@@ -40,6 +40,7 @@ sub getconfig () { #{{{
 			"post-commit" => \$config{post_commit},
 			"render=s" => \$config{render},
 			"wrappers!" => \$config{genwrappers},
+			"wrappergroup=s" => \$config{wrappergroup},
 			"usedirs!" => \$config{usedirs},
 			"prefix-directives!" => \$config{prefix_directives},
 			"getctime" => \$config{getctime},
