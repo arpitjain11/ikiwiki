@@ -23,6 +23,9 @@ PROBABLE_INST_LIB=$(shell \\
 	fi \\
 )
 
+# Additional configurable path variables.
+W3M_CGI_BIN?=$(PREFIX)/lib/w3m/cgi-bin
+
 tflag=$(shell if [ -n "$$NOTAINT" ] && [ "$$NOTAINT" != 1 ]; then printf -- "-T"; fi)
 extramodules=$(shell if [ "$$PROFILE" = 1 ]; then printf -- "-d:Profile"; fi)
 
@@ -94,8 +97,8 @@ extra_install:
 	install -d $(DESTDIR)$(PREFIX)/sbin
 	install ikiwiki-mass-rebuild $(DESTDIR)$(PREFIX)/sbin
 
-	install -d $(DESTDIR)$(PREFIX)/lib/w3m/cgi-bin
-	install ikiwiki-w3m.cgi $(DESTDIR)$(PREFIX)/lib/w3m/cgi-bin
+	install -d $(DESTDIR)$(W3M_CGI_BIN)
+	install ikiwiki-w3m.cgi $(DESTDIR)$(W3M_CGI_BIN)
 
 	install -d $(DESTDIR)$(PREFIX)/bin
 	install ikiwiki.out $(DESTDIR)$(PREFIX)/bin/ikiwiki
