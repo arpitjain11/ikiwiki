@@ -218,12 +218,20 @@ sub linkbacks ($$) {
 
 	my @links;
 	foreach my $p (keys %links) {
+		next if bestlink($page, $p) eq $page;
 		if (grep { length $_ && bestlink($p, $_) eq $page } @{$links{$p}}) {
 			my $href=File::Spec->abs2rel(htmlpage($p), dirname($page));
-			# TODO: if $p is joey/foo/bar and 
-			# the $page is joey/foo/baz, make the link text
-			# just be "bar".
-			push @links, "<a href=\"$href\">$p</a>";
+			
+			# Trim common dir prefixes from both pages.
+			my $p_trimmed=$p;
+			my $page_trimmed=$page;
+			my $dir;
+			1 while (($dir)=$page_trimmed=~m!^([^/]+/)!) &&
+			        defined $dir &&
+			        $p_trimmed=~s/^\Q$dir\E// &&
+			        $page_trimmed=~s/^\Q$dir\E//;
+				       
+			push @links, "<a href=\"$href\">$p_trimmed</a>";
 		}
 	}
 
