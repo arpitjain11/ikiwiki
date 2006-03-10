@@ -210,7 +210,7 @@ sub finalize ($$) {
 		}
 		$path.="../";
 	}
-	$path=~s/\.\.\///;
+	$path=~s/\.\.\/$/index.html/;
 	$pagelink="<a href=\"$path\">$wikiname/</a> $pagelink";
 	
 	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
