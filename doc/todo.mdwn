@@ -39,5 +39,14 @@ what style of [[WikiLink]]s are supported, maybe some people want to add
 The finalize step is where the page gets all the pretty junk around the
 edges, so that clearly needs to be pluggable too.
 
-There could also be a step before finalize, where stuff like lists of pages
-that linked back to it could be added to the page.
+There also needs to be a step before finalize, where stuff like lists of pages
+that linked back to it could be added to the page. However, doing linkbacks
+also needs to tie into the main logic, to determine what pages need to be
+renered, so maybe that won't be a plugin.
+
+## revist case
+
+Being case insensative is handy, but it does make the [[BackLinks]] a bit
+ugly compared to other links. It should be possible to support pagenames
+that have uppercase, while still allowing them to be linked to using any
+case.

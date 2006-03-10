@@ -35,8 +35,10 @@ my ($srcdir) = shift =~ /(.*)/; # untaint
 my ($destdir) = shift =~ /(.*)/; # untaint
 
 my %links;
+my %oldlinks;
 my %oldpagemtime;
 my %renderedfiles;
+my %pagesources;
 
 sub error ($) {
 	die @_;
@@ -206,6 +208,21 @@ sub htmlize ($$) {
 	}
 }
 
+sub linkbacks ($$) {
+	my $content=shift;
+	my $page=shift;
+
+	my @links;
+	foreach my $p (keys %links) {
+		if (grep { $_ eq $page } @{$links{$p}}) {
+			my $href=File::Spec->abs2rel(htmlpage($p), dirname($page));
+			push @links, "<a href=\"$href\">$p</a>";
+		}
+	}
+
+	$content.="<hr><p>Links: ".join(" ", sort @links)."</p>\n";
+}
+
 sub finalize ($$) {
 	my $content=shift;
 	my $page=shift;
@@ -217,7 +234,7 @@ sub finalize ($$) {
 	my $path="";
 	foreach my $dir (reverse split("/", $page)) {
 		if (length($pagelink)) {
-			$pagelink="<a href=\"$path$dir.html\">$dir/</a> $pagelink";
+			$pagelink="<a href=\"$path$dir.html\">$dir</a>/ $pagelink";
 		}
 		else {
 			$pagelink=$dir;
@@ -225,7 +242,7 @@ sub finalize ($$) {
 		$path.="../";
 	}
 	$path=~s/\.\.\/$/index.html/;
-	$pagelink="<a href=\"$path\">$wikiname/</a> $pagelink";
+	$pagelink="<a href=\"$path\">$wikiname</a>/ $pagelink";
 	
 	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
 	          "<h1>$pagelink</h1>\n".
@@ -242,10 +259,12 @@ sub render ($) {
 	my $content=readpage($file);
 	if ($type ne 'unknown') {
 		my $page=pagename($file);
+		
 		$links{$page}=[findlinks($content)];
-	
+		
 		$content=linkify($content, $file);
 		$content=htmlize($type, $content);
+		$content=linkbacks($content, $page);
 		$content=finalize($content, $page);
 		
 		writepage(htmlpage($page), $content);
@@ -263,11 +282,15 @@ sub render ($) {
 sub loadindex () {
 	open (IN, "$srcdir/.index") || return;
 	while (<IN>) {
+		($_)=/(.*)/; # untaint
 		chomp;
-		my ($mtime, $page, $rendered, @links)=split(' ', $_);
+		my ($mtime, $file, $rendered, @links)=split(' ', $_);
+		my $page=pagename($file);
+		$pagesources{$page}=$file;
 		$oldpagemtime{$page}=$mtime;
-		$links{$page}=\@links;
-		($renderedfiles{$page})=$rendered=~m/(.*)/; # untaint
+		$links{$page}=[@links];
+		$oldlinks{$page}=[@links];
+		$renderedfiles{$page}=$rendered;
 	}
 	close IN;
 }	
@@ -275,7 +298,7 @@ sub loadindex () {
 sub saveindex () {
 	open (OUT, ">$srcdir/.index") || error("cannot write to .index: $!");
 	foreach my $page (keys %oldpagemtime) {
-	print OUT "$oldpagemtime{$page} $page $renderedfiles{$page} ".
+	print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
 	          join(" ", @{$links{$page}})."\n"
 			if $oldpagemtime{$page};
 	}
@@ -316,23 +339,27 @@ sub refresh () {
 		},
 	}, $srcdir);
 
+	my %rendered;
+
 	# check for added or removed pages
-	my @adddel;
+	my @add;
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		if (! $oldpagemtime{$page}) {
 			debug("new page $page");
-			push @adddel, $page;
+			push @add, $file;
 			$links{$page}=[];
+			$pagesources{$page}=$file;
 		}
 	}
+	my @del;
 	foreach my $page (keys %oldpagemtime) {
 		if (! $exists{$page}) {
 			debug("removing old page $page");
+			push @del, $renderedfiles{$page};
 			prune($destdir."/".$renderedfiles{$page});
 			delete $renderedfiles{$page};
 			$oldpagemtime{$page}=0;
-			push @adddel, $page;
 		}
 	}
 	
@@ -344,19 +371,23 @@ sub refresh () {
 		    mtime("$srcdir/$file") > $oldpagemtime{$page}) {
 		    	debug("rendering changed file $file");
 			render($file);
+			$rendered{$file}=1;
 		}
 		elsif ($rebuild) {
 			debug("rebuilding unchanged file $file");
 			render($file);
+			$rendered{$file}=1;
 		}
 	}
 	
 	# if any files were added or removed, check to see if each page
 	# needs an update due to linking to them
-	if (@adddel) {
+	if (@add || @del) {
 FILE:		foreach my $file (@files) {
+			next if $rendered{$file};
 			my $page=pagename($file);
-			foreach my $p (@adddel) {
+			foreach my $f (@add, @del) {
+				my $p=pagename($f);
 				foreach my $link (@{$links{$page}}) {
 					if (bestlink($page, $link) eq $p) {
 		   				debug("rendering $file, which links to $p");
@@ -364,6 +395,41 @@ FILE:		foreach my $file (@files) {
 						next FILE;
 					}
 				}
+			}
+		}
+	}
+
+	# handle linkbacks; if a page has added/removed links, update the
+	# pages it links to
+	# TODO: inefficient; pages may get rendered above and again here;
+	# problem is the linkbacks could be wrong in the first pass render
+	# above.
+	if (%rendered) {
+		my %linkchanged;
+		foreach my $file (keys %rendered, @del) {
+			my $pagename=pagename($file);
+			if (exists $links{$pagename}) {
+				foreach my $link (@{$links{$pagename}}) {
+					if (! exists $oldlinks{$pagename} ||
+					    ! grep { $_ eq $link } @{$oldlinks{$pagename}}) {
+						$linkchanged{$link}=1;
+					}
+				}
+			}
+			if (exists $oldlinks{$pagename}) {
+				foreach my $link (@{$oldlinks{$pagename}}) {
+					if (! exists $links{$pagename} ||
+					    ! grep { $_ eq $link } @{$links{$pagename}}) {
+						$linkchanged{$link}=1;
+					}
+				}
+			}
+		}
+		foreach my $link (keys %linkchanged) {
+		    	my $linkfile=$pagesources{$link};
+			if (defined $linkfile) {
+				debug("rendering $linkfile, to update its linkbacks");
+				render($linkfile);
 			}
 		}
 	}
