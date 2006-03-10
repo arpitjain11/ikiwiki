@@ -1,0 +1,11 @@
+Here's an example of how to run ikiwiki in a [[Subversion]] post-commit
+hook to automatically update a wiki as commits come in:
+
+	wiki_src=/path/to/checkout
+	wiki_dest=/path/to/web/server
+	svn up -q $wiki_src
+	ikiwiki $wiki_src $wiki_dest --wikiname=MyWiki
+
+This assumes that permissions allow anyone who commits to svn up the
+wiki_src directory and write to wiki_dest. If they don't, you'll need a
+suid wrapper to run the above as a user who can write to both.
