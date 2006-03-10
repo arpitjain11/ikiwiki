@@ -14,11 +14,25 @@ BEGIN {
 memoize('pagename');
 memoize('bestlink');
 
-my ($srcdir)= shift =~ /(.*)/; # untaint
-my ($destdir)= shift =~ /(.*)/; # untaint
+sub usage {
+	die "usage: ikiwiki [options] source dest\n";
+}
+
 my $link=qr/\[\[([^\s]+)\]\]/;
-my $verbose=1;
+my $verbose=0;
+my $rebuild=0;
 my $wikiname="wiki";
+if (grep /^-/, @ARGV) {
+	eval {use Getopt::Long};
+	GetOptions(
+		"wikiname=s" => \$wikiname,
+		"verbose|v" => \$verbose,
+		"rebuild" => \$rebuild,
+	) || usage();
+}
+usage() unless @ARGV == 2;
+my ($srcdir) = shift =~ /(.*)/; # untaint
+my ($destdir) = shift =~ /(.*)/; # untaint
 
 my %links;
 my %oldpagemtime;
@@ -329,6 +343,10 @@ sub refresh () {
 		if (! exists $oldpagemtime{$page} ||
 		    mtime("$srcdir/$file") > $oldpagemtime{$page}) {
 		    	debug("rendering changed file $file");
+			render($file);
+		}
+		elsif ($rebuild) {
+			debug("rebuilding unchanged file $file");
 			render($file);
 		}
 	}

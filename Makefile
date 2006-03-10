@@ -1,5 +1,5 @@
 all:
-	./ikiwiki doc html
+	./ikiwiki doc html --wikiname="ikiwiki"
 
 clean:
 	rm -rf html
