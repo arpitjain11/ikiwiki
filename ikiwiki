@@ -23,6 +23,7 @@ my $wikiname="wiki";
 my $default_pagetype=".mdwn";
 my $cgi=0;
 my $url="";
+my $svn=1;
 
 sub usage {
 	die "usage: ikiwiki [options] source dest\n";
@@ -322,10 +323,31 @@ sub saveindex () {
 	close OUT;
 }
 
-sub update () {
+sub rcs_update () {
 	if (-d "$srcdir/.svn") {
 		if (system("svn", "update", "--quiet", $srcdir) != 0) {
 			warn("svn update failed\n");
+		}
+	}
+}
+
+sub rcs_commit ($) {
+	my $message=shift;
+
+	if (-d "$srcdir/.svn") {
+		if (system("svn", "commit", "--quiet", "-m",
+		           possibly_foolish_untaint($message), $srcdir) != 0) {
+			warn("svn commit failed\n");
+		}
+	}
+}
+
+sub rcs_ad ($) {
+	my $file=shift;
+
+	if (-d "$srcdir/.svn") {
+		if (system("svn", "add", "--quiet", $file) != 0) {
+			warn("svn add failed\n");
 		}
 	}
 }
@@ -466,7 +488,7 @@ FILE:		foreach my $file (@files) {
 # Generates a C wrapper program for running ikiwiki in a specific way.
 # The wrapper may be safely made suid.
 sub gen_wrapper ($$) {
-	my ($offline, $rebuild)=@_;
+	my ($svn, $rebuild)=@_;
 
 	eval {use Cwd 'abs_path'};
 	$srcdir=abs_path($srcdir);
@@ -479,13 +501,13 @@ sub gen_wrapper ($$) {
 	my $call=qq{"$this", "$this", "$srcdir", "$destdir", "--wikiname=$wikiname"};
 	$call.=', "--verbose"' if $verbose;
 	$call.=', "--rebuild"' if $rebuild;
-	$call.=', "--offline"' if $offline;
+	$call.=', "--nosvn"' if !$svn;
 	$call.=', "--cgi"' if $cgi;
 	$call.=', "--url='.$url.'"' if $url;
 	
-	# For CGI we need all these environment variables.
-	my @envsave=qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
-	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE};
+	my @envsave;
+	push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
+	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE} if $cgi;
 	my $envsave="";
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"
@@ -507,17 +529,13 @@ extern char **environ;
 
 int main (void) {
 	/* Sanitize environment. */
-	if ($cgi) {
-		char *s;
-		char *newenviron[$#envsave+2];
-		int i=0;
-		$envsave;
-		newenviron[i]=NULL;
-		environ=newenviron;
-	}
-	else {
-		clearenv();
-	}
+	char *s;
+	char *newenviron[$#envsave+3];
+	int i=0;
+	$envsave;
+	newenviron[i++]="HOME=$ENV{HOME}";
+	newenviron[i]=NULL;
+	environ=newenviron;
 
 	execl($call, NULL);
 	perror("failed to run $this");
@@ -568,25 +586,44 @@ sub cgi () {
 		               -default => $content,
 		               -rows => 20,
 		               -columns => 80),
-		      $q->p,
+		      $q->br,
+		      "$ENV{HOME} Optional comment about this change",
+		      $q->br,
+		      $q->textfield(-name => "comments", -size => 80),
+		      $q->br,
 		      $q->submit("Save Changes"),
-		      # TODO: Cancel button returns to page.
-		      # TODO: Preview button.
-		      # TODO: Commit message field.
-		      # TODO: Conflict prevention.
 		      $q->end_form,
 		      $q->end_html;
 	}
 	elsif ($do eq 'save') {
 		my $file=$page.$default_pagetype;
+		my $newfile=1;
 		if (exists $pagesources{lc($page)}) {
 			$file=$pagesources{lc($page)};
+			$newfile=0;
 		}
 		
 		my $content=$q->param('content');
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
 		writefile("$srcdir/$file", $content);
+		
+		my $message="web commit from $ENV{REMOTE_ADDR}";
+		if (defined $q->param('comments')) {
+			$message.="\n".$q->param('comments');
+		}
+		
+		if ($svn) {
+			if ($newfile) {
+				rcs_add($file);
+			}
+			# presumably the commit will trigger an update
+			# of the wiki
+			rcs_commit($message);
+		}
+		else {
+			refresh();
+		}
 		
 		print $q->redirect("$url/".htmlpage($page));
 	}
@@ -596,7 +633,6 @@ sub cgi () {
 }
 
 my $rebuild=0;
-my $offline=0;
 my $wrapper=0;
 if (grep /^-/, @ARGV) {
 	eval {use Getopt::Long};
@@ -605,7 +641,7 @@ if (grep /^-/, @ARGV) {
 		"verbose|v" => \$verbose,
 		"rebuild" => \$rebuild,
 		"wrapper" => \$wrapper,
-		"offline" => \$offline,
+		"svn!" => \$svn,
 		"cgi" => \$cgi,
 		"url=s" => \$url,
 	) || usage();
@@ -618,7 +654,7 @@ if ($cgi && ! length $url) {
 	error("Must specify url to wiki with --url when using --cgi");
 }
 
-gen_wrapper($offline, $rebuild) if $wrapper;
+gen_wrapper($svn, $rebuild) if $wrapper;
 memoize('pagename');
 memoize('bestlink');
 loadindex() unless $rebuild;
@@ -626,7 +662,7 @@ if ($cgi) {
 	cgi();
 }
 else {
-	update() unless $offline;
+	rcs_update() if $svn;
 	refresh();
 	saveindex();
 }

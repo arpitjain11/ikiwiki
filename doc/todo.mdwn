@@ -1,17 +1,10 @@
 ## online page editing
 
-To support editing pages in a web browser,  a CGI script is needed that
-pulls the page out of [[Subversion]], presents it to the user for editing,
-and then commits the changed page back to [[Subversion]].
-
-Due to [[WikiSpam]], this will probably also need to incorporate a user
-registration system. So there will need to be a script that handles logins
-and registrations, sets a cookie, and the page editor can refuse to edit
-pages for users who arn't logged in, and include a not of who made the
-change in the svn log.
-
-If possible I'd prefer to use someone else's generic web user registration
-and login system, if one exists.
+* Missing support for preview, cancel.
+* Missing conflict detection.
+* Missing commit message box.
+* No support for web user tracking/login yet.
+* Doesn't svn commit yet.
 
 ## [[RecentChanges]]
 
