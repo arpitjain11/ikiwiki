@@ -220,7 +220,8 @@ sub linkbacks ($$) {
 		}
 	}
 
-	$content.="<hr><p>Links: ".join(" ", sort @links)."</p>\n";
+	$content.="<hr><p>Links: ".join(" ", sort @links)."</p>\n" if @links;
+	return $content;
 }
 
 sub finalize ($$) {
