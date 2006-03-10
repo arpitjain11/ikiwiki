@@ -154,7 +154,7 @@ sub bestlink ($$) {
 		}
 	} while $cwd=~s!/?[^/]+$!!;
 
-	print STDERR "warning: page $page, broken link: $link\n";
+	#print STDERR "warning: page $page, broken link: $link\n";
 	return "";
 }
 
@@ -173,7 +173,9 @@ sub htmllink ($$) {
 	return $link if $page eq $bestlink;
 	
 	# TODO BUG: %renderedfiles may not have it, if the linked to page
-	# was also added and isn't yet rendered!
+	# was also added and isn't yet rendered! Note that this bug is
+	# masked by the bug mentioned below that makes all new files
+	# be rendered twice.
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		$bestlink=htmlpage($bestlink);
 	}
@@ -385,7 +387,7 @@ sub refresh () {
 	# if any files were added or removed, check to see if each page
 	# needs an update due to linking to them
 	# TODO: inefficient; pages may get rendered above and again here;
-	# problem is the bestlink may have changes and we won't know until
+	# problem is the bestlink may have changed and we won't know until
 	# now
 	if (@add || @del) {
 FILE:		foreach my $file (@files) {
@@ -408,7 +410,7 @@ FILE:		foreach my $file (@files) {
 	# pages it links to
 	# TODO: inefficient; pages may get rendered above and again here;
 	# problem is the linkbacks could be wrong in the first pass render
-	# above.
+	# above
 	if (%rendered) {
 		my %linkchanged;
 		foreach my $file (keys %rendered, @del) {
