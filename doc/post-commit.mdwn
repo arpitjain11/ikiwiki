@@ -1,11 +1,26 @@
-Here's an example of how to run ikiwiki in a [[Subversion]] post-commit
-hook to automatically update a wiki as commits come in:
+The best way to run ikiwiki in a [[Subversion]] post-commit hook is using
+a wrapper, which can be generated using `ikiwiki --gen-wrapper`.
 
-	wiki_src=/path/to/checkout
-	wiki_dest=/path/to/web/server
-	svn up -q $wiki_src
-	ikiwiki $wiki_src $wiki_dest --wikiname=MyWiki
+First, set up the subversion checkout that ikiwiki will update and compile
+into your wiki at each subversion commit. Run ikiwiki a few times by hand
+to get a feel for it. Now, generate the wrapper by adding "--gen-wrapper"
+to whatever command line you've been using to run ikiwiki. For example:
 
-This assumes that permissions allow anyone who commits to svn up the
-wiki_src directory and write to wiki_dest. If they don't, you'll need a
-suid wrapper to run the above as a user who can write to both.
+	~/wiki-checkout> ikiwiki . ~/public_html/wiki
+	~/wiki-checkout> ikiwiki . ~/public_html/wiki --gen-wrapper
+	successfully generated ikiwiki-wrap
+
+The generated wrapper is a C program that is designed to safely be made
+suid if necessary. It's hardcoded to run ikiwiki with the settings
+specified when you ran --gen-wrapper, and can only be used to update and 
+compile that one checkout into the specified html directory.
+
+Now, put the wrapper somewhere convenient, and create a post-commit hook
+script in your subversion repository for the wiki. All the post-commit
+hook has to do is run ikiwiki-wrap (with no parameters).
+
+Depending on your Subversion setup, the post-commit hook might end up
+getting called by users who have write access to subversion, but not to
+your wiki checkout and html directory. If so, you can safely make
+ikiwiki-wrap suid to a user who can write there (*not* to root!). You might
+want to read [[Security]] first.

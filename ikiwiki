@@ -463,7 +463,7 @@ sub gen_wrapper ($$) {
 #include <stdlib.h>
 
 int main (void) {
-	unsetenv("PERLIO_DEBUG"); /* CAN-2005-0155 */
+	clearenv();
 	execl($call, NULL);
 	perror("failed to run $this");
 	exit(1);

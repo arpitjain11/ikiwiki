@@ -42,11 +42,11 @@ they can try to use this to exploit your web server.
 
 ## --gen-wrapper might generate insecure wrappers
 
-ikiwiki --gen-wrapper is instended to generate a wrapper program that
+ikiwiki --gen-wrapper is intended to generate a wrapper program that
 runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
 for example to be used in a [[post-commit]] hook by people who cannot write
 to the html pages, etc.
 
 If the wrapper script is made suid, then any bugs in this wrapper would be
 security holes. The wrapper is written as securely as I know how and
-there's been no problems yet.
+there's been no problem yet.
