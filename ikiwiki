@@ -587,7 +587,7 @@ sub cgi () {
 		               -rows => 20,
 		               -columns => 80),
 		      $q->br,
-		      "$ENV{HOME} Optional comment about this change",
+		      "Optional comment about this change",
 		      $q->br,
 		      $q->textfield(-name => "comments", -size => 80),
 		      $q->br,
@@ -610,7 +610,7 @@ sub cgi () {
 		
 		my $message="web commit from $ENV{REMOTE_ADDR}";
 		if (defined $q->param('comments')) {
-			$message.="\n".$q->param('comments');
+			$message.=": ".$q->param('comments');
 		}
 		
 		if ($svn) {
