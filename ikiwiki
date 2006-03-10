@@ -37,6 +37,12 @@ sub mtime ($) {
 	return (stat($page))[9];
 }
 
+sub possibly_foolish_untaint ($) {
+	my $tainted=shift;
+	my ($untainted)=$tainted=~/(.*)/;
+	return $untainted;
+}
+
 sub basename {
 	my $file=shift;
 
@@ -281,7 +287,7 @@ sub render ($) {
 sub loadindex () {
 	open (IN, "$srcdir/.index") || return;
 	while (<IN>) {
-		($_)=/(.*)/; # untaint
+		$_=possibly_foolish_untaint($_);
 		chomp;
 		my ($mtime, $file, $rendered, @links)=split(' ', $_);
 		my $page=pagename($file);
@@ -500,8 +506,8 @@ if (grep /^-/, @ARGV) {
 	) || usage();
 }
 usage() unless @ARGV == 2;
-($srcdir) = shift =~ /(.*)/; # untaint
-($destdir) = shift =~ /(.*)/; # untaint
+($srcdir) = possibly_foolish_untaint(shift);
+($destdir) = possibly_foolish_untaint(shift);
 
 gen_wrapper($offline, $rebuild) if $gen_wrapper;
 memoize('pagename');
