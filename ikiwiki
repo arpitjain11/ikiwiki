@@ -18,6 +18,7 @@ my ($srcdir)= shift =~ /(.*)/; # untaint
 my ($destdir)= shift =~ /(.*)/; # untaint
 my $link=qr/\[\[([^\s]+)\]\]/;
 my $verbose=1;
+my $wikiname="wiki";
 
 my %links;
 my %oldpagemtime;
@@ -153,7 +154,7 @@ sub htmllink ($$) {
 
 	my $bestlink=bestlink($page, $link);
 
-	return $page if $page eq $bestlink;
+	return $link if $page eq $bestlink;
 	
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		$bestlink=htmlpage($bestlink);
@@ -198,9 +199,24 @@ sub finalize ($$) {
 	my $title=basename($page);
 	$title=~s/_/ /g;
 	
+	my $pagelink="";
+	my $path="";
+	foreach my $dir (reverse split("/", $page)) {
+		if (length($pagelink)) {
+			$pagelink="<a href=\"$path$dir.html\">$dir/</a> $pagelink";
+		}
+		else {
+			$pagelink=$dir;
+		}
+		$path.="../";
+	}
+	$path=~s/\.\.\///;
+	$pagelink="<a href=\"$path\">$wikiname/</a> $pagelink";
+	
 	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
-		  $content.
-		  "</body>\n</html>\n";
+	          "<h1>$pagelink</h1>\n".
+	          $content.
+	          "</body>\n</html>\n";
 	
 	return $content;
 }
