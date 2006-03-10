@@ -1,0 +1,36 @@
+[[Ikiwiki]] is a wiki compiler. It converts a directory full of wiki pages
+into html pages suitable for publishing on a website. Unlike a traditional
+wiki, ikiwiki does not have its own means of storing page history, its own
+markup language, or support for editing pages online. 
+
+To use [[ikiwiki]] to set up a wiki, you will probably want to use it with a
+revision control system, such as [[Subversion]], for keeping track of past
+versions of pages. ikiwiki can run as a Subversion post-commit hook, so
+that each committed change to your wiki is immediatly compiled and
+published. (It can also be run by hand, by cron, or integrated with any
+other revision control system.) 
+
+[[Subversion]] also offers a way to let others edit pages on your wiki.
+Just configure subversion to let appropriate users (or everyone) commit to
+the wiki's repository. There are some things you should keep in mind about
+[[Security]] when allowing the world to edit your ikiwiki.
+
+ikiwiki supports pages using [[MarkDown]] as their markup language. Any
+page with a filename ending in ".mdwn" is converted from markdown to html
+by ikiwiki. Markdown understands text formatted as it would be in an email,
+and is quite smart about converting it to html. The only additional markup
+provided by ikiwiki aside from regular markdown is the [[WikiLink]].
+
+ikiwiki also supports files of any other type, including raw html, text,
+images, etc. These are not converted to wiki pages, they are just copied
+unchanged by ikiwiki as it builds your wiki. So you can check in an image,
+program, or other special file and link to it from your wiki pages.
+ikiwiki also supports making one page that is a [[SubPage]] of another.
+
+[[TODO]] lists things that need to be added to ikiwiki before most people
+would consider it a full-fledged wiki.
+
+All wikis are supposed to have a [[SandBox]], so this one does to.
+If you'd like to try editing pages on this wiki, do whatever you'd like in 
+
+[[ikiwiki]] is developed by JoeyHess.

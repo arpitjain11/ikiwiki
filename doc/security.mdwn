@@ -1,0 +1,39 @@
+If you are using ikiwiki to render pages that only you can edit, then there
+are no more security issues with this program than with cat(1). If,
+however, you let others edit pages in your wiki, then some security issues
+do need to be kept in mind.
+
+## html attacks
+
+ikiwiki does not attempt to do any santization of the html on the wiki.
+MarkDown allows embedding of arbitrary html into a markdown document. If
+you let anyone else edit files on the wiki, then anyone can have fun exploiting
+the web browser bug of the day. This type of attack is typically referred
+to as an XSS attack ([google](http://www.google.com/search?q=xss+attack)).
+
+## image files etc attacks
+
+If it enounters a file type it does not understand, ikiwiki just copies it
+into place. So if you let users add any kind of file they like, they can
+upload images, movies, windows executables, etc. If these files exploit
+security holes in the browser of someone who's viewing the wiki, that can
+be a security problem.
+
+## exploting ikiwiki with bad content
+
+Someone could add bad content to the wiki and hope to exploit ikiwiki.
+Note that ikiwiki runs with perl taint checks on, so this is unlikely;
+the only data that is not subject to full taint checking is the names of
+files, and filenames are sanitised.
+
+## cgi scripts
+
+ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
+rather, the script is published, but it's not marked executable, so
+hopefully your web server will not run it.
+
+## web server attacks
+
+If your web server does any parsing of special sorts of files (for example,
+server parsed html files), then if you let anyone else add files to the wiki,
+they can try to use this to exploit your web server.

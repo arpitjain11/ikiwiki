@@ -1,0 +1,43 @@
+## online page editing
+
+To support editing pages in a web browser,  a CGI script is needed that
+pulls the page out of [[Subversion]], presents it to the user for editing,
+and then commits the changed page back to [[Subversion]].
+
+Due to [[WikiSpam]], this will probably also need to incorporate a user
+registration system. So there will need to be a script that handles logins
+and registrations, sets a cookie, and the page editor can refuse to edit
+pages for users who arn't logged in, and include a not of who made the
+change in the svn log.
+
+If possible I'd prefer to use someone else's generic web user registration
+and login system, if one exists.
+
+## [[RecentChanges]]
+
+This will need to be another cgi script, that grubs through the
+[[Subversion]] logs.
+
+This should support RSS for notification of new and changed pages.
+
+## page history
+
+To see past versions of a page, we can either implement a browser for that,
+or just provide a way to link to the page in viewcvs.
+
+## pluggable renderers
+
+I'm considering a configurable rendering pipeline for each supported
+filename extension. So for ".mdwn" files, it would send the content through
+linkify, markdown, and finalize, while for ".wiki" files it might send it
+through just a wiki formatter and finalize.
+
+This would allow not only supporting more types of markup, but changing
+what style of [[WikiLink]]s are supported, maybe some people want to add
+[[CamelCase]] for example, or don't like the [[SubPage/LinkingRules]].
+
+The finalize step is where the page gets all the pretty junk around the
+edges, so that clearly needs to be pluggable too.
+
+There could also be a step before finalize, where stuff like lists of pages
+that linked back to it could be added to the page.

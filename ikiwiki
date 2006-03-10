@@ -1,0 +1,340 @@
+#!/usr/bin/perl -T
+
+use warnings;
+use strict;
+use File::Find;
+use Memoize;
+use File::Spec;
+
+BEGIN {
+	$blosxom::version="is a proper perl module too much to ask?";
+	do "/usr/bin/markdown";
+}
+
+memoize('pagename');
+memoize('bestlink');
+
+my ($srcdir)= shift =~ /(.*)/; # untaint
+my ($destdir)= shift =~ /(.*)/; # untaint
+my $link=qr/\[\[([^\s]+)\]\]/;
+my $verbose=1;
+
+my %links;
+my %oldpagemtime;
+my %renderedfiles;
+
+sub error ($) {
+	die @_;
+}
+
+sub debug ($) {
+	print "@_\n" if $verbose;
+}
+
+sub mtime ($) {
+	my $page=shift;
+	
+	return (stat($page))[9];
+}
+
+sub basename {
+	my $file=shift;
+
+	$file=~s!.*/!!;
+	return $file;
+}
+
+sub dirname {
+	my $file=shift;
+
+	$file=~s!/?[^/]+$!!;
+	return $file;
+}
+
+sub pagetype ($) {
+	my $page=shift;
+	
+	if ($page =~ /\.mdwn$/) {
+		return ".mdwn";
+	}
+	else {
+		return "unknown";
+	}
+}
+
+sub pagename ($) {
+	my $file=shift;
+
+	my $type=pagetype($file);
+	my $page=$file;
+	$page=~s/\Q$type\E*$// unless $type eq 'unknown';
+	return $page;
+}
+
+sub htmlpage ($) {
+	my $page=shift;
+
+	return $page.".html";
+}
+
+sub readpage ($) {
+	my $page=shift;
+
+	local $/=undef;
+	open (PAGE, "$srcdir/$page") || error("failed to read $page: $!");
+	my $ret=<PAGE>;
+	close PAGE;
+	return $ret;
+}
+
+sub writepage ($$) {
+	my $page=shift;
+	my $content=shift;
+
+	my $dir=dirname("$destdir/$page");
+	if (! -d $dir) {
+		my $d="";
+		foreach my $s (split(m!/+!, $dir)) {
+			$d.="$s/";
+			if (! -d $d) {
+				mkdir($d) || error("failed to create directory $d: $!");
+			}
+		}
+	}
+	
+	open (PAGE, ">$destdir/$page") || error("failed to write $page: $!");
+	print PAGE $content;
+	close PAGE;
+}
+
+sub findlinks {
+	my $content=shift;
+
+	my @links;
+	while ($content =~ /$link/g) {
+		push @links, lc($1);
+	}
+	return @links;
+}
+
+# Given a page and the text of a link on the page, determine which existing
+# page that link best points to. Prefers pages under a subdirectory with
+# the same name as the source page, failing that goes down the directory tree
+# to the base looking for matching pages.
+sub bestlink ($$) {
+	my $page=shift;
+	my $link=lc(shift);
+	
+	my $cwd=$page;
+	do {
+		my $l=$cwd;
+		$l.="/" if length $l;
+		$l.=$link;
+
+		if (exists $links{$l}) {
+			#debug("for $page, \"$link\", use $l");
+			return $l;
+		}
+	} while $cwd=~s!/?[^/]+$!!;
+
+	print STDERR "warning: page $page, broken link: $link\n";
+	return "";
+}
+
+sub isinlinableimage ($) {
+	my $file=shift;
+	
+	$file=~/\.(png|gif|jpg|jpeg)$/;
+}
+
+sub htmllink ($$) {
+	my $page=shift;
+	my $link=shift;
+
+	my $bestlink=bestlink($page, $link);
+
+	return $page if $page eq $bestlink;
+	
+	if (! grep { $_ eq $bestlink } values %renderedfiles) {
+		$bestlink=htmlpage($bestlink);
+	}
+	if (! grep { $_ eq $bestlink } values %renderedfiles) {
+		return "<a href=\"?\">?</a>$link"
+	}
+	
+	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
+	
+	if (isinlinableimage($bestlink)) {
+		return "<img src=\"$bestlink\">";
+	}
+	return "<a href=\"$bestlink\">$link</a>";
+}
+
+sub linkify ($$) {
+	my $content=shift;
+	my $file=shift;
+
+	$content =~ s/$link/htmllink(pagename($file), $1)/eg;
+	
+	return $content;
+}
+
+sub htmlize ($$) {
+	my $type=shift;
+	my $content=shift;
+	
+	if ($type eq '.mdwn') {
+		return Markdown::Markdown($content);
+	}
+	else {
+		error("htmlization of $type not supported");
+	}
+}
+
+sub finalize ($$) {
+	my $content=shift;
+	my $page=shift;
+
+	my $title=basename($page);
+	$title=~s/_/ /g;
+	
+	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
+		  $content.
+		  "</body>\n</html>\n";
+	
+	return $content;
+}
+
+sub render ($) {
+	my $file=shift;
+	
+	my $type=pagetype($file);
+	my $content=readpage($file);
+	if ($type ne 'unknown') {
+		my $page=pagename($file);
+		$links{$page}=[findlinks($content)];
+	
+		$content=linkify($content, $file);
+		$content=htmlize($type, $content);
+		$content=finalize($content, $page);
+		
+		writepage(htmlpage($page), $content);
+		$oldpagemtime{$page}=time;
+		$renderedfiles{$page}=htmlpage($page);
+	}
+	else {
+		$links{$file}=[];
+		writepage($file, $content);
+		$oldpagemtime{$file}=time;
+		$renderedfiles{$file}=$file;
+	}
+}
+
+sub loadindex () {
+	open (IN, "$srcdir/.index") || return;
+	while (<IN>) {
+		chomp;
+		my ($mtime, $page, $rendered, @links)=split(' ', $_);
+		$oldpagemtime{$page}=$mtime;
+		$links{$page}=\@links;
+		($renderedfiles{$page})=$rendered=~m/(.*)/; # untaint
+	}
+	close IN;
+}	
+
+sub saveindex () {
+	open (OUT, ">$srcdir/.index") || error("cannot write to .index: $!");
+	foreach my $page (keys %oldpagemtime) {
+	print OUT "$oldpagemtime{$page} $page $renderedfiles{$page} ".
+	          join(" ", @{$links{$page}})."\n"
+			if $oldpagemtime{$page};
+	}
+	close OUT;
+}
+
+sub prune ($) {
+	my $file=shift;
+
+	unlink($file);
+	my $dir=dirname($file);
+	while (rmdir($dir)) {
+		$dir=dirname($dir);
+	}
+}
+
+sub refresh () {
+	# Find existing pages.
+	my %exists;
+	my @files;
+	find({
+		no_chdir => 1,
+		wanted => sub {
+			if (/\/\.svn\//) {
+				$File::Find::prune=1;
+			}
+			elsif (! -d $_ && ! /\.html$/ && ! /\/\./) {
+				my ($f)=/(^[-A-Za-z0-9_.:\/+]+$)/; # untaint
+				if (! defined $f) {
+					warn("skipping bad filename $_\n");
+				}
+				else {
+					$f=~s/^\Q$srcdir\E\/?//;
+					push @files, $f;
+					$exists{pagename($f)}=1;
+				}
+			}
+		},
+	}, $srcdir);
+
+	# check for added or removed pages
+	my @adddel;
+	foreach my $file (@files) {
+		my $page=pagename($file);
+		if (! $oldpagemtime{$page}) {
+			debug("new page $page");
+			push @adddel, $page;
+			$links{$page}=[];
+		}
+	}
+	foreach my $page (keys %oldpagemtime) {
+		if (! $exists{$page}) {
+			debug("removing old page $page");
+			prune($destdir."/".$renderedfiles{$page});
+			delete $renderedfiles{$page};
+			$oldpagemtime{$page}=0;
+			push @adddel, $page;
+		}
+	}
+	
+	# render any updated files
+	foreach my $file (@files) {
+		my $page=pagename($file);
+		
+		if (! exists $oldpagemtime{$page} ||
+		    mtime("$srcdir/$file") > $oldpagemtime{$page}) {
+		    	debug("rendering changed file $file");
+			render($file);
+		}
+	}
+	
+	# if any files were added or removed, check to see if each page
+	# needs an update due to linking to them
+	if (@adddel) {
+FILE:		foreach my $file (@files) {
+			my $page=pagename($file);
+			foreach my $p (@adddel) {
+				foreach my $link (@{$links{$page}}) {
+					if (bestlink($page, $link) eq $p) {
+		   				debug("rendering $file, which links to $p");
+						render($file);
+						next FILE;
+					}
+				}
+			}
+		}
+	}
+}
+
+loadindex();
+refresh();
+saveindex();
