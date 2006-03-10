@@ -4,3 +4,5 @@
   to point to it, but will forget to update the linkbacks in Foo/Baz.
   And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
   back to Foo/Baz.
+* Foo/Bar/Baz shows up as Bar/Baz in the linkbacks on page Foo/Bar. Should
+  show as just Baz there.

@@ -15,16 +15,28 @@ BEGIN {
 
 my ($srcdir, $destdir, %links, %oldlinks, %oldpagemtime, %renderedfiles,
     %pagesources);
-my $link=qr/\[\[([^\s]+)\]\]/;
+my $wiki_link_regexp=qr/\[\[([^\s]+)\]\]/;
+my $wiki_file_regexp=qr/(^[-A-Za-z0-9_.:\/+]+$)/;
+my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.)!;
 my $verbose=0;
 my $wikiname="wiki";
+my $default_pagetype=".mdwn";
+my $cgi=0;
+my $url="";
 
 sub usage {
 	die "usage: ikiwiki [options] source dest\n";
 }
 
 sub error ($) {
-	die @_;
+	if ($cgi) {
+		print "Content-type: text/html\n\n";
+		print "Error: @_\n";
+		exit 1;
+	}
+	else {
+		die @_;
+	}
 }
 
 sub debug ($) {
@@ -83,21 +95,21 @@ sub htmlpage ($) {
 	return $page.".html";
 }
 
-sub readpage ($) {
-	my $page=shift;
+sub readfile ($) {
+	my $file=shift;
 
 	local $/=undef;
-	open (PAGE, "$srcdir/$page") || error("failed to read $page: $!");
-	my $ret=<PAGE>;
-	close PAGE;
+	open (IN, "$file") || error("failed to read $file: $!");
+	my $ret=<IN>;
+	close IN;
 	return $ret;
 }
 
-sub writepage ($$) {
-	my $page=shift;
+sub writefile ($$) {
+	my $file=shift;
 	my $content=shift;
 
-	my $dir=dirname("$destdir/$page");
+	my $dir=dirname($file);
 	if (! -d $dir) {
 		my $d="";
 		foreach my $s (split(m!/+!, $dir)) {
@@ -108,16 +120,16 @@ sub writepage ($$) {
 		}
 	}
 	
-	open (PAGE, ">$destdir/$page") || error("failed to write $page: $!");
-	print PAGE $content;
-	close PAGE;
+	open (OUT, ">$file") || error("failed to write $file: $!");
+	print OUT $content;
+	close OUT;
 }
 
 sub findlinks {
 	my $content=shift;
 
 	my @links;
-	while ($content =~ /$link/g) {
+	while ($content =~ /$wiki_link_regexp/g) {
 		push @links, lc($1);
 	}
 	return @links;
@@ -184,7 +196,7 @@ sub linkify ($$) {
 	my $content=shift;
 	my $file=shift;
 
-	$content =~ s/$link/htmllink(pagename($file), $1)/eg;
+	$content =~ s/$wiki_link_regexp/htmllink(pagename($file), $1)/eg;
 	
 	return $content;
 }
@@ -261,7 +273,7 @@ sub render ($) {
 	my $file=shift;
 	
 	my $type=pagetype($file);
-	my $content=readpage($file);
+	my $content=readfile("$srcdir/$file");
 	if ($type ne 'unknown') {
 		my $page=pagename($file);
 		
@@ -272,13 +284,13 @@ sub render ($) {
 		$content=linkbacks($content, $page);
 		$content=finalize($content, $page);
 		
-		writepage(htmlpage($page), $content);
+		writefile("$destdir/".htmlpage($page), $content);
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
 	}
 	else {
 		$links{$file}=[];
-		writepage($file, $content);
+		writefile("$destdir/$file", $content);
 		$oldpagemtime{$file}=time;
 		$renderedfiles{$file}=$file;
 	}
@@ -310,6 +322,14 @@ sub saveindex () {
 	close OUT;
 }
 
+sub update () {
+	if (-d "$srcdir/.svn") {
+		if (system("svn", "update", "--quiet", $srcdir) != 0) {
+			warn("svn update failed\n");
+		}
+	}
+}
+
 sub prune ($) {
 	my $file=shift;
 
@@ -327,11 +347,11 @@ sub refresh () {
 	find({
 		no_chdir => 1,
 		wanted => sub {
-			if (/\/\.svn\//) {
+			if (/$wiki_file_prune_regexp/) {
 				$File::Find::prune=1;
 			}
 			elsif (! -d $_ && ! /\.html$/ && ! /\/\./) {
-				my ($f)=/(^[-A-Za-z0-9_.:\/+]+$)/; # untaint
+				my ($f)=/$wiki_file_regexp/; # untaint
 				if (! defined $f) {
 					warn("skipping bad filename $_\n");
 				}
@@ -460,16 +480,45 @@ sub gen_wrapper ($$) {
 	$call.=', "--verbose"' if $verbose;
 	$call.=', "--rebuild"' if $rebuild;
 	$call.=', "--offline"' if $offline;
+	$call.=', "--cgi"' if $cgi;
+	$call.=', "--url='.$url.'"' if $url;
+	
+	# For CGI we need all these environment variables.
+	my @envsave=qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
+	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE};
+	my $envsave="";
+	foreach my $var (@envsave) {
+		$envsave.=<<"EOF"
+		if ((s=getenv("$var")))
+			asprintf(&newenviron[i++], "%s=%s", "$var", s);
+EOF
+	}
 	
 	open(OUT, ">ikiwiki-wrap.c") || error("failed to write ikiwiki-wrap.c: $!");;
 	print OUT <<"EOF";
-/* A suid wraper for ikiwiki */
+/* A wrapper for ikiwiki, can be safely made suid. */
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+
+extern char **environ;
 
 int main (void) {
-	clearenv();
+	/* Sanitize environment. */
+	if ($cgi) {
+		char *s;
+		char *newenviron[$#envsave+2];
+		int i=0;
+		$envsave;
+		newenviron[i]=NULL;
+		environ=newenviron;
+	}
+	else {
+		clearenv();
+	}
+
 	execl($call, NULL);
 	perror("failed to run $this");
 	exit(1);
@@ -484,35 +533,100 @@ EOF
 	exit 0;
 }
 
-sub update () {
-	if (-d "$srcdir/.svn") {
-		if (system("svn", "update", "--quiet", $srcdir) != 0) {
-			warn("svn update failed\n");
+sub cgi () {
+	eval q{use CGI};
+	my $q=CGI->new;
+
+	my $do=$q->param('do');
+	if (! defined $do || ! length $do) {
+		error("\"do\" parameter missing");
+	}
+	
+	my ($page)=$q->param('page')=~/$wiki_file_regexp/; # untaint
+	if (! defined $page || ! length $page || $page ne $q->param('page') ||
+	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
+		error("bad page name");
+	}
+	
+	my $action=$q->request_uri;
+	$action=~s/\?.*//;
+	
+	if ($do eq 'edit') {
+		my $content="";
+		if (exists $pagesources{lc($page)}) {
+			$content=readfile("$srcdir/$pagesources{lc($page)}");
+			$content=~s/\n/\r\n/g;
 		}
+		$q->param("do", "save");
+		print $q->header,
+		      $q->start_html("$wikiname: Editing $page"),
+		      $q->h1("$wikiname: Editing $page"),
+		      $q->start_form(-action => $action),
+		      $q->hidden('do'),
+		      $q->hidden('page'),
+		      $q->textarea(-name => 'content',
+		               -default => $content,
+		               -rows => 20,
+		               -columns => 80),
+		      $q->p,
+		      $q->submit("Save Changes"),
+		      # TODO: Cancel button returns to page.
+		      # TODO: Preview button.
+		      # TODO: Commit message field.
+		      # TODO: Conflict prevention.
+		      $q->end_form,
+		      $q->end_html;
+	}
+	elsif ($do eq 'save') {
+		my $file=$page.$default_pagetype;
+		if (exists $pagesources{lc($page)}) {
+			$file=$pagesources{lc($page)};
+		}
+		
+		my $content=$q->param('content');
+		$content=~s/\r\n/\n/g;
+		$content=~s/\r/\n/g;
+		writefile("$srcdir/$file", $content);
+		
+		print $q->redirect("$url/".htmlpage($page));
+	}
+	else {
+		error("unknown do parameter");
 	}
 }
 
 my $rebuild=0;
 my $offline=0;
-my $gen_wrapper=0;
+my $wrapper=0;
 if (grep /^-/, @ARGV) {
 	eval {use Getopt::Long};
 	GetOptions(
 		"wikiname=s" => \$wikiname,
 		"verbose|v" => \$verbose,
 		"rebuild" => \$rebuild,
-		"gen-wrapper" => \$gen_wrapper,
+		"wrapper" => \$wrapper,
 		"offline" => \$offline,
+		"cgi" => \$cgi,
+		"url=s" => \$url,
 	) || usage();
 }
 usage() unless @ARGV == 2;
 ($srcdir) = possibly_foolish_untaint(shift);
 ($destdir) = possibly_foolish_untaint(shift);
 
-gen_wrapper($offline, $rebuild) if $gen_wrapper;
+if ($cgi && ! length $url) {
+	error("Must specify url to wiki with --url when using --cgi");
+}
+
+gen_wrapper($offline, $rebuild) if $wrapper;
 memoize('pagename');
 memoize('bestlink');
-update() unless $offline;
 loadindex() unless $rebuild;
-refresh();
-saveindex();
+if ($cgi) {
+	cgi();
+}
+else {
+	update() unless $offline;
+	refresh();
+	saveindex();
+}

@@ -1,9 +1,10 @@
 Let's do an ikiwiki security analysis..
 
-If you are using ikiwiki to render pages that only you can edit, then there
-are no more security issues with this program than with cat(1). If,
-however, you let others edit pages in your wiki, then some security issues
-do need to be kept in mind.
+If you are using ikiwiki to render pages that only you can edit, do not
+generate any wrappers, and do not use the cgi, then there are no more
+security issues with this program than with cat(1). If, however, you let
+others edit pages in your wiki, then some possible security issues do need
+to be kept in mind.
 
 ## html attacks
 
@@ -50,3 +51,35 @@ to the html pages, etc.
 If the wrapper script is made suid, then any bugs in this wrapper would be
 security holes. The wrapper is written as securely as I know how and
 there's been no problem yet.
+
+## symlink attacks
+
+Could a committer trick ikiwiki into following a symlink and operating on
+some other tree that it shouldn't? svn supports symlinks, so one can get
+into the repo. ikiwiki uses File::Find to traverse the repo, and does not
+tell it to follow symlinks, but it might be possible to race replacing a
+directory with a symlink and trick it into following.
+
+It would certianly be possible to start out with a directory, let ikiwiki
+run and find a file in there, then replace it with a symlink, and ikiwiki
+would then go ahead and follow the symlink when it went to open that file
+to read it. If it was some private file and was running suid, that could be
+bad.
+
+TODO: seems that locking to prevent more than one ikiwiki run at a time
+would both fix this and is a good idea in general. With locking, an
+attacker couldn't get ikiwiki to svn up while another instance was running.
+
+Even with locking, if an attacker has local write access to the checkout,
+they could still fool ikiwiki using similar races. So it's best if only one
+person can ever write to the checkout that ikiwiki compiles the moo from.
+
+## cgi security
+
+When ikiwiki runs as a cgi to edit a page, it is passed the name of the
+page to edit. It has to make sure to sanitise this page, to prevent eg,
+editing of ../../../foo, or editing of files that are not part of the wiki,
+such as subversion dotfiles. This is done by sanitising the filename
+removing unallowed characters, then making sure it doesn't start with "/"
+or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
+security holes breed.
