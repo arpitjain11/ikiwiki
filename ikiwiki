@@ -172,6 +172,8 @@ sub htmllink ($$) {
 
 	return $link if $page eq $bestlink;
 	
+	# TODO BUG: %renderedfiles may not have it, if the linked to page
+	# was also added and isn't yet rendered!
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		$bestlink=htmlpage($bestlink);
 	}
@@ -214,8 +216,11 @@ sub linkbacks ($$) {
 
 	my @links;
 	foreach my $p (keys %links) {
-		if (grep { $_ eq $page } @{$links{$p}}) {
+		if (grep { length $_ && bestlink($p, $_) eq $page } @{$links{$p}}) {
 			my $href=File::Spec->abs2rel(htmlpage($p), dirname($page));
+			# TODO: if $p is joey/foo/bar and 
+			# the $page is joey/foo/baz, make the link text
+			# just be "bar".
 			push @links, "<a href=\"$href\">$p</a>";
 		}
 	}
@@ -289,8 +294,8 @@ sub loadindex () {
 		my $page=pagename($file);
 		$pagesources{$page}=$file;
 		$oldpagemtime{$page}=$mtime;
-		$links{$page}=[@links];
 		$oldlinks{$page}=[@links];
+		$links{$page}=[@links];
 		$renderedfiles{$page}=$rendered;
 	}
 	close IN;
@@ -361,6 +366,7 @@ sub refresh () {
 			prune($destdir."/".$renderedfiles{$page});
 			delete $renderedfiles{$page};
 			$oldpagemtime{$page}=0;
+			delete $pagesources{$page};
 		}
 	}
 	
@@ -374,18 +380,15 @@ sub refresh () {
 			render($file);
 			$rendered{$file}=1;
 		}
-		elsif ($rebuild) {
-			debug("rebuilding unchanged file $file");
-			render($file);
-			$rendered{$file}=1;
-		}
 	}
 	
 	# if any files were added or removed, check to see if each page
 	# needs an update due to linking to them
+	# TODO: inefficient; pages may get rendered above and again here;
+	# problem is the bestlink may have changes and we won't know until
+	# now
 	if (@add || @del) {
 FILE:		foreach my $file (@files) {
-			next if $rendered{$file};
 			my $page=pagename($file);
 			foreach my $f (@add, @del) {
 				my $p=pagename($f);
@@ -393,6 +396,7 @@ FILE:		foreach my $file (@files) {
 					if (bestlink($page, $link) eq $p) {
 		   				debug("rendering $file, which links to $p");
 						render($file);
+						$rendered{$file}=1;
 						next FILE;
 					}
 				}
@@ -408,19 +412,23 @@ FILE:		foreach my $file (@files) {
 	if (%rendered) {
 		my %linkchanged;
 		foreach my $file (keys %rendered, @del) {
-			my $pagename=pagename($file);
-			if (exists $links{$pagename}) {
-				foreach my $link (@{$links{$pagename}}) {
-					if (! exists $oldlinks{$pagename} ||
-					    ! grep { $_ eq $link } @{$oldlinks{$pagename}}) {
+			my $page=pagename($file);
+			if (exists $links{$page}) {
+				foreach my $link (@{$links{$page}}) {
+					$link=bestlink($page, $link);
+					if (length $link &&
+					    ! exists $oldlinks{$page} ||
+					    ! grep { $_ eq $link } @{$oldlinks{$page}}) {
 						$linkchanged{$link}=1;
 					}
 				}
 			}
-			if (exists $oldlinks{$pagename}) {
-				foreach my $link (@{$oldlinks{$pagename}}) {
-					if (! exists $links{$pagename} ||
-					    ! grep { $_ eq $link } @{$links{$pagename}}) {
+			if (exists $oldlinks{$page}) {
+				foreach my $link (@{$oldlinks{$page}}) {
+					$link=bestlink($page, $link);
+					if (length $link &&
+					    ! exists $links{$page} ||
+					    ! grep { $_ eq $link } @{$links{$page}}) {
 						$linkchanged{$link}=1;
 					}
 				}
@@ -436,6 +444,6 @@ FILE:		foreach my $file (@files) {
 	}
 }
 
-loadindex();
+loadindex() unless $rebuild;
 refresh();
 saveindex();
