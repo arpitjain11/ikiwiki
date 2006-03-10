@@ -1,3 +1,5 @@
+Let's do an ikiwiki security analysis..
+
 If you are using ikiwiki to render pages that only you can edit, then there
 are no more security issues with this program than with cat(1). If,
 however, you let others edit pages in your wiki, then some security issues
@@ -37,3 +39,14 @@ hopefully your web server will not run it.
 If your web server does any parsing of special sorts of files (for example,
 server parsed html files), then if you let anyone else add files to the wiki,
 they can try to use this to exploit your web server.
+
+## --gen-wrapper might generate insecure wrappers
+
+ikiwiki --gen-wrapper is instended to generate a wrapper program that
+runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
+for example to be used in a [[post-commit]] hook by people who cannot write
+to the html pages, etc.
+
+If the wrapper script is made suid, then any bugs in this wrapper would be
+security holes. The wrapper is written as securely as I know how and
+there's been no problems yet.

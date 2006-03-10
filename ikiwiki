@@ -6,39 +6,22 @@ use File::Find;
 use Memoize;
 use File::Spec;
 
+$ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
+
 BEGIN {
 	$blosxom::version="is a proper perl module too much to ask?";
 	do "/usr/bin/markdown";
 }
 
-memoize('pagename');
-memoize('bestlink');
+my ($srcdir, $destdir, %links, %oldlinks, %oldpagemtime, %renderedfiles,
+    %pagesources);
+my $link=qr/\[\[([^\s]+)\]\]/;
+my $verbose=0;
+my $wikiname="wiki";
 
 sub usage {
 	die "usage: ikiwiki [options] source dest\n";
 }
-
-my $link=qr/\[\[([^\s]+)\]\]/;
-my $verbose=0;
-my $rebuild=0;
-my $wikiname="wiki";
-if (grep /^-/, @ARGV) {
-	eval {use Getopt::Long};
-	GetOptions(
-		"wikiname=s" => \$wikiname,
-		"verbose|v" => \$verbose,
-		"rebuild" => \$rebuild,
-	) || usage();
-}
-usage() unless @ARGV == 2;
-my ($srcdir) = shift =~ /(.*)/; # untaint
-my ($destdir) = shift =~ /(.*)/; # untaint
-
-my %links;
-my %oldlinks;
-my %oldpagemtime;
-my %renderedfiles;
-my %pagesources;
 
 sub error ($) {
 	die @_;
@@ -454,6 +437,76 @@ FILE:		foreach my $file (@files) {
 	}
 }
 
+# Generates a C wrapper program for running ikiwiki in a specific way.
+# The wrapper may be safely made suid.
+sub gen_wrapper ($$) {
+	my ($offline, $rebuild)=@_;
+
+	eval {use Cwd 'abs_path'};
+	$srcdir=abs_path($srcdir);
+	$destdir=abs_path($destdir);
+	my $this=abs_path($0);
+	if (! -x $this) {
+		error("$this doesn't seem to be executable");
+	}
+	
+	my $call=qq{"$this", "$this", "$srcdir", "$destdir", "--wikiname=$wikiname"};
+	$call.=', "--verbose"' if $verbose;
+	$call.=', "--rebuild"' if $rebuild;
+	$call.=', "--offline"' if $offline;
+	
+	open(OUT, ">ikiwiki-wrap.c") || error("failed to write ikiwiki-wrap.c: $!");;
+	print OUT <<"EOF";
+/* A suid wraper for ikiwiki */
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main (void) {
+	unsetenv("PERLIO_DEBUG"); /* CAN-2005-0155 */
+	execl($call, NULL);
+	perror("failed to run $this");
+	exit(1);
+}
+EOF
+	close OUT;
+	if (system("gcc", "ikiwiki-wrap.c", "-o", "ikiwiki-wrap") != 0) {
+		error("failed to compile ikiwiki-wrap.c");
+	}
+	unlink("ikiwiki-wrap.c");
+	print "successfully generated ikiwiki-wrap\n";
+	exit 0;
+}
+
+sub update () {
+	if (-d "$srcdir/.svn") {
+		if (system("svn", "update", "--quiet", $srcdir) != 0) {
+			warn("svn update failed\n");
+		}
+	}
+}
+
+my $rebuild=0;
+my $offline=0;
+my $gen_wrapper=0;
+if (grep /^-/, @ARGV) {
+	eval {use Getopt::Long};
+	GetOptions(
+		"wikiname=s" => \$wikiname,
+		"verbose|v" => \$verbose,
+		"rebuild" => \$rebuild,
+		"gen-wrapper" => \$gen_wrapper,
+		"offline" => \$offline,
+	) || usage();
+}
+usage() unless @ARGV == 2;
+($srcdir) = shift =~ /(.*)/; # untaint
+($destdir) = shift =~ /(.*)/; # untaint
+
+gen_wrapper($offline, $rebuild) if $gen_wrapper;
+memoize('pagename');
+memoize('bestlink');
+update() unless $offline;
 loadindex() unless $rebuild;
 refresh();
 saveindex();
