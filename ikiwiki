@@ -397,7 +397,7 @@ sub rcs_recentchanges ($) {
 				$when=concise(ago(time - str2time($3)));
 		    	}
 			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E\/(.+)$/) {
-				push @pages, pagename($1);
+				push @pages, pagename($1) if length $1;
 			}
 			elsif ($state eq 'header' && /^$/) {
 				$state='body';
@@ -405,7 +405,7 @@ sub rcs_recentchanges ($) {
 			elsif ($state eq 'body' && /$div/) {
 				push @ret, { rev => $rev, user => $user,
 					when => $when, message => $message,
-					pages => [@pages] };
+					pages => [@pages] } if @pages;
 				return @ret if @ret >= $num;
 				
 				$state='header';
