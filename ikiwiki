@@ -366,6 +366,56 @@ sub rcs_add ($) {
 	}
 }
 
+sub rcs_recentchanges ($) {
+	my $num=shift;
+	my @ret;
+	
+	eval {use Date::Parse};
+	eval {use Time::Duration};
+	
+	if (-d "$srcdir/.svn") {
+		my $info=`LANG=C svn info $srcdir`;
+		my ($svn_url)=$info=~/^URL: (.*)$/m;
+
+		my $div=qr/^--------------------+$/;
+		my $infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
+		my $state='start';
+		my ($rev, $user, $when, @pages, $message);
+		foreach (`LANG=C svn log -v '$svn_url'`) {
+			chomp;
+			if ($state eq 'start' && /$div/) {
+				$state='header';
+			}
+			elsif ($state eq 'header' && /$infoline/) {
+				$rev=$1;
+				$user=$2;
+				$when=ago(time - str2time($3));
+		    	}
+			elsif ($state eq 'header' && /^\s+(.*)/) {
+				push @pages, $1;
+			}
+			elsif ($state eq 'header' && /^$/) {
+				$state='body';
+			}
+			elsif ($state eq 'body' && /$div/) {
+				push @ret, {rev => $rev, user => $user,
+					date => $when, message => $message,
+					pages => [@pages]},
+				last if @ret >= $num;
+				
+				$state='header';
+				$message=$rev=$user=$when=undef;
+				@pages=();
+			}
+			elsif ($state eq 'body') {
+				$message.="$_<br>\n";
+			}
+		}
+	}
+
+	return @ret;
+}
+
 sub prune ($) {
 	my $file=shift;
 
@@ -586,6 +636,30 @@ sub cgi () {
 		error("\"do\" parameter missing");
 	}
 	
+	if ($do eq 'recentchanges') {
+		my $list="<ul>\n";
+		foreach my $change (rcs_recentchanges(100)) {
+			$list.="<li>";
+			foreach my $page (@{$change->{pages}}) {
+				$list.=$page." ";
+			}
+			$list.="<br>\n";
+			$list.="changed ".$change->{when}." by ".
+			       htmllink("index", $change->{user}).
+			       ": <i>".$change->{message}."<br>\n";
+			$list.="</li>\n";
+		}
+		$list.="</ul>\n";
+		
+		print $q->header,
+		      $q->start_html("RecentChanges"),
+		      $q->h1("<a href=\"$url\">$wikiname</a>/ RecentChanges"),
+		      $list,
+		      $q->end_form,
+		      $q->end_html;
+		return;
+	}
+	
 	my ($page)=$q->param('page')=~/$wiki_file_regexp/;
 	if (! defined $page || ! length $page || $page ne $q->param('page') ||
 	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
@@ -622,8 +696,8 @@ sub cgi () {
 		
 		$q->param("do", "save");
 		print $q->header,
-		      $q->start_html("$wikiname: Creating $page"),
-		      $q->h1("$wikiname: Creating $page"),
+		      $q->start_html("Creating $page"),
+		      $q->start_h1("<a href=\"$url\">$wikiname</a>/ Creating $page"),
 		      $q->start_form(-action => $action),
 		      $q->hidden('do'),
 		      "Select page location:",
@@ -649,8 +723,8 @@ sub cgi () {
 		}
 		$q->param("do", "save");
 		print $q->header,
-		      $q->start_html("$wikiname: Editing $page"),
-		      $q->h1("$wikiname: Editing $page"),
+		      $q->start_html("Editing $page"),
+		      $q->h1("<a href=\"$url\">$wikiname</a>/ Editing $page"),
 		      $q->start_form(-action => $action),
 		      $q->hidden('do'),
 		      $q->hidden('page'),
