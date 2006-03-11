@@ -10,3 +10,5 @@
   "Host key verification failed."
   I think that the setuid isn't fully taking; it should be running as me,
   but commit log shows www-data. So maybe it has the wrong username?
+* Can't put the source in a directory named .source; the page finder skips
+  that due to too broad exclusion of any dotfile in a path.
