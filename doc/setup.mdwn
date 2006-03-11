@@ -1,0 +1,68 @@
+So you want to set up your own wiki using ikiwiki? This turorial will walk
+you through setting up a wiki that is stored in [[Subversion]] and that has
+optional support for commits from the web.
+
+1. [[Install]] ikiwiki.
+
+		apt-get install ikiwiki
+
+2. Create the subversion repository for your wiki.
+
+		svnadmin create /svn/wikirepo
+		svn mkdir file:///svn/wikirepo/trunk -m create
+
+3. Check out the repository to make the working copy that ikiwiki will use.
+
+		svn co file:///svn/wikirepo/trunk ~/wikiwc
+
+4. Create some files them into subversion.
+
+		echo "Welcome to my empty wiki." > ~/wikiwc/index.mdwn
+		echo "Feel free to edit this page" > ~/wikiwc/sandbox.mdwn
+		svn add ~/wikiwc/*.mdwn
+		svn commit ~/wikiwc -m add
+
+5. Build your wiki for the first time.
+
+		ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ \
+			--url=http://host/~you/wiki/
+
+   Replace the url with the right url to your wiki. You should now
+   be able to visit the url and see your page that you created earlier.
+
+6. Repeat steps 4 and 5 as desired, editing or adding pages and rebuilding
+   the wiki. You can play around with other ikiwiki parameters such as
+   --wikiname too. Get conformatble with its command line.
+
+7. Set up a Subversion [[post-commit]] hook to automatically rebuild your
+   wiki when you commit to it.
+
+		ikiwiki ~/wikiwc/ ~/public_html/wiki/ \
+			--url=http://host/~you/wiki/ --wrapper
+		mv ikiwiki-wrap /svn/wikirepo/hooks/post-commit
+
+8. Set up a [[CGI]] to allow editing the wiki from the web.
+
+		ikiwiki ~/wikiwc/ ~/public_html/wiki/ \
+			--url=http://host/~you/wiki/ --wrapper --cgi
+		chmod 6755 ikiwiki-wrap
+		mv wrapper ~/public_html/wiki/ikiwki.cgi
+
+   Note that this assumes that your web server will run CGI scripts from
+   your public_html directory. You might need to put it somewhere else
+   depending on your web server configuration.
+
+9. Add links to the CGI to all the pages in your wiki, and update your
+   post-commit hook to add such links when updating the wiki in the
+   future. Note the use of the [[WrapperParamsTrick]].
+
+		ikiwiki $(/svn/wikirepo/hooks/post-commit --params) --rebuild
+		ikiwiki $(/svn/wikirepo/hooks/post-commit --params) \
+			--cgiurl=http://host/~you/wiki/ikiwiki.cgi \
+			--wrapper
+		mv ikiwiki-wrap /svn/wikirepo/hooks/post-commit
+
+   Be sure to change the cgiurl to the actual url to the wiki.cgi you
+   installed in step 9.
+
+10. Enjoy your new wiki!

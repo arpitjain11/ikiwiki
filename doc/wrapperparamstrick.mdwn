@@ -1,0 +1,20 @@
+ikiwiki --wrapper can be used to generate a wrapper
+program that runs ikiwiki with the specified parameters. This is used for
+[[post-commit]] hooks, [[CGI]], etc, both for convenience and because these
+things often need suid wrapper scripts to make ikiwiki run as the right
+user.
+
+The generated wrapper is a binary program. What if you want to regenerate
+it with different parameters, or just run ikiwiki like it would but with
+some parameter changed? To easily accomomplish this, the wrappers all
+support being run with --params, which causes them to print out the
+parameters they run ikiwiki with. 
+
+You can use this trick to regenerate a wrapper, adding or changing a
+parameter:
+
+	ikiwiki $(./ikiwiki-wrap --params) --wikiname="newname" --wrapper
+
+Or just to run ikiwiki like the wrapper would, and add a parameter:
+
+	ikiwiki $(./ikiwiki-wrap --params) --rebuild

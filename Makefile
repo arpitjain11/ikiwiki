@@ -1,5 +1,5 @@
 all:
-	./ikiwiki doc html --wikiname="ikiwiki" --verbose --offline
+	./ikiwiki doc html --wikiname="ikiwiki" --verbose --nosvn
 
 clean:
 	rm -rf html

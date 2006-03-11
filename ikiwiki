@@ -497,13 +497,19 @@ sub gen_wrapper ($$) {
 	if (! -x $this) {
 		error("$this doesn't seem to be executable");
 	}
-	
-	my $call=qq{"$this", "$this", "$srcdir", "$destdir", "--wikiname=$wikiname"};
-	$call.=', "--verbose"' if $verbose;
-	$call.=', "--rebuild"' if $rebuild;
-	$call.=', "--nosvn"' if !$svn;
-	$call.=', "--cgi"' if $cgi;
-	$call.=', "--url='.$url.'"' if $url;
+
+	my @params=($srcdir, $destdir, "--wikiname=$wikiname");
+	push @params, "--verbose" if $verbose;
+	push @params, "--rebuild" if $rebuild;
+	push @params, "--nosvn" if !$svn;
+	push @params, "--cgi" if $cgi;
+	push @params, "--url=$url" if $url;
+	my $params=join(" ", @params);
+	my $call='';
+	foreach my $p ($this, $this, @params) {
+		$call.=qq{"$p", };
+	}
+	$call.="NULL";
 	
 	my @envsave;
 	push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
@@ -511,8 +517,8 @@ sub gen_wrapper ($$) {
 	my $envsave="";
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"
-		if ((s=getenv("$var")))
-			asprintf(&newenviron[i++], "%s=%s", "$var", s);
+	if ((s=getenv("$var")))
+		asprintf(&newenviron[i++], "%s=%s", "$var", s);
 EOF
 	}
 	
@@ -527,17 +533,22 @@ EOF
 
 extern char **environ;
 
-int main (void) {
+int main (int argc, char **argv) {
 	/* Sanitize environment. */
 	char *s;
 	char *newenviron[$#envsave+3];
 	int i=0;
-	$envsave;
+$envsave
 	newenviron[i++]="HOME=$ENV{HOME}";
 	newenviron[i]=NULL;
 	environ=newenviron;
 
-	execl($call, NULL);
+	if (argc == 2 && strcmp(argv[1], "--params") == 0) {
+		printf("$params\\n");
+		exit(0);
+	}
+	
+	execl($call);
 	perror("failed to run $this");
 	exit(1);
 }
