@@ -402,7 +402,7 @@ sub rcs_recentchanges ($) {
 				push @ret, {rev => $rev, user => $user,
 					date => $when, message => $message,
 					pages => [@pages]},
-				last if @ret >= $num;
+				return @ret if @ret >= $num;
 				
 				$state='header';
 				$message=$rev=$user=$when=undef;
@@ -640,6 +640,7 @@ sub cgi () {
 	if ($do eq 'recentchanges') {
 		my $list="<ul>\n";
 		foreach my $change (rcs_recentchanges(100)) {
+			print STDERR "change: $change....\n";
 			$list.="<li>";
 			foreach my $page (@{$change->{pages}}) {
 				$list.=$page." ";
