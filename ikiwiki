@@ -610,6 +610,7 @@ sub cgi () {
 			$default_loc="$from/$page";
 			while (length $from) {
 				push @page_locs, "$from/$page";
+				$from=dirname($from);
 			}
 			push @page_locs, $page;
 		}
