@@ -401,7 +401,7 @@ sub rcs_recentchanges ($) {
 			elsif ($state eq 'body' && /$div/) {
 				push @ret, { rev => $rev, user => $user,
 					date => $when, message => $message,
-					pages => [@pages] },
+					pages => [@pages] };
 				print STDERR "have: $#ret; most recent is $ret[$#ret]\n";
 				return @ret if @ret >= $num;
 				
