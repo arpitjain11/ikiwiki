@@ -700,8 +700,7 @@ sub cgi () {
 		$q->param("do", "save");
 		print $q->header,
 		      $q->start_html("Creating $page"),
-		      $q->start_h1("<a href=\"$url\">$wikiname</a>/ Creating $page"),
-		      $q->end_hi,
+		      $q->h1("<a href=\"$url\">$wikiname</a>/ Creating $page"),
 		      $q->start_form(-action => $action),
 		      $q->hidden('do'),
 		      "Select page location:",
@@ -729,7 +728,6 @@ sub cgi () {
 		print $q->header,
 		      $q->start_html("Editing $page"),
 		      $q->h1("<a href=\"$url\">$wikiname</a>/ Editing $page"),
-		      $q->end_hi,
 		      $q->start_form(-action => $action),
 		      $q->hidden('do'),
 		      $q->hidden('page'),
