@@ -167,9 +167,10 @@ sub isinlinableimage ($) {
 	$file=~/\.(png|gif|jpg|jpeg)$/;
 }
 
-sub htmllink ($$) {
+sub htmllink {
 	my $page=shift;
 	my $link=shift;
+	my $noimagelink=shift;
 
 	my $bestlink=bestlink($page, $link);
 
@@ -188,7 +189,7 @@ sub htmllink ($$) {
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
 	
-	if (isinlinableimage($bestlink)) {
+	if (! $noimagelink && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\">";
 	}
 	return "<a href=\"$bestlink\">$link</a>";
@@ -644,10 +645,10 @@ sub cgi () {
 		my $list="<ul>\n";
 		foreach my $change (rcs_recentchanges(100)) {
 			$list.="<li>";
-			$list.=join(", ", map { htmllink("index", $_) } @{$change->{pages}});
+			$list.=join(", ", map { htmllink("index", $_, 1) } @{$change->{pages}});
 			$list.="<br>\n";
 			$list.="changed ".$change->{when}." by ".
-			       htmllink("index", $change->{user}).
+			       htmllink("index", $change->{user}, 1).
 			       ": <i>".$change->{message}."</i>\n";
 			$list.="</li>\n";
 		}
