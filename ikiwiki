@@ -350,10 +350,16 @@ sub rcs_commit ($) {
 	}
 }
 
-sub rcs_ad ($) {
+sub rcs_add ($) {
 	my $file=shift;
 
 	if (-d "$srcdir/.svn") {
+		my $parent=dirname($file);
+		while (! -d "$srcdir/$parent/.svn") {
+			$file=$parent;
+			$parent=dirname($file);
+		}
+		
 		if (system("svn", "add", "--quiet", $file) != 0) {
 			warn("svn add failed\n");
 		}
