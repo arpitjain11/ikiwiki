@@ -360,7 +360,7 @@ sub rcs_add ($) {
 			$parent=dirname($file);
 		}
 		
-		if (system("svn", "add", "--quiet", $file) != 0) {
+		if (system("svn", "add", "--quiet", "$srcdir/$file") != 0) {
 			warn("svn add failed\n");
 		}
 	}
