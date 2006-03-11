@@ -1,25 +1,21 @@
-Ikiwiki is a wiki compiler. It converts a directory full of wiki pages
+ikiwiki is a wiki compiler. It converts a directory full of wiki pages
 into html pages suitable for publishing on a website. Unlike a traditional
 wiki, ikiwiki does not have its own means of storing page history, its own
-markup language, or support for editing pages online. [[WhyIkiWiki]]
+markup language, or support for editing pages online. 
 
 To use ikiwiki to set up a wiki, you will probably want to use it with a
 revision control system, such as [[Subversion]], for keeping track of past
 versions of pages. ikiwiki can run as a Subversion [[post-commit]] hook, so
 that each committed change to your wiki is immediatly compiled and
-published. (It can also be run by hand, by cron, or integrated with any
-other revision control system.) 
+published.
+
+See [[Features]] for a current list of ikiwiki's features. [[WhyIkiWiki]]
+might be useful if you're considering using this.
 
 [[Subversion]] also offers a way to let others edit pages on your wiki.
 Just configure subversion to let appropriate users (or everyone) commit to
 the wiki's repository. There are some things you should keep in mind about
 [[Security]] when allowing the world to edit your ikiwiki.
-
-ikiwiki supports pages using [[MarkDown]] as their markup language. Any
-page with a filename ending in ".mdwn" is converted from markdown to html
-by ikiwiki. Markdown understands text formatted as it would be in an email,
-and is quite smart about converting it to html. The only additional markup
-provided by ikiwiki aside from regular markdown is the [[WikiLink]].
 
 ikiwiki also supports files of any other type, including raw html, text,
 images, etc. These are not converted to wiki pages, they are just copied
