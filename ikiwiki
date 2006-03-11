@@ -644,9 +644,7 @@ sub cgi () {
 		my $list="<ul>\n";
 		foreach my $change (rcs_recentchanges(100)) {
 			$list.="<li>";
-			foreach my $page (@{$change->{pages}}) {
-				$list.=$page." ";
-			}
+			$list.=join(", ", map { htmllink("index", $_) } @{$change->{pages}});
 			$list.="<br>\n";
 			$list.="changed ".$change->{when}." by ".
 			       htmllink("index", $change->{user}).
