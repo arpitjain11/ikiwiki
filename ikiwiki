@@ -383,7 +383,6 @@ sub rcs_recentchanges ($) {
 		my ($rev, $user, $when, @pages, $message);
 		foreach (`LANG=C svn log -v '$svn_url'`) {
 			chomp;
-			print STDERR "state: $state ($_)\n";
 			if ($state eq 'start' && /$div/) {
 				$state='header';
 			}
@@ -402,7 +401,6 @@ sub rcs_recentchanges ($) {
 				push @ret, { rev => $rev, user => $user,
 					date => $when, message => $message,
 					pages => [@pages] };
-				print STDERR "have: $#ret; most recent is $ret[$#ret]\n";
 				return @ret if @ret >= $num;
 				
 				$state='header';
@@ -641,7 +639,6 @@ sub cgi () {
 	if ($do eq 'recentchanges') {
 		my $list="<ul>\n";
 		foreach my $change (rcs_recentchanges(100)) {
-			print STDERR "change: $change....\n";
 			$list.="<li>";
 			foreach my $page (@{$change->{pages}}) {
 				$list.=$page." ";
@@ -649,7 +646,7 @@ sub cgi () {
 			$list.="<br>\n";
 			$list.="changed ".$change->{when}." by ".
 			       htmllink("index", $change->{user}).
-			       ": <i>".$change->{message}."<br>\n";
+			       ": <i>".$change->{message}."</i><br>\n";
 			$list.="</li>\n";
 		}
 		$list.="</ul>\n";
