@@ -585,6 +585,7 @@ sub cgi () {
 	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
 		error("bad page name");
 	}
+	$page=lc($page);
 	
 	my $action=$q->request_uri;
 	$action=~s/\?.*//;
@@ -606,12 +607,11 @@ sub cgi () {
 		else {
 			@page_locs="$from/$page";
 			$from=dirname($from);
-			push @page_locs, "$from/$page";
 			$default_loc="$from/$page";
 			while (length $from) {
-				$from=dirname($from);
 				push @page_locs, "$from/$page";
 			}
+			push @page_locs, $page;
 		}
 		
 		$q->param("do", "save");
@@ -620,13 +620,14 @@ sub cgi () {
 		      $q->h1("$wikiname: Creating $page"),
 		      $q->start_form(-action => $action),
 		      $q->hidden('do'),
+		      "Select page location:",
 		      $q->popup_menu('page', \@page_locs, $default_loc),
 		      $q->textarea(-name => 'content',
 		               -default => "",
 		               -rows => 20,
 		               -columns => 80),
 		      $q->br,
-		      "Optional comment about this change",
+		      "Optional comment about this change:",
 		      $q->br,
 		      $q->textfield(-name => "comments", -size => 80),
 		      $q->br,
@@ -652,7 +653,7 @@ sub cgi () {
 		               -rows => 20,
 		               -columns => 80),
 		      $q->br,
-		      "Optional comment about this change",
+		      "Optional comment about this change:",
 		      $q->br,
 		      $q->textfield(-name => "comments", -size => 80),
 		      $q->br,
