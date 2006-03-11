@@ -1,5 +1,13 @@
 Currently implemented:
 
+* [[Subversion]]
+
+  Rather than implement its own system for storing page histories etc, ikiwiki      simply uses subversion. (Supporting other revision control systems is also possible, ikiwiki only needs $FOO add, $FOO commit, and $FOO log).
+
+  Instead of editing pages in a stupid web form, you can use vim and commit changes via svn. Or work disconnected using svk and push your changes out when you come online.
+
+ ikiwiki can be run from a [[post-commit]] hook to update your wiki immediatly whenever you commit.
+
 * [[MarkDown]]
 
   ikiwiki supports pages using [[MarkDown]] as their markup language. Any
