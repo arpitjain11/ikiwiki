@@ -6,10 +6,12 @@ security issues with this program than with cat(1). If, however, you let
 others edit pages in your wiki, then some possible security issues do need
 to be kept in mind.
 
+# Probable holes
+
 ## html attacks
 
 ikiwiki does not attempt to do any santization of the html on the wiki.
-MarkDown allows embedding of arbitrary html into a markdown document. If
+[[MarkDown]] allows embedding of arbitrary html into a markdown document. If
 you let anyone else edit files on the wiki, then anyone can have fun exploiting
 the web browser bug of the day. This type of attack is typically referred
 to as an XSS attack ([google](http://www.google.com/search?q=xss+attack)).
@@ -18,39 +20,15 @@ to as an XSS attack ([google](http://www.google.com/search?q=xss+attack)).
 
 If it enounters a file type it does not understand, ikiwiki just copies it
 into place. So if you let users add any kind of file they like, they can
-upload images, movies, windows executables, etc. If these files exploit
-security holes in the browser of someone who's viewing the wiki, that can
-be a security problem.
+upload images, movies, windows executables, css files, etc. If these files exploit security holes in the browser of someone who's viewing the wiki, that can be a security problem.
 
-## exploting ikiwiki with bad content
-
-Someone could add bad content to the wiki and hope to exploit ikiwiki.
-Note that ikiwiki runs with perl taint checks on, so this is unlikely;
-the only data that is not subject to full taint checking is the names of
-files, and filenames are sanitised.
-
-## cgi scripts
-
-ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
-rather, the script is published, but it's not marked executable, so
-hopefully your web server will not run it.
+Of course nobody else seems to worry about this in other wikis, so should we?
 
 ## web server attacks
 
 If your web server does any parsing of special sorts of files (for example,
 server parsed html files), then if you let anyone else add files to the wiki,
 they can try to use this to exploit your web server.
-
-## --gen-wrapper might generate insecure wrappers
-
-ikiwiki --gen-wrapper is intended to generate a wrapper program that
-runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
-for example to be used in a [[post-commit]] hook by people who cannot write
-to the html pages, etc.
-
-If the wrapper script is made suid, then any bugs in this wrapper would be
-security holes. The wrapper is written as securely as I know how and
-there's been no problem yet.
 
 ## symlink attacks
 
@@ -89,3 +67,28 @@ such as subversion dotfiles. This is done by sanitising the filename
 removing unallowed characters, then making sure it doesn't start with "/"
 or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
 security holes breed. It needs a test suite at the very least.
+
+----
+
+# Probable non-holes
+
+## exploting ikiwiki with bad content
+
+Someone could add bad content to the wiki and hope to exploit ikiwiki.
+Note that ikiwiki runs with perl taint checks on, so this is unlikely.
+
+## publishing cgi scripts
+
+ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
+rather, the script is published, but it's not marked executable, so
+hopefully your web server will not run it.
+
+## --gen-wrapper might generate insecure wrappers
+
+ikiwiki --gen-wrapper is intended to generate a wrapper program that
+runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
+for example to be used in a [[post-commit]] hook by people who cannot write
+to the html pages, etc.
+
+If the wrapper script is made suid, then any bugs in this wrapper would be
+security holes. The wrapper is written as securely as I know how, is based on code that has a history of security use long before ikiwiki, and there's been no problem yet.
