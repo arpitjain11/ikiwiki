@@ -399,7 +399,7 @@ sub rcs_recentchanges ($) {
 			}
 			elsif ($state eq 'body' && /$div/) {
 				push @ret, { rev => $rev, user => $user,
-					date => $when, message => $message,
+					when => $when, message => $message,
 					pages => [@pages] };
 				return @ret if @ret >= $num;
 				
@@ -646,7 +646,7 @@ sub cgi () {
 			$list.="<br>\n";
 			$list.="changed ".$change->{when}." by ".
 			       htmllink("index", $change->{user}).
-			       ": <i>".$change->{message}."</i><br>\n";
+			       ": <i>".$change->{message}."</i>\n";
 			$list.="</li>\n";
 		}
 		$list.="</ul>\n";
