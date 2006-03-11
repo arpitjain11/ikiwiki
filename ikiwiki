@@ -6,13 +6,12 @@ use File::Find;
 use Memoize;
 use File::Spec;
 
-$ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
-
 BEGIN {
 	$blosxom::version="is a proper perl module too much to ask?";
 	do "/usr/bin/markdown";
 }
 
+$ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 my ($srcdir, $destdir, %links, %oldlinks, %oldpagemtime, %renderedfiles,
     %pagesources);
 my $wiki_link_regexp=qr/\[\[([^\s]+)\]\]/;
@@ -24,13 +23,14 @@ my $default_pagetype=".mdwn";
 my $cgi=0;
 my $url="";
 my $cgiurl="";
+my $historyurl="";
 my $svn=1;
 
-sub usage {
+sub usage { #{{{
 	die "usage: ikiwiki [options] source dest\n";
-}
+} #}}}
 
-sub error ($) {
+sub error ($) { #{{{
 	if ($cgi) {
 		print "Content-type: text/html\n\n";
 		print "Error: @_\n";
@@ -39,39 +39,39 @@ sub error ($) {
 	else {
 		die @_;
 	}
-}
+} #}}}
 
-sub debug ($) {
+sub debug ($) { #{{{
 	print "@_\n" if $verbose;
-}
+} #}}}
 
-sub mtime ($) {
+sub mtime ($) { #{{{
 	my $page=shift;
 	
 	return (stat($page))[9];
-}
+} #}}}
 
-sub possibly_foolish_untaint ($) {
+sub possibly_foolish_untaint ($) { #{{{
 	my $tainted=shift;
 	my ($untainted)=$tainted=~/(.*)/;
 	return $untainted;
-}
+} #}}}
 
-sub basename {
+sub basename ($) { #{{{
 	my $file=shift;
 
 	$file=~s!.*/!!;
 	return $file;
-}
+} #}}}
 
-sub dirname {
+sub dirname ($) { #{{{
 	my $file=shift;
 
 	$file=~s!/?[^/]+$!!;
 	return $file;
-}
+} #}}}
 
-sub pagetype ($) {
+sub pagetype ($) { #{{{
 	my $page=shift;
 	
 	if ($page =~ /\.mdwn$/) {
@@ -80,24 +80,24 @@ sub pagetype ($) {
 	else {
 		return "unknown";
 	}
-}
+} #}}}
 
-sub pagename ($) {
+sub pagename ($) { #{{{
 	my $file=shift;
 
 	my $type=pagetype($file);
 	my $page=$file;
 	$page=~s/\Q$type\E*$// unless $type eq 'unknown';
 	return $page;
-}
+} #}}}
 
-sub htmlpage ($) {
+sub htmlpage ($) { #{{{
 	my $page=shift;
 
 	return $page.".html";
-}
+} #}}}
 
-sub readfile ($) {
+sub readfile ($) { #{{{
 	my $file=shift;
 
 	local $/=undef;
@@ -105,9 +105,9 @@ sub readfile ($) {
 	my $ret=<IN>;
 	close IN;
 	return $ret;
-}
+} #}}}
 
-sub writefile ($$) {
+sub writefile ($$) { #{{{
 	my $file=shift;
 	my $content=shift;
 
@@ -125,9 +125,9 @@ sub writefile ($$) {
 	open (OUT, ">$file") || error("failed to write $file: $!");
 	print OUT $content;
 	close OUT;
-}
+} #}}}
 
-sub findlinks {
+sub findlinks { #{{{
 	my $content=shift;
 
 	my @links;
@@ -135,13 +135,13 @@ sub findlinks {
 		push @links, lc($1);
 	}
 	return @links;
-}
+} #}}}
 
 # Given a page and the text of a link on the page, determine which existing
 # page that link best points to. Prefers pages under a subdirectory with
 # the same name as the source page, failing that goes down the directory tree
 # to the base looking for matching pages.
-sub bestlink ($$) {
+sub bestlink ($$) { #{{{
 	my $page=shift;
 	my $link=lc(shift);
 	
@@ -159,15 +159,15 @@ sub bestlink ($$) {
 
 	#print STDERR "warning: page $page, broken link: $link\n";
 	return "";
-}
+} #}}}
 
-sub isinlinableimage ($) {
+sub isinlinableimage ($) { #{{{
 	my $file=shift;
 	
 	$file=~/\.(png|gif|jpg|jpeg)$/;
-}
+} #}}}
 
-sub htmllink {
+sub htmllink { #{{{
 	my $page=shift;
 	my $link=shift;
 	my $noimagelink=shift;
@@ -193,18 +193,18 @@ sub htmllink {
 		return "<img src=\"$bestlink\">";
 	}
 	return "<a href=\"$bestlink\">$link</a>";
-}
+} #}}}
 
-sub linkify ($$) {
+sub linkify ($$) { #{{{
 	my $content=shift;
 	my $file=shift;
 
 	$content =~ s/$wiki_link_regexp/htmllink(pagename($file), $1)/eg;
 	
 	return $content;
-}
+} #}}}
 
-sub htmlize ($$) {
+sub htmlize ($$) { #{{{
 	my $type=shift;
 	my $content=shift;
 	
@@ -214,9 +214,9 @@ sub htmlize ($$) {
 	else {
 		error("htmlization of $type not supported");
 	}
-}
+} #}}}
 
-sub linkbacks ($$) {
+sub linkbacks ($$) { #{{{
 	my $content=shift;
 	my $page=shift;
 
@@ -241,9 +241,9 @@ sub linkbacks ($$) {
 
 	$content.="<hr><p>Links: ".join(" ", sort @links)."</p>\n" if @links;
 	return $content;
-}
+} #}}}
 
-sub finalize ($$) {
+sub finalize ($$) { #{{{
 	my $content=shift;
 	my $page=shift;
 
@@ -269,6 +269,11 @@ sub finalize ($$) {
 		push @actions, "<a href=\"$cgiurl?do=edit&page=$page\">Edit</a>";
 		push @actions, "<a href=\"$cgiurl?do=recentchanges\">RecentChanges</a>";
 	}
+	if (length $historyurl) {
+		my $url=$historyurl;
+		$url=~s/\[\[\]\]/$page/g;
+		push @actions, "<a href=\"$url\">History</a>";
+	}
 	
 	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
 	          "<h1>$pagelink</h1>\n".
@@ -277,9 +282,9 @@ sub finalize ($$) {
 	          "</body>\n</html>\n";
 	
 	return $content;
-}
+} #}}}
 
-sub render ($) {
+sub render ($) { #{{{
 	my $file=shift;
 	
 	my $type=pagetype($file);
@@ -304,9 +309,9 @@ sub render ($) {
 		$oldpagemtime{$file}=time;
 		$renderedfiles{$file}=$file;
 	}
-}
+} #}}}
 
-sub loadindex () {
+sub loadindex () { #{{{
 	open (IN, "$srcdir/.index") || return;
 	while (<IN>) {
 		$_=possibly_foolish_untaint($_);
@@ -320,9 +325,9 @@ sub loadindex () {
 		$renderedfiles{$page}=$rendered;
 	}
 	close IN;
-}	
+} #}}}
 
-sub saveindex () {
+sub saveindex () { #{{{
 	open (OUT, ">$srcdir/.index") || error("cannot write to .index: $!");
 	foreach my $page (keys %oldpagemtime) {
 		print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
@@ -330,17 +335,17 @@ sub saveindex () {
 				if $oldpagemtime{$page};
 	}
 	close OUT;
-}
+} #}}}
 
-sub rcs_update () {
+sub rcs_update () { #{{{
 	if (-d "$srcdir/.svn") {
 		if (system("svn", "update", "--quiet", $srcdir) != 0) {
 			warn("svn update failed\n");
 		}
 	}
-}
+} #}}}
 
-sub rcs_commit ($) {
+sub rcs_commit ($) { #{{{
 	my $message=shift;
 
 	if (-d "$srcdir/.svn") {
@@ -349,9 +354,9 @@ sub rcs_commit ($) {
 			warn("svn commit failed\n");
 		}
 	}
-}
+} #}}}
 
-sub rcs_add ($) {
+sub rcs_add ($) { #{{{
 	my $file=shift;
 
 	if (-d "$srcdir/.svn") {
@@ -365,9 +370,9 @@ sub rcs_add ($) {
 			warn("svn add failed\n");
 		}
 	}
-}
+} #}}}
 
-sub rcs_recentchanges ($) {
+sub rcs_recentchanges ($) { #{{{
 	my $num=shift;
 	my @ret;
 	
@@ -419,9 +424,9 @@ sub rcs_recentchanges ($) {
 	}
 
 	return @ret;
-}
+} #}}}
 
-sub prune ($) {
+sub prune ($) { #{{{
 	my $file=shift;
 
 	unlink($file);
@@ -429,9 +434,9 @@ sub prune ($) {
 	while (rmdir($dir)) {
 		$dir=dirname($dir);
 	}
-}
+} #}}}
 
-sub refresh () {
+sub refresh () { #{{{
 	# Find existing pages.
 	my %exists;
 	my @files;
@@ -552,11 +557,11 @@ FILE:		foreach my $file (@files) {
 			}
 		}
 	}
-}
+} #}}}
 
 # Generates a C wrapper program for running ikiwiki in a specific way.
 # The wrapper may be safely made suid.
-sub gen_wrapper ($$) {
+sub gen_wrapper ($$) { #{{{
 	my ($svn, $rebuild)=@_;
 
 	eval q{use Cwd 'abs_path'};
@@ -574,6 +579,7 @@ sub gen_wrapper ($$) {
 	push @params, "--cgi" if $cgi;
 	push @params, "--url=$url" if $url;
 	push @params, "--cgiurl=$cgiurl" if $cgiurl;
+	push @params, "--historyurl=$historyurl" if $historyurl;
 	my $params=join(" ", @params);
 	my $call='';
 	foreach my $p ($this, $this, @params) {
@@ -630,9 +636,9 @@ EOF
 	unlink("ikiwiki-wrap.c");
 	print "successfully generated ikiwiki-wrap\n";
 	exit 0;
-}
+} #}}}
 
-sub cgi () {
+sub cgi () { #{{{
 	eval q{use CGI};
 	my $q=CGI->new;
 
@@ -779,8 +785,9 @@ sub cgi () {
 	else {
 		error("unknown do parameter");
 	}
-}
+} #}}}
 
+# main {{{
 my $rebuild=0;
 my $wrapper=0;
 if (grep /^-/, @ARGV) {
@@ -794,6 +801,7 @@ if (grep /^-/, @ARGV) {
 		"cgi" => \$cgi,
 		"url=s" => \$url,
 		"cgiurl=s" => \$cgiurl,
+		"historyurl=s" => \$historyurl,
 	) || usage();
 }
 usage() unless @ARGV == 2;
@@ -816,3 +824,4 @@ else {
 	refresh();
 	saveindex();
 }
+#}}}
