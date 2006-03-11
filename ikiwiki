@@ -373,8 +373,6 @@ sub rcs_recentchanges ($) {
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
 	
-	my %sourcepages=reverse %pagesources;
-	
 	if (-d "$srcdir/.svn") {
 		my $info=`LANG=C svn info $srcdir`;
 		my ($svn_url)=$info=~/^URL: (.*)$/m;
@@ -398,7 +396,7 @@ sub rcs_recentchanges ($) {
 				$when=concise(ago(time - str2time($3)));
 		    	}
 			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E\/(.+)$/) {
-				push @pages, exists $sourcepages{$1} ? $sourcepages{$1} : $1;
+				push @pages, pagename($1);
 			}
 			elsif ($state eq 'header' && /^$/) {
 				$state='body';
