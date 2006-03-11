@@ -379,9 +379,9 @@ sub rcs_recentchanges ($) {
 		my $info=`LANG=C svn info $srcdir`;
 		my ($svn_url)=$info=~/^URL: (.*)$/m;
 
-		# FIXME: currently assumes that the wiki is under trunk in
-		# svn.
-		my ($svn_base)=$svn_url=~m!(/trunk/.*)!;
+		# FIXME: currently assumes that the wiki is somewhere
+		# under trunk in svn, doesn't support other layouts.
+		my ($svn_base)=$svn_url=~m!(/trunk(?:/.*)?)$!;
 		
 		my $div=qr/^--------------------+$/;
 		my $infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
