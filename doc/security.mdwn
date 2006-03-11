@@ -83,7 +83,7 @@ ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
 rather, the script is published, but it's not marked executable, so
 hopefully your web server will not run it.
 
-## --gen-wrapper might generate insecure wrappers
+## suid wrappers
 
 ikiwiki --gen-wrapper is intended to generate a wrapper program that
 runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
