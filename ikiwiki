@@ -512,7 +512,7 @@ sub gen_wrapper ($$) {
 	push @params, "--nosvn" if !$svn;
 	push @params, "--cgi" if $cgi;
 	push @params, "--url=$url" if $url;
-	push @params, "--cgiurl=$url" if $cgiurl;
+	push @params, "--cgiurl=$cgiurl" if $cgiurl;
 	my $params=join(" ", @params);
 	my $call='';
 	foreach my $p ($this, $this, @params) {
