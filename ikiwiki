@@ -389,7 +389,7 @@ sub rcs_recentchanges ($) {
 			elsif ($state eq 'header' && /$infoline/) {
 				$rev=$1;
 				$user=$2;
-				$when=ago(time - str2time($3));
+				$when=concise(ago(time - str2time($3)));
 		    	}
 			elsif ($state eq 'header' && /^\s+(.*)/) {
 				push @pages, $1;
