@@ -605,11 +605,11 @@ sub cgi () {
 		}
 		else {
 			my $dir=$from."/";
-			$dir=~s/[^/]+\/$//;
+			$dir=~s![^/]+/$!!;
 			push @page_locs, $dir.$page;
 			push @page_locs, "$from/$page";
 			while (length $dir) {
-				$dir=~s/[^/]+\/$//;
+				$dir=~s![^/]+/$!!;
 				push @page_locs, $dir.$page;
 			}
 		}
