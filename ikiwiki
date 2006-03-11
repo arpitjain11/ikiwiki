@@ -399,10 +399,10 @@ sub rcs_recentchanges ($) {
 				$state='body';
 			}
 			elsif ($state eq 'body' && /$div/) {
-				push @ret, {rev => $rev, user => $user,
+				push @ret, { rev => $rev, user => $user,
 					date => $when, message => $message,
-					pages => [@pages]},
-				print STDERR "have: @ret\n";
+					pages => [@pages] },
+				print STDERR "have: $#ret\n";
 				return @ret if @ret >= $num;
 				
 				$state='header';
