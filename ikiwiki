@@ -23,6 +23,7 @@ my $wikiname="wiki";
 my $default_pagetype=".mdwn";
 my $cgi=0;
 my $url="";
+my $cgiurl="";
 my $svn=1;
 
 sub usage {
@@ -262,8 +263,15 @@ sub finalize ($$) {
 	$path=~s/\.\.\/$/index.html/;
 	$pagelink="<a href=\"$path\">$wikiname</a>/ $pagelink";
 	
+	my @actions;
+	if (length $cgiurl) {
+		push @actions, "<a href=\"$cgiurl?do=edit&page=$page\">Edit</a>";
+		push @actions, "<a href=\"$cgiurl?do=recentchanges\">RecentChanges</a>";
+	}
+	
 	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
 	          "<h1>$pagelink</h1>\n".
+		  "@actions\n<hr>\n".
 	          $content.
 	          "</body>\n</html>\n";
 	
@@ -655,6 +663,7 @@ if (grep /^-/, @ARGV) {
 		"svn!" => \$svn,
 		"cgi" => \$cgi,
 		"url=s" => \$url,
+		"cgiurl=s" => \$cgiurl,
 	) || usage();
 }
 usage() unless @ARGV == 2;
