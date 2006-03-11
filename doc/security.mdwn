@@ -92,3 +92,7 @@ to the html pages, etc.
 
 If the wrapper script is made suid, then any bugs in this wrapper would be
 security holes. The wrapper is written as securely as I know how, is based on code that has a history of security use long before ikiwiki, and there's been no problem yet.
+
+## shell exploits
+
+ikiwiki does not expose untrusted data to the shell. In fact it doesn't use system() at all, and the only use of backticks is on data supplied by the wiki admin. And it runs with taint checks on of course..
