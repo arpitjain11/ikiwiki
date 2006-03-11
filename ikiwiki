@@ -17,7 +17,7 @@ my ($srcdir, $destdir, %links, %oldlinks, %oldpagemtime, %renderedfiles,
     %pagesources);
 my $wiki_link_regexp=qr/\[\[([^\s]+)\]\]/;
 my $wiki_file_regexp=qr/(^[-A-Za-z0-9_.:\/+]+$)/;
-my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.|^.|\/\.|\.html?$)!;
+my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.|^\.|\/\.|\.html?$)!;
 my $verbose=0;
 my $wikiname="wiki";
 my $default_pagetype=".mdwn";
