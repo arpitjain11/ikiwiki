@@ -183,7 +183,7 @@ sub htmllink ($$) {
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
-		return "<a href=\"?\">?</a>$link"
+		return "<a href=\"$cgiurl?do=create&page=$link&from=$page\">?</a>$link"
 	}
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
@@ -580,7 +580,7 @@ sub cgi () {
 		error("\"do\" parameter missing");
 	}
 	
-	my ($page)=$q->param('page')=~/$wiki_file_regexp/; # untaint
+	my ($page)=$q->param('page')=~/$wiki_file_regexp/;
 	if (! defined $page || ! length $page || $page ne $q->param('page') ||
 	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
 		error("bad page name");
@@ -589,7 +589,52 @@ sub cgi () {
 	my $action=$q->request_uri;
 	$action=~s/\?.*//;
 	
-	if ($do eq 'edit') {
+	if ($do eq 'create') {
+		if (exists $pagesources{lc($page)}) {
+			# hmm, someone else made the page in the meantime?
+			print $q->redirect("$url/".htmlpage($page));
+		}
+
+		my @page_locs;
+		my $default_loc="";
+		my ($from)=$q->param('from')=~/$wiki_file_regexp/;
+		if (! defined $from || ! length $from ||
+		    $from ne $q->param('from') ||
+		    $from=~/$wiki_file_prune_regexp/ || $from=~/^\//) {
+			@page_locs=$page;
+		}
+		else {
+			@page_locs="$from/$page";
+			$from=dirname($from);
+			push @page_locs, "$from/$page";
+			$default_loc="$from/$page";
+			while (length $from) {
+				$from=dirname($from);
+				push @page_locs, "$from/$page";
+			}
+		}
+		
+		$q->param("do", "save");
+		print $q->header,
+		      $q->start_html("$wikiname: Creating $page"),
+		      $q->h1("$wikiname: Creating $page"),
+		      $q->start_form(-action => $action),
+		      $q->hidden('do'),
+		      $q->popup_menu('page', \@page_locs, $default_loc),
+		      $q->textarea(-name => 'content',
+		               -default => "",
+		               -rows => 20,
+		               -columns => 80),
+		      $q->br,
+		      "Optional comment about this change",
+		      $q->br,
+		      $q->textfield(-name => "comments", -size => 80),
+		      $q->br,
+		      $q->submit("Save Page"),
+		      $q->end_form,
+		      $q->end_html;
+	}
+	elsif ($do eq 'edit') {
 		my $content="";
 		if (exists $pagesources{lc($page)}) {
 			$content=readfile("$srcdir/$pagesources{lc($page)}");
@@ -611,7 +656,7 @@ sub cgi () {
 		      $q->br,
 		      $q->textfield(-name => "comments", -size => 80),
 		      $q->br,
-		      $q->submit("Save Changes"),
+		      $q->submit("Save Page"),
 		      $q->end_form,
 		      $q->end_html;
 	}
