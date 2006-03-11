@@ -271,7 +271,7 @@ sub finalize ($$) { #{{{
 	}
 	if (length $historyurl) {
 		my $url=$historyurl;
-		$url=~s/\[\[\]\]/$page/g;
+		$url=~s/\[\[\]\]/$pagesources{$page}/g;
 		push @actions, "<a href=\"$url\">History</a>";
 	}
 	
