@@ -324,9 +324,9 @@ sub loadindex () {
 sub saveindex () {
 	open (OUT, ">$srcdir/.index") || error("cannot write to .index: $!");
 	foreach my $page (keys %oldpagemtime) {
-	print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
-	          join(" ", @{$links{$page}})."\n"
-			if $oldpagemtime{$page};
+		print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
+	        	join(" ", @{$links{$page}})."\n"
+				if $oldpagemtime{$page};
 	}
 	close OUT;
 }
@@ -370,13 +370,19 @@ sub rcs_recentchanges ($) {
 	my $num=shift;
 	my @ret;
 	
-	eval {use Date::Parse};
-	eval {use Time::Duration};
+	eval q{use Date::Parse};
+	eval q{use Time::Duration};
+	
+	my %sourcepages=reverse %pagesources;
 	
 	if (-d "$srcdir/.svn") {
 		my $info=`LANG=C svn info $srcdir`;
 		my ($svn_url)=$info=~/^URL: (.*)$/m;
 
+		# FIXME: currently assumes that the wiki is under trunk in
+		# svn.
+		my ($svn_base)=$svn_url=~m!(/trunk/.*)!;
+		
 		my $div=qr/^--------------------+$/;
 		my $infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 		my $state='start';
@@ -391,8 +397,8 @@ sub rcs_recentchanges ($) {
 				$user=$2;
 				$when=concise(ago(time - str2time($3)));
 		    	}
-			elsif ($state eq 'header' && /^\s+(.*)/) {
-				push @pages, $1;
+			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E(.*)/) {
+				push @pages, $sourcepages{$1};
 			}
 			elsif ($state eq 'header' && /^$/) {
 				$state='body';
@@ -554,7 +560,7 @@ FILE:		foreach my $file (@files) {
 sub gen_wrapper ($$) {
 	my ($svn, $rebuild)=@_;
 
-	eval {use Cwd 'abs_path'};
+	eval q{use Cwd 'abs_path'};
 	$srcdir=abs_path($srcdir);
 	$destdir=abs_path($destdir);
 	my $this=abs_path($0);
