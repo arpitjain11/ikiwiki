@@ -398,7 +398,7 @@ sub rcs_recentchanges ($) {
 				$when=concise(ago(time - str2time($3)));
 		    	}
 			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E\/(.+)$/) {
-				push @pages, $1;
+				push @pages, exists $sourcepages{$1} ? $sourcepages{$1} : $1;
 			}
 			elsif ($state eq 'header' && /^$/) {
 				$state='body';
