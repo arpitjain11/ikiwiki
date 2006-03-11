@@ -597,7 +597,6 @@ sub cgi () {
 		}
 
 		my @page_locs;
-		my $default_loc="";
 		my ($from)=$q->param('from')=~/$wiki_file_regexp/;
 		if (! defined $from || ! length $from ||
 		    $from ne $q->param('from') ||
@@ -605,14 +604,14 @@ sub cgi () {
 			@page_locs=$page;
 		}
 		else {
-			@page_locs="$from/$page";
-			$from=dirname($from);
-			$default_loc="$from/$page";
-			while (length $from) {
-				push @page_locs, "$from/$page";
-				$from=dirname($from);
+			my $dir=$from."/";
+			$dir=~s/[^/]+\/$//;
+			push @page_locs, $dir.$page;
+			push @page_locs, "$from/$page";
+			while (length $dir) {
+				$dir=~s/[^/]+\/$//;
+				push @page_locs, $dir.$page;
 			}
-			push @page_locs, $page;
 		}
 		
 		$q->param("do", "save");
@@ -622,9 +621,7 @@ sub cgi () {
 		      $q->start_form(-action => $action),
 		      $q->hidden('do'),
 		      "Select page location:",
-		      $q->popup_menu(-name => 'page',
-		               -values => \@page_locs,
-		               -default => $default_loc),
+		      $q->popup_menu('page', \@page_locs),
 		      $q->textarea(-name => 'content',
 		               -default => "",
 		               -rows => 20,
