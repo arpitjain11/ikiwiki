@@ -58,8 +58,7 @@ optional support for commits from the web.
 
 		ikiwiki $(/svn/wikirepo/hooks/post-commit --params) --rebuild
 		ikiwiki $(/svn/wikirepo/hooks/post-commit --params) \
-			--cgiurl=http://host/~you/wiki/ikiwiki.cgi \
-			--wrapper
+			--cgiurl=http://host/~you/wiki/ikiwiki.cgi --wrapper
 		mv ikiwiki-wrap /svn/wikirepo/hooks/post-commit
 
    Be sure to change the cgiurl to the actual url to the wiki.cgi you
