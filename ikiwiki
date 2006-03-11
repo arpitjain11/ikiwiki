@@ -17,7 +17,7 @@ my ($srcdir, $destdir, %links, %oldlinks, %oldpagemtime, %renderedfiles,
     %pagesources);
 my $wiki_link_regexp=qr/\[\[([^\s]+)\]\]/;
 my $wiki_file_regexp=qr/(^[-A-Za-z0-9_.:\/+]+$)/;
-my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.)!;
+my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.|^.|\/\.|\.html?$)!;
 my $verbose=0;
 my $wikiname="wiki";
 my $default_pagetype=".mdwn";
@@ -380,7 +380,7 @@ sub refresh () {
 			if (/$wiki_file_prune_regexp/) {
 				$File::Find::prune=1;
 			}
-			elsif (! -d $_ && ! /\.html$/ && ! /\/\./) {
+			elsif (! -d $_) {
 				my ($f)=/$wiki_file_regexp/; # untaint
 				if (! defined $f) {
 					warn("skipping bad filename $_\n");
