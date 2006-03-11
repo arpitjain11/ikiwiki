@@ -402,7 +402,7 @@ sub rcs_recentchanges ($) {
 				push @ret, { rev => $rev, user => $user,
 					date => $when, message => $message,
 					pages => [@pages] },
-				print STDERR "have: $#ret\n";
+				print STDERR "have: $#ret; most recent is $ret[$#ret]\n";
 				return @ret if @ret >= $num;
 				
 				$state='header';
