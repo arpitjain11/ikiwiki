@@ -942,6 +942,10 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "content", type => "textarea", rows => 20,
 		cols => 80);
 	
+	if ($form->submitted eq "Cancel") {
+		print $q->redirect("$url/".htmlpage($page));
+		return;
+	}
 	if (! $form->submitted || ! $form->validate) {
 		if ($form->field("do") eq "create") {
 			if (exists $pagesources{lc($page)}) {
@@ -989,7 +993,7 @@ sub cgi_editpage ($$) { #{{{
 		
 		$form->tmpl_param("can_commit", $svn);
 		$form->tmpl_param("indexlink", indexlink());
-		print $form->render(submit => ["Save Page"]);
+		print $form->render(submit => ["Save Page", "Cancel"]);
 	}
 	else {
 		# save page
