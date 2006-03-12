@@ -456,7 +456,8 @@ sub rcs_recentchanges ($) { #{{{
 					$committype="svn";
 				}
 				
-				push @ret, { rev => $rev, user => $user,
+				push @ret, { rev => $rev,
+					user => htmllink("", $user, 1),
 					committype => $committype,
 					when => $when, message => [@message],
 					pages => [@pages] } if @pages;
