@@ -419,7 +419,7 @@ sub rcs_recentchanges ($) { #{{{
 				$when=concise(ago(time - str2time($3)));
 		    	}
 			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E\/(.+)$/) {
-				push @pages, htmllink("", pagename($1), 1)
+				push @pages, { link => htmllink("", pagename($1), 1) }
 					if length $1;
 			}
 			elsif ($state eq 'header' && /^$/) {
