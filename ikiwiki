@@ -669,7 +669,7 @@ sub cgi_recentchanges () { #{{{
 		wikiname => $wikiname,
 		changelog => [rcs_recentchanges(100)],
 	);
-	return $template->output;
+	print $template->output;
 } #}}}
 
 sub cgi_signin ($$) { #{{{
@@ -939,8 +939,6 @@ usage() unless @ARGV == 3;
 ($srcdir) = possibly_foolish_untaint(shift);
 ($templatedir) = possibly_foolish_untaint(shift);
 ($destdir) = possibly_foolish_untaint(shift);
-
-print cgi_recentchanges();
 
 if ($cgi && ! length $url) {
 	error("Must specify url to wiki with --url when using --cgi");
