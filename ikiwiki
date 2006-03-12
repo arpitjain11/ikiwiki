@@ -658,7 +658,7 @@ EOF
 	exit 0;
 } #}}}
 
-sub html_recentchanges ($) { #{{{
+sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
 	
 	my $template=HTML::Template->new(
