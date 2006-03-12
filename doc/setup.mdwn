@@ -27,7 +27,9 @@ optional support for commits from the web.
 
 5. Build your wiki for the first time.
 
-		ikiwiki --verbose ~/wikiwc/ /usr/lib/ikiwiki/templates ~/public_html/wiki/ --url=http://host/~you/wiki/
+		ikiwiki --verbose ~/wikiwc/ \
+                  /usr/lib/ikiwiki/templates ~/public_html/wiki/ \
+                  --url=http://host/~you/wiki/
 
    Replace the url with the right url to your wiki. You should now
    be able to visit the url and see your page that you created earlier.
@@ -39,13 +41,15 @@ optional support for commits from the web.
 7. Set up a Subversion [[post-commit]] hook to automatically rebuild your
    wiki when you commit to it.
 
-		ikiwiki ~/wikiwc/ ~/public_html/wiki/ \
+		ikiwiki ~/wikiwc/ \
+                    /usr/lib/ikiwiki/templates ~/public_html/wiki/ \
 			--url=http://host/~you/wiki/ --wrapper
 		mv ikiwiki-wrap /svn/wikirepo/hooks/post-commit
 
 8. Set up a [[CGI]] to allow editing the wiki from the web.
 
-		ikiwiki ~/wikiwc/ ~/public_html/wiki/ \
+		ikiwiki ~/wikiwc/ \
+                    /usr/lib/ikiwiki/templates ~/public_html/wiki/ \
 			--url=http://host/~you/wiki/ --wrapper --cgi
 		chmod 6755 ikiwiki-wrap
 		mv wrapper ~/public_html/wiki/ikiwki.cgi
