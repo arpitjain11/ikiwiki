@@ -940,6 +940,8 @@ usage() unless @ARGV == 3;
 ($templatedir) = possibly_foolish_untaint(shift);
 ($destdir) = possibly_foolish_untaint(shift);
 
+print cgi_recentchanges();
+
 if ($cgi && ! length $url) {
 	error("Must specify url to wiki with --url when using --cgi");
 }
