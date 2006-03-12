@@ -1,0 +1,25 @@
+<html>
+<head><title><TMPL_VAR TITLE></title></head>
+<body>
+
+<h1>
+<a href="<TMPL_VAR INDEXLINK>"><TMPL_VAR WIKINAME></a>/ <TMPL_VAR TITLE>
+</h1>
+
+<hr>
+
+<ul>
+<TMPL_LOOP NAME="CHANGELOG">
+	<li>
+		<TMPL_LOOP NAME="PAGES">
+			<TMPL_VAR NAME="LINK"></a>
+		</TMPL_LOOP>
+		<br>
+		changed <TMPL_LOOP NAME="WHEN"> by <TMPL_LOOP NAME="USER">:
+		<i><TMPL_LOOP NAME="MESSAGE"></i>
+	</li>
+</TMPL_LOOP>
+</ul>
+
+</body>
+</html>

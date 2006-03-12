@@ -1,6 +1,6 @@
 all:
-	./ikiwiki doc html --wikiname="ikiwiki" --verbose --nosvn
+	./ikiwiki doc templates html --wikiname="ikiwiki" --verbose --nosvn
 
 clean:
 	rm -rf html
-	rm -f doc/.index
+	rm -rf doc/.ikiwiki
