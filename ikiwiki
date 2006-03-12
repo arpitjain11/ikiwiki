@@ -5,6 +5,7 @@ use strict;
 use File::Find;
 use Memoize;
 use File::Spec;
+use HTML::Template;
 
 BEGIN {
 	$blosxom::version="is a proper perl module too much to ask?";
@@ -12,8 +13,8 @@ BEGIN {
 }
 
 $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
-my ($srcdir, $destdir, %links, %oldlinks, %oldpagemtime, %renderedfiles,
-    %pagesources);
+my ($srcdir, $templatedir, $destdir, %links, %oldlinks, %oldpagemtime,
+    %renderedfiles, %pagesources);
 my $wiki_link_regexp=qr/\[\[([^\s]+)\]\]/;
 my $wiki_file_regexp=qr/(^[-A-Za-z0-9_.:\/+]+$)/;
 my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.|^\.|\/\.|\.html?$)!;
@@ -27,7 +28,7 @@ my $historyurl="";
 my $svn=1;
 
 sub usage { #{{{
-	die "usage: ikiwiki [options] source dest\n";
+	die "usage: ikiwiki [options] source templates dest\n";
 } #}}}
 
 sub error ($) { #{{{
@@ -216,8 +217,7 @@ sub htmlize ($$) { #{{{
 	}
 } #}}}
 
-sub linkbacks ($$) { #{{{
-	my $content=shift;
+sub backlinks ($) { #{{{
 	my $page=shift;
 
 	my @links;
@@ -235,13 +235,31 @@ sub linkbacks ($$) { #{{{
 			        $p_trimmed=~s/^\Q$dir\E// &&
 			        $page_trimmed=~s/^\Q$dir\E//;
 				       
-			push @links, "<a href=\"$href\">$p_trimmed</a>";
+			push @links, { url => $href, page => $p_trimmed };
 		}
 	}
 
-	$content.="<hr><p>Links: ".join(" ", sort @links)."</p>\n" if @links;
-	return $content;
+	return @links;
 } #}}}
+	
+sub parentlinks ($) {
+	my $page=shift;
+	
+	my @ret;
+	my $pagelink="";
+	my $path="";
+	my $skip=1;
+	foreach my $dir (reverse split("/", $page)) {
+		if (! $skip) {
+			unshift @ret, { url => "$path$dir.html", page => $dir };
+		}
+		else {
+			$skip=0;
+		}
+		$path.="../";
+	}
+	return @ret;
+}
 
 sub indexlink () { #{{{
 	return "<a href=\"$url\">$wikiname</a>/ ";
@@ -254,38 +272,30 @@ sub finalize ($$) { #{{{
 	my $title=basename($page);
 	$title=~s/_/ /g;
 	
-	my $pagelink="";
-	my $path="";
-	foreach my $dir (reverse split("/", $page)) {
-		if (length($pagelink)) {
-			$pagelink="<a href=\"$path$dir.html\">$dir</a>/ $pagelink";
-		}
-		else {
-			$pagelink=$dir;
-		}
-		$path.="../";
-	}
-	$path=~s/\.\.\/$/index.html/;
-	$pagelink=indexlink()." $pagelink";
+	my $template=HTML::Template->new(blind_cache => 1,
+		filename => "$templatedir/page.tmpl");
 	
-	my @actions;
 	if (length $cgiurl) {
-		push @actions, "<a href=\"$cgiurl?do=edit&page=$page\">Edit</a>";
-		push @actions, "<a href=\"$cgiurl?do=recentchanges\">RecentChanges</a>";
+		$template->param(editurl => "$cgiurl?do=edit&page=$page");
+		$template->param(recentchangesurl => "$cgiurl?do=recentchanges");
 	}
+
 	if (length $historyurl) {
-		my $url=$historyurl;
-		$url=~s/\[\[\]\]/$pagesources{$page}/g;
-		push @actions, "<a href=\"$url\">History</a>";
+		my $u=$historyurl;
+		$u=~s/\[\[\]\]/$pagesources{$page}/g;
+		$template->param(historyurl => $u);
 	}
 	
-	$content="<html>\n<head><title>$title</title></head>\n<body>\n".
-	          "<h1>$pagelink</h1>\n".
-		  "@actions\n<hr>\n".
-	          $content.
-	          "</body>\n</html>\n";
+	$template->param(
+		title => $title,
+		indexlink => $url,
+		wikiname => $wikiname,
+		parentlinks => [parentlinks($page)],
+		content => $content,
+		backlinks => [backlinks($page)],
+	);
 	
-	return $content;
+	return $template->output;
 } #}}}
 
 sub render ($) { #{{{
@@ -300,7 +310,6 @@ sub render ($) { #{{{
 		
 		$content=linkify($content, $file);
 		$content=htmlize($type, $content);
-		$content=linkbacks($content, $page);
 		$content=finalize($content, $page);
 		
 		writefile("$destdir/".htmlpage($page), $content);
@@ -526,10 +535,10 @@ FILE:		foreach my $file (@files) {
 		}
 	}
 
-	# handle linkbacks; if a page has added/removed links, update the
+	# handle backlinks; if a page has added/removed links, update the
 	# pages it links to
 	# TODO: inefficient; pages may get rendered above and again here;
-	# problem is the linkbacks could be wrong in the first pass render
+	# problem is the backlinks could be wrong in the first pass render
 	# above
 	if (%rendered) {
 		my %linkchanged;
@@ -559,7 +568,7 @@ FILE:		foreach my $file (@files) {
 		foreach my $link (keys %linkchanged) {
 		    	my $linkfile=$pagesources{$link};
 			if (defined $linkfile) {
-				debug("rendering $linkfile, to update its linkbacks");
+				debug("rendering $linkfile, to update its backlinks");
 				render($linkfile);
 			}
 		}
@@ -648,6 +657,8 @@ EOF
 
 sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
+	
+	
 	
 	my $list="<ul>\n";
 	foreach my $change (rcs_recentchanges(100)) {
@@ -931,8 +942,9 @@ if (grep /^-/, @ARGV) {
 		"historyurl=s" => \$historyurl,
 	) || usage();
 }
-usage() unless @ARGV == 2;
+usage() unless @ARGV == 3;
 ($srcdir) = possibly_foolish_untaint(shift);
+($templatedir) = possibly_foolish_untaint(shift);
 ($destdir) = possibly_foolish_untaint(shift);
 
 if ($cgi && ! length $url) {
