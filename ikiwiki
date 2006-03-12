@@ -26,6 +26,7 @@ my $url="";
 my $cgiurl="";
 my $historyurl="";
 my $svn=1;
+my $anonok=0;
 
 sub usage { #{{{
 	die "usage: ikiwiki [options] source templates dest\n";
@@ -597,6 +598,7 @@ sub gen_wrapper ($$) { #{{{
 	push @params, "--url=$url" if $url;
 	push @params, "--cgiurl=$cgiurl" if $cgiurl;
 	push @params, "--historyurl=$historyurl" if $historyurl;
+	push @params, "--anonok" if $anonok;
 	my $params=join(" ", @params);
 	my $call='';
 	foreach my $p ($this, $this, @params) {
@@ -792,7 +794,7 @@ sub cgi () { #{{{
 		return;
 	}
 	
-	if (! defined $session->param("name") || $do eq 'signin') {
+	if ((! $anonok && ! defined $session->param("name")) || $do eq 'signin') {
 		cgi_signin($q, $session);
 		return;
 	}
@@ -926,6 +928,7 @@ if (grep /^-/, @ARGV) {
 		"rebuild" => \$rebuild,
 		"wrapper" => \$wrapper,
 		"svn!" => \$svn,
+		"anonok!" => \$anonok,
 		"cgi" => \$cgi,
 		"url=s" => \$url,
 		"cgiurl=s" => \$cgiurl,
