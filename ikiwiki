@@ -446,13 +446,18 @@ sub rcs_recentchanges ($) { #{{{
 				$state='body';
 			}
 			elsif ($state eq 'body' && /$div/) {
+				my $committype="web";
 				if (defined $message[0] &&
 				    $message[0]->{line}=~/^web commit by (\w+)(.*)/) {
-					$user="$1 (web)";
+					$user="$1";
 					$message[0]->{line}=$2;
+				}
+				else {
+					$committype="svn";
 				}
 				
 				push @ret, { rev => $rev, user => $user,
+					commitype => $commitype,
 					when => $when, message => [@message],
 					pages => [@pages] } if @pages;
 				return @ret if @ret >= $num;
