@@ -746,7 +746,8 @@ sub cgi_signin ($$) { #{{{
 	if ($form->submitted && $form->validate) {
 		if ($form->submitted eq 'Login') {
 			$session->param("name", $form->field("name"));
-			if (defined $form->field("do")) {
+			if (defined $form->field("do") && 
+			    $form->field("do") ne 'signin') {
 				print $q->redirect(
 					"$cgiurl?do=".$form->field("do").
 					"&page=".$form->field("page"));
