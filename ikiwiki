@@ -120,7 +120,6 @@ sub writefile ($$) { #{{{
 
 	my $dir=dirname($file);
 	if (! -d $dir) {
-		print STDERR ">>$dir<<\n";
 		my $d="";
 		foreach my $s (split(m!/+!, $dir)) {
 			$d.="$s/";
@@ -246,8 +245,7 @@ sub backlinks ($) { #{{{
 		}
 	}
 
-	# TODO sort by page name
-	return @links;
+	return sort { $a->{page} cmp $b->{page} } @links;
 } #}}}
 	
 sub parentlinks ($) { #{{{
@@ -672,7 +670,8 @@ sub misctemplate ($$) { #{{{
 	my $pagebody=shift;
 	
 	my $template=HTML::Template->new(
-		filename => "$templatedir/misc.tmpl");
+		filename => "$templatedir/misc.tmpl"
+	);
 	$template->param(
 		title => $title,
 		indexlink => indexlink(),
@@ -686,7 +685,8 @@ sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
 	
 	my $template=HTML::Template->new(
-		filename => "$templatedir/recentchanges.tmpl");
+		filename => "$templatedir/recentchanges.tmpl"
+	);
 	$template->param(
 		title => "RecentChanges",
 		indexlink => indexlink(),
