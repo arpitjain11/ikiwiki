@@ -48,9 +48,14 @@ TODO: seems that locking to prevent more than one ikiwiki run at a time
 would both fix this and is a good idea in general. With locking, an
 attacker couldn't get ikiwiki to svn up while another instance was running.
 
-Even with locking, if an attacker has local write access to the checkout,
-they could still fool ikiwiki using similar races. So it's best if only one
-person can ever write to the checkout that ikiwiki compiles the moo from.
+## multiple accessors of wiki source directory
+
+If multiple people can write to the source directory ikiwiki is using, then
+one can cause trouble for the other when they run ikiwiki through symlink
+sttacks.
+
+So it's best if only one person can ever write to the checkout that ikiwiki
+compiles the moo from.
 
 ## webserver symlink attacks
 
@@ -58,7 +63,7 @@ If someone checks in a symlink to /etc/passwd, ikiwiki would publish that.
 To aoid this, ikiwiki will need to avoid reading files that are symlinks.
 TODO and note discussion of races above.
 
-## cgi security
+## cgi data security
 
 When ikiwiki runs as a cgi to edit a page, it is passed the name of the
 page to edit. It has to make sure to sanitise this page, to prevent eg,
@@ -67,6 +72,21 @@ such as subversion dotfiles. This is done by sanitising the filename
 removing unallowed characters, then making sure it doesn't start with "/"
 or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
 security holes breed. It needs a test suite at the very least.
+
+## cgi password security
+
+Login to the wiki involves sending a password in cleartext over the net.
+Cracking the password only allows editing the moo as that user though.
+If you care, you can use https, I suppose.
+
+## CGI::Session security
+
+Is CGI::Session secure? Well, it writes the session files world-readable,
+which could be used by a local attacker to take over someone's session.
+
+I have no idea if CGI::Session writes session files securely to /tmp.
+ikiwiki makes it write them to a directory it controls (but see "multiple
+accessors of wiki source directory" above).
 
 ----
 
