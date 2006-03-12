@@ -747,12 +747,12 @@ sub cgi_signin ($$) { #{{{
 		if ($form->submitted eq 'Login') {
 			$session->param("name", $form->field("name"));
 			if (defined $form->field("do")) {
-				$q->redirect(
+				print $q->redirect(
 					"$cgiurl?do=".$form->field("do").
 					"&page=".$form->field("page"));
 			}
 			else {
-				$q->redirect($url);
+				print $q->redirect($url);
 			}
 		}
 		elsif ($form->submitted eq 'Register') {
