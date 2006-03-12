@@ -658,7 +658,7 @@ EOF
 	exit 0;
 } #}}}
 
-sub cgi_recentchanges () { #{{{
+sub html_recentchanges ($q) { #{{{
 	my $q=shift;
 	
 	my $template=HTML::Template->new(
@@ -669,7 +669,7 @@ sub cgi_recentchanges () { #{{{
 		wikiname => $wikiname,
 		changelog => [rcs_recentchanges(100)],
 	);
-	print $template->output;
+	print $q->header, $template->output;
 } #}}}
 
 sub cgi_signin ($$) { #{{{
@@ -790,7 +790,7 @@ sub cgi () { #{{{
 	}
 	
 	if ($do eq 'recentchanges') {
-		cgi_recentchanges();
+		cgi_recentchanges($q);
 		return;
 	}
 	
