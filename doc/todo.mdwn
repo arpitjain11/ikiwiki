@@ -1,0 +1,47 @@
+## online page editing
+
+* Missing support for preview, cancel.
+* Missing conflict detection, just overwrites changes and does not svn up
+  first.
+* Eventually, might want page deletion.
+* Eventually, might want file upload.
+
+## recentchanges
+
+Should support RSS for notification of new and changed pages.
+
+## docs
+
+Need to document all the command line switches in a man page and somehow on this wiki too. Can markdown generate a man page somehow?
+
+## pluggable renderers
+
+I'm considering a configurable rendering pipeline for each supported
+filename extension. So for ".mdwn" files, it would send the content through
+linkify, markdown, and finalize, while for ".wiki" files it might send it
+through just a wiki formatter and finalize.
+
+This would allow not only supporting more types of markup, but changing
+what style of [[WikiLink]]s are supported, maybe some people want to add
+[[CamelCase]] for example, or don't like the [[SubPage/LinkingRules]].
+
+The finalize step is where the page gets all the pretty junk around the
+edges, so that clearly needs to be pluggable too.
+
+There also needs to be a step before finalize, where stuff like lists of pages
+that linked back to it could be added to the page. However, doing linkbacks
+also needs to tie into the main logic, to determine what pages need to be
+renered, so maybe that won't be a plugin.
+
+## revisit case
+
+Being case insensative is handy, but it does make the [[BackLinks]] a bit
+ugly compared to other links. It should be possible to support pagenames
+that have uppercase, while still allowing them to be linked to using any
+case.
+
+## html
+
+Make the html valid. Add css.
+
+## [[Bugs]]
