@@ -12,11 +12,17 @@
 <TMPL_LOOP NAME="CHANGELOG">
 	<li> <!-- <TMPL_VAR NAME="REV"> -->
 		<TMPL_LOOP NAME="PAGES">
-			<TMPL_VAR NAME="LINK"></a>
+			<TMPL_VAR NAME="LINK">
 		</TMPL_LOOP>
 		<br>
 		changed <TMPL_VAR NAME="WHEN"> by <TMPL_VAR NAME="USER">:
-		<i><TMPL_VAR NAME="MESSAGE"></i>
+		<i>
+		<TMPL_LOOP NAME="MESSAGE">
+			<TMPL_IF NAME="LINE">
+				<TMPL_VAR NAME="LINE"><br>
+			</TMPL_IF>
+		</TMPL_LOOP>
+		</i>
 	</li>
 </TMPL_LOOP>
 </ul>

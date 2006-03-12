@@ -407,7 +407,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $div=qr/^--------------------+$/;
 		my $infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 		my $state='start';
-		my ($rev, $user, $when, @pages, $message);
+		my ($rev, $user, $when, @pages, @message);
 		foreach (`LANG=C svn log -v '$svn_url'`) {
 			chomp;
 			if ($state eq 'start' && /$div/) {
@@ -427,7 +427,7 @@ sub rcs_recentchanges ($) { #{{{
 			}
 			elsif ($state eq 'body' && /$div/) {
 				push @ret, { rev => $rev, user => $user,
-					when => $when, message => $message,
+					when => $when, message => [@message],
 					pages => [@pages] } if @pages;
 				return @ret if @ret >= $num;
 				
@@ -436,7 +436,7 @@ sub rcs_recentchanges ($) { #{{{
 				@pages=();
 			}
 			elsif ($state eq 'body') {
-				$message.="$_<br>\n";
+				push @message, {line => $_},
 			}
 		}
 	}
