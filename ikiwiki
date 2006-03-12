@@ -693,6 +693,7 @@ sub cgi_signin ($$) { #{{{
 		javascript => 0,
 		params => $q,
 		action => $q->request_uri,
+		template => (-e "$templatedir/signin.tmpl" ? "$templatedir/signin.tmpl" : "")
 	);
 	
 	$form->sessionid($session->id);
