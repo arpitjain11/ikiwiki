@@ -963,6 +963,12 @@ sub cgi () { #{{{
 	# Everything below this point needs the user to be signed in.
 	if ((! $anonok && ! defined $session->param("name")) || $do eq 'signin') {
 		cgi_signin($q, $session);
+	
+		# Force session flush with safe umask.
+		my $oldmask=umask(077);
+		$session->flush;
+		umask($oldmask);
+		
 		return;
 	}
 	
