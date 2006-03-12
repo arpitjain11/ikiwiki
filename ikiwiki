@@ -446,11 +446,10 @@ sub rcs_recentchanges ($) { #{{{
 				$state='body';
 			}
 			elsif ($state eq 'body' && /$div/) {
-				print STDERR ">>$message[0]<<\n";
 				if (defined $message[0] &&
-				    $message[0]=~/^web commit by (\w+)(.*)/) {
+				    $message[0]->{line}=~/^web commit by (\w+)(.*)/) {
 					$user="$1 (web)";
-					$message[0]=$2;
+					$message[0]->{line}=$2;
 				}
 				
 				push @ret, { rev => $rev, user => $user,
