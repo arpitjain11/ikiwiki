@@ -27,8 +27,7 @@ optional support for commits from the web.
 
 5. Build your wiki for the first time.
 
-		ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ \
-			--url=http://host/~you/wiki/
+		ikiwiki --verbose ~/wikiwc/ /usr/lib/ikiwiki/templates ~/public_html/wiki/ --url=http://host/~you/wiki/
 
    Replace the url with the right url to your wiki. You should now
    be able to visit the url and see your page that you created earlier.
