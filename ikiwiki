@@ -306,6 +306,17 @@ sub finalize ($$) { #{{{
 	return $template->output;
 } #}}}
 
+# Important security check. Make sure to call this before saving any files
+# to the source directory.
+sub check_overwrite ($$) { #{{{
+	my $dest=shift;
+	my $src=shift;
+	
+	if (! exists $renderedfiles{$src} && -e $dest) {
+		error("$dest exists and was not rendered from $src before, not overwriting");
+	}
+} #}}}
+		
 sub render ($) { #{{{
 	my $file=shift;
 	
@@ -320,12 +331,14 @@ sub render ($) { #{{{
 		$content=htmlize($type, $content);
 		$content=finalize($content, $page);
 		
+		check_overwrite("$destdir/".htmlpage($page), $page);
 		writefile("$destdir/".htmlpage($page), $content);
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
 	}
 	else {
 		$links{$file}=[];
+		check_overwrite("$destdir/$file", $file);
 		writefile("$destdir/$file", $content);
 		$oldpagemtime{$file}=time;
 		$renderedfiles{$file}=$file;
@@ -941,8 +954,11 @@ sub cgi () { #{{{
 	}
 	
 	CGI::Session->name("ikiwiki_session");
-	my $session = CGI::Session->new(undef, $q,
-		{ Directory=> "$srcdir/.ikiwiki/sessions" });
+
+	my $oldmask=umask(077);
+	my $session = CGI::Session->new("driver:db_file", $q,
+		{ FileName => "$srcdir/.ikiwiki/sessions.db" });
+	umask($oldmask);
 	
 	# Everything below this point needs the user to be signed in.
 	if ((! $anonok && ! defined $session->param("name")) || $do eq 'signin') {

@@ -52,16 +52,65 @@ attacker couldn't get ikiwiki to svn up while another instance was running.
 
 If multiple people can write to the source directory ikiwiki is using, then
 one can cause trouble for the other when they run ikiwiki through symlink
-sttacks.
+attacks.
 
 So it's best if only one person can ever write to the checkout that ikiwiki
-compiles the moo from.
+compiles the wiki from.
 
 ## webserver symlink attacks
 
 If someone checks in a symlink to /etc/passwd, ikiwiki would publish that.
 To aoid this, ikiwiki will need to avoid reading files that are symlinks.
 TODO and note discussion of races above.
+
+----
+
+# Hopefully non-holes
+
+(AKA, the assumptions that will be the root of most security holes...)
+
+## exploting ikiwiki with bad content
+
+Someone could add bad content to the wiki and hope to exploit ikiwiki.
+Note that ikiwiki runs with perl taint checks on, so this is unlikely.
+
+## publishing cgi scripts
+
+ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
+rather, the script is published, but it's not marked executable (except in
+the case of "destination directory file replacement" below), so hopefully
+your web server will not run it.
+
+## suid wrappers
+
+ikiwiki --wrapper is intended to generate a wrapper program that
+runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
+for example to be used in a [[post-commit]] hook by people who cannot write
+to the html pages, etc.
+
+If the wrapper script is made suid, then any bugs in this wrapper would be
+security holes. The wrapper is written as securely as I know how, is based
+on code that has a history of security use long before ikiwiki, and there's
+been no problem yet.
+
+## shell exploits
+
+ikiwiki does not expose untrusted data to the shell. In fact it doesn't use
+system() at all, and the only use of backticks is on data supplied by the
+wiki admin. And it runs with taint checks on of course..
+
+## destination directory file replacement
+
+Any file in the destination directory that is a valid page filename can be
+replaced, even if it was not originally rendered from a page. For example,
+ikiwiki.cgi could be edited in the wiki, and it would write out a
+replacement. File permission is preseved. Yipes!
+
+This was fixed by making ikiwiki check if the file it's writing to exists;
+if it does then it has to be a file that it's aware of creating before, or
+it will refuse to create it.
+
+Still, this sort of attack is something to keep in mind.
 
 ## cgi data security
 
@@ -81,38 +130,7 @@ If you care, you can use https, I suppose.
 
 ## CGI::Session security
 
-Is CGI::Session secure? Well, it writes the session files world-readable,
-which could be used by a local attacker to take over someone's session.
-
-I have no idea if CGI::Session writes session files securely to /tmp.
-ikiwiki makes it write them to a directory it controls (but see "multiple
-accessors of wiki source directory" above).
-
-----
-
-# Probable non-holes
-
-## exploting ikiwiki with bad content
-
-Someone could add bad content to the wiki and hope to exploit ikiwiki.
-Note that ikiwiki runs with perl taint checks on, so this is unlikely.
-
-## publishing cgi scripts
-
-ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
-rather, the script is published, but it's not marked executable, so
-hopefully your web server will not run it.
-
-## suid wrappers
-
-ikiwiki --wrapper is intended to generate a wrapper program that
-runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
-for example to be used in a [[post-commit]] hook by people who cannot write
-to the html pages, etc.
-
-If the wrapper script is made suid, then any bugs in this wrapper would be
-security holes. The wrapper is written as securely as I know how, is based on code that has a history of security use long before ikiwiki, and there's been no problem yet.
-
-## shell exploits
-
-ikiwiki does not expose untrusted data to the shell. In fact it doesn't use system() at all, and the only use of backticks is on data supplied by the wiki admin. And it runs with taint checks on of course..
+I've audited this module and it is massively insecure by default. ikiwiki
+uses it in one of the few secure ways; by forcing it to write to a
+directory it controls (and not /tmp) and by setting a umask that makes the
+file not be world readable.
