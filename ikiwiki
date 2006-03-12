@@ -777,6 +777,18 @@ sub cgi () { #{{{
 	eval q{use CGI::Session};
 	
 	my $q=CGI->new;
+	
+	my $do=$q->param('do');
+	if (! defined $do || ! length $do) {
+		error("\"do\" parameter missing");
+	}
+	
+	# This does not need a session.
+	if ($do eq 'recentchanges') {
+		cgi_recentchanges($q);
+		return;
+	}
+	
 	# session id has to be _sessionid for CGI::FormBuilder to work.
 	# TODO: stop having the formbuilder emit cookies and change session
 	# id to something else.
@@ -784,16 +796,7 @@ sub cgi () { #{{{
 	my $session = CGI::Session->new(undef, $q,
 		{ Directory=> "$srcdir/.ikiwiki/sessions" });
 	
-	my $do=$q->param('do');
-	if (! defined $do || ! length $do) {
-		error("\"do\" parameter missing");
-	}
-	
-	if ($do eq 'recentchanges') {
-		cgi_recentchanges($q);
-		return;
-	}
-	
+	# Everything below this point needs the user to be signed in.
 	if ((! $anonok && ! defined $session->param("name")) || $do eq 'signin') {
 		cgi_signin($q, $session);
 		return;
