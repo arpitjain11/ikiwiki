@@ -1,0 +1,71 @@
+# NAME
+
+ikiwiki - a wiki compiler
+
+# SYNOPSIS
+
+ikiwiki [options] source templates destination
+
+# DESCRIPTION
+
+`ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from `source` in the [[MarkDown]] `language`, using the specified html `templates` and writes it out to `destination`.
+
+# OPTIONS
+
+Note that most options can be shortened to single letters.
+
+* --wikiname
+
+The name of the wiki, default is "wiki".
+
+* --verbose
+
+Be vebose about what it's doing.
+
+* --rebuild
+
+Force a rebuild of all pages.
+
+* --wrapper
+
+Generate a [[wrapper]] binary that is hardcoded to do action specified by the other options, using the specified input files and `destination` directory.
+
+The wrapper is designed to be safely made suid and be run by untrusted users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
+
+Note that the generated wrapper will ignore all command line parameters except for --params, which will make it print out the parameters it would run ikiwiki with.
+
+* --svn, --nosvn
+
+Enable or disable use of [[subversion]]. If subversion is enabled, the `source` directory is assumed to be a working copy, and is automatically updated before building the wiki. 
+
+In [[CGI]] mode, with subversion enabled pages edited via the web will be committed to subversion. Also, the [[RecentChanges]] link will be placed on pages.
+
+Subversion is enabled by default.
+
+* --anonok, --noanonok
+
+If anonok is set, it will allow anonymous web users, who have not signed in, to make changes to the wiki.
+
+By default, anonymous users cannot edit the wiki.
+
+* --cgi
+
+Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and supports editing pages, signing in, registration, and displaying [[RecentChanges]].
+
+To use ikiwiki as a [[CGI]] program you need to use --wrapper to generate a wrapper. The wrapper will generally need to run suid 6755 to the user who owns the `source` and `destination` directories.
+
+* --url http://someurl/
+
+Specifies the url to the wiki. This is a required parameter in [[CGI]] mode.
+
+* --cgiurl http://someurl/ikiwiki.cgi
+
+Specifies the url to the ikiwiki [[CGI]] script [[wrapper]]. Required when building the wiki for links to the cgi script to be generated.
+
+* --historyurl http://svn.someurl/trunk/[[]]?root=wiki
+
+Specifies the url to link to for page history browsing. In the url, "[[]]" is replaced with the page to browse. It's common to use [[ViewCVS]] for this.
+
+# AUTHOR
+
+Joey Hess <joey@kitenet.net>
