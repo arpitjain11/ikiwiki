@@ -720,7 +720,7 @@ sub cgi_recentchanges ($) { #{{{
 	print $q->header, $template->output;
 } #}}}
 
-sub userinfo_get ($$) { #{{
+sub userinfo_get ($$) { #{{{
 	my $user=shift;
 	my $field=shift;
 
@@ -731,9 +731,9 @@ sub userinfo_get ($$) { #{{
 		return "";
 	}
 	return $userdata->{$user}->{$field};
-} #}}
+} #}}}
 
-sub userinfo_set ($$) { #{{
+sub userinfo_set ($$) { #{{{
 	my $user=shift;
 	my $info=shift;
 	
@@ -747,7 +747,7 @@ sub userinfo_set ($$) { #{{
 	my $ret=Storable::lock_store($userdata, "$srcdir/.ikiwiki/userdb");
 	umask($oldmask);
 	return $ret;
-} #}}
+} #}}}
 
 sub cgi_signin ($$) { #{{{
 	my $q=shift;
@@ -916,8 +916,10 @@ sub cgi_editpage ($$) { #{{{
 		fields => [qw(do from page content comments)],
 		header => 1,
 		method => 'POST',
-		validate => {},
-		required => [qw{}],
+		validate => {
+			content => '/.+/',
+		},
+		required => [qw{content}],
 		javascript => 0,
 		params => $q,
 		action => $q->request_uri,
