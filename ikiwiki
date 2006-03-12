@@ -1033,7 +1033,9 @@ sub cgi_editpage ($$) { #{{{
 			refresh();
 		}
 		
-		print $q->redirect("$url/".htmlpage($page));
+		# The trailing question mark tries to avoid broken
+		# caches and get the most recent version of the page.
+		print $q->redirect("$url/".htmlpage($page)."?");
 	}
 } #}}}
 
