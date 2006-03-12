@@ -3,9 +3,8 @@
 <body>
 
 <h1>
-<a href="<TMPL_VAR INDEXLINK>"><TMPL_VAR WIKINAME></a>/
 <TMPL_LOOP NAME="PARENTLINKS">
-<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a> / 
+<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
 </TMPL_LOOP>
 <TMPL_VAR TITLE>
 </h1>
@@ -33,6 +32,8 @@
 </TMPL_LOOP>
 </p>
 </TMPL_IF>
+
+<!-- from <TMPL_VAR NAME=WIKINAME> -->
 
 </body>
 </html>

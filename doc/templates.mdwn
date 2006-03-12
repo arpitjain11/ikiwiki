@@ -1,13 +1,24 @@
-ikiwiki uses the HTML::Template module as its template engine. This supports things like conditionals and loops in templates and is pretty easy to learn.
+ikiwiki uses the HTML::Template module as its template engine. This
+supports things like conditionals and loops in templates and is pretty easy
+to learn.
 
 It ships with some basic templates which can be customised:
 
 * `templates/page.tmpl` - Used for displaying all regular wiki pages.
+* `templates/misc.tmpl` - Generic template used for any page that doesn't
+  have a custom template.
 * `templates/recentchanges.tmpl` - Used for the RecentChanges page.
-* `templates/edit.tmpl' - Edit page.
-* `templates/create.tmpl' - Creating a new page.
-* `templates/signin.tmpl` - Used for the SignIn form and all assciated forms, if it exists.
-   
-  Note that the SignIn form is implemented using CGI::FormBuilder, which interfaces to HTML::Template, so not all of it can be customised with templates, although most of it can, by creating this template. Without the template, CGI::FormBuilder creates the page by itself.
+* `templates/editpage.tmpl' - Create/edit page.
+
+If you like, you can add these to further customise it:
+
+* `templates/signin.tmpl` - If it exists, it is used for customising the
+  layout of the SignIn form and all assciated forms. The misc.tmpl is
+  wrapped around this, so it should only be a template for the form.
+  
+  Note that the SignIn form is implemented using CGI::FormBuilder, which
+  interfaces to HTML::Template, so not all of it can be customised with
+  templates, although most of it can, by creating this template. Without
+  the template, CGI::FormBuilder creates the page body by itself.
 
 I aim to keep almost all html out of ikiwiki and in the templates.

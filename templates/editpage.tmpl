@@ -1,0 +1,21 @@
+<html>
+<head><title><TMPL_VAR FORM-TITLE></title></head>
+<body>
+<TMPL_VAR FORM-START>
+<h1><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></h1>
+<TMPL_VAR FIELD-DO>
+<TMPL_VAR FIELD-FROM>
+<TMPL_IF NAME="PAGE_SELECT">
+Page location: <TMPL_VAR FIELD-PAGE><br>
+<TMPL_ELSE>
+<TMPL_VAR FIELD-PAGE>
+</TMPL_IF>
+<TMPL_VAR FIELD-CONTENT><br>
+<TMPL_IF NAME="CAN_COMMIT">
+Optional comment about this change:</br>
+<TMPL_VAR FIELD-COMMENTS><br>
+</TMPL_IF>
+<TMPL_VAR FORM-SUBMIT>
+<TMPL_VAR FORM-END>
+</body>
+</html>

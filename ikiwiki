@@ -35,7 +35,7 @@ sub usage { #{{{
 sub error ($) { #{{{
 	if ($cgi) {
 		print "Content-type: text/html\n\n";
-		print "Error: @_\n";
+		print misctemplate("Error", "<p>Error: @_</p>");
 		exit 1;
 	}
 	else {
@@ -44,7 +44,12 @@ sub error ($) { #{{{
 } #}}}
 
 sub debug ($) { #{{{
-	print "@_\n" if $verbose;
+	if (! $cgi) {
+		print "@_\n" if $verbose;
+	}
+	else {
+		print STDERR "@_\n" if $verbose;
+	}
 } #}}}
 
 sub mtime ($) { #{{{
@@ -115,6 +120,7 @@ sub writefile ($$) { #{{{
 
 	my $dir=dirname($file);
 	if (! -d $dir) {
+		print STDERR ">>$dir<<\n";
 		my $d="";
 		foreach my $s (split(m!/+!, $dir)) {
 			$d.="$s/";
@@ -240,6 +246,7 @@ sub backlinks ($) { #{{{
 		}
 	}
 
+	# TODO sort by page name
 	return @links;
 } #}}}
 	
@@ -259,11 +266,12 @@ sub parentlinks ($) { #{{{
 		}
 		$path.="../";
 	}
+	unshift @ret, { url => $path , page => $wikiname };
 	return @ret;
 } #}}}
 
 sub indexlink () { #{{{
-	return "<a href=\"$url\">$wikiname</a>/ ";
+	return "<a href=\"$url\">$wikiname</a>";
 } #}}}
 	
 sub finalize ($$) { #{{{
@@ -278,7 +286,9 @@ sub finalize ($$) { #{{{
 	
 	if (length $cgiurl) {
 		$template->param(editurl => "$cgiurl?do=edit&page=$page");
-		$template->param(recentchangesurl => "$cgiurl?do=recentchanges");
+		if ($svn) {
+			$template->param(recentchangesurl => "$cgiurl?do=recentchanges");
+		}
 	}
 
 	if (length $historyurl) {
@@ -289,7 +299,6 @@ sub finalize ($$) { #{{{
 	
 	$template->param(
 		title => $title,
-		indexlink => $url,
 		wikiname => $wikiname,
 		parentlinks => [parentlinks($page)],
 		content => $content,
@@ -657,6 +666,21 @@ EOF
 	print "successfully generated ikiwiki-wrap\n";
 	exit 0;
 } #}}}
+		
+sub misctemplate ($$) { #{{{
+	my $title=shift;
+	my $pagebody=shift;
+	
+	my $template=HTML::Template->new(
+		filename => "$templatedir/misc.tmpl");
+	$template->param(
+		title => $title,
+		indexlink => indexlink(),
+		wikiname => $wikiname,
+		pagebody => $pagebody,
+	);
+	return $template->output;
+}#}}}
 
 sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
@@ -665,7 +689,7 @@ sub cgi_recentchanges ($) { #{{{
 		filename => "$templatedir/recentchanges.tmpl");
 	$template->param(
 		title => "RecentChanges",
-		indexlink => $url,
+		indexlink => indexlink(),
 		wikiname => $wikiname,
 		changelog => [rcs_recentchanges(100)],
 	);
@@ -693,10 +717,10 @@ sub cgi_signin ($$) { #{{{
 		javascript => 0,
 		params => $q,
 		action => $q->request_uri,
+		header => 0,
 		template => (-e "$templatedir/signin.tmpl" ? "$templatedir/signin.tmpl" : "")
 	);
 	
-	$form->sessionid($session->id);
 	$form->field(name => "name", required => 0);
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "page", type => "hidden");
@@ -761,16 +785,141 @@ sub cgi_signin ($$) { #{{{
 			$form->field(name => "confirm_password", type => "hidden");
 			$form->field(name => "email", type => "hidden");
 			$form->text("Registration successful. Now you can Login.");
-			print $form->render(submit => ["Login"]);;
+			print $session->header();
+			print misctemplate($form->title, $form->render(submit => ["Login"]));
 		}
 		elsif ($form->submitted eq 'Mail Password') {
 			# TODO mail password
 			$form->text("Your password has been emailed to you.");
-			print $form->render(submit => ["Login", "Register", "Mail Password"]);;
+			print $session->header();
+			print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
 		}
 	}
 	else {
-		print $form->render(submit => ["Login", "Register", "Mail Password"]);;
+		print $session->header();
+		print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
+	}
+} #}}}
+
+sub cgi_editpage ($$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	eval q{use CGI::FormBuilder};
+	my $form = CGI::FormBuilder->new(
+		fields => [qw(do from page content comments)],
+		header => 1,
+		method => 'POST',
+		validate => {},
+		required => [qw{}],
+		javascript => 0,
+		params => $q,
+		action => $q->request_uri,
+		table => 0,
+		template => "$templatedir/editpage.tmpl"
+	);
+	
+	my ($page)=$form->param('page')=~/$wiki_file_regexp/;
+	if (! defined $page || ! length $page || $page ne $q->param('page') ||
+	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
+		error("bad page name");
+	}
+	$page=lc($page);
+
+	$form->field(name => "do", type => 'hidden');
+	$form->field(name => "from", type => 'hidden');
+	$form->field(name => "page", value => "$page", force => 1);
+	$form->field(name => "comments", type => "text", size => 80);
+	$form->field(name => "content", type => "textarea", rows => 20,
+		cols => 80);
+	
+	if (! $form->submitted || ! $form->validate) {
+		if ($form->field("do") eq "create") {
+			if (exists $pagesources{lc($page)}) {
+				# hmm, someone else made the page in the
+				# meantime?
+				print $q->redirect("$url/".htmlpage($page));
+				return;
+			}
+			
+			my @page_locs;
+			my ($from)=$form->param('from')=~/$wiki_file_regexp/;
+			if (! defined $from || ! length $from ||
+			    $from ne $form->param('from') ||
+			    $from=~/$wiki_file_prune_regexp/ || $from=~/^\//) {
+				@page_locs=$page;
+			}
+			else {
+				my $dir=$from."/";
+				$dir=~s![^/]+/$!!;
+				push @page_locs, $dir.$page;
+				push @page_locs, "$from/$page";
+				while (length $dir) {
+					$dir=~s![^/]+/$!!;
+					push @page_locs, $dir.$page;
+				}
+			}
+
+			$form->tmpl_param("page_select", 1);
+			$form->field(name => "page", type => 'select',
+				options => \@page_locs);
+			$form->title("creating $page");
+		}
+		elsif ($form->field("do") eq "edit") {
+			my $content="";
+			if (exists $pagesources{lc($page)}) {
+				$content=readfile("$srcdir/$pagesources{lc($page)}");
+				$content=~s/\n/\r\n/g;
+			}
+			$form->tmpl_param("page_select", 0);
+			$form->field(name => "content", value => $content,
+				force => 1);
+			$form->field(name => "page", type => 'hidden');
+			$form->title("editing $page");
+		}
+		
+		$form->tmpl_param("can_commit", $svn);
+		$form->tmpl_param("indexlink", indexlink());
+		print $form->render(submit => ["Save Page"]);
+	}
+	else {
+		# save page
+		my $file=$page.$default_pagetype;
+		my $newfile=1;
+		if (exists $pagesources{lc($page)}) {
+			$file=$pagesources{lc($page)};
+			$newfile=0;
+		}
+		
+		my $content=$form->field('content');
+		$content=~s/\r\n/\n/g;
+		$content=~s/\r/\n/g;
+		writefile("$srcdir/$file", $content);
+		
+		my $message="web commit ";
+		if ($session->param("name")) {
+			$message.="by ".$session->param("name");
+		}
+		else {
+			$message.="from $ENV{REMOTE_ADDR}";
+		}
+		if (length $form->field('comments')) {
+			$message.=": ".$form->field('comments');
+		}
+		
+		if ($svn) {
+			if ($newfile) {
+				rcs_add($file);
+			}
+			# presumably the commit will trigger an update
+			# of the wiki
+			rcs_commit($message);
+		}
+		else {
+			refresh();
+		}
+		
+		print $q->redirect("$url/".htmlpage($page));
 	}
 } #}}}
 
@@ -791,10 +940,7 @@ sub cgi () { #{{{
 		return;
 	}
 	
-	# session id has to be _sessionid for CGI::FormBuilder to work.
-	# TODO: stop having the formbuilder emit cookies and change session
-	# id to something else.
-	CGI::Session->name("_sessionid");
+	CGI::Session->name("ikiwiki_session");
 	my $session = CGI::Session->new(undef, $q,
 		{ Directory=> "$srcdir/.ikiwiki/sessions" });
 	
@@ -804,118 +950,8 @@ sub cgi () { #{{{
 		return;
 	}
 	
-	my ($page)=$q->param('page')=~/$wiki_file_regexp/;
-	if (! defined $page || ! length $page || $page ne $q->param('page') ||
-	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
-		error("bad page name");
-	}
-	$page=lc($page);
-	
-	my $action=$q->request_uri;
-	$action=~s/\?.*//;
-	
-	if ($do eq 'create') {
-		if (exists $pagesources{lc($page)}) {
-			# hmm, someone else made the page in the meantime?
-			print $q->redirect("$url/".htmlpage($page));
-		}
-
-		my @page_locs;
-		my ($from)=$q->param('from')=~/$wiki_file_regexp/;
-		if (! defined $from || ! length $from ||
-		    $from ne $q->param('from') ||
-		    $from=~/$wiki_file_prune_regexp/ || $from=~/^\//) {
-			@page_locs=$page;
-		}
-		else {
-			my $dir=$from."/";
-			$dir=~s![^/]+/$!!;
-			push @page_locs, $dir.$page;
-			push @page_locs, "$from/$page";
-			while (length $dir) {
-				$dir=~s![^/]+/$!!;
-				push @page_locs, $dir.$page;
-			}
-		}
-		
-		$q->param("do", "save");
-		print $q->header,
-		      $q->start_html("Creating $page"),
-		      $q->h1(indexlink()." Creating $page"),
-		      $q->start_form(-action => $action),
-		      $q->hidden('do'),
-		      "Select page location:",
-		      $q->popup_menu('page', \@page_locs),
-		      $q->textarea(-name => 'content',
-		               -default => "",
-		               -rows => 20,
-		               -columns => 80),
-		      $q->br,
-		      "Optional comment about this change:",
-		      $q->br,
-		      $q->textfield(-name => "comments", -size => 80),
-		      $q->br,
-		      $q->submit("Save Page"),
-		      $q->end_form,
-		      $q->end_html;
-	}
-	elsif ($do eq 'edit') {
-		my $content="";
-		if (exists $pagesources{lc($page)}) {
-			$content=readfile("$srcdir/$pagesources{lc($page)}");
-			$content=~s/\n/\r\n/g;
-		}
-		$q->param("do", "save");
-		print $q->header,
-		      $q->start_html("Editing $page"),
-		      $q->h1(indexlink()." Editing $page"),
-		      $q->start_form(-action => $action),
-		      $q->hidden('do'),
-		      $q->hidden('page'),
-		      $q->textarea(-name => 'content',
-		               -default => $content,
-		               -rows => 20,
-		               -columns => 80),
-		      $q->br,
-		      "Optional comment about this change:",
-		      $q->br,
-		      $q->textfield(-name => "comments", -size => 80),
-		      $q->br,
-		      $q->submit("Save Page"),
-		      $q->end_form,
-		      $q->end_html;
-	}
-	elsif ($do eq 'save') {
-		my $file=$page.$default_pagetype;
-		my $newfile=1;
-		if (exists $pagesources{lc($page)}) {
-			$file=$pagesources{lc($page)};
-			$newfile=0;
-		}
-		
-		my $content=$q->param('content');
-		$content=~s/\r\n/\n/g;
-		$content=~s/\r/\n/g;
-		writefile("$srcdir/$file", $content);
-		
-		my $message="web commit from $ENV{REMOTE_ADDR}";
-		if (defined $q->param('comments')) {
-			$message.=": ".$q->param('comments');
-		}
-		
-		if ($svn) {
-			if ($newfile) {
-				rcs_add($file);
-			}
-			# presumably the commit will trigger an update
-			# of the wiki
-			rcs_commit($message);
-		}
-		else {
-			refresh();
-		}
-		
-		print $q->redirect("$url/".htmlpage($page));
+	if ($do eq 'create' || $do eq 'edit') {
+		cgi_editpage($q, $session);
 	}
 	else {
 		error("unknown do parameter");
