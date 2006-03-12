@@ -709,6 +709,35 @@ sub cgi_recentchanges ($) { #{{{
 	print $q->header, $template->output;
 } #}}}
 
+sub userinfo_get ($$) { #{{
+	my $user=shift;
+	my $field=shift;
+
+	eval q{use Storable};
+	my $userdata=eval{ Storable::lock_retrieve("$srcdir/.ikiwiki/userdb") };
+	if (! defined $userdata || ! ref $userdata || 
+	    ! exists $userdata->{$user} || ! ref $userdata->{$user}) {
+		return "";
+	}
+	return $userdata->{$user}->{$field};
+} #}}
+
+sub userinfo_set ($$) { #{{
+	my $user=shift;
+	my $info=shift;
+	
+	eval q{use Storable};
+	my $userdata=eval{ Storable::lock_retrieve("$srcdir/.ikiwiki/userdb") };
+	if (! defined $userdata || ! ref $userdata) {
+		$userdata={};
+	}
+	$userdata->{$user}=$info;
+	my $oldmask=umask(077);
+	my $ret=Storable::lock_store($userdata, "$srcdir/.ikiwiki/userdb");
+	umask($oldmask);
+	return $ret;
+} #}}
+
 sub cgi_signin ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
@@ -720,7 +749,6 @@ sub cgi_signin ($$) { #{{{
 		header => 1,
 		method => 'POST',
 		validate => {
-			name => '/^\w+$/',
 			confirm_password => {
 				perl => q{eq $form->field("password")},
 			},
@@ -740,9 +768,6 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "password", type => "password", required => 0);
 	$form->field(name => "confirm_password", type => "password", required => 0);
 	$form->field(name => "email", required => 0);
-	if ($session->param("name")) {
-		$form->field(name => "name", value => $session->param("name"));
-	}
 	if ($q->param("do") ne "signin") {
 		$form->text("You need to log in before you can edit pages.");
 	}
@@ -758,26 +783,52 @@ sub cgi_signin ($$) { #{{{
 			$form->field(name => $opt, required => 1);
 		}
 	
-		# Validate password differently depending on how form was
-		# submitted.
+		# Validate password differently depending on how
+		# form was submitted.
 		if ($form->submitted eq 'Login') {
 			$form->field(
 				name => "password",
 				validate => sub {
-					# TODO get real user password
-					shift eq "foo";
+					length $form->field("name") &&
+					shift eq userinfo_get($form->field("name"), 'password');
 				},
 			);
+			$form->field(name => "name", validate => '/^\w+$/');
 		}
 		else {
 			$form->field(name => "password", validate => 'VALUE');
 		}
+		# And make sure the entered name exists when logging
+		# in or sending email, and does not when registering.
+		if ($form->submitted eq 'Register') {
+			$form->field(
+				name => "name",
+				validate => sub {
+					my $name=shift;
+					length $name &&
+					! userinfo_get($name, "regdate");
+				},
+			);
+		}
+		else {
+			$form->field(
+				name => "name",
+				validate => sub {
+					my $name=shift;
+					length $name &&
+					userinfo_get($name, "regdate");
+				},
+			);
+		}
 	}
 	else {
-		# Comments only shown first time.
+		# First time settings.
 		$form->field(name => "name", comment => "use FirstnameLastName");
 		$form->field(name => "confirm_password", comment => "(only needed");
 		$form->field(name => "email",            comment => "for registration)");
+		if ($session->param("name")) {
+			$form->field(name => "name", value => $session->param("name"));
+		}
 	}
 
 	if ($form->submitted && $form->validate) {
@@ -794,16 +845,47 @@ sub cgi_signin ($$) { #{{{
 			}
 		}
 		elsif ($form->submitted eq 'Register') {
-			# TODO: save registration info
-			$form->field(name => "confirm_password", type => "hidden");
-			$form->field(name => "email", type => "hidden");
-			$form->text("Registration successful. Now you can Login.");
-			print $session->header();
-			print misctemplate($form->title, $form->render(submit => ["Login"]));
+			my $user_name=$form->field('name');
+			if (userinfo_set($user_name, {
+				           'email' => $form->field('email'),
+				           'password' => $form->field('password'),
+				           'regdate' => time
+				         })) {
+				$form->field(name => "confirm_password", type => "hidden");
+				$form->field(name => "email", type => "hidden");
+				$form->text("Registration successful. Now you can Login.");
+				print $session->header();
+				print misctemplate($form->title, $form->render(submit => ["Login"]));
+			}
+			else {
+				error("Error saving registration.");
+			}
 		}
 		elsif ($form->submitted eq 'Mail Password') {
-			# TODO mail password
+			my $user_name=$form->field("name");
+			my $template=HTML::Template->new(
+				filename => "$templatedir/passwordmail.tmpl"
+			);
+			$template->param(
+				user_name => $user_name,
+				user_password => userinfo_get($user_name, "password"),
+				wikiurl => $url,
+				wikiname => $wikiname,
+				REMOTE_ADDR => $ENV{REMOTE_ADDR},
+			);
+			
+			eval q{use Mail::Sendmail};
+			my ($fromhost) = $cgiurl =~ m!/([^/]+)!;
+			print STDERR "$< $> >>> $cgiurl ".(getpwuid($>))[0]."@".$fromhost."\n";
+			sendmail(
+				To => userinfo_get($user_name, "email"),
+				From => "$wikiname admin <".(getpwuid($>))[0]."@".$fromhost.">",
+				Subject => "$wikiname information",
+				Message => $template->output,
+			) or error("Failed to send mail");
+			
 			$form->text("Your password has been emailed to you.");
+			$form->field(name => "name", required => 0);
 			print $session->header();
 			print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
 		}
@@ -916,7 +998,8 @@ sub cgi_editpage ($$) { #{{{
 		else {
 			$message.="from $ENV{REMOTE_ADDR}";
 		}
-		if (length $form->field('comments')) {
+		if (defined $form->field('comments') &&
+		    length $form->field('comments')) {
 			$message.=": ".$form->field('comments');
 		}
 		
@@ -961,7 +1044,8 @@ sub cgi () { #{{{
 	umask($oldmask);
 	
 	# Everything below this point needs the user to be signed in.
-	if ((! $anonok && ! defined $session->param("name")) || $do eq 'signin') {
+	if ((! $anonok && ! defined $session->param("name") ||
+		! userinfo_get($session->param("name"), "regdate")) || $do eq 'signin') {
 		cgi_signin($q, $session);
 	
 		# Force session flush with safe umask.
