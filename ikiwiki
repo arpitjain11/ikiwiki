@@ -172,7 +172,7 @@ sub findlinks ($) { #{{{
 	my $content=shift;
 
 	my @links;
-	while ($content =~ /$config{wiki_link_regexp}/g) {
+	while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
 		push @links, lc($1);
 	}
 	return @links;
@@ -247,7 +247,9 @@ sub linkify ($$) { #{{{
 	my $content=shift;
 	my $file=shift;
 
-	$content =~ s/$config{wiki_link_regexp}/htmllink(pagename($file), $1)/eg;
+	$content =~ s{(\\?)$config{wiki_link_regexp}}{
+		$1 ? "[[$2]]" : htmllink(pagename($file), $2)
+	}eg;
 	
 	return $content;
 } #}}}
