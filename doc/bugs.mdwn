@@ -27,9 +27,3 @@
   markdown, but that will probably be a bear. I guess the question is how
   common "[[ ]]" is, and maybe we should just provide a way to escape a
   wikilink..
-
-Fixed bugs:
-
-* RecentChanges is supposed to linkify WikiNames and it does, but only if
-  the user's page exists. It doesn't add a ?link to a noneistant page to
-  aid creating it. (Fixed. -- [[Joey]])

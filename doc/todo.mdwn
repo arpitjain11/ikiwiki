@@ -15,7 +15,7 @@ is built. (As long as all changes to all pages is ok.)
 
 * Should support mail notification of new and changed pages.
 
-  Hmm, should be easy to implement this.. it runs as a svn post-cookit hook
+  Hmm, should be easy to implement this.. it runs as a svn post-coommit hook
   already, so just look at the userdb, svnlook at what's changed, and send
   mails to people who have subscribed.
 
@@ -61,6 +61,11 @@ and that includes the date.
 
 What syntax do other wikis use for this? I'm considering "[[ -- ]]" (with
 spaces removed) as it has a nice nmemonic.
+
+OTOH, adding additional syntax for this would be counter to one of the
+design goals for ikiwiki: keeping as much markup as possible out of the
+wiki and not adding nonstandard markup. And it's not significantly hard to
+type "--[[Joey]]", and as to the date, we do have page history.
 
 ## recentchanges links to commit diffs
 

@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+# Configuration file for ikiwiki.
+# Passing this to ikiwiki --setup will make ikiwiki generate tw
+# wrapper programs, one for cgi and one for a subversion post-commit hook.
+#
+# Remember to re-run ikiwiki --setup any time you edit this file.
+
+my %common=(
+	wikiname => "MyWiki",
+
+	# Be sure to customise these..
+	srcdir => "/path/to/source",
+	templatedir => "/path/to/templates",
+	destdir => "/var/www/wiki",
+	url => "http://myhost/wiki",
+	cgiurl => "http://myhost/ikiwiki.cgi",
+	historyurl => "$webdir/cgi-bin/viewcvs?[[]]"
+	
+	# Whether to integrate with svn.
+	svn => 1,
+	svnrepo => "/svn/wiki",
+	
+	# Can anonymous web users edit pages?
+	#anonok => 1,
+);	
+
+gen_wrapper(
+	%common,
+	cgi => 1,
+	wrapper => "$common{destdir}/ikiwiki.cgi",
+	wrappermode => 06755,
+);
+gen_wrapper(
+	%common,
+	# Note that this will overwrite any exsting post-commit hoo
+	# script, which may not be what you want.
+	wrapper => "$common{svnrepo}/hooks/post-commit",
+	wrappermode => 04755,
+) if $common{$svn};

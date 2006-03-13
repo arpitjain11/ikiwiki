@@ -18,23 +18,27 @@ my %config=( #{{{
 	wikiname => "wiki",
 	default_pageext => ".mdwn",
 	cgi => 0,
-	url => "",
-	cgiurl => "",
-	historyurl => "",
 	svn => 1,
+	url => '',
+	cgiurl => '',
+	historyurl => '',
 	anonok => 0,
 	rebuild => 0,
-	wrapper => 0,
+	wrapper => undef,
+	wrappermode => undef,
 	srcdir => undef,
 	destdir => undef,
 	templatedir => undef,
+	setup => undef,
 ); #}}}
 
 GetOptions( #{{{
+	"setup=s" => \$config{setup},
 	"wikiname=s" => \$config{wikiname},
 	"verbose|v!" => \$config{verbose},
 	"rebuild!" => \$config{rebuild},
-	"wrapper!" => \$config{wrapper},
+	"wrapper=s" => sub { $config{wrapper}=$_[1] ? $_[1] : "ikiwiki-wrap" },
+	"wrappermode=i" => \$config{wrappermode},
 	"svn!" => \$config{svn},
 	"anonok!" => \$config{anonok},
 	"cgi!" => \$config{cgi},
@@ -46,13 +50,16 @@ GetOptions( #{{{
 	},
 ) || usage();
 
-usage() unless @ARGV == 3;
-$config{srcdir} = possibly_foolish_untaint(shift);
-$config{templatedir} = possibly_foolish_untaint(shift);
-$config{destdir} = possibly_foolish_untaint(shift);
-if ($config{cgi} && ! length $config{url}) {
-	error("Must specify url to wiki with --url when using --cgi");
-} #}}}
+if (! $config{setup}) {
+	usage() unless @ARGV == 3;
+	$config{srcdir} = possibly_foolish_untaint(shift);
+	$config{templatedir} = possibly_foolish_untaint(shift);
+	$config{destdir} = possibly_foolish_untaint(shift);
+	if ($config{cgi} && ! length $config{url}) {
+		error("Must specify url to wiki with --url when using --cgi");
+	}
+}
+#}}}
 
 sub usage { #{{{
 	die "usage: ikiwiki [options] source templates dest\n";
@@ -659,7 +666,8 @@ FILE:		foreach my $file (@files) {
 	}
 } #}}}
 
-sub gen_wrapper () { #{{{
+sub gen_wrapper (@) { #{{{
+	my %config=(@_);
 	eval q{use Cwd 'abs_path'};
 	$config{srcdir}=abs_path($config{srcdir});
 	$config{destdir}=abs_path($config{destdir});
@@ -668,6 +676,10 @@ sub gen_wrapper () { #{{{
 		error("$this doesn't seem to be executable");
 	}
 
+	if ($config{setup}) {
+		error("cannot create a wrapper that uses a setup file");
+	}
+	
 	my @params=($config{srcdir}, $config{templatedir}, $config{destdir},
 		"--wikiname=$config{wikiname}");
 	push @params, "--verbose" if $config{verbose};
@@ -729,12 +741,15 @@ $envsave
 }
 EOF
 	close OUT;
-	if (system("gcc", "ikiwiki-wrap.c", "-o", "ikiwiki-wrap") != 0) {
+	if (system("gcc", "ikiwiki-wrap.c", "-o", possibly_foolish_untaint($config{wrapper})) != 0) {
 		error("failed to compile ikiwiki-wrap.c");
 	}
 	unlink("ikiwiki-wrap.c");
-	print "successfully generated ikiwiki-wrap\n";
-	exit 0;
+	if (defined $config{wrappermode} &&
+	    ! chmod(oct($config{wrappermode}), possibly_foolish_untaint($config{wrapper}))) {
+		error("chmod $config{wrapper}: $!");
+	}
+	print "successfully generated $config{wrapper}\n";
 } #}}}
 		
 sub misctemplate ($$) { #{{{
@@ -1133,8 +1148,25 @@ sub cgi () { #{{{
 	}
 } #}}}
 
+sub setup () { # {{{
+	my $setup=possibly_foolish_untaint($config{setup});
+	open (IN, $setup) || error("read $setup: $!\n");
+	local $/=undef;
+	my $code=<IN>;
+	($code)=$code=~/(.*)/s;
+	close IN;
+	eval $code;
+	error($@) if $@;
+	print "ikiwiki setup complete\n";
+	exit;
+} #}}}
+
 # main {{{
-gen_wrapper() if $config{wrapper};
+setup() if $config{setup};
+if ($config{wrapper}) {
+	gen_wrapper(%config);
+	exit;
+}
 memoize('pagename');
 memoize('bestlink');
 loadindex() unless $config{rebuild};

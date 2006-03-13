@@ -6,13 +6,18 @@ ikiwiki - a wiki compiler
 
 ikiwiki [options] source templates destination
 
+ikiwiki --setup configfile
+
 # DESCRIPTION
 
-`ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from `source` in the [[MarkDown]] language, using the specified html `templates` and writes it out to `destination`.
+`ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from
+`source` in the [[MarkDown]] language, using the specified html `templates`
+and writes it out to `destination`.
 
 # OPTIONS
 
-Note that most options can be shortened to single letters, and boolean flags such as --verbose can be negated with --no-verbose.
+Note that most options can be shortened to single letters, and boolean
+flags such as --verbose can be negated with --no-verbose.
 
 * --wikiname
 
@@ -26,13 +31,22 @@ Note that most options can be shortened to single letters, and boolean flags suc
 
   Force a rebuild of all pages.
 
-* --wrapper
+* --wrapper [file]
 
-  Generate a [[wrapper]] binary that is hardcoded to do action specified by the other options, using the specified input files and `destination` directory.
+  Generate a [[wrapper]] binary that is hardcoded to do action specified by
+  the other options, using the specified input files and `destination`
+  directory. The filename to use for the wrapper is optional.
 
-  The wrapper is designed to be safely made suid and be run by untrusted users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
+  The wrapper is designed to be safely made suid and be run by untrusted
+  users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
 
-  Note that the generated wrapper will ignore all command line parameters except for --params, which will make it print out the parameters it would run ikiwiki with.
+  Note that the generated wrapper will ignore all command line parameters
+  except for --params, which will make it print out the parameters it would
+  run ikiwiki with.
+
+* --wrappermode mode
+
+  Specify a mode to chmod the wrapper to after creating it.
 
 * --svn, --nosvn
 
@@ -70,6 +84,13 @@ Note that most options can be shortened to single letters, and boolean flags suc
 
   Specifies a rexexp of source files to exclude from processing.
   May be specified multiple times to add to exclude list.
+
+* --setup configfile
+
+  In setup mode, ikiwiki reads the config file, which is really a perl
+  program that can call ikiwiki internal functions. Uses of this are
+  various; one is to automatically generate wrappers for a wiki based on
+  data in a config file.
 
 # AUTHOR
 
