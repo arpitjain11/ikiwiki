@@ -89,8 +89,13 @@ flags such as --verbose can be negated with --no-verbose.
 
   In setup mode, ikiwiki reads the config file, which is really a perl
   program that can call ikiwiki internal functions. Uses of this are
-  various; one is to automatically generate wrappers for a wiki based on
-  data in a config file.
+  various; the normal one is to automatically generate wrappers for a
+  wiki based on data in a config file.
+  
+  Note that the wiki will be (re)built as part of the setup process to
+  ensure that any changes take effect.
+
+  [[ikiwiki.setup]] is an example of such a config file.
 
 # AUTHOR
 

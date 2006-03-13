@@ -5,7 +5,8 @@
 #
 # Remember to re-run ikiwiki --setup any time you edit this file.
 
-my %common=(
+%config=(%config,
+	
 	wikiname => "MyWiki",
 
 	# Be sure to customise these..
@@ -14,7 +15,7 @@ my %common=(
 	destdir => "/var/www/wiki",
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
-	historyurl => "$webdir/cgi-bin/viewcvs?[[]]"
+	#historyurl => "http://svn.myhost/trunk/[[]]",
 	
 	# Whether to integrate with svn.
 	svn => 1,
@@ -22,18 +23,21 @@ my %common=(
 	
 	# Can anonymous web users edit pages?
 	#anonok => 1,
+
 );	
 
-gen_wrapper(
-	%common,
+gen_wrapper(%config,
+	
 	cgi => 1,
-	wrapper => "$common{destdir}/ikiwiki.cgi",
+	wrapper => "$config{destdir}/ikiwiki.cgi",
 	wrappermode => 06755,
+	
 );
-gen_wrapper(
-	%common,
+gen_wrapper(%config,
+	
 	# Note that this will overwrite any exsting post-commit hoo
 	# script, which may not be what you want.
-	wrapper => "$common{svnrepo}/hooks/post-commit",
+	wrapper => "$config{svnrepo}/hooks/post-commit",
 	wrappermode => 04755,
-) if $common{$svn};
+
+) if $config{$svn};
