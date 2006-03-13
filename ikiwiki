@@ -1,4 +1,5 @@
 #!/usr/bin/perl -T
+$ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 
 use warnings;
 use strict;
@@ -6,16 +7,15 @@ use File::Find;
 use Memoize;
 use File::Spec;
 use HTML::Template;
-
+use Getopt::Long;
 BEGIN {
 	$blosxom::version="is a proper perl module too much to ask?";
 	do "/usr/bin/markdown";
 }
 
-$ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 my (%links, %oldlinks, %oldpagemtime, %renderedfiles, %pagesources);
 
-my %config=(
+my %config=( #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
 	wiki_link_regexp => qr/\[\[([^\s]+)\]\]/,
 	wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
@@ -33,13 +33,37 @@ my %config=(
 	srcdir => undef,
 	destdir => undef,
 	templatedir => undef,
-);
+); #}}}
+
+GetOptions( #{{{
+	"wikiname=s" => \$config{wikiname},
+	"verbose|v!" => \$config{verbose},
+	"rebuild!" => \$config{rebuild},
+	"wrapper!" => \$config{wrapper},
+	"svn!" => \$config{svn},
+	"anonok!" => \$config{anonok},
+	"cgi!" => \$config{cgi},
+	"url=s" => \$config{url},
+	"cgiurl=s" => \$config{cgiurl},
+	"historyurl=s" => \$config{historyurl},
+	"exclude=s@" => sub {
+		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
+	},
+) || usage();
+
+usage() unless @ARGV == 3;
+$config{srcdir} = possibly_foolish_untaint(shift);
+$config{templatedir} = possibly_foolish_untaint(shift);
+$config{destdir} = possibly_foolish_untaint(shift);
+if ($config{cgi} && ! length $config{url}) {
+	error("Must specify url to wiki with --url when using --cgi");
+} #}}}
 
 sub usage { #{{{
 	die "usage: ikiwiki [options] source templates dest\n";
 } #}}}
 
-sub error ($) { #{{{
+sub error { #{{{
 	if ($config{cgi}) {
 		print "Content-type: text/html\n\n";
 		print misctemplate("Error", "<p>Error: @_</p>");
@@ -66,7 +90,7 @@ sub mtime ($) { #{{{
 	return (stat($page))[9];
 } #}}}
 
-sub possibly_foolish_untaint ($) { #{{{
+sub possibly_foolish_untaint { #{{{
 	my $tainted=shift;
 	my ($untainted)=$tainted=~/(.*)/;
 	return $untainted;
@@ -152,11 +176,12 @@ sub findlinks ($) { #{{{
 	return @links;
 } #}}}
 
-# Given a page and the text of a link on the page, determine which existing
-# page that link best points to. Prefers pages under a subdirectory with
-# the same name as the source page, failing that goes down the directory tree
-# to the base looking for matching pages.
 sub bestlink ($$) { #{{{
+	# Given a page and the text of a link on the page, determine which
+	# existing page that link best points to. Prefers pages under a
+	# subdirectory with the same name as the source page, failing that
+	# goes down the directory tree to the base looking for matching
+	# pages.
 	my $page=shift;
 	my $link=lc(shift);
 	
@@ -321,9 +346,9 @@ sub finalize ($$) { #{{{
 	return $template->output;
 } #}}}
 
-# Important security check. Make sure to call this before saving any files
-# to the source directory.
 sub check_overwrite ($$) { #{{{
+	# Important security check. Make sure to call this before saving
+	# any files to the source directory.
 	my $dest=shift;
 	my $src=shift;
 	
@@ -628,8 +653,6 @@ FILE:		foreach my $file (@files) {
 	}
 } #}}}
 
-# Generates a C wrapper program for running ikiwiki in a specific way.
-# The wrapper may be safely made suid.
 sub gen_wrapper () { #{{{
 	eval q{use Cwd 'abs_path'};
 	$config{srcdir}=abs_path($config{srcdir});
@@ -1105,33 +1128,6 @@ sub cgi () { #{{{
 } #}}}
 
 # main {{{
-if (grep /^-/, @ARGV) {
-	eval {use Getopt::Long};
-	GetOptions(
-		"wikiname=s" => \$config{wikiname},
-		"verbose|v!" => \$config{verbose},
-		"rebuild!" => \$config{rebuild},
-		"wrapper!" => \$config{wrapper},
-		"svn!" => \$config{svn},
-		"anonok!" => \$config{anonok},
-		"cgi!" => \$config{cgi},
-		"url=s" => \$config{url},
-		"cgiurl=s" => \$config{cgiurl},
-		"historyurl=s" => \$config{historyurl},
-		"exclude=s@" => sub {
-			$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
-		},
-	) || usage();
-}
-usage() unless @ARGV == 3;
-$config{srcdir} = possibly_foolish_untaint(shift);
-$config{templatedir} = possibly_foolish_untaint(shift);
-$config{destdir} = possibly_foolish_untaint(shift);
-
-if ($config{cgi} && ! length $config{url}) {
-	error("Must specify url to wiki with --url when using --cgi");
-}
-
 gen_wrapper() if $config{wrapper};
 memoize('pagename');
 memoize('bestlink');
