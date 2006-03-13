@@ -8,10 +8,6 @@ use Memoize;
 use File::Spec;
 use HTML::Template;
 use Getopt::Long;
-BEGIN {
-	$blosxom::version="is a proper perl module too much to ask?";
-	do "/usr/bin/markdown";
-}
 
 my (%links, %oldlinks, %oldpagemtime, %renderedfiles, %pagesources);
 
@@ -253,6 +249,11 @@ sub linkify ($$) { #{{{
 sub htmlize ($$) { #{{{
 	my $type=shift;
 	my $content=shift;
+	
+	if (! $INC{"/usr/bin/markdown"}) {
+		$blosxom::version="is a proper perl module too much to ask?";
+		do "/usr/bin/markdown";
+	}
 	
 	if ($type eq '.mdwn') {
 		return Markdown::Markdown($content);
