@@ -642,7 +642,7 @@ sub gen_wrapper ($$) { #{{{
 	push @params, "--cgiurl=$cgiurl" if $cgiurl;
 	push @params, "--historyurl=$historyurl" if $historyurl;
 	push @params, "--anonok" if $anonok;
-	my $params=join(" ", @params);
+	my $params=join(" ", map { "\'$_\'" } @params);
 	my $call='';
 	foreach my $p ($this, $this, @params) {
 		$call.=qq{"$p", };
