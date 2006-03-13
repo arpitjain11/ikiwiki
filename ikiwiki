@@ -27,6 +27,7 @@ my $cgiurl="";
 my $historyurl="";
 my $svn=1;
 my $anonok=0;
+my $rebuild=0;
 
 sub usage { #{{{
 	die "usage: ikiwiki [options] source templates dest\n";
@@ -177,11 +178,12 @@ sub isinlinableimage ($) { #{{{
 sub htmllink { #{{{
 	my $page=shift;
 	my $link=shift;
-	my $noimagelink=shift;
+	my $noimageinline=shift; # don't turn links into inline html images
+	my $createsubpage=shift; # force creation of a subpage if page DNE
 
 	my $bestlink=bestlink($page, $link);
 
-	return $link if $page eq $bestlink;
+	return $link if length $bestlink && $page eq $bestlink;
 	
 	# TODO BUG: %renderedfiles may not have it, if the linked to page
 	# was also added and isn't yet rendered! Note that this bug is
@@ -191,12 +193,17 @@ sub htmllink { #{{{
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
-		return "<a href=\"$cgiurl?do=create&page=$link&from=$page\">?</a>$link"
+		if (! $createsubpage) {
+			return "<a href=\"$cgiurl?do=create&page=$link&from=$page\">?</a>$link"
+		}
+		else {
+			return "<a href=\"$cgiurl?do=create&page=$page/$link\">?</a>$link"
+		}
 	}
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
 	
-	if (! $noimagelink && isinlinableimage($bestlink)) {
+	if (! $noimageinline && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\">";
 	}
 	return "<a href=\"$bestlink\">$link</a>";
@@ -271,7 +278,7 @@ sub parentlinks ($) { #{{{
 sub indexlink () { #{{{
 	return "<a href=\"$url\">$wikiname</a>";
 } #}}}
-	
+
 sub finalize ($$) { #{{{
 	my $content=shift;
 	my $page=shift;
@@ -301,6 +308,7 @@ sub finalize ($$) { #{{{
 		parentlinks => [parentlinks($page)],
 		content => $content,
 		backlinks => [backlinks($page)],
+		discussionlink => htmllink($page, "Discussion", 1, 1),
 	);
 	
 	return $template->output;
@@ -312,8 +320,11 @@ sub check_overwrite ($$) { #{{{
 	my $dest=shift;
 	my $src=shift;
 	
-	if (! exists $renderedfiles{$src} && -e $dest) {
-		error("$dest exists and was not rendered from $src before, not overwriting");
+	if (! exists $renderedfiles{$src} && -e $dest && ! $rebuild) {
+		error("$dest exists and was rendered from ".
+			join(" ",(grep { $renderedfiles{$_} eq $dest } keys
+				%renderedfiles)).
+			", not from $src before not overwriting");
 	}
 } #}}}
 		
@@ -757,7 +768,7 @@ sub cgi_signin ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
 		title => "$wikiname signin",
-		fields => [qw(do page name password confirm_password email)],
+		fields => [qw(do page from name password confirm_password email)],
 		header => 1,
 		method => 'POST',
 		validate => {
@@ -777,6 +788,7 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "name", required => 0);
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "page", type => "hidden");
+	$form->field(name => "from", type => "hidden");
 	$form->field(name => "password", type => "password", required => 0);
 	$form->field(name => "confirm_password", type => "password", required => 0);
 	$form->field(name => "email", required => 0);
@@ -850,7 +862,8 @@ sub cgi_signin ($$) { #{{{
 			    $form->field("do") ne 'signin') {
 				print $q->redirect(
 					"$cgiurl?do=".$form->field("do").
-					"&page=".$form->field("page"));
+					"&page=".$form->field("page").
+					"&from=".$form->field("from"));;
 			}
 			else {
 				print $q->redirect($url);
@@ -1035,7 +1048,7 @@ sub cgi_editpage ($$) { #{{{
 		
 		# The trailing question mark tries to avoid broken
 		# caches and get the most recent version of the page.
-		print $q->redirect("$url/".htmlpage($page)."?");
+		print $q->redirect("$url/".htmlpage($page)."?updated");
 	}
 } #}}}
 
@@ -1085,7 +1098,6 @@ sub cgi () { #{{{
 } #}}}
 
 # main {{{
-my $rebuild=0;
 my $wrapper=0;
 if (grep /^-/, @ARGV) {
 	eval {use Getopt::Long};

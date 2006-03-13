@@ -4,16 +4,32 @@
   to point to it, but will forget to update the linkbacks in Foo/Baz.
   And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
   back to Foo/Baz.
+
+  Basically this makes creating new pages painful, top of TODO list..
+
 * Foo/Bar/Baz shows up as Bar/Baz in the linkbacks on page Foo/Bar. Should
   show as just Baz there.
 * If I try to do a web commit, to a svn+ssh repo, it fails with
   "Host key verification failed."
   I think that the setuid isn't fully taking; it should be running as me,
-  but commit log shows www-data. So maybe it has the wrong username?
+  but commit log shows www-data. So maybe it has the wrong username? Or
+  EUID/Real UID screwage.
 * Can't put the source in a directory named .source; the page finder skips
   that due to too broad exclusion of any dotfile in a path.
-* RecentChanges is a regular page, perhaps it should be automatically replaced with a link to the [[CGI]]?
+* RecentChanges is a regular page, perhaps it should be automatically
+  replaced with a link to the [[CGI]]?
 * [[ikiwiki]] should go to the same place as [[index]] (on this wiki).
 * There's no way to escape a [[WikiLink]] when discussing one on a wiki.
-* Wikilinks are even expanded in the middle of [[MarkDown]] code blocks, and probably shouldn't be (nor in blockquotes?)
-* RecentChanges is supposed to linkify WikiNames and it does, but only if the user's page exists. It doesn't add a ?link to a noneistant page to aid creating it.
+* Wikilinks are even expanded in the middle of [[MarkDown]] code blocks,
+  and probably shouldn't be (nor in blockquotes?)
+
+  Hmm, the best way to fix this would be to add WikiLink support into
+  markdown, but that will probably be a bear. I guess the question is how
+  common "[[ ]]" is, and maybe we should just provide a way to escape a
+  wikilink..
+
+Fixed bugs:
+
+* RecentChanges is supposed to linkify WikiNames and it does, but only if
+  the user's page exists. It doesn't add a ?link to a noneistant page to
+  aid creating it. (Fixed. -- [[Joey]])
