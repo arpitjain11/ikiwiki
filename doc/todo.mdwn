@@ -21,7 +21,8 @@ is built. (As long as all changes to all pages is ok.)
 
 ## docs
 
-Need to document all the command line switches in a man page and somehow on this wiki too. Can markdown generate a man page somehow?
+Need to turn [[usage]] into a man page.
+this wiki too. Can markdown generate a man page somehow?
 
 ## pluggable renderers
 
@@ -60,5 +61,15 @@ and that includes the date.
 
 What syntax do other wikis use for this? I'm considering "[[ -- ]]" (with
 spaces removed) as it has a nice nmemonic.
+
+## recentchanges links to commit diffs
+
+Would take a bit more viewcvs integration, let the be a "[diff]" link in
+recentchanges that goes to the diff for any listed change.
+
+## recentchanges more than 100
+
+Possibly add "next 100" link to it, but OTOH, you can just use svn log if
+you need that data..
 
 ## [[Bugs]]

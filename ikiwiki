@@ -13,28 +13,34 @@ BEGIN {
 }
 
 $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
-my ($srcdir, $templatedir, $destdir, %links, %oldlinks, %oldpagemtime,
-    %renderedfiles, %pagesources);
-my $wiki_link_regexp=qr/\[\[([^\s]+)\]\]/;
-my $wiki_file_regexp=qr/(^[-A-Za-z0-9_.:\/+]+$)/;
-my $wiki_file_prune_regexp=qr!((^|/).svn/|\.\.|^\.|\/\.|\.html?$)!;
-my $verbose=0;
-my $wikiname="wiki";
-my $default_pagetype=".mdwn";
-my $cgi=0;
-my $url="";
-my $cgiurl="";
-my $historyurl="";
-my $svn=1;
-my $anonok=0;
-my $rebuild=0;
+my (%links, %oldlinks, %oldpagemtime, %renderedfiles, %pagesources);
+
+my %config=(
+	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
+	wiki_link_regexp => qr/\[\[([^\s]+)\]\]/,
+	wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
+	verbose => 0,
+	wikiname => "wiki",
+	default_pageext => ".mdwn",
+	cgi => 0,
+	url => "",
+	cgiurl => "",
+	historyurl => "",
+	svn => 1,
+	anonok => 0,
+	rebuild => 0,
+	wrapper => 0,
+	srcdir => undef,
+	destdir => undef,
+	templatedir => undef,
+);
 
 sub usage { #{{{
 	die "usage: ikiwiki [options] source templates dest\n";
 } #}}}
 
 sub error ($) { #{{{
-	if ($cgi) {
+	if ($config{cgi}) {
 		print "Content-type: text/html\n\n";
 		print misctemplate("Error", "<p>Error: @_</p>");
 		exit 1;
@@ -45,11 +51,12 @@ sub error ($) { #{{{
 } #}}}
 
 sub debug ($) { #{{{
-	if (! $cgi) {
-		print "@_\n" if $verbose;
+	return unless $config{verbose};
+	if (! $config{cgi}) {
+		print "@_\n";
 	}
 	else {
-		print STDERR "@_\n" if $verbose;
+		print STDERR "@_\n";
 	}
 } #}}}
 
@@ -139,7 +146,7 @@ sub findlinks ($) { #{{{
 	my $content=shift;
 
 	my @links;
-	while ($content =~ /$wiki_link_regexp/g) {
+	while ($content =~ /$config{wiki_link_regexp}/g) {
 		push @links, lc($1);
 	}
 	return @links;
@@ -194,10 +201,10 @@ sub htmllink { #{{{
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		if (! $createsubpage) {
-			return "<a href=\"$cgiurl?do=create&page=$link&from=$page\">?</a>$link"
+			return "<a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$link"
 		}
 		else {
-			return "<a href=\"$cgiurl?do=create&page=$page/$link\">?</a>$link"
+			return "<a href=\"$config{cgiurl}?do=create&page=$page/$link\">?</a>$link"
 		}
 	}
 	
@@ -213,7 +220,7 @@ sub linkify ($$) { #{{{
 	my $content=shift;
 	my $file=shift;
 
-	$content =~ s/$wiki_link_regexp/htmllink(pagename($file), $1)/eg;
+	$content =~ s/$config{wiki_link_regexp}/htmllink(pagename($file), $1)/eg;
 	
 	return $content;
 } #}}}
@@ -271,12 +278,12 @@ sub parentlinks ($) { #{{{
 		}
 		$path.="../";
 	}
-	unshift @ret, { url => $path , page => $wikiname };
+	unshift @ret, { url => $path , page => $config{wikiname} };
 	return @ret;
 } #}}}
 
 sub indexlink () { #{{{
-	return "<a href=\"$url\">$wikiname</a>";
+	return "<a href=\"$config{url}\">$config{wikiname}</a>";
 } #}}}
 
 sub finalize ($$) { #{{{
@@ -287,24 +294,24 @@ sub finalize ($$) { #{{{
 	$title=~s/_/ /g;
 	
 	my $template=HTML::Template->new(blind_cache => 1,
-		filename => "$templatedir/page.tmpl");
+		filename => "$config{templatedir}/page.tmpl");
 	
-	if (length $cgiurl) {
-		$template->param(editurl => "$cgiurl?do=edit&page=$page");
-		if ($svn) {
-			$template->param(recentchangesurl => "$cgiurl?do=recentchanges");
+	if (length $config{cgiurl}) {
+		$template->param(editurl => "$config{cgiurl}?do=edit&page=$page");
+		if ($config{svn}) {
+			$template->param(recentchangesurl => "$config{cgiurl}?do=recentchanges");
 		}
 	}
 
-	if (length $historyurl) {
-		my $u=$historyurl;
+	if (length $config{historyurl}) {
+		my $u=$config{historyurl};
 		$u=~s/\[\[\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
 	}
 	
 	$template->param(
 		title => $title,
-		wikiname => $wikiname,
+		wikiname => $config{wikiname},
 		parentlinks => [parentlinks($page)],
 		content => $content,
 		backlinks => [backlinks($page)],
@@ -320,7 +327,7 @@ sub check_overwrite ($$) { #{{{
 	my $dest=shift;
 	my $src=shift;
 	
-	if (! exists $renderedfiles{$src} && -e $dest && ! $rebuild) {
+	if (! exists $renderedfiles{$src} && -e $dest && ! $config{rebuild}) {
 		error("$dest exists and was rendered from ".
 			join(" ",(grep { $renderedfiles{$_} eq $dest } keys
 				%renderedfiles)).
@@ -332,7 +339,7 @@ sub render ($) { #{{{
 	my $file=shift;
 	
 	my $type=pagetype($file);
-	my $content=readfile("$srcdir/$file");
+	my $content=readfile("$config{srcdir}/$file");
 	if ($type ne 'unknown') {
 		my $page=pagename($file);
 		
@@ -342,22 +349,22 @@ sub render ($) { #{{{
 		$content=htmlize($type, $content);
 		$content=finalize($content, $page);
 		
-		check_overwrite("$destdir/".htmlpage($page), $page);
-		writefile("$destdir/".htmlpage($page), $content);
+		check_overwrite("$config{destdir}/".htmlpage($page), $page);
+		writefile("$config{destdir}/".htmlpage($page), $content);
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
 	}
 	else {
 		$links{$file}=[];
-		check_overwrite("$destdir/$file", $file);
-		writefile("$destdir/$file", $content);
+		check_overwrite("$config{destdir}/$file", $file);
+		writefile("$config{destdir}/$file", $content);
 		$oldpagemtime{$file}=time;
 		$renderedfiles{$file}=$file;
 	}
 } #}}}
 
 sub loadindex () { #{{{
-	open (IN, "$srcdir/.ikiwiki/index") || return;
+	open (IN, "$config{srcdir}/.ikiwiki/index") || return;
 	while (<IN>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
@@ -373,10 +380,10 @@ sub loadindex () { #{{{
 } #}}}
 
 sub saveindex () { #{{{
-	if (! -d "$srcdir/.ikiwiki") {
-		mkdir("$srcdir/.ikiwiki");
+	if (! -d "$config{srcdir}/.ikiwiki") {
+		mkdir("$config{srcdir}/.ikiwiki");
 	}
-	open (OUT, ">$srcdir/.ikiwiki/index") || error("cannot write to index: $!");
+	open (OUT, ">$config{srcdir}/.ikiwiki/index") || error("cannot write to index: $!");
 	foreach my $page (keys %oldpagemtime) {
 		print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
 	        	join(" ", @{$links{$page}})."\n"
@@ -386,8 +393,8 @@ sub saveindex () { #{{{
 } #}}}
 
 sub rcs_update () { #{{{
-	if (-d "$srcdir/.svn") {
-		if (system("svn", "update", "--quiet", $srcdir) != 0) {
+	if (-d "$config{srcdir}/.svn") {
+		if (system("svn", "update", "--quiet", $config{srcdir}) != 0) {
 			warn("svn update failed\n");
 		}
 	}
@@ -396,9 +403,10 @@ sub rcs_update () { #{{{
 sub rcs_commit ($) { #{{{
 	my $message=shift;
 
-	if (-d "$srcdir/.svn") {
+	if (-d "$config{srcdir}/.svn") {
 		if (system("svn", "commit", "--quiet", "-m",
-		           possibly_foolish_untaint($message), $srcdir) != 0) {
+		           possibly_foolish_untaint($message),
+			   $config{srcdir}) != 0) {
 			warn("svn commit failed\n");
 		}
 	}
@@ -407,14 +415,14 @@ sub rcs_commit ($) { #{{{
 sub rcs_add ($) { #{{{
 	my $file=shift;
 
-	if (-d "$srcdir/.svn") {
+	if (-d "$config{srcdir}/.svn") {
 		my $parent=dirname($file);
-		while (! -d "$srcdir/$parent/.svn") {
+		while (! -d "$config{srcdir}/$parent/.svn") {
 			$file=$parent;
 			$parent=dirname($file);
 		}
 		
-		if (system("svn", "add", "--quiet", "$srcdir/$file") != 0) {
+		if (system("svn", "add", "--quiet", "$config{srcdir}/$file") != 0) {
 			warn("svn add failed\n");
 		}
 	}
@@ -427,8 +435,8 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
 	
-	if (-d "$srcdir/.svn") {
-		my $info=`LANG=C svn info $srcdir`;
+	if (-d "$config{srcdir}/.svn") {
+		my $info=`LANG=C svn info $config{srcdir}`;
 		my ($svn_url)=$info=~/^URL: (.*)$/m;
 
 		# FIXME: currently assumes that the wiki is somewhere
@@ -504,22 +512,22 @@ sub refresh () { #{{{
 	find({
 		no_chdir => 1,
 		wanted => sub {
-			if (/$wiki_file_prune_regexp/) {
+			if (/$config{wiki_file_prune_regexp}/) {
 				$File::Find::prune=1;
 			}
 			elsif (! -d $_) {
-				my ($f)=/$wiki_file_regexp/; # untaint
+				my ($f)=/$config{wiki_file_regexp}/; # untaint
 				if (! defined $f) {
 					warn("skipping bad filename $_\n");
 				}
 				else {
-					$f=~s/^\Q$srcdir\E\/?//;
+					$f=~s/^\Q$config{srcdir}\E\/?//;
 					push @files, $f;
 					$exists{pagename($f)}=1;
 				}
 			}
 		},
-	}, $srcdir);
+	}, $config{srcdir});
 
 	my %rendered;
 
@@ -539,7 +547,7 @@ sub refresh () { #{{{
 		if (! $exists{$page}) {
 			debug("removing old page $page");
 			push @del, $renderedfiles{$page};
-			prune($destdir."/".$renderedfiles{$page});
+			prune($config{destdir}."/".$renderedfiles{$page});
 			delete $renderedfiles{$page};
 			$oldpagemtime{$page}=0;
 			delete $pagesources{$page};
@@ -551,7 +559,7 @@ sub refresh () { #{{{
 		my $page=pagename($file);
 		
 		if (! exists $oldpagemtime{$page} ||
-		    mtime("$srcdir/$file") > $oldpagemtime{$page}) {
+		    mtime("$config{srcdir}/$file") > $oldpagemtime{$page}) {
 		    	debug("rendering changed file $file");
 			render($file);
 			$rendered{$file}=1;
@@ -622,26 +630,25 @@ FILE:		foreach my $file (@files) {
 
 # Generates a C wrapper program for running ikiwiki in a specific way.
 # The wrapper may be safely made suid.
-sub gen_wrapper ($$) { #{{{
-	my ($svn, $rebuild)=@_;
-
+sub gen_wrapper () { #{{{
 	eval q{use Cwd 'abs_path'};
-	$srcdir=abs_path($srcdir);
-	$destdir=abs_path($destdir);
+	$config{srcdir}=abs_path($config{srcdir});
+	$config{destdir}=abs_path($config{destdir});
 	my $this=abs_path($0);
 	if (! -x $this) {
 		error("$this doesn't seem to be executable");
 	}
 
-	my @params=($srcdir, $templatedir, $destdir, "--wikiname=$wikiname");
-	push @params, "--verbose" if $verbose;
-	push @params, "--rebuild" if $rebuild;
-	push @params, "--nosvn" if !$svn;
-	push @params, "--cgi" if $cgi;
-	push @params, "--url=$url" if $url;
-	push @params, "--cgiurl=$cgiurl" if $cgiurl;
-	push @params, "--historyurl=$historyurl" if $historyurl;
-	push @params, "--anonok" if $anonok;
+	my @params=($config{srcdir}, $config{templatedir}, $config{destdir},
+		"--wikiname=$config{wikiname}");
+	push @params, "--verbose" if $config{verbose};
+	push @params, "--rebuild" if $config{rebuild};
+	push @params, "--nosvn" if !$config{svn};
+	push @params, "--cgi" if $config{cgi};
+	push @params, "--url=$config{url}" if length $config{url};
+	push @params, "--cgiurl=$config{cgiurl}" if length $config{cgiurl};
+	push @params, "--historyurl=$config{historyurl}" if length $config{historyurl};
+	push @params, "--anonok" if $config{anonok};
 	my $params=join(" ", map { "\'$_\'" } @params);
 	my $call='';
 	foreach my $p ($this, $this, @params) {
@@ -652,7 +659,7 @@ sub gen_wrapper ($$) { #{{{
 	my @envsave;
 	push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
 	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE
-		       HTTP_COOKIE} if $cgi;
+		       HTTP_COOKIE} if $config{cgi};
 	my $envsave="";
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"
@@ -706,12 +713,12 @@ sub misctemplate ($$) { #{{{
 	my $pagebody=shift;
 	
 	my $template=HTML::Template->new(
-		filename => "$templatedir/misc.tmpl"
+		filename => "$config{templatedir}/misc.tmpl"
 	);
 	$template->param(
 		title => $title,
 		indexlink => indexlink(),
-		wikiname => $wikiname,
+		wikiname => $config{wikiname},
 		pagebody => $pagebody,
 	);
 	return $template->output;
@@ -721,12 +728,12 @@ sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
 	
 	my $template=HTML::Template->new(
-		filename => "$templatedir/recentchanges.tmpl"
+		filename => "$config{templatedir}/recentchanges.tmpl"
 	);
 	$template->param(
 		title => "RecentChanges",
 		indexlink => indexlink(),
-		wikiname => $wikiname,
+		wikiname => $config{wikiname},
 		changelog => [rcs_recentchanges(100)],
 	);
 	print $q->header, $template->output;
@@ -737,7 +744,7 @@ sub userinfo_get ($$) { #{{{
 	my $field=shift;
 
 	eval q{use Storable};
-	my $userdata=eval{ Storable::lock_retrieve("$srcdir/.ikiwiki/userdb") };
+	my $userdata=eval{ Storable::lock_retrieve("$config{srcdir}/.ikiwiki/userdb") };
 	if (! defined $userdata || ! ref $userdata || 
 	    ! exists $userdata->{$user} || ! ref $userdata->{$user}) {
 		return "";
@@ -750,13 +757,13 @@ sub userinfo_set ($$) { #{{{
 	my $info=shift;
 	
 	eval q{use Storable};
-	my $userdata=eval{ Storable::lock_retrieve("$srcdir/.ikiwiki/userdb") };
+	my $userdata=eval{ Storable::lock_retrieve("$config{srcdir}/.ikiwiki/userdb") };
 	if (! defined $userdata || ! ref $userdata) {
 		$userdata={};
 	}
 	$userdata->{$user}=$info;
 	my $oldmask=umask(077);
-	my $ret=Storable::lock_store($userdata, "$srcdir/.ikiwiki/userdb");
+	my $ret=Storable::lock_store($userdata, "$config{srcdir}/.ikiwiki/userdb");
 	umask($oldmask);
 	return $ret;
 } #}}}
@@ -767,7 +774,7 @@ sub cgi_signin ($$) { #{{{
 
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
-		title => "$wikiname signin",
+		title => "$config{wikiname} signin",
 		fields => [qw(do page from name password confirm_password email)],
 		header => 1,
 		method => 'POST',
@@ -782,7 +789,8 @@ sub cgi_signin ($$) { #{{{
 		params => $q,
 		action => $q->request_uri,
 		header => 0,
-		template => (-e "$templatedir/signin.tmpl" ? "$templatedir/signin.tmpl" : "")
+		template => (-e "$config{templatedir}/signin.tmpl" ?
+		              "$config{templatedir}/signin.tmpl" : "")
 	);
 	
 	$form->field(name => "name", required => 0);
@@ -861,12 +869,12 @@ sub cgi_signin ($$) { #{{{
 			if (defined $form->field("do") && 
 			    $form->field("do") ne 'signin') {
 				print $q->redirect(
-					"$cgiurl?do=".$form->field("do").
+					"$config{cgiurl}?do=".$form->field("do").
 					"&page=".$form->field("page").
 					"&from=".$form->field("from"));;
 			}
 			else {
-				print $q->redirect($url);
+				print $q->redirect($config{url});
 			}
 		}
 		elsif ($form->submitted eq 'Register') {
@@ -889,23 +897,22 @@ sub cgi_signin ($$) { #{{{
 		elsif ($form->submitted eq 'Mail Password') {
 			my $user_name=$form->field("name");
 			my $template=HTML::Template->new(
-				filename => "$templatedir/passwordmail.tmpl"
+				filename => "$config{templatedir}/passwordmail.tmpl"
 			);
 			$template->param(
 				user_name => $user_name,
 				user_password => userinfo_get($user_name, "password"),
-				wikiurl => $url,
-				wikiname => $wikiname,
+				wikiurl => $config{url},
+				wikiname => $config{wikiname},
 				REMOTE_ADDR => $ENV{REMOTE_ADDR},
 			);
 			
 			eval q{use Mail::Sendmail};
-			my ($fromhost) = $cgiurl =~ m!/([^/]+)!;
-			print STDERR "$< $> >>> $cgiurl ".(getpwuid($>))[0]."@".$fromhost."\n";
+			my ($fromhost) = $config{cgiurl} =~ m!/([^/]+)!;
 			sendmail(
 				To => userinfo_get($user_name, "email"),
-				From => "$wikiname admin <".(getpwuid($>))[0]."@".$fromhost.">",
-				Subject => "$wikiname information",
+				From => "$config{wikiname} admin <".(getpwuid($>))[0]."@".$fromhost.">",
+				Subject => "$config{wikiname} information",
 				Message => $template->output,
 			) or error("Failed to send mail");
 			
@@ -938,12 +945,12 @@ sub cgi_editpage ($$) { #{{{
 		params => $q,
 		action => $q->request_uri,
 		table => 0,
-		template => "$templatedir/editpage.tmpl"
+		template => "$config{templatedir}/editpage.tmpl"
 	);
 	
-	my ($page)=$form->param('page')=~/$wiki_file_regexp/;
+	my ($page)=$form->param('page')=~/$config{wiki_file_regexp}/;
 	if (! defined $page || ! length $page || $page ne $q->param('page') ||
-	    $page=~/$wiki_file_prune_regexp/ || $page=~/^\//) {
+	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
 		error("bad page name");
 	}
 	$page=lc($page);
@@ -956,7 +963,7 @@ sub cgi_editpage ($$) { #{{{
 		cols => 80);
 	
 	if ($form->submitted eq "Cancel") {
-		print $q->redirect("$url/".htmlpage($page));
+		print $q->redirect("$config{url}/".htmlpage($page));
 		return;
 	}
 	if (! $form->submitted || ! $form->validate) {
@@ -964,15 +971,15 @@ sub cgi_editpage ($$) { #{{{
 			if (exists $pagesources{lc($page)}) {
 				# hmm, someone else made the page in the
 				# meantime?
-				print $q->redirect("$url/".htmlpage($page));
+				print $q->redirect("$config{url}/".htmlpage($page));
 				return;
 			}
 			
 			my @page_locs;
-			my ($from)=$form->param('from')=~/$wiki_file_regexp/;
+			my ($from)=$form->param('from')=~/$config{wiki_file_regexp}/;
 			if (! defined $from || ! length $from ||
 			    $from ne $form->param('from') ||
-			    $from=~/$wiki_file_prune_regexp/ || $from=~/^\//) {
+			    $from=~/$config{wiki_file_prune_regexp}/ || $from=~/^\//) {
 				@page_locs=$page;
 			}
 			else {
@@ -994,7 +1001,7 @@ sub cgi_editpage ($$) { #{{{
 		elsif ($form->field("do") eq "edit") {
 			my $content="";
 			if (exists $pagesources{lc($page)}) {
-				$content=readfile("$srcdir/$pagesources{lc($page)}");
+				$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
 				$content=~s/\n/\r\n/g;
 			}
 			$form->tmpl_param("page_select", 0);
@@ -1004,13 +1011,13 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("editing $page");
 		}
 		
-		$form->tmpl_param("can_commit", $svn);
+		$form->tmpl_param("can_commit", $config{svn});
 		$form->tmpl_param("indexlink", indexlink());
 		print $form->render(submit => ["Save Page", "Cancel"]);
 	}
 	else {
 		# save page
-		my $file=$page.$default_pagetype;
+		my $file=$page.$config{default_pageext};
 		my $newfile=1;
 		if (exists $pagesources{lc($page)}) {
 			$file=$pagesources{lc($page)};
@@ -1020,7 +1027,7 @@ sub cgi_editpage ($$) { #{{{
 		my $content=$form->field('content');
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
-		writefile("$srcdir/$file", $content);
+		writefile("$config{srcdir}/$file", $content);
 		
 		my $message="web commit ";
 		if ($session->param("name")) {
@@ -1034,7 +1041,7 @@ sub cgi_editpage ($$) { #{{{
 			$message.=": ".$form->field('comments');
 		}
 		
-		if ($svn) {
+		if ($config{svn}) {
 			if ($newfile) {
 				rcs_add($file);
 			}
@@ -1048,7 +1055,7 @@ sub cgi_editpage ($$) { #{{{
 		
 		# The trailing question mark tries to avoid broken
 		# caches and get the most recent version of the page.
-		print $q->redirect("$url/".htmlpage($page)."?updated");
+		print $q->redirect("$config{url}/".htmlpage($page)."?updated");
 	}
 } #}}}
 
@@ -1073,11 +1080,11 @@ sub cgi () { #{{{
 
 	my $oldmask=umask(077);
 	my $session = CGI::Session->new("driver:db_file", $q,
-		{ FileName => "$srcdir/.ikiwiki/sessions.db" });
+		{ FileName => "$config{srcdir}/.ikiwiki/sessions.db" });
 	umask($oldmask);
 	
 	# Everything below this point needs the user to be signed in.
-	if ((! $anonok && ! defined $session->param("name") ||
+	if ((! $config{anonok} && ! defined $session->param("name") ||
 		! userinfo_get($session->param("name"), "regdate")) || $do eq 'signin') {
 		cgi_signin($q, $session);
 	
@@ -1098,40 +1105,42 @@ sub cgi () { #{{{
 } #}}}
 
 # main {{{
-my $wrapper=0;
 if (grep /^-/, @ARGV) {
 	eval {use Getopt::Long};
 	GetOptions(
-		"wikiname=s" => \$wikiname,
-		"verbose|v" => \$verbose,
-		"rebuild!" => \$rebuild,
-		"wrapper!" => \$wrapper,
-		"svn!" => \$svn,
-		"anonok!" => \$anonok,
-		"cgi!" => \$cgi,
-		"url=s" => \$url,
-		"cgiurl=s" => \$cgiurl,
-		"historyurl=s" => \$historyurl,
+		"wikiname=s" => \$config{wikiname},
+		"verbose|v!" => \$config{verbose},
+		"rebuild!" => \$config{rebuild},
+		"wrapper!" => \$config{wrapper},
+		"svn!" => \$config{svn},
+		"anonok!" => \$config{anonok},
+		"cgi!" => \$config{cgi},
+		"url=s" => \$config{url},
+		"cgiurl=s" => \$config{cgiurl},
+		"historyurl=s" => \$config{historyurl},
+		"exclude=s@" => sub {
+			$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
+		},
 	) || usage();
 }
 usage() unless @ARGV == 3;
-($srcdir) = possibly_foolish_untaint(shift);
-($templatedir) = possibly_foolish_untaint(shift);
-($destdir) = possibly_foolish_untaint(shift);
+$config{srcdir} = possibly_foolish_untaint(shift);
+$config{templatedir} = possibly_foolish_untaint(shift);
+$config{destdir} = possibly_foolish_untaint(shift);
 
-if ($cgi && ! length $url) {
+if ($config{cgi} && ! length $config{url}) {
 	error("Must specify url to wiki with --url when using --cgi");
 }
 
-gen_wrapper($svn, $rebuild) if $wrapper;
+gen_wrapper() if $config{wrapper};
 memoize('pagename');
 memoize('bestlink');
-loadindex() unless $rebuild;
-if ($cgi) {
+loadindex() unless $config{rebuild};
+if ($config{cgi}) {
 	cgi();
 }
 else {
-	rcs_update() if $svn;
+	rcs_update() if $config{svn};
 	refresh();
 	saveindex();
 }

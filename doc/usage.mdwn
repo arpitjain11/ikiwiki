@@ -66,6 +66,11 @@ Note that most options can be shortened to single letters, and boolean flags suc
 
   Specifies the url to link to for page history browsing. In the url, "[[]]" is replaced with the page to browse. It's common to use [[ViewCVS]] for this.
 
+* --exclude regexp
+
+  Specifies a rexexp of source files to exclude from processing.
+  May be specified multiple times to add to exclude list.
+
 # AUTHOR
 
 Joey Hess <joey@kitenet.net>
