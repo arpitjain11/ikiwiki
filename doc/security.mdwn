@@ -63,6 +63,12 @@ If someone checks in a symlink to /etc/passwd, ikiwiki would publish that.
 To aoid this, ikiwiki will need to avoid reading files that are symlinks.
 TODO and note discussion of races above.
 
+## setup files
+
+Setup files are not safe to keep in subversion with the rest of the wiki.
+Just don't do it. [[ikiwiki.setup]] is *not* used as the setup file for
+this wiki, BTW.
+
 ----
 
 # Hopefully non-holes
