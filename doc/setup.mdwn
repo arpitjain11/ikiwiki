@@ -54,16 +54,17 @@ optional support for commits from the web.
    directories, and read through and configure the rest of the file to your
    liking.
 
-   Note that the default file will enable a [[post-commit]] hook to
-   update the wiki, but has cgi support turned off.
+   Note that the default file has a block to configure a svnwraper. This
+   sets up a [[post-commit]] hook to update the wiki.
 
-   When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it will
-   generate the subversion [[post-commit]] hook and update your wiki.
+   When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
+   will set everything up and update your wiki.
 
 8. Set up [[CGI]] to allow editing the wiki from the web.
 
-   Just edit ikiwiki.setup, change cgiwrapper to 1, and optioanlly anonok
-   to 1, run `ikiwiki --setup ikiwiki.setup`, and you're done!
+   Just edit ikiwiki.setup, uncomment the block for the cgiwrapper, make
+   sure the filename for the cgi wrapper is ok, run 
+   `ikiwiki --setup ikiwiki.setup`, and you're done!
 
 9. Add [[PageHistory]] links to the top of pages. This requires you to have
    setup [[ViewCVS]] or something similar to access your [[Subversion]]

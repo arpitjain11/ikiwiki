@@ -1158,15 +1158,20 @@ sub setup () { # {{{
 	my $code=<IN>;
 	($code)=$code=~/(.*)/s;
 	close IN;
+
+	my (%setup);
 	eval $code;
 	error($@) if $@;
-	print "$config{wikiname} setup complete, now forcing a rebuild.\n";
-	$config{cgi}=0;
-	$config{rebuild}=1;
-	foreach my $c (keys %config) {
-		$config{$c}=possibly_foolish_untaint($config{$c})
-			if defined $config{$c};
+	
+	gen_wrapper(%config, %setup, %{$setup{cgiwrapper}}) if $setup{cgiwrapper};
+	gen_wrapper(%config, %setup, %{$setup{svnwrapper}}) if $setup{svnwrapper};
+	
+	print "$setup{wikiname} setup complete, now forcing a rebuild\n";
+	foreach my $c (keys %setup) {
+		$config{$c}=possibly_foolish_untaint($setup{$c})
+			if defined $setup{$c} && ! ref $setup{$c};
 	}
+	$config{rebuild}=1;
 	refresh();
 	saveindex();
 	exit;

@@ -1,12 +1,11 @@
 #!/usr/bin/perl
 # Configuration file for ikiwiki.
-# Passing this to ikiwiki --setup will make ikiwiki generate tw
+# Passing this to ikiwiki --setup will make ikiwiki generate two
 # wrapper programs, one for cgi and one for a subversion post-commit hook.
 #
 # Remember to re-run ikiwiki --setup any time you edit this file.
 
-%config=(%config,
-	
+%setup=(
 	wikiname => "MyWiki",
 
 	# Be sure to customise these..
@@ -22,26 +21,21 @@
 	svn => 1,
 	svnrepo => "/svn/wiki",
 
-	# Whether to enable a cgi wrapper.
-	cgiwrapper => 0,
+	# The svn wrapper.
+	svnwrapper => {
+		# Note that this will overwrite any exsting post-commit hoo
+		# script, which may not be what you want.
+		wrapper => "$config{svnrepo}/hooks/post-commit",
+		wrappermode => 04755,
+	},
+	
+	# The cgi wrapper.
+	#cgiwrapper => {
+	#	cgi => 1,
+	#	wrapper => "/var/www/wiki/ikiwiki.cgi",
+	#	wrappermode => 06755,
+	#},
+
 	# Can anonymous web users edit pages?
 	#anonok => 1,
-
-);	
-
-gen_wrapper(%config,
-	
-	cgi => 1,
-	wrapper => "$config{destdir}/ikiwiki.cgi",
-	wrappermode => 06755,
-	
-) if $config{cgiwrapper};
-
-gen_wrapper(%config,
-	
-	# Note that this will overwrite any exsting post-commit hoo
-	# script, which may not be what you want.
-	wrapper => "$config{svnrepo}/hooks/post-commit",
-	wrappermode => 04755,
-
-) if $config{svn};
+);
