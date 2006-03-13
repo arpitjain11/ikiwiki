@@ -36,42 +36,43 @@ optional support for commits from the web.
 
 6. Repeat steps 4 and 5 as desired, editing or adding pages and rebuilding
    the wiki. You can play around with other ikiwiki parameters such as
-   --wikiname too. Get conformatble with its command line.
+   --wikiname too. Get confortable with its command line.
 
-7. Set up a Subversion [[post-commit]] hook to automatically rebuild your
-   wiki when you commit to it.
+7. By now you should be getting tired of typing in all the command line
+   options each time you change something in your wiki's setup. And it's
+   also getting old to have to manualy rebuild the wiki each time you
+   change a file. Time to introduce setup files. 
+   
+   A sample setup file is [[ikiwiki.setup]]. Download it (or copy it from
+   `doc/ikiwiki.setup` in the ikiwiki sources), and edit it. 
+   
+   Most of the options, like `wikiname` in the setup file are the same as
+   ikiwiki's command line options (documented in [[usage]]. `srcdir`,
+   `templatedir` and `destdir` are the three directories you specify when
+   running ikiwiki by hand. `svnrepo` is the path to your subversion 
+   repository. Make sure that all of these are pointing to the right
+   directories, and read through and configure the rest of the file to your
+   liking.
 
-		ikiwiki ~/wikiwc/ \
-                    /usr/lib/ikiwiki/templates ~/public_html/wiki/ \
-			--url=http://host/~you/wiki/ --wrapper
-		mv ikiwiki-wrap /svn/wikirepo/hooks/post-commit
+   Note that the default file will enable a [[post-commit]] hook to
+   update the wiki, but has cgi support turned off.
 
-8. Set up a [[CGI]] to allow editing the wiki from the web.
+   When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it will
+   generate the subversion [[post-commit]] hook and update your wiki.
 
-		ikiwiki ~/wikiwc/ \
-                    /usr/lib/ikiwiki/templates ~/public_html/wiki/ \
-			--url=http://host/~you/wiki/ --wrapper --cgi
-		chmod 6755 ikiwiki-wrap
-		mv wrapper ~/public_html/wiki/ikiwki.cgi
+8. Set up [[CGI]] to allow editing the wiki from the web.
 
-   Note that this assumes that your web server will run CGI scripts from
-   your public_html directory. You might need to put it somewhere else
-   depending on your web server configuration.
+   Just edit ikiwiki.setup, change cgiwrapper to 1, and optioanlly anonok
+   to 1, run `ikiwiki --setup ikiwiki.setup`, and you're done!
 
-9. Add links to the CGI to all the pages in your wiki, and update your
-   post-commit hook to add such links when updating the wiki in the
-   future. Note the use of the [[WrapperParamsTrick]].
+9. Add [[PageHistory]] links to the top of pages. This requires you to have
+   setup [[ViewCVS]] or something similar to access your [[Subversion]]
+   repository.  The `historyurl` setting makes ikiwiki add the links, and 
+   in that url, "[[]]" is replaced with the name of the file to view. So
+   edit ikiwiki.setup and set `historyurl` to something like this:
 
-		ikiwiki $(/svn/wikirepo/hooks/post-commit --params) \
-			--cgiurl=http://host/~you/wiki/ikiwiki.cgi --wrapper
-		mv ikiwiki-wrap /svn/wikirepo/hooks/post-commit
-		ikiwiki $(/svn/wikirepo/hooks/post-commit --params) --rebuild
+   	`http://svn.host/trunk/[[]]?root=wiki`
+   
+   Then run `ikiwiki --setup ikiwiki.setup` again.
 
-   Be sure to change the cgiurl to the actual url to the wiki.cgi you
-   installed in step 9.
-
-10. Add [[PageHistory]] links to the top of pages. This requires you to have setup [[ViewCVS]] or something similar to access your [[Subversion]] repository.  The --historyurl parameter makes ikiwiki add the links, and in that url, "[[]]" is replaced with the name of the file to view. So repeat step 9 to rebuild the wiki post commit wrapper and wiki, adding a historyurl something like this one:
-
-                --historyurl='http://svn.host/trunk/[[]]?root=wiki'
-
-11. Enjoy your new wiki! Add yourself to [[IkiWikiUsers]]
+10. Enjoy your new wiki! Add yourself to [[IkiWikiUsers]]

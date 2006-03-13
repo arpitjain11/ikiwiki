@@ -13,6 +13,7 @@
 	srcdir => "/path/to/source",
 	templatedir => "/path/to/templates",
 	destdir => "/var/www/wiki",
+
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
 	#historyurl => "http://svn.myhost/trunk/[[]]",
@@ -20,7 +21,9 @@
 	# Whether to integrate with svn.
 	svn => 1,
 	svnrepo => "/svn/wiki",
-	
+
+	# Whether to enable a cgi wrapper.
+	cgiwrapper => 0,
 	# Can anonymous web users edit pages?
 	#anonok => 1,
 
@@ -32,7 +35,8 @@ gen_wrapper(%config,
 	wrapper => "$config{destdir}/ikiwiki.cgi",
 	wrappermode => 06755,
 	
-);
+) if $config{cgiwrapper};
+
 gen_wrapper(%config,
 	
 	# Note that this will overwrite any exsting post-commit hoo
@@ -40,4 +44,4 @@ gen_wrapper(%config,
 	wrapper => "$config{svnrepo}/hooks/post-commit",
 	wrappermode => 04755,
 
-) if $config{$svn};
+) if $config{svn};
