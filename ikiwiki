@@ -3,7 +3,6 @@ $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 
 use warnings;
 use strict;
-use File::Find;
 use Memoize;
 use File::Spec;
 use HTML::Template;
@@ -251,7 +250,9 @@ sub htmlize ($$) { #{{{
 	my $content=shift;
 	
 	if (! $INC{"/usr/bin/markdown"}) {
+		no warnings 'once';
 		$blosxom::version="is a proper perl module too much to ask?";
+		use warnings 'all';
 		do "/usr/bin/markdown";
 	}
 	
@@ -535,11 +536,15 @@ sub refresh () { #{{{
 	# Find existing pages.
 	my %exists;
 	my @files;
+	
+	eval q{use File::Find};
 	find({
 		no_chdir => 1,
 		wanted => sub {
 			if (/$config{wiki_file_prune_regexp}/) {
+				no warnings 'once';
 				$File::Find::prune=1;
+				use warnings "all";
 			}
 			elsif (! -d $_) {
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
