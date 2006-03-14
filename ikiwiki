@@ -69,11 +69,8 @@ sub error { #{{{
 	if ($config{cgi}) {
 		print "Content-type: text/html\n\n";
 		print misctemplate("Error", "<p>Error: @_</p>");
-		exit 1;
 	}
-	else {
-		die @_;
-	}
+	die @_;
 } #}}}
 
 sub debug ($) { #{{{
@@ -364,10 +361,10 @@ sub check_overwrite ($$) { #{{{
 	my $src=shift;
 	
 	if (! exists $renderedfiles{$src} && -e $dest && ! $config{rebuild}) {
-		error("$dest exists and was rendered from ".
+		error("$dest already exists and was rendered from ".
 			join(" ",(grep { $renderedfiles{$_} eq $dest } keys
 				%renderedfiles)).
-			", not from $src before not overwriting");
+			", before, so not rendering from $src");
 	}
 } #}}}
 		
@@ -692,7 +689,7 @@ sub gen_wrapper (@) { #{{{
 	push @params, "--cgiurl=$config{cgiurl}" if length $config{cgiurl};
 	push @params, "--historyurl=$config{historyurl}" if length $config{historyurl};
 	push @params, "--anonok" if $config{anonok};
-	my $params=join(" ", map { "\'$_\'" } @params);
+	my $params=join(" ", @params);
 	my $call='';
 	foreach my $p ($this, $this, @params) {
 		$call.=qq{"$p", };
