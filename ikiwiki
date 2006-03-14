@@ -165,14 +165,17 @@ sub writefile ($$) { #{{{
 	close OUT;
 } #}}}
 
-sub findlinks ($) { #{{{
+sub findlinks ($$) { #{{{
 	my $content=shift;
+	my $page=shift;
 
 	my @links;
 	while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
 		push @links, lc($1);
 	}
-	return @links;
+	# Discussion links are a special case since they're not in the text
+	# of the page, but on its template.
+	return @links, "$page/discussion";
 } #}}}
 
 sub bestlink ($$) { #{{{
@@ -377,7 +380,7 @@ sub render ($) { #{{{
 	if ($type ne 'unknown') {
 		my $page=pagename($file);
 		
-		$links{$page}=[findlinks($content)];
+		$links{$page}=[findlinks($content, $page)];
 		
 		$content=linkify($content, $file);
 		$content=htmlize($type, $content);
