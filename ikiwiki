@@ -210,9 +210,15 @@ sub htmllink { #{{{
 	my $page=shift;
 	my $link=shift;
 	my $noimageinline=shift; # don't turn links into inline html images
-	my $createsubpage=shift; # force creation of a subpage if page DNE
+	my $forcesubpage=shift; # force a link to a subpage
 
-	my $bestlink=bestlink($page, $link);
+	my $bestlink;
+	if (! $forcesubpage) {
+		$bestlink=bestlink($page, $link);
+	}
+	else {
+		$bestlink="$page/".lc($link);
+	}
 
 	return $link if length $bestlink && $page eq $bestlink;
 	
@@ -224,12 +230,7 @@ sub htmllink { #{{{
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
-		if (! $createsubpage) {
-			return "<a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$link"
-		}
-		else {
-			return "<a href=\"$config{cgiurl}?do=create&page=$page/$link\">?</a>$link"
-		}
+		return "<a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$link"
 	}
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
