@@ -77,4 +77,13 @@ recentchanges that goes to the diff for any listed change.
 Possibly add "next 100" link to it, but OTOH, you can just use svn log if
 you need that data..
 
+## setup classes
+
+The setup files should "use WikiWiki::Setup" and the like at the top, and
+indeed could just be one big use that passes all params to the module's
+importer. The module then handles running ikiwiki functions. This would
+allow for different types of setup files for more than just the one
+hardcoded thing there is now, and would probably be good for upgrades,
+incompatible changes, etc, too.
+
 ## [[Bugs]]

@@ -307,15 +307,14 @@ sub parentlinks ($) { #{{{
 	my $skip=1;
 	foreach my $dir (reverse split("/", $page)) {
 		if (! $skip) {
+			$path.="../";
 			unshift @ret, { url => "$path$dir.html", page => $dir };
 		}
 		else {
 			$skip=0;
 		}
-		$path.="../";
 	}
-	$path=~s!../!!;
-	unshift @ret, { url => $path , page => $config{wikiname} };
+	unshift @ret, { url => length $path ? $path : ".", page => $config{wikiname} };
 	return @ret;
 } #}}}
 
