@@ -1096,7 +1096,9 @@ sub cgi_editpage ($$) { #{{{
 			rcs_commit($message);
 		}
 		else {
+			loadindex();
 			refresh();
+			saveindex();
 		}
 		
 		# The trailing question mark tries to avoid broken
