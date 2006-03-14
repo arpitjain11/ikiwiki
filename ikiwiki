@@ -1020,26 +1020,31 @@ sub cgi_editpage ($$) { #{{{
 			}
 			
 			my @page_locs;
+			my $best_loc;
 			my ($from)=$form->param('from')=~/$config{wiki_file_regexp}/;
 			if (! defined $from || ! length $from ||
 			    $from ne $form->param('from') ||
 			    $from=~/$config{wiki_file_prune_regexp}/ || $from=~/^\//) {
-				@page_locs=$page;
+				@page_locs=$best_loc=$page;
 			}
 			else {
 				my $dir=$from."/";
 				$dir=~s![^/]+/$!!;
 				push @page_locs, $dir.$page;
 				push @page_locs, "$from/$page";
+				$best_loc="$from/$page";
 				while (length $dir) {
 					$dir=~s![^/]+/$!!;
 					push @page_locs, $dir.$page;
 				}
+
+				@page_locs = grep { ! exists
+					$pagesources{lc($_)} } @page_locs;
 			}
 
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
-				options => \@page_locs);
+				options => \@page_locs, value => $best_loc);
 			$form->title("creating $page");
 		}
 		elsif ($form->field("do") eq "edit") {
