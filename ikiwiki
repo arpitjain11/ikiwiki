@@ -314,6 +314,7 @@ sub parentlinks ($) { #{{{
 		}
 		$path.="../";
 	}
+	$path=~s!../!!;
 	unshift @ret, { url => $path , page => $config{wikiname} };
 	return @ret;
 } #}}}
