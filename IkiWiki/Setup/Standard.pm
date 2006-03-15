@@ -12,10 +12,9 @@ use strict;
 sub import {
 	my %setup=%{$_[1]};
 
-
 	::debug("generating wrappers..");
-	foreach my $wrapper (@{$setup{wrapper}}) {
-		::gen_wrapper(%::config, %setup, %{$wrapper});
+	foreach my $wrapper (@{$setup{wrappers}}) {
+		::gen_wrapper(%::config, verbose => 0, %setup, %{$wrapper});
 	}
 
 	::debug("rebuilding wiki..");
