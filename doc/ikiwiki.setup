@@ -10,8 +10,8 @@ use IkiWiki::Setup::Standard {
 
 	# Be sure to customise these..
 	srcdir => "/path/to/source",
-	templatedir => "/path/to/templates",
 	destdir => "/var/www/wiki",
+	templatedir => "/usr/share/ikiwiki/templates",
 
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
