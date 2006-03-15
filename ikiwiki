@@ -525,7 +525,7 @@ sub rcs_recentchanges ($) { #{{{
 				@pages=@message=();
 			}
 			elsif ($state eq 'body') {
-				push @message, {line => $_},
+				push @message, {line => escapeHTML($_)},
 			}
 		}
 	}
