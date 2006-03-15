@@ -69,6 +69,12 @@ Setup files are not safe to keep in subversion with the rest of the wiki.
 Just don't do it. [[ikiwiki.setup]] is *not* used as the setup file for
 this wiki, BTW.
 
+## svn commit logs
+
+Currently html is not escape in svn commit logs, this should probably be fixed.
+
+Anyone with svn commit access can forge "web commit from foo" and make it appeat on [[RecentChanges]] like foo committed. One way to avoid this would be to limit web commits to those done by a certian user.
+
 ----
 
 # Hopefully non-holes
