@@ -24,7 +24,7 @@ binary-indep: build
 	$(MAKE) pure_install INSTALLDIRS=vendor \
 		PREFIX=$(shell pwd)/debian/ikiwiki/$(shell perl -MConfig -e 'print $$Config{prefix}')
 	dh_installdocs html
-	dh_installexamples
+	dh_installman ikiwiki.man
 	dh_installchangelogs
 	dh_compress
 	dh_fixperms

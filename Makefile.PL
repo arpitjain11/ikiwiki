@@ -14,10 +14,11 @@ pure_install:: extra_install
 extra_build:
 	./ikiwiki doc templates html --wikiname="ikiwiki" --verbose \
 		--nosvn --exclude=/discussion
-
+	./mdwn2man doc/usage.mdwn > ikiwiki.man
+		
 extra_clean:
-	rm -rf html
-	rm -rf doc/.ikiwiki
+	rm -rf html doc/.ikiwiki
+	rm -f ikiwiki.man
 
 extra_install:
 	install -d $(PREFIX)/share/ikiwiki/templates
