@@ -639,8 +639,7 @@ FILE:		foreach my $file (@files) {
 		foreach my $file (keys %rendered, @del) {
 			my $page=pagename($file);
 			if (exists $links{$page}) {
-				foreach my $link (@{$links{$page}}) {
-					$link=bestlink($page, $link);
+				foreach my $link (map { bestlink($page, $_) } @{$links{$page}}) {
 					if (length $link &&
 					    ! exists $oldlinks{$page} ||
 					    ! grep { $_ eq $link } @{$oldlinks{$page}}) {
@@ -649,8 +648,7 @@ FILE:		foreach my $file (@files) {
 				}
 			}
 			if (exists $oldlinks{$page}) {
-				foreach my $link (@{$oldlinks{$page}}) {
-					$link=bestlink($page, $link);
+				foreach my $link (map { bestlink($page, $_) } @{$oldlinks{$page}}) {
 					if (length $link &&
 					    ! exists $links{$page} ||
 					    ! grep { $_ eq $link } @{$links{$page}}) {
