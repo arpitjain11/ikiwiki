@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	perl Makefile.PL
+	$(MAKE)
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	perl Makefile.PL
+	-$(MAKE) realclean
+	dh_clean
+
+binary-arch: build
+
+binary-indep: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	$(MAKE) pure_install INSTALLDIRS=vendor \
+		PREFIX=$(shell pwd)/debian/ikiwiki/$(shell perl -MConfig -e 'print $$Config{prefix}')
+	dh_installdocs html
+	dh_installexamples
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_perl
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

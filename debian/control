@@ -1,0 +1,21 @@
+Source: ikiwiki
+Section: web
+Priority: optional
+Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.9.0), markdown, libhtml-template-perl
+Maintainer: Joey Hess <joeyh@debian.org>
+Standards-Version: 3.6.2
+
+Package: ikiwiki
+Architecture: all
+Depends: ${perl:Depends}, markdown, libhtml-template-perl, libcgi-formbuilder-perl, libtime-duration-perl, libcgi-session-perl, libmail-sendmail-perl, gcc | c-compiler
+Recommends: subversion
+Suggests: viewcvs
+Description: a wiki compiler
+ ikiwiki converts a directory full of wiki pages into html pages suitable
+ for publishing on a website. Unlike many wikis, ikiwiki does not have its
+ own means of storing page history or its own markup language. Instead it
+ uses subversion and markdown.
+ .
+ ikiwiki implements most of the other standard features of a wiki, including
+ web-based page editing, user registration and logins, and a RecentChanges
+ page.

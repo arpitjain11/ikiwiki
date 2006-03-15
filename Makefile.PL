@@ -20,6 +20,8 @@ extra_clean:
 	rm -rf doc/.ikiwiki
 
 extra_install:
+	install -d $(PREFIX)/share/ikiwiki/templates
+	cp templates/* $(PREFIX)/share/ikiwiki/templates
 }
 }
 
