@@ -5,7 +5,7 @@
 #
 # Remember to re-run ikiwiki --setup any time you edit this file.
 
-%setup=(
+use IkiWiki::Setup::Standard {
 	wikiname => "MyWiki",
 
 	# Be sure to customise these..
@@ -21,21 +21,25 @@
 	svn => 1,
 	svnrepo => "/svn/wiki",
 
-	# The svn wrapper.
-	svnwrapper => {
-		# Note that this will overwrite any exsting post-commit hoo
-		# script, which may not be what you want.
-		wrapper => "$config{svnrepo}/hooks/post-commit",
-		wrappermode => 04755,
-	},
+	wrappers => [
+		{
+			# The svn wrapper.
+			# Note that this will overwrite any exsting
+			# post-commit hook script, which may not be
+			# what you want.
+			wrapper => "$config{svnrepo}/hooks/post-commit",
+			wrappermode => 04755,
+		},
+		{
+			# The cgi wrapper.
+			#cgiwrapper => {
+			#	cgi => 1,
+			#	wrapper => "/var/www/wiki/ikiwiki.cgi",
+			#	wrappermode => 06755,
+			#},
+		},
+	],
 	
-	# The cgi wrapper.
-	#cgiwrapper => {
-	#	cgi => 1,
-	#	wrapper => "/var/www/wiki/ikiwiki.cgi",
-	#	wrappermode => 06755,
-	#},
-
 	# Can anonymous web users edit pages?
 	#anonok => 1,
-);
+}

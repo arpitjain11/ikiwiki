@@ -54,7 +54,7 @@ optional support for commits from the web.
    directories, and read through and configure the rest of the file to your
    liking.
 
-   Note that the default file has a block to configure a svnwraper. This
+   Note that the default file has a block to configure a svn wrapper. This
    sets up a [[post-commit]] hook to update the wiki.
 
    When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
@@ -62,7 +62,7 @@ optional support for commits from the web.
 
 8. Set up [[CGI]] to allow editing the wiki from the web.
 
-   Just edit ikiwiki.setup, uncomment the block for the cgiwrapper, make
+   Just edit ikiwiki.setup, uncomment the block for the cgi wrapper, make
    sure the filename for the cgi wrapper is ok, run 
    `ikiwiki --setup ikiwiki.setup`, and you're done!
 

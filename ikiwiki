@@ -10,7 +10,8 @@ use Getopt::Long;
 
 my (%links, %oldlinks, %oldpagemtime, %renderedfiles, %pagesources);
 
-my %config=( #{{{
+# Holds global config settings, also used by some modules.
+our %config=( #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
 	wiki_link_regexp => qr/\[\[([^\s]+)\]\]/,
 	wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
@@ -1165,21 +1166,8 @@ sub setup () { # {{{
 	($code)=$code=~/(.*)/s;
 	close IN;
 
-	my (%setup);
 	eval $code;
 	error($@) if $@;
-	
-	gen_wrapper(%config, %setup, %{$setup{cgiwrapper}}) if $setup{cgiwrapper};
-	gen_wrapper(%config, %setup, %{$setup{svnwrapper}}) if $setup{svnwrapper};
-	
-	print "$setup{wikiname} setup complete, now forcing a rebuild\n";
-	foreach my $c (keys %setup) {
-		$config{$c}=possibly_foolish_untaint($setup{$c})
-			if defined $setup{$c} && ! ref $setup{$c};
-	}
-	$config{rebuild}=1;
-	refresh();
-	saveindex();
 	exit;
 } #}}}
 
