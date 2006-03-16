@@ -1079,14 +1079,16 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("creating $page");
 		}
 		elsif ($form->field("do") eq "edit") {
-			my $content="";
-			if (exists $pagesources{lc($page)}) {
-				$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
-				$content=~s/\n/\r\n/g;
+			if (! length $form->field('content')) {
+				my $content="";
+				if (exists $pagesources{lc($page)}) {
+						$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
+					$content=~s/\n/\r\n/g;
+				}
+				$form->field(name => "content", value => $content,
+					force => 1);
 			}
 			$form->tmpl_param("page_select", 0);
-			$form->field(name => "content", value => $content,
-				force => 1);
 			$form->field(name => "page", type => 'hidden');
 			$form->title("editing $page");
 		}
