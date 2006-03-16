@@ -30,7 +30,7 @@ If your web server does any parsing of special sorts of files (for example,
 server parsed html files), then if you let anyone else add files to the wiki,
 they can try to use this to exploit your web server.
 
-## multiple accessors of wiki source directory
+## multiple accessors of wiki directory
 
 If multiple people can write to the source directory ikiwiki is using, or to the destination directory it writes files to, then one can cause trouble for the other when they run ikiwiki through symlink attacks.
 
