@@ -30,38 +30,11 @@ If your web server does any parsing of special sorts of files (for example,
 server parsed html files), then if you let anyone else add files to the wiki,
 they can try to use this to exploit your web server.
 
-## symlink attacks
-
-Could a committer trick ikiwiki into following a symlink and operating on
-some other tree that it shouldn't? svn supports symlinks, so one can get
-into the repo. ikiwiki uses File::Find to traverse the repo, and does not
-tell it to follow symlinks, but it might be possible to race replacing a
-directory with a symlink and trick it into following.
-
-It would certianly be possible to start out with a directory, let ikiwiki
-run and find a file in there, then replace it with a symlink, and ikiwiki
-would then go ahead and follow the symlink when it went to open that file
-to read it. If it was some private file and was running suid, that could be
-bad.
-
-TODO: seems that locking to prevent more than one ikiwiki run at a time
-would both fix this and is a good idea in general. With locking, an
-attacker couldn't get ikiwiki to svn up while another instance was running.
-
 ## multiple accessors of wiki source directory
 
-If multiple people can write to the source directory ikiwiki is using, then
-one can cause trouble for the other when they run ikiwiki through symlink
-attacks.
+If multiple people can write to the source directory ikiwiki is using, or to the destination directory it writes files to, then one can cause trouble for the other when they run ikiwiki through symlink attacks.
 
-So it's best if only one person can ever write to the checkout that ikiwiki
-compiles the wiki from.
-
-## webserver symlink attacks
-
-If someone checks in a symlink to /etc/passwd, ikiwiki would publish that.
-To aoid this, ikiwiki will need to avoid reading files that are symlinks.
-TODO and note discussion of races above.
+So it's best if only one person can ever write to those directories.
 
 ## setup files
 
@@ -148,3 +121,15 @@ I've audited this module and it is massively insecure by default. ikiwiki
 uses it in one of the few secure ways; by forcing it to write to a
 directory it controls (and not /tmp) and by setting a umask that makes the
 file not be world readable.
+
+## symlink attacks
+
+Could a committer trick ikiwiki into following a symlink and operating on
+some other tree that it shouldn't? svn supports symlinks, so one can get
+into the repo. ikiwiki uses File::Find to traverse the repo, and does not
+tell it to follow symlinks, but it might be possible to race replacing a
+directory with a symlink and trick it into following the link.
+
+Also, if someone checks in a symlink to /etc/passwd, ikiwiki would read and publish that, which could be used to expose files a committer otherwise wouldn't see.
+
+To avoid this, ikiwiki will avoid reading files that are symlinks, and uses locking to prevent more than one instance running at a time. The lock prevents one ikiwiki from running a svn up at the wrong time to race another ikiwiki. So only attackers who can write to the working copy on their own can race it.
