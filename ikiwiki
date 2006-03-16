@@ -401,6 +401,25 @@ sub render ($) { #{{{
 	}
 } #}}}
 
+sub lockwiki () { #{{{
+	# Take an exclusive lock on the wiki to prevent multiple concurrent
+	# run issues. The lock will be dropped on program exit.
+	if (! -d "$config{srcdir}/.ikiwiki") {
+		mkdir("$config{srcdir}/.ikiwiki");
+	}
+	open(WIKILOCK, ">$config{srcdir}/.ikiwiki/lockfile") || error ("cannot write to lockfile: $!");
+	if (! flock(WIKILOCK, 2 | 4)) {
+		debug("wiki seems to be locked, waiting for lock");
+		my $wait=600; # arbitrary, but don't hang forever to 
+		              # prevent process pileup
+		for (1..600) {
+			return if flock(WIKILOCK, 2 | 4);
+			sleep 1;
+		}
+		error("wiki is locked; waited $wait seconds without lock being freed (possible stuck process or stale lock?)");
+	}
+} #}}}
+
 sub loadindex () { #{{{
 	open (IN, "$config{srcdir}/.ikiwiki/index") || return;
 	while (<IN>) {
@@ -557,7 +576,7 @@ sub refresh () { #{{{
 				$File::Find::prune=1;
 				use warnings "all";
 			}
-			elsif (! -d $_) {
+			elsif (! -d $_ && ! -l $_) {
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
 				if (! defined $f) {
 					warn("skipping bad filename $_\n");
@@ -1172,6 +1191,7 @@ sub setup () { # {{{
 } #}}}
 
 # main {{{
+lockwiki();
 setup() if $config{setup};
 if ($config{wrapper}) {
 	gen_wrapper(%config);
