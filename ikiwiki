@@ -564,10 +564,9 @@ sub prune ($) { #{{{
 } #}}}
 
 sub refresh () { #{{{
-	# Find existing pages.
+	# find existing pages
 	my %exists;
 	my @files;
-	
 	eval q{use File::Find};
 	find({
 		no_chdir => 1,
@@ -608,7 +607,7 @@ sub refresh () { #{{{
 	foreach my $page (keys %oldpagemtime) {
 		if (! $exists{$page}) {
 			debug("removing old page $page");
-			push @del, $renderedfiles{$page};
+			push @del, $pagesources{$page};
 			prune($config{destdir}."/".$renderedfiles{$page});
 			delete $renderedfiles{$page};
 			$oldpagemtime{$page}=0;
