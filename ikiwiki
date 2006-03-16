@@ -247,10 +247,10 @@ sub htmllink { #{{{
 
 sub linkify ($$) { #{{{
 	my $content=shift;
-	my $file=shift;
+	my $page=shift;
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
-		$1 ? "[[$2]]" : htmllink(pagename($file), $2)
+		$1 ? "[[$2]]" : htmllink($page, $2)
 	}eg;
 	
 	return $content;
@@ -372,7 +372,7 @@ sub check_overwrite ($$) { #{{{
 			", before, so not rendering from $src");
 	}
 } #}}}
-		
+
 sub render ($) { #{{{
 	my $file=shift;
 	
@@ -383,7 +383,7 @@ sub render ($) { #{{{
 		
 		$links{$page}=[findlinks($content, $page)];
 		
-		$content=linkify($content, $file);
+		$content=linkify($content, $page);
 		$content=htmlize($type, $content);
 		$content=finalize($content, $page);
 		
@@ -1031,7 +1031,17 @@ sub cgi_editpage ($$) { #{{{
 		print $q->redirect("$config{url}/".htmlpage($page));
 		return;
 	}
-	if (! $form->submitted || ! $form->validate) {
+	elsif ($form->submitted eq "Preview") {
+		$form->tmpl_param("page_preview",
+			htmlize($config{default_pageext},
+				linkify($form->field('content'), $page)));
+	}
+	else {
+		$form->tmpl_param("page_preview", "");
+	}
+	
+	if (! $form->submitted || $form->submitted eq "Preview" || 
+	    ! $form->validate) {
 		if ($form->field("do") eq "create") {
 			if (exists $pagesources{lc($page)}) {
 				# hmm, someone else made the page in the
@@ -1083,7 +1093,7 @@ sub cgi_editpage ($$) { #{{{
 		
 		$form->tmpl_param("can_commit", $config{svn});
 		$form->tmpl_param("indexlink", indexlink());
-		print $form->render(submit => ["Save Page", "Cancel"]);
+		print $form->render(submit => ["Save Page", "Preview", "Cancel"]);
 	}
 	else {
 		# save page
