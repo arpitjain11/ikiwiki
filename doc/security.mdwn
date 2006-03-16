@@ -86,6 +86,31 @@ ikiwiki does not expose untrusted data to the shell. In fact it doesn't use
 system() at all, and the only use of backticks is on data supplied by the
 wiki admin. And it runs with taint checks on of course..
 
+## cgi data security
+
+When ikiwiki runs as a cgi to edit a page, it is passed the name of the
+page to edit. It has to make sure to sanitise this page, to prevent eg,
+editing of ../../../foo, or editing of files that are not part of the wiki,
+such as subversion dotfiles. This is done by sanitising the filename
+removing unallowed characters, then making sure it doesn't start with "/"
+or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
+security holes breed. It needs a test suite at the very least.
+
+## CGI::Session security
+
+I've audited this module and it is massively insecure by default. ikiwiki
+uses it in one of the few secure ways; by forcing it to write to a
+directory it controls (and not /tmp) and by setting a umask that makes the
+file not be world readable.
+
+## cgi password security
+
+Login to the wiki involves sending a password in cleartext over the net.
+Cracking the password only allows editing the wiki as that user though.
+If you care, you can use https, I suppose.
+
+# Fixed holes.
+
 ## destination directory file replacement
 
 Any file in the destination directory that is a valid page filename can be
@@ -98,29 +123,6 @@ if it does then it has to be a file that it's aware of creating before, or
 it will refuse to create it.
 
 Still, this sort of attack is something to keep in mind.
-
-## cgi data security
-
-When ikiwiki runs as a cgi to edit a page, it is passed the name of the
-page to edit. It has to make sure to sanitise this page, to prevent eg,
-editing of ../../../foo, or editing of files that are not part of the wiki,
-such as subversion dotfiles. This is done by sanitising the filename
-removing unallowed characters, then making sure it doesn't start with "/"
-or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
-security holes breed. It needs a test suite at the very least.
-
-## cgi password security
-
-Login to the wiki involves sending a password in cleartext over the net.
-Cracking the password only allows editing the wiki as that user though.
-If you care, you can use https, I suppose.
-
-## CGI::Session security
-
-I've audited this module and it is massively insecure by default. ikiwiki
-uses it in one of the few secure ways; by forcing it to write to a
-directory it controls (and not /tmp) and by setting a umask that makes the
-file not be world readable.
 
 ## symlink attacks
 
