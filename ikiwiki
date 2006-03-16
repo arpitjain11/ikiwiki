@@ -489,6 +489,7 @@ sub rcs_recentchanges ($) { #{{{
 	my $num=shift;
 	my @ret;
 	
+	eval q{use CGI 'escapeHTML'};
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
 	
