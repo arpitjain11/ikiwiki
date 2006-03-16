@@ -504,7 +504,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 		my $state='start';
 		my ($rev, $user, $when, @pages, @message);
-		foreach (`LANG=C svn log -v '$svn_url'`) {
+		foreach (`LANG=C svn log --limit $num -v '$svn_url'`) {
 			chomp;
 			if ($state eq 'start' && /$div/) {
 				$state='header';
