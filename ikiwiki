@@ -420,6 +420,10 @@ sub lockwiki () { #{{{
 	}
 } #}}}
 
+sub lockwiki () { #{{{
+	close WIKILOCK;
+} #}}}
+
 sub loadindex () { #{{{
 	open (IN, "$config{srcdir}/.ikiwiki/index") || return;
 	while (<IN>) {
@@ -1130,6 +1134,7 @@ sub cgi_editpage ($$) { #{{{
 			# presumably the commit will trigger an update
 			# of the wiki
 			rcs_commit($message);
+			unlock_wiki();
 		}
 		else {
 			loadindex();
