@@ -420,7 +420,7 @@ sub lockwiki () { #{{{
 	}
 } #}}}
 
-sub lockwiki () { #{{{
+sub unlockwiki () { #{{{
 	close WIKILOCK;
 } #}}}
 
@@ -1134,7 +1134,8 @@ sub cgi_editpage ($$) { #{{{
 			# presumably the commit will trigger an update
 			# of the wiki
 			rcs_commit($message);
-			unlock_wiki();
+			# prevent deadlock with post-commit hook
+			unlockwiki();
 		}
 		else {
 			loadindex();
