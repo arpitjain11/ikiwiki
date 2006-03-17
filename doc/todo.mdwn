@@ -23,6 +23,10 @@ is built. (As long as all changes to all pages is ok.)
      explicitly named pages would be desirable.
   2. I think that since we're using Perl on the backend, being able to
      let users craft their own arbitrary regexes would be good.
+
+     Joey points out that this is actually a security hole, because Perl
+     regexes let you embed (arbitrary?) Perl expressions inside them.  Yuck!
+
   3. Of course if you do that, you want to have form processing on the user
      page that lets them tune it, and probably choose literal or glob by
      default.
