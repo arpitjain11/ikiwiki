@@ -2,6 +2,18 @@
 
 * Missing conflict detection, just overwrites changes and does not svn up
   first..
+
+  How to resolve this? Would this work when saving a page?
+
+  1. write changes to wc
+  2. svn up (so it can merge with any other changes)
+  3. check for conflicts
+  4. if conflicts, read in page w/conflict markers, svn revert page, and display resolution form
+  5. otherwise, svn commit
+  6. if commit fails, perhaps we were raced and there are conflicts still; so check for conflicts and if found, goto 2.
+
+  Note that unless we use `svn lock`, we really can't "warn" about concurrent edits and such the way other wikis do, which is ok, since that system sucks anyway. Using svn up for smart merging will be much nicer most of the time.
+   
 * Eventually, might want page deletion.
 * Eventually, might want file upload.
 
@@ -26,6 +38,8 @@ is built. (As long as all changes to all pages is ok.)
 
      Joey points out that this is actually a security hole, because Perl
      regexes let you embed (arbitrary?) Perl expressions inside them.  Yuck!
+
+     It would also be good to be able to subscribe to all pages except discussion pages or the SandBox: `* !*/discussion !sandobx`, maybe --[[Joey]]
 
   3. Of course if you do that, you want to have form processing on the user
      page that lets them tune it, and probably choose literal or glob by
@@ -111,5 +125,11 @@ docs to use as a seed for new wikis.
 ## page indexes
 
 Might be nice to support automatically generating an index based on headers in a page, for long pages. The question is, how to turn on such an index?
+
+## page locking
+
+Some wikis will need the abiity to lock a page, or the whole wiki, so that only admins can edit them. Probably using the same globbing as for recentchanges mails to determine what to lock. 
+
+Probably it's ok if locking is only supported for web commits.
 
 ## [[Bugs]]
