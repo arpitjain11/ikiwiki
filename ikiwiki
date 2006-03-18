@@ -1131,11 +1131,11 @@ sub cgi_editpage ($$) { #{{{
 			if ($newfile) {
 				rcs_add($file);
 			}
+			# prevent deadlock with post-commit hook
+			unlockwiki();
 			# presumably the commit will trigger an update
 			# of the wiki
 			rcs_commit($message);
-			# prevent deadlock with post-commit hook
-			unlockwiki();
 		}
 		else {
 			loadindex();
