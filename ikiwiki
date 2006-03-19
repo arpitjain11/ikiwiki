@@ -1131,8 +1131,15 @@ sub cgi_editpage ($$) { #{{{
 			else {
 				my $dir=$from."/";
 				$dir=~s![^/]+/$!!;
+				
+				if ($page eq 'discussion') {
+					$best_loc="$from/$page";
+				}
+				else {
+					$best_loc=$dir.$page;
+				}
+				
 				push @page_locs, $dir.$page;
-				$best_loc=$dir.$page;
 				push @page_locs, "$from/$page";
 				while (length $dir) {
 					$dir=~s![^/]+/$!!;
