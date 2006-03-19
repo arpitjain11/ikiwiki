@@ -16,6 +16,8 @@
 
   Well, it could keep track of the version number of the page it started editing, and if it's changed during the edit, ask svn to merge all changes from that version number to head into the page after writing it out. Doing that without races with other svn committers seems tricky.
 
+  If each commit operated in a separate copy of the wc, that was created for the commit, the steps above would work. But it would be very expensive to make and maintain all those copies.
+
   Note that unless we use `svn lock`, we really can't "warn" about concurrent edits and such the way other wikis do, which is ok, since that system sucks anyway. Using svn up for smart merging will be much nicer most of the time.
    
 * Eventually, might want page deletion.
