@@ -27,10 +27,12 @@ Optional comment about this change:</br>
 </TMPL_IF>
 <TMPL_VAR FORM-SUBMIT>
 <TMPL_VAR FORM-END>
-<TMPL_IF NAME="PAGE_PREVIEW">
 <hr>
+<TMPL_IF NAME="PAGE_PREVIEW">
 <h1>Page preview:</h1>
 <TMPL_VAR PAGE_PREVIEW>
+<TMPL_ELSE>
+<TMPL_VAR HELPONFORMATTINGLINK>
 </TMPL_IF>
 </body>
 </html>

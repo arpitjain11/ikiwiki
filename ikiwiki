@@ -1089,6 +1089,8 @@ sub cgi_editpage ($$) { #{{{
 		cols => 80);
 	$form->tmpl_param("can_commit", $config{svn});
 	$form->tmpl_param("indexlink", indexlink());
+	$form->tmpl_param("helponformattinglink",
+		htmllink("HelpOnFormatting", pagename($1), 1));
 	if (! $form->submitted) {
 		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 			force => 1);
