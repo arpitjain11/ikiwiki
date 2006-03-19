@@ -1281,8 +1281,8 @@ sub setup () { # {{{
 } #}}}
 
 # main {{{
-lockwiki();
 setup() if $config{setup};
+lockwiki();
 if ($config{wrapper}) {
 	gen_wrapper(%config);
 	exit;
