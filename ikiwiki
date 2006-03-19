@@ -1132,8 +1132,8 @@ sub cgi_editpage ($$) { #{{{
 				my $dir=$from."/";
 				$dir=~s![^/]+/$!!;
 				push @page_locs, $dir.$page;
+				$best_loc=$dir.$page;
 				push @page_locs, "$from/$page";
-				$best_loc="$from/$page";
 				while (length $dir) {
 					$dir=~s![^/]+/$!!;
 					push @page_locs, $dir.$page;
