@@ -12,6 +12,10 @@
   5. otherwise, svn commit
   6. if commit fails, perhaps we were raced and there are conflicts still; so check for conflicts and if found, goto 2.
 
+  No, it won't work, because the other committer updates the srcdir when they make their commit, so svn does not get a chance to merge in the changes on update in step 2. Hmm..
+
+  Well, it could keep track of the version number of the page it started editing, and if it's changed during the edit, ask svn to merge all changes from that version number to head into the page after writing it out. Doing that without races with other svn committers seems tricky.
+
   Note that unless we use `svn lock`, we really can't "warn" about concurrent edits and such the way other wikis do, which is ok, since that system sucks anyway. Using svn up for smart merging will be much nicer most of the time.
    
 * Eventually, might want page deletion.
