@@ -465,12 +465,12 @@ sub rcs_commit ($$) { #{{{
 	# Tries to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on failure.
 	# The file is relative to the srcdir.
-	my $message=shift;
 	my $file=shift;
+	my $message=shift;
 
 	if (-d "$config{srcdir}/.svn") {
 		# svn up to let svn merge in other changes
-		if (system("svn", "update", "$config{srcdir}/$file") != 0) {
+		if (system("svn", "update", "-quiet", "$config{srcdir}/$file") != 0) {
 			warn("svn update failed\n");
 		}
 		if (system("svn", "commit", "--quiet", "-m",
@@ -478,7 +478,7 @@ sub rcs_commit ($$) { #{{{
 			   "$config{srcdir}/$file") != 0) {
 			warn("svn commit failed\n");
 			my $conflict=readfile("$config{srcdir}/$file");
-			if (system("svn", "revert", "$config{srcdir}/$file") != 0) {
+			if (system("svn", "revert", "--quiet", "$config{srcdir}/$file") != 0) {
 				warn("svn revert failed\n");
 			}
 			return $conflict;
