@@ -84,7 +84,7 @@ been no problem yet.
 
 ikiwiki does not expose untrusted data to the shell. In fact it doesn't use
 system() at all, and the only use of backticks is on data supplied by the
-wiki admin. And it runs with taint checks on of course..
+wiki admin and untainted filenames. And it runs with taint checks on of course..
 
 ## cgi data security
 
