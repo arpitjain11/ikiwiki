@@ -18,7 +18,9 @@ optional support for commits from the web.
 
 		svn co file:///svn/wikirepo/trunk ~/wikiwc
 
-4. Create some files and add them into subversion.
+4. Create some files and add them into subversion. Or you might copy the
+   files from /usr/share/ikiwiki/basewiki and check those in to get a
+   head start on creating your wiki.
 
 		echo "Welcome to my empty wiki." > ~/wikiwc/index.mdwn
 		echo "Feel free to edit this page" > ~/wikiwc/sandbox.mdwn
