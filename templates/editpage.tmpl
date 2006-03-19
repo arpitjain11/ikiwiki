@@ -4,6 +4,8 @@
 <TMPL_IF NAME="PAGE_CONFLICT">
 <p>
 <b>Your changes confict with other changes made to the page.</b>
+</p>
+<p>
 Conflict markers have been inserted into the page content. Reconcile the
 confict and commit again to save your changes.
 </p>
@@ -12,6 +14,7 @@ confict and commit again to save your changes.
 <h1><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></h1>
 <TMPL_VAR FIELD-DO>
 <TMPL_VAR FIELD-FROM>
+<TMPL_VAR FIELD-RCSINFO>
 <TMPL_IF NAME="PAGE_SELECT">
 Page location: <TMPL_VAR FIELD-PAGE><br>
 <TMPL_ELSE>

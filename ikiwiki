@@ -487,11 +487,12 @@ sub rcs_commit ($$$) { #{{{
 	if (-d "$config{srcdir}/.svn") {
 		# Check to see if the page has been changed by someone
 		# else since rcs_prepedit was called.
-		my $oldrev=int($rcstoken);
+		my ($oldrev)=$rcstoken=~/^([0-9]+)$/; # untaint
 		my $rev=svn_info("Revision", "$config{srcdir}/$file");
 		if ($rev != $oldrev) {
 			# Merge their changes into the file that we've
 			# changed.
+			chdir($config{srcdir}); # svn merge wants to be here
 			if (system("svn", "merge", "--quiet", "-r$oldrev:$rev",
 			           "$config{srcdir}/$file") != 0) {
 				warn("svn merge -r$oldrev:$rev failed\n");
@@ -501,7 +502,6 @@ sub rcs_commit ($$$) { #{{{
 		if (system("svn", "commit", "--quiet", "-m",
 		           possibly_foolish_untaint($message),
 			   "$config{srcdir}/$file") != 0) {
-			warn("svn commit failed\n");
 			my $conflict=readfile("$config{srcdir}/$file");
 			if (system("svn", "revert", "--quiet", "$config{srcdir}/$file") != 0) {
 				warn("svn revert failed\n");
@@ -530,8 +530,8 @@ sub rcs_add ($) { #{{{
 } #}}}
 
 sub svn_info ($$) { #{{{
-	my $file=shift;
 	my $field=shift;
+	my $file=shift;
 
 	my $info=`LANG=C svn info $file`;
 	my ($ret)=$info=~/^$field: (.*)$/m;
@@ -1082,13 +1082,16 @@ sub cgi_editpage ($$) { #{{{
 
 	$form->field(name => "do", type => 'hidden');
 	$form->field(name => "from", type => 'hidden');
+	$form->field(name => "rcsinfo", type => 'hidden');
 	$form->field(name => "page", value => "$page", force => 1);
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "content", type => "textarea", rows => 20,
 		cols => 80);
+	$form->tmpl_param("can_commit", $config{svn});
+	$form->tmpl_param("indexlink", indexlink());
 	if (! $form->submitted) {
-		$form->field(name => "rcsinfo", type => 'hidden',
-			value => rcs_prepedit($file), force => 1);
+		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+			force => 1);
 	}
 	
 	if ($form->submitted eq "Cancel") {
@@ -1144,7 +1147,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("creating $page");
 		}
 		elsif ($form->field("do") eq "edit") {
-			if (! length $form->field('content')) {
+			if (! defined $form->field('content') || 
+			    ! length $form->field('content')) {
 				my $content="";
 				if (exists $pagesources{lc($page)}) {
 						$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
@@ -1158,8 +1162,6 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("editing $page");
 		}
 		
-		$form->tmpl_param("can_commit", $config{svn});
-		$form->tmpl_param("indexlink", indexlink());
 		print $form->render(submit => \@buttons);
 	}
 	else {
@@ -1193,9 +1195,14 @@ sub cgi_editpage ($$) { #{{{
 				$form->field("rcsinfo"));
 		
 			if (defined $conflict) {
+				$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+					force => 1);
 				$form->tmpl_param("page_conflict", 1);
-				$form->field("content", $conflict);
+				$form->field("content", value => $conflict, force => 1);
 				$form->field("do", "edit)");
+				$form->tmpl_param("page_select", 0);
+				$form->field(name => "page", type => 'hidden');
+				$form->title("editing $page");
 				print $form->render(submit => \@buttons);
 				return;
 			}
