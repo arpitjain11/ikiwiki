@@ -461,18 +461,43 @@ sub rcs_update () { #{{{
 	}
 } #}}}
 
-sub rcs_commit ($$) { #{{{
+sub rcs_prepedit ($) { #{{{
+	# Prepares to edit a file under revision control. Returns a token
+	# that must be passed into rcs_commit when the file is ready
+	# for committing.
+	# The file is relative to the srcdir.
+	my $file=shift;
+	
+	if (-d "$config{srcdir}/.svn") {
+		# For subversion, return the revision of the file when
+		# editing begins.
+		my $rev=svn_info("Revision", "$config{srcdir}/$file");
+		return defined $rev ? $rev : "";
+	}
+} #}}}
+
+sub rcs_commit ($$$) { #{{{
 	# Tries to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on failure.
 	# The file is relative to the srcdir.
 	my $file=shift;
 	my $message=shift;
+	my $rcstoken=shift;
 
 	if (-d "$config{srcdir}/.svn") {
-		# svn up to let svn merge in other changes
-		if (system("svn", "update", "-quiet", "$config{srcdir}/$file") != 0) {
-			warn("svn update failed\n");
+		# Check to see if the page has been changed by someone
+		# else since rcs_prepedit was called.
+		my $oldrev=int($rcstoken);
+		my $rev=svn_info("Revision", "$config{srcdir}/$file");
+		if ($rev != $oldrev) {
+			# Merge their changes into the file that we've
+			# changed.
+			if (system("svn", "merge", "--quiet", "-r$oldrev:$rev",
+			           "$config{srcdir}/$file") != 0) {
+				warn("svn merge -r$oldrev:$rev failed\n");
+			}
 		}
+
 		if (system("svn", "commit", "--quiet", "-m",
 		           possibly_foolish_untaint($message),
 			   "$config{srcdir}/$file") != 0) {
@@ -504,6 +529,15 @@ sub rcs_add ($) { #{{{
 	}
 } #}}}
 
+sub svn_info ($$) { #{{{
+	my $file=shift;
+	my $field=shift;
+
+	my $info=`LANG=C svn info $file`;
+	my ($ret)=$info=~/^$field: (.*)$/m;
+	return $ret;
+} #}}}
+
 sub rcs_recentchanges ($) { #{{{
 	my $num=shift;
 	my @ret;
@@ -513,8 +547,7 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use Time::Duration};
 	
 	if (-d "$config{srcdir}/.svn") {
-		my $info=`LANG=C svn info $config{srcdir}`;
-		my ($svn_url)=$info=~/^URL: (.*)$/m;
+		my $svn_url=svn_info("URL", $config{srcdir});
 
 		# FIXME: currently assumes that the wiki is somewhere
 		# under trunk in svn, doesn't support other layouts.
@@ -1018,7 +1051,7 @@ sub cgi_editpage ($$) { #{{{
 
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
-		fields => [qw(do from page content comments)],
+		fields => [qw(do rcsinfo from page content comments)],
 		header => 1,
 		method => 'POST',
 		validate => {
@@ -1039,6 +1072,13 @@ sub cgi_editpage ($$) { #{{{
 		error("bad page name");
 	}
 	$page=lc($page);
+	
+	my $file=$page.$config{default_pageext};
+	my $newfile=1;
+	if (exists $pagesources{lc($page)}) {
+		$file=$pagesources{lc($page)};
+		$newfile=0;
+	}
 
 	$form->field(name => "do", type => 'hidden');
 	$form->field(name => "from", type => 'hidden');
@@ -1046,6 +1086,10 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "content", type => "textarea", rows => 20,
 		cols => 80);
+	if (! $form->submitted) {
+		$form->field(name => "rcsinfo", type => 'hidden',
+			value => rcs_prepedit($file), force => 1);
+	}
 	
 	if ($form->submitted eq "Cancel") {
 		print $q->redirect("$config{url}/".htmlpage($page));
@@ -1120,13 +1164,6 @@ sub cgi_editpage ($$) { #{{{
 	}
 	else {
 		# save page
-		my $file=$page.$config{default_pageext};
-		my $newfile=1;
-		if (exists $pagesources{lc($page)}) {
-			$file=$pagesources{lc($page)};
-			$newfile=0;
-		}
-		
 		my $content=$form->field('content');
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
@@ -1152,7 +1189,8 @@ sub cgi_editpage ($$) { #{{{
 			unlockwiki();
 			# presumably the commit will trigger an update
 			# of the wiki
-			my $conflict=rcs_commit($file, $message);
+			my $conflict=rcs_commit($file, $message,
+				$form->field("rcsinfo"));
 		
 			if (defined $conflict) {
 				$form->tmpl_param("page_conflict", 1);
