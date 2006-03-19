@@ -11,8 +11,7 @@ Currently implemented:
 
   Instead of editing pages in a stupid web form, you can use vim and commit
   changes via svn. Or work disconnected using svk and push your changes out
-  when you come online. Deal with edit conflicts with others in a sane
-  environment. Take advantage of subversion's smart merges.
+  when you come online.
 
   ikiwiki can be run from a [[post-commit]] hook to update your wiki
   immediately whenever you commit.
@@ -73,6 +72,12 @@ Currently implemented:
   Thanks to subpages, every page can easily and automatically have a
   /Discussion subpage. By default, these links are included in the
   [[templates]] for each page.
+
+* Smart merging and conflict resolution in web browser
+
+  Since it uses subversion, ikiwiki takes advantage of its smart merging to avoid any conflicts when two people edit different parts of the same page    at the same time. No annoying warnings about other editors, or locking, etc, instead the other person's changes will be automaticaly merged with yours when you commit.
+
+  In the rare cases where automatic merging fails due to the same part of a page being concurrently edited, regular subversion commit markers are shown in the file to resolve the conflict, so if you're already familiar with that there's no new commit marker syntax to learn.
 
 ----
 
