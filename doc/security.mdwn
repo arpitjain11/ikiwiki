@@ -44,7 +44,7 @@ this wiki, BTW.
 
 ## svn commit logs
 
-Anyone with svn commit access can forge "web commit from foo" and make it appeat on [[RecentChanges]] like foo committed. One way to avoid this would be to limit web commits to those done by a certian user.
+Anyone with svn commit access can forge "web commit from foo" and make it appear on [[RecentChanges]] like foo committed. One way to avoid this would be to limit web commits to those done by a certian user.
 
 It's actually possible to force a whole series of svn commits to appear to have come just before yours, by forging svn log output. This could be guarded against somewhat by revision number scanning, since the forged revisions would duplicate the numbers of unforged ones. Or subversion could fix svn log to indent commit messages, which would make such forgery impossible..
 
