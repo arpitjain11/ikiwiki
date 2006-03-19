@@ -461,19 +461,34 @@ sub rcs_update () { #{{{
 	}
 } #}}}
 
-sub rcs_commit ($) { #{{{
+sub rcs_commit ($$) { #{{{
+	# Tries to commit the page; returns undef on _success_ and
+	# a version of the page with the rcs's conflict markers on failure.
+	# The file is relative to the srcdir.
 	my $message=shift;
+	my $file=shift;
 
 	if (-d "$config{srcdir}/.svn") {
+		# svn up to let svn merge in other changes
+		if (system("svn", "update", "$config{srcdir}/$file") != 0) {
+			warn("svn update failed\n");
+		}
 		if (system("svn", "commit", "--quiet", "-m",
 		           possibly_foolish_untaint($message),
-			   $config{srcdir}) != 0) {
+			   "$config{srcdir}/$file") != 0) {
 			warn("svn commit failed\n");
+			my $conflict=readfile("$config{srcdir}/$file");
+			if (system("svn", "revert", "$config{srcdir}/$file") != 0) {
+				warn("svn revert failed\n");
+			}
+			return $conflict;
 		}
 	}
+	return undef # success
 } #}}}
 
 sub rcs_add ($) { #{{{
+	# filename is relative to the root of the srcdir
 	my $file=shift;
 
 	if (-d "$config{srcdir}/.svn") {
@@ -1016,6 +1031,7 @@ sub cgi_editpage ($$) { #{{{
 		table => 0,
 		template => "$config{templatedir}/editpage.tmpl"
 	);
+	my @buttons=("Save Page", "Preview", "Cancel");
 	
 	my ($page)=$form->param('page')=~/$config{wiki_file_regexp}/;
 	if (! defined $page || ! length $page || $page ne $q->param('page') ||
@@ -1043,6 +1059,7 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		$form->tmpl_param("page_preview", "");
 	}
+	$form->tmpl_param("page_conflict", "");
 	
 	if (! $form->submitted || $form->submitted eq "Preview" || 
 	    ! $form->validate) {
@@ -1099,7 +1116,7 @@ sub cgi_editpage ($$) { #{{{
 		
 		$form->tmpl_param("can_commit", $config{svn});
 		$form->tmpl_param("indexlink", indexlink());
-		print $form->render(submit => ["Save Page", "Preview", "Cancel"]);
+		print $form->render(submit => \@buttons);
 	}
 	else {
 		# save page
@@ -1135,7 +1152,15 @@ sub cgi_editpage ($$) { #{{{
 			unlockwiki();
 			# presumably the commit will trigger an update
 			# of the wiki
-			rcs_commit($message);
+			my $conflict=rcs_commit($file, $message);
+		
+			if (defined $conflict) {
+				$form->tmpl_param("page_conflict", 1);
+				$form->field("content", $conflict);
+				$form->field("do", "edit)");
+				print $form->render(submit => \@buttons);
+				return;
+			}
 		}
 		else {
 			loadindex();

@@ -1,6 +1,13 @@
 <html>
 <head><title><TMPL_VAR FORM-TITLE></title></head>
 <body>
+<TMPL_IF NAME="PAGE_CONFLICT">
+<p>
+<b>Your changes confict with other changes made to the page.</b>
+Conflict markers have been inserted into the page content. Reconcile the
+confict and commit again to save your changes.
+</p>
+</TMPL_IF>
 <TMPL_VAR FORM-START>
 <h1><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></h1>
 <TMPL_VAR FIELD-DO>
