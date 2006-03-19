@@ -10,23 +10,23 @@ in single or double asterisks.
 
 To create a list, start each line with an asterisk:
 
-* \* this is my list
-* \* another item
+* "* this is my list"
+* "* another item"
 
 To make a numbered list, start each line with a number (any number will
 do) followed by a period:
 
-1. 1\. first line
-2. 2\. second line
-2. 2\. third line
+1. "1. first line"
+2. "2. second line"
+2. "2. third line"
 
 To create a header, start a line with one or more `#` characters followed
 by a space and the header text. The number of `#` characters controls the
 size of the header:
 
-## h2
-### h3
-#### h4
+## ## h2
+### ### h3
+#### #### h4
 
 To create a horizontal rule, just write three or more dashes on their own
 line:
@@ -44,10 +44,9 @@ To write a code block, indent each line with a tab:
 	20 GOTO 10
 
 To link to another page on the wiki, place the page's name inside double
-square brackets to create a [[[[WikiLink]]]].
+square brackets, so you would use `\[[WikiLink]]` to link to [[WikiLink]].
 
-To link to any other web page, you can just put the url in angle brackets:
-<<http://ikiwiki.kitenet.net>>, or you can use the form
+To link to any other web page, or to an email address, you can just put the url in angle brackets: <<http://ikiwiki.kitenet.net>>, or you can use the form
 \[link text\]\(url\)
 
 ----
