@@ -324,9 +324,10 @@ sub indexlink () { #{{{
 	return "<a href=\"$config{url}\">$config{wikiname}</a>";
 } #}}}
 
-sub finalize ($$) { #{{{
+sub finalize ($$$) { #{{{
 	my $content=shift;
 	my $page=shift;
+	my $mtime=shift;
 
 	my $title=basename($page);
 	$title=~s/_/ /g;
@@ -354,6 +355,7 @@ sub finalize ($$) { #{{{
 		content => $content,
 		backlinks => [backlinks($page)],
 		discussionlink => htmllink($page, "Discussion", 1, 1),
+		mtime => scalar(gmtime($mtime)),
 	);
 	
 	return $template->output;
@@ -385,7 +387,8 @@ sub render ($) { #{{{
 		
 		$content=linkify($content, $page);
 		$content=htmlize($type, $content);
-		$content=finalize($content, $page);
+		$content=finalize($content, $page,
+			mtime("$config{srcdir}/$file"));
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
 		writefile("$config{destdir}/".htmlpage($page), $content);
