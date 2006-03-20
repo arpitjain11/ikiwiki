@@ -489,7 +489,7 @@ sub rcs_commit ($$$) { #{{{
 		# else since rcs_prepedit was called.
 		my ($oldrev)=$rcstoken=~/^([0-9]+)$/; # untaint
 		my $rev=svn_info("Revision", "$config{srcdir}/$file");
-		if ($rev != $oldrev) {
+		if (defined $rev && defined $oldrev && $rev != $oldrev) {
 			# Merge their changes into the file that we've
 			# changed.
 			chdir($config{srcdir}); # svn merge wants to be here
@@ -501,7 +501,7 @@ sub rcs_commit ($$$) { #{{{
 
 		if (system("svn", "commit", "--quiet", "-m",
 		           possibly_foolish_untaint($message),
-			   "$config{srcdir}/$file") != 0) {
+			   "$config{srcdir}") != 0) {
 			my $conflict=readfile("$config{srcdir}/$file");
 			if (system("svn", "revert", "--quiet", "$config{srcdir}/$file") != 0) {
 				warn("svn revert failed\n");
