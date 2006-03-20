@@ -27,7 +27,7 @@ use IkiWiki::Setup::Standard {
 			# Note that this will overwrite any exsting
 			# post-commit hook script, which may not be
 			# what you want.
-			wrapper => "$config{svnrepo}/hooks/post-commit",
+			wrapper => "/svn/wiki/hooks/post-commit",
 			wrappermode => 04755,
 		},
 		{
