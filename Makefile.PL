@@ -25,7 +25,7 @@ extra_install:
 	cp templates/* $(PREFIX)/share/ikiwiki/templates
 
 	install -d $(PREFIX)/share/ikiwiki/basewiki
-	cp basewiki/* $(PREFIX)/share/ikiwiki/basewiki
+	cp -a basewiki/* $(PREFIX)/share/ikiwiki/basewiki
 }
 }
 

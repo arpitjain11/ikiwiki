@@ -15,7 +15,8 @@ use IkiWiki::Setup::Standard {
 
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
-	#historyurl => "http://svn.myhost/trunk/[[]]",
+	#historyurl => "http://svn.myhost/trunk/[[file]]",
+	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
 	
 	# Whether to integrate with svn.
 	svn => 1,

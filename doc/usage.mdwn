@@ -76,9 +76,18 @@ flags such as --verbose can be negated with --no-verbose.
 
   Specifies the url to the ikiwiki [[CGI]] script [[wrapper]]. Required when building the wiki for links to the cgi script to be generated.
 
-* --historyurl http://svn.someurl/trunk/[[]]?root=wiki
+* --historyurl http://svn.someurl/trunk/\[[file]]?root=wiki
 
-  Specifies the url to link to for page history browsing. In the url, "[[]]" is replaced with the page to browse. It's common to use [[ViewCVS]] for this.
+  Specifies the url to link to for page history browsing. In the url,
+  "\[[file]]" is replaced with the file to browse. It's common to use
+  [[ViewCVS]] for this.
+
+* --diffurl http://svn.someurl/trunk/\[[file]]?root=wiki&r1=\[[r1]]&r2=\[[r2]]
+
+  Specifies the url to link to for a diff of changes to a page. In the url,
+  "\[[file]]" is replaced with the file to browse, "\[[r1]]" is the old
+  revision of the page, and "\[[r2]]" is the new revision. It's common to use
+  [[ViewCVS]] for this.
 
 * --exclude regexp
 

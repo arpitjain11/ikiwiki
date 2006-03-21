@@ -13,6 +13,9 @@
 	<li> <!-- <TMPL_VAR NAME="REV"> -->
 		<TMPL_LOOP NAME="PAGES">
 			<TMPL_VAR NAME="LINK">
+			<TMPL_IF NAME="DIFFURL">
+				(<a href="<TMPL_VAR NAME="DIFFURL">">diff</a>)
+			</TMPL_IF>
 		</TMPL_LOOP>
 		<br>
 		<!-- <TMPL_VAR NAME="COMMITTYPE"> -->

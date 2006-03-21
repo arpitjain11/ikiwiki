@@ -13,7 +13,7 @@ my (%links, %oldlinks, %oldpagemtime, %renderedfiles, %pagesources);
 # Holds global config settings, also used by some modules.
 our %config=( #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
-	wiki_link_regexp => qr/\[\[([^\s]+)\]\]/,
+	wiki_link_regexp => qr/\[\[([^\s\]]+)\]\]/,
 	wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
 	verbose => 0,
 	wikiname => "wiki",
@@ -23,6 +23,7 @@ our %config=( #{{{
 	url => '',
 	cgiurl => '',
 	historyurl => '',
+	diffurl => '',
 	anonok => 0,
 	rebuild => 0,
 	wrapper => undef,
@@ -46,6 +47,7 @@ GetOptions( #{{{
 	"url=s" => \$config{url},
 	"cgiurl=s" => \$config{cgiurl},
 	"historyurl=s" => \$config{historyurl},
+	"diffurl=s" => \$config{diffurl},
 	"exclude=s@" => sub {
 		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
 	},
@@ -344,7 +346,7 @@ sub finalize ($$$) { #{{{
 
 	if (length $config{historyurl}) {
 		my $u=$config{historyurl};
-		$u=~s/\[\[\]\]/$pagesources{$page}/g;
+		$u=~s/\[\[file\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
 	}
 	
@@ -571,8 +573,15 @@ sub rcs_recentchanges ($) { #{{{
 				$when=concise(ago(time - str2time($3)));
 		    	}
 			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E\/([^ ]+)(?:$|\s)/) {
-				push @pages, { link => htmllink("", pagename($1), 1) }
-					if length $1;
+				my $file=$1;
+				my $diffurl=$config{diffurl};
+				$diffurl=~s/\[\[file\]\]/$file/g;
+				$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
+				$diffurl=~s/\[\[r2\]\]/$rev/g;
+				push @pages, {
+					link => htmllink("", pagename($file), 1),
+					diffurl => $diffurl,
+				} if length $file;
 			}
 			elsif ($state eq 'header' && /^$/) {
 				$state='body';
@@ -592,7 +601,8 @@ sub rcs_recentchanges ($) { #{{{
 					user => htmllink("", $user, 1),
 					committype => $committype,
 					when => $when, message => [@message],
-					pages => [@pages] } if @pages;
+					pages => [@pages],
+				} if @pages;
 				return @ret if @ret >= $num;
 				
 				$state='header';
@@ -765,6 +775,7 @@ sub gen_wrapper (@) { #{{{
 	push @params, "--url=$config{url}" if length $config{url};
 	push @params, "--cgiurl=$config{cgiurl}" if length $config{cgiurl};
 	push @params, "--historyurl=$config{historyurl}" if length $config{historyurl};
+	push @params, "--diffurl=$config{diffurl}" if length $config{diffurl};
 	push @params, "--anonok" if $config{anonok};
 	my $params=join(" ", @params);
 	my $call='';

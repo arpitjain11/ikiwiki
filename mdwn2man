@@ -4,12 +4,11 @@
 print ".TH ikiwiki 1\n";
 
 while (<>) {
+	s{(\\?)\[\[([^\s\]]+)\]\]}{$1 ? "[[$2]]" : $2}eg;
 	s/^#\s/.SH /;
 	s/^\s+//;
 	s/^Warning:.*//g;
 	s/^$/.PP\n/;
-	s/\[\[//g;
-	s/\]\]//g;
 	s/\`//g;
 	s/^\*\s+(.*)/.IP "$1"/;
 	next if $_ eq ".PP\n" && $skippara;
