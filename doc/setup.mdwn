@@ -72,10 +72,10 @@ optional support for commits from the web.
 9. Add [[PageHistory]] links to the top of pages. This requires you to have
    setup [[ViewCVS]] or something similar to access your [[Subversion]]
    repository.  The `historyurl` setting makes ikiwiki add the links, and 
-   in that url, "[[]]" is replaced with the name of the file to view. So
+   in that url, "\[[file]]" is replaced with the name of the file to view. So
    edit ikiwiki.setup and set `historyurl` to something like this:
 
-   	`http://svn.host/trunk/[[]]?root=wiki`
+   	`http://svn.host/trunk/\[[file]]?root=wiki`
    
    Then run `ikiwiki --setup ikiwiki.setup` again.
 
