@@ -429,20 +429,18 @@ sub main () { #{{{
 		require IkiWiki::Setup;
 		setup();
 	}
-	
-	lockwiki();
-	
-	if ($config{wrapper}) {
+	elsif ($config{wrapper}) {
+		lockwiki();
 		require IkiWiki::Wrapper;
 		gen_wrapper();
-		exit;
 	}
-	
-	if ($config{cgi}) {
+	elsif ($config{cgi}) {
+		lockwiki();
 		require IkiWiki::CGI;
 		cgi();
 	}
 	else {
+		lockwiki();
 		loadindex() unless $config{rebuild};
 		require IkiWiki::Render;
 		rcs_update();
