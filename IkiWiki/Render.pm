@@ -292,6 +292,7 @@ sub refresh () { #{{{
 			push @add, $file;
 			$links{$page}=[];
 			$pagesources{$page}=$file;
+			$pagectime{$page}=time;
 		}
 	}
 	my @del;

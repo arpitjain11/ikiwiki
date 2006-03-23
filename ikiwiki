@@ -8,7 +8,8 @@ use File::Spec;
 use HTML::Template;
 use lib '.'; # For use without installation, removed by Makefile.
 
-use vars qw{%config %links %oldlinks %oldpagemtime %renderedfiles %pagesources};
+use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
+            %renderedfiles %pagesources};
 
 sub usage () { #{{{
 	die "usage: ikiwiki [options] source dest\n";
@@ -326,6 +327,7 @@ sub loadindex () { #{{{
 		my $page=pagename($items{src}[0]);
 		$pagesources{$page}=$items{src}[0];
 		$oldpagemtime{$page}=$items{mtime}[0];
+		$pagectime{$page}=$items{ctime}[0];
 		$oldlinks{$page}=[@{$items{link}}];
 		$links{$page}=[@{$items{link}}];
 		$renderedfiles{$page}=$items{dest}[0];
@@ -341,6 +343,7 @@ sub saveindex () { #{{{
 		error("cannot write to $config{wikistatedir}/index: $!");
 	foreach my $page (keys %oldpagemtime) {
 		my $line="mtime=$oldpagemtime{$page} ".
+			"ctime=$pagectime{$page} ".
 			"src=$pagesources{$page} ".
 			"dest=$renderedfiles{$page}";
 		if ($oldpagemtime{$page}) {
