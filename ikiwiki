@@ -39,7 +39,7 @@ our %config=( #{{{
 ); #}}}
 
 GetOptions( #{{{
-	"setup=s" => \$config{setup},
+	"setup|s=s" => \$config{setup},
 	"wikiname=s" => \$config{wikiname},
 	"verbose|v!" => \$config{verbose},
 	"rebuild!" => \$config{rebuild},
