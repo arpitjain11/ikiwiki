@@ -19,7 +19,8 @@ sub import {
 		::checkoptions();
 		::gen_wrapper();
 	}
-
+	%::config=(%startconfig);
+	
 	::debug("rebuilding wiki..");
 	foreach my $c (keys %setup) {
 		$::config{$c}=::possibly_foolish_untaint($setup{$c})
