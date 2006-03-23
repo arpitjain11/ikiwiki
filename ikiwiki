@@ -30,6 +30,7 @@ sub getconfig () { #{{{
 			historyurl => '',
 			diffurl => '',
 			anonok => 0,
+			rss => 0,
 			rebuild => 0,
 			wrapper => undef,
 			wrappermode => undef,
@@ -49,6 +50,7 @@ sub getconfig () { #{{{
 			"wrappermode=i" => \$config{wrappermode},
 			"svn!" => \$config{svn},
 			"anonok!" => \$config{anonok},
+			"rss!" => \$config{rss},
 			"cgi!" => \$config{cgi},
 			"url=s" => \$config{url},
 			"cgiurl=s" => \$config{cgiurl},
@@ -85,7 +87,10 @@ sub getconfig () { #{{{
 
 sub checkconfig () { #{{{
 	if ($config{cgi} && ! length $config{url}) {
-		error("Must specify url to wiki with --url when using --cgi");
+		error("Must specify url to wiki with --url when using --cgi\n");
+	}
+	if ($config{rss} && ! length $config{url}) {
+		error("Must specify url to wiki with --url when using --rss\n");
 	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"

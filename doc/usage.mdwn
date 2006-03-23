@@ -64,6 +64,12 @@ flags such as --verbose can be negated with --no-verbose.
 
   By default, anonymous users cannot edit the wiki.
 
+* --rss, --norss
+
+  If rss is set, along with every html page rendered by ikiwiki, an rss
+  page will also be rendered, to allow users to subscribe to a rss feed of
+  changes to that page.
+
 * --cgi
 
   Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and supports editing pages, signing in, registration, and displaying [[RecentChanges]].

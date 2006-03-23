@@ -79,7 +79,13 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
-sub finalize ($$$) { #{{{
+sub rsspage ($) { #{{{
+	my $page=shift;
+
+	return $page.".rss";
+} #}}}
+
+sub genpage ($$$) { #{{{
 	my $content=shift;
 	my $page=shift;
 	my $mtime=shift;
@@ -102,6 +108,10 @@ sub finalize ($$$) { #{{{
 		$u=~s/\[\[file\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
 	}
+
+	if ($config{rss}) {
+		$template->param(rssurl => rsspage($page));
+	}
 	
 	$template->param(
 		title => $title,
@@ -111,6 +121,59 @@ sub finalize ($$$) { #{{{
 		backlinks => [backlinks($page)],
 		discussionlink => htmllink($page, "Discussion", 1, 1),
 		mtime => scalar(gmtime($mtime)),
+	);
+	
+	return $template->output;
+} #}}}
+
+sub date_822 ($) { #{{{
+	my $time=shift;
+
+	eval q{use POSIX};
+	return POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
+} #}}}
+
+sub absolute_urls ($$) { #{{{
+	my $content=shift;
+	my $url=shift;
+
+	$url=~s/[^\/]+$//;
+	
+	$content=~s{<a\s+href="([^"]+)"}{
+		"<a href=\"$url$1\""
+	}ieg;
+	$content=~s{<img\s+src="([^"]+)"}{
+		"<img src=\"$url$1\""
+	}ieg;
+	return $content;
+} #}}}
+
+sub genrss ($$$) { #{{{
+	my $content=shift;
+	my $page=shift;
+	my $mtime=shift;
+
+	my $url="$config{url}/".htmlpage($page);
+	
+	my $template=HTML::Template->new(blind_cache => 1,
+		filename => "$config{templatedir}/rsspage.tmpl");
+	
+	# Regular page gets a feed that is updated every time the
+	# page is changed, so the mtime is encoded in the guid.
+	my @items=(
+		{
+			itemtitle => pagetitle(basename($page)),
+			itemguid => "$url?mtime=$mtime",
+			itemurl => $url,
+			itempubdate => date_822($mtime),
+			itemcontent => absolute_urls($content, $url), # rss sucks
+		},
+	);
+	
+	$template->param(
+		title => pagetitle(basename($page)),
+		pageurl => $url,
+		items => \@items,
 	);
 	
 	return $template->output;
@@ -161,13 +224,20 @@ sub render ($) { #{{{
 		
 		$content=linkify($content, $page);
 		$content=htmlize($type, $content);
-		$content=finalize($content, $page,
-			mtime("$config{srcdir}/$file"));
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
-		writefile("$config{destdir}/".htmlpage($page), $content);
+		writefile("$config{destdir}/".htmlpage($page),
+			genpage($content, $page, mtime("$config{srcdir}/$file")));		
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
+
+		# TODO: should really add this to renderedfiles and call
+		# check_overwrite, as above, but currently renderedfiles
+		# only supports listing one file per page.
+		if ($config{rss}) {
+			writefile("$config{destdir}/".rsspage($page),
+				genrss($content, $page, mtime("$config{srcdir}/$file")));
+		}
 	}
 	else {
 		$links{$file}=[];

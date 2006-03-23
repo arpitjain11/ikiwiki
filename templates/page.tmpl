@@ -41,7 +41,10 @@
 
 <p>
 <!-- from <TMPL_VAR NAME=WIKINAME> -->
-last edited <TMPL_VAR NAME=MTIME>
+Last edited <TMPL_VAR NAME=MTIME>
+<TMPL_IF NAME="RSSURL">
+; <a type="application/rss+xml" href="<TMPL_VAR NAME=RSSURL>">RSS</a>
+</TMPL_IF>
 </p>
 
 </body>
