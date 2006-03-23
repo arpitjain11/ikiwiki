@@ -472,6 +472,7 @@ sub main () { #{{{
 	}
 	elsif ($config{cgi}) {
 		lockwiki();
+		loadindex();
 		require IkiWiki::CGI;
 		cgi();
 	}

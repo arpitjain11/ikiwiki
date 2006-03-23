@@ -271,8 +271,6 @@ sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
-	loadindex();
-	
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
 		fields => [qw(do rcsinfo from page content comments)],
