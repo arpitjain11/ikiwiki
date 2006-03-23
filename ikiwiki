@@ -63,11 +63,17 @@ if (! $config{setup}) {
 	usage() unless @ARGV == 2;
 	$config{srcdir} = possibly_foolish_untaint(shift);
 	$config{destdir} = possibly_foolish_untaint(shift);
+	checkoptions();
+}
+#}}}
+
+sub checkoptions { #{{{
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi");
 	}
-}
-#}}}
+	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
+		unless exists $config{wikistatedir};
+} #}}}
 
 sub usage { #{{{
 	die "usage: ikiwiki [options] source dest\n";
@@ -415,10 +421,11 @@ sub render ($) { #{{{
 sub lockwiki () { #{{{
 	# Take an exclusive lock on the wiki to prevent multiple concurrent
 	# run issues. The lock will be dropped on program exit.
-	if (! -d "$config{srcdir}/.ikiwiki") {
-		mkdir("$config{srcdir}/.ikiwiki");
+	if (! -d $config{wikistatedir}) {
+		mkdir($config{wikistatedir});
 	}
-	open(WIKILOCK, ">$config{srcdir}/.ikiwiki/lockfile") || error ("cannot write to lockfile: $!");
+	open(WIKILOCK, ">$config{wikistatedir}/lockfile") ||
+		error ("cannot write to $config{wikistatedir}/lockfile: $!");
 	if (! flock(WIKILOCK, 2 | 4)) {
 		debug("wiki seems to be locked, waiting for lock");
 		my $wait=600; # arbitrary, but don't hang forever to 
@@ -436,7 +443,7 @@ sub unlockwiki () { #{{{
 } #}}}
 
 sub loadindex () { #{{{
-	open (IN, "$config{srcdir}/.ikiwiki/index") || return;
+	open (IN, "$config{wikistatedir}/index") || return;
 	while (<IN>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
@@ -452,10 +459,11 @@ sub loadindex () { #{{{
 } #}}}
 
 sub saveindex () { #{{{
-	if (! -d "$config{srcdir}/.ikiwiki") {
-		mkdir("$config{srcdir}/.ikiwiki");
+	if (! -d $config{wikistatedir}) {
+		mkdir($config{wikistatedir});
 	}
-	open (OUT, ">$config{srcdir}/.ikiwiki/index") || error("cannot write to index: $!");
+	open (OUT, ">$config{wikistatedir}/index") || 
+		error("cannot write to $config{wikistatedir}/index: $!");
 	foreach my $page (keys %oldpagemtime) {
 		print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
 	        	join(" ", @{$links{$page}})."\n"
@@ -758,8 +766,7 @@ FILE:		foreach my $file (@files) {
 	}
 } #}}}
 
-sub gen_wrapper (@) { #{{{
-	my %config=(@_);
+sub gen_wrapper () { #{{{
 	eval q{use Cwd 'abs_path'};
 	$config{srcdir}=abs_path($config{srcdir});
 	$config{destdir}=abs_path($config{destdir});
@@ -883,7 +890,7 @@ sub userinfo_get ($$) { #{{{
 	my $field=shift;
 
 	eval q{use Storable};
-	my $userdata=eval{ Storable::lock_retrieve("$config{srcdir}/.ikiwiki/userdb") };
+	my $userdata=eval{ Storable::lock_retrieve("$config{wikistatedir}/userdb") };
 	if (! defined $userdata || ! ref $userdata || 
 	    ! exists $userdata->{$user} || ! ref $userdata->{$user} ||
             ! exists $userdata->{$user}->{$field}) {
@@ -898,7 +905,7 @@ sub userinfo_set ($$$) { #{{{
 	my $value=shift;
 	
 	eval q{use Storable};
-	my $userdata=eval{ Storable::lock_retrieve("$config{srcdir}/.ikiwiki/userdb") };
+	my $userdata=eval{ Storable::lock_retrieve("$config{wikistatedir}/userdb") };
 	if (! defined $userdata || ! ref $userdata || 
 	    ! exists $userdata->{$user} || ! ref $userdata->{$user}) {
 		return "";
@@ -906,7 +913,7 @@ sub userinfo_set ($$$) { #{{{
 	
 	$userdata->{$user}->{$field}=$value;
 	my $oldmask=umask(077);
-	my $ret=Storable::lock_store($userdata, "$config{srcdir}/.ikiwiki/userdb");
+	my $ret=Storable::lock_store($userdata, "$config{wikistatedir}/userdb");
 	umask($oldmask);
 	return $ret;
 } #}}}
@@ -916,13 +923,13 @@ sub userinfo_setall ($$) { #{{{
 	my $info=shift;
 	
 	eval q{use Storable};
-	my $userdata=eval{ Storable::lock_retrieve("$config{srcdir}/.ikiwiki/userdb") };
+	my $userdata=eval{ Storable::lock_retrieve("$config{wikistatedir}/userdb") };
 	if (! defined $userdata || ! ref $userdata) {
 		$userdata={};
 	}
 	$userdata->{$user}=$info;
 	my $oldmask=umask(077);
-	my $ret=Storable::lock_store($userdata, "$config{srcdir}/.ikiwiki/userdb");
+	my $ret=Storable::lock_store($userdata, "$config{wikistatedir}/userdb");
 	umask($oldmask);
 	return $ret;
 } #}}}
@@ -1418,7 +1425,7 @@ sub cgi () { #{{{
 
 	my $oldmask=umask(077);
 	my $session = CGI::Session->new("driver:db_file", $q,
-		{ FileName => "$config{srcdir}/.ikiwiki/sessions.db" });
+		{ FileName => "$config{wikistatedir}/sessions.db" });
 	umask($oldmask);
 	
 	# Everything below this point needs the user to be signed in.
@@ -1464,7 +1471,7 @@ sub setup () { # {{{
 setup() if $config{setup};
 lockwiki();
 if ($config{wrapper}) {
-	gen_wrapper(%config);
+	gen_wrapper();
 	exit;
 }
 memoize('pagename');

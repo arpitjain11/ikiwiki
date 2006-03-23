@@ -14,7 +14,9 @@ sub import {
 
 	::debug("generating wrappers..");
 	foreach my $wrapper (@{$setup{wrappers}}) {
-		::gen_wrapper(%::config, verbose => 0, %setup, %{$wrapper});
+		%::config=(%::config, verbose => 0, %setup, %{$wrapper});
+		::checkoptions();
+		::gen_wrapper();
 	}
 
 	::debug("rebuilding wiki..");
@@ -23,6 +25,7 @@ sub import {
 			if defined $setup{$c} && ! ref $setup{$c};
 	}
 	$::config{rebuild}=1;
+	::checkoptions();
 	::refresh();
 
 	::debug("done");
