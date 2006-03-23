@@ -24,7 +24,7 @@ sub setup_standard {
 	my %startconfig=(%config);
 	foreach my $wrapper (@{$setup{wrappers}}) {
 		%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
-		checkoptions();
+		checkconfig();
 		gen_wrapper();
 	}
 	%config=(%startconfig);
@@ -36,7 +36,7 @@ sub setup_standard {
 	}
 	$config{rebuild}=1;
 
-	checkoptions();
+	checkconfig();
 	lockwiki();
 	refresh();
 
