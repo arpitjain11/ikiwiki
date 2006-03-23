@@ -19,7 +19,7 @@ sub getconfig () { #{{{
 		%config=(
 			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
 			wiki_link_regexp => qr/\[\[([^\s\]]+)\]\]/,
-			wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
+			wiki_file_regexp => qr/(^[-A-Za-z0-9_.\&;:\/+]+$)/,
 			verbose => 0,
 			wikiname => "wiki",
 			default_pageext => ".mdwn",
@@ -92,11 +92,11 @@ sub checkconfig () { #{{{
 		unless exists $config{wikistatedir};
 	
 	if ($config{svn}) {
-		require IkiWiki::RCS::SVN;
+		require IkiWiki::Rcs::SVN;
 		$config{rcs}=1;
 	}
 	else {
-		require IkiWiki::RCS::Stub;
+		require IkiWiki::Rcs::Stub;
 		$config{rcs}=0;
 	}
 } #}}}
@@ -234,6 +234,13 @@ sub isinlinableimage ($) { #{{{
 	$file=~/\.(png|gif|jpg|jpeg)$/;
 } #}}}
 
+sub pagetitle ($) { #{{{
+	my $page=shift;
+	$page=~s/__(\d+)__/&#$1;/g;
+	$page=~y/_/ /;
+	return $page;
+} #}}}
+
 sub htmllink ($$;$$) { #{{{
 	my $page=shift;
 	my $link=shift;
@@ -248,7 +255,9 @@ sub htmllink ($$;$$) { #{{{
 		$bestlink="$page/".lc($link);
 	}
 
-	return $link if length $bestlink && $page eq $bestlink;
+	my $linktext=pagetitle($link);
+	
+	return $linktext if length $bestlink && $page eq $bestlink;
 	
 	# TODO BUG: %renderedfiles may not have it, if the linked to page
 	# was also added and isn't yet rendered! Note that this bug is
@@ -258,7 +267,7 @@ sub htmllink ($$;$$) { #{{{
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
-		return "<a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$link"
+		return "<a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$linktext"
 	}
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
@@ -266,7 +275,7 @@ sub htmllink ($$;$$) { #{{{
 	if (! $noimageinline && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\">";
 	}
-	return "<a href=\"$bestlink\">$link</a>";
+	return "<a href=\"$bestlink\">$linktext</a>";
 } #}}}
 
 sub indexlink () { #{{{

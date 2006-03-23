@@ -100,15 +100,10 @@ Requirements:
 * Need to keep track of the globlists in the index file.
    - Probably need to redesign the index file format to allow for this sort
      of future expansion.
-* Need to make _ render as " " in page titles.
-* Also need to support as much other punctuation as possible in page
-  titles, ideally all of it. Punctuation that is illegal in filenames for
-  various good reasons should be embedded encoded in the filenames. Blogs
-  tend to have more punctuation-intensive page titles than wikis.
 * Need to pick a good token and note that the token will need to be passed
   multiple parameters. Possibly something like this:
 
-  	[[rss pages="myblog/*" show="30"]]
+  	[[embed pages="myblog/*" show="30"]]
 
 ## revisit case
 

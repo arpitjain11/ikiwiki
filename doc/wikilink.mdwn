@@ -11,5 +11,15 @@ play when linking between [[SubPage]]s.
 WikiLinks can be entered in any case you like, the page they link to is
 always lowercased.
 
+While a WikiLink is limited to alphanumerics and only a few special
+charaters, it is possible to create page names containing other characters:
+
+* To display a page name with a space in it, use "_" in the WikiLink, for
+  example, [[Multi_Word_Page_Name]]. 
+* For any other special character, you can use "__nnnn__" where `nnnn` is the
+  unicode character number. For example,
+  [[This_page_name_is__44___uselessly__44___a_complete_sentence__46__]]
+  Limiting use of this to when you really need it is a good idea.
+
 Note that if the file linked to by a WikiLink looks like an image, it will
 be displayed inline on the page.

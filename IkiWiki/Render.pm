@@ -84,8 +84,7 @@ sub finalize ($$$) { #{{{
 	my $page=shift;
 	my $mtime=shift;
 
-	my $title=basename($page);
-	$title=~s/_/ /g;
+	my $title=pagetitle(basename($page));
 	
 	my $template=HTML::Template->new(blind_cache => 1,
 		filename => "$config{templatedir}/page.tmpl");
