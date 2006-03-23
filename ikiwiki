@@ -11,33 +11,32 @@ use lib '.'; # For use without installation, removed by Makefile.
 
 use vars qw{%config %links %oldlinks %oldpagemtime %renderedfiles %pagesources};
 
-# Holds global config settings, also used by some modules.
-our %config=( #{{{
-	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
-	wiki_link_regexp => qr/\[\[([^\s\]]+)\]\]/,
-	wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
-	verbose => 0,
-	wikiname => "wiki",
-	default_pageext => ".mdwn",
-	cgi => 0,
-	svn => 1,
-	url => '',
-	cgiurl => '',
-	historyurl => '',
-	diffurl => '',
-	anonok => 0,
-	rebuild => 0,
-	wrapper => undef,
-	wrappermode => undef,
-	srcdir => undef,
-	destdir => undef,
-	templatedir => "/usr/share/ikiwiki/templates",
-	setup => undef,
-	adminuser => undef,
-); #}}}
-
 sub getconfig () { #{{{
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
+		%config=(
+			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
+			wiki_link_regexp => qr/\[\[([^\s\]]+)\]\]/,
+			wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
+			verbose => 0,
+			wikiname => "wiki",
+			default_pageext => ".mdwn",
+			cgi => 0,
+			svn => 1,
+			url => '',
+			cgiurl => '',
+			historyurl => '',
+			diffurl => '',
+			anonok => 0,
+			rebuild => 0,
+			wrapper => undef,
+			wrappermode => undef,
+			srcdir => undef,
+			destdir => undef,
+			templatedir => "/usr/share/ikiwiki/templates",
+			setup => undef,
+			adminuser => undef,
+		);
+
 		eval q{use Getopt::Long};
 		GetOptions(
 			"setup|s=s" => \$config{setup},
