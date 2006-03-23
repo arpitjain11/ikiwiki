@@ -31,6 +31,9 @@ is built. (As long as all changes to all pages is ok.)
      page that lets them tune it, and probably choose literal or glob by
      default.
 
+     I think that the new globlist() function should do everything you need.
+     Adding a field to the prefs page will be trivial --[[Joey]]
+
   The first cut, I suppose, could use one sendmail process to batch-mail all
   subscribers for a given page.  However, in the long run, I can see users
   demanding a bit of feature creep:
