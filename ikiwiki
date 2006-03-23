@@ -81,7 +81,7 @@ sub getconfig () { #{{{
 	}
 } #}}}
 
-sub checkconfig { #{{{
+sub checkconfig () { #{{{
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi");
 	}
@@ -99,16 +99,22 @@ sub checkconfig { #{{{
 	}
 } #}}}
 
-sub usage { #{{{
-	die "usage: ikiwiki [options] source dest\n";
-} #}}}
-
-sub error { #{{{
+sub error ($) { #{{{
 	if ($config{cgi}) {
 		print "Content-type: text/html\n\n";
 		print misctemplate("Error", "<p>Error: @_</p>");
 	}
 	die @_;
+} #}}}
+
+sub usage () { #{{{
+	die "usage: ikiwiki [options] source dest\n";
+} #}}}
+
+sub possibly_foolish_untaint ($) { #{{{
+	my $tainted=shift;
+	my ($untainted)=$tainted=~/(.*)/;
+	return $untainted;
 } #}}}
 
 sub debug ($) { #{{{
@@ -119,12 +125,6 @@ sub debug ($) { #{{{
 	else {
 		print STDERR "@_\n";
 	}
-} #}}}
-
-sub possibly_foolish_untaint { #{{{
-	my $tainted=shift;
-	my ($untainted)=$tainted=~/(.*)/;
-	return $untainted;
 } #}}}
 
 sub basename ($) { #{{{
@@ -236,7 +236,7 @@ sub isinlinableimage ($) { #{{{
 	$file=~/\.(png|gif|jpg|jpeg)$/;
 } #}}}
 
-sub htmllink { #{{{
+sub htmllink ($$;$$) { #{{{
 	my $page=shift;
 	my $link=shift;
 	my $noimageinline=shift; # don't turn links into inline html images
