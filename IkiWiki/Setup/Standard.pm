@@ -7,6 +7,7 @@
 use warnings;
 use strict;
 use IkiWiki::Wrapper;
+use IkiWiki::Render;
 
 package IkiWiki::Setup::Standard;
 
