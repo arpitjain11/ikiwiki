@@ -12,12 +12,12 @@ use IkiWiki::Setup::Standard {
 	# Be sure to customise these..
 	srcdir => "/path/to/source",
 	destdir => "/var/www/wiki",
-	templatedir => "/usr/share/ikiwiki/templates",
-
+	
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
 	#historyurl => "http://svn.myhost/trunk/[[file]]",
 	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
+	#templatedir => "/usr/share/ikiwiki/templates",
 	
 	# Whether to integrate with svn.
 	svn => 1,

@@ -12,8 +12,8 @@ install:: extra_install
 pure_install:: extra_install
 
 extra_build:
-	./ikiwiki doc templates html --wikiname="ikiwiki" --verbose \
-		--nosvn --exclude=/discussion
+	./ikiwiki doc html --templatedir=templates --wikiname="ikiwiki" \
+		--verbose --nosvn --exclude=/discussion
 	./mdwn2man doc/usage.mdwn > ikiwiki.man
 		
 extra_clean:

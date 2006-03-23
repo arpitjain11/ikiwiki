@@ -4,15 +4,14 @@ ikiwiki - a wiki compiler
 
 # SYNOPSIS
 
-ikiwiki [options] source templates destination
+ikiwiki [options] source destination
 
 ikiwiki --setup configfile
 
 # DESCRIPTION
 
 `ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from
-`source` in the [[MarkDown]] language, using the specified html `templates`
-and writes it out to `destination`.
+`source` in the [[MarkDown]] language, and writes it out to `destination`.
 
 # OPTIONS
 
@@ -30,6 +29,11 @@ flags such as --verbose can be negated with --no-verbose.
 * --rebuild
 
   Force a rebuild of all pages.
+
+* --templatedir
+
+  Specify the directory that the page [[templates]] are stored in.
+  Default is `/usr/share/ikiwiki/templates`.
 
 * --wrapper [file]
 

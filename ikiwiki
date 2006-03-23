@@ -33,7 +33,7 @@ our %config=( #{{{
 	wrappermode => undef,
 	srcdir => undef,
 	destdir => undef,
-	templatedir => undef,
+	templatedir => "/usr/share/ikiwiki/templates",
 	setup => undef,
 	adminuser => undef,
 ); #}}}
@@ -56,12 +56,12 @@ GetOptions( #{{{
 		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
 	},
 	"adminuser=s@" => sub { push @{$config{adminuser}}, $_[1] },
+	"templatedir=s" => sub { $config{templatedir}=possibly_foolish_untaint($_[1]) },
 ) || usage();
 
 if (! $config{setup}) {
-	usage() unless @ARGV == 3;
+	usage() unless @ARGV == 2;
 	$config{srcdir} = possibly_foolish_untaint(shift);
-	$config{templatedir} = possibly_foolish_untaint(shift);
 	$config{destdir} = possibly_foolish_untaint(shift);
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi");
@@ -70,7 +70,7 @@ if (! $config{setup}) {
 #}}}
 
 sub usage { #{{{
-	die "usage: ikiwiki [options] source templates dest\n";
+	die "usage: ikiwiki [options] source dest\n";
 } #}}}
 
 sub error { #{{{
@@ -772,8 +772,9 @@ sub gen_wrapper (@) { #{{{
 		error("cannot create a wrapper that uses a setup file");
 	}
 	
-	my @params=($config{srcdir}, $config{templatedir}, $config{destdir},
-		"--wikiname=$config{wikiname}");
+	my @params=($config{srcdir}, $config{destdir},
+		"--wikiname=$config{wikiname}",
+		"--templatedir=$config{templatedir}");
 	push @params, "--verbose" if $config{verbose};
 	push @params, "--rebuild" if $config{rebuild};
 	push @params, "--nosvn" if !$config{svn};

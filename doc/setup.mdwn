@@ -29,11 +29,10 @@ optional support for commits from the web.
 
 5. Build your wiki for the first time.
 
-		ikiwiki --verbose ~/wikiwc/ \
-                  /usr/share/ikiwiki/templates ~/public_html/wiki/ \
-                  --url=http://host/~you/wiki/
+		ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ \
+			--url=http://host/~you/wiki/
 
-   Replace the url with the right url to your wiki. You should now
+   Replace the url with the real url to your wiki. You should now
    be able to visit the url and see your page that you created earlier.
 
 6. Repeat steps 4 and 5 as desired, editing or adding pages and rebuilding
@@ -50,8 +49,8 @@ optional support for commits from the web.
    `doc/ikiwiki.setup` in the ikiwiki sources), and edit it. 
    
    Most of the options, like `wikiname` in the setup file are the same as
-   ikiwiki's command line options (documented in [[usage]]. `srcdir`,
-   `templatedir` and `destdir` are the three directories you specify when
+   ikiwiki's command line options (documented in [[usage]]. `srcdir`
+   and `destdir` are the two directories you specify when
    running ikiwiki by hand. `svnrepo` is the path to your subversion 
    repository. Make sure that all of these are pointing to the right
    directories, and read through and configure the rest of the file to your
