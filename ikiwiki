@@ -424,26 +424,31 @@ sub globlist_match ($$) { #{{{
 	return 0;
 } #}}}
 
-# main {{{
-if ($config{setup}) {
-	require IkiWiki::Setup;
-	setup();
-}
-lockwiki();
-if ($config{wrapper}) {
-	require IkiWiki::Wrapper;
-	gen_wrapper();
-	exit;
-}
-loadindex() unless $config{rebuild};
-if ($config{cgi}) {
-	require IkiWiki::CGI;
-	cgi();
-}
-else {
-	require IkiWiki::Render;
-	rcs_update();
-	refresh();
-	saveindex();
-}
-#}}}
+sub main () { #{{{
+	if ($config{setup}) {
+		require IkiWiki::Setup;
+		setup();
+	}
+	
+	lockwiki();
+	
+	if ($config{wrapper}) {
+		require IkiWiki::Wrapper;
+		gen_wrapper();
+		exit;
+	}
+	
+	if ($config{cgi}) {
+		require IkiWiki::CGI;
+		cgi();
+	}
+	else {
+		loadindex() unless $config{rebuild};
+		require IkiWiki::Render;
+		rcs_update();
+		refresh();
+		saveindex();
+	}
+} #}}}
+
+main;
