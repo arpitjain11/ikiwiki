@@ -1,7 +1,5 @@
 #!/usr/bin/perl -T
 
-eval 'exec /usr/bin/perl -T -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
 $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 
 use warnings;
