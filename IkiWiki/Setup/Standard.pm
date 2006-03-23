@@ -13,8 +13,9 @@ sub import {
 	my %setup=%{$_[1]};
 
 	::debug("generating wrappers..");
+	my %startconfig=(%::config);
 	foreach my $wrapper (@{$setup{wrappers}}) {
-		%::config=(%::config, verbose => 0, %setup, %{$wrapper});
+		%::config=(%startconfig, verbose => 0, %setup, %{$wrapper});
 		::checkoptions();
 		::gen_wrapper();
 	}
