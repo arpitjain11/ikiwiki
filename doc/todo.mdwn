@@ -5,11 +5,6 @@
 
 ## recentchanges
 
-* Should support RSS for notification of new and changed pages. 
-
-  This can be a static rss file that is generated when the wiki
-is built. (As long as all changes to all pages is ok.)
-
 * Should support mail notification of new and changed pages.
 
   Hmm, should be easy to implement this.. it runs as a svn post-coommit hook
@@ -66,6 +61,55 @@ that linked back to it could be added to the page. However, doing linkbacks
 also needs to tie into the main logic, to determine what pages need to be
 renered, so maybe that won't be a plugin.
 
+## blogging and rss
+
+The wiki should emit rss feeds for pages. The simple case is a regular
+page. The complex case is a blog composed of multiple pages.
+
+### single page
+
+Just create an rss feed with one element, that contains the last diff to
+the page, or the contents of the page, or something like that. Whenever the
+page is changed, rss readers should see the single post in the feed as a
+new post, so they'll dump out the page again. Simple, allows subscribing to
+any page as an RSS feed if you want to see just changes to that page.
+
+### multi-page blog
+
+This also takes care of the feature of wanting to make a wiki page
+comprised of several sub-pages that can be independantly edited. Add a
+token that can be embedded into a page and that specifies a [[GlobList]] of
+pages. Now when any page matching the globs changes, this page must be
+updated too. 
+
+For the html rendering, just embed the most recently created N pages in the
+[[GlobList]], with the title of each being a link to the individual page,
+plus a link to an additional page that lists all the titles of every
+matching page in creation order (archives). Plus at the bottom a small web
+form that prompts for a title and allows creating a new page for a new blog
+post.
+
+For the rss rendering, generate a proper weblog of the same pages.
+Of course for permalinks use the links to the subpages.
+
+Note that this allows for weblogs with different sections, etc.
+
+Requirements:
+
+* Need to keep track of creation dates of pages in the index file.
+* Need to keep track of the globlists in the index file.
+   - Probably need to redesign the index file format to allow for this sort
+     of future expansion.
+* Need to make _ render as " " in page titles.
+* Also need to support as much other punctuation as possible in page
+  titles, ideally all of it. Punctuation that is illegal in filenames for
+  various good reasons should be embedded encoded in the filenames. Blogs
+  tend to have more punctuation-intensive page titles than wikis.
+* Need to pick a good token and note that the token will need to be passed
+  multiple parameters. Possibly something like this:
+
+  	[[rss pages="myblog/*" show="30"]]
+
 ## revisit case
 
 Being case insensative is handy, but it does make the [[BackLinks]] a bit
@@ -105,7 +149,8 @@ you need that data..
 ## lists
 
 * list of all missing pages
-* list of all pages or some kind of page map
+* list of all pages or some kind of page map (probably covered by the rss
+  feeds stuff above)
 
 These could be their own static pages updated when other pages are updated.
 Perhaps this ties in with the pluggable renderers stuff.
