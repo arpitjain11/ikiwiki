@@ -171,7 +171,7 @@ sub genrss ($$$) { #{{{
 	);
 	
 	$template->param(
-		title => pagetitle(basename($page)),
+		title => $config{wikiname},
 		pageurl => $url,
 		items => \@items,
 	);

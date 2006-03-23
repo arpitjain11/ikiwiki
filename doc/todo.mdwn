@@ -64,15 +64,7 @@ renered, so maybe that won't be a plugin.
 ## blogging and rss
 
 The wiki should emit rss feeds for pages. The simple case is a regular
-page. The complex case is a blog composed of multiple pages.
-
-### single page
-
-Just create an rss feed with one element, that contains the last diff to
-the page, or the contents of the page, or something like that. Whenever the
-page is changed, rss readers should see the single post in the feed as a
-new post, so they'll dump out the page again. Simple, allows subscribing to
-any page as an RSS feed if you want to see just changes to that page.
+page (done). The complex case is a blog composed of multiple pages.
 
 ### multi-page blog
 
