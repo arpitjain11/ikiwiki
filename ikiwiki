@@ -316,13 +316,19 @@ sub loadindex () { #{{{
 	while (<IN>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
-		my ($mtime, $file, $rendered, @links)=split(' ', $_);
-		my $page=pagename($file);
-		$pagesources{$page}=$file;
-		$oldpagemtime{$page}=$mtime;
-		$oldlinks{$page}=[@links];
-		$links{$page}=[@links];
-		$renderedfiles{$page}=$rendered;
+		my %items;
+		$items{link}=[];
+		foreach my $i (split(/ /, $_)) {
+			my ($item, $val)=split(/=/, $i, 2);
+			push @{$items{$item}}, $val;
+		}
+
+		my $page=pagename($items{src}[0]);
+		$pagesources{$page}=$items{src}[0];
+		$oldpagemtime{$page}=$items{mtime}[0];
+		$oldlinks{$page}=[@{$items{link}}];
+		$links{$page}=[@{$items{link}}];
+		$renderedfiles{$page}=$items{dest}[0];
 	}
 	close IN;
 } #}}}
@@ -334,9 +340,13 @@ sub saveindex () { #{{{
 	open (OUT, ">$config{wikistatedir}/index") || 
 		error("cannot write to $config{wikistatedir}/index: $!");
 	foreach my $page (keys %oldpagemtime) {
-		print OUT "$oldpagemtime{$page} $pagesources{$page} $renderedfiles{$page} ".
-	        	join(" ", @{$links{$page}})."\n"
-				if $oldpagemtime{$page};
+		my $line="mtime=$oldpagemtime{$page} ".
+			"src=$pagesources{$page} ".
+			"dest=$renderedfiles{$page}";
+		if ($oldpagemtime{$page}) {
+			$line.=" link=$_" foreach @{$links{$page}};
+		}
+		print OUT $line."\n";
 	}
 	close OUT;
 } #}}}

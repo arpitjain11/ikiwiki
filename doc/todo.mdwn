@@ -90,12 +90,10 @@ Requirements:
 
 * Need to keep track of creation dates of pages in the index file.
 * Need to keep track of the globlists in the index file.
-   - Probably need to redesign the index file format to allow for this sort
-     of future expansion.
 * Need to pick a good token and note that the token will need to be passed
   multiple parameters. Possibly something like this:
 
-  	[[embed pages="myblog/*" show="30"]]
+  	[[inline pages="myblog/*" show="30"]]
 
 ## revisit case
 
