@@ -1,5 +1,4 @@
 #!/usr/bin/perl -T
-
 $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 
 package IkiWiki;
@@ -10,6 +9,10 @@ use HTML::Template;
 use lib '.'; # For use without installation, removed by Makefile.
 
 use vars qw{%config %links %oldlinks %oldpagemtime %renderedfiles %pagesources};
+
+sub usage () { #{{{
+	die "usage: ikiwiki [options] source dest\n";
+} #}}}
 
 sub getconfig () { #{{{
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
@@ -104,10 +107,6 @@ sub error ($) { #{{{
 		print misctemplate("Error", "<p>Error: @_</p>");
 	}
 	die @_;
-} #}}}
-
-sub usage () { #{{{
-	die "usage: ikiwiki [options] source dest\n";
 } #}}}
 
 sub possibly_foolish_untaint ($) { #{{{
