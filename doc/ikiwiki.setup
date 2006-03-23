@@ -7,7 +7,8 @@
 
 use IkiWiki::Setup::Standard {
 	wikiname => "MyWiki",
-
+	#adminuser => ["yourname", ],
+	
 	# Be sure to customise these..
 	srcdir => "/path/to/source",
 	destdir => "/var/www/wiki",

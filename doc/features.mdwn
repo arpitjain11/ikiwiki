@@ -75,10 +75,21 @@ Currently implemented:
 
 * Smart merging and conflict resolution in your web browser
 
-  Since it uses subversion, ikiwiki takes advantage of its smart merging to avoid any conflicts when two people edit different parts of the same page    at the same time. No annoying warnings about other editors, or locking, etc, instead the other person's changes will be automaticaly merged with yours when you commit.
+  Since it uses subversion, ikiwiki takes advantage of its smart merging to
+  avoid any conflicts when two people edit different parts of the same page
+  at the same time. No annoying warnings about other editors, or locking,
+  etc, instead the other person's changes will be automaticaly merged with
+  yours when you commit.
 
-  In the rare cases where automatic merging fails due to the same part of a page being concurrently edited, regular subversion commit markers are shown in the file to resolve the conflict, so if you're already familiar with that there's no new commit marker syntax to learn.
+  In the rare cases where automatic merging fails due to the same part of a
+  page being concurrently edited, regular subversion commit markers are
+  shown in the file to resolve the conflict, so if you're already familiar
+  with that there's no new commit marker syntax to learn.
+
+* page locking
+
+  Wiki admin can [[lock]] pages so that only other admins can edit them.
 
 ----
 
-It also has lots of [[TODO]] items and [[Bugs]]. This wiki is not ready for production!
+It also has some [[TODO]] items and [[Bugs]].

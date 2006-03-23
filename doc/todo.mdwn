@@ -104,11 +104,14 @@ you need that data..
 
 Might be nice to support automatically generating an index based on headers in a page, for long pages. The question is, how to turn on such an index?
 
-## page locking
+## basewiki underlay
 
-Some wikis will need the abiity to lock a page, or the whole wiki, so that only admins can edit them. Probably using the same globbing as for recentchanges mails to determine what to lock. 
+Rather than copy the basewii around everywhere, it should be configured to
+underlay the main srcdir, and pages be rendered from there if not in the
+srcdir. This would allow upgrades to add/edit pages in the basewiki.
 
-Probably it's ok if locking is only supported for web commits.
+Impementaion will be slightly tricky since currently ikiwiki is hardcoded
+in many places to look in srcdir for pages.
 
 ## Logo
 
