@@ -35,7 +35,9 @@ sub setup_standard {
 			if defined $setup{$c} && ! ref $setup{$c};
 	}
 	$config{rebuild}=1;
+
 	checkoptions();
+	lockwiki();
 	refresh();
 
 	debug("done");
