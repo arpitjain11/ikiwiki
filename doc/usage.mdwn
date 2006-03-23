@@ -44,9 +44,7 @@ flags such as --verbose can be negated with --no-verbose.
   The wrapper is designed to be safely made suid and be run by untrusted
   users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
 
-  Note that the generated wrapper will ignore all command line parameters
-  except for --params, which will make it print out the parameters it would
-  run ikiwiki with.
+  Note that the generated wrapper will ignore all command line parameters.
 
 * --wrappermode mode
 

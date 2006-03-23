@@ -10,7 +10,6 @@ use strict;
 use Memoize;
 use File::Spec;
 use HTML::Template;
-use Getopt::Long;
 
 use vars qw{%config %links %oldlinks %oldpagemtime %renderedfiles %pagesources};
 
@@ -39,31 +38,41 @@ our %config=( #{{{
 	adminuser => undef,
 ); #}}}
 
-GetOptions( #{{{
-	"setup|s=s" => \$config{setup},
-	"wikiname=s" => \$config{wikiname},
-	"verbose|v!" => \$config{verbose},
-	"rebuild!" => \$config{rebuild},
-	"wrapper:s" => sub { $config{wrapper}=$_[1] ? $_[1] : "ikiwiki-wrap" },
-	"wrappermode=i" => \$config{wrappermode},
-	"svn!" => \$config{svn},
-	"anonok!" => \$config{anonok},
-	"cgi!" => \$config{cgi},
-	"url=s" => \$config{url},
-	"cgiurl=s" => \$config{cgiurl},
-	"historyurl=s" => \$config{historyurl},
-	"diffurl=s" => \$config{diffurl},
-	"exclude=s@" => sub {
-		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
-	},
-	"adminuser=s@" => sub { push @{$config{adminuser}}, $_[1] },
-	"templatedir=s" => sub { $config{templatedir}=possibly_foolish_untaint($_[1]) },
-) || usage();
+# option parsing #{{{
+if (! exists $ENV{WRAPPED_OPTIONS}) {
+	eval q{use Getopt::Long};
+	GetOptions(
+		"setup|s=s" => \$config{setup},
+		"wikiname=s" => \$config{wikiname},
+		"verbose|v!" => \$config{verbose},
+		"rebuild!" => \$config{rebuild},
+		"wrapper:s" => sub { $config{wrapper}=$_[1] ? $_[1] : "ikiwiki-wrap" },
+		"wrappermode=i" => \$config{wrappermode},
+		"svn!" => \$config{svn},
+		"anonok!" => \$config{anonok},
+		"cgi!" => \$config{cgi},
+		"url=s" => \$config{url},
+		"cgiurl=s" => \$config{cgiurl},
+		"historyurl=s" => \$config{historyurl},
+		"diffurl=s" => \$config{diffurl},
+		"exclude=s@" => sub {
+			$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
+		},
+		"adminuser=s@" => sub { push @{$config{adminuser}}, $_[1] },
+		"templatedir=s" => sub { $config{templatedir}=possibly_foolish_untaint($_[1]) },
+	) || usage();
 
-if (! $config{setup}) {
-	usage() unless @ARGV == 2;
-	$config{srcdir} = possibly_foolish_untaint(shift);
-	$config{destdir} = possibly_foolish_untaint(shift);
+	if (! $config{setup}) {
+		usage() unless @ARGV == 2;
+		$config{srcdir} = possibly_foolish_untaint(shift);
+		$config{destdir} = possibly_foolish_untaint(shift);
+		checkoptions();
+	}
+}
+else {
+	# wrapper passes a full config structure in the environment
+	# variable
+	eval possibly_foolish_untaint($ENV{WRAPPED_OPTIONS});
 	checkoptions();
 }
 #}}}
