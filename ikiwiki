@@ -7,7 +7,6 @@ use lib '.'; # For use without installation, removed by Makefile.
 package IkiWiki;
 use warnings;
 use strict;
-use Memoize;
 use File::Spec;
 use HTML::Template;
 
@@ -426,8 +425,6 @@ sub globlist_match ($$) { #{{{
 } #}}}
 
 # main {{{
-memoize('pagename');
-memoize('bestlink');
 if ($config{setup}) {
 	require IkiWiki::Setup;
 	setup();

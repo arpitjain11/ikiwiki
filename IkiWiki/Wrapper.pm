@@ -33,7 +33,7 @@ sub gen_wrapper () { #{{{
 EOF
 	}
 	
-	$Data::Dumper::Indent=0;
+	$Data::Dumper::Indent=0; # no newlines
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);
 	$configstring=~s/\\/\\\\/g;
 	$configstring=~s/"/\\"/g;
