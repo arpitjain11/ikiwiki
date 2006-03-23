@@ -152,6 +152,10 @@ sub htmlpage ($) { #{{{
 sub readfile ($) { #{{{
 	my $file=shift;
 
+	if (-l $file) {
+		error("cannot read a symlink ($file)");
+	}
+	
 	local $/=undef;
 	open (IN, "$file") || error("failed to read $file: $!");
 	my $ret=<IN>;
@@ -162,6 +166,10 @@ sub readfile ($) { #{{{
 sub writefile ($$) { #{{{
 	my $file=shift;
 	my $content=shift;
+	
+	if (-l $file) {
+		error("cannot write to a symlink ($file)");
+	}
 
 	my $dir=dirname($file);
 	if (! -d $dir) {
@@ -1334,7 +1342,7 @@ sub cgi_editpage ($$) { #{{{
 			    ! length $form->field('content')) {
 				my $content="";
 				if (exists $pagesources{lc($page)}) {
-						$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
+					$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
 					$content=~s/\n/\r\n/g;
 				}
 				$form->field(name => "content", value => $content,

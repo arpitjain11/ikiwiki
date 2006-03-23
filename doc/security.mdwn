@@ -141,6 +141,22 @@ into the repo. ikiwiki uses File::Find to traverse the repo, and does not
 tell it to follow symlinks, but it might be possible to race replacing a
 directory with a symlink and trick it into following the link.
 
-Also, if someone checks in a symlink to /etc/passwd, ikiwiki would read and publish that, which could be used to expose files a committer otherwise wouldn't see.
+Also, if someone checks in a symlink to /etc/passwd, ikiwiki would read and
+publish that, which could be used to expose files a committer otherwise
+wouldn't see.
 
-To avoid this, ikiwiki will avoid reading files that are symlinks, and uses locking to prevent more than one instance running at a time. The lock prevents one ikiwiki from running a svn up at the wrong time to race another ikiwiki. So only attackers who can write to the working copy on their own can race it.
+To avoid this, ikiwiki will skip over symlinks when scanning for pages, and
+uses locking to prevent more than one instance running at a time. The lock
+prevents one ikiwiki from running a svn up at the wrong time to race
+another ikiwiki. So only attackers who can write to the working copy on
+their own can race it.
+
+## symlink + cgi attacks
+
+Similarly, a svn commit of a symlink could be made, ikiwiki ignores it
+because of the above, but the symlink is still there, and then you edit the
+page from the web, which follows the symlink when reading the page, and
+again when saving the changed page.
+
+This was fixed by making ikiwiki refuse to read or write to files that are
+symlinks, combined with the above locking.
