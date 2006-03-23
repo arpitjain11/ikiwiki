@@ -288,11 +288,11 @@ sub refresh () { #{{{
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		if (! $oldpagemtime{$page}) {
-			debug("new page $page");
+			debug("new page $page") unless exists $pagectime{$page};
 			push @add, $file;
 			$links{$page}=[];
 			$pagesources{$page}=$file;
-			$pagectime{$page}=time;
+			$pagectime{$page}=time unless exists $pagectime{$page};
 		}
 	}
 	my @del;

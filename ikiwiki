@@ -325,12 +325,14 @@ sub loadindex () { #{{{
 		}
 
 		my $page=pagename($items{src}[0]);
-		$pagesources{$page}=$items{src}[0];
-		$oldpagemtime{$page}=$items{mtime}[0];
+		if (! $config{rebuild}) {
+			$pagesources{$page}=$items{src}[0];
+			$oldpagemtime{$page}=$items{mtime}[0];
+			$oldlinks{$page}=[@{$items{link}}];
+			$links{$page}=[@{$items{link}}];
+			$renderedfiles{$page}=$items{dest}[0];
+		}
 		$pagectime{$page}=$items{ctime}[0];
-		$oldlinks{$page}=[@{$items{link}}];
-		$links{$page}=[@{$items{link}}];
-		$renderedfiles{$page}=$items{dest}[0];
 	}
 	close IN;
 } #}}}
@@ -473,7 +475,7 @@ sub main () { #{{{
 	}
 	else {
 		lockwiki();
-		loadindex() unless $config{rebuild};
+		loadindex();
 		require IkiWiki::Render;
 		rcs_update();
 		refresh();
