@@ -1137,6 +1137,8 @@ sub page_locked ($$;$) { #{{{
 			      htmllink("", $admin, 1)." and cannot be edited.");
 		}
 	}
+
+	return 0;
 } #}}}
 
 sub cgi_prefs ($$) { #{{{
