@@ -66,9 +66,8 @@ flags such as --verbose can be negated with --no-verbose.
 
 * --rss, --norss
 
-  If rss is set, along with every html page rendered by ikiwiki, an rss
-  page will also be rendered, to allow users to subscribe to a rss feed of
-  changes to that page.
+  If rss is set, ikiwiki will generate rss feeds for pages that inline
+  a blog.
 
 * --cgi
 

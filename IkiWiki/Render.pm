@@ -159,7 +159,7 @@ sub postprocess_html_inline { #{{{
 		$params{show}=10;
 	}
 	$inlinepages{$parentpage}=$params{pages};
-		
+	
 	my $template=HTML::Template->new(blind_cache => 1,
 		filename => (($params{archive} eq "no") 
 				? "$config{templatedir}/inlinepage.tmpl"
@@ -204,7 +204,7 @@ sub genpage ($$$) { #{{{
 		$template->param(historyurl => $u);
 	}
 
-	if ($config{rss}) {
+	if ($config{rss} && $inlinepages{$page}) {
 		$template->param(rssurl => rsspage($page));
 	}
 	
@@ -238,7 +238,7 @@ sub absolute_urls ($$) { #{{{
 	$content=~s/<a\s+href="(?!http:\/\/)([^"]+)"/<a href="$url$1"/ig;
 	$content=~s/<img\s+src="(?!http:\/\/)([^"]+)"/<img src="$url$1"/ig;
 	return $content;
-} #}}}zo
+} #}}}
 
 sub genrss ($$$) { #{{{
 	my $content=shift;
@@ -264,7 +264,6 @@ sub genrss ($$$) { #{{{
 		if (! exists $params{pages}) {
 			return "";
 		}
-		$inlinepages{$parentpage}=$params{pages};
 		
 		$isblog=1;
 		foreach my $page (blog_list($params{pages}, $params{show})) {
@@ -282,16 +281,6 @@ sub genrss ($$$) { #{{{
 	
 	$content = postprocess($page, $content, inline => $gen_blog);
 
-	# Regular page gets a feed that is updated every time the
-	# page is changed, so the mtime is encoded in the guid.
-	push @items, {
-		itemtitle => pagetitle(basename($page)),
-		itemguid => "$url?mtime=$mtime",
-		itemurl => $url,
-		itempubdate => date_822($mtime),
-		itemcontent => absolute_urls($content, $url),
-	} unless $isblog;
-	
 	$template->param(
 		title => $config{wikiname},
 		pageurl => $url,
@@ -357,7 +346,7 @@ sub render ($) { #{{{
 		# TODO: should really add this to renderedfiles and call
 		# check_overwrite, as above, but currently renderedfiles
 		# only supports listing one file per page.
-		if ($config{rss}) {
+		if ($config{rss} && exists $inlinepages{$page}) {
 			writefile("$config{destdir}/".rsspage($page),
 				genrss($content, $page, mtime("$config{srcdir}/$file")));
 		}
