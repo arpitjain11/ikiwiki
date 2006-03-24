@@ -315,9 +315,9 @@ sub check_overwrite ($$) { #{{{
 } #}}}
 
 sub mtime ($) { #{{{
-	my $page=shift;
+	my $file=shift;
 	
-	return (stat($page))[9];
+	return (stat($file))[9];
 } #}}}
 
 sub findlinks ($$) { #{{{
@@ -418,7 +418,8 @@ sub refresh () { #{{{
 			push @add, $file;
 			$links{$page}=[];
 			$pagesources{$page}=$file;
-			$pagectime{$page}=time unless exists $pagectime{$page};
+			$pagectime{$page}=mtime("$config{srcdir}/$file") 
+				unless exists $pagectime{$page};
 		}
 	}
 	my @del;
