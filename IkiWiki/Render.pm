@@ -463,19 +463,23 @@ FILE:		foreach my $file (@files) {
 	# problem is the backlinks could be wrong in the first pass render
 	# above
 	if (%rendered || @del) {
+		foreach my $f (@files) {
+			my $p=pagename($f);
+			if (exists $inlinepages{$p}) {
+				foreach my $file (keys %rendered, @del) {
+					my $page=pagename($file);
+					if (globlist_match($page, $inlinepages{$p})) {
+						debug("rendering $f, which inlines $page");
+						render($f);
+						last;
+					}
+				}
+			}
+		}
+		
 		my %linkchanged;
 		foreach my $file (keys %rendered, @del) {
 			my $page=pagename($file);
-			
-			foreach my $f (@files) {
-				my $p=pagename($f);
-				if (exists $inlinepages{$p} && 
-				    globlist_match($page, $inlinepages{$p})) {
-					debug("rendering $f, which inlines $page");
-					render($f);
-					next;
-				}
-			}
 			
 			if (exists $links{$page}) {
 				foreach my $link (map { bestlink($page, $_) } @{$links{$page}}) {
