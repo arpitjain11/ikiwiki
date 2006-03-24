@@ -47,7 +47,7 @@ sub cgi_signin ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
-		fields => [qw(do page from name password confirm_password email)],
+		fields => [qw(do title page subpage from name password confirm_password email)],
 		header => 1,
 		method => 'POST',
 		validate => {
@@ -68,7 +68,9 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "name", required => 0);
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "page", type => "hidden");
+	$form->field(name => "title", type => "hidden");
 	$form->field(name => "from", type => "hidden");
+	$form->field(name => "subpage", type => "hidden");
 	$form->field(name => "password", type => "password", required => 0);
 	$form->field(name => "confirm_password", type => "password", required => 0);
 	$form->field(name => "email", required => 0);
@@ -143,6 +145,8 @@ sub cgi_signin ($$) { #{{{
 				print $q->redirect(
 					"$config{cgiurl}?do=".$form->field("do").
 					"&page=".$form->field("page").
+					"&title=".$form->field("title").
+					"&subpage=".$form->field("subpage").
 					"&from=".$form->field("from"));;
 			}
 			else {
@@ -273,7 +277,7 @@ sub cgi_editpage ($$) { #{{{
 
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
-		fields => [qw(do rcsinfo from page content comments)],
+		fields => [qw(do rcsinfo subpage from page content comments)],
 		header => 1,
 		method => 'POST',
 		validate => {
@@ -305,6 +309,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "do", type => 'hidden');
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
+	$form->field(name => "subpage", type => 'hidden');
 	$form->field(name => "page", value => "$page", force => 1);
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "content", type => "textarea", rows => 20,
@@ -355,7 +360,8 @@ sub cgi_editpage ($$) { #{{{
 				my $dir=$from."/";
 				$dir=~s![^/]+/$!!;
 				
-				if ($page eq 'discussion') {
+				if (length $form->param('subpage') ||
+				    $page eq 'discussion') {
 					$best_loc="$from/$page";
 				}
 				else {
@@ -378,7 +384,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
 				options => \@page_locs, value => $best_loc);
-			$form->title("creating $page");
+			$form->title("creating ".pagetitle($page));
 		}
 		elsif ($form->field("do") eq "edit") {
 			page_locked($page, $session);
@@ -394,7 +400,7 @@ sub cgi_editpage ($$) { #{{{
 			}
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
-			$form->title("editing $page");
+			$form->title("editing ".pagetitle($page));
 		}
 		
 		print $form->render(submit => \@buttons);
@@ -472,23 +478,6 @@ sub cgi () { #{{{
 		cgi_recentchanges($q);
 		return;
 	}
-	elsif ($do eq 'blog') {
-		# munge page name to be valid, no matter what freeform text
-		# is entered
-		my $page=$q->param('title');
-		$page=~y/ /_/;
-		$page=~s/([^-A-Za-z0-9_.:+])/"__".ord($1)."__"/eg;
-		# if the page already exist, munge it to be unique
-		my $from=$q->param('from');
-		my $add="";
-		while (exists $pagectime{"$from/$page$add"}) {
-			$add=1 unless length $add;
-			$add++;
-		}
-		$q->param('page', $page.$add);
-		$q->param('do', 'create');
-		# now it behaves same as create does
-	}
 	
 	CGI::Session->name("ikiwiki_session");
 
@@ -516,6 +505,24 @@ sub cgi () { #{{{
 	}
 	elsif ($do eq 'prefs') {
 		cgi_prefs($q, $session);
+	}
+	elsif ($do eq 'blog') {
+		# munge page name to be valid, no matter what freeform text
+		# is entered
+		my $page=lc($q->param('title'));
+		$page=~y/ /_/;
+		$page=~s/([^-A-Za-z0-9_:+])/"__".ord($1)."__"/eg;
+		# if the page already exist, munge it to be unique
+		my $from=$q->param('from');
+		my $add="";
+		while (exists $oldpagemtime{"$from/$page$add"}) {
+			$add=1 unless length $add;
+			$add++;
+		}
+		$q->param('page', $page.$add);
+		# now run same as create
+		$q->param('do', 'create');
+		cgi_editpage($q, $session);
 	}
 	else {
 		error("unknown do parameter");
