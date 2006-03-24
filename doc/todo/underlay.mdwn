@@ -1,0 +1,15 @@
+Rather than copy the basewiki around everywhere, it should be configured to
+underlay the main srcdir, and pages be rendered from there if not in the
+srcdir. This would allow upgrades to add/edit pages in the basewiki.
+
+Impementaion will be slightly tricky since currently ikiwiki is hardcoded
+in many places to look in srcdir for pages. Also, there are possible
+security attacks in the vein of providing a file ikiwiki would normally
+skip in the srcdir, and tricking it to processing this file instead of the
+one from the underlaydir.
+
+There are also difficulties related to removing files from the srcdir, and
+exposing ones from the underlaydir. Will need to make sure that the mtime
+for the source file is zeroed when the page is removed, and that it then
+finds the underlay file and treats it as newer.
+
