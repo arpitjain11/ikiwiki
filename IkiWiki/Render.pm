@@ -127,7 +127,7 @@ sub blog_list ($$) { #{{{
 	}
 
 	@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
-	return @list if @list <= $maxitems;
+	return @list if ! $maxitems || @list <= $maxitems;
 	return @list[0..$maxitems - 1];
 } #}}}
 
@@ -149,21 +149,28 @@ sub postprocess_html_inline { #{{{
 	my $parentpage=shift;
 	my %params=@_;
 	
-	if (! exists $params{show}) {
-		$params{show}=10;
-	}
 	if (! exists $params{pages}) {
 		return "";
 	}
+	if (! exists $params{archive}) {
+		$params{archive}="no";
+	}
+	if (! exists $params{show} && $params{archive} eq "no") {
+		$params{show}=10;
+	}
 	$inlinepages{$parentpage}=$params{pages};
-	
+		
 	my $template=HTML::Template->new(blind_cache => 1,
-		filename => "$config{templatedir}/inlinepage.tmpl");
+		filename => (($params{archive} eq "no") 
+				? "$config{templatedir}/inlinepage.tmpl"
+				: "$config{templatedir}/inlinepagetitle.tmpl"));
 	
 	my $ret="";
 	foreach my $page (blog_list($params{pages}, $params{show})) {
+		next if $page eq $parentpage;
 		$template->param(pagelink => htmllink($parentpage, $page));
-		$template->param(content => get_inline_content($parentpage, $page));
+		$template->param(content => get_inline_content($parentpage, $page))
+			if $params{archive} eq "no";
 		$template->param(ctime => scalar(gmtime($pagectime{$page})));
 		$ret.=$template->output;
 	}
@@ -249,6 +256,8 @@ sub genrss ($$$) { #{{{
 		my $parentpage=shift;
 		my %params=@_;
 		
+		return "" if exists $params{archive} && $params{archive} eq 'yes';
+		
 		if (! exists $params{show}) {
 			$params{show}=10;
 		}
@@ -259,6 +268,7 @@ sub genrss ($$$) { #{{{
 		
 		$isblog=1;
 		foreach my $page (blog_list($params{pages}, $params{show})) {
+			next if $page eq $parentpage;
 			push @items, {
 				itemtitle => pagetitle(basename($page)),
 				itemurl => "$config{url}/$renderedfiles{$page}",
@@ -333,6 +343,7 @@ sub render ($) { #{{{
 		my $page=pagename($file);
 		
 		$links{$page}=[findlinks($content, $page)];
+		delete $inlinepages{$page};
 		
 		$content=linkify($content, $page);
 		$content=htmlize($type, $content);
@@ -453,25 +464,30 @@ FILE:		foreach my $file (@files) {
 						next FILE;
 					}
 				}
-				if (exists $inlinepages{$page} &&
-				    globlist_match($p, $inlinepages{$page})) {
-					debug("rendering $file, which inlines $p");
-					render($file);
-					$rendered{$file}=1;
-				}
 			}
 		}
 	}
 
-	# handle backlinks; if a page has added/removed links, update the
-	# pages it links to
+	# Handle backlinks; if a page has added/removed links, update the
+	# pages it links to. Also handle inlining here.
 	# TODO: inefficient; pages may get rendered above and again here;
 	# problem is the backlinks could be wrong in the first pass render
 	# above
-	if (%rendered) {
+	if (%rendered || @del) {
 		my %linkchanged;
 		foreach my $file (keys %rendered, @del) {
 			my $page=pagename($file);
+			
+			foreach my $f (@files) {
+				my $p=pagename($f);
+				if (exists $inlinepages{$p} && 
+				    globlist_match($page, $inlinepages{$p})) {
+					debug("rendering $f, which inlines $page");
+					render($f);
+					next;
+				}
+			}
+			
 			if (exists $links{$page}) {
 				foreach my $link (map { bestlink($page, $_) } @{$links{$page}}) {
 					if (length $link &&

@@ -65,9 +65,6 @@ renered, so maybe that won't be a plugin.
 
 - Add a small form at top and bottom of a blog to allow entering
   a title for a new item, that goes to a template to create the new page.
-- Add a link to the end of a blog to go to the archives; this would
-  probably best be another cgi script, to avoid needing to generate big
-  static pages for little used archives.
 - Should probably add params to control various rss fields like the blog
   title, its author email, its copyright info, etc. 
 
@@ -110,10 +107,8 @@ you need that data..
 ## lists
 
 * list of all missing pages
-* list of all pages or some kind of page map (probably covered by the rss
-  feeds stuff above)
 
-These could be their own static pages updated when other pages are updated.
+This could be its own static pages updated when other pages are updated.
 Perhaps this ties in with the pluggable renderers stuff.
 
 ## page indexes
