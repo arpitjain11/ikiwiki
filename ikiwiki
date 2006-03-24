@@ -262,7 +262,7 @@ sub htmllink ($$;$$) { #{{{
 		$bestlink="$page/".lc($link);
 	}
 
-	my $linktext=pagetitle($link);
+	my $linktext=pagetitle(basename($link));
 	
 	return $linktext if length $bestlink && $page eq $bestlink;
 	
