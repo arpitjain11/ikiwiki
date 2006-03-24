@@ -466,7 +466,13 @@ sub globlist_match ($$) { #{{{
 sub main () { #{{{
 	getconfig();
 	
-	if ($config{setup}) {
+	if ($config{cgi}) {
+		lockwiki();
+		loadindex();
+		require IkiWiki::CGI;
+		cgi();
+	}
+	elsif ($config{setup}) {
 		require IkiWiki::Setup;
 		setup();
 	}
@@ -474,12 +480,6 @@ sub main () { #{{{
 		lockwiki();
 		require IkiWiki::Wrapper;
 		gen_wrapper();
-	}
-	elsif ($config{cgi}) {
-		lockwiki();
-		loadindex();
-		require IkiWiki::CGI;
-		cgi();
 	}
 	else {
 		lockwiki();
