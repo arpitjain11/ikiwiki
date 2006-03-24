@@ -38,6 +38,7 @@ sub setup_standard {
 
 	checkconfig();
 	lockwiki();
+	loadindex();
 	refresh();
 
 	debug("done");
