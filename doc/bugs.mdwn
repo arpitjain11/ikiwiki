@@ -21,3 +21,5 @@
 * The diff links in RecentChanges go to a viewcvs backtrace if the rev in question is when the page was added. Is this a viewcvs bug, or a behavior ikiwiki needs to work around?
 * If a page stops inlining anthing, its rss feed file
   will linger around and not be deleted.
+* Currently only one blog is supported per page. Attempts to add more
+  will make it only update one of the blogs on the page.

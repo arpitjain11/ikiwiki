@@ -1,9 +1,10 @@
-Welcome to ikiwiki's todo blog. Feel free to add todo items on [[SubPage]s.
+Welcome to ikiwiki's todo blog. Feel free to add todo items on
+[[SubPage]]s, and move items to [[todo/done]] when they're done.
 
 ## recently added
 
-[[inline pages="todo/* !*/Discussion" show="30"]]
+[[inline pages="todo/* !todo/done* !*/Discussion" show="30"]]
 
-## all todo items
+## all open todo items
 
-[[inline pages="todo/* !*/Discussion" archive="yes"]]
+[[inline pages="todo/* !todo/done* !*/Discussion" archive="yes"]]
