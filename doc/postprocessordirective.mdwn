@@ -1,0 +1,11 @@
+Postprocessor directives are similar to a [[WikiLink]] in form, except they
+contain spaces and parameters. The general form is:
+
+\\[[directive param="value" param="value"]]
+
+This gets expanded after the rest of the page is processed, and can be used
+to transform the page in various ways.
+
+Currently, these postprocessor directives are available:
+
+* "inline" to make a [[blog]]

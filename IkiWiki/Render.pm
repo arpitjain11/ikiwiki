@@ -85,11 +85,99 @@ sub rsspage ($) { #{{{
 	return $page.".rss";
 } #}}}
 
+sub postprocess { #{{{
+	# Takes content to postprocess followed by a list of postprocessor
+	# commands and subroutine references to run for the commands.
+	my $page=shift;
+	my $content=shift;
+	my %commands=@_;
+	
+	my $handle=sub {
+		my $escape=shift;
+		my $command=shift;
+		my $params=shift;
+		if (length $escape) {
+			"[[$command $params]]";
+		}
+		elsif (exists $commands{$command}) {
+			my %params;
+			while ($params =~ /(\w+)=\"([^"]+)"(\s+|$)/g) {
+				$params{$1}=$2;
+			}
+			$commands{$command}->($page, %params);
+		}
+		else {
+			"[[bad directive $command]]";
+		}
+	};
+	
+	$content =~ s{(\\?)$config{wiki_processor_regexp}}{$handle->($1, $2, $3)}eg;
+	return $content;
+} #}}}
+
+sub blog_list ($$) { #{{{
+	my $globlist=shift;
+	my $maxitems=shift;
+	
+	my @list;
+	foreach my $page (keys %pagesources) {
+		if (globlist_match($page, $globlist)) {
+			push @list, $page;
+		}
+	}
+
+	@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+	return @list if @list <= $maxitems;
+	return @list[0..$maxitems - 1];
+} #}}}
+
+sub get_inline_content ($$) { #{{{
+	my $parentpage=shift;
+	my $page=shift;
+	
+	my $file=$pagesources{$page};
+	my $type=pagetype($file);
+	if ($type ne 'unknown') {
+		return htmlize($type, linkify(readfile("$config{srcdir}/$file"), $parentpage));
+	}
+	else {
+		return "";
+	}
+} #}}}
+
+sub postprocess_html_inline { #{{{
+	my $parentpage=shift;
+	my %params=@_;
+	
+	if (! exists $params{show}) {
+		$params{show}=10;
+	}
+	if (! exists $params{pages}) {
+		return "";
+	}
+	$inlinepages{$parentpage}=$params{pages};
+	
+	my $template=HTML::Template->new(blind_cache => 1,
+		filename => "$config{templatedir}/inlinepage.tmpl");
+	
+	my $ret="";
+	foreach my $page (blog_list($params{pages}, $params{show})) {
+		$template->param(pagelink => htmllink($parentpage, $page));
+		$template->param(content => get_inline_content($parentpage, $page));
+		$template->param(ctime => scalar(gmtime($pagectime{$page})));
+		$ret.=$template->output;
+	}
+	
+	return $ret;
+} #}}}
+
 sub genpage ($$$) { #{{{
 	my $content=shift;
 	my $page=shift;
 	my $mtime=shift;
 
+	$content = postprocess($page, $content, inline => \&postprocess_html_inline);
+	
 	my $title=pagetitle(basename($page));
 	
 	my $template=HTML::Template->new(blind_cache => 1,
@@ -134,6 +222,7 @@ sub date_822 ($) { #{{{
 } #}}}
 
 sub absolute_urls ($$) { #{{{
+	# sucky sub because rss sucks
 	my $content=shift;
 	my $url=shift;
 
@@ -142,29 +231,56 @@ sub absolute_urls ($$) { #{{{
 	$content=~s/<a\s+href="(?!http:\/\/)([^"]+)"/<a href="$url$1"/ig;
 	$content=~s/<img\s+src="(?!http:\/\/)([^"]+)"/<img src="$url$1"/ig;
 	return $content;
-} #}}}
+} #}}}zo
 
 sub genrss ($$$) { #{{{
 	my $content=shift;
 	my $page=shift;
 	my $mtime=shift;
-
+	
 	my $url="$config{url}/".htmlpage($page);
 	
 	my $template=HTML::Template->new(blind_cache => 1,
 		filename => "$config{templatedir}/rsspage.tmpl");
 	
+	my @items;
+	my $isblog=0;
+	my $gen_blog=sub {
+		my $parentpage=shift;
+		my %params=@_;
+		
+		if (! exists $params{show}) {
+			$params{show}=10;
+		}
+		if (! exists $params{pages}) {
+			return "";
+		}
+		$inlinepages{$parentpage}=$params{pages};
+		
+		$isblog=1;
+		foreach my $page (blog_list($params{pages}, $params{show})) {
+			push @items, {
+				itemtitle => pagetitle(basename($page)),
+				itemurl => "$config{url}/$renderedfiles{$page}",
+				itempubdate => date_822($pagectime{$page}),
+				itemcontent => absolute_urls(get_inline_content($parentpage, $page), $url),
+			} if exists $renderedfiles{$page};
+		}
+		
+		return "";
+	};
+	
+	$content = postprocess($page, $content, inline => $gen_blog);
+
 	# Regular page gets a feed that is updated every time the
 	# page is changed, so the mtime is encoded in the guid.
-	my @items=(
-		{
-			itemtitle => pagetitle(basename($page)),
-			itemguid => "$url?mtime=$mtime",
-			itemurl => $url,
-			itempubdate => date_822($mtime),
-			itemcontent => absolute_urls($content, $url), # rss sucks
-		},
-	);
+	push @items, {
+		itemtitle => pagetitle(basename($page)),
+		itemguid => "$url?mtime=$mtime",
+		itemurl => $url,
+		itempubdate => date_822($mtime),
+		itemcontent => absolute_urls($content, $url),
+	} unless $isblog;
 	
 	$template->param(
 		title => $config{wikiname},
@@ -223,7 +339,7 @@ sub render ($) { #{{{
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
 		writefile("$config{destdir}/".htmlpage($page),
-			genpage($content, $page, mtime("$config{srcdir}/$file")));		
+			genpage($content, $page, mtime("$config{srcdir}/$file")));
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
 
@@ -320,7 +436,7 @@ sub refresh () { #{{{
 	}
 	
 	# if any files were added or removed, check to see if each page
-	# needs an update due to linking to them
+	# needs an update due to linking to them or inlining them.
 	# TODO: inefficient; pages may get rendered above and again here;
 	# problem is the bestlink may have changed and we won't know until
 	# now
@@ -336,6 +452,12 @@ FILE:		foreach my $file (@files) {
 						$rendered{$file}=1;
 						next FILE;
 					}
+				}
+				if (exists $inlinepages{$page} &&
+				    globlist_match($p, $inlinepages{$page})) {
+					debug("rendering $file, which inlines $p");
+					render($file);
+					$rendered{$file}=1;
 				}
 			}
 		}

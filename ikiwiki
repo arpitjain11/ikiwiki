@@ -9,7 +9,7 @@ use HTML::Template;
 use lib '.'; # For use without installation, removed by Makefile.
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
-            %renderedfiles %pagesources};
+            %renderedfiles %pagesources %inlinepages};
 
 sub usage () { #{{{
 	die "usage: ikiwiki [options] source dest\n";
@@ -20,6 +20,7 @@ sub getconfig () { #{{{
 		%config=(
 			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
 			wiki_link_regexp => qr/\[\[([^\s\]]+)\]\]/,
+			wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]+)\]\]/,
 			wiki_file_regexp => qr/(^[-A-Za-z0-9_.\&;:\/+]+$)/,
 			verbose => 0,
 			wikiname => "wiki",
@@ -273,7 +274,7 @@ sub htmllink ($$;$$) { #{{{
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
-		return "<a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$linktext"
+		return "<span><a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$linktext</span>"
 	}
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
@@ -332,6 +333,8 @@ sub loadindex () { #{{{
 			$oldpagemtime{$page}=$items{mtime}[0];
 			$oldlinks{$page}=[@{$items{link}}];
 			$links{$page}=[@{$items{link}}];
+			$inlinepages{$page}=join(" ", @{$items{inlinepage}})
+				if exists $items{inlinepage};
 			$renderedfiles{$page}=$items{dest}[0];
 		}
 		$pagectime{$page}=$items{ctime}[0];
@@ -346,12 +349,14 @@ sub saveindex () { #{{{
 	open (OUT, ">$config{wikistatedir}/index") || 
 		error("cannot write to $config{wikistatedir}/index: $!");
 	foreach my $page (keys %oldpagemtime) {
+		next unless $oldpagemtime{$page};
 		my $line="mtime=$oldpagemtime{$page} ".
 			"ctime=$pagectime{$page} ".
 			"src=$pagesources{$page} ".
 			"dest=$renderedfiles{$page}";
-		if ($oldpagemtime{$page}) {
-			$line.=" link=$_" foreach @{$links{$page}};
+		$line.=" link=$_" foreach @{$links{$page}};
+		if (exists $inlinepages{$page}) {
+			$line.=" inlinepage=$_" foreach split " ", $inlinepages{$page};
 		}
 		print OUT $line."\n";
 	}

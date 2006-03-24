@@ -1,0 +1,8 @@
+You can turn any page on this wiki into a weblog by inserting a
+[[PostProcessorDirective]]. Like this:
+
+\\[[inline pages="blog/*" show="10"]]
+
+Any pages that match the specified [[GlobList]] (in the exaple, any
+[[SubPages]] of "blog") will be part of the blog, and the newest 10
+of them will appear in the page.
