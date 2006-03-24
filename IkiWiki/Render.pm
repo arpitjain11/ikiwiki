@@ -160,12 +160,22 @@ sub postprocess_html_inline { #{{{
 	}
 	$inlinepages{$parentpage}=$params{pages};
 	
+	my $ret="";
+	
+	if (exists $params{rootpage}) {
+		my $formtemplate=HTML::Template->new(blind_cache => 1,
+			filename => "$config{templatedir}/blogpost.tmpl");
+		$formtemplate->param(cgiurl => $config{cgiurl});
+		$formtemplate->param(rootpage => $params{rootpage});
+		my $form=$formtemplate->output;
+		$ret.=$form;
+	}
+	
 	my $template=HTML::Template->new(blind_cache => 1,
 		filename => (($params{archive} eq "no") 
 				? "$config{templatedir}/inlinepage.tmpl"
 				: "$config{templatedir}/inlinepagetitle.tmpl"));
 	
-	my $ret="";
 	foreach my $page (blog_list($params{pages}, $params{show})) {
 		next if $page eq $parentpage;
 		$template->param(pagelink => htmllink($parentpage, $page));

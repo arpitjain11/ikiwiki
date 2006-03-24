@@ -467,10 +467,27 @@ sub cgi () { #{{{
 		error("\"do\" parameter missing");
 	}
 	
-	# This does not need a session.
+	# Things that do not need a session.
 	if ($do eq 'recentchanges') {
 		cgi_recentchanges($q);
 		return;
+	}
+	elsif ($do eq 'blog') {
+		# munge page name to be valid, no matter what freeform text
+		# is entered
+		my $page=$q->param('title');
+		$page=~y/ /_/;
+		$page=~s/([^-A-Za-z0-9_.:+])/"__".ord($1)."__"/eg;
+		# if the page already exist, munge it to be unique
+		my $from=$q->param('from');
+		my $add="";
+		while (exists $pagectime{"$from/$page$add"}) {
+			$add=1 unless length $add;
+			$add++;
+		}
+		$q->param('page', $page.$add);
+		$q->param('do', 'create');
+		# now it behaves same as create does
 	}
 	
 	CGI::Session->name("ikiwiki_session");

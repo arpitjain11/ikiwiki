@@ -1,11 +1,15 @@
 You can turn any page on this wiki into a weblog by inserting a
 [[PostProcessorDirective]]. Like this:
 
-\\[[inline pages="blog/* !*/Discussion" show="10"]]
+\\[[inline pages="blog/* !*/Discussion" show="10" rootpage="blog"]]
 
 Any pages that match the specified [[GlobList]] (in the exaple, any
 [[SubPages]] of "blog") will be part of the blog, and the newest 10
 of them will appear in the page.
+
+The optional `rootpage` setting tells the wiki that new posts to this blog
+should default to being [[SubPages]] of "blog", and enables a form at the
+top of the blog that can be used to add new items.
 
 If you want your blog to have an archive page listing every post ever made
 to it, you can accomplish that like this:
