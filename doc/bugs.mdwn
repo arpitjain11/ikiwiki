@@ -4,6 +4,9 @@
   to point to it, but will forget to update the linkbacks in Foo/Baz.
   And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
   back to Foo/Baz.
+
+    -- is this still true?
+
 * If I try to do a web commit, to a svn+ssh repo, it fails with
   "Host key verification failed."
   I think that the setuid isn't fully taking; it should be running as me,
@@ -14,7 +17,6 @@
 * RecentChanges is a regular page, perhaps it should be automatically
   replaced with a link to the [[CGI]]?
 * [[ikiwiki]] should go to the same place as [[index]] (on this wiki).
-* Various inneficencies cause it to sometimes render the same page 3 times for one change. This could be fixed for a 3 fold speedup on commits.
 * Web browsers don't word-wrap lines in submitted text, which makes editing a
   page that someone wrote in a web browser annoying (`gqip` is vim user's
   friend here). Is there any way to improve this?
