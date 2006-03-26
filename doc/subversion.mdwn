@@ -1,3 +1,4 @@
 Subversion is a revision control system. While ikiwiki is relatively
-independant of the underlying revision control system, using it with
-Subversion is recommended. Ikiki can run as a [[post-commit]] hook to update a wiki whenever commits come in.
+independant of the underlying revision control system, and can easily be used without one, using it with Subversion is recommended. 
+
+Ikiwiki can run as a [[post-commit]] hook to update a wiki whenever commits come in. When running as a [[cgi]] with Subversion, ikiwiki automatically commits edited pages to the subversion repostory, and uses the Subversion log to generate the [[RecentChanges]] page.
