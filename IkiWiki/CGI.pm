@@ -28,6 +28,8 @@ sub page_locked ($$;$) { #{{{
 sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
 	
+	unlockwiki();
+
 	my $template=HTML::Template->new(
 		filename => "$config{templatedir}/recentchanges.tmpl"
 	);
