@@ -215,7 +215,7 @@ sub genpage ($$$) { #{{{
 	}
 
 	if ($config{rss} && $inlinepages{$page}) {
-		$template->param(rssurl => rsspage($page));
+		$template->param(rssurl => rsspage(basename($page)));
 	}
 	
 	$template->param(
