@@ -30,6 +30,11 @@ flags such as --verbose can be negated with --no-verbose.
 
   Force a rebuild of all pages.
 
+* --refresh
+
+  Refresh the wiki, updating any changes pages. This is the default
+  behavior so you don't normally need to specify it.
+
 * --fixctime
 
   Pull last changed time for all pages out of the revision control system.
@@ -117,12 +122,12 @@ flags such as --verbose can be negated with --no-verbose.
 * --setup configfile
 
   In setup mode, ikiwiki reads the config file, which is really a perl
-  program that can call ikiwiki internal functions. Uses of this are
-  various; the normal one is to automatically generate wrappers for a
-  wiki based on data in a config file.
-  
-  Note that the wiki will be (re)built as part of the setup process to
-  ensure that any changes take effect.
+  program that can call ikiwiki internal functions.
+
+  The default action when --setup is specified is to automatically generate
+  wrappers for a wiki based on data in a config file, and rebuild the wiki.
+  If you also pass the --refresh option, ikiwiki will instead just refresh
+  the wiki described in the setup file.
 
   [[ikiwiki.setup]] is an example of such a config file.
 

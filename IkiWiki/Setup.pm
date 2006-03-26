@@ -19,6 +19,7 @@ sub setup () { # {{{
 
 	eval $code;
 	error($@) if $@;
+
 	exit;
 } #}}}
 

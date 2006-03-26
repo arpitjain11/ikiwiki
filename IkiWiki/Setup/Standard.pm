@@ -20,21 +20,27 @@ package IkiWiki;
 sub setup_standard {
 	my %setup=%{$_[1]};
 
-	debug("generating wrappers..");
-	my %startconfig=(%config);
-	foreach my $wrapper (@{$setup{wrappers}}) {
-		%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
-		checkconfig();
-		gen_wrapper();
+	if (! $config{refresh}) {
+		debug("generating wrappers..");
+		my %startconfig=(%config);
+		foreach my $wrapper (@{$setup{wrappers}}) {
+			%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
+			checkconfig();
+			gen_wrapper();
+		}
+		%config=(%startconfig);
 	}
-	%config=(%startconfig);
-	
-	debug("rebuilding wiki..");
 	foreach my $c (keys %setup) {
 		$config{$c}=possibly_foolish_untaint($setup{$c})
 			if defined $setup{$c} && ! ref $setup{$c};
 	}
-	$config{rebuild}=1;
+	if (! $config{refresh}) {
+		$config{rebuild}=1;
+		debug("rebuilding wiki..");
+	}
+	else {
+		debug("refreshing wiki..");
+	}
 
 	checkconfig();
 	lockwiki();

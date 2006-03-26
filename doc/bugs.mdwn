@@ -25,3 +25,6 @@
   will linger around and not be deleted.
 * Currently only one blog is supported per page. Attempts to add more
   will make it only update one of the blogs on the page.
+* If I edit blog/entry/blog_moved, add a link to code/ikiwiki, and hit
+  preview, it doesn't get the link right because it makes it relative to
+  where the page will be saved to, not to where the cgi script is.
