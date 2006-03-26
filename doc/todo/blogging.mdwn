@@ -3,10 +3,4 @@
 - The [[TODO]] page would work better if the first N were shown in full, 
   and then all open items were shown in summary. Maybe add this mode.
 - Add Discussion and Edit links at the bottom of each inlined post.
-- Still not completly comfortable with ikiwiki only knowing when a page was
-  posted based on the on-disk mtime the first time it sees the page. svn doesn't
-  preserve mtimes and also if the index gets broken it will see new mtimes for any
-  pages that were actually modified in the interim. I suppose that info could 
-  be pulled out of svn log by a utility that was run if the index or mtimes 
-  got screwed up.
 - It would be possible to support rss enclosures for eg, podcasts, pretty easily. 

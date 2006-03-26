@@ -1,4 +1,4 @@
-#!/usr/bin/perl -T
+#!/usr/bin/perl
 # Stubs for no revision control.
 
 use warnings;
@@ -21,6 +21,10 @@ sub rcs_add ($) {
 }
 
 sub rcs_recentchanges ($) {
+}
+
+sub rcs_getctime () {
+	error "getctime not implemented";
 }
 
 1

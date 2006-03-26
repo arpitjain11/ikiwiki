@@ -30,6 +30,13 @@ flags such as --verbose can be negated with --no-verbose.
 
   Force a rebuild of all pages.
 
+* --fixctime
+
+  Pull last changed time for all pages out of the revision control system.
+  This rarely used option provides a way to get the real creation times of
+  items in weblogs, for example when building a wiki from a new subversion
+  checkout. It is unoptimised and quite slow.
+
 * --templatedir
 
   Specify the directory that the page [[templates]] are stored in.

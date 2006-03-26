@@ -1,10 +1,12 @@
-#!/usr/bin/perl -T
+#!/usr/bin/perl
 # For subversion support.
 
 use warnings;
 use strict;
 
 package IkiWiki;
+		
+my $svn_log_infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 
 sub svn_info ($$) { #{{{
 	my $field=shift;
@@ -107,7 +109,6 @@ sub rcs_recentchanges ($) { #{{{
 		my ($svn_base)=$svn_url=~m!(/trunk(?:/.*)?)$!;
 		
 		my $div=qr/^--------------------+$/;
-		my $infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 		my $state='start';
 		my ($rev, $user, $when, @pages, @message);
 		foreach (`LANG=C svn log --limit $num -v '$svn_url'`) {
@@ -115,7 +116,7 @@ sub rcs_recentchanges ($) { #{{{
 			if ($state eq 'start' && /$div/) {
 				$state='header';
 			}
-			elsif ($state eq 'header' && /$infoline/) {
+			elsif ($state eq 'header' && /$svn_log_infoline/) {
 				$rev=$1;
 				$user=$2;
 				$when=concise(ago(time - str2time($3)));
@@ -164,6 +165,33 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @ret;
+} #}}}
+
+sub rcs_getctime () { #{{{
+	eval q{use Date::Parse};
+	foreach my $page (keys %pagectime) {
+		my $file="$config{srcdir}/$pagesources{$page}";
+		my $child = open(SVNLOG, "-|");
+		if (! $child) {
+			exec("svn", "log", $file) || error("svn log $file failed to run");
+		}
+
+		my $date;
+		while (<SVNLOG>) {
+			if (/$svn_log_infoline/) {
+				$date=$3;
+		    	}
+		}
+		close SVNLOG || warn "svn log $file exited $?";
+
+		if (! defined $date) {
+			warn "failed to parse svn log for $file\n";
+			next;
+		}
+		
+		$pagectime{$page}=$date=str2time($date);
+		debug("found ctime ".localtime($date)." for $page");
+	}
 } #}}}
 
 1

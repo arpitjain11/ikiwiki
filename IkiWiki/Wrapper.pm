@@ -38,7 +38,7 @@ EOF
 	$configstring=~s/\\/\\\\/g;
 	$configstring=~s/"/\\"/g;
 	
-	open(OUT, ">ikiwiki-wrap.c") || error("failed to write ikiwiki-wrap.c: $!");;
+	open(OUT, ">$wrapper.c") || error("failed to write $wrapper.c: $!");;
 	print OUT <<"EOF";
 /* A wrapper for ikiwiki, can be safely made suid. */
 #define _GNU_SOURCE
@@ -66,10 +66,10 @@ $envsave
 }
 EOF
 	close OUT;
-	if (system("gcc", "ikiwiki-wrap.c", "-o", $wrapper) != 0) {
-		error("failed to compile ikiwiki-wrap.c");
+	if (system("gcc", "$wrapper.c", "-o", $wrapper) != 0) {
+		error("failed to compile $wrapper.c");
 	}
-	unlink("ikiwiki-wrap.c");
+	unlink("$wrapper.c");
 	if (defined $config{wrappermode} &&
 	    ! chmod(oct($config{wrappermode}), $wrapper)) {
 		error("chmod $wrapper: $!");

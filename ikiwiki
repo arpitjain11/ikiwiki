@@ -34,6 +34,7 @@ sub getconfig () { #{{{
 			anonok => 0,
 			rss => 0,
 			rebuild => 0,
+			getctime => 0,
 			wrapper => undef,
 			wrappermode => undef,
 			srcdir => undef,
@@ -49,6 +50,7 @@ sub getconfig () { #{{{
 			"wikiname=s" => \$config{wikiname},
 			"verbose|v!" => \$config{verbose},
 			"rebuild!" => \$config{rebuild},
+			"getctime" => \$config{getctime},
 			"wrappermode=i" => \$config{wrappermode},
 			"svn!" => \$config{svn},
 			"anonok!" => \$config{anonok},
@@ -486,6 +488,7 @@ sub main () { #{{{
 		loadindex();
 		require IkiWiki::Render;
 		rcs_update();
+		rcs_getctime() if $config{getctime};
 		refresh();
 		saveindex();
 	}
