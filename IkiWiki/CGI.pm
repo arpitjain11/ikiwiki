@@ -511,7 +511,7 @@ sub cgi () { #{{{
 		# is entered
 		my $page=lc($q->param('title'));
 		$page=~y/ /_/;
-		$page=~s/([^-A-Za-z0-9_:+])/"__".ord($1)."__"/eg;
+		$page=~s/([^-A-Za-z0-9_:+/])/"__".ord($1)."__"/eg;
 		# if the page already exist, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
