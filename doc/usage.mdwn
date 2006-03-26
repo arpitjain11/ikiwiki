@@ -13,27 +13,62 @@ ikiwiki --setup configfile
 `ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from
 `source` in the [[MarkDown]] language, and writes it out to `destination`.
 
-# OPTIONS
-
 Note that most options can be shortened to single letters, and boolean
 flags such as --verbose can be negated with --no-verbose.
 
-* --wikiname
+# MODE OPTIONS
 
-  The name of the wiki, default is "wiki".
-
-* --verbose
-
-  Be vebose about what it's doing.
-
-* --rebuild
-
-  Force a rebuild of all pages.
+These options control the mode that ikiwiki is operating in.
 
 * --refresh
 
   Refresh the wiki, updating any changes pages. This is the default
   behavior so you don't normally need to specify it.
+
+* --rebuild
+
+  Force a rebuild of all pages.
+
+* --cgi
+
+  Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and
+  supports editing pages, signing in, registration, and displaying
+  [[RecentChanges]].
+
+  To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
+  to generate a wrapper. The wrapper will generally need to run suid 6755 to
+  the user who owns the `source` and `destination` directories.
+
+* --wrapper [file]
+
+  Generate a [[wrapper]] binary that is hardcoded to do action specified by
+  the other options, using the specified input files and `destination`
+  directory. The filename to use for the wrapper is optional.
+
+  The wrapper is designed to be safely made suid and be run by untrusted
+  users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
+
+  Note that the generated wrapper will ignore all command line parameters.
+
+* --setup configfile
+
+  In setup mode, ikiwiki reads the config file, which is really a perl
+  program that can call ikiwiki internal functions.
+
+  The default action when --setup is specified is to automatically generate
+  wrappers for a wiki based on data in a config file, and rebuild the wiki.
+  If you also pass the --refresh option, ikiwiki will instead just refresh
+  the wiki described in the setup file.
+
+  [[ikiwiki.setup]] is an example of such a config file.
+
+# CONFIG OPTIONS
+
+These options configure the wiki.
+
+* --wikiname
+
+  The name of the wiki, default is "wiki".
 
 * --fixctime
 
@@ -46,17 +81,6 @@ flags such as --verbose can be negated with --no-verbose.
 
   Specify the directory that the page [[templates]] are stored in.
   Default is `/usr/share/ikiwiki/templates`.
-
-* --wrapper [file]
-
-  Generate a [[wrapper]] binary that is hardcoded to do action specified by
-  the other options, using the specified input files and `destination`
-  directory. The filename to use for the wrapper is optional.
-
-  The wrapper is designed to be safely made suid and be run by untrusted
-  users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
-
-  Note that the generated wrapper will ignore all command line parameters.
 
 * --wrappermode mode
 
@@ -80,12 +104,6 @@ flags such as --verbose can be negated with --no-verbose.
 
   If rss is set, ikiwiki will generate rss feeds for pages that inline
   a blog.
-
-* --cgi
-
-  Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and supports editing pages, signing in, registration, and displaying [[RecentChanges]].
-
-  To use ikiwiki as a [[CGI]] program you need to use --wrapper to generate a wrapper. The wrapper will generally need to run suid 6755 to the user who owns the `source` and `destination` directories.
 
 * --url http://someurl/
 
@@ -119,17 +137,9 @@ flags such as --verbose can be negated with --no-verbose.
   Currently allows locking of any page, other powers may be added later.
   May be specified multiple times for multiple admins.
 
-* --setup configfile
+* --verbose
 
-  In setup mode, ikiwiki reads the config file, which is really a perl
-  program that can call ikiwiki internal functions.
-
-  The default action when --setup is specified is to automatically generate
-  wrappers for a wiki based on data in a config file, and rebuild the wiki.
-  If you also pass the --refresh option, ikiwiki will instead just refresh
-  the wiki described in the setup file.
-
-  [[ikiwiki.setup]] is an example of such a config file.
+  Be vebose about what it's doing.
 
 # AUTHOR
 
