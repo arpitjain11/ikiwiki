@@ -28,3 +28,4 @@
 * If I edit blog/entry/blog_moved, add a link to code/ikiwiki, and hit
   preview, it doesn't get the link right because it makes it relative to
   where the page will be saved to, not to where the cgi script is.
+* RSS output contains relative links. Ie. http://kitenet.net/~joey/blog/index.rss contains a link to http://kitenet.net/~joey/blog/../blog.html
