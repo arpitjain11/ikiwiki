@@ -29,3 +29,4 @@
   preview, it doesn't get the link right because it makes it relative to
   where the page will be saved to, not to where the cgi script is.
 * RSS output contains relative links. Ie. http://kitenet.net/~joey/blog/index.rss contains a link to http://kitenet.net/~joey/blog/../blog.html
+* \[\[inline archive="yes\]\] creates an RSS link, but no feed.
