@@ -266,8 +266,6 @@ sub genrss ($$$) { #{{{
 		my $parentpage=shift;
 		my %params=@_;
 		
-		return "" if exists $params{archive} && $params{archive} eq 'yes';
-		
 		if (! exists $params{show}) {
 			$params{show}=10;
 		}
