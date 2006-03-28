@@ -355,7 +355,9 @@ sub cgi_editpage ($$) { #{{{
 			my ($from)=$form->param('from')=~/$config{wiki_file_regexp}/;
 			if (! defined $from || ! length $from ||
 			    $from ne $form->param('from') ||
-			    $from=~/$config{wiki_file_prune_regexp}/ || $from=~/^\//) {
+			    $from=~/$config{wiki_file_prune_regexp}/ ||
+			    $from=~/^\// ||
+			    $form->submitted eq "Preview") {
 				@page_locs=$best_loc=$page;
 			}
 			else {
