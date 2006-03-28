@@ -19,7 +19,7 @@ sub getconfig () { #{{{
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
 		%config=(
 			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
-			wiki_link_regexp => qr/\[\[([^\s\]]+)\]\]/,
+			wiki_link_regexp => qr/\[\[(?:([^\s\]\|]+)\|)?([^\s\]]+)\]\]/,
 			wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]+)\]\]/,
 			wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
 			verbose => 0,
@@ -252,11 +252,12 @@ sub pagetitle ($) { #{{{
 	return $page;
 } #}}}
 
-sub htmllink ($$;$$) { #{{{
+sub htmllink ($$;$$$) { #{{{
 	my $page=shift;
 	my $link=shift;
 	my $noimageinline=shift; # don't turn links into inline html images
 	my $forcesubpage=shift; # force a link to a subpage
+	my $linktext=shift; # set to force the link text to something
 
 	my $bestlink;
 	if (! $forcesubpage) {
@@ -266,7 +267,7 @@ sub htmllink ($$;$$) { #{{{
 		$bestlink="$page/".lc($link);
 	}
 
-	my $linktext=pagetitle(basename($link));
+	$linktext=pagetitle(basename($link)) unless defined $linktext;
 	
 	return $linktext if length $bestlink && $page eq $bestlink;
 	
