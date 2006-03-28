@@ -242,7 +242,7 @@ sub bestlink ($$) { #{{{
 sub isinlinableimage ($) { #{{{
 	my $file=shift;
 	
-	$file=~/\.(png|gif|jpg|jpeg)$/;
+	$file=~/\.(png|gif|jpg|jpeg)$/i;
 } #}}}
 
 sub pagetitle ($) { #{{{
