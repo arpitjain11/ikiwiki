@@ -17,10 +17,12 @@
 </h1>
 <TMPL_IF NAME="HYPERESTRAIERURL">
 <form method="get" action="<TMPL_VAR HYPERESTRAIERURL>" id="searchform">
-<input type="text" name="phrase" value="" size="32" />
-<input type="submit" value="Search" />
+<div>
+<input type="text" name="phrase" value="" size="16" />
 <input type="hidden" name="enc" value="UTF-8" />
 <input type="hidden" name="do" value="hyperestraier" />
+</div>
+</form>
 </TMPL_IF>
 </div>
 

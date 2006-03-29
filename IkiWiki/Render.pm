@@ -407,9 +407,10 @@ sub estcfg () { #{{{
 	);
 	print TEMPLATE $template->output;
 	close TEMPLATE;
-	symlink("/usr/lib/estraier/estseek.cgi",
-		"$estdir/".basename($config{cgiurl})) ||
-			error("symlink: $!");
+	$cgi="$estdir/".basename($config{cgiurl});
+	unlink($cgi);
+	symlink("/usr/lib/estraier/estseek.cgi", $cgi) ||
+		error("symlink $cgi: $!");
 } # }}}
 
 sub estcmd ($;@) { #{{{
