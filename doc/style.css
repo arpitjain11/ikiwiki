@@ -19,6 +19,7 @@
 	border-bottom: 1px solid #000;
 }
 
+/* Used for adding a blog page. */
 #blogform {
 	margin: 10 10;
 	border: 1px solid #000;
@@ -35,4 +36,13 @@
 
 #pageinfo {
 	font-style: italic;
+}
+
+/* Used for invalid form fields. */
+#fb_invalid {
+	background: red;
+}
+/* Used for required form fields. */
+#fb_required {
+	fornt-style: bold;
 }
