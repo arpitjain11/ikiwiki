@@ -1,11 +1,11 @@
 #header h1 {
 	margin: 0;
-	padding: 2px 0;
+	padding: 0 0;
 }
 
 #actions ul {
 	margin: 0;
-	padding: 2px;
+	padding: 6px;
 	list-style-type: none;
 	border-bottom: 1px solid #000;
 }
@@ -13,6 +13,11 @@
 #actions li {
 	display: inline;
 	padding: .2em .4em;
+}
+
+#searchform {
+	display: inline;
+	float: right;
 }
 
 #content {
@@ -23,8 +28,8 @@
 #blogform {
 	padding: 10px 10px;
 	border: 1px solid #aaa;
-	color: black !important;;
 	background: #eee;
+	color: black !important;
 }
 
 #backlinks {

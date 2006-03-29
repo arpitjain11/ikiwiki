@@ -8,7 +8,7 @@ Standards-Version: 3.6.2
 Package: ikiwiki
 Architecture: all
 Depends: ${perl:Depends}, markdown, libhtml-template-perl, libcgi-formbuilder-perl, libtime-duration-perl, libcgi-session-perl, libmail-sendmail-perl, gcc | c-compiler
-Recommends: subversion
+Recommends: subversion, hyperestraier
 Suggests: viewcvs
 Description: a wiki compiler
  ikiwiki converts a directory full of wiki pages into html pages suitable

@@ -475,11 +475,21 @@ sub cgi_editpage ($$) { #{{{
 	}
 } #}}}
 
+sub cgi_hyperestraier () { #{{{
+	# only works for GET requests
+	chdir("$config{wikistatedir}/hyperestraier") || error("chdir: $!");
+	exec("./".basename($config{cgiurl})) || error("estseek.cgi failed");
+} #}}}
+
 sub cgi () { #{{{
 	eval q{use CGI};
 	eval q{use CGI::Session};
 	
 	my $q=CGI->new;
+	
+	if (defined $q->param('phrase')) {
+		cgi_hyperestraier();
+	}
 	
 	my $do=$q->param('do');
 	if (! defined $do || ! length $do) {
@@ -490,6 +500,9 @@ sub cgi () { #{{{
 	if ($do eq 'recentchanges') {
 		cgi_recentchanges($q);
 		return;
+	}
+	elsif ($do eq 'hyperestraier') {
+		cgi_hyperestraier();
 	}
 	
 	CGI::Session->name("ikiwiki_session_$config{wikiname}");
