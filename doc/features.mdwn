@@ -52,10 +52,12 @@ Currently implemented:
   that have changed (and tracks things like creation of new pages and links
   that can indirectly cause a page to need a rebuild)
 
-* [[Templates]]
+* valid html and css
 
-  ikiwiki generates html using templates so you can change the look and 
-  layout of all pages in any way you would like.
+  ikiwiki aims to produce 
+  [valid XHTML 1.0](http://validator.w3.org/check?url=referer).
+  ikiwiki generates html using [[templates]], and uses css, so you can 
+  change the look and layout of all pages in any way you would like.
 
 * [[BackLinks]]
 
