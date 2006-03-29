@@ -483,8 +483,8 @@ sub cgi () { #{{{
 		return;
 	}
 	
-	CGI::Session->name("ikiwiki_session");
-
+	CGI::Session->name("ikiwiki_session_$config{wikiname}");
+	
 	my $oldmask=umask(077);
 	my $session = CGI::Session->new("driver:db_file", $q,
 		{ FileName => "$config{wikistatedir}/sessions.db" });
