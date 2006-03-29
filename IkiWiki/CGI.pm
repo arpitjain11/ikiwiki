@@ -308,10 +308,12 @@ sub cgi_editpage ($$) { #{{{
 	$page=lc($page);
 	
 	my $file=$page.$config{default_pageext};
-	my $newfile=1;
 	if (exists $pagesources{lc($page)}) {
 		$file=$pagesources{lc($page)};
-		$newfile=0;
+	}
+	my $newfile=0;
+	if (! -e "$config{srcdir}/$file") {
+		$newfile=1;
 	}
 
 	$form->field(name => "do", type => 'hidden');
