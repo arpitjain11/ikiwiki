@@ -1,8 +1,8 @@
-Add css and prettify. Make RecentChanges use table for
+Create some nice stylesheets. Make RecentChanges use table for
 formatting, and images to indicate web vs svn commits and to link to diffs.
 
 All of this should be doable w/o touching a single line of code, just
-editing the [[templates]] BTW.
+editing the [[templates]] and/or editing [[style.css]] BTW.
 
 ## html validation
 
@@ -41,6 +41,5 @@ editing the [[templates]] BTW.
 	markdown enclosing it in other spanning tags in some cases.
 	I've implemented this hack now. :-/ --[[Joey]]
 
-  * This page is now valid, although the validator conplains at having to guess the encoding. Should the encoding be forced to utf-8 in the templates?
-
+This page is now valid.
 Test: [validate this page](http://validator.w3.org/check?url=referer)

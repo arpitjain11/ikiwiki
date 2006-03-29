@@ -1,0 +1,68 @@
+#header h1 {
+	margin: 0;
+	padding: 2px 0;
+}
+
+#actions ul {
+	margin: 0;
+	padding: 2px;
+	list-style-type: none;
+	border-bottom: 1px solid #000;
+}
+
+#actions li {
+	display: inline;
+	padding: .2em .4em;
+}
+
+#content {
+	border-bottom: 1px solid #000;
+}
+
+/* Used for adding a blog page. */
+#blogform {
+	padding: 10px 10px;
+	border: 1px solid #aaa;
+	background: #eee;
+}
+
+#backlinks {
+	margin: 1em 0;
+}
+
+#footer {
+	margin: 1em 0;
+}
+
+#pageinfo {
+	font-style: italic;
+}
+
+/* Used for invalid form fields. */
+.fb_invalid {
+	color: red;
+}
+
+/* Used for required form fields. */
+.fb_required {
+	fornt-style: bold;
+}
+
+/* RSS button. */
+.rssbutton {
+	background: #ff6600;
+	color: white !important;
+	border-left: 1px solid #cc9966;
+	border-top: 1px solid #ccaa99;
+	border-right: 1px solid #993300;
+	border-bottom: 1px solid #331100;
+	padding: 0px 0.5em 0px 0.5em;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	font-size: small;
+	text-decoration: none;
+	margin-top: 1em;
+}
+.rssbutton:hover {
+	background: #ff9900;
+}

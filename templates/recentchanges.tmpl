@@ -1,15 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head><title><TMPL_VAR TITLE></title></head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><TMPL_VAR TITLE></title>
+<link rel="stylesheet" href="<TMPL_VAR STYLEURL>" type="text/css" />
+</head>
 <body>
 
+<div id="header">
 <h1>
 <TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
 </h1>
+</div>
 
-<hr />
-
+<div id="content">
 <ul>
 <TMPL_LOOP NAME="CHANGELOG">
 	<li> <!-- <TMPL_VAR NAME="REV"> -->
@@ -32,6 +37,7 @@
 	</li>
 </TMPL_LOOP>
 </ul>
+</div>
 
 <!-- from <TMPL_VAR NAME=WIKINAME> -->
 

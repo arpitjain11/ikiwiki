@@ -227,6 +227,7 @@ sub genpage ($$$) { #{{{
 		backlinks => [backlinks($page)],
 		discussionlink => htmllink($page, "Discussion", 1, 1),
 		mtime => scalar(gmtime($mtime)),
+		styleurl => styleurl($page),
 	);
 	
 	return $template->output;

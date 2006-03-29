@@ -265,6 +265,16 @@ sub cgiurl (@) { #{{{
 	return $config{cgiurl}."?".join("&amp;", map "$_=$params{$_}", keys %params);
 } #}}}
 
+sub styleurl (;$) { #{{{
+	my $page=shift;
+
+	return "$config{url}/style.css" if ! defined $page;
+	
+	$page=~s/[^\/]+$//;
+	$page=~s/[^\/]+\//..\//g;
+	return $page."style.css";
+} #}}}
+
 sub htmllink ($$;$$$) { #{{{
 	my $page=shift;
 	my $link=shift;
@@ -300,7 +310,7 @@ sub htmllink ($$;$$$) { #{{{
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
 	
 	if (! $noimageinline && isinlinableimage($bestlink)) {
-		return "<img src=\"$bestlink\" alt=\"$linktext\">";
+		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
 	}
 	return "<a href=\"$bestlink\">$linktext</a>";
 } #}}}
@@ -395,6 +405,7 @@ sub misctemplate ($$) { #{{{
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
 		pagebody => $pagebody,
+		styleurl => styleurl(),
 	);
 	return $template->output;
 }#}}}

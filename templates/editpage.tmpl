@@ -1,7 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head><title><TMPL_VAR FORM-TITLE></title></head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><TMPL_VAR FORM-TITLE></title>
+<link rel="stylesheet" href="<TMPL_VAR STYLEURL>" type="text/css" />
+</head>
 <body>
 <TMPL_IF NAME="PAGE_CONFLICT">
 <p>
@@ -31,8 +35,12 @@ Optional comment about this change:<br />
 <TMPL_VAR FORM-END>
 <hr />
 <TMPL_IF NAME="PAGE_PREVIEW">
+<div id="header">
 <h1>Page preview:</h1>
+</div>
+<div id="content">
 <TMPL_VAR PAGE_PREVIEW>
+</div>
 <TMPL_ELSE>
 <TMPL_VAR HELPONFORMATTINGLINK>
 </TMPL_IF>

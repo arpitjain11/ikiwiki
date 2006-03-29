@@ -1,57 +1,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head><title><TMPL_VAR TITLE></title></head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><TMPL_VAR TITLE></title>
+<link rel="stylesheet" href="<TMPL_VAR STYLEURL>" type="text/css" />
+</head>
 <body>
 
+<div id="header">
 <h1>
 <TMPL_LOOP NAME="PARENTLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
 </TMPL_LOOP>
 <TMPL_VAR TITLE>
 </h1>
+</div>
 
-<p>
+<div id="actions">
+<ul>
 <TMPL_IF NAME="EDITURL">
-<a href="<TMPL_VAR EDITURL>">Edit</a>&nbsp;
+<li><a href="<TMPL_VAR EDITURL>">Edit</a></li>
 </TMPL_IF>
 
 <TMPL_IF NAME="RECENTCHANGESURL">
-<a href="<TMPL_VAR RECENTCHANGESURL>">RecentChanges</a>&nbsp;
+<li><a href="<TMPL_VAR RECENTCHANGESURL>">RecentChanges</a></li>
 </TMPL_IF>
 
 <TMPL_IF NAME="HISTORYURL">
-<a href="<TMPL_VAR HISTORYURL>">History</a>&nbsp;
+<li><a href="<TMPL_VAR HISTORYURL>">History</a></li>
 </TMPL_IF>
 
 <TMPL_IF NAME="PREFSURL">
-<a href="<TMPL_VAR PREFSURL>">Preferences</a>&nbsp;
+<li><a href="<TMPL_VAR PREFSURL>">Preferences</a></li>
 </TMPL_IF>
 
-<TMPL_VAR DISCUSSIONLINK><br />
-</p>
+<li><TMPL_VAR DISCUSSIONLINK><br /></li>
+</ul>
+</div>
 
-<hr />
+<div id="content">
 <TMPL_VAR CONTENT>
-<hr />
+</div>
 
+<div id="backlinks">
 <TMPL_IF NAME="BACKLINKS">
-<p>Links:
+Links:
 <TMPL_LOOP NAME="BACKLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>
 </TMPL_LOOP>
-</p>
 </TMPL_IF>
+</div>
 
-<p>
-<i>
+<div id="footer">
+<span id="pageinfo">
 <!-- from <TMPL_VAR NAME=WIKINAME> -->
 Last edited <TMPL_VAR NAME=MTIME>
+</span>
 <TMPL_IF NAME="RSSURL">
-; <a type="application/rss+xml" href="<TMPL_VAR NAME=RSSURL>">RSS</a>
+<a class="rssbutton" type="application/rss+xml" href="<TMPL_VAR NAME=RSSURL>">RSS</a>
 </TMPL_IF>
-</i>
-</p>
+</div>
 
 </body>
 </html>

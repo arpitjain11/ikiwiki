@@ -38,6 +38,7 @@ sub cgi_recentchanges ($) { #{{{
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
 		changelog => [rcs_recentchanges(100)],
+		styleurl => styleurl(),
 	);
 	print $q->header, $template->output;
 } #}}}
@@ -64,7 +65,8 @@ sub cgi_signin ($$) { #{{{
 		action => $q->request_uri,
 		header => 0,
 		template => (-e "$config{templatedir}/signin.tmpl" ?
-		              "$config{templatedir}/signin.tmpl" : "")
+		              "$config{templatedir}/signin.tmpl" : ""),
+		stylesheet => styleurl(),
 	);
 	
 	$form->field(name => "name", required => 0);
@@ -228,7 +230,8 @@ sub cgi_prefs ($$) { #{{{
 		params => $q,
 		action => $q->request_uri,
 		template => (-e "$config{templatedir}/prefs.tmpl" ?
-		              "$config{templatedir}/prefs.tmpl" : "")
+		              "$config{templatedir}/prefs.tmpl" : ""),
+		stylesheet => styleurl(),
 	);
 	my @buttons=("Save Preferences", "Logout", "Cancel");
 	
@@ -323,6 +326,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
 		htmllink("", "HelpOnFormatting", 1));
+	$form->tmpl_param("styleurl", styleurl());
 	if (! $form->submitted) {
 		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 			force => 1);
