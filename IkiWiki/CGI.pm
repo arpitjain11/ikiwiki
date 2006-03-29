@@ -425,7 +425,7 @@ sub cgi_editpage ($$) { #{{{
 		my $content=$form->field('content');
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
-		writefile("$config{srcdir}/$file", $content);
+		writefile($file, $config{srcdir}, $content);
 		
 		my $message="web commit ";
 		if (length $session->param("name")) {

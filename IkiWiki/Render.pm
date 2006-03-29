@@ -349,7 +349,7 @@ sub render ($) { #{{{
 		$content=htmlize($type, $content);
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
-		writefile("$config{destdir}/".htmlpage($page),
+		writefile(htmlpage($page), $config{destdir},
 			genpage($content, $page, mtime($srcfile)));
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
@@ -358,14 +358,14 @@ sub render ($) { #{{{
 		# check_overwrite, as above, but currently renderedfiles
 		# only supports listing one file per page.
 		if ($config{rss} && exists $inlinepages{$page}) {
-			writefile("$config{destdir}/".rsspage($page),
+			writefile(rsspage($page), $config{destdir},
 				genrss($content, $page, mtime($srcfile)));
 		}
 	}
 	else {
 		$links{$file}=[];
 		check_overwrite("$config{destdir}/$file", $file);
-		writefile("$config{destdir}/$file", $content);
+		writefile($file, $config{destdir}, $content);
 		$oldpagemtime{$file}=time;
 		$renderedfiles{$file}=$file;
 	}

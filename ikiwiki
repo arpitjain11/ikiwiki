@@ -202,15 +202,20 @@ sub readfile ($) { #{{{
 	return $ret;
 } #}}}
 
-sub writefile ($$) { #{{{
-	my $file=shift;
+sub writefile ($$$) { #{{{
+	my $file=shift; # can include subdirs
+	my $destdir=shift; # directory to put file in
 	my $content=shift;
 	
-	if (-l $file) {
-		error("cannot write to a symlink ($file)");
+	my $test=$file;
+	while (length $test) {
+		if (-l "$destdir/$test") {
+			error("cannot write to a symlink ($test)");
+		}
+		$test=dirname($test);
 	}
 
-	my $dir=dirname($file);
+	my $dir=dirname("$destdir/$file");
 	if (! -d $dir) {
 		my $d="";
 		foreach my $s (split(m!/+!, $dir)) {
@@ -221,7 +226,7 @@ sub writefile ($$) { #{{{
 		}
 	}
 	
-	open (OUT, ">$file") || error("failed to write $file: $!");
+	open (OUT, ">$destdir/$file") || error("failed to write $destdir/$file: $!");
 	print OUT $content;
 	close OUT;
 } #}}}

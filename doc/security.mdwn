@@ -161,7 +161,8 @@ page from the web, which follows the symlink when reading the page, and
 again when saving the changed page.
 
 This was fixed by making ikiwiki refuse to read or write to files that are
-symlinks, combined with the above locking.
+symlinks, or that are in subdirectories that are symlinks, combined with
+the above locking.
 
 ## underlaydir override attacks
 
