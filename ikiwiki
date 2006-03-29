@@ -252,6 +252,13 @@ sub pagetitle ($) { #{{{
 	return $page;
 } #}}}
 
+sub titlepage ($) { #{{{
+	my $title=shift;
+	$title=~y/ /_/;
+	$title=~s/([^-A-Za-z0-9_:+\/])/"__".ord($1)."__"/eg;
+	return $title;
+} #}}}
+
 sub htmllink ($$;$$$) { #{{{
 	my $page=shift;
 	my $link=shift;

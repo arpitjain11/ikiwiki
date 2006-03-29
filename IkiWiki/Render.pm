@@ -9,8 +9,8 @@ sub linkify ($$) { #{{{
 	my $page=shift;
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
-		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($page, $3, 0, 0, pagetitle($2)))
-		   : ( $1 ? "[[$3]]" :    htmllink($page, $3))
+		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($page, titlepage($3), 0, 0, pagetitle($2)))
+		   : ( $1 ? "[[$3]]" :    htmllink($page, titlepage($3)))
 	}eg;
 	
 	return $content;
@@ -325,7 +325,7 @@ sub findlinks ($$) { #{{{
 
 	my @links;
 	while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
-		push @links, lc($2);
+		push @links, titlepage($2);
 	}
 	# Discussion links are a special case since they're not in the text
 	# of the page, but on its template.

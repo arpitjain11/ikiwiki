@@ -294,8 +294,10 @@ sub cgi_editpage ($$) { #{{{
 	);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
-	my ($page)=$form->param('page')=~/$config{wiki_file_regexp}/;
-	if (! defined $page || ! length $page || $page ne $q->param('page') ||
+	# This untaint is safe because titlepage removes any problimatic
+	# characters.
+	my ($page)=titlepage(possibly_foolish_untaint(lc($form->param('page'))));
+	if (! defined $page || ! length $page ||
 	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
 		error("bad page name");
 	}
@@ -364,7 +366,7 @@ sub cgi_editpage ($$) { #{{{
 				my $dir=$from."/";
 				$dir=~s![^/]+/$!!;
 				
-				if (length $form->param('subpage') ||
+				if ((defined $form->param('subpage') && length $form->param('subpage')) ||
 				    $page eq 'discussion') {
 					$best_loc="$from/$page";
 				}
@@ -511,12 +513,8 @@ sub cgi () { #{{{
 		cgi_prefs($q, $session);
 	}
 	elsif ($do eq 'blog') {
-		# munge page name to be valid, no matter what freeform text
-		# is entered
-		my $page=lc($q->param('title'));
-		$page=~y/ /_/;
-		$page=~s/([^-A-Za-z0-9_:+\/])/"__".ord($1)."__"/eg;
-		# if the page already exist, munge it to be unique
+		my $page=titlepage(lc($q->param('title')));
+		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
 		while (exists $oldpagemtime{"$from/$page$add"}) {
