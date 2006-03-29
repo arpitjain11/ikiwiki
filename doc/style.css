@@ -42,28 +42,27 @@
 .fb_invalid {
 	color: red;
 }
+
 /* Used for required form fields. */
 .fb_required {
 	fornt-style: bold;
 }
+
 /* RSS button. */
 .rssbutton {
-	 color: FFFFFF;
-	 background-color: FF6600;
-	 border-color: FF6600;
-	 border-style: outset;
-	 text-decoration: none !important;
-	 margin: 2em 0em 0em 0em;
-	 padding: 0em 0.5em 0em 0.5em;
-	 border-width: 2; color: FFFFFF;
-	 background-color: FF6600;
-	 border-color: FF6600;
-	 border-style: outset;
-	 text-decoration: none !important;
-	 margin: 2em 0em 0em 0em;
-	 padding: 0em 0.5em 0em 0.5em;
-	 border-width: 2;
+	background: #ff6600;
+	color: white !important;
+	border-left: 1px solid #cc9966;
+	border-top: 1px solid #ccaa99;
+	border-right: 1px solid #993300;
+	border-bottom: 1px solid #331100;
+	padding: 0px 0.5em 0px 0.5em;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	font-size: small;
+	text-decoration: none;
+	margin-top: 1em;
 }
-.rssbutton:active {
-	border-style: inset !important;
+.rssbutton:hover {
+	background: #ff9900;
 }
