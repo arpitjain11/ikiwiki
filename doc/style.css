@@ -23,6 +23,7 @@
 #blogform {
 	padding: 10px 10px;
 	border: 1px solid #aaa;
+	color: black !important;;
 	background: #eee;
 }
 
@@ -41,11 +42,12 @@
 /* Used for invalid form fields. */
 .fb_invalid {
 	color: red;
+	background: white !important;
 }
 
 /* Used for required form fields. */
 .fb_required {
-	fornt-style: bold;
+	font-style: bold;
 }
 
 /* RSS button. */
@@ -64,5 +66,6 @@
 	margin-top: 1em;
 }
 .rssbutton:hover {
+	color: white !important;
 	background: #ff9900;
 }
