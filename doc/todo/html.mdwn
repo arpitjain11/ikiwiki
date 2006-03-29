@@ -41,5 +41,11 @@ editing the [[templates]] and/or editing [[style.css]] BTW.
 	markdown enclosing it in other spanning tags in some cases.
 	I've implemented this hack now. :-/ --[[Joey]]
 
+	I used this 'hack' myself, but yesterday I came up with a better idea:  
+	    &lt;div class="inlinepage"&gt;  
+	    [ [inlinepage] ]  
+	    &lt;/div&gt;  
+	This prevents markdown enclosing and even adds a useful css identifier. --[[JeroenSchot]]
+
 This page is now valid.
 Test: [validate this page](http://validator.w3.org/check?url=referer)
