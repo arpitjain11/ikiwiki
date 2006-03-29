@@ -259,6 +259,12 @@ sub titlepage ($) { #{{{
 	return $title;
 } #}}}
 
+sub cgiurl (@) { #{{{
+	my %params=@_;
+
+	return $config{cgiurl}."?".join("&amp;", map "$_=$params{$_}", keys %params);
+} #}}}
+
 sub htmllink ($$;$$$) { #{{{
 	my $page=shift;
 	my $link=shift;
@@ -286,13 +292,15 @@ sub htmllink ($$;$$$) { #{{{
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
-		return "<span><a href=\"$config{cgiurl}?do=create&page=$link&from=$page\">?</a>$linktext</span>"
+		return "<span><a href=\"".
+			cgiurl(do => "create", page => $link, from =>$page).
+			"\">?</a>$linktext</span>"
 	}
 	
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
 	
 	if (! $noimageinline && isinlinableimage($bestlink)) {
-		return "<img src=\"$bestlink\">";
+		return "<img src=\"$bestlink\" alt=\"$linktext\">";
 	}
 	return "<a href=\"$bestlink\">$linktext</a>";
 } #}}}

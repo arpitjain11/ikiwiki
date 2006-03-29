@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head><title><TMPL_VAR TITLE></title></head>
 <body>
@@ -6,7 +8,7 @@
 <TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
 </h1>
 
-<hr>
+<hr />
 
 <ul>
 <TMPL_LOOP NAME="CHANGELOG">
@@ -17,13 +19,13 @@
 				(<a href="<TMPL_VAR NAME="DIFFURL">">diff</a>)
 			</TMPL_IF>
 		</TMPL_LOOP>
-		<br>
+		<br />
 		<!-- <TMPL_VAR NAME="COMMITTYPE"> -->
 		changed <TMPL_VAR NAME="WHEN"> by <TMPL_VAR NAME="USER">:
 		<i>
 		<TMPL_LOOP NAME="MESSAGE">
 			<TMPL_IF NAME="LINE">
-				<TMPL_VAR NAME="LINE"><br>
+				<TMPL_VAR NAME="LINE"><br />
 			</TMPL_IF>
 		</TMPL_LOOP>
 		</i>

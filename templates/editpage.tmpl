@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head><title><TMPL_VAR FORM-TITLE></title></head>
 <body>
@@ -16,18 +18,18 @@ confict and commit again to save your changes.
 <TMPL_VAR FIELD-FROM>
 <TMPL_VAR FIELD-RCSINFO>
 <TMPL_IF NAME="PAGE_SELECT">
-Page location: <TMPL_VAR FIELD-PAGE><br>
+Page location: <TMPL_VAR FIELD-PAGE><br />
 <TMPL_ELSE>
 <TMPL_VAR FIELD-PAGE>
 </TMPL_IF>
-<TMPL_VAR FIELD-CONTENT><br>
+<TMPL_VAR FIELD-CONTENT><br />
 <TMPL_IF NAME="CAN_COMMIT">
-Optional comment about this change:</br>
-<TMPL_VAR FIELD-COMMENTS><br>
+Optional comment about this change:<br />
+<TMPL_VAR FIELD-COMMENTS><br />
 </TMPL_IF>
 <TMPL_VAR FORM-SUBMIT>
 <TMPL_VAR FORM-END>
-<hr>
+<hr />
 <TMPL_IF NAME="PAGE_PREVIEW">
 <h1>Page preview:</h1>
 <TMPL_VAR PAGE_PREVIEW>

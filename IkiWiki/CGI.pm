@@ -144,12 +144,13 @@ sub cgi_signin ($$) { #{{{
 			$session->param("name", $form->field("name"));
 			if (defined $form->field("do") && 
 			    $form->field("do") ne 'signin') {
-				print $q->redirect(
-					"$config{cgiurl}?do=".$form->field("do").
-					"&page=".$form->field("page").
-					"&title=".$form->field("title").
-					"&subpage=".$form->field("subpage").
-					"&from=".$form->field("from"));;
+				print $q->redirect(cgiurl(
+					do => $form->field("do"),
+					page => $form->field("page"),
+					title => $form->field("title"),
+					subpage => $form->field("subpage"),
+					from => $form->field("from"),
+				));
 			}
 			else {
 				print $q->redirect($config{url});

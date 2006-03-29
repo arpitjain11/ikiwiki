@@ -186,7 +186,7 @@ sub postprocess_html_inline { #{{{
 		$ret.=$template->output;
 	}
 	
-	return $ret;
+	return "</p>$ret<p>";
 } #}}}
 
 sub genpage ($$$) { #{{{
@@ -202,10 +202,10 @@ sub genpage ($$$) { #{{{
 		filename => "$config{templatedir}/page.tmpl");
 	
 	if (length $config{cgiurl}) {
-		$template->param(editurl => "$config{cgiurl}?do=edit&page=$page");
-		$template->param(prefsurl => "$config{cgiurl}?do=prefs");
+		$template->param(editurl => cgiurl(do => "edit", page => $page));
+		$template->param(prefsurl => cgiurl(do => "prefs"));
 		if ($config{rcs}) {
-			$template->param(recentchangesurl => "$config{cgiurl}?do=recentchanges");
+			$template->param(recentchangesurl => cgiurl(do => "recentchanges"));
 		}
 	}
 
