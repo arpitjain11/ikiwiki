@@ -403,7 +403,7 @@ sub cgi_editpage ($$) { #{{{
 			    ! length $form->field('content')) {
 				my $content="";
 				if (exists $pagesources{lc($page)}) {
-					$content=readfile("$config{srcdir}/$pagesources{lc($page)}");
+					$content=readfile(srcfile($pagesources{lc($page)}));
 					$content=~s/\n/\r\n/g;
 				}
 				$form->field(name => "content", value => $content,

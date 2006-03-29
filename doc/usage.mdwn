@@ -82,6 +82,12 @@ These options configure the wiki.
   Specify the directory that the page [[templates]] are stored in.
   Default is `/usr/share/ikiwiki/templates`.
 
+* --underlaydir
+
+  Specify the directory that is used to underlay the source directory.
+  Source files will be taken from here unless overridden by a file in the
+  source directory. Default is `/usr/share/ikiwiki/basewiki`.
+
 * --wrappermode mode
 
   Specify a mode to chmod the wrapper to after creating it.

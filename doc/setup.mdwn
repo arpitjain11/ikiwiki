@@ -19,22 +19,24 @@ optional support for commits from the web.
 
 		svn co file:///svn/wikirepo/trunk ~/wikiwc
 
-4. Create some files and add them into subversion. Or you might copy the
-   files from /usr/share/ikiwiki/basewiki and check those in to get a
-   head start on creating your wiki.
-
-		echo "Welcome to my empty wiki." > ~/wikiwc/index.mdwn
-		echo "Feel free to edit this page" > ~/wikiwc/sandbox.mdwn
-		svn add ~/wikiwc/*.mdwn
-		svn commit ~/wikiwc -m add
-
-5. Build your wiki for the first time.
+4. Build your wiki for the first time.
 
 		ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ \
 			--url=http://host/~you/wiki/
 
    Replace the url with the real url to your wiki. You should now
-   be able to visit the url and see your page that you created earlier.
+   be able to visit the url and see your wiki.
+
+5. Customise your wiki. The files in `/usr/share/ikiwiki/basewiki/` are
+   used if you don't have a custom version, so let's start by making a
+   custom version of the wiki's index page:
+
+   		cp /usr/share/ikiwiki/basewiki/index.mdwn ~/wikiwc
+		svn add ~/wikiwc/index.mdwn
+		$EDITOR ~/wikiwc/index.mdwn
+		svn commit ~/wikiwc/index.mdwn -m customised
+
+   You can also add any files you like from scratch of course.
 
 6. Repeat steps 4 and 5 as desired, editing or adding pages and rebuilding
    the wiki. You can play around with other ikiwiki parameters such as

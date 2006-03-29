@@ -29,3 +29,8 @@
   preview, it doesn't get the link right because it makes it relative to
   where the page will be saved to, not to where the cgi script is.
 * RSS output contains relative links. Ie. http://kitenet.net/~joey/blog/index.rss contains a link to http://kitenet.net/~joey/blog/../blog.html
+* If a file in the srcdir is removed, exposing a file in the underlaydir,
+  ikiwiki will not notice the change and rebuild it until the file in the
+  underlaydir gets a mtime newer than the mtime the removed file had.
+* Pages rendered from files in the underlaydir should not have a history
+  link, since there's no file in the svn repo to view the history of.

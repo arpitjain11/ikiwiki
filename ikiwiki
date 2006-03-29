@@ -18,7 +18,7 @@ sub usage () { #{{{
 sub getconfig () { #{{{
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
 		%config=(
-			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$)},
+			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$|\.rss$)},
 			wiki_link_regexp => qr/\[\[(?:([^\s\]\|]+)\|)?([^\s\]]+)\]\]/,
 			wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]+)\]\]/,
 			wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
@@ -41,6 +41,7 @@ sub getconfig () { #{{{
 			srcdir => undef,
 			destdir => undef,
 			templatedir => "/usr/share/ikiwiki/templates",
+			underlaydir => "/usr/share/ikiwiki/basewiki",
 			setup => undef,
 			adminuser => undef,
 		);
@@ -70,6 +71,9 @@ sub getconfig () { #{{{
 			},
 			"templatedir=s" => sub {
 				$config{templatedir}=possibly_foolish_untaint($_[1])
+			},
+			"underlaydir=s" => sub {
+				$config{underlaydir}=possibly_foolish_untaint($_[1])
 			},
 			"wrapper:s" => sub {
 				$config{wrapper}=$_[1] ? $_[1] : "ikiwiki-wrap"
@@ -174,6 +178,14 @@ sub htmlpage ($) { #{{{
 	my $page=shift;
 
 	return $page.".html";
+} #}}}
+
+sub srcfile ($) { #{{{
+	my $file=shift;
+
+	return "$config{srcdir}/$file" if -e "$config{srcdir}/$file";
+	return "$config{underlaydir}/$file" if -e "$config{underlaydir}/$file";
+	error("internal error: $file cannot be found");
 } #}}}
 
 sub readfile ($) { #{{{

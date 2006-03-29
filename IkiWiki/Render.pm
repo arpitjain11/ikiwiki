@@ -139,7 +139,7 @@ sub get_inline_content ($$) { #{{{
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if ($type ne 'unknown') {
-		return htmlize($type, linkify(readfile("$config{srcdir}/$file"), $parentpage));
+		return htmlize($type, linkify(readfile(srcfile($file)), $parentpage));
 	}
 	else {
 		return "";
@@ -337,7 +337,8 @@ sub render ($) { #{{{
 	my $file=shift;
 	
 	my $type=pagetype($file);
-	my $content=readfile("$config{srcdir}/$file");
+	my $srcfile=srcfile($file);
+	my $content=readfile($srcfile);
 	if ($type ne 'unknown') {
 		my $page=pagename($file);
 		
@@ -349,7 +350,7 @@ sub render ($) { #{{{
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
 		writefile("$config{destdir}/".htmlpage($page),
-			genpage($content, $page, mtime("$config{srcdir}/$file")));
+			genpage($content, $page, mtime($srcfile)));
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
 
@@ -358,7 +359,7 @@ sub render ($) { #{{{
 		# only supports listing one file per page.
 		if ($config{rss} && exists $inlinepages{$page}) {
 			writefile("$config{destdir}/".rsspage($page),
-				genrss($content, $page, mtime("$config{srcdir}/$file")));
+				genrss($content, $page, mtime($srcfile)));
 		}
 	}
 	else {
@@ -389,9 +390,7 @@ sub refresh () { #{{{
 		no_chdir => 1,
 		wanted => sub {
 			if (/$config{wiki_file_prune_regexp}/) {
-				no warnings 'once';
 				$File::Find::prune=1;
-				use warnings "all";
 			}
 			elsif (! -d $_ && ! -l $_) {
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
@@ -406,6 +405,30 @@ sub refresh () { #{{{
 			}
 		},
 	}, $config{srcdir});
+	find({
+		no_chdir => 1,
+		wanted => sub {
+			if (/$config{wiki_file_prune_regexp}/) {
+				$File::Find::prune=1;
+			}
+			elsif (! -d $_ && ! -l $_) {
+				my ($f)=/$config{wiki_file_regexp}/; # untaint
+				if (! defined $f) {
+					warn("skipping bad filename $_\n");
+				}
+				else {
+					# Don't add files that are in the
+					# srcdir.
+					$f=~s/^\Q$config{underlaydir}\E\/?//;
+					if (! -e "$config{srcdir}/$f" && 
+					    ! -l "$config{srcdir}/$f") {
+						push @files, $f;
+						$exists{pagename($f)}=1;
+					}
+				}
+			}
+		},
+	}, $config{underlaydir});
 
 	my %rendered;
 
@@ -418,7 +441,7 @@ sub refresh () { #{{{
 			push @add, $file;
 			$links{$page}=[];
 			$pagesources{$page}=$file;
-			$pagectime{$page}=mtime("$config{srcdir}/$file") 
+			$pagectime{$page}=mtime(srcfile($file))
 				unless exists $pagectime{$page};
 		}
 	}
@@ -439,7 +462,7 @@ sub refresh () { #{{{
 		my $page=pagename($file);
 		
 		if (! exists $oldpagemtime{$page} ||
-		    mtime("$config{srcdir}/$file") > $oldpagemtime{$page}) {
+		    mtime(srcfile($file)) > $oldpagemtime{$page}) {
 		    	debug("rendering changed file $file");
 			render($file);
 			$rendered{$file}=1;

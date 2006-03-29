@@ -171,6 +171,7 @@ sub rcs_getctime () { #{{{
 	eval q{use Date::Parse};
 	foreach my $page (keys %pagectime) {
 		my $file="$config{srcdir}/$pagesources{$page}";
+		next unless -e $file;
 		my $child = open(SVNLOG, "-|");
 		if (! $child) {
 			exec("svn", "log", $file) || error("svn log $file failed to run");

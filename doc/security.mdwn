@@ -162,3 +162,25 @@ again when saving the changed page.
 
 This was fixed by making ikiwiki refuse to read or write to files that are
 symlinks, combined with the above locking.
+
+## underlaydir override attacks
+
+ikiwiki also scans an underlaydir for pages, this is used to provide stock
+pages to all wikis w/o needing to copy them into the wiki. Since ikiwiki
+internally stores only the base filename from the underlaydir or srcdir,
+and searches for a file in either directory when reading a page source,
+there is the potential for ikiwiki's scanner to reject a file from the
+srcdir for some reason (such as it being a symlink), find a valid copy of
+the file in the underlaydir, and then when loading the file, mistekenly
+load the bad file from the srcdir.
+
+This attack is avoided by making ikiwiki scan the srcdir first, and refuse
+to add any files from the underlaydir if a file also exists in the srcdir
+with the same name. **But**, note that this assumes that any given page can
+be produced from a file with only one name (`page.mdwn` => `page.html`).
+
+If it's possible for files with different names to produce a given page, it
+would still be possible to use this attack to confuse ikiwiki into
+rendering the wrong thing. This is not currently possible, but must be kept
+in mind in the future when for example adding support for generating html
+pages from source with some other extension.

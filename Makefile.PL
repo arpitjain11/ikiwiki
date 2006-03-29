@@ -12,7 +12,7 @@ install:: extra_install
 pure_install:: extra_install
 
 extra_build:
-	./ikiwiki doc html --templatedir=templates \
+	./ikiwiki doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --nosvn --exclude=/discussion
 	./mdwn2man doc/usage.mdwn > ikiwiki.man
 		
