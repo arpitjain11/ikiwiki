@@ -1,24 +1,28 @@
-Make the html valid. Add css and prettify. Make RecentChanges use table for
+Add css and prettify. Make RecentChanges use table for
 formatting, and images to indicate web vs svn commits and to link to diffs.
 
 All of this should be doable w/o touching a single line of code, just
 editing the [[templates]] BTW.
 
-Current problems:
+## html validation
 
   * A doctype should be added: do we want XHTML 1.0 or HTML 4.01 Trans as
     default?
     
 	Need to choose a doctype that corresponds to what [[MarkDown]]
 	generates. For example, it does generate &lt;hr /&gt;
-	So xhml seems a good fit and I'm going to add that to the
+	So xhtml seems a good fit and I'm going to add that to the
 	templates. 
 	
 	One consideration of course is that regular users might embed html
-	that uses deprecated presentational elements like &lt;center&gt;.
+	that uses deprecated presentational elements like &lt;center&gt;. At
+        least firefox seems to handle that mixture ok. 
 	--[[Joey]]
 	
   * If XHTML: In templates &lt;hr&gt; should become &lt;hr /&gt; etc.
+        
+        Done --[[Joey]]
+
   * Image wikilinks should provide an alt text (maybe '$filname wiki-image'?).
 
   	Now it will be the text of the [[WikiLink]], which even allows
