@@ -487,13 +487,14 @@ sub cgi () { #{{{
 	
 	my $q=CGI->new;
 	
-	if (defined $q->param('phrase')) {
-		cgi_hyperestraier();
-	}
-	
 	my $do=$q->param('do');
 	if (! defined $do || ! length $do) {
-		error("\"do\" parameter missing");
+		if (defined $q->param('phrase')) {
+			cgi_hyperestraier();
+		}
+		else {
+			error("\"do\" parameter missing");
+		}
 	}
 	
 	# Things that do not need a session.
