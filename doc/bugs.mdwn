@@ -34,3 +34,6 @@
   underlaydir gets a mtime newer than the mtime the removed file had.
 * Pages rendered from files in the underlaydir should not have a history
   link, since there's no file in the svn repo to view the history of.
+* Markdown will try to expand stuff inside postprocessordirectives. For
+  example, if there are two *'s, it will turn them to html em's, which
+  breaks things unexpectedly and requires escaping.
