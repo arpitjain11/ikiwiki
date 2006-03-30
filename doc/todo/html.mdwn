@@ -6,33 +6,13 @@ editing the [[templates]] and/or editing [[style.css]] BTW.
 
 ## html validation
 
-  * A doctype should be added: do we want XHTML 1.0 or HTML 4.01 Trans as
-    default?
-    
-	Need to choose a doctype that corresponds to what [[MarkDown]]
-	generates. For example, it does generate &lt;hr /&gt;
-	So xhtml seems a good fit and I'm going to add that to the
-	templates. 
-	
+  * Doctype is XHTML 1.0 Strict
+    	
 	One consideration of course is that regular users might embed html
 	that uses deprecated presentational elements like &lt;center&gt;. At
         least firefox seems to handle that mixture ok. 
 	--[[Joey]]
-	
-  * If XHTML: In templates &lt;hr&gt; should become &lt;hr /&gt; etc.
-        
-    Done --[[Joey]]
 
-  * Image wikilinks should provide an alt text (maybe '$filname wiki-image'?).
-
-  	Now it will be the text of the [[WikiLink]], which even allows
-	setting a custom alt text like this: \[[my_alt_text|image.png]]
-	--[[Joey]]
-	
-  * &'s in (cgi-)url's must be escaped as &amp;amp;.
-  
-  	Fixed --[[Joey]]
-	
   * [ [inlinepage] ] gets wrapped in &lt;p&gt;...&lt;/p&gt; which has a high chance of invalidating the page.
 
   	Since markdown does this, the only way I can think to fix it is to
@@ -45,7 +25,7 @@ editing the [[templates]] and/or editing [[style.css]] BTW.
 	    &lt;div class="inlinepage"&gt;  
 	    [ [inlinepage] ]  
 	    &lt;/div&gt;  
-	This prevents markdown enclosing and even adds a useful css identifier. --[[JeroenSchot]]
+	This prevents markdown enclosing and even adds a useful css identifier. Problem is that this should be added to every page and not in the template(s). --[[JeroenSchot]]
 
 This page is now valid.
 Test: [validate this page](http://validator.w3.org/check?url=referer)
