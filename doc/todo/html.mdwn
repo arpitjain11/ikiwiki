@@ -28,8 +28,14 @@ editing the [[templates]] and/or editing [[style.css]] BTW.
 	This prevents markdown enclosing and even adds a useful css identifier. Problem is that this should be added to every page and not in the template(s). --[[JeroenSchot]]
 
 	I can make ikiwiki add that around every inlined page easily
-	enough. However, where is it docuemented? Came up dry on google.
+	enough. However, where is it documented? Came up dry on google.
 	--[[Joey]]
+
+	From <http://daringfireball.net/projects/markdown/syntax#html>:
+	> The only restrictions are that block-level HTML elements — e.g. &lt;div&gt;, &lt;table&gt;, &lt;pre&gt;, &lt;p&gt;, etc. — must be separated from surrounding content by blank lines, and the start and end tags of the block should not be indented with tabs or spaces. Markdown is smart enough not to add extra (unwanted) &lt;p&gt; tags around HTML block-level tags. [snip]
+	> Note that Markdown formatting syntax is not processed within block-level HTML tags. E.g., you can’t use Markdown-style \*emphasis\* inside an HTML block.
+
+	Because [ [inlinepage] ] isn't separated by a blank line it gets treated as a block-level element. Hmm, will this stop all formatting, including *'s to em-tags? --[[JeroenSchot]]
 
 This page is now valid.
 Test: [validate this page](http://validator.w3.org/check?url=referer)
