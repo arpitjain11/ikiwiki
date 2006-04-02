@@ -428,6 +428,7 @@ sub misctemplate ($$) { #{{{
 		wikiname => $config{wikiname},
 		pagebody => $pagebody,
 		styleurl => styleurl(),
+		baseurl => "$config{url}/",
 	);
 	return $template->output;
 }#}}}

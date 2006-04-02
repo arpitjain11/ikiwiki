@@ -111,7 +111,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $div=qr/^--------------------+$/;
 		my $state='start';
 		my ($rev, $user, $when, @pages, @message);
-		foreach (`LANG=C svn log --limit $num -v '$svn_url'`) {
+		foreach (`LANG=C svn log -v '$svn_url'`) {
 			chomp;
 			if ($state eq 'start' && /$div/) {
 				$state='header';

@@ -21,13 +21,12 @@
   page that someone wrote in a web browser annoying (`gqip` is vim user's
   friend here). Is there any way to improve this?
 * The diff links in RecentChanges go to a viewcvs backtrace if the rev in question is when the page was added. Is this a viewcvs bug, or a behavior ikiwiki needs to work around?
+    - As a special case, there should certianly be no history link for
+      pages generated from the underlaydir as it can never work for them.
 * If a page stops inlining anthing, its rss feed file
   will linger around and not be deleted.
 * Currently only one blog is supported per page. Attempts to add more
   will make it only update one of the blogs on the page.
-* If I edit blog/entry/blog_moved, add a link to code/ikiwiki, and hit
-  preview, it doesn't get the link right because it makes it relative to
-  where the page will be saved to, not to where the cgi script is.
 * RSS output contains relative links. Ie. http://kitenet.net/~joey/blog/index.rss contains a link to http://kitenet.net/~joey/blog/../blog.html
 * If a file in the srcdir is removed, exposing a file in the underlaydir,
   ikiwiki will not notice the change and rebuild it until the file in the
@@ -37,3 +36,5 @@
 * Markdown will try to expand stuff inside postprocessordirectives. For
   example, if there are two *'s, it will turn them to html em's, which
   breaks things unexpectedly and requires escaping.
+* ikiwiki will generate html formatted error messages to the command
+  line if --cgi is set, even if it's not yet running as a cgi

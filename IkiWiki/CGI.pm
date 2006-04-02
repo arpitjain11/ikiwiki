@@ -39,6 +39,7 @@ sub cgi_recentchanges ($) { #{{{
 		wikiname => $config{wikiname},
 		changelog => [rcs_recentchanges(100)],
 		styleurl => styleurl(),
+		baseurl => "$config{url}/",
 	);
 	print $q->header, $template->output;
 } #}}}
@@ -329,6 +330,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("helponformattinglink",
 		htmllink("", "HelpOnFormatting", 1));
 	$form->tmpl_param("styleurl", styleurl());
+	$form->tmpl_param("baseurl", "$config{url}/");
 	if (! $form->submitted) {
 		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 			force => 1);
@@ -509,7 +511,7 @@ sub cgi () { #{{{
 	CGI::Session->name("ikiwiki_session_$config{wikiname}");
 	
 	my $oldmask=umask(077);
-	my $session = CGI::Session->new("driver:db_file", $q,
+	my $session = CGI::Session->new("driver:DB_File", $q,
 		{ FileName => "$config{wikistatedir}/sessions.db" });
 	umask($oldmask);
 	
