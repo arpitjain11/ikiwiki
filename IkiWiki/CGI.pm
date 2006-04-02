@@ -63,7 +63,8 @@ sub cgi_signin ($$) { #{{{
 		required => 'NONE',
 		javascript => 0,
 		params => $q,
-		action => $q->request_uri,
+		# Why was this added?
+		#action => $q->request_uri,
 		header => 0,
 		template => (-e "$config{templatedir}/signin.tmpl" ?
 		              "$config{templatedir}/signin.tmpl" : ""),
