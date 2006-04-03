@@ -13,6 +13,24 @@ Should support mail notification of new and changed pages.
      Joey points out that this is actually a security hole, because Perl
      regexes let you embed (arbitrary?) Perl expressions inside them.  Yuck!
 
+(This is not actually true unless you "use re 'eval';", without which
+(?{ code }) is disabled for expressions which interpolate variables.
+See perldoc re, second paragraph of DESCRIPTION. It's a little iffy
+to allow arbitrary regexen, since it's fairly easy to craft a regular
+expression that takes unbounded time to run, but this can be avoided
+with the use of alarm to add a time limit. Something like
+
+    eval { # catches invalid regexen
+      no re 'eval'; # to be sure
+      local $SIG{ALRM} = sub { die };
+      alarm(1);
+      ... stuff involving m/$some_random_variable/ ...
+      alarm(0);
+    };
+    if ($@) { ... handle the error ... }
+
+should be safe. --[[WillThompson]])
+
      It would also be good to be able to subscribe to all pages except discussion pages or the SandBox: `* !*/discussion !sandobx`, maybe --[[Joey]]
 
   3. Of course if you do that, you want to have form processing on the user
