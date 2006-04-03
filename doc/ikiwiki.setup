@@ -30,16 +30,16 @@ use IkiWiki::Setup::Standard {
 			# post-commit hook script, which may not be
 			# what you want.
 			wrapper => "/svn/wiki/hooks/post-commit",
-			wrappermode => 04755,
+			wrappermode => "04755",
 		},
-		{
-			# The cgi wrapper.
-			#cgiwrapper => {
-			#	cgi => 1,
-			#	wrapper => "/var/www/wiki/ikiwiki.cgi",
-			#	wrappermode => 06755,
-			#},
-		},
+		#{
+		#	# The cgi wrapper.
+		#	cgiwrapper => {
+		#		cgi => 1,
+		#		wrapper => "/var/www/wiki/ikiwiki.cgi",
+		#		wrappermode => "06755",
+		#	},
+		#},
 	],
 	
 	# Can anonymous web users edit pages?
