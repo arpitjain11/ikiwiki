@@ -341,8 +341,8 @@ sub render ($) { #{{{
 	
 	my $type=pagetype($file);
 	my $srcfile=srcfile($file);
-	my $content=readfile($srcfile);
 	if ($type ne 'unknown') {
+		my $content=readfile($srcfile);
 		my $page=pagename($file);
 		
 		$links{$page}=[findlinks($content, $page)];
@@ -366,9 +366,10 @@ sub render ($) { #{{{
 		}
 	}
 	else {
+		my $content=readfile($srcfile, 1);
 		$links{$file}=[];
 		check_overwrite("$config{destdir}/$file", $file);
-		writefile($file, $config{destdir}, $content);
+		writefile($file, $config{destdir}, $content, 1);
 		$oldpagemtime{$file}=time;
 		$renderedfiles{$file}=$file;
 	}

@@ -1,0 +1,27 @@
+ikiwiki should support utf-8 pages, both input and output
+
+Currently ikiwiki is belived to be utf-8 clean itself; it tells perl to use
+binmode when reading possibly binary files (such as images) and it uses
+utf-8 compatable regexps etc.
+
+utf-8 IO is not enabled by default though. While you can probably embed
+utf-8 in pages anyway, ikiwiki will not treat it right in the cases where
+it deals with things on a per-character basis (mostly when escaping and
+de-escaping special characters in filenames).
+
+To enable utf-8, edit ikiwiki and add -CSD to the perl hashbang line.
+(This should probably be configurable via a --utf8 or better --encoding=
+switch.)
+
+The following problems have been observed when running ikiwiki this way:
+
+* If invalid utf-8 creeps into a file, ikiwiki will crash rendering it as
+  follows:
+
+	Malformed UTF-8 character (unexpected continuation byte 0x97, with no preceding start byte) in substitution iterator at /usr/bin/markdown line 1317.
+	Malformed UTF-8 character (fatal) at /usr/bin/markdown line 1317.
+
+  In this example, a literal 0x97 character had gotten into a markdown
+  file. 
+  
+  Here, let's put one in this file: "—"
