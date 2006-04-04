@@ -63,8 +63,7 @@ sub cgi_signin ($$) { #{{{
 		required => 'NONE',
 		javascript => 0,
 		params => $q,
-		# Why was this added?
-		#action => $q->request_uri,
+		action => $config{cgiurl},
 		header => 0,
 		template => (-e "$config{templatedir}/signin.tmpl" ?
 		              "$config{templatedir}/signin.tmpl" : ""),
@@ -230,7 +229,7 @@ sub cgi_prefs ($$) { #{{{
 		required => 'NONE',
 		javascript => 0,
 		params => $q,
-		action => $q->request_uri,
+		action => $config{cgiurl},
 		template => (-e "$config{templatedir}/prefs.tmpl" ?
 		              "$config{templatedir}/prefs.tmpl" : ""),
 		stylesheet => styleurl(),
@@ -294,7 +293,7 @@ sub cgi_editpage ($$) { #{{{
 		required => [qw{content}],
 		javascript => 0,
 		params => $q,
-		action => $q->request_uri,
+		action => $config{cgiurl},
 		table => 0,
 		template => "$config{templatedir}/editpage.tmpl"
 	);
