@@ -2,6 +2,10 @@
 set -e
 #DEBHELPER#
 
+# Change this when some incompatible change is made that requires
+# rebuilding all wikis.
+firstcompat=0.1
+
 wikilist=/etc/ikiwiki/wikilist
 
 processline () {
@@ -21,7 +25,8 @@ processline () {
 	fi
 }
 
-if [ "$1" = configure ] && [ -e $wikilist ]; then
+if [ "$1" = configure ] && [ -e $wikilist ] && \
+   dpkg --compare-versions "$2" lt "$firstcompat"; then
 	grep -v '^#' $wikilist | grep -v '^$' | while read line; do 
 		processline $line
 	done
