@@ -86,12 +86,11 @@ sub rsspage ($) { #{{{
 	return $page.".rss";
 } #}}}
 
-sub postprocess { #{{{
-	# Takes content to postprocess followed by a list of postprocessor
-	# commands and subroutine references to run for the commands.
+sub preprocess ($$) { #{{{
 	my $page=shift;
 	my $content=shift;
-	my %commands=@_;
+
+	my %commands=(inline => \&preprocess_inline);
 	
 	my $handle=sub {
 		my $escape=shift;
@@ -146,7 +145,7 @@ sub get_inline_content ($$) { #{{{
 	}
 } #}}}
 
-sub postprocess_html_inline { #{{{
+sub preprocess_inline ($@) { #{{{
 	my $parentpage=shift;
 	my %params=@_;
 	
@@ -160,7 +159,7 @@ sub postprocess_html_inline { #{{{
 		$params{show}=10;
 	}
 	$inlinepages{$parentpage}=$params{pages};
-	
+
 	my $ret="";
 	
 	if (exists $params{rootpage}) {
@@ -177,8 +176,10 @@ sub postprocess_html_inline { #{{{
 				? "$config{templatedir}/inlinepage.tmpl"
 				: "$config{templatedir}/inlinepagetitle.tmpl"));
 	
+	my @pages;
 	foreach my $page (blog_list($params{pages}, $params{show})) {
 		next if $page eq $parentpage;
+		push @pages, $page;
 		$template->param(pagelink => htmllink($parentpage, $page));
 		$template->param(content => get_inline_content($parentpage, $page))
 			if $params{archive} eq "no";
@@ -186,7 +187,15 @@ sub postprocess_html_inline { #{{{
 		$ret.=$template->output;
 	}
 	
-	return "</p>$ret<p>";
+	# TODO: should really add this to renderedfiles and call
+	# check_overwrite, but currently renderedfiles
+	# only supports listing one file per page.
+	if ($config{rss}) {
+		writefile(rsspage($parentpage), $config{destdir},
+			genrss($parentpage, @pages));
+	}
+	
+	return $ret;
 } #}}}
 
 sub genpage ($$$) { #{{{
@@ -194,8 +203,6 @@ sub genpage ($$$) { #{{{
 	my $page=shift;
 	my $mtime=shift;
 
-	$content = postprocess($page, $content, inline => \&postprocess_html_inline);
-	
 	my $title=pagetitle(basename($page));
 	
 	my $template=HTML::Template->new(blind_cache => 1,
@@ -255,10 +262,9 @@ sub absolute_urls ($$) { #{{{
 	return $content;
 } #}}}
 
-sub genrss ($$$) { #{{{
-	my $content=shift;
+sub genrss ($@) { #{{{
 	my $page=shift;
-	my $mtime=shift;
+	my @pages=@_;
 	
 	my $url="$config{url}/".htmlpage($page);
 	
@@ -266,33 +272,14 @@ sub genrss ($$$) { #{{{
 		filename => "$config{templatedir}/rsspage.tmpl");
 	
 	my @items;
-	my $isblog=0;
-	my $gen_blog=sub {
-		my $parentpage=shift;
-		my %params=@_;
-		
-		if (! exists $params{show}) {
-			$params{show}=10;
-		}
-		if (! exists $params{pages}) {
-			return "";
-		}
-		
-		$isblog=1;
-		foreach my $page (blog_list($params{pages}, $params{show})) {
-			next if $page eq $parentpage;
-			push @items, {
-				itemtitle => pagetitle(basename($page)),
-				itemurl => "$config{url}/$renderedfiles{$page}",
-				itempubdate => date_822($pagectime{$page}),
-				itemcontent => absolute_urls(get_inline_content($parentpage, $page), $url),
-			} if exists $renderedfiles{$page};
-		}
-		
-		return "";
-	};
-	
-	$content = postprocess($page, $content, inline => $gen_blog);
+	foreach my $p (@pages) {
+		push @items, {
+			itemtitle => pagetitle(basename($p)),
+			itemurl => "$config{url}/$renderedfiles{$p}",
+			itempubdate => date_822($pagectime{$p}),
+			itemcontent => absolute_urls(get_inline_content($page, $p), $url),
+		} if exists $renderedfiles{$p};
+	}
 
 	$template->param(
 		title => $config{wikiname},
@@ -349,6 +336,7 @@ sub render ($) { #{{{
 		delete $inlinepages{$page};
 		
 		$content=linkify($content, $page);
+		$content=preprocess($page, $content);
 		$content=htmlize($type, $content);
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
@@ -356,14 +344,6 @@ sub render ($) { #{{{
 			genpage($content, $page, mtime($srcfile)));
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
-
-		# TODO: should really add this to renderedfiles and call
-		# check_overwrite, as above, but currently renderedfiles
-		# only supports listing one file per page.
-		if ($config{rss} && exists $inlinepages{$page}) {
-			writefile(rsspage($page), $config{destdir},
-				genrss($content, $page, mtime($srcfile)));
-		}
 	}
 	else {
 		my $content=readfile($srcfile, 1);
