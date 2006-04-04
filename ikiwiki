@@ -21,7 +21,7 @@ sub getconfig () { #{{{
 			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$|\.rss$)},
 			wiki_link_regexp => qr/\[\[(?:([^\s\]\|]+)\|)?([^\s\]]+)\]\]/,
 			wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]+)\]\]/,
-			wiki_file_regexp => qr/(^[-A-Za-z0-9_.:\/+]+$)/,
+			wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 			verbose => 0,
 			wikiname => "wiki",
 			default_pageext => ".mdwn",
@@ -277,7 +277,7 @@ sub pagetitle ($) { #{{{
 sub titlepage ($) { #{{{
 	my $title=shift;
 	$title=~y/ /_/;
-	$title=~s/([^-A-Za-z0-9_:+\/.])/"__".ord($1)."__"/eg;
+	$title=~s/([^-[:alnum:]_:+\/.])/"__".ord($1)."__"/eg;
 	return $title;
 } #}}}
 
