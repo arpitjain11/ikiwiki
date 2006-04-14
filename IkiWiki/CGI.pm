@@ -516,9 +516,9 @@ sub cgi () { #{{{
 	umask($oldmask);
 	
 	# Everything below this point needs the user to be signed in.
-	if ((! $config{anonok} && ! defined $session->param("name") ||
-	     ! defined $session->param("name") ||
-	     ! userinfo_get($session->param("name"), "regdate")) || $do eq 'signin') {
+	if ((! $config{anonok} &&
+	     (! defined $session->param("name") ||
+	     ! userinfo_get($session->param("name"), "regdate"))) || $do eq 'signin') {
 		cgi_signin($q, $session);
 	
 		# Force session flush with safe umask.
