@@ -7,7 +7,7 @@ Standards-Version: 3.6.2
 
 Package: ikiwiki
 Architecture: all
-Depends: ${perl:Depends}, markdown, libtimedate-perl, libhtml-template-perl, libcgi-formbuilder-perl, libtime-duration-perl, libcgi-session-perl, libmail-sendmail-perl, gcc | c-compiler
+Depends: ${perl:Depends}, markdown, libtimedate-perl, libhtml-template-perl, libcgi-formbuilder-perl (>= 3.02.02), libtime-duration-perl, libcgi-session-perl, libmail-sendmail-perl, gcc | c-compiler
 Recommends: subversion, hyperestraier
 Suggests: viewcvs
 Description: a wiki compiler
