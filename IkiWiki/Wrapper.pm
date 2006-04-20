@@ -19,6 +19,9 @@ sub gen_wrapper () { #{{{
 		error("cannot create a wrapper that uses a setup file");
 	}
 	my $wrapper=possibly_foolish_untaint($config{wrapper});
+	if (! defined $wrapper || ! length $wrapper) {
+		error("wrapper filename not specified");
+	}
 	delete $config{wrapper};
 	
 	my @envsave;
