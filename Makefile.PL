@@ -26,6 +26,9 @@ extra_install:
 
 	install -d $(PREFIX)/share/ikiwiki/basewiki
 	cp -a basewiki/* $(PREFIX)/share/ikiwiki/basewiki
+
+	install -d $(PREFIX)/share/man/man1
+	install ikiwiki.man $(PREFIX)/share/man/man1/ikiwiki.1
 }
 }
 

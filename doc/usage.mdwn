@@ -94,9 +94,13 @@ These options configure the wiki.
 
 * --svn, --nosvn
 
-  Enable or disable use of [[subversion]]. If subversion is enabled, the `source` directory is assumed to be a working copy, and is automatically updated before building the wiki. 
+  Enable or disable use of [[subversion]]. If subversion is enabled, the
+  `source` directory is assumed to be a working copy, and is automatically
+  updated before building the wiki. 
 
-  In [[CGI]] mode, with subversion enabled pages edited via the web will be committed to subversion. Also, the [[RecentChanges]] link will be placed on pages.
+  In [[CGI]] mode, with subversion enabled pages edited via the web will be
+  committed to subversion. Also, the [[RecentChanges]] link will be placed
+  on pages.
 
   Subversion is enabled by default.
 

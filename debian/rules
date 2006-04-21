@@ -28,7 +28,6 @@ binary-indep: build
 	dh_link usr/share/common-licenses/GPL usr/share/doc/ikiwiki/html/GPL
 	dh_link usr/share/ikiwiki/basewiki \
 		usr/share/doc/ikiwiki/examples/basewiki
-	dh_installman ikiwiki.man
 	dh_installchangelogs
 	dh_compress -X html
 	dh_fixperms
