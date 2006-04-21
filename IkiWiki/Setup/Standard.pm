@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 # Standard ikiwiki setup module.
 # Parameters to import should be all the standard ikiwiki config stuff,
-# plus hashes for cgiwrapper and svnwrapper, which specify any differing
-# config stuff for them and cause the wrappers to be made.
+# plus an array of wrappers to set up.
 
 use warnings;
 use strict;
