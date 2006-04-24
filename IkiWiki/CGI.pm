@@ -2,6 +2,7 @@
 
 use warnings;
 use strict;
+use IkiWiki::UserInfo;
 
 package IkiWiki;
 
@@ -190,10 +191,9 @@ sub cgi_signin ($$) { #{{{
 			);
 			
 			eval q{use Mail::Sendmail};
-			my ($fromhost) = $config{cgiurl} =~ m!/([^/]+)!;
 			sendmail(
 				To => userinfo_get($user_name, "email"),
-				From => "$config{wikiname} admin <".(getpwuid($>))[0]."@".$fromhost.">",
+				From => "$config{wikiname} admin <$config{adminemail}>",
 				Subject => "$config{wikiname} information",
 				Message => $template->output,
 			) or error("Failed to send mail");

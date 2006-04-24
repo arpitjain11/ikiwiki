@@ -23,6 +23,9 @@ sub rcs_add ($) {
 sub rcs_recentchanges ($) {
 }
 
+sub rcs_notify () {
+}
+
 sub rcs_getctime () {
 	error "getctime not implemented";
 }

@@ -28,6 +28,7 @@ sub gen_wrapper () { #{{{
 	push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
 	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE
 		       HTTP_COOKIE} if $config{cgi};
+	push @envsave, qw{REV} if $config{svn};
 	my $envsave="";
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"

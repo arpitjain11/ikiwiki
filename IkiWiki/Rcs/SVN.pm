@@ -104,10 +104,6 @@ sub rcs_recentchanges ($) { #{{{
 	if (-d "$config{srcdir}/.svn") {
 		my $svn_url=svn_info("URL", $config{srcdir});
 
-		# FIXME: currently assumes that the wiki is somewhere
-		# under trunk in svn, doesn't support other layouts.
-		my ($svn_base)=$svn_url=~m!(/trunk(?:/.*)?)$!;
-		
 		my $div=qr/^--------------------+$/;
 		my $state='start';
 		my ($rev, $user, $when, @pages, @message);
@@ -121,7 +117,7 @@ sub rcs_recentchanges ($) { #{{{
 				$user=$2;
 				$when=concise(ago(time - str2time($3)));
 		    	}
-			elsif ($state eq 'header' && /^\s+[A-Z]\s+\Q$svn_base\E\/([^ ]+)(?:$|\s)/) {
+			elsif ($state eq 'header' && /^\s+[A-Z]+\s+\/\Q$config{svnpath}\E\/([^ ]+)(?:$|\s)/) {
 				my $file=$1;
 				my $diffurl=$config{diffurl};
 				$diffurl=~s/\[\[file\]\]/$file/g;
@@ -165,6 +161,39 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @ret;
+} #}}}
+
+sub rcs_notify () { #{{{
+	if (! exists $ENV{REV}) {
+		error("REV is not set, not running from svn post-commit hook, cannot send notifications");
+	}
+
+	my @changed_pages;
+	foreach my $change (`svnlook changed $config{svnrepo} -r $ENV{REV}`) {
+		chomp;
+		if (/^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
+			push @changed_pages, $1;
+		}
+	}
+		
+	require IkiWiki::UserInfo;
+	my @email_recipients=page_subscribers(@changed_pages);
+	if (@email_recipients) {
+		eval q{use Mail::Sendmail};
+		# TODO: if a commit spans multiple pages, this will send
+		# subscribers a diff that might contain pages they did not
+		# sign up for. Should separate the diff per page and
+		# reassemble into one mail with just the pages subscribed to.
+		my $body=`LANG=C svnlook diff $config{svnrepo} -r $ENV{REV} --no-diff-deleted`;
+		foreach my $email (@email_recipients) {
+			sendmail(
+				To => $email,
+				From => "$config{wikiname} <$config{adminemail}>",
+				Subject => "$config{wikiname} $ENV{REV} update notification",
+				Message => $body,
+			) or error("Failed to send update notification mail");
+		}
+	}
 } #}}}
 
 sub rcs_getctime () { #{{{
