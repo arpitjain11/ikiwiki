@@ -8,6 +8,7 @@
 use IkiWiki::Setup::Standard {
 	wikiname => "MyWiki",
 	#adminuser => ["yourname", ],
+	adminemail => 'me@myhost',
 	
 	# Be sure to customise these..
 	srcdir => "/path/to/source",
@@ -22,6 +23,7 @@ use IkiWiki::Setup::Standard {
 	# Whether to integrate with svn.
 	svn => 1,
 	svnrepo => "/svn/wiki",
+	svnpath => "trunk",
 
 	wrappers => [
 		{
@@ -31,6 +33,8 @@ use IkiWiki::Setup::Standard {
 			# what you want.
 			wrapper => "/svn/wiki/hooks/post-commit",
 			wrappermode => "04755",
+			# Enable mail notifications of commits.
+			notify => 1,
 		},
 		#{
 		#	# The cgi wrapper.

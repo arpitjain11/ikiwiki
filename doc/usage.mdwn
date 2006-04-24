@@ -92,6 +92,11 @@ These options configure the wiki.
 
   Specify a mode to chmod the wrapper to after creating it.
 
+* --notify
+
+  Enable email notification of commits. This should be used when running
+  ikiwiki as a [[Subversion]] [[post-commit]] hook.
+
 * --svn, --nosvn
 
   Enable or disable use of [[subversion]]. If subversion is enabled, the
@@ -103,6 +108,17 @@ These options configure the wiki.
   on pages.
 
   Subversion is enabled by default.
+
+* --svnrepo /svn/wiki
+
+  Specify the location of the svn repository for the wiki. This is required
+  for using --notify with [[subversion]].
+
+* --svnpath trunk
+
+  Specify the path inside your svn reporistory where the wiki is located.
+  This defaults to trunk; change it if your wiki is at some other location
+  inside the repository.
 
 * --anonok, --noanonok
 
@@ -128,6 +144,10 @@ These options configure the wiki.
   Specifies the url to link to for page history browsing. In the url,
   "\[[file]]" is replaced with the file to browse. It's common to use
   [[ViewCVS]] for this.
+
+* --adminemail you@yourhost
+
+  Specifies the email address that ikiwiki should use for sending email.
 
 * --diffurl http://svn.someurl/trunk/\[[file]]?root=wiki&r1=\[[r1]]&r2=\[[r2]]
 

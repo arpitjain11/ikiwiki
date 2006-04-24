@@ -1,0 +1,21 @@
+ikiwiki now supports subscribing to pages on wikis with a subversion
+backend. Subscribers will be mailed commit diffs.
+
+Some changes are needed to ikiwiki configs to support this:
+
+* A new `--adminemail` config option has been added, that is used for both
+  this and for sending user subscription mails, so should be configured on
+  any wiki that uses either feature. 
+* `--svnpath` needs to be set to location of your wiki inside its
+  subversion repository. It defaults to "trunk", which will work for many
+  layouts.
+* A new `--notify` config option should be passed to ikiwiki when it's run
+  as a svn commit hook, to enable it sending the subscription mails.
+* `--svnrepo` is actually supported and used now, so should be set to the
+  subversion repository directory.
+
+[[ikiwiki.setup]] has been updated accordingly.
+
+This is the last major change planned before the first official release of
+ikiwiki. The main remaining issue blocking that release is the resolution
+of what to do about HTML XSS [[security]] issues.
