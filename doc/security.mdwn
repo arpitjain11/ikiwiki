@@ -10,21 +10,6 @@ to be kept in mind.
 
 # Probable holes
 
-## XSS holes in CGI output
-
-ikiwiki has not yet been audited to ensure that all cgi script input/output is
-sanitised to prevent XSS attacks.
-
-## image file etc attacks
-
-If it enounters a file type it does not understand, ikiwiki just copies it
-into place. So if you let users add any kind of file they like, they can
-upload images, movies, windows executables, css files, etc (though not html
-files). If these files exploit security holes in the browser of someone
-who's viewing the wiki, that can be a security problem.
-
-Of course nobody else seems to worry about this in other wikis, so should we?
-
 ## svn commit logs
 
 Anyone with svn commit access can forge "web commit from foo" and make it
@@ -42,6 +27,22 @@ ikiwiki escapes any html in svn commit logs to prevent other mischief.
 # Potential gotchas
 
 _(Things not to do.)_
+
+## image file etc attacks
+
+If it enounters a file type it does not understand, ikiwiki just copies it
+into place. So if you let users add any kind of file they like, they can
+upload images, movies, windows executables, css files, etc (though not html
+files). If these files exploit security holes in the browser of someone
+who's viewing the wiki, that can be a security problem.
+
+Of course nobody else seems to worry about this in other wikis, so should we?
+
+Currently only people with direct svn commit access can upload such files
+(and if you wanted to you could block that with a svn pre-commit hook).
+Wsers with only web commit access are limited to editing pages as ikiwiki
+doesn't support file uploads from browsers (yet), so they can't exploit
+this.
 
 ## multiple accessors of wiki directory
 
@@ -129,6 +130,15 @@ file not be world readable.
 Login to the wiki involves sending a password in cleartext over the net.
 Cracking the password only allows editing the wiki as that user though.
 If you care, you can use https, I suppose.
+
+## XSS holes in CGI output
+
+ikiwiki has not yet been audited to ensure that all cgi script input/output
+is sanitised to prevent XSS attacks. For example, a user can't register
+with a username containing html code (anymore).
+
+It's difficult to know for sure if all such avenues have really been
+closed though.
 
 ----
 
