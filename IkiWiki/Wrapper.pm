@@ -28,12 +28,21 @@ sub gen_wrapper () { #{{{
 	push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
 	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE
 		       HTTP_COOKIE} if $config{cgi};
-	push @envsave, qw{REV} if $config{svn};
 	my $envsave="";
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"
 	if ((s=getenv("$var")))
 		asprintf(&newenviron[i++], "%s=%s", "$var", s);
+EOF
+	}
+	if ($config{svn} && $config{notify}) {
+		# Support running directly as hooks/post-commit by passing
+		# $2 in REV in the environment.
+		$envsave.=<<"EOF"
+	if (argc == 3)
+		asprintf(&newenviron[i++], "REV=%s", argv[2]);
+	else if ((s=getenv("REV")))
+		asprintf(&newenviron[i++], "%s=%s", "REV", s);
 EOF
 	}
 	
@@ -56,7 +65,7 @@ extern char **environ;
 int main (int argc, char **argv) {
 	/* Sanitize environment. */
 	char *s;
-	char *newenviron[$#envsave+4];
+	char *newenviron[$#envsave+5];
 	int i=0;
 $envsave
 	newenviron[i++]="HOME=$ENV{HOME}";

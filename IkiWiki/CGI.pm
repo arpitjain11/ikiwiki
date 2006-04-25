@@ -217,7 +217,8 @@ sub cgi_prefs ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
 		title => "preferences",
-		fields => [qw(do name password confirm_password email locked_pages)],
+		fields => [qw(do name password confirm_password email 
+		              subscriptions locked_pages)],
 		header => 0,
 		method => 'POST',
 		validate => {
@@ -242,6 +243,8 @@ sub cgi_prefs ($$) { #{{{
 		value => $user_name, force => 1);
 	$form->field(name => "password", type => "password");
 	$form->field(name => "confirm_password", type => "password");
+	$form->field(name => "subscriptions", size => 50,
+		comment => "(".htmllink("", "GlobList", 1).")");
 	$form->field(name => "locked_pages", size => 50,
 		comment => "(".htmllink("", "GlobList", 1).")");
 	
@@ -252,6 +255,8 @@ sub cgi_prefs ($$) { #{{{
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
 			value => userinfo_get($user_name, "email"));
+		$form->field(name => "subscriptions", force => 1,
+			value => userinfo_get($user_name, "subscriptions"));
 		$form->field(name => "locked_pages", force => 1,
 			value => userinfo_get($user_name, "locked_pages"));
 	}
@@ -266,7 +271,7 @@ sub cgi_prefs ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq "Save Preferences" && $form->validate) {
-		foreach my $field (qw(password email locked_pages)) {
+		foreach my $field (qw(password email subscriptions locked_pages)) {
 			if (length $form->field($field)) {
 				userinfo_set($user_name, $field, $form->field($field)) || error("failed to set $field");
 			}

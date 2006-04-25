@@ -7,6 +7,7 @@ use strict;
 package IkiWiki;
 		
 my $svn_log_infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
+my $svn_webcommit=qr/^web commit by (\w+):?(.*)/;
 
 sub svn_info ($$) { #{{{
 	my $field=shift;
@@ -134,7 +135,7 @@ sub rcs_recentchanges ($) { #{{{
 			elsif ($state eq 'body' && /$div/) {
 				my $committype="web";
 				if (defined $message[0] &&
-				    $message[0]->{line}=~/^web commit by (\w+):?(.*)/) {
+				    $message[0]->{line}=~/$svn_webcommit/) {
 					$user="$1";
 					$message[0]->{line}=$2;
 				}
@@ -167,11 +168,12 @@ sub rcs_notify () { #{{{
 	if (! exists $ENV{REV}) {
 		error("REV is not set, not running from svn post-commit hook, cannot send notifications");
 	}
+	my $rev=int(possibly_foolish_untaint($ENV{REV}));
 
 	my @changed_pages;
-	foreach my $change (`svnlook changed $config{svnrepo} -r $ENV{REV}`) {
-		chomp;
-		if (/^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
+	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
+		chomp $change;
+		if ($change =~ /^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
 			push @changed_pages, $1;
 		}
 	}
@@ -179,18 +181,45 @@ sub rcs_notify () { #{{{
 	require IkiWiki::UserInfo;
 	my @email_recipients=page_subscribers(@changed_pages);
 	if (@email_recipients) {
-		eval q{use Mail::Sendmail};
 		# TODO: if a commit spans multiple pages, this will send
 		# subscribers a diff that might contain pages they did not
 		# sign up for. Should separate the diff per page and
 		# reassemble into one mail with just the pages subscribed to.
-		my $body=`LANG=C svnlook diff $config{svnrepo} -r $ENV{REV} --no-diff-deleted`;
+		my $diff=`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
+
+		my $user=`svnlook author $config{svnrepo} -r $rev`;
+		my $message=`svnlook log $config{svnrepo} -r $rev`;
+		if ($message=~/$svn_webcommit/) {
+			$user="$1";
+			$message=$2;
+		}
+		
+		my $subject="$config{wikiname} update of ";
+		if (@changed_pages > 2) {
+			$subject.="$changed_pages[0] $changed_pages[1] etc";
+		}
+		else {
+			$subject.=join(" ", @changed_pages);
+		}
+		$subject.=" by $user";
+
+		my $template=HTML::Template->new(
+			filename => "$config{templatedir}/notifymail.tmpl"
+		);
+		$template->param(
+			wikiname => $config{wikiname},
+			diff => $diff,
+			user => $user,
+			message => $message,
+		);
+		
+		eval q{use Mail::Sendmail};
 		foreach my $email (@email_recipients) {
 			sendmail(
 				To => $email,
 				From => "$config{wikiname} <$config{adminemail}>",
-				Subject => "$config{wikiname} $ENV{REV} update notification",
-				Message => $body,
+				Subject => $subject,
+				Message => $template->output,
 			) or error("Failed to send update notification mail");
 		}
 	}

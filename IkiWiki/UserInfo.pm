@@ -70,12 +70,12 @@ sub page_subscribers (@) { #{{{
 	my @ret;
 	my $userinfo=userinfo_retrieve();
 	foreach my $user (keys %{$userinfo}) {
-		if (exists $user->{subscriptions} &&
-		    length $user->{subscriptions} &&
-		    exists $user->{email} &&
-		    length $user->{email} &&
-		    grep { globmatch($_, $user->{subscriptions}) } @_) {
-			push @ret, $user->{email};
+		if (exists $userinfo->{$user}->{subscriptions} &&
+		    length $userinfo->{$user}->{subscriptions} &&
+		    exists $userinfo->{$user}->{email} &&
+		    length $userinfo->{$user}->{email} &&
+		    grep { glob_match($_, $userinfo->{$user}->{subscriptions}) } @_) {
+			push @ret, $userinfo->{$user}->{email};
 		}
 	}
 	return @ret;
