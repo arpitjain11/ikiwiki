@@ -156,14 +156,14 @@ sub debug ($) { #{{{
 sub basename ($) { #{{{
 	my $file=shift;
 
-	$file=~s!.*/!!;
+	$file=~s!.*/+!!;
 	return $file;
 } #}}}
 
 sub dirname ($) { #{{{
 	my $file=shift;
 
-	$file=~s!/?[^/]+$!!;
+	$file=~s!/*[^/]+$!!;
 	return $file;
 } #}}}
 
