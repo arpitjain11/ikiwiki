@@ -11,6 +11,9 @@ It ships with some basic templates which can be customised:
   have a custom template.
 * `templates/recentchanges.tmpl` - Used for the RecentChanges page.
 * `templates/editpage.tmpl` - Create/edit page.
+* `templates/notifymail.tmpl` - Not a html template, this is used to
+  generate change notification mails for users who have subscribed to
+  changes to a page.
 * `templates/passwordmail.tmpl` - Not a html template, this is used to
   generate the mail with the user's password in it.
 * `templates/rsspage.tmpl` - Used for generating rss feeds for [[blog]]s.

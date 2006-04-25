@@ -1,8 +1,6 @@
 ikiwiki now supports subscribing to pages on wikis with a subversion
 backend. Subscribers will be mailed commit diffs.
 
-(Support for editing subscriptions in the web UI will be implemented RSN. I got a tad ahead of myself with commits here.. --[[Joey]])
-
 Some changes are needed to ikiwiki configs to support this:
 
 * A new `--adminemail` config option has been added, that is used for both
