@@ -7,9 +7,6 @@ This would allow not only supporting more types of markup, but changing
 what style of [[WikiLink]]s are supported, maybe some people want to add
 [[CamelCase]] for example, or don't like the [[SubPage/LinkingRules]].
 
-The finalize step is where the page gets all the pretty junk around the
-edges, so that clearly needs to be pluggable too.
-
 There also needs to be a step before finalize, where stuff like lists of pages
 that linked back to it could be added to the page. However, doing linkbacks
 also needs to tie into the main logic, to determine what pages need to be
