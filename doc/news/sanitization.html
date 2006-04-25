@@ -1,0 +1,7 @@
+ikiwiki's main outstanding security hole, lack of [[HtmlSanitization]] has
+now been addressed. ikiwiki now sanitizes html by default.
+
+If only trusted parties can edit your wiki's content, then you might want
+to turn this sanitization back off to allow use of potentially dangerous
+tags. To do so, pass --no-sanitize or set "sanitize =&gt; 0," in your
+[[ikiwiki.setup]].

@@ -8,21 +8,18 @@ to be kept in mind.
 
 # Probable holes
 
-## html attacks
+## XSS holes in CGI output
 
-ikiwiki does not attempt to do any santization of the html on the wiki.
-[[MarkDown]] allows embedding of arbitrary html into a markdown document. If
-you let anyone else edit files on the wiki, then anyone can have fun exploiting
-the web browser bug of the day. This type of attack is typically referred
-to as an XSS attack ([google](http://www.google.com/search?q=xss+attack)).
+ikiwiki has not yet been audited to ensure that all cgi script output is
+sanitised to prevent XSS attacks.
 
 ## image files etc attacks
 
 If it enounters a file type it does not understand, ikiwiki just copies it
 into place. So if you let users add any kind of file they like, they can
-upload images, movies, windows executables, css files, etc. If these files
-exploit security holes in the browser of someone who's viewing the wiki,
-that can be a security problem.
+upload images, movies, windows executables, css files, etc (though not html
+files). If these files exploit security holes in the browser of someone
+who's viewing the wiki, that can be a security problem.
 
 Of course nobody else seems to worry about this in other wikis, so should we?
 
@@ -193,3 +190,7 @@ would still be possible to use this attack to confuse ikiwiki into
 rendering the wrong thing. This is not currently possible, but must be kept
 in mind in the future when for example adding support for generating html
 pages from source with some other extension.
+
+## XSS attacks in page content
+
+ikiwiki supports [[HtmlSanitistion]], though it can be turned off.

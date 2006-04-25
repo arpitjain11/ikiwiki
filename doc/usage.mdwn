@@ -167,6 +167,11 @@ These options configure the wiki.
   Currently allows locking of any page, other powers may be added later.
   May be specified multiple times for multiple admins.
 
+* --sanitize
+
+  Enable [[HtmlSanitization]] of wiki content. On by default, disable with
+  --no-sanitize.
+
 * --hyperestraier
 
   Enables use of the [[HyperEstraier]] search engine for full test page
