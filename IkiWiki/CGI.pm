@@ -378,7 +378,7 @@ sub cgi_editpage ($$) { #{{{
 			}
 			else {
 				my $dir=$from."/";
-				$dir=~s![^/]+/$!!;
+				$dir=~s![^/]+/+$!!;
 				
 				if ((defined $form->param('subpage') && length $form->param('subpage')) ||
 				    $page eq 'discussion') {
@@ -391,7 +391,7 @@ sub cgi_editpage ($$) { #{{{
 				push @page_locs, $dir.$page;
 				push @page_locs, "$from/$page";
 				while (length $dir) {
-					$dir=~s![^/]+/$!!;
+					$dir=~s![^/]+/+$!!;
 					push @page_locs, $dir.$page;
 				}
 
