@@ -74,7 +74,7 @@ sub page_subscribers (@) { #{{{
 		    length $userinfo->{$user}->{subscriptions} &&
 		    exists $userinfo->{$user}->{email} &&
 		    length $userinfo->{$user}->{email} &&
-		    grep { glob_match($_, $userinfo->{$user}->{subscriptions}) } @_) {
+		    grep { globlist_match($_, $userinfo->{$user}->{subscriptions}) } @_) {
 			push @ret, $userinfo->{$user}->{email};
 		}
 	}
