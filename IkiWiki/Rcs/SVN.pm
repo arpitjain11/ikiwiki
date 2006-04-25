@@ -169,6 +169,14 @@ sub rcs_notify () { #{{{
 		error("REV is not set, not running from svn post-commit hook, cannot send notifications");
 	}
 	my $rev=int(possibly_foolish_untaint($ENV{REV}));
+	
+	my $user=`svnlook author $config{svnrepo} -r $rev`;
+	chomp $user;
+	my $message=`svnlook log $config{svnrepo} -r $rev`;
+	if ($message=~/$svn_webcommit/) {
+		$user="$1";
+		$message=$2;
+	}
 
 	my @changed_pages;
 	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
@@ -179,7 +187,7 @@ sub rcs_notify () { #{{{
 	}
 		
 	require IkiWiki::UserInfo;
-	my @email_recipients=page_subscribers(@changed_pages);
+	my @email_recipients=commit_notify_list($user, @changed_pages);
 	if (@email_recipients) {
 		# TODO: if a commit spans multiple pages, this will send
 		# subscribers a diff that might contain pages they did not
@@ -187,14 +195,6 @@ sub rcs_notify () { #{{{
 		# reassemble into one mail with just the pages subscribed to.
 		my $diff=`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
 
-		my $user=`svnlook author $config{svnrepo} -r $rev`;
-		chomp $user;
-		my $message=`svnlook log $config{svnrepo} -r $rev`;
-		if ($message=~/$svn_webcommit/) {
-			$user="$1";
-			$message=$2;
-		}
-		
 		my $subject="$config{wikiname} update of ";
 		if (@changed_pages > 2) {
 			$subject.="$changed_pages[0] $changed_pages[1] etc";

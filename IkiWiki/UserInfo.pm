@@ -66,15 +66,19 @@ sub is_admin ($) { #{{{
 	return grep { $_ eq $user_name } @{$config{adminuser}};
 } #}}}
 
-sub page_subscribers (@) { #{{{
+sub commit_notify_list ($@) { #{{{
+	my $committer=shift;
+	my @pages=@_;
+	
 	my @ret;
 	my $userinfo=userinfo_retrieve();
 	foreach my $user (keys %{$userinfo}) {
+		next if $user eq $committer;
 		if (exists $userinfo->{$user}->{subscriptions} &&
 		    length $userinfo->{$user}->{subscriptions} &&
 		    exists $userinfo->{$user}->{email} &&
 		    length $userinfo->{$user}->{email} &&
-		    grep { globlist_match($_, $userinfo->{$user}->{subscriptions}) } @_) {
+		    grep { globlist_match($_, $userinfo->{$user}->{subscriptions}) } @pages) {
 			push @ret, $userinfo->{$user}->{email};
 		}
 	}
