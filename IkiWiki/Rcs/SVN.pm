@@ -188,6 +188,7 @@ sub rcs_notify () { #{{{
 		my $diff=`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
 
 		my $user=`svnlook author $config{svnrepo} -r $rev`;
+		chomp $user;
 		my $message=`svnlook log $config{svnrepo} -r $rev`;
 		if ($message=~/$svn_webcommit/) {
 			$user="$1";
