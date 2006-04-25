@@ -10,10 +10,10 @@ to be kept in mind.
 
 ## XSS holes in CGI output
 
-ikiwiki has not yet been audited to ensure that all cgi script output is
+ikiwiki has not yet been audited to ensure that all cgi script input/output is
 sanitised to prevent XSS attacks.
 
-## image files etc attacks
+## image file etc attacks
 
 If it enounters a file type it does not understand, ikiwiki just copies it
 into place. So if you let users add any kind of file they like, they can
@@ -23,11 +23,23 @@ who's viewing the wiki, that can be a security problem.
 
 Of course nobody else seems to worry about this in other wikis, so should we?
 
-## web server attacks
+## svn commit logs
 
-If your web server does any parsing of special sorts of files (for example,
-server parsed html files), then if you let anyone else add files to the wiki,
-they can try to use this to exploit your web server.
+Anyone with svn commit access can forge "web commit from foo" and make it
+appear on [[RecentChanges]] like foo committed. One way to avoid this would
+be to limit web commits to those done by a certian user.
+
+It's actually possible to force a whole series of svn commits to appear to
+have come just before yours, by forging svn log output. This could be
+guarded against by using svn log --xml.
+
+ikiwiki escapes any html in svn commit logs to prevent other mischief.
+
+----
+
+# Potential gotchas
+
+Things not to do.
 
 ## multiple accessors of wiki directory
 
@@ -43,24 +55,18 @@ Setup files are not safe to keep in subversion with the rest of the wiki.
 Just don't do it. [[ikiwiki.setup]] is *not* used as the setup file for
 this wiki, BTW.
 
-## svn commit logs
-
-Anyone with svn commit access can forge "web commit from foo" and make it
-appear on [[RecentChanges]] like foo committed. One way to avoid this would
-be to limit web commits to those done by a certian user.
-
-It's actually possible to force a whole series of svn commits to appear to
-have come just before yours, by forging svn log output. This could be
-guarded against by using svn log --xml.
-
-ikiwiki escapes any html in svn commit logs to prevent other mischief.
-
 ## page locking can be bypassed via direct svn commits
 
 A [[lock]]ed page can only be edited on the web by an admin, but
 anyone who is allowed to commit direct to svn can bypass this. This is by
 design, although a subversion pre-commit hook could be used to prevent
 editing of locked pages when using subversion, if you really need to.
+
+## web server attacks
+
+If your web server does any parsing of special sorts of files (for example,
+server parsed html files), then if you let anyone else add files to the wiki,
+they can try to use this to exploit your web server.
 
 ----
 
