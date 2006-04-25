@@ -118,6 +118,7 @@ sub cgi_signin ($$) { #{{{
 				validate => sub {
 					my $name=shift;
 					length $name &&
+					$name=~/$wiki_file_regexp/ &&
 					! userinfo_get($name, "regdate");
 				},
 			);
