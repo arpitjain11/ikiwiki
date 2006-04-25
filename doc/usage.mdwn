@@ -131,15 +131,15 @@ These options configure the wiki.
   If rss is set, ikiwiki will generate rss feeds for pages that inline
   a blog.
 
-* --url http://someurl/
+* --url http://url/
 
   Specifies the url to the wiki. This is a required parameter in [[CGI]] mode.
 
-* --cgiurl http://someurl/ikiwiki.cgi
+* --cgiurl http://url/ikiwiki.cgi
 
   Specifies the url to the ikiwiki [[CGI]] script [[wrapper]]. Required when building the wiki for links to the cgi script to be generated.
 
-* --historyurl http://svn.someurl/trunk/\[[file]]?root=wiki
+* --historyurl http://url/trunk/\[[file]]?root=wiki
 
   Specifies the url to link to for page history browsing. In the url,
   "\[[file]]" is replaced with the file to browse. It's common to use
@@ -149,7 +149,7 @@ These options configure the wiki.
 
   Specifies the email address that ikiwiki should use for sending email.
 
-* --diffurl http://svn.someurl/trunk/\[[file]]?root=wiki&r1=\[[r1]]&r2=\[[r2]]
+* --diffurl http://url/trunk/\[[file]]?root=wiki&r1=\[[r1]]&r2=\[[r2]]
 
   Specifies the url to link to for a diff of changes to a page. In the url,
   "\[[file]]" is replaced with the file to browse, "\[[r1]]" is the old
