@@ -6,6 +6,8 @@ security issues with this program than with cat(1). If, however, you let
 others edit pages in your wiki, then some possible security issues do need
 to be kept in mind.
 
+----
+
 # Probable holes
 
 ## XSS holes in CGI output
@@ -39,7 +41,7 @@ ikiwiki escapes any html in svn commit logs to prevent other mischief.
 
 # Potential gotchas
 
-Things not to do.
+_(Things not to do.)_
 
 ## multiple accessors of wiki directory
 
@@ -72,7 +74,7 @@ they can try to use this to exploit your web server.
 
 # Hopefully non-holes
 
-(AKA, the assumptions that will be the root of most security holes...)
+_(AKA, the assumptions that will be the root of most security holes...)_
 
 ## exploting ikiwiki with bad content
 
@@ -127,6 +129,8 @@ file not be world readable.
 Login to the wiki involves sending a password in cleartext over the net.
 Cracking the password only allows editing the wiki as that user though.
 If you care, you can use https, I suppose.
+
+----
 
 # Fixed holes
 
