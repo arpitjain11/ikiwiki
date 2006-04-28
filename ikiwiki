@@ -499,9 +499,9 @@ sub main () { #{{{
 		loadindex();
 		require IkiWiki::Render;
 		rcs_update();
-		rcs_notify() if $config{notify};
 		rcs_getctime() if $config{getctime};
 		refresh();
+		rcs_notify() if $config{notify};
 		saveindex();
 	}
 } #}}}

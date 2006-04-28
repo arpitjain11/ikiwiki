@@ -68,7 +68,11 @@ sub is_admin ($) { #{{{
 
 sub commit_notify_list ($@) { #{{{
 	my $committer=shift;
-	my @pages=@_;
+	
+	my @pages;
+	foreach my $file (@_) {
+		push @pages, grep { $pagesources{$_} eq $file } keys %pagesources;
+	}
 	
 	my @ret;
 	my $userinfo=userinfo_retrieve();
