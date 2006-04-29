@@ -37,7 +37,7 @@ binary-indep: build
 
 # Not intended for use by anyone except the author.
 announcedir:
-	@echo ${HOME}/src/ikiwiki/news
+	@echo ${HOME}/src/ikiwiki/doc/news
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary
