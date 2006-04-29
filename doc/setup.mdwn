@@ -4,11 +4,6 @@ optional support for commits from the web.
 
 1. [[Install]] ikiwiki. See [[download]] for where to get it.
 
-   Ikiwiki requires [[MarkDown]] be installed, and also uses the following
-   perl modules: `CGI::Session` `CGI::FormBuilder` (version 3.02.02 or
-   newer) `HTML::Template` `Mail::SendMail` `Time::Duration` `Date::Parse`
-   (libtimedate-perl), `HTML::Scrubber`
-
 2. Create the subversion repository for your wiki.
 
 		svnadmin create /svn/wikirepo
