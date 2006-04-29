@@ -26,8 +26,6 @@ binary-indep: build
 	dh_install debian/wikilist etc/ikiwiki
 	dh_installdocs html
 	dh_link usr/share/common-licenses/GPL usr/share/doc/ikiwiki/html/GPL
-	dh_link usr/share/ikiwiki/basewiki \
-		usr/share/doc/ikiwiki/examples/basewiki
 	dh_installchangelogs
 	dh_compress -X html
 	dh_fixperms
