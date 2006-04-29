@@ -1,5 +1,10 @@
 The easiest way to install ikiwiki is using the Debian package.
 
+Ikiwiki requires [[MarkDown]] be installed, and also uses the following
+perl modules: `CGI::Session` `CGI::FormBuilder` (version 3.02.02 or
+newer) `HTML::Template` `Mail::SendMail` `Time::Duration` `Date::Parse`
+(libtimedate-perl), `HTML::Scrubber`
+
 If you want to install from the tarball, you should make sure that the required perl modules are installed, then run:
 
         perl Makefile.PL
