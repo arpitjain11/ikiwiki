@@ -7,7 +7,7 @@ A plugin system should ideally support things like:
 * [[todo/sigs]]
 * [[pageindexes]]
 * Wiki stats, such as the total number of pages, total number of links, most linked to pages, etc, etc.
-* 
+* etc
 
 Considering ikiwiki plugins, one idea I have is to make the [[PreProcessorDirective]]s be a plugin. A setting in the config file would enable various plusins, which are perl modules, that each provide one or more preprocessor directives. 
 
