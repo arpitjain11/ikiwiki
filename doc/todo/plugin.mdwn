@@ -14,3 +14,5 @@ Considering ikiwiki plugins, one idea I have is to make the [[PreProcessorDirect
 Since preprocessing happens before htmlization but after a page is loaded and linkified, it should be possible to use it to create something like a link map or lists, or a page index. Page inlining and rss generation is already done via preprocessor directives and seems a natureal as a plugin too. 
 
 Note that things like a link map or a broken link list page would need to be updated whenever a set (or all) pages change; the %inlinepages hash already allows for pages to register this, although it might need to be renamed. 
+
+I need to look at the range of things that other wikis use their plugin systems for, but preprocessor directives as plugins certianly seems useful, even if it's  not a complete solution.
