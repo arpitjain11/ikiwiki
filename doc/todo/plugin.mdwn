@@ -9,7 +9,7 @@ A plugin system should ideally support things like:
 * Wiki stats, such as the total number of pages, total number of links, most linked to pages, etc, etc.
 * wiki info page, giving the ikiwiki version etc
 * would it be useful to reimplement the hyperestradier search integration as a plugin?
-* Support [[RecentChanges]] as a regular page containing a plugin that updates each time there is a change, and statically builds the recent changes list. (Would this be too expensive? There might be other ways to do it as a plugin, like making all links to RecentChanges link to the cgi and have the cgi render it on demand.)
+* Support [[RecentChanges]] as a regular page containing a plugin that updates each time there is a change, and statically builds the recent changes list. (Would this be too expensive/inflexible? There might be other ways to do it as a plugin, like making all links to RecentChanges link to the cgi and have the cgi render it on demand.)
 * etc
 
 Another, separate plugin system that already (mostly) exists in ikiwiki is the RCS backend, which allows writing modules to drive other RCS systems than subversion.
