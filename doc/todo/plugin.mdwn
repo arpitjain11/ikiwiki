@@ -33,6 +33,3 @@ See <http://moinmoin.wikiwikiweb.de/MoinDev/PluginConcept>
 * *parsers* and *formatters* are basically what I've been calling [[PluggableRenderers]]. MoinMoin separates these, so that a page is parsed to (presumbly) some intermediate form before being output as html or some other form. That's a nice separation, but what to do about things like markdown that are both a parser and a formatter?
 * *macros* and *processors* are analagous to preprocessor directives. A processor can operate on a large block of text though.
 * *themes* should be irrellevant (ikiwiki has [[templates]]).
-
-## case study: pybloxsom plugins
-
