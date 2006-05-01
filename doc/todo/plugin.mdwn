@@ -7,7 +7,12 @@ A plugin system should ideally support things like:
 * [[todo/sigs]]
 * [[pageindexes]]
 * Wiki stats, such as the total number of pages, total number of links, most linked to pages, etc, etc.
+* wiki info page, giving the ikiwiki version etc
 * etc
+
+Another, separate plugin system that already (mostly) exists in ikiwiki is the RCS backend, which allows writing modules to drive other RCS systems than subversion.
+
+## preprocessor plugins
 
 Considering ikiwiki plugins, one idea I have is to make the [[PreProcessorDirective]]s be a plugin. A setting in the config file would enable various plusins, which are perl modules, that each provide one or more preprocessor directives. 
 
@@ -15,4 +20,15 @@ Since preprocessing happens before htmlization but after a page is loaded and li
 
 Note that things like a link map or a broken link list page would need to be updated whenever a set (or all) pages change; the %inlinepages hash already allows for pages to register this, although it might need to be renamed. 
 
-I need to look at the range of things that other wikis use their plugin systems for, but preprocessor directives as plugins certianly seems useful, even if it's  not a complete solution.
+I need to look at the full range of things that other wikis use their plugin systems for, but preprocessor directives as plugins certianly seems useful, even if it's  not a complete solution.
+
+## case study: Moin Moin plugins
+
+See <http://moinmoin.wikiwikiweb.de/MoinDev/PluginConcept>
+
+6 different types of plugins:
+
+* *actions* are possibly out of scope for ikiwiki, this is probably what it uses for cgi script type stuff. Unless ikiwiki wants to allow pluggable CGI script stuff, it doesn't need these.
+* *parsers* and *formatters* are basically what I've been calling [[PluggableRenderers]]. MoinMoin separates these, so that a page is parsed to (presumbly) some intermediate form before being output as html or some other form. That's a nice separation, but what to do about things like markdown that are both a parser and a formatter?
+* *macros* and *processors* are analagous to preprocessor directives. A processor can operate on a large block of text though.
+* *themes* should be irrellevant (ikiwiki has [[templates]]).
