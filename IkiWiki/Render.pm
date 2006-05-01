@@ -146,7 +146,7 @@ sub preprocess ($$) { #{{{
 			while ($params =~ /(\w+)=\"([^"]+)"(\s+|$)/g) {
 				$params{$1}=$2;
 			}
-			return $commands{$command}->($page, %params);
+			return $commands{$command}->(page => $page, %params);
 		}
 		else {
 			return "[[bad directive $command]]";
@@ -188,7 +188,6 @@ sub get_inline_content ($$) { #{{{
 } #}}}
 
 sub preprocess_inline ($@) { #{{{
-	my $parentpage=shift;
 	my %params=@_;
 	
 	if (! exists $params{pages}) {
@@ -200,11 +199,11 @@ sub preprocess_inline ($@) { #{{{
 	if (! exists $params{show} && $params{archive} eq "no") {
 		$params{show}=10;
 	}
-	if (! exists $depends{$parentpage}) {
-		$depends{$parentpage}=$params{pages};
+	if (! exists $depends{$params{page}}) {
+		$depends{$params{page}}=$params{pages};
 	}
 	else {
-		$depends{$parentpage}.=" ".$params{pages};
+		$depends{$params{page}}.=" ".$params{pages};
 	}
 
 	my $ret="";
@@ -216,7 +215,7 @@ sub preprocess_inline ($@) { #{{{
 		$formtemplate->param(cgiurl => $config{cgiurl});
 		$formtemplate->param(rootpage => $params{rootpage});
 		if ($config{rss}) {
-			$formtemplate->param(rssurl => rsspage(basename($parentpage)));
+			$formtemplate->param(rssurl => rsspage(basename($params{page})));
 		}
 		$ret.=$formtemplate->output;
 	}
@@ -224,7 +223,7 @@ sub preprocess_inline ($@) { #{{{
 		# Add a rss link button.
 		my $linktemplate=HTML::Template->new(blind_cache => 1,
 			filename => "$config{templatedir}/rsslink.tmpl");
-		$linktemplate->param(rssurl => rsspage(basename($parentpage)));
+		$linktemplate->param(rssurl => rsspage(basename($params{page})));
 		$ret.=$linktemplate->output;
 	}
 	
@@ -235,10 +234,10 @@ sub preprocess_inline ($@) { #{{{
 	
 	my @pages;
 	foreach my $page (blog_list($params{pages}, $params{show})) {
-		next if $page eq $parentpage;
+		next if $page eq $params{page};
 		push @pages, $page;
-		$template->param(pagelink => htmllink($parentpage, $page));
-		$template->param(content => get_inline_content($parentpage, $page))
+		$template->param(pagelink => htmllink($params{page}, $page));
+		$template->param(content => get_inline_content($params{page}, $page))
 			if $params{archive} eq "no";
 		$template->param(ctime => scalar(gmtime($pagectime{$page})));
 		$ret.=$template->output;
@@ -248,8 +247,8 @@ sub preprocess_inline ($@) { #{{{
 	# check_overwrite, but currently renderedfiles
 	# only supports listing one file per page.
 	if ($config{rss}) {
-		writefile(rsspage($parentpage), $config{destdir},
-			genrss($parentpage, @pages));
+		writefile(rsspage($params{page}), $config{destdir},
+			genrss($params{page}, @pages));
 	}
 	
 	return $ret;
