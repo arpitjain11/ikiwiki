@@ -9,7 +9,8 @@ ikiwiki (1.1) UNRELEASED; urgency=low
   * Allow the depends GlobList to be built up from multiple sources (such as
     plugins) during a page render.
   * Which means that more than one blog is now supported to appear on a
-    single page. (With some limitations.)
+    single page. (With some limitations, like only the last one getting an
+    rss file.)
 
  -- Joey Hess <joeyh@debian.org>  Mon,  1 May 2006 18:21:16 -0400
 
