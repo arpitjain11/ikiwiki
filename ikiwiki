@@ -9,7 +9,7 @@ use HTML::Template;
 use lib '.'; # For use without installation, removed by Makefile.
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
-            %renderedfiles %pagesources %inlinepages};
+            %renderedfiles %pagesources %depends};
 
 sub usage () { #{{{
 	die "usage: ikiwiki [options] source dest\n";
@@ -399,8 +399,8 @@ sub loadindex () { #{{{
 			$oldpagemtime{$page}=$items{mtime}[0];
 			$oldlinks{$page}=[@{$items{link}}];
 			$links{$page}=[@{$items{link}}];
-			$inlinepages{$page}=join(" ", @{$items{inlinepage}})
-				if exists $items{inlinepage};
+			$depends{$page}=join(" ", @{$items{depends}})
+				if exists $items{depends};
 			$renderedfiles{$page}=$items{dest}[0];
 		}
 		$pagectime{$page}=$items{ctime}[0];
@@ -421,8 +421,8 @@ sub saveindex () { #{{{
 			"src=$pagesources{$page} ".
 			"dest=$renderedfiles{$page}";
 		$line.=" link=$_" foreach @{$links{$page}};
-		if (exists $inlinepages{$page}) {
-			$line.=" inlinepage=$_" foreach split " ", $inlinepages{$page};
+		if (exists $depends{$page}) {
+			$line.=" depends=$_" foreach split " ", $depends{$page};
 		}
 		print OUT $line."\n";
 	}

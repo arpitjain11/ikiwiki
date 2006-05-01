@@ -23,8 +23,6 @@
       pages generated from the underlaydir as it can never work for them.
 * If a page stops inlining anthing, its rss feed file
   will linger around and not be deleted.
-* Currently only one blog is supported per page. Attempts to add more
-  will make it only update one of the blogs on the page.
 * RSS output contains relative links. Ie. http://kitenet.net/~joey/blog/index.rss contains a link to http://kitenet.net/~joey/blog/../blog.html
 * If a file in the srcdir is removed, exposing a file in the underlaydir,
   ikiwiki will not notice the change and rebuild it until the file in the

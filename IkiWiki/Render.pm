@@ -139,17 +139,17 @@ sub preprocess ($$) { #{{{
 		my $command=shift;
 		my $params=shift;
 		if (length $escape) {
-			"[[$command $params]]";
+			return "[[$command $params]]";
 		}
 		elsif (exists $commands{$command}) {
 			my %params;
 			while ($params =~ /(\w+)=\"([^"]+)"(\s+|$)/g) {
 				$params{$1}=$2;
 			}
-			$commands{$command}->($page, %params);
+			return $commands{$command}->($page, %params);
 		}
 		else {
-			"[[bad directive $command]]";
+			return "[[bad directive $command]]";
 		}
 	};
 	
@@ -200,17 +200,32 @@ sub preprocess_inline ($@) { #{{{
 	if (! exists $params{show} && $params{archive} eq "no") {
 		$params{show}=10;
 	}
-	$inlinepages{$parentpage}=$params{pages};
+	if (! exists $depends{$parentpage}) {
+		$depends{$parentpage}=$params{pages};
+	}
+	else {
+		$depends{$parentpage}.=" ".$params{pages};
+	}
 
 	my $ret="";
 	
 	if (exists $params{rootpage}) {
+		# Add a blog post form, with a rss link button.
 		my $formtemplate=HTML::Template->new(blind_cache => 1,
 			filename => "$config{templatedir}/blogpost.tmpl");
 		$formtemplate->param(cgiurl => $config{cgiurl});
 		$formtemplate->param(rootpage => $params{rootpage});
-		my $form=$formtemplate->output;
-		$ret.=$form;
+		if ($config{rss}) {
+			$formtemplate->param(rssurl => rsspage(basename($parentpage)));
+		}
+		$ret.=$formtemplate->output;
+	}
+	elsif ($config{rss}) {
+		# Add a rss link button.
+		my $linktemplate=HTML::Template->new(blind_cache => 1,
+			filename => "$config{templatedir}/rsslink.tmpl");
+		$linktemplate->param(rssurl => rsspage(basename($parentpage)));
+		$ret.=$linktemplate->output;
 	}
 	
 	my $template=HTML::Template->new(blind_cache => 1,
@@ -267,10 +282,6 @@ sub genpage ($$$) { #{{{
 		$template->param(hyperestraierurl => cgiurl());
 	}
 
-	if ($config{rss} && $inlinepages{$page}) {
-		$template->param(rssurl => rsspage(basename($page)));
-	}
-	
 	$template->param(
 		title => $title,
 		wikiname => $config{wikiname},
@@ -375,7 +386,7 @@ sub render ($) { #{{{
 		my $page=pagename($file);
 		
 		$links{$page}=[findlinks($content, $page)];
-		delete $inlinepages{$page};
+		delete $depends{$page};
 		
 		$content=linkify($content, $page);
 		$content=preprocess($page, $content);
@@ -569,18 +580,18 @@ FILE:		foreach my $file (@files) {
 	}
 
 	# Handle backlinks; if a page has added/removed links, update the
-	# pages it links to. Also handle inlining here.
+	# pages it links to. Also handles rebuilding dependat pages.
 	# TODO: inefficient; pages may get rendered above and again here;
 	# problem is the backlinks could be wrong in the first pass render
 	# above
 	if (%rendered || @del) {
 		foreach my $f (@files) {
 			my $p=pagename($f);
-			if (exists $inlinepages{$p}) {
+			if (exists $depends{$p}) {
 				foreach my $file (keys %rendered, @del) {
 					my $page=pagename($file);
-					if (globlist_match($page, $inlinepages{$p})) {
-						debug("rendering $f, which inlines $page");
+					if (globlist_match($page, $depends{$p})) {
+						debug("rendering $f, which depends on $page");
 						render($f);
 						$rendered{$f}=1;
 						last;
