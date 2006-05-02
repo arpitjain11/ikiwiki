@@ -141,7 +141,7 @@ sub preprocess ($$) { #{{{
 			return $plugins{preprocess}{$command}->(page => $page, %params);
 		}
 		else {
-			return "[[bad directive $command]]";
+			return "[[$command not processed]]";
 		}
 	};
 	

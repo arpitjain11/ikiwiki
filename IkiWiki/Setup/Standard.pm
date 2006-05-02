@@ -28,11 +28,22 @@ sub setup_standard {
 			gen_wrapper();
 		}
 		%config=(%startconfig);
+		delete $config{wrappers};
 	}
 	foreach my $c (keys %setup) {
-		$config{$c}=possibly_foolish_untaint($setup{$c})
-			if defined $setup{$c} && ! ref $setup{$c};
+		if (defined $setup{$c}) {
+			if (! ref $setup{$c}) {
+				$config{$c}=possibly_foolish_untaint($setup{$c});
+			}
+			elsif (ref $setup{$c} eq 'ARRAY') {
+				$config{$c}=[map { possibly_foolish_untaint($_) } @{$setup{$c}}]
+			}
+		}
+		else {
+			$config{$c}=undef;
+		}
 	}
+
 	if (! $config{refresh}) {
 		$config{rebuild}=1;
 		debug("rebuilding wiki..");
