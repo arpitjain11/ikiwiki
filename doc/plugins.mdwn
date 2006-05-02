@@ -6,6 +6,9 @@ The ikiiki package includes some standard plugins that are installed and
 by default. These include [[inline]], [[pagecount]], and [[brokenlinks]].
 Of these, [[inline]] is enabled by default.
 
+To enable other plugins, use the `--plugin` switch described in [[usage]], or the equivilant line in
+[[ikiwiki.setup]].
+
 ## Third party plugins
 
 Plugins are perl modules and should be installed somewhere in the perl
@@ -16,9 +19,6 @@ inside the perl search path. For example, if your perl looks in
 `/usr/local/lib/site_perl` for modules, you can locally install ikiwiki
 plugins to `/usr/local/lib/site_perl/IkiWiki/Plugin`
 
-Once a plugin is installed, you need to configure ikiwiki to load it using
-the `--plugin` switch described in [[usage]], or the equivilant line in
-[[ikiwiki.setup]].
 
 ## Plugin directory
 
