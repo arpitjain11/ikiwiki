@@ -58,7 +58,7 @@ If your plugin needs to access data about other pages in the wiki. It can
 use the following hashes, using a page name as the key:
 
 * `%IkiWiki::links` lists the names of each page
-  that is linked to from that page in an array reference.
+  that a page links to, in an array reference.
 * `%IkiWiki::pagemtime` contains the last modification time of each page
 * `%IkiWiki::pagectime` contains the creation time of each page`
 * `%IkiWiki::renderedfiles` contains the name of the file rendered by a
