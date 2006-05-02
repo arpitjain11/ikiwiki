@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 use Storable;
+use IkiWiki;
 
 package IkiWiki;
 

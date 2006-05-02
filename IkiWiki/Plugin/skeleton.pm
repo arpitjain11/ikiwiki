@@ -5,6 +5,7 @@ package IkiWiki::Plugin::skeleton;
 
 use warnings;
 use strict;
+use IkiWiki;
 
 sub import { #{{{
 	IkiWiki::register_plugin("preprocess", "skeleton", \&preprocess);

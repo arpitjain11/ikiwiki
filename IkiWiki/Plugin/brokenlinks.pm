@@ -4,6 +4,7 @@ package IkiWiki::Plugin::brokenlinks;
 
 use warnings;
 use strict;
+use IkiWiki;
 
 sub import { #{{{
 	IkiWiki::register_plugin("preprocess", "brokenlinks", \&preprocess);

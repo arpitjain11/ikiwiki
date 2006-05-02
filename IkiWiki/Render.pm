@@ -5,6 +5,7 @@ package IkiWiki;
 use warnings;
 use strict;
 use File::Spec;
+use IkiWiki;
 
 sub linkify ($$) { #{{{
 	my $content=shift;

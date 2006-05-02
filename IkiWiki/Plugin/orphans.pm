@@ -4,6 +4,7 @@ package IkiWiki::Plugin::orphans;
 
 use warnings;
 use strict;
+use IkiWiki;
 
 sub import { #{{{
 	IkiWiki::register_plugin("preprocess", "orphans", \&preprocess);

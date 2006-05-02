@@ -4,6 +4,7 @@ package IkiWiki::Plugin::pagecount;
 
 use warnings;
 use strict;
+use IkiWiki;
 
 sub import { #{{{
 	IkiWiki::register_plugin("preprocess", "pagecount", \&preprocess);

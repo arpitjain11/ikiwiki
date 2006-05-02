@@ -2,6 +2,7 @@
 
 use warnings;
 use strict;
+use IkiWiki;
 use IkiWiki::UserInfo;
 
 package IkiWiki;

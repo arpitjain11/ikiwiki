@@ -4,6 +4,7 @@ package IkiWiki::Plugin::inline;
 
 use warnings;
 use strict;
+use IkiWiki;
 
 sub import { #{{{
 	IkiWiki::register_plugin("preprocess", "inline", \&IkiWiki::preprocess_inline);
