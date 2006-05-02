@@ -12,7 +12,7 @@ sub page_locked ($$;$) { #{{{
 	my $nonfatal=shift;
 	
 	my $user=$session->param("name");
-	return if length $user && is_admin($user);
+	return if defined $user && is_admin($user);
 
 	foreach my $admin (@{$config{adminuser}}) {
 		my $locked_pages=userinfo_get($admin, "locked_pages");
