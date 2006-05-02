@@ -15,7 +15,7 @@ extra_build:
 	./ikiwiki doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --nosvn \
 		--exclude=/discussion --plugin=brokenlinks \
-		--plugin=pagecount
+		--plugin=pagecount --plugin=orphans
 	./mdwn2man doc/usage.mdwn > ikiwiki.man
 		
 extra_clean:

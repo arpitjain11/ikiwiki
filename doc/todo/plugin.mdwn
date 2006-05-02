@@ -1,22 +1,30 @@
 A plugin system should ideally support things like:
 
-* [[todo/lists]] of pages, of mising pages / broken links, of registered users, etc
+* [[todo/lists]] of pages, of mising pages / broken links (done), orphaned
+  pages (done), of registered users, etc
 * a [[todo/link_map]]
+* [[todo/sigs]] ?
 * [[pageindexes]]
-* Wiki stats, such as the total number of pages, total number of links, most linked to pages, etc, etc.
+* Wiki stats, such as the total number of pages (done), total number of links, most linked to pages, etc, etc.
 * wiki info page, giving the ikiwiki version etc
 * would it be useful to reimplement the hyperestradier search integration as a plugin?
 * Support [[RecentChanges]] as a regular page containing a plugin that updates each time there is a change, and statically builds the recent changes list. (Would this be too expensive/inflexible? There might be other ways to do it as a plugin, like making all links to RecentChanges link to the cgi and have the cgi render it on demand.)
+* Support for smileys or other symbols. I appreciate the support for check
+  marks, etc in other wikis.
+* For PlaceWiki I want to be able to do some custom plugins, including one
+  that links together subpages about the same place created by different
+  users. This seems to call for a plugin that applies to every page w/o any
+  specific marker being used, and pre-or-post-processes the full page
+  content. It also needs to update pages when related pages are added,
+  so it needs to register dependencies pre-emptively between pages,
+  or something. It's possible that this is a special case of backlinks and
+  is best implemented by making backlinks a plugin somehow. --[[Joey]]
 * etc
-* For another type of plugin, see [[todo/PluggableRenderers]]. 
+* For another type of plugin, see [[todo/PluggableRenderers]].
 
 Another, separate plugin system that already (mostly) exists in ikiwiki is
 the RCS backend, which allows writing modules to drive other RCS systems
 than subversion.
-
-## preprocessor plugins
-
-done
 
 ## case study: Moin Moin plugins
 
