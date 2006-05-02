@@ -72,8 +72,6 @@ sub getconfig () { #{{{
 			"diffurl=s" => \$config{diffurl},
 			"svnrepo" => \$config{svnrepo},
 			"svnpath" => \$config{svnpath},
-			"rcs=s" => \$config{rcs},
-			"no-rcs" => sub { $config{rcs}="" },
 			"adminemail=s" => \$config{adminemail},
 			"exclude=s@" => sub {
 				$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
