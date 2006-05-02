@@ -26,7 +26,8 @@ ikiwiki (1.1) UNRELEASED; urgency=low
   * Removed backlinks page, which it turns out nothing used.
   * Split off an IkiWiki.pm out of ikiwiki and have all the other modules use
     it, this will allow for adding a unit test suite.
-  * Add a unit test for globlist_match().
+  * Add unit tests for several core functions, including globlist_match,
+    dirname, basename, and bestlink.
   * Smart globlist merging.
   * Patch from Thomas Schwinge to switch from --svn to --rcs=svn, etc,
     to pave the way for adding other RCS support. This also changes the
@@ -34,7 +35,7 @@ ikiwiki (1.1) UNRELEASED; urgency=low
     rcs => "svn" or rcs => "".
   * Add a debian/NEWS file with upgrade notes.
   * Load whatever rcs module is specified, so new ones can be just dropped in
-    as plugins and work.
+    as plugins and work. (Well, in theory.)
   * Add some basic docs about writing RCS modules.
 
  -- Joey Hess <joeyh@debian.org>  Tue,  2 May 2006 14:13:59 -0400
