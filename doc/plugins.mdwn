@@ -9,7 +9,13 @@ Of these, [[inline]] is enabled by default.
 To enable other plugins, use the `--plugin` switch described in [[usage]], or the equivilant line in
 [[ikiwiki.setup]].
 
-## Third party plugins
+## Plugin directory
+
+Add your contributed plugins here.
+
+[[inline pages="plugins/* !plugins/write !*/Discussion" archive="yes" rootpage="plugins/contrib" show="30"]]
+
+## Installing third party plugins
 
 Plugins are perl modules and should be installed somewhere in the perl
 module search path. See the @INC list at the end of the output of `perl -V`
@@ -18,10 +24,3 @@ IkiWiki::Plugin namespace, so they go in a IkiWiki/Plugin subdirectory
 inside the perl search path. For example, if your perl looks in
 `/usr/local/lib/site_perl` for modules, you can locally install ikiwiki
 plugins to `/usr/local/lib/site_perl/IkiWiki/Plugin`
-
-
-## Plugin directory
-
-Add your contributed plugins here.
-
-[[inline pages="plugins/* !plugins/write !*/Discussion" archive="yes" rootpage="plugins/contrib" show="30"]]
