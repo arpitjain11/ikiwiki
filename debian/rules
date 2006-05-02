@@ -5,6 +5,7 @@ build-stamp:
 	dh_testdir
 	perl Makefile.PL
 	$(MAKE)
+	$(MAKE) test
 	touch build-stamp
 
 clean:
