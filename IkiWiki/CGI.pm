@@ -360,13 +360,6 @@ sub cgi_editpage ($$) { #{{{
 	if (! $form->submitted || $form->submitted eq "Preview" || 
 	    ! $form->validate) {
 		if ($form->field("do") eq "create") {
-			if (exists $pagesources{lc($page)}) {
-				# hmm, someone else made the page in the
-				# meantime?
-				print $q->redirect("$config{url}/".htmlpage($page));
-				return;
-			}
-			
 			my @page_locs;
 			my $best_loc;
 			my ($from)=$form->param('from')=~/$config{wiki_file_regexp}/;
@@ -395,13 +388,20 @@ sub cgi_editpage ($$) { #{{{
 					$dir=~s![^/]+/+$!!;
 					push @page_locs, $dir.$page;
 				}
-
-				@page_locs = grep {
-					! exists $pagesources{lc($_)} &&
-					! page_locked($_, $session, 1)
-				} @page_locs;
 			}
 
+			@page_locs = grep {
+				! exists $pagesources{lc($_)} &&
+				! page_locked($_, $session, 1)
+			} @page_locs;
+			
+			if (! @page_locs) {
+				# hmm, someone else made the page in the
+				# meantime?
+				print $q->redirect("$config{url}/".htmlpage($page));
+				return;
+			}
+				
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
 				options => \@page_locs, value => $best_loc);
