@@ -44,7 +44,7 @@ return the error message as the output of the plugin.
 Note that if [[HTMLSanitization]] is enabled, html in 
 [[PreProcessorDirective]] output is sanitised, which may limit what your
 plugin can do. Also, the rest of the page content is not in html format at
-preprocessor time.
+preprocessor time. Text output by a preprocessor directive will be passed through markdown along with the rest of the page.
 
 ## Wiki configuration
 
