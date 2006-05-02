@@ -9,4 +9,4 @@ design goals for ikiwiki: keeping as much markup as possible out of the
 wiki and not adding nonstandard markup. And it's not significantly hard to
 type "--\[[Joey]]", and as to the date, we do have page history.
 
-Perhaps just let it be a [[plugin]].
+I'm also unsure how to possibly implement this. Seems ikiwiki would need to expand the rune to the user's name when a page is saved, but that leaves out svn commits.
