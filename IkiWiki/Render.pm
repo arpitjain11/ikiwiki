@@ -158,9 +158,30 @@ sub add_depends ($$) { #{{{
 		$depends{$page}=$globlist;
 	}
 	else {
-		$depends{$page}.=" ".$globlist;
+		$depends{$page}=globlist_merge($depends{$page}, $globlist);
 	}
 } # }}}
+
+sub globlist_merge ($$) { #{{{
+	my $a=shift;
+	my $b=shift;
+
+	my $ret="";
+	# Only add negated globs if they are not matched by the other globlist.
+	foreach my $i ((map { [ $a, $_ ] } split(" ", $b)), 
+	               (map { [ $b, $_ ] } split(" ", $a))) {
+		if ($i->[1]=~/^!(.*)/) {
+			if (! globlist_match($1, $i->[0])) {
+				$ret.=" ".$i->[1];
+			}
+		}
+		else {
+			$ret.=" ".$i->[1];
+		}
+	}
+	
+	return $ret;
+} #}}}
 
 sub genpage ($$$) { #{{{
 	my $content=shift;

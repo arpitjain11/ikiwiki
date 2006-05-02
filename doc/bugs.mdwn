@@ -33,10 +33,3 @@
 * if a page containing an rss feed happens to show up in an rss feed,
   the preprocessor directives won't be expanded (good) but are left in
   raw rather than removed (bad).
-* add\_depends() needs work. If there are two preprocessor directives on a page,   and one calls add\_depends("foo"), while the other calls add\_depends("* !foo"), the second one wins, page foo will not be matched by the appended globlist.
-
-  What it needs to do is be smarter about merging depends, so if "foo" is added to "!foo", it should yeild "foo"; adding "!foo" to "foo" should again yeild "foo". That's easy, what's hard is when there are globs involved and potentially partially overlapping included and excluded subsets..
-
-  A basic heuristic might be, when merging two globlists, if either contains negated expressions, remove those expressions. This is not ideal, it does avoid it skipping pages that should be in the merged list though.
-
-  A slightly smarter heuristic: When merging two globlists, find negated expressions, de-negate them, and test them to see if they match anything in the other globlist. If so, remove the negated expression, if not, keep. This would probably be good enough. 
