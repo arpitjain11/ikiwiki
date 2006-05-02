@@ -90,17 +90,18 @@ These options configure the wiki.
   Enable email notification of commits. This should be used when running
   ikiwiki as a [[Subversion]] [[post-commit]] hook.
 
-* --svn, --nosvn
+* --rcs=svn, --no-rcs
 
-  Enable or disable use of [[subversion]]. If subversion is enabled, the
-  `source` directory is assumed to be a working copy, and is automatically
-  updated before building the wiki. 
+  Enable or disable use of a revision control system.
 
-  In [[CGI]] mode, with subversion enabled pages edited via the web will be
-  committed to subversion. Also, the [[RecentChanges]] link will be placed
+  If you use svn ([[Subversion]]), the `source` directory is assumed to be
+  a working copy, and is automatically updated before building the wiki.
+
+  In [[CGI]] mode, with a revision control system enabled pages edited via
+  the web will be committed. Also, the [[RecentChanges]] link will be placed
   on pages.
 
-  Subversion is enabled by default.
+  svn is enabled by default.
 
 * --svnrepo /svn/wiki
 

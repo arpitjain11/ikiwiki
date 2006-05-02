@@ -13,7 +13,7 @@ pure_install:: extra_install
 
 extra_build:
 	./ikiwiki doc html --templatedir=templates --underlaydir=basewiki \
-		--wikiname="ikiwiki" --verbose --nosvn \
+		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --plugin=brokenlinks \
 		--plugin=pagecount --plugin=orphans
 	./mdwn2man doc/usage.mdwn > ikiwiki.man

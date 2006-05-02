@@ -20,8 +20,8 @@ use IkiWiki::Setup::Standard {
 	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
 	#templatedir => "/usr/share/ikiwiki/templates",
 	
-	# Whether to integrate with svn.
-	svn => 1,
+	#rcs => "", # don't use svn
+	rcs => "svn", # use svn (the default)
 	svnrepo => "/svn/wiki",
 	svnpath => "trunk",
 

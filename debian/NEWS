@@ -1,0 +1,12 @@
+ikiwiki (1.1) unstable; urgency=low
+
+  The --svn and --no-svn switches are removed, instead you should use
+   --rcs=svn or --no-rcs. ikiwiki setup files that set svn => 1 should
+  be changed to set rcs => "svn"; if your setup file sets svn => 0
+  then change it to use rcs => "" to disable svn.
+
+  You will need to rebuild your wiki when upgrading to this version.
+  If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+  automatically.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  2 May 2006 14:13:59 -0400

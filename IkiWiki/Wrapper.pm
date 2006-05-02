@@ -36,7 +36,7 @@ sub gen_wrapper () { #{{{
 		asprintf(&newenviron[i++], "%s=%s", "$var", s);
 EOF
 	}
-	if ($config{svn} && $config{notify}) {
+	if ($config{rcs} eq "svn" && $config{notify}) {
 		# Support running directly as hooks/post-commit by passing
 		# $2 in REV in the environment.
 		$envsave.=<<"EOF"

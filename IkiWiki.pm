@@ -23,13 +23,14 @@ sub checkconfig () { #{{{
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
 		unless exists $config{wikistatedir};
 	
-	if ($config{svn}) {
-		require IkiWiki::Rcs::SVN;
-		$config{rcs}=1;
+	if ($config{rcs}) {
+		eval qq{require IkiWiki::Rcs::$config{rcs}};
+		if ($@) {
+			error("Failed to load RCS module IkiWiki::Rcs::$config{rcs}: $@");
+		}
 	}
 	else {
 		require IkiWiki::Rcs::Stub;
-		$config{rcs}=0;
 	}
 
 	foreach my $plugin (@{$config{plugin}}) {

@@ -22,7 +22,7 @@ sub getconfig () { #{{{
 			wikiname => "wiki",
 			default_pageext => ".mdwn",
 			cgi => 0,
-			svn => 1,
+			rcs => 'svn',
 			notify => 0,
 			url => '',
 			cgiurl => '',
@@ -58,7 +58,8 @@ sub getconfig () { #{{{
 			"refresh!" => \$config{refresh},
 			"getctime" => \$config{getctime},
 			"wrappermode=i" => \$config{wrappermode},
-			"svn!" => \$config{svn},
+			"rcs=s" => \$config{rcs},
+			"no-rcs" => sub { $config{rcs}="" },
 			"anonok!" => \$config{anonok},
 			"hyperestraier" => \$config{hyperestraier},
 			"rss!" => \$config{rss},
@@ -71,6 +72,8 @@ sub getconfig () { #{{{
 			"diffurl=s" => \$config{diffurl},
 			"svnrepo" => \$config{svnrepo},
 			"svnpath" => \$config{svnpath},
+			"rcs=s" => \$config{rcs},
+			"no-rcs" => sub { $config{rcs}="" },
 			"adminemail=s" => \$config{adminemail},
 			"exclude=s@" => sub {
 				$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
