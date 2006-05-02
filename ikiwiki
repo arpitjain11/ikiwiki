@@ -135,10 +135,10 @@ sub checkconfig () { #{{{
 	}
 
 	foreach my $plugin (@{$config{plugin}}) {
-		$plugin="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
-		eval qq{use $plugin};
+		my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
+		eval qq{use $mod};
 		if ($@) {
-			error("Failed to load plugin $plugin: $@");
+			error("Failed to load plugin $mod: $@");
 		}
 	}
 } #}}}
