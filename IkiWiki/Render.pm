@@ -122,18 +122,10 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
-sub rsspage ($) { #{{{
-	my $page=shift;
-
-	return $page.".rss";
-} #}}}
-
 sub preprocess ($$) { #{{{
 	my $page=shift;
 	my $content=shift;
 
-	my %commands=(inline => \&preprocess_inline);
-	
 	my $handle=sub {
 		my $escape=shift;
 		my $command=shift;
@@ -141,12 +133,12 @@ sub preprocess ($$) { #{{{
 		if (length $escape) {
 			return "[[$command $params]]";
 		}
-		elsif (exists $commands{$command}) {
+		elsif (exists $plugins{preprocess}{$command}) {
 			my %params;
 			while ($params =~ /(\w+)=\"([^"]+)"(\s+|$)/g) {
 				$params{$1}=$2;
 			}
-			return $commands{$command}->(page => $page, %params);
+			return $plugins{preprocess}{$command}->(page => $page, %params);
 		}
 		else {
 			return "[[bad directive $command]]";
@@ -157,102 +149,17 @@ sub preprocess ($$) { #{{{
 	return $content;
 } #}}}
 
-sub blog_list ($$) { #{{{
-	my $globlist=shift;
-	my $maxitems=shift;
-	
-	my @list;
-	foreach my $page (keys %pagesources) {
-		if (globlist_match($page, $globlist)) {
-			push @list, $page;
-		}
-	}
-
-	@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
-	return @list if ! $maxitems || @list <= $maxitems;
-	return @list[0..$maxitems - 1];
-} #}}}
-
-sub get_inline_content ($$) { #{{{
-	my $parentpage=shift;
+sub add_depends ($$) { #{{{
 	my $page=shift;
+	my $globlist=shift;
 	
-	my $file=$pagesources{$page};
-	my $type=pagetype($file);
-	if ($type ne 'unknown') {
-		return htmlize($type, linkify(readfile(srcfile($file)), $parentpage));
+	if (! exists $depends{$page}) {
+		$depends{$page}=$globlist;
 	}
 	else {
-		return "";
+		$depends{$page}.=" ".$globlist;
 	}
-} #}}}
-
-sub preprocess_inline ($@) { #{{{
-	my %params=@_;
-	
-	if (! exists $params{pages}) {
-		return "";
-	}
-	if (! exists $params{archive}) {
-		$params{archive}="no";
-	}
-	if (! exists $params{show} && $params{archive} eq "no") {
-		$params{show}=10;
-	}
-	if (! exists $depends{$params{page}}) {
-		$depends{$params{page}}=$params{pages};
-	}
-	else {
-		$depends{$params{page}}.=" ".$params{pages};
-	}
-
-	my $ret="";
-	
-	if (exists $params{rootpage}) {
-		# Add a blog post form, with a rss link button.
-		my $formtemplate=HTML::Template->new(blind_cache => 1,
-			filename => "$config{templatedir}/blogpost.tmpl");
-		$formtemplate->param(cgiurl => $config{cgiurl});
-		$formtemplate->param(rootpage => $params{rootpage});
-		if ($config{rss}) {
-			$formtemplate->param(rssurl => rsspage(basename($params{page})));
-		}
-		$ret.=$formtemplate->output;
-	}
-	elsif ($config{rss}) {
-		# Add a rss link button.
-		my $linktemplate=HTML::Template->new(blind_cache => 1,
-			filename => "$config{templatedir}/rsslink.tmpl");
-		$linktemplate->param(rssurl => rsspage(basename($params{page})));
-		$ret.=$linktemplate->output;
-	}
-	
-	my $template=HTML::Template->new(blind_cache => 1,
-		filename => (($params{archive} eq "no") 
-				? "$config{templatedir}/inlinepage.tmpl"
-				: "$config{templatedir}/inlinepagetitle.tmpl"));
-	
-	my @pages;
-	foreach my $page (blog_list($params{pages}, $params{show})) {
-		next if $page eq $params{page};
-		push @pages, $page;
-		$template->param(pagelink => htmllink($params{page}, $page));
-		$template->param(content => get_inline_content($params{page}, $page))
-			if $params{archive} eq "no";
-		$template->param(ctime => scalar(gmtime($pagectime{$page})));
-		$ret.=$template->output;
-	}
-	
-	# TODO: should really add this to renderedfiles and call
-	# check_overwrite, but currently renderedfiles
-	# only supports listing one file per page.
-	if ($config{rss}) {
-		writefile(rsspage($params{page}), $config{destdir},
-			genrss($params{page}, @pages));
-	}
-	
-	return $ret;
-} #}}}
+} # }}}
 
 sub genpage ($$$) { #{{{
 	my $content=shift;
@@ -290,53 +197,6 @@ sub genpage ($$$) { #{{{
 		discussionlink => htmllink($page, "Discussion", 1, 1),
 		mtime => scalar(gmtime($mtime)),
 		styleurl => styleurl($page),
-	);
-	
-	return $template->output;
-} #}}}
-
-sub date_822 ($) { #{{{
-	my $time=shift;
-
-	eval q{use POSIX};
-	return POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
-} #}}}
-
-sub absolute_urls ($$) { #{{{
-	# sucky sub because rss sucks
-	my $content=shift;
-	my $url=shift;
-
-	$url=~s/[^\/]+$//;
-	
-	$content=~s/<a\s+href="(?!http:\/\/)([^"]+)"/<a href="$url$1"/ig;
-	$content=~s/<img\s+src="(?!http:\/\/)([^"]+)"/<img src="$url$1"/ig;
-	return $content;
-} #}}}
-
-sub genrss ($@) { #{{{
-	my $page=shift;
-	my @pages=@_;
-	
-	my $url="$config{url}/".htmlpage($page);
-	
-	my $template=HTML::Template->new(blind_cache => 1,
-		filename => "$config{templatedir}/rsspage.tmpl");
-	
-	my @items;
-	foreach my $p (@pages) {
-		push @items, {
-			itemtitle => pagetitle(basename($p)),
-			itemurl => "$config{url}/$renderedfiles{$p}",
-			itempubdate => date_822($pagectime{$p}),
-			itemcontent => absolute_urls(get_inline_content($page, $p), $url),
-		} if exists $renderedfiles{$p};
-	}
-
-	$template->param(
-		title => $config{wikiname},
-		pageurl => $url,
-		items => \@items,
 	);
 	
 	return $template->output;
@@ -400,6 +260,7 @@ sub render ($) { #{{{
 	else {
 		my $content=readfile($srcfile, 1);
 		$links{$file}=[];
+		delete $depends{$file};
 		check_overwrite("$config{destdir}/$file", $file);
 		writefile($file, $config{destdir}, $content, 1);
 		$oldpagemtime{$file}=time;
@@ -588,6 +449,7 @@ FILE:		foreach my $file (@files) {
 			my $p=pagename($f);
 			if (exists $depends{$p}) {
 				foreach my $file (keys %rendered, @del) {
+					next if $f eq $file;
 					my $page=pagename($file);
 					if (globlist_match($page, $depends{$p})) {
 						debug("rendering $f, which depends on $page");
@@ -606,8 +468,8 @@ FILE:		foreach my $file (@files) {
 			if (exists $links{$page}) {
 				foreach my $link (map { bestlink($page, $_) } @{$links{$page}}) {
 					if (length $link &&
-					    ! exists $oldlinks{$page} ||
-					    ! grep { $_ eq $link } @{$oldlinks{$page}}) {
+					    (! exists $oldlinks{$page} ||
+					     ! grep { bestlink($page, $_) eq $link } @{$oldlinks{$page}})) {
 						$linkchanged{$link}=1;
 					}
 				}
@@ -615,8 +477,8 @@ FILE:		foreach my $file (@files) {
 			if (exists $oldlinks{$page}) {
 				foreach my $link (map { bestlink($page, $_) } @{$oldlinks{$page}}) {
 					if (length $link &&
-					    ! exists $links{$page} ||
-					    ! grep { $_ eq $link } @{$links{$page}}) {
+					    (! exists $links{$page} || 
+					     ! grep { bestlink($page, $_) eq $link } @{$links{$page}})) {
 						$linkchanged{$link}=1;
 					}
 				}

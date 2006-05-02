@@ -1,0 +1,27 @@
+Plugins can be used to add additional features to ikiwiki. It's possible to
+[[write]] your own plugins, or you can install and use plugins contributed by
+others. 
+
+The ikiiki package includes some standard plugins that are installed and
+by default. These include [[inline]], [[pagecount]], and [[brokenlinks]].
+Of these, [[inline]] is enabled by default.
+
+## Third party plugins
+
+Plugins are perl modules and should be installed somewhere in the perl
+module search path. See the @INC list at the end of the output of `perl -V`
+for a list of the directories in that path. All plugins are in the
+IkiWiki::Plugin namespace, so they go in a IkiWiki/Plugin subdirectory
+inside the perl search path. For example, if your perl looks in
+`/usr/local/lib/site_perl` for modules, you can locally install ikiwiki
+plugins to `/usr/local/lib/site_perl/IkiWiki/Plugin`
+
+Once a plugin is installed, you need to configure ikiwiki to load it using
+the `--plugin` switch described in [[usage]], or the equivilant line in
+[[ikiwiki.setup]].
+
+## Plugin directory
+
+Add your contributed plugins using this form:
+
+[[inline pages="plugins/* !plugins/write !*/Discussion" archive="yes" rootpage="plugins/contrib" show="30"]]

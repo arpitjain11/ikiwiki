@@ -2,10 +2,11 @@
   adding/removing a page. For example, if Foo/Bar links to "Baz", which is
   Foo/Baz, and Foo/Bar/Baz gets added, it will update the links in Foo/Bar
   to point to it, but will forget to update the linkbacks in Foo/Baz.
-  And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
+  
+* And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
   back to Foo/Baz.
 
-    -- is this still true?
+    -- is this still true? (Yes (as of 1.0))
 
 * If I try to do a web commit, to a svn+ssh repo, it fails with
   "Host key verification failed."
@@ -31,4 +32,4 @@
   line if --cgi is set, even if it's not yet running as a cgi
 * if a page containing an rss feed happens to show up in an rss feed,
   the preprocessor directives won't be expanded (good) but are left in
-  raw rather than removed (bad)
+  raw rather than removed (bad).

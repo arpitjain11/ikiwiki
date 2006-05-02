@@ -11,8 +11,17 @@ ikiwiki (1.1) UNRELEASED; urgency=low
   * Which means that more than one blog is now supported to appear on a
     single page. (With some limitations, like only the last one getting an
     rss file.)
+  * Added plugin system, currently only supporting for PreProcessorDirectives.
+  * Added a pagecount plugin, enabled by default.
+  * Support PreProcessorDirectives with no parameters, ie "[[pagecount ]]".
+  * Fixed/optimised backlinks code, to avoid rebuilding pages to update
+    backlinks when the backlinks hadn't really changed.
+  * Moved inline page support, rss generation etc into the inline plugin,
+    enabled by default.
+  * Added brokenlinks plugin, not enabled by default, but rather handy.
+  * Fix several broken links in the doc wiki.
 
- -- Joey Hess <joeyh@debian.org>  Mon,  1 May 2006 18:21:16 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon,  1 May 2006 21:01:12 -0400
 
 ikiwiki (1.0) unstable; urgency=low
 

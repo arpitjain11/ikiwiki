@@ -1,0 +1,74 @@
+ikiwiki [[plugins]] are written in perl. Each plugin is a perl module, in
+the `IkiWiki::Plugin` namespace. The name of the plugin is typically in
+lowercase, such as `IkiWiki::Plugin::inline`. Ikiwiki includes a
+`IkiWiki::Plugin::skeleton` that can be fleshed out to make a useful
+plugin. `IkiWiki::Plugin::pagecount` is another simple example.
+
+## Note
+
+One thing to keep in mind when writing a plugin is that ikiwiki is a wiki
+*compiler*. So plugins influence pages when they are built, not when they
+are loaded. A plugin that inserts the current time into a page, for
+example, will insert the build time. Also, as a compiler, ikiwiki avoids
+rebuilding pages unless they have changed, so a plugin that prints some
+random or changing thing on a page will generate a static page that won't
+change until ikiwiki rebuilds the page for some other reason, like the page
+being edited.
+
+## Registering plugins
+
+Plugins should, when imported, call IkiWiki::register_plugin to hook into
+ikiwiki. The function takes four parameters:
+
+1. A method type. Use "preprocess" to register a [[PreProcessorDirective]]
+2. A command name. This is the bit that will appear inside brackets in a
+   page.
+3. A reference to a subroutine that is run when the plugin is used.
+
+## Writing a [[PreProcessorDirective]]
+
+For preprocessor commands, the subroutine is passed named parameters. A
+"page" parameter gives the name of the page that embedded the preprocessor
+command. All parameters included in the preprocessor command are included
+as named parameters as well. Whatever the subroutine returns goes onto the
+page in place of the command.
+
+## Error handing in plugins
+
+While a plugin can call ikiwiki's error routine for a fatal error, for
+errors that aren't intended to halt the entire wiki build, including bad
+parameters passed to a [[PreProcessorDirective]], etc, it's better to just
+return the error message as the output of the plugin.
+
+## Html issues
+
+Note that if [[HTMLSanitization]] is enabled, html in 
+[[PreProcessorDirective]] output is sanitised, which may limit what your
+plugin can do. Also, the rest of the page content is not in html format at
+preprocessor time.
+
+## Wiki configuration
+
+A plugin can access the wiki's configuration via the `%IkiWiki::config` hash.
+The best way to understand the contents of the hash is to look at
+[[ikiwiki.setup]], which sets the hash content to configure the wiki.
+
+## Wiki data
+
+If your plugin needs to access data about other pages in the wiki. It can
+use the following hashes, using a page name as the key:
+
+* `%IkiWiki::links` lists the names of each page
+  that is linked to from that page in an array reference.
+* `%IkiWiki::pagemtime` contains the last modification time of each page
+* `%IkiWiki::pagectime` contains the creation time of each page`
+* `%IkiWiki::renderedfiles` contains the name of the file rendered by a
+  page
+* `%IkiWiki::pagesources` contains the name of the source file for a page.
+* `%IkiWiki::depends` contains a [[GlobList]] that is used to specify other
+  pages that a page depends on. If one of its dependencies is updated, the
+  page will also get rebuilt. 
+  
+  Many plugins will need to add dependencies to this hash; the best way to do
+  it is by using the IkiWiki::add_depends function, which takes as its
+  parameters the page name and a [[GlobList]] of dependencies to add.

@@ -9,7 +9,7 @@ use HTML::Template;
 use lib '.'; # For use without installation, removed by Makefile.
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
-            %renderedfiles %pagesources %depends};
+            %renderedfiles %pagesources %depends %plugins};
 
 sub usage () { #{{{
 	die "usage: ikiwiki [options] source dest\n";
@@ -20,7 +20,7 @@ sub getconfig () { #{{{
 		%config=(
 			wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$|\.rss$)},
 			wiki_link_regexp => qr/\[\[(?:([^\s\]\|]+)\|)?([^\s\]]+)\]\]/,
-			wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]+)\]\]/,
+			wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]*)\]\]/,
 			wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 			verbose => 0,
 			wikiname => "wiki",
@@ -50,6 +50,7 @@ sub getconfig () { #{{{
 			setup => undef,
 			adminuser => undef,
 			adminemail => undef,
+			plugin => [qw{inline}],
 		);
 
 		eval q{use Getopt::Long};
@@ -90,6 +91,9 @@ sub getconfig () { #{{{
 			"wrapper:s" => sub {
 				$config{wrapper}=$_[1] ? $_[1] : "ikiwiki-wrap"
 			},
+			"plugin=s@" => sub {
+				push @{$config{plugin}}, $_[1];
+			}
 		) || usage();
 
 		if (! $config{setup}) {
@@ -128,6 +132,14 @@ sub checkconfig () { #{{{
 	else {
 		require IkiWiki::Rcs::Stub;
 		$config{rcs}=0;
+	}
+
+	foreach my $plugin (@{$config{plugin}}) {
+		$plugin="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
+		eval qq{use $plugin};
+		if ($@) {
+			error("Failed to load plugin $plugin: $@");
+		}
 	}
 } #}}}
 
@@ -475,6 +487,14 @@ sub globlist_match ($$) { #{{{
 	
 	return 0;
 } #}}}
+
+sub register_plugin ($$$) { # {{{
+	my $type=shift;
+	my $command=shift;
+	my $function=shift;
+	
+	$plugins{$type}{$command}=$function;
+} # }}}
 
 sub main () { #{{{
 	getconfig();

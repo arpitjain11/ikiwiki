@@ -6,6 +6,7 @@ contain spaces and parameters. The general form is:
 This gets expanded before the rest of the page is processed, and can be used
 to transform the page in various ways.
 
-Currently, these preprocessor directives are available:
+Note that if a preprocessor directive has no parameters, a space still must
+be put after its name, to avoid confusion with a [[WikiLink]]. For example:
 
-* "inline" to make a [[blog]]
+\\[[pagecount ]]

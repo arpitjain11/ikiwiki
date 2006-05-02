@@ -52,4 +52,6 @@ use IkiWiki::Setup::Standard {
 	#hyperestraier => 1,
 	# Sanitize html?
 	sanitize => 1,
+	# To change the enabled plugins, edit this list
+	#plugins => [qw{pagecount inline brokenlinks}],
 }

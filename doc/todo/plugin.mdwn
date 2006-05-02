@@ -1,5 +1,3 @@
-For one type of plugin, see [[todo/PluggableRenderers]]. 
-
 A plugin system should ideally support things like:
 
 * [[todo/lists]] of pages, of mising pages / broken links, of registered users, etc
@@ -11,22 +9,15 @@ A plugin system should ideally support things like:
 * would it be useful to reimplement the hyperestradier search integration as a plugin?
 * Support [[RecentChanges]] as a regular page containing a plugin that updates each time there is a change, and statically builds the recent changes list. (Would this be too expensive/inflexible? There might be other ways to do it as a plugin, like making all links to RecentChanges link to the cgi and have the cgi render it on demand.)
 * etc
+* For another type of plugin, see [[todo/PluggableRenderers]]. 
 
-Another, separate plugin system that already (mostly) exists in ikiwiki is the RCS backend, which allows writing modules to drive other RCS systems than subversion.
+Another, separate plugin system that already (mostly) exists in ikiwiki is
+the RCS backend, which allows writing modules to drive other RCS systems
+than subversion.
 
 ## preprocessor plugins
 
-Considering ikiwiki plugins, one idea I have is to make the [[PreProcessorDirective]]s be a plugin. A setting in the config file would enable various plusins, which are perl modules, that each provide one or more preprocessor directives. 
-
-Since preprocessing happens before htmlization but after a page is loaded and linkified, it should be possible to use it to create something like a link map or lists, or a page index. Page inlining and rss generation is already done via preprocessor directives and seems a natureal as a plugin too. 
-
-Note that things like a link map or a broken link list page would need to
-be updated whenever a set (or all) pages change; the %depends hash
-already allows for pages to register this, although there could be some
-strange behavior if mixing multiple directives some of which exclude pages
-that others might want to include.
-
-I need to look at the full range of things that other wikis use their plugin systems for, but preprocessor directives as plugins certianly seems useful, even if it's  not a complete solution.
+done
 
 ## case study: Moin Moin plugins
 

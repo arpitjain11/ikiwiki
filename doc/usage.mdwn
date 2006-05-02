@@ -41,7 +41,7 @@ These options control the mode that ikiwiki is operating in.
 
 * --wrapper [file]
 
-  Generate a [[wrapper]] binary that is hardcoded to do action specified by
+  Generate a wrapper binary that is hardcoded to do action specified by
   the other options, using the specified input files and `destination`
   directory. The filename to use for the wrapper is optional.
 
@@ -69,13 +69,6 @@ These options configure the wiki.
 * --wikiname
 
   The name of the wiki, default is "wiki".
-
-* --fixctime
-
-  Pull last changed time for all pages out of the revision control system.
-  This rarely used option provides a way to get the real creation times of
-  items in weblogs, for example when building a wiki from a new subversion
-  checkout. It is unoptimised and quite slow.
 
 * --templatedir
 
@@ -129,7 +122,7 @@ These options configure the wiki.
 * --rss, --norss
 
   If rss is set, ikiwiki will generate rss feeds for pages that inline
-  a blog.
+  a [[blog]].
 
 * --url http://url/
 
@@ -137,7 +130,8 @@ These options configure the wiki.
 
 * --cgiurl http://url/ikiwiki.cgi
 
-  Specifies the url to the ikiwiki [[CGI]] script [[wrapper]]. Required when building the wiki for links to the cgi script to be generated.
+  Specifies the url to the ikiwiki [[CGI]] script wrapper. Required when
+  building the wiki for links to the cgi script to be generated.
 
 * --historyurl http://url/trunk/\[[file]]?root=wiki
 
@@ -172,6 +166,11 @@ These options configure the wiki.
   Enable [[HtmlSanitization]] of wiki content. On by default, disable with
   --no-sanitize.
 
+* --plugin name
+
+  Enables the use of the specified plugin in the wiki. See [[plugins]] for
+  details. Note that plugin names are case sensative.
+
 * --hyperestraier
 
   Enables use of the [[HyperEstraier]] search engine for full test page
@@ -179,7 +178,14 @@ These options configure the wiki.
 
 * --verbose
 
-  Be vebose about what it's doing.
+  Be vebose about what is being done.
+
+* --fixctime
+
+  Pull last changed time for all pages out of the revision control system.
+  This rarely used option provides a way to get the real creation times of
+  items in weblogs, for example when building a wiki from a new subversion
+  checkout. It is unoptimised and quite slow.
 
 # AUTHOR
 
