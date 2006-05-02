@@ -27,11 +27,10 @@ ikiwiki. The function takes four parameters:
 
 ## Writing a [[PreProcessorDirective]]
 
-For preprocessor commands, the subroutine is passed named parameters. A
-"page" parameter gives the name of the page that embedded the preprocessor
-command. All parameters included in the preprocessor command are included
+For preprocessor directives, the subroutine is passed named parameters. A
+"page" parameter gives the name of the page that embedded the preprocessor directive. All parameters included in the directive are included
 as named parameters as well. Whatever the subroutine returns goes onto the
-page in place of the command.
+page in place of the directive.
 
 ## Error handing in plugins
 
