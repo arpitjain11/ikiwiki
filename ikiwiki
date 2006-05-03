@@ -34,7 +34,6 @@ sub getconfig () { #{{{
 			rebuild => 0,
 			refresh => 0,
 			getctime => 0,
-			hyperestraier => 0,
 			wrapper => undef,
 			wrappermode => undef,
 			svnrepo => undef,
@@ -47,6 +46,7 @@ sub getconfig () { #{{{
 			adminuser => undef,
 			adminemail => undef,
 			plugin => [qw{inline}],
+			headercontent => '',
 		);
 
 		eval q{use Getopt::Long};
@@ -61,7 +61,6 @@ sub getconfig () { #{{{
 			"rcs=s" => \$config{rcs},
 			"no-rcs" => sub { $config{rcs}="" },
 			"anonok!" => \$config{anonok},
-			"hyperestraier" => \$config{hyperestraier},
 			"rss!" => \$config{rss},
 			"cgi!" => \$config{cgi},
 			"notify!" => \$config{notify},
@@ -104,6 +103,9 @@ sub getconfig () { #{{{
 		# wrapper passes a full config structure in the environment
 		# variable
 		eval possibly_foolish_untaint($ENV{WRAPPED_OPTIONS});
+		if ($@) {
+			error("WRAPPED_OPTIONS: $@");
+		}
 		checkconfig();
 	}
 } #}}}

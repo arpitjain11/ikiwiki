@@ -5,6 +5,10 @@ ikiwiki (1.1) unstable; urgency=low
   be changed to set rcs => "svn"; if your setup file sets svn => 0
   then change it to use rcs => "" to disable svn.
 
+  The --hyperestraier switch is gone too. To enable searching, turn on the
+  search plugin, by passing --plugin=search or through the plugin setting in
+  the config file.
+
   You will need to rebuild your wiki when upgrading to this version.
   If you listed your wiki in /etc/ikiwiki/wikilist this will be done
   automatically.

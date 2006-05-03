@@ -15,15 +15,7 @@
 </TMPL_LOOP>
 <TMPL_VAR TITLE>
 </h1>
-<TMPL_IF NAME="HYPERESTRAIERURL">
-<form method="get" action="<TMPL_VAR HYPERESTRAIERURL>" id="searchform">
-<div>
-<input type="text" name="phrase" value="" size="16" />
-<input type="hidden" name="enc" value="UTF-8" />
-<input type="hidden" name="do" value="hyperestraier" />
-</div>
-</form>
-</TMPL_IF>
+<TMPL_VAR HEADERCONTENT>
 </div>
 
 <div id="actions">

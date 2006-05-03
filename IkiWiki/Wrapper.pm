@@ -51,6 +51,7 @@ EOF
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);
 	$configstring=~s/\\/\\\\/g;
 	$configstring=~s/"/\\"/g;
+	$configstring=~s/\n/\\\n/g;
 	
 	open(OUT, ">$wrapper.c") || error("failed to write $wrapper.c: $!");;
 	print OUT <<"EOF";

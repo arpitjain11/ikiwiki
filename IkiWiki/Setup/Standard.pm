@@ -21,15 +21,20 @@ sub setup_standard {
 
 	if (! $config{refresh}) {
 		debug("generating wrappers..");
+		my @wrappers=@{$setup{wrappers}};
+		delete $setup{wrappers};
 		my %startconfig=(%config);
-		foreach my $wrapper (@{$setup{wrappers}}) {
+		foreach my $wrapper (@wrappers) {
 			%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
 			checkconfig();
 			gen_wrapper();
 		}
 		%config=(%startconfig);
-		delete $config{wrappers};
 	}
+	else {
+		delete $setup{wrappers};
+	}
+	
 	foreach my $c (keys %setup) {
 		if (defined $setup{$c}) {
 			if (! ref $setup{$c}) {

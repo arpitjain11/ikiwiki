@@ -11,7 +11,7 @@ ikiwiki (1.1) UNRELEASED; urgency=low
   * Which means that more than one blog is now supported to appear on a
     single page. (With some limitations, like only the last one getting an
     rss file.)
-  * Added plugin system, currently only supporting for PreProcessorDirectives.
+  * Added a plugin system.
   * Added a pagecount plugin, enabled by default.
   * Support PreProcessorDirectives with no parameters, ie "[[pagecount ]]".
   * Fixed/optimised backlinks code, to avoid rebuilding pages to update
@@ -37,6 +37,8 @@ ikiwiki (1.1) UNRELEASED; urgency=low
   * Load whatever rcs module is specified, so new ones can be just dropped in
     as plugins and work. (Well, in theory.)
   * Add some basic docs about writing RCS modules.
+  * Broke search capability out into a plugin, removed the --hyperestraier
+    switch.
 
  -- Joey Hess <joeyh@debian.org>  Tue,  2 May 2006 14:13:59 -0400
 

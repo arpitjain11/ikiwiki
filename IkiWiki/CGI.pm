@@ -484,26 +484,21 @@ sub cgi_editpage ($$) { #{{{
 	}
 } #}}}
 
-sub cgi_hyperestraier () { #{{{
-	# only works for GET requests
-	chdir("$config{wikistatedir}/hyperestraier") || error("chdir: $!");
-	exec("./".basename($config{cgiurl})) || error("estseek.cgi failed");
-} #}}}
-
 sub cgi () { #{{{
 	eval q{use CGI};
 	eval q{use CGI::Session};
 	
 	my $q=CGI->new;
 	
+	if (exists $hooks{cgi}) {
+		foreach my $id (keys %{$hooks{cgi}}) {
+			$hooks{cgi}{$id}{call}->($q);
+		}
+	}
+	
 	my $do=$q->param('do');
 	if (! defined $do || ! length $do) {
-		if (defined $q->param('phrase')) {
-			cgi_hyperestraier();
-		}
-		else {
-			error("\"do\" parameter missing");
-		}
+		error("\"do\" parameter missing");
 	}
 	
 	# Things that do not need a session.

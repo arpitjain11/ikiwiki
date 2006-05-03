@@ -206,9 +206,7 @@ sub genpage ($$$) { #{{{
 		$u=~s/\[\[file\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
 	}
-	if ($config{hyperestraier}) {
-		$template->param(hyperestraierurl => cgiurl());
-	}
+	$template->param(headercontent => $config{headercontent});
 
 	$template->param(
 		title => $title,
@@ -297,57 +295,6 @@ sub prune ($) { #{{{
 	my $dir=dirname($file);
 	while (rmdir($dir)) {
 		$dir=dirname($dir);
-	}
-} #}}}
-
-sub estcfg () { #{{{
-	my $estdir="$config{wikistatedir}/hyperestraier";
-	my $cgi=basename($config{cgiurl});
-	$cgi=~s/\..*$//;
-	open(TEMPLATE, ">$estdir/$cgi.tmpl") ||
-		error("write $estdir/$cgi.tmpl: $!");
-	print TEMPLATE misctemplate("search", 
-		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n");
-	close TEMPLATE;
-	open(TEMPLATE, ">$estdir/$cgi.conf") ||
-		error("write $estdir/$cgi.conf: $!");
-	my $template=HTML::Template->new(
-		filename => "$config{templatedir}/estseek.conf"
-	);
-	eval q{use Cwd 'abs_path'};
-	$template->param(
-		index => $estdir,
-		tmplfile => "$estdir/$cgi.tmpl",
-		destdir => abs_path($config{destdir}),
-		url => $config{url},
-	);
-	print TEMPLATE $template->output;
-	close TEMPLATE;
-	$cgi="$estdir/".basename($config{cgiurl});
-	unlink($cgi);
-	symlink("/usr/lib/estraier/estseek.cgi", $cgi) ||
-		error("symlink $cgi: $!");
-} # }}}
-
-sub estcmd ($;@) { #{{{
-	my @params=split(' ', shift);
-	push @params, "-cl", "$config{wikistatedir}/hyperestraier";
-	if (@_) {
-		push @params, "-";
-	}
-	
-	my $pid=open(CHILD, "|-");
-	if ($pid) {
-		# parent
-		foreach (@_) {
-			print CHILD "$_\n";
-		}
-		close(CHILD) || error("estcmd @params exited nonzero: $?");
-	}
-	else {
-		# child
-		open(STDOUT, "/dev/null"); # shut it up (closing won't work)
-		exec("estcmd", @params) || error("can't run estcmd");
 	}
 } #}}}
 
@@ -516,19 +463,15 @@ FILE:		foreach my $file (@files) {
 		}
 	}
 
-	if ($config{hyperestraier} && (%rendered || @del)) {
-		debug("updating hyperestraier search index");
-		if (%rendered) {
-			estcmd("gather -cm -bc -cl -sd", 
-				map { $config{destdir}."/".$renderedfiles{pagename($_)} }
-				keys %rendered);
+	if (@del && exists $hooks{delete}) {
+		foreach my $id (keys %{$hooks{delete}}) {
+			$hooks{delete}{$id}{call}->(@del);
 		}
-		if (@del) {
-			estcmd("purge -cl");
+	}
+	if (%rendered && exists $hooks{render}) {
+		foreach my $id (keys %{$hooks{render}}) {
+			$hooks{render}{$id}{call}->(keys %rendered);
 		}
-		
-		debug("generating hyperestraier cgi config");
-		estcfg();
 	}
 } #}}}
 

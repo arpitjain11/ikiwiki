@@ -16,9 +16,6 @@ sub checkconfig () { #{{{
 	if ($config{rss} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --rss\n");
 	}
-	if ($config{hyperestraier} && ! length $config{url}) {
-		error("Must specify --url when using --hyperestraier\n");
-	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
 		unless exists $config{wikistatedir};
@@ -40,6 +37,12 @@ sub checkconfig () { #{{{
 			error("Failed to load plugin $mod: $@");
 		}
 	}
+
+	if (exists $hooks{checkconfig}) {
+                foreach my $id (keys %{$hooks{checkconfig}}) {
+                        $hooks{checkconfig}{$id}{call}->();
+                }
+        }
 } #}}}
 
 sub error ($) { #{{{
