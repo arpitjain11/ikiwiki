@@ -53,10 +53,9 @@ Beyond PreProcessorDirectives, Other types of hooks that can be used by plugins 
 
 ### checkconfig
 
-        IkiWiki::hook(type => "delete", id => "foo", call => \&checkconfig);
+        IkiWiki::hook(type => "checkconfig", id => "foo", call => \&checkconfig);
 
-This is useful if the plugin needs to check for, or modify ikiwiki's configuration. It's called early in the ikiwiki startup process. It's ok for
-the function to call IkiWiki::error if something isn't configured right.
+This is useful if the plugin needs to check for, or modify ikiwiki's configuration. It's called early in the ikiwiki startup process. The function is passed no values. It's ok for the function to call IkiWiki::error if something isn't configured right.
 
 ### delete
 
