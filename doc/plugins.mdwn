@@ -1,9 +1,8 @@
-Plugins can be used to add additional features to ikiwiki. Ikiwiki's
-backend RCS support is also pluggable, so support for new revision control
-systems can be added to ikiwiki. It's possible to [[write]] your own plugins,
-or you can install and use plugins contributed by others. 
+Plugins can be used to add additional features to ikiwiki. The interface is quite flexible, allowing plugins to register [[PreProcessorDirective]]s, hook into [[CGI]] mode, and more. Ikiwiki's backend RCS support is also pluggable, so support for new revision control systems can be added to ikiwiki. 
 
-The ikiiki package includes some standard plugins that are installed and
+There's documentation if you want to [[write]] your own plugins, or you can install and use plugins contributed by others. 
+
+The ikiwiki package includes some standard plugins that are installed and
 by default. These include [[inline]], [[pagecount]], and [[brokenlinks]].
 Of these, [[inline]] is enabled by default.
 
