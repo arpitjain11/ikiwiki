@@ -134,12 +134,12 @@ sub preprocess ($$) { #{{{
 		if (length $escape) {
 			return "[[$command $params]]";
 		}
-		elsif (exists $plugins{preprocess}{$command}) {
+		elsif (exists $hooks{preprocess}{$command}) {
 			my %params;
 			while ($params =~ /(\w+)=\"([^"]+)"(\s+|$)/g) {
 				$params{$1}=$2;
 			}
-			return $plugins{preprocess}{$command}->(page => $page, %params);
+			return $hooks{preprocess}{$command}{call}->(page => $page, %params);
 		}
 		else {
 			return "[[$command not processed]]";

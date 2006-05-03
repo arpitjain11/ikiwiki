@@ -7,7 +7,7 @@ use File::Spec;
 use HTML::Template;
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
-            %renderedfiles %pagesources %depends %plugins};
+            %renderedfiles %pagesources %depends %hooks};
 
 sub checkconfig () { #{{{
 	if ($config{cgi} && ! length $config{url}) {
@@ -387,12 +387,14 @@ sub globlist_match ($$) { #{{{
 	return 0;
 } #}}}
 
-sub register_plugin ($$$) { # {{{
-	my $type=shift;
-	my $command=shift;
-	my $function=shift;
+sub hook (@) { # {{{
+	my %param=@_;
 	
-	$plugins{$type}{$command}=$function;
+	if (! exists $param{type} || ! ref $param{call} || ! exists $param{id}) {
+		error "hook requires type, call, and id parameters";
+	}
+	
+	$hooks{$param{type}}{$param{id}}=\%param;
 } # }}}
 
 1

@@ -7,7 +7,8 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::register_plugin("preprocess", "orphans", \&preprocess);
+	IkiWiki::hook(type => "preprocess", id => "orphans",
+		call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
