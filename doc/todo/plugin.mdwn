@@ -7,7 +7,7 @@ A plugin system should ideally support things like:
 * [[pageindexes]]
 * Wiki stats, such as the total number of pages (done), total number of links, most linked to pages, etc, etc.
 * wiki info page, giving the ikiwiki version etc
-* would it be useful to reimplement the hyperestradier search integration as a plugin?
+* would it be useful to reimplement the hyperestradier search integration as a plugin? (done)
 * Support [[RecentChanges]] as a regular page containing a plugin that updates each time there is a change, and statically builds the recent changes list. (Would this be too expensive/inflexible? There might be other ways to do it as a plugin, like making all links to RecentChanges link to the cgi and have the cgi render it on demand.)
 * Support for smileys or other symbols. I appreciate the support for check
   marks, etc in other wikis.
