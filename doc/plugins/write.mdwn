@@ -37,15 +37,22 @@ page in place of the directive.
 
 Beyond PreProcessorDirectives, Other types of hooks that can be used by plugins include:
 
+### checkconfig
+
+        IkiWiki::hook(type => "delete", id => "foo", call => \&checkconfig);
+
+This is useful if the plugin needs to check for, or modify ikiwiki's configuration. It's called early in the ikiwiki startup process. It's ok for
+the function to call IkiWiki::error if something isn't configured right.
+
 ### delete
 
-        IkiWiki::hook(type => "delete", id => "foo", call => \&deletion);
+        IkiWiki::hook(type => "delete", id => "foo", call => \&dele);
 
 Each time a page or pages is removed from the wiki, the referenced function is called, and passed the names of the source files that were removed.
 
 ### render
 
-        IkiWiki::hook(type => "render", id => "foo", call => \&update);
+        IkiWiki::hook(type => "render", id => "foo", call => \&render);
 
 Each time ikiwiki renders a change or addition (but not deletion) of a page to the wiki, the referenced function is called, and passed the name of the source file that was rendered.
 
