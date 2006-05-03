@@ -118,7 +118,7 @@ Some of ikiwiki's features:
 
 * [[Plugins]]
 
-  A plugin system allows extending ikiwiki in arbitrary ways.
+  Plugins can be used to add additional features to ikiwiki. The interface is quite flexible, allowing plugins to register [[PreProcessorDirective]]s, hook into [[CGI]] mode, and more. Ikiwiki's backend RCS support is also pluggable, so support for new revision control systems can be added to ikiwiki. 
 
 ----
 
