@@ -69,6 +69,13 @@ Each time a page or pages is removed from the wiki, the referenced function is c
 
 Each time ikiwiki renders a change or addition (but not deletion) of a page to the wiki, the referenced function is called, and passed the name of the source file that was rendered.
 
+### cgi
+
+        IkiWiki::hook(type => "cgi", id => "foo", call => \&cgi);
+
+Use this to hook into ikiwiki's cgi script. Each registered cgi hook is called
+in turn, and passed a CGI object. The hook should examine the parameters, and if it will handle this CGI request, output a page and terminate the program.
+
 ## Wiki configuration
 
 A plugin can access the wiki's configuration via the `%IkiWiki::config` hash.
@@ -94,6 +101,15 @@ use the following hashes, using a page name as the key:
   Many plugins will need to add dependencies to this hash; the best way to do
   it is by using the IkiWiki::add_depends function, which takes as its
   parameters the page name and a [[GlobList]] of dependencies to add.
+
+## Page templates
+
+Plugins are mostly limited to changing the content of pages, to change the look and feel of the wiki it's generally better to use a stylesheet and [[templates]]. However, there are some hooks in the templates that plugins can use to add stuff to the wiki's UI:
+
+### Adding content to the page header
+
+Html that is added to $IkiWiki::config{headercontent} will show up in the
+header of the page. One good thing to put here is a search form.
 
 ## RCS plugins
 
