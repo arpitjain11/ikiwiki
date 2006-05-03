@@ -17,17 +17,16 @@ being edited.
 
 ## Registering plugins
 
-Plugins should, when imported, call IkiWiki::register_plugin to hook into
-ikiwiki. The function takes four parameters:
-
-1. A method type. Use "preprocess" to register a [[PreProcessorDirective]]
-2. A command name. This is the bit that will appear inside brackets in a
-   page.
-3. A reference to a subroutine that is run when the plugin is used.
+Plugins should, when imported, call IkiWiki::hook to hook into
+ikiwiki's processing. The function uses named parameters, and use varies depending on the type of plugin being registered. Note that a plugin can call the function more than once to register multiple hooks. All calls to IkiWiki::hook should be passed a "type" parameter, which gives the type of hook, a "id" paramter, which should be a unique string for this plugin, and a "call" parameter, which is a reference to a function to call for the hook.
 
 ## Writing a [[PreProcessorDirective]]
 
-For preprocessor directives, the subroutine is passed named parameters. A
+        IkiWiki::hook(type => "preprocess", id => "foo", call => \&preprocess);
+
+Replace "foo" with the command name that will be used inside brackers for the preprocessor directive.
+
+Each time the directive is processed, the referenced subroutine (`preprocess` in the example above) is called, and is passed named parameters. A
 "page" parameter gives the name of the page that embedded the preprocessor directive. All parameters included in the directive are included
 as named parameters as well. Whatever the subroutine returns goes onto the
 page in place of the directive.
