@@ -117,6 +117,6 @@ ikiwiki's support for revision control systems also uses pluggable perl
 modules. These are in the `IkiWiki::RCS` namespace, for example
 `IkiWiki::RCS::svn`. 
 
-Each RCS plugin must support all the IkiWiki::rcs_* functions.
+Each RCS plugin must support all the IkiWiki::rcs\_* functions.
 See IkiWiki::RCS::Stub for the full list of functions. It's ok if
-rcs_getctime does nothing except for throwing an error.
+rcs\_getctime does nothing except for throwing an error.
