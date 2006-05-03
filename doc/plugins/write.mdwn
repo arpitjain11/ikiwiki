@@ -22,14 +22,32 @@ ikiwiki's processing. The function uses named parameters, and use varies dependi
 
 ## Writing a [[PreProcessorDirective]]
 
+This is probably the most common use of a plugin.
+
         IkiWiki::hook(type => "preprocess", id => "foo", call => \&preprocess);
 
 Replace "foo" with the command name that will be used inside brackers for the preprocessor directive.
 
-Each time the directive is processed, the referenced subroutine (`preprocess` in the example above) is called, and is passed named parameters. A
+Each time the directive is processed, the referenced function (`preprocess` in the example above) is called, and is passed named parameters. A
 "page" parameter gives the name of the page that embedded the preprocessor directive. All parameters included in the directive are included
-as named parameters as well. Whatever the subroutine returns goes onto the
+as named parameters as well. Whatever the function returns goes onto the
 page in place of the directive.
+
+## Other types of hooks
+
+Beyond PreProcessorDirectives, Other types of hooks that can be used by plugins include:
+
+### delete
+
+        IkiWiki::hook(type => "delete", id => "foo", call => \&deletion);
+
+Each time a page or pages is removed from the wiki, the referenced function is called, and passed the names of the source files that were removed.
+
+### render
+
+        IkiWiki::hook(type => "render", id => "foo", call => \&update);
+
+Each time ikiwiki renders a change or addition (but not deletion) of a page to the wiki, the referenced function is called, and passed the name of the source file that was rendered.
 
 ## Error handing in plugins
 
