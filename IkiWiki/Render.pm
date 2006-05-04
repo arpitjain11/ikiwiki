@@ -263,9 +263,18 @@ sub render ($) { #{{{
 	if ($type ne 'unknown') {
 		my $content=readfile($srcfile);
 		my $page=pagename($file);
+		delete $depends{$page};
+		
+		if (exists $hooks{filter}) {
+			foreach my $id (keys %{$hooks{filter}}) {
+				$content=$hooks{filter}{$id}{call}->(
+					page => $page,
+					content => $content
+				);
+			}
+		}
 		
 		$links{$page}=[findlinks($content, $page)];
-		delete $depends{$page};
 		
 		$content=linkify($content, $page);
 		$content=preprocess($page, $content);
