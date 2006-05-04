@@ -1,1 +1,8 @@
-Perhaps I'm just too stupid to find the proper way to do this, but how would I add a new page to the wiki without selecting to edit an already installed one and frobbing the URL to direct to the to-be-created page?
+Perhaps I'm just too stupid to find the proper way to do this, but how would I add a new page to the wiki without selecting to edit an already installed one and frobbing the URL to direct to the to-be-created page? --[[ThomasSchwinge]]
+
+Good point. Of course one way is to start with creating a link to the page, which also helps prevent orphans. But other wikis based on CGI do have this a bit easier, since they can detect an attempt to access a nonexistant page and show an edit page. Ikiwiki can't do that (unless its web server is configured to do smart things on a 404).
+
+Some wikis also provide a UI means for creating a new page. If we can find something good, that can be added to ikiwiki's UI. --[[Joey]]
+
+Hmm, maybe just a preprocessor directive that creates a form inside a page, like is used for blog posting already would suffice? Then the main page of a wiki could have a form for adding new pages, if that directive were included there. 
+Won't work for subpages though, unless the directive were added to the parent page. However, unconnected subpages are surely an even rarer thing to want than unconnected top level pages. --[[Joey]]
