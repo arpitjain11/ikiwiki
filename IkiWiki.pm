@@ -9,6 +9,42 @@ use HTML::Template;
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks};
 
+sub defaultconfig () { #{{{
+	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$|\.rss$)},
+	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
+	wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]*)\]\]/,
+	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
+	verbose => 0,
+	wikiname => "wiki",
+	default_pageext => ".mdwn",
+	cgi => 0,
+	rcs => 'svn',
+	notify => 0,
+	url => '',
+	cgiurl => '',
+	historyurl => '',
+	diffurl => '',
+	anonok => 0,
+	rss => 0,
+	sanitize => 1,
+	rebuild => 0,
+	refresh => 0,
+	getctime => 0,
+	wrapper => undef,
+	wrappermode => undef,
+	svnrepo => undef,
+	svnpath => "trunk",
+	srcdir => undef,
+	destdir => undef,
+	templatedir => "/usr/share/ikiwiki/templates",
+	underlaydir => "/usr/share/ikiwiki/basewiki",
+	setup => undef,
+	adminuser => undef,
+	adminemail => undef,
+	plugin => [qw{inline}],
+	headercontent => '',
+} #}}}
+	    
 sub checkconfig () { #{{{
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi\n");
