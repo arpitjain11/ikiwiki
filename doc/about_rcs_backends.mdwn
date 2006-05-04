@@ -22,6 +22,9 @@ HTML is generated from W.  rcs_update() will update from M to W.
 
 CGI operates on W.  rcs_commit() will commit from W to M.
 
+For all the gory details of how ikiwiki handles this behind the scenes,
+see [[commit-internals]].
+
 You browse and web-edit the wiki on W.
 
 
@@ -45,11 +48,11 @@ There is a working copy of R1: R2.
 CGI operates on R2.  rcs_commit() will push from R2 to R1.
 
 You browse the wiki on R1 and web-edit it on R2.  This means for example
-that R2 needs to be updated from R1 if you are going the web-edit a page,
+that R2 needs to be updated from R1 if you are going to web-edit a page,
 as the user otherwise might be irritated otherwise...
 
 How do changes get from R1 to R2?  Currently only internally in
-rcs_commit().  Is rcs_prepedit() suitable?
+rcs\_commit().  Is rcs\_prepedit() suitable?
 
 It follows that the HTML rendering and the CGI handling can be completely
 separated parts in ikiwiki.
@@ -62,11 +65,11 @@ darcs is a distributed RCS, which means that every checkout of a
 repository is equal to the repository it was checked-out from.  There is
 no forced hierarchy.
 
-R1 is the nevertheless called the master repository.  It's used for
+R1 is nevertheless called the master repository.  It's used for
 collecting all the changes and publishing them: on the one hand via the
 rendered HTML and on the other via the standard darcs RCS interface.
 
-R2, the repository where CGI operates on, is just a checkout of R1 and
+R2, the repository the CGI operates on, is just a checkout of R1 and
 doesn't really differ from the other checkouts that people will branch
 off from R1.
 
