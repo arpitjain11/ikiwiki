@@ -1,18 +1,15 @@
 There's documentation if you want to [[write]] your own plugins, or you can install and use plugins contributed by others. 
 
-The ikiwiki package includes some standard plugins that are installed and
-by default. These include [[inline]], [[htmlscrubber]], [[pagecount]],
-[[brokenlinks]], [[search]], [[smiley]], and even [[haiku]]. 
-Of these, [[inline]] and [[htmlscrubber]] are enabled by default.
+The [[inline]] and [[htmlscrubber]] plugins are enabled by default.
 
 To enable other plugins, use the `--plugin` switch described in [[usage]],
 or the equivalent line in [[ikiwiki.setup]].
 
 ## Plugin directory
 
-Add your contributed plugins here. Or add ideas to the [[todo|todo/plugin]] page.
+Add all plugins here. Or add ideas to the [[todo|todo/plugin]] page.
 
-[[inline pages="plugins/* !plugins/write !*/Discussion" archive="yes" rootpage="plugins/contrib" show="30"]]
+[[inline pages="plugins/* !plugins/write !*/Discussion" archive="yes" rootpage="plugins/contrib" show="60"]]
 
 ## Installing third party plugins
 
