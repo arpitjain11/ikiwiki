@@ -1,0 +1,14 @@
+This plugin allows inserting a randomly generated haiku into a wiki page.
+Just type \\[[haiku hint="argument with a bear"]].
+
+[[haiku hint="argument with a bear"]]
+
+The hint parameter can be omitted, it only provides the generator a hint at
+what to write the haiku about. If no hint is given, it might base it on the
+page name. Since the vocabulary it knows is very small, many hints won't
+affect the result at all.
+
+This plugin is included in ikiwiki, but is not enabled by default.
+
+You need to have the Coy module installed for this plugin to do anything
+interesting. That does all the heavy lifting.
