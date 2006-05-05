@@ -35,11 +35,8 @@ sub preprocess (@) { #{{{
 		$haiku=$canned[rand @canned];
 	}
 	else {
-		# Coy is rather strange, so the best way to get a haiku
-		# out of it is to die..
-		eval {die exists $params{hint} ? $params{hint} : $params{page}};
-		$haiku=$@;
-
+		$haiku=Coy::with_haiku($params{hint} ? $params{hint} : $params{page});
+		
 		# trim off other text
 		$haiku=~s/\s+-----\n//s;
 		$haiku=~s/\s+-----.*//s;
@@ -48,7 +45,7 @@ sub preprocess (@) { #{{{
 	$haiku=~s/^\s+//mg;
 	$haiku=~s/\n/<br>\n/mg;
 	
-	return $haiku
+	return "\n\n<blockquote>$haiku</blockquote>\n\n";
 } # }}}
 
 1
