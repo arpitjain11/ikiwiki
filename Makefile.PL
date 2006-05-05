@@ -17,7 +17,8 @@ extra_build:
 		--exclude=/discussion --no-discussion \
 		--plugin=brokenlinks --plugin=pagecount \
 		--plugin=orphans --plugin=haiku
-	./mdwn2man doc/usage.mdwn > ikiwiki.man
+	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
+	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 		
 extra_clean:
 	rm -rf html doc/.ikiwiki
@@ -32,6 +33,12 @@ extra_install:
 
 	install -d $(PREFIX)/share/man/man1
 	install ikiwiki.man $(PREFIX)/share/man/man1/ikiwiki.1
+	
+	install -d $(PREFIX)/share/man/man8
+	install ikiwiki-mass-rebuild.man $(PREFIX)/share/man/man8/ikiwiki-mass-rebuild.8
+	
+	install -d $(PREFIX)/sbin
+	install ikiwiki-mass-rebuild $(PREFIX)/sbin
 }
 }
 

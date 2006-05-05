@@ -1,5 +1,7 @@
 ikiwiki (1.1) unstable; urgency=low
 
+  There have been several configuration changes in this release of ikiwiki:
+
   The --svn and --no-svn switches are removed, instead you should use
    --rcs=svn or --no-rcs. ikiwiki setup files that set svn => 1 should
   be changed to set rcs => "svn"; if your setup file sets svn => 0
@@ -7,15 +9,21 @@ ikiwiki (1.1) unstable; urgency=low
 
   The --hyperestraier switch is gone too. To enable searching, turn on the
   search plugin, by passing --plugin=search or through the plugin setting in
-  the config file.
+  the setup file.
 
   The --sanitize and --no-sanitize switches are also gone, replaced with the
   htmlscrubber plugin. This plugin is enabled by default, to disable it,
   use --disable-plugin=htmlscrubber, or modify the plugin setting in the
-  config file.
+  setup file.
+
+  If your wiki is configured with a setup file, you will need to add a line
+  to enable Discussion links at the top of pages:
+  discussion => 1,
+  Discussion pages are enabled by default, but old setup files won't enable
+  them unless you add tat line.
 
   You will need to rebuild your wiki when upgrading to this version.
   If you listed your wiki in /etc/ikiwiki/wikilist this will be done
-  automatically.
+  automatically when the Debian package is upgraded.
 
  -- Joey Hess <joeyh@debian.org>  Tue,  2 May 2006 14:13:59 -0400

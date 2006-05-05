@@ -1,7 +1,10 @@
 #!/usr/bin/perl
 # Warning: hack
 
-print ".TH ikiwiki 1\n";
+my $prog=shift;
+my $section=shift;
+
+print ".TH $prog $section\n";
 
 while (<>) {
 	s{(\\?)\[\[([^\s\]]+)\]\]}{$1 ? "[[$2]]" : $2}eg;
