@@ -29,7 +29,6 @@ sub getconfig () { #{{{
 			"rss!" => \$config{rss},
 			"cgi!" => \$config{cgi},
 			"notify!" => \$config{notify},
-			"sanitize!" => \$config{sanitize},
 			"url=s" => \$config{url},
 			"cgiurl=s" => \$config{cgiurl},
 			"historyurl=s" => \$config{historyurl},
@@ -54,7 +53,10 @@ sub getconfig () { #{{{
 			},
 			"plugin=s@" => sub {
 				push @{$config{plugin}}, $_[1];
-			}
+			},
+			"disable-plugin=s@" => sub {
+				$config{plugin}=[grep { $_ ne $_[1] } @{$config{plugin}} ];
+			},
 		) || usage();
 
 		if (! $config{setup}) {

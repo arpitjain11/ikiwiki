@@ -15,6 +15,8 @@ sub import { #{{{
 		call => \&preprocess);
 	IkiWiki::hook(type => "filter", id => "skeleton", 
 		call => \&filter);
+	IkiWiki::hook(type => "sanitize", id => "skeleton", 
+		call => \&sanitize);
 	IkiWiki::hook(type => "delete", id => "skeleton", 
 		call => \&delete);
 	IkiWiki::hook(type => "change", id => "skeleton", 
@@ -33,10 +35,18 @@ sub preprocess (@) { #{{{
 	return "skeleton plugin result";
 } # }}}
 
-sub filter ($) { #{{{
-	my $content=shift;
+sub filter (@) { #{{{
+	my %params=@_;
 	
 	IkiWiki::debug("skeleton plugin running as filter");
+
+	return $params{content};
+} # }}}
+
+sub sanitize ($) { #{{{
+	my $content=shift;
+	
+	IkiWiki::debug("skeleton plugin running as a sanitizer");
 
 	return $content;
 } # }}}

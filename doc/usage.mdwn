@@ -162,15 +162,15 @@ These options configure the wiki.
   Currently allows locking of any page, other powers may be added later.
   May be specified multiple times for multiple admins.
 
-* --sanitize
-
-  Enable [[HtmlSanitization]] of wiki content. On by default, disable with
-  --no-sanitize.
-
 * --plugin name
 
   Enables the use of the specified plugin in the wiki. See [[plugins]] for
   details. Note that plugin names are case sensative.
+
+* --disable-plugin name
+
+  Disables use of a plugin. For example "--disable-plugin htmlscrubber"
+  to do away with html sanitization.
 
 * --verbose
 

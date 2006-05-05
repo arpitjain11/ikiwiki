@@ -49,7 +49,7 @@ return the error message as the output of the plugin.
 
 ### Html issues
 
-Note that if [[HTMLSanitization]] is enabled, html in
+Note that if the [[htmlscrubber]] is enabled, html in
 [[PreProcessorDirective]] output is sanitised, which may limit what your
 plugin can do. Also, the rest of the page content is not in html format at
 preprocessor time. Text output by a preprocessor directive will be passed
@@ -75,7 +75,16 @@ IkiWiki::error if something isn't configured right.
 
 Runs on the raw source of a page, before anything else touches it, and can
 make arbitrary changes. The function is passed named parameters `page` and
-`content` should return the filtered content.
+`content` and should return the filtered content.
+
+### sanitize
+
+	IkiWiki::hook(type => "filter", id => "foo", call => \&sanitize);
+
+Use this to implement html sanitization or anything else that needs to
+modify the content of a page after it has been fully converted to html.
+The function is passed the page content and should return the sanitized
+content.
 
 ### delete
 

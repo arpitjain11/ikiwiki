@@ -9,6 +9,11 @@ ikiwiki (1.1) unstable; urgency=low
   search plugin, by passing --plugin=search or through the plugin setting in
   the config file.
 
+  The --sanitize and --no-sanitize switches are also gone, replaced with the
+  htmlscrubber plugin. This plugin is enabled by default, to disable it,
+  use --disable-plugin=htmlscrubber, or modify the plugin setting in the
+  config file.
+
   You will need to rebuild your wiki when upgrading to this version.
   If you listed your wiki in /etc/ikiwiki/wikilist this will be done
   automatically.

@@ -48,8 +48,7 @@ use IkiWiki::Setup::Standard {
 	#anonok => 1,
 	# Generate rss feeds for pages?
 	rss => 1,
-	# Sanitize html?
-	sanitize => 1,
 	# To change the enabled plugins, edit this list
-	#plugin => [qw{pagecount inline brokenlinks hyperestraier smiley}],
+	#plugin => [qw{pagecount inline brokenlinks hyperestraier smiley
+	#              htmlscrubber}],
 }

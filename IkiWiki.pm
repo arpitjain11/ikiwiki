@@ -26,7 +26,6 @@ sub defaultconfig () { #{{{
 	diffurl => '',
 	anonok => 0,
 	rss => 0,
-	sanitize => 1,
 	rebuild => 0,
 	refresh => 0,
 	getctime => 0,
@@ -41,7 +40,7 @@ sub defaultconfig () { #{{{
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
-	plugin => [qw{inline}],
+	plugin => [qw{inline htmlscrubber}],
 	headercontent => '',
 } #}}}
 	    

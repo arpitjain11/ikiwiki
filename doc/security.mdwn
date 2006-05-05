@@ -215,4 +215,5 @@ pages from source with some other extension.
 
 ## XSS attacks in page content
 
-ikiwiki supports [[HtmlSanitization]], though it can be turned off.
+ikiwiki supports protecting users from their own broken browsers via the
+[[plugins/htmlscrubber]] plugin, which is enabled by default.
