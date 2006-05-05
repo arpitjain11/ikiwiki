@@ -23,7 +23,7 @@ sub preprocess (@) { #{{{
 	foreach my $page (%IkiWiki::links) {
 		if (IkiWiki::globlist_match($page, $params{pages})) {
 			foreach my $link (@{$IkiWiki::links{$page}}) {
-				next if $link =~ /.*\/discussion/i;
+				next if $link =~ /.*\/discussion/i && $IkiWiki::config{discussion};
 				my $bestlink=IkiWiki::bestlink($page, $link);
 				next if length $bestlink;
 				push @broken,

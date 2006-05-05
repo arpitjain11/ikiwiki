@@ -174,6 +174,9 @@ sub genpage ($$$) { #{{{
 		$u=~s/\[\[file\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
 	}
+	if ($config{discussion}) {
+		$template->param(discussionlink => htmllink($page, "Discussion", 1, 1));
+	}
 	$template->param(headercontent => $config{headercontent});
 
 	$template->param(
@@ -182,7 +185,6 @@ sub genpage ($$$) { #{{{
 		parentlinks => [parentlinks($page)],
 		content => $content,
 		backlinks => [backlinks($page)],
-		discussionlink => htmllink($page, "Discussion", 1, 1),
 		mtime => scalar(gmtime($mtime)),
 		styleurl => styleurl($page),
 	);
@@ -218,9 +220,14 @@ sub findlinks ($$) { #{{{
 	while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
 		push @links, titlepage($2);
 	}
-	# Discussion links are a special case since they're not in the text
-	# of the page, but on its template.
-	return @links, "$page/discussion";
+	if ($config{discussion}) {
+		# Discussion links are a special case since they're not in the
+		# text of the page, but on its template.
+		return @links, "$page/discussion";
+	}
+	else {
+		return @links;
+	}
 } #}}}
 
 sub render ($) { #{{{

@@ -26,6 +26,7 @@ sub defaultconfig () { #{{{
 	diffurl => '',
 	anonok => 0,
 	rss => 0,
+	discussion => 1,
 	rebuild => 0,
 	refresh => 0,
 	getctime => 0,

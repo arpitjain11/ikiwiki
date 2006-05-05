@@ -9,8 +9,5 @@
 * Don't render blog archive pages unless a page is added/removed. Just
   changing a page doesn't affect the archives as they show only the title.
 
-* Look at breaking the relatively rarely used blogging stuff out of
-  Render.pm, into its own module.
-
 * Look at splitting up CGI.pm. But note that too much splitting can slow
   perl down.
