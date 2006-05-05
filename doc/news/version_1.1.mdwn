@@ -1,4 +1,32 @@
-ikiwiki 1.1 released with these changes:
+ikiwiki 1.1 is now released.
+
+There have been several configuration changes in this release of ikiwiki:
+
+* The --svn and --no-svn switches are removed, instead you should use
+   --rcs=svn or --no-rcs. ikiwiki setup files that set svn => 1 should
+  be changed to set rcs => "svn"; if your setup file sets svn => 0
+  then change it to use rcs => "" to disable svn.
+
+* The --hyperestraier switch is gone too. To enable searching, turn on the
+  search plugin, by passing --plugin=search or through the plugin setting in
+  the setup file.
+
+* The --sanitize and --no-sanitize switches are also gone, replaced with the
+  htmlscrubber plugin. This plugin is enabled by default, to disable it,
+  use --disable-plugin=htmlscrubber, or modify the plugin setting in the
+  setup file.
+
+* Discussion pages are enabled by default, but if your wiki is configured
+  with a setup file, you need to edit it to keep them enabled on upgrade
+  to this version. Add a line reading:
+        discussion => 1,
+
+You will need to rebuild your wiki when upgrading to this version.
+If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+automatically when the Debian package is upgraded. Or use
+ikiiki-mass-rebuild to force a rebuild.
+
+Here's the full list of changes in ikiwiki 1.1:
 
    * Rename inlinepage to depends, so that it can be used to refer to more
      dependency relationships than just inlining. This will require a rebuild
