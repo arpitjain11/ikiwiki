@@ -16,14 +16,14 @@ ikiwiki (1.1) unstable; urgency=low
   use --disable-plugin=htmlscrubber, or modify the plugin setting in the
   setup file.
 
-  If your wiki is configured with a setup file, you will need to add a line
-  to enable Discussion links at the top of pages:
+  Discussion pages are enabled by default, but if your wiki is configured
+  with a setup file, you need to edit it to keep them enabled on upgrade
+  to this version. Add a line reading:
   discussion => 1,
-  Discussion pages are enabled by default, but old setup files won't enable
-  them unless you add tat line.
 
   You will need to rebuild your wiki when upgrading to this version.
   If you listed your wiki in /etc/ikiwiki/wikilist this will be done
-  automatically when the Debian package is upgraded.
+  automatically when the Debian package is upgraded. Or use
+  ikiiki-mass-rebuild to force a rebuild.
 
  -- Joey Hess <joeyh@debian.org>  Tue,  2 May 2006 14:13:59 -0400
