@@ -17,8 +17,8 @@ sub import { #{{{
 		call => \&filter);
 	IkiWiki::hook(type => "delete", id => "skeleton", 
 		call => \&delete);
-	IkiWiki::hook(type => "render", id => "skeleton", 
-		call => \&render);
+	IkiWiki::hook(type => "change", id => "skeleton", 
+		call => \&change);
 	IkiWiki::hook(type => "cgi", id => "skeleton", 
 		call => \&cgi);
 } # }}}
@@ -47,10 +47,10 @@ sub delete (@) { #{{{
 	IkiWiki::debug("skeleton plugin told that files were deleted: @files");
 } #}}}
 
-sub render (@) { #{{{
+sub change (@) { #{{{
 	my @files=@_;
 
-	IkiWiki::debug("skeleton plugin told that files were rendered: @files");
+	IkiWiki::debug("skeleton plugin told that changed files were rendered: @files");
 } #}}}
 
 sub cgi ($) { #{{{

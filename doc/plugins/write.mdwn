@@ -49,10 +49,11 @@ return the error message as the output of the plugin.
 
 ### Html issues
 
-Note that if [[HTMLSanitization]] is enabled, html in 
+Note that if [[HTMLSanitization]] is enabled, html in
 [[PreProcessorDirective]] output is sanitised, which may limit what your
 plugin can do. Also, the rest of the page content is not in html format at
-preprocessor time. Text output by a preprocessor directive will be passed through markdown along with the rest of the page.
+preprocessor time. Text output by a preprocessor directive will be passed
+through markdown along with the rest of the page.
 
 ## Other types of hooks
 
@@ -83,13 +84,13 @@ make arbitrary changes. The function is passed named parameters `page` and
 Each time a page or pages is removed from the wiki, the referenced function
 is called, and passed the names of the source files that were removed.
 
-### render
+### change
 
-	IkiWiki::hook(type => "render", id => "foo", call => \&render);
+	IkiWiki::hook(type => "change", id => "foo", call => \&render);
 
-Each time ikiwiki renders a change or addition (but not deletion) of a page
-to the wiki, the referenced function is called, and passed the name of the
-source file that was rendered.
+Each time ikiwiki renders a change or addition (but not deletion) to the
+wiki, the referenced function is called, and passed the names of the
+source files that were rendered.
 
 ### cgi
 

@@ -11,8 +11,8 @@ sub import { #{{{
 		call => \&checkconfig);
 	IkiWiki::hook(type => "delete", id => "hyperestraier",
 		call => \&delete);
-	IkiWiki::hook(type => "render", id => "hyperestraier",
-		call => \&render);
+	IkiWiki::hook(type => "change", id => "hyperestraier",
+		call => \&change);
 	IkiWiki::hook(type => "cgi", id => "hyperestraier",
 		call => \&cgi);
 } # }}}
@@ -41,7 +41,7 @@ sub delete (@) { #{{{
 	IkiWiki::estcfg();
 } #}}}
 
-sub render (@) { #{{{
+sub change (@) { #{{{
 	IkiWiki::debug("updating hyperestraier search index");
 	IkiWiki::estcmd("gather -cm -bc -cl -sd",
 		map {

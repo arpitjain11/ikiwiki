@@ -477,9 +477,9 @@ FILE:		foreach my $file (@files) {
 			$hooks{delete}{$id}{call}->(@del);
 		}
 	}
-	if (%rendered && exists $hooks{render}) {
-		foreach my $id (keys %{$hooks{render}}) {
-			$hooks{render}{$id}{call}->(keys %rendered);
+	if (%rendered && exists $hooks{change}) {
+		foreach my $id (keys %{$hooks{change}}) {
+			$hooks{change}{$id}{call}->(keys %rendered);
 		}
 	}
 } #}}}
