@@ -74,3 +74,51 @@ doesn't really differ from the other checkouts that people will branch
 off from R1.
 
 (To be continued.)
+
+
+### [[git]] (not yet included)
+
+A patch with full git support is at <http://people.debian.org/~roktas/patches/ikiwiki/git.patch>. Regarding the patch, Recai says:
+
+I have been testing it for the past few days and it seems satisfactory.  I
+haven't observed any race condition regarding the concurrent blog commits
+and it handles merge conflicts gracefully as far as I can see.
+
+As you may notice from the patch size, GIT support is not so trivial to
+implement (for me, at least).  Being a fairly fresh code base it has some
+bugs.  It also has some drawbacks (especially wrt merge which was the hard
+part).  GIT doesn't have a similar functionality like 'svn merge -rOLD:NEW
+FILE' (please see the relevant comment in mergepast for more details), so I
+had to invent an ugly hack just for the purpose.
+
+Some other notes:
+
+- There are two separate helper packages in git.pm. To keep things self
+  confined, I haven't split it up.
+
+- I've used a (mini) Debug.pm during the tests and made it a separate file
+  for the convenience of others.  It relies on the "constant folding"
+  feature of Perl, so there shouldn't be a runtime penalty (at least this
+  is what the 'perl -MO=Deparse shows', haven't made a real benchmark).
+
+- rcs_notify() has not been implemented yet (I have noticed it after I
+  finished the main work).
+
+- GIT backend uses the gitweb for repository browsing (the counterpart of
+  ViewCVS).
+
+- There might be some subs in GIT name space which you may prefer to move to
+  the main code.
+
+- Due to the reasons explained in the code, I've written an rcs_invoke()
+  wrapper.  May be there should be a better approach to reach the same
+  goal.
+
+- There are some parts which I may change in future, like using a global
+  rcs_fatal_error and the ugly error reporting code in _rcs_commit.
+
+- Documentation is missing.
+
+It works for me, but of course in the end, the final decision is yours (due
+to mostly GIT quirks, the implementation is not clean as SVN).  Feel free
+to fix/delete/add whatever you want.  Hope it doesn't have any serious bug.
