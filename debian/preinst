@@ -5,6 +5,9 @@
 if [ "$1" = upgrade ] && dpkg --compare-versions "$2" lt 1.2; then
 	if [ -e /etc/wikilist ]; then
 		if [ ! -e /etc/ikiwiki/wikilist ]; then
+			if [ ! -e /etc/ikiwiki ]; then
+				mkdir /etc/ikiwiki
+			fi
 			mv -f /etc/wikilist /etc/ikiwiki/wikilist
 		else
 			rm -f /etc/wikilist
