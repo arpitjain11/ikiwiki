@@ -8,4 +8,13 @@ added).
 
 [[ikiwiki_logo|ikiwiki.png]] 
 
+LaTeX source to an image approximating the above:
+
+	\documentclass{article}
+	\usepackage{graphicx}
+	\begin{document}
+	\pagestyle{empty}
+	\huge\reflectbox{iki}wiki
+	\end{document}
+
 Contributed by [[JeroenSchot]]
