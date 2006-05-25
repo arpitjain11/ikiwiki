@@ -43,7 +43,8 @@ sub scrubber { #{{{
 			selected shape size span src start summary
 			tabindex target title type usemap valign
 			value vspace width
-		}}],
+		}, "/" => 1, # emit proper <hr /> XHTML
+		}],
 	);
 	return $_scrubber;
 } # }}}

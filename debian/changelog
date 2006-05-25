@@ -1,3 +1,11 @@
+ikiwiki (1.4) UNRELEASED; urgency=low
+
+  * Tell HTML::Scrubber to treat "/" as a valid attribute which is its
+    very strange way of enabling proper XHTML <br /> type tags. Output html
+    should be always valid again now.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 25 May 2006 18:01:59 -0400
+
 ikiwiki (1.3) unstable; urgency=low
 
   * Fix the preinst introduced in the last version. Closes: #367458

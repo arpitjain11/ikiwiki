@@ -33,6 +33,3 @@
 * if a page containing an rss feed happens to show up in an rss feed,
   the preprocessor directives won't be expanded (good) but are left in
   raw rather than removed (bad).
-* HTML::Scrubber doesn't produce valid xhtml for tags like hr, so if html
-  sanitisation is enabled the html page won't be valid.
-  <http://bugs.debian.org/365971>
