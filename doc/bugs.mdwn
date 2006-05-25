@@ -36,3 +36,6 @@
 * HTML::Scrubber doesn't produce valid xhtml for tags like hr, so if html
   sanitisation is enabled the html page won't be valid.
   <http://bugs.debian.org/365971>
+* The file doc/ikiwiki.setup includes: "#plugin => [qw{pagecount inline brokenlinks hyperestraier smiley htmlscrubber}],".  "hyperrestraier" should be replaced with "search", or perhaps the line should instead read as follows?: "#plugin => [qw{pagecount inline orphans brokenlinks search smiley
+haiku htmlscrubber}],"
+
