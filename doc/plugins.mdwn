@@ -1,17 +1,18 @@
-There's documentation if you want to [[write]] your own plugins, or you can install and use plugins contributed by others. 
+There's documentation if you want to [[write]] your own plugins, or you can
+install and use plugins contributed by others. 
 
 The [[inline]] and [[htmlscrubber]] plugins are enabled by default.
 
 To enable other plugins, use the `--plugin` switch described in [[usage]],
 or the equivalent line in [[ikiwiki.setup]].
 
-## Plugin directory
+# Plugin directory
 
 Add all plugins here. Or add ideas to the [[todo|todo/plugin]] page.
 
 [[inline pages="plugins/* !plugins/write !*/Discussion" archive="yes" rootpage="plugins/contrib" show="60"]]
 
-## Installing third party plugins
+# Installing third party plugins
 
 Plugins are perl modules and should be installed somewhere in the perl
 module search path. See the @INC list at the end of the output of `perl -V`

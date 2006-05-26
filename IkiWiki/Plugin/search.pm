@@ -9,6 +9,8 @@ use IkiWiki;
 sub import { #{{{
 	IkiWiki::hook(type => "checkconfig", id => "hyperestraier",
 		call => \&checkconfig);
+	IkiWiki::hook(type => "pagetemplate", id => "hyperestraier",
+		call => \&pagetemplate);
 	IkiWiki::hook(type => "delete", id => "hyperestraier",
 		call => \&delete);
 	IkiWiki::hook(type => "change", id => "hyperestraier",
@@ -23,8 +25,14 @@ sub checkconfig () { #{{{
 			IkiWiki::error("Must specify $required when using the search plugin\n");
 		}
 	}
+} #}}}
 
-	$IkiWiki::config{headercontent}.=qq{
+sub pagetemplate ($$) { #{{{
+	my $page=shift;
+	my $template=shift;
+
+	# Add search box to page header.
+	$template->param(searchform => qq{
 <form method="get" action="$IkiWiki::config{cgiurl}" id="searchform">
 <div>
 <input type="text" name="phrase" value="" size="16" />
@@ -32,7 +40,7 @@ sub checkconfig () { #{{{
 <input type="hidden" name="do" value="hyperestraier" />
 </div>
 </form>
-};
+});
 } #}}}
 
 sub delete (@) { #{{{

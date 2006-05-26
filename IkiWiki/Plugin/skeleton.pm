@@ -17,6 +17,8 @@ sub import { #{{{
 		call => \&filter);
 	IkiWiki::hook(type => "sanitize", id => "skeleton", 
 		call => \&sanitize);
+	IkiWiki::hook(type => "pagetemplate", id => "skeleton", 
+		call => \&pagetemplate);
 	IkiWiki::hook(type => "delete", id => "skeleton", 
 		call => \&delete);
 	IkiWiki::hook(type => "change", id => "skeleton", 
@@ -49,6 +51,13 @@ sub sanitize ($) { #{{{
 	IkiWiki::debug("skeleton plugin running as a sanitizer");
 
 	return $content;
+} # }}}
+
+sub pagetemplate ($$) { #{{{
+	my $page=shift;
+	my $template=shift;
+	
+	IkiWiki::debug("skeleton plugin running as a pagetemplate hook");
 } # }}}
 
 sub delete (@) { #{{{

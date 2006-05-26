@@ -20,7 +20,9 @@ confict and commit again to save your changes.
 </p>
 </TMPL_IF>
 <TMPL_VAR FORM-START>
-<h1><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></h1>
+<div id="header">
+<span><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></span>
+</div>
 <TMPL_VAR FIELD-DO>
 <TMPL_VAR FIELD-FROM>
 <TMPL_VAR FIELD-RCSINFO>
@@ -39,7 +41,7 @@ Optional comment about this change:<br />
 <hr />
 <TMPL_IF NAME="PAGE_PREVIEW">
 <div id="header">
-<h1>Page preview:</h1>
+<span>Page preview:</span>
 </div>
 <div id="content">
 <TMPL_VAR PAGE_PREVIEW>

@@ -42,7 +42,6 @@ sub defaultconfig () { #{{{
 	adminuser => undef,
 	adminemail => undef,
 	plugin => [qw{inline htmlscrubber}],
-	headercontent => '',
 } #}}}
 	    
 sub checkconfig () { #{{{

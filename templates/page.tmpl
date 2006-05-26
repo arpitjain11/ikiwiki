@@ -9,13 +9,15 @@
 <body>
 
 <div id="header">
-<h1>
+<span>
 <TMPL_LOOP NAME="PARENTLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
 </TMPL_LOOP>
 <TMPL_VAR TITLE>
-</h1>
-<TMPL_VAR HEADERCONTENT>
+</span>
+<TMPL_IF NAME="SEARCHFORM">
+<TMPL_VAR SEARCHFORM>
+</TMPL_IF>
 </div>
 
 <div id="actions">

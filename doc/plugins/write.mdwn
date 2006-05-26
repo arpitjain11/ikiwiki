@@ -4,7 +4,7 @@ lowercase, such as `IkiWiki::Plugin::inline`. Ikiwiki includes a
 `IkiWiki::Plugin::skeleton` that can be fleshed out to make a useful
 plugin. `IkiWiki::Plugin::pagecount` is another simple example.
 
-## Note
+# Note
 
 One thing to keep in mind when writing a plugin is that ikiwiki is a wiki
 *compiler*. So plugins influence pages when they are built, not when they
@@ -15,7 +15,7 @@ random or changing thing on a page will generate a static page that won't
 change until ikiwiki rebuilds the page for some other reason, like the page
 being edited.
 
-## Registering plugins
+# Registering plugins
 
 Plugins should, when imported, call IkiWiki::hook to hook into ikiwiki's
 processing. The function uses named parameters, and use varies depending on
@@ -26,7 +26,7 @@ hook, a "id" paramter, which should be a unique string for this plugin, and
 a "call" parameter, which is a reference to a function to call for the
 hook.
 
-## Writing a [[PreProcessorDirective]]
+# Writing a [[PreProcessorDirective]]
 
 This is probably the most common use of a plugin.
 
@@ -40,14 +40,14 @@ Each time the directive is processed, the referenced function (`preprocess` in t
 as named parameters as well. Whatever the function returns goes onto the
 page in place of the directive.
 
-### Error handing
+## Error handing
 
 While a plugin can call ikiwiki's error routine for a fatal error, for
 errors that aren't intended to halt the entire wiki build, including bad
 parameters passed to a [[PreProcessorDirective]], etc, it's better to just
 return the error message as the output of the plugin.
 
-### Html issues
+## Html issues
 
 Note that if the [[htmlscrubber]] is enabled, html in
 [[PreProcessorDirective]] output is sanitised, which may limit what your
@@ -55,12 +55,12 @@ plugin can do. Also, the rest of the page content is not in html format at
 preprocessor time. Text output by a preprocessor directive will be passed
 through markdown along with the rest of the page.
 
-## Other types of hooks
+# Other types of hooks
 
 Beyond PreProcessorDirectives, Other types of hooks that can be used by
 plugins include:
 
-### checkconfig
+## checkconfig
 
 	IkiWiki::hook(type => "checkconfig", id => "foo", call => \&checkconfig);
 
@@ -69,7 +69,7 @@ configuration. It's called early in the ikiwiki startup process. The
 function is passed no values. It's ok for the function to call
 IkiWiki::error if something isn't configured right.
 
-### filter
+## filter
 
 	IkiWiki::hook(type => "filter", id => "foo", call => \&filter);
 
@@ -77,7 +77,7 @@ Runs on the raw source of a page, before anything else touches it, and can
 make arbitrary changes. The function is passed named parameters `page` and
 `content` and should return the filtered content.
 
-### sanitize
+## sanitize
 
 	IkiWiki::hook(type => "filter", id => "foo", call => \&sanitize);
 
@@ -86,14 +86,25 @@ modify the content of a page after it has been fully converted to html.
 The function is passed the page content and should return the sanitized
 content.
 
-### delete
+## pagetemplate
+
+	IkiWiki::hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
+
+Each time a page is rendered, a [[template|templates]] is filled out.
+This hook allows modifying that template. The function is passed the name
+of the page, and a `HTML::Template` object that is the template that will
+be used to generate the page. It can manipulate that template, the most
+common thing to do is probably to call $template->param() to add a new
+custom parameter to the template.
+
+## delete
 
 	IkiWiki::hook(type => "delete", id => "foo", call => \&dele);
 
 Each time a page or pages is removed from the wiki, the referenced function
 is called, and passed the names of the source files that were removed.
 
-### change
+## change
 
 	IkiWiki::hook(type => "change", id => "foo", call => \&render);
 
@@ -101,7 +112,7 @@ Each time ikiwiki renders a change or addition (but not deletion) to the
 wiki, the referenced function is called, and passed the names of the
 source files that were rendered.
 
-### cgi
+## cgi
 
 	IkiWiki::hook(type => "cgi", id => "foo", call => \&cgi);
 
@@ -110,13 +121,13 @@ called in turn, and passed a CGI object. The hook should examine the
 parameters, and if it will handle this CGI request, output a page and
 terminate the program.
 
-## Wiki configuration
+# Wiki configuration
 
 A plugin can access the wiki's configuration via the `%IkiWiki::config`
 hash. The best way to understand the contents of the hash is to look at
 [[ikiwiki.setup]], which sets the hash content to configure the wiki.
 
-## Wiki data
+# Wiki data
 
 If your plugin needs to access data about other pages in the wiki. It can
 use the following hashes, using a page name as the key:
@@ -136,19 +147,7 @@ use the following hashes, using a page name as the key:
   it is by using the IkiWiki::add_depends function, which takes as its
   parameters the page name and a [[GlobList]] of dependencies to add.
 
-## Page templates
-
-Plugins are mostly limited to changing the content of pages, to change the
-look and feel of the wiki it's generally better to use a stylesheet and
-[[templates]]. However, there are some hooks in the templates that plugins
-can use to add stuff to the wiki's UI:
-
-### Adding content to the page header
-
-Html that is added to $IkiWiki::config{headercontent} will show up in the
-header of the page. One good thing to put here is a search form.
-
-## RCS plugins
+# RCS plugins
 
 ikiwiki's support for revision control systems also uses pluggable perl
 modules. These are in the `IkiWiki::RCS` namespace, for example

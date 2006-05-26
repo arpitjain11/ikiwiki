@@ -3,8 +3,16 @@ ikiwiki (1.4) UNRELEASED; urgency=low
   * Tell HTML::Scrubber to treat "/" as a valid attribute which is its
     very strange way of enabling proper XHTML <br /> type tags. Output html
     should be always valid again now.
+  * The page name and parent links has switched from using a <h1> to a styled
+    <span>, so pages can use <h1> internally instead of needing to use <h2>.
+  * Updated all of ikiwiki's own wiki pages for that.
+  * Add pagetemplate hook, which can be used by plugins that want to mess
+    around with adding new stuff to the page template.
+  * Remove headercontent; the search plugin now adds the search box to the
+    header by registering a pagetemplate hook, and other plugins should do
+    similarly.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 25 May 2006 18:01:59 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 25 May 2006 20:57:07 -0400
 
 ikiwiki (1.3) unstable; urgency=low
 

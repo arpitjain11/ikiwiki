@@ -177,7 +177,12 @@ sub genpage ($$$) { #{{{
 	if ($config{discussion}) {
 		$template->param(discussionlink => htmllink($page, "Discussion", 1, 1));
 	}
-	$template->param(headercontent => $config{headercontent});
+
+	if (exists $hooks{pagetemplate}) {
+		foreach my $id (keys %{$hooks{pagetemplate}}) {
+			$hooks{pagetemplate}{$id}{call}->($page, $template);
+		}
+	}
 
 	$template->param(
 		title => $title,

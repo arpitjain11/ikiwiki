@@ -47,10 +47,6 @@ EOF
 EOF
 	}
 	
-	# This is only set by plugins, which append to it on startup, so
-	# avoid storing it in the wrapper.
-	$config{headercontent}="";
-	
 	$Data::Dumper::Indent=0; # no newlines
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);
 	$configstring=~s/\\/\\\\/g;
