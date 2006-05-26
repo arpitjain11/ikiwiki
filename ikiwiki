@@ -1,4 +1,4 @@
-#!/usr/bin/perl -T
+#!/usr/bin/perl -T -CSD
 $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 
 package IkiWiki;
@@ -101,7 +101,6 @@ sub main () { #{{{
 		loadindex();
 		require IkiWiki::Render;
 		rcs_update();
-		rcs_getctime() if $config{getctime};
 		refresh();
 		rcs_notify() if $config{notify};
 		saveindex();

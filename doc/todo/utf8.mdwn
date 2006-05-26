@@ -25,4 +25,17 @@ The following problems have been observed when running ikiwiki this way:
 	Malformed UTF-8 character (fatal) at /usr/bin/markdown line 1317.
 
   In this example, a literal 0x97 character had gotten into a markdown
-  file. 
+  file.
+
+  Running this before markdown can avoid it:
+
+  $content = Encode::encode_utf8($content);
+
+  I'm not sure how, or what should be done after markdown to get the string
+  back into a form that perl can treat as utf-8.
+
+* Apache "AddDefaultCharset on" settings will not play well with utf-8
+  pages.
+
+* CGI::FormBuilder needs to be told to set `charset => "utf-8"` so that
+  utf-8 is used in the edit form. (done)
