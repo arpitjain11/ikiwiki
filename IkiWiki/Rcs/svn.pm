@@ -227,32 +227,31 @@ sub rcs_notify () { #{{{
 	}
 } #}}}
 
-sub rcs_getctime () { #{{{
+sub rcs_getctime ($) { #{{{
+	my $file=shift;
 	eval q{use Date::Parse};
-	foreach my $page (keys %pagectime) {
-		my $file="$config{srcdir}/$pagesources{$page}";
-		next unless -e $file;
-		my $child = open(SVNLOG, "-|");
-		if (! $child) {
-			exec("svn", "log", $file) || error("svn log $file failed to run");
-		}
-
-		my $date;
-		while (<SVNLOG>) {
-			if (/$svn_log_infoline/) {
-				$date=$3;
-		    	}
-		}
-		close SVNLOG || warn "svn log $file exited $?";
-
-		if (! defined $date) {
-			warn "failed to parse svn log for $file\n";
-			next;
-		}
 		
-		$pagectime{$page}=$date=str2time($date);
-		debug("found ctime ".localtime($date)." for $page");
+	my $child = open(SVNLOG, "-|");
+	if (! $child) {
+		exec("svn", "log", $file) || error("svn log $file failed to run");
 	}
+
+	my $date;
+	while (<SVNLOG>) {
+		if (/$svn_log_infoline/) {
+			$date=$3;
+	    	}
+	}
+	close SVNLOG || warn "svn log $file exited $?";
+
+	if (! defined $date) {
+		warn "failed to parse svn log for $file\n";
+		return 0;
+	}
+		
+	$date=str2time($date);
+	debug("found ctime ".localtime($date)." for $file");
+	return $date;
 } #}}}
 
 1
