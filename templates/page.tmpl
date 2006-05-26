@@ -20,31 +20,27 @@
 </TMPL_IF>
 </div>
 
+<TMPL_IF NAME="HAVE_ACTIONS">
 <div id="actions">
 <ul>
 <TMPL_IF NAME="EDITURL">
 <li><a href="<TMPL_VAR EDITURL>">Edit</a></li>
 </TMPL_IF>
-
 <TMPL_IF NAME="RECENTCHANGESURL">
 <li><a href="<TMPL_VAR RECENTCHANGESURL>">RecentChanges</a></li>
 </TMPL_IF>
-
 <TMPL_IF NAME="HISTORYURL">
 <li><a href="<TMPL_VAR HISTORYURL>">History</a></li>
 </TMPL_IF>
-
 <TMPL_IF NAME="PREFSURL">
 <li><a href="<TMPL_VAR PREFSURL>">Preferences</a></li>
 </TMPL_IF>
-
 <TMPL_IF NAME="DISCUSSIONLINK">
 <li><TMPL_VAR DISCUSSIONLINK><br /></li>
 </TMPL_IF>
-
-<li></li>
 </ul>
 </div>
+</TMPL_IF>
 
 <div id="content">
 <TMPL_VAR CONTENT>

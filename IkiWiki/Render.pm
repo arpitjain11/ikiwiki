@@ -160,22 +160,30 @@ sub genpage ($$$) { #{{{
 	
 	my $template=HTML::Template->new(blind_cache => 1,
 		filename => "$config{templatedir}/page.tmpl");
-	
+	my $actions=0;
+
 	if (length $config{cgiurl}) {
 		$template->param(editurl => cgiurl(do => "edit", page => $page));
 		$template->param(prefsurl => cgiurl(do => "prefs"));
 		if ($config{rcs}) {
 			$template->param(recentchangesurl => cgiurl(do => "recentchanges"));
 		}
+		$actions++;
 	}
 
 	if (length $config{historyurl}) {
 		my $u=$config{historyurl};
 		$u=~s/\[\[file\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
+		$actions++;
 	}
 	if ($config{discussion}) {
 		$template->param(discussionlink => htmllink($page, "Discussion", 1, 1));
+		$actions++;
+	}
+
+	if ($actions) {
+		$template->param(have_actions => 1);
 	}
 
 	if (exists $hooks{pagetemplate}) {
