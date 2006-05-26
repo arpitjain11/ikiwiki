@@ -351,7 +351,7 @@ sub cgi_editpage ($$) { #{{{
 		require IkiWiki::Render;
 		$form->tmpl_param("page_preview",
 			htmlize($config{default_pageext},
-				linkify($form->field('content'), $page)));
+				linkify($page, $form->field('content'))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");

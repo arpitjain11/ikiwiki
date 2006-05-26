@@ -8,8 +8,8 @@ use File::Spec;
 use IkiWiki;
 
 sub linkify ($$) { #{{{
-	my $content=shift;
 	my $page=shift;
+	my $content=shift;
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
 		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($page, titlepage($3), 0, 0, pagetitle($2)))
@@ -152,8 +152,8 @@ sub globlist_merge ($$) { #{{{
 } #}}}
 
 sub genpage ($$$) { #{{{
-	my $content=shift;
 	my $page=shift;
+	my $content=shift;
 	my $mtime=shift;
 
 	my $title=pagetitle(basename($page));
@@ -218,8 +218,8 @@ sub mtime ($) { #{{{
 } #}}}
 
 sub findlinks ($$) { #{{{
-	my $content=shift;
 	my $page=shift;
+	my $content=shift;
 
 	my @links;
 	while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
@@ -254,15 +254,15 @@ sub render ($) { #{{{
 			}
 		}
 		
-		$links{$page}=[findlinks($content, $page)];
+		$links{$page}=[findlinks($page, $content)];
 		
-		$content=linkify($content, $page);
+		$content=linkify($page, $content);
 		$content=preprocess($page, $content);
 		$content=htmlize($type, $content);
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
 		writefile(htmlpage($page), $config{destdir},
-			genpage($content, $page, mtime($srcfile)));
+			genpage($page, $content, mtime($srcfile)));
 		$oldpagemtime{$page}=time;
 		$renderedfiles{$page}=htmlpage($page);
 	}
