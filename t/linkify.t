@@ -1,10 +1,12 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 11;
+use Test::More tests => 13;
 
-sub linkify ($$$) {
+sub linkify ($$$$) {
+	my $lpage=shift;
 	my $page=shift;
+
 	my $content=shift;
 	my @existing_pages=@{shift()};
 	
@@ -17,7 +19,7 @@ sub linkify ($$$) {
 	}
 	%IkiWiki::config=IkiWiki::defaultconfig();
 
-	return IkiWiki::linkify($page, $content);
+	return IkiWiki::linkify($lpage, $page, $content);
 }
 
 sub links_to ($$) {
@@ -62,13 +64,16 @@ sub links_text ($$) {
 
 BEGIN { use_ok("IkiWiki::Render"); }
 
-ok(links_to("bar", linkify("foo", "link to [[bar]] ok", ["foo", "bar"])), "ok link");
-ok(not_links_to("bar", linkify("foo", "link to \\[[bar]] ok", ["foo", "bar"])), "escaped link");
-ok(links_to("page=bar", linkify("foo", "link to [[bar]] ok", ["foo"])), "broken link");
-ok(links_to("bar", linkify("foo", "link to [[baz]] and [[bar]] ok", ["foo", "baz", "bar"])), "dual links");
-ok(links_to("baz", linkify("foo", "link to [[baz]] and [[bar]] ok", ["foo", "baz", "bar"])), "dual links");
-ok(links_to("bar", linkify("foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link");
-ok(links_text("some page", linkify("foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link text");
-ok(links_to("bar", linkify("foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link, with whitespace");
-ok(links_text("some page", linkify("foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link text, with whitespace");
-ok(links_text("Some long, & complex page name.", linkify("foo", "link to [[Some long, & complex page name.|bar]] ok, and this is not a link]] here", ["foo", "bar"])), "complex named link text");
+ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "bar"])), "ok link");
+ok(not_links_to("bar", linkify("foo", "foo", "link to \\[[bar]] ok", ["foo", "bar"])), "escaped link");
+ok(links_to("page=bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo"])), "broken link");
+ok(links_to("bar", linkify("foo", "foo", "link to [[baz]] and [[bar]] ok", ["foo", "baz", "bar"])), "dual links");
+ok(links_to("baz", linkify("foo", "foo", "link to [[baz]] and [[bar]] ok", ["foo", "baz", "bar"])), "dual links");
+ok(links_to("bar", linkify("foo", "foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link");
+ok(links_text("some page", linkify("foo", "foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link text");
+ok(links_to("bar", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link, with whitespace");
+ok(links_text("some page", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link text, with whitespace");
+ok(links_text("Some long, & complex page name.", linkify("foo", "foo", "link to [[Some long, & complex page name.|bar]] ok, and this is not a link]] here", ["foo", "bar"])), "complex named link text");
+ok(links_to("foo/bar", linkify("foo/item", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "inline page link");
+ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "same except not inline");
+

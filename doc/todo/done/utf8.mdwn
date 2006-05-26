@@ -1,0 +1,13 @@
+ikiwiki should support utf-8 pages, both input and output. To test, here's a
+utf-8 smiley:
+
+# ☺
+
+Currently ikiwiki is belived to be utf-8 clean itself; it tells perl to use
+binmode when reading possibly binary files (such as images) and it uses
+utf-8 compatable regexps etc.
+
+Notes:
+
+* Apache "AddDefaultCharset on" settings will not play well with utf-8
+  pages. Turn it off.

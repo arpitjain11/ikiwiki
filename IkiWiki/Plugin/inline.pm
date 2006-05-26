@@ -59,7 +59,7 @@ sub preprocess_inline (@) { #{{{
 	foreach my $page (blog_list($params{pages}, $params{show})) {
 		next if $page eq $params{page};
 		push @pages, $page;
-		$template->param(pagelink => htmllink($params{page}, $page));
+		$template->param(pagelink => htmllink($params{page}, $params{page}, $page));
 		$template->param(content => get_inline_content($params{page}, $page))
 			if $params{archive} eq "no";
 		$template->param(ctime => scalar(gmtime($pagectime{$page})));
@@ -100,7 +100,7 @@ sub get_inline_content ($$) { #{{{
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if ($type ne 'unknown') {
-		return htmlize($type, linkify($parentpage, readfile(srcfile($file))));
+		return htmlize($type, linkify($page, $parentpage, readfile(srcfile($file))));
 	}
 	else {
 		return "";

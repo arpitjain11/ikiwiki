@@ -19,8 +19,8 @@ sub page_locked ($$;$) { #{{{
 		my $locked_pages=userinfo_get($admin, "locked_pages");
 		if (globlist_match($page, userinfo_get($admin, "locked_pages"))) {
 			return 1 if $nonfatal;
-			error(htmllink("", $page, 1)." is locked by ".
-			      htmllink("", $admin, 1)." and cannot be edited.");
+			error(htmllink("", "", $page, 1)." is locked by ".
+			      htmllink("", "", $admin, 1)." and cannot be edited.");
 		}
 	}
 
@@ -246,9 +246,9 @@ sub cgi_prefs ($$) { #{{{
 	$form->field(name => "password", type => "password");
 	$form->field(name => "confirm_password", type => "password");
 	$form->field(name => "subscriptions", size => 50,
-		comment => "(".htmllink("", "GlobList", 1).")");
+		comment => "(".htmllink("", "", "GlobList", 1).")");
 	$form->field(name => "locked_pages", size => 50,
-		comment => "(".htmllink("", "GlobList", 1).")");
+		comment => "(".htmllink("", "", "GlobList", 1).")");
 	
 	if (! is_admin($user_name)) {
 		$form->field(name => "locked_pages", type => "hidden");
@@ -335,7 +335,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
-		htmllink("", "HelpOnFormatting", 1));
+		htmllink("", "", "HelpOnFormatting", 1));
 	$form->tmpl_param("styleurl", styleurl());
 	$form->tmpl_param("baseurl", "$config{url}/");
 	if (! $form->submitted) {
@@ -351,7 +351,7 @@ sub cgi_editpage ($$) { #{{{
 		require IkiWiki::Render;
 		$form->tmpl_param("page_preview",
 			htmlize($config{default_pageext},
-				linkify($page, $form->field('content'))));
+				linkify($page, $page, $form->field('content'))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");

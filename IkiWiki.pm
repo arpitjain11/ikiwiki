@@ -260,8 +260,9 @@ sub styleurl (;$) { #{{{
 	return $page."style.css";
 } #}}}
 
-sub htmllink ($$;$$$) { #{{{
-	my $page=shift;
+sub htmllink ($$$;$$$) { #{{{
+	my $lpage=shift; # the page doing the linking
+	my $page=shift; # the page that will contain the link (different for inline)
 	my $link=shift;
 	my $noimageinline=shift; # don't turn links into inline html images
 	my $forcesubpage=shift; # force a link to a subpage
@@ -269,10 +270,10 @@ sub htmllink ($$;$$$) { #{{{
 
 	my $bestlink;
 	if (! $forcesubpage) {
-		$bestlink=bestlink($page, $link);
+		$bestlink=bestlink($lpage, $link);
 	}
 	else {
-		$bestlink="$page/".lc($link);
+		$bestlink="$lpage/".lc($link);
 	}
 
 	$linktext=pagetitle(basename($link)) unless defined $linktext;
@@ -281,14 +282,13 @@ sub htmllink ($$;$$$) { #{{{
 	
 	# TODO BUG: %renderedfiles may not have it, if the linked to page
 	# was also added and isn't yet rendered! Note that this bug is
-	# masked by the bug mentioned below that makes all new files
-	# be rendered twice.
+	# masked by the bug that makes all new files be rendered twice.
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		return "<span><a href=\"".
-			cgiurl(do => "create", page => $link, from =>$page).
+			cgiurl(do => "create", page => $link, from => $page).
 			"\">?</a>$linktext</span>"
 	}
 	

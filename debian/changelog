@@ -19,12 +19,23 @@ ikiwiki (1.4) UNRELEASED; urgency=low
   * Enable full utf-8 support for page input and output.
   * Add a workaround for markdown, which does not work well with utf-8
     strings.
-  * --getctime had bitrotted (well I only ever used it the once so far..), 
+  * --getctime had bitrotted (well I only ever used it the once so far..),
     fix and make it a bit more flexible
   * rcs_getctime is changed, now rather than needing to loop over all pages,
     it should just use the rcs to get the ctime of the passed file.
+  * When inlining a page in another one, links from the inlined page are now
+    expanded the same as they are when rendering the inlined page as a
+    standalone page. So rather than being expanded from the POV of the
+    inlining page, they are expanded from the POV of the inlined page.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 26 May 2006 04:49:49 -0400
+    For example, a link from blog/foo to "bar" will now link to blog/bar
+    if it exists. Previously this needed to be a link explicitly to 
+    "blog/bar"; such links will also continue to work.
+
+    (This was slightly complex to do as the link still has to be constructed
+    relative to the inlining page.)
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 26 May 2006 11:43:08 -0400
 
 ikiwiki (1.3) unstable; urgency=low
 

@@ -7,13 +7,14 @@ use strict;
 use File::Spec;
 use IkiWiki;
 
-sub linkify ($$) { #{{{
+sub linkify ($$$) { #{{{
+	my $lpage=shift;
 	my $page=shift;
 	my $content=shift;
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
-		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($page, titlepage($3), 0, 0, pagetitle($2)))
-		   : ( $1 ? "[[$3]]" :    htmllink($page, titlepage($3)))
+		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), 0, 0, pagetitle($2)))
+		   : ( $1 ? "[[$3]]" :    htmllink($lpage, $page, titlepage($3)))
 	}eg;
 	
 	return $content;
@@ -181,7 +182,7 @@ sub genpage ($$$) { #{{{
 		$actions++;
 	}
 	if ($config{discussion}) {
-		$template->param(discussionlink => htmllink($page, "Discussion", 1, 1));
+		$template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
 		$actions++;
 	}
 
@@ -267,7 +268,7 @@ sub render ($) { #{{{
 		
 		$links{$page}=[findlinks($page, $content)];
 		
-		$content=linkify($page, $content);
+		$content=linkify($page, $page, $content);
 		$content=preprocess($page, $content);
 		$content=htmlize($type, $content);
 		

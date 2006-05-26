@@ -36,7 +36,7 @@ sub preprocess (@) { #{{{
 	}
 	
 	return "All pages are linked to by other pages." unless @orphans;
-	return "<ul>\n".join("\n", map { "<li>".IkiWiki::htmllink($params{page}, $_, 1)."</li>" } sort @orphans)."</ul>\n";
+	return "<ul>\n".join("\n", map { "<li>".IkiWiki::htmllink($params{page}, $params{page}, $_, 1)."</li>" } sort @orphans)."</ul>\n";
 } # }}}
 
 1
