@@ -347,8 +347,12 @@ sub refresh () { #{{{
 			push @add, $file;
 			$links{$page}=[];
 			$pagesources{$page}=$file;
-			$pagectime{$page}=mtime(srcfile($file))
-				unless exists $pagectime{$page};
+			if ($config{getctime} && -e "$config{srcdir}/$file") {
+				$pagectime{$page}=rcs_getctime("$config{srcdir}/$file");
+			}
+			elsif (! exists $pagectime{$page}) {
+				$pagectime{$page}=mtime(srcfile($file));
+			}
 		}
 	}
 	my @del;
