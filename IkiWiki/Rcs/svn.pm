@@ -126,7 +126,7 @@ sub rcs_recentchanges ($) { #{{{
 				$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
 				$diffurl=~s/\[\[r2\]\]/$rev/g;
 				push @pages, {
-					link => htmllink("", pagename($file), 1),
+					link => htmllink("", "", pagename($file), 1),
 					diffurl => $diffurl,
 				} if length $file;
 			}
@@ -145,7 +145,7 @@ sub rcs_recentchanges ($) { #{{{
 				}
 				
 				push @ret, { rev => $rev,
-					user => htmllink("", $user, 1),
+					user => htmllink("", "", $user, 1),
 					committype => $committype,
 					when => $when, message => [@message],
 					pages => [@pages],
