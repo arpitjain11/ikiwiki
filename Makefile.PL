@@ -22,7 +22,7 @@ extra_build:
 		
 extra_clean:
 	rm -rf html doc/.ikiwiki
-	rm -f ikiwiki.man
+	rm -f ikiwiki.man ikiwiki-mass-rebuild.man
 
 extra_install:
 	install -d $(PREFIX)/share/ikiwiki/templates

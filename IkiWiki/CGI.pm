@@ -291,13 +291,13 @@ sub cgi_editpage ($$) { #{{{
 
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
-		fields => [qw(do rcsinfo subpage from page content comments)],
+		fields => [qw(do rcsinfo subpage from page editcontent comments)],
 		header => 1,
 		method => 'POST',
 		validate => {
-			content => '/.+/',
+			editcontent => '/.+/',
 		},
-		required => [qw{content}],
+		required => [qw{editcontent}],
 		javascript => 0,
 		params => $q,
 		action => $config{cgiurl},
@@ -330,7 +330,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "subpage", type => 'hidden');
 	$form->field(name => "page", value => "$page", force => 1);
 	$form->field(name => "comments", type => "text", size => 80);
-	$form->field(name => "content", type => "textarea", rows => 20,
+	$form->field(name => "editcontent", type => "textarea", rows => 20,
 		cols => 80);
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
@@ -351,7 +351,7 @@ sub cgi_editpage ($$) { #{{{
 		require IkiWiki::Render;
 		$form->tmpl_param("page_preview",
 			htmlize($config{default_pageext},
-				linkify($page, $page, $form->field('content'))));
+				linkify($page, $page, $form->field('editcontent'))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");
@@ -410,14 +410,14 @@ sub cgi_editpage ($$) { #{{{
 		}
 		elsif ($form->field("do") eq "edit") {
 			page_locked($page, $session);
-			if (! defined $form->field('content') || 
-			    ! length $form->field('content')) {
+			if (! defined $form->field('editcontent') || 
+			    ! length $form->field('editcontent')) {
 				my $content="";
 				if (exists $pagesources{lc($page)}) {
 					$content=readfile(srcfile($pagesources{lc($page)}));
 					$content=~s/\n/\r\n/g;
 				}
-				$form->field(name => "content", value => $content,
+				$form->field(name => "editcontent", value => $content,
 					force => 1);
 			}
 			$form->tmpl_param("page_select", 0);
@@ -431,7 +431,7 @@ sub cgi_editpage ($$) { #{{{
 		# save page
 		page_locked($page, $session);
 		
-		my $content=$form->field('content');
+		my $content=$form->field('editcontent');
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
 		writefile($file, $config{srcdir}, $content);
@@ -463,7 +463,7 @@ sub cgi_editpage ($$) { #{{{
 				$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 					force => 1);
 				$form->tmpl_param("page_conflict", 1);
-				$form->field("content", value => $conflict, force => 1);
+				$form->field("editcontent", value => $conflict, force => 1);
 				$form->field("do", "edit)");
 				$form->tmpl_param("page_select", 0);
 				$form->field(name => "page", type => 'hidden');

@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+action=""
+if [ -n "$1" ]; then
+	action="$1"
+fi
+
 wikilist=/etc/ikiwiki/wikilist
 
 processline () {
@@ -15,8 +20,8 @@ processline () {
 	if [ ! -f "$setup" ]; then
 		echo "warning: $setup specified in /etc/ikiwiki/wikilist does not exist, skipping" >&2
 	else
-		echo "Rebuilding $setup as user $user ..."
-		su "$user" -c "ikiwiki -setup $setup"
+		echo "Processing $setup as user $user ..."
+		su "$user" -c "ikiwiki -setup $setup $action"
 	fi
 }
 

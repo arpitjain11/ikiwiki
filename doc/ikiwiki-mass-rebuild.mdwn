@@ -14,6 +14,13 @@ on a system. You will need to list the wikis it shuld build in the file
 
 user /path/to/wiki
 
+# OPTIONS
+
+* -refresh
+
+  Rather than rebuilding all the wikis, just build any changed pages
+  (including pages inherited from the basewiki).
+
 # AUTHOR
 
 Joey Hess <joey@kitenet.net>

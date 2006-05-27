@@ -27,11 +27,12 @@ confict and commit again to save your changes.
 <TMPL_VAR FIELD-FROM>
 <TMPL_VAR FIELD-RCSINFO>
 <TMPL_IF NAME="PAGE_SELECT">
-Page location: <TMPL_VAR FIELD-PAGE><br />
+Page location: <TMPL_VAR FIELD-PAGE>
 <TMPL_ELSE>
+<br />
 <TMPL_VAR FIELD-PAGE>
 </TMPL_IF>
-<TMPL_VAR FIELD-CONTENT><br />
+<TMPL_VAR FIELD-EDITCONTENT><br />
 <TMPL_IF NAME="CAN_COMMIT">
 Optional comment about this change:<br />
 <TMPL_VAR FIELD-COMMENTS><br />
