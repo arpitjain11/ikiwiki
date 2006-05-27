@@ -1,0 +1,37 @@
+ikiwiki 1.4 released with these changes:
+
+   * Tell HTML::Scrubber to treat "/" as a valid attribute which is its
+     very strange way of enabling proper XHTML <br /> type tags. Output html
+     should be always valid again now.
+   * The page name and parent links has switched from using a <h1> to a styled
+     <span>, so pages can use <h1> internally instead of needing to use <h2>.
+   * Updated all of ikiwiki's own wiki pages for that.
+   * Add pagetemplate hook, which can be used by plugins that want to mess
+     around with adding new stuff to the page template.
+   * Remove headercontent; the search plugin now adds the search box to the
+     header by registering a pagetemplate hook, and other plugins should do
+     similarly.
+   * Rebuilding on upgrade to this version is recommended.
+   * Add a html validity check to the test suite, using the wdg-html-validator,
+     if available.
+   * Make the html valid when there is nothing in the actions list.
+   * Reordered some function call parameters for consistency.
+   * Enable full utf-8 support for page input and output.
+   * Add a workaround for markdown, which does not work well with utf-8
+     strings.
+   * --getctime had bitrotted (well I only ever used it the once so far..),
+     fix and make it a bit more flexible
+   * rcs\_getctime is changed, now rather than needing to loop over all pages,
+     it should just use the rcs to get the ctime of the passed file.
+   * When inlining a page in another one, links from the inlined page are now
+     expanded the same as they are when rendering the inlined page as a
+     standalone page. So rather than being expanded from the POV of the
+     inlining page, they are expanded from the POV of the inlined page.
+     For example, a link from blog/foo to "bar" will now link to blog/bar
+     if it exists. Previously this needed to be a link explicitly to
+     "blog/bar"; such links will also continue to work.
+     (This was slightly complex to do as the link still has to be constructed
+     relative to the inlining page.)
+   * Make page edit textarea resize to fit browser window.
+   * Add -refresh option to ikiwiki-mass-rebuild and use that on upgrades that
+     do not need a full rebuild, in order to update any basewiki pages.
