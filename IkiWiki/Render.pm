@@ -202,7 +202,7 @@ sub genpage ($$$) { #{{{
 		parentlinks => [parentlinks($page)],
 		content => $content,
 		backlinks => [backlinks($page)],
-		mtime => scalar(gmtime($mtime)),
+		mtime => displaytime($mtime),
 		styleurl => styleurl($page),
 	);
 	
@@ -220,6 +220,18 @@ sub check_overwrite ($$) { #{{{
 			join(" ",(grep { $renderedfiles{$_} eq $dest } keys
 				%renderedfiles)).
 			", before, so not rendering from $src");
+	}
+} #}}}
+
+sub displaytime ($) { #{{{
+	my $time=shift;
+
+	if ($config{timeformat} eq '%c') {
+		return scalar(localtime($time)); # optimisation
+	}
+	else {
+		eval q{use POSIX};
+		return POSIX::strftime($config{timeformat}, localtime($time));
 	}
 } #}}}
 

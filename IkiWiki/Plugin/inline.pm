@@ -62,7 +62,7 @@ sub preprocess_inline (@) { #{{{
 		$template->param(pagelink => htmllink($params{page}, $params{page}, $page));
 		$template->param(content => get_inline_content($params{page}, $page))
 			if $params{archive} eq "no";
-		$template->param(ctime => scalar(gmtime($pagectime{$page})));
+		$template->param(ctime => displaytime($pagectime{$page}));
 		$ret.=$template->output;
 	}
 	

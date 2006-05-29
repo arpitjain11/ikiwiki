@@ -177,6 +177,11 @@ These options configure the wiki.
   Enables or disables "Discussion" links from being added to the header of
   every page. The links are enabled by default.
 
+* --timeformat format
+
+  Specify how to display the time or date. The format string is passed to the
+  strftime(3) function.
+
 * --verbose
 
   Be vebose about what is being done.
