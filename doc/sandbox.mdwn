@@ -54,28 +54,6 @@ Bulleted list
 * [GNU](http://www.gnu.org/)
 * [Email](mailto:noone@invalid)
 
-----
-&#1506;&#1489;&#1512;&#1497;&#1514;
-&#1506;&#1489;&#1512;&#1497;&#1514; &#1506;&#1460;&#1501; &#1504;&#1456;&#1511;&#1493;&#1468;&#1491;&#1493;&#1465;&#1514;
-----
-
-So did that work? --[[Joey]]
-
-----
-
-Turkish spesific characters (latin5) expected to be here --> Ä±ÄŸÃ¼ÅŸÃ¶Ã§Ä°ÄžÃœÅžÃ–Ã‡
-(character encoding set as UTF-8 on the client side)
-
-Hmm...  Rendered properly but now in this second entry, they all seem to be corrupted in the CGI form.  How about `sandbox.mdwn`?  --[[Roktas]]
-
-Displayed correctly after the previous (second) test, corrupted in the CGI form  though. --[[Roktas]]
-
-Multibyte characters are rendered and stored correctly (looking at the `sandbox.mdwn` diff), but we have a problem in CGI forms.  --[[Roktas]]
-
-----
-
-Esto está en español :-)
-
 -----
 
 This sandbox is also a [[blog]]!
