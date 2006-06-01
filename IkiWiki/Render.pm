@@ -426,7 +426,7 @@ FILE:		foreach my $file (@files) {
 	}
 
 	# Handle backlinks; if a page has added/removed links, update the
-	# pages it links to. Also handles rebuilding dependat pages.
+	# pages it links to. Also handles rebuilding dependant pages.
 	# TODO: inefficient; pages may get rendered above and again here;
 	# problem is the backlinks could be wrong in the first pass render
 	# above

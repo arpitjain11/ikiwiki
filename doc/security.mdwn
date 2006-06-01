@@ -184,12 +184,18 @@ their own can race it.
 
 Similarly, a svn commit of a symlink could be made, ikiwiki ignores it
 because of the above, but the symlink is still there, and then you edit the
-page from the web, which follows the symlink when reading the page, and
-again when saving the changed page.
+page from the web, which follows the symlink when reading the page
+(exposing the content), and again when saving the changed page (changing
+the content).
 
-This was fixed by making ikiwiki refuse to read or write to files that are
-symlinks, or that are in subdirectories that are symlinks, combined with
-the above locking.
+This was fixed for page saving by making ikiwiki refuse to write to files
+that are symlinks, or that are in subdirectories that are symlinks,
+combined with the above locking.
+
+For page editing, it's fixed by ikiwiki checking to make sure that it
+already has found a page by scanning the tree, before loading it for
+editing, which as described above, also is done in a way that avoids
+symlink attacks.
 
 ## underlaydir override attacks
 
@@ -198,20 +204,24 @@ pages to all wikis w/o needing to copy them into the wiki. Since ikiwiki
 internally stores only the base filename from the underlaydir or srcdir,
 and searches for a file in either directory when reading a page source,
 there is the potential for ikiwiki's scanner to reject a file from the
-srcdir for some reason (such as it being a symlink), find a valid copy of
-the file in the underlaydir, and then when loading the file, mistekenly
-load the bad file from the srcdir.
+srcdir for some reason (such as it being contained in a directory that is
+symlinked in), find a valid copy of the file in the underlaydir, and then
+when loading the file, mistakenly load the bad file from the srcdir.
 
-This attack is avoided by making ikiwiki scan the srcdir first, and refuse
-to add any files from the underlaydir if a file also exists in the srcdir
-with the same name. **But**, note that this assumes that any given page can
-be produced from a file with only one name (`page.mdwn` => `page.html`).
+This attack is avoided by making ikiwiki refuse to add any files from the
+underlaydir if a file also exists in the srcdir with the same name.
 
-If it's possible for files with different names to produce a given page, it
-would still be possible to use this attack to confuse ikiwiki into
-rendering the wrong thing. This is not currently possible, but must be kept
-in mind in the future when for example adding support for generating html
-pages from source with some other extension.
+## multiple page source issues
+
+Note that I previously worried that underlay override attacks could also be
+accomplished if ikiwiki were extended to support other page markup
+languages besides markdown. However, a closer look indicates that this is
+not a problem: ikiwiki does preserve the file extension when storing the
+source filename of a page, so a file with another extension that renders to
+the same page name can't bypass the check. Ie, ikiwiki won't skip foo.rst
+in the srcdir, find foo.mdwn in the underlay, decide to render page foo and
+then read the bad foo.mdwn. Instead it will remember the .rst extension and
+only render a file with that extension.
 
 ## XSS attacks in page content
 
