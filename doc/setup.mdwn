@@ -66,13 +66,16 @@ and that has optional support for commits from the web.
    Most of the options, like `wikiname` in the setup file are the same as
    ikiwiki's command line options (documented in [[usage]]. `srcdir` and
    `destdir` are the two directories you specify when running ikiwiki by
-   hand. `rcsrepo` is the path to your master rcs repository.  Make sure
+   hand. `svnrepo` is the path to your subversion repository.  Make sure
    that all of these are pointing to the right directories, and read
    through and configure the rest of the file to your liking.
 
-   Note that the default file has a block to configure an Rcs wrapper to
-   update the wiki.  You need to uncomment the related block for whatever
-   rcs you use and comment out the other rcs blocks.
+   If you want to use git, comment out the subversion stuff, uncomment and
+   edit the git stuff.
+
+   Note that the default file has a block to configure an [[post-commit]] 
+   wrapper to update the wiki. You need to uncomment the related block for
+   whatever rcs you use and comment out the other rcs blocks.
 
    When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
    will set everything up and update your wiki.
@@ -90,14 +93,8 @@ and that has optional support for commits from the web.
    
    The `historyurl` setting makes ikiwiki add the links, and in that url,
    "\[[file]]" is replaced with the name of the file to view. So edit
-   ikiwiki.setup and set `historyurl` to something like this for
-   Subversion:
-
-   	`http://svn.host/trunk/\[[file]]?root=wiki`
-
-   Or this for Git:
-
-	`http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]`
+   ikiwiki.setup and ucomment the appropriate `historyurl` setting and edit
+   it for your setup.
    
    Then run `ikiwiki --setup ikiwiki.setup` again.
 

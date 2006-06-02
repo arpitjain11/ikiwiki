@@ -16,31 +16,45 @@ use IkiWiki::Setup::Standard {
 	
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
-	#historyurl => "http://svn.myhost/trunk/[[file]]",
 	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
 	#templatedir => "/usr/share/ikiwiki/templates",
 	
-	#rcs => "", # don't use svn
-	rcs => "svn", # use svn (the default)
+	# Subversion stuff.
+	rcs => "svn",
+	#historyurl => "http://svn.myhost/trunk/[[file]]",
 	svnrepo => "/svn/wiki",
 	svnpath => "trunk",
 
+	# Git stuff.
+	#rcs => "git",
+	#historyurl => "http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
+
 	wrappers => [
-		{
-			# The svn wrapper.
-			# Note that this will overwrite any exsting
-			# post-commit hook script, which may not be
-			# what you want.
-			wrapper => "/svn/wiki/hooks/post-commit",
-			wrappermode => "04755",
-			# Enable mail notifications of commits.
-			notify => 1,
-		},
 		#{
 		#	# The cgi wrapper.
 		#	cgi => 1,
 		#	wrapper => "/var/www/wiki/ikiwiki.cgi",
 		#	wrappermode => "06755",
+		#},
+		{
+			# The svn post-commit wrapper.
+			# Note that this will overwrite any exsting
+			# post-commit hook script, which may not be
+			# what you want.
+			wrapper => "/svn/wikirepo/hooks/post-commit",
+			wrappermode => "04755",
+			# Enable mail notifications of commits.
+			notify => 1,
+		},
+		#{
+		#	# The git post-update wrapper.
+		#	# Note that this will overwrite any exsting
+		#	# post-commit hook script, which may not be
+		#	# what you want.
+		#	wrapper => "/git/wikirepo/hooks/post-update",
+		#	wrappermode => "04755",
+		#	# Enable mail notifications of commits.
+		#	notify => 1,
 		#},
 	],
 	
