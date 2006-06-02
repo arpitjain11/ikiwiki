@@ -27,11 +27,13 @@ sub preprocess (@) { #{{{
 	my $page=$params{page};
 	delete $params{page};
 
+	eval q{use CGI 'escapeHTML'};
+
 	if ($key eq 'link') {
 		if (%params) {
 			$meta{$page}='' unless exists $meta{$page};
-			$meta{$page}.="<link href=\"$value\" ".
-				join(" ", map { "$_=\"$params{$_}\"" } keys %params).
+			$meta{$page}.="<link href=\"".escapeHTML($value)."\" ".
+				join(" ", map { escapeHTML("$_=\"$params{$_}\"") } keys %params).
 				" />\n";
 		}
 		else {
@@ -40,11 +42,11 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'title') {
-		$title{$page}=$value;
+		$title{$page}=escapeHTML($value);
 	}
 	else {
 		$meta{$page}='' unless exists $meta{$page};
-		$meta{$page}.="<meta name=\"$key\" content=\"$value\" />\n";
+		$meta{$page}.="<meta name=\"".escapeHTML($key)."\" content=\"".escapeHTML($value)."\" />\n";
 	}
 
 	return "";

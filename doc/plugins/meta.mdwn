@@ -1,4 +1,6 @@
 This plugin allows inserting arbitrary metadata into the source of a page.
+This plugin is not enabled by default. If it is enabled, the title of this
+page will say it is. [[meta title="meta plugin (enabled)"]]
 Enter the metadata as follows:
 
 	\\[[meta field="value"]]
@@ -39,7 +41,3 @@ You can use any field names you like, but here are some predefined ones:
 If the field is not treated specially (as the link and title fields are),
 the metadata will be written to the generated html page as a &lt;meta&gt;
 header.
-
-This plugin is not enabled by default. If it is enabled, the title of this
-page will say it is.
-[[meta title="meta plugin (enabled)"]]

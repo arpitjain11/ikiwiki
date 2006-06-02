@@ -79,15 +79,6 @@ Runs on the raw source of a page, before anything else touches it, and can
 make arbitrary changes. The function is passed named parameters `page` and
 `content` and should return the filtered content.
 
-## sanitize
-
-	IkiWiki::hook(type => "filter", id => "foo", call => \&sanitize);
-
-Use this to implement html sanitization or anything else that needs to
-modify the content of a page after it has been fully converted to html.
-The function is passed the page content and should return the sanitized
-content.
-
 ## pagetemplate
 
 	IkiWiki::hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
@@ -98,6 +89,15 @@ of the page, and a `HTML::Template` object that is the template that will
 be used to generate the page. It can manipulate that template, the most
 common thing to do is probably to call $template->param() to add a new
 custom parameter to the template.
+
+## sanitize
+
+	IkiWiki::hook(type => "sanitize", id => "foo", call => \&sanitize);
+
+Use this to implement html sanitization or anything else that needs to
+modify the content of a page after it has been fully converted to html.
+The function is passed the page content and should return the sanitized
+content.
 
 ## delete
 
