@@ -37,3 +37,6 @@
   which makes it spit out eacaped charcters for utf-8 chars. If it's run in
   locale en_US.UTF-8, it would be ok, but that would require the system
   have that locale.
+
+  Seems that the right fix for this is to use svn log --xml, which is
+  always utf-8 and come up with a parser for that.
