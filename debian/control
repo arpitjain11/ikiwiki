@@ -9,17 +9,17 @@ Standards-Version: 3.7.2
 Package: ikiwiki
 Architecture: all
 Depends: ${perl:Depends}, markdown, libtimedate-perl, libhtml-template-perl, libhtml-scrubber-perl, libcgi-formbuilder-perl (>= 3.02.02), libtime-duration-perl, libcgi-session-perl, libmail-sendmail-perl, gcc | c-compiler, libc6-dev | libc-dev
-Recommends: subversion, hyperestraier
+Recommends: subversion | git-core, hyperestraier
 Suggests: viewcvs
 Description: a wiki compiler
  ikiwiki converts a directory full of wiki pages into html pages suitable
  for publishing on a website. Unlike many wikis, ikiwiki does not have its
  own means of storing page history or its own markup language. Instead it
- uses subversion and markdown.
+ uses subversion (or git) and markdown.
  .
  ikiwiki implements all of the other standard features of a wiki, including
  web-based page editing, user registration and logins, a RecentChanges
- page, BackLinks, search, Discussion pages, smart merging and conflict
+ page, BackLinks, search, Discussion pages, tags, smart merging and conflict
  resolution, page locking, and commit emails.
  .
  It also supports generating RSS feeds and blogging.

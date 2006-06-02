@@ -46,7 +46,7 @@ These options control the mode that ikiwiki is operating in.
   directory. The filename to use for the wrapper is optional.
 
   The wrapper is designed to be safely made suid and be run by untrusted
-  users, as a [[Subversion]] [[post-commit]] hook, or as a [[CGI]].
+  users, as a [[post-commit]] hook, or as a [[CGI]].
 
   Note that the generated wrapper will ignore all command line parameters.
 
@@ -88,14 +88,17 @@ These options configure the wiki.
 * --notify
 
   Enable email notification of commits. This should be used when running
-  ikiwiki as a [[Subversion]] [[post-commit]] hook.
+  ikiwiki as a [[post-commit]] hook.
 
 * --rcs=svn, --no-rcs
 
   Enable or disable use of a revision control system.
 
-  If you use svn ([[Subversion]]), the `source` directory is assumed to be
-  a working copy, and is automatically updated before building the wiki.
+  If you use svn, the `source` directory is assumed to be
+  a [[Subversion]] working copy.
+
+  If you use git, the `source` directory is assumed to be a clone of the
+  [[git]] repository.
 
   In [[CGI]] mode, with a revision control system enabled pages edited via
   the web will be committed. Also, the [[RecentChanges]] link will be placed
@@ -164,8 +167,8 @@ These options configure the wiki.
 
 * --plugin name
 
-  Enables the use of the specified plugin in the wiki. See [[plugins]] for
-  details. Note that plugin names are case sensative.
+  Enables the use of the specified [[plugin|plugins]] in the wiki. 
+  Note that plugin names are case sensative.
 
 * --disable-plugin name
 

@@ -1,17 +1,27 @@
 So you want to set up your own wiki using ikiwiki? This tutorial will walk
-you through setting up a wiki that is stored in [[Subversion]] and that has
-optional support for commits from the web.
+you through setting up a wiki that is stored in [[Subversion]] or [[Git]],
+and that has optional support for commits from the web.
 
 1. [[Install]] ikiwiki. See [[download]] for where to get it.
 
-2. Create the subversion repository for your wiki.
+2. Create the master rcs repository for your wiki.
 
+		# Subversion
 		svnadmin create /svn/wikirepo
 		svn mkdir file:///svn/wikirepo/trunk -m create
 
+		# Git
+		mkdir /git/wikirepo
+		cd /git/wikirepo
+		git init-db
+
 3. Check out the repository to make the working copy that ikiwiki will use.
 
+		# Subversion
 		svn co file:///svn/wikirepo/trunk ~/wikiwc
+
+		# Git
+		git clone /git/wikirepo ~/wikiwc
 
 4. Build your wiki for the first time.
 
@@ -25,10 +35,18 @@ optional support for commits from the web.
    used if you don't have a custom version, so let's start by making a
    custom version of the wiki's index page:
 
-   		cp /usr/share/ikiwiki/basewiki/index.mdwn ~/wikiwc
-		svn add ~/wikiwc/index.mdwn
-		$EDITOR ~/wikiwc/index.mdwn
-		svn commit ~/wikiwc/index.mdwn -m customised
+		cd ~/wikiwc
+   		cp /usr/share/ikiwiki/basewiki/index.mdwn .
+		$EDITOR index.mdwn
+
+		# Subversion
+		svn add index.mdwn
+		svn commit -m customised index.mdwn
+
+		# Git
+		git add index.mdwn
+		git commit -m customised index.mdwn
+		git push origin
 
    You can also add any files you like from scratch of course.
 
@@ -46,15 +64,15 @@ optional support for commits from the web.
    `doc/ikiwiki.setup` in the ikiwiki sources), and edit it. 
    
    Most of the options, like `wikiname` in the setup file are the same as
-   ikiwiki's command line options (documented in [[usage]]. `srcdir`
-   and `destdir` are the two directories you specify when
-   running ikiwiki by hand. `svnrepo` is the path to your subversion 
-   repository. Make sure that all of these are pointing to the right
-   directories, and read through and configure the rest of the file to your
-   liking.
+   ikiwiki's command line options (documented in [[usage]]. `srcdir` and
+   `destdir` are the two directories you specify when running ikiwiki by
+   hand. `rcsrepo` is the path to your master rcs repository.  Make sure
+   that all of these are pointing to the right directories, and read
+   through and configure the rest of the file to your liking.
 
-   Note that the default file has a block to configure a svn wrapper. This
-   sets up a [[post-commit]] hook to update the wiki.
+   Note that the default file has a block to configure an Rcs wrapper to
+   update the wiki.  You need to uncomment the related block for whatever
+   rcs you use and comment out the other rcs blocks.
 
    When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
    will set everything up and update your wiki.
@@ -66,12 +84,20 @@ optional support for commits from the web.
    `ikiwiki --setup ikiwiki.setup`, and you're done!
 
 9. Add [[PageHistory]] links to the top of pages. This requires you to have
-   setup [[ViewCVS]] or something similar to access your [[Subversion]]
-   repository.  The `historyurl` setting makes ikiwiki add the links, and 
-   in that url, "\[[file]]" is replaced with the name of the file to view. So
-   edit ikiwiki.setup and set `historyurl` to something like this:
+   setup a repository browser.  For Subversion, you may use [[ViewCVS]] or
+   something similar to access your [[Subversion]] repository.  For Git,
+   [[Gitweb]] can be used.
+   
+   The `historyurl` setting makes ikiwiki add the links, and in that url,
+   "\[[file]]" is replaced with the name of the file to view. So edit
+   ikiwiki.setup and set `historyurl` to something like this for
+   Subversion:
 
    	`http://svn.host/trunk/\[[file]]?root=wiki`
+
+   Or this for Git:
+
+	`http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]`
    
    Then run `ikiwiki --setup ikiwiki.setup` again.
 

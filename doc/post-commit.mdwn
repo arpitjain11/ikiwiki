@@ -1,32 +1,19 @@
-A post-commit hook is run every time you commit a change to your subversion
-repository. To make the wiki be updated each time a commit is made, it can
-be run from (or as) a post-commit hook.
+A post-commit hook is run every time you commit a change to your
+[[subversion]] (or [[git]]) repository. To make the wiki be updated each
+time a commit is made, it can be run from (or as) a post-commit hook.
 
-The best way to run ikiwiki in a [[Subversion]] post-commit hook is using
-a wrapper, which can be generated using `ikiwiki --wrapper`.
-
-First, set up the subversion checkout that ikiwiki will update and compile
-into your wiki at each subversion commit. Run ikiwiki a few times by hand
-to get a feel for it. Now, generate the wrapper by adding "--wrapper"
-to whatever command line you've been using to run ikiwiki. For example:
-
-	~/wiki-checkout> ikiwiki . ~/public_html/wiki
-	~/wiki-checkout> ikiwiki . ~/public_html/wiki --wrapper
-	successfully generated ikiwiki-wrap
+The best way to run ikiwiki in a post-commit hook is using a wrapper, which
+ikiwiki is usually configured to generate using a setup file.
 
 The generated wrapper is a C program that is designed to safely be made
 suid if necessary. It's hardcoded to run ikiwiki with the settings
 specified when you ran --wrapper, and can only be used to update and
 compile that one checkout into the specified html directory.
 
-Now, put the wrapper somewhere convenient, and create a post-commit hook
-script in your subversion repository for the wiki. All the post-commit
-hook has to do is run the wrapper (with no parameters).
-
-Depending on your Subversion setup, the post-commit hook might end up
-getting called by users who have write access to subversion, but not to
+Depending on your setup, the post-commit hook might end up
+getting called by users who have write access to the repository, but not to
 your wiki checkout and html directory. If so, you can safely make
-ikiwiki-wrap suid to a user who can write there (*not* to root!). You might
+the wrapper suid to a user who can write there (*not* to root!). You might
 want to read [[Security]] first.
 
 [[setup]] explains setting this up in more detail.
