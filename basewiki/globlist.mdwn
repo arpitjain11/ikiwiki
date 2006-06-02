@@ -14,3 +14,7 @@ pages that match it. So if you want to specify all pages except for
 Discussion pages and the SandBox:
 
 	* !SandBox !*/Discussion
+
+It's also possible to match pages that link to a given page, by writing
+"link(page)" in a globlist. Or, match pages that a given page links to, by
+writing "backlink(page)".

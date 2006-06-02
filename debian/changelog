@@ -4,8 +4,17 @@ ikiwiki (1.5) UNRELEASED; urgency=low
     Note that as a side effect, dates will now be displayed using the local
     timezone, not as GMT.
   * More security review.
+  * Patch from Dr. Zini to add link() and backlink() to globlists. This allows
+    for some handy stuff like:
+    - Using links as a kind of tag; creating blog pages that list all pages
+      containing a given tag/link or not containing some other tag.
+    - Subscribing to mail notifications whenever a change is made to a page
+      that is a backlink of page foo. Ie, "Please notify me of changes in all
+      pages that link to my home page in the wiki"
+    - Locking any pages that are linked to from a particular page, so that
+      lists of locks can be exposed in the wiki.
 
- -- Joey Hess <joeyh@debian.org>  Thu,  1 Jun 2006 15:12:29 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu,  1 Jun 2006 20:56:58 -0400
 
 ikiwiki (1.4) unstable; urgency=low
 

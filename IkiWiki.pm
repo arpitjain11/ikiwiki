@@ -401,13 +401,27 @@ sub glob_match ($$) { #{{{
 	my $page=shift;
 	my $glob=shift;
 
-	# turn glob into safe regexp
-	$glob=quotemeta($glob);
-	$glob=~s/\\\*/.*/g;
-	$glob=~s/\\\?/./g;
-	$glob=~s!\\/!/!g;
-	
-	$page=~/^$glob$/i;
+	if ($glob =~ /^link\((.+)\)$/) {
+		my $rev = $links{$page} or return undef;
+		foreach my $p (@$rev) {
+			return 1 if lc $p eq $1;
+		}
+		return 0;
+	} elsif ($glob =~ /^backlink\((.+)\)$/) {
+		my $rev = $links{$1} or return undef;
+		foreach my $p (@$rev) {
+			return 1 if lc $p eq $page;
+		}
+		return 0;
+	} else {
+		# turn glob into safe regexp
+		$glob=quotemeta($glob);
+		$glob=~s/\\\*/.*/g;
+		$glob=~s/\\\?/./g;
+		$glob=~s!\\/!/!g;
+		
+		return $page=~/^$glob$/i;
+	}
 } #}}}
 
 sub globlist_match ($$) { #{{{
