@@ -32,3 +32,8 @@
   line if --cgi is set, even if it's not yet running as a cgi
 * The meta plugin doesn't affect a page if it's being inlined. Probably
   setting the title with it should override the title of the blog post.
+* svn log messages containing utf-8 (such as r773) don't get displayed
+  right in RecentChanges. The problem is ikiwiki runs svn log in locale C,
+  which makes it spit out eacaped charcters for utf-8 chars. If it's run in
+  locale en_US.UTF-8, it would be ok, but that would require the system
+  have that locale.
