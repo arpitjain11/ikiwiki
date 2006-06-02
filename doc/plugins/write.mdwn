@@ -35,10 +35,12 @@ This is probably the most common use of a plugin.
 Replace "foo" with the command name that will be used inside brackers for
 the preprocessor directive.
 
-Each time the directive is processed, the referenced function (`preprocess` in the example above) is called, and is passed named parameters. A
-"page" parameter gives the name of the page that embedded the preprocessor directive. All parameters included in the directive are included
-as named parameters as well. Whatever the function returns goes onto the
-page in place of the directive.
+Each time the directive is processed, the referenced function (`preprocess`
+in the example above) is called, and is passed named parameters. A "page"
+parameter gives the name of the page that embedded the preprocessor
+directive. All parameters included in the directive are included as named
+parameters as well. Whatever the function returns goes onto the page in
+place of the directive.
 
 ## Error handing
 

@@ -1,0 +1,18 @@
+While ikiwiki supports hierarchically categorising pages by creating
+[[SubPage]]s, that's often not flexible enough, and it can also be useful
+to tag pages in various non-hierarchical ways.
+
+Since this is a wiki, tagging is just a form of linking. For example, since
+this page links to [[features]], it can be considered to have something to
+do with ikiwiki's features. If you want to put pages into a category, the
+typical wiki way to do so is to create a "CategoryFoo" page and link pages
+in the category to it. That is just another form of tagging.
+
+Sometimes you may want to tag a page without putting a visible link on it.
+The [[meta_plugin|plugins/meta]] allows you to do so, like this:
+
+	\\[[meta link=mytag]]
+
+One way to use these tags is to create a [[blog]] of pages that have a
+particular set of tags. [[Plugins]] can be written to do anything else with
+tags that you might desire.

@@ -30,6 +30,5 @@
   underlaydir gets a mtime newer than the mtime the removed file had.
 * ikiwiki will generate html formatted error messages to the command
   line if --cgi is set, even if it's not yet running as a cgi
-* if a page containing an rss feed happens to show up in an rss feed,
-  the preprocessor directives won't be expanded (good) but are left in
-  raw rather than removed (bad).
+* The meta plugin doesn't affect a page if it's being inlined. Probably
+  setting the title with it should override the title of the blog post.

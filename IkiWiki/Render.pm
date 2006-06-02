@@ -95,9 +95,10 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
-sub preprocess ($$) { #{{{
+sub preprocess ($$;$) { #{{{
 	my $page=shift;
 	my $content=shift;
+	my $onlystrip=shift || 0; # strip directives without processing
 
 	my $handle=sub {
 		my $escape=shift;
@@ -106,12 +107,17 @@ sub preprocess ($$) { #{{{
 		if (length $escape) {
 			return "[[$command $params]]";
 		}
+		elsif ($onlystrip) {
+			return "";
+		}
 		elsif (exists $hooks{preprocess}{$command}) {
-			my %params;
-			while ($params =~ /(\w+)=\"([^"]+)"(\s+|$)/g) {
-				$params{$1}=$2;
+			# Note: preserve order of params, some plugins may
+			# consider it significant.
+			my @params;
+			while ($params =~ /(\w+)=\"?([^"]+)"?(\s+|$)/g) {
+				push @params, $1, $2;
 			}
-			return $hooks{preprocess}{$command}{call}->(page => $page, %params);
+			return $hooks{preprocess}{$command}{call}->(@params, page => $page);
 		}
 		else {
 			return "[[$command not processed]]";
@@ -190,12 +196,6 @@ sub genpage ($$$) { #{{{
 		$template->param(have_actions => 1);
 	}
 
-	if (exists $hooks{pagetemplate}) {
-		foreach my $id (keys %{$hooks{pagetemplate}}) {
-			$hooks{pagetemplate}{$id}{call}->($page, $template);
-		}
-	}
-
 	$template->param(
 		title => $title,
 		wikiname => $config{wikiname},
@@ -205,6 +205,12 @@ sub genpage ($$$) { #{{{
 		mtime => displaytime($mtime),
 		styleurl => styleurl($page),
 	);
+
+	if (exists $hooks{pagetemplate}) {
+		foreach my $id (keys %{$hooks{pagetemplate}}) {
+			$hooks{pagetemplate}{$id}{call}->($page, $template);
+		}
+	}
 	
 	return $template->output;
 } #}}}

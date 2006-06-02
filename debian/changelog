@@ -13,11 +13,18 @@ ikiwiki (1.5) UNRELEASED; urgency=low
       pages that link to my home page in the wiki"
     - Locking any pages that are linked to from a particular page, so that
       lists of locks can be exposed in the wiki.
-  * Reorganised the doc wiki's todo/* pages, using a [[done]] tag to flag
+  * Reorganised the doc wiki's todo/* pages, using a link/tag to flag
     when a todo item is done, instead of the previous moving it to a different
     subdir.
+  * Allow pagetemplate plugins to override *anything* in the template.
+  * Add a meta plugin, which allows specifying various metadata about pages,
+    like license and author. It also allows for inserting html link and meta
+    tags into html, overriding the title, and adding hidden WikiLinks, which
+    can be useful when using link-based globbing for page categorisation.
+  * Remove preprocessor directives from inlined pages.
+  * Allow simple preprocessor directive values to be specified w/o quotes.
 
- -- Joey Hess <joeyh@debian.org>  Thu,  1 Jun 2006 21:30:03 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu,  1 Jun 2006 23:47:43 -0400
 
 ikiwiki (1.4) unstable; urgency=low
 
