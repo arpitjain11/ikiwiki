@@ -9,7 +9,7 @@ and that has optional support for commits from the web.
 		# Subversion
 		svnadmin create /svn/wikirepo
 		svn mkdir file:///svn/wikirepo/trunk -m create
-
+		
 		# Git
 		mkdir /git/wikirepo
 		cd /git/wikirepo
@@ -19,7 +19,7 @@ and that has optional support for commits from the web.
 
 		# Subversion
 		svn co file:///svn/wikirepo/trunk ~/wikiwc
-
+		
 		# Git
 		git clone /git/wikirepo ~/wikiwc
 
@@ -38,11 +38,11 @@ and that has optional support for commits from the web.
 		cd ~/wikiwc
    		cp /usr/share/ikiwiki/basewiki/index.mdwn .
 		$EDITOR index.mdwn
-
+		
 		# Subversion
 		svn add index.mdwn
 		svn commit -m customised index.mdwn
-
+		
 		# Git
 		git add index.mdwn
 		git commit -m customised index.mdwn
