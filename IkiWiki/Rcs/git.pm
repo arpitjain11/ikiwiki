@@ -11,10 +11,9 @@ use IkiWiki;
 package IkiWiki;
 
 my $origin_branch    = 'origin';            # Git ref for main repository
-my $master_branch    = 'master';            # Working branch
+my $master_branch    = 'master';            # working branch
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
-my $dummy_commit_msg = 'dummy commit';      # will be used in all dummy commits
-				            # and skipped in recent changes list
+my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 my $web_commit_msg   = qr/^web commit by (\w+):?(.*)/; # pattern for web commits
 
 sub _safe_git (&@) { #{{{
@@ -105,7 +104,7 @@ sub _merge_past ($$$) { #{{{
 		push @undo, sub {
 			return if ! -e "$hidden"; # already renamed
 			rename($hidden, $target)
-			   or debug("rename '$hidden' to '$target' failed: $!");
+			    or warn "rename '$hidden' to '$target' failed: $!";
 		};
 
 		my $branch = "throw_away_${sha1}"; # supposed to be unique
@@ -160,10 +159,9 @@ sub _parse_diff_tree (@) { #{{{
 	return if !defined @{ $dt_ref } || !length @{ $dt_ref }[0];
 
 	my %ci;
-
 	# Header line.
 	HEADER: while (my $line = shift @{ $dt_ref }) {
-		return if $line !~ m/^diff-tree (\S+)/;
+		return if $line !~ m/^diff-tree ($sha1_pattern)/;
 
 		my $sha1 = $1;
 		$ci{'sha1'} = $sha1;
@@ -217,14 +215,14 @@ sub _parse_diff_tree (@) { #{{{
 
 	# Modified files.
 	FILE: while (my $line = shift @{ $dt_ref }) {
-		if ($line =~ m{^
-			:([0-7]{6})[ ]       # from mode
-			([0-7]{6})[ ]        # to mode
-			([0-9a-fA-F]{40})[ ] # from sha1
-			([0-9a-fA-F]{40})[ ] # to sha1
-			(.)                  # status
-			([0-9]{0,3})\t       # similarity
-			(.*)                 # file
+		if ($line =~ m{^:
+			([0-7]{6})[ ]      # from mode
+			([0-7]{6})[ ]      # to mode
+			($sha1_pattern)[ ] # from sha1
+			($sha1_pattern)[ ] # to sha1
+			(.)                # status
+			([0-9]{0,3})\t     # similarity
+			(.*)               # file
 		$}xo) {
 			my ($sha1_from, $sha1_to, $file) =
 			   ($3,         $4,       $7   );
@@ -244,7 +242,7 @@ sub _parse_diff_tree (@) { #{{{
 		last FILE;
 	}
 
-	error("No detail in diff-tree output") if !defined $ci{'details'};
+	warn "No detail in diff-tree output" if !defined $ci{'details'};
 
 	return \%ci;
 } #}}}
@@ -259,7 +257,7 @@ sub git_commit_info (;$$) { #{{{
 
 	my @raw_lines =
 	    run_or_die(qq{git-rev-list --max-count=$num $sha1 |
-		git-diff-tree --stdin --pretty=raw -c -M -r});
+		          git-diff-tree --stdin --pretty=raw -M -r});
 
 	my @ci;
 	while (my $parsed = _parse_diff_tree(\@raw_lines)) {
@@ -274,10 +272,12 @@ sub git_sha1 (;$) { #{{{
 
 	my $file = shift || q{--};
 
-	my ($sha1) = run_or_die('git-rev-list', '--max-count=1', 'HEAD', $file);
-	($sha1) = $sha1 =~ m/($sha1_pattern)/; # sha1sum is untainted now
-	debug("Empty sha1sum for '$file'.") if !length $sha1;
-	return $sha1;
+	# Ignore error since a non-existing file might be given.
+	my ($sha1) = run_or_non('git-rev-list', '--max-count=1', 'HEAD', $file);
+	if ($sha1) {
+		($sha1) = $sha1 =~ m/($sha1_pattern)/; # sha1 is untainted now
+	} else { debug("Empty sha1sum for '$file'.") }
+	return defined $sha1 ? $sha1 : q{};
 } #}}}
 
 sub rcs_update () { #{{{
@@ -292,8 +292,7 @@ sub rcs_prepedit ($) { #{{{
 
 	my ($file) = @_;
 
-	my $sha1 = git_sha1($file);
-	return defined $sha1 ? $sha1 : q{};
+	return git_sha1($file);
 } #}}}
 
 sub rcs_commit ($$$) { #{{{
@@ -313,7 +312,7 @@ sub rcs_commit ($$$) { #{{{
 	# Check to see if the page has been changed by someone else since
 	# rcs_prepedit was called.
 	my $cur    = git_sha1($file);
-	my ($prev) = $rcstoken =~ m/^$sha1_pattern$/; # untaint
+	my ($prev) = $rcstoken =~ /^($sha1_pattern)$/; # untaint
 
 	if (defined $cur && defined $prev && $cur ne $prev) {
 		my $conflict = _merge_past($prev, $file, $dummy_commit_msg);
@@ -322,6 +321,7 @@ sub rcs_commit ($$$) { #{{{
 
 	# git-commit(1) returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
+	$message = possibly_foolish_untaint($message);
 	if (run_or_non('git-commit', '-m', $message, '-i', $file)) {
 		unlockwiki();
 		run_or_cry('git-push', $origin_branch);

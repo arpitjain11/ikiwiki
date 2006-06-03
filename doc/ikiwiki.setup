@@ -16,18 +16,19 @@ use IkiWiki::Setup::Standard {
 	
 	url => "http://myhost/wiki",
 	cgiurl => "http://myhost/ikiwiki.cgi",
-	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
 	#templatedir => "/usr/share/ikiwiki/templates",
 	
 	# Subversion stuff.
 	rcs => "svn",
 	#historyurl => "http://svn.myhost/trunk/[[file]]",
+	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
 	svnrepo => "/svn/wiki",
 	svnpath => "trunk",
 
 	# Git stuff.
 	#rcs => "git",
 	#historyurl => "http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
+	#diffurl => "http://git.host/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
 
 	wrappers => [
 		#{
@@ -38,7 +39,7 @@ use IkiWiki::Setup::Standard {
 		#},
 		{
 			# The svn post-commit wrapper.
-			# Note that this will overwrite any exsting
+			# Note that this will overwrite any existing
 			# post-commit hook script, which may not be
 			# what you want.
 			wrapper => "/svn/wikirepo/hooks/post-commit",
@@ -48,8 +49,8 @@ use IkiWiki::Setup::Standard {
 		},
 		#{
 		#	# The git post-update wrapper.
-		#	# Note that this will overwrite any exsting
-		#	# post-commit hook script, which may not be
+		#	# Note that this will overwrite any existing
+		#	# post-update hook script, which may not be
 		#	# what you want.
 		#	wrapper => "/git/wikirepo/hooks/post-update",
 		#	wrappermode => "04755",
