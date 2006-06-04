@@ -368,7 +368,7 @@ sub rcs_recentchanges ($) { #{{{
 			$diffurl =~ s/\[\[sha1_to\]\]/$bit->{'sha1_to'}/go;
 
 			push @pages, {
-				link => htmllink("", pagename($file), 1),
+				link => htmllink("", "", pagename($file), 1),
 				diffurl => $diffurl,
 			},
 		}
@@ -386,7 +386,7 @@ sub rcs_recentchanges ($) { #{{{
 
 		push @rets, {
 			rev        => $sha1,
-			user       => htmllink("", $user, 1),
+			user       => htmllink("", "", $user, 1),
 			committype => $type,
 			when       => $when,
 			message    => [@message],
