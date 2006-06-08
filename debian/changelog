@@ -26,8 +26,10 @@ ikiwiki (1.5) UNRELEASED; urgency=low
   * Add support for using git instead of subversion as the RCS backend,
     tremendous thanks to Recai Oktaş for this.
   * Doc updates for git.
+  * Fix absolute url munging in rss generation to support https, ftp, etc urls
+    not just http urls.
 
- -- Joey Hess <joeyh@debian.org>  Fri,  2 Jun 2006 01:13:18 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu,  8 Jun 2006 02:05:57 -0400
 
 ikiwiki (1.4) unstable; urgency=low
 

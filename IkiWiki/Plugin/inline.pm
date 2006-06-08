@@ -121,8 +121,8 @@ sub absolute_urls ($$) { #{{{
 
 	$url=~s/[^\/]+$//;
 	
-	$content=~s/<a\s+href="(?!http:\/\/)([^"]+)"/<a href="$url$1"/ig;
-	$content=~s/<img\s+src="(?!http:\/\/)([^"]+)"/<img src="$url$1"/ig;
+	$content=~s/<a\s+href="(?![^:]+:\/\/)([^"]+)"/<a href="$url$1"/ig;
+	$content=~s/<img\s+src="(?![^:]+:\/\/)([^"]+)"/<img src="$url$1"/ig;
 	return $content;
 } #}}}
 
