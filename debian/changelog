@@ -28,8 +28,11 @@ ikiwiki (1.5) UNRELEASED; urgency=low
   * Doc updates for git.
   * Fix absolute url munging in rss generation to support https, ftp, etc urls
     not just http urls.
+  * Patch from Recai Oktaş to improve utf-8 support, it should now use proper
+    utf-8 for edit and other fields, and for recentchanges. There may still
+    be utf-8 issues with the preferences page though.
 
- -- Joey Hess <joeyh@debian.org>  Thu,  8 Jun 2006 02:05:57 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 11 Jun 2006 14:48:41 -0400
 
 ikiwiki (1.4) unstable; urgency=low
 

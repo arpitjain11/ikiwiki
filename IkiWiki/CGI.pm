@@ -43,7 +43,8 @@ sub cgi_recentchanges ($) { #{{{
 		styleurl => styleurl(),
 		baseurl => "$config{url}/",
 	);
-	print $q->header, $template->output;
+	require Encode;
+	print $q->header(-charset=>'utf-8'), Encode::decode_utf8($template->output);
 } #}}}
 
 sub cgi_signin ($$) { #{{{
@@ -55,6 +56,7 @@ sub cgi_signin ($$) { #{{{
 		title => "signin",
 		fields => [qw(do title page subpage from name password confirm_password email)],
 		header => 1,
+		charset => "utf-8",
 		method => 'POST',
 		validate => {
 			confirm_password => {
@@ -172,7 +174,7 @@ sub cgi_signin ($$) { #{{{
 				$form->field(name => "confirm_password", type => "hidden");
 				$form->field(name => "email", type => "hidden");
 				$form->text("Registration successful. Now you can Login.");
-				print $session->header();
+				print $session->header(-charset=>'utf-8');
 				print misctemplate($form->title, $form->render(submit => ["Login"]));
 			}
 			else {
@@ -202,12 +204,12 @@ sub cgi_signin ($$) { #{{{
 			
 			$form->text("Your password has been emailed to you.");
 			$form->field(name => "name", required => 0);
-			print $session->header();
+			print $session->header(-charset=>'utf-8');
 			print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
 		}
 	}
 	else {
-		print $session->header();
+		print $session->header(-charset=>'utf-8');
 		print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
 	}
 } #}}}
@@ -222,6 +224,7 @@ sub cgi_prefs ($$) { #{{{
 		fields => [qw(do name password confirm_password email 
 		              subscriptions locked_pages)],
 		header => 0,
+		charset => "utf-8",
 		method => 'POST',
 		validate => {
 			confirm_password => {
@@ -281,7 +284,7 @@ sub cgi_prefs ($$) { #{{{
 		$form->text("Preferences saved.");
 	}
 	
-	print $session->header();
+	print $session->header(-charset=>'utf-8');
 	print misctemplate($form->title, $form->render(submit => \@buttons));
 } #}}}
 
@@ -293,6 +296,7 @@ sub cgi_editpage ($$) { #{{{
 	my $form = CGI::FormBuilder->new(
 		fields => [qw(do rcsinfo subpage from page editcontent comments)],
 		header => 1,
+		charset => "utf-8",
 		method => 'POST',
 		validate => {
 			editcontent => '/.+/',
@@ -414,7 +418,8 @@ sub cgi_editpage ($$) { #{{{
 			    ! length $form->field('editcontent')) {
 				my $content="";
 				if (exists $pagesources{lc($page)}) {
-					$content=readfile(srcfile($pagesources{lc($page)}));
+					require Encode;
+					$content=Encode::decode_utf8(readfile(srcfile($pagesources{lc($page)})));
 					$content=~s/\n/\r\n/g;
 				}
 				$form->field(name => "editcontent", value => $content,
@@ -445,7 +450,8 @@ sub cgi_editpage ($$) { #{{{
 		}
 		if (defined $form->field('comments') &&
 		    length $form->field('comments')) {
-			$message.=": ".$form->field('comments');
+			require Encode;
+			$message.=Encode::decode_utf8(": ".$form->field('comments'));
 		}
 		
 		if ($config{rcs}) {
