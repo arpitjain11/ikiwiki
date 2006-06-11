@@ -14,6 +14,10 @@ and that has optional support for commits from the web.
 		mkdir /git/wikirepo
 		cd /git/wikirepo
 		git init-db
+		# Git requires something be in the repo to start with.
+		cp /usr/share/ikiwiki/basewiki/index.mdwn .
+		git add .
+		git commit -m create -a
 
 3. Check out the repository to make the working copy that ikiwiki will use.
 
