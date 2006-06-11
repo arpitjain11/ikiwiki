@@ -1,3 +1,5 @@
 Git is a distributed revison control system originally developed for the linux kernel. Ikiki supports storing a wiki in git.
 
-(This page needs to be fleshed out with more info.)
+Ikiwiki can run as a post-update hook to update a wiki whenever commits
+come in. When running as a [[cgi]] with Git, ikiwiki automatically
+commits edited pages, and uses the Git history to generate the [[RecentChanges]] page.
