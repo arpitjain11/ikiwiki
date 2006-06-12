@@ -1,0 +1,33 @@
+ikiwiki 1.5 released with these changes:
+
+   * Add --timeformat config option to allow changing how dates are displayed.
+     Note that as a side effect, dates will now be displayed using the local
+     timezone, not as GMT.
+   * More security review.
+   * Patch from Dr. Zini to add link() and backlink() to globlists. This allows
+     for some handy stuff like:
+     - Using links as a kind of tag; creating blog pages that list all pages
+       containing a given tag/link or not containing some other tag.
+     - Subscribing to mail notifications whenever a change is made to a page
+       that is a backlink of page foo. Ie, "Please notify me of changes in all
+       pages that link to my home page in the wiki"
+     - Locking any pages that are linked to from a particular page, so that
+       lists of locks can be exposed in the wiki.
+   * Reorganised the doc wiki's todo/* pages, using a link/tag to flag
+     when a todo item is done, instead of the previous moving it to a different
+     subdir.
+   * Allow pagetemplate plugins to override *anything* in the template.
+   * Add a meta plugin, which allows specifying various metadata about pages,
+     like license and author. It also allows for inserting html link and meta
+     tags into html, overriding the title, and adding hidden WikiLinks, which
+     can be useful when using link-based globbing for page categorisation.
+   * Remove preprocessor directives from inlined pages.
+   * Allow simple preprocessor directive values to be specified w/o quotes.
+   * Add support for using git instead of subversion as the RCS backend,
+     tremendous thanks to Recai Oktaş for this.
+   * Doc updates for git.
+   * Fix absolute url munging in rss generation to support https, ftp, etc urls
+     not just http urls.
+   * Patch from Recai Oktaş to improve utf-8 support, it should now use proper
+     utf-8 for edit and other fields, and for recentchanges. There may still
+     be utf-8 issues with the preferences page though.
