@@ -163,7 +163,12 @@ sub readfile ($;$) { #{{{
 	
 	local $/=undef;
 	open (IN, $file) || error("failed to read $file: $!");
-	binmode(IN) if $binary;
+	if (! $binary) {
+		binmode(IN, ":utf8");
+	}
+	else {
+		binmode(IN);
+	}
 	my $ret=<IN>;
 	close IN;
 	return $ret;
@@ -195,7 +200,12 @@ sub writefile ($$$;$) { #{{{
 	}
 	
 	open (OUT, ">$destdir/$file") || error("failed to write $destdir/$file: $!");
-	binmode(OUT) if $binary;
+	if (! $binary) {
+		binmode(OUT, ":utf8");
+	}
+	else {
+		binmode(OUT);
+	}
 	print OUT $content;
 	close OUT;
 } #}}}

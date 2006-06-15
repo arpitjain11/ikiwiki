@@ -43,6 +43,7 @@ sub cgi_recentchanges ($) { #{{{
 		styleurl => styleurl(),
 		baseurl => "$config{url}/",
 	);
+	# XXX why is this needed? If it's raw utf-8 won't print DTRT?
 	require Encode;
 	print $q->header(-charset=>'utf-8'), Encode::decode_utf8($template->output);
 } #}}}
@@ -353,12 +354,14 @@ sub cgi_editpage ($$) { #{{{
 	}
 	elsif ($form->submitted eq "Preview") {
 		require IkiWiki::Render;
+		# Apparently FormBuilder doesn't not treat input as
+		# utf-8, so decode from it.
 		require Encode;
 		my $content = Encode::decode_utf8($form->field('editcontent'));
 		$form->field(name => "editcontent", value => $content, force => 1);
 		$form->tmpl_param("page_preview",
-			Encode::decode_utf8(htmlize($config{default_pageext},
-				linkify($page, $page, $content))));
+			htmlize($config{default_pageext},
+				linkify($page, $page, $content)));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");
@@ -421,8 +424,7 @@ sub cgi_editpage ($$) { #{{{
 			    ! length $form->field('editcontent')) {
 				my $content="";
 				if (exists $pagesources{lc($page)}) {
-					require Encode;
-					$content=Encode::decode_utf8(readfile(srcfile($pagesources{lc($page)})));
+					$content=readfile(srcfile($pagesources{lc($page)}));
 					$content=~s/\n/\r\n/g;
 				}
 				$form->field(name => "editcontent", value => $content,
@@ -453,6 +455,7 @@ sub cgi_editpage ($$) { #{{{
 		}
 		if (defined $form->field('comments') &&
 		    length $form->field('comments')) {
+		    	# Decode utf-8 since FormBuilder does not.
 			require Encode;
 			$message.=Encode::decode_utf8(": ".$form->field('comments'));
 		}

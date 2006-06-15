@@ -2,8 +2,17 @@ ikiwiki (1.6) UNRELEASED; urgency=low
 
   * YA utf-8 patch from Recai, this time to fix previewing a page so that
     the text in the input box is re-encoded back to utf-8.
+  * -CSD does not affect modules, so readfile() was not using the utf-8 input
+    layer, which led to lots of problems; make it force read files as utf-8.
+    Closes: #373203
+  * writefile() likewise needs to use the utf8 output layer.
+  * Remove the -CSD from ikiwiki's hashbang since it's useless to have it
+    there.
+  * Revert some of the decode_utf8 changes in CGI.pm that seem unnecessary
+    given the readfile fix.
+  * Add utf-8 testcases for readfile and htmlize.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 14 Jun 2006 23:38:40 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 15 Jun 2006 01:46:03 -0400
 
 ikiwiki (1.5) unstable; urgency=low
 
