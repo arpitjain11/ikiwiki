@@ -353,9 +353,12 @@ sub cgi_editpage ($$) { #{{{
 	}
 	elsif ($form->submitted eq "Preview") {
 		require IkiWiki::Render;
+		require Encode;
+		my $content = Encode::decode_utf8($form->field('editcontent'));
+		$form->field(name => "editcontent", value => $content, force => 1);
 		$form->tmpl_param("page_preview",
-			htmlize($config{default_pageext},
-				linkify($page, $page, $form->field('editcontent'))));
+			Encode::decode_utf8(htmlize($config{default_pageext},
+				linkify($page, $page, $content))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");
