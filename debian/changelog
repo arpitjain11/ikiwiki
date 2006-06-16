@@ -11,8 +11,10 @@ ikiwiki (1.6) UNRELEASED; urgency=low
   * Revert some of the decode_utf8 changes in CGI.pm that seem unnecessary
     given the readfile fix.
   * Add utf-8 testcases for readfile and htmlize.
+  * Put back the encode_utf8 in the input to markdown; it's really not utf-8
+    safe.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 15 Jun 2006 01:46:03 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 16 Jun 2006 00:41:25 -0400
 
 ikiwiki (1.5) unstable; urgency=low
 

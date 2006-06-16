@@ -29,10 +29,11 @@ sub htmlize ($$) { #{{{
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
 		do "/usr/bin/markdown";
+		use Encode;
 	}
 	
 	if ($type eq '.mdwn') {
-		$content=Markdown::Markdown($content);
+		$content=Encode::decode_utf8(Markdown::Markdown(Encode::encode_utf8($content)));
 	}
 	else {
 		error("htmlization of $type not supported");
