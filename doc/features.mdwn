@@ -119,7 +119,16 @@ Some of ikiwiki's features:
 
 * [[Plugins]]
 
-  Plugins can be used to add additional features to ikiwiki. The interface is quite flexible, allowing plugins to register [[PreProcessorDirective]]s, hook into [[CGI]] mode, and more. Ikiwiki's backend RCS support is also pluggable, so support for new revision control systems can be added to ikiwiki. 
+  Plugins can be used to add additional features to ikiwiki. The interface
+  is quite flexible, allowing plugins to register
+  [[PreProcessorDirective]]s, hook into [[CGI]] mode, and more. Ikiwiki's
+  backend RCS support is also pluggable, so support for new revision
+  control systems can be added to ikiwiki. 
+
+* [[todo/utf8]]
+
+  After rather a lot of fiddling, we think that ikiwiki correctly and fully
+  supports utf8 everywhere.
 
 ----
 
