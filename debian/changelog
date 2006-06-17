@@ -5,6 +5,10 @@ ikiwiki (1.6) UNRELEASED; urgency=low
   * -CSD does not affect modules, so readfile() was not using the utf-8 input
     layer, which led to lots of problems; make it force read files as utf-8.
     Closes: #373203
+  * Note that as a consequence, this version of ikiwiki will actually try to
+    parse utf8 in source files for the first time, which may expose broken
+    utf8 in wiki sources that was hidden before. Most common will be
+    perl warnings like "utf8 "\xE9" does not map to Unicode"
   * writefile() likewise needs to use the utf8 output layer.
   * Remove the -CSD from ikiwiki's hashbang since it's useless to have it
     there.
