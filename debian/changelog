@@ -19,6 +19,8 @@ ikiwiki (1.6) UNRELEASED; urgency=low
     - Comment field in edit page is not decoded and all the non-ascii chars in
       this field are corrupted as the result.  We should decode it as we do it
       for the content.
+    - Add 'use encoding "utf8"' to CGI.pm to avoid warnings about wide
+      character in print.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 16 Jun 2006 21:35:03 -0400
 
