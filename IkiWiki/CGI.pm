@@ -43,7 +43,6 @@ sub cgi_recentchanges ($) { #{{{
 		styleurl => styleurl(),
 		baseurl => "$config{url}/",
 	);
-	# XXX why is this needed? If it's raw utf-8 won't print DTRT?
 	require Encode;
 	print $q->header(-charset=>'utf-8'), Encode::decode_utf8($template->output);
 } #}}}
@@ -358,7 +357,10 @@ sub cgi_editpage ($$) { #{{{
 		# utf-8, so decode from it.
 		require Encode;
 		my $content = Encode::decode_utf8($form->field('editcontent'));
-		$form->field(name => "editcontent", value => $content, force => 1);
+		$form->field(name => "editcontent",
+				value => $content, force => 1);
+		$form->field(name => "comments",
+				value => Encode::decode_utf8($form->field('comments')), force => 1);
 		$form->tmpl_param("page_preview",
 			htmlize($config{default_pageext},
 				linkify($page, $page, $content)));
@@ -441,13 +443,17 @@ sub cgi_editpage ($$) { #{{{
 		# save page
 		page_locked($page, $session);
 		
-		my $content=$form->field('editcontent');
+		# Decode utf-8 since FormBuilder does not
+		require Encode;
+		my $content=Encode::decode_utf8($form->field('editcontent'));
+
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
 		writefile($file, $config{srcdir}, $content);
 		
 		my $message="web commit ";
-		if (length $session->param("name")) {
+		if (defined $session->param("name") && 
+		    length $session->param("name")) {
 			$message.="by ".$session->param("name");
 		}
 		else {
@@ -455,8 +461,6 @@ sub cgi_editpage ($$) { #{{{
 		}
 		if (defined $form->field('comments') &&
 		    length $form->field('comments')) {
-		    	# Decode utf-8 since FormBuilder does not.
-			require Encode;
 			$message.=Encode::decode_utf8(": ".$form->field('comments'));
 		}
 		

@@ -13,8 +13,14 @@ ikiwiki (1.6) UNRELEASED; urgency=low
   * Add utf-8 testcases for readfile and htmlize.
   * Put back the encode_utf8 in the input to markdown; it's really not utf-8
     safe.
+  * More utf-8 fixes from Recai, partly to things I broke above:
+    - The serious problem is that writefile() saves the content in undecoded
+      format in CGI, hence all (non-ascii) chars are corrupted permanently.
+    - Comment field in edit page is not decoded and all the non-ascii chars in
+      this field are corrupted as the result.  We should decode it as we do it
+      for the content.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 16 Jun 2006 00:41:25 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 16 Jun 2006 21:35:03 -0400
 
 ikiwiki (1.5) unstable; urgency=low
 
