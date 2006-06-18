@@ -1,0 +1,28 @@
+ikiwiki 1.6 released with these changes:
+
+   * YA utf-8 patch from Recai, this time to fix previewing a page so that
+     the text in the input box is re-encoded back to utf-8.
+   * -CSD does not affect modules, so readfile() was not using the utf-8 input
+     layer, which led to lots of problems; make it force read files as utf-8.
+     Closes: #[373203](http://bugs.debian.org/373203)
+   * Note that as a consequence, this version of ikiwiki will actually try to
+     parse utf8 in source files for the first time, which may expose broken
+     utf8 in wiki sources that was hidden before. Most common will be
+     perl warnings like "utf8 "\xE9" does not map to Unicode"
+   * writefile() likewise needs to use the utf8 output layer.
+   * Remove the -CSD from ikiwiki's hashbang since it's useless to have it
+     there.
+   * Revert some of the decode\_utf8 changes in CGI.pm that seem unnecessary
+     given the readfile fix.
+   * Add utf-8 testcases for readfile and htmlize.
+   * Put back the encode\_utf8 in the input to markdown; it's really not utf-8
+     safe.
+   * More utf-8 fixes from Recai, partly to things I broke above:
+     - The serious problem is that writefile() saves the content in undecoded
+       format in CGI, hence all (non-ascii) chars are corrupted permanently.
+     - Comment field in edit page is not decoded and all the non-ascii chars in
+       this field are corrupted as the result.  We should decode it as we do it
+       for the content.
+     - Add 'use encoding "utf8"' to CGI.pm to avoid warnings about wide
+       character in print.
+   * New SVG logo from Recai.
