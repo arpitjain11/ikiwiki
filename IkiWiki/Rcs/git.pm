@@ -1,8 +1,4 @@
 #!/usr/bin/perl
-# Git backend for IkiWiki.
-# Copyright 2006  Recai Oktaş <roktas@debian.org>
-#
-# Licensed under the same terms as IkiWiki.
 
 use warnings;
 use strict;
@@ -161,7 +157,7 @@ sub _parse_diff_tree (@) { #{{{
 	my %ci;
 	# Header line.
 	HEADER: while (my $line = shift @{ $dt_ref }) {
-		return if $line !~ m/^diff-tree ($sha1_pattern)/;
+		return if $line !~ m/^(.+) ($sha1_pattern)/;
 
 		my $sha1 = $1;
 		$ci{'sha1'} = $sha1;
@@ -263,6 +259,8 @@ sub git_commit_info (;$$) { #{{{
 	while (my $parsed = _parse_diff_tree(\@raw_lines)) {
 		push @ci, $parsed;
 	}
+
+	warn "Cannot parse commit info for '$sha1' commit" if !@ci;
 
 	return wantarray ? @ci : $ci[0];
 } #}}}
@@ -420,10 +418,7 @@ sub rcs_notify () { #{{{
 	my $sha1 = 'HEAD'; # the commit which triggers this action
 
 	my $ci = git_commit_info($sha1);
-	if (!defined $ci) {
-		warn "Cannot parse info for '$sha1' commit";
-		return;
-	}
+	return if !defined $ci;
 
 	my @changed_pages = map { $_->{'file'} } @{ $ci->{'details'} };
 
