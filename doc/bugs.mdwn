@@ -1,42 +1,9 @@
-* Has bugs updating things if the bestlink of a page changes due to
-  adding/removing a page. For example, if Foo/Bar links to "Baz", which is
-  Foo/Baz, and Foo/Bar/Baz gets added, it will update the links in Foo/Bar
-  to point to it, but will forget to update the linkbacks in Foo/Baz.
-  
-* And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
-  back to Foo/Baz.
+This is ikiwiki's bug list. Link bugs to [[bugs/done]] when done.
 
-    -- is this still true? (Yes (as of 1.0))
+[[inline pages="bugs/* !bugs/done !link(bugs/done) !*/Discussion" rootpage="bugs" show="30"]]
 
-* If I try to do a web commit, to a svn+ssh repo, it fails with
-  "Host key verification failed."
-  I think that the setuid isn't fully taking; it should be running as me,
-  but commit log shows www-data. So maybe it has the wrong username? Or
-  EUID/Real UID screwage.
-* Can't put the source in a directory named .source; the page finder skips
-  that due to too broad exclusion of any dotfile in a path.
-* [[ikiwiki]] should go to the same place as [[index]] (on this wiki).
-* Web browsers don't word-wrap lines in submitted text, which makes editing a
-  page that someone wrote in a web browser annoying (`gqip` is vim user's
-  friend here). Is there any way to improve this?
-* The diff links in RecentChanges go to a viewcvs backtrace if the rev in question is when the page was added. Is this a viewcvs bug, or a behavior ikiwiki needs to work around?
-    - As a special case, there should certianly be no history link for
-      pages generated from the underlaydir as it can never work for them.
-* If a page stops inlining anthing, its rss feed file
-  will linger around and not be deleted.
-* RSS output contains relative links. Ie. http://kitenet.net/~joey/blog/index.rss contains a link to http://kitenet.net/~joey/blog/../blog.html
-* If a file in the srcdir is removed, exposing a file in the underlaydir,
-  ikiwiki will not notice the change and rebuild it until the file in the
-  underlaydir gets a mtime newer than the mtime the removed file had.
-* ikiwiki will generate html formatted error messages to the command
-  line if --cgi is set, even if it's not yet running as a cgi
-* The meta plugin doesn't affect a page if it's being inlined. Probably
-  setting the title with it should override the title of the blog post.
-* svn log messages containing utf-8 (such as r773) don't get displayed
-  right in RecentChanges. The problem is ikiwiki runs svn log in locale C,
-  which makes it spit out eacaped charcters for utf-8 chars. If it's run in
-  locale en_US.UTF-8, it would be ok, but that would require the system
-  have that locale.
+----
 
-  Seems that the right fix for this is to use svn log --xml, which is
-  always utf-8 and come up with a parser for that.
+# Full list of open bugs:
+
+[[inline pages="bugs/* !bugs/done !link(bugs/done) !*/Discussion" archive="yes"]]
