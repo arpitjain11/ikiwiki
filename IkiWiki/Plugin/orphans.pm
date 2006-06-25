@@ -31,7 +31,11 @@ sub preprocess (@) { #{{{
 		next unless IkiWiki::globlist_match($page, $params{pages});
 		# If the page has a link to some other page, it's
 		# indirectly linked to a page via that page's backlinks.
-		next if grep { length $_ && ($_ !~/\/Discussion$/i || ! $IkiWiki::config{discussion}) && IkiWiki::bestlink($page, $_) ne $page } @{$IkiWiki::links{$page}};
+		next if grep { 
+			length $_ &&
+			($_ !~ /\/Discussion$/i || ! $IkiWiki::config{discussion}) &&
+			IkiWiki::bestlink($page, $_) !~ /^($page|)$/ 
+		} @{$IkiWiki::links{$page}};
 		push @orphans, $page;
 	}
 	
