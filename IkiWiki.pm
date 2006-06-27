@@ -36,6 +36,7 @@ sub defaultconfig () { #{{{
 	svnpath => "trunk",
 	srcdir => undef,
 	destdir => undef,
+	pingurl => [],
 	templatedir => "/usr/share/ikiwiki/templates",
 	underlaydir => "/usr/share/ikiwiki/basewiki",
 	setup => undef,

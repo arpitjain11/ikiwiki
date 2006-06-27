@@ -10,7 +10,7 @@ Package: ikiwiki
 Architecture: all
 Depends: ${perl:Depends}, markdown, libtimedate-perl, libhtml-template-perl, libhtml-scrubber-perl, libcgi-formbuilder-perl (>= 3.02.02), libtime-duration-perl, libcgi-session-perl, libmail-sendmail-perl, gcc | c-compiler, libc6-dev | libc-dev
 Recommends: subversion | git-core, hyperestraier
-Suggests: viewcvs
+Suggests: viewcvs, librpc-xml-perl
 Description: a wiki compiler
  ikiwiki converts a directory full of wiki pages into html pages suitable
  for publishing on a website. Unlike many wikis, ikiwiki does not have its

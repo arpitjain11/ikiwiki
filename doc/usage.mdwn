@@ -128,7 +128,16 @@ These options configure the wiki.
   If rss is set, ikiwiki will generate rss feeds for pages that inline
   a [[blog]].
 
-* --url http://url/
+* --pingurl url
+
+  Set this to the url to an XML-RPC service to ping when an RSS feed is
+  updated. For example, to ping Technorati, use the url
+  http://rpc.technorati.com/rpc/ping
+
+  This parameter can be specified multiple times to specify more than one
+  url to ping.
+
+* --url url
 
   Specifies the url to the wiki. This is a required parameter in [[CGI]] mode.
 

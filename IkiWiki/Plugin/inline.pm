@@ -9,12 +9,19 @@ use IkiWiki;
 sub import { #{{{
 	IkiWiki::hook(type => "preprocess", id => "inline", 
 		call => \&IkiWiki::preprocess_inline);
+	# Hook to change to do pinging since it's called late.
+	# This ensures each page only pings once and prevents slow
+	# pings interrupting page builds.
+	IkiWiki::hook(type => "change", id => "inline", 
+		call => \&IkiWiki::pingurl);
 } # }}}
 
 # Back to ikiwiki namespace for the rest, this code is very much
 # internal to ikiwiki even though it's separated into a plugin.
 package IkiWiki;
-	
+
+my %toping;
+
 sub preprocess_inline (@) { #{{{
 	my %params=@_;
 
@@ -72,6 +79,7 @@ sub preprocess_inline (@) { #{{{
 	if ($config{rss}) {
 		writefile(rsspage($params{page}), $config{destdir},
 			genrss($params{page}, @pages));
+		$toping{$params{page}}=1;
 	}
 	
 	return $ret;
@@ -158,6 +166,34 @@ sub genrss ($@) { #{{{
 	);
 	
 	return $template->output;
+} #}}}
+
+sub pingurl (@) { #{{{
+	return unless $config{pingurl} && %toping;
+
+	eval q{require RPC::XML::Client};
+	if ($@) {
+		debug("RPC::XML::Client not found, not pinging");
+	}
+
+	foreach my $page (keys %toping) {
+		my $title=pagetitle(basename($page));
+		my $url="$config{url}/".htmlpage($page);
+		foreach my $pingurl (@{$config{pingurl}}) {
+			my $client = RPC::XML::Client->new($pingurl);
+			my $req = RPC::XML::request->new('weblogUpdates.ping',
+				$title, $url);
+			debug("Pinging $pingurl for $page");
+			my $res = $client->send_request($req);
+			if (! ref $res) {
+				debug("Did not receive response to ping");
+			}
+			my $r=$res->value;
+			if (! exists $r->{flerror} || $r->{flerror}) {
+				debug("Ping rejected: ".$r->{message});
+			}
+		}
+	}
 } #}}}
 
 1
