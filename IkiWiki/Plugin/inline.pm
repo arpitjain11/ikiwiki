@@ -174,6 +174,7 @@ sub pingurl (@) { #{{{
 	eval q{require RPC::XML::Client};
 	if ($@) {
 		debug("RPC::XML::Client not found, not pinging");
+		return;
 	}
 
 	foreach my $page (keys %toping) {
