@@ -34,6 +34,19 @@ sub preprocess_inline (@) { #{{{
 	if (! exists $params{show} && $params{archive} eq "no") {
 		$params{show}=10;
 	}
+
+	my @list;
+	foreach my $page (keys %pagesources) {
+		next if $page eq $params{page};
+		if (globlist_match($page, $params{pages})) {
+			push @list, $page;
+		}
+	}
+	@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+	if ($params{show} && @list > $params{show}) {
+		@list=@list[0..$params{show} - 1];
+	}
+
 	add_depends($params{page}, $params{pages});
 
 	my $ret="";
@@ -62,10 +75,7 @@ sub preprocess_inline (@) { #{{{
 		blind_cache => 1,
 	);
 	
-	my @pages;
-	foreach my $page (blog_list($params{pages}, $params{show})) {
-		next if $page eq $params{page};
-		push @pages, $page;
+	foreach my $page (@list) {
 		$template->param(pagelink => htmllink($params{page}, $params{page}, $page));
 		$template->param(content => get_inline_content($params{page}, $page))
 			if $params{archive} eq "no";
@@ -78,27 +88,11 @@ sub preprocess_inline (@) { #{{{
 	# only supports listing one file per page.
 	if ($config{rss}) {
 		writefile(rsspage($params{page}), $config{destdir},
-			genrss($params{page}, @pages));
+			genrss($params{page}, @list));
 		$toping{$params{page}}=1;
 	}
 	
 	return $ret;
-} #}}}
-
-sub blog_list ($$) { #{{{
-	my $globlist=shift;
-	my $maxitems=shift;
-
-	my @list;
-	foreach my $page (keys %pagesources) {
-		if (globlist_match($page, $globlist)) {
-			push @list, $page;
-		}
-	}
-
-	@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
-	return @list if ! $maxitems || @list <= $maxitems;
-	return @list[0..$maxitems - 1];
 } #}}}
 
 sub get_inline_content ($$) { #{{{
