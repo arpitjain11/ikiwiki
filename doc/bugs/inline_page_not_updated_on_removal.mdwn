@@ -1,3 +1,13 @@
 If a page inlines some other page (such as this page by the bugs page), 
 and the page is removed (such as by this page being linked to bugs/done),
 the inlining page is not updated to remove it.
+
+This only happens if the page is removed from the inlined globlist due to
+a tag changing; the problem is that once the tag is changed, ikiwiki does
+not know that the page used to match before.
+
+To fix, seems I would need to record the actual list of pages that are
+currently included on an inline page, and do a comparison to see if any
+have changed. At first I thought, why not just add them to the dependencies
+explicitly, but that fails because the dependencies globlist fails to match
+when a negated expression like "!tag(bugs/done)" is matched.
