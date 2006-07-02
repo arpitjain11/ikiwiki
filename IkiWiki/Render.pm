@@ -34,11 +34,11 @@ sub htmlize ($$) { #{{{
 	
 	if ($type eq '.mdwn') {
 		# XXX explanation of this insanity wating on perl bug number
-		$content=Encode::encode_utf8($content);
+#		$content=Encode::encode_utf8($content);
 		$content=Encode::encode_utf8($content);
 		$content=Markdown::Markdown($content);
 		$content=Encode::decode_utf8($content);
-		$content=Encode::decode_utf8($content);
+#		$content=Encode::decode_utf8($content);
 	}
 	else {
 		error("htmlization of $type not supported");

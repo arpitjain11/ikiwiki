@@ -38,17 +38,16 @@ Optional comment about this change:<br />
 <TMPL_VAR FIELD-COMMENTS><br />
 </TMPL_IF>
 <TMPL_VAR FORM-SUBMIT>
+<TMPL_VAR HELPONFORMATTINGLINK>
 <TMPL_VAR FORM-END>
-<hr />
 <TMPL_IF NAME="PAGE_PREVIEW">
+<hr />
 <div class="header">
 <span>Page preview:</span>
 </div>
 <div id="content">
 <TMPL_VAR PAGE_PREVIEW>
 </div>
-<TMPL_ELSE>
-<TMPL_VAR HELPONFORMATTINGLINK>
 </TMPL_IF>
 </body>
 </html>

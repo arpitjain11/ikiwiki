@@ -8,7 +8,7 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     ikiwiki depend on XML::Simple. Patch by Faidon Liambotis.
   * POSIX::strftime doesn't know about encodings and doesn't return a utf8
     flagged string even if the locale causes it to generate utf8 output,
-    so make sure to let perl know it should be handled as utf8. Also, 
+    so make sure to let perl know it should be handled as utf8. Also,
     the optimised version used for standard time formats won't work if the
     user has changed locale, so drop it. Thanks, Faidon Liambotis.
   * Fix re-encoding of the comments field to utf8 if a commit fails
@@ -18,8 +18,10 @@ ikiwiki (1.8) UNRELEASED; urgency=low
   * Add insane double encode/decode to utf8 around call to markdown.
     This works around a truely strange bug, which is apparently a bug in
     perl, which I lack space to describe here (see t/crazy-badass-perl-bug.t)
+  * Improve layout of edit page so formatting help link is always visible w/o
+    getting in the way of the preview.
 
- -- Joey Hess <joeyh@debian.org>  Sat,  1 Jul 2006 23:25:44 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun,  2 Jul 2006 13:43:56 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 
