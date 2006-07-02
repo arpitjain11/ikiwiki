@@ -1,4 +1,4 @@
-Let's do an ikiwiki security analysis..
+Let's do an ikiwiki security analysis.
 
 If you are using ikiwiki to render pages that only you can edit, do not
 generate any wrappers, and do not use the cgi, then there are no more
@@ -41,7 +41,7 @@ Of course nobody else seems to worry about this in other wikis, so should we?
 
 Currently only people with direct svn commit access can upload such files
 (and if you wanted to you could block that with a svn pre-commit hook).
-Wsers with only web commit access are limited to editing pages as ikiwiki
+Users with only web commit access are limited to editing pages as ikiwiki
 doesn't support file uploads from browsers (yet), so they can't exploit
 this.
 
