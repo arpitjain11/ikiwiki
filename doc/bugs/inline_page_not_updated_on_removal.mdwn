@@ -11,3 +11,7 @@ currently included on an inline page, and do a comparison to see if any
 have changed. At first I thought, why not just add them to the dependencies
 explicitly, but that fails because the dependencies globlist fails to match
 when a negated expression like "!tag(bugs/done)" is matched.
+
+So, quick fixes aside, what's the generic mechanism here that a plugin can
+use to let ikiwiki know that a page should be updated if some other page
+stops matching its dependencies globlist?
