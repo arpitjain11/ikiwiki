@@ -35,12 +35,9 @@ sub cgi_recentchanges ($) { #{{{
 
 	# Force reading the template as utf-8, necessary if
 	# rcs_recentchanges returns true utf-8 strings.
-	open(TMPL, "<:utf8", "$config{templatedir}/recentchanges.tmpl");
-	my $template=HTML::Template->new(filehandle => *TMPL);
-	close(TMPL);
-	my $template=HTML::Template->new(
-		filename => "$config{templatedir}/recentchanges.tmpl"
-	);
+	require Encode;
+	my $template=HTML::Template->new(filter => \&Encode::decode_utf8,
+		filename => "$config{templatedir}/recentchanges.tmpl");
 	$template->param(
 		title => "RecentChanges",
 		indexlink => indexlink(),
