@@ -14,3 +14,7 @@ A workaround is to change all the template reading code like this:
 
 However, this will make ikiwiki slower when rebuilding a wiki, since it
 won't cache templates.
+
+Could be approached by using HTML::Template's support for filters. Just make it use a filter that turns on utf-8
+
+Or by subclassing it and overriding the _init_template method, though that's a bit uglier
