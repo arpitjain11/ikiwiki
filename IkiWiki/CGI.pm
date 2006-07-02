@@ -33,11 +33,7 @@ sub cgi_recentchanges ($) { #{{{
 	
 	unlockwiki();
 
-	# Force reading the template as utf-8, necessary if
-	# rcs_recentchanges returns true utf-8 strings.
-	require Encode;
-	my $template=HTML::Template->new(filter => \&Encode::decode_utf8,
-		filename => "$config{templatedir}/recentchanges.tmpl");
+	my $template=template("recentchanges.tmpl"); 
 	$template->param(
 		title => "RecentChanges",
 		indexlink => indexlink(),
@@ -72,7 +68,7 @@ sub cgi_signin ($$) { #{{{
 		action => $config{cgiurl},
 		header => 0,
 		template => (-e "$config{templatedir}/signin.tmpl" ?
-		              "$config{templatedir}/signin.tmpl" : ""),
+			     {template_params("signin.tmpl")} : ""),
 		stylesheet => styleurl(),
 	);
 	
@@ -185,9 +181,7 @@ sub cgi_signin ($$) { #{{{
 		}
 		elsif ($form->submitted eq 'Mail Password') {
 			my $user_name=$form->field("name");
-			my $template=HTML::Template->new(
-				filename => "$config{templatedir}/passwordmail.tmpl"
-			);
+			my $template=template("passwordmail.tmpl");
 			$template->param(
 				user_name => $user_name,
 				user_password => userinfo_get($user_name, "password"),
@@ -239,7 +233,7 @@ sub cgi_prefs ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		template => (-e "$config{templatedir}/prefs.tmpl" ?
-		              "$config{templatedir}/prefs.tmpl" : ""),
+			     {template_params("prefs.tmpl")} : ""),
 		stylesheet => styleurl(),
 	);
 	my @buttons=("Save Preferences", "Logout", "Cancel");
@@ -308,7 +302,7 @@ sub cgi_editpage ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		table => 0,
-		template => "$config{templatedir}/editpage.tmpl"
+		template => {template_params("editpage.tmpl")},
 	);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	

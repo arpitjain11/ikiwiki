@@ -25,11 +25,13 @@ sub htmlize ($$) { #{{{
 	my $content=shift;
 	
 	if (! $INC{"/usr/bin/markdown"}) {
+		# Note: a proper perl module is available in Debian
+		# for markdown, but not upstream yet.
 		no warnings 'once';
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
 		do "/usr/bin/markdown";
-		use Encode;
+		require Encode;
 	}
 	
 	if ($type eq '.mdwn') {
@@ -171,8 +173,7 @@ sub genpage ($$$) { #{{{
 
 	my $title=pagetitle(basename($page));
 	
-	my $template=HTML::Template->new(blind_cache => 1,
-		filename => "$config{templatedir}/page.tmpl");
+	my $template=template("page.tmpl", blind_cache => 1);
 	my $actions=0;
 
 	if (length $config{cgiurl}) {

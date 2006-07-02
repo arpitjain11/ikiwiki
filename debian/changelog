@@ -20,8 +20,10 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     perl, #376329. Also added a test case for it.
   * Improve layout of edit page so formatting help link is always visible w/o
     getting in the way of the preview.
+  * Centralised all calls to HTML::Template and force all the templates
+    to be read as utf8.
 
- -- Joey Hess <joeyh@debian.org>  Sun,  2 Jul 2006 13:43:56 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun,  2 Jul 2006 14:55:40 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 

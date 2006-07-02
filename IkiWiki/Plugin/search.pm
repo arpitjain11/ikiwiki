@@ -87,9 +87,7 @@ sub estcfg () { #{{{
 	close TEMPLATE;
 	open(TEMPLATE, ">$estdir/$cgi.conf") ||
 		error("write $estdir/$cgi.conf: $!");
-	my $template=HTML::Template->new(
-		filename => "$config{templatedir}/estseek.conf"
-	);
+	my $template=template("estseek.conf");
 	eval q{use Cwd 'abs_path'};
 	$template->param(
 		index => $estdir,

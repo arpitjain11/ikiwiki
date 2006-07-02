@@ -3,8 +3,6 @@
 package IkiWiki;
 use warnings;
 use strict;
-use File::Spec;
-use HTML::Template;
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks};
@@ -304,6 +302,7 @@ sub htmllink ($$$;$$$) { #{{{
 			"\">?</a>$linktext</span>"
 	}
 	
+	require File::Spec;
 	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
 	
 	if (! $noimageinline && isinlinableimage($bestlink)) {
@@ -390,13 +389,24 @@ sub saveindex () { #{{{
 	close OUT;
 } #}}}
 
+sub template_params (@) { #{{{
+	my $filename=shift;
+	
+	require Encode;
+	require HTML::Template;
+	return filter => \&Encode::decode_utf8,
+		filename => "$config{templatedir}/$filename", @_;
+} #}}}
+
+sub template ($;@) { #{{{
+	HTML::Template->new(template_params(@_));
+} #}}}
+
 sub misctemplate ($$) { #{{{
 	my $title=shift;
 	my $pagebody=shift;
 	
-	my $template=HTML::Template->new(
-		filename => "$config{templatedir}/misc.tmpl"
-	);
+	my $template=template("misc.tmpl");
 	$template->param(
 		title => $title,
 		indexlink => indexlink(),

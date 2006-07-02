@@ -449,9 +449,7 @@ sub rcs_notify () { #{{{
 	}
 	$subject .= " by $user";
 
-	my $template = HTML::Template->new(
-		filename => "$config{templatedir}/notifymail.tmpl"
-	);
+	my $template = template("notifymail.tmpl");
 	$template->param(
 		wikiname => $config{wikiname},
 		diff     => $diff,

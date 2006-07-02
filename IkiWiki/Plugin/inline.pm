@@ -40,8 +40,7 @@ sub preprocess_inline (@) { #{{{
 	
 	if (exists $params{rootpage}) {
 		# Add a blog post form, with a rss link button.
-		my $formtemplate=HTML::Template->new(blind_cache => 1,
-			filename => "$config{templatedir}/blogpost.tmpl");
+		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
 		$formtemplate->param(rootpage => $params{rootpage});
 		if ($config{rss}) {
@@ -51,16 +50,17 @@ sub preprocess_inline (@) { #{{{
 	}
 	elsif ($config{rss}) {
 		# Add a rss link button.
-		my $linktemplate=HTML::Template->new(blind_cache => 1,
-			filename => "$config{templatedir}/rsslink.tmpl");
+		my $linktemplate=template("rsslink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => rsspage(basename($params{page})));
 		$ret.=$linktemplate->output;
 	}
 	
-	my $template=HTML::Template->new(blind_cache => 1,
-		filename => (($params{archive} eq "no") 
-				? "$config{templatedir}/inlinepage.tmpl"
-				: "$config{templatedir}/inlinepagetitle.tmpl"));
+	my $template=template(
+		(($params{archive} eq "no")
+			? "inlinepage.tmpl"
+			: "inlinepagetitle.tmpl"),
+		blind_cache => 1,
+	);
 	
 	my @pages;
 	foreach my $page (blog_list($params{pages}, $params{show})) {
@@ -146,8 +146,7 @@ sub genrss ($@) { #{{{
 	
 	my $url="$config{url}/".htmlpage($page);
 	
-	my $template=HTML::Template->new(blind_cache => 1,
-		filename => "$config{templatedir}/rsspage.tmpl");
+	my $template=template("rsspage.tmpl", blind_cache => 1);
 	
 	my @items;
 	foreach my $p (@pages) {
