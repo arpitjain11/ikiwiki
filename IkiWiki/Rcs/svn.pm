@@ -64,7 +64,8 @@ sub rcs_commit ($$$) { #{{{
 			}
 		}
 
-		if (system("svn", "commit", "--quiet", "-m",
+		if (system("svn", "commit", "--quiet", 
+		           "--encoding", "UTF-8", "-m",
 		           possibly_foolish_untaint($message),
 			   "$config{srcdir}") != 0) {
 			my $conflict=readfile("$config{srcdir}/$file");

@@ -485,6 +485,7 @@ sub cgi_editpage ($$) { #{{{
 					force => 1);
 				$form->tmpl_param("page_conflict", 1);
 				$form->field("editcontent", value => $conflict, force => 1);
+				$form->field(name => "comments", value => Encode::decode_utf8($form->field('comments')), force => 1);
 				$form->field("do", "edit)");
 				$form->tmpl_param("page_select", 0);
 				$form->field(name => "page", type => 'hidden');

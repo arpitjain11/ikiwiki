@@ -33,7 +33,12 @@ sub htmlize ($$) { #{{{
 	}
 	
 	if ($type eq '.mdwn') {
-		$content=Encode::decode_utf8(Markdown::Markdown(Encode::encode_utf8($content)));
+		# XXX explanation of this insanity wating on perl bug number
+		$content=Encode::encode_utf8($content);
+		$content=Encode::encode_utf8($content);
+		$content=Markdown::Markdown($content);
+		$content=Encode::decode_utf8($content);
+		$content=Encode::decode_utf8($content);
 	}
 	else {
 		error("htmlization of $type not supported");
@@ -230,13 +235,11 @@ sub check_overwrite ($$) { #{{{
 sub displaytime ($) { #{{{
 	my $time=shift;
 
-	if ($config{timeformat} eq '%c' && ! exists $ENV{LC_CTIME}) {
-		return scalar(localtime($time)); # optimisation
-	}
-	else {
-		eval q{use POSIX};
-		return POSIX::strftime($config{timeformat}, localtime($time));
-	}
+	eval q{use POSIX};
+	# strftime doesn't know about encodings, so make sure
+	# its output is properly treated as utf8
+	return Encode::decode_utf8(POSIX::strftime(
+			$config{timeformat}, localtime($time)));
 } #}}}
 
 sub mtime ($) { #{{{
