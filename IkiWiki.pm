@@ -394,7 +394,10 @@ sub template_params (@) { #{{{
 	
 	require Encode;
 	require HTML::Template;
-	return filter => \&Encode::decode_utf8,
+	return filter => sub {
+			my $text_ref = shift;
+			$$text_ref=&Encode::decode_utf8($$text_ref);
+		},
 		filename => "$config{templatedir}/$filename", @_;
 } #}}}
 
