@@ -230,7 +230,7 @@ sub check_overwrite ($$) { #{{{
 sub displaytime ($) { #{{{
 	my $time=shift;
 
-	if ($config{timeformat} eq '%c') {
+	if ($config{timeformat} eq '%c' && ! exists $ENV{LC_CTIME}) {
 		return scalar(localtime($time)); # optimisation
 	}
 	else {
