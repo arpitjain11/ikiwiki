@@ -33,6 +33,11 @@ sub cgi_recentchanges ($) { #{{{
 	
 	unlockwiki();
 
+	# Force reading the template as utf-8, necessary if
+	# rcs_recentchanges returns true utf-8 strings.
+	open(TMPL, "<:utf8", "$config{templatedir}/recentchanges.tmpl");
+	my $template=HTML::Template->new(filehandle => *TMPL);
+	close(TMPL);
 	my $template=HTML::Template->new(
 		filename => "$config{templatedir}/recentchanges.tmpl"
 	);
@@ -44,8 +49,7 @@ sub cgi_recentchanges ($) { #{{{
 		styleurl => styleurl(),
 		baseurl => "$config{url}/",
 	);
-	require Encode;
-	print $q->header(-charset=>'utf-8'), Encode::decode_utf8($template->output);
+	print $q->header(-charset=>'utf-8'), $template->output;
 } #}}}
 
 sub cgi_signin ($$) { #{{{

@@ -7,7 +7,6 @@ use IkiWiki;
 
 package IkiWiki;
 		
-my $svn_log_infoline=qr/^r(\d+)\s+\|\s+([^\s]+)\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 my $svn_webcommit=qr/^web commit by (\w+):?(.*)/;
 
 sub svn_info ($$) { #{{{
@@ -99,67 +98,64 @@ sub rcs_recentchanges ($) { #{{{
 	my $num=shift;
 	my @ret;
 	
+	return unless -d "$config{srcdir}/.svn";
+
 	eval q{use CGI 'escapeHTML'};
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
+	eval q{use XML::Simple};
 	
-	if (-d "$config{srcdir}/.svn") {
-		my $svn_url=svn_info("URL", $config{srcdir});
+	my $svn_url=svn_info("URL", $config{srcdir});
+	my $xml = XMLin(scalar `svn --xml -v log '$svn_url'`,
+		ForceArray => [ 'logentry', 'path' ],
+		GroupTags => { paths => 'path' },
+		KeyAttr => { path => 'content' },
+	);
+	foreach my $logentry (@{$xml->{logentry}}) {
+		my (@pages, @message);
 
-		my $div=qr/^--------------------+$/;
-		my $state='start';
-		my ($rev, $user, $when, @pages, @message);
-		foreach (`LANG=C svn log -v '$svn_url'`) {
-			chomp;
-			if ($state eq 'start' && /$div/) {
-				$state='header';
-			}
-			elsif ($state eq 'header' && /$svn_log_infoline/) {
-				$rev=$1;
-				$user=$2;
-				$when=concise(ago(time - str2time($3)));
-		    	}
-			elsif ($state eq 'header' && /^\s+[A-Z]+\s+\/\Q$config{svnpath}\E\/([^ ]+)(?:$|\s)/) {
-				my $file=$1;
-				my $diffurl=$config{diffurl};
-				$diffurl=~s/\[\[file\]\]/$file/g;
-				$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
-				$diffurl=~s/\[\[r2\]\]/$rev/g;
-				push @pages, {
-					link => htmllink("", "", pagename($file), 1),
-					diffurl => $diffurl,
-				} if length $file;
-			}
-			elsif ($state eq 'header' && /^$/) {
-				$state='body';
-			}
-			elsif ($state eq 'body' && /$div/) {
-				my $committype="web";
-				if (defined $message[0] &&
-				    $message[0]->{line}=~/$svn_webcommit/) {
-					$user="$1";
-					$message[0]->{line}=$2;
-				}
-				else {
-					$committype="svn";
-				}
-				
-				push @ret, { rev => $rev,
-					user => htmllink("", "", $user, 1),
-					committype => $committype,
-					when => $when, message => [@message],
-					pages => [@pages],
-				} if @pages;
-				return @ret if @ret >= $num;
-				
-				$state='header';
-				$rev=$user=$when=undef;
-				@pages=@message=();
-			}
-			elsif ($state eq 'body') {
-				push @message, {line => escapeHTML($_)},
-			}
+		my $rev = $logentry->{revision};
+		my $user = $logentry->{author};
+
+		my $date = $logentry->{date};
+		$date =~ s/T/ /;
+		$date =~ s/\.\d+Z$//;
+		my $when=concise(ago(time - str2time($date, 'UTC')));
+
+		foreach my $msgline (split(/\n/, $logentry->{msg})) {
+			push @message, { line => escapeHTML($msgline) };
 		}
+
+		my $committype="web";
+		if (defined $message[0] &&
+		    $message[0]->{line}=~/$svn_webcommit/) {
+			$user="$1";
+			$message[0]->{line}=$2;
+		}
+		else {
+			$committype="svn";
+		}
+
+		foreach (keys %{$logentry->{paths}}) {
+			next unless /^\/\Q$config{svnpath}\E\/([^ ]+)(?:$|\s)/;
+			my $file=$1;
+			my $diffurl=$config{diffurl};
+			$diffurl=~s/\[\[file\]\]/$file/g;
+			$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
+			$diffurl=~s/\[\[r2\]\]/$rev/g;
+			push @pages, {
+				link => htmllink("", "", pagename($file), 1),
+				diffurl => $diffurl,
+			} if length $file;
+		}
+		push @ret, { rev => $rev,
+			user => htmllink("", "", $user, 1),
+			committype => $committype,
+			when => $when,
+			message => [@message],
+			pages => [@pages],
+		} if @pages;
+		return @ret if @ret >= $num;
 	}
 
 	return @ret;
@@ -230,6 +226,8 @@ sub rcs_notify () { #{{{
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 	eval q{use Date::Parse};
+
+	my $svn_log_infoline=qr/^r\d+\s+\|\s+[^\s]+\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 		
 	my $child = open(SVNLOG, "-|");
 	if (! $child) {
@@ -239,7 +237,7 @@ sub rcs_getctime ($) { #{{{
 	my $date;
 	while (<SVNLOG>) {
 		if (/$svn_log_infoline/) {
-			$date=$3;
+			$date=$1;
 	    	}
 	}
 	close SVNLOG || warn "svn log $file exited $?";

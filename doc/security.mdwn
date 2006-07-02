@@ -12,17 +12,16 @@ to be kept in mind.
 
 _(The list of things to fix.)_
 
-## svn commit logs
+## commit spoofing
 
-Anyone with svn commit access can forge "web commit from foo" and make it
-appear on [[RecentChanges]] like foo committed. One way to avoid this would
-be to limit web commits to those done by a certian user.
+Anyone with direct commit access can forge "web commit from foo" and
+make it appear on [[RecentChanges]] like foo committed. One way to avoid
+this would be to limit web commits to those done by a certian user.
 
-It's actually possible to force a whole series of svn commits to appear to
-have come just before yours, by forging svn log output. This could be
-guarded against by using svn log --xml.
+## other stuff to look at
 
-ikiwiki escapes any html in svn commit logs to prevent other mischief.
+I need to audit the git backend a bit, and have been meaning to
+see if any CRLF injection type things can be done.
 
 ----
 
@@ -227,3 +226,11 @@ only render a file with that extension.
 
 ikiwiki supports protecting users from their own broken browsers via the
 [[plugins/htmlscrubber]] plugin, which is enabled by default.
+
+## svn commit logs
+
+It's was possible to force a whole series of svn commits to appear to
+have come just before yours, by forging svn log output. This was
+guarded against by using svn log --xml.
+
+ikiwiki escapes any html in svn commit logs to prevent other mischief.

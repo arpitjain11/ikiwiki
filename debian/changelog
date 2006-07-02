@@ -6,8 +6,10 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     about changes to rss feeds.
   * Honor LC_CTIME when formatting a time for display. Thanks, Faidon
     Liambotis.
+  * Parse svn log as xml for improved utf8 and security. Note that this makes
+    ikiwiki depend on XML::Simple. Patch by Faidon Liambotis.
 
- -- Joey Hess <joeyh@debian.org>  Sat,  1 Jul 2006 20:28:26 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat,  1 Jul 2006 20:41:55 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 
