@@ -5,6 +5,7 @@ use strict;
 use IkiWiki;
 use IkiWiki::UserInfo;
 use encoding 'utf8'; # force use of utf8 for io layer
+use Encode;
 
 package IkiWiki;
 
@@ -352,7 +353,6 @@ sub cgi_editpage ($$) { #{{{
 		require IkiWiki::Render;
 		# Apparently FormBuilder doesn't not treat input as
 		# utf-8, so decode from it.
-		require Encode;
 		my $content = Encode::decode_utf8($form->field('editcontent'));
 		my $comments = Encode::decode_utf8($form->field('comments'));
 		$form->field(name => "editcontent",
@@ -442,7 +442,6 @@ sub cgi_editpage ($$) { #{{{
 		page_locked($page, $session);
 		
 		# Decode utf-8 since FormBuilder does not
-		require Encode;
 		my $content=Encode::decode_utf8($form->field('editcontent'));
 
 		$content=~s/\r\n/\n/g;

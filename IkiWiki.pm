@@ -3,7 +3,8 @@
 package IkiWiki;
 use warnings;
 use strict;
-use encoding "utf8";
+use encoding "utf8"; # force use of utf8 for io layer
+use Encode;
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks};
@@ -393,7 +394,6 @@ sub saveindex () { #{{{
 sub template_params (@) { #{{{
 	my $filename=shift;
 	
-	require Encode;
 	require HTML::Template;
 	return filter => sub {
 			my $text_ref = shift;

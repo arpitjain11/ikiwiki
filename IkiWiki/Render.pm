@@ -6,6 +6,7 @@ use warnings;
 use strict;
 use File::Spec;
 use IkiWiki;
+use Encode;
 
 sub linkify ($$$) { #{{{
 	my $lpage=shift;
@@ -31,7 +32,6 @@ sub htmlize ($$) { #{{{
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
 		do "/usr/bin/markdown";
-		require Encode;
 	}
 	
 	if ($type eq '.mdwn') {
@@ -324,7 +324,6 @@ sub refresh () { #{{{
 	my %exists;
 	my @files;
 	eval q{use File::Find};
-	require Encode;
 	find({
 		no_chdir => 1,
 		wanted => sub {
