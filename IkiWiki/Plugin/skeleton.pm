@@ -15,6 +15,8 @@ sub import { #{{{
 		call => \&preprocess);
 	IkiWiki::hook(type => "filter", id => "skeleton", 
 		call => \&filter);
+	IkiWiki::hook(type => "htmlize", id => "skeleton",
+		call => \&htmlize);
 	IkiWiki::hook(type => "sanitize", id => "skeleton", 
 		call => \&sanitize);
 	IkiWiki::hook(type => "pagetemplate", id => "skeleton", 
@@ -43,6 +45,14 @@ sub filter (@) { #{{{
 	IkiWiki::debug("skeleton plugin running as filter");
 
 	return $params{content};
+} # }}}
+
+sub htmlize ($) { #{{{
+	my $content=shift;
+
+	IkiWiki::debug("skeleton plugin running as htmlize");
+
+	return $content;
 } # }}}
 
 sub sanitize ($) { #{{{
