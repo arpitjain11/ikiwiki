@@ -123,7 +123,7 @@ sub dirname ($) { #{{{
 sub pagetype ($) { #{{{
 	my $page=shift;
 	
-	if ($page =~ /\.(.*)$/) {
+	if ($page =~ /\.(.*?)$/) {
 		return $1 if exists $hooks{htmlize}{$1};
 	}
 	return undef;
