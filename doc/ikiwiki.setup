@@ -52,7 +52,7 @@ use IkiWiki::Setup::Standard {
 		#	# Note that this will overwrite any existing
 		#	# post-update hook script, which may not be
 		#	# what you want.
-		#	wrapper => "/git/wikirepo/hooks/post-update",
+		#	wrapper => "/git/wikirepo/.git/hooks/post-update",
 		#	wrappermode => "04755",
 		#	# Enable mail notifications of commits.
 		#	notify => 1,
