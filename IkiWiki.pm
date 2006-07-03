@@ -3,6 +3,7 @@
 package IkiWiki;
 use warnings;
 use strict;
+use encoding "utf8";
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks};
@@ -340,7 +341,7 @@ sub unlockwiki () { #{{{
 } #}}}
 
 sub loadindex () { #{{{
-	open (IN, "$config{wikistatedir}/index") || return;
+	open (IN, "<:utf8", "$config{wikistatedir}/index") || return;
 	while (<IN>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
@@ -372,7 +373,7 @@ sub saveindex () { #{{{
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
 	}
-	open (OUT, ">$config{wikistatedir}/index") || 
+	open (OUT, ">:utf8", "$config{wikistatedir}/index") || 
 		error("cannot write to $config{wikistatedir}/index: $!");
 	foreach my $page (keys %oldpagemtime) {
 		next unless $oldpagemtime{$page};

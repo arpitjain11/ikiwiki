@@ -324,9 +324,11 @@ sub refresh () { #{{{
 	my %exists;
 	my @files;
 	eval q{use File::Find};
+	require Encode;
 	find({
 		no_chdir => 1,
 		wanted => sub {
+			$_ = Encode::decode_utf8($_);
 			if (/$config{wiki_file_prune_regexp}/) {
 				$File::Find::prune=1;
 			}
@@ -346,6 +348,7 @@ sub refresh () { #{{{
 	find({
 		no_chdir => 1,
 		wanted => sub {
+			$_ = Encode::decode_utf8($_);
 			if (/$config{wiki_file_prune_regexp}/) {
 				$File::Find::prune=1;
 			}
@@ -405,7 +408,7 @@ sub refresh () { #{{{
 		
 		if (! exists $oldpagemtime{$page} ||
 		    mtime(srcfile($file)) > $oldpagemtime{$page}) {
-		    	debug("rendering changed file $file");
+		    	debug("rendering $file");
 			render($file);
 			$rendered{$file}=1;
 		}

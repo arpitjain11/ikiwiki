@@ -308,7 +308,8 @@ sub cgi_editpage ($$) { #{{{
 	
 	# This untaint is safe because titlepage removes any problimatic
 	# characters.
-	my ($page)=titlepage(possibly_foolish_untaint(lc($form->param('page'))));
+	my ($page)=Encode::decode_utf8($form->param('page'));
+	$page=titlepage(possibly_foolish_untaint(lc($page)));
 	if (! defined $page || ! length $page ||
 	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
 		error("bad page name");
@@ -353,10 +354,11 @@ sub cgi_editpage ($$) { #{{{
 		# utf-8, so decode from it.
 		require Encode;
 		my $content = Encode::decode_utf8($form->field('editcontent'));
+		my $comments = Encode::decode_utf8($form->field('comments'));
 		$form->field(name => "editcontent",
 				value => $content, force => 1);
 		$form->field(name => "comments",
-				value => Encode::decode_utf8($form->field('comments')), force => 1);
+				value => $comments, force => 1);
 		$form->tmpl_param("page_preview",
 			htmlize($config{default_pageext},
 				linkify($page, $page, $content)));
@@ -457,7 +459,7 @@ sub cgi_editpage ($$) { #{{{
 		}
 		if (defined $form->field('comments') &&
 		    length $form->field('comments')) {
-			$message.=Encode::decode_utf8(": ".$form->field('comments'));
+			$message.=": ".Encode::decode_utf8($form->field('comments'));
 		}
 		
 		if ($config{rcs}) {
