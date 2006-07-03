@@ -12,10 +12,10 @@ BEGIN { use_ok("IkiWiki::Render"); }
 $IkiWiki::config{srcdir}=$IkiWiki::config{destdir}="/dev/null";
 IkiWiki::checkconfig();
 
-is(IkiWiki::htmlize(".mdwn", "foo\n\nbar\n"), "<p>foo</p>\n\n<p>bar</p>\n",
+is(IkiWiki::htmlize("mdwn", "foo\n\nbar\n"), "<p>foo</p>\n\n<p>bar</p>\n",
 	"basic");
-is(IkiWiki::htmlize(".mdwn", IkiWiki::readfile("t/test1.mdwn")),
+is(IkiWiki::htmlize("mdwn", IkiWiki::readfile("t/test1.mdwn")),
 	Encode::decode_utf8(qq{<p><img src="../images/o.jpg" alt="o" title="&oacute;" />\nóóóóó</p>\n}),
 	"utf8; bug #373203");
-ok(IkiWiki::htmlize(".mdwn", IkiWiki::readfile("t/test2.mdwn")),
+ok(IkiWiki::htmlize("mdwn", IkiWiki::readfile("t/test2.mdwn")),
 	"this file crashes markdown if it's fed in as decoded utf-8");

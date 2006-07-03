@@ -42,7 +42,7 @@ sub defaultconfig () { #{{{
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
-	plugin => [qw{inline htmlscrubber}],
+	plugin => [qw{mdwn inline htmlscrubber}],
 	timeformat => '%c',
 } #}}}
 	    
@@ -123,12 +123,10 @@ sub dirname ($) { #{{{
 sub pagetype ($) { #{{{
 	my $page=shift;
 	
-	if ($page =~ /\.mdwn$/) {
-		return ".mdwn";
+	if ($page =~ /\.(.*)$/) {
+		return $1 if exists $hooks{htmlize}{$1};
 	}
-	else {
-		return "unknown";
-	}
+	return "unknown";
 } #}}}
 
 sub pagename ($) { #{{{
@@ -136,7 +134,7 @@ sub pagename ($) { #{{{
 
 	my $type=pagetype($file);
 	my $page=$file;
-	$page=~s/\Q$type\E*$// unless $type eq 'unknown';
+	$page=~s/\Q.$type\E*$// unless $type eq 'unknown';
 	return $page;
 } #}}}
 

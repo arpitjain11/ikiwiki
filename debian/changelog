@@ -27,8 +27,10 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     This allows adding or removing plugins w/o overriding the whole list of
     default plugins, which makes it easier to upgrade when new default plugins
     are added.
+  * Support htmlize plugins and make mdwn one such plugin, which is enabled by
+    default (of course!). Based on a patch by Faidon Liambotis.
 
- -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 16:57:37 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 18:06:49 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 

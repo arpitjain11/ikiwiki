@@ -55,7 +55,8 @@ Note that if the [[htmlscrubber]] is enabled, html in
 [[PreProcessorDirective]] output is sanitised, which may limit what your
 plugin can do. Also, the rest of the page content is not in html format at
 preprocessor time. Text output by a preprocessor directive will be passed
-through markdown along with the rest of the page.
+through markdown (or whatever engine is used to htmlize the page) along
+with the rest of the page.
 
 # Other types of hooks
 
@@ -78,6 +79,15 @@ IkiWiki::error if something isn't configured right.
 Runs on the raw source of a page, before anything else touches it, and can
 make arbitrary changes. The function is passed named parameters `page` and
 `content` and should return the filtered content.
+
+## htmlize
+
+	IkiWiki::hook(type => "htmlize", id => "ext", call => \&filter);
+
+Runs on the raw source of a page and turns it into html. The id parameter
+specifies the filename extension that a file must have to be htmlized using
+this plugin. This is how you can add support for new and exciting markup
+languages to ikiwiki.
 
 ## pagetemplate
 

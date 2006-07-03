@@ -25,22 +25,8 @@ sub htmlize ($$) { #{{{
 	my $type=shift;
 	my $content=shift;
 	
-	if (! $INC{"/usr/bin/markdown"}) {
-		# Note: a proper perl module is available in Debian
-		# for markdown, but not upstream yet.
-		no warnings 'once';
-		$blosxom::version="is a proper perl module too much to ask?";
-		use warnings 'all';
-		do "/usr/bin/markdown";
-	}
-	
-	if ($type eq '.mdwn') {
-		# Workaround for perl bug (#376329)
-		$content=Encode::encode_utf8($content);
-		$content=Encode::encode_utf8($content);
-		$content=Markdown::Markdown($content);
-		$content=Encode::decode_utf8($content);
-		$content=Encode::decode_utf8($content);
+	if (exists $hooks{htmlize}{$type}) {
+		$content=$hooks{htmlize}{$type}{call}->($content);
 	}
 	else {
 		error("htmlization of $type not supported");

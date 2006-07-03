@@ -26,6 +26,9 @@ Some of ikiwiki's features:
   provided by ikiwiki aside from regular markdown is the [[WikiLink]] and 
   [[PreprocessorDirective]]
 
+  If you prefer to use some other markup language, ikiwiki allows others to
+  be added by [[plugins]].
+
 * support for other file types
 
   ikiwiki also supports files of any other type, including plain text,
@@ -120,10 +123,10 @@ Some of ikiwiki's features:
 * [[Plugins]]
 
   Plugins can be used to add additional features to ikiwiki. The interface
-  is quite flexible, allowing plugins to register
-  [[PreProcessorDirective]]s, hook into [[CGI]] mode, and more. Ikiwiki's
-  backend RCS support is also pluggable, so support for new revision
-  control systems can be added to ikiwiki. 
+  is quite flexible, allowing plugins to implement additional markup
+  languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
+  and more. Ikiwiki's backend RCS support is also pluggable, so support for
+  new revision control systems can be added to ikiwiki. 
 
 * [[todo/utf8]]
 
