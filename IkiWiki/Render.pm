@@ -255,7 +255,7 @@ sub render ($) { #{{{
 	
 	my $type=pagetype($file);
 	my $srcfile=srcfile($file);
-	if ($type ne 'unknown') {
+	if (defined $type) {
 		my $content=readfile($srcfile);
 		my $page=pagename($file);
 		delete $depends{$page};

@@ -3,8 +3,8 @@
 package IkiWiki;
 use warnings;
 use strict;
-use encoding "utf8"; # force use of utf8 for io layer
 use Encode;
+use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks};
@@ -126,7 +126,7 @@ sub pagetype ($) { #{{{
 	if ($page =~ /\.(.*)$/) {
 		return $1 if exists $hooks{htmlize}{$1};
 	}
-	return "unknown";
+	return undef;
 } #}}}
 
 sub pagename ($) { #{{{
@@ -134,7 +134,7 @@ sub pagename ($) { #{{{
 
 	my $type=pagetype($file);
 	my $page=$file;
-	$page=~s/\Q.$type\E*$// unless $type eq 'unknown';
+	$page=~s/\Q.$type\E*$// if defined $type;
 	return $page;
 } #}}}
 
@@ -162,12 +162,7 @@ sub readfile ($;$) { #{{{
 	
 	local $/=undef;
 	open (IN, $file) || error("failed to read $file: $!");
-	if (! $binary) {
-		binmode(IN, ":utf8");
-	}
-	else {
-		binmode(IN);
-	}
+	binmode(IN) if ($binary);
 	my $ret=<IN>;
 	close IN;
 	return $ret;
@@ -199,12 +194,7 @@ sub writefile ($$$;$) { #{{{
 	}
 	
 	open (OUT, ">$destdir/$file") || error("failed to write $destdir/$file: $!");
-	if (! $binary) {
-		binmode(OUT, ":utf8");
-	}
-	else {
-		binmode(OUT);
-	}
+	binmode(OUT) if ($binary);
 	print OUT $content;
 	close OUT;
 } #}}}
@@ -340,7 +330,7 @@ sub unlockwiki () { #{{{
 } #}}}
 
 sub loadindex () { #{{{
-	open (IN, "<:utf8", "$config{wikistatedir}/index") || return;
+	open (IN, "$config{wikistatedir}/index") || return;
 	while (<IN>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
@@ -372,7 +362,7 @@ sub saveindex () { #{{{
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
 	}
-	open (OUT, ">:utf8", "$config{wikistatedir}/index") || 
+	open (OUT, ">$config{wikistatedir}/index") || 
 		error("cannot write to $config{wikistatedir}/index: $!");
 	foreach my $page (keys %oldpagemtime) {
 		next unless $oldpagemtime{$page};

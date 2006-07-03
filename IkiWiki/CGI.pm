@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use IkiWiki;
 use IkiWiki::UserInfo;
-use encoding 'utf8'; # force use of utf8 for io layer
+use open qw{:utf8 :std};
 use Encode;
 
 package IkiWiki;

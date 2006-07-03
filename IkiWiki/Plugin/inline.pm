@@ -101,7 +101,7 @@ sub get_inline_content ($$) { #{{{
 	
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
-	if ($type ne 'unknown') {
+	if (defined $type) {
 		return htmlize($type, preprocess($page, linkify($page, $parentpage, readfile(srcfile($file))), 1));
 	}
 	else {
