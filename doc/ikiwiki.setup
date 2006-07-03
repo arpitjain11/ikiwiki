@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # Configuration file for ikiwiki.
-# Passing this to ikiwiki --setup will make ikiwiki generate two
-# wrapper programs, one for cgi and one for a subversion post-commit hook.
+# Passing this to ikiwiki --setup will make ikiwiki generate wrappers and 
+# build the wiki.
 #
 # Remember to re-run ikiwiki --setup any time you edit this file.
 
@@ -69,7 +69,9 @@ use IkiWiki::Setup::Standard {
 	discussion => 1,
 	# Time format (for strftime)
 	#timeformat => '%c',
-	# To change the enabled plugins, edit this list
-	#plugin => [qw{pagecount inline brokenlinks search smiley
-	#              htmlscrubber}],
+	
+	# To add plugins, list them here.
+	#add_plugins => [qw{pagecount brokenlinks search smiley}],
+	# If you want to disable any of the default plugins, list them here.
+	#disable_plugins => [qw{inline htmlscrubber}],
 }

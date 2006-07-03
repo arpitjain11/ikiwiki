@@ -226,10 +226,7 @@ sub check_overwrite ($$) { #{{{
 	my $src=shift;
 	
 	if (! exists $renderedfiles{$src} && -e $dest && ! $config{rebuild}) {
-		error("$dest already exists and was rendered from ".
-			join(" ",(grep { $renderedfiles{$_} eq $dest } keys
-				%renderedfiles)).
-			", before, so not rendering from $src");
+		error("$dest already exists and was not rendered from $src before");
 	}
 } #}}}
 

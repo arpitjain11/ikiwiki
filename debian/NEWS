@@ -1,3 +1,22 @@
+ikiwiki (1.8) unstable; urgency=low
+
+  If your wiki is configured with a setup file, you should modify it to
+  stop setting the "plugin" list directly, and instead add or remove plugins
+  via the add_plugins and disable_plugins lines. For example, if you had:
+
+  plugin => [qw{inline smiley search}],
+
+  Change it to these lines, which disables the default htmlscrubber plugin
+  and adds the two additional plugins:
+
+  add_plugins => [qw{smiley search}],
+  disable_plugins => [qw{htmlscrubber}],
+
+  Making this change makes your ikiwiki setup file more future-proof since
+  new default plugins will be automatically used.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 16:59:29 -0400
+
 ikiwiki (1.1) unstable; urgency=low
 
   There have been several configuration changes in this release of ikiwiki:

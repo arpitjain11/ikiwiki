@@ -19,6 +19,18 @@ package IkiWiki;
 sub setup_standard {
 	my %setup=%{$_[1]};
 
+	$setup{plugin}=$config{plugin};
+	if (exists $setup{add_plugins}) {
+		push @{$setup{plugin}}, @{$setup{add_plugins}};
+		delete $setup{add_plugins};
+	}
+	if (exists $setup{disable_plugins}) {
+		foreach my $plugin (@{$setup{disable_plugins}}) {
+			$setup{plugin}=[grep { $_ ne $plugin } @{$setup{plugin}}];
+		}
+		delete $setup{disable_plugins};
+	}
+
 	if (! $config{refresh}) {
 		debug("generating wrappers..");
 		my @wrappers=@{$setup{wrappers}};
