@@ -13,16 +13,18 @@ Released 29 April 2006.
 # 2.0
 
 * Unit test suite (with tests of at least core stuff like
-  [[GlobList]]).
-* [[Plugins]] 
-* [[Tags]]
-* Should have fully working [[todo/utf8]] support.
+  [[GlobList]]). (status: exists, could of course use more tests)
+* [[Plugins]] _(status: done)_
+* [[Tags]] _(status: partial)_
+* Should have fully working [[todo/utf8]] support. _(status: fair)_
 * [[Optimised_rendering|todo/optimisations]] if possible. Deal with other
-  scalability issues.
+  scalability issues. _(status: 25%-35% speedup since 1.0)_
 * Improved [[todo/html]] stylesheets and templates.
-* Improved [[logo]].
+* Improved scalable [[logo]]. _(status: done)_
 * Support for at least one RCS aside from svn. Once it supports two, it should
   quickly grow to support them all.. See [[about_rcs_backends]]
+  _(status: supports git in tree)_
 * Support for one other markup language, probably restructured text.
+  _(status: done, but need a few more in tree)_
 * No serious known [[bugs]]
 * No severe-to-moderate known [[security]] issues.
