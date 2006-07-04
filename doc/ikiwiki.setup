@@ -21,7 +21,7 @@ use IkiWiki::Setup::Standard {
 	# Subversion stuff.
 	rcs => "svn",
 	#historyurl => "http://svn.myhost/trunk/[[file]]",
-	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&r1=[[r1]]&r2=[[r2]]",
+	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
 	svnrepo => "/svn/wiki",
 	svnpath => "trunk",
 

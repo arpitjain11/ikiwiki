@@ -18,28 +18,49 @@
 </div>
 
 <div id="content">
-<ul>
+<br />
+<table border="1" frame="border" rules="groups">
+<thead>
+	<tr class="changeheader">
+		<th align="left">user</th>
+		<th align="left">time</th>
+		<th align="left">changes</th>
+	</tr>
+</thead>
 <TMPL_LOOP NAME="CHANGELOG">
-	<li> <!-- <TMPL_VAR NAME="REV"> -->
+<tbody>
+	<!-- <TMPL_VAR NAME="REV"> -->
+	<!-- <TMPL_VAR NAME="COMMITTYPE"> -->
+	<tr class="changeheader">
+		<td><TMPL_VAR NAME="USER"></td>
+		<td class="changetime"><TMPL_VAR NAME="WHEN"></td>
+		<td>
 		<TMPL_LOOP NAME="PAGES">
-			<TMPL_VAR NAME="LINK">
 			<TMPL_IF NAME="DIFFURL">
-				(<a href="<TMPL_VAR NAME="DIFFURL">">diff</a>)
+				<a href="<TMPL_VAR NAME="DIFFURL">">
+				<img alt="diff" src="wikiicons/diff.png" style="border-style: none" />
+				</a>
+				<TMPL_VAR NAME="LINK">
+			<TMPL_ELSE>
+				<TMPL_VAR NAME="LINK">
 			</TMPL_IF>
 		</TMPL_LOOP>
-		<br />
-		<!-- <TMPL_VAR NAME="COMMITTYPE"> -->
-		changed <TMPL_VAR NAME="WHEN"> by <TMPL_VAR NAME="USER">:
-		<i>
-		<TMPL_LOOP NAME="MESSAGE">
-			<TMPL_IF NAME="LINE">
-				<TMPL_VAR NAME="LINE"><br />
-			</TMPL_IF>
-		</TMPL_LOOP>
-		</i>
-	</li>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<i>
+			<TMPL_LOOP NAME="MESSAGE">
+				<TMPL_IF NAME="LINE">
+					<TMPL_VAR NAME="LINE"><br />
+				</TMPL_IF>
+			</TMPL_LOOP>
+			</i>
+		</td>
+	</tr>
+</tbody>
 </TMPL_LOOP>
-</ul>
+</table>
 </div>
 
 <!-- from <TMPL_VAR NAME=WIKINAME> -->

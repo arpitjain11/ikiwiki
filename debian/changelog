@@ -42,8 +42,11 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     is a savings of 2 pointless fork/execs per link calculation, which
     results in ~25% speedup of ikiwiki building its own doc wiki, and
     about 35% speedup displaying RecentChanges!
+  * Make RecentChanges use a table and some CSS, should be much more readable.
+    No code changes involved.
+  * Encode & in diffurl in examples, to conform to pedantic rules. 
 
- -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 23:33:57 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue,  4 Jul 2006 01:42:28 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 
