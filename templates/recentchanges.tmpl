@@ -24,13 +24,12 @@
 	<tr class="changeheader">
 		<th align="left">user</th>
 		<th align="left">time</th>
-		<th align="left">changes</th>
+		<th align="left" colspan="2">changes</th>
 	</tr>
 </thead>
 <TMPL_LOOP NAME="CHANGELOG">
 <tbody>
 	<!-- <TMPL_VAR NAME="REV"> -->
-	<!-- <TMPL_VAR NAME="COMMITTYPE"> -->
 	<tr class="changeheader">
 		<td><TMPL_VAR NAME="USER"></td>
 		<td class="changetime"><TMPL_VAR NAME="WHEN"></td>
@@ -46,6 +45,7 @@
 			</TMPL_IF>
 		</TMPL_LOOP>
 		</td>
+		<td><TMPL_VAR NAME="COMMITTYPE"></td>
 	</tr>
 	<tr>
 		<td colspan="3">
