@@ -34,6 +34,13 @@ sub cgi_recentchanges ($) { #{{{
 	
 	unlockwiki();
 
+	# Optimisation: building recentchanges means calculating lots of
+	# links. Memoizing htmllink speeds it up a lot (can't be memoized
+	# during page builds as the return values may change, but they
+	# won't here.)
+	eval q{use Memoize};
+	memoize("htmllink");
+
 	my $template=template("recentchanges.tmpl"); 
 	$template->param(
 		title => "RecentChanges",

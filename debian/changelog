@@ -44,9 +44,10 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     about 35% speedup displaying RecentChanges!
   * Make RecentChanges use a table and some CSS, should be much more readable.
     No code changes involved.
-  * Encode & in diffurl in examples, to conform to pedantic rules. 
+  * Encode & in diffurl in examples, to conform to pedantic rules.
+  * Speed up RecentChanges by another 40% or so with some memoization.
 
- -- Joey Hess <joeyh@debian.org>  Tue,  4 Jul 2006 01:42:28 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue,  4 Jul 2006 12:16:39 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 
