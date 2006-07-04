@@ -4,7 +4,7 @@ set -e
 
 # Change this when some incompatible change is made that requires
 # rebuilding all wikis.
-firstcompat=1.8
+firstcompat=1.4
 
 if [ "$1" = configure ] && \
    dpkg --compare-versions "$2" lt "$firstcompat"; then

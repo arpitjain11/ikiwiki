@@ -35,8 +35,10 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     be copied unsanitised. With this plugin, it will process, and html
     sanitise them, like any other page type.
   * Rebuilding wrappers is necessary on upgrade to this version.
+  * Make ikiwiki --setup --refresh rebuild wrappers, so wrapper rebuild
+    will be automatically done on all upgrades.
 
- -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 18:15:30 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 20:24:18 -0400
 
 ikiwiki (1.7) unstable; urgency=low
 

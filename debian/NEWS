@@ -15,10 +15,10 @@ ikiwiki (1.8) unstable; urgency=low
   Making this change makes your ikiwiki setup file more future-proof since
   new default plugins will be automatically used.
   
-  You will need to rebuild your wiki when upgrading to this version.
-  If you listed your wiki in /etc/ikiwiki/wikilist this will be done
-  automatically when the Debian package is upgraded. Or use
-  ikiiki-mass-rebuild to force a rebuild.
+  You will need to rebuild your ikiwiki wrappers when upgrading to this
+  version. If you listed your wiki in /etc/ikiwiki/wikilist this will be
+  done automatically when the Debian package is upgraded. Or use
+  ikiiki-mass-rebuild --refresh to force a refresh.
 
  -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 16:59:29 -0400
 

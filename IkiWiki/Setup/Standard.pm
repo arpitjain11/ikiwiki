@@ -31,21 +31,16 @@ sub setup_standard {
 		delete $setup{disable_plugins};
 	}
 
-	if (! $config{refresh}) {
-		debug("generating wrappers..");
-		my @wrappers=@{$setup{wrappers}};
-		delete $setup{wrappers};
-		my %startconfig=(%config);
-		foreach my $wrapper (@wrappers) {
-			%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
-			checkconfig();
-			gen_wrapper();
-		}
-		%config=(%startconfig);
+	debug("generating wrappers..");
+	my @wrappers=@{$setup{wrappers}};
+	delete $setup{wrappers};
+	my %startconfig=(%config);
+	foreach my $wrapper (@wrappers) {
+		%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
+		checkconfig();
+		gen_wrapper();
 	}
-	else {
-		delete $setup{wrappers};
-	}
+	%config=(%startconfig);
 	
 	foreach my $c (keys %setup) {
 		if (defined $setup{$c}) {
