@@ -317,9 +317,12 @@ sub cgi_editpage ($$) { #{{{
 	}
 	$page=lc($page);
 	
-	my $file=$page.$config{default_pageext};
+	my $file;
 	if (exists $pagesources{lc($page)}) {
 		$file=$pagesources{lc($page)};
+	}
+	else {
+		$file=$page.".".$config{default_pageext};
 	}
 	my $newfile=0;
 	if (! -e "$config{srcdir}/$file") {
@@ -360,7 +363,7 @@ sub cgi_editpage ($$) { #{{{
 		$form->field(name => "comments",
 				value => $comments, force => 1);
 		$form->tmpl_param("page_preview",
-			htmlize($config{default_pageext},
+			htmlize(pagetype($file),
 				linkify($page, $page, $content)));
 	}
 	else {

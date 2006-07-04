@@ -16,7 +16,7 @@ sub defaultconfig () { #{{{
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	verbose => 0,
 	wikiname => "wiki",
-	default_pageext => ".mdwn",
+	default_pageext => "mdwn",
 	cgi => 0,
 	rcs => 'svn',
 	notify => 0,
