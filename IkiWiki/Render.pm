@@ -4,7 +4,6 @@ package IkiWiki;
 
 use warnings;
 use strict;
-use File::Spec;
 use IkiWiki;
 use Encode;
 
@@ -48,7 +47,7 @@ sub backlinks ($) { #{{{
 	foreach my $p (keys %links) {
 		next if bestlink($page, $p) eq $page;
 		if (grep { length $_ && bestlink($p, $_) eq $page } @{$links{$p}}) {
-			my $href=File::Spec->abs2rel(htmlpage($p), dirname($page));
+			my $href=abs2rel(htmlpage($p), dirname($page));
 			
 			# Trim common dir prefixes from both pages.
 			my $p_trimmed=$p;

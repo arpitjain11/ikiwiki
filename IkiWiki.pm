@@ -260,6 +260,19 @@ sub styleurl (;$) { #{{{
 	return $page."style.css";
 } #}}}
 
+sub abs2rel ($$) {
+	# Work around very innefficient behavior in File::Spec if abs2rel
+	# is passed two relative paths. It's much faster if paths are
+	# absolute!
+	my $path="/".shift;
+	my $base="/".shift;
+
+	require File::Spec;
+	my $ret=File::Spec->abs2rel($path, $base);
+	$ret=~s/^// if defined $ret;
+	return $ret;
+}
+
 sub htmllink ($$$;$$$) { #{{{
 	my $lpage=shift; # the page doing the linking
 	my $page=shift; # the page that will contain the link (different for inline)
@@ -292,8 +305,7 @@ sub htmllink ($$$;$$$) { #{{{
 			"\">?</a>$linktext</span>"
 	}
 	
-	require File::Spec;
-	$bestlink=File::Spec->abs2rel($bestlink, dirname($page));
+	$bestlink=abs2rel($bestlink, dirname($page));
 	
 	if (! $noimageinline && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
