@@ -72,6 +72,7 @@ sub parentlinks ($) { #{{{
 	my $pagelink="";
 	my $path="";
 	my $skip=1;
+	return if $page eq 'index'; # toplevel
 	foreach my $dir (reverse split("/", $page)) {
 		if (! $skip) {
 			$path.="../";
@@ -156,8 +157,6 @@ sub genpage ($$$) { #{{{
 	my $content=shift;
 	my $mtime=shift;
 
-	my $title=pagetitle(basename($page));
-	
 	my $template=template("page.tmpl", blind_cache => 1);
 	my $actions=0;
 
@@ -186,7 +185,9 @@ sub genpage ($$$) { #{{{
 	}
 
 	$template->param(
-		title => $title,
+		title => $page eq 'index' 
+			? $config{wikiname} 
+			: pagetitle(basename($page)),
 		wikiname => $config{wikiname},
 		parentlinks => [parentlinks($page)],
 		content => $content,
