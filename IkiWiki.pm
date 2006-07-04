@@ -6,6 +6,10 @@ use strict;
 use Encode;
 use open qw{:utf8 :std};
 
+# Optimisation.
+use Memoize;
+memoize("abs2rel");
+
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks};
 
