@@ -33,7 +33,8 @@ ikiwiki (1.8) UNRELEASED; urgency=low
     if you'd ever want to do such a thing. Slightly tricky, since ikiwiki
     defaults to not processing .html files, since w/o this plugin they would
     be copied unsanitised. With this plugin, it will process, and html
-    sanitise, them like any other page type.
+    sanitise them, like any other page type.
+  * Rebuilding wrappers is necessary on upgrade to this version.
 
  -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 18:15:30 -0400
 

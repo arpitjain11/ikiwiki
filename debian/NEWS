@@ -4,16 +4,21 @@ ikiwiki (1.8) unstable; urgency=low
   stop setting the "plugin" list directly, and instead add or remove plugins
   via the add_plugins and disable_plugins lines. For example, if you had:
 
-  plugin => [qw{inline smiley search}],
+  	plugin => [qw{inline smiley search}],
 
   Change it to these lines, which disables the default htmlscrubber plugin
   and adds the two additional plugins:
 
-  add_plugins => [qw{smiley search}],
-  disable_plugins => [qw{htmlscrubber}],
+  	add_plugins => [qw{smiley search}],
+  	disable_plugins => [qw{htmlscrubber}],
 
   Making this change makes your ikiwiki setup file more future-proof since
   new default plugins will be automatically used.
+  
+  You will need to rebuild your wiki when upgrading to this version.
+  If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+  automatically when the Debian package is upgraded. Or use
+  ikiiki-mass-rebuild to force a rebuild.
 
  -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 16:59:29 -0400
 
