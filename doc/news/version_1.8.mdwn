@@ -1,4 +1,28 @@
-ikiwiki 1.8 released with these changes:
+A special release for July 4th with many improvements.
+
+*Upgrade notes:*
+
+  If your wiki is configured with a setup file, you should modify it to
+  stop setting the "plugin" list directly, and instead add or remove plugins
+  via the add_plugins and disable_plugins lines. For example, if you had:
+
+        plugin => [qw{inline smiley search}],
+
+  Change it to these lines, which disables the default htmlscrubber plugin
+  and adds the two additional plugins:
+
+        add_plugins => [qw{smiley search}],
+        disable_plugins => [qw{htmlscrubber}],
+
+  Making this change makes your ikiwiki setup file more future-proof since
+  new default plugins will be automatically used.
+
+  You will need to rebuild your ikiwiki wrappers when upgrading to this
+  version. If you listed your wiki in /etc/ikiwiki/wikilist this will be
+  done automatically when the Debian package is upgraded. Or use
+  ikiiki-mass-rebuild --refresh to force a refresh.
+
+*Changes:*
 
    * Fix orphans plugin to not count a link to a nonexistant page as a reason
      for a page not being an orphan.
