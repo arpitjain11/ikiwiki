@@ -126,6 +126,7 @@ sub rcs_recentchanges ($) { #{{{
 		foreach my $msgline (split(/\n/, $logentry->{msg})) {
 			push @message, { line => escapeHTML($msgline) };
 		}
+		unshift @message, { line => "\n" } if @message > 1;
 
 		my $committype="web";
 		if (defined $message[0] &&
