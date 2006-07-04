@@ -1,0 +1,50 @@
+ikiwiki 1.8 released with these changes:
+
+   * Fix orphans plugin to not count a link to a nonexistant page as a reason
+     for a page not being an orphan.
+   * Support pinging services such as Technorati using XML-RPC to notify them
+     about changes to rss feeds.
+   * Parse svn log as xml for improved utf8 and security. Note that this makes
+     ikiwiki depend on XML::Simple. Patch by Faidon Liambotis.
+   * POSIX::strftime doesn't know about encodings and doesn't return a utf8
+     flagged string even if the locale causes it to generate utf8 output,
+     so make sure to let perl know it should be handled as utf8. Also,
+     the optimised version used for standard time formats won't work if the
+     user has changed locale, so drop it. Thanks, Faidon Liambotis.
+   * Fix re-encoding of the comments field to utf8 if a commit fails
+     due to a conflict. Thanks, Faidon Liambotis.
+   * Let svn know that commits have utf8 commit messages. Thanks, Faidon
+     Liambotis.
+   * Add insane double encode/decode to utf8 around call to markdown.
+     This works around a truely strange bug, which is apparently a bug in
+     perl, #376329. Also added a test case for it.
+   * Improve layout of edit page so formatting help link is always visible w/o
+     getting in the way of the preview.
+   * Centralised all calls to HTML::Template and force all the templates
+     to be read as utf8.
+   * Support pages with utf8 filenames. Patch by Faidon Liambotis.
+   * Introduce add\_plugins and disable\_plugins config options in setup files.
+     This allows adding or removing plugins w/o overriding the whole list of
+     default plugins, which makes it easier to upgrade when new default plugins
+     are added.
+   * Support htmlize plugins and make mdwn one such plugin, which is enabled by
+     default (of course!). Based on a patch by Faidon Liambotis.
+   * Add a html plugin, which can be used to write wikis in raw html,
+     if you'd ever want to do such a thing. Slightly tricky, since ikiwiki
+     defaults to not processing .html files, since w/o this plugin they would
+     be copied unsanitised. With this plugin, it will process and html
+     sanitise them, like any other page type.
+   * Rebuilding wrappers is necessary on upgrade to this version.
+   * Make ikiwiki --setup --refresh rebuild wrappers, so wrapper rebuild
+     will be automatically done on all upgrades.
+   * Don't send pings if the wiki is being rebuilt.
+   * Work around very innefficient behavior in File::Spec::abs2rel. Result
+     is a savings of 2 pointless fork/execs per link calculation, which
+     results in ~25% speedup of ikiwiki building its own doc wiki, and
+     about 35% speedup displaying RecentChanges!
+   * Make RecentChanges use a table and some CSS, should be much more readable.
+     No code changes involved.
+   * Encode &amp; in diffurl in examples, to conform to pedantic rules.
+   * Speed up RecentChanges by another 40% or so with some memoization.
+   * Memoize abs2rel, which is still kinda slow, for another 30% speedup
+     in time to build the doc wiki.
