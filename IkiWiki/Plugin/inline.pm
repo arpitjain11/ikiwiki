@@ -89,7 +89,7 @@ sub preprocess_inline (@) { #{{{
 	if ($config{rss}) {
 		writefile(rsspage($params{page}), $config{destdir},
 			genrss($params{page}, @list));
-		$toping{$params{page}}=1;
+		$toping{$params{page}}=1 unless $config{rebuild};
 	}
 	
 	return $ret;
