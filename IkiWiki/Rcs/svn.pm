@@ -105,9 +105,15 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
 	eval q{use XML::Simple};
-	
+
+	# --limit is only supported on Subversion 1.2.0+
+	my $svn_version=`svn --version -q`;
+	my $svn_limit='';
+	$svn_limit="--limit $num"
+		if $svn_version =~ /\d\.(\d)\.\d/ && $1 >= 2;
+
 	my $svn_url=svn_info("URL", $config{srcdir});
-	my $xml = XMLin(scalar `svn --xml -v log '$svn_url'`,
+	my $xml = XMLin(scalar `svn $svn_limit --xml -v log '$svn_url'`,
 		ForceArray => [ 'logentry', 'path' ],
 		GroupTags => { paths => 'path' },
 		KeyAttr => { path => 'content' },

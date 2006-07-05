@@ -1,8 +1,10 @@
 ikiwiki (1.9) UNRELEASED; urgency=low
 
   * Improve display of parentlinks and page title of toplevel index page.
+  * Patch from Faidon to use svn --limit when possible for recentchanges,
+    speeds up recentchanges a lot for wikis with more history.
 
- -- Joey Hess <joeyh@debian.org>  Tue,  4 Jul 2006 15:41:16 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed,  5 Jul 2006 13:33:59 -0400
 
 ikiwiki (1.8) unstable; urgency=low
 
