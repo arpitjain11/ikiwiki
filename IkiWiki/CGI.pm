@@ -316,7 +316,7 @@ sub cgi_editpage ($$) { #{{{
 	
 	# This untaint is safe because titlepage removes any problimatic
 	# characters.
-	my ($page)=Encode::decode_utf8($form->param('page'));
+	my ($page)=decode_utf8($form->param('page'));
 	$page=titlepage(possibly_foolish_untaint(lc($page)));
 	if (! defined $page || ! length $page ||
 	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
@@ -363,8 +363,8 @@ sub cgi_editpage ($$) { #{{{
 		require IkiWiki::Render;
 		# Apparently FormBuilder doesn't not treat input as
 		# utf-8, so decode from it.
-		my $content = Encode::decode_utf8($form->field('editcontent'));
-		my $comments = Encode::decode_utf8($form->field('comments'));
+		my $content=decode_utf8($form->field('editcontent'));
+		my $comments=decode_utf8($form->field('comments'));
 		$form->field(name => "editcontent",
 				value => $content, force => 1);
 		$form->field(name => "comments",
@@ -452,7 +452,7 @@ sub cgi_editpage ($$) { #{{{
 		page_locked($page, $session);
 		
 		# Decode utf-8 since FormBuilder does not
-		my $content=Encode::decode_utf8($form->field('editcontent'));
+		my $content=decode_utf8($form->field('editcontent'));
 
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
@@ -468,7 +468,7 @@ sub cgi_editpage ($$) { #{{{
 		}
 		if (defined $form->field('comments') &&
 		    length $form->field('comments')) {
-			$message.=": ".Encode::decode_utf8($form->field('comments'));
+			$message.=": ".decode_utf8($form->field('comments'));
 		}
 		
 		if ($config{rcs}) {
@@ -487,7 +487,7 @@ sub cgi_editpage ($$) { #{{{
 					force => 1);
 				$form->tmpl_param("page_conflict", 1);
 				$form->field("editcontent", value => $conflict, force => 1);
-				$form->field(name => "comments", value => Encode::decode_utf8($form->field('comments')), force => 1);
+				$form->field(name => "comments", value => decode_utf8($form->field('comments')), force => 1);
 				$form->field("do", "edit)");
 				$form->tmpl_param("page_select", 0);
 				$form->field(name => "page", type => 'hidden');

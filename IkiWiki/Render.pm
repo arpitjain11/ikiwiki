@@ -222,7 +222,7 @@ sub displaytime ($) { #{{{
 	eval q{use POSIX};
 	# strftime doesn't know about encodings, so make sure
 	# its output is properly treated as utf8
-	return Encode::decode_utf8(POSIX::strftime(
+	return decode_utf8(POSIX::strftime(
 			$config{timeformat}, localtime($time)));
 } #}}}
 
@@ -310,7 +310,7 @@ sub refresh () { #{{{
 	find({
 		no_chdir => 1,
 		wanted => sub {
-			$_ = Encode::decode_utf8($_);
+			$_=decode_utf8($_);
 			if (/$config{wiki_file_prune_regexp}/) {
 				$File::Find::prune=1;
 			}
@@ -330,7 +330,7 @@ sub refresh () { #{{{
 	find({
 		no_chdir => 1,
 		wanted => sub {
-			$_ = Encode::decode_utf8($_);
+			$_=decode_utf8($_);
 			if (/$config{wiki_file_prune_regexp}/) {
 				$File::Find::prune=1;
 			}
