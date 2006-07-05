@@ -3,6 +3,8 @@
 use warnings;
 use strict;
 use IkiWiki;
+use Encode;
+use open qw{:utf8 :std};
 
 package IkiWiki;
 
@@ -228,7 +230,7 @@ sub _parse_diff_tree (@) { #{{{
 			}
 			if (length $file) {
 				push @{ $ci{'details'} }, {
-					'file'      => $file,
+					'file'      => decode_utf8($file),
 					'sha1_from' => $sha1_from,
 					'sha1_to'   => $sha1_to,
 				};
