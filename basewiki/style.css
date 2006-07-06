@@ -31,12 +31,26 @@
 }      
 
 /* Stuff for the RecentChanges table. */
-.changeheader {
+tr.changeheader {
 	background: #eee;
 	color: black !important;
 }
-.changetime {
+tr.changeinfo {
+	background: #eee;
+	color: black !important;
+}
+th.changeheader {
+	padding: 1px .3em;
+}
+td.changeinfo { 
+	padding: 1px .3em;
+}
+td.changetime {
 	white-space: nowrap;
+	padding: 1px .3em;
+}
+td.changelog {
+	font-style: italic;
 }
 
 /* Used for adding a blog page. */
