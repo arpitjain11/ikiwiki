@@ -1,0 +1,81 @@
+#!/usr/bin/perl
+# Configuration file for ikiwiki (w3m mode).
+# Passing this to ikiwiki --setup will make ikiwiki generate wrappers and 
+# build the wiki.
+#
+# Remember to re-run ikiwiki --setup any time you edit this file.
+
+use IkiWiki::Setup::Standard {
+	wikiname => "ikiwiki",
+	#adminuser => ["yourname", ],
+	#adminemail => 'me@myhost',
+	
+	# Be sure to customise these..
+	srcdir => "doc",
+	destdir => "html",
+	
+	# Enable w3m mode.
+	w3mmode => 1,
+
+	cgiurl => 'ikiwiki.cgi',
+	#templatedir => "/usr/share/ikiwiki/templates",
+	
+	rcs => "",
+
+	# Subversion stuff.
+	#rcs => "svn",
+	#historyurl => "http://svn.myhost/trunk/[[file]]",
+	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
+	#svnrepo => "/svn/wiki",
+	#svnpath => "trunk",
+
+	# Git stuff.
+	#rcs => "git",
+	#historyurl => "http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
+	#diffurl => "http://git.host/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
+
+	wrappers => [
+		{
+			# The cgi wrapper.
+			cgi => 1,
+			wrapper => "$ENV{HOME}/.ikiwiki/wrappers/ikiwiki.cgi",
+			wrappermode => "0755",
+		},
+		#{
+		#	# The svn post-commit wrapper.
+		#	# Note that this will overwrite any existing
+		#	# post-commit hook script, which may not be
+		#	# what you want.
+		#	wrapper => "/svn/wikirepo/hooks/post-commit",
+		#	wrappermode => "04755",
+		#	# Enable mail notifications of commits.
+		#	notify => 1,
+		#},
+		#{
+		#	# The git post-update wrapper.
+		#	# Note that this will overwrite any existing
+		#	# post-update hook script, which may not be
+		#	# what you want.
+		#	wrapper => "/git/wikirepo/.git/hooks/post-update",
+		#	wrappermode => "04755",
+		#	# Enable mail notifications of commits.
+		#	notify => 1,
+		#},
+	],
+	
+	# Can anonymous web users edit pages?
+	anonok => 1,
+	# Generate rss feeds for pages?
+	rss => 1,
+	# Urls to ping with XML-RPC when rss feeds are updated
+	#pingurl => [qw{http://rpc.technorati.com/rpc/ping}],
+	# Include discussion links on all pages?
+	discussion => 1,
+	# Time format (for strftime)
+	#timeformat => '%c',
+	
+	# To add plugins, list them here.
+	#add_plugins => [qw{pagecount brokenlinks search smiley wikitext}],
+	# If you want to disable any of the default plugins, list them here.
+	#disable_plugins => [qw{inline htmlscrubber}],
+}

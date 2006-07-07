@@ -1,0 +1,11 @@
+It's possible to use all of ikiwiki's web features (page editing, etc) in
+the `w3m` web browser without using a web server. `w3m` supports local CGI
+scripts, and ikiwiki can be set up to run that way. This requires some
+special configuration:
+
+ * `w3mmode` must be enabled
+ * A CGI wrapper must be created, in ~/.ikiwiki/wrappers/
+ * `cgiurl` should be set to just the base of the filename of the CGI
+   wrapper.
+
+This [[ikiwiki.setup]] is an example of setting up a wiki using w3mmode.

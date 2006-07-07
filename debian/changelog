@@ -6,6 +6,8 @@ ikiwiki (1.9) UNRELEASED; urgency=low
   * Patch from Recai to fix utf8 issues in git backend.
   * Add wikitext markup plugin, which supports ".wiki" pages written in the
     original wiki syntax, CamelCase links and all.
+  * Support a w3mmode, which lets w3m run ikiwiki using its local CGI
+    support, to edit pages etc without a web server.
 
  -- Joey Hess <joeyh@debian.org>  Fri,  7 Jul 2006 14:11:50 -0400
 

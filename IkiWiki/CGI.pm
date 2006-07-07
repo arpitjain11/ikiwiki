@@ -9,6 +9,18 @@ use Encode;
 
 package IkiWiki;
 
+sub redirect ($$) { #{{{
+	my $q=shift;
+	my $url=shift;
+	if (! $config{w3mmode}) {
+		print $q->redirect($url);
+	}
+	else {
+		print "Content-type: text/plain\n";
+		print "W3m-control: GOTO $url\n\n";
+	}
+} #}}}
+
 sub page_locked ($$;$) { #{{{
 	my $page=shift;
 	my $session=shift;
@@ -158,7 +170,7 @@ sub cgi_signin ($$) { #{{{
 			$session->param("name", $form->field("name"));
 			if (defined $form->field("do") && 
 			    $form->field("do") ne 'signin') {
-				print $q->redirect(cgiurl(
+				redirect($q, cgiurl(
 					do => $form->field("do"),
 					page => $form->field("page"),
 					title => $form->field("title"),
@@ -167,7 +179,7 @@ sub cgi_signin ($$) { #{{{
 				));
 			}
 			else {
-				print $q->redirect($config{url});
+				redirect($q, $config{url});
 			}
 		}
 		elsif ($form->submitted eq 'Register') {
@@ -272,11 +284,11 @@ sub cgi_prefs ($$) { #{{{
 	
 	if ($form->submitted eq 'Logout') {
 		$session->delete();
-		print $q->redirect($config{url});
+		redirect($q, $config{url});
 		return;
 	}
 	elsif ($form->submitted eq 'Cancel') {
-		print $q->redirect($config{url});
+		redirect($q, $config{url});
 		return;
 	}
 	elsif ($form->submitted eq "Save Preferences" && $form->validate) {
@@ -356,7 +368,7 @@ sub cgi_editpage ($$) { #{{{
 	}
 	
 	if ($form->submitted eq "Cancel") {
-		print $q->redirect("$config{url}/".htmlpage($page));
+		redirect($q, "$config{url}/".htmlpage($page));
 		return;
 	}
 	elsif ($form->submitted eq "Preview") {
@@ -419,7 +431,7 @@ sub cgi_editpage ($$) { #{{{
 			if (! @page_locs) {
 				# hmm, someone else made the page in the
 				# meantime?
-				print $q->redirect("$config{url}/".htmlpage($page));
+				redirect($q, "$config{url}/".htmlpage($page));
 				return;
 			}
 				
@@ -504,7 +516,7 @@ sub cgi_editpage ($$) { #{{{
 		
 		# The trailing question mark tries to avoid broken
 		# caches and get the most recent version of the page.
-		print $q->redirect("$config{url}/".htmlpage($page)."?updated");
+		redirect($q, "$config{url}/".htmlpage($page)."?updated");
 	}
 } #}}}
 

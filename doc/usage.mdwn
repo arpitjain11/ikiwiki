@@ -200,6 +200,11 @@ These options configure the wiki.
 
   Be vebose about what is being done.
 
+* --w3mmode, --no-w3mmode
+
+  Enable [[w3mmode]], which allows w3m to use ikiwiki as a local CGI script,
+  without a web server.
+
 * --getctime
 
   Pull last changed time for each new page out of the revision control

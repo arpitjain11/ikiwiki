@@ -29,6 +29,7 @@ sub getconfig () { #{{{
 			"rss!" => \$config{rss},
 			"cgi!" => \$config{cgi},
 			"discussion!" => \$config{discussion},
+			"w3mmode!" => \$config{w3mmode},
 			"notify!" => \$config{notify},
 			"url=s" => \$config{url},
 			"cgiurl=s" => \$config{cgiurl},

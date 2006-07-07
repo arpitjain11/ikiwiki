@@ -34,6 +34,7 @@ sub defaultconfig () { #{{{
 	rebuild => 0,
 	refresh => 0,
 	getctime => 0,
+	w3mmode => 0,
 	wrapper => undef,
 	wrappermode => undef,
 	svnrepo => undef,
@@ -49,8 +50,17 @@ sub defaultconfig () { #{{{
 	plugin => [qw{mdwn inline htmlscrubber}],
 	timeformat => '%c',
 } #}}}
-	    
+   
 sub checkconfig () { #{{{
+	if ($config{w3mmode}) {
+		eval q{use Cwd q{abs_path}};
+		$config{srcdir}=possibly_foolish_untaint(abs_path($config{srcdir}));
+		$config{destdir}=possibly_foolish_untaint(abs_path($config{destdir}));
+		$config{cgiurl}="file:///\$LIB/ikiwiki-w3m.cgi/".$config{cgiurl}
+			unless $config{cgiurl} =~ m!file:///!;
+		$config{url}="file://".$config{destdir};
+	}
+
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi\n");
 	}

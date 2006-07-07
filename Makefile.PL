@@ -39,6 +39,9 @@ extra_install:
 	
 	install -d $(PREFIX)/sbin
 	install ikiwiki-mass-rebuild $(PREFIX)/sbin
+
+	install -d $(PREFIX)/lib/w3m/cgi-bin
+	install ikiwiki-w3m.cgi $(PREFIX)/lib/w3m/cgi-bin
 }
 }
 

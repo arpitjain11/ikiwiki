@@ -2,23 +2,9 @@ Hack together a local ikiwiki w/o a web server using w3m's cgi-less mode
 and $EDITOR. Browse around a wiki, select pages to edit and get dropped
 right into the editor and have the page committed to svn automatically.
 
+[[todo/done]]
+
 Less grandiosely, a simple command line util to add a new page would be
 useful, especially if it made it easy to add blog entries to the wiki. I
 have a special purpose version of this in my [blog
 script](http://kitenet.net/~joey/code/bin.html).
-
-----
-
-w3m's cgi mode requires that cgis be in /usr/lib/w3m/cgi-bin/, and the url
-for it can be $LIB/script. This presents a problem, since a regular user
-can't add an ikiwiki wrapper to there (nor should they). But,
-/usr/lib/w3m/cgi-bin/ikiwiki could be a meta-wrapper, that is passed the
-path to the real wrapper in PATH_INFO, validates it, and runs the real
-wrapper. So:
-
-<a href="file:///$LIB/ikiwiki.cgi/home/joey/.ikiwiki/wrappers/ikiwiki.cgi">
-
-Validation is important, because we don't want just any html document
-including an evil w3m cgi that gets unintentionally run. The validation I'm
-thinking of is that the ikiwiki meta-wrapper only runs wrappers in
-$HOME/.ikiwiki/wrappers/, which the user presumably controls.
