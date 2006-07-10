@@ -534,7 +534,13 @@ sub cgi () { #{{{
 	
 	my $do=$q->param('do');
 	if (! defined $do || ! length $do) {
-		error("\"do\" parameter missing");
+		my $error = $q->cgi_error;
+		if ($error) {
+			error("Request not processed: $error");
+		}
+		else {
+			error("\"do\" parameter missing");
+		}
 	}
 	
 	# Things that do not need a session.
