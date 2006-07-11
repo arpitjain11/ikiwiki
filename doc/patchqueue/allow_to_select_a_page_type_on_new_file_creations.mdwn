@@ -1,0 +1,127 @@
+From [[Recai]].
+
+Note that this isn't safe since it needs to check file types from the CGI
+against the list of allowed file types. Also, renaming a page won't work so
+at least the first cut needs to be changed to only allow changing file type
+when crating a new page. -- [[Joey]]
+
+diff -rup ikiwiki.orig/IkiWiki/CGI.pm ikiwiki/IkiWiki/CGI.pm
+--- ikiwiki.orig/IkiWiki/CGI.pm	2006-07-08 02:33:07.000000000 +0300
++++ ikiwiki/IkiWiki/CGI.pm	2006-07-08 18:27:24.000000000 +0300
+@@ -310,7 +310,7 @@ sub cgi_editpage ($$) { #{{{
+ 
+ 	eval q{use CGI::FormBuilder};
+ 	my $form = CGI::FormBuilder->new(
+-		fields => [qw(do rcsinfo subpage from page editcontent comments)],
++		fields => [qw(do rcsinfo subpage from page type editcontent comments)],
+ 		header => 1,
+ 		charset => "utf-8",
+ 		method => 'POST',
+@@ -337,12 +337,21 @@ sub cgi_editpage ($$) { #{{{
+ 	$page=lc($page);
+ 	
+ 	my $file;
+-	if (exists $pagesources{lc($page)}) {
+-		$file=$pagesources{lc($page)};
++	my $type;	
++	if (exists $pagesources{$page}) {
++		$file=$pagesources{$page};
++		$type=pagetype($file);
+ 	}
+ 	else {
+-		$file=$page.".".$config{default_pageext};
++		$type=$form->param('type');
++		if (defined $type && length $type) {
++			$type=possibly_foolish_untaint($type);
++		} else {
++			$type=$config{default_pageext};
++		}
++		$file=$page.".".$type;
+ 	}
++
+ 	my $newfile=0;
+ 	if (! -e "$config{srcdir}/$file") {
+ 		$newfile=1;
+@@ -353,6 +362,7 @@ sub cgi_editpage ($$) { #{{{
+ 	$form->field(name => "rcsinfo", type => 'hidden');
+ 	$form->field(name => "subpage", type => 'hidden');
+ 	$form->field(name => "page", value => "$page", force => 1);
++	$form->field(name => "type", value => "$type", force => 1, type => 'hidden');
+ 	$form->field(name => "comments", type => "text", size => 80);
+ 	$form->field(name => "editcontent", type => "textarea", rows => 20,
+ 		cols => 80);
+@@ -382,8 +392,7 @@ sub cgi_editpage ($$) { #{{{
+ 		$form->field(name => "comments",
+ 				value => $comments, force => 1);
+ 		$form->tmpl_param("page_preview",
+-			htmlize(pagetype($file),
+-				linkify($page, $page, $content)));
++			htmlize($type, linkify($page, $page, $content)));
+ 	}
+ 	else {
+ 		$form->tmpl_param("page_preview", "");
+@@ -395,6 +404,8 @@ sub cgi_editpage ($$) { #{{{
+ 		if ($form->field("do") eq "create") {
+ 			my @page_locs;
+ 			my $best_loc;
++			my @page_types;
++			my $best_type;
+ 			my ($from)=$form->param('from')=~/$config{wiki_file_regexp}/;
+ 			if (! defined $from || ! length $from ||
+ 			    $from ne $form->param('from') ||
+@@ -435,9 +446,24 @@ sub cgi_editpage ($$) { #{{{
+ 				return;
+ 			}
+ 				
++			if (exists $hooks{htmlize}) {
++				@page_types=keys %{$hooks{htmlize}};
++			}
++			else {
++				@page_types=($type);
++			}
++
++			# favor the type of originated page
++			$best_type=pagetype($pagesources{$from});
++			if (! defined $best_type || ! length $best_type) {
++				$best_type=$type;
++			}
++
+ 			$form->tmpl_param("page_select", 1);
+ 			$form->field(name => "page", type => 'select',
+ 				options => \@page_locs, value => $best_loc);
++			$form->field(name => "type", type => 'select',
++				options => \@page_types, value => $best_type);
+ 			$form->title("creating ".pagetitle($page));
+ 		}
+ 		elsif ($form->field("do") eq "edit") {
+@@ -454,6 +480,7 @@ sub cgi_editpage ($$) { #{{{
+ 			}
+ 			$form->tmpl_param("page_select", 0);
+ 			$form->field(name => "page", type => 'hidden');
++			$form->field(name => "type", type => 'hidden');
+ 			$form->title("editing ".pagetitle($page));
+ 		}
+ 		
+@@ -503,6 +530,7 @@ sub cgi_editpage ($$) { #{{{
+ 				$form->field("do", "edit)");
+ 				$form->tmpl_param("page_select", 0);
+ 				$form->field(name => "page", type => 'hidden');
++				$form->field(name => "type", type => 'hidden');
+ 				$form->title("editing $page");
+ 				print $form->render(submit => \@buttons);
+ 				return;
+diff -rup ikiwiki.orig/templates/editpage.tmpl ikiwiki/templates/editpage.tmpl
+--- ikiwiki.orig/templates/editpage.tmpl	2006-07-03 03:13:46.000000000 +0300
++++ ikiwiki/templates/editpage.tmpl	2006-07-08 18:04:48.000000000 +0300
+@@ -28,9 +28,11 @@ confict and commit again to save your ch
+ <TMPL_VAR FIELD-RCSINFO>
+ <TMPL_IF NAME="PAGE_SELECT">
+ Page location: <TMPL_VAR FIELD-PAGE>
++Page type: <TMPL_VAR FIELD-TYPE>
+ <TMPL_ELSE>
+ <br />
+ <TMPL_VAR FIELD-PAGE>
++<TMPL_VAR FIELD-TYPE>
+ </TMPL_IF>
+ <TMPL_VAR FIELD-EDITCONTENT><br />
+ <TMPL_IF NAME="CAN_COMMIT">
