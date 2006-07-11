@@ -104,7 +104,14 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use CGI 'escapeHTML'};
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
+	eval q{use XML::SAX};
 	eval q{use XML::Simple};
+
+	# avoid using XML::SAX::PurePerl, it's buggy with UTF-8 data
+	my @parsers = map { ${$_}{Name} } @{XML::SAX->parsers()};
+	do {
+		$XML::Simple::PREFERRED_PARSER = pop @parsers;
+	} until $XML::Simple::PREFERRED_PARSER ne 'XML::SAX::PurePerl';
 
 	# --limit is only supported on Subversion 1.2.0+
 	my $svn_version=`svn --version -q`;
