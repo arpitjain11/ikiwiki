@@ -41,6 +41,17 @@ sub page_locked ($$;$) { #{{{
 	return 0;
 } #}}}
 
+sub decode_form_utf8 ($) { #{{{
+	my $form = shift;
+	foreach my $f ($form->field) {
+		next if Encode::is_utf8(scalar $form->field($f));
+		$form->field(name  => $f,
+			     value => decode_utf8($form->field($f)),
+			     force => 1,
+			    );
+	}
+} #}}}
+
 sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
 	
@@ -106,6 +117,8 @@ sub cgi_signin ($$) { #{{{
 	}
 	
 	if ($form->submitted) {
+		decode_form_utf8($form);
+
 		# Set required fields based on how form was submitted.
 		my %required=(
 			"Login" => [qw(name password)],
@@ -166,6 +179,8 @@ sub cgi_signin ($$) { #{{{
 	}
 
 	if ($form->submitted && $form->validate) {
+		decode_form_utf8($form);
+		
 		if ($form->submitted eq 'Login') {
 			$session->param("name", $form->field("name"));
 			if (defined $form->field("do") && 
@@ -282,6 +297,8 @@ sub cgi_prefs ($$) { #{{{
 			value => userinfo_get($user_name, "locked_pages"));
 	}
 	
+	decode_form_utf8($form);
+	
 	if ($form->submitted eq 'Logout') {
 		$session->delete();
 		redirect($q, $config{url});
@@ -326,9 +343,11 @@ sub cgi_editpage ($$) { #{{{
 	);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
-	# This untaint is safe because titlepage removes any problimatic
+	decode_form_utf8($form);
+	
+	# This untaint is safe because titlepage removes any problematic
 	# characters.
-	my ($page)=decode_utf8($form->param('page'));
+	my ($page)=$form->field('page');
 	$page=titlepage(possibly_foolish_untaint(lc($page)));
 	if (! defined $page || ! length $page ||
 	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
@@ -373,10 +392,8 @@ sub cgi_editpage ($$) { #{{{
 	}
 	elsif ($form->submitted eq "Preview") {
 		require IkiWiki::Render;
-		# Apparently FormBuilder doesn't not treat input as
-		# utf-8, so decode from it.
-		my $content=decode_utf8($form->field('editcontent'));
-		my $comments=decode_utf8($form->field('comments'));
+		my $content=$form->field('editcontent');
+		my $comments=$form->field('comments');
 		$form->field(name => "editcontent",
 				value => $content, force => 1);
 		$form->field(name => "comments",
@@ -395,9 +412,9 @@ sub cgi_editpage ($$) { #{{{
 		if ($form->field("do") eq "create") {
 			my @page_locs;
 			my $best_loc;
-			my ($from)=$form->param('from')=~/$config{wiki_file_regexp}/;
+			my ($from)=$form->field('from')=~/$config{wiki_file_regexp}/;
 			if (! defined $from || ! length $from ||
-			    $from ne $form->param('from') ||
+			    $from ne $form->field('from') ||
 			    $from=~/$config{wiki_file_prune_regexp}/ ||
 			    $from=~/^\// ||
 			    $form->submitted eq "Preview") {
@@ -407,7 +424,7 @@ sub cgi_editpage ($$) { #{{{
 				my $dir=$from."/";
 				$dir=~s![^/]+/+$!!;
 				
-				if ((defined $form->param('subpage') && length $form->param('subpage')) ||
+				if ((defined $form->field('subpage') && length $form->field('subpage')) ||
 				    $page eq 'discussion') {
 					$best_loc="$from/$page";
 				}
@@ -463,8 +480,7 @@ sub cgi_editpage ($$) { #{{{
 		# save page
 		page_locked($page, $session);
 		
-		# Decode utf-8 since FormBuilder does not
-		my $content=decode_utf8($form->field('editcontent'));
+		my $content=$form->field('editcontent');
 
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
@@ -480,7 +496,7 @@ sub cgi_editpage ($$) { #{{{
 		}
 		if (defined $form->field('comments') &&
 		    length $form->field('comments')) {
-			$message.=": ".decode_utf8($form->field('comments'));
+			$message.=": ".$form->field('comments');
 		}
 		
 		if ($config{rcs}) {
@@ -499,7 +515,7 @@ sub cgi_editpage ($$) { #{{{
 					force => 1);
 				$form->tmpl_param("page_conflict", 1);
 				$form->field("editcontent", value => $conflict, force => 1);
-				$form->field(name => "comments", value => decode_utf8($form->field('comments')), force => 1);
+				$form->field(name => "comments", value => $form->field('comments'), force => 1);
 				$form->field("do", "edit)");
 				$form->tmpl_param("page_select", 0);
 				$form->field(name => "page", type => 'hidden');
