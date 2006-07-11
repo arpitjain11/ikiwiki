@@ -1,0 +1,97 @@
+From [[Recai]]:
+> Here is my initial work on ikiwiki l10n infrastructure (I'm sending it
+> before finalizing, there may be errors).
+
+I've revised the patches (tested OK):
+
+- $config{lang} patch:
+
+    http://people.debian.org/~roktas/patches/ikiwiki/ikiwiki-lang.diff
+
+  + Support for CGI::FormBuilder.
+  + Modify Makefile.PL for l10n.
+
+- l10n infrastructure from Koha project.  (This patch must be applied with
+  '-p1', also, it needs a 'chmod +x l10n/*.pl' after patching.)
+
+  + Leave templates dir untouched, use a temporary translations directory
+    instead.
+  + Fix Makefile (it failed to update templates).
+
+    http://people.debian.org/~roktas/patches/ikiwiki/ikiwiki-l10n.diff
+
+However...
+
+> There are two places in IkiWiki, subject to localization: HTML::Template
+
+Unfortunately this is not correct.  There a few (?) exceptional places, for
+example button texts in CGI.pm:
+
+    my @buttons=("Save Page", "Preview", "Cancel");
+
+> fine.  Also a final note, I haven't examined the quality of generated
+> templates yet.
+
+Looks like, tmpl_process3 cannot preserve line breaks in template files.
+For example, it processed the following template:
+
+    Someone[1], possibly you, requested that you be emailed the password for
+user
+    <TMPL_VAR USER_NAME> on <TMPL_VAR WIKINAME>[2].
+
+    The password is: <TMPL_VAR USER_PASSWORD>
+
+    --
+    ikiwiki
+
+    [1] The user requesting the password was at IP address <TMPL_VAR
+REMOTE_ADDR>
+    [2] Located at <TMPL_VAR WIKIURL>
+
+as (in Turkish):
+
+Birisi[1], ki muhtemelen bu sizsiniz, <TMPL_VAR WIKINAME>[2] üzerindeki
+<TMPL_VAR USER_NAME> kullanıcısına ait parolanın epostalanması isteğinde
+bulundu. Parola: <TMPL_VAR USER_PASSWORD> -- ikiwiki [1] Parolayı isteyen
+kullanıcının ait IP adresi: <TMPL_VAR REMOTE_ADDR>[2] <TMPL_VAR WIKIURL>
+
+----
+
+> Unfortunately this is not correct.  There a few (?) exceptional places, for
+> example button texts in CGI.pm:
+>
+>     my @buttons=("Save Page", "Preview", "Cancel");
+
+Hmm, I've thought on this issue.  Using Locale::gettext seems to be the
+natural solution.  But this would need to create another po file and also,
+ikiwiki would depend another Perl module.  Kinda overkill...
+
+I have another idea...  What about to create another (flat) template file
+for this sort of strings?  Something like strings.tmpl with the content:
+
+    Save Page, Preview, Cancel
+
+or we could categorize these strings in some variables (',' is the
+delimiter for this code snippet):
+
+    <TMPL_IF NAME="BUTTONS">
+    Save Page, Preview, Cancel
+    </TMPL_IF>
+
+and then (preferably in a separate wrapper function in CGI.pm):
+
+     my $template=template("strings.tmpl");
+     $template->param("BUTTONS", 1);
+     my @buttons=split(/\s*,\s*/, $template->output);
+
+You get the idea...  I've tried this method.  All in one po file, kind of
+ugly, but it _really_ works.
+
+> > fine.  Also a final note, I haven't examined the quality of generated
+> > templates yet.
+>
+> Looks like, tmpl_process3 cannot preserve line breaks in template files.
+> For example, it processed the following template:
+
+This could be easily worked around in tmpl_process3, but I wouldn't like to
+maintain a separate utility.
