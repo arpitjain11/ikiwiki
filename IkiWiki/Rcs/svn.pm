@@ -7,7 +7,7 @@ use IkiWiki;
 
 package IkiWiki;
 		
-my $svn_webcommit=qr/^web commit by (\w+):?(.*)/;
+my $svn_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
 
 sub svn_info ($$) { #{{{
 	my $field=shift;
@@ -143,8 +143,8 @@ sub rcs_recentchanges ($) { #{{{
 		my $committype="web";
 		if (defined $message[0] &&
 		    $message[0]->{line}=~/$svn_webcommit/) {
-			$user="$1";
-			$message[0]->{line}=$2;
+			$user=defined $2 ? "$2" : "$3";
+			$message[0]->{line}=$4;
 		}
 		else {
 			$committype="svn";
@@ -185,8 +185,8 @@ sub rcs_notify () { #{{{
 	chomp $user;
 	my $message=`svnlook log $config{svnrepo} -r $rev`;
 	if ($message=~/$svn_webcommit/) {
-		$user="$1";
-		$message=$2;
+		$user=defined $2 ? "$2" : "$3";
+		$message=$4;
 	}
 
 	my @changed_pages;

@@ -12,8 +12,10 @@ ikiwiki (1.9) UNRELEASED; urgency=low
   * Fix from Faidon for a XML parser issue that breaks utf-8 for
     RecentChanges. Avoid using XML::SAX::PurePerl, which is buggy in this
     area, and also way slow.
+  * Match 'web commit from' in SVN and git, these are web commits too.
+    (Faidon)
 
- -- Joey Hess <joeyh@debian.org>  Tue, 11 Jul 2006 14:37:30 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 11 Jul 2006 16:54:00 -0400
 
 ikiwiki (1.8) unstable; urgency=low
 
