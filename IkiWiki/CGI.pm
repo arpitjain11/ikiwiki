@@ -102,6 +102,8 @@ sub cgi_signin ($$) { #{{{
 			     {template_params("signin.tmpl")} : ""),
 		stylesheet => styleurl(),
 	);
+		
+	decode_form_utf8($form);
 	
 	$form->field(name => "name", required => 0);
 	$form->field(name => "do", type => "hidden");
@@ -117,8 +119,6 @@ sub cgi_signin ($$) { #{{{
 	}
 	
 	if ($form->submitted) {
-		decode_form_utf8($form);
-
 		# Set required fields based on how form was submitted.
 		my %required=(
 			"Login" => [qw(name password)],
