@@ -1,0 +1,155 @@
+From [[Faidon]]:
+
+Joey,
+Attached is a patch that adds locale support to ikiwiki.
+A suitable locale is choosed in that order:
+1) $config{locale}
+2) $ENV{LC_ALL}
+3) en_US.UTF-8
+4) en_*.UTF-8
+5) *.UTF-8
+5) en_US
+6) en_*
+7) *
+8) POSIX
+(where * == the first item found)
+
+The patch brings the following functionality:
+a) Proper local time, either using a UTF-8 locale or not (by the means
+of a new function decode_locale),
+b) Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this
+patch, commiting (or even rcs_updating) on repositories with UTF-8
+filenames is impossible.
+
+This is RFC because it has some hard-coded parts: 'locale -a' and
+/usr/share/i18n/SUPPORTED. They obviously work on Debian, but I'm sure
+they won't work on other distros, let along on other operating systems.
+
+Besides that, it's quite a big of a change and I could use some comments
+to make it better :)
+
+	Index: IkiWiki/Rcs/svn.pm
+	===================================================================
+	--- IkiWiki/Rcs/svn.pm	(revision 904)
+	+++ IkiWiki/Rcs/svn.pm	(working copy)
+	@@ -174,16 +236,16 @@
+	 	}
+	 	my $rev=int(possibly_foolish_untaint($ENV{REV}));
+	 	
+	-	my $user=`svnlook author $config{svnrepo} -r $rev`;
+	+	my $user=decode_locale(`svnlook author $config{svnrepo} -r $rev`);
+	 	chomp $user;
+	-	my $message=`svnlook log $config{svnrepo} -r $rev`;
+	+	my $message=decode_locale(`svnlook log $config{svnrepo} -r $rev`);
+	 	if ($message=~/$svn_webcommit/) {
+	 		$user="$1";
+	 		$message=$2;
+	 	}
+	 
+	 	my @changed_pages;
+	-	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
+	+	foreach my $change (decode_locale(`svnlook changed $config{svnrepo} -r $rev`)) {
+	 		chomp $change;
+	 		if ($change =~ /^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
+	 			push @changed_pages, $1;
+	@@ -197,7 +259,7 @@
+	 		# subscribers a diff that might contain pages they did not
+	 		# sign up for. Should separate the diff per page and
+	 		# reassemble into one mail with just the pages subscribed to.
+	-		my $diff=`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
+	+		my $diff=decode_locale(`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`);
+	 
+	 		my $subject="$config{wikiname} update of ";
+	 		if (@changed_pages > 2) {
+	Index: IkiWiki/Render.pm
+	===================================================================
+	--- IkiWiki/Render.pm	(revision 904)
+	+++ IkiWiki/Render.pm	(working copy)
+	@@ -222,7 +222,7 @@
+	 	eval q{use POSIX};
+	 	# strftime doesn't know about encodings, so make sure
+	 	# its output is properly treated as utf8
+	-	return decode_utf8(POSIX::strftime(
+	+	return decode_locale(POSIX::strftime(
+	 			$config{timeformat}, localtime($time)));
+	 } #}}}
+	 
+	Index: IkiWiki.pm
+	===================================================================
+	--- IkiWiki.pm	(revision 904)
+	+++ IkiWiki.pm	(working copy)
+	@@ -9,6 +9,7 @@
+	 # Optimisation.
+	 use Memoize;
+	 memoize("abs2rel");
+	+memoize("get_charset_from_locale");
+	 
+	 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
+	             %renderedfiles %pagesources %depends %hooks};
+	@@ -49,9 +50,15 @@
+	 	adminemail => undef,
+	 	plugin => [qw{mdwn inline htmlscrubber}],
+	 	timeformat => '%c',
+	+	locale => get_preferred_locale(),
+	 } #}}}
+	    
+	 sub checkconfig () { #{{{
+	+	debug("setting LC_ALL to '$config{locale}'");
+	+	eval q{use POSIX};
+	+	$ENV{LC_ALL} = $config{locale};
+	+	POSIX::setlocale(&POSIX::LC_ALL, $config{locale});
+	+
+	 	if ($config{w3mmode}) {
+	 		eval q{use Cwd q{abs_path}};
+	 		$config{srcdir}=possibly_foolish_untaint(abs_path($config{srcdir}));
+	@@ -489,4 +496,50 @@
+	 	$hooks{$param{type}}{$param{id}}=\%param;
+	 } # }}}
+	 
+	+sub get_preferred_locale() {
+	+	if (my $env = $ENV{LC_ALL}) {
+	+		return $env;
+	+	}
+	+
+	+	my @avail=`locale -a`;
+	+	chomp @avail;
+	+
+	+	return "POSIX" unless @avail;
+	+
+	+	my @ret;
+	+	# prefer UTF-8 locales
+	+	@avail = map { my $l = $_; $l =~ s/\.utf8/\.UTF-8/; $l; } @avail;
+	+	@avail = @ret if @ret = grep(/\.UTF-8$/, @avail);
+	+
+	+	# prefer en_US or en_ locales
+	+	return $ret[0] if @ret = grep(/^en_US/, @avail);
+	+	return $ret[0] if @ret = grep(/^en_/, @avail);
+	+	return $ret[0] if @ret = grep(/^[^.@]+$/, @avail);
+	+
+	+	# fallback to the first locale found
+	+	return $avail[0];
+	+} # }}}
+	+
+	+sub get_charset_from_locale($) {
+	+	my $locale=shift;
+	+	my ($l, $c);
+	+
+	+	my $supportedlist = "/usr/share/i18n/SUPPORTED";
+	+	if (defined $locale and open(SUPPORTED, "< $supportedlist")) {
+	+		while (<SUPPORTED>) {
+	+			chomp;
+	+			($l, $c) = split(/\s+/);
+	+			last if ($l eq $locale);
+	+		}
+	+		close(SUPPORTED);
+	+
+	+		return $c if ($l eq $locale);
+	+	}
+	+	return "ISO-8859-1";
+	+} # }}}
+	+
+	+sub decode_locale($) {
+	+	return decode(get_charset_from_locale($config{locale}), shift);
+	+} # }}}
+	+
+	 1
