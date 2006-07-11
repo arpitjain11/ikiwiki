@@ -1,0 +1,106 @@
+From [[Faidon]]:
+
+I consolidated all decode_utf8 in FormBuilder's fields
+to make the code more readable and avoid future mistakes. The patch
+seems to work and for the first time I have a UTF-8 username ;-)
+I think that with this patch and the previous one about locales, we're
+done with UTF-8 support. Yay!
+
+	Index: IkiWiki/CGI.pm
+	===================================================================
+	--- IkiWiki/CGI.pm	(revision 904)
+	+++ IkiWiki/CGI.pm	(working copy)
+	@@ -41,6 +41,17 @@
+	 	return 0;
+	 } #}}}
+	 
+	+sub decode_form_utf8 ($) { #{{{
+	+	my $form = shift;
+	+	foreach my $f ($form->field) {
+	+		next if Encode::is_utf8(scalar $form->field($f));
+	+		$form->field(name  => $f,
+	+			     value => decode_utf8($form->field($f)),
+	+			     force => 1,
+	+			    );
+	+	}
+	+} #}}}
+	+
+	 sub cgi_recentchanges ($) { #{{{
+	 	my $q=shift;
+	 	
+	@@ -166,6 +177,8 @@
+	 	}
+	 
+	 	if ($form->submitted && $form->validate) {
+	+		decode_form_utf8($form);
+	+		
+	 		if ($form->submitted eq 'Login') {
+	 			$session->param("name", $form->field("name"));
+	 			if (defined $form->field("do") && 
+	@@ -282,6 +295,8 @@
+	 			value => userinfo_get($user_name, "locked_pages"));
+	 	}
+	 	
+	+	decode_form_utf8($form);
+	+	
+	 	if ($form->submitted eq 'Logout') {
+	 		$session->delete();
+	 		redirect($q, $config{url});
+	@@ -326,7 +341,7 @@
+	 	);
+	 	my @buttons=("Save Page", "Preview", "Cancel");
+	 	
+	-	# This untaint is safe because titlepage removes any problimatic
+	+	# This untaint is safe because titlepage removes any problematic
+	 	# characters.
+	 	my ($page)=decode_utf8($form->param('page'));
+	 	$page=titlepage(possibly_foolish_untaint(lc($page)));
+	@@ -367,16 +382,16 @@
+	 			force => 1);
+	 	}
+	 	
+	+	decode_form_utf8($form);
+	+	
+	 	if ($form->submitted eq "Cancel") {
+	 		redirect($q, "$config{url}/".htmlpage($page));
+	 		return;
+	 	}
+	 	elsif ($form->submitted eq "Preview") {
+	 		require IkiWiki::Render;
+	-		# Apparently FormBuilder doesn't not treat input as
+	-		# utf-8, so decode from it.
+	-		my $content=decode_utf8($form->field('editcontent'));
+	-		my $comments=decode_utf8($form->field('comments'));
+	+		my $content=$form->field('editcontent');
+	+		my $comments=$form->field('comments');
+	 		$form->field(name => "editcontent",
+	 				value => $content, force => 1);
+	 		$form->field(name => "comments",
+	@@ -463,8 +478,7 @@
+	 		# save page
+	 		page_locked($page, $session);
+	 		
+	-		# Decode utf-8 since FormBuilder does not
+	-		my $content=decode_utf8($form->field('editcontent'));
+	+		my $content=$form->field('editcontent');
+	 
+	 		$content=~s/\r\n/\n/g;
+	 		$content=~s/\r/\n/g;
+	@@ -480,7 +494,7 @@
+	 		}
+	 		if (defined $form->field('comments') &&
+	 		    length $form->field('comments')) {
+	-			$message.=": ".decode_utf8($form->field('comments'));
+	+			$message.=": ".$form->field('comments');
+	 		}
+	 		
+	 		if ($config{rcs}) {
+	@@ -499,7 +513,7 @@
+	 					force => 1);
+	 				$form->tmpl_param("page_conflict", 1);
+	 				$form->field("editcontent", value => $conflict, force => 1);
+	-				$form->field(name => "comments", value => decode_utf8($form->field('comments')), force => 1);
+	+				$form->field(name => "comments", value => $form->field('comments'), force => 1);
+	 				$form->field("do", "edit)");
+	 				$form->tmpl_param("page_select", 0);
+	 				$form->field(name => "page", type => 'hidden');

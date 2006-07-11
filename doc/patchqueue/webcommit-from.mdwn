@@ -1,0 +1,79 @@
+From [[Faidon]]:
+	
+Match 'web commit from' in SVN and git, these are web
+commits too. Show the IP instead of the user 'www-data' (which is kind
+of security fix too, since the user Apache is running as was visible).
+
+Note that the git backend patch is untested.
+Recai, could you test it? (if Joey finds the change acceptable that is).
+	
+	Index: IkiWiki/Rcs/svn.pm
+	===================================================================
+	--- IkiWiki/Rcs/svn.pm	(revision 904)
+	+++ IkiWiki/Rcs/svn.pm	(working copy)
+	@@ -7,7 +7,7 @@
+	 
+	 package IkiWiki;
+	 		
+	-my $svn_webcommit=qr/^web commit by (\w+):?(.*)/;
+	+my $svn_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
+	 
+	 sub svn_info ($$) { #{{{
+	 	my $field=shift;
+	@@ -136,8 +136,8 @@
+	 		my $committype="web";
+	 		if (defined $message[0] &&
+	 		    $message[0]->{line}=~/$svn_webcommit/) {
+	-			$user="$1";
+	-			$message[0]->{line}=$2;
+	+			$user=defined $2 ? "$2" : "$3";
+	+			$message[0]->{line}=$4;
+	 		}
+	 		else {
+	 			$committype="svn";
+	@@ -178,8 +178,8 @@
+	 	chomp $user;
+	 	my $message=`svnlook log $config{svnrepo} -r $rev`;
+	 	if ($message=~/$svn_webcommit/) {
+	-		$user="$1";
+	-		$message=$2;
+	+		$user=defined $2 ? "$2" : "$3";
+	+		$message=$4;
+	 	}
+	 
+	 	my @changed_pages;
+	Index: IkiWiki/Rcs/git.pm
+	===================================================================
+	--- IkiWiki/Rcs/git.pm	(revision 904)
+	+++ IkiWiki/Rcs/git.pm	(working copy)
+	@@ -12,7 +12,7 @@
+	 my $master_branch    = 'master';            # working branch
+	 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
+	 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
+	-my $web_commit_msg   = qr/^web commit by (\w+):?(.*)/; # pattern for web commits
+	+my $web_commit_msg   = qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
+	 
+	 sub _safe_git (&@) { #{{{
+	 	# Start a child process safely without resorting /bin/sh.
+	@@ -377,8 +377,8 @@
+	 
+	 		if (defined $message[0] &&
+	 		    $message[0]->{line} =~ m/$web_commit_msg/) {
+	-			$user = "$1";
+	-			$message[0]->{line} = $2;
+	+			$user=defined $2 ? "$2" : "$3";
+	+			$message[0]->{line}=$4;
+	 		} else {
+	 			$type ="git";
+	 			$user = $ci->{'author_username'};
+	@@ -426,8 +426,8 @@
+	 
+	 	my ($user, $message);
+	 	if (@{ $ci->{'comment'} }[0] =~ m/$web_commit_msg/) {
+	-		$user    = "$1";
+	-		$message = $2;
+	+		$user    = defined $2 ? "$2" : "$3";
+	+		$message = $4;
+	 	} else {
+	 		$user    = $ci->{'author_username'};
+	 		$message = join "\n", @{ $ci->{'comment'} };
