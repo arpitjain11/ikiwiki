@@ -179,8 +179,6 @@ sub cgi_signin ($$) { #{{{
 	}
 
 	if ($form->submitted && $form->validate) {
-		decode_form_utf8($form);
-		
 		if ($form->submitted eq 'Login') {
 			$session->param("name", $form->field("name"));
 			if (defined $form->field("do") && 
