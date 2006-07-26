@@ -325,7 +325,7 @@ sub cgi_editpage ($$) { #{{{
 
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
-		fields => [qw(do rcsinfo subpage from page editcontent comments)],
+		fields => [qw(do rcsinfo subpage from page type editcontent comments)],
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
@@ -353,13 +353,32 @@ sub cgi_editpage ($$) { #{{{
 	}
 	$page=lc($page);
 	
+	my $from;
+	if (defined $form->field('from')) {
+		($from)=$form->field('from')=~/$config{wiki_file_regexp}/;
+	}
+	
 	my $file;
-	if (exists $pagesources{lc($page)}) {
-		$file=$pagesources{lc($page)};
+	my $type;	
+	if (exists $pagesources{$page}) {
+		$file=$pagesources{$page};
+		$type=pagetype($file);
 	}
 	else {
-		$file=$page.".".$config{default_pageext};
+		$type=$form->param('type');
+		if (defined $type && length $type && $hooks{htmlize}{$type}) {
+			$type=possibly_foolish_untaint($type);
+		}
+		elsif (defined $from) {
+			# favor the type of linking page
+			$type=pagetype($pagesources{$from});
+		}
+		else {
+			$type=$config{default_pageext};
+		}
+		$file=$page.".".$type;
 	}
+
 	my $newfile=0;
 	if (! -e "$config{srcdir}/$file") {
 		$newfile=1;
@@ -369,7 +388,8 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
 	$form->field(name => "subpage", type => 'hidden');
-	$form->field(name => "page", value => "$page", force => 1);
+	$form->field(name => "page", value => $page, force => 1);
+	$form->field(name => "type", value => $type, force => 1);
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "editcontent", type => "textarea", rows => 20,
 		cols => 80);
@@ -397,8 +417,7 @@ sub cgi_editpage ($$) { #{{{
 		$form->field(name => "comments",
 				value => $comments, force => 1);
 		$form->tmpl_param("page_preview",
-			htmlize(pagetype($file),
-				linkify($page, $page, $content)));
+			htmlize($type, linkify($page, $page, $content)));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");
@@ -410,7 +429,6 @@ sub cgi_editpage ($$) { #{{{
 		if ($form->field("do") eq "create") {
 			my @page_locs;
 			my $best_loc;
-			my ($from)=$form->field('from')=~/$config{wiki_file_regexp}/;
 			if (! defined $from || ! length $from ||
 			    $from ne $form->field('from') ||
 			    $from=~/$config{wiki_file_prune_regexp}/ ||
@@ -449,10 +467,17 @@ sub cgi_editpage ($$) { #{{{
 				redirect($q, "$config{url}/".htmlpage($page));
 				return;
 			}
-				
+			
+			my @page_types;
+			if (exists $hooks{htmlize}) {
+				@page_types=keys %{$hooks{htmlize}};
+			}
+			
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
 				options => \@page_locs, value => $best_loc);
+			$form->field(name => "type", type => 'select',
+				options => \@page_types);
 			$form->title("creating ".pagetitle($page));
 		}
 		elsif ($form->field("do") eq "edit") {
@@ -469,6 +494,7 @@ sub cgi_editpage ($$) { #{{{
 			}
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
+			$form->field(name => "type", type => 'hidden');
 			$form->title("editing ".pagetitle($page));
 		}
 		
@@ -517,6 +543,7 @@ sub cgi_editpage ($$) { #{{{
 				$form->field("do", "edit)");
 				$form->tmpl_param("page_select", 0);
 				$form->field(name => "page", type => 'hidden');
+				$form->field(name => "type", type => 'hidden');
 				$form->title("editing $page");
 				print $form->render(submit => \@buttons);
 				return;
