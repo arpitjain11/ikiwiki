@@ -1,3 +1,13 @@
+ikiwiki (1.10) UNRELEASED; urgency=low
+
+  * Run page through any relevant filters when generating a page preview.
+  * Noticed a bug in the wikitext markup plugin -- it made CamelCase links the
+    default throughout the wiki, not only on wikitext pages. Decided to call
+    this a feature, and split the camelcase support out into a separate plugin
+    that is independant of wikitext.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 26 Jul 2006 17:44:25 -0400
+
 ikiwiki (1.9) unstable; urgency=low
 
   * Improve display of parentlinks and page title of toplevel index page.

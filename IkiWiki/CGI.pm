@@ -417,7 +417,7 @@ sub cgi_editpage ($$) { #{{{
 		$form->field(name => "comments",
 				value => $comments, force => 1);
 		$form->tmpl_param("page_preview",
-			htmlize($type, linkify($page, $page, $content)));
+			htmlize($type, linkify($page, $page, filter($page, $content))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");

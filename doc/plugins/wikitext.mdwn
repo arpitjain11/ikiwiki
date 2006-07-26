@@ -4,12 +4,13 @@ installed, enable the plugin, then files with the extention `.wiki` will be
 processed as wiki text.
 
 Wiki formatting is very simple. An item wrapped in three single quotes is
-strong. An item wrapped in two single quotes is emphasized. Any word with
-multiple CapitalLetters (e. g., StudlyCaps) will become a link (standard
-[[WikiLinks|WikiLink]] work too). Four or more
-hyphen characters at the start of a line create a horizontal line.
-Newlines turn into the appropriate tags. Headers are matching equals signs
-around the header text -- the more signs, the lesser the header.
+strong. An item wrapped in two single quotes is emphasized. Four or more
+hyphen characters at the start of a line create a horizontal line. Newlines
+turn into the appropriate tags. Headers are matching equals signs around
+the header text -- the more signs, the lesser the header.
+
+Links are standard [[WikiLinks|WikiLink]], although you can also enable
+[[CamelCase]] links.
 
 Lists are indented text, by one tab or four spaces. In unordered lists,
 where each item has its own bullet point, each item needs a leading

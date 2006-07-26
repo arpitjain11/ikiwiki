@@ -250,6 +250,22 @@ sub findlinks ($$) { #{{{
 	}
 } #}}}
 
+sub filter ($$) {
+	my $page=shift;
+	my $content=shift;
+
+	if (exists $hooks{filter}) {
+		foreach my $id (keys %{$hooks{filter}}) {
+			$content=$hooks{filter}{$id}{call}->(
+				page => $page,
+				content => $content
+			);
+		}
+	}
+
+	return $content;
+}
+
 sub render ($) { #{{{
 	my $file=shift;
 	
@@ -260,14 +276,7 @@ sub render ($) { #{{{
 		my $page=pagename($file);
 		delete $depends{$page};
 		
-		if (exists $hooks{filter}) {
-			foreach my $id (keys %{$hooks{filter}}) {
-				$content=$hooks{filter}{$id}{call}->(
-					page => $page,
-					content => $content
-				);
-			}
-		}
+		$content=filter($page, $content);
 		
 		$links{$page}=[findlinks($page, $content)];
 		
