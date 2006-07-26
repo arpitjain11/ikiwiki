@@ -3,21 +3,23 @@ From [[Faidon]]:
 Joey,
 Attached is a patch that adds locale support to ikiwiki.
 A suitable locale is choosed in that order:
-1) $config{locale}
-2) $ENV{LC_ALL}
-3) en_US.UTF-8
-4) en_*.UTF-8
-5) *.UTF-8
-5) en_US
-6) en_*
-7) *
-8) POSIX
+
+1. $config{locale}
+2. $ENV{LC_ALL}
+3. en_US.UTF-8
+4. en_*.UTF-8
+5. *.UTF-8
+6. en_US
+7. en_*
+8. *
+9. POSIX
 (where * == the first item found)
 
 The patch brings the following functionality:
-a) Proper local time, either using a UTF-8 locale or not (by the means
+
+1. Proper local time, either using a UTF-8 locale or not (by the means
 of a new function decode_locale),
-b) Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this
+2. Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this
 patch, commiting (or even rcs_updating) on repositories with UTF-8
 filenames is impossible.
 
@@ -27,6 +29,18 @@ they won't work on other distros, let along on other operating systems.
 
 Besides that, it's quite a big of a change and I could use some comments
 to make it better :)
+
+----
+
+First comments on this: 
+
+* Defaulting to en_US anything or even en feels wrong. Defaulting to C is standard.
+* If ikiwiki uses utf-8, why should it cater to non-utf8 locales? If it only supports locales that are utf-8 or simple ascii then it doesn't need to do messy charset conversion and charset determininition via the SUPPORTED file. It can just make sure that incoming data is properly interpreted as utf-8 by perl; based on the patch I guess there are still some issues along those lines in the svn filename code.
+* I don't see any real need to guess at a locale to use with locale -a. If a user wants a locale they should set one. (_Or_, ikiwiki could record the user's own locale settings at wiki setup time, so that the compiled CGI wrapper contains the locale settings in effect when it was built. However, this is likely to have issues with ikiwiki-mass-rebuild. Maybe some kind of tool to generate a setup file, including a locale setting taken from the user's locale would be a useful avenue..)
+
+--[[Joey]]
+
+----
 
 	Index: IkiWiki/Rcs/svn.pm
 	===================================================================
