@@ -6,3 +6,12 @@ you wanted to keep them forever.
 
 This would allow ikiwiki to work as a kind of a planet, or at least a
 poor-man's news aggregator.
+
+* XML::Feed has a very nice interface, may require valid feeds though.
+* How to store GUIDs? Maybe as meta tags on pages, although that would need
+  caching of such metadata somewhere.
+* How to configure which feeds to pull, how often, and where to put the
+  pulled entries? One way would be command line/config file, but I think
+  better would be to use preprocessor directives in a wiki page, probably
+  the same page that inlines all the pages together.
+* Where to store when a feed was last pulled?
