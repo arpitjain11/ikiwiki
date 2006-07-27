@@ -27,9 +27,10 @@ sub checkconfig () { #{{{
 	}
 } #}}}
 
-sub pagetemplate ($$) { #{{{
-	my $page=shift;
-	my $template=shift;
+sub pagetemplate (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	my $template=$params{template};
 
 	# Add search box to page header.
 	if ($template->query(name => "searchform")) {

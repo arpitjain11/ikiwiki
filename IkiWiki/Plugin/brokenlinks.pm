@@ -27,9 +27,9 @@ sub preprocess (@) { #{{{
 				my $bestlink=IkiWiki::bestlink($page, $link);
 				next if length $bestlink;
 				push @broken,
-					IkiWiki::htmllink($page, $page, $link, 1).
+					IkiWiki::htmllink($page, $params{destpage}, $link, 1).
 					" in ".
-					IkiWiki::htmllink($params{page}, $params{page}, $page, 1);
+					IkiWiki::htmllink($params{page}, $params{destpage}, $page, 1);
 			}
 		}
 	}

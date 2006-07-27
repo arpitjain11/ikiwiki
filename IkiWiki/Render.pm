@@ -8,8 +8,8 @@ use IkiWiki;
 use Encode;
 
 sub linkify ($$$) { #{{{
-	my $lpage=shift;
-	my $page=shift;
+	my $lpage=shift; # the page containing the links
+	my $page=shift; # the page the link will end up on (different for inline)
 	my $content=shift;
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
@@ -86,8 +86,9 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
-sub preprocess ($$;$) { #{{{
-	my $page=shift;
+sub preprocess ($$$;$) { #{{{
+	my $page=shift; # the page the data comes from
+	my $destpage=shift; # the page the data will appear in (different for inline)
 	my $content=shift;
 	my $onlystrip=shift || 0; # strip directives without processing
 
@@ -113,7 +114,11 @@ sub preprocess ($$;$) { #{{{
 					push @params, (defined $2 ? $2 : $3), '';
 				}
 			}
-			return $hooks{preprocess}{$command}{call}->(@params, page => $page);
+			return $hooks{preprocess}{$command}{call}->(
+				@params,
+				page => $page,
+				destpage => $destpage,
+			);
 		}
 		else {
 			return "[[$command not processed]]";
@@ -203,7 +208,11 @@ sub genpage ($$$) { #{{{
 
 	if (exists $hooks{pagetemplate}) {
 		foreach my $id (keys %{$hooks{pagetemplate}}) {
-			$hooks{pagetemplate}{$id}{call}->($page, $template);
+			$hooks{pagetemplate}{$id}{call}->(
+				page => $page,
+				destpage => $page,
+				template => $template,
+			);
 		}
 	}
 	
@@ -286,7 +295,7 @@ sub render ($) { #{{{
 		$links{$page}=[findlinks($page, $content)];
 		
 		$content=linkify($page, $page, $content);
-		$content=preprocess($page, $content);
+		$content=preprocess($page, $page, $content);
 		$content=htmlize($type, $content);
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);

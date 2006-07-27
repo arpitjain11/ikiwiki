@@ -33,12 +33,14 @@ sub preprocess (@) { #{{{
 	return "";
 } # }}}
 
-sub pagetemplate ($$) { #{{{
-	my $page=shift;
-	my $template=shift;
+sub pagetemplate (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	my $destpage=$params{destpage};
+	my $template=$params{template};
 
 	$template->param(tags => join(', ', 
-			map { IkiWiki::htmllink($page, $page, $_) } 
+			map { IkiWiki::htmllink($page, $destpage, $_) } 
 				@{$tags{$page}}))
 		if exists $tags{$page} && $template->query(name => "tags");
 } # }}}

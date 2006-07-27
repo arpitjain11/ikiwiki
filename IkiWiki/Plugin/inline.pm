@@ -77,13 +77,17 @@ sub preprocess_inline (@) { #{{{
 	
 	foreach my $page (@list) {
 		$template->param(pagelink => htmllink($params{page}, $params{page}, $page));
-		$template->param(content => get_inline_content($params{page}, $page))
+		$template->param(content => get_inline_content($page, $params{page}))
 			if $params{archive} eq "no";
 		$template->param(ctime => displaytime($pagectime{$page}));
 
 		if (exists $hooks{pagetemplate}) {
 			foreach my $id (keys %{$hooks{pagetemplate}}) {
-				$hooks{pagetemplate}{$id}{call}->($page, $template);
+				$hooks{pagetemplate}{$id}{call}->(
+					page => $page,
+					destpage => $params{page},
+					template => $template,
+				);
 			}
 		}
 
@@ -104,13 +108,13 @@ sub preprocess_inline (@) { #{{{
 } #}}}
 
 sub get_inline_content ($$) { #{{{
-	my $parentpage=shift;
 	my $page=shift;
+	my $destpage=shift;
 	
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if (defined $type) {
-		return htmlize($type, preprocess($page, linkify($page, $parentpage, readfile(srcfile($file))), 1));
+		return htmlize($type, preprocess($page, $destpage, linkify($page, $destpage, readfile(srcfile($file))), 1));
 	}
 	else {
 		return "";
@@ -156,7 +160,7 @@ sub genrss ($@) { #{{{
 			itemtitle => pagetitle(basename($p)),
 			itemurl => "$config{url}/$renderedfiles{$p}",
 			itempubdate => date_822($pagectime{$p}),
-			itemcontent => absolute_urls(get_inline_content($page, $p), $url),
+			itemcontent => absolute_urls(get_inline_content($p, $page), $url),
 		} if exists $renderedfiles{$p};
 	}
 

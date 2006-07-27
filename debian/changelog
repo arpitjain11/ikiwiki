@@ -12,6 +12,13 @@ ikiwiki (1.11) UNRELEASED; urgency=low
     list their tags.
   * Make all plugins with pagetemplate hooks check that variables exist
     on the template before setting them.
+  * Switch pagetemplate hooks to using named parameters.
+  * Pass a "destpage" parameter to preprocessor and pagetemplate hooks.
+    This will be the page that a source page will be part of, which is
+    different than the source page for inlined pages.
+  * Audited all plugins to endure they pass page, destpage to htmllink
+    appropriatly. This means inlining of various plugins will not work
+    properly, with correct links generated.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 17:03:09 -0400
 

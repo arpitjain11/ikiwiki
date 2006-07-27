@@ -63,9 +63,10 @@ sub sanitize ($) { #{{{
 	return $content;
 } # }}}
 
-sub pagetemplate ($$) { #{{{
-	my $page=shift;
-	my $template=shift;
+sub pagetemplate (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	my $template=$params{template};
 	
 	IkiWiki::debug("skeleton plugin running as a pagetemplate hook");
 } # }}}

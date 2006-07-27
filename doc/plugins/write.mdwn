@@ -38,9 +38,10 @@ the preprocessor directive.
 Each time the directive is processed, the referenced function (`preprocess`
 in the example above) is called, and is passed named parameters. A "page"
 parameter gives the name of the page that embedded the preprocessor
-directive. All parameters included in the directive are included as named
-parameters as well. Whatever the function returns goes onto the page in
-place of the directive.
+directive, while a "destpage" parameter gices the name of the page the
+content is going to (different for inlined pages). All parameters included
+in the directive are included as named parameters as well. Whatever the
+function returns goes onto the page in place of the directive.
 
 ## Error handing
 
@@ -94,9 +95,11 @@ languages to ikiwiki.
 	IkiWiki::hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
 Each time a page is rendered, a [[template|templates]] is filled out.
-This hook allows modifying that template. The function is passed the name
-of the page, and a `HTML::Template` object that is the template that will
-be used to generate the page. It can manipulate that template object.
+This hook allows modifying that template. The function is passed named
+parameters. The "page" and "destpage" parameters are the same as for a
+preprocess hook. The "template" parameter is a `HTML::Template` object that
+is the template that will be used to generate the page. The function 
+can manipulate that template object.
 
 The most common thing to do is probably to call $template->param() to add
 a new custom parameter to the template. Note that in order to be robust,

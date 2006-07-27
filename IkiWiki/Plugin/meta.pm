@@ -52,9 +52,10 @@ sub preprocess (@) { #{{{
 	return "";
 } # }}}
 
-sub pagetemplate ($$) { #{{{
-        my $page=shift;
-        my $template=shift;
+sub pagetemplate (@) { #{{{
+	my %params=@_;
+        my $page=$params{page};
+        my $template=$params{template};
 
 	$template->param(meta => $meta{$page})
 		if exists $meta{$page} && $template->query(name => "meta");
