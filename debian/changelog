@@ -1,3 +1,15 @@
+ikiwiki (1.11) UNRELEASED; urgency=low
+
+  * Patch from Enrico that
+    - allows preprocessor directives to have parameters with no specified
+      value
+    - fixes preprocessor directive parameter parsing so that
+      foo=bar baz now means "foo=bar" and a "baz" with no value
+    - Add a tag plugin that allows more easily tagging pages.
+      The meta plugin can also still be used for this.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 17:03:09 -0400
+
 ikiwiki (1.10) unstable; urgency=low
 
   * Run page through any relevant filters when generating a page preview.

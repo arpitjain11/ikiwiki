@@ -105,8 +105,13 @@ sub preprocess ($$;$) { #{{{
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
 			my @params;
-			while ($params =~ /(\w+)=\"?([^"]+)"?(\s+|$)/g) {
-				push @params, $1, $2;
+			while ($params =~ /(?:(\w+)=)?(?:"([^"]+)"|(\S+))(?:\s+|$)/g) {
+				if (defined $1) {
+					push @params, $1, (defined $2 ? $2 : $3);
+				}
+				else {
+					push @params, (defined $2 ? $2 : $3), '';
+				}
 			}
 			return $hooks{preprocess}{$command}{call}->(@params, page => $page);
 		}

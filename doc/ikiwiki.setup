@@ -71,7 +71,8 @@ use IkiWiki::Setup::Standard {
 	#timeformat => '%c',
 	
 	# To add plugins, list them here.
-	#add_plugins => [qw{pagecount brokenlinks search smiley wikitext}],
+	#add_plugins => [qw{meta tag pagecount brokenlinks search smiley
+	#                   wikitext camelcase}],
 	# If you want to disable any of the default plugins, list them here.
 	#disable_plugins => [qw{inline htmlscrubber}],
 }
