@@ -56,8 +56,10 @@ sub pagetemplate ($$) { #{{{
         my $page=shift;
         my $template=shift;
 
-	$template->param(meta => $meta{$page}) if exists $meta{$page};
-	$template->param(title => $title{$page}) if exists $title{$page};
+	$template->param(meta => $meta{$page})
+		if exists $meta{$page} && $template->query(name => "meta");
+	$template->param(title => $title{$page})
+		if exists $title{$page} && $template->query(name => "title");
 } # }}}
 
 1

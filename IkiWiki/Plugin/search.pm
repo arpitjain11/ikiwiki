@@ -32,7 +32,8 @@ sub pagetemplate ($$) { #{{{
 	my $template=shift;
 
 	# Add search box to page header.
-	$template->param(searchform => qq{
+	if ($template->query(name => "searchform")) {
+		$template->param(searchform => qq{
 <form method="get" action="$IkiWiki::config{cgiurl}" id="searchform">
 <div>
 <input type="text" name="phrase" value="" size="16" />
@@ -41,6 +42,7 @@ sub pagetemplate ($$) { #{{{
 </div>
 </form>
 });
+	}
 } #}}}
 
 sub delete (@) { #{{{

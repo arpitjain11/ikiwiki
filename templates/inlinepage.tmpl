@@ -4,6 +4,9 @@
 <TMPL_VAR CONTENT>
 
 <p>
-<i>(posted <TMPL_VAR CTIME>)</i>
+<i>
+Posted <TMPL_VAR CTIME>
+<TMPL_IF NAME="TAGS">Tags: <TMPL_VAR TAGS></TMPL_IF>
+</i>
 </p>
 </div>

@@ -80,7 +80,15 @@ sub preprocess_inline (@) { #{{{
 		$template->param(content => get_inline_content($params{page}, $page))
 			if $params{archive} eq "no";
 		$template->param(ctime => displaytime($pagectime{$page}));
+
+		if (exists $hooks{pagetemplate}) {
+			foreach my $id (keys %{$hooks{pagetemplate}}) {
+				$hooks{pagetemplate}{$id}{call}->($page, $template);
+			}
+		}
+
 		$ret.=$template->output;
+		$template->clear_params;
 	}
 	
 	# TODO: should really add this to renderedfiles and call

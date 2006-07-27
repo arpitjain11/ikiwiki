@@ -96,9 +96,16 @@ languages to ikiwiki.
 Each time a page is rendered, a [[template|templates]] is filled out.
 This hook allows modifying that template. The function is passed the name
 of the page, and a `HTML::Template` object that is the template that will
-be used to generate the page. It can manipulate that template, the most
-common thing to do is probably to call $template->param() to add a new
-custom parameter to the template.
+be used to generate the page. It can manipulate that template object.
+
+The most common thing to do is probably to call $template->param() to add
+a new custom parameter to the template. Note that in order to be robust,
+it's a good idea to check whether the template has a variable before trying
+to set it, as setting a variable that's not present is an error.
+
+	if ($template->query(name => 'foo')) {
+		$template->param("foo" => "bar");
+	}
 
 ## sanitize
 
