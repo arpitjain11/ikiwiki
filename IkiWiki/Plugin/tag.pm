@@ -22,6 +22,7 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 	my $page = $params{page};
 	delete $params{page};
+	delete $params{destpage};
 
 	$tags{$page} = [];
 	foreach my $tag (keys %params) {

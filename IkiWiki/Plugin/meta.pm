@@ -26,6 +26,7 @@ sub preprocess (@) { #{{{
 	delete $params{$key};
 	my $page=$params{page};
 	delete $params{page};
+	delete $params{destpage};
 
 	eval q{use CGI 'escapeHTML'};
 

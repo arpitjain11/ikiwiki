@@ -169,6 +169,20 @@ use the following hashes, using a page name as the key:
   it is by using the IkiWiki::add_depends function, which takes as its
   parameters the page name and a [[GlobList]] of dependencies to add.
 
+# A note on generating html links
+
+Many plugins need to generate html links and add them to a page. This is
+done by using the htmllink() function in ikiwiki. The usual way to call
+htmlllink is: `htmllink($page, $page, $link)`
+
+Why is $page repeated? Because if a page is inlined inside another, and a
+link is placed on it, the right way to make that link is actually:
+`htmllink($page, $destpage, $link)`
+
+Here $destpage is the inlining page. A destpage parameter is passed to some
+of the hook functions above; the ones that are not passed it are not used
+during inlining and don't need to worry about this issue.
+
 # RCS plugins
 
 ikiwiki's support for revision control systems also uses pluggable perl
