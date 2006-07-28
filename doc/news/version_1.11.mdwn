@@ -1,4 +1,18 @@
-ikiwiki 1.11 released with these changes:
+ikiwiki 1.11 is released.
+
+There are some changes to tags in this release, due to a new tag plugin. If you have
+been using the meta plugin to tag pages, you'll want to enable the tag
+plugin too, and change things like this:
+
+    \[[meta link="foobar"]]
+
+To this:
+
+    \[[tag foobar]]
+
+The new tags will appear at page footers, and are also easier to type.
+
+Full list of changes:
 
    * Patch from Enrico that
      - Adds a tag plugin that allows more easily tagging pages.
