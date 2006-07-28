@@ -1,8 +1,8 @@
 This plugin allows inserting arbitrary metadata into the source of a page.
 Enter the metadata as follows:
 
-	\\[[meta field="value"]]
-	\\[[meta field="value" param="value" param="value"]]
+	\[[meta field="value"]]
+	\[[meta field="value" param="value" param="value"]]
 
 The first form sets a given field to a given value, while the second form
 also specifies some additional sub-parameters.
@@ -17,11 +17,11 @@ You can use any field names you like, but here are some predefined ones:
   can be useful when using links to categorise pages. A html link tag
   would look like this:
 
-	\\[[meta link="foo.css" rel="stylesheet" type="text/css"]]
+	\[[meta link="foo.css" rel="stylesheet" type="text/css"]]
 
   A non-user-visible [[WikiLink]] would instead look like this:
 
-	\\[[meta link=otherpage]]
+	\[[meta link=otherpage]]
 
 * title
 
