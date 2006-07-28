@@ -9,11 +9,19 @@ use IkiWiki;
 my %tags;
 
 sub import { #{{{
+	IkiWiki::hook(type => "getopt", id => "tag",
+		call => \&getopt);
 	IkiWiki::hook(type => "preprocess", id => "tag",
 		call => \&preprocess);
 	IkiWiki::hook(type => "pagetemplate", id => "tag",
 		call => \&pagetemplate);
 } # }}}
+
+sub getopt () { #{{{
+	eval q{use Getopt::Long};
+	Getopt::Long::Configure('pass_through');
+	GetOptions("tagbase=s" => \$IkiWiki::config{tagbase});
+} #}}}
 
 sub preprocess (@) { #{{{
 	if (! @_) {
@@ -26,6 +34,9 @@ sub preprocess (@) { #{{{
 
 	$tags{$page} = [];
 	foreach my $tag (keys %params) {
+		if (exists $IkiWiki::config{tagbase}) {
+			$tag=$IkiWiki::config{tagbase}."/".$tag;
+		}
 		push @{$tags{$page}}, $tag;
 		# hidden WikiLink
 		push @{$IkiWiki::links{$page}}, $tag;

@@ -64,6 +64,18 @@ with the rest of the page.
 Beyond PreProcessorDirectives, Other types of hooks that can be used by
 plugins include:
 
+## getopt
+
+	IkiWiki::hook(type => "getopt", id => "foo", call => \&getopt);
+
+This allows for plugins to perform their own processing of command-line
+options and so add options to the ikiwiki command line. It's called during
+command line processing, with @ARGV full of any options that ikiwiki was
+not able to process on its own. The function should process any options it
+can, removing them from @ARGV. It should take care not to abort if it sees
+an option it cannot process, and should just skip over those options and
+leave them in @ARGV.
+
 ## checkconfig
 
 	IkiWiki::hook(type => "checkconfig", id => "foo", call => \&checkconfig);

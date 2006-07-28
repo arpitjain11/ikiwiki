@@ -15,6 +15,7 @@ sub getconfig () { #{{{
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
 		%config=defaultconfig();
 		eval q{use Getopt::Long};
+		Getopt::Long::Configure('pass_through');
 		GetOptions(
 			"setup|s=s" => \$config{setup},
 			"wikiname=s" => \$config{wikiname},
@@ -66,6 +67,17 @@ sub getconfig () { #{{{
 		) || usage();
 
 		if (! $config{setup}) {
+			loadplugins();
+			if (exists $hooks{getopt}) {
+				foreach my $id (keys %{$hooks{getopt}}) {
+		                        $hooks{getopt}{$id}{call}->();
+				}
+			}
+			if (grep /^-/, @ARGV) {
+				print STDERR "Unknown option: $_\n"
+					foreach grep /^-/, @ARGV;
+				usage();
+			}
 			usage() unless @ARGV == 2;
 			$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
 			$config{destdir} = possibly_foolish_untaint(shift @ARGV);
@@ -79,6 +91,7 @@ sub getconfig () { #{{{
 		if ($@) {
 			error("WRAPPED_OPTIONS: $@");
 		}
+		loadplugins();
 		checkconfig();
 	}
 } #}}}

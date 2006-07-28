@@ -9,6 +9,8 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
+	IkiWiki::hook(type => "getopt", id => "skeleton", 
+		call => \&getopt);
 	IkiWiki::hook(type => "checkconfig", id => "skeleton", 
 		call => \&checkconfig);
 	IkiWiki::hook(type => "preprocess", id => "skeleton", 
@@ -28,6 +30,10 @@ sub import { #{{{
 	IkiWiki::hook(type => "cgi", id => "skeleton", 
 		call => \&cgi);
 } # }}}
+
+sub getopt () { #{{{
+	IkiWiki::debug("skeleton plugin getopt");
+} #}}}
 
 sub checkconfig () { #{{{
 	IkiWiki::debug("skeleton plugin checkconfig");

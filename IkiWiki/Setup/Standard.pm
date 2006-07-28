@@ -64,6 +64,7 @@ sub setup_standard {
 		debug("refreshing wiki..");
 	}
 
+	loadplugins();
 	checkconfig();
 	lockwiki();
 	loadindex();

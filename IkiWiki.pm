@@ -81,6 +81,14 @@ sub checkconfig () { #{{{
 		require IkiWiki::Rcs::Stub;
 	}
 
+	if (exists $hooks{checkconfig}) {
+                foreach my $id (keys %{$hooks{checkconfig}}) {
+                        $hooks{checkconfig}{$id}{call}->();
+                }
+        }
+} #}}}
+
+sub loadplugins () { #{{{
 	foreach my $plugin (@{$config{plugin}}) {
 		my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
 		eval qq{use $mod};
@@ -88,12 +96,6 @@ sub checkconfig () { #{{{
 			error("Failed to load plugin $mod: $@");
 		}
 	}
-
-	if (exists $hooks{checkconfig}) {
-                foreach my $id (keys %{$hooks{checkconfig}}) {
-                        $hooks{checkconfig}{$id}{call}->();
-                }
-        }
 } #}}}
 
 sub error ($) { #{{{

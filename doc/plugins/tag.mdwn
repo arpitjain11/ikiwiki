@@ -6,6 +6,12 @@ The tags work the same as if you had put a (hidden) [[WikiLink]] on the page
 for each tag, so you can use a [[GlobList]] to link to all pages that are
 tagged with a given tag, for example.
 
+This plugin has a configuration option. Set --tagbase=tag and all tags will
+be located inside a "tag" subdirectory, so in the above example, the tags
+are really set to tag/tech, tag/life, and tag/linux. This is a useful way
+to avoid having to write the full path to tags, if you want to keep them
+grouped together out of the way.
+
 This plugin is included in ikiwiki, but is not enabled by default. If it is
 enabled, you'll see a note below that this page is tagged with the "tags"
 tag.
