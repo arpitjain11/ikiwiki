@@ -34,7 +34,8 @@ sub preprocess (@) { #{{{
 
 	$tags{$page} = [];
 	foreach my $tag (keys %params) {
-		if (exists $IkiWiki::config{tagbase}) {
+		if (exists $IkiWiki::config{tagbase} &&
+		    defined $IkiWiki::config{tagbase}) {
 			$tag=$IkiWiki::config{tagbase}."/".$tag;
 		}
 		push @{$tags{$page}}, $tag;

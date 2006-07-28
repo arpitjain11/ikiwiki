@@ -10,6 +10,7 @@ BEGIN { use_ok("IkiWiki::Render"); }
 # Initialize htmlscrubber plugin
 %IkiWiki::config=IkiWiki::defaultconfig();
 $IkiWiki::config{srcdir}=$IkiWiki::config{destdir}="/dev/null";
+IkiWiki::loadplugins();
 IkiWiki::checkconfig();
 
 is(IkiWiki::htmlize("mdwn", "foo\n\nbar\n"), "<p>foo</p>\n\n<p>bar</p>\n",

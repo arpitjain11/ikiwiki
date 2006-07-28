@@ -13,7 +13,7 @@ BEGIN { use_ok("IkiWiki::Render"); }
 # Initialize htmlscrubber plugin
 %IkiWiki::config=IkiWiki::defaultconfig();
 $IkiWiki::config{srcdir}=$IkiWiki::config{destdir}="/dev/null";
-IkiWiki::checkconfig();
+IkiWiki::loadplugins(); IkiWiki::checkconfig();
 ok(IkiWiki::htmlize("mdwn", IkiWiki::readfile("t/test1.mdwn")));
 ok(IkiWiki::htmlize("mdwn", IkiWiki::readfile("t/test3.mdwn")),
 	"wtf?") for 1..100;

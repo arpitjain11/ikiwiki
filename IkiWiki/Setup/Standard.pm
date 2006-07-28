@@ -30,6 +30,9 @@ sub setup_standard {
 		}
 		delete $setup{disable_plugins};
 	}
+	if (exists $setup{exclude}) {
+		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$setup{exclude}/;
+	}
 
 	debug("generating wrappers..");
 	my @wrappers=@{$setup{wrappers}};
