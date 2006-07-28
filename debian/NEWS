@@ -1,3 +1,22 @@
+ikiwiki (1.11) unstable; urgency=low
+
+  Some changes to tags in this release, due to a new tag plugin. If you have
+  been using the meta plugin to tag pages, you'll want to enable the tag
+  plugin too, and change things like this:
+
+  [[meta link="foobar"]]
+
+  To this:
+
+  [[tag foobar]]
+
+  The new tags will appear at page footers, and are also easier to type.
+
+  There have also been some changes to the plugin interface, particularly the
+  interface of pagetemplate hooks has changed. See the changelog for details.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 17:03:09 -0400
+
 ikiwiki (1.8) unstable; urgency=low
 
   If your wiki is configured with a setup file, you should modify it to
