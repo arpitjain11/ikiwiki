@@ -172,12 +172,15 @@ use the following hashes, using a page name as the key:
 # A note on generating html links
 
 Many plugins need to generate html links and add them to a page. This is
-done by using the htmllink() function in ikiwiki. The usual way to call
-htmlllink is: `htmllink($page, $page, $link)`
+done by using the `IkiWiki::htmllink` function. The usual way to call
+htmlllink is:
+
+	htmllink($page, $page, $link)
 
 Why is $page repeated? Because if a page is inlined inside another, and a
 link is placed on it, the right way to make that link is actually:
-`htmllink($page, $destpage, $link)`
+
+	htmllink($page, $destpage, $link)
 
 Here $destpage is the inlining page. A destpage parameter is passed to some
 of the hook functions above; the ones that are not passed it are not used
