@@ -1,8 +1,0 @@
-ikiwiki 1.10 released with these changes:
-
-   * Run page through any relevant filters when generating a page preview.
-   * Noticed a bug in the wikitext markup plugin -- it made CamelCase links the
-     default throughout the wiki, not only on wikitext pages. Decided to call
-     this a feature, and split the camelcase support out into a separate plugin
-     that is independant of wikitext.
-   * Fix CamelCase regexp to not break [[FooBar|BazBar]] WikiLinks.
