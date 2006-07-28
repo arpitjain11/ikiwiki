@@ -40,10 +40,10 @@ sub pagetemplate (@) { #{{{
 	my $destpage=$params{destpage};
 	my $template=$params{template};
 
-	$template->param(tags => join(', ', 
-			map { IkiWiki::htmllink($page, $destpage, $_) } 
-				@{$tags{$page}}))
-		if exists $tags{$page} && $template->query(name => "tags");
+	$template->param(tags => [
+		map { link => IkiWiki::htmllink($page, $destpage, $_) }, 
+			@{$tags{$page}}
+	]) if exists $tags{$page} && @{$tags{$page}} && $template->query(name => "tags");
 } # }}}
 
 1

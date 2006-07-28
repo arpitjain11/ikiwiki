@@ -49,6 +49,15 @@
 <TMPL_VAR CONTENT>
 </div>
 
+<div class="tags">
+<TMPL_IF NAME="TAGS">
+Tags:
+<TMPL_LOOP NAME="TAGS">
+<TMPL_VAR NAME=LINK>
+</TMPL_LOOP>
+</TMPL_IF>
+</div>
+
 <div id="backlinks">
 <TMPL_IF NAME="BACKLINKS">
 Links:
@@ -59,10 +68,9 @@ Links:
 </div>
 
 <div id="footer">
-<span id="pageinfo">
+<span class="pageinfo">
 <!-- from <TMPL_VAR NAME=WIKINAME> -->
 Last edited <TMPL_VAR NAME=MTIME>
-<TMPL_IF NAME="TAGS">Tags: <TMPL_VAR TAGS></TMPL_IF>
 </span>
 </div>
 

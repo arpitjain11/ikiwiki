@@ -8,10 +8,10 @@ ikiwiki (1.11) UNRELEASED; urgency=low
       value.
     - Fixes preprocessor directive parameter parsing so that
       foo=bar baz now means "foo=bar" and a "baz" with no value.
-  * Run pagetemplate hooks when inlining pages so that inlines pages also
+  * Run pagetemplate hooks when inlining pages so that inlined pages also
     list their tags.
   * Make all plugins with pagetemplate hooks check that variables exist
-    on the template before setting them.
+    on the template before setting them, for robustness.
   * Switch pagetemplate hooks to using named parameters.
   * Pass a "destpage" parameter to preprocessor and pagetemplate hooks.
     This will be the page that a source page will be part of, which is

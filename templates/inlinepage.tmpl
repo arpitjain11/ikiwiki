@@ -3,10 +3,16 @@
 
 <TMPL_VAR CONTENT>
 
-<p>
-<i>
+<span class="pageinfo">
 Posted <TMPL_VAR CTIME>
-<TMPL_IF NAME="TAGS">Tags: <TMPL_VAR TAGS></TMPL_IF>
-</i>
-</p>
+</span>
+
+<span class="tags">
+<TMPL_IF NAME="TAGS">
+Tags:
+<TMPL_LOOP NAME="TAGS">
+<TMPL_VAR NAME=LINK>
+</TMPL_LOOP>
+</TMPL_IF>
+</span>
 </div>
