@@ -1,4 +1,4 @@
-ikiwiki (1.11) UNRELEASED; urgency=low
+ikiwiki (1.11) unstable; urgency=low
 
   * Patch from Enrico that
     - Adds a tag plugin that allows more easily tagging pages.
@@ -13,14 +13,14 @@ ikiwiki (1.11) UNRELEASED; urgency=low
   * Make all plugins with pagetemplate hooks check that variables exist
     on the template before setting them, for robustness.
   * Switch pagetemplate hooks to using named parameters.
-  * Pass a "destpage" parameter to preprocessor and pagetemplate hooks.
+  * Pass a destpage parameter to preprocessor and pagetemplate hooks.
     This will be the page that a source page will be part of, which is
     different than the source page for inlined pages.
-  * Audited all plugins to endure they pass page, destpage to htmllink
+  * Audited all plugins to endure they pass (page, destpage) to htmllink
     appropriatly. This means inlining of various plugins will not work
     properly, with correct links generated.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 17:03:09 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 20:51:23 -0400
 
 ikiwiki (1.10) unstable; urgency=low
 
