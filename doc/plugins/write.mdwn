@@ -72,7 +72,8 @@ This allows for plugins to perform their own processing of command-line
 options and so add options to the ikiwiki command line. It's called during
 command line processing, with @ARGV full of any options that ikiwiki was
 not able to process on its own. The function should process any options it
-can, removing them from @ARGV. It should take care not to abort if it sees
+can, removing them from @ARGV, and probably recording the configuration
+settings in %IkiWiki::config. It should take care not to abort if it sees
 an option it cannot process, and should just skip over those options and
 leave them in @ARGV.
 
@@ -80,8 +81,8 @@ leave them in @ARGV.
 
 	IkiWiki::hook(type => "checkconfig", id => "foo", call => \&checkconfig);
 
-This is useful if the plugin needs to check for, or modify ikiwiki's
-configuration. It's called early in the ikiwiki startup process. The
+This is useful if the plugin needs to check for or modify ikiwiki's
+configuration. It's called early in the startup process. The
 function is passed no values. It's ok for the function to call
 IkiWiki::error if something isn't configured right.
 
