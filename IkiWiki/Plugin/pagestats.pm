@@ -42,8 +42,14 @@ sub preprocess (@) { #{{{
 	}
 
 	if ($style eq 'table') {
-		return "<table class='pageStats'>\n".join("\n", map { "<tr><td>$_</td><td>".$counts{$_}."</td></tr>" }
-		      sort { $counts{$b} <=> $counts{$a} } keys %counts)."\n</table>\n" ;
+		return "<table class='pageStats'>\n".
+			join("\n", map {
+				"<tr><td>".
+				IkiWiki::htmllink($params{page}, $params{destpage}, $_, 1).
+				"</td><td>".$counts{$_}."</td></tr>"
+			}
+			sort { $counts{$b} <=> $counts{$a} } keys %counts).
+			"\n</table>\n" ;
 	} else {
 		# In case of misspelling, default to a page cloud
 
