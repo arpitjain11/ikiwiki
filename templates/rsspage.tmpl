@@ -7,12 +7,13 @@
 		<TMPL_LOOP NAME="ITEMS">
 		<item>
 			<title><TMPL_VAR ITEMTITLE ESCAPE=HTML></title>
-			<TMPL_IF NAME="ITEMGUID">
-			<guid isPermaLink="false"><TMPL_VAR ITEMGUID></guid>
-			<TMPL_ELSE>
 			<guid><TMPL_VAR ITEMURL></guid>
-			</TMPL_IF>
 			<link><TMPL_VAR ITEMURL></link>
+			<TMPL_IF NAME="CATEGORIES">
+			<TMPL_LOOP NAME="CATEGORIES">
+			<category><TMPL_VAR NAME=CATEGORY></category>
+			</TMPL_LOOP>
+			</TMPL_IF>
 			<pubDate><TMPL_VAR ITEMPUBDATE></pubDate>
 			<description><![CDATA[<TMPL_VAR ITEMCONTENT>]]></description>
 		</item>

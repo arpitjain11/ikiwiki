@@ -1,5 +1,10 @@
 Stuff still needing to be done with tags:
 
-* Move the pages they link to into an automatic tag/ namespace?
-* Include tag info in the RSS feed.
-* Technorati tag support?
+* It's unfortunate that the rss category (tag) support doesn't include
+  a domain="" attribute in the category elements. That would let readers
+  know how to follow back to the tag page in the wiki. However, the domain
+  attribute is specified to be the base url, to which the category is just
+  appended. So there's no way to add ".html", so the url won't be right.
+
+  This is one good argument for changing ikiwiki so that pages are all
+  dir/index.html, then a link to just "dir" works.

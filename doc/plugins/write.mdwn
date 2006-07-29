@@ -107,12 +107,13 @@ languages to ikiwiki.
 
 	IkiWiki::hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
-Each time a page is rendered, a [[template|templates]] is filled out.
-This hook allows modifying that template. The function is passed named
-parameters. The "page" and "destpage" parameters are the same as for a
-preprocess hook. The "template" parameter is a `HTML::Template` object that
-is the template that will be used to generate the page. The function 
-can manipulate that template object.
+Each time a page (or part of a blog page, or an rss feed) is rendered, a
+[[template|templates]] is filled out. This hook allows modifying that
+template. The function is passed named parameters. The "page" and
+"destpage" parameters are the same as for a preprocess hook. The "template"
+parameter is a `HTML::Template` object that is the template that will be
+used to generate the page. The function can manipulate that template
+object.
 
 The most common thing to do is probably to call $template->param() to add
 a new custom parameter to the template. Note that in order to be robust,

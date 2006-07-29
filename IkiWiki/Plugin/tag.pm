@@ -23,6 +23,17 @@ sub getopt () { #{{{
 	GetOptions("tagbase=s" => \$IkiWiki::config{tagbase});
 } #}}}
 
+sub tagpage ($) { #{{{
+	my $tag=shift;
+			
+	if (exists $IkiWiki::config{tagbase} &&
+	    defined $IkiWiki::config{tagbase}) {
+		$tag=$IkiWiki::config{tagbase}."/".$tag;
+	}
+
+	return $tag;
+} #}}}
+
 sub preprocess (@) { #{{{
 	if (! @_) {
 		return "";
@@ -34,13 +45,9 @@ sub preprocess (@) { #{{{
 
 	$tags{$page} = [];
 	foreach my $tag (keys %params) {
-		if (exists $IkiWiki::config{tagbase} &&
-		    defined $IkiWiki::config{tagbase}) {
-			$tag=$IkiWiki::config{tagbase}."/".$tag;
-		}
 		push @{$tags{$page}}, $tag;
 		# hidden WikiLink
-		push @{$IkiWiki::links{$page}}, $tag;
+		push @{$IkiWiki::links{$page}}, tagpage($tag);
 	}
 		
 	return "";
@@ -53,9 +60,26 @@ sub pagetemplate (@) { #{{{
 	my $template=$params{template};
 
 	$template->param(tags => [
-		map { link => IkiWiki::htmllink($page, $destpage, $_) }, 
-			@{$tags{$page}}
+		map { 
+			link => IkiWiki::htmllink($page, $destpage, tagpage($_))
+		}, @{$tags{$page}}
 	]) if exists $tags{$page} && @{$tags{$page}} && $template->query(name => "tags");
+
+	if ($template->query(name => "items")) {
+		# It's an rss template. Modify each item in the feed,
+		# adding any categories based on the page for that item.
+		foreach my $item (@{$template->param("items")}) {
+			my $p=$item->{page};
+			if (exists $tags{$p} && @{$tags{$p}}) {
+				$item->{categories}=[];
+				foreach my $tag (@{$tags{$p}}) {
+					push @{$item->{categories}}, {
+						category => $tag,
+					};
+				}
+			}
+		}
+	}
 } # }}}
 
 1

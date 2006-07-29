@@ -152,7 +152,8 @@ sub genrss ($@) { #{{{
 	
 	my $url="$config{url}/".htmlpage($page);
 	
-	my $template=template("rsspage.tmpl", blind_cache => 1);
+	my $template=template("rsspage.tmpl", blind_cache => 1,
+		die_on_bad_params => 0);
 	
 	my @items;
 	foreach my $p (@pages) {
@@ -161,6 +162,7 @@ sub genrss ($@) { #{{{
 			itemurl => "$config{url}/$renderedfiles{$p}",
 			itempubdate => date_822($pagectime{$p}),
 			itemcontent => absolute_urls(get_inline_content($p, $page), $url),
+			page => $p, # used by category adding code in tag plugin
 		} if exists $renderedfiles{$p};
 	}
 
@@ -169,6 +171,14 @@ sub genrss ($@) { #{{{
 		pageurl => $url,
 		items => \@items,
 	);
+	
+	foreach my $id (keys %{$hooks{pagetemplate}}) {
+		$hooks{pagetemplate}{$id}{call}->(
+			page => $page,
+			destpage => $page,
+			template => $template,
+		);
+	}
 	
 	return $template->output;
 } #}}}
