@@ -21,6 +21,7 @@ sub import { #{{{
 package IkiWiki;
 
 my %toping;
+my $processing_inline=0;
 
 sub preprocess_inline (@) { #{{{
 	my %params=@_;
@@ -34,6 +35,12 @@ sub preprocess_inline (@) { #{{{
 	if (! exists $params{show} && $params{archive} eq "no") {
 		$params{show}=10;
 	}
+
+	# Avoid nested inlines, to avoid loops etc.
+	if ($processing_inline) {
+		return "";
+	}
+	$processing_inline=1;
 
 	my @list;
 	foreach my $page (keys %pagesources) {
@@ -104,6 +111,8 @@ sub preprocess_inline (@) { #{{{
 		$toping{$params{page}}=1 unless $config{rebuild};
 	}
 	
+	$processing_inline=0;
+
 	return $ret;
 } #}}}
 
@@ -114,7 +123,7 @@ sub get_inline_content ($$) { #{{{
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if (defined $type) {
-		return htmlize($type, preprocess($page, $destpage, linkify($page, $destpage, readfile(srcfile($file))), 1));
+		return htmlize($type, preprocess($page, $destpage, linkify($page, $destpage, readfile(srcfile($file)))));
 	}
 	else {
 		return "";
