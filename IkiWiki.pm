@@ -61,7 +61,7 @@ sub checkconfig () { #{{{
 	if (defined $config{locale}) {
 		eval q{use POSIX};
 		$ENV{LANG} = $config{locale}
-			if POSIX::setlocale(&POSIX::LANG, $config{locale});
+			if POSIX::setlocale(&POSIX::LC_TIME, $config{locale});
 	}
 
 	if ($config{w3mmode}) {
