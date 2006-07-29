@@ -49,9 +49,21 @@ sub defaultconfig () { #{{{
 	adminemail => undef,
 	plugin => [qw{mdwn inline htmlscrubber}],
 	timeformat => '%c',
+	locale => undef,
 } #}}}
    
 sub checkconfig () { #{{{
+	# locale stuff; avoid LC_ALL since it overrides everything
+	if (defined $ENV{LC_ALL}) {
+		$ENV{LANG} = $ENV{LC_ALL};
+		delete $ENV{LC_ALL};
+	}
+	if (defined $config{locale}) {
+		eval q{use POSIX};
+		$ENV{LANG} = $config{locale}
+			if POSIX::setlocale(&POSIX::LANG, $config{locale});
+	}
+
 	if ($config{w3mmode}) {
 		eval q{use Cwd q{abs_path}};
 		$config{srcdir}=possibly_foolish_untaint(abs_path($config{srcdir}));

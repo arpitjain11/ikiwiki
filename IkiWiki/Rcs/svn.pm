@@ -4,10 +4,32 @@
 use warnings;
 use strict;
 use IkiWiki;
+use POSIX qw(setlocale LC_CTYPE);
 
 package IkiWiki;
 		
 my $svn_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
+
+# svn needs LC_CTYPE set to a UTF-8 locale, so try to find one. Any will do.
+sub find_lc_ctype() {
+	my $current = setlocale(LC_CTYPE());
+	return $current if $current =~ m/UTF-?8$/i;
+
+	# Make some obvious attempts to avoid calling `locale -a`
+	foreach my $locale ("$current.UTF-8", "en_US.UTF-8", "en_GB.UTF-8") {
+		return $locale if setlocale(LC_CTYPE(), $locale);
+	}
+
+	# Try to get all available locales and pick the first UTF-8 one found.
+	if (my @locale = grep(/UTF-?8$/i, `locale -a`)) {
+		chomp @locale;
+		return $locale[0] if setlocale(LC_CTYPE(), $locale[0]);
+	}
+
+	# fallback to the current locale
+	return $current;
+} # }}}
+$ENV{LC_CTYPE} = $ENV{LC_CTYPE} || find_lc_ctype();
 
 sub svn_info ($$) { #{{{
 	my $field=shift;

@@ -11,8 +11,14 @@ ikiwiki (1.13) UNRELEASED; urgency=low
     when upgrading to get the cleanup globally.
   * Polygen plugin from Enrico.
   * htmltidy plugin from Faidon.
+  * Locale patch from Faidon:
+    - Adds a locale setting to setup files.
+    - Proper local time, if the locale configuration option is used.
+    - Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this patch,
+      commiting (or even rcs_updating) on repositories with UTF-8 filenames was
+      impossible.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 16:43:50 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 16:56:26 -0400
 
 ikiwiki (1.12) unstable; urgency=low
 

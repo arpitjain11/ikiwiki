@@ -72,6 +72,8 @@ use IkiWiki::Setup::Standard {
 	#exclude => qr/\*.wav/,
 	# Time format (for strftime)
 	#timeformat => '%c',
+	# Locale to use. Must be a UTF-8 locale.
+	#locale => 'en_US.UTF-8',
 	
 	# To add plugins, list them here.
 	#add_plugins => [qw{meta tag pagecount brokenlinks search smiley
