@@ -33,7 +33,7 @@ sub preprocess (@) { #{{{
 	
 	my %counts;
 	my $max = 0;
-	foreach my $page (%IkiWiki::links) {
+	foreach my $page (keys %IkiWiki::links) {
 		if (IkiWiki::globlist_match($page, $params{pages})) {
 			my @bl = IkiWiki::backlinks($page);
 			$counts{$page} = scalar(@bl);

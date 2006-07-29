@@ -20,7 +20,7 @@ sub preprocess (@) { #{{{
 	IkiWiki::add_depends($params{page}, $params{pages});
 	
 	my @broken;
-	foreach my $page (%IkiWiki::links) {
+	foreach my $page (keys %IkiWiki::links) {
 		if (IkiWiki::globlist_match($page, $params{pages})) {
 			foreach my $link (@{$IkiWiki::links{$page}}) {
 				next if $link =~ /.*\/discussion/i && $IkiWiki::config{discussion};
