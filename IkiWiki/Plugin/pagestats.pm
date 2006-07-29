@@ -50,10 +50,9 @@ sub preprocess (@) { #{{{
 		my $res = "<div class='pagecloud'>\n";
 		foreach my $page (sort keys %counts) {
 			my $class = $classes[$counts{$page} * scalar(@classes) / ($max + 1)];
-			my $link = IkiWiki::abs2rel(IkiWiki::htmlpage($page), IkiWiki::dirname($params{page}));
-			$res .= sprintf("<span class='%s'><a href='%s'>%s</a></span>\n",
-					$class, $link, $page);
-				
+			$res .= "<span class=\"$class\">".
+			        IkiWiki::htmllink($params{page}, $params{destpage}, $page).
+			        "</span>\n";
 		}
 		$res .= "</div>\n";
 
