@@ -1,169 +1,102 @@
-From [[Faidon]]:
+This v2 patch is a different approach after Joey's comments and some though.
 
-Joey,
-Attached is a patch that adds locale support to ikiwiki.
-A suitable locale is choosed in that order:
+It achieves:
 
-1. $config{locale}
-2. $ENV{LC_ALL}
-3. en_US.UTF-8
-4. en_*.UTF-8
-5. *.UTF-8
-6. en_US
-7. en_*
-8. *
-9. POSIX
-(where * == the first item found)
-
-The patch brings the following functionality:
-
-1. Proper local time, either using a UTF-8 locale or not (by the means
-of a new function decode_locale),
+1. Proper local time, if the locale configuration option is used,
 2. Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this
 patch, commiting (or even rcs_updating) on repositories with UTF-8
-filenames is impossible.
+filenames was impossible.
 
-This is RFC because it has some hard-coded parts: 'locale -a' and
-/usr/share/i18n/SUPPORTED. They obviously work on Debian, but I'm sure
-they won't work on other distros, let along on other operating systems.
+The svn backend sets `LC_CTYPE` to the following, in order of preference:
+ 
+* The current locale, if it contains utf8/UTF-8,
+* The current locale with the string ".UTF-8" appended to it,
+* `en_US.UTF-8`/`en_GB.UTF-8` -- a bit hacky, but they're _very_ common and
+  they can help avoiding a call to `locale -a`, which may not be available
+  in the current system,
+* The first UTF-8 locale it encounters from `locale -a`. Note that `LC_CTYPE`
+  is the same for every UTF-8 locale, so it doesn't matter which one will be used.
 
-Besides that, it's quite a big of a change and I could use some comments
-to make it better :)
-
-----
-
-First comments on this: 
-
-* Defaulting to en_US anything or even en feels wrong. Defaulting to C is standard.
-* If ikiwiki uses utf-8, why should it cater to non-utf8 locales? If it only supports locales that are utf-8 or simple ascii then it doesn't need to do messy charset conversion and charset determininition via the SUPPORTED file. It can just make sure that incoming data is properly interpreted as utf-8 by perl; based on the patch I guess there are still some issues along those lines in the svn filename code.
-* I don't see any real need to guess at a locale to use with locale -a. If a user wants a locale they should set one. (_Or_, ikiwiki could record the user's own locale settings at wiki setup time, so that the compiled CGI wrapper contains the locale settings in effect when it was built. However, this is likely to have issues with ikiwiki-mass-rebuild. Maybe some kind of tool to generate a setup file, including a locale setting taken from the user's locale would be a useful avenue..)
-
---[[Joey]]
+-- [[Faidon]]
 
 ----
-
 	Index: IkiWiki/Rcs/svn.pm
 	===================================================================
-	--- IkiWiki/Rcs/svn.pm	(revision 904)
+	--- IkiWiki/Rcs/svn.pm	(revision 967)
 	+++ IkiWiki/Rcs/svn.pm	(working copy)
-	@@ -174,16 +236,16 @@
-	 	}
-	 	my $rev=int(possibly_foolish_untaint($ENV{REV}));
-	 	
-	-	my $user=`svnlook author $config{svnrepo} -r $rev`;
-	+	my $user=decode_locale(`svnlook author $config{svnrepo} -r $rev`);
-	 	chomp $user;
-	-	my $message=`svnlook log $config{svnrepo} -r $rev`;
-	+	my $message=decode_locale(`svnlook log $config{svnrepo} -r $rev`);
-	 	if ($message=~/$svn_webcommit/) {
-	 		$user="$1";
-	 		$message=$2;
-	 	}
+	@@ -4,11 +4,35 @@
+	 use warnings;
+	 use strict;
+	 use IkiWiki;
+	+use POSIX qw(setlocale LC_CTYPE);
 	 
-	 	my @changed_pages;
-	-	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
-	+	foreach my $change (decode_locale(`svnlook changed $config{svnrepo} -r $rev`)) {
-	 		chomp $change;
-	 		if ($change =~ /^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
-	 			push @changed_pages, $1;
-	@@ -197,7 +259,7 @@
-	 		# subscribers a diff that might contain pages they did not
-	 		# sign up for. Should separate the diff per page and
-	 		# reassemble into one mail with just the pages subscribed to.
-	-		my $diff=`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
-	+		my $diff=decode_locale(`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`);
+	 package IkiWiki;
+	 		
+	 my $svn_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
 	 
-	 		my $subject="$config{wikiname} update of ";
-	 		if (@changed_pages > 2) {
-	Index: IkiWiki/Render.pm
-	===================================================================
-	--- IkiWiki/Render.pm	(revision 904)
-	+++ IkiWiki/Render.pm	(working copy)
-	@@ -222,7 +222,7 @@
-	 	eval q{use POSIX};
-	 	# strftime doesn't know about encodings, so make sure
-	 	# its output is properly treated as utf8
-	-	return decode_utf8(POSIX::strftime(
-	+	return decode_locale(POSIX::strftime(
-	 			$config{timeformat}, localtime($time)));
-	 } #}}}
-	 
+	+sub find_lc_ctype() {
+	+	my $current = setlocale(LC_CTYPE);
+	+
+	+	# Respect current locale if it's a UTF-8 one
+	+	return $current if $current =~ m/UTF-?8$/i;
+	+
+	+	# Make some obvious attempts to avoid calling `locale -a`
+	+	foreach my $locale ("$current.UTF-8", "en_US.UTF-8", "en_GB.UTF-8") {
+	+		return $locale if setlocale(LC_CTYPE, $locale);
+	+	}
+	+
+	+	# Try to get all available locales and pick the first UTF-8 one if found
+	+	if (my @locale = grep(/UTF-?8$/i, `locale -a`)) {
+	+		chomp @locale;
+	+		return $locale[0] if setlocale(LC_CTYPE, $locale[0]);
+	+	}
+	+
+	+	# fallback to the current locale
+	+	return $current;
+	+
+	+} # }}}
+	+$ENV{LC_CTYPE} = $ENV{LC_CTYPE} || find_lc_ctype();
+	+
+	 sub svn_info ($$) { #{{{
+	 	my $field=shift;
+	 	my $file=shift;
 	Index: IkiWiki.pm
 	===================================================================
-	--- IkiWiki.pm	(revision 904)
+	--- IkiWiki.pm	(revision 967)
 	+++ IkiWiki.pm	(working copy)
-	@@ -9,6 +9,7 @@
-	 # Optimisation.
-	 use Memoize;
-	 memoize("abs2rel");
-	+memoize("get_charset_from_locale");
-	 
-	 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
-	             %renderedfiles %pagesources %depends %hooks};
-	@@ -49,9 +50,15 @@
+	@@ -49,9 +49,21 @@
 	 	adminemail => undef,
 	 	plugin => [qw{mdwn inline htmlscrubber}],
 	 	timeformat => '%c',
-	+	locale => get_preferred_locale(),
+	+	locale => undef,
 	 } #}}}
 	    
 	 sub checkconfig () { #{{{
-	+	debug("setting LC_ALL to '$config{locale}'");
-	+	eval q{use POSIX};
-	+	$ENV{LC_ALL} = $config{locale};
-	+	POSIX::setlocale(&POSIX::LC_ALL, $config{locale});
+	+	# locale stuff; avoid LC_ALL since it overrides everything
+	+	if (defined $ENV{LC_ALL}) {
+	+		$ENV{LANG} = $ENV{LC_ALL};
+	+		delete $ENV{LC_ALL};
+	+	}
+	+	if (defined $config{locale}) {
+	+		eval q{use POSIX};
+	+		$ENV{LANG} = $config{locale}
+	+			if POSIX::setlocale(&POSIX::LANG, $config{locale});
+	+	}
 	+
 	 	if ($config{w3mmode}) {
 	 		eval q{use Cwd q{abs_path}};
 	 		$config{srcdir}=possibly_foolish_untaint(abs_path($config{srcdir}));
-	@@ -489,4 +496,50 @@
-	 	$hooks{$param{type}}{$param{id}}=\%param;
-	 } # }}}
-	 
-	+sub get_preferred_locale() {
-	+	if (my $env = $ENV{LC_ALL}) {
-	+		return $env;
-	+	}
-	+
-	+	my @avail=`locale -a`;
-	+	chomp @avail;
-	+
-	+	return "POSIX" unless @avail;
-	+
-	+	my @ret;
-	+	# prefer UTF-8 locales
-	+	@avail = map { my $l = $_; $l =~ s/\.utf8/\.UTF-8/; $l; } @avail;
-	+	@avail = @ret if @ret = grep(/\.UTF-8$/, @avail);
-	+
-	+	# prefer en_US or en_ locales
-	+	return $ret[0] if @ret = grep(/^en_US/, @avail);
-	+	return $ret[0] if @ret = grep(/^en_/, @avail);
-	+	return $ret[0] if @ret = grep(/^[^.@]+$/, @avail);
-	+
-	+	# fallback to the first locale found
-	+	return $avail[0];
-	+} # }}}
-	+
-	+sub get_charset_from_locale($) {
-	+	my $locale=shift;
-	+	my ($l, $c);
-	+
-	+	my $supportedlist = "/usr/share/i18n/SUPPORTED";
-	+	if (defined $locale and open(SUPPORTED, "< $supportedlist")) {
-	+		while (<SUPPORTED>) {
-	+			chomp;
-	+			($l, $c) = split(/\s+/);
-	+			last if ($l eq $locale);
-	+		}
-	+		close(SUPPORTED);
-	+
-	+		return $c if ($l eq $locale);
-	+	}
-	+	return "ISO-8859-1";
-	+} # }}}
-	+
-	+sub decode_locale($) {
-	+	return decode(get_charset_from_locale($config{locale}), shift);
-	+} # }}}
-	+
-	 1
+	Index: doc/ikiwiki.setup
+	===================================================================
+	--- doc/ikiwiki.setup	(revision 967)
+	+++ doc/ikiwiki.setup	(working copy)
+	@@ -72,6 +72,9 @@
+	 	#exclude => qr/\*.wav/,
+	 	# Time format (for strftime)
+	 	#timeformat => '%c',
+	+	# Locale to be used, useful for language customization of last-modified
+	+	# time. WARNING: Must be a UTF-8 locale!
+	+	#locale => 'en_US.UTF-8',
+	 	
+	 	# To add plugins, list them here.
+	 	#add_plugins => [qw{meta tag pagecount brokenlinks search smiley
