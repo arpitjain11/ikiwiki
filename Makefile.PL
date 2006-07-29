@@ -17,7 +17,8 @@ extra_build:
 		--exclude=/discussion --no-discussion \
 		--plugin=brokenlinks --plugin=pagecount \
 		--plugin=orphans --plugin=haiku --plugin=meta \
-		--plugin=tag --plugin=polygen --plugin=pagestats
+		--plugin=tag --plugin=polygen --plugin=pagestats \
+		--plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 		
