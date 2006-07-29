@@ -58,7 +58,7 @@ sub backlinks ($) { #{{{
 			        $p_trimmed=~s/^\Q$dir\E// &&
 			        $page_trimmed=~s/^\Q$dir\E//;
 				       
-			push @links, { url => $href, page => $p_trimmed };
+			push @links, { url => $href, page => pagetitle($p_trimmed) };
 		}
 	}
 
@@ -76,7 +76,7 @@ sub parentlinks ($) { #{{{
 	foreach my $dir (reverse split("/", $page)) {
 		if (! $skip) {
 			$path.="../";
-			unshift @ret, { url => "$path$dir.html", page => $dir };
+			unshift @ret, { url => "$path$dir.html", page => pagetitle($dir) };
 		}
 		else {
 			$skip=0;
