@@ -1,11 +1,18 @@
-ikiwiki (1.12) UNRELEASED; urgency=low
+ikiwiki (1.13) UNRELEASED; urgency=low
+
+  * New pagestats plugin from Enrico, which can generate a table counting
+    the backlinks for each page, or a del.icio.us style cloud.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 13:30:16 -0400
+
+ikiwiki (1.12) unstable; urgency=low
 
   * Add getopt hook type, this allows plugins to add new command-line options.
   * Add --tagbase option to tag plugin.
   * Add exclude option in setup files, works same as --exclude.
   * Put categories in rss feeds for tagged items.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 02:58:23 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 03:24:58 -0400
 
 ikiwiki (1.11) unstable; urgency=low
 
