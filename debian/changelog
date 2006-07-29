@@ -1,4 +1,4 @@
-ikiwiki (1.13) UNRELEASED; urgency=low
+ikiwiki (1.12) UNRELEASED; urgency=low
 
   "Viva l'Italia!"
   * New pagestats plugin from Enrico, which can generate a table counting
@@ -17,11 +17,6 @@ ikiwiki (1.13) UNRELEASED; urgency=low
     - Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this patch,
       commiting (or even rcs_updating) on repositories with UTF-8 filenames was
       impossible.
-
- -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 16:56:26 -0400
-
-ikiwiki (1.12) unstable; urgency=low
-
   * Add getopt hook type, this allows plugins to add new command-line options.
   * Add --tagbase option to tag plugin.
   * Add exclude option in setup files, works same as --exclude.
