@@ -252,7 +252,9 @@ sub add_page (@) { #{{{
 		$feed->{newposts}++;
 
 		# assign it an unused page
-		my $page=$feed->{dir}."/".IkiWiki::titlepage($params{title});
+		my $page=IkiWiki::titlepage($params{title});
+		$page=~s!([/])!"__".ord($1)."__"!eg; # escape slashes in title
+		$page=$feed->{dir}."/".$page;
 		$page=lc($page);
 		($page)=$page=~/$IkiWiki::config{wiki_file_regexp}/;
 		if (! defined $page || ! length $page) {
