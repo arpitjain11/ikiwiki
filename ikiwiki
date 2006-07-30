@@ -69,12 +69,6 @@ sub getconfig () { #{{{
 
 		if (! $config{setup}) {
 			loadplugins();
-			run_hooks(getopt => sub { shift->() });
-			if (grep /^-/, @ARGV) {
-				print STDERR "Unknown option: $_\n"
-					foreach grep /^-/, @ARGV;
-				usage();
-			}
 			usage() unless @ARGV == 2;
 			$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
 			$config{destdir} = possibly_foolish_untaint(shift @ARGV);

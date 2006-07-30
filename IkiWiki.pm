@@ -104,6 +104,12 @@ sub loadplugins () { #{{{
 			error("Failed to load plugin $mod: $@");
 		}
 	}
+	run_hooks(getopt => sub { shift->() });
+	if (grep /^-/, @ARGV) {
+		print STDERR "Unknown option: $_\n"
+			foreach grep /^-/, @ARGV;
+		usage();
+	}
 } #}}}
 
 sub error ($) { #{{{
