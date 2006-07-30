@@ -1,0 +1,53 @@
+This plugin allows content from other blogs to be aggregated into the wiki.
+Aggregate a blog as follows:
+
+	\[[aggregate name="example blog" feedurl="http://example.com/index.rss" url="http://example.com/" updateinterval="15" dir="example"]
+
+That example aggregates posts from the expecified RSS feed, updating no
+more frequently than once every 15 minutes, and puts a page per post under
+the example/ directory in the wiki.
+
+You can then use ikiwiki's [[blog]] support to create a blog of one or more
+aggregated feeds.
+
+## setup
+
+Make sure that you have the [[html]] plugin enabled, as the created pages are
+in html format. The [[tag]] plugin is also recommended.
+
+You will need to run ikiwiki periodically from a cron job, passing it the
+--aggregate parameter, to make it check for new posts. Here's an example
+crontab entry:
+
+	*/15 * * * * ikiwiki --setup my.wiki --aggregate --refresh
+
+## usage
+
+Here are descriptions of all the supported parameters to the `aggregate`
+directive:
+
+* `name` - A name for the feed. Each feed must have a unique name.
+  Required.
+* `url` - The url to the web page for the blog that's being aggregated.
+  Required.
+* `dir` - The directory in the wiki where pages should be saved. Required.
+* `feedurl` - The url to the feed. Optional, if it's not specified ikiwiki
+  will look for feeds on the `blogurl`. RSS and atom feeds are supported.
+* `updateinterval` - How often to check for new posts, in minutes. Default
+  is 15 minutes.
+* `expireage` - Expire old items from this blog if they are older than
+  a specified number of days. Default is to never expire on age.
+* `expirecount` - Expire old items from this blog if there are more than
+  the specified number total. Oldest items will be expired first. Default
+  is to never expire on count.
+* `tag` - A tag to tag each post from the blog with. A good tag to use is
+  the name of the blog. Can be repeated multiple times. The [[tag]] plugin
+  must be enabled for this to work.
+
+Note that even if you are using subversion or another revision control
+system, pages created by aggregation will *not* be checked into revision
+control.
+
+This plugin is not enabled by default.
+
+[[tag type/useful]]

@@ -1,10 +1,16 @@
 ikiwiki (1.13) UNRELEASED; urgency=low
 
+  * ikiwiki can now download and aggregate feeds with its new aggregate
+    plugin, so it's possible to implement a Planet using ikiwiki!
   * Add a run_hooks function for the common task of running all hooks of a
     given type.
   * Add a savestate hook.
   * Don't put blog post forms on pages if there's no cgiurl set.
   * Reformat front page.
+  * --setup --refresh no longer rebuilds wrappers. Use --setup --refresh
+    --wrappers to do that.
+  * Add %IkiWiki::forcerebuild to provide a way for plugins like aggregate
+    to update pages that haven't changed on disk.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 20:10:51 -0400
 

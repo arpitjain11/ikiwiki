@@ -96,7 +96,7 @@ make arbitrary changes. The function is passed named parameters `page` and
 
 ## htmlize
 
-	IkiWiki::hook(type => "htmlize", id => "ext", call => \&filter);
+	IkiWiki::hook(type => "htmlize", id => "ext", call => \&htmlize);
 
 Runs on the raw source of a page and turns it into html. The id parameter
 specifies the filename extension that a file must have to be htmlized using
@@ -135,7 +135,7 @@ content.
 
 ## delete
 
-	IkiWiki::hook(type => "delete", id => "foo", call => \&dele);
+	IkiWiki::hook(type => "delete", id => "foo", call => \&delete);
 
 Each time a page or pages is removed from the wiki, the referenced function
 is called, and passed the names of the source files that were removed.
@@ -190,6 +190,8 @@ use the following hashes, using a page name as the key:
   Many plugins will need to add dependencies to this hash; the best way to do
   it is by using the IkiWiki::add_depends function, which takes as its
   parameters the page name and a [[GlobList]] of dependencies to add.
+* `%IkiWiki::forcerebuild` any pages set as the keys to this hash will be
+  treated as if they're modified and rebuilt.
 
 # A note on generating html links
 

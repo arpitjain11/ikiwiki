@@ -22,6 +22,7 @@ sub getconfig () { #{{{
 			"verbose|v!" => \$config{verbose},
 			"rebuild!" => \$config{rebuild},
 			"refresh!" => \$config{refresh},
+			"wrappers!" => \$config{wrappers},
 			"getctime" => \$config{getctime},
 			"wrappermode=i" => \$config{wrappermode},
 			"rcs=s" => \$config{rcs},

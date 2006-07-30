@@ -11,7 +11,7 @@ use Memoize;
 memoize("abs2rel");
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
-            %renderedfiles %pagesources %depends %hooks};
+            %renderedfiles %pagesources %depends %hooks %forcerebuild};
 
 sub defaultconfig () { #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.html?$|\.rss$)},

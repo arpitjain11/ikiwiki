@@ -399,7 +399,8 @@ sub refresh () { #{{{
 		my $page=pagename($file);
 		
 		if (! exists $oldpagemtime{$page} ||
-		    mtime(srcfile($file)) > $oldpagemtime{$page}) {
+		    mtime(srcfile($file)) > $oldpagemtime{$page} ||
+	    	    $forcerebuild{$page}) {
 		    	debug("rendering $file");
 			render($file);
 			$rendered{$file}=1;

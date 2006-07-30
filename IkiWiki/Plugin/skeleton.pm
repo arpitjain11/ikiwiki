@@ -29,7 +29,7 @@ sub import { #{{{
 		call => \&change);
 	IkiWiki::hook(type => "cgi", id => "skeleton", 
 		call => \&cgi);
-	IkiWiki::hook(type => "cgi", id => "savestate", 
+	IkiWiki::hook(type => "savestate", id => "savestate", 
 		call => \&savestate);
 } # }}}
 

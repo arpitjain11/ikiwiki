@@ -24,8 +24,7 @@ These options control the mode that ikiwiki is operating in.
 * --refresh
 
   Refresh the wiki, updating any changed pages. This is the default
-  behavior so you don't normally need to specify it. If used with -setup also
-  updates any configured wrappers.
+  behavior so you don't normally need to specify it.
 
 * --rebuild
 
@@ -59,10 +58,18 @@ These options control the mode that ikiwiki is operating in.
 
   The default action when --setup is specified is to automatically generate
   wrappers for a wiki based on data in a config file, and rebuild the wiki.
-  If you also pass the --refresh option, ikiwiki will instead just refresh
-  the wiki described in the setup file.
 
   [[ikiwiki.setup]] is an example of such a config file.
+
+* --wrappers
+
+  If used with --setup --refresh, this makes it also update any configured
+  wrappers.
+
+* --aggregate
+
+  If the aggregate plugin is enabled, this makes ikiwiki poll configured
+  feeds and save new posts to the srcdir.
 
 # CONFIG OPTIONS
 

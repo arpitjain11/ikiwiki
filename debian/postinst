@@ -10,5 +10,5 @@ if [ "$1" = configure ] && \
    dpkg --compare-versions "$2" lt "$firstcompat"; then
 	ikiwiki-mass-rebuild
 else
-	ikiwiki-mass-rebuild -refresh
+	ikiwiki-mass-rebuild -refresh -wrappers
 fi

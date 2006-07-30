@@ -34,16 +34,18 @@ sub setup_standard {
 		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$setup{exclude}/;
 	}
 
-	debug("generating wrappers..");
-	my @wrappers=@{$setup{wrappers}};
-	delete $setup{wrappers};
-	my %startconfig=(%config);
-	foreach my $wrapper (@wrappers) {
-		%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
-		checkconfig();
-		gen_wrapper();
+	if (! $config{refresh} || $config{wrappers}) {
+		debug("generating wrappers..");
+		my @wrappers=@{$setup{wrappers}};
+		delete $setup{wrappers};
+		my %startconfig=(%config);
+		foreach my $wrapper (@wrappers) {
+			%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
+			checkconfig();
+			gen_wrapper();
+		}
+		%config=(%startconfig);
 	}
-	%config=(%startconfig);
 	
 	foreach my $c (keys %setup) {
 		if (defined $setup{$c}) {
