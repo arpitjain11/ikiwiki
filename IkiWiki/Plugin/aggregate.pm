@@ -253,6 +253,7 @@ sub add_page (@) { #{{{
 
 		# assign it an unused page
 		my $page=$feed->{dir}."/".IkiWiki::titlepage($params{title});
+		$page=lc($page);
 		($page)=$page=~/$IkiWiki::config{wiki_file_regexp}/;
 		if (! defined $page || ! length $page) {
 			$page=$feed->{dir}."/item";
@@ -310,7 +311,7 @@ sub remove_feeds () { #{{{
 } #}}}
 
 sub pagefile ($) { #{{{
-	my $page=lc(shift);
+	my $page=shift;
 
 	return "$IkiWiki::config{srcdir}/$page.html";
 } #}}}
