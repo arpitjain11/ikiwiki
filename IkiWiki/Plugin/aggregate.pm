@@ -310,7 +310,7 @@ sub remove_feeds () { #{{{
 } #}}}
 
 sub pagefile ($) { #{{{
-	my $page=shift;
+	my $page=lc(shift);
 
 	return "$IkiWiki::config{srcdir}/$page.html";
 } #}}}
