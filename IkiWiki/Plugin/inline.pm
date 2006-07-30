@@ -83,7 +83,12 @@ sub preprocess_inline (@) { #{{{
 	);
 	
 	foreach my $page (@list) {
-		$template->param(pagelink => htmllink($params{page}, $params{page}, $page));
+		# Don't use htmllink because this way the title is separate
+		# and can be overridden by other plugins.
+		my $link=htmlpage(bestlink($params{page}, $page));
+		$link=abs2rel($link, dirname($params{page}));
+		$template->param(pageurl => $link);
+		$template->param(title => $page);
 		$template->param(content => get_inline_content($page, $params{page}))
 			if $params{archive} eq "no";
 		$template->param(ctime => displaytime($pagectime{$page}));
@@ -172,6 +177,7 @@ sub genrss ($@) { #{{{
 
 	$template->param(
 		title => $config{wikiname},
+		wikiname => $config{wikiname},
 		pageurl => $url,
 		items => \@items,
 	);
