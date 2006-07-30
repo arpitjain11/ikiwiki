@@ -257,7 +257,8 @@ sub add_page (@) { #{{{
 	# to avoid unneccessary rebuilding. The mtime from rss cannot be
 	# trusted; let's use a digest.
 	eval q{use Digest::MD5 'md5_hex'};
-	my $digest=md5_hex($params{content});
+	require Encode;
+	my $digest=md5_hex(Encode::encode_utf8($params{content}));
 	return unless ! exists $guid->{md5} || $guid->{md5} ne $digest;
 	$guid->{md5}=$digest;
 
