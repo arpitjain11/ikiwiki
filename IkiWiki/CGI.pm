@@ -114,7 +114,7 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "password", type => "password", required => 0);
 	$form->field(name => "confirm_password", type => "password", required => 0);
 	$form->field(name => "email", required => 0);
-	if ($q->param("do") ne "signin") {
+	if ($q->param("do") ne "signin" && !$form->submitted) {
 		$form->text("You need to log in first.");
 	}
 	
