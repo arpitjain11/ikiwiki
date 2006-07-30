@@ -116,7 +116,8 @@ sub loadstate () { #{{{
 			my $data={};
 			foreach my $i (split(/ /, $_)) {
 				my ($field, $val)=split(/=/, $i, 2);
-				if ($field eq "name" || $field eq "message") {
+				if ($field eq "name" || $field eq "feed" ||
+				    $field eq "guid" || $field eq "message") {
 					$data->{$field}=IkiWiki::pagetitle($val);
 				}
 				elsif ($field eq "tag") {
@@ -159,7 +160,8 @@ sub savestate () { #{{{
 
 		my @line;
 		foreach my $field (keys %$data) {
-			if ($field eq "name" || $field eq "message") {
+			if ($field eq "name" || $field eq "feed" ||
+			    $field eq "guid" || $field eq "message") {
 				push @line, "$field=".IkiWiki::titlepage($data->{$field});
 			}
 			elsif ($field eq "tags") {
