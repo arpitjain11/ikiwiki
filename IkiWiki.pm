@@ -395,6 +395,8 @@ sub loadindex () { #{{{
 } #}}}
 
 sub saveindex () { #{{{
+	run_hooks(savestate => sub { shift->() });
+
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
 	}
