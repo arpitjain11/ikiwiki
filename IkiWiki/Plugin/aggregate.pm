@@ -204,7 +204,7 @@ FEED:	foreach my $feed (values %feeds) {
 			foreach my $entry ($f->entries) {
 				add_page(
 					feed => $feed,
-					title => decode_entities($entry->title),
+					title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 					link => $entry->link,
 					content => $entry->content->body,
 					guid => defined $entry->id ? $entry->id : time."_".$feed->name,
@@ -220,7 +220,7 @@ FEED:	foreach my $feed (values %feeds) {
 
 sub add_page (@) { #{{{
 	my %params=@_;
-
+	
 	my $feed=$params{feed};
 	my $guid={};
 	my $mtime;
