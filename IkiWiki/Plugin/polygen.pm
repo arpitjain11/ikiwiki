@@ -27,6 +27,9 @@ sub preprocess (@) { #{{{
 	$symbol =~ s/[^A-Za-z0-9]//g if defined $symbol;
 
 	my $grmfile = '/usr/share/polygen/ita/polygen.grm';
+	if (! -d '/usr/share/polygen') {
+		return "[[polygen not installed]]";
+	}
 	find({wanted => sub {
 			if (substr($File::Find::name, -length($grammar)) eq $grammar) {
 				$grmfile = IkiWiki::possibly_foolish_untaint($File::Find::name);
