@@ -11,8 +11,17 @@ ikiwiki (1.13) UNRELEASED; urgency=low
     --wrappers to do that.
   * Add %IkiWiki::forcerebuild to provide a way for plugins like aggregate
     to update pages that haven't changed on disk.
+  * Change meta tags to use html entity-escaped text for values, so that
+    quotes and such can be represented in title tags.
+  * Depend and build-depend on HTML::Parser for HTML::Entities which is used
+    for the above.
+  * Make --rebuild also cause --aggregate to re-download and write aggregated
+    pages.
+  * Avoid outputting duplicate meta info.
+  * Include title metadata on aggregated posts for capitalised and un-munged
+    titles.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 20:10:51 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 30 Jul 2006 18:17:28 -0400
 
 ikiwiki (1.12) unstable; urgency=low
 

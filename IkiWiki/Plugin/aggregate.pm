@@ -188,7 +188,8 @@ sub aggregate () { #{{{
 	die $@ if $@;
 
 	foreach my $feed (values %feeds) {
-		next unless time - $feed->{lastupdate} >= $feed->{updateinterval};
+		next unless $IkiWiki::config{rebuild} || 
+			time - $feed->{lastupdate} >= $feed->{updateinterval};
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
 		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
@@ -277,7 +278,7 @@ sub add_page (@) { #{{{
 	eval q{use Digest::MD5 'md5_hex'};
 	require Encode;
 	my $digest=md5_hex(Encode::encode_utf8($params{content}));
-	return unless ! exists $guid->{md5} || $guid->{md5} ne $digest;
+	return unless ! exists $guid->{md5} || $guid->{md5} ne $digest || $IkiWiki::config{rebuild};
 	$guid->{md5}=$digest;
 
 	# Create the page.
@@ -285,6 +286,8 @@ sub add_page (@) { #{{{
 	my $content=$params{content};
 	$params{content}=~s/(?<!\\)\[\[/\\\[\[/g; # escape accidental wikilinks
 	                                          # and preprocessor stuff
+	$template->param(title => $params{title})
+		if defined $params{title} && length($params{title});
 	$template->param(content => $params{content});
 	$template->param(url => $feed->{url});
 	$template->param(name => $feed->{name});

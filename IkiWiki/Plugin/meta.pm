@@ -12,8 +12,18 @@ my %title;
 sub import { #{{{
 	IkiWiki::hook(type => "preprocess", id => "meta", 
 		call => \&preprocess);
+	IkiWiki::hook(type => "filter", id => "meta", 
+		call => \&filter);
 	IkiWiki::hook(type => "pagetemplate", id => "meta", 
 		call => \&pagetemplate);
+} # }}}
+
+sub filter (@) { #{{{
+	my %params=@_;
+	
+	$meta{$params{page}}='';
+
+	return $params{content};
 } # }}}
 
 sub preprocess (@) { #{{{
@@ -28,13 +38,15 @@ sub preprocess (@) { #{{{
 	delete $params{page};
 	delete $params{destpage};
 
-	eval q{use CGI 'escapeHTML'};
+	eval q{use HTML::Entities};
+	# Always dencode, even if encoding later, since it might not be
+	# fully encoded.
+	$value=decode_entities($value);
 
 	if ($key eq 'link') {
 		if (%params) {
-			$meta{$page}='' unless exists $meta{$page};
-			$meta{$page}.="<link href=\"".escapeHTML($value)."\" ".
-				join(" ", map { escapeHTML("$_=\"$params{$_}\"") } keys %params).
+			$meta{$page}.="<link href=\"".encode_entities($value)."\" ".
+				join(" ", map { encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\"" } keys %params).
 				" />\n";
 		}
 		else {
@@ -43,11 +55,11 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'title') {
-		$title{$page}=escapeHTML($value);
+		$title{$page}=$value;
 	}
 	else {
-		$meta{$page}='' unless exists $meta{$page};
-		$meta{$page}.="<meta name=\"".escapeHTML($key)."\" content=\"".escapeHTML($value)."\" />\n";
+		$meta{$page}.="<meta name=\"".encode_entities($key).
+			"\" content=\"".encode_entities($value)."\" />\n";
 	}
 
 	return "";
