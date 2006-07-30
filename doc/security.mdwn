@@ -18,6 +18,14 @@ Anyone with direct commit access can forge "web commit from foo" and
 make it appear on [[RecentChanges]] like foo committed. One way to avoid
 this would be to limit web commits to those done by a certian user.
 
+## XML::Parser
+
+XML::Parser is used by the aggregation plugin, and has some security holes
+that are still open in Debian unstable as of this writing. #378411 does not
+seem to affect our use, since the data is not encoded as utf-8 at that
+point. #378412 could affect us, although it doesn't seem very exploitable.
+It has a simple fix, which should be NMUed or something..
+
 ## other stuff to look at
 
 I need to audit the git backend a bit, and have been meaning to
