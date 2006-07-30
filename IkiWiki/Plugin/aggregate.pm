@@ -107,6 +107,8 @@ sub delete (@) { #{{{
 } #}}}
 
 sub loadstate () { #{{{
+	eval q{use HTML::Entities};
+	die $@ if $@;
 	if (-e "$IkiWiki::config{wikistatedir}/aggregate") {
 		open (IN, "$IkiWiki::config{wikistatedir}/aggregate" ||
 			die "$IkiWiki::config{wikistatedir}/aggregate: $!");
@@ -118,7 +120,7 @@ sub loadstate () { #{{{
 				my ($field, $val)=split(/=/, $i, 2);
 				if ($field eq "name" || $field eq "feed" ||
 				    $field eq "guid" || $field eq "message") {
-					$data->{$field}=IkiWiki::pagetitle($val);
+					$data->{$field}=decode_entities($val, " \t\n");
 				}
 				elsif ($field eq "tag") {
 					push @{$data->{tags}}, $val;
@@ -141,6 +143,8 @@ sub loadstate () { #{{{
 } #}}}
 
 sub savestate () { #{{{
+	eval q{use HTML::Entities};
+	die $@ if $@;
 	open (OUT, ">$IkiWiki::config{wikistatedir}/aggregate" ||
 		die "$IkiWiki::config{wikistatedir}/aggregate: $!");
 	foreach my $data (values %feeds, values %guids) {
@@ -162,7 +166,7 @@ sub savestate () { #{{{
 		foreach my $field (keys %$data) {
 			if ($field eq "name" || $field eq "feed" ||
 			    $field eq "guid" || $field eq "message") {
-				push @line, "$field=".IkiWiki::titlepage($data->{$field});
+				push @line, "$field=".encode_entities($data->{$field}, " \t\n");
 			}
 			elsif ($field eq "tags") {
 				push @line, "tag=$_" foreach @{$data->{tags}};
