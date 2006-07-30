@@ -74,7 +74,7 @@ sub preprocess (@) { #{{{
 	$dir=~s/^\/+//;
 	($dir)=$dir=~/$IkiWiki::config{wiki_file_regexp}/;
 	$feed->{dir}=$dir;
-	$feed->{feedurl}=defined $params{feedurl} ? $params{feedurl} : $params{url};
+	$feed->{feedurl}=defined $params{feedurl} ? $params{feedurl} : "";
 	$feed->{updateinterval}=defined $params{updateinterval} ? $params{updateinterval} * 60 : 15 * 60;
 	$feed->{expireage}=defined $params{expireage} ? $params{expireage} : 0;
 	$feed->{expirecount}=defined $params{expirecount} ? $params{expirecount} : 0;
@@ -180,7 +180,7 @@ sub aggregate () { #{{{
 	eval q{use HTML::Entities};
 	die $@ if $@;
 
-FEED:	foreach my $feed (values %feeds) {
+	foreach my $feed (values %feeds) {
 		next unless time - $feed->{lastupdate} >= $feed->{updateinterval};
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
@@ -188,36 +188,38 @@ FEED:	foreach my $feed (values %feeds) {
 
 		IkiWiki::debug("checking feed ".$feed->{name}." ...");
 
-		my @urls=XML::Feed->find_feeds($feed->{feedurl});
-		if (! @urls) {
-			$feed->{message}="could not find feed at ".$feed->{feedurl};
+		if (! length $feed->{feedurl}) {
+			my @urls=XML::Feed->find_feeds($feed->{url});
+			if (! @urls) {
+				$feed->{message}="could not find feed at ".$feed->{feedurl};
+				IkiWiki::debug($feed->{message});
+				next;
+			}
+			$feed->{feedurl}=pop @urls;
+		}
+		my $f=eval{XML::Feed->parse(URI->new($feed->{feedurl}))};
+		if ($@) {
+			$feed->{message}="feed crashed XML::Feed! $@";
 			IkiWiki::debug($feed->{message});
-			next FEED;
+			next;
 		}
-		foreach my $url (@urls) {
-			my $f=eval{XML::Feed->parse(URI->new($url))};
-			if ($@) {
-				$feed->{message}="feed crashed XML::Feed! $@";
-				IkiWiki::debug($feed->{message});
-				next FEED;
-			}
-			if (! $f) {
-				$feed->{message}=XML::Feed->errstr;
-				IkiWiki::debug($feed->{message});
-				next FEED;
-			}
+		if (! $f) {
+			$feed->{message}=XML::Feed->errstr;
+			IkiWiki::debug($feed->{message});
+			next;
+		}
 
-			foreach my $entry ($f->entries) {
-				add_page(
-					feed => $feed,
-					title => defined $entry->title ? decode_entities($entry->title) : "untitled",
-					link => $entry->link,
-					content => $entry->content->body,
-					guid => defined $entry->id ? $entry->id : time."_".$feed->name,
-					ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
-				);
-			}
+		foreach my $entry ($f->entries) {
+			add_page(
+				feed => $feed,
+				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
+				link => $entry->link,
+				content => $entry->content->body,
+				guid => defined $entry->id ? $entry->id : time."_".$feed->name,
+				ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
+			);
 		}
+
 		$feed->{message}="processed ok";
 	}
 
