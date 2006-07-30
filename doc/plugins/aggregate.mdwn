@@ -33,7 +33,7 @@ directive:
 * `dir` - The directory in the wiki where pages should be saved. Optional,
   if not specified, the directory is based on the name of the feed.
 * `feedurl` - The url to the feed. Optional, if it's not specified ikiwiki
-  will look for feeds on the `blogurl`. RSS and atom feeds are supported.
+  will look for feeds on the `url`. RSS and atom feeds are supported.
 * `updateinterval` - How often to check for new posts, in minutes. Default
   is 15 minutes.
 * `expireage` - Expire old items from this blog if they are older than
