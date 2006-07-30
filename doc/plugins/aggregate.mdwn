@@ -1,7 +1,7 @@
 This plugin allows content from other blogs to be aggregated into the wiki.
 Aggregate a blog as follows:
 
-	\[[aggregate name="example blog" feedurl="http://example.com/index.rss" url="http://example.com/" updateinterval="15" dir="example"]
+	\[[aggregate name="example blog" feedurl="http://example.com/index.rss" url="http://example.com/" updateinterval="15"]
 
 That example aggregates posts from the expecified RSS feed, updating no
 more frequently than once every 15 minutes, and puts a page per post under
@@ -30,7 +30,8 @@ directive:
   Required.
 * `url` - The url to the web page for the blog that's being aggregated.
   Required.
-* `dir` - The directory in the wiki where pages should be saved. Required.
+* `dir` - The directory in the wiki where pages should be saved. Optional,
+  if not specified, the directory is based on the name of the feed.
 * `feedurl` - The url to the feed. Optional, if it's not specified ikiwiki
   will look for feeds on the `blogurl`. RSS and atom feeds are supported.
 * `updateinterval` - How often to check for new posts, in minutes. Default

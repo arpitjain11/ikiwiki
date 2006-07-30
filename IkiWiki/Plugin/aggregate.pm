@@ -53,7 +53,7 @@ sub filter (@) { #{{{
 sub preprocess (@) { #{{{
 	my %params=@_;
 
-	foreach my $required (qw{name url dir}) {
+	foreach my $required (qw{name url}) {
 		if (! exists $params{$required}) {
 			return "[[aggregate plugin missing $required parameter]]";
 		}
@@ -70,10 +70,12 @@ sub preprocess (@) { #{{{
 	$feed->{name}=$name;
 	$feed->{sourcepage}=$params{page};
 	$feed->{url}=$params{url};
-	($feed->{dir})=$params{dir}=~/$IkiWiki::config{wiki_file_regexp}/;
-	$feed->{dir}=~s/^\/+//;
+	my $dir=exists $params{dir} ? $params{dir} : IkiWiki::titlepage($params{name});
+	$dir=~s/^\/+//;
+	($dir)=$dir=~/$IkiWiki::config{wiki_file_regexp}/;
+	$feed->{dir}=$dir;
 	$feed->{feedurl}=defined $params{feedurl} ? $params{feedurl} : $params{url};
-	$feed->{updateinterval}=defined $params{updateinterval} ? $params{updateinterval} : 15;
+	$feed->{updateinterval}=defined $params{updateinterval} ? $params{updateinterval} * 60 : 15 * 60;
 	$feed->{expireage}=defined $params{expireage} ? $params{expireage} : 0;
 	$feed->{expirecount}=defined $params{expirecount} ? $params{expirecount} : 0;
 	delete $feed->{remove};
@@ -179,7 +181,7 @@ sub aggregate () { #{{{
 	die $@ if $@;
 
 FEED:	foreach my $feed (values %feeds) {
-		# TODO: check updateinterval
+		next unless time - $feed->{lastupdate} >= $feed->{updateinterval};
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
 		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
@@ -269,7 +271,7 @@ sub add_page (@) { #{{{
 	$template->param(name => $feed->{name});
 	$template->param(link => $params{link}) if defined $params{link};
 	if (ref $feed->{tags}) {
-		$template->param(tags => map { tag => $_ }, @{$feed->{tags}});
+		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
 	}
 	IkiWiki::writefile($guid->{page}.".html", $IkiWiki::config{srcdir},
 		$template->output);
