@@ -93,7 +93,7 @@ sub preprocess (@) { #{{{
 
 	return "<a href=\"".$feed->{url}."\">".$feed->{name}."</a>: ".
 	       "<i>".$feed->{message}."</i> (".$feed->{numposts}.
-	       " stored posts; ".$feed->{newposts}." new)";
+	       " stored posts; ".$feed->{newposts}." new)<br />";
 } # }}}
 
 sub delete (@) { #{{{
@@ -192,9 +192,15 @@ FEED:	foreach my $feed (values %feeds) {
 		if (! @urls) {
 			$feed->{message}="could not find feed at ".$feed->{feedurl};
 			IkiWiki::debug($feed->{message});
+			next FEED;
 		}
 		foreach my $url (@urls) {
-			my $f=XML::Feed->parse(URI->new($url));
+			my $f=eval{XML::Feed->parse(URI->new($url))};
+			if ($@) {
+				$feed->{message}="feed crashed XML::Feed! $@";
+				IkiWiki::debug($feed->{message});
+				next FEED;
+			}
 			if (! $f) {
 				$feed->{message}=XML::Feed->errstr;
 				IkiWiki::debug($feed->{message});
