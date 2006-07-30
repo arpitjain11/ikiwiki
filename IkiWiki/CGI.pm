@@ -567,11 +567,7 @@ sub cgi () { #{{{
 	
 	my $q=CGI->new;
 	
-	if (exists $hooks{cgi}) {
-		foreach my $id (keys %{$hooks{cgi}}) {
-			$hooks{cgi}{$id}{call}->($q);
-		}
-	}
+	run_hooks(cgi => sub { shift->($q) });
 	
 	my $do=$q->param('do');
 	if (! defined $do || ! length $do) {

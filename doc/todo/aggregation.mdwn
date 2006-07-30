@@ -15,3 +15,10 @@ poor-man's news aggregator.
   better would be to use preprocessor directives in a wiki page, probably
   the same page that inlines all the pages together.
 * Where to store when a feed was last pulled?
+
+So I need:
+
+* A way to store info from the preprocessor directives about what pages
+  to pull and expiry.
+* A way to store info on last pull time, guids, etc.
+* Switch for a mode that a) pulls b) expires old c) rebuilds wiki (for cron)

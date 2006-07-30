@@ -31,11 +31,9 @@ sub htmlize ($$) { #{{{
 		error("htmlization of $type not supported");
 	}
 
-	if (exists $hooks{sanitize}) {
-		foreach my $id (keys %{$hooks{sanitize}}) {
-			$content=$hooks{sanitize}{$id}{call}->($content);
-		}
-	}
+	run_hooks(sanitize => sub {
+		$content=shift->($content);
+	});
 	
 	return $content;
 } #}}}
@@ -206,15 +204,9 @@ sub genpage ($$$) { #{{{
 		styleurl => styleurl($page),
 	);
 
-	if (exists $hooks{pagetemplate}) {
-		foreach my $id (keys %{$hooks{pagetemplate}}) {
-			$hooks{pagetemplate}{$id}{call}->(
-				page => $page,
-				destpage => $page,
-				template => $template,
-			);
-		}
-	}
+	run_hooks(pagetemplate => sub {
+		shift->(page => $page, destpage => $page, template => $template);
+	});
 	
 	return $template->output;
 } #}}}
@@ -268,14 +260,9 @@ sub filter ($$) {
 	my $page=shift;
 	my $content=shift;
 
-	if (exists $hooks{filter}) {
-		foreach my $id (keys %{$hooks{filter}}) {
-			$content=$hooks{filter}{$id}{call}->(
-				page => $page,
-				content => $content
-			);
-		}
-	}
+	run_hooks(filter => sub {
+		$content=shift->(page => $page, content => $content);
+	});
 
 	return $content;
 }
@@ -496,15 +483,11 @@ FILE:		foreach my $file (@files) {
 		}
 	}
 
-	if (@del && exists $hooks{delete}) {
-		foreach my $id (keys %{$hooks{delete}}) {
-			$hooks{delete}{$id}{call}->(@del);
-		}
+	if (@del) {
+		run_hooks(delete => sub { shift->(@del) });
 	}
-	if (%rendered && exists $hooks{change}) {
-		foreach my $id (keys %{$hooks{change}}) {
-			$hooks{change}{$id}{call}->(keys %rendered);
-		}
+	if (%rendered) {
+		run_hooks(change => sub { shift->(keys %rendered) });
 	}
 } #}}}
 

@@ -58,7 +58,7 @@ sub preprocess_inline (@) { #{{{
 
 	my $ret="";
 	
-	if (exists $params{rootpage}) {
+	if (exists $params{rootpage} && $config{cgiurl}) {
 		# Add a blog post form, with a rss link button.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
@@ -88,15 +88,10 @@ sub preprocess_inline (@) { #{{{
 			if $params{archive} eq "no";
 		$template->param(ctime => displaytime($pagectime{$page}));
 
-		if (exists $hooks{pagetemplate}) {
-			foreach my $id (keys %{$hooks{pagetemplate}}) {
-				$hooks{pagetemplate}{$id}{call}->(
-					page => $page,
-					destpage => $params{page},
-					template => $template,
-				);
-			}
-		}
+		run_hooks(pagetemplate => sub {
+			shift->(page => $page, destpage => $params{page},
+				template => $template,);
+		});
 
 		$ret.=$template->output;
 		$template->clear_params;
@@ -181,13 +176,10 @@ sub genrss ($@) { #{{{
 		items => \@items,
 	);
 	
-	foreach my $id (keys %{$hooks{pagetemplate}}) {
-		$hooks{pagetemplate}{$id}{call}->(
-			page => $page,
-			destpage => $page,
-			template => $template,
-		);
-	}
+	run_hooks(pagetemplate => sub {
+		shift->(page => $page, destpage => $page,
+			template => $template);
+	});
 	
 	return $template->output;
 } #}}}

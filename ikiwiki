@@ -68,11 +68,7 @@ sub getconfig () { #{{{
 
 		if (! $config{setup}) {
 			loadplugins();
-			if (exists $hooks{getopt}) {
-				foreach my $id (keys %{$hooks{getopt}}) {
-		                        $hooks{getopt}{$id}{call}->();
-				}
-			}
+			run_hooks(getopt => sub { shift->() });
 			if (grep /^-/, @ARGV) {
 				print STDERR "Unknown option: $_\n"
 					foreach grep /^-/, @ARGV;

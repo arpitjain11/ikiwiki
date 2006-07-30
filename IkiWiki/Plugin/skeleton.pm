@@ -29,6 +29,8 @@ sub import { #{{{
 		call => \&change);
 	IkiWiki::hook(type => "cgi", id => "skeleton", 
 		call => \&cgi);
+	IkiWiki::hook(type => "cgi", id => "savestate", 
+		call => \&savestate);
 } # }}}
 
 sub getopt () { #{{{
@@ -93,6 +95,10 @@ sub cgi ($) { #{{{
 	my $cgi=shift;
 
 	IkiWiki::debug("skeleton plugin running in cgi");
+} #}}}
+
+sub savestate () { #{{{
+	IkiWiki::debug("skeleton plugin running in savestate");
 } #}}}
 
 1

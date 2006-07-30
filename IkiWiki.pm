@@ -93,11 +93,7 @@ sub checkconfig () { #{{{
 		require IkiWiki::Rcs::Stub;
 	}
 
-	if (exists $hooks{checkconfig}) {
-                foreach my $id (keys %{$hooks{checkconfig}}) {
-                        $hooks{checkconfig}{$id}{call}->();
-                }
-        }
+	run_hooks(checkconfig => sub { shift->() });
 } #}}}
 
 sub loadplugins () { #{{{
@@ -502,5 +498,18 @@ sub hook (@) { # {{{
 	
 	$hooks{$param{type}}{$param{id}}=\%param;
 } # }}}
+
+sub run_hooks ($$) { # {{{
+	# Calls the given sub for each hook of the given type,
+	# passing it the hook function to call.
+	my $type=shift;
+	my $sub=shift;
+
+	if (exists $hooks{$type}) {
+		foreach my $id (keys %{$hooks{$type}}) {
+			$sub->($hooks{$type}{$id}{call});
+		}
+	}
+} #}}}
 
 1

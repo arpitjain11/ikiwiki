@@ -157,6 +157,14 @@ called in turn, and passed a CGI object. The hook should examine the
 parameters, and if it will handle this CGI request, output a page and
 terminate the program.
 
+## savestate
+
+	IkiWiki::hook(type => "savestate", id => "foo", call => \&savestate);
+
+This hook is called wheneven ikiwiki normally saves its state, just before
+the state is saved. The function can save other state, modify values before
+they're saved, etc.
+
 # Wiki configuration
 
 A plugin can access the wiki's configuration via the `%IkiWiki::config`

@@ -1,3 +1,13 @@
+ikiwiki (1.13) UNRELEASED; urgency=low
+
+  * Add a run_hooks function for the common task of running all hooks of a
+    given type.
+  * Add a savestate hook.
+  * Don't put blog post forms on pages if there's no cgiurl set.
+  * Reformat front page.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 20:10:51 -0400
+
 ikiwiki (1.12) unstable; urgency=low
 
   "Viva l'Italia!"
