@@ -83,6 +83,7 @@ sub preprocess (@) { #{{{
 	$feed->{numposts}=0 unless defined $feed->{numposts};
 	$feed->{newposts}=0 unless defined $feed->{newposts};
 	$feed->{message}="new feed" unless defined $feed->{message};
+	$feed->{tags}=[];
 	while (@_) {
 		my $key=shift;
 		my $value=shift;
