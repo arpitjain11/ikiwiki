@@ -254,14 +254,15 @@ sub add_page (@) { #{{{
 
 		# assign it an unused page
 		my $page=IkiWiki::titlepage($params{title});
-		$page=~s!([/])!"__".ord($1)."__"!eg; # escape slashes in title
+		# escape slashes and periods in title so it doesn't specify
+		# directory name or trigger ".." disallowing code.
+		$page=~s!([/.])!"__".ord($1)."__"!eg;
 		$page=$feed->{dir}."/".$page;
 		$page=lc($page);
 		($page)=$page=~/$IkiWiki::config{wiki_file_regexp}/;
 		if (! defined $page || ! length $page) {
 			$page=$feed->{dir}."/item";
 		}
-		$page=~s/\.\.//g; # avoid ".." directory tricks
 		my $c="";
 		while (exists $IkiWiki::pagesources{$page.$c} ||
 		       -e pagefile($page.$c)) {
