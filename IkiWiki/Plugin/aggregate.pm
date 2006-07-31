@@ -70,7 +70,7 @@ sub preprocess (@) { #{{{
 	$feed->{name}=$name;
 	$feed->{sourcepage}=$params{page};
 	$feed->{url}=$params{url};
-	my $dir=exists $params{dir} ? $params{dir} : "feed/".IkiWiki::titlepage($params{name});
+	my $dir=exists $params{dir} ? $params{dir} : $params{page}."/".IkiWiki::titlepage($params{name});
 	$dir=~s/^\/+//;
 	($dir)=$dir=~/$IkiWiki::config{wiki_file_regexp}/;
 	$feed->{dir}=$dir;
