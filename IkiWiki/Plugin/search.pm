@@ -56,7 +56,7 @@ sub change (@) { #{{{
 	IkiWiki::debug("updating hyperestraier search index");
 	IkiWiki::estcmd("gather -cm -bc -cl -sd",
 		map {
-			$IkiWiki::config{destdir}."/".$IkiWiki::renderedfiles{IkiWiki::pagename($_)}
+			Encode::encode_utf8($IkiWiki::config{destdir}."/".$IkiWiki::renderedfiles{IkiWiki::pagename($_)})
 		} @_
 	);
 	IkiWiki::estcfg();
