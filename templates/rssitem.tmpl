@@ -1,0 +1,12 @@
+<item>
+	<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	<guid><TMPL_VAR URL></guid>
+	<link><TMPL_VAR URL></link>
+	<TMPL_IF NAME="CATEGORIES">
+	<TMPL_LOOP NAME="CATEGORIES">
+	<category><TMPL_VAR NAME=CATEGORY></category>
+	</TMPL_LOOP>
+	</TMPL_IF>
+	<pubDate><TMPL_VAR PUBDATE></pubDate>
+	<description><![CDATA[<TMPL_VAR CONTENT>]]></description>
+</item>

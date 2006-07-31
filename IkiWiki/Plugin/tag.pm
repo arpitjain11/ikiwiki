@@ -65,19 +65,10 @@ sub pagetemplate (@) { #{{{
 		}, @{$tags{$page}}
 	]) if exists $tags{$page} && @{$tags{$page}} && $template->query(name => "tags");
 
-	if ($template->query(name => "items")) {
-		# It's an rss template. Modify each item in the feed,
-		# adding any categories based on the page for that item.
-		foreach my $item (@{$template->param("items")}) {
-			my $p=$item->{page};
-			if (exists $tags{$p} && @{$tags{$p}}) {
-				$item->{categories}=[];
-				foreach my $tag (@{$tags{$p}}) {
-					push @{$item->{categories}}, {
-						category => $tag,
-					};
-				}
-			}
+	if ($template->query(name => "pubdate")) {
+		# It's an rss template. Add any categories.
+		if (exists $tags{$page} && @{$tags{$page}}) {
+			$template->param(categories => [map { category => $_ }, @{$tags{$page}}]);
 		}
 	}
 } # }}}

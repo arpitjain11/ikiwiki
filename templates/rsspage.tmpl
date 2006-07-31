@@ -1,22 +1,9 @@
 <?xml version="1.0"?>
 <rss version="2.0">
-	<channel>
-		<title><TMPL_VAR TITLE ESCAPE=HTML></title>
-		<link><TMPL_VAR PAGEURL></link>
-		<description><TMPL_VAR WIKINAME ESCAPE=HTML></description>
-		<TMPL_LOOP NAME="ITEMS">
-		<item>
-			<title><TMPL_VAR ITEMTITLE ESCAPE=HTML></title>
-			<guid><TMPL_VAR ITEMURL></guid>
-			<link><TMPL_VAR ITEMURL></link>
-			<TMPL_IF NAME="CATEGORIES">
-			<TMPL_LOOP NAME="CATEGORIES">
-			<category><TMPL_VAR NAME=CATEGORY></category>
-			</TMPL_LOOP>
-			</TMPL_IF>
-			<pubDate><TMPL_VAR ITEMPUBDATE></pubDate>
-			<description><![CDATA[<TMPL_VAR ITEMCONTENT>]]></description>
-		</item>
-		</TMPL_LOOP>
-	</channel>
+<channel>
+<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+<link><TMPL_VAR PAGEURL></link>
+<description><TMPL_VAR WIKINAME ESCAPE=HTML></description>
+<TMPL_VAR CONTENT>
+</channel>
 </rss>

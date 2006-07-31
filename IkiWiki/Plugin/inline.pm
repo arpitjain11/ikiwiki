@@ -88,7 +88,7 @@ sub preprocess_inline (@) { #{{{
 		my $link=htmlpage(bestlink($params{page}, $page));
 		$link=abs2rel($link, dirname($params{page}));
 		$template->param(pageurl => $link);
-		$template->param(title => $page);
+		$template->param(title => pagetitle(basename($page)));
 		$template->param(content => get_inline_content($page, $params{page}))
 			if $params{archive} eq "no";
 		$template->param(ctime => displaytime($pagectime{$page}));
@@ -161,25 +161,32 @@ sub genrss ($@) { #{{{
 	
 	my $url="$config{url}/".htmlpage($page);
 	
-	my $template=template("rsspage.tmpl", blind_cache => 1,
+	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1, 
 		die_on_bad_params => 0);
-	
-	my @items;
+	my $content="";
 	foreach my $p (@pages) {
-		push @items, {
-			itemtitle => pagetitle(basename($p)),
-			itemurl => "$config{url}/$renderedfiles{$p}",
-			itempubdate => date_822($pagectime{$p}),
-			itemcontent => absolute_urls(get_inline_content($p, $page), $url),
-			page => $p, # used by category adding code in tag plugin
-		} if exists $renderedfiles{$p};
+		next unless exists $renderedfiles{$p};
+
+		$itemtemplate->param(
+			title => pagetitle(basename($p)),
+			url => "$config{url}/$renderedfiles{$p}",
+			pubdate => date_822($pagectime{$p}),
+			content => absolute_urls(get_inline_content($p, $page), $url),
+		);
+		run_hooks(pagetemplate => sub {
+			shift->(page => $p, destpage => $page,
+				template => $itemtemplate);
+		});
+		$content.=$itemtemplate->output;
+		$itemtemplate->clear_params;
 	}
 
+	my $template=template("rsspage.tmpl", blind_cache => 1);
 	$template->param(
 		title => $config{wikiname},
 		wikiname => $config{wikiname},
 		pageurl => $url,
-		items => \@items,
+		content => $content,
 	);
 	
 	run_hooks(pagetemplate => sub {
