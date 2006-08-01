@@ -71,7 +71,7 @@ sub preprocess_inline (@) { #{{{
 		}
 		$ret.=$formtemplate->output;
 	}
-	elsif ($config{rss} && $params{rss} eq "yes")) {
+	elsif ($config{rss} && $params{rss} eq "yes") {
 		# Add a rss link button.
 		my $linktemplate=template("rsslink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => rsspage(basename($params{page})));
