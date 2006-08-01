@@ -6,7 +6,6 @@ ikiwiki (1.13) UNRELEASED; urgency=low
     given type.
   * Add a savestate hook.
   * Don't put blog post forms on pages if there's no cgiurl set.
-  * Reformat front page.
   * --setup --refresh no longer rebuilds wrappers. Use --setup --refresh
     --wrappers to do that.
   * Add %IkiWiki::forcerebuild to provide a way for plugins like aggregate
@@ -23,8 +22,10 @@ ikiwiki (1.13) UNRELEASED; urgency=low
   * Title metadata of inlined pages now shows up in blogs and rss feeds.
   * Fix issue with unicode filenames and updating the hyper estradier search
     index. (Aka Please Please Please, let that be the last one.)
+  * Patch from Roland Mas to support an rss=no parameter to inline directives.
+    Closes: #380743
 
- -- Joey Hess <joeyh@debian.org>  Sun, 30 Jul 2006 21:18:16 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue,  1 Aug 2006 16:00:58 -0400
 
 ikiwiki (1.12) unstable; urgency=low
 
