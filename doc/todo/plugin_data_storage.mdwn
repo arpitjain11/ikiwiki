@@ -36,7 +36,9 @@ and it is passed/returns a big hash of pages and the values for each page.
 
 It may also be better to just punt on lists, and require plugins that need
 even lists to encode them. Especially since in many cases, `join(" ", @list)`
-will do.
+will do. Er hmm, if I do that though, I'm actually back to a big global
+%page_data that plugins can just toss data into, arn't I? So maybe that's
+%the right approach after all, hmm..
 
 Note that for the aggregate plugin to use this, it will need some changes:
 
