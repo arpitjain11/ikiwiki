@@ -586,14 +586,7 @@ sub match_link ($$) { #{{{
 } #}}}
 
 sub match_backlink ($$) { #{{{
-	my $page=shift;
-	my $linkto=shift;
-
-	my $links = $links{$linkto} or return undef;
-	foreach my $p (@$links) {
-		return 1 if lc $p eq $page;
-	}
-	return 0;
+	match_link(reverse @_);
 } #}}}
 
 sub match_creation_day ($$) { #{{{
