@@ -38,7 +38,8 @@ It may also be better to just punt on lists, and require plugins that need
 even lists to encode them. Especially since in many cases, `join(" ", @list)`
 will do. Er hmm, if I do that though, I'm actually back to a big global
 %page_data that plugins can just toss data into, arn't I? So maybe that's
-%the right approach after all, hmm..
+%the right approach after all, hmm.. Except that needing to decode/encode list
+data all the time when using it would quite suck, so no, let's not do that.
 
 Note that for the aggregate plugin to use this, it will need some changes:
 
