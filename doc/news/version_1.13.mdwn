@@ -1,0 +1,38 @@
+ikiwiki 1.13 released with these changes:
+
+   * ikiwiki can now download and aggregate feeds with its new aggregate
+     plugin, so it's possible to implement a Planet using ikiwiki!
+   * Add a run\_hooks function for the common task of running all hooks of a
+     given type.
+   * Add a savestate hook.
+   * Don't put blog post forms on pages if there's no cgiurl set.
+   * --setup --refresh no longer rebuilds wrappers. Use --setup --refresh
+     --wrappers to do that.
+   * Add %IkiWiki::forcerebuild to provide a way for plugins like aggregate
+     to update pages that haven't changed on disk.
+   * Change meta tags to use html entity-escaped text for values, so that
+     quotes and such can be represented in title tags.
+   * Depend and build-depend on HTML::Parser for HTML::Entities which is used
+     for the above.
+   * Make --rebuild also cause --aggregate to re-download and write aggregated
+     pages.
+   * Avoid outputting duplicate meta info.
+   * Include title metadata on aggregated posts for capitalised and un-munged
+     titles.
+   * Title metadata of inlined pages now shows up in blogs and rss feeds.
+   * Fix issue with unicode filenames and updating the hyper estradier search
+     index. (Aka Please Please Please, let that be the last one.)
+   * Patch from Roland Mas to support an rss=no parameter to inline directives.
+     Closes: #[380743](http://bugs.debian.org/380743)
+   * Renamed GlobLists to PageSpecs.
+   * PageSpecs can now include nested parens, "and", and "or". This remains
+     backwards compatible to the old GlobList format. It's implemented by
+     treating the GlobList as a very limited microlanguage that is transformed
+     to perl code that does the matching.
+   * The old GlobList format is deprecated, and I encourage users to switch to
+     using the new PageSpec format. Compatability with the old format will be
+     removed at some point, possibly by 2.0.
+   * Wiki rebuild needed on upgrade to this version due to PageSpec change.
+   * Add support for creation\_month and creation\_year to PageSpec.
+     Closes: #[380680](http://bugs.debian.org/380680)
+   * Changes to index file encoding.
