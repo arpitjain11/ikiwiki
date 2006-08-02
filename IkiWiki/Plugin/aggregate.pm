@@ -5,6 +5,7 @@ package IkiWiki::Plugin::aggregate;
 use warnings;
 use strict;
 use IkiWiki;
+use HTML::Entities;
 
 my %feeds;
 my %guids;
