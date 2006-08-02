@@ -586,7 +586,7 @@ sub match_link ($$) { #{{{
 } #}}}
 
 sub match_backlink ($$) { #{{{
-	match_link(reverse @_);
+	match_link(pop, pop);
 } #}}}
 
 sub match_creation_day ($$) { #{{{
