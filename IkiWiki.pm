@@ -4,6 +4,7 @@ package IkiWiki;
 use warnings;
 use strict;
 use Encode;
+use HTML::Entities;
 use open qw{:utf8 :std};
 
 # Optimisation.
@@ -290,7 +291,7 @@ sub styleurl (;$) { #{{{
 	return $page."style.css";
 } #}}}
 
-sub abs2rel ($$) {
+sub abs2rel ($$) { #{{{
 	# Work around very innefficient behavior in File::Spec if abs2rel
 	# is passed two relative paths. It's much faster if paths are
 	# absolute!
@@ -301,7 +302,7 @@ sub abs2rel ($$) {
 	my $ret=File::Spec->abs2rel($path, $base);
 	$ret=~s/^// if defined $ret;
 	return $ret;
-}
+} #}}}
 
 sub htmllink ($$$;$$$) { #{{{
 	my $lpage=shift; # the page doing the linking
@@ -380,7 +381,7 @@ sub loadindex () { #{{{
 		$items{link}=[];
 		foreach my $i (split(/ /, $_)) {
 			my ($item, $val)=split(/=/, $i, 2);
-			push @{$items{$item}}, $val;
+			push @{$items{$item}}, decode_entities($val);
 		}
 
 		next unless exists $items{src}; # skip bad lines for now
@@ -391,8 +392,7 @@ sub loadindex () { #{{{
 			$oldpagemtime{$page}=$items{mtime}[0];
 			$oldlinks{$page}=[@{$items{link}}];
 			$links{$page}=[@{$items{link}}];
-			$depends{$page}=join(" ", @{$items{depends}})
-				if exists $items{depends};
+			$depends{$page}=$items{depends}[0] if exists $items{depends};
 			$renderedfiles{$page}=$items{dest}[0];
 		}
 		$pagectime{$page}=$items{ctime}[0];
@@ -416,7 +416,7 @@ sub saveindex () { #{{{
 			"dest=$renderedfiles{$page}";
 		$line.=" link=$_" foreach @{$links{$page}};
 		if (exists $depends{$page}) {
-			$line.=" depends=$_" foreach split " ", $depends{$page};
+			$line.=" depends=".encode_entities($depends{$page}, " \t\n");
 		}
 		print OUT $line."\n";
 	}
@@ -454,49 +454,6 @@ sub misctemplate ($$) { #{{{
 	return $template->output;
 }#}}}
 
-sub glob_match ($$) { #{{{
-	my $page=shift;
-	my $glob=shift;
-
-	if ($glob =~ /^link\((.+)\)$/) {
-		my $rev = $links{$page} or return undef;
-		foreach my $p (@$rev) {
-			return 1 if lc $p eq $1;
-		}
-		return 0;
-	} elsif ($glob =~ /^backlink\((.+)\)$/) {
-		my $rev = $links{$1} or return undef;
-		foreach my $p (@$rev) {
-			return 1 if lc $p eq $page;
-		}
-		return 0;
-	} else {
-		# turn glob into safe regexp
-		$glob=quotemeta($glob);
-		$glob=~s/\\\*/.*/g;
-		$glob=~s/\\\?/./g;
-		$glob=~s!\\/!/!g;
-		
-		return $page=~/^$glob$/i;
-	}
-} #}}}
-
-sub globlist_match ($$) { #{{{
-	my $page=shift;
-	my @globlist=split(" ", shift);
-
-	# check any negated globs first
-	foreach my $glob (@globlist) {
-		return 0 if $glob=~/^!(.*)/ && glob_match($page, $1);
-	}
-
-	foreach my $glob (@globlist) {
-		return 1 if glob_match($page, $glob);
-	}
-	
-	return 0;
-} #}}}
-
 sub hook (@) { # {{{
 	my %param=@_;
 	
@@ -519,5 +476,137 @@ sub run_hooks ($$) { # {{{
 		}
 	}
 } #}}}
+
+sub globlist_to_pagespec ($) { #{{{
+	my @globlist=split(' ', shift);
+
+	my (@spec, @skip);
+	foreach my $glob (@globlist) {
+		if ($glob=~/^!(.*)/) {
+			push @skip, $glob;
+		}
+		else {
+			push @spec, $glob;
+		}
+	}
+
+	my $spec=join(" or ", @spec);
+	if (@skip) {
+		my $skip=join(" and ", @skip);
+		if (length $spec) {
+			$spec="$skip and ($spec)";
+		}
+		else {
+			$spec=$skip;
+		}
+	}
+	return $spec;
+} #}}}
+
+sub is_globlist ($) { #{{{
+	my $s=shift;
+	$s=~/[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or";
+} #}}}
+
+sub safequote ($) { #{{{
+	my $s=shift;
+	$s=~s/[{}]//g;
+	return "q{$s}";
+} #}}}
+
+sub pagespec_merge ($$) { #{{{
+	my $a=shift;
+	my $b=shift;
+
+        # Support for old-style GlobLists.
+        if (is_globlist($a)) {
+                $a=globlist_to_pagespec($a);
+        }
+        if (is_globlist($b)) {
+                $b=globlist_to_pagespec($b);
+        }
+
+	return "($a) or ($b)";
+} #}}}
+
+sub pagespec_match ($$) { #{{{
+	my $page=shift;
+	my $spec=shift;
+
+	# Support for old-style GlobLists.
+	if (is_globlist($spec)) {
+		$spec=globlist_to_pagespec($spec);
+	}
+
+	# Convert spec to perl code.
+	my $code="";
+	while ($spec=~m/\s*(\!|\(|\)|\w+\([^\)]+\)|[^\s()]+)\s*/ig) {
+		my $word=$1;
+		if (lc $word eq "and") {
+			$code.=" &&";
+		}
+		elsif (lc $word eq "or") {
+			$code.=" ||";
+		}
+		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
+			$code.=" ".$word;
+		}
+		elsif ($word =~ /^(link|backlink|creation_month|creation_year|creation_day)\((.+)\)$/) {
+			$code.=" match_$1(\$page, ".safequote($2).")";
+		}
+		else {
+			$code.=" match_glob(\$page, ".safequote($word).")";
+		}
+	}
+
+	return eval $code;
+} #}}}
+
+sub match_glob ($$) { #{{{
+	my $page=shift;
+	my $glob=shift;
+
+	# turn glob into safe regexp
+	$glob=quotemeta($glob);
+	$glob=~s/\\\*/.*/g;
+	$glob=~s/\\\?/./g;
+
+	return $page=~/^$glob$/;
+} #}}}
+
+sub match_link ($$) { #{{{
+	my $page=shift;
+	my $link=shift;
+
+	my $links = $links{$page} or return undef;
+	foreach my $p (@$links) {
+		return 1 if lc $p eq $link;
+	}
+	return 0;
+} #}}}
+
+sub match_backlink ($$) { #{{{
+	my $page=shift;
+	my $linkto=shift;
+
+	my $links = $links{$linkto} or return undef;
+	foreach my $p (@$links) {
+		return 1 if lc $p eq $page;
+	}
+	return 0;
+} #}}}
+
+sub match_creation_day ($$) { #{{{
+	return if (localtime($pagectime{shift()}))[3] == shift;
+} #}}}
+
+sub match_creation_month ($$) { #{{{
+	return if (localtime($pagectime{shift()}))[4] + 1 == shift;
+} #}}}
+
+sub match_creation_year ($$) { #{{{
+	return if (localtime($pagectime{shift()}))[5] + 1900 == shift;
+} #}}}
+
 
 1

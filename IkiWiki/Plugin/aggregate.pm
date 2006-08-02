@@ -108,8 +108,6 @@ sub delete (@) { #{{{
 } #}}}
 
 sub loadstate () { #{{{
-	eval q{use HTML::Entities};
-	die $@ if $@;
 	if (-e "$IkiWiki::config{wikistatedir}/aggregate") {
 		open (IN, "$IkiWiki::config{wikistatedir}/aggregate" ||
 			die "$IkiWiki::config{wikistatedir}/aggregate: $!");

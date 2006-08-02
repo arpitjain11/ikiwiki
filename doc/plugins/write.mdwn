@@ -183,13 +183,13 @@ use the following hashes, using a page name as the key:
 * `%IkiWiki::renderedfiles` contains the name of the file rendered by a
   page
 * `%IkiWiki::pagesources` contains the name of the source file for a page.
-* `%IkiWiki::depends` contains a [[GlobList]] that is used to specify other
+* `%IkiWiki::depends` contains a [[PageSpec]] that is used to specify other
   pages that a page depends on. If one of its dependencies is updated, the
   page will also get rebuilt. 
   
   Many plugins will need to add dependencies to this hash; the best way to do
   it is by using the IkiWiki::add_depends function, which takes as its
-  parameters the page name and a [[GlobList]] of dependencies to add.
+  parameters the page name and a [[PageSpec]] of dependencies to add.
 * `%IkiWiki::forcerebuild` any pages set as the keys to this hash will be
   treated as if they're modified and rebuilt.
 

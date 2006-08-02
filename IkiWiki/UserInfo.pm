@@ -83,7 +83,7 @@ sub commit_notify_list ($@) { #{{{
 		    length $userinfo->{$user}->{subscriptions} &&
 		    exists $userinfo->{$user}->{email} &&
 		    length $userinfo->{$user}->{email} &&
-		    grep { globlist_match($_, $userinfo->{$user}->{subscriptions}) } @pages) {
+		    grep { pagespec_match($_, $userinfo->{$user}->{subscriptions}) } @pages) {
 			push @ret, $userinfo->{$user}->{email};
 		}
 	}

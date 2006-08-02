@@ -48,7 +48,7 @@ sub preprocess_inline (@) { #{{{
 	my @list;
 	foreach my $page (keys %pagesources) {
 		next if $page eq $params{page};
-		if (globlist_match($page, $params{pages})) {
+		if (pagespec_match($page, $params{pages})) {
 			push @list, $page;
 		}
 	}

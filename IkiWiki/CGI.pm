@@ -31,7 +31,7 @@ sub page_locked ($$;$) { #{{{
 
 	foreach my $admin (@{$config{adminuser}}) {
 		my $locked_pages=userinfo_get($admin, "locked_pages");
-		if (globlist_match($page, userinfo_get($admin, "locked_pages"))) {
+		if (pagespec_match($page, userinfo_get($admin, "locked_pages"))) {
 			return 1 if $nonfatal;
 			error(htmllink("", "", $page, 1)." is locked by ".
 			      htmllink("", "", $admin, 1)." and cannot be edited.");
@@ -278,9 +278,9 @@ sub cgi_prefs ($$) { #{{{
 	$form->field(name => "password", type => "password");
 	$form->field(name => "confirm_password", type => "password");
 	$form->field(name => "subscriptions", size => 50,
-		comment => "(".htmllink("", "", "GlobList", 1).")");
+		comment => "(".htmllink("", "", "PageSpec", 1).")");
 	$form->field(name => "locked_pages", size => 50,
-		comment => "(".htmllink("", "", "GlobList", 1).")");
+		comment => "(".htmllink("", "", "PageSpec", 1).")");
 	
 	if (! is_admin($user_name)) {
 		$form->field(name => "locked_pages", type => "hidden");

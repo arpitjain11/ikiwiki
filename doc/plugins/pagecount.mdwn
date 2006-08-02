@@ -1,7 +1,7 @@
 Provides a \\[[pagecount ]] [[PreProcessorDirective]] that is replaced with
 the total number of pages currently in the wiki.
 
-The optional parameter "pages" can be a [[GlobList]] specifying the pages
+The optional parameter "pages" can be a [[PageSpec]] specifying the pages
 to count, default is to count them all.
 
 This plugin is included in ikiwiki, but is not enabled by default.

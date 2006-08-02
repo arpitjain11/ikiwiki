@@ -129,36 +129,15 @@ sub preprocess ($$$;$) { #{{{
 
 sub add_depends ($$) { #{{{
 	my $page=shift;
-	my $globlist=shift;
+	my $pagespec=shift;
 	
 	if (! exists $depends{$page}) {
-		$depends{$page}=$globlist;
+		$depends{$page}=$pagespec;
 	}
 	else {
-		$depends{$page}=globlist_merge($depends{$page}, $globlist);
+		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
 	}
 } # }}}
-
-sub globlist_merge ($$) { #{{{
-	my $a=shift;
-	my $b=shift;
-
-	my $ret="";
-	# Only add negated globs if they are not matched by the other globlist.
-	foreach my $i ((map { [ $a, $_ ] } split(" ", $b)), 
-	               (map { [ $b, $_ ] } split(" ", $a))) {
-		if ($i->[1]=~/^!(.*)/) {
-			if (! globlist_match($1, $i->[0])) {
-				$ret.=" ".$i->[1];
-			}
-		}
-		else {
-			$ret.=" ".$i->[1];
-		}
-	}
-	
-	return $ret;
-} #}}}
 
 sub genpage ($$$) { #{{{
 	my $page=shift;
@@ -441,7 +420,7 @@ FILE:		foreach my $file (@files) {
 				foreach my $file (keys %rendered, @del) {
 					next if $f eq $file;
 					my $page=pagename($file);
-					if (globlist_match($page, $depends{$p})) {
+					if (pagespec_match($page, $depends{$p})) {
 						debug("rendering $f, which depends on $page");
 						render($f);
 						$rendered{$f}=1;

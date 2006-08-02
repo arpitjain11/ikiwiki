@@ -28,7 +28,7 @@ sub preprocess (@) { #{{{
 	my @orphans;
 	foreach my $page (keys %IkiWiki::renderedfiles) {
 		next if $linkedto{$page};
-		next unless IkiWiki::globlist_match($page, $params{pages});
+		next unless IkiWiki::pagespec_match($page, $params{pages});
 		# If the page has a link to some other page, it's
 		# indirectly linked to a page via that page's backlinks.
 		next if grep { 

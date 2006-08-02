@@ -24,6 +24,18 @@ ikiwiki (1.13) UNRELEASED; urgency=low
     index. (Aka Please Please Please, let that be the last one.)
   * Patch from Roland Mas to support an rss=no parameter to inline directives.
     Closes: #380743
+  * Renamed GlobLists to PageSpecs.
+  * PageSpecs can now include nested parens, "and", and "or". This remains
+    backwards compatible to the old GlobList format. It's implemented by
+    treating the GlobList as a very limited microlanguage that is transformed
+    to perl code that does the matching.
+  * The old GlobList format is deprecated, and I encourage users to switch to
+    using the new PageSpec format. Compatability with the old format will be
+    removed at some point, possibly by 2.0.
+  * Wiki rebuild needed on upgrade to this version due to PageSpec change.
+  * Add support for creation_month and creation_year to PageSpec.
+    Closes: #380680
+  * Changes to index file encoding.
 
  -- Joey Hess <joeyh@debian.org>  Tue,  1 Aug 2006 16:00:58 -0400
 

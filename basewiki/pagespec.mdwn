@@ -1,0 +1,61 @@
+To select a set of pages, such as pages that are locked, pages
+whose commit emails you want subscribe to, or pages to combine into a
+[[blog]], the wiki uses a PageSpec. This is an expression that matches
+a set of pages.
+
+The simplest PageSpec is a simple list of pages. For example, this matches
+any of the three listed pages:
+
+	foo or bar or baz
+
+More often you will want to match any pages that have a particular thing in
+their name. You can do this using a glob pattern. "`*`" stands for any part
+of a page name, and "`?`" for any single letter of a page name. So this
+matches all pages about music, and any [[SubPage]]s of the SandBox, but does
+not match the SandBox itself:
+
+	*music* or SandBox/*
+
+You can also prefix an item with "`!`" to skip pages that match it. So to
+match all pages except for Discussion pages and the SandBox:
+
+	* and !SandBox and !*/Discussion
+
+It's also possible to match pages that link to a given page, by writing
+"`link(page)`". Or, match pages that a given page links to, by
+writing "`backlink(page)`". Or match pages created in a given month, year,
+or day of the month by writing "`creation_month(month)`",
+"`creation_year(year)`" or "`creation_day(mday)`".
+
+For example, to match all pages in a blog that link to the page about music
+and were written on Mondays in 2005:
+
+	blog/* and link(music) and creation_year(2005) and creation_day(0)
+
+Matches can also be used to limit matching to pages created before or after
+a given date. 
+
+More complex expressions can also be created, by using parentheses for
+grouping. For example, to match pages in a blog that are tagged with either
+of two tags, use:
+
+	blog/* and (link(tag/foo) or link(tag/bar))
+
+## Old syntax
+
+The old PageSpec syntax was called a "GlobList", and worked differently in
+two ways:
+
+1. "and" and "or" were not used; any page matching any item from the list
+   matched.
+2. If an item was prefixed with "`!`", then no page matching that item
+   matched, even if it matched an earlier list item.
+
+For example, here is the old way to match all pages except for the SandBox
+and Discussion pages:
+
+	* !SandBox !*/Discussion
+
+Using this old syntax is still supported. However, the old syntax is
+deprecated and will be removed at some point, and using the new syntax is
+recommended.

@@ -23,7 +23,7 @@ sub preprocess (@) { #{{{
 	return $#pages+1 if $params{pages} eq "*"; # optimisation
 	my $count=0;
 	foreach my $page (@pages) {
-		$count++ if IkiWiki::globlist_match($page, $params{pages});
+		$count++ if IkiWiki::pagespec_match($page, $params{pages});
 	}
 	return $count;
 } # }}}

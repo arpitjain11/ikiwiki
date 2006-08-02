@@ -8,14 +8,14 @@ sub same {
 	my $b=shift;
 	my $match=shift;
 	
-	my $imatch=(IkiWiki::globlist_match($match, $a) ||
-		    IkiWiki::globlist_match($match, $b));
-	my $cmatch=IkiWiki::globlist_match($match, IkiWiki::globlist_merge($a, $b));
+	my $imatch=(IkiWiki::pagespec_match($match, $a) ||
+		    IkiWiki::pagespec_match($match, $b));
+	my $cmatch=IkiWiki::pagespec_match($match, IkiWiki::pagespec_merge($a, $b));
 	
 	return $imatch == $cmatch;
 }
 
-BEGIN { use_ok("IkiWiki::Render"); }
+BEGIN { use_ok("IkiWiki"); }
 
 ok(same("foo", "bar", "foo"), "basic match 1");
 ok(same("foo", "bar", "bar"), "basic match 2");
@@ -36,8 +36,8 @@ ok(same("f?? !f??", "!bar", "bar"), "matching glob and matching inverted glob");
 ok(same("b??", "!b?z", "bar"), "matching glob and non-matching inverted glob");
 ok(same("f?? !f?z", "!bar", "bar"), "matching glob and non-matching inverted glob");
 ok(same("!foo bar baz", "!bar", "bar"), "matching list and matching inversion");
-ok(IkiWiki::globlist_match("foo/Discussion",
-	IkiWiki::globlist_merge("* !*/Discussion", "*/Discussion")), "should match");
+ok(IkiWiki::pagespec_match("foo/Discussion",
+	IkiWiki::pagespec_merge("* !*/Discussion", "*/Discussion")), "should match");
 ok(same("* !*/Discussion", "*/Discussion", "foo/Discussion"), "Discussion merge 1");
 ok(same("*/Discussion", "* !*/Discussion", "foo/Discussion"), "Discussion merge 2");
 ok(same("*/Discussion !*/bar", "*/bar !*/Discussion", "foo/Discussion"), "bidirectional merge 1");

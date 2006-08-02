@@ -1,3 +1,19 @@
+ikiwiki (1.13) unstable; urgency=low
+
+  The GlobList format which was used for specifiying sets of pages, has been
+  replaced with a new PageSpec format. While GlobLists will continue to work,
+  that format is deprecated, and you are recommended to use PageSpecs from now
+  on, and also to change any GlobLists in your wiki to PageSpecs. 
+  
+  See the new PageSpec page for details.
+  
+  You will need to rebuild your wiki when upgrading to this version. If you
+  listed your wiki in /etc/ikiwiki/wikilist this will be done automatically
+  when the Debian package is upgraded. Or use ikiiki-mass-rebuild to force a
+  rebuild.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  1 Aug 2006 18:29:51 -0400
+
 ikiwiki (1.11) unstable; urgency=low
 
   Some changes to tags in this release, due to a new tag plugin. If you have
