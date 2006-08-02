@@ -91,6 +91,10 @@ _(AKA, the assumptions that will be the root of most security holes...)_
 Someone could add bad content to the wiki and hope to exploit ikiwiki.
 Note that ikiwiki runs with perl taint checks on, so this is unlikely.
 
+One fun thing in ikiwiki is its handling of a PageSpec, which involves
+translating it into perl and running the perl. Of course, this is done
+*very* carefully to guard against injecting arbitrary perl code.
+
 ## publishing cgi scripts
 
 ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
