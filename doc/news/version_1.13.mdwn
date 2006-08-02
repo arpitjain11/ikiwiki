@@ -1,4 +1,19 @@
-ikiwiki 1.13 released with these changes:
+ikiwiki 1.13 is released.
+
+_Upgrade notes:_
+
+The GlobList format which was used for specifiying sets of pages, has been
+replaced with a new, more expressive PageSpec format. While GlobLists will
+continue to work, that format is deprecated, and you are encouraged to use
+PageSpecs from now on, and also to change any GlobLists in your wiki to
+PageSpecs. See the new [[PageSpec]] page for details.
+
+You will need to rebuild your wiki when upgrading to this version. If you
+listed your wiki in /etc/ikiwiki/wikilist this will be done automatically
+when the Debian package is upgraded. Or use ikiiki-mass-rebuild to force a
+rebuild.
+
+_Changes:_
 
    * ikiwiki can now download and aggregate feeds with its new aggregate
      plugin, so it's possible to implement a Planet using ikiwiki!
