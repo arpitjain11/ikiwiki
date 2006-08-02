@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 21;
+use Test::More tests => 25;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -18,6 +18,12 @@ ok(! IkiWiki::pagespec_match("foo", "* and !foo"));
 ok(! IkiWiki::pagespec_match("foo", "foo and !foo"));
 ok(! IkiWiki::pagespec_match("foo.png", "* and !*.*"));
 ok(IkiWiki::pagespec_match("foo", "(bar or ((meep and foo) or (baz or foo) or beep))"));
+
+$IkiWiki::links{foo}=[qw{bar baz}];
+ok(IkiWiki::pagespec_match("foo", "link(bar)"));
+ok(! IkiWiki::pagespec_match("foo", "link(quux)"));
+ok(IkiWiki::pagespec_match("bar", "backlink(foo)"));
+ok(! IkiWiki::pagespec_match("quux", "backlink(foo)"));
 
 # old style globlists
 ok(IkiWiki::pagespec_match("foo", "foo bar"), "simple list");
