@@ -10,6 +10,7 @@ use open qw{:utf8 :std};
 # Optimisation.
 use Memoize;
 memoize("abs2rel");
+memoize("pagespec_translate");
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
             %renderedfiles %pagesources %depends %hooks %forcerebuild};
@@ -529,8 +530,9 @@ sub pagespec_merge ($$) { #{{{
 	return "($a) or ($b)";
 } #}}}
 
-sub pagespec_match ($$) { #{{{
-	my $page=shift;
+sub pagespec_translate ($) { #{{{
+	# This assumes that $page is in scope in the function
+	# that evalulates the translated pagespec code.
 	my $spec=shift;
 
 	# Support for old-style GlobLists.
@@ -559,7 +561,14 @@ sub pagespec_match ($$) { #{{{
 		}
 	}
 
-	return eval $code;
+	return $code;
+} #}}}
+
+sub pagespec_match ($$) { #{{{
+	my $page=shift;
+	my $spec=shift;
+
+	return eval pagespec_translate($spec);
 } #}}}
 
 sub match_glob ($$) { #{{{
