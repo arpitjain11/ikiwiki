@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 25;
+use Test::More tests => 31;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -24,6 +24,14 @@ ok(IkiWiki::pagespec_match("foo", "link(bar)"));
 ok(! IkiWiki::pagespec_match("foo", "link(quux)"));
 ok(IkiWiki::pagespec_match("bar", "backlink(foo)"));
 ok(! IkiWiki::pagespec_match("quux", "backlink(foo)"));
+
+$IkiWiki::pagectime{foo}=1154532692; # Wed Aug  2 11:26 EDT 2006
+ok(IkiWiki::pagespec_match("foo", "creation_year(2006)"), "year");
+ok(! IkiWiki::pagespec_match("foo", "creation_year(2005)"), "other year");
+ok(IkiWiki::pagespec_match("foo", "creation_month(8)"), "month");
+ok(! IkiWiki::pagespec_match("foo", "creation_month(9)"), "other month");
+ok(IkiWiki::pagespec_match("foo", "creation_day(2)"), "day");
+ok(! IkiWiki::pagespec_match("foo", "creation_day(3)"), "other day");
 
 # old style globlists
 ok(IkiWiki::pagespec_match("foo", "foo bar"), "simple list");

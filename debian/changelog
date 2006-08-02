@@ -2,8 +2,10 @@ ikiwiki (1.14) UNRELEASED; urgency=low
 
   * Memoize pagespec translation, this speeds up a build of the ikiwiki tree
     by 10% or so.
+  * Fix stupid bug in date matching, patch from Roland Mas. Closes: #381132
+  * Added many unit tests for pagespec_match.
 
- -- Joey Hess <joeyh@debian.org>  Tue,  1 Aug 2006 23:35:13 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed,  2 Aug 2006 11:31:52 -0400
 
 ikiwiki (1.13) unstable; urgency=low
 

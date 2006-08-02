@@ -599,16 +599,15 @@ sub match_backlink ($$) { #{{{
 } #}}}
 
 sub match_creation_day ($$) { #{{{
-	return if (gmtime($pagectime{shift()}))[3] == shift;
+	return ((gmtime($pagectime{shift()}))[3] == shift);
 } #}}}
 
 sub match_creation_month ($$) { #{{{
-	return if (gmtime($pagectime{shift()}))[4] + 1 == shift;
+	return ((gmtime($pagectime{shift()}))[4] + 1 == shift);
 } #}}}
 
 sub match_creation_year ($$) { #{{{
-	return if (gmtime($pagectime{shift()}))[5] + 1900 == shift;
+	return ((gmtime($pagectime{shift()}))[5] + 1900 == shift);
 } #}}}
-
 
 1
