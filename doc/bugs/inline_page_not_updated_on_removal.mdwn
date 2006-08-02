@@ -6,12 +6,27 @@ This only happens if the page is removed from the inlined pagespec due to
 a tag changing; the problem is that once the tag is changed, ikiwiki does
 not know that the page used to match before.
 
+Another example would be a pagespec that allowed only matching new pages:
+
+	newer(1 day)
+
+Obviously, the pages that matches are going to change, and again once they
+do, ikiwiki will no longer know that they matched before, so it won't know
+to remove them from a page that used that to inline them.
+
 To fix, seems I would need to record the actual list of pages that are
 currently included on an inline page, and do a comparison to see if any
-have changed. At first I thought, why not just add them to the dependencies
-explicitly, but that fails because the dependencies pagespec fails to match
-when a negated expression like "!tag(bugs/done)" is matched.
+have changed. 
 
-So, quick fixes aside, what's the generic mechanism here that a plugin can
-use to let ikiwiki know that a page should be updated if some other page
-stops matching its dependencies pagespec?
+At first I thought, why not just add them to the dependencies
+explicitly, but that failed because the dependencies GlobList failed to match
+when a negated expression like "!tag(bugs/done)" is matched. It is,
+however, doable with PageSpecs:
+
+	(real deps here) or (list of all currently inlined pages here)
+
+However, it's not really clear to me how to _remove_ inlined pages from the
+deps when they stop being inlined for whatever reason. So a separate list
+would be better.
+
+So this is blocked by [[todo/plugin_data_storage]] I suppose.

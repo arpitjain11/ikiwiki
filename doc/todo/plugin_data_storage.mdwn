@@ -1,0 +1,54 @@
+ikiwiki currently stores some key data in .ikiwiki/index. Some plugins need a
+way to store additional data, and ideally it would be something managed by
+ikiwiki instead of ad-hoc because:
+
+* consistency is good
+* ikiwiki knows when a page is removed and can stop storing data for that
+  page; plugins have to go to some lengths to track that and remove their
+  data
+* it's generally too much code and work to maintain a separate data store
+
+The aggregate plugin is a use-case: of 324 lines, 70 are data storage and
+another 10 handle deletion. Also, it's able to use a format very like
+ikiwiki's, but it does need to store some lists in there, which complicates
+it some and means that a very naive translation between a big per-page hash
+and the .index won't be good enough.
+
+The current ikiwiki index format is not very flexible, although it is at
+least fairly easy and inexpensive to parse as well as hand-edit.
+
+Would this do: ?
+
+* Plugins can register savestate and loadstate hooks. The hook id is the
+  key used in the index file that the hook handles.
+* loadstate hooks are called and passed a list of all values for a page
+  that for the registered key, and the page name, and should store the data
+  somewhere
+* savestate hooks are called and passed a page, and should return a list of 
+  all values for that key for that page
+* If they need anything more complex than a list of values, they will need
+  to encode it somehow in the list.
+
+Hmm, that's potentially a lot of function calls per page eave load/save
+though.. For less function calls, only call each hook *once* per load/save,
+and it is passed/returns a big hash of pages and the values for each page.
+(Which probably means `%state=@_` for load and `return %state` for save.)
+
+It may also be better to just punt on lists, and require plugins that need
+even lists to encode them. Especially since in many cases, `join(" ", @list)`
+will do.
+
+Note that for the aggregate plugin to use this, it will need some changes:
+
+* guid data will need to be stored as part of the data for the page
+  that was aggregated from that guid
+* All feeds will need to be marked as removable in loadstate, and only
+  unmarked if seen in preprocess. Then savestate will need to not only
+  remove any feeds still marked as such, but do the unlinking of pages
+  aggregated from them too.
+
+If I do this, I might as well also:
+
+* Change the link= link= stuff to just links=link+link etc.
+* Change the delimiter from space to comma; commas are rare in index files,
+  so less ugly escaped delimiters to deal with.
