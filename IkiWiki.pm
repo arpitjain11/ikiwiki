@@ -597,15 +597,15 @@ sub match_backlink ($$) { #{{{
 } #}}}
 
 sub match_creation_day ($$) { #{{{
-	return if (localtime($pagectime{shift()}))[3] == shift;
+	return if (gmtime($pagectime{shift()}))[3] == shift;
 } #}}}
 
 sub match_creation_month ($$) { #{{{
-	return if (localtime($pagectime{shift()}))[4] + 1 == shift;
+	return if (gmtime($pagectime{shift()}))[4] + 1 == shift;
 } #}}}
 
 sub match_creation_year ($$) { #{{{
-	return if (localtime($pagectime{shift()}))[5] + 1900 == shift;
+	return if (gmtime($pagectime{shift()}))[5] + 1900 == shift;
 } #}}}
 
 
