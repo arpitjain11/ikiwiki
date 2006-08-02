@@ -571,7 +571,7 @@ sub match_glob ($$) { #{{{
 	$glob=~s/\\\*/.*/g;
 	$glob=~s/\\\?/./g;
 
-	return $page=~/^$glob$/;
+	return $page=~/^$glob$/i;
 } #}}}
 
 sub match_link ($$) { #{{{
