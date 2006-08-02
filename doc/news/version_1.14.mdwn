@@ -1,0 +1,6 @@
+ikiwiki 1.14 released with these changes:
+
+   * Memoize pagespec translation, this speeds up a build of the ikiwiki tree
+     by 10% or so.
+   * Fix stupid bug in date matching, patch from Roland Mas. Closes: #[381132](http://bugs.debian.org/381132)
+   * Added many unit tests for pagespec\_match.
