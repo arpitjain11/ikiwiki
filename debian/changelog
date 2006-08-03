@@ -1,3 +1,12 @@
+ikiwiki (1.16) UNRELEASED; urgency=low
+
+  * Try to handle relative links in aggregated feeds. However,
+    the current support is a crude hack due to limitations of XML::Feed:
+    xml:base is not supported, neither is Content-Location. And of course,
+    relative links in RSS feeds are ill-undefined..
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  3 Aug 2006 17:29:51 -0400
+
 ikiwiki (1.15) unstable; urgency=low
 
   * Remove CDPATH and other env vars perl taint checking doesn't like.

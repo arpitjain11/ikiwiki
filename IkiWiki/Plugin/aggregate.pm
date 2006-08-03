@@ -6,6 +6,9 @@ use warnings;
 use strict;
 use IkiWiki;
 use HTML::Entities;
+use HTML::Parser;
+use HTML::Tagset;
+use URI;
 
 my %feeds;
 my %guids;
@@ -283,15 +286,13 @@ sub add_page (@) { #{{{
 
 	# Create the page.
 	my $template=IkiWiki::template("aggregatepost.tmpl", blind_cache => 1);
-	my $content=$params{content};
-	$params{content}=~s/(?<!\\)\[\[/\\\[\[/g; # escape accidental wikilinks
-	                                          # and preprocessor stuff
 	$template->param(title => $params{title})
 		if defined $params{title} && length($params{title});
-	$template->param(content => $params{content});
+	$template->param(content => htmlescape(htmlabs($params{content}, $feed->{feedurl})));
 	$template->param(url => $feed->{url});
 	$template->param(name => $feed->{name});
-	$template->param(link => $params{link}) if defined $params{link};
+	$template->param(link => urlabs($params{link}, $feed->{feedurl}))
+		if defined $params{link};
 	if (ref $feed->{tags}) {
 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
 	}
@@ -301,6 +302,58 @@ sub add_page (@) { #{{{
 	# Set the mtime, this lets the build process get the right creation
 	# time on record for the new page.
 	utime $mtime, $mtime, pagefile($guid->{page}) if defined $mtime;
+} #}}}
+
+sub htmlescape ($) { #{{{
+	# escape accidental wikilinks and preprocessor stuff
+	my $html=shift;
+	$html=~s/(?<!\\)\[\[/\\\[\[/g;
+	return $html;
+} #}}}
+
+sub urlabs ($$) { #{{{
+	my $url=shift;
+	my $urlbase=shift;
+
+	URI->new_abs($url, $urlbase)->as_string;
+} #}}}
+
+sub htmlabs ($$) { #{{{
+	# Convert links in html from relative to absolute.
+	# Note that this is a heuristic, which is not specified by the rss
+	# spec and may not be right for all feeds. Also, see Debian
+	# bug #XXXX TODO: get bug.
+	my $html=shift;
+	my $urlbase=shift;
+
+	my $ret="";
+	my $p = HTML::Parser->new(api_version => 3);
+	$p->handler(default => sub { $ret.=join("", @_) }, "text");
+	$p->handler(start => sub {
+		my ($tagname, $pos, $text) = @_;
+		if (ref $HTML::Tagset::linkElements{$tagname}) {
+			while (4 <= @$pos) {
+				# use attribute sets from right to left
+				# to avoid invalidating the offsets
+				# when replacing the values
+				my($k_offset, $k_len, $v_offset, $v_len) =
+					splice(@$pos, -4);
+				my $attrname = lc(substr($text, $k_offset, $k_len));
+				next unless grep { $_ eq $attrname } @{$HTML::Tagset::linkElements{$tagname}};
+				next unless $v_offset; # 0 v_offset means no value
+				my $v = substr($text, $v_offset, $v_len);
+				$v =~ s/^([\'\"])(.*)\1$/$2/;
+				my $new_v=urlabs($v, $urlbase);
+				$new_v =~ s/\"/&quot;/g; # since we quote with ""
+				substr($text, $v_offset, $v_len) = qq("$new_v");
+			}
+		}
+		$ret.=$text;
+	}, "tagname, tokenpos, text");
+	$p->parse($html);
+	$p->eof;
+
+	return $ret;
 } #}}}
 
 sub remove_feeds () { #{{{
