@@ -1,3 +1,10 @@
+ikiwiki (1.15) UNRELEASED; urgency=low
+
+  * Remove CDPATH and other env vars perl taint checking doesn't like.
+    Closes: #381279
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  3 Aug 2006 12:12:53 -0400
+
 ikiwiki (1.14) unstable; urgency=low
 
   * Memoize pagespec translation, this speeds up a build of the ikiwiki tree
