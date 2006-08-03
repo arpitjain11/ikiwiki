@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 31;
+use Test::More tests => 35;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -26,6 +26,11 @@ ok(IkiWiki::pagespec_match("bar", "backlink(foo)"));
 ok(! IkiWiki::pagespec_match("quux", "backlink(foo)"));
 
 $IkiWiki::pagectime{foo}=1154532692; # Wed Aug  2 11:26 EDT 2006
+$IkiWiki::pagectime{bar}=1154532695; # after
+ok(IkiWiki::pagespec_match("foo", "created_before(bar)"));
+ok(! IkiWiki::pagespec_match("foo", "created_after(bar)"));
+ok(! IkiWiki::pagespec_match("bar", "created_before(foo)"));
+ok(IkiWiki::pagespec_match("bar", "created_after(foo)"));
 ok(IkiWiki::pagespec_match("foo", "creation_year(2006)"), "year");
 ok(! IkiWiki::pagespec_match("foo", "creation_year(2005)"), "other year");
 ok(IkiWiki::pagespec_match("foo", "creation_month(8)"), "month");

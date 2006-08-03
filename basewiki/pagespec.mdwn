@@ -21,16 +21,23 @@ match all pages except for Discussion pages and the SandBox:
 
 	* and !SandBox and !*/Discussion
 
-It's also possible to match pages that link to a given page, by writing
-"`link(page)`". Or, match pages that a given page links to, by
-writing "`backlink(page)`". Or match pages created in a given month, year,
-or day of the month by writing "`creation_month(month)`",
-"`creation_year(year)`" or "`creation_day(mday)`".
+Some more elaborate limits can be added to what matches using any of these
+functions:
+
+* "`link(page)`" - match only pages that link to a given page
+* "`backlink(page)`" - match only pages that a given page links to
+* "`creation_month(month)`" - match only pages created on the given month
+* "`creation_day(mday)`" - or day of the month
+* "`creation_year(year)`" - or year
+* "`created_after(page)`" - match only pages created after the given page
+  was created
+* "`created_before(page)`" - match only pages created before the given page
+  was created
 
 For example, to match all pages in a blog that link to the page about music
-and were written on Mondays in 2005:
+and were written in 2005:
 
-	blog/* and link(music) and creation_year(2005) and creation_day(0)
+	blog/* and link(music) and creation_year(2005)
 
 More complex expressions can also be created, by using parentheses for
 grouping. For example, to match pages in a blog that are tagged with either

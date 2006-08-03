@@ -553,7 +553,7 @@ sub pagespec_translate ($) { #{{{
 		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
 			$code.=" ".$word;
 		}
-		elsif ($word =~ /^(link|backlink|creation_month|creation_year|creation_day)\((.+)\)$/) {
+		elsif ($word =~ /^(link|backlink|created_before|created_after|creation_month|creation_year|creation_day)\((.+)\)$/) {
 			$code.=" match_$1(\$page, ".safequote($2).")";
 		}
 		else {
@@ -596,6 +596,30 @@ sub match_link ($$) { #{{{
 
 sub match_backlink ($$) { #{{{
 	match_link(pop, pop);
+} #}}}
+
+sub match_created_before ($$) { #{{{
+	my $page=shift;
+	my $testpage=shift;
+
+	if (exists $pagectime{$testpage}) {
+		return $pagectime{$page} < $pagectime{$testpage};
+	}
+	else {
+		return 0;
+	}
+} #}}}
+
+sub match_created_after ($$) { #{{{
+	my $page=shift;
+	my $testpage=shift;
+
+	if (exists $pagectime{$testpage}) {
+		return $pagectime{$page} > $pagectime{$testpage};
+	}
+	else {
+		return 0;
+	}
 } #}}}
 
 sub match_creation_day ($$) { #{{{
