@@ -5,6 +5,7 @@ package IkiWiki::Plugin::inline;
 use warnings;
 use strict;
 use IkiWiki;
+use HTML::Entities q{encode_entities_numeric};
 
 sub import { #{{{
 	IkiWiki::hook(type => "preprocess", id => "inline", 
@@ -162,7 +163,7 @@ sub genrss ($@) { #{{{
 	my $page=shift;
 	my @pages=@_;
 	
-	my $url="$config{url}/".htmlpage($page);
+	my $url=encode_entities_numeric("$config{url}/".htmlpage($page));
 	
 	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1, 
 		die_on_bad_params => 0);
@@ -170,10 +171,12 @@ sub genrss ($@) { #{{{
 	foreach my $p (@pages) {
 		next unless exists $renderedfiles{$p};
 
+		my $u=encode_entities_numeric("$config{url}/$renderedfiles{$p}");
+
 		$itemtemplate->param(
 			title => pagetitle(basename($p)),
-			url => "$config{url}/$renderedfiles{$p}",
-			permalink => "$config{url}/$renderedfiles{$p}",
+			url => $u,
+			permalink => $u,
 			pubdate => date_822($pagectime{$p}),
 			content => absolute_urls(get_inline_content($p, $page), $url),
 		);
