@@ -296,7 +296,7 @@ sub add_page (@) { #{{{
 	if (ref $feed->{tags}) {
 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
 	}
-	IkiWiki::writefile($guid->{page}.".html", $IkiWiki::config{srcdir},
+	IkiWiki::writefile(IkiWiki::htmlpage($guid->{page}), $IkiWiki::config{srcdir},
 		$template->output);
 
 	# Set the mtime, this lets the build process get the right creation
@@ -371,7 +371,7 @@ sub remove_feeds () { #{{{
 sub pagefile ($) { #{{{
 	my $page=shift;
 
-	return "$IkiWiki::config{srcdir}/$page.html";
+	return "$IkiWiki::config{srcdir}/".IkiWiki::htmlpage($page);
 } #}}}
 
 1
