@@ -11,8 +11,10 @@ ikiwiki (1.16) UNRELEASED; urgency=low
   * Encode link and guid urls in rss feeds to avoid illegal utf8 slipping in.
   * Add xhtml files to the default prune regexp.
   * Also generate rel=bookmark links for permalinks.
+  * Fix the htmltidy plugin, which wasn't working due my breaking it when
+    I added it..
 
- -- Joey Hess <joeyh@debian.org>  Thu,  3 Aug 2006 22:35:11 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri,  4 Aug 2006 03:03:19 -0400
 
 ikiwiki (1.15) unstable; urgency=low
 

@@ -5,7 +5,7 @@
 # It is particularly useful when the html plugin is used.
 #
 # by Faidon Liambotis
-package IkiWiki::Plugin::tidy;
+package IkiWiki::Plugin::htmltidy;
 
 use warnings;
 use strict;
@@ -21,7 +21,7 @@ sub sanitize ($) { #{{{
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8'); 
 	binmode (OUT, ':utf8'); 
-
+	
 	print OUT shift;
 	close OUT;
 
