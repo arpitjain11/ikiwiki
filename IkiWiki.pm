@@ -272,7 +272,9 @@ sub pagetitle ($) { #{{{
 sub titlepage ($) { #{{{
 	my $title=shift;
 	$title=~y/ /_/;
-	$title=~s/([^-[:alnum:]_:+\/.])/"__".ord($1)."__"/eg;
+	# Note: [:alnum:] is not used here, on purpose; unicode
+	# not allowed in urls.
+	$title=~s/([^-A-Za-z0-9_:+\/.])/"__".ord($1)."__"/eg;
 	return $title;
 } #}}}
 

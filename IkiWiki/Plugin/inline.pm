@@ -173,6 +173,7 @@ sub genrss ($@) { #{{{
 		$itemtemplate->param(
 			title => pagetitle(basename($p)),
 			url => "$config{url}/$renderedfiles{$p}",
+			permalink => "$config{url}/$renderedfiles{$p}",
 			pubdate => date_822($pagectime{$p}),
 			content => absolute_urls(get_inline_content($p, $page), $url),
 		);
@@ -180,6 +181,7 @@ sub genrss ($@) { #{{{
 			shift->(page => $p, destpage => $page,
 				template => $itemtemplate);
 		});
+
 		$content.=$itemtemplate->output;
 		$itemtemplate->clear_params;
 	}
@@ -191,7 +193,6 @@ sub genrss ($@) { #{{{
 		pageurl => $url,
 		content => $content,
 	);
-	
 	run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page,
 			template => $template);

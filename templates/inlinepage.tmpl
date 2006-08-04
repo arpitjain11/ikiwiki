@@ -5,6 +5,12 @@
 
 <span class="pageinfo">
 Posted <TMPL_VAR CTIME>
+<TMPL_IF NAME="AUTHOR">
+by <TMPL_VAR NAME=AUTHOR>
+</TMPL_IF>
+<TMPL_IF NAME="PERMALINK">
+(<a href="<TMPL_VAR NAME=PERMALINK>">permalink</a>)
+</TMPL_IF>
 </span>
 
 <span class="tags">

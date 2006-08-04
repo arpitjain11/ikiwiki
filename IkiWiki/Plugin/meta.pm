@@ -8,6 +8,8 @@ use IkiWiki;
 
 my %meta;
 my %title;
+my %permalink;
+my %author;
 
 sub import { #{{{
 	IkiWiki::hook(type => "preprocess", id => "meta", 
@@ -57,9 +59,15 @@ sub preprocess (@) { #{{{
 	elsif ($key eq 'title') {
 		$title{$page}=$value;
 	}
+	elsif ($key eq 'permalink') {
+		$permalink{$page}=$value;
+	}
 	else {
 		$meta{$page}.="<meta name=\"".encode_entities($key).
 			"\" content=\"".encode_entities($value)."\" />\n";
+		if ($key eq 'author') {
+			$author{$page}=$value;
+		}
 	}
 
 	return "";
@@ -74,6 +82,11 @@ sub pagetemplate (@) { #{{{
 		if exists $meta{$page} && $template->query(name => "meta");
 	$template->param(title => $title{$page})
 		if exists $title{$page} && $template->query(name => "title");
+	$template->param(permalink => $permalink{$page})
+		if exists $permalink{$page} && $template->query(name => "permalink");
+	$template->param(author => $author{$page})
+		if exists $author{$page} && $template->query(name => "author");
+	
 } # }}}
 
 1

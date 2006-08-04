@@ -1,10 +1,15 @@
 <item>
+	<TMPL_IF NAME="AUTHOR">
+	<title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE ESCAPE=HTML></title>
+	<dc:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dc:creator>
+	<TMPL_ELSE>
 	<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	</TMPL_IF>
 	<guid><TMPL_VAR URL></guid>
-	<link><TMPL_VAR URL></link>
+	<link><TMPL_VAR PERMALINK></link>
 	<TMPL_IF NAME="CATEGORIES">
 	<TMPL_LOOP NAME="CATEGORIES">
-	<category><TMPL_VAR NAME=CATEGORY></category>
+	<category><TMPL_VAR CATEGORY></category>
 	</TMPL_LOOP>
 	</TMPL_IF>
 	<pubDate><TMPL_VAR PUBDATE></pubDate>
