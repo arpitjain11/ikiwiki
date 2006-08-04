@@ -62,6 +62,7 @@ sub preprocess (@) { #{{{
 	}
 	elsif ($key eq 'permalink') {
 		$permalink{$page}=$value;
+		$meta{$page}.="<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n";
 	}
 	else {
 		$meta{$page}.="<meta name=\"".encode_entities($key).
