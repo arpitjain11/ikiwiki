@@ -10,6 +10,7 @@ my %meta;
 my %title;
 my %permalink;
 my %author;
+my %authorurl;
 
 sub import { #{{{
 	IkiWiki::hook(type => "preprocess", id => "meta", 
@@ -68,6 +69,9 @@ sub preprocess (@) { #{{{
 		if ($key eq 'author') {
 			$author{$page}=$value;
 		}
+		elsif ($key eq 'authorurl') {
+			$authorurl{$page}=$value;
+		}
 	}
 
 	return "";
@@ -86,6 +90,8 @@ sub pagetemplate (@) { #{{{
 		if exists $permalink{$page} && $template->query(name => "permalink");
 	$template->param(author => $author{$page})
 		if exists $author{$page} && $template->query(name => "author");
+	$template->param(authorurl => $authorurl{$page})
+		if exists $authorurl{$page} && $template->query(name => "authorurl");
 	
 } # }}}
 
