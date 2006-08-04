@@ -7,9 +7,6 @@ ikiwiki (1.16) UNRELEASED; urgency=low
   * Make aggregator save permalinks and author name to pages as metadata.
   * Add permalink and author support to meta plugin, affecting RSS feeds
     and blog pages.
-  * Change titlepage() to encode utf-8 alnum characters. This is necessary
-    to avoid UTF-8 creeping into filenames in urls. (There are still
-    some other ways that it can get in.)
   * Various CSS and formatting changes.
 
  -- Joey Hess <joeyh@debian.org>  Thu,  3 Aug 2006 18:45:36 -0400
