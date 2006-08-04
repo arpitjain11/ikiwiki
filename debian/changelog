@@ -13,8 +13,15 @@ ikiwiki (1.16) UNRELEASED; urgency=low
   * Also generate rel=bookmark links for permalinks.
   * Fix the htmltidy plugin, which wasn't working due my breaking it when
     I added it..
+  * Don't run tidy with -xml as that fails if the input is not well-formed.
+    Run it with -asxhtml instead, so it will output well-formed xhtml no
+    matter what the input.
+  * Disable tidy warnings too.
+  * Add a new format hook, and make tidy use it, since tidy can really only
+    operate on and output complete html documents, not the body chunks
+    that sanitise gets.
 
- -- Joey Hess <joeyh@debian.org>  Fri,  4 Aug 2006 03:03:19 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri,  4 Aug 2006 03:33:09 -0400
 
 ikiwiki (1.15) unstable; urgency=low
 

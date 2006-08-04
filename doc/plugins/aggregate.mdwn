@@ -13,7 +13,9 @@ aggregated feeds.
 ## setup
 
 Make sure that you have the [[html]] plugin enabled, as the created pages are
-in html format. The [[meta]] and [[tag]] plugins are also recommended.
+in html format. The [[meta]] and [[tag]] plugins are also recommended. The
+[[htmltidy]] plugin is suggested, since feeds can easily contain invalid
+html which tidy can fix.
 
 You will need to run ikiwiki periodically from a cron job, passing it the
 --aggregate parameter, to make it check for new posts. Here's an example

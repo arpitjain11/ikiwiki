@@ -187,7 +187,13 @@ sub genpage ($$$) { #{{{
 		shift->(page => $page, destpage => $page, template => $template);
 	});
 	
-	return $template->output;
+	$content=$template->output;
+
+	run_hooks(format => sub {
+		$content=shift->($content);
+	});
+
+	return $content;
 } #}}}
 
 sub check_overwrite ($$) { #{{{

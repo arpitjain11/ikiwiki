@@ -129,9 +129,19 @@ to set it, as setting a variable that's not present is an error.
 	IkiWiki::hook(type => "sanitize", id => "foo", call => \&sanitize);
 
 Use this to implement html sanitization or anything else that needs to
-modify the content of a page after it has been fully converted to html.
+modify the body of a page after it has been fully converted to html.
 The function is passed the page content and should return the sanitized
 content.
+
+## format
+
+	IkiWiki::hook(type => "format", id => "foo", call => \&format);
+
+The function is passed the complete page content and can reformat it
+and return the new content. The difference between format and sanitize is
+that sanitize only acts on the page body, while format can modify the
+entire html page including the header and footer inserted by ikiwiki, the
+html document type, etc.
 
 ## delete
 
