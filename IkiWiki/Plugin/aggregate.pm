@@ -290,6 +290,7 @@ sub add_page (@) { #{{{
 		if defined $params{title} && length($params{title});
 	$template->param(content => htmlescape(htmlabs($params{content}, $feed->{feedurl})));
 	$template->param(name => $feed->{name});
+	$template->param(url => $feed->{url});
 	$template->param(permalink => urlabs($params{link}, $feed->{feedurl}))
 		if defined $params{link};
 	if (ref $feed->{tags}) {
