@@ -163,7 +163,7 @@ sub genrss ($@) { #{{{
 	my $page=shift;
 	my @pages=@_;
 	
-	my $url=URI->new("$config{url}/".htmlpage($page));
+	my $url=URI->new(encode_utf8("$config{url}/".htmlpage($page)));
 	
 	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1, 
 		die_on_bad_params => 0);
@@ -171,7 +171,7 @@ sub genrss ($@) { #{{{
 	foreach my $p (@pages) {
 		next unless exists $renderedfiles{$p};
 
-		my $u=URI->new("$config{url}/$renderedfiles{$p}");
+		my $u=URI->new(encode_utf8("$config{url}/$renderedfiles{$p}"));
 
 		$itemtemplate->param(
 			title => pagetitle(basename($p)),
