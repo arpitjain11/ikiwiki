@@ -1,0 +1,23 @@
+ikiwiki 1.16 released with these changes:
+
+   * Try to handle relative links in aggregated feeds. However,
+     the current support is a crude hack due to limitations of XML::Feed:
+     xml:base is not supported, neither is Content-Location. And of course,
+     relative links in RSS feeds are ill-undefined..
+   * Make aggregator save permalinks and author name to pages as metadata.
+   * Add permalink and author support to meta plugin, affecting RSS feeds
+     and blog pages.
+   * Various CSS and formatting changes.
+   * Encode link and guid urls in rss feeds to avoid illegal utf8 slipping in.
+   * Add xhtml files to the default prune regexp.
+   * Also generate rel=bookmark links for permalinks.
+   * Fix the htmltidy plugin, which wasn't working due my breaking it when
+     I added it..
+   * Don't run tidy with -xml as that fails if the input is not well-formed.
+     Run it with -asxhtml instead, so it will output well-formed xhtml no
+     matter what the input.
+   * Disable tidy warnings too.
+   * Add a new format hook, and make tidy use it, since tidy can really only
+     operate on and output complete html documents, not the body chunks
+     that sanitise gets.
+   * Fix dates in rss feeds if running localised, so they're still rfc 822.
