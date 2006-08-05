@@ -432,7 +432,9 @@ sub template_params (@) { #{{{
 			my $text_ref = shift;
 			$$text_ref=&Encode::decode_utf8($$text_ref);
 		},
-		filename => "$config{templatedir}/$filename", @_;
+		filename => "$config{templatedir}/$filename",
+		loop_context_vars => 1,
+		@_;
 } #}}}
 
 sub template ($;@) { #{{{
