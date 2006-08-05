@@ -17,7 +17,7 @@ sub import { #{{{
 } # }}}
 
 sub format ($) { #{{{
-	open2(*IN, *OUT, 'tidy -quiet -asxhtml -indent -utf8 --show-warnings no') or return shift;
+	open2(*IN, *OUT, 'tidy -quiet -asxhtml -indent -utf8 --show-warnings no --tidy-mark no') or return shift;
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8'); 
 	binmode (OUT, ':utf8'); 
