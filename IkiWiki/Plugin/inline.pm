@@ -138,7 +138,11 @@ sub date_822 ($) { #{{{
 	my $time=shift;
 
 	eval q{use POSIX};
-	return POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
+	my $lc_time= POSIX::setlocale(&POSIX::LC_TIME);
+	POSIX::setlocale(&POSIX::LC_TIME, "C");
+	my $ret=POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
+	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
+	return $ret;
 } #}}}
 
 sub absolute_urls ($$) { #{{{
