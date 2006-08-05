@@ -6,8 +6,9 @@ ikiwiki (1.17) UNRELEASED; urgency=low
   * Turn on HTML::Template loop_context_vars; not actually used in stock
     templates but can be useful for things like making comma-delimited lists
     of tags or what have you.
+  * Remove <br> from end of aggregate preprocessor directive output.
 
- -- Joey Hess <joeyh@debian.org>  Fri,  4 Aug 2006 23:04:12 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat,  5 Aug 2006 17:15:12 -0400
 
 ikiwiki (1.16) unstable; urgency=low
 
