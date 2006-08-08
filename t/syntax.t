@@ -3,7 +3,7 @@ use warnings;
 use strict;
 use Test;
 
-my @progs="ikiwiki";
+my @progs="ikiwiki.pl";
 my @libs="IkiWiki.pm";
 push @libs, map { chomp; $_ } `find IkiWiki -type f -name \\*.pm`;
 

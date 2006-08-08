@@ -12,7 +12,7 @@ install:: extra_install
 pure_install:: extra_install
 
 extra_build:
-	./ikiwiki doc html --templatedir=templates --underlaydir=basewiki \
+	./ikiwiki.pl doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion \
 		--plugin=brokenlinks --plugin=pagecount \
@@ -50,5 +50,5 @@ extra_install:
 WriteMakefile(
 	'NAME'		=> 'IkiWiki',
 	'PM_FILTER'	=> 'grep -v "removed by Makefile"',
-	'EXE_FILES'	=> ['ikiwiki'],
+	'EXE_FILES'	=> ['ikiwiki.pl'],
 );

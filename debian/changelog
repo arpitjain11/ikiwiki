@@ -7,8 +7,10 @@ ikiwiki (1.17) UNRELEASED; urgency=low
     templates but can be useful for things like making comma-delimited lists
     of tags or what have you.
   * Remove <br> from end of aggregate preprocessor directive output.
+  * Ship ikiwiki executable as ikiwiki.pl in source to avoid issues on
+    case-sensative filesystems like OSX.
 
- -- Joey Hess <joeyh@debian.org>  Sat,  5 Aug 2006 17:15:12 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue,  8 Aug 2006 10:52:23 -0400
 
 ikiwiki (1.16) unstable; urgency=low
 
