@@ -19,7 +19,7 @@ sub htmlize ($) { #{{{
 		no warnings 'once';
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
-		do "/usr/bin/markdown";
+		do "/usr/bin/markdown" || IkiWiki::error("failed to load /usr/bin/markdown: $!");
 		require Encode;
 	}
 	
