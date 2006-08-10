@@ -10,16 +10,24 @@ sub import { #{{{
 	IkiWiki::hook(type => "htmlize", id => "mdwn", call => \&htmlize);
 } # }}}
 
+my $markdown_loaded=0;
 sub htmlize ($) { #{{{
 	my $content = shift;
 
-	if (! $INC{"/usr/bin/markdown"}) {
-		# Note: a proper perl module is available in Debian
+	if (! $markdown_loaded) {
+		# Note: This hack to make markdown run as a proper perl
+		# module. A proper perl module is available in Debian
 		# for markdown, but not upstream yet.
 		no warnings 'once';
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
-		do "/usr/bin/markdown" || IkiWiki::error("failed to load /usr/bin/markdown: $!");
+
+		eval q{use Markdown};
+		if ($@) {
+			do "/usr/bin/markdown" ||
+				IkiWiki::error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
+		}
+		$markdown_loaded=1;
 		require Encode;
 	}
 	

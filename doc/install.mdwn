@@ -6,6 +6,10 @@ installed, and also uses the following perl modules if available:
 `HTML::Template` `Mail::SendMail` `Time::Duration` `Date::Parse`,
 `HTML::Scrubber`, `RPC::XML`, `XML::Simple`, `XML::Feed`
 
+If you're installing MarkDown by hand, note that it should be installed as
+`Markdown.pm` somewhere in perl's module search path, or alternately as
+`/usr/bin/markdown`. Ikiwiki will find it under either name.
+
 If you want to install from the tarball, you should make sure that the
 required perl modules are installed, then run:
 
