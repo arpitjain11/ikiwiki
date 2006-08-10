@@ -9,7 +9,7 @@ ikiwiki (1.17) UNRELEASED; urgency=low
   * Remove <br> from end of aggregate preprocessor directive output.
   * Ship ikiwiki executable as ikiwiki.pl in source to avoid issues on
     case-sensative filesystems like OSX.
-  * Improve markdown loading. First, try to load it as a properl perl module,
+  * Improve markdown loading. First, try to load it as a proper perl module,
     in case it was installed as one. Then fall back to trying
     /usr/bin/markdown.
   * Document in install page how to install markdown, since it has no
