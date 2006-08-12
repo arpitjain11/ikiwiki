@@ -93,8 +93,11 @@ sub preprocess_inline (@) { #{{{
 		$link=abs2rel($link, dirname($params{page}));
 		$template->param(pageurl => $link);
 		$template->param(title => pagetitle(basename($page)));
-		$template->param(content => get_inline_content($page, $params{page}))
-			if $params{archive} eq "no";
+		# TODO: if $params{archive} eq "no", the only reason to do this
+		# is to let the meta plugin get page title info; so stop
+		# calling this next line then once the meta plugin can
+		# store that accross runs.
+		$template->param(content => get_inline_content($page, $params{page}));
 		$template->param(ctime => displaytime($pagectime{$page}));
 
 		run_hooks(pagetemplate => sub {
@@ -169,8 +172,7 @@ sub genrss ($@) { #{{{
 	
 	my $url=URI->new(encode_utf8("$config{url}/".htmlpage($page)));
 	
-	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1, 
-		die_on_bad_params => 0);
+	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1);
 	my $content="";
 	foreach my $p (@pages) {
 		next unless exists $renderedfiles{$p};

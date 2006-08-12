@@ -14,8 +14,12 @@ ikiwiki (1.17) UNRELEASED; urgency=low
     /usr/bin/markdown.
   * Document in install page how to install markdown, since it has no
     installation procedure in the upstream tarball.
+  * Set die_on_bad_params => 0 for all templates, to allow users to modify
+    them without annoyances.
+  * Suck in the page content when generating an inline archive page, to work
+    around the meta plugin's lack of caching of title metadata across runs.
 
- -- Joey Hess <joeyh@debian.org>  Wed,  9 Aug 2006 23:50:25 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 12 Aug 2006 12:30:48 -0400
 
 ikiwiki (1.16) unstable; urgency=low
 

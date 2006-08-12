@@ -434,6 +434,7 @@ sub template_params (@) { #{{{
 		},
 		filename => "$config{templatedir}/$filename",
 		loop_context_vars => 1,
+		die_on_bad_params => 0,
 		@_;
 } #}}}
 
