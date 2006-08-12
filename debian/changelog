@@ -1,3 +1,11 @@
+ikiwiki (1.18) UNRELEASED; urgency=low
+
+  * If the meta plugin overides the page title, set a title_overridden
+    variable in the template to true. This allows doing things with the
+    templates conditional on the title being overriden.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 12 Aug 2006 13:45:05 -0400
+
 ikiwiki (1.17) unstable; urgency=low
 
   * Disable tidy generator tag.

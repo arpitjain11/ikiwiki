@@ -85,8 +85,10 @@ sub pagetemplate (@) { #{{{
 
 	$template->param(meta => $meta{$page})
 		if exists $meta{$page} && $template->query(name => "meta");
-	$template->param(title => $title{$page})
-		if exists $title{$page} && $template->query(name => "title");
+	if (exists $title{$page} && $template->query(name => "title")) {
+		$template->param(title => $title{$page});
+		$template->param(title_overridden => 1);
+	}
 	$template->param(permalink => $permalink{$page})
 		if exists $permalink{$page} && $template->query(name => "permalink");
 	$template->param(author => $author{$page})

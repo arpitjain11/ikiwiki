@@ -116,13 +116,7 @@ used to generate the page. The function can manipulate that template
 object.
 
 The most common thing to do is probably to call $template->param() to add
-a new custom parameter to the template. Note that in order to be robust,
-it's a good idea to check whether the template has a variable before trying
-to set it, as setting a variable that's not present is an error.
-
-	if ($template->query(name => 'foo')) {
-		$template->param("foo" => "bar");
-	}
+a new custom parameter to the template.
 
 ## sanitize
 
