@@ -96,7 +96,7 @@ sub preprocess_inline (@) { #{{{
 		# TODO: if $params{archive} eq "no", the only reason to do this
 		# is to let the meta plugin get page title info; so stop
 		# calling this next line then once the meta plugin can
-		# store that accross runs.
+		# store that accross runs (also tags plugin).
 		$template->param(content => get_inline_content($page, $params{page}));
 		$template->param(ctime => displaytime($pagectime{$page}));
 
