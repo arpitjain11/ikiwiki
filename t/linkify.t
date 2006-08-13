@@ -13,8 +13,10 @@ sub linkify ($$$$) {
 	# This is what linkify and htmllink need set right now to work.
 	# This could change, if so, update it..
 	%IkiWiki::pagecase=();
+	%IkiWiki::links=();
 	foreach my $page (@existing_pages) {
 		$IkiWiki::pagecase{lc $page}=$page;
+		$IkiWiki::links{$page}=[];
 		$IkiWiki::renderedfiles{"$page.mdwn"}=$page;
 	}
 	%IkiWiki::config=IkiWiki::defaultconfig();
