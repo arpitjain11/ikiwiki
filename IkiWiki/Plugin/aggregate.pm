@@ -260,13 +260,12 @@ sub add_page (@) { #{{{
 		# directory name or trigger ".." disallowing code.
 		$page=~s!([/.])!"__".ord($1)."__"!eg;
 		$page=$feed->{dir}."/".$page;
-		$page=lc($page);
 		($page)=$page=~/$IkiWiki::config{wiki_file_regexp}/;
 		if (! defined $page || ! length $page) {
 			$page=$feed->{dir}."/item";
 		}
 		my $c="";
-		while (exists $IkiWiki::pagesources{$page.$c} ||
+		while (exists $IkiWiki::pagecase{lc $page} ||
 		       -e pagefile($page.$c)) {
 			$c++
 		}

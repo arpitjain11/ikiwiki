@@ -8,8 +8,12 @@ print ".TH $prog $section\n";
 
 while (<>) {
 	s{(\\?)\[\[([^\s\]]+)\]\]}{$1 ? "[[$2]]" : $2}eg;
-	s/^#\s/.SH /;
+	if (/^#\s/) {
+		s/^#\s/.SH /;
+		<>; # blank;
+	}
 	s/^\s+//;
+	s/-/\\-/g;
 	s/^Warning:.*//g;
 	s/^$/.PP\n/;
 	s/\`//g;

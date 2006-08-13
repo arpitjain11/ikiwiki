@@ -358,6 +358,7 @@ sub refresh () { #{{{
 			debug("new page $page") unless exists $pagectime{$page};
 			push @add, $file;
 			$links{$page}=[];
+			$pagecase{lc $page}=$page;
 			$pagesources{$page}=$file;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
 				$pagectime{$page}=rcs_getctime("$config{srcdir}/$file");

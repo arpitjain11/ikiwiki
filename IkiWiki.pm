@@ -12,7 +12,7 @@ use Memoize;
 memoize("abs2rel");
 memoize("pagespec_translate");
 
-use vars qw{%config %links %oldlinks %oldpagemtime %pagectime
+use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
             %renderedfiles %pagesources %depends %hooks %forcerebuild};
 
 sub defaultconfig () { #{{{
@@ -238,7 +238,7 @@ sub bestlink ($$) { #{{{
 	# goes down the directory tree to the base looking for matching
 	# pages.
 	my $page=shift;
-	my $link=lc(shift);
+	my $link=shift;
 	
 	my $cwd=$page;
 	do {
@@ -247,8 +247,10 @@ sub bestlink ($$) { #{{{
 		$l.=$link;
 
 		if (exists $links{$l}) {
-			#debug("for $page, \"$link\", use $l");
 			return $l;
+		}
+		elsif (exists $pagecase{lc $l}) {
+			return $pagecase{lc $l};
 		}
 	} while $cwd=~s!/?[^/]+$!!;
 
@@ -333,7 +335,7 @@ sub htmllink ($$$;$$$) { #{{{
 	}
 	if (! grep { $_ eq $bestlink } values %renderedfiles) {
 		return "<span><a href=\"".
-			cgiurl(do => "create", page => $link, from => $page).
+			cgiurl(do => "create", page => lc($link), from => $page).
 			"\">?</a>$linktext</span>"
 	}
 	
@@ -395,6 +397,7 @@ sub loadindex () { #{{{
 			$links{$page}=[@{$items{link}}];
 			$depends{$page}=$items{depends}[0] if exists $items{depends};
 			$renderedfiles{$page}=$items{dest}[0];
+			$pagecase{lc $page}=$page;
 		}
 		$pagectime{$page}=$items{ctime}[0];
 	}
@@ -588,7 +591,7 @@ sub match_glob ($$) { #{{{
 
 sub match_link ($$) { #{{{
 	my $page=shift;
-	my $link=shift;
+	my $link=lc(shift);
 
 	my $links = $links{$page} or return undef;
 	foreach my $p (@$links) {

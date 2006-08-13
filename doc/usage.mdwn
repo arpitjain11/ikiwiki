@@ -75,6 +75,10 @@ These options control the mode that ikiwiki is operating in.
   along with this one. --rebuild will also force feeds to be polled even if
   they were polled recently.
 
+* --version
+
+  Print ikiwiki version number.
+
 # CONFIG OPTIONS
 
 These options configure the wiki. Note that plugins can add additional
@@ -160,7 +164,7 @@ configuration options of their own.
   Specifies the url to the ikiwiki [[CGI]] script wrapper. Required when
   building the wiki for links to the cgi script to be generated.
 
-* --historyurl http://url/trunk/\[[file]]?root=wiki
+* --historyurl url
 
   Specifies the url to link to for page history browsing. In the url,
   "\[[file]]" is replaced with the file to browse. It's common to use
@@ -170,7 +174,7 @@ configuration options of their own.
 
   Specifies the email address that ikiwiki should use for sending email.
 
-* --diffurl http://url/trunk/\[[file]]?root=wiki&amp;r1=\[[r1]]&amp;r2=\[[r2]]
+* --diffurl url
 
   Specifies the url to link to for a diff of changes to a page. In the url,
   "\[[file]]" is replaced with the file to browse, "\[[r1]]" is the old

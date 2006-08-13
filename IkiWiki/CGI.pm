@@ -346,12 +346,11 @@ sub cgi_editpage ($$) { #{{{
 	# This untaint is safe because titlepage removes any problematic
 	# characters.
 	my ($page)=$form->field('page');
-	$page=titlepage(possibly_foolish_untaint(lc($page)));
+	$page=titlepage(possibly_foolish_untaint($page));
 	if (! defined $page || ! length $page ||
 	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
 		error("bad page name");
 	}
-	$page=lc($page);
 	
 	my $from;
 	if (defined $form->field('from')) {
@@ -359,7 +358,7 @@ sub cgi_editpage ($$) { #{{{
 	}
 	
 	my $file;
-	my $type;	
+	my $type;
 	if (exists $pagesources{$page}) {
 		$file=$pagesources{$page};
 		$type=pagetype($file);
@@ -457,7 +456,7 @@ sub cgi_editpage ($$) { #{{{
 			}
 
 			@page_locs = grep {
-				! exists $pagesources{lc($_)} &&
+				! exists $pagecase{lc $_} &&
 				! page_locked($_, $session, 1)
 			} @page_locs;
 			
@@ -485,8 +484,8 @@ sub cgi_editpage ($$) { #{{{
 			if (! defined $form->field('editcontent') || 
 			    ! length $form->field('editcontent')) {
 				my $content="";
-				if (exists $pagesources{lc($page)}) {
-					$content=readfile(srcfile($pagesources{lc($page)}));
+				if (exists $pagesources{$page}) {
+					$content=readfile(srcfile($pagesources{$page}));
 					$content=~s/\n/\r\n/g;
 				}
 				$form->field(name => "editcontent", value => $content,
@@ -617,11 +616,11 @@ sub cgi () { #{{{
 		cgi_prefs($q, $session);
 	}
 	elsif ($do eq 'blog') {
-		my $page=titlepage(lc($q->param('title')));
+		my $page=titlepage($q->param('title'));
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
-		while (exists $oldpagemtime{"$from/$page$add"}) {
+		while (exists $pagecase{lc "$from/$page$add"}) {
 			$add=1 unless length $add;
 			$add++;
 		}

@@ -11,6 +11,11 @@ clean:: extra_clean
 install:: extra_install
 pure_install:: extra_install
 
+VER=$(shell perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)
+
+ikiwiki: ikiwiki.pl
+	perl -pe '$$_="" if /use lib/; $$_="our \$$version=\"$(VER)\";\n" if /VERSION_AUTOREPLACE/' ikiwiki.pl > ikiwiki
+
 extra_build:
 	./ikiwiki.pl doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
@@ -50,5 +55,6 @@ extra_install:
 WriteMakefile(
 	'NAME'		=> 'IkiWiki',
 	'PM_FILTER'	=> 'grep -v "removed by Makefile"',
-	'EXE_FILES'	=> ['ikiwiki.pl'],
+	'EXE_FILES'	=> ['ikiwiki'],
+	'clean'		=> {FILES => 'ikiwiki'},
 );

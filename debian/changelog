@@ -1,10 +1,22 @@
 ikiwiki (1.18) UNRELEASED; urgency=low
 
+  * The last release accidentially installed ikiwiki as ikiwiki.pl, now fixed.
+  * Add --version.
+  * Man page format fixups.
   * If the meta plugin overides the page title, set a title_overridden
     variable in the template to true. This allows doing things with the
     templates conditional on the title being overriden.
+  * Add a %pagecase which maps lower-case page names to the actual case
+    used in the filename. Use this in bestlinks calculation instead of
+    forcing the link to lowercase.
+  * Also use %pagecase in various other places that want to check if a page
+    with a given name exists.
+  * This means that links to pages with mixed case names will now work,
+    even if the link is in some other case mixture, and mixed case pages
+    should be fully supported throughout ikiwiki.
+  * Recommend rebuilding wikis on upgrade to this version.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 12 Aug 2006 13:45:05 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 12 Aug 2006 21:26:29 -0400
 
 ikiwiki (1.17) unstable; urgency=low
 
