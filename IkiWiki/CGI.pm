@@ -372,9 +372,7 @@ sub cgi_editpage ($$) { #{{{
 			# favor the type of linking page
 			$type=pagetype($pagesources{$from});
 		}
-		else {
-			$type=$config{default_pageext};
-		}
+		$type=$config{default_pageext} unless defined $type;
 		$file=$page.".".$type;
 	}
 
