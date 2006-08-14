@@ -75,6 +75,30 @@ off from R1.
 
 (To be continued.)
 
+#### Another possible approach
+
+Here's what I (tuomov) think, would be a “cleaner” approach:
+
+ 1. Upon starting to edit, Ikiwiki gets a copy of the page, and `darcs changes --context`.
+     This context _and_ the present version of the page are stored in as the “version” of the
+     page in a hidden control of the HTML.
+     Thus the HTML includes all that is needed to generate a patch wrt. to the state of the
+     repository at the time the edit was started. This is of course all that darcs needs.
+ 2. Once the user is done with editing, _Ikiwiki generates a patch bundle_ for darcs.
+     This should be easy with existing `Text::Diff` or somesuch modules, as the Web edits
+     only concern single files. The reason why the old version of the page is stored in
+     the HTML (possibly compressed) is that the diff can be generated.
+ 3. Now this patch bundle is applied with `darcs apply`, or sent by email for moderation…
+     there are many possibilities.
+
+This approach avoids some of the problems of concurrent edits that the previous one may have,
+although there may be conflicts, which may or may not propagate to the displayed web page.
+(Unfortunately there is not an option to `darcs apply` to generate some sort of ‘confliction resolution
+bundle’.) Also, only one repository is needed, as it is never directly modified
+by Ikiwiki. 
+
+This approach might be applicable to other distributed VCSs as well, although they're not as oriented
+towards transmitting changes with standalone patch bundles (often by email) as darcs is.
 
 ## [[Git]]
 
