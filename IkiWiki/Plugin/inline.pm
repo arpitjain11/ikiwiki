@@ -233,7 +233,7 @@ sub pingurl (@) { #{{{
 			}
 			my $r=$res->value;
 			if (! exists $r->{flerror} || $r->{flerror}) {
-				debug("Ping rejected: ".$r->{message});
+				debug("Ping rejected: ".(exists $r->{message} ? $r->{message} : "[unknown reason]"));
 			}
 		}
 	}
