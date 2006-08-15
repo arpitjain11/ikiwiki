@@ -2,9 +2,9 @@ WikiLinks provide easy linking between pages of the wiki. To create a
 [[WikiLink]], just put the name of the page to link to in double brackets.
 For example "\[[WikiLink]]".
 
-Wiki links may not contain spaces.  The associated file must be the wiki
-link with any capital letters converted to lower case plus the file
-extention.
+The file name associated with a wiki link is create as follows: capital
+letters converted to lower case and spaces to underscores.  Finally,
+the file extention is added.
 
 If you ever need to write something like "\[[WikiLink]] without creating a
 wikilink, just prefix it with a "\", like "\\\\[[WikiLink]]".
