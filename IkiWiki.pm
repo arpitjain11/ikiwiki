@@ -21,6 +21,7 @@ sub defaultconfig () { #{{{
 	wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]*)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	verbose => 0,
+	syslog => 0,
 	wikiname => "wiki",
 	default_pageext => "mdwn",
 	cgi => 0,
@@ -119,12 +120,31 @@ sub error ($) { #{{{
 		print "Content-type: text/html\n\n";
 		print misctemplate("Error", "<p>Error: @_</p>");
 	}
-	die @_;
+	log_message(error => @_);
+	exit(1);
 } #}}}
 
 sub debug ($) { #{{{
 	return unless $config{verbose};
-	if (! $config{cgi}) {
+	log_message(debug => @_);
+} #}}}
+
+my $log_open=0;
+sub log_message ($$) { #{{{
+	my $type=shift;
+
+	if ($config{syslog}) {
+		require Sys::Syslog;
+		unless ($log_open) {
+			Sys::Syslog::setlogsock('unix');
+			Sys::Syslog::openlog('ikiwiki', '', 'user');
+			$log_open=1;
+		}
+		eval {
+			Sys::Syslog::syslog($type, join(" ", @_));
+		}
+	}
+	elsif (! $config{cgi}) {
 		print "@_\n";
 	}
 	else {

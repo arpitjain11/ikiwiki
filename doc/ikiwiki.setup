@@ -74,6 +74,9 @@ use IkiWiki::Setup::Standard {
 	#timeformat => '%c',
 	# Locale to use. Must be a UTF-8 locale.
 	#locale => 'en_US.UTF-8',
+	# Logging settings:
+	verbose => 0,
+	syslog => 0,
 	
 	# To add plugins, list them here.
 	#add_plugins => [qw{meta tag pagecount brokenlinks search smiley

@@ -212,9 +212,13 @@ configuration options of their own.
   Specify how to display the time or date. The format string is passed to the
   strftime(3) function.
 
-* --verbose
+* --verbose, --no-verbose
 
   Be vebose about what is being done.
+
+* --syslog, --no-syslog
+
+  Log to syslog.
 
 * --w3mmode, --no-w3mmode
 

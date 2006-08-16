@@ -23,6 +23,7 @@ sub getconfig () { #{{{
 			"setup|s=s" => \$config{setup},
 			"wikiname=s" => \$config{wikiname},
 			"verbose|v!" => \$config{verbose},
+			"syslog!" => \$config{syslog},
 			"rebuild!" => \$config{rebuild},
 			"refresh!" => \$config{refresh},
 			"wrappers!" => \$config{wrappers},
