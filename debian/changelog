@@ -2,8 +2,9 @@ ikiwiki (1.19) UNRELEASED; urgency=low
 
   * Fix several related bugs in page type determination during online editing.
   * Add some locking to prevent 2 aggregators from running at once.
+  * Fix an infinite loop in the aggregator when finding a unique filename.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 16 Aug 2006 13:28:34 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 16 Aug 2006 13:32:27 -0400
 
 ikiwiki (1.18) unstable; urgency=low
 

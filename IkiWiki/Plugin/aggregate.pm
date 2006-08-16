@@ -267,7 +267,7 @@ sub add_page (@) { #{{{
 			$page=$feed->{dir}."/item";
 		}
 		my $c="";
-		while (exists $IkiWiki::pagecase{lc $page} ||
+		while (exists $IkiWiki::pagecase{lc $page.$c} ||
 		       -e pagefile($page.$c)) {
 			$c++
 		}
