@@ -35,11 +35,13 @@ sub getopt () { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	loadstate();
 	if ($IkiWiki::config{aggregate}) {
+		IkiWiki::lockwiki();
+		loadstate();
 		IkiWiki::loadindex();
 		aggregate();
 		savestate();
+		IkiWiki::unlockwiki();
 	}
 } #}}}
 
