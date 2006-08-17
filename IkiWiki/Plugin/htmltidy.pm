@@ -17,7 +17,18 @@ sub import { #{{{
 } # }}}
 
 sub sanitize ($) { #{{{
-	open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no') or return shift;
+	my $tries=10;
+	while (1) {
+		eval {
+			open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no');
+		};
+		last unless $@;
+		$tries--;
+		if ($tries < 1) {
+			IkiWiki::debug("failed to run tidy: $@");
+			return shift;
+		}
+	}
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8'); 
 	binmode (OUT, ':utf8'); 

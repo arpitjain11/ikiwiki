@@ -4,8 +4,10 @@ ikiwiki (1.20) UNRELEASED; urgency=low
     Since these can easily become part of other people's websites, they
     should be under as permissive a license as possible.
   * Add --syslog config option, to log to the syslog.
+  * Catch failing IPC::Open2 in tidy plugin and retry in case this is a
+    transient failure to fork (which I've seen happen in the wild).
 
- -- Joey Hess <joeyh@debian.org>  Wed, 16 Aug 2006 17:07:35 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 14:43:02 -0400
 
 ikiwiki (1.19) unstable; urgency=low
 
