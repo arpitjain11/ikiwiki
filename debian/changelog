@@ -1,4 +1,4 @@
-ikiwiki (1.20) UNRELEASED; urgency=low
+ikiwiki (1.20) unstable; urgency=low
 
   * Relicense the templates and basewiki under the 2-clause BSD license.
     Since these can easily become part of other people's websites, they
@@ -6,8 +6,10 @@ ikiwiki (1.20) UNRELEASED; urgency=low
   * Add --syslog config option, to log to the syslog.
   * Catch failing IPC::Open2 in tidy plugin and retry in case this is a
     transient failure to fork (which I've seen happen in the wild).
+  * Fix a bug in the aggregator introduced last version that caused all
+    aggregator state to be lost during a non-aggregating build.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 14:43:02 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 19:05:56 -0400
 
 ikiwiki (1.19) unstable; urgency=low
 
