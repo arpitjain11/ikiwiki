@@ -21,7 +21,11 @@ sub sidebar_content ($) { #{{{
 	my $sidebar_type=IkiWiki::pagetype($sidebar_file);
 	
 	if (defined $sidebar_type) {
+		# FIXME: This isn't quite right; it won't take into account
+		# adding a new sidebar page. So adding such a page
+		# currently requires a wiki rebuild.
 		IkiWiki::add_depends($page, $sidebar_page);
+
 		my $content=IkiWiki::readfile(IkiWiki::srcfile($sidebar_file));
 		return unless length $content;
 		return IkiWiki::htmlize($sidebar_type,
