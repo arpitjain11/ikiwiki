@@ -345,7 +345,8 @@ sub htmllink ($$$;$$$) { #{{{
 
 	$linktext=pagetitle(basename($link)) unless defined $linktext;
 	
-	return $linktext if length $bestlink && $page eq $bestlink;
+	return "<span class=\"selflink\">$linktext</span>"
+		if length $bestlink && $page eq $bestlink;
 	
 	# TODO BUG: %renderedfiles may not have it, if the linked to page
 	# was also added and isn't yet rendered! Note that this bug is

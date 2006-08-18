@@ -1,3 +1,12 @@
+ikiwiki (1.21) UNRELEASED; urgency=low
+
+  * Add a tail fin^W^Wsidebar plugin by Tuomo Valkonen.
+  * If a page links to itself, mark up the link text in a span with
+    class="selflink" so that it can be styled. I don't have a useful style
+    defined for that though.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 20:18:23 -0400
+
 ikiwiki (1.20) unstable; urgency=low
 
   * Relicense the templates and basewiki under the 2-clause BSD license.

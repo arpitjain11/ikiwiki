@@ -1,0 +1,12 @@
+If this plugin is enabled, then a sidebar is added to pages in the wiki.
+The content of the sidebar is simply the content of a page named
+"sidebar".
+
+Typically this will be a page in the root of the wiki, but it can also be a
+[[SubPage]]. In fact, this page, [[plugins/sidebar|plugins/sidebar]], will
+be treated as a sidebar for the [[plugins]] page, and of all of its
+SubPages, if the plugin is enabled.
+
+This plugin is included in ikiwiki, but is not enabled by default.
+
+[[tag type/chrome]]
