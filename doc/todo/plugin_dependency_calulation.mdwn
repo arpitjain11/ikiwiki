@@ -1,0 +1,23 @@
+A few plugins need more complex dependency calculations than ikiwiki can do
+on its own:
+
+* Use of a version plugin should only make the page rebuild when it's built
+  with a new version of ikiwiki.
+* The [[plugins/sidebar]] plugin should make any page get rebuilt if a
+  sidebar is created "closer" to it than the current sidebar.
+* Some plugin might want to _always_ rebuild the page that uses it.
+* If backlinks were turned into a plugin, it would need to make a page
+  rebuild when its backlinks changed.
+
+These suggest there should be a way for plugins to have hooks that tweak
+the list of pages to rebuild.
+
+Which in turn suggests that there should *be* a list of pages to rebuild;
+currently there's not, and the best such an interface could do would be to
+rebuild the pages even if they were already going to be rebuilt for some
+other reason. (See [[optimisation]].)
+
+It also suggests that plugins will want to examine pages and/or
+[[store_data|plugin_data_storage]] about them to use in the dependency
+calculations. For example, the version plugin would need to store info
+about what pages use it.

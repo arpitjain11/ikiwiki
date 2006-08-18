@@ -2,9 +2,21 @@
   times in worst case (8 times if there's an rss feed).
 
   The issue is that rendering a page is used to gather info like the links
-  on the page that can effect rendering other pages. So it needs a
-  multi-pass system. But rendering the whole page in each pass is rather
-  obscene.
+  on the page (and other stuff) that can effect rendering other pages. So it
+  needs a multi-pass system. But rendering the whole page in each pass is
+  rather obscene.
+  
+  It would be better to have the first pass be a data gathering pass. Such
+  a pass would still need to load and parse the page contents etc, but
+  wouldn't need to generate html or write anything to disk.
+
+  One problem with this idea is that it could turn into 2x the work in
+  cases where ikiwiki currently efficiently renders a page just once. And
+  caching between the passes to avoid that wouldn't do good things to the
+  memory footprint.
+
+  Might be best to just do a partial first pass, getting eg, the page links
+  up-to-date, and then multiple, but generally fewer, rendering passes.
 
 * Don't render blog archive pages unless a page is added/removed. Just
   changing a page doesn't affect the archives as they show only the title.
