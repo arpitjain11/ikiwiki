@@ -23,7 +23,7 @@ extra_build:
 		--plugin=brokenlinks --plugin=pagecount \
 		--plugin=orphans --plugin=haiku --plugin=meta \
 		--plugin=tag --plugin=polygen --plugin=pagestats \
-		--plugin=fortune --plugin=aggregate
+		--plugin=fortune --plugin=aggregate --plugin=map
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 		
