@@ -1,16 +1,18 @@
 This plugin generates a hierarchical page map for the wiki. Example usage:
 
-	\[[map pages="* and !blog/*" maxdepth=2]]
+	\[[map pages="* and !blog/* and !*/Discussion"]]
 
 If the pages to include are not specified, all pages (and other files) in
-the wiki are mapped. If the maxdepth parameter is passed, only pages nested
-less than that many levels deep will be included in the map.
+the wiki are mapped.
+
+Hint: To limit the map to displaying pages less than a certian level deep,
+use a [[PageSpec]] like this: `pages="* and !*/*/*"`
 
 This plugin is included in ikiwiki, but is not enabled by default.
 
 If this plugin is enabled, here is a page map for the plugins section
 of this wiki:
 
-[[map pages="plugins or plugins/*" maxdepth=3]]
+[[map pages="(plugins or plugins/*) and !*/*/*"]]
 
 [[tag type/meta]]

@@ -37,7 +37,6 @@ sub preprocess (@) { #{{{
 	my $map = "<div class='map'>\n";
 	foreach my $item (sort @mapitems) {
 		my $depth = ($item =~ tr/\//\//) + 1;
-		next if exists $params{maxdepth} && $depth > $params{maxdepth};
 		while ($depth < $indent) {
 			$indent--;
 			$map.="</ul>\n";
