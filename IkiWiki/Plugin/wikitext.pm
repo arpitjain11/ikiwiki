@@ -4,6 +4,7 @@ package IkiWiki::Plugin::wikitext;
 
 use warnings;
 use strict;
+use IkiWiki;
 use Text::WikiFormat;
 
 sub import { #{{{
