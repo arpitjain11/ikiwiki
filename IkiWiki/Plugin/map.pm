@@ -4,7 +4,7 @@
 #
 # By Alessandro Dotti Contra <alessandro@hyboria.org>
 #
-# Revision: 0.1
+# Revision: 0.2
 package IkiWiki::Plugin::map;
 
 use warnings;
@@ -34,25 +34,30 @@ sub preprocess (@) { #{{{
 
 	# Create the map.
 	my $indent=0;
+	my $openli=0;
 	my $map = "<div class='map'>\n";
+	$map .= "<ul>\n";
 	foreach my $item (sort @mapitems) {
-		my $depth = ($item =~ tr/\//\//) + 1;
+		my $depth = ($item =~ tr/\//\//);
 		while ($depth < $indent) {
 			$indent--;
-			$map.="</ul>\n";
+			$map.="</li></ul>\n";
 		}
 		while ($depth > $indent) {
 			$indent++;
 			$map.="<ul>\n";
+			$openli=0;
 		}
+		$map .= "</li>\n" if $openli;
 		$map .= "<li>"
-		        .IkiWiki::htmllink($params{page}, $params{destpage}, $item)
-			."</li>\n";
+		        .IkiWiki::htmllink($params{page}, $params{destpage}, $item) ."\n";
+		$openli=1;
 	}
 	while ($indent > 0) {
 		$indent--;
-		$map.="</ul>\n";
+		$map.="</li></ul>\n";
 	}
+	$map .= "</li></ul>\n";
 	$map .= "</div>\n";
 	return $map;
 } # }}}
