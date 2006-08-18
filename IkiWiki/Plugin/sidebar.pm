@@ -26,7 +26,8 @@ sub sidebar_content ($) { #{{{
 		return unless length $content;
 		return IkiWiki::htmlize($sidebar_type,
 		       IkiWiki::preprocess($sidebar_page, $page,
-		       IkiWiki::linkify($sidebar_page, $page, $content)));
+		       IkiWiki::linkify($sidebar_page, $page,
+		       IkiWiki::filter($sidebar_page, $content))));
 	}
 
 } # }}}

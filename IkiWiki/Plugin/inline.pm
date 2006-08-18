@@ -130,7 +130,11 @@ sub get_inline_content ($$) { #{{{
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if (defined $type) {
-		return htmlize($type, preprocess($page, $destpage, linkify($page, $destpage, readfile(srcfile($file)))));
+		return htmlize($type,
+		       preprocess($page, $destpage,
+		       linkify($page, $destpage,
+		       filter($page,
+		       readfile(srcfile($file))))));
 	}
 	else {
 		return "";
