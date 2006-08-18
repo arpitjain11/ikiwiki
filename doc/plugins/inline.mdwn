@@ -1,5 +1,28 @@
-Allows including one wiki page inside another, generating blogs and RSS
-feeds. See [[blog]] for details.
+This is a [[PreProcessorDirective]] that allows including one wiki page
+inside another. For example:
+
+	\[[inline pages="blog/*"]]
+
+The most common use of inlining is generating blogs and RSS feeds.
+See [[blog]] for details.
+
+## usage
+
+Here are descriptions of all the supported parameters to the `inline`
+directive:
+
+* `pages` - A [[PageSpec]] of the pages to inline.
+* `show` - Specify the maximum number of matching pages to inline.
+  Default is 10, unless archiving, when the default is to show all.
+  Set to 0 to show all matching pages.
+* `rss` - Controls generation of an RSS feed. On by default, set to "no" to
+  disable.
+* `rootpage` - Enables a form to post new pages to a [[blog]].
+* `archive` - If set to "yes", only list page titles and some metadata, not
+  full controls.
+* `raw` - Rather than the default behavior of creating a [[blog]],
+  if raw is set to "yes", the page will be included raw, without additional
+  markup around it, as if it were a literal part of the inlining page.
 
 This plugin is enabled by default.
 

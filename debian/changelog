@@ -5,8 +5,12 @@ ikiwiki (1.21) UNRELEASED; urgency=low
     class="selflink" so that it can be styled. I don't have a useful style
     defined for that though.
   * Call filter hooks on inlined page content.
+  * Support inlining pages raw, rather than creating a blog.
+  * Clean up yes/no parameter parsing in inline plugin.
+  * Implemented better cycle detection in the inline plugin; nested inlines
+    will now work.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 20:39:20 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 23:27:38 -0400
 
 ikiwiki (1.20) unstable; urgency=low
 

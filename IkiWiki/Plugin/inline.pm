@@ -22,29 +22,29 @@ sub import { #{{{
 package IkiWiki;
 
 my %toping;
-my $processing_inline=0;
+my @processing_inline;
+
+sub yesno ($) { #{{{
+	my $val=shift;
+	return (defined $val && lc($val) eq "yes");
+} #}}}
 
 sub preprocess_inline (@) { #{{{
 	my %params=@_;
+	
+	# Avoid nested inlines, to avoid loops etc.
+	return "" if grep { $_ eq $params{page} } @processing_inline;
+	push @processing_inline, $params{page};
 
 	if (! exists $params{pages}) {
 		return "";
 	}
-	if (! exists $params{archive}) {
-		$params{archive}="no";
-	}
-	if (! exists $params{show} && $params{archive} eq "no") {
+	my $raw=yesno($params{raw});
+	my $archive=yesno($params{archive});
+	my $rss=exists $params{rss} ? yesno($params{rss}) : 1;
+	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}
-	if (! exists $params{rss}) {
-		$params{rss}="yes";
-	}
-
-	# Avoid nested inlines, to avoid loops etc.
-	if ($processing_inline) {
-		return "";
-	}
-	$processing_inline=1;
 
 	my @list;
 	foreach my $page (keys %pagesources) {
@@ -72,7 +72,7 @@ sub preprocess_inline (@) { #{{{
 		}
 		$ret.=$formtemplate->output;
 	}
-	elsif ($config{rss} && $params{rss} eq "yes") {
+	elsif ($config{rss} && $rss) {
 		# Add a rss link button.
 		my $linktemplate=template("rsslink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => rsspage(basename($params{page})));
@@ -80,46 +80,56 @@ sub preprocess_inline (@) { #{{{
 	}
 	
 	my $template=template(
-		(($params{archive} eq "no")
-			? "inlinepage.tmpl"
-			: "inlinepagetitle.tmpl"),
+		($archive ? "inlinepagetitle.tmpl" : "inlinepage.tmpl"),
 		blind_cache => 1,
-	);
+	) unless $raw;
 	
 	foreach my $page (@list) {
-		# Don't use htmllink because this way the title is separate
-		# and can be overridden by other plugins.
-		my $link=htmlpage(bestlink($params{page}, $page));
-		$link=abs2rel($link, dirname($params{page}));
-		$template->param(pageurl => $link);
-		$template->param(title => pagetitle(basename($page)));
-		# TODO: if $params{archive} eq "no", the only reason to do this
-		# is to let the meta plugin get page title info; so stop
-		# calling this next line then once the meta plugin can
-		# store that accross runs (also tags plugin).
-		$template->param(content => get_inline_content($page, $params{page}));
-		$template->param(ctime => displaytime($pagectime{$page}));
+		if (! $raw) {
+			# Don't use htmllink because this way the title is separate
+			# and can be overridden by other plugins.
+			my $link=htmlpage(bestlink($params{page}, $page));
+			$link=abs2rel($link, dirname($params{page}));
+			$template->param(pageurl => $link);
+			$template->param(title => pagetitle(basename($page)));
+			# TODO: if $archive=1, the only reason to do this
+			# is to let the meta plugin get page title info; so stop
+			# calling this next line then once the meta plugin can
+			# store that accross runs (also tags plugin).
+			$template->param(content => get_inline_content($page, $params{page}));
+			$template->param(ctime => displaytime($pagectime{$page}));
 
-		run_hooks(pagetemplate => sub {
-			shift->(page => $page, destpage => $params{page},
-				template => $template,);
-		});
+			run_hooks(pagetemplate => sub {
+				shift->(page => $page, destpage => $params{page},
+					template => $template,);
+			});
 
-		$ret.=$template->output;
-		$template->clear_params;
+			$ret.=$template->output;
+			$template->clear_params;
+		}
+		else {
+			my $file=$pagesources{$page};
+			my $type=pagetype($file);
+			if (defined $type) {
+				$ret.="\n".
+				      preprocess($page, $params{page},
+				      linkify($page, $params{page},
+				      filter($page,
+				      readfile(srcfile($file)))));
+			}
+		}
 	}
 	
 	# TODO: should really add this to renderedfiles and call
 	# check_overwrite, but currently renderedfiles
 	# only supports listing one file per page.
-	if ($config{rss} && $params{rss} eq "yes") {
+	if ($config{rss} && $rss) {
 		writefile(rsspage($params{page}), $config{destdir},
 			genrss($params{page}, @list));
 		$toping{$params{page}}=1 unless $config{rebuild};
 	}
 	
-	$processing_inline=0;
-
+	pop @processing_inline;
 	return $ret;
 } #}}}
 
