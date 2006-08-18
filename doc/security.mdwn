@@ -242,7 +242,7 @@ ikiwiki escapes any html in svn commit logs to prevent other mischief.
 ## XML::Parser
 
 XML::Parser is used by the aggregation plugin, and has some security holes. 
-#[378411](http://bugs.debian.org/378411) does not
+Bug #[378411](http://bugs.debian.org/378411) does not
 seem to affect our use, since the data is not encoded as utf-8 at that
 point. #[378412](http://bugs.debian.org/378412) could affect us, although it
 doesn't seem very exploitable. It has a simple fix, and has been fixed in
