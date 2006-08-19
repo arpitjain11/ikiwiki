@@ -8,7 +8,23 @@ use IkiWiki;
 use IPC::Open2;
 
 sub import { #{{{
+	IkiWiki::hook(type => "filter", id => "otl", call => \&filter);
 	IkiWiki::hook(type => "htmlize", id => "otl", call => \&htmlize);
+
+} # }}}
+
+sub filter (@) { #{{{
+	my %params=@_;
+        
+	# Munge up check boxes to look a little bit better. This is a hack.
+	my $checked=IkiWiki::htmllink($params{page}, $params{page},
+		"smileys/star_on.png", 0);
+	my $unchecked=IkiWiki::htmllink($params{page}, $params{page},
+		"smileys/star_off.png", 0);
+	$params{content}=~s/^(\s+)\[X\]\s/${1}$checked /mg;
+	$params{content}=~s/^(\s+)\[_\]\s/${1}$unchecked /mg;
+        
+	return $params{content};
 } # }}}
 
 sub htmlize ($) { #{{{
