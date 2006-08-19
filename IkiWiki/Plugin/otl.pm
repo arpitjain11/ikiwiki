@@ -21,8 +21,8 @@ sub filter (@) { #{{{
 		"smileys/star_on.png", 0);
 	my $unchecked=IkiWiki::htmllink($params{page}, $params{page},
 		"smileys/star_off.png", 0);
-	$params{content}=~s/^(\s+)\[X\]\s/${1}$checked /mg;
-	$params{content}=~s/^(\s+)\[_\]\s/${1}$unchecked /mg;
+	$params{content}=~s/^(\s*)\[X\]\s/${1}$checked /mg;
+	$params{content}=~s/^(\s*)\[_\]\s/${1}$unchecked /mg;
         
 	return $params{content};
 } # }}}
