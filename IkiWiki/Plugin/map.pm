@@ -2,7 +2,7 @@
 #
 # Produce a hyerarchical map of links.
 #
-# By Alessandro Dotti Contra <alessandro@hyboria.org>
+# by Alessandro Dotti Contra <alessandro@hyboria.org>
 #
 # Revision: 0.2
 package IkiWiki::Plugin::map;

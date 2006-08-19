@@ -1,0 +1,24 @@
+This plugin lets ikwiki convert files with names ending in ".rst" to html.
+It uses the [reStructuredText](http://docutils.sourceforge.net/rst.html)
+markup syntax. You need to have the python-docutils module installed to use
+it.
+
+Note that this plugin does not interoperate very well with the rest of
+ikiwiki. Limitations include:
+
+* reStructuredText does not allow raw html to be inserted into
+  documents, but ikiwiki does so in many cases, including
+  [[WikiLinks|WikiLink]] and many
+  [[PreprocessorDirectives|PreprocessorDirective]].
+* It's slow; it forks a copy of python for each page. While there is a
+  perl version of the reStructuredText processor, it is not being kept in
+  sync with the standard version, so is not used.
+
+So while you may find this useful for importing old files into your wiki,
+using this as your main markup language in ikiwiki isn't recommended at
+this time.
+
+This plugin is included in ikiwiki, but not enabled by default.
+It was contributed by Sergio Talens-Oliag.
+
+[[tag type/format]]

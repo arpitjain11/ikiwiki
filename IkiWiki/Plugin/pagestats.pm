@@ -7,7 +7,7 @@
 #          (default)
 #   table: produces a table with the number of backlinks for each page
 #
-# By Enrico Zini.
+# by Enrico Zini
 package IkiWiki::Plugin::pagestats;
 
 use warnings;
