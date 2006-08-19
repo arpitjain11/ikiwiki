@@ -3,14 +3,16 @@ This plugin allows tagging pages. List tags as follows:
 	\[[tag tech life linux]]
 
 The tags work the same as if you had put a (hidden) [[WikiLink]] on the page
-for each tag, so you can use a [[PageSpec]] to link to all pages that are
+for each tag, so you can use a [[PageSpec]] match all pages that are
 tagged with a given tag, for example. The tags will also show up on blog
 entries and at the bottom of the tagged pages, as well as in rss feeds.
 
-This plugin has a configuration option. Set --tagbase=tag and all tags will
-be located inside a "tag" subdirectory, This is a useful way to avoid having
-to write the full path to tags, if you want to keep them grouped together out
-of the way.
+This plugin has a configuration option. Set --tagbase=tag and links to tags
+will be located under the specified base page. If ikiwiki is configured
+this way, then the example above actually tags the page with the tags
+tags/tech, tags/life, and tags/linux. This is a useful way to avoid
+having to write the full path to tags, if you want to keep them grouped
+together out of the way.
 
 This plugin is included in ikiwiki, but is not enabled by default. If it is
 enabled, you'll see a note below that this page is tagged with the "tags"
