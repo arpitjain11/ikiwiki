@@ -35,6 +35,7 @@ sub htmlize ($) { #{{{
 	my $ret=<IN>;
 	$ret=~s/.*<body>//s;
 	$ret=~s/<body>.*//s;
+	$ret=~s/<div class="Footer">.*//s;
 	return $ret;
 } # }}}
 
