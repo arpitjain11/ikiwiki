@@ -1,0 +1,19 @@
+ikiwiki 1.21 released with these changes:
+
+   * Add a tail fin^W^Wsidebar plugin by Tuomo Valkonen.
+   * If a page links to itself, mark up the link text in a span with
+     class="selflink" so that it can be styled. I don't have a useful style
+     defined for that though.
+   * Call filter hooks on inlined page content.
+   * Support inlining pages raw, rather than creating a blog.
+   * Clean up yes/no parameter parsing in inline plugin.
+   * Implemented better cycle detection in the inline plugin; nested inlines
+     will now work.
+   * Add a map plugin contributed by Alessandro Dotti Contra.
+   * Add otl format plugin, which handles files as created by vimoutliner.
+   * Fix ikiwiki-mass-rebuild to work in the way the postinst uses it.
+   * Add first draft at a Restructured Text (rst) plugin, by Sergio
+     Talens-Oliag. Note that this has many known issues -- see the caveats on
+     the plugin's page.
+   * Credit everyone who wrote a plugin on the plugins' wiki pages.
+   * Fix utf-8 in blog post form.
