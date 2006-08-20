@@ -614,7 +614,7 @@ sub cgi () { #{{{
 		cgi_prefs($q, $session);
 	}
 	elsif ($do eq 'blog') {
-		my $page=titlepage($q->param('title'));
+		my $page=titlepage(decode_utf8($q->param('title')));
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
