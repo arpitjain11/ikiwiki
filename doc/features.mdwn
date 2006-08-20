@@ -1,26 +1,28 @@
 Some of ikiwiki's features:
 
-* [[Subversion]]
+* Uses a real RCS
 
   Rather than implement its own system for storing page histories etc,
-  ikiwiki simply uses subversion. (It's also possible to [[plugins/write]]
-  support for other systems, and ikiwiki also includes support for [[Git]]
-  now.)
+  ikiwiki uses a real RCS. This isn't because we're lazy, it's because a
+  real RCS is a good thing to have, and there are advantages to using one
+  that are not possible with a standard wiki.
 
   Instead of editing pages in a stupid web form, you can use vim and commit
   changes via svn. Or work disconnected using svk and push your changes out
-  when you come online.
+  when you come online. Or use git to work in a distributed fashion all the
+  time. (It's also possible to [[plugins/write]] a plugin to support other
+  systems.)
 
   ikiwiki can be run from a [[post-commit]] hook to update your wiki
   immediately whenever you commit.
 
-  Note that ikiwiki does not require subversion to function. If you want to
+  Note that ikiwiki does not require a RCS to function. If you want to
   run a simple wiki without page history, it can do that too.
 
-* [[MarkDown]]
+* Supports many markup languages
 
-  ikiwiki supports pages using [[MarkDown]] as their markup language. Any
-  page with a filename ending in ".mdwn" is converted from markdown to html
+  By default, pages in the wiki are written using the [[MarkDown]] format.
+  Any page with a filename ending in ".mdwn" is converted from markdown to html
   by ikiwiki. Markdown understands text formatted as it would be in an email,
   and is quite smart about converting it to html. The only additional markup
   provided by ikiwiki on top of regular markdown is the [[WikiLink]] and 
@@ -28,8 +30,8 @@ Some of ikiwiki's features:
 
   If you prefer to use some other markup language, ikiwiki allows others to
   easily be added by [[plugins]]. For example it also supports traditional
-  [[plugins/WikiText]] formatted pages or pages written as pure
-  [[plugins/HTML]].
+  [[plugins/WikiText]] formatted pages, pages written as pure
+  [[plugins/HTML]], or pages written in [[reStructuredText|plugins/rst]].
 
 * support for other file types
 
@@ -38,10 +40,11 @@ Some of ikiwiki's features:
   unchanged by ikiwiki as it builds your wiki. So you can check in an image,
   program, or other special file and link to it from your wiki pages.
 
-* [[SubPages|SubPage]]
+* Fast compiler
 
-  Arbitrarily deep hierarchies of pages with fairly simple and useful
-  [[SubPage/LinkingRules]]
+  ikiwiki is fast and smart about updating a wiki, it only builds pages
+  that have changed (and tracks things like creation of new pages and links
+  that can indirectly cause a page to need a rebuild)
 
 * [[blogging|blog]]
 
@@ -62,18 +65,17 @@ Some of ikiwiki's features:
   up in the ways you'd expect, like at the bottom of pages, in blogs, and
   in rss feeds.
 
-* Fast compiler
-
-  ikiwiki is fast and smart about updating a wiki, it only builds pages
-  that have changed (and tracks things like creation of new pages and links
-  that can indirectly cause a page to need a rebuild)
-
 * valid html and css
 
   ikiwiki aims to produce 
   [valid XHTML 1.0](http://validator.w3.org/check?url=referer).
   ikiwiki generates html using [[templates]], and uses css, so you can 
   change the look and layout of all pages in any way you would like.
+
+* [[SubPages|SubPage]]
+
+  Arbitrarily deep hierarchies of pages with fairly simple and useful
+  [[SubPage/LinkingRules]]
 
 * [[BackLinks]]
 
@@ -104,14 +106,14 @@ Some of ikiwiki's features:
 
 * Smart merging and conflict resolution in your web browser
 
-  Since it uses subversion, ikiwiki takes advantage of its smart merging to
+  Since it uses a real RCS, ikiwiki takes advantage of its smart merging to
   avoid any conflicts when two people edit different parts of the same page
   at the same time. No annoying warnings about other editors, or locking,
   etc, instead the other person's changes will be automatically merged with
   yours when you commit.
 
   In the rare cases where automatic merging fails due to the same part of a
-  page being concurrently edited, regular subversion commit markers are
+  page being concurrently edited, regular commit conflict markers are
   shown in the file to resolve the conflict, so if you're already familiar
   with that there's no new commit marker syntax to learn.
 
@@ -134,8 +136,9 @@ Some of ikiwiki's features:
   Plugins can be used to add additional features to ikiwiki. The interface
   is quite flexible, allowing plugins to implement additional markup
   languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
-  and more. Ikiwiki's backend RCS support is also pluggable, so support for
-  new revision control systems can be added to ikiwiki. 
+  and more. Most of ikiwiki's features are actually provided by plugins.
+  Ikiwiki's backend RCS support is also pluggable, so support for new
+  revision control systems can be added to ikiwiki. 
 
 * [[todo/utf8]]
 
