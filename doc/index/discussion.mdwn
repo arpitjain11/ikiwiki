@@ -17,3 +17,9 @@ It would be interesting to have a `<TMPL_VAR BASEURL>` that would act exactly li
 		$page=~s/[^\/]+\//..\//g;
 		return $page;
 	} #}}}
+
+----
+The header of subpages always links to its "superpage", even if it doesn't exist. I'm not sure if this is a feature or a bug, but I would certainly prefer that superpages weren't mandatory.
+
+For example, if you are in 'example/page.html', the header will be something like 'wiki / example / page'. Now, if 'example.html' doesn't exist, you'll have a dead link for every subpage.
+
