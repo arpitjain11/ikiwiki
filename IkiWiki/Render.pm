@@ -180,7 +180,7 @@ sub genpage ($$$) { #{{{
 		content => $content,
 		backlinks => [backlinks($page)],
 		mtime => displaytime($mtime),
-		styleurl => styleurl($page),
+		baseurl => baseurl($page),
 	);
 
 	run_hooks(pagetemplate => sub {

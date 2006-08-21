@@ -1,3 +1,14 @@
+ikiwiki (1.22) UNRELEASED; urgency=low
+
+  * Fixed a bug with previews of subpages having broken links to top-level
+    pages.
+  * Change how the stylesheet url is determined in the templates: Remove
+    STYLEURL and add BASEURL to all templates (some already had it). This
+    new more general variable can be used to link to other things (eg, images)
+    from the template, as well as stylesheets.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 21 Aug 2006 18:16:09 -0400
+
 ikiwiki (1.21) unstable; urgency=low
 
   * Add a tail fin^W^Wsidebar plugin by Tuomo Valkonen.

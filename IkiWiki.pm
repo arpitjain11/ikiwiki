@@ -304,14 +304,14 @@ sub cgiurl (@) { #{{{
 	return $config{cgiurl}."?".join("&amp;", map "$_=$params{$_}", keys %params);
 } #}}}
 
-sub styleurl (;$) { #{{{
+sub baseurl (;$) { #{{{
 	my $page=shift;
 
-	return "$config{url}/style.css" if ! defined $page;
+	return "$config{url}/" if ! defined $page;
 	
 	$page=~s/[^\/]+$//;
 	$page=~s/[^\/]+\//..\//g;
-	return $page."style.css";
+	return $page;
 } #}}}
 
 sub abs2rel ($$) { #{{{
@@ -476,8 +476,7 @@ sub misctemplate ($$) { #{{{
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
 		pagebody => $pagebody,
-		styleurl => styleurl(),
-		baseurl => "$config{url}/",
+		baseurl => baseurl(),
 	);
 	return $template->output;
 }#}}}

@@ -2,12 +2,10 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<TMPL_IF NAME="BASEURL">
 <base href="<TMPL_VAR BASEURL>" />
-</TMPL_IF>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><TMPL_VAR FORM-TITLE></title>
-<link rel="stylesheet" href="<TMPL_VAR STYLEURL>" type="text/css" />
+<link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
 </head>
 <body>
 <TMPL_IF NAME="PAGE_CONFLICT">

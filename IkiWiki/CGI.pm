@@ -70,8 +70,7 @@ sub cgi_recentchanges ($) { #{{{
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
 		changelog => [rcs_recentchanges(100)],
-		styleurl => styleurl(),
-		baseurl => "$config{url}/",
+		baseurl => baseurl(),
 	);
 	print $q->header(-charset=>'utf-8'), $template->output;
 } #}}}
@@ -100,7 +99,7 @@ sub cgi_signin ($$) { #{{{
 		header => 0,
 		template => (-e "$config{templatedir}/signin.tmpl" ?
 			     {template_params("signin.tmpl")} : ""),
-		stylesheet => styleurl(),
+		stylesheet => baseurl()."style.css",
 	);
 		
 	decode_form_utf8($form);
@@ -267,7 +266,7 @@ sub cgi_prefs ($$) { #{{{
 		action => $config{cgiurl},
 		template => (-e "$config{templatedir}/prefs.tmpl" ?
 			     {template_params("prefs.tmpl")} : ""),
-		stylesheet => styleurl(),
+		stylesheet => baseurl()."style.css",
 	);
 	my @buttons=("Save Preferences", "Logout", "Cancel");
 	
@@ -394,8 +393,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
 		htmllink("", "", "HelpOnFormatting", 1));
-	$form->tmpl_param("styleurl", styleurl());
-	$form->tmpl_param("baseurl", "$config{url}/");
+	$form->tmpl_param("baseurl", baseurl());
 	if (! $form->submitted) {
 		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 			force => 1);
@@ -414,7 +412,7 @@ sub cgi_editpage ($$) { #{{{
 		$form->field(name => "comments",
 				value => $comments, force => 1);
 		$form->tmpl_param("page_preview",
-			htmlize($type, linkify($page, $page, filter($page, $content))));
+			htmlize($type, linkify($page, "", filter($page, $content))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");
