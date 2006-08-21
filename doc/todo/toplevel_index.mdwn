@@ -2,3 +2,20 @@ Some inconsistences around the toplevel [[index]] page:
 
 * [[ikiwiki]] is a separate page; links to [[ikiwiki]] should better go to
   the [[index]] though.
+* The toplevel [[ikiwiki/Discussion]] page has some weird parentlinks
+  behavior. This could be special cased around with the following patch.
+  However, I'm unsure if I like the idea of more special cases around this.
+  It would be better to find a way to make the toplevel index page not be a
+  special case at all.
+
+	--- IkiWiki/Render.pm   (revision 1187)
+	+++ IkiWiki/Render.pm   (working copy)
+	@@ -71,6 +71,7 @@
+	        my $path="";
+	        my $skip=1;
+	        return if $page eq 'index'; # toplevel
+	+       $path=".." if $page=~s/^index\///;
+	        foreach my $dir (reverse split("/", $page)) {
+	                if (! $skip) {
+	                        $path.="../";
+
