@@ -49,12 +49,15 @@ it in ikiwiki.setup, though some problems were found while trying to do
 so. (Actually, defining hash-like arguments from the command like works
 fine, but it fails from ikiwiki.setup.)
 
+  > My guess about this is that it's because of the way Setup/Standard.pm untaints the config items from the file. It has code to handle arrays, but not hashes or more complex data structures. --[[Joey]]
+
 * Wiki links to other translated pages require the full page name
 including the `.$LANG`. It should be possible to link automatically
 to pages with the same `.$LANG`, but that would probably require some
 changes in IkiWiki. (I'm not sure though, I still haven't looked at
 it... any hints?)
 
+  > Have you considered using the form ll/page? This would let more usual linking rules  apply amoung pages without needing to specify the language. I'm not sure if you're supporting browser content negotiation, or whether that other layout would be harder to support it though. --[[Joey]]
 
 Examples
 --------
