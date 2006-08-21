@@ -4,3 +4,16 @@ Note that for more formal bug reports or todo items, you can also edit the [[bug
 
 ----
 How about adding ACL? So that you can control which users are allowed to read, write certain pages. The moinmoin wiki has that, and it is something, that I think is very valuable. 
+
+----
+It would be interesting to have a `<TMPL_VAR BASEURL>` that would act exactly like the current `STYLEURL`, but without adding 'style.css' (`STYLEURL` could be defined in terms of `BASEURL`). This way it would be possible to have more flexible templates allowing multiple stylesheets, shortcut icons (and other images), etc.
+
+	sub baseurl (;$) { #{{{
+		my $page=shift;
+
+		return "$config{url}/" if ! defined $page;
+		
+		$page=~s/[^\/]+$//;
+		$page=~s/[^\/]+\//..\//g;
+		return $page;
+	} #}}}
