@@ -74,7 +74,7 @@ sub parentlinks ($) { #{{{
 	foreach my $dir (reverse split("/", $page)) {
 		if (! $skip) {
 			$path.="../";
-			unshift @ret, { url => $path.htmlpage($dir), page => pagetitle($dir) };
+			unshift @ret, { url => exists $pagesources{$dir} ? $path.htmlpage($dir) : "", page => pagetitle($dir) };
 		}
 		else {
 			$skip=0;
