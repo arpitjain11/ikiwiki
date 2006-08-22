@@ -86,17 +86,21 @@ sub preprocess_inline (@) { #{{{
 	
 	foreach my $page (@list) {
 		if (! $raw) {
+			# Get the content before populating the template,
+			# since getting the content uses the same template
+			# if inlines are nested.
+			# TODO: if $archive=1, the only reason to do this
+			# is to let the meta plugin get page title info; so stop
+			# calling this next line then once the meta plugin can
+			# store that accross runs (also tags plugin).
+			my $content=get_inline_content($page, $params{page});
 			# Don't use htmllink because this way the title is separate
 			# and can be overridden by other plugins.
 			my $link=htmlpage(bestlink($params{page}, $page));
 			$link=abs2rel($link, dirname($params{page}));
 			$template->param(pageurl => $link);
 			$template->param(title => pagetitle(basename($page)));
-			# TODO: if $archive=1, the only reason to do this
-			# is to let the meta plugin get page title info; so stop
-			# calling this next line then once the meta plugin can
-			# store that accross runs (also tags plugin).
-			$template->param(content => get_inline_content($page, $params{page}));
+			$template->param(content => $content);
 			$template->param(ctime => displaytime($pagectime{$page}));
 
 			run_hooks(pagetemplate => sub {
