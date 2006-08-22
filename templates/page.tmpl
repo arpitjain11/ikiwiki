@@ -14,11 +14,7 @@
 <div class="header">
 <span>
 <TMPL_LOOP NAME="PARENTLINKS">
-<TMPL_IF NAME="URL">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
-<TMPL_ELSE>
-<TMPL_VAR NAME=PAGE>/ 
-</TMPL_IF>
 </TMPL_LOOP>
 <TMPL_VAR TITLE>
 </span>

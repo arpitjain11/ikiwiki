@@ -6,4 +6,18 @@ For example, if you are in 'example/page.html', the header will be something
 like 'wiki / example / page'. Now, if 'example.html' doesn't exist, you'll have
 a dead link for every subpage.
 
-[[todo/done]]
+---
+
+This is a bug, but fixing it is very tricky. Consider what would happen if
+example.mdwn were created: example/page.html and the rest of example/*
+would need to be updated to change the parentlink from a bare work to a
+link to the new page. Now if example.mdwn were removed again, they'd need
+to be updated again. So example/* depends on example. But it's even more
+tricky, because if example.mdwn is modified, we _don't_ want to rebuild
+example/*!
+
+ikiwiki doesn't have a way to represent this dependency and can't get one
+without a lot of new complex code being added.
+
+For now the best thing to do is to make sure that you always create
+example if you create example/foo. Which is probably a good idea anyway..

@@ -1,7 +1,5 @@
 ikiwiki (1.22) UNRELEASED; urgency=low
 
-  * Fixed a bug with previews of subpages having broken links to top-level
-    pages.
   * Change how the stylesheet url is determined in the templates: Remove
     STYLEURL and add BASEURL to all templates (some already had it). This
     new more general variable can be used to link to other things (eg, images)
