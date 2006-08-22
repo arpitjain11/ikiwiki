@@ -1,3 +1,12 @@
+ikiwiki (1.22) unstable; urgency=low
+
+  If you have modified versions of ikiwiki's html templates, you will need
+  to update your templates to link to the stylesheet file using
+  "<TMPL_VAR BASEURL>style.css" instead of the old method which used
+  STYLEURL.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 15:33:12 -0400
+
 ikiwiki (1.13) unstable; urgency=low
 
   The GlobList format which was used for specifiying sets of pages, has been
