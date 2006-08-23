@@ -1,0 +1,17 @@
+I built ikiwiki using
+
+% perl Makefile.PL PREFIX=/home/ed
+% make
+% make install
+
+This installs the files under /home/ed, for example one of the lines it prints is
+
+cp -a basewiki/* /home/ed/share/ikiwiki/basewiki
+
+However when I try to run ikiwiki I get an error as follows:
+
+% ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ --url=http://membled.com/wiki/ 
+Can't stat /usr/share/ikiwiki/basewiki: No such file or directory 
+ at /home/ed/lib/perl5/site_perl/5.8.7/IkiWiki/Render.pm line 349 
+
+The PREFIX specified at build time should also affect the share directory - it shouldn't try to use /usr/share here.
