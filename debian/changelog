@@ -16,8 +16,16 @@ ikiwiki (1.22) UNRELEASED; urgency=low
   * Make pagespec merge code smarter about merging duplicate pagespecs.
   * Patch from Jordà Polo to make Setup::Standard support hashes in config
     files.
+  * Change order of linkify and preprocess; first preprocess and then linkify.
+    This allows passing a wikilink inside a parameter to a preprocessor
+    directive without it being expanded to html, and leaking out of the
+    parameter, which had required some non-obvious use of triple-quoting
+    to avoid. Note that any preprocessor plugins that output something
+    that looks like a wikilink will now have it treated as such; AFAIK
+    this doesn't change any behavior though except for the template plugin.
+  * Enable preprocessor directives when previewing an edit.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 23 Aug 2006 14:35:18 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 23 Aug 2006 15:30:09 -0400
 
 ikiwiki (1.21) unstable; urgency=low
 

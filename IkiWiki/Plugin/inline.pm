@@ -116,8 +116,8 @@ sub preprocess_inline (@) { #{{{
 			my $type=pagetype($file);
 			if (defined $type) {
 				$ret.="\n".
-				      preprocess($page, $params{page},
 				      linkify($page, $params{page},
+				      preprocess($page, $params{page},
 				      filter($page,
 				      readfile(srcfile($file)))));
 			}
@@ -145,8 +145,8 @@ sub get_inline_content ($$) { #{{{
 	my $type=pagetype($file);
 	if (defined $type) {
 		return htmlize($type,
-		       preprocess($page, $destpage,
 		       linkify($page, $destpage,
+		       preprocess($page, $destpage,
 		       filter($page,
 		       readfile(srcfile($file))))));
 	}

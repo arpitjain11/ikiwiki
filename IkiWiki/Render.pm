@@ -104,11 +104,24 @@ sub preprocess ($$$;$) { #{{{
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
 			my @params;
-			while ($params =~ /(?:(\w+)=)?(?:"""\n?(.+)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
-				my $val=(defined $2 ? $2 : (defined $3 ? $3 : $4));
-				chomp $val;
-				if (defined $1) {
-					push @params, $1, $val;
+			while ($params =~ /(?:(\w+)=)?(?:"""(.*?)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
+				my $key=$1;
+				my $val;
+				if (defined $2) {
+					$val=$2;
+					$val=~s/\r\n/\n/mg;
+					$val=~s/^\n+//g;
+					$val=~s/\n+$//g;
+				}
+				elsif (defined $3) {
+					$val=$3;
+				}
+				elsif (defined $4) {
+					$val=$4;
+				}
+
+				if (defined $key) {
+					push @params, $key, $val;
 				}
 				else {
 					push @params, $val, '';
@@ -125,7 +138,7 @@ sub preprocess ($$$;$) { #{{{
 		}
 	};
 	
-	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:""".+"""|"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}eg;
+	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:""".*?"""|"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}seg;
 	return $content;
 } #}}}
 
@@ -268,8 +281,8 @@ sub render ($) { #{{{
 		
 		$links{$page}=[findlinks($page, $content)];
 		
-		$content=linkify($page, $page, $content);
 		$content=preprocess($page, $page, $content);
+		$content=linkify($page, $page, $content);
 		$content=htmlize($type, $content);
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
