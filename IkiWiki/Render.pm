@@ -84,11 +84,10 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
-sub preprocess ($$$;$) { #{{{
+sub preprocess ($$$) { #{{{
 	my $page=shift; # the page the data comes from
 	my $destpage=shift; # the page the data will appear in (different for inline)
 	my $content=shift;
-	my $onlystrip=shift || 0; # strip directives without processing
 
 	my $handle=sub {
 		my $escape=shift;
@@ -96,9 +95,6 @@ sub preprocess ($$$;$) { #{{{
 		my $params=shift;
 		if (length $escape) {
 			return "[[$command $params]]";
-		}
-		elsif ($onlystrip) {
-			return "";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			# Note: preserve order of params, some plugins may
