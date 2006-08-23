@@ -1,3 +1,6 @@
+[[template id=plugin name=inline core=1 included=1 author="""[[Joey]]"""]]
+[[tag type/core]]
+
 This is a [[PreProcessorDirective]] that allows including one wiki page
 inside another. For example:
 
@@ -24,7 +27,3 @@ directive:
   if raw is set to "yes", the page will be included raw, without additional
   markup around it, as if it were a literal part of the source of the 
   inlining page.
-
-This plugin is enabled by default.
-
-[[tag type/core]]

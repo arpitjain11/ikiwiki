@@ -1,7 +1,12 @@
+[[template id=plugin name=aggregate included=1 author="""[[Joey]]"""]]
+[[tag type/useful]]
+
 This plugin allows content from other blogs to be aggregated into the wiki.
 Aggregate a blog as follows:
 
-	\[[aggregate name="example blog" feedurl="http://example.com/index.rss" url="http://example.com/" updateinterval="15"]]
+	\[[aggregate name="example blog"
+	feedurl="http://example.com/index.rss"
+	url="http://example.com/" updateinterval="15"]]
 
 That example aggregates posts from the expecified RSS feed, updating no
 more frequently than once every 15 minutes, and puts a page per post under
@@ -50,7 +55,3 @@ directive:
 Note that even if you are using subversion or another revision control
 system, pages created by aggregation will *not* be checked into revision
 control.
-
-This plugin is not enabled by default.
-
-[[tag type/useful]]

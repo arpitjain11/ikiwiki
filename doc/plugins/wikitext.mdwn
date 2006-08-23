@@ -1,3 +1,6 @@
+[[template id=plugin name=wikitext included=1 author="""[[Joey]]"""]]
+[[tag type/format]]
+
 This plugin allows ikiwiki to process pages written in the original wiki
 text format. To use it, you need to have the Text::WikiFormat perl module
 installed, enable the plugin, then files with the extention `.wiki` will be
@@ -18,7 +21,3 @@ asterisk and space. Ordered lists consist of items marked with combination
 of one or more alphanumeric characters followed by a period and an optional
 space. Any indented text without either marking is code, handled literally.
 You can nest lists.
-
-This plugin is included in ikiwiki, but is not enabled by default.
-
-[[tag type/format]]

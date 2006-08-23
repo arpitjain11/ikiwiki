@@ -145,6 +145,13 @@ with a username containing html code (anymore).
 It's difficult to know for sure if all such avenues have really been
 closed though.
 
+## HTML::Template security
+
+If the [[plugins/template]] plugin is enabled, users can modify templates
+like any other part of the wiki. This assumes that HTML::Template is secure
+when used with untrusted/malicious templates. (Note that includes are not
+allowed, so that's not a problem.)
+
 ----
 
 # Fixed holes

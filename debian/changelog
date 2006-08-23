@@ -8,6 +8,11 @@ ikiwiki (1.22) UNRELEASED; urgency=low
   * Allow preprocessor directives to span multiple lines, both to make
     long ones with lots of values easier to write, and to allow for ones with
     multi-line quoted values.
+  * Allow preprocessor directives to contain python-like triple-quoted
+    text blocks, for easy nesting of quotes inside.
+  * Add a template plugin.
+  * Use the template plugin to add infoboxes to each plugin page listing basic
+    info about the plugin.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 23:09:46 -0400
 

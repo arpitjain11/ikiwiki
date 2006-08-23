@@ -1,3 +1,6 @@
+[[template id=plugin name=map included=1 author="""Alessandro Dotti Contra"""]]
+[[tag type/meta]]
+
 This plugin generates a hierarchical page map for the wiki. Example usage:
 
 	\[[map pages="* and !blog/* and !*/Discussion"]]
@@ -15,5 +18,3 @@ If this plugin is enabled, here is a page map for the plugins section
 of this wiki:
 
 [[map pages="(plugins or plugins/*) and !*/*/*"]]
-
-[[tag type/meta]]

@@ -16,15 +16,18 @@ be put after its name, to avoid confusion with a [[WikiLink]]. For example:
 
 	\[[pagecount ]]
 
-A preprocessor directive does not need to all be on one line. Also,
-multiple lines of *quoted* text can be used for a value. Examples:
-
+A preprocessor directive does not need to all be on one line, it can be
+wrapped to multiple lines if you like:
+	
 	\[[directive foo="baldersnatch"
 	bar="supercalifragalisticexpealadocious" baz=11]]
 
-	\[[directive text="
-	1. foo
-	2. bar
-	3. baz
-	more lines
-	"]]
+Also, multiple lines of *quoted* text can be used for a value.
+To allow quote marks inside the quoted text, delimit the block
+of text with triple-quotes:
+
+	\[[directive text="""
+	1. "foo"
+	2. "bar"
+	3. "baz"
+	"""]]

@@ -1,3 +1,6 @@
+[[template id=plugin name=meta included=1 author="""[[Joey]]"""]]
+[[tag type/meta]]
+
 This plugin allows inserting arbitrary metadata into the source of a page.
 Enter the metadata as follows:
 
@@ -52,8 +55,5 @@ header.
 The field value is treated as HTML entity-escaped text, so you can include
 a quote in the text by writing `&quot;` and so on.
 
-This plugin is included in ikiwiki, but it is not enabled by default. If
-it is enabled, the title of this page will say it is.
+If this plugin is enabled, the title of this page will say that it is.
 [[meta title="meta plugin (enabled)"]]
-
-[[tag type/meta]]

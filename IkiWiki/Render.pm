@@ -104,12 +104,12 @@ sub preprocess ($$$;$) { #{{{
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
 			my @params;
-			while ($params =~ /(?:(\w+)=)?(?:"([^"]+)"|(\S+))(?:\s+|$)/g) {
+			while ($params =~ /(?:(\w+)=)?(?:"""(.+)"""|"([^"]+)"|(\S+))(?:\s+|$)/g) {
 				if (defined $1) {
-					push @params, $1, (defined $2 ? $2 : $3);
+					push @params, $1, (defined $2 ? $2 : (defined $3 ? $3 : $4));
 				}
 				else {
-					push @params, (defined $2 ? $2 : $3), '';
+					push @params, (defined $2 ? $2 : (defined $3 ? $3 : $4)), '';
 				}
 			}
 			return $hooks{preprocess}{$command}{call}->(
@@ -123,7 +123,7 @@ sub preprocess ($$$;$) { #{{{
 		}
 	};
 	
-	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}eg;
+	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:""".+"""|"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}eg;
 	return $content;
 } #}}}
 
