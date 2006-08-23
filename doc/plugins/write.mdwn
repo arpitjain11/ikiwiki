@@ -81,9 +81,9 @@ function returns goes onto the page in place of the directive.
 Note that if the [[htmlscrubber]] is enabled, html in
 [[PreProcessorDirective]] output is sanitised, which may limit what your
 plugin can do. Also, the rest of the page content is not in html format at
-preprocessor time. Text output by a preprocessor directive will be passed
-through markdown (or whatever engine is used to htmlize the page) along
-with the rest of the page.
+preprocessor time. Text output by a preprocessor directive will be
+linkified and passed through markdown (or whatever engine is used to htmlize
+the page) along with the rest of the page.
 
 ## htmlize
 
