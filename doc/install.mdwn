@@ -7,7 +7,10 @@ Ikiwiki requires [[MarkDown]] and the `HTML::Parser` perl module be
 installed, and also uses the following perl modules if available: 
 `CGI::Session` `CGI::FormBuilder` (version 3.02.02 or newer)
 `HTML::Template` `Mail::SendMail` `Time::Duration` `Date::Parse`,
-`HTML::Scrubber`, `RPC::XML`, `XML::Simple`, `XML::Feed`.  The 'fortune' plugin uses fortune(1).
+`HTML::Scrubber`, `RPC::XML`, `XML::Simple`, `XML::Feed`.
+
+Various [[plugins]] use other libraries and utlities; see their individual
+documentation for details.
 
 If you're installing MarkDown by hand, note that it should be installed as
 `Markdown.pm` somewhere in perl's module search path, or alternately as
