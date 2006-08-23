@@ -544,6 +544,8 @@ sub pagespec_merge ($$) { #{{{
 	my $a=shift;
 	my $b=shift;
 
+	return $a if $a eq $b;
+
         # Support for old-style GlobLists.
         if (is_globlist($a)) {
                 $a=globlist_to_pagespec($a);
