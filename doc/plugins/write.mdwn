@@ -26,43 +26,9 @@ hook, a "id" paramter, which should be a unique string for this plugin, and
 a "call" parameter, which is a reference to a function to call for the
 hook.
 
-# Writing a [[PreProcessorDirective]]
+# Types of hooks
 
-This is probably the most common use of a plugin.
-
-        IkiWiki::hook(type => "preprocess", id => "foo", call => \&preprocess);
-
-Replace "foo" with the command name that will be used inside brackers for
-the preprocessor directive.
-
-Each time the directive is processed, the referenced function (`preprocess`
-in the example above) is called, and is passed named parameters. A "page"
-parameter gives the name of the page that embedded the preprocessor
-directive, while a "destpage" parameter gices the name of the page the
-content is going to (different for inlined pages). All parameters included
-in the directive are included as named parameters as well. Whatever the
-function returns goes onto the page in place of the directive.
-
-## Error handing
-
-While a plugin can call ikiwiki's error routine for a fatal error, for
-errors that aren't intended to halt the entire wiki build, including bad
-parameters passed to a [[PreProcessorDirective]], etc, it's better to just
-return the error message as the output of the plugin.
-
-## Html issues
-
-Note that if the [[htmlscrubber]] is enabled, html in
-[[PreProcessorDirective]] output is sanitised, which may limit what your
-plugin can do. Also, the rest of the page content is not in html format at
-preprocessor time. Text output by a preprocessor directive will be passed
-through markdown (or whatever engine is used to htmlize the page) along
-with the rest of the page.
-
-# Other types of hooks
-
-Beyond PreProcessorDirectives, Other types of hooks that can be used by
-plugins include:
+In roughly the order they are called.
 
 ## getopt
 
@@ -93,6 +59,31 @@ IkiWiki::error if something isn't configured right.
 Runs on the raw source of a page, before anything else touches it, and can
 make arbitrary changes. The function is passed named parameters `page` and
 `content` and should return the filtered content.
+
+## preprocess
+
+Adding a [[PreProcessorDirective]] is probably the most common use of a
+plugin.
+
+        IkiWiki::hook(type => "preprocess", id => "foo", call => \&preprocess);
+
+Replace "foo" with the command name that will be used inside brackets for
+the preprocessor directive.
+
+Each time the directive is processed, the referenced function (`preprocess`
+in the example above) is called, and is passed named parameters. A "page"
+parameter gives the name of the page that embedded the preprocessor
+directive, while a "destpage" parameter gices the name of the page the
+content is going to (different for inlined pages). All parameters included
+in the directive are included as named parameters as well. Whatever the
+function returns goes onto the page in place of the directive.
+
+Note that if the [[htmlscrubber]] is enabled, html in
+[[PreProcessorDirective]] output is sanitised, which may limit what your
+plugin can do. Also, the rest of the page content is not in html format at
+preprocessor time. Text output by a preprocessor directive will be passed
+through markdown (or whatever engine is used to htmlize the page) along
+with the rest of the page.
 
 ## htmlize
 
@@ -168,6 +159,13 @@ terminate the program.
 This hook is called wheneven ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
+
+## Error handing
+
+While a plugin can call ikiwiki's error routine for a fatal error, for
+errors that aren't intended to halt the entire wiki build, including bad
+parameters passed to a [[PreProcessorDirective]], etc, it's better to just
+return the error message as the output of the plugin.
 
 # Wiki configuration
 
