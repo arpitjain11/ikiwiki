@@ -123,7 +123,7 @@ sub preprocess ($$$;$) { #{{{
 		}
 	};
 	
-	$content =~ s{(\\?)$config{wiki_processor_regexp}}{$handle->($1, $2, $3)}eg;
+	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}eg;
 	return $content;
 } #}}}
 

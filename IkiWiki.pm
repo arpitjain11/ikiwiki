@@ -18,7 +18,6 @@ use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
 sub defaultconfig () { #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$)},
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
-	wiki_processor_regexp => qr/\[\[(\w+)\s+([^\]]*)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	verbose => 0,
 	syslog => 0,

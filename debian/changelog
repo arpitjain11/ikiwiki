@@ -5,8 +5,11 @@ ikiwiki (1.22) UNRELEASED; urgency=low
     new more general variable can be used to link to other things (eg, images)
     from the template, as well as stylesheets.
   * Fix a bug introduced last version to do with nested inlines.
+  * Allow preprocessor directives to span multiple lines, both to make
+    long ones with lots of values easier to write, and to allow for ones with
+    multi-line quoted values.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 12:53:05 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 23:09:46 -0400
 
 ikiwiki (1.21) unstable; urgency=low
 
