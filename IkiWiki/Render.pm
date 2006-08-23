@@ -104,12 +104,14 @@ sub preprocess ($$$;$) { #{{{
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
 			my @params;
-			while ($params =~ /(?:(\w+)=)?(?:"""(.+)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
+			while ($params =~ /(?:(\w+)=)?(?:"""\n?(.+)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
+				my $val=(defined $2 ? $2 : (defined $3 ? $3 : $4));
+				chomp $val;
 				if (defined $1) {
-					push @params, $1, (defined $2 ? $2 : (defined $3 ? $3 : $4));
+					push @params, $1, $val;
 				}
 				else {
-					push @params, (defined $2 ? $2 : (defined $3 ? $3 : $4)), '';
+					push @params, $val, '';
 				}
 			}
 			return $hooks{preprocess}{$command}{call}->(
