@@ -55,6 +55,11 @@ sub setup_standard {
 			elsif (ref $setup{$c} eq 'ARRAY') {
 				$config{$c}=[map { possibly_foolish_untaint($_) } @{$setup{$c}}]
 			}
+			elsif (ref $setup{$c} eq 'HASH') {
+				foreach my $key (keys %{$setup{$c}}) {
+					$config{$c}{$key}=possibly_foolish_untaint($setup{$c}{$key});
+				}
+			}
 		}
 		else {
 			$config{$c}=undef;
