@@ -1,0 +1,50 @@
+# thoughts on infoboxes
+
+I was thinking about adding a [[preprocessordirective]] to make it easy to
+add an info box. Something like:
+
+	\[[infobox "text here"]]
+
+But it seems it would be better if multi-line text could be put inside,
+maybe expanding the syntax a bit:
+
+	\[[infobox "
+	text here
+	and here
+	etc.
+	"]]
+
+This would just wrap the text up in a span element that was styled to float
+to the right, with a border, the way info boxes do on some wikis.
+
+However, as I thought about it some more, I realized that this would be
+just as easy to type:
+
+	<span id=infobox>
+	text here
+	</span>
+
+Why invent new syntax, after all? I see no reason to for something this
+simple.
+
+However, maybe in the more complex case, this would be useful. If the
+infobox filled in a kind of template:
+
+	\[[infobox type=person name="Joey Hess" email=joey@kitenet.net url="http://kitenet.net/~joey/" description="
+	Joey is the author of ikiwiki and some other stuff. *Yay*!
+	"]]
+
+That might be a lot more useful. Or here's one to use to describe ikiwiki's
+own plugins:
+
+	\[[infobox type=plugin name="sidebar" author="Tuomo Valkonen" core=no]]
+
+This would expand by filling out the template page, which would be
+infobox/person or infobox/plugin, or whatever, and would have some syntax
+(possibly HTML::Template, if it's secure) for testing for values and
+embedding variables. Of course it would register a dependency on its
+template so changes to the template update all the pages.
+
+(Since it's a preprocessor directive, the big multiline blocks of text can
+mix markdown (or whatever) with html, wikilinks, etc, in a natural way,
+which is nice..)
