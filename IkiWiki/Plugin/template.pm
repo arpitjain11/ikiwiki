@@ -44,7 +44,6 @@ sub preprocess (@) { #{{{
 		$template->param($param => $params{$param});
 	}
 
-
 	return IkiWiki::preprocess($params{page}, $params{destpage},
 		$template->output);
 } # }}}
