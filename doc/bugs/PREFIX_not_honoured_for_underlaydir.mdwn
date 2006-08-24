@@ -14,4 +14,20 @@ However when I try to run ikiwiki I get an error as follows:
 Can't stat /usr/share/ikiwiki/basewiki: No such file or directory 
  at /home/ed/lib/perl5/site_perl/5.8.7/IkiWiki/Render.pm line 349 
 
-The PREFIX specified at build time should also affect the share directory - it shouldn't try to use /usr/share here.
+The PREFIX specified at build time should also affect the share directory -
+it shouldn't try to use /usr/share here.
+
+	Actually, the PREFIX, no matter where you specify it, is only
+	intended to control where files are _installed_, not where they're
+	looked for at runtime.
+
+	There's a good reason not to make PREFIX be used to actually
+	change the program's behavior: Most packaging systems use PREFIX
+	when building the package, to make it install into a temporary
+	directory which gets packaged up.
+
+	It would probably be nice if ikiwiki offered a separate build-time
+	setting to control where it looked for its data files, though it already
+	offers a way to do it at runtime (--underlaydir and --templatedir).
+
+	--[[Joey]]
