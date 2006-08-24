@@ -153,10 +153,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $rev = $logentry->{revision};
 		my $user = $logentry->{author};
 
-		my $date = $logentry->{date};
-		$date =~ s/T/ /;
-		$date =~ s/\.\d+Z$//;
-		my $when=concise(ago(time - str2time($date, 'UTC')));
+		my $when=concise(ago(time - str2time($logentry->{date}, 'UTC')));
 
 		foreach my $msgline (split(/\n/, $logentry->{msg})) {
 			push @message, { line => escapeHTML($msgline) };
