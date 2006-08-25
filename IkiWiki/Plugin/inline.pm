@@ -22,7 +22,6 @@ sub import { #{{{
 package IkiWiki;
 
 my %toping;
-my @processing_inline;
 
 sub yesno ($) { #{{{
 	my $val=shift;
@@ -32,10 +31,6 @@ sub yesno ($) { #{{{
 sub preprocess_inline (@) { #{{{
 	my %params=@_;
 	
-	# Avoid nested inlines, to avoid loops etc.
-	return "" if grep { $_ eq $params{page} } @processing_inline;
-	push @processing_inline, $params{page};
-
 	if (! exists $params{pages}) {
 		return "";
 	}
@@ -133,7 +128,6 @@ sub preprocess_inline (@) { #{{{
 		$toping{$params{page}}=1 unless $config{rebuild};
 	}
 	
-	pop @processing_inline;
 	return $ret;
 } #}}}
 

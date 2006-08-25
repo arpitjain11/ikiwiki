@@ -84,6 +84,7 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
+my @preprocessing;
 sub preprocess ($$$) { #{{{
 	my $page=shift; # the page the data comes from
 	my $destpage=shift; # the page the data will appear in (different for inline)
@@ -95,6 +96,11 @@ sub preprocess ($$$) { #{{{
 		my $params=shift;
 		if (length $escape) {
 			return "[[$command $params]]";
+		}
+		elsif (grep { $_ eq $page } @preprocessing) {
+			# Avoid loops of preprocessed pages preprocessing
+			# other pages that preprocess them, etc.
+			return "[[$command would cause preprocessing loop]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			# Note: preserve order of params, some plugins may
@@ -123,11 +129,14 @@ sub preprocess ($$$) { #{{{
 					push @params, $val, '';
 				}
 			}
-			return $hooks{preprocess}{$command}{call}->(
+			push @preprocessing, $page;
+			my $ret=$hooks{preprocess}{$command}{call}->(
 				@params,
 				page => $page,
 				destpage => $destpage,
 			);
+			pop @preprocessing;
+			return $ret;
 		}
 		else {
 			return "[[$command not processed]]";
