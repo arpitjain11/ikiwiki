@@ -15,6 +15,8 @@ memoize("pagespec_translate");
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
             %renderedfiles %pagesources %depends %hooks %forcerebuild};
 
+my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+
 sub defaultconfig () { #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$)},
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
@@ -44,8 +46,8 @@ sub defaultconfig () { #{{{
 	srcdir => undef,
 	destdir => undef,
 	pingurl => [],
-	templatedir => "/usr/share/ikiwiki/templates",
-	underlaydir => "/usr/share/ikiwiki/basewiki",
+	templatedir => "$installdir/share/ikiwiki/templates",
+	underlaydir => "$installdir/share/ikiwiki/basewiki",
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,

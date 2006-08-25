@@ -14,7 +14,7 @@ pure_install:: extra_install
 VER=$(shell perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)
 
 ikiwiki: ikiwiki.pl
-	perl -pe '$$_="" if /use lib/; $$_="our \$$version=\"$(VER)\";\n" if /VERSION_AUTOREPLACE/' ikiwiki.pl > ikiwiki
+	./pm_filter $(PREFIX) $(VER) < ikiwiki.pl > ikiwiki
 
 extra_build:
 	./ikiwiki.pl doc html --templatedir=templates --underlaydir=basewiki \
@@ -33,29 +33,30 @@ extra_clean:
 	rm -f ikiwiki.man ikiwiki-mass-rebuild.man
 
 extra_install:
-	install -d $(PREFIX)/share/ikiwiki/templates
-	cp templates/* $(PREFIX)/share/ikiwiki/templates
+	install -d $(DESTDIR)/usr/share/ikiwiki/templates
+	cp templates/* $(DESTDIR)/usr/share/ikiwiki/templates
 
-	install -d $(PREFIX)/share/ikiwiki/basewiki
-	cp -a basewiki/* $(PREFIX)/share/ikiwiki/basewiki
+	install -d $(DESTDIR)/usr/share/ikiwiki/basewiki
+	cp -a basewiki/* $(DESTDIR)/usr/share/ikiwiki/basewiki
 
-	install -d $(PREFIX)/share/man/man1
-	install ikiwiki.man $(PREFIX)/share/man/man1/ikiwiki.1
+	install -d $(DESTDIR)/usr/share/man/man1
+	install ikiwiki.man $(DESTDIR)/usr/share/man/man1/ikiwiki.1
 	
-	install -d $(PREFIX)/share/man/man8
-	install ikiwiki-mass-rebuild.man $(PREFIX)/share/man/man8/ikiwiki-mass-rebuild.8
+	install -d $(DESTDIR)/usr/share/man/man8
+	install ikiwiki-mass-rebuild.man $(DESTDIR)/usr/share/man/man8/ikiwiki-mass-rebuild.8
 	
-	install -d $(PREFIX)/sbin
-	install ikiwiki-mass-rebuild $(PREFIX)/sbin
+	install -d $(DESTDIR)/usr/sbin
+	install ikiwiki-mass-rebuild $(DESTDIR)/usr/sbin
 
-	install -d $(PREFIX)/lib/w3m/cgi-bin
-	install ikiwiki-w3m.cgi $(PREFIX)/lib/w3m/cgi-bin
+	install -d $(DESTDIR)/usr/lib/w3m/cgi-bin
+	install ikiwiki-w3m.cgi $(DESTDIR)/usr/lib/w3m/cgi-bin
 }
 }
 
 WriteMakefile(
 	'NAME'		=> 'IkiWiki',
-	'PM_FILTER'	=> 'grep -v "removed by Makefile"',
+	'PM_FILTER'	=> './pm_filter $(PREFIX) $(VER)',
 	'EXE_FILES'	=> ['ikiwiki'],
+	'MAN1PODS'	=> {},
 	'clean'		=> {FILES => 'ikiwiki'},
 );

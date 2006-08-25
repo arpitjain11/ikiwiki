@@ -27,8 +27,11 @@ ikiwiki (1.22) UNRELEASED; urgency=low
   * Make all pages pull in a local.css style sheet, if present. This won't
     be included in ikiwiki, but can be created to make local styling changes
     w/o needing to merge in every new change to the distributed style.css.
+  * Use DESTDIR and not PREFIX to specify installation prefix for packaging.
+  * Support running "perl Makefile.PL PREFIX=foo" to build ikiwiki to run
+    from a different directory.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 24 Aug 2006 16:29:24 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 24 Aug 2006 21:28:45 -0400
 
 ikiwiki (1.21) unstable; urgency=low
 

@@ -91,13 +91,15 @@ configuration options of their own.
 * --templatedir
 
   Specify the directory that the page [[templates]] are stored in.
-  Default is `/usr/share/ikiwiki/templates`.
+  Default is `/usr/share/ikiwiki/templates`, or another location as
+  configured at build time.
 
 * --underlaydir
 
   Specify the directory that is used to underlay the source directory.
   Source files will be taken from here unless overridden by a file in the
-  source directory. Default is `/usr/share/ikiwiki/basewiki`.
+  source directory. Default is `/usr/share/ikiwiki/basewiki` or another
+  location as configured at build time.
 
 * --wrappermode mode
 

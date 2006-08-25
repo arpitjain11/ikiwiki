@@ -1,0 +1,16 @@
+#!/usr/bin/perl -i -p
+
+BEGIN {
+	$prefix=shift;
+	$ver=shift;
+}
+
+if (/INSTALLDIR_AUTOREPLACE/) {
+	$_=qq{my \$installdir="$prefix";};
+}
+elsif (/VERSION_AUTOREPLACE/) {
+	$_=qq{our \$version="$ver";};
+}
+elsif (/^use lib/) {
+	$_="";
+}

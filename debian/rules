@@ -23,7 +23,7 @@ binary-indep: build
 	dh_testroot
 	dh_clean -k
 	$(MAKE) pure_install INSTALLDIRS=vendor \
-		PREFIX=$(shell pwd)/debian/ikiwiki/$(shell perl -MConfig -e 'print $$Config{prefix}')
+		DESTDIR=$(shell pwd)/debian/ikiwiki
 	dh_install wikilist etc/ikiwiki
 	dh_installdocs html
 	dh_link usr/share/common-licenses/GPL usr/share/doc/ikiwiki/html/GPL
