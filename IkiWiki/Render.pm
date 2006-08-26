@@ -97,10 +97,10 @@ sub preprocess ($$$) { #{{{
 		if (length $escape) {
 			return "[[$command $params]]";
 		}
-		elsif ($preprocessing{$page}) {
+		elsif ($preprocessing{$page}++ > 10) {
 			# Avoid loops of preprocessed pages preprocessing
 			# other pages that preprocess them, etc.
-			return "[[$command would cause preprocessing loop]]";
+			return "[[$command preprocessing loop detected]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			# Note: preserve order of params, some plugins may
@@ -129,13 +129,12 @@ sub preprocess ($$$) { #{{{
 					push @params, $val, '';
 				}
 			}
-			$preprocessing{$page}=1;
 			my $ret=$hooks{preprocess}{$command}{call}->(
 				@params,
 				page => $page,
 				destpage => $destpage,
 			);
-			delete $preprocessing{$page};
+			$preprocessing{$page}--;
 			return $ret;
 		}
 		else {
