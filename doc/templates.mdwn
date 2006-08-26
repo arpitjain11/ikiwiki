@@ -29,6 +29,8 @@ It ships with some basic templates which can be customised:
 * `rsslink.tmpl` - Used to add a rss link if blogpost.tmpl is not used.
 * `aggregatepost.tmpl` - Used by the [[plugins/aggregate]] plugin to create
   a page for a post.
+* `searchform.tmpl` - Used by the [[plugins/search]] plugin to add a search
+  form to wiki pages.
 
 If you like, you can add these to further customise it:
 
@@ -44,3 +46,6 @@ CGI::FormBuilder, which interfaces to HTML::Template, so not all of it can
 be customised with templates, although most of it can, by creating these
 templates. Without the templates, CGI::FormBuilder creates the page bodies
 by itself.
+
+The [[plugin/template]] plugin also uses templates, though those templates
+are stored in the wiki.

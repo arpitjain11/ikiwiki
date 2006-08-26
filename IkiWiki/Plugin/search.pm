@@ -27,6 +27,7 @@ sub checkconfig () { #{{{
 	}
 } #}}}
 
+my $form;
 sub pagetemplate (@) { #{{{
 	my %params=@_;
 	my $page=$params{page};
@@ -34,15 +35,13 @@ sub pagetemplate (@) { #{{{
 
 	# Add search box to page header.
 	if ($template->query(name => "searchform")) {
-		$template->param(searchform => qq{
-<form method="get" action="$IkiWiki::config{cgiurl}" id="searchform">
-<div>
-<input type="text" name="phrase" value="" size="16" />
-<input type="hidden" name="enc" value="UTF-8" />
-<input type="hidden" name="do" value="hyperestraier" />
-</div>
-</form>
-});
+		if (! defined $form) {
+			my $searchform = IkiWiki::template("searchform.tmpl", blind_cache => 1);
+			$searchform->param(searchaction => $IkiWiki::config{cgiurl});
+			$form=$searchform->output;
+		}
+
+		$template->param(searchform => $form);
 	}
 } #}}}
 
