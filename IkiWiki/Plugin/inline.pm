@@ -40,6 +40,12 @@ sub preprocess_inline (@) { #{{{
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}
+	my $desc;
+	if (exists $params{description}) {
+		$desc = $params{description} 
+	} else {
+		$desc = $config{wikiname};
+	}
 
 	my @list;
 	foreach my $page (keys %pagesources) {
@@ -124,7 +130,7 @@ sub preprocess_inline (@) { #{{{
 	# only supports listing one file per page.
 	if ($config{rss} && $rss) {
 		writefile(rsspage($params{page}), $config{destdir},
-			genrss($params{page}, @list));
+			genrss($desc, $params{page}, @list));
 		$toping{$params{page}}=1 unless $config{rebuild};
 	}
 	
@@ -178,7 +184,8 @@ sub rsspage ($) { #{{{
 	return $page.".rss";
 } #}}}
 
-sub genrss ($@) { #{{{
+sub genrss ($$@) { #{{{
+	my $desc = shift;
 	my $page=shift;
 	my @pages=@_;
 	
@@ -213,6 +220,7 @@ sub genrss ($@) { #{{{
 		wikiname => $config{wikiname},
 		pageurl => $url,
 		content => $content,
+		rssdesc => $desc,
 	);
 	run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page,
