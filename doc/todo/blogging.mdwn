@@ -2,3 +2,12 @@
   and then all open items were shown in summary. Maybe add this mode.
 - Add Discussion and Edit links at the bottom of each inlined post.
 - It would be possible to support rss enclosures for eg, podcasts, pretty easily. 
+
+Here is the last of those items. Using the meta plugin you can give the appropriate 
+info, and the enclosure will be added to the entry. It will also add a <link /> tag
+at the top, but I don't know if this is necessary. It also includes a fix for
+when make is used without PREFIX. 
+
+http://jameswestby.net/scratch/podcast.diff
+
+-- JamesWestby
