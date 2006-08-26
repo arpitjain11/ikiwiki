@@ -100,7 +100,7 @@ sub preprocess ($$$) { #{{{
 		elsif ($preprocessing{$page}++ > 10) {
 			# Avoid loops of preprocessed pages preprocessing
 			# other pages that preprocess them, etc.
-			return "[[$command preprocessing loop detected]]";
+			return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			# Note: preserve order of params, some plugins may
