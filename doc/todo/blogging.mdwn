@@ -29,3 +29,23 @@ http://jameswestby.net/scratch/podcast.diff
 	the wiki..
 
 	--[[Joey]]
+
+That's fair enough. I'm a little unsure of how it all works, so I just did the
+simplest thing I could. 
+
+You don't need a description for podcasts it seems. So there's nothing stopping
+you there. 
+
+I have another patch that I think does what you want. It only supports .mp3 files,
+.ogg or similar could be added easily. 
+
+It has the disadvantage that the filename is all there is to go on, as I can't
+think of a way to associate any information with the mp3 file. I don't 
+want to add a dependency on a IDv3 tag library. You could add another file
+.mp3.info with the title/description in. 
+
+It's obviously up to you which way you want to go.
+
+http://jameswestby.net/scratch/podcast2.diff
+
+-- JamesWestby
