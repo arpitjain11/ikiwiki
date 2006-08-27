@@ -31,13 +31,25 @@
 	padding: .2em .4em;
 }
 
+#backlinks {
+	margin: 1em 0;
+}
+
+.tags {
+	clear: both;
+}
+
+div.tags {
+	border-top: 1px solid #000;
+}
+
+#footer {
+	margin: 1em 0;
+}
+
 #searchform {
 	display: inline;
 	float: right;
-}
-
-#content {
-	border-bottom: 1px solid #000;
 }
 
 #editcontent {
@@ -80,15 +92,8 @@ td.changelog {
 	border: 1px solid #aaa;
 }
 
-#backlinks {
-	margin: 1em 0;
-}
-
-#footer {
-	margin: 1em 0;
-}
-
 .pageinfo {
+	clear: both;
 	font-style: italic;
 	display: block;
 }
