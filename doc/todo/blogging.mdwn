@@ -49,3 +49,12 @@ It's obviously up to you which way you want to go.
 http://jameswestby.net/scratch/podcast2.diff
 
 -- JamesWestby
+
+	Hmm, this could be taken a step further, and assume that if
+	IkiWiki::pagetype doesn't return a defined page type for the page
+	in the blog, then no matter the extension it should be fed into the
+	rss feed in an enclosure. This would allow for not only podcasting,
+	but vidcasting and a form of photo blogging. Or even an rss feed
+	containing the source of ikiwiki. ;-)
+	
+	--[[Joey]]
