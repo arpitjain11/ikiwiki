@@ -134,7 +134,9 @@ file not be world readable.
 
 Login to the wiki involves sending a password in cleartext over the net.
 Cracking the password only allows editing the wiki as that user though.
-If you care, you can use https, I suppose.
+If you care, you can use https, I suppose. If you do use https either for
+all of the wiki, or just the cgi access, then consider using the sslcookie
+option.
 
 ## XSS holes in CGI output
 

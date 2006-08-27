@@ -227,6 +227,12 @@ configuration options of their own.
   Enable [[w3mmode]], which allows w3m to use ikiwiki as a local CGI script,
   without a web server.
 
+* --sslcookie
+
+  Only send cookies over an SSL connection. This should prevent them being
+  intercepted. If you enable this option then you must run at least the 
+  CGI portion of ikiwiki over SSL.
+
 * --getctime
 
   Pull last changed time for each new page out of the revision control

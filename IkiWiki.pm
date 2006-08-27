@@ -54,6 +54,7 @@ sub defaultconfig () { #{{{
 	plugin => [qw{mdwn inline htmlscrubber}],
 	timeformat => '%c',
 	locale => undef,
+	sslcookie => 0,
 } #}}}
    
 sub checkconfig () { #{{{

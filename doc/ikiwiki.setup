@@ -74,6 +74,8 @@ use IkiWiki::Setup::Standard {
 	#timeformat => '%c',
 	# Locale to use. Must be a UTF-8 locale.
 	#locale => 'en_US.UTF-8',
+	# Only send cookies over SSL connections.
+	#sslcookie => 1,
 	# Logging settings:
 	verbose => 0,
 	syslog => 0,

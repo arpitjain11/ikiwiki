@@ -9,6 +9,18 @@ use Encode;
 
 package IkiWiki;
 
+sub printheader ($) { #{{{
+	my $session=shift;
+	
+	if ($config{sslcookie}) {
+		print $session->header(-charset => 'utf-8',
+			-cookie => $session->cookie(-secure => 1));
+	} else {
+		print $session->header(-charset => 'utf-8');
+	}
+
+} #}}}
+
 sub redirect ($$) { #{{{
 	my $q=shift;
 	my $url=shift;
@@ -72,7 +84,7 @@ sub cgi_recentchanges ($) { #{{{
 		changelog => [rcs_recentchanges(100)],
 		baseurl => baseurl(),
 	);
-	print $q->header(-charset=>'utf-8'), $template->output;
+	print $q->header(-charset => 'utf-8'), $template->output;
 } #}}}
 
 sub cgi_signin ($$) { #{{{
@@ -204,7 +216,7 @@ sub cgi_signin ($$) { #{{{
 				$form->field(name => "confirm_password", type => "hidden");
 				$form->field(name => "email", type => "hidden");
 				$form->text("Registration successful. Now you can Login.");
-				print $session->header(-charset=>'utf-8');
+				printheader($session);
 				print misctemplate($form->title, $form->render(submit => ["Login"]));
 			}
 			else {
@@ -232,12 +244,12 @@ sub cgi_signin ($$) { #{{{
 			
 			$form->text("Your password has been emailed to you.");
 			$form->field(name => "name", required => 0);
-			print $session->header(-charset=>'utf-8');
+			printheader($session);
 			print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
 		}
 	}
 	else {
-		print $session->header(-charset=>'utf-8');
+		printheader($session);
 		print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
 	}
 } #}}}
@@ -314,7 +326,7 @@ sub cgi_prefs ($$) { #{{{
 		$form->text("Preferences saved.");
 	}
 	
-	print $session->header(-charset=>'utf-8');
+	printheader($session);
 	print misctemplate($form->title, $form->render(submit => \@buttons));
 } #}}}
 
@@ -596,7 +608,7 @@ sub cgi () { #{{{
 	umask($oldmask);
 	
 	# Everything below this point needs the user to be signed in.
-	if ((! $config{anonok} &&
+	if (((! $config{anonok} || $do eq 'prefs') &&
 	     (! defined $session->param("name") ||
 	     ! userinfo_get($session->param("name"), "regdate"))) || $do eq 'signin') {
 		cgi_signin($q, $session);
