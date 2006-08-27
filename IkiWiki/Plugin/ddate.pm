@@ -23,6 +23,9 @@ sub IkiWiki::displaytime ($) { #{{{
         my $gregorian=POSIX::strftime("%d %m %Y", localtime($time));
 	my $date=`ddate +'$IkiWiki::config{timeformat}' $gregorian`;
 	chomp $date;
+	if ($? || ! length $date) {
+		return "some time or other (hail Eris!)";
+	}
 	return $date;
 } #}}}
 
