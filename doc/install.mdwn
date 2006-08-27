@@ -19,7 +19,7 @@ If you're installing MarkDown by hand, note that it should be installed as
 If you want to install from the tarball, you should make sure that the
 required perl modules are installed, then run:
 
-        perl Makefile.PL
+        perl Makefile.PL # PREFIX=/dir to install elsewhere
         make
 	make test # optional
         make install

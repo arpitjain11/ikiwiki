@@ -55,7 +55,7 @@ extra_install:
 
 WriteMakefile(
 	NAME		=> 'IkiWiki',
-	PREFIX		=> "/usr",
+	PREFIX		=> "/usr/local",
 	PM_FILTER	=> './pm_filter $(PREFIX) $(VER)',
 	EXE_FILES	=> ['ikiwiki'],
 	MAN1PODS	=> {},
