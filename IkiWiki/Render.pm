@@ -97,11 +97,6 @@ sub preprocess ($$$) { #{{{
 		if (length $escape) {
 			return "[[$command $params]]";
 		}
-		elsif ($preprocessing{$page}++ > 10) {
-			# Avoid loops of preprocessed pages preprocessing
-			# other pages that preprocess them, etc.
-			return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
-		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
@@ -128,6 +123,11 @@ sub preprocess ($$$) { #{{{
 				else {
 					push @params, $val, '';
 				}
+			}
+			if ($preprocessing{$page}++ > 10) {
+				# Avoid loops of preprocessed pages preprocessing
+				# other pages that preprocess them, etc.
+				return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
 			}
 			my $ret=$hooks{preprocess}{$command}{call}->(
 				@params,
