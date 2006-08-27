@@ -138,7 +138,7 @@ sub preprocess ($$$) { #{{{
 			return $ret;
 		}
 		else {
-			return "[[$command not processed]]";
+			return "[[$command $params]]";
 		}
 	};
 	
