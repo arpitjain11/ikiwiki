@@ -68,8 +68,8 @@ These options control the mode that ikiwiki is operating in.
 
 * --aggregate
 
-  If the aggregate plugin is enabled, this makes ikiwiki poll configured
-  feeds and save new posts to the srcdir.
+  If the [[plugins/aggregate]] plugin is enabled, this makes ikiwiki poll
+  configured feeds and save new posts to the srcdir.
 
   Note that to rebuild previously aggregated posts, use the --rebuild option
   along with this one. --rebuild will also force feeds to be polled even if
@@ -81,7 +81,7 @@ These options control the mode that ikiwiki is operating in.
 
 # CONFIG OPTIONS
 
-These options configure the wiki. Note that plugins can add additional
+These options configure the wiki. Note that [[plugins]] can add additional
 configuration options of their own.
 
 * --wikiname
