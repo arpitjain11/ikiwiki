@@ -2,7 +2,7 @@
 # Discordian date support fnord ikiwiki.
 package IkiWiki::Plugin::ddate;
 use IkiWiki;
-use IkiWiki::Render; # so we can redefine it here:
+use IkiWiki::Render; # so we can redefine it here
 no warnings;
 
 sub import { #{{{
