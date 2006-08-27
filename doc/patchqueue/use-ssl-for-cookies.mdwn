@@ -1,0 +1,20 @@
+It is very easy to stop the password being sniffed, you just use https:// for cgiurl
+(with appropriately configure server of course), and disallow access to the cgiscript
+over http.
+
+However the cookie is still sent for all requests, meaning that it could be stolen.
+I don't know quite how well CGI::Session defends against this, but the best it could
+do is probably tie it to an IP address, but that still leaves room for abuse.
+
+I have created a patch that adds a config option sslcookie, which causes the
+cookie to have it's secure property set. This means that it is only sent over SSL.
+So if you can configure apache to do what you want, you only have to change two options
+(cgiurl and sslcookie) to encrypt all authentication data.
+
+The disadvantage is that if someone were to activate it while using http:// I think it
+would mean they couldn't log in, as the browser would never offer the cookie. 
+I think I have made the documentation clear enough on this point.
+
+http://jameswestby.net/scratch/sslcookie.diff
+
+-- JamesWestby
