@@ -323,7 +323,7 @@ sub htmlabs ($$) { #{{{
 	# Convert links in html from relative to absolute.
 	# Note that this is a heuristic, which is not specified by the rss
 	# spec and may not be right for all feeds. Also, see Debian
-	# bug #XXXX TODO: get bug.
+	# bug #381359.
 	my $html=shift;
 	my $urlbase=shift;
 
