@@ -108,11 +108,12 @@ sub preprocess_inline (@) { #{{{
 			if ($actions) {
 				my $file = $pagesources{$page};
 				my $type = pagetype($file);
-				$template->param(have_actions => 1);
 				if ($config{discussion}) {
+					$template->param(have_actions => 1);
 					$template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
 				}
 				if (length $config{cgiurl} && defined $type) {
+					$template->param(have_actions => 1);
 					$template->param(editurl => cgiurl(do => "edit", page => $page));
 				}
 			}
