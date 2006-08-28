@@ -425,7 +425,7 @@ sub cgi_editpage ($$) { #{{{
 				value => $comments, force => 1);
 		$config{rss}=0; # avoid preview writing an rss feed!
 		$form->tmpl_param("page_preview",
-			htmlize($type,
+			htmlize($page, $type,
 			linkify($page, "",
 			preprocess($page, $page,
 			filter($page, $content)))));

@@ -14,7 +14,7 @@ sub import { #{{{
 		call => \&format);
 } # }}}
 
-my @tocs;
+my %tocpages;
 
 sub preprocess (@) { #{{{
 	my %params=@_;
@@ -23,17 +23,17 @@ sub preprocess (@) { #{{{
 
 	# It's too early to generate the toc here, so just record the
 	# info.
-	push @tocs, \%params;
+	$tocpages{$params{destpage}}=\%params;
 
-	return "\n[[toc $#tocs]]\n";
+	return "\n<div class=\"toc\"></div>\n";
 } # }}}
 
-sub format ($) { #{{{
-	my $content=shift;
+sub format (@) { #{{{
+	my %params=@_;
+	my $content=$params{content};
 	
-	return $content unless @tocs && $content=~/\[\[toc (\d+)\]\]/ && $#tocs >= $1;
-	my $id=$1;
-	my %params=%{$tocs[$id]};
+	return $content unless exists $tocpages{$params{page}};
+	%params=%{$tocpages{$params{page}}};
 
 	my $p=HTML::Parser->new(api_version => 3);
 	my $page="";
@@ -107,9 +107,7 @@ sub format ($) { #{{{
 		$index.=&$indent."</ol>\n";
 	}
 
-	# Ignore cruft around the toc marker, probably <p> tags added by
-	# markdown which shouldn't appear in a list anyway.
-	$page=~s/\n.*\[\[toc $id\]\].*\n/$index/;
+	$page=~s/(<div class=\"toc\">)/$1\n$index/;
 	return $page;
 }
 

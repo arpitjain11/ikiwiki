@@ -94,6 +94,9 @@ specifies the filename extension that a file must have to be htmlized using
 this plugin. This is how you can add support for new and exciting markup
 languages to ikiwiki.
 
+The function is passed named parameters: "page" and "content" and should
+return the htmlized content.
+
 ## pagetemplate
 
 	IkiWiki::hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
@@ -115,18 +118,20 @@ a new custom parameter to the template.
 
 Use this to implement html sanitization or anything else that needs to
 modify the body of a page after it has been fully converted to html.
-The function is passed the page content and should return the sanitized
-content.
+
+The function is passed named parameters: "page" and "content", and 
+should return the sanitized content.
 
 ## format
 
 	IkiWiki::hook(type => "format", id => "foo", call => \&format);
 
-The function is passed the complete page content and can reformat it
-and return the new content. The difference between format and sanitize is
-that sanitize only acts on the page body, while format can modify the
-entire html page including the header and footer inserted by ikiwiki, the
-html document type, etc.
+The difference between format and sanitize is that sanitize only acts on
+the page body, while format can modify the entire html page including the
+header and footer inserted by ikiwiki, the html document type, etc.
+
+The function is passed named parameters: "page" and "content", and 
+should return the formatted content.
 
 ## delete
 

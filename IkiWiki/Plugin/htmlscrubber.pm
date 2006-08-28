@@ -10,8 +10,9 @@ sub import { #{{{
 		call => \&sanitize);
 } # }}}
 
-sub sanitize ($) { #{{{
-	return scrubber()->scrub(shift);
+sub sanitize (@) { #{{{
+	my %params=@_;
+	return scrubber()->scrub($params{content});
 } # }}}
 
 my $_scrubber;

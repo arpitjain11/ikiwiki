@@ -57,28 +57,28 @@ sub filter (@) { #{{{
 	return $params{content};
 } # }}}
 
-sub htmlize ($) { #{{{
-	my $content=shift;
+sub htmlize (@) { #{{{
+	my %params=@_;
 
 	IkiWiki::debug("skeleton plugin running as htmlize");
 
-	return $content;
+	return $params{content};
 } # }}}
 
-sub sanitize ($) { #{{{
-	my $content=shift;
+sub sanitize (@) { #{{{
+	my %params=@_;
 	
 	IkiWiki::debug("skeleton plugin running as a sanitizer");
 
-	return $content;
+	return $params{content};
 } # }}}
 
-sub format ($) { #{{{
-	my $content=shift;
+sub format (@) { #{{{
+	my %params=@_;
 	
 	IkiWiki::debug("skeleton plugin running as a formatter");
 
-	return $content;
+	return $params{content};
 } # }}}
 
 sub pagetemplate (@) { #{{{

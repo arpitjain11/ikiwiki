@@ -5,6 +5,11 @@ ikiwiki (1.22) unstable; urgency=low
   "<TMPL_VAR BASEURL>style.css" instead of the old method which used
   STYLEURL.
 
+  There have also been some changes to the plugin interface:
+  Any plugins that use santize, htmlize, or format hooks will need to be
+  updated for this version of ikiwiki since these hooks have been changed
+  to use named parameters.
+
  -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 15:33:12 -0400
 
 ikiwiki (1.13) unstable; urgency=low

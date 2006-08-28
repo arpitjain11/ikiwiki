@@ -28,7 +28,7 @@ sub sidebar_content ($) { #{{{
 
 		my $content=IkiWiki::readfile(IkiWiki::srcfile($sidebar_file));
 		return unless length $content;
-		return IkiWiki::htmlize($sidebar_type,
+		return IkiWiki::htmlize($page, $sidebar_type,
 		       IkiWiki::linkify($sidebar_page, $page,
 		       IkiWiki::preprocess($sidebar_page, $page,
 		       IkiWiki::filter($sidebar_page, $content))));

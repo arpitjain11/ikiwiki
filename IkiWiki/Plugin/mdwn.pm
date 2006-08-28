@@ -11,8 +11,9 @@ sub import { #{{{
 } # }}}
 
 my $markdown_loaded=0;
-sub htmlize ($) { #{{{
-	my $content = shift;
+sub htmlize (@) { #{{{
+	my %params=@_;
+	my $content = $params{content};
 
 	if (! $markdown_loaded) {
 		# Note: This hack to make markdown run as a proper perl

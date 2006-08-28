@@ -11,8 +11,9 @@ sub import { #{{{
 	IkiWiki::hook(type => "htmlize", id => "wiki", call => \&htmlize);
 } # }}}
 
-sub htmlize ($) { #{{{
-	my $content = shift;
+sub htmlize (@) { #{{{
+	my %params=@_;
+	my $content = $params{content};
 
 	return Text::WikiFormat::format($content, undef, { implicit_links => 0 });
 } # }}}

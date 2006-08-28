@@ -39,8 +39,9 @@ sub import { #{{{
 	IkiWiki::hook(type => "htmlize", id => "rst", call => \&htmlize);
 } # }}}
 
-sub htmlize ($) { #{{{
-	my $content=shift;
+sub htmlize (@) { #{{{
+	my %params=@_;
+	my $content=$params{content};
 
 	my $tries=10;
 	while (1) {

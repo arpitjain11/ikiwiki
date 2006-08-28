@@ -144,7 +144,7 @@ sub get_inline_content ($$) { #{{{
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if (defined $type) {
-		return htmlize($type,
+		return htmlize($page, $type,
 		       linkify($page, $destpage,
 		       preprocess($page, $destpage,
 		       filter($page,

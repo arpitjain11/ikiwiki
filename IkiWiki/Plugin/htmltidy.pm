@@ -16,7 +16,9 @@ sub import { #{{{
 	IkiWiki::hook(type => "sanitize", id => "tidy", call => \&sanitize);
 } # }}}
 
-sub sanitize ($) { #{{{
+sub sanitize (@) { #{{{
+	my %params=@_;
+
 	my $tries=10;
 	while (1) {
 		eval {
@@ -26,14 +28,14 @@ sub sanitize ($) { #{{{
 		$tries--;
 		if ($tries < 1) {
 			IkiWiki::debug("failed to run tidy: $@");
-			return shift;
+			return $params{content};
 		}
 	}
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8'); 
 	binmode (OUT, ':utf8'); 
 	
-	print OUT shift;
+	print OUT $params{content};
 	close OUT;
 
 	local $/ = undef;

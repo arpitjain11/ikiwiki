@@ -20,19 +20,26 @@ sub linkify ($$$) { #{{{
 	return $content;
 } #}}}
 
-sub htmlize ($$) { #{{{
+sub htmlize ($$$) { #{{{
+	my $page=shift;
 	my $type=shift;
 	my $content=shift;
 	
 	if (exists $hooks{htmlize}{$type}) {
-		$content=$hooks{htmlize}{$type}{call}->($content);
+		$content=$hooks{htmlize}{$type}{call}->(
+			page => $page,
+			content => $content,
+		);
 	}
 	else {
 		error("htmlization of $type not supported");
 	}
 
 	run_hooks(sanitize => sub {
-		$content=shift->($content);
+		$content=shift->(
+			page => $page,
+			content => $content,
+		);
 	});
 	
 	return $content;
@@ -209,7 +216,10 @@ sub genpage ($$$) { #{{{
 	$content=$template->output;
 
 	run_hooks(format => sub {
-		$content=shift->($content);
+		$content=shift->(
+			page => $page,
+			content => $content,
+		);
 	});
 
 	return $content;
@@ -287,7 +297,7 @@ sub render ($) { #{{{
 		
 		$content=preprocess($page, $page, $content);
 		$content=linkify($page, $page, $content);
-		$content=htmlize($type, $content);
+		$content=htmlize($page, $type, $content);
 		
 		check_overwrite("$config{destdir}/".htmlpage($page), $page);
 		writefile(htmlpage($page), $config{destdir},
