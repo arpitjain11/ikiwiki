@@ -1,4 +1,9 @@
 ikiwiki (1.22) unstable; urgency=low
+  
+  Due to some changes in the CSS, wikis should be rebuilt on upgrade to this
+  version. If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+  automatically when the Debian package is upgraded. Or use ikiiki-mass-rebuild
+  to force a rebuild.
 
   If you have modified versions of ikiwiki's html templates, you will need
   to update your templates to link to the stylesheet file using
@@ -9,11 +14,6 @@ ikiwiki (1.22) unstable; urgency=low
   Any plugins that use santize, htmlize, or format hooks will need to be
   updated for this version of ikiwiki since these hooks have been changed
   to use named parameters.
-
-  Due to some changes in the CSS, wikis should be rebuilt on upgrade to this
-  version. If you listed your wiki in /etc/ikiwiki/wikilist this will be done
-  automatically when the Debian package is upgraded. Or use ikiiki-mass-rebuild
-  to force a rebuild.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 15:33:12 -0400
 
