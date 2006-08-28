@@ -20,6 +20,13 @@ immediately whenever you commit.
 Note that ikiwiki does not require a RCS to function. If you want to
 run a simple wiki without page history, it can do that too.
 
+## A wiki compiler
+
+ikiwiki is a wiki compiler; it builds static website for your wiki, and
+updates it as pages are edited. It is fast and smart about updating a wiki,
+it only builds pages that have changed (and tracks things like creation of
+new pages and links that can indirectly cause a page to need a rebuild)
+
 ## Supports many markup languages
 
 By default, pages in the wiki are written using the [[MarkDown]] format.
@@ -34,20 +41,12 @@ easily be added by [[plugins]]. For example it also supports traditional
 [[plugins/WikiText]] formatted pages, pages written as pure
 [[plugins/HTML]], or pages written in [[reStructuredText|plugins/rst]].
 
-## support for other file types
-
 ikiwiki also supports files of any other type, including plain text,
 images, etc. These are not converted to wiki pages, they are just copied
 unchanged by ikiwiki as it builds your wiki. So you can check in an image,
 program, or other special file and link to it from your wiki pages.
 
-## Fast compiler
-
-ikiwiki is fast and smart about updating a wiki, it only builds pages
-that have changed (and tracks things like creation of new pages and links
-that can indirectly cause a page to need a rebuild)
-
-## [[blogging|blog]]
+## [[Blogging|blog]]
 
 You can turn any page in the wiki into a [[blog]]. Pages matching a
 specified [[PageSpec]] will be displayed as a weblog within the blog
@@ -60,52 +59,50 @@ Ikiwiki can also [[plugins/aggregate]] external blogs, feeding them into
 the wiki. This can be used to create a Planet type site that aggregates
 interesting feeds.
 
-## [[tags]]
-
-You can tag pages and use these tags in various ways. Tags will show
-up in the ways you'd expect, like at the bottom of pages, in blogs, and
-in rss feeds.
-
-## valid html and css
+## Valid html and css
 
 ikiwiki aims to produce 
 [valid XHTML 1.0](http://validator.w3.org/check?url=referer).
 ikiwiki generates html using [[templates]], and uses css, so you can 
 change the look and layout of all pages in any way you would like.
 
-## [[SubPages|SubPage]]
+## [[Plugins]]
+
+Plugins can be used to add additional features to ikiwiki. The interface
+is quite flexible, allowing plugins to implement additional markup
+languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
+and more. Most of ikiwiki's features are actually provided by plugins.
+Ikiwiki's backend RCS support is also pluggable, so support for new
+revision control systems can be added to ikiwiki.
+
+### [[todo/utf8]]
+
+After rather a lot of fiddling, we think that ikiwiki correctly and fully
+supports utf8 everywhere.
+
+## Other features
+
+The above are the core design goals and features of ikiwiki, but on that
+foundation a lot of other important features are added. Here is an
+incomplete list of some of them.
+
+## [[Tags]]
+
+You can tag pages and use these tags in various ways. Tags will show
+up in the ways you'd expect, like at the bottom of pages, in blogs, and
+in rss feeds.
+
+### [[SubPages|SubPage]]
 
 Arbitrarily deep hierarchies of pages with fairly simple and useful
 [[SubPage/LinkingRules]]
 
-## [[BackLinks]]
+### [[BackLinks]]
 
 Automatically included on pages. Rather faster than eg MoinMoin and
 always there to help with navigation.
 
-## [[PageHistory]]
-
-Well, sorta. Rather than implementing YA history browser, it can link to
-[[ViewCVS]] or the like to browse the history of a wiki page.
-
-## [[RecentChanges]], editing pages in a web browser
-
-Nearly the definition of a wiki, although perhaps ikiwiki challenges how
-much of that web gunk a wiki really needs. These features are optional
-and can be enabled by enabling [[CGI]].
-
-## User registration
-
-Can optionally be configured to allow only registered users to post
-pages; online user registration form, etc.
-
-## Discussion pages
-
-Thanks to subpages, every page can easily and automatically have a
-/Discussion subpage. By default, these links are included in the
-[[templates]] for each page.
-
-## Smart merging and conflict resolution in your web browser
+### Smart merging and conflict resolution in your web browser
 
 Since it uses a real RCS, ikiwiki takes advantage of its smart merging to
 avoid any conflicts when two people edit different parts of the same page
@@ -118,35 +115,43 @@ page being concurrently edited, regular commit conflict markers are
 shown in the file to resolve the conflict, so if you're already familiar
 with that there's no new commit marker syntax to learn.
 
-## page locking
+### [[RecentChanges]], editing pages in a web browser
+
+Nearly the definition of a wiki, although perhaps ikiwiki challenges how
+much of that web gunk a wiki really needs. These features are optional
+and can be enabled by enabling [[CGI]].
+
+### User registration
+
+Can optionally be configured to allow only registered users to post
+pages; online user registration form, etc.
+
+### Discussion pages
+
+Thanks to subpages, every page can easily and automatically have a
+/Discussion subpage. By default, these links are included in the
+[[templates]] for each page.
+
+### Page locking
 
 Wiki admins can lock pages so that only other admins can edit them.
 
-## Full text search
+### [[PageHistory]]
+
+Well, sorta. Rather than implementing YA history browser, it can link to
+[[ViewCVS]] or the like to browse the history of a wiki page.
+
+### Full text search
 
 ikiwiki can use the [[HyperEstraier]] search engine to add powerful
 full text search capabilities to your wiki.
 
-## Commit mails
+### Commit mails
 
 ikiwiki can be configured to send you commit mails with diffs of changes
 to selected pages.
 
-## [[Plugins]]
-
-Plugins can be used to add additional features to ikiwiki. The interface
-is quite flexible, allowing plugins to implement additional markup
-languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
-and more. Most of ikiwiki's features are actually provided by plugins.
-Ikiwiki's backend RCS support is also pluggable, so support for new
-revision control systems can be added to ikiwiki. 
-
-## [[todo/utf8]]
-
-After rather a lot of fiddling, we think that ikiwiki correctly and fully
-supports utf8 everywhere.
-
-## [[w3mmode]]
+### [[w3mmode]]
 
 Can be set up so that w3m can be used to browse a wiki and edit pages
 without using a web server.
