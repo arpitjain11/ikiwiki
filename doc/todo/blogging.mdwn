@@ -58,3 +58,15 @@ http://jameswestby.net/scratch/podcast2.diff
 	containing the source of ikiwiki. ;-)
 	
 	--[[Joey]]
+
+Yes I agree that this would be great, but rss2 spec says that enclosure
+must have mime-type. How about I use the File::MimeInfo trick from the 
+first patch to do this? I don't know why I didn't do this before.
+This will probably clean the code up a little as well. 
+
+What do you think of the change that when using raw, if the filetype is not
+known it adds an entry anyway? I did this so that the entries appear if
+this mode is used. It might be that this is not necessary, as can we assume
+that people wont use raw if they want to pod/vid/whatevercast?
+
+-- JamesWestby
