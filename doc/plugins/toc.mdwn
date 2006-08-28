@@ -1,0 +1,13 @@
+[[template id=plugin name=toc included=1 author="Joey Hess"]]
+[[tag type/chrome]]
+
+Add a table of contents be to a page:
+
+	\[[toc ]]
+
+The table of contents will be automatically generated based on the
+headers of the page. By default only the largest headers present on the
+page will be shown; to control how many levels of headers are shown, use
+the `levels` parameter:
+
+	\[[toc levels=2]]

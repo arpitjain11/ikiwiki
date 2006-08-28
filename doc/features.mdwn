@@ -1,155 +1,152 @@
-Some of ikiwiki's features:
+An overview of some of ikiwiki's features:
+[[toc ]]
 
-* Uses a real RCS
+## Uses a real RCS
 
-  Rather than implement its own system for storing page histories etc,
-  ikiwiki uses a real RCS. This isn't because we're lazy, it's because a
-  real RCS is a good thing to have, and there are advantages to using one
-  that are not possible with a standard wiki.
+Rather than implement its own system for storing page histories etc,
+ikiwiki uses a real RCS. This isn't because we're lazy, it's because a
+real RCS is a good thing to have, and there are advantages to using one
+that are not possible with a standard wiki.
 
-  Instead of editing pages in a stupid web form, you can use vim and commit
-  changes via svn. Or work disconnected using svk and push your changes out
-  when you come online. Or use git to work in a distributed fashion all the
-  time. (It's also possible to [[plugins/write]] a plugin to support other
-  systems.)
+Instead of editing pages in a stupid web form, you can use vim and commit
+changes via svn. Or work disconnected using svk and push your changes out
+when you come online. Or use git to work in a distributed fashion all the
+time. (It's also possible to [[plugins/write]] a plugin to support other
+systems.)
 
-  ikiwiki can be run from a [[post-commit]] hook to update your wiki
-  immediately whenever you commit.
+ikiwiki can be run from a [[post-commit]] hook to update your wiki
+immediately whenever you commit.
 
-  Note that ikiwiki does not require a RCS to function. If you want to
-  run a simple wiki without page history, it can do that too.
+Note that ikiwiki does not require a RCS to function. If you want to
+run a simple wiki without page history, it can do that too.
 
-* Supports many markup languages
+## Supports many markup languages
 
-  By default, pages in the wiki are written using the [[MarkDown]] format.
-  Any page with a filename ending in ".mdwn" is converted from markdown to html
-  by ikiwiki. Markdown understands text formatted as it would be in an email,
-  and is quite smart about converting it to html. The only additional markup
-  provided by ikiwiki on top of regular markdown is the [[WikiLink]] and 
-  [[PreprocessorDirective]].
+By default, pages in the wiki are written using the [[MarkDown]] format.
+Any page with a filename ending in ".mdwn" is converted from markdown to html
+by ikiwiki. Markdown understands text formatted as it would be in an email,
+and is quite smart about converting it to html. The only additional markup
+provided by ikiwiki on top of regular markdown is the [[WikiLink]] and 
+[[PreprocessorDirective]].
 
-  If you prefer to use some other markup language, ikiwiki allows others to
-  easily be added by [[plugins]]. For example it also supports traditional
-  [[plugins/WikiText]] formatted pages, pages written as pure
-  [[plugins/HTML]], or pages written in [[reStructuredText|plugins/rst]].
+If you prefer to use some other markup language, ikiwiki allows others to
+easily be added by [[plugins]]. For example it also supports traditional
+[[plugins/WikiText]] formatted pages, pages written as pure
+[[plugins/HTML]], or pages written in [[reStructuredText|plugins/rst]].
 
-* support for other file types
+## support for other file types
 
-  ikiwiki also supports files of any other type, including plain text,
-  images, etc. These are not converted to wiki pages, they are just copied
-  unchanged by ikiwiki as it builds your wiki. So you can check in an image,
-  program, or other special file and link to it from your wiki pages.
+ikiwiki also supports files of any other type, including plain text,
+images, etc. These are not converted to wiki pages, they are just copied
+unchanged by ikiwiki as it builds your wiki. So you can check in an image,
+program, or other special file and link to it from your wiki pages.
 
-* Fast compiler
+## Fast compiler
 
-  ikiwiki is fast and smart about updating a wiki, it only builds pages
-  that have changed (and tracks things like creation of new pages and links
-  that can indirectly cause a page to need a rebuild)
+ikiwiki is fast and smart about updating a wiki, it only builds pages
+that have changed (and tracks things like creation of new pages and links
+that can indirectly cause a page to need a rebuild)
 
-* [[blogging|blog]]
+## [[blogging|blog]]
 
-  You can turn any page in the wiki into a [[blog]]. Pages matching a
-  specified [[PageSpec]] will be displayed as a weblog within the blog
-  page. And an RSS feed can be generated to follow the blog.
+You can turn any page in the wiki into a [[blog]]. Pages matching a
+specified [[PageSpec]] will be displayed as a weblog within the blog
+page. And an RSS feed can be generated to follow the blog.
 
-  Ikiwiki's own [[TODO]], [[news]], and [[plugins]] pages are good examples
-  of some of the flexible ways that this can be used.
+Ikiwiki's own [[TODO]], [[news]], and [[plugins]] pages are good examples
+of some of the flexible ways that this can be used.
 
-  Ikiwiki can also [[plugins/aggregate]] external blogs, feeding them into
-  the wiki. This can be used to create a Planet type site that aggregates
-  interesting feeds.
+Ikiwiki can also [[plugins/aggregate]] external blogs, feeding them into
+the wiki. This can be used to create a Planet type site that aggregates
+interesting feeds.
 
-* [[tags]]
+## [[tags]]
 
-  You can tag pages and use these tags in various ways. Tags will show
-  up in the ways you'd expect, like at the bottom of pages, in blogs, and
-  in rss feeds.
+You can tag pages and use these tags in various ways. Tags will show
+up in the ways you'd expect, like at the bottom of pages, in blogs, and
+in rss feeds.
 
-* valid html and css
+## valid html and css
 
-  ikiwiki aims to produce 
-  [valid XHTML 1.0](http://validator.w3.org/check?url=referer).
-  ikiwiki generates html using [[templates]], and uses css, so you can 
-  change the look and layout of all pages in any way you would like.
+ikiwiki aims to produce 
+[valid XHTML 1.0](http://validator.w3.org/check?url=referer).
+ikiwiki generates html using [[templates]], and uses css, so you can 
+change the look and layout of all pages in any way you would like.
 
-* [[SubPages|SubPage]]
+## [[SubPages|SubPage]]
 
-  Arbitrarily deep hierarchies of pages with fairly simple and useful
-  [[SubPage/LinkingRules]]
+Arbitrarily deep hierarchies of pages with fairly simple and useful
+[[SubPage/LinkingRules]]
 
-* [[BackLinks]]
+## [[BackLinks]]
 
-  Automatically included on pages. Rather faster than eg MoinMoin and
-  always there to help with navigation.
+Automatically included on pages. Rather faster than eg MoinMoin and
+always there to help with navigation.
 
-* [[PageHistory]]
+## [[PageHistory]]
 
-  Well, sorta. Rather than implementing YA history browser, it can link to
-  [[ViewCVS]] or the like to browse the history of a wiki page.
+Well, sorta. Rather than implementing YA history browser, it can link to
+[[ViewCVS]] or the like to browse the history of a wiki page.
 
-* [[RecentChanges]], editing pages in a web browser
+## [[RecentChanges]], editing pages in a web browser
 
-  Nearly the definition of a wiki, although perhaps ikiwiki challenges how
-  much of that web gunk a wiki really needs. These features are optional
-  and can be enabled by enabling [[CGI]].
+Nearly the definition of a wiki, although perhaps ikiwiki challenges how
+much of that web gunk a wiki really needs. These features are optional
+and can be enabled by enabling [[CGI]].
 
-* User registration
+## User registration
 
-  Can optionally be configured to allow only registered users to post
-  pages; online user registration form, etc.
+Can optionally be configured to allow only registered users to post
+pages; online user registration form, etc.
 
-* Discussion pages
+## Discussion pages
 
-  Thanks to subpages, every page can easily and automatically have a
-  /Discussion subpage. By default, these links are included in the
-  [[templates]] for each page.
+Thanks to subpages, every page can easily and automatically have a
+/Discussion subpage. By default, these links are included in the
+[[templates]] for each page.
 
-* Smart merging and conflict resolution in your web browser
+## Smart merging and conflict resolution in your web browser
 
-  Since it uses a real RCS, ikiwiki takes advantage of its smart merging to
-  avoid any conflicts when two people edit different parts of the same page
-  at the same time. No annoying warnings about other editors, or locking,
-  etc, instead the other person's changes will be automatically merged with
-  yours when you commit.
+Since it uses a real RCS, ikiwiki takes advantage of its smart merging to
+avoid any conflicts when two people edit different parts of the same page
+at the same time. No annoying warnings about other editors, or locking,
+etc, instead the other person's changes will be automatically merged with
+yours when you commit.
 
-  In the rare cases where automatic merging fails due to the same part of a
-  page being concurrently edited, regular commit conflict markers are
-  shown in the file to resolve the conflict, so if you're already familiar
-  with that there's no new commit marker syntax to learn.
+In the rare cases where automatic merging fails due to the same part of a
+page being concurrently edited, regular commit conflict markers are
+shown in the file to resolve the conflict, so if you're already familiar
+with that there's no new commit marker syntax to learn.
 
-* page locking
+## page locking
 
-  Wiki admins can lock pages so that only other admins can edit them.
+Wiki admins can lock pages so that only other admins can edit them.
 
-* Full text search
+## Full text search
 
-  ikiwiki can use the [[HyperEstraier]] search engine to add powerful
-  full text search capabilities to your wiki.
+ikiwiki can use the [[HyperEstraier]] search engine to add powerful
+full text search capabilities to your wiki.
 
-* Commit mails
+## Commit mails
 
-  ikiwiki can be configured to send you commit mails with diffs of changes
-  to selected pages.
+ikiwiki can be configured to send you commit mails with diffs of changes
+to selected pages.
 
-* [[Plugins]]
+## [[Plugins]]
 
-  Plugins can be used to add additional features to ikiwiki. The interface
-  is quite flexible, allowing plugins to implement additional markup
-  languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
-  and more. Most of ikiwiki's features are actually provided by plugins.
-  Ikiwiki's backend RCS support is also pluggable, so support for new
-  revision control systems can be added to ikiwiki. 
+Plugins can be used to add additional features to ikiwiki. The interface
+is quite flexible, allowing plugins to implement additional markup
+languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
+and more. Most of ikiwiki's features are actually provided by plugins.
+Ikiwiki's backend RCS support is also pluggable, so support for new
+revision control systems can be added to ikiwiki. 
 
-* [[todo/utf8]]
+## [[todo/utf8]]
 
-  After rather a lot of fiddling, we think that ikiwiki correctly and fully
-  supports utf8 everywhere.
+After rather a lot of fiddling, we think that ikiwiki correctly and fully
+supports utf8 everywhere.
 
-* [[w3mmode]]
+## [[w3mmode]]
 
-  Can be set up so that w3m can be used to browse a wiki and edit pages
-  without using a web server.
-
-----
-
-It also has some [[TODO]] items and [[Bugs]].
+Can be set up so that w3m can be used to browse a wiki and edit pages
+without using a web server.
