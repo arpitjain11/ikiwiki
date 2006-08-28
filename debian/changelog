@@ -44,6 +44,8 @@ ikiwiki (1.22) UNRELEASED; urgency=low
   * Change htmlize, format, and sanitize hooks to use named parameters.
   * Patch from James Westby to add an actions option to inline; this
     adds Edit and Discussion links at the end of blog entries.
+  * Due to some css changes, you'll want to rebuild your wiki on upgrade
+    to this version. Will be handled automatically by the deb.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 28 Aug 2006 15:29:14 -0400
 
