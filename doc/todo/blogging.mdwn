@@ -10,23 +10,23 @@ when make is used without PREFIX.
 
 -- JamesWestby
 
-	Hmm. Not quite how I'd envisioned podcasts would work, my idea was
-	more that the sound files would be kept inside the wiki, and the
-	inline plugin could be told to eg, inline *.mp3, and would add
-	those to the rss feed as enclosures. Maybe you'd also inline some
-	regular blog pages to describe the files or the like.
+> Hmm. Not quite how I'd envisioned podcasts would work, my idea was
+> more that the sound files would be kept inside the wiki, and the
+> inline plugin could be told to eg, inline *.mp3, and would add
+> those to the rss feed as enclosures. Maybe you'd also inline some
+> regular blog pages to describe the files or the like.
 
-	Do you think that would work or that it's worth pursuing that
-	approach? I haven't looked at podcasts enough to know if that
-	method would be technically feasable; for one thing it would limit
-	the blog items for podcasts to just having an enclosure but no
-	description.
+> Do you think that would work or that it's worth pursuing that
+> approach? I haven't looked at podcasts enough to know if that
+> method would be technically feasable; for one thing it would limit
+> the blog items for podcasts to just having an enclosure but no
+> description.
 
-	Even if that doesn't work and pages are needed to desribe the items
-	like you did, it still seems better to keep the podcast items in
-	the wiki..
+> Even if that doesn't work and pages are needed to desribe the items
+> like you did, it still seems better to keep the podcast items in
+> the wiki..
 
-	--[[Joey]]
+> --[[Joey]]
 
 That's fair enough. I'm a little unsure of how it all works, so I just did the
 simplest thing I could. 
@@ -48,14 +48,14 @@ It's obviously up to you which way you want to go.
 
 -- JamesWestby
 
-	Hmm, this could be taken a step further, and assume that if
-	IkiWiki::pagetype doesn't return a defined page type for the page
-	in the blog, then no matter the extension it should be fed into the
-	rss feed in an enclosure. This would allow for not only podcasting,
-	but vidcasting and a form of photo blogging. Or even an rss feed
-	containing the source of ikiwiki. ;-)
-	
-	--[[Joey]]
+> Hmm, this could be taken a step further, and assume that if
+> IkiWiki::pagetype doesn't return a defined page type for the page
+> in the blog, then no matter the extension it should be fed into the
+> rss feed in an enclosure. This would allow for not only podcasting,
+> but vidcasting and a form of photo blogging. Or even an rss feed
+> containing the source of ikiwiki. ;-)
+> 
+> --[[Joey]]
 
 Yes I agree that this would be great, but rss2 spec says that enclosure
 must have mime-type. How about I use the File::MimeInfo trick from the 
@@ -69,21 +69,21 @@ that people wont use raw if they want to pod/vid/whatevercast?
 
 -- JamesWestby
 
-	Using File::Mimeinfo makes sense to me.
+> Using File::Mimeinfo makes sense to me.
 
-	I think it probably makes sense to make the (html) blog page
-	add an entry with a link to the file that's in the enclosure in the
-	rss feed. Whether or not raw is being used.
+> I think it probably makes sense to make the (html) blog page
+> add an entry with a link to the file that's in the enclosure in the
+> rss feed. Whether or not raw is being used.
 
-	Note: I'm still unsure about whether podcasts should support
-	descriptions for the enclosures or not. Here's an early podcast
-	that did use descriptions:
-	<http://static.userland.com/gems/backend/gratefulDead.xml>
-	Here's a contemporary podcast, which also uses descriptions:
-	<http://www.lugradio.org/episodes.rss>
+> Note: I'm still unsure about whether podcasts should support
+> descriptions for the enclosures or not. Here's an early podcast
+> that did use descriptions:
+> <http://static.userland.com/gems/backend/gratefulDead.xml>
+> Here's a contemporary podcast, which also uses descriptions:
+> <http://www.lugradio.org/episodes.rss>
 
-	The podcast client I use certianly doesn't care about the
-	descriptions. But it's podracer, probably not the thing most
-	podcast users use. :-)
+> The podcast client I use certianly doesn't care about the
+> descriptions. But it's podracer, probably not the thing most
+> podcast users use. :-)
 
-	--[[Joey]]
+> --[[Joey]]
