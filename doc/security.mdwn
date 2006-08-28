@@ -256,3 +256,10 @@ seem to affect our use, since the data is not encoded as utf-8 at that
 point. #[378412](http://bugs.debian.org/378412) could affect us, although it
 doesn't seem very exploitable. It has a simple fix, and has been fixed in
 Debian unstable.
+
+## include loops
+
+Various directives that cause one page to be included into another could
+be exploited to DOS the wiki, by causing a loop. Ikiwiki has always guarded
+against this one way or another; the current solution should detect all
+types of loops involving preprocessor directives.
