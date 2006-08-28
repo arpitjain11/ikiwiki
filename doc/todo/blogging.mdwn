@@ -87,3 +87,20 @@ that people wont use raw if they want to pod/vid/whatevercast?
 > podcast users use. :-)
 
 > --[[Joey]]
+
+I tested with amarok, and that also ignored the description.
+I am thinking of those where you have a mixed feed, and people
+using clients that ignore enclsures get pretty much a blank post,
+with just the filename, and the html page, which also just displays
+the filename.
+
+I don't think this is a big issue though, so I guess it's just which
+you think is the cleaner interface.
+
+I have also added the first of your ideas as well (though you seem to have
+removed it). It adds a parameter to inline `archive_after` which limits
+showing full entries to that number.
+
+<http://jameswestby.net/scratch/limit.diff>
+
+-- JamesWestby
