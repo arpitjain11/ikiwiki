@@ -1,5 +1,3 @@
-- The [[TODO]] page would work better if the first N were shown in full, 
-  and then all open items were shown in summary. Maybe add this mode.
 - Add Discussion and Edit links at the bottom of each inlined post.
 - It would be possible to support rss enclosures for eg, podcasts, pretty easily. 
 
@@ -8,7 +6,7 @@ info, and the enclosure will be added to the entry. It will also add a <link /> 
 at the top, but I don't know if this is necessary. It also includes a fix for
 when make is used without PREFIX. 
 
-http://jameswestby.net/scratch/podcast.diff
+<http://jameswestby.net/scratch/podcast.diff>
 
 -- JamesWestby
 
@@ -46,7 +44,7 @@ want to add a dependency on a IDv3 tag library. You could add another file
 
 It's obviously up to you which way you want to go.
 
-http://jameswestby.net/scratch/podcast2.diff
+<http://jameswestby.net/scratch/podcast2.diff>
 
 -- JamesWestby
 
@@ -70,3 +68,22 @@ this mode is used. It might be that this is not necessary, as can we assume
 that people wont use raw if they want to pod/vid/whatevercast?
 
 -- JamesWestby
+
+	Using File::Mimeinfo makes sense to me.
+
+	I think it probably makes sense to make the (html) blog page
+	add an entry with a link to the file that's in the enclosure in the
+	rss feed. Whether or not raw is being used.
+
+	Note: I'm still unsure about whether podcasts should support
+	descriptions for the enclosures or not. Here's an early podcast
+	that did use descriptions:
+	<http://static.userland.com/gems/backend/gratefulDead.xml>
+	Here's a contemporary podcast, which also uses descriptions:
+	<http://www.lugradio.org/episodes.rss>
+
+	The podcast client I use certianly doesn't care about the
+	descriptions. But it's podracer, probably not the thing most
+	podcast users use. :-)
+
+	--[[Joey]]
