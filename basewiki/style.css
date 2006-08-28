@@ -19,14 +19,18 @@
 	display: block;
 }
 
-#actions ul {
+.actions ul {
 	margin: 0;
 	padding: 6px;
 	list-style-type: none;
 	border-bottom: 1px solid #000;
 }
 
-#actions li {
+.inlinepage .actions ul {
+	border-bottom: 0;
+}
+
+.actions li {
 	display: inline;
 	padding: .2em .4em;
 }

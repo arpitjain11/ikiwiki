@@ -46,6 +46,7 @@ sub preprocess_inline (@) { #{{{
 	} else {
 		$desc = $config{wikiname};
 	}
+	my $actions=yesno($params{actions});
 
 	my @list;
 	foreach my $page (keys %pagesources) {
@@ -103,6 +104,18 @@ sub preprocess_inline (@) { #{{{
 			$template->param(title => pagetitle(basename($page)));
 			$template->param(content => $content);
 			$template->param(ctime => displaytime($pagectime{$page}));
+
+			if ($actions) {
+				my $file = $pagesources{$page};
+				my $type = pagetype($file);
+				$template->param(have_actions => 1);
+				if ($config{discussion}) {
+					$template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
+				}
+				if (length $config{cgiurl} && defined $type) {
+					$template->param(editurl => cgiurl(do => "edit", page => $page));
+				}
+			}
 
 			run_hooks(pagetemplate => sub {
 				shift->(page => $page, destpage => $params{page},

@@ -28,4 +28,18 @@ Tags:
 </TMPL_LOOP>
 </TMPL_IF>
 </span>
+
+<TMPL_IF NAME="HAVE_ACTIONS">
+<span class="actions">
+<ul>
+<TMPL_IF NAME="EDITURL">
+<li><a href="<TMPL_VAR EDITURL>">Edit</a></li>
+</TMPL_IF>
+<TMPL_IF NAME="DISCUSSIONLINK">
+<li><TMPL_VAR DISCUSSIONLINK></li>
+</TMPL_IF>
+</ul>
+</span>
+</TMPL_IF>
+
 </div>
