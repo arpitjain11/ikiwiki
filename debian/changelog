@@ -11,8 +11,6 @@ ikiwiki (1.22) UNRELEASED; urgency=low
   * Allow preprocessor directives to contain python-like triple-quoted
     text blocks, for easy nesting of quotes inside.
   * Add a template plugin.
-  * Use the template plugin to add infoboxes to each plugin page listing basic
-    info about the plugin.
   * Make pagespec merge code smarter about merging duplicate pagespecs.
   * Patch from Jordà Polo to make Setup::Standard support hashes in config
     files.
@@ -33,11 +31,9 @@ ikiwiki (1.22) UNRELEASED; urgency=low
   * Generalised preprocesser loop protection code.
   * Patch from James Westby to allow a description to be set for rss feeds.
   * Patch from James Westby to add a template for the search form.
-  * Cache search form for speedup.
   * Added a ddate plugin.
   * Patch from James Westby to add a --sslcookie switch, which forces
     cookies to only be sent over ssl connections to avoid interception.
-  * Factor out the cgi header printing code into a new function.
   * Fix preferences page on anonok wikis; still need to sign in to get
     to the preferences page.
   * Add toc (table of contents) plugin.
