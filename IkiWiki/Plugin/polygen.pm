@@ -25,6 +25,7 @@ sub preprocess (@) { #{{{
 	$grammar =~ s/\.grm$//;
 	$grammar .= '.grm';
 	$symbol =~ s/[^A-Za-z0-9]//g if defined $symbol;
+	$symbol = IkiWiki::possibly_foolish_untaint($symbol) if defined $symbol;
 
 	my $grmfile = '/usr/share/polygen/ita/polygen.grm';
 	if (! -d '/usr/share/polygen') {
