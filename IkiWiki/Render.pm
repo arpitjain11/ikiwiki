@@ -131,7 +131,7 @@ sub preprocess ($$$) { #{{{
 					push @params, $val, '';
 				}
 			}
-			if ($preprocessing{$page}++ > 10) {
+			if ($preprocessing{$page}++ > 3) {
 				# Avoid loops of preprocessed pages preprocessing
 				# other pages that preprocess them, etc.
 				return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
