@@ -232,7 +232,8 @@ sub aggregate () { #{{{
 			);
 		}
 
-		$feed->{message}="processed ok";
+		$feed->{message}="processed ok at ".
+			IkiWiki::displaytime($feed->{lastupdate});
 	}
 
 	# TODO: expiry

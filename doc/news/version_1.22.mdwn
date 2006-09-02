@@ -1,0 +1,62 @@
+Version 1.22 of ikiwiki is released. Some important news items for this
+release:
+
+Due to some changes in the CSS, wikis should be rebuilt on upgrade to this
+version. If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+automatically when the Debian package is upgraded. Or use ikiiki-mass-rebuild
+to force a rebuild.
+
+If you have modified versions of ikiwiki's html templates, you will need
+to update your templates to link to the stylesheet file using
+"<TMPL_VAR BASEURL>style.css" instead of the old method which used
+STYLEURL.
+
+There have also been some changes to the plugin interface:
+Any plugins that use santize, htmlize, or format hooks will need to be
+updated for this version of ikiwiki since these hooks have been changed
+to use named parameters.
+
+Here's the full list of changes:
+
+   * Change how the stylesheet url is determined in the templates: Remove
+     STYLEURL and add BASEURL to all templates (some already had it). This
+     new more general variable can be used to link to other things (eg, images)
+     from the template, as well as stylesheets.
+   * Fix a bug introduced last version to do with nested inlines.
+   * Allow preprocessor directives to span multiple lines, both to make
+     long ones with lots of values easier to write, and to allow for ones with
+     multi-line quoted values.
+   * Allow preprocessor directives to contain python-like triple-quoted
+     text blocks, for easy nesting of quotes inside.
+   * Add a template plugin.
+   * Make pagespec merge code smarter about merging duplicate pagespecs.
+   * Patch from Jordà Polo to make Setup::Standard support hashes in config
+     files.
+   * Change order of linkify and preprocess; first preprocess and then linkify.
+     This allows passing a wikilink inside a parameter to a preprocessor
+     directive without it being expanded to html, and leaking out of the
+     parameter, which had required some non-obvious use of triple-quoting
+     to avoid. Note that any preprocessor plugins that output something
+     that looks like a wikilink will now have it treated as such; AFAIK
+     this doesn't change any behavior though except for the template plugin.
+   * Enable preprocessor directives when previewing an edit.
+   * Make all pages pull in a local.css style sheet, if present. This won't
+     be included in ikiwiki, but can be created to make local styling changes
+     w/o needing to merge in every new change to the distributed style.css.
+   * Use DESTDIR and not PREFIX to specify installation prefix for packaging.
+   * Support running "perl Makefile.PL PREFIX=foo" to build ikiwiki to run
+     from a different directory.
+   * Generalised preprocesser loop protection code.
+   * Patch from James Westby to allow a description to be set for rss feeds.
+   * Patch from James Westby to add a template for the search form.
+   * Added a ddate plugin.
+   * Patch from James Westby to add a --sslcookie switch, which forces
+     cookies to only be sent over ssl connections to avoid interception.
+   * Fix preferences page on anonok wikis; still need to sign in to get
+     to the preferences page.
+   * Add toc (table of contents) plugin.
+   * Change htmlize, format, and sanitize hooks to use named parameters.
+   * Patch from James Westby to add an actions option to inline; this
+     adds Edit and Discussion links at the end of blog entries.
+   * Due to some css changes, you'll want to rebuild your wiki on upgrade
+     to this version. Will be handled automatically by the deb.
