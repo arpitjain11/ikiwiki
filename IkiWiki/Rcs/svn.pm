@@ -256,7 +256,6 @@ sub rcs_notify () { #{{{
 
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
-	eval q{use Date::Parse};
 
 	my $svn_log_infoline=qr/^r\d+\s+\|\s+[^\s]+\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
 		
@@ -278,6 +277,7 @@ sub rcs_getctime ($) { #{{{
 		return 0;
 	}
 		
+	eval q{use Date::Parse};
 	$date=str2time($date);
 	debug("found ctime ".localtime($date)." for $file");
 	return $date;
