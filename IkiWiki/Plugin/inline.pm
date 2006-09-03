@@ -95,7 +95,7 @@ sub preprocess_inline (@) { #{{{
 			# is to let the meta plugin get page title info; so stop
 			# calling this next line then once the meta plugin can
 			# store that accross runs (also tags plugin).
-			my $content=get_inline_content($page, $params{page});
+			my $content=get_inline_content($page, $params{destpage});
 			# Don't use htmllink because this way the title is separate
 			# and can be overridden by other plugins.
 			my $link=htmlpage(bestlink($params{page}, $page));
@@ -199,11 +199,11 @@ sub rsspage ($) { #{{{
 } #}}}
 
 sub genrss ($$@) { #{{{
-	my $desc = shift;
+	my $desc=shift;
 	my $page=shift;
 	my @pages=@_;
 	
-	my $url=URI->new(encode_utf8("$config{url}/".htmlpage($page)));
+	my $url=URI->new(encode_utf8($config{url}."/".htmlpage($page)));
 	
 	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1);
 	my $content="";
