@@ -76,12 +76,26 @@ sub cgi_recentchanges ($) { #{{{
 	eval q{use Memoize};
 	memoize("htmllink");
 
+	eval q{use Time::Duration};
+
+	my $changelog=[rcs_recentchanges(100)];
+	foreach my $change (@$changelog) {
+		$change->{when} = concise(ago($change->{when}));
+		$change->{user} = htmllink("", "", $change->{user}, 1);
+		$change->{pages} = [
+			map {
+				$_->{link} = htmllink("", "", $_->{page}, 1);
+				$_;
+			} @{$change->{pages}}
+		];
+	}
+
 	my $template=template("recentchanges.tmpl"); 
 	$template->param(
 		title => "RecentChanges",
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
-		changelog => [rcs_recentchanges(100)],
+		changelog => $changelog,
 		baseurl => baseurl(),
 	);
 	print $q->header(-charset => 'utf-8'), $template->output;

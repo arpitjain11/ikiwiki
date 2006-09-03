@@ -32,15 +32,26 @@ sub rcs_add ($) {
 }
 
 sub rcs_recentchanges ($) {
-	# Examine the RCS history and generate a data structure for
-	# the recentchanges page.
-	# This structure is a list of items, each item is a hash reference
-	# representing one change to the repo.
-	# The hash has keys user (a link to the user making the change),
-	# committype (web or the name of the rcs), when (when the change
-	# happened, relative to the current time), message (a reference
-	# to an array of lines for the commit message), and pages (a
-	# reference to an array of links to the pages that were changed).
+	# Examine the RCS history and generate a list of recent changes.
+	# The data structure returned for each change is:
+	# {
+	# 	user => # name of user who made the change,
+	# 	committype => # either "web" or the name of the rcs,
+	# 	when => # time when the change was made,
+	# 	message => [
+	# 		"commit message line",
+	# 		"commit message line",
+	# 		"...",
+	# 	],
+	# 	pages => [
+	# 		{
+	# 			page => # name of page changed,
+	#			diffurl => # optional url to a diff showing 
+	#			           # the changes,
+	# 		}
+	# 		# repeat for each page changed in this commit
+	# 	],
+	# }
 }
 
 sub rcs_notify () {

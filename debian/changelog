@@ -1,3 +1,10 @@
+ikiwiki (1.24) UNRELEASED; urgency=low
+
+  * Simplify the data structure returned by rcs_recentchanges to avoid
+    each rcs plugin needing to form complex strings on its own.
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  3 Sep 2006 13:32:34 -0400
+
 ikiwiki (1.23) unstable; urgency=low
 
   * Allow inline directives to be nested inside eg, sidebars. Closes: #385512

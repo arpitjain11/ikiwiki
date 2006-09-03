@@ -153,7 +153,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $rev = $logentry->{revision};
 		my $user = $logentry->{author};
 
-		my $when=concise(ago(time - str2time($logentry->{date}, 'UTC')));
+		my $when=time - str2time($logentry->{date}, 'UTC');
 
 		foreach my $msgline (split(/\n/, $logentry->{msg})) {
 			push @message, { line => escapeHTML($msgline) };
@@ -177,12 +177,12 @@ sub rcs_recentchanges ($) { #{{{
 			$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
 			$diffurl=~s/\[\[r2\]\]/$rev/g;
 			push @pages, {
-				link => htmllink("", "", pagename($file), 1),
+				page => pagename($file),
 				diffurl => $diffurl,
 			} if length $file;
 		}
 		push @ret, { rev => $rev,
-			user => htmllink("", "", $user, 1),
+			user => $user,
 			committype => $committype,
 			when => $when,
 			message => [@message],

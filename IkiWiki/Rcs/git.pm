@@ -345,7 +345,6 @@ sub rcs_recentchanges ($) { #{{{
 
 	eval q{use CGI 'escapeHTML'};
 	eval q{use Date::Parse};
-	eval q{use Time::Duration};
 
 	my ($sha1, $type, $when, $diffurl, $user, @pages, @message, @rets);
 	INFO: foreach my $ci (git_commit_info('HEAD', $num)) {
@@ -356,7 +355,7 @@ sub rcs_recentchanges ($) { #{{{
 
 		$sha1 = $ci->{'sha1'};
 		$type = "web";
-		$when = concise(ago(time - $ci->{'author_epoch'}));
+		$when = time - $ci->{'author_epoch'};
 
 		foreach my $bit (@{ $ci->{'details'} }) {
 			my $diffurl = $config{'diffurl'};
@@ -368,7 +367,7 @@ sub rcs_recentchanges ($) { #{{{
 			$diffurl =~ s/\[\[sha1_to\]\]/$bit->{'sha1_to'}/go;
 
 			push @pages, {
-				link => htmllink("", "", pagename($file), 1),
+				page => pagename($file),
 				diffurl => $diffurl,
 			},
 		}
@@ -386,7 +385,7 @@ sub rcs_recentchanges ($) { #{{{
 
 		push @rets, {
 			rev        => $sha1,
-			user       => htmllink("", "", $user, 1),
+			user       => $user,
 			committype => $type,
 			when       => $when,
 			message    => [@message],
