@@ -99,7 +99,7 @@ sub preprocess_inline (@) { #{{{
 			# Don't use htmllink because this way the title is separate
 			# and can be overridden by other plugins.
 			my $link=htmlpage(bestlink($params{page}, $page));
-			$link=abs2rel($link, dirname($params{page}));
+			$link=abs2rel($link, dirname($params{destpage}));
 			$template->param(pageurl => $link);
 			$template->param(title => pagetitle(basename($page)));
 			$template->param(content => $content);
