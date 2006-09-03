@@ -44,10 +44,11 @@ sub htmlize (@) { #{{{
 	my $content=$params{content};
 
 	my $tries=10;
+	my $pid;
 	while (1) {
 		eval {
 			# Try to call python and run our command
-			open2(*IN, *OUT, "python", "-c",  $pyCmnd)
+			$pid=open2(*IN, *OUT, "python", "-c",  $pyCmnd)
 				or return $content;
 		};
 		last unless $@;
@@ -63,8 +64,13 @@ sub htmlize (@) { #{{{
 	
 	print OUT $content;
 	close OUT;
+
 	local $/ = undef;
-	return <IN>;
+	my $ret=<IN>;
+	close IN;
+	waitpid $pid, 0;
+
+	return $ret;
 } # }}}
 
 1

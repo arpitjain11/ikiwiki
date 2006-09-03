@@ -31,9 +31,10 @@ sub htmlize (@) { #{{{
 	my %params=@_;
 
 	my $tries=10;
+	my $pid;
 	while (1) {
 		eval {
-			open2(*IN, *OUT, 'otl2html -S /dev/null -T /dev/stdin');
+			$pid=open2(*IN, *OUT, 'otl2html -S /dev/null -T /dev/stdin');
 		};
 		last unless $@;
 		$tries--;
@@ -51,6 +52,9 @@ sub htmlize (@) { #{{{
 
 	local $/ = undef;
 	my $ret=<IN>;
+	close IN;
+	waitpid $pid, 0;
+
 	$ret=~s/.*<body>//s;
 	$ret=~s/<body>.*//s;
 	$ret=~s/<div class="Footer">.*//s;

@@ -20,9 +20,10 @@ sub sanitize (@) { #{{{
 	my %params=@_;
 
 	my $tries=10;
+	my $pid;
 	while (1) {
 		eval {
-			open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no');
+			$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no');
 		};
 		last unless $@;
 		$tries--;
@@ -39,7 +40,11 @@ sub sanitize (@) { #{{{
 	close OUT;
 
 	local $/ = undef;
-	return <IN>;
+	my $ret=<IN>;
+	close IN;
+	waitpid $pid, 0;
+
+	return $ret;
 } # }}}
 
 1

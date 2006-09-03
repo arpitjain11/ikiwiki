@@ -1,3 +1,10 @@
+ikiwiki (1.25) UNRELEASED; urgency=low
+
+  * Add proper waitpid calls for open2ed processes throughout to avoid
+    zombies; this hit htmltidy especially badly.
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  3 Sep 2006 15:56:55 -0400
+
 ikiwiki (1.24) unstable; urgency=low
 
   * Simplify the data structure returned by rcs_recentchanges to avoid
