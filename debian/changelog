@@ -2,8 +2,10 @@ ikiwiki (1.25) UNRELEASED; urgency=low
 
   * Add proper waitpid calls for open2ed processes throughout to avoid
     zombies; this hit htmltidy especially badly.
+  * Drop real uid/gid in the suid wrapper, thus allowing commits to remote
+    subversion repos and fixing some other issues.
 
- -- Joey Hess <joeyh@debian.org>  Sun,  3 Sep 2006 15:56:55 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun,  3 Sep 2006 23:28:37 -0400
 
 ikiwiki (1.24) unstable; urgency=low
 
