@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-# For subversion support.
 
 use warnings;
 use strict;

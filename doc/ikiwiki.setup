@@ -30,6 +30,11 @@ use IkiWiki::Setup::Standard {
 	#historyurl => "http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
 	#diffurl => "http://git.host/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
 
+	# Tla stuff.
+	#rcs => "tla"
+	#historyurl => ??,
+	#diffurl => ??,
+
 	wrappers => [
 		#{
 		#	# The cgi wrapper.

@@ -1,6 +1,6 @@
 So you want to set up your own wiki using ikiwiki? This tutorial will walk
-you through setting up a wiki that is stored in [[Subversion]] or [[Git]],
-and that has optional support for commits from the web.
+you through setting up a wiki that is stored in [[Subversion]], [[Git]], or
+[[TLA]], and that has optional support for commits from the web.
 
 1. [[Install]] ikiwiki. See [[download]] for where to get it.
 
@@ -19,6 +19,11 @@ and that has optional support for commits from the web.
 		git add .
 		git commit -m create -a
 
+		# TLA
+		mkdir /tla
+		tla make-archive me@localhost--wiki /tla/wikirepo
+		tla my-id "<me@localhost>"
+
 3. Check out the repository to make the working copy that ikiwiki will use.
 
 		# Subversion
@@ -26,6 +31,13 @@ and that has optional support for commits from the web.
 		 
 		# Git
 		git clone /git/wikirepo ~/wikiwc
+
+		# TLA
+		mkdir ~/wikiwc
+		cd ~/wikiwc
+		tla archive-setup me@localhost--wiki/wiki--0
+		tla init-tree me@localhost--wiki/wiki--0
+		tla import
 
 4. Build your wiki for the first time.
 
@@ -51,6 +63,10 @@ and that has optional support for commits from the web.
 		git add index.mdwn
 		git commit -m customised index.mdwn
 		git push origin
+
+		# TLA
+		tla add index.mdwn
+		tla commit
 
    You can also add any files you like from scratch of course.
 
