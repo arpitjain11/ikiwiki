@@ -10,6 +10,7 @@ package IkiWiki;
 my $tla_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
 
 sub quiet_system (@) {
+	# See Debian bug #385939.
 	open (SAVEOUT, ">&STDOUT");
 	close STDOUT;
 	my $ret=system(@_);
