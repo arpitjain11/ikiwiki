@@ -50,7 +50,7 @@
 		<td class="changelog" colspan="4">
 			<TMPL_LOOP NAME="MESSAGE">
 				<TMPL_IF NAME="LINE">
-					<TMPL_VAR NAME="LINE"><br />
+					<TMPL_VAR NAME="LINE" ESCAPE="HTML"><br />
 				</TMPL_IF>
 			</TMPL_LOOP>
 		</td>

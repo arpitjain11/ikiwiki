@@ -343,7 +343,6 @@ sub rcs_recentchanges ($) { #{{{
 
 	my ($num) = @_;
 
-	eval q{use CGI 'escapeHTML'};
 	eval q{use Date::Parse};
 
 	my ($sha1, $type, $when, $diffurl, $user, @pages, @message, @rets);
@@ -372,7 +371,7 @@ sub rcs_recentchanges ($) { #{{{
 			},
 		}
 
-		push @message, { line => escapeHTML($title) };
+		push @message, { line => $title };
 
 		if (defined $message[0] &&
 		    $message[0]->{line} =~ m/$web_commit_msg/) {

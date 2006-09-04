@@ -123,7 +123,6 @@ sub rcs_recentchanges ($) { #{{{
 	
 	return unless -d "$config{srcdir}/.svn";
 
-	eval q{use CGI 'escapeHTML'};
 	eval q{use Date::Parse};
 	eval q{use Time::Duration};
 	eval q{use XML::SAX};
@@ -156,7 +155,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $when=time - str2time($logentry->{date}, 'UTC');
 
 		foreach my $msgline (split(/\n/, $logentry->{msg})) {
-			push @message, { line => escapeHTML($msgline) };
+			push @message, { line => $msgline };
 		}
 
 		my $committype="web";
