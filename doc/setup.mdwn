@@ -23,6 +23,8 @@ you through setting up a wiki that is stored in [[Subversion]], [[Git]], or
 		mkdir /tla
 		tla make-archive me@localhost--wiki /tla/wikirepo
 		tla my-id "<me@localhost>"
+		# Edit {arch}/=tagging-method and change the precious
+		# line to add the .ikiwiki directory to the regexp.
 
 3. Check out the repository to make the working copy that ikiwiki will use.
 
