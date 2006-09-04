@@ -48,8 +48,8 @@ sub rcs_recentchanges ($) {
 	# 			page => # name of page changed,
 	#			diffurl => # optional url to a diff showing 
 	#			           # the changes,
-	# 		}
-	# 		# repeat for each page changed in this commit
+	# 		},
+	# 		# repeat for each page changed in this commit,
 	# 	],
 	# }
 }
