@@ -30,7 +30,7 @@
 <TMPL_LOOP NAME="CHANGELOG">
 	<!-- <TMPL_VAR NAME="REV"> -->
 	<tr class="changeinfo">
-		<td class="changeinfo"><TMPL_VAR NAME="USER"></td>
+		<td class="changeinfo"><TMPL_VAR NAME="USER" ESCAPE="HTML"></td>
 		<td class="changetime"><TMPL_VAR NAME="WHEN"></td>
 		<td class="changeinfo">
 		<TMPL_LOOP NAME="PAGES">
