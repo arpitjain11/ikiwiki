@@ -39,9 +39,9 @@ sub rcs_recentchanges ($) {
 	# 	committype => # either "web" or the name of the rcs,
 	# 	when => # time when the change was made,
 	# 	message => [
-	# 		"commit message line",
-	# 		"commit message line",
-	# 		"...",
+	# 		{ line => "commit message line" },
+	# 		{ line => "commit message line" },
+	# 		# etc,
 	# 	],
 	# 	pages => [
 	# 		{
