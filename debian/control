@@ -14,12 +14,13 @@ Suggests: viewcvs, librpc-xml-perl, libtext-wikiformat-perl, python-docutils, po
 Description: a wiki compiler
  ikiwiki converts a directory full of wiki pages into html pages suitable
  for publishing on a website. Unlike many wikis, ikiwiki does not have its
- own means of storing page history or its own markup language. Instead it
- uses subversion (or git) and markdown.
+ own means of storing page history. Instead it can use Subversion (or
+ Git or tla).
  .
  ikiwiki implements all of the other standard features of a wiki, including
  web-based page editing, user registration and logins, a RecentChanges
  page, BackLinks, search, Discussion pages, tags, smart merging and conflict
  resolution, page locking, and commit emails.
  .
- It also supports generating RSS feeds and blogging.
+ It also supports generating RSS feeds and blogging, and a plugin system
+ allows many other features to be added.
