@@ -77,6 +77,7 @@ sub cgi_recentchanges ($) { #{{{
 	memoize("htmllink");
 
 	eval q{use Time::Duration};
+	eval q{use CGI 'escapeHTML'};
 
 	my $changelog=[rcs_recentchanges(100)];
 	foreach my $change (@$changelog) {
