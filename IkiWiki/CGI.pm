@@ -81,7 +81,7 @@ sub cgi_recentchanges ($) { #{{{
 	my $changelog=[rcs_recentchanges(100)];
 	foreach my $change (@$changelog) {
 		$change->{when} = concise(ago($change->{when}));
-		$change->{user} = htmllink("", "", $change->{user}, 1);
+		$change->{user} = htmllink("", "", escapeHTML($change->{user}), 1);
 		$change->{pages} = [
 			map {
 				$_->{link} = htmllink("", "", $_->{page}, 1);
