@@ -35,6 +35,11 @@ use IkiWiki::Setup::Standard {
 	#historyurl => ??,
 	#diffurl => ??,
 
+	# Mercurial stuff.
+	#rcs => "mercurial",
+	#historyurl => "http://localhost:8000/", # hg serve'd local repository
+	#diffurl => "http://localhost:8000/?fd=[[changeset]];file=[[file]]",
+
 	wrappers => [
 		#{
 		#	# The cgi wrapper.

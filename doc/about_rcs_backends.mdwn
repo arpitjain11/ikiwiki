@@ -117,8 +117,33 @@ part).  GIT doesn't have a similar functionality like 'svn merge -rOLD:NEW
 FILE' (please see the relevant comment in mergepast for more details), so I
 had to invent an ugly hack just for the purpose.
 
-## [mercurial](http://www.selenic.com/mercurial/)
+## [Mercurial](http://www.selenic.com/mercurial/)
 
-Being worked on by Emanuele Aina.
+The Mercurial backend is still in a early phase, so it may not be mature 
+enough, but it should be simple to understand and use.
 
-<http://techn.ocracy.org/ikiwiki>
+As Mercurial is a distributed RCS, it lacks the distinction between 
+repository and working copy (every wc is a repo).
+
+This means that the Mercurial backend uses directly the repository as 
+working copy (the master M and the working copy W described in the svn 
+example are the same thing).
+
+You only need to specify 'srcdir' (the repository M) and 'destdir' (where
+the HTML will be generated).
+
+Master repository M.
+
+RCS commit from the outside are installed into M.
+
+M is directly used as working copy (M is also W).
+
+HTML is generated from the working copy in M. rcs_update() will update 
+to the last committed revision in M (the same as 'hg update').
+If you use an 'update' hook you can generate automatically the HTML
+in the destination directory each time 'hg update' is called.
+
+CGI operates on M. rcs_commit() will commit directly in M.
+
+If you have any question or suggestion about the Mercurial backend 
+please refer to [Emanuele](http://nerd.ocracy.org/em/).

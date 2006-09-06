@@ -120,6 +120,11 @@ configuration options of their own.
   If you use git, the `source` directory is assumed to be a clone of the
   [[git]] repository.
 
+  If you use tla, the `source` directory is assumed to be a tla import.
+
+  If you use mercurial, the `source` directory is assumed to be the
+  [[mercurial]] repository.
+
   In [[CGI]] mode, with a revision control system enabled pages edited via
   the web will be committed. Also, the [[RecentChanges]] link will be placed
   on pages.
