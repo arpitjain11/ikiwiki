@@ -10,6 +10,8 @@ use URI;
 sub import { #{{{
 	IkiWiki::hook(type => "preprocess", id => "inline", 
 		call => \&IkiWiki::preprocess_inline);
+	IkiWiki::hook(type => "pagetemplate", id => "inline",
+		call => \&IkiWiki::pagetemplate_inline);
 	# Hook to change to do pinging since it's called late.
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.
@@ -22,6 +24,7 @@ sub import { #{{{
 package IkiWiki;
 
 my %toping;
+my %rsslinks;
 
 sub yesno ($) { #{{{
 	my $val=shift;
@@ -62,22 +65,23 @@ sub preprocess_inline (@) { #{{{
 
 	add_depends($params{page}, $params{pages});
 
+	my $rssurl=rsspage(basename($params{page}));
 	my $ret="";
-	
+
 	if (exists $params{rootpage} && $config{cgiurl}) {
 		# Add a blog post form, with a rss link button.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
 		$formtemplate->param(rootpage => $params{rootpage});
 		if ($config{rss}) {
-			$formtemplate->param(rssurl => rsspage(basename($params{page})));
+			$formtemplate->param(rssurl => $rssurl);
 		}
 		$ret.=$formtemplate->output;
 	}
 	elsif ($config{rss} && $rss) {
 		# Add a rss link button.
 		my $linktemplate=template("rsslink.tmpl", blind_cache => 1);
-		$linktemplate->param(rssurl => rsspage(basename($params{page})));
+		$linktemplate->param(rssurl => $rssurl);
 		$ret.=$linktemplate->output;
 	}
 	
@@ -146,9 +150,19 @@ sub preprocess_inline (@) { #{{{
 		writefile(rsspage($params{page}), $config{destdir},
 			genrss($desc, $params{page}, @list));
 		$toping{$params{page}}=1 unless $config{rebuild};
+		$rsslinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 	}
 	
 	return $ret;
+} #}}}
+
+sub pagetemplate_inline (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	my $template=$params{template};
+
+	$template->param(rsslink => $rsslinks{$page})
+		if exists $rsslinks{$page} && $template->query(name => "rsslink");
 } #}}}
 
 sub get_inline_content ($$) { #{{{
