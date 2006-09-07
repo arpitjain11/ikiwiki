@@ -99,8 +99,7 @@ sub preprocess (@) { #{{{
 	}
 
 	return "<a href=\"".$feed->{url}."\">".$feed->{name}."</a>: ".
-	       "<i>".$feed->{message}."</i> (".$feed->{numposts}.
-	       " stored posts".
+	       "<i>".$feed->{message}."</i> (".$feed->{numposts}." posts".
 	       ($feed->{newposts} ? "; ".$feed->{newposts}." new" : "").
 	       ")";
 } # }}}
