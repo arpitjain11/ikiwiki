@@ -1,0 +1,106 @@
+#!/usr/bin/perl
+package IkiWiki::Plugin::linkmap;
+
+use warnings;
+use strict;
+use IkiWiki;
+use IPC::Open2;
+
+sub import { #{{{
+	IkiWiki::hook(type => "preprocess", id => "linkmap",
+		call => \&preprocess);
+	IkiWiki::hook(type => "format", id => "linkmap",
+		call => \&format);
+} # }}}
+
+my $mapnum=0;
+my %maps;
+
+sub preprocess (@) { #{{{
+	my %params=@_;
+	$params{pages}="*" unless defined $params{pages};
+	
+	# Needs to update whenever a page is added or removed, so
+	# register a dependency.
+	IkiWiki::add_depends($params{page}, $params{pages});
+	
+	# Can't just return the linkmap here, since the htmlscrubber
+	# scrubs out all <object> tags (with good reason!)
+	# Instead, insert a placeholder tag, which will be expanded during
+	# formatting.
+	$mapnum++;
+	$maps{$mapnum}=\%params;
+	return "<div class=\"linkmap$mapnum\"></div>";
+} # }}}
+
+sub format (@) { #{{{
+        my %params=@_;
+
+	$params{content}=~s/<div class=\"linkmap(\d+)"><\/div>/genmap($1)/eg;
+
+        return $params{content};
+} # }}}
+
+sub genmap ($) { #{{{
+	my $mapnum=shift;
+	return "" unless exists $maps{$mapnum};
+	my %params=%{$maps{$mapnum}};
+
+	# Get all the items to map.
+	my %mapitems = ();
+	foreach my $item (keys %IkiWiki::links) {
+		if (IkiWiki::pagespec_match($item, $params{pages})) {
+			my $link=IkiWiki::htmlpage($item);
+			$link=IkiWiki::abs2rel($link, IkiWiki::dirname($params{page}));
+			$mapitems{$item}=$link;
+		}
+	}
+
+	# Use ikiwiki's function to create the file, this makes sure needed
+	# subdirs are there and does some sanity checking.
+	IkiWiki::writefile("$params{page}.png", $IkiWiki::config{destdir}, "");
+
+	# Run dot to create the graphic and get the map data.
+	# TODO: should really add the png to renderedfiles and call
+	# check_overwrite, but currently renderedfiles
+	# only supports listing one file per page.
+	my $tries=10;
+	my $pid;
+	while (1) {
+		eval {
+			$pid=open2(*IN, *OUT, "dot /dev/stdin -Tpng -o '$IkiWiki::config{destdir}/$params{page}.png' -Tcmapx");
+		};
+		last unless $@;
+		$tries--;
+		if ($tries < 1) {
+			return "failed to run dot: $@";
+		}
+	}
+	# open2 doesn't respect "use open ':utf8'"
+	binmode (IN, ':utf8'); 
+	binmode (OUT, ':utf8'); 
+
+	print OUT "digraph linkmap$mapnum {\n";
+	print OUT "concentrate=true;\n";
+	foreach my $item (keys %mapitems) {
+		print OUT "\"$item\" [shape=box,href=\"$mapitems{$item}\"];\n";
+		foreach my $link (map { IkiWiki::bestlink($item, $_) } @{$IkiWiki::links{$item}}) {
+			print OUT "\"$item\" -> \"$link\";\n"
+				if $mapitems{$link};
+		}
+	}
+	print OUT "}\n";
+	close OUT;
+
+	local $/=undef;
+	my $ret="<object data=\"".
+	        IkiWiki::abs2rel("$params{page}.png", IkiWiki::dirname($params{page})).
+	        "\" type=\"image/png\" usemap=\"#linkmap$mapnum\">\n".
+	         <IN>.
+	         "</object>";
+	close IN;
+	waitpid $pid, 0;
+	return $ret;
+} #}}}
+
+1
