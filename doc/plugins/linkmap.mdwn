@@ -14,6 +14,14 @@ the map can become very large, unweildy, and complicated. Also, the map is
 rebuilt whenever one of the mapped pages is changed, which can make the
 wiki a bit slow.
 
+Here are descriptions of all the supported parameters to the `linkmap`
+directive:
+
+* `pages` - A [[PageSpec]] of the pages to map.
+* `height`, `width` - Limit the size of the map to a given height and width,
+  in inches. Both must be specified for the limiting to take effect, otherwise
+  the map's size is not limited.
+
 This plugin is included in ikiwiki, but is not enabled by default.
 
 If this plugin is enabled, here is a link map of the index page and all

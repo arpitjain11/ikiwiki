@@ -18,6 +18,7 @@ my %maps;
 
 sub preprocess (@) { #{{{
 	my %params=@_;
+
 	$params{pages}="*" unless defined $params{pages};
 	
 	# Needs to update whenever a page is added or removed, so
@@ -83,6 +84,8 @@ sub genmap ($) { #{{{
 	print OUT "digraph linkmap$mapnum {\n";
 	print OUT "concentrate=true;\n";
 	print OUT "charset=\"utf-8\";\n";
+	print OUT "ratio=compress;\nsize=\"".($params{width}+0).", ".($params{height}+0)."\";\n"
+		if defined $params{width} and defined $params{height};
 	foreach my $item (keys %mapitems) {
 		print OUT "\"$item\" [shape=box,href=\"$mapitems{$item}\"];\n";
 		foreach my $link (map { IkiWiki::bestlink($item, $_) } @{$IkiWiki::links{$item}}) {
