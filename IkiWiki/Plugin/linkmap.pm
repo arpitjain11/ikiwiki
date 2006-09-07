@@ -82,6 +82,7 @@ sub genmap ($) { #{{{
 
 	print OUT "digraph linkmap$mapnum {\n";
 	print OUT "concentrate=true;\n";
+	print OUT "charset=\"utf-8\";\n";
 	foreach my $item (keys %mapitems) {
 		print OUT "\"$item\" [shape=box,href=\"$mapitems{$item}\"];\n";
 		foreach my $link (map { IkiWiki::bestlink($item, $_) } @{$IkiWiki::links{$item}}) {
