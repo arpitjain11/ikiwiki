@@ -167,9 +167,9 @@ This hook is called wheneven ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
 
-## Error handing
+# Error handing
 
-While a plugin can call ikiwiki's error routine for a fatal error, for
+While a plugin can call ikiwiki's `error` routine for a fatal error, for
 errors that aren't intended to halt the entire wiki build, including bad
 parameters passed to a [[PreProcessorDirective]], etc, it's better to just
 return the error message as the output of the plugin.
