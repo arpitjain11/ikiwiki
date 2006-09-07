@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Produce a hyerarchical map of links.
+# Produce a hierarchical map of links.
 #
 # by Alessandro Dotti Contra <alessandro@hyboria.org>
 #
