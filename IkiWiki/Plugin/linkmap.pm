@@ -69,7 +69,7 @@ sub genmap ($) { #{{{
 	my $pid;
 	while (1) {
 		eval {
-			$pid=open2(*IN, *OUT, "dot /dev/stdin -Tpng -o '$IkiWiki::config{destdir}/$params{page}.png' -Tcmapx");
+			$pid=open2(*IN, *OUT, "dot -Tpng -o '$IkiWiki::config{destdir}/$params{page}.png' -Tcmapx");
 		};
 		last unless $@;
 		$tries--;
