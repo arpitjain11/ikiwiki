@@ -61,7 +61,7 @@ sub rcs_commit ($$$) { #{{{
 		           "-L".possibly_foolish_untaint($message),
 			   '-d', $config{srcdir}) != 0) {
 			my $conflict=readfile("$config{srcdir}/$file");
-			if (system("tla", "undo", "--quiet", "-d", "$config{srcdir}") != 0) {
+			if (system("tla", "undo", "-n", "--quiet", "-d", "$config{srcdir}") != 0) {
 				warn("tla undo failed\n");
 			}
 			return $conflict;
