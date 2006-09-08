@@ -1,8 +1,11 @@
-ikiwiki (1.26) UNRELEASED; urgency=low
+ikiwiki (1.26) unstable; urgency=low
 
-  * Add a missing -n to tla undo call. 
+  * Add a missing -n to tla undo call.
+  * otl2hmtl can't be safely used with IPC::Open2 since it sometimes
+    writes before consuming its whole stdin. Avoid this deadlock.
+  * Fix alt tags for outline checkboxes.
 
- -- Joey Hess <joeyh@debian.org>  Fri,  8 Sep 2006 15:10:13 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri,  8 Sep 2006 16:24:16 -0400
 
 ikiwiki (1.25) unstable; urgency=low
 

@@ -5,7 +5,6 @@ package IkiWiki::Plugin::otl;
 use warnings;
 use strict;
 use IkiWiki;
-use IPC::Open2;
 
 sub import { #{{{
 	IkiWiki::hook(type => "filter", id => "otl", call => \&filter);
@@ -18,9 +17,9 @@ sub filter (@) { #{{{
         
 	# Munge up check boxes to look a little bit better. This is a hack.
 	my $checked=IkiWiki::htmllink($params{page}, $params{page},
-		"smileys/star_on.png", 0);
+		"smileys/star_on.png", 0, 0, "[X]");
 	my $unchecked=IkiWiki::htmllink($params{page}, $params{page},
-		"smileys/star_off.png", 0);
+		"smileys/star_off.png", 0, 0, "[_]");
 	$params{content}=~s/^(\s*)\[X\]\s/${1}$checked /mg;
 	$params{content}=~s/^(\s*)\[_\]\s/${1}$unchecked /mg;
         
@@ -30,29 +29,56 @@ sub filter (@) { #{{{
 sub htmlize (@) { #{{{
 	my %params=@_;
 
+	# Can't use open2 since otl2html doesn't play nice with buffering.
+	# Instead, fork off a child process that will run otl2html and feed
+	# it the content. Then read otl2html's response.
+
 	my $tries=10;
 	my $pid;
-	while (1) {
-		eval {
-			$pid=open2(*IN, *OUT, 'otl2html -S /dev/null -T /dev/stdin');
-		};
-		last unless $@;
-		$tries--;
-		if ($tries < 1) {
-			IkiWiki::debug("failed to run otl2html: $@");
-			return $params{content};
+	do {
+		$pid = open(KID_TO_READ, "-|");
+		unless (defined $pid) {
+			$tries--;
+			if ($tries < 1) {
+				IkiWiki::debug("failed to fork: $@");
+				return $params{content};
+			}
 		}
-	}
-	# open2 doesn't respect "use open ':utf8'"
-	binmode (IN, ':utf8'); 
-	binmode (OUT, ':utf8'); 
-	
-	print OUT $params{content};
-	close OUT;
+	} until defined $pid;
 
+	if (! $pid) {
+		$tries=10;
+		$pid=undef;
+
+		do {
+			$pid = open(KID_TO_WRITE, "|-");
+			unless (defined $pid) {
+				$tries--;
+				if ($tries < 1) {
+					IkiWiki::debug("failed to fork: $@");
+					print $params{content};
+					exit;
+				}
+			}
+		} until defined $pid;
+
+		if (! $pid) {
+			if (! exec 'otl2html', '-S', '/dev/null', '-T', '/dev/stdin') {
+				IkiWiki::debug("failed to run otl2html: $@");
+				print $params{content};
+				exit;
+			}
+		}
+
+		print KID_TO_WRITE $params{content};
+		close KID_TO_WRITE;
+		waitpid $pid, 0;
+		exit;
+	}
+	
 	local $/ = undef;
-	my $ret=<IN>;
-	close IN;
+	my $ret=<KID_TO_READ>;
+	close KID_TO_READ;
 	waitpid $pid, 0;
 
 	$ret=~s/.*<body>//s;
