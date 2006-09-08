@@ -1,0 +1,11 @@
+ikiwiki 1.25 released with these changes:
+
+   * Add proper waitpid calls for open2ed processes throughout to avoid
+     zombies; this hit htmltidy especially badly.
+   * Drop real uid/gid in the suid wrapper, thus allowing commits to remote
+     subversion repos and fixing some other issues.
+   * Add support for tla, contributed by Clint Adams. Closes: #[385936](http://bugs.debian.org/385936)
+   * Add support for mercurial, contributed by Emanuele Aina.
+   * Include &lt;link rel&gt; tag for RSS feeds, used by some aggregators and
+     firefox to find the feed.
+   * Add a linkmap plugin (requires graphviz).
