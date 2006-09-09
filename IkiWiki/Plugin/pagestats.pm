@@ -18,8 +18,7 @@ use IkiWiki;
 our @classes = ('smallestPC', 'smallPC', 'normalPC', 'bigPC', 'biggestPC' );
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "pagestats",
-		call => \&preprocess);
+	hook(type => "preprocess", id => "pagestats", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
@@ -29,12 +28,12 @@ sub preprocess (@) { #{{{
 	
 	# Needs to update whenever a page is added or removed, so
 	# register a dependency.
-	IkiWiki::add_depends($params{page}, $params{pages});
+	add_depends($params{page}, $params{pages});
 	
 	my %counts;
 	my $max = 0;
-	foreach my $page (keys %IkiWiki::links) {
-		if (IkiWiki::pagespec_match($page, $params{pages})) {
+	foreach my $page (keys %links) {
+		if (pagespec_match($page, $params{pages})) {
 			my @bl = IkiWiki::backlinks($page);
 			$counts{$page} = scalar(@bl);
 			$max = $counts{$page} if $counts{$page} > $max;
@@ -45,7 +44,7 @@ sub preprocess (@) { #{{{
 		return "<table class='pageStats'>\n".
 			join("\n", map {
 				"<tr><td>".
-				IkiWiki::htmllink($params{page}, $params{destpage}, $_, 1).
+				htmllink($params{page}, $params{destpage}, $_, 1).
 				"</td><td>".$counts{$_}."</td></tr>"
 			}
 			sort { $counts{$b} <=> $counts{$a} } keys %counts).
@@ -57,7 +56,7 @@ sub preprocess (@) { #{{{
 		foreach my $page (sort keys %counts) {
 			my $class = $classes[$counts{$page} * scalar(@classes) / ($max + 1)];
 			$res .= "<span class=\"$class\">".
-			        IkiWiki::htmllink($params{page}, $params{destpage}, $page).
+			        htmllink($params{page}, $params{destpage}, $page).
 			        "</span>\n";
 		}
 		$res .= "</div>\n";

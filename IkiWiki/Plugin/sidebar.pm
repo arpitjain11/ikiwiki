@@ -9,24 +9,23 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "pagetemplate", id => "sidebar", 
-		call => \&pagetemplate);
+	hook(type => "pagetemplate", id => "sidebar", call => \&pagetemplate);
 } # }}}
 
 sub sidebar_content ($) { #{{{
 	my $page=shift;
 	
-	my $sidebar_page=IkiWiki::bestlink($page, "sidebar") || return;
-	my $sidebar_file=$IkiWiki::pagesources{$sidebar_page} || return;
-	my $sidebar_type=IkiWiki::pagetype($sidebar_file);
+	my $sidebar_page=bestlink($page, "sidebar") || return;
+	my $sidebar_file=$pagesources{$sidebar_page} || return;
+	my $sidebar_type=pagetype($sidebar_file);
 	
 	if (defined $sidebar_type) {
 		# FIXME: This isn't quite right; it won't take into account
 		# adding a new sidebar page. So adding such a page
 		# currently requires a wiki rebuild.
-		IkiWiki::add_depends($page, $sidebar_page);
+		add_depends($page, $sidebar_page);
 
-		my $content=IkiWiki::readfile(IkiWiki::srcfile($sidebar_file));
+		my $content=readfile(srcfile($sidebar_file));
 		return unless length $content;
 		return IkiWiki::htmlize($page, $sidebar_type,
 		       IkiWiki::linkify($sidebar_page, $page,

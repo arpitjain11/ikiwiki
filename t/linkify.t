@@ -3,6 +3,8 @@ use warnings;
 use strict;
 use Test::More tests => 13;
 
+BEGIN { use_ok("IkiWiki"); }
+
 sub linkify ($$$$) {
 	my $lpage=shift;
 	my $page=shift;
@@ -13,13 +15,13 @@ sub linkify ($$$$) {
 	# This is what linkify and htmllink need set right now to work.
 	# This could change, if so, update it..
 	%IkiWiki::pagecase=();
-	%IkiWiki::links=();
+	%links=();
 	foreach my $page (@existing_pages) {
 		$IkiWiki::pagecase{lc $page}=$page;
-		$IkiWiki::links{$page}=[];
-		$IkiWiki::renderedfiles{"$page.mdwn"}=$page;
+		$links{$page}=[];
+		$renderedfiles{"$page.mdwn"}=$page;
 	}
-	%IkiWiki::config=IkiWiki::defaultconfig();
+	%config=IkiWiki::defaultconfig();
 
 	return IkiWiki::linkify($lpage, $page, $content);
 }
@@ -63,8 +65,6 @@ sub links_text ($$) {
 	}
 }
 
-
-BEGIN { use_ok("IkiWiki::Render"); }
 
 ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "bar"])), "ok link");
 ok(not_links_to("bar", linkify("foo", "foo", "link to \\[[bar]] ok", ["foo", "bar"])), "escaped link");

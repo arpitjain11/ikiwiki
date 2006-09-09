@@ -7,44 +7,6 @@ use strict;
 use IkiWiki;
 use Encode;
 
-sub linkify ($$$) { #{{{
-	my $lpage=shift; # the page containing the links
-	my $page=shift; # the page the link will end up on (different for inline)
-	my $content=shift;
-
-	$content =~ s{(\\?)$config{wiki_link_regexp}}{
-		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), 0, 0, pagetitle($2)))
-		   : ( $1 ? "[[$3]]" :    htmllink($lpage, $page, titlepage($3)))
-	}eg;
-	
-	return $content;
-} #}}}
-
-sub htmlize ($$$) { #{{{
-	my $page=shift;
-	my $type=shift;
-	my $content=shift;
-	
-	if (exists $hooks{htmlize}{$type}) {
-		$content=$hooks{htmlize}{$type}{call}->(
-			page => $page,
-			content => $content,
-		);
-	}
-	else {
-		error("htmlization of $type not supported");
-	}
-
-	run_hooks(sanitize => sub {
-		$content=shift->(
-			page => $page,
-			content => $content,
-		);
-	});
-	
-	return $content;
-} #}}}
-
 sub backlinks ($) { #{{{
 	my $page=shift;
 
@@ -90,80 +52,6 @@ sub parentlinks ($) { #{{{
 	unshift @ret, { url => length $path ? $path : ".", page => $config{wikiname} };
 	return @ret;
 } #}}}
-
-my %preprocessing;
-sub preprocess ($$$) { #{{{
-	my $page=shift; # the page the data comes from
-	my $destpage=shift; # the page the data will appear in (different for inline)
-	my $content=shift;
-
-	my $handle=sub {
-		my $escape=shift;
-		my $command=shift;
-		my $params=shift;
-		if (length $escape) {
-			return "[[$command $params]]";
-		}
-		elsif (exists $hooks{preprocess}{$command}) {
-			# Note: preserve order of params, some plugins may
-			# consider it significant.
-			my @params;
-			while ($params =~ /(?:(\w+)=)?(?:"""(.*?)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
-				my $key=$1;
-				my $val;
-				if (defined $2) {
-					$val=$2;
-					$val=~s/\r\n/\n/mg;
-					$val=~s/^\n+//g;
-					$val=~s/\n+$//g;
-				}
-				elsif (defined $3) {
-					$val=$3;
-				}
-				elsif (defined $4) {
-					$val=$4;
-				}
-
-				if (defined $key) {
-					push @params, $key, $val;
-				}
-				else {
-					push @params, $val, '';
-				}
-			}
-			if ($preprocessing{$page}++ > 3) {
-				# Avoid loops of preprocessed pages preprocessing
-				# other pages that preprocess them, etc.
-				return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
-			}
-			my $ret=$hooks{preprocess}{$command}{call}->(
-				@params,
-				page => $page,
-				destpage => $destpage,
-			);
-			$preprocessing{$page}--;
-			return $ret;
-		}
-		else {
-			return "[[$command $params]]";
-		}
-	};
-	
-	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:""".*?"""|"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}seg;
-	return $content;
-} #}}}
-
-sub add_depends ($$) { #{{{
-	my $page=shift;
-	my $pagespec=shift;
-	
-	if (! exists $depends{$page}) {
-		$depends{$page}=$pagespec;
-	}
-	else {
-		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
-	}
-} # }}}
 
 sub genpage ($$$) { #{{{
 	my $page=shift;
@@ -236,16 +124,6 @@ sub check_overwrite ($$) { #{{{
 	}
 } #}}}
 
-sub displaytime ($) { #{{{
-	my $time=shift;
-
-	eval q{use POSIX};
-	# strftime doesn't know about encodings, so make sure
-	# its output is properly treated as utf8
-	return decode_utf8(POSIX::strftime(
-			$config{timeformat}, localtime($time)));
-} #}}}
-
 sub mtime ($) { #{{{
 	my $file=shift;
 	
@@ -269,17 +147,6 @@ sub findlinks ($$) { #{{{
 		return @links;
 	}
 } #}}}
-
-sub filter ($$) {
-	my $page=shift;
-	my $content=shift;
-
-	run_hooks(filter => sub {
-		$content=shift->(page => $page, content => $content);
-	});
-
-	return $content;
-}
 
 sub render ($) { #{{{
 	my $file=shift;

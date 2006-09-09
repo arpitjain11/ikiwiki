@@ -1,0 +1,72 @@
+The plugin interface is currently that they can register hooks, and can
+call any other ikiwiki internal function they desire, generally through
+Ikiwiki::function calls. Also, some Ikiwiki::config etc variables can be
+used.
+
+This is a very weak interface, and should be firmed up to something more
+like a proper perl library. I've been waiting to get some idea of what bits
+of ikiwiki are most useful to plugins before doing it; there are plenty of
+plugins to know that now.
+
+IkiWiki will now  export some function calls and variables when loaded.
+
+Functions used by many plugins, which I'm sure should be exported:
+
+* hook
+* debug
+* error
+* template
+* htmlpage
+* add_depends
+* pagespec_match
+* bestlink
+* htmllink
+* readfile
+* writefile
+* pagetype
+* srcfile
+* pagename
+* displaytime
+
+Functions used by only some plugins, undecided:
+
+* lockwiki, unlockwiki (aggregate)
+	Too internal to ever be exported.
+* loadindex (aggregate)
+	Too internal to ever be exported.
+* titlepage (aggregate)
+	Not until more than one thing uses it.
+* basename (polygen, inline, search, polygen)
+* dirname (linkmap, inline)
+	For basename and dirname, they could just use standard perl library
+	stuff. Howevever, ikiwiki's versions are slightly different and I'd
+	need to check if the standard versions work for the uses made in
+	these plugins. Inclined not to export.
+* abs2rel (linkmap, inline)
+	This *is* the library version, just optimised to work around a bug.
+	Don't export this.
+* possibly_foolish_untaint (aggregate, polygen)
+	Probably better to implement yourself.
+* htmlize
+* linkify
+* preprocess
+* filter
+	Used by several, but problimatic since plugins typically define
+	functions with these names..
+
+Variables used by plugins:
+
+* %IkiWiki::config (various values; probably not worth locking down any
+  more, export it)
+* %IkiWiki::links (many, seems clearcut to export)
+* %IkiWiki::renderedfiles (orphans, inline, search)
+* %IkiWiki::pagesources (pagecount, sidebar, template, inline)
+* %IkiWiki::pagecase (aggregate.. will not export yet)
+* %IkiWIki::backlinks (pagestats.. will not export yet)
+
+I don't want this interface to be too firm; it's ok for a plugin like
+`ddate` to redefine an internal function like IkiWiki::displaytime if it
+wants to.. But plugins that still access stuff through IkiWiki:: should be
+aware that that stuff can change at any time and break them. Possibly without
+perl's type checking catching the breakage, in some cases. Plugins that
+only use exported symbols should not break by future ikiwiki changes.

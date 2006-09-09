@@ -9,26 +9,23 @@ use IkiWiki;
 my %tags;
 
 sub import { #{{{
-	IkiWiki::hook(type => "getopt", id => "tag",
-		call => \&getopt);
-	IkiWiki::hook(type => "preprocess", id => "tag",
-		call => \&preprocess);
-	IkiWiki::hook(type => "pagetemplate", id => "tag",
-		call => \&pagetemplate);
+	hook(type => "getopt", id => "tag", call => \&getopt);
+	hook(type => "preprocess", id => "tag", call => \&preprocess);
+	hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
 } # }}}
 
 sub getopt () { #{{{
 	eval q{use Getopt::Long};
 	Getopt::Long::Configure('pass_through');
-	GetOptions("tagbase=s" => \$IkiWiki::config{tagbase});
+	GetOptions("tagbase=s" => \$config{tagbase});
 } #}}}
 
 sub tagpage ($) { #{{{
 	my $tag=shift;
 			
-	if (exists $IkiWiki::config{tagbase} &&
-	    defined $IkiWiki::config{tagbase}) {
-		$tag=$IkiWiki::config{tagbase}."/".$tag;
+	if (exists $config{tagbase} &&
+	    defined $config{tagbase}) {
+		$tag=$config{tagbase}."/".$tag;
 	}
 
 	return $tag;
@@ -47,7 +44,7 @@ sub preprocess (@) { #{{{
 	foreach my $tag (keys %params) {
 		push @{$tags{$page}}, $tag;
 		# hidden WikiLink
-		push @{$IkiWiki::links{$page}}, tagpage($tag);
+		push @{$links{$page}}, tagpage($tag);
 	}
 		
 	return "";
@@ -61,7 +58,7 @@ sub pagetemplate (@) { #{{{
 
 	$template->param(tags => [
 		map { 
-			link => IkiWiki::htmllink($page, $destpage, tagpage($_))
+			link => htmllink($page, $destpage, tagpage($_))
 		}, @{$tags{$page}}
 	]) if exists $tags{$page} && @{$tags{$page}} && $template->query(name => "tags");
 

@@ -7,13 +7,18 @@ use Encode;
 use HTML::Entities;
 use open qw{:utf8 :std};
 
+use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
+            %renderedfiles %pagesources %depends %hooks %forcerebuild};
+
+use Exporter q{import};
+our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+                 bestlink htmllink readfile writefile pagetype srcfile pagename
+                 %config %links %renderedfiles %pagesources);
+
 # Optimisation.
 use Memoize;
 memoize("abs2rel");
 memoize("pagespec_translate");
-
-use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
-            %renderedfiles %pagesources %depends %hooks %forcerebuild};
 
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
@@ -254,11 +259,6 @@ sub writefile ($$$;$) { #{{{
 } #}}}
 
 sub bestlink ($$) { #{{{
-	# Given a page and the text of a link on the page, determine which
-	# existing page that link best points to. Prefers pages under a
-	# subdirectory with the same name as the source page, failing that
-	# goes down the directory tree to the base looking for matching
-	# pages.
 	my $page=shift;
 	my $link=shift;
 	
@@ -329,6 +329,16 @@ sub abs2rel ($$) { #{{{
 	return $ret;
 } #}}}
 
+sub displaytime ($) { #{{{
+	my $time=shift;
+
+	eval q{use POSIX};
+	# strftime doesn't know about encodings, so make sure
+	# its output is properly treated as utf8
+	return decode_utf8(POSIX::strftime(
+			$config{timeformat}, localtime($time)));
+} #}}}
+
 sub htmllink ($$$;$$$) { #{{{
 	my $lpage=shift; # the page doing the linking
 	my $page=shift; # the page that will contain the link (different for inline)
@@ -369,6 +379,117 @@ sub htmllink ($$$;$$$) { #{{{
 	}
 	return "<a href=\"$bestlink\">$linktext</a>";
 } #}}}
+
+sub htmlize ($$$) { #{{{
+	my $page=shift;
+	my $type=shift;
+	my $content=shift;
+
+	if (exists $hooks{htmlize}{$type}) {
+		$content=$hooks{htmlize}{$type}{call}->(
+			page => $page,
+			content => $content,
+		);
+	}
+	else {
+		error("htmlization of $type not supported");
+	}
+
+	run_hooks(sanitize => sub {
+		$content=shift->(
+			page => $page,
+			content => $content,
+		);
+	});
+
+	return $content;
+} #}}}
+
+sub linkify ($$$) { #{{{
+	my $lpage=shift; # the page containing the links
+	my $page=shift; # the page the link will end up on (different for inline)
+	my $content=shift;
+
+	$content =~ s{(\\?)$config{wiki_link_regexp}}{
+		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), 0, 0, pagetitle($2)))
+		   : ( $1 ? "[[$3]]" :    htmllink($lpage, $page, titlepage($3)))
+	}eg;
+	
+	return $content;
+} #}}}
+
+my %preprocessing;
+sub preprocess ($$$) { #{{{
+	my $page=shift; # the page the data comes from
+	my $destpage=shift; # the page the data will appear in (different for inline)
+	my $content=shift;
+
+	my $handle=sub {
+		my $escape=shift;
+		my $command=shift;
+		my $params=shift;
+		if (length $escape) {
+			return "[[$command $params]]";
+		}
+		elsif (exists $hooks{preprocess}{$command}) {
+			# Note: preserve order of params, some plugins may
+			# consider it significant.
+			my @params;
+			while ($params =~ /(?:(\w+)=)?(?:"""(.*?)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
+				my $key=$1;
+				my $val;
+				if (defined $2) {
+					$val=$2;
+					$val=~s/\r\n/\n/mg;
+					$val=~s/^\n+//g;
+					$val=~s/\n+$//g;
+				}
+				elsif (defined $3) {
+					$val=$3;
+				}
+				elsif (defined $4) {
+					$val=$4;
+				}
+
+				if (defined $key) {
+					push @params, $key, $val;
+				}
+				else {
+					push @params, $val, '';
+				}
+			}
+			if ($preprocessing{$page}++ > 3) {
+				# Avoid loops of preprocessed pages preprocessing
+				# other pages that preprocess them, etc.
+				return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
+			}
+			my $ret=$hooks{preprocess}{$command}{call}->(
+				@params,
+				page => $page,
+				destpage => $destpage,
+			);
+			$preprocessing{$page}--;
+			return $ret;
+		}
+		else {
+			return "[[$command $params]]";
+		}
+	};
+	
+	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:""".*?"""|"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}seg;
+	return $content;
+} #}}}
+
+sub filter ($$) {
+	my $page=shift;
+	my $content=shift;
+
+	run_hooks(filter => sub {
+		$content=shift->(page => $page, content => $content);
+	});
+
+	return $content;
+}
 
 sub indexlink () { #{{{
 	return "<a href=\"$config{url}\">$config{wikiname}</a>";
@@ -478,7 +599,7 @@ sub misctemplate ($$) { #{{{
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
 		pagebody => $pagebody,
-		baseurl => baseurl(),
+	baseurl => baseurl(),
 	);
 	return $template->output;
 }#}}}
@@ -593,6 +714,18 @@ sub pagespec_translate ($) { #{{{
 
 	return $code;
 } #}}}
+
+sub add_depends ($$) { #{{{
+	my $page=shift;
+	my $pagespec=shift;
+	
+	if (! exists $depends{$page}) {
+		$depends{$page}=$pagespec;
+	}
+	else {
+		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
+	}
+} # }}}
 
 sub pagespec_match ($$) { #{{{
 	my $page=shift;

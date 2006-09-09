@@ -5,17 +5,18 @@ package IkiWiki::Plugin::inline;
 use warnings;
 use strict;
 use IkiWiki;
+use IkiWiki::Render; # for displaytime
 use URI;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "inline", 
+	hook(type => "preprocess", id => "inline", 
 		call => \&IkiWiki::preprocess_inline);
-	IkiWiki::hook(type => "pagetemplate", id => "inline",
+	hook(type => "pagetemplate", id => "inline",
 		call => \&IkiWiki::pagetemplate_inline);
 	# Hook to change to do pinging since it's called late.
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.
-	IkiWiki::hook(type => "change", id => "inline", 
+	hook(type => "change", id => "inline", 
 		call => \&IkiWiki::pingurl);
 } # }}}
 

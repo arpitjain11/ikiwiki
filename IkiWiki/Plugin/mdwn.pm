@@ -7,7 +7,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "htmlize", id => "mdwn", call => \&htmlize);
+	hook(type => "htmlize", id => "mdwn", call => \&htmlize);
 } # }}}
 
 my $markdown_loaded=0;
@@ -26,7 +26,7 @@ sub htmlize (@) { #{{{
 		eval q{use Markdown};
 		if ($@) {
 			do "/usr/bin/markdown" ||
-				IkiWiki::error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
+				error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
 		}
 		$markdown_loaded=1;
 		require Encode;

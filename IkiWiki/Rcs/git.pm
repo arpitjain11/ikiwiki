@@ -48,7 +48,7 @@ sub _safe_git (&@) { #{{{
 	return wantarray ? @lines : ($? == 0);
 }
 # Convenient wrappers.
-sub run_or_die ($@) { _safe_git(\&IkiWiki::error, @_) }
+sub run_or_die ($@) { _safe_git(\&error, @_) }
 sub run_or_cry ($@) { _safe_git(sub { warn @_ },  @_) }
 sub run_or_non ($@) { _safe_git(undef,            @_) }
 #}}}

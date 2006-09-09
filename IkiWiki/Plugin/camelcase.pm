@@ -2,11 +2,12 @@
 # CamelCase links
 package IkiWiki::Plugin::camelcase;
 
+use IkiWiki;
 use warnings;
 use strict;
 
 sub import { #{{{
-	IkiWiki::hook(type => "filter", id => "camelcase", call => \&filter);
+	hook(type => "filter", id => "camelcase", call => \&filter);
 } # }}}
 
 sub filter (@) { #{{{

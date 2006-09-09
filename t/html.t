@@ -11,10 +11,9 @@ BEGIN {
 		plan skip_all => "/usr/bin/validate html validator not present";
 	}
 	else {
-		plan(tests => int @pages + 3);
+		plan(tests => int @pages + 2);
 	}
 	use_ok("IkiWiki");
-	use_ok("IkiWiki::Render");
 }
 
 # Have to build the html pages first.

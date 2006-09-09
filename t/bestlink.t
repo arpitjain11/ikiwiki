@@ -3,22 +3,22 @@ use warnings;
 use strict;
 use Test::More tests => 9;
 
+BEGIN { use_ok("IkiWiki"); }
+
 sub test ($$$) {
 	my $page=shift;
 	my $link=shift;
 	my @existing_pages=@{shift()};
 	
 	%IkiWiki::pagecase=();
-	%IkiWiki::links=();
+	%links=();
 	foreach my $page (@existing_pages) {
 		$IkiWiki::pagecase{lc $page}=$page;
-		$IkiWiki::links{$page}=[];
+		$links{$page}=[];
 	}
 
-	return IkiWiki::bestlink($page, $link);
+	return bestlink($page, $link);
 }
-
-BEGIN { use_ok("IkiWiki"); }
 
 is(test("bar", "foo", ["bar"]), "", "broken link");
 is(test("bar", "foo", ["bar", "foo"]), "foo", "simple link");

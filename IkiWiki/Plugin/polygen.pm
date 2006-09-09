@@ -11,8 +11,7 @@ use IkiWiki;
 use File::Find;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "polygen",
-		call => \&preprocess);
+	hook(type => "preprocess", id => "polygen", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{

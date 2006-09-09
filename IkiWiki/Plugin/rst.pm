@@ -36,7 +36,7 @@ print html[html.find('<body>')+6:html.find('</body>')].strip();
 ";
 
 sub import { #{{{
-	IkiWiki::hook(type => "htmlize", id => "rst", call => \&htmlize);
+	hook(type => "htmlize", id => "rst", call => \&htmlize);
 } # }}}
 
 sub htmlize (@) { #{{{
@@ -54,7 +54,7 @@ sub htmlize (@) { #{{{
 		last unless $@;
 		$tries--;
 		if ($tries < 1) {
-			IkiWiki::debug("failed to run python to convert rst: $@");
+			debug("failed to run python to convert rst: $@");
 			return $content;
 		}
 	}

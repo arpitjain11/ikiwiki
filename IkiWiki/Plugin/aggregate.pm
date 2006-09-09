@@ -14,30 +14,24 @@ my %feeds;
 my %guids;
 
 sub import { #{{{
-	IkiWiki::hook(type => "getopt", id => "aggregate", 
-		call => \&getopt);
-	IkiWiki::hook(type => "checkconfig", id => "aggregate",
-		call => \&checkconfig);
-	IkiWiki::hook(type => "filter", id => "aggregate", 
-		call => \&filter);
-	IkiWiki::hook(type => "preprocess", id => "aggregate",
-		call => \&preprocess);
-        IkiWiki::hook(type => "delete", id => "aggregate",
-                call => \&delete);
-	IkiWiki::hook(type => "savestate", id => "aggregate",
-		call => \&savestate);
+	hook(type => "getopt", id => "aggregate", call => \&getopt);
+	hook(type => "checkconfig", id => "aggregate", call => \&checkconfig);
+	hook(type => "filter", id => "aggregate", call => \&filter);
+	hook(type => "preprocess", id => "aggregate", call => \&preprocess);
+        hook(type => "delete", id => "aggregate", call => \&delete);
+	hook(type => "savestate", id => "aggregate", call => \&savestate);
 } # }}}
 
 sub getopt () { #{{{
         eval q{use Getopt::Long};
         Getopt::Long::Configure('pass_through');
-        GetOptions("aggregate" => \$IkiWiki::config{aggregate});
+        GetOptions("aggregate" => \$config{aggregate});
 } #}}}
 
 sub checkconfig () { #{{{
 	IkiWiki::lockwiki();
 	loadstate();
-	if ($IkiWiki::config{aggregate}) {
+	if ($config{aggregate}) {
 		IkiWiki::loadindex();
 		aggregate();
 		savestate();
@@ -78,7 +72,7 @@ sub preprocess (@) { #{{{
 	$feed->{url}=$params{url};
 	my $dir=exists $params{dir} ? $params{dir} : $params{page}."/".IkiWiki::titlepage($params{name});
 	$dir=~s/^\/+//;
-	($dir)=$dir=~/$IkiWiki::config{wiki_file_regexp}/;
+	($dir)=$dir=~/$config{wiki_file_regexp}/;
 	$feed->{dir}=$dir;
 	$feed->{feedurl}=defined $params{feedurl} ? $params{feedurl} : "";
 	$feed->{updateinterval}=defined $params{updateinterval} ? $params{updateinterval} * 60 : 15 * 60;
@@ -109,15 +103,15 @@ sub delete (@) { #{{{
 
 	# Remove feed data for removed pages.
 	foreach my $file (@files) {
-		my $page=IkiWiki::pagename($file);
+		my $page=pagename($file);
 		remove_feeds($page);
 	}
 } #}}}
 
 sub loadstate () { #{{{
-	if (-e "$IkiWiki::config{wikistatedir}/aggregate") {
-		open (IN, "$IkiWiki::config{wikistatedir}/aggregate" ||
-			die "$IkiWiki::config{wikistatedir}/aggregate: $!");
+	if (-e "$config{wikistatedir}/aggregate") {
+		open (IN, "$config{wikistatedir}/aggregate" ||
+			die "$config{wikistatedir}/aggregate: $!");
 		while (<IN>) {
 			$_=IkiWiki::possibly_foolish_untaint($_);
 			chomp;
@@ -151,8 +145,8 @@ sub loadstate () { #{{{
 sub savestate () { #{{{
 	eval q{use HTML::Entities};
 	die $@ if $@;
-	open (OUT, ">$IkiWiki::config{wikistatedir}/aggregate" ||
-		die "$IkiWiki::config{wikistatedir}/aggregate: $!");
+	open (OUT, ">$config{wikistatedir}/aggregate" ||
+		die "$config{wikistatedir}/aggregate: $!");
 	foreach my $data (values %feeds, values %guids) {
 		if ($data->{remove}) {
 			if ($data->{name}) {
@@ -193,19 +187,19 @@ sub aggregate () { #{{{
 	die $@ if $@;
 
 	foreach my $feed (values %feeds) {
-		next unless $IkiWiki::config{rebuild} || 
+		next unless $config{rebuild} || 
 			time - $feed->{lastupdate} >= $feed->{updateinterval};
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
 		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
 
-		IkiWiki::debug("checking feed ".$feed->{name}." ...");
+		debug("checking feed ".$feed->{name}." ...");
 
 		if (! length $feed->{feedurl}) {
 			my @urls=XML::Feed->find_feeds($feed->{url});
 			if (! @urls) {
 				$feed->{message}="could not find feed at ".$feed->{feedurl};
-				IkiWiki::debug($feed->{message});
+				debug($feed->{message});
 				next;
 			}
 			$feed->{feedurl}=pop @urls;
@@ -213,12 +207,12 @@ sub aggregate () { #{{{
 		my $f=eval{XML::Feed->parse(URI->new($feed->{feedurl}))};
 		if ($@) {
 			$feed->{message}="feed crashed XML::Feed! $@";
-			IkiWiki::debug($feed->{message});
+			debug($feed->{message});
 			next;
 		}
 		if (! $f) {
 			$feed->{message}=XML::Feed->errstr;
-			IkiWiki::debug($feed->{message});
+			debug($feed->{message});
 			next;
 		}
 
@@ -234,7 +228,7 @@ sub aggregate () { #{{{
 		}
 
 		$feed->{message}="processed ok at ".
-			IkiWiki::displaytime($feed->{lastupdate});
+			displaytime($feed->{lastupdate});
 	}
 
 	# TODO: expiry
@@ -264,7 +258,7 @@ sub add_page (@) { #{{{
 		# directory name or trigger ".." disallowing code.
 		$page=~s!([/.])!"__".ord($1)."__"!eg;
 		$page=$feed->{dir}."/".$page;
-		($page)=$page=~/$IkiWiki::config{wiki_file_regexp}/;
+		($page)=$page=~/$config{wiki_file_regexp}/;
 		if (! defined $page || ! length $page) {
 			$page=$feed->{dir}."/item";
 		}
@@ -274,7 +268,7 @@ sub add_page (@) { #{{{
 			$c++
 		}
 		$guid->{page}=$page;
-		IkiWiki::debug("creating new page $page");
+		debug("creating new page $page");
 	}
 	$guid->{feed}=$feed->{name};
 	
@@ -284,11 +278,11 @@ sub add_page (@) { #{{{
 	eval q{use Digest::MD5 'md5_hex'};
 	require Encode;
 	my $digest=md5_hex(Encode::encode_utf8($params{content}));
-	return unless ! exists $guid->{md5} || $guid->{md5} ne $digest || $IkiWiki::config{rebuild};
+	return unless ! exists $guid->{md5} || $guid->{md5} ne $digest || $config{rebuild};
 	$guid->{md5}=$digest;
 
 	# Create the page.
-	my $template=IkiWiki::template("aggregatepost.tmpl", blind_cache => 1);
+	my $template=template("aggregatepost.tmpl", blind_cache => 1);
 	$template->param(title => $params{title})
 		if defined $params{title} && length($params{title});
 	$template->param(content => htmlescape(htmlabs($params{content}, $feed->{feedurl})));
@@ -299,7 +293,7 @@ sub add_page (@) { #{{{
 	if (ref $feed->{tags}) {
 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
 	}
-	IkiWiki::writefile(IkiWiki::htmlpage($guid->{page}), $IkiWiki::config{srcdir},
+	writefile(htmlpage($guid->{page}), $config{srcdir},
 		$template->output);
 
 	# Set the mtime, this lets the build process get the right creation
@@ -374,7 +368,7 @@ sub remove_feeds () { #{{{
 sub pagefile ($) { #{{{
 	my $page=shift;
 
-	return "$IkiWiki::config{srcdir}/".IkiWiki::htmlpage($page);
+	return "$config{srcdir}/".htmlpage($page);
 } #}}}
 
 1

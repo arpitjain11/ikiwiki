@@ -7,12 +7,12 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "htmlize", id => "html", call => \&htmlize);
-	IkiWiki::hook(type => "htmlize", id => "htm", call => \&htmlize);
+	hook(type => "htmlize", id => "html", call => \&htmlize);
+	hook(type => "htmlize", id => "htm", call => \&htmlize);
 
 	# ikiwiki defaults to skipping .html files as a security measure;
 	# make it process them so this plugin can take effect
-	$IkiWiki::config{wiki_file_prune_regexp} =~ s/\|\\\.x\?html\?\$//;
+	$config{wiki_file_prune_regexp} =~ s/\|\\\.x\?html\?\$//;
 } # }}}
 
 sub htmlize (@) { #{{{

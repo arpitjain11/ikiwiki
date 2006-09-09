@@ -6,8 +6,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "sanitize", id => "htmlscrubber",
-		call => \&sanitize);
+	hook(type => "sanitize", id => "htmlscrubber", call => \&sanitize);
 } # }}}
 
 sub sanitize (@) { #{{{

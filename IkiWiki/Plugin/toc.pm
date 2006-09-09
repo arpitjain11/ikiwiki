@@ -8,10 +8,8 @@ use IkiWiki;
 use HTML::Parser;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "toc",
-		call => \&preprocess);
-	IkiWiki::hook(type => "format", id => "toc",
-		call => \&format);
+	hook(type => "preprocess", id => "toc", call => \&preprocess);
+	hook(type => "format", id => "toc", call => \&format);
 } # }}}
 
 my %tocpages;

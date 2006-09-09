@@ -431,7 +431,6 @@ sub cgi_editpage ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq "Preview") {
-		require IkiWiki::Render;
 		my $content=$form->field('editcontent');
 		my $comments=$form->field('comments');
 		$form->field(name => "editcontent",

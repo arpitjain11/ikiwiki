@@ -8,7 +8,7 @@ use IkiWiki;
 use Text::WikiFormat;
 
 sub import { #{{{
-	IkiWiki::hook(type => "htmlize", id => "wiki", call => \&htmlize);
+	hook(type => "htmlize", id => "wiki", call => \&htmlize);
 } # }}}
 
 sub htmlize (@) { #{{{

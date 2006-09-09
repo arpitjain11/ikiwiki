@@ -9,38 +9,26 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "getopt", id => "skeleton", 
-		call => \&getopt);
-	IkiWiki::hook(type => "checkconfig", id => "skeleton", 
-		call => \&checkconfig);
-	IkiWiki::hook(type => "preprocess", id => "skeleton", 
-		call => \&preprocess);
-	IkiWiki::hook(type => "filter", id => "skeleton", 
-		call => \&filter);
-	IkiWiki::hook(type => "htmlize", id => "skeleton",
-		call => \&htmlize);
-	IkiWiki::hook(type => "sanitize", id => "skeleton", 
-		call => \&sanitize);
-	IkiWiki::hook(type => "format", id => "skeleton", 
-		call => \&format);
-	IkiWiki::hook(type => "pagetemplate", id => "skeleton", 
-		call => \&pagetemplate);
-	IkiWiki::hook(type => "delete", id => "skeleton", 
-		call => \&delete);
-	IkiWiki::hook(type => "change", id => "skeleton", 
-		call => \&change);
-	IkiWiki::hook(type => "cgi", id => "skeleton", 
-		call => \&cgi);
-	IkiWiki::hook(type => "savestate", id => "savestate", 
-		call => \&savestate);
+	hook(type => "getopt", id => "skeleton",  call => \&getopt);
+	hook(type => "checkconfig", id => "skeleton", call => \&checkconfig);
+	hook(type => "preprocess", id => "skeleton", call => \&preprocess);
+	hook(type => "filter", id => "skeleton", call => \&filter);
+	hook(type => "htmlize", id => "skeleton", call => \&htmlize);
+	hook(type => "sanitize", id => "skeleton", call => \&sanitize);
+	hook(type => "format", id => "skeleton", call => \&format);
+	hook(type => "pagetemplate", id => "skeleton", call => \&pagetemplate);
+	hook(type => "delete", id => "skeleton", call => \&delete);
+	hook(type => "change", id => "skeleton", call => \&change);
+	hook(type => "cgi", id => "skeleton", call => \&cgi);
+	hook(type => "savestate", id => "savestate", call => \&savestate);
 } # }}}
 
 sub getopt () { #{{{
-	IkiWiki::debug("skeleton plugin getopt");
+	debug("skeleton plugin getopt");
 } #}}}
 
 sub checkconfig () { #{{{
-	IkiWiki::debug("skeleton plugin checkconfig");
+	debug("skeleton plugin checkconfig");
 } #}}}
 
 sub preprocess (@) { #{{{
@@ -52,7 +40,7 @@ sub preprocess (@) { #{{{
 sub filter (@) { #{{{
 	my %params=@_;
 	
-	IkiWiki::debug("skeleton plugin running as filter");
+	debug("skeleton plugin running as filter");
 
 	return $params{content};
 } # }}}
@@ -60,7 +48,7 @@ sub filter (@) { #{{{
 sub htmlize (@) { #{{{
 	my %params=@_;
 
-	IkiWiki::debug("skeleton plugin running as htmlize");
+	debug("skeleton plugin running as htmlize");
 
 	return $params{content};
 } # }}}
@@ -68,7 +56,7 @@ sub htmlize (@) { #{{{
 sub sanitize (@) { #{{{
 	my %params=@_;
 	
-	IkiWiki::debug("skeleton plugin running as a sanitizer");
+	debug("skeleton plugin running as a sanitizer");
 
 	return $params{content};
 } # }}}
@@ -76,7 +64,7 @@ sub sanitize (@) { #{{{
 sub format (@) { #{{{
 	my %params=@_;
 	
-	IkiWiki::debug("skeleton plugin running as a formatter");
+	debug("skeleton plugin running as a formatter");
 
 	return $params{content};
 } # }}}
@@ -86,29 +74,29 @@ sub pagetemplate (@) { #{{{
 	my $page=$params{page};
 	my $template=$params{template};
 	
-	IkiWiki::debug("skeleton plugin running as a pagetemplate hook");
+	debug("skeleton plugin running as a pagetemplate hook");
 } # }}}
 
 sub delete (@) { #{{{
 	my @files=@_;
 
-	IkiWiki::debug("skeleton plugin told that files were deleted: @files");
+	debug("skeleton plugin told that files were deleted: @files");
 } #}}}
 
 sub change (@) { #{{{
 	my @files=@_;
 
-	IkiWiki::debug("skeleton plugin told that changed files were rendered: @files");
+	debug("skeleton plugin told that changed files were rendered: @files");
 } #}}}
 
 sub cgi ($) { #{{{
 	my $cgi=shift;
 
-	IkiWiki::debug("skeleton plugin running in cgi");
+	debug("skeleton plugin running in cgi");
 } #}}}
 
 sub savestate () { #{{{
-	IkiWiki::debug("skeleton plugin running in savestate");
+	debug("skeleton plugin running in savestate");
 } #}}}
 
 1

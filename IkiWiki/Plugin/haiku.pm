@@ -7,8 +7,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "haiku",
-		call => \&preprocess);
+	hook(type => "preprocess", id => "haiku", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
@@ -16,7 +15,7 @@ sub preprocess (@) { #{{{
 
 	my $haiku;
 	eval q{use Coy};
-	if ($@) {
+	if ($@ || ! Coy->can("Coy::with_haiku")) {
 		my @canned=(
 			"The lack of a Coy:
 			 No darting, subtle haiku.

@@ -7,8 +7,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "brokenlinks",
-		call => \&preprocess);
+	hook(type => "preprocess", id => "brokenlinks", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
@@ -17,19 +16,19 @@ sub preprocess (@) { #{{{
 	
 	# Needs to update whenever a page is added or removed, so
 	# register a dependency.
-	IkiWiki::add_depends($params{page}, $params{pages});
+	add_depends($params{page}, $params{pages});
 	
 	my @broken;
-	foreach my $page (keys %IkiWiki::links) {
-		if (IkiWiki::pagespec_match($page, $params{pages})) {
-			foreach my $link (@{$IkiWiki::links{$page}}) {
-				next if $link =~ /.*\/discussion/i && $IkiWiki::config{discussion};
-				my $bestlink=IkiWiki::bestlink($page, $link);
+	foreach my $page (keys %links) {
+		if (pagespec_match($page, $params{pages})) {
+			foreach my $link (@{$links{$page}}) {
+				next if $link =~ /.*\/discussion/i && $config{discussion};
+				my $bestlink=bestlink($page, $link);
 				next if length $bestlink;
 				push @broken,
-					IkiWiki::htmllink($page, $params{destpage}, $link, 1).
+					htmllink($page, $params{destpage}, $link, 1).
 					" in ".
-					IkiWiki::htmllink($params{page}, $params{destpage}, $page, 1);
+					htmllink($params{page}, $params{destpage}, $page, 1);
 			}
 		}
 	}

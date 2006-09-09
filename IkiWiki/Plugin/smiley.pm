@@ -9,33 +9,33 @@ my %smileys;
 my $smiley_regexp;
 
 sub import { #{{{
-	IkiWiki::hook(type => "checkconfig", id => "smiley", call => \&setup);
+	hook(type => "checkconfig", id => "smiley", call => \&setup);
 } # }}}
 
 sub setup () { #{{{
-	my $list=IkiWiki::readfile(IkiWiki::srcfile("smileys.mdwn"));
+	my $list=readfile(srcfile("smileys.mdwn"));
 	while ($list =~ m/^\s*\*\s+\\([^\s]+)\s+\[\[([^]]+)\]\]/mg) {
 		$smileys{$1}=$2;
 	}
 	
 	if (! %smileys) {
-		IkiWiki::debug("failed to parse any smileys, disabling plugin");
+		debug("failed to parse any smileys, disabling plugin");
 		return;
 	}
 	
-	IkiWiki::hook(type => "filter", id => "smiley", call => \&filter);
+	hook(type => "filter", id => "smiley", call => \&filter);
 	# sort and reverse so that substrings come after longer strings
 	# that contain them, in most cases.
 	$smiley_regexp='('.join('|', map { quotemeta }
 		reverse sort keys %smileys).')';
-	#IkiWiki::debug($smiley_regexp);
+	#debug($smiley_regexp);
 } #}}}
 
 sub filter (@) { #{{{
 	my %params=@_;
 	
 	$params{content} =~ s{(?<=\s)(\\?)$smiley_regexp(?=\s)}{
-		$1 ? $2 : IkiWiki::htmllink($params{page}, $params{page}, $smileys{$2}, 0, 0, $2)
+		$1 ? $2 : htmllink($params{page}, $params{page}, $smileys{$2}, 0, 0, $2)
 	}egs;
 	
 	return $params{content};

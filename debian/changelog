@@ -3,8 +3,25 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Add a googlecalendar plugin. A bit special-purpose, but it shows
     one way to to deal with user-supplied content that could cause XSS
     issues w/o the htmlscrubber, and won't survive the scrubber.
+  * Work on firming up the plugin interface:
+    - Plugins should not need to load IkiWiki::Render to get commonly
+      used functions, so moved some functions from there to IkiWiki.
+    - Picked out the set of functions and variables that most plugins
+      use, documented them, and made IkiWiki export them by default,
+      like a proper perl module should.
+    - Use the other functions at your own risk.
+    - This is not quite complete, I still have to decide whether to
+      export some other things.
+  * Changed all plugins included in ikiwiki to not use "IkiWiki::" when
+    referring to stuff now exported by the IkiWiki module.
+  * Anyone with a third-party ikiwiki plugin is strongly enrouraged
+    to make like changes to it and avoid use of non-exported symboles from
+    "IkiWiki::".
+  * Link debian/changelog and debian/news to NEWS and CHANGELOG.
+  * Support hyperestradier version 1.4.2, which adds a new required phraseform
+    setting.
 
- -- Joey Hess <joeyh@debian.org>  Sat,  9 Sep 2006 03:00:45 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat,  9 Sep 2006 18:38:19 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 

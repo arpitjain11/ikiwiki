@@ -7,22 +7,22 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "checkconfig", id => "hyperestraier",
+	hook(type => "checkconfig", id => "hyperestraier",
 		call => \&checkconfig);
-	IkiWiki::hook(type => "pagetemplate", id => "hyperestraier",
+	hook(type => "pagetemplate", id => "hyperestraier",
 		call => \&pagetemplate);
-	IkiWiki::hook(type => "delete", id => "hyperestraier",
+	hook(type => "delete", id => "hyperestraier",
 		call => \&delete);
-	IkiWiki::hook(type => "change", id => "hyperestraier",
+	hook(type => "change", id => "hyperestraier",
 		call => \&change);
-	IkiWiki::hook(type => "cgi", id => "hyperestraier",
+	hook(type => "cgi", id => "hyperestraier",
 		call => \&cgi);
 } # }}}
 
 sub checkconfig () { #{{{
 	foreach my $required (qw(url cgiurl)) {
-		if (! length $IkiWiki::config{$required}) {
-			IkiWiki::error("Must specify $required when using the search plugin\n");
+		if (! length $config{$required}) {
+			error("Must specify $required when using the search plugin\n");
 		}
 	}
 } #}}}
@@ -36,8 +36,8 @@ sub pagetemplate (@) { #{{{
 	# Add search box to page header.
 	if ($template->query(name => "searchform")) {
 		if (! defined $form) {
-			my $searchform = IkiWiki::template("searchform.tmpl", blind_cache => 1);
-			$searchform->param(searchaction => $IkiWiki::config{cgiurl});
+			my $searchform = template("searchform.tmpl", blind_cache => 1);
+			$searchform->param(searchaction => $config{cgiurl});
 			$form=$searchform->output;
 		}
 
@@ -46,19 +46,19 @@ sub pagetemplate (@) { #{{{
 } #}}}
 
 sub delete (@) { #{{{
-	IkiWiki::debug("cleaning hyperestraier search index");
-	IkiWiki::estcmd("purge -cl");
-	IkiWiki::estcfg();
+	debug("cleaning hyperestraier search index");
+	estcmd("purge -cl");
+	estcfg();
 } #}}}
 
 sub change (@) { #{{{
-	IkiWiki::debug("updating hyperestraier search index");
-	IkiWiki::estcmd("gather -cm -bc -cl -sd",
+	debug("updating hyperestraier search index");
+	estcmd("gather -cm -bc -cl -sd",
 		map {
-			Encode::encode_utf8($IkiWiki::config{destdir}."/".$IkiWiki::renderedfiles{IkiWiki::pagename($_)})
+			Encode::encode_utf8($config{destdir}."/".$renderedfiles{pagename($_)})
 		} @_
 	);
-	IkiWiki::estcfg();
+	estcfg();
 } #}}}
 
 sub cgi ($) { #{{{
@@ -66,13 +66,10 @@ sub cgi ($) { #{{{
 
 	if (defined $cgi->param('phrase')) {
 		# only works for GET requests
-		chdir("$IkiWiki::config{wikistatedir}/hyperestraier") || IkiWiki::error("chdir: $!");
-		exec("./".IkiWiki::basename($IkiWiki::config{cgiurl})) || IkiWiki::error("estseek.cgi failed");
+		chdir("$config{wikistatedir}/hyperestraier") || error("chdir: $!");
+		exec("./".IkiWiki::basename($config{cgiurl})) || error("estseek.cgi failed");
 	}
 } #}}}
-
-# Easier to keep these in the IkiWiki namespace.
-package IkiWiki;
 
 my $configured=0;
 sub estcfg () { #{{{
@@ -80,11 +77,11 @@ sub estcfg () { #{{{
 	$configured=1;
 	
 	my $estdir="$config{wikistatedir}/hyperestraier";
-	my $cgi=basename($config{cgiurl});
+	my $cgi=IkiWiki::basename($config{cgiurl});
 	$cgi=~s/\..*$//;
 	open(TEMPLATE, ">$estdir/$cgi.tmpl") ||
 		error("write $estdir/$cgi.tmpl: $!");
-	print TEMPLATE misctemplate("search", 
+	print TEMPLATE IkiWiki::misctemplate("search", 
 		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n");
 	close TEMPLATE;
 	open(TEMPLATE, ">$estdir/$cgi.conf") ||
@@ -94,12 +91,12 @@ sub estcfg () { #{{{
 	$template->param(
 		index => $estdir,
 		tmplfile => "$estdir/$cgi.tmpl",
-		destdir => abs_path($config{destdir}),
+		destdir => IkiWiki::abs_path($config{destdir}),
 		url => $config{url},
 	);
 	print TEMPLATE $template->output;
 	close TEMPLATE;
-	$cgi="$estdir/".basename($config{cgiurl});
+	$cgi="$estdir/".IkiWiki::basename($config{cgiurl});
 	unlink($cgi);
 	symlink("/usr/lib/estraier/estseek.cgi", $cgi) ||
 		error("symlink $cgi: $!");

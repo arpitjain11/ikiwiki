@@ -13,12 +13,9 @@ my %author;
 my %authorurl;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "meta", 
-		call => \&preprocess);
-	IkiWiki::hook(type => "filter", id => "meta", 
-		call => \&filter);
-	IkiWiki::hook(type => "pagetemplate", id => "meta", 
-		call => \&pagetemplate);
+	hook(type => "preprocess", id => "meta", call => \&preprocess);
+	hook(type => "filter", id => "meta", call => \&filter);
+	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
 } # }}}
 
 sub filter (@) { #{{{
@@ -54,7 +51,7 @@ sub preprocess (@) { #{{{
 		}
 		else {
 			# hidden WikiLink
-			push @{$IkiWiki::links{$page}}, $value;
+			push @{$links{$page}}, $value;
 		}
 	}
 	elsif ($key eq 'title') {

@@ -13,7 +13,7 @@ use IkiWiki;
 use IPC::Open2;
 
 sub import { #{{{
-	IkiWiki::hook(type => "sanitize", id => "tidy", call => \&sanitize);
+	hook(type => "sanitize", id => "tidy", call => \&sanitize);
 } # }}}
 
 sub sanitize (@) { #{{{
@@ -28,7 +28,7 @@ sub sanitize (@) { #{{{
 		last unless $@;
 		$tries--;
 		if ($tries < 1) {
-			IkiWiki::debug("failed to run tidy: $@");
+			debug("failed to run tidy: $@");
 			return $params{content};
 		}
 	}

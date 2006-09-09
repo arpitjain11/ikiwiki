@@ -12,8 +12,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "map",
-		call => \&preprocess);
+	hook(type => "preprocess", id => "map", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
@@ -22,12 +21,12 @@ sub preprocess (@) { #{{{
 	
 	# Needs to update whenever a page is added or removed, so
 	# register a dependency.
-	IkiWiki::add_depends($params{page}, $params{pages});
+	add_depends($params{page}, $params{pages});
 	
 	# Get all the items to map.
 	my @mapitems = ();
-	foreach my $page (keys %IkiWiki::links) {
-		if (IkiWiki::pagespec_match($page, $params{pages})) {
+	foreach my $page (keys %links) {
+		if (pagespec_match($page, $params{pages})) {
 			push @mapitems, $page;
 		}
 	}
@@ -50,7 +49,7 @@ sub preprocess (@) { #{{{
 		}
 		$map .= "</li>\n" if $openli;
 		$map .= "<li>"
-		        .IkiWiki::htmllink($params{page}, $params{destpage}, $item) ."\n";
+		        .htmllink($params{page}, $params{destpage}, $item) ."\n";
 		$openli=1;
 	}
 	while ($indent > 0) {

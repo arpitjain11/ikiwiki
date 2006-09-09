@@ -7,10 +7,8 @@ use IkiWiki;
 use IPC::Open2;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "linkmap",
-		call => \&preprocess);
-	IkiWiki::hook(type => "format", id => "linkmap",
-		call => \&format);
+	hook(type => "preprocess", id => "linkmap", call => \&preprocess);
+	hook(type => "format", id => "linkmap", call => \&format);
 } # }}}
 
 my $mapnum=0;
@@ -23,7 +21,7 @@ sub preprocess (@) { #{{{
 	
 	# Needs to update whenever a page is added or removed, so
 	# register a dependency.
-	IkiWiki::add_depends($params{page}, $params{pages});
+	add_depends($params{page}, $params{pages});
 	
 	# Can't just return the linkmap here, since the htmlscrubber
 	# scrubs out all <object> tags (with good reason!)
@@ -49,9 +47,9 @@ sub genmap ($) { #{{{
 
 	# Get all the items to map.
 	my %mapitems = ();
-	foreach my $item (keys %IkiWiki::links) {
-		if (IkiWiki::pagespec_match($item, $params{pages})) {
-			my $link=IkiWiki::htmlpage($item);
+	foreach my $item (keys %links) {
+		if (pagespec_match($item, $params{pages})) {
+			my $link=htmlpage($item);
 			$link=IkiWiki::abs2rel($link, IkiWiki::dirname($params{page}));
 			$mapitems{$item}=$link;
 		}
@@ -59,7 +57,7 @@ sub genmap ($) { #{{{
 
 	# Use ikiwiki's function to create the file, this makes sure needed
 	# subdirs are there and does some sanity checking.
-	IkiWiki::writefile("$params{page}.png", $IkiWiki::config{destdir}, "");
+	writefile("$params{page}.png", $config{destdir}, "");
 
 	# Run dot to create the graphic and get the map data.
 	# TODO: should really add the png to renderedfiles and call
@@ -69,7 +67,7 @@ sub genmap ($) { #{{{
 	my $pid;
 	while (1) {
 		eval {
-			$pid=open2(*IN, *OUT, "dot -Tpng -o '$IkiWiki::config{destdir}/$params{page}.png' -Tcmapx");
+			$pid=open2(*IN, *OUT, "dot -Tpng -o '$config{destdir}/$params{page}.png' -Tcmapx");
 		};
 		last unless $@;
 		$tries--;
@@ -88,7 +86,7 @@ sub genmap ($) { #{{{
 		if defined $params{width} and defined $params{height};
 	foreach my $item (keys %mapitems) {
 		print OUT "\"$item\" [shape=box,href=\"$mapitems{$item}\"];\n";
-		foreach my $link (map { IkiWiki::bestlink($item, $_) } @{$IkiWiki::links{$item}}) {
+		foreach my $link (map { bestlink($item, $_) } @{$links{$item}}) {
 			print OUT "\"$item\" -> \"$link\";\n"
 				if $mapitems{$link};
 		}

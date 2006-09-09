@@ -7,8 +7,8 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	IkiWiki::hook(type => "filter", id => "otl", call => \&filter);
-	IkiWiki::hook(type => "htmlize", id => "otl", call => \&htmlize);
+	hook(type => "filter", id => "otl", call => \&filter);
+	hook(type => "htmlize", id => "otl", call => \&htmlize);
 
 } # }}}
 
@@ -16,9 +16,9 @@ sub filter (@) { #{{{
 	my %params=@_;
         
 	# Munge up check boxes to look a little bit better. This is a hack.
-	my $checked=IkiWiki::htmllink($params{page}, $params{page},
+	my $checked=htmllink($params{page}, $params{page},
 		"smileys/star_on.png", 0, 0, "[X]");
-	my $unchecked=IkiWiki::htmllink($params{page}, $params{page},
+	my $unchecked=htmllink($params{page}, $params{page},
 		"smileys/star_off.png", 0, 0, "[_]");
 	$params{content}=~s/^(\s*)\[X\]\s/${1}$checked /mg;
 	$params{content}=~s/^(\s*)\[_\]\s/${1}$unchecked /mg;
@@ -40,7 +40,7 @@ sub htmlize (@) { #{{{
 		unless (defined $pid) {
 			$tries--;
 			if ($tries < 1) {
-				IkiWiki::debug("failed to fork: $@");
+				debug("failed to fork: $@");
 				return $params{content};
 			}
 		}
@@ -55,7 +55,7 @@ sub htmlize (@) { #{{{
 			unless (defined $pid) {
 				$tries--;
 				if ($tries < 1) {
-					IkiWiki::debug("failed to fork: $@");
+					debug("failed to fork: $@");
 					print $params{content};
 					exit;
 				}
@@ -64,7 +64,7 @@ sub htmlize (@) { #{{{
 
 		if (! $pid) {
 			if (! exec 'otl2html', '-S', '/dev/null', '-T', '/dev/stdin') {
-				IkiWiki::debug("failed to run otl2html: $@");
+				debug("failed to run otl2html: $@");
 				print $params{content};
 				exit;
 			}

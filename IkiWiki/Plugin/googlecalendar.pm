@@ -7,9 +7,9 @@ use IkiWiki;
 use IPC::Open2;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "googlecalendar",
+	hook(type => "preprocess", id => "googlecalendar",
 		call => \&preprocess);
-	IkiWiki::hook(type => "format", id => "googlecalendar",
+	hook(type => "format", id => "googlecalendar",
 		call => \&format);
 } # }}}
 

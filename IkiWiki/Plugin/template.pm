@@ -9,8 +9,7 @@ use HTML::Template;
 use Encode;
 
 sub import { #{{{
-	IkiWiki::hook(type => "preprocess", id => "template", 
-		call => \&preprocess);
+	hook(type => "preprocess", id => "template", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
@@ -21,11 +20,11 @@ sub preprocess (@) { #{{{
 	}
 
 	my $template_page="templates/$params{id}";
-	IkiWiki::add_depends($params{page}, $template_page);
+	add_depends($params{page}, $template_page);
 
-	my $template_file=$IkiWiki::pagesources{$template_page};
+	my $template_file=$pagesources{$template_page};
 	return "[[template ".
-	       IkiWiki::htmllink($params{page}, $params{destpage}, $template_page).
+	       htmllink($params{page}, $params{destpage}, $template_page).
 	       " not found]]"
 		unless defined $template_file;
 
@@ -34,7 +33,7 @@ sub preprocess (@) { #{{{
                         my $text_ref = shift;
                         $$text_ref=&Encode::decode_utf8($$text_ref);
                 },
-                filename => IkiWiki::srcfile($template_file),
+                filename => srcfile($template_file),
                 die_on_bad_params => 0,
 		no_includes => 1,
 		blind_cache => 1,
