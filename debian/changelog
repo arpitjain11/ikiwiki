@@ -1,3 +1,11 @@
+ikiwiki (1.27) UNRELEASED; urgency=low
+
+  * Add a googlecalendar plugin. A bit special-purpose, but it shows
+    one way to to deal with user-supplied content that could cause XSS
+    issues w/o the htmlscrubber, and won't survive the scrubber.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  9 Sep 2006 03:00:45 -0400
+
 ikiwiki (1.26) unstable; urgency=low
 
   * Add a missing -n to tla undo call.
