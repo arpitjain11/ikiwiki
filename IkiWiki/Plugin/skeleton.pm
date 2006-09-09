@@ -6,7 +6,7 @@ package IkiWiki::Plugin::skeleton;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki '1.00';
 
 sub import { #{{{
 	hook(type => "getopt", id => "skeleton",  call => \&getopt);

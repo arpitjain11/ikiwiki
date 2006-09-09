@@ -173,7 +173,7 @@ they're saved, etc.
 
 To import the ikiwiki plugin interface:
 
-	use IkiWiki;
+	use IkiWiki '1.00';
 
 This will import several variables and functions into your plugin's
 namespace. These variables and functions are the ones most plugins need,
