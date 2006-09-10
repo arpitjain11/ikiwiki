@@ -18,6 +18,9 @@ you through setting up a wiki that is stored in [[Subversion]], [[Git]],
 		cp /usr/share/ikiwiki/basewiki/index.mdwn .
 		git add .
 		git commit -m create -a
+		# No need to keep files in the master repository; so at this
+		# stage, you may want to remove all files (except .git) to
+		# save disk space.
 
 		# TLA
 		mkdir /tla
@@ -35,7 +38,9 @@ you through setting up a wiki that is stored in [[Subversion]], [[Git]],
 		svn co file:///svn/wikirepo/trunk ~/wikiwc
 		 
 		# Git
-		git clone /git/wikirepo ~/wikiwc
+		# Create a local clone to save disk space and also to
+		# optimize performance. See git-clone(1).
+		git clone -l -s /git/wikirepo ~/wikiwc
 
 		# TLA
 		mkdir ~/wikiwc
