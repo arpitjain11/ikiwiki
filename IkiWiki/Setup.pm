@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 use IkiWiki;
+use open qw{:utf8 :std};
 
 package IkiWiki;
 

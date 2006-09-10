@@ -23,8 +23,10 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Support hyperestradier version 1.4.2, which adds a new required phraseform
     setting.
   * If an inlined page has a permalink, link the page title to that.
+  * Patch from Recai to use utf8 when reading the setup file, so that
+    utf8 wikinames from there will be used properly.
 
- -- Joey Hess <joeyh@debian.org>  Sat,  9 Sep 2006 23:56:48 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 10 Sep 2006 14:06:01 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 
