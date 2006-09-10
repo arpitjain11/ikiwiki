@@ -117,6 +117,19 @@ part).  GIT doesn't have a similar functionality like 'svn merge -rOLD:NEW
 FILE' (please see the relevant comment in mergepast for more details), so I
 had to invent an ugly hack just for the purpose.
 
+By design, Git backend uses a "master-clone" repository pair approach in contrast
+to the single repository approach (here, _clone_ may be considered as the working
+copy of a fictious web user).  Even though a single repository implementation is
+possible, it somewhat increases the code complexity of backend (I couldn't figure
+out a uniform method which doesn't depend on the prefered repository model, yet).
+By exploiting the fact that the master repo and _web user_'s repo (`srcdir`) are all
+on the same local machine, I suggest to create the latter with the "`git clone -l -s`"
+command to save disk space.
+
+Note that, as a rule of thumb, you should always put the rcs wrapper (`post-update`)
+into the master repository (`.git/hooks/`) as can be noticed in the Git wrappers of
+the sample [[ikiwiki.setup]].
+
 ## [[Mercurial]]
 
 The Mercurial backend is still in a early phase, so it may not be mature 
