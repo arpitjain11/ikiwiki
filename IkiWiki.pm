@@ -320,7 +320,7 @@ sub baseurl (;$) { #{{{
 sub abs2rel ($$) { #{{{
 	# Work around very innefficient behavior in File::Spec if abs2rel
 	# is passed two relative paths. It's much faster if paths are
-	# absolute!
+	# absolute! (Debian bug #376658)
 	my $path="/".shift;
 	my $base="/".shift;
 
