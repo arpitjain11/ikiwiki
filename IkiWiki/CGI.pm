@@ -614,7 +614,7 @@ sub cgi () { #{{{
 		cgi_hyperestraier();
 	}
 	
-	CGI::Session->name("ikiwiki_session_$config{wikiname}");
+	CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
 	
 	my $oldmask=umask(077);
 	my $session = CGI::Session->new("driver:DB_File", $q,
