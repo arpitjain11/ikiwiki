@@ -13,6 +13,7 @@ use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
+                 displaytime
                  %config %links %renderedfiles %pagesources);
 our $VERSION = 1.00;
 
