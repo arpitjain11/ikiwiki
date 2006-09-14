@@ -11,20 +11,22 @@ sub import { #{{{
 sub checkconfig () { #{{{
 	if (! defined $config{timeformat} ||
 	    $config{timeformat} eq '%c') {
-		$config{timeformat}='on %{%A, the %e of %B%}, %Y. %N%nCelebrate %H';
+		$config{timeformat}='on %A, the %e of %B, %Y. %N%nCelebrate %H';
 	}
 } #}}}
 
 sub IkiWiki::displaytime ($) { #{{{
 	my $time=shift;
-        eval q{use POSIX};
-        my $gregorian=POSIX::strftime("%d %m %Y", localtime($time));
-	my $date=`ddate +'$config{timeformat}' $gregorian`;
-	chomp $date;
-	if ($? || ! length $date) {
-		return "some time or other (hail Eris!)";
+	eval q{
+		use DateTime;
+		use DateTime::Calendar::Discordian;
+	};
+	if ($@) {
+		 return "some time or other ($@ -- hail Eris!)";
 	}
-	return $date;
+	my $dt = DateTime->from_epoch(epoch => $time);
+	my $dd = DateTime::Calendar::Discordian->from_object(object => $dt);
+	return $dd->strftime($IkiWiki::config{timeformat});
 } #}}}
 
 5
