@@ -91,7 +91,7 @@ sub estcfg () { #{{{
 	$template->param(
 		index => $estdir,
 		tmplfile => "$estdir/$cgi.tmpl",
-		destdir => IkiWiki::abs_path($config{destdir}),
+		destdir => abs_path($config{destdir}),
 		url => $config{url},
 	);
 	print TEMPLATE $template->output;
