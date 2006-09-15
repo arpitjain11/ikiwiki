@@ -79,7 +79,7 @@ sub estcfg () { #{{{
 	my $estdir="$config{wikistatedir}/hyperestraier";
 	my $cgi=IkiWiki::basename($config{cgiurl});
 	$cgi=~s/\..*$//;
-	open(TEMPLATE, ">$estdir/$cgi.tmpl") ||
+	open(TEMPLATE, ">:utf8", "$estdir/$cgi.tmpl") ||
 		error("write $estdir/$cgi.tmpl: $!");
 	print TEMPLATE IkiWiki::misctemplate("search", 
 		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n",
