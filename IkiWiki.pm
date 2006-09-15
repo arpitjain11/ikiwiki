@@ -591,7 +591,7 @@ sub template ($;@) { #{{{
 	HTML::Template->new(template_params(@_));
 } #}}}
 
-sub misctemplate ($$) { #{{{
+sub misctemplate ($$;@) { #{{{
 	my $title=shift;
 	my $pagebody=shift;
 	
@@ -601,7 +601,8 @@ sub misctemplate ($$) { #{{{
 		indexlink => indexlink(),
 		wikiname => $config{wikiname},
 		pagebody => $pagebody,
-	baseurl => baseurl(),
+		baseurl => baseurl(),
+		@_,
 	);
 	return $template->output;
 }#}}}

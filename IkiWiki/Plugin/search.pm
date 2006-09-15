@@ -82,7 +82,8 @@ sub estcfg () { #{{{
 	open(TEMPLATE, ">$estdir/$cgi.tmpl") ||
 		error("write $estdir/$cgi.tmpl: $!");
 	print TEMPLATE IkiWiki::misctemplate("search", 
-		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n");
+		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n",
+		baseurl => IkiWiki::dirname($config{cgiurl})."/");
 	close TEMPLATE;
 	open(TEMPLATE, ">$estdir/$cgi.conf") ||
 		error("write $estdir/$cgi.conf: $!");
