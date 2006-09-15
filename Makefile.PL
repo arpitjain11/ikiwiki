@@ -13,9 +13,6 @@ pure_install:: extra_install
 
 VER=$(shell perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)
 
-ikiwiki: ikiwiki.pl
-	./pm_filter $(PREFIX) $(VER) < ikiwiki.pl > ikiwiki
-
 extra_build:
 	./ikiwiki.pl doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
@@ -27,10 +24,11 @@ extra_build:
 		--plugin=template --plugin=toc
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
+	./pm_filter $(PREFIX) $(VER) < ikiwiki.pl > ikiwiki.out
 		
 extra_clean:
 	rm -rf html doc/.ikiwiki
-	rm -f ikiwiki.man ikiwiki-mass-rebuild.man
+	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out
 
 extra_install:
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/templates
@@ -50,6 +48,9 @@ extra_install:
 
 	install -d $(DESTDIR)$(PREFIX)/lib/w3m/cgi-bin
 	install ikiwiki-w3m.cgi $(DESTDIR)$(PREFIX)/lib/w3m/cgi-bin
+
+	install -d $(DESTDIR)$(PREFIX)/bin
+	install ikiwiki.out $(DESTDIR)$(PREFIX)/bin/ikiwiki
 }
 }
 
@@ -57,7 +58,6 @@ WriteMakefile(
 	NAME		=> 'IkiWiki',
 	PREFIX		=> "/usr/local",
 	PM_FILTER	=> './pm_filter $(PREFIX) $(VER)',
-	EXE_FILES	=> ['ikiwiki'],
 	MAN1PODS	=> {},
 	clean		=> {FILES => 'ikiwiki'},
 );
