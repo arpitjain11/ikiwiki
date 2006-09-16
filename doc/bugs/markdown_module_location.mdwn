@@ -1,0 +1,11 @@
+If the Markdown module is installed via CPAN rather than apt then
+the module is actually Text::Markdown.
+
+I had to edit the source to change this on my old server. I have filed
+a [bug](http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=387687) against
+the Debian markdown, which I guess you can consider a blocking bug of this.
+
+I tried to come up with the magical invocation to allow either location 
+to be used by ikiwiki, but I couldn't do it.
+
+-- JamesWestby
