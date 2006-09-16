@@ -25,8 +25,11 @@ sub htmlize (@) { #{{{
 
 		eval q{use Markdown};
 		if ($@) {
-			do "/usr/bin/markdown" ||
-				error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
+			eval q{use Text::Markdown};
+			if ($@) {
+				do "/usr/bin/markdown" ||
+					error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
+			}
 		}
 		$markdown_loaded=1;
 		require Encode;
