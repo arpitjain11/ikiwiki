@@ -46,6 +46,12 @@ EOF
 		asprintf(&newenviron[i++], "%s=%s", "REV", s);
 EOF
 	}
+	if ($config{rcs} eq "tla" && $config{notify}) {
+		$envsave.=<<"EOF"
+	if ((s=getenv("ARCH_VERSION")))
+		asprintf(&newenviron[i++], "%s=%s", "ARCH_VERSION", s);
+EOF
+	}
 	
 	$Data::Dumper::Indent=0; # no newlines
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);

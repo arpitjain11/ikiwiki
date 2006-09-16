@@ -25,7 +25,7 @@ memoize("pagespec_translate");
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
 sub defaultconfig () { #{{{
-	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$)},
+	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$|.arch-ids/|{arch}/)},
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	verbose => 0,

@@ -13,6 +13,7 @@ sub quiet_system (@) {
 	# See Debian bug #385939.
 	open (SAVEOUT, ">&STDOUT");
 	close STDOUT;
+	open (STDOUT, ">/dev/null");
 	my $ret=system(@_);
 	open (STDOUT, ">&SAVEOUT");
 	close SAVEOUT;
@@ -51,8 +52,8 @@ sub rcs_commit ($$$) { #{{{
 		if (defined $rev && defined $oldrev && $rev ne $oldrev) {
 			# Merge their changes into the file that we've
 			# changed.
-			if (system("tla", "update", "-d",
-			           "$config{srcdir}/$file") != 0) {
+			if (quiet_system("tla", "update", "-d",
+			           "$config{srcdir}") != 0) {
 				warn("tla update failed\n");
 			}
 		}
@@ -105,7 +106,7 @@ sub rcs_recentchanges ($) {
 		my $modfiles = $head->get("Modified-files");
 		my $user = $head->get("Creator");
 
-		my @paths = grep {!/^.*\/\.arch-ids\/.*\.id$/} split(/ /,
+		my @paths = grep {!/^(.*\/\)?.arch-ids\/.*\.id$/} split(/ /,
 			"$newfiles $modfiles");
 
 		my $sdate = $head->get("Standard-date");
@@ -122,7 +123,6 @@ sub rcs_recentchanges ($) {
 
 		my @message;
 		push @message, { line => escapeHTML($summ) };
-		$user = escapeHTML($user);
 
 		my @pages;
 
@@ -151,8 +151,8 @@ sub rcs_recentchanges ($) {
 
 sub rcs_notify () { #{{{
 	# FIXME: Not set
-	if (! exists $ENV{REV}) {
-		error("REV is not set, not running from tla post-commit hook, cannot send notifications");
+	if (! exists $ENV{ARCH_VERSION}) {
+		error("ARCH_VERSION is not set, not running from tla post-commit hook, cannot send notifications");
 	}
 	my $rev=int(possibly_foolish_untaint($ENV{REV}));
 
@@ -167,7 +167,7 @@ sub rcs_notify () { #{{{
 	my $newfiles = $head->get("New-files");
 	my $modfiles = $head->get("Modified-files");
 
-	my @changed_pages = grep {!/^.*\/\.arch-ids\/.*\.id$/} split(/ /,
+	my @changed_pages = grep {!/(^.*\/)?\.arch-ids\/.*\.id$/} split(/ /,
 		"$newfiles $modfiles");
 
 	if ($message =~ /$tla_webcommit/) {
