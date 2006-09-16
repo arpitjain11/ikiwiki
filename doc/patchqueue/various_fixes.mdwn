@@ -36,6 +36,21 @@ sure what the CGI was running under.
 > Can you reproduce the problem running svn info outside of ikiwiki?
 > --[[Joey]]
 
+>> I've now managed to reproduce the problem. I'll try and give some more information.
+>> When going to the Recent Changes link I get 
+
+    [Sat Sep 16 15:16:08 2006] [error] [client xxxx] svn: Can't check path '/home/jw2328/.subversion': Permission denied, referer: http://xxxxx/test/sandbox.html
+    [Sat Sep 16 15:16:08 2006] [error] [client xxxx] Use of uninitialized value in concatenation (.) or string at /usr/lib/perl5/site_perl/5.8.3/IkiWiki/Rcs/svn.pm line 145., referer: http://xxxx/test/sandbox.html
+    [Sat Sep 16 15:16:08 2006] [error] [client xxxxx] svn: Can't check path '/home/jw2328/.subversion': Permission denied, referer: http://xxxx/test/sandbox.html
+    [Sat Sep 16 15:16:09 2006] [error] [client xxxx] File does not exist:  at /usr/lib/perl5/site_perl/5.8.3/IkiWiki/Rcs/svn.pm line 145, referer: http://xxxx/test/sandbox.html
+    [Sat Sep 16 15:16:09 2006] [error] [client xxxx] Premature end of script headers: ikitest, referer: http://xxxx/test/sandbox.html
+
+>> which the $svn_url is causing the uninitialised value, due to the 
+>> LANG=C it seems, as if I remove it it goes away.
+>> The file does not exist is due to the unreadable .subversion.
+>> echoing the LANG before it is set shows that the variable is normally 
+>> empty for the user that is running it.
+
 The second removes problems with cannot access /home/$user/.svnsomething in
 the logs. I think this problem was also fatal (I should have reported these
 sooner). 
@@ -57,6 +72,15 @@ much help I'm afraid.
 > 
 > What's the error message? --[[Joey]]
 
+>> `svn: Can't check path '/home/jw2328/.subversion': Permission denied,`
+>> where jw2328 is my usual user. 
+>> I have restrictive permissions of 0700 on home dirs on the server,
+>> and the CGI is running as uid apache, euid root. (Not my setup anymore).
+>> The way I had it set up, was jw2328 owning thesource dir, and the svn repo,
+>> with g+sw on them both. I ran sudo ikiwiki --setup though, as I was reluctant
+>> to adjust permissions on my cgi-dir. This seems to be the root of the 
+>> problem.
+
 ----
 
     --- IkiWiki/Plugin/search.pm
@@ -77,6 +101,8 @@ you.
 
 > This should be made configurable via an option in %IkiWiki::config,
 > the search plugin could register a getopt hook to handle it. --[[Joey]]
+
+>> Like this? <http://jameswestby.net/scratch/estseek.diff>
 
 ----
 
@@ -133,6 +159,27 @@ informative if that code path is ever taken, but I hope that it never is.
 > 
 > --[[Joey]]
 
+>> It seems like it is always the (with instrumentation)
+     
+     elsif ($word =~ /^(link|backlink|created_before|created_after|creation_month|creation_year|creation_day)\((.+)\)$/) {
+          warn("\$1 tainted=".tainted($1).", \$2 tainted=".tainted($2)." \$code tainted=".tainted($code));
+          $code.=" match_$1(\$page, ".safequote($2).")";
+          warn("\$1 tainted=".tainted($1).", \$2 tainted=".tainted($2)." \$code tainted=".tainted($code));
+          warn("safequote tainted=".tainted(safequote($2)));
+     }
+
+>> bit that causes it. With the following trace:
+
+     $1 tainted=0, $2 tainted=0 $code tainted=0 at IkiWiki.pm line 718.
+     $1 tainted=0, $2 tainted=0 $code tainted=1 at IkiWiki.pm line 720.
+     safequote tainted=0 at IkiWiki.pm line 721.
+
+>> which shows that `$code` appears to become tainted from nowhere.
+>> <http://mail-archives.apache.org/mod_mbox/spamassassin-dev/200509.mbox/%3C3838.431C7D9B.5F152B8F.dev@spamassassin.apache.org%3E>
+>> is what pointed me to find the problem/workaround.
+
+      
+
 ----
 
 As for backports there is a problem with the sarge version of libcgi-session-perl
@@ -144,6 +191,8 @@ to debian/control. It would mean one more package to backport, but stops the
 bug if anyone actually uses my sslcookie option except me.
 
 > May as well, done --[[Joey]]
+
+>> Thanks.
 
 As for backports I managed with 
 
