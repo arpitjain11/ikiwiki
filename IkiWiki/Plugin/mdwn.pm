@@ -10,28 +10,34 @@ sub import { #{{{
 	hook(type => "htmlize", id => "mdwn", call => \&htmlize);
 } # }}}
 
-my $markdown_loaded=0;
+my $markdown_sub;
 sub htmlize (@) { #{{{
 	my %params=@_;
 	my $content = $params{content};
 
-	if (! $markdown_loaded) {
-		# Note: This hack to make markdown run as a proper perl
-		# module. A proper perl module is available in Debian
-		# for markdown, but not upstream yet.
+	if (! defined $markdown_sub) {
+		# Markdown is forked and splintered upstream and can be
+		# available in a variety of incompatible forms. Support
+		# them all.
 		no warnings 'once';
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
 
 		eval q{use Markdown};
-		if ($@) {
+		if (! $@) {
+			$markdown_sub=\&Markdown::Markdown;
+		}
+		else {
 			eval q{use Text::Markdown};
-			if ($@) {
+			if (! $@) {
+				$markdown_sub=\&Text::Markdown::Markdown;
+			}
+			else {
 				do "/usr/bin/markdown" ||
 					error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
+				$markdown_sub=\&Markdown::Markdown;
 			}
 		}
-		$markdown_loaded=1;
 		require Encode;
 	}
 	

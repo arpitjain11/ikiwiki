@@ -36,13 +36,13 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * pagetemplate hooks are now also called when generating cgi pages.
   * Add a favicon plugin, which simply adds a link tag for an icon to each
     page (and cgis).
-  * Deal with CPAN installing Markdown as Text::Markdown, while it's
-    installed as just Markdown by apt.
   * Patch from James Westby to deal with the case where you're editing a
     new page, hit cancel, and need to be redirected to somewhere sane.
   * Various documentation improvements by various wiki users.
+  * Support Text::Markdown from CPAN, which has a different interface from
+    the original markdown or the one in Debian.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 15 Sep 2006 21:20:31 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 15 Sep 2006 21:49:23 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 

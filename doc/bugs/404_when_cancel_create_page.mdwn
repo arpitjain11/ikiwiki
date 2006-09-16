@@ -48,11 +48,11 @@ is there aren't going to be many possible extensions. Something like `/(.\w+)+/`
 (groups of dot separated alpha-num chars if my perl-foo isn't failing me). You could
 at least exclude `/` and `..`. I'm happy to turn this in to a patch if you agree.]
 
-> The reason it's safe to use possibly_foolish_untaint here is because
+> The reason it's safe to use `possibly_foolish_untaint` here is because
 > of the check for $hooks{htmlize}{$type}. This limits it to types
 > that have a registered htmlize hook (mdwn, etc), and not whatever random
 > garbage an attacker might try to put in. If it wasn't for that check,
-> using possibly_foolish_untaint there would be _very_ foolish indeed.. 
+> using `possibly_foolish_untaint` there would be _very_ foolish indeed.. 
 > --[[Joey]]
 
 >> Nice, sorry I missed it. 
