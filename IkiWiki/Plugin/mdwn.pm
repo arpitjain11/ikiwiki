@@ -44,7 +44,7 @@ sub htmlize (@) { #{{{
 	# Workaround for perl bug (#376329)
 	$content=Encode::encode_utf8($content);
 	$content=Encode::encode_utf8($content);
-	$content=Markdown::Markdown($content);
+	$content=&$markdown_sub($content);
 	$content=Encode::decode_utf8($content);
 	$content=Encode::decode_utf8($content);
 
