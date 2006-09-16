@@ -7,6 +7,9 @@
 <title><TMPL_VAR TITLE></title>
 <link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
 <link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
+<TMPL_IF NAME="FAVICON">
+<link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/png" />
+</TMPL_IF>
 </head>
 <body>
 

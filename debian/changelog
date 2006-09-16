@@ -33,8 +33,11 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Patch from Recai to fix a wide character warning from the search plugin
     during setup if the wikiname contains utf8.
   * Yet another fix for those poor case-insensative OSX users.
+  * pagetemplate hooks are now also called when generating cgi pages.
+  * Add a favicon plugin, which simply adds a link tag for an icon to each
+    page (and cgis).
 
- -- Joey Hess <joeyh@debian.org>  Fri, 15 Sep 2006 13:19:54 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 15 Sep 2006 19:39:36 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 

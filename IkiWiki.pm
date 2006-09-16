@@ -604,6 +604,9 @@ sub misctemplate ($$;@) { #{{{
 		baseurl => baseurl(),
 		@_,
 	);
+	run_hooks(pagetemplate => sub {
+		shift->(page => "", destpage => "", template => $template);
+	});
 	return $template->output;
 }#}}}
 

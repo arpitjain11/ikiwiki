@@ -99,6 +99,9 @@ sub cgi_recentchanges ($) { #{{{
 		changelog => $changelog,
 		baseurl => baseurl(),
 	);
+	run_hooks(pagetemplate => sub {
+		shift->(page => "", destpage => "", template => $template);
+	});
 	print $q->header(-charset => 'utf-8'), $template->output;
 } #}}}
 
@@ -349,9 +352,19 @@ sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
-	eval q{use CGI::FormBuilder};
+	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
+	my @buttons=("Save Page", "Preview", "Cancel");
+	
+	eval q{use CGI::FormBuilder; use CGI::FormBuilder::Template::HTML};
+	my $renderer=CGI::FormBuilder::Template::HTML->new(
+		fields => \@fields,
+		template_params("editpage.tmpl"),
+	);
+	run_hooks(pagetemplate => sub {
+		shift->(page => "", destpage => "", template => $renderer->engine);
+	});
 	my $form = CGI::FormBuilder->new(
-		fields => [qw(do rcsinfo subpage from page type editcontent comments)],
+		fields => \@fields,
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
@@ -363,9 +376,8 @@ sub cgi_editpage ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		table => 0,
-		template => {template_params("editpage.tmpl")},
+		template => $renderer,
 	);
-	my @buttons=("Save Page", "Preview", "Cancel");
 	
 	decode_form_utf8($form);
 	
