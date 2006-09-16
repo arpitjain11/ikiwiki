@@ -439,7 +439,15 @@ sub cgi_editpage ($$) { #{{{
 	}
 	
 	if ($form->submitted eq "Cancel") {
-		redirect($q, "$config{url}/".htmlpage($page));
+		if ($newfile && defined $from) {
+			redirect($q, "$config{url}/".htmlpage($from));
+		}
+		elsif ($newfile) {
+			redirect($q, $config{url});
+		}
+		else {
+			redirect($q, "$config{url}/".htmlpage($page));
+		}
 		return;
 	}
 	elsif ($form->submitted eq "Preview") {

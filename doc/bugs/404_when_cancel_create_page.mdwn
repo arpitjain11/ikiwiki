@@ -25,7 +25,9 @@ if it is known.
                 }
                 elsif ($form->submitted eq "Preview") {
 
-
+> I think you mean to use `$newfile`? I've applied a modieid version
+> that also deal with creating a new page with no defined $from location.
+> [[bugs/done]] --[[Joey]] 
 
 [P.S. just above that is 
 
@@ -43,4 +45,9 @@ is there aren't going to be many possible extensions. Something like `/(.\w+)+/`
 (groups of dot separated alpha-num chars if my perl-foo isn't failing me). You could
 at least exclude `/` and `..`. I'm happy to turn this in to a patch if you agree.]
 
-
+> The reason it's safe to use possibly_foolish_untaint here is because
+> of the check for $hooks{htmlize}{$type}. This limits it to types
+> that have a registered htmlize hook (mdwn, etc), and not whatever random
+> garbage an attacker might try to put in. If it wasn't for that check,
+> using possibly_foolish_untaint there would be _very_ foolish indeed.. 
+> --[[Joey]]
