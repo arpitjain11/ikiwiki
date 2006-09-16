@@ -17,7 +17,7 @@ sub pagetemplate (@) { #{{{
 	my $template=$params{template};
 	
 	if ($template->query(name => "favicon")) {
-		$template->param(favicon => "favicon.png");
+		$template->param(favicon => "favicon.ico");
 	}
 } # }}}
 
