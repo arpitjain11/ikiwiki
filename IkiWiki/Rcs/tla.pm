@@ -106,8 +106,8 @@ sub rcs_recentchanges ($) {
 		my $modfiles = $head->get("Modified-files");
 		my $user = $head->get("Creator");
 
-		my @paths = grep {!/^(.*\/\)?.arch-ids\/.*\.id$/} split(/ /,
-			"$newfiles $modfiles");
+		my @paths = grep { !/^(.*\/)?\.arch-ids\/.*\.id$/ }
+			split(/ /, "$newfiles $modfiles .arch-ids/fake.id");
 
 		my $sdate = $head->get("Standard-date");
 		my $when = time - str2time($sdate, 'UTC');
