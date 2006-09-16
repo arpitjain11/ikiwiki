@@ -8,8 +8,14 @@ the Debian markdown, which I guess you can consider a blocking bug of this.
 I tried to come up with the magical invocation to allow either location 
 to be used by ikiwiki, but I couldn't do it.
 
--- JamesWestby
+-- [[JamesWestby]]
 
 Fixed, I think --[[Joey]]
 
-[[bugs/done]]
+> Fraid not. The import works ok, but I get
+     `Undefined subroutine &Markdown::Markdown called at IkiWiki/Plugin/mdwn.pm line 41.`
+> This is what stumped me, I was trying to import as an alias, but couldn't work
+> out how to do it. A flag if you use the second import would be an ugly solution.
+> -- [[JamesWestby]]
+
+
