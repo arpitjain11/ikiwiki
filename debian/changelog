@@ -41,8 +41,10 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Various documentation improvements by various wiki users.
   * Support Text::Markdown from CPAN, which has a different interface from
     the original markdown or the one in Debian.
+  * Version the libcgi-session-perl dependency, some features that need
+    the new version are used in some cases (sslcookie).
 
- -- Joey Hess <joeyh@debian.org>  Fri, 15 Sep 2006 21:49:23 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 15 Sep 2006 22:28:31 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 
