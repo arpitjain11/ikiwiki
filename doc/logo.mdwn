@@ -17,8 +17,8 @@ added).
   The [[favicon.ico]] can also be generated from this file, as follows:
 
 	for s in 16 32 64; do
-		inkscape -z -w $s -i favicon -e favicon-$s.png ikiwiki.svgz
-	done
+		inkscape -z -w $s -i favicon -e favicon-$s.png ikiwiki.svgz;
+	done;
 	icotool -c -o favicon.ico favicon-*.png && rm -f favicon-*.png
 
   Some other alternate icons are also included in the svg file and can
