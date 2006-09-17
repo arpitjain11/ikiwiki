@@ -15,6 +15,7 @@ sub quiet_system (@) {
 	close STDOUT;
 	open (STDOUT, ">/dev/null");
 	my $ret=system(@_);
+	close STDOUT;
 	open (STDOUT, ">&SAVEOUT");
 	close SAVEOUT;
 	return $ret;
@@ -104,6 +105,7 @@ sub rcs_recentchanges ($) {
 		my $summ = $head->get("Summary");
 		my $newfiles = $head->get("New-files");
 		my $modfiles = $head->get("Modified-files");
+		my $remfiles = $head->get("Removed-files");
 		my $user = $head->get("Creator");
 
 		my @paths = grep { !/^(.*\/)?\.arch-ids\/.*\.id$/ }
@@ -166,9 +168,10 @@ sub rcs_notify () { #{{{
 
 	my $newfiles = $head->get("New-files");
 	my $modfiles = $head->get("Modified-files");
+	my $remfiles = $head->get("Removed-files");
 
-	my @changed_pages = grep {!/(^.*\/)?\.arch-ids\/.*\.id$/} split(/ /,
-		"$newfiles $modfiles");
+	my @changed_pages = grep { !/(^.*\/)?\.arch-ids\/.*\.id$/ }
+		split(/ /, "$newfiles $modfiles $remfiles .arch-ids/fake.id");
 
 	if ($message =~ /$tla_webcommit/) {
 		$user=defined $2 ? "$2" : "$3";
