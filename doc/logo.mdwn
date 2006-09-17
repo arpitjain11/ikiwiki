@@ -12,14 +12,15 @@ added).
   [[SVG_source|ikiwiki.svgz]], can be used to generate a logo at any size
   with a command like:  
 
-	inkscape -z -w 90 -i logo -e ikiwiki.png ikiwiki.svgz
+	inkscape -w 90 -i logo -e ikiwiki.png ikiwiki.svgz
 
   The [[favicon.ico]] can also be generated from this file, as follows:
 
-	for s in 16 32 64; do
-		inkscape -z -w $s -i favicon -e favicon-$s.png ikiwiki.svgz;
-	done;
-	icotool -c -o favicon.ico favicon-*.png && rm -f favicon-*.png
+	inkscape -w 16 -i favicon -e favicon.ico ikiwiki.svgz
+
+  A larger icon (80x15 pixels) can also be generated as follows:
+
+  	inkscape -w 80 -i icon -e icon.png ikiwiki.svgz
 
   Some other alternate icons are also included in the svg file and can
   be extracted by specifying their names.
