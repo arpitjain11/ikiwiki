@@ -81,28 +81,9 @@ much help I'm afraid.
 >> to adjust permissions on my cgi-dir. This seems to be the root of the 
 >> problem.
 
-----
-
-    --- IkiWiki/Plugin/search.pm
-    +++ IkiWiki/Plugin/search.pm
-    @@ -99,7 +99,7 @@
-            close TEMPLATE;
-            $cgi="$estdir/".IkiWiki::basename($config{cgiurl});
-            unlink($cgi);
-    -       symlink("/usr/lib/estraier/estseek.cgi", $cgi) ||
-    +       symlink("/usr/local/libexec/estseek.cgi", $cgi) ||
-                    error("symlink $cgi: $!");
-     } # }}}
-
-obviously I'm not asking you to include this patch, but it would
-be good if this sort of thing was configurable (at build time?). I can
-have a go if you like, but I'm not sure what would be acceptable to
-you.
-
-> This should be made configurable via an option in %IkiWiki::config,
-> the search plugin could register a getopt hook to handle it. --[[Joey]]
-
->> Like this? <http://jameswestby.net/scratch/estseek.diff>
+>>> Ah, I think it's better to keep the permissions of the repository
+>>> and source directory sane (755) and make the cgi suid to your user,
+>>> which is how it's designed to work.
 
 ----
 
@@ -178,29 +159,6 @@ informative if that code path is ever taken, but I hope that it never is.
 >> <http://mail-archives.apache.org/mod_mbox/spamassassin-dev/200509.mbox/%3C3838.431C7D9B.5F152B8F.dev@spamassassin.apache.org%3E>
 >> is what pointed me to find the problem/workaround.
 
-      
-
-----
-
-As for backports there is a problem with the sarge version of libcgi-session-perl
-and my sslcookie patch (complaints about a missing include file auto/CGI/Session/cookie.al IIRC).
-This file does not and has not ever existed, but it appears to be fixed in 
-the backport of libcgi-session-perl that I did. That puts the dependency
-required at somewhere between 3.95-2 and 4.14-1. This could then be added
-to debian/control. It would mean one more package to backport, but stops the
-bug if anyone actually uses my sslcookie option except me.
-
-> May as well, done --[[Joey]]
-
->> Thanks.
-
-As for backports I managed with 
-
- * ikiwiki_1.26
- * libcgi-formbuilder-perl_3.03.01-1
- * libcgi-session-perl_4.14-1
-
-backported to sarge, with bpo in sources.list. This only covers Depends: though,
-for instance hyperestraier needs to be backported, which I haven't got
-round to yet as there is a chain to do.
-
+>>> Given that verification, an untaint contingent on the value of $^V
+>>> sounds reasonable and I'd accept such a patch. I'm not quite sure which
+>>> version(s) of perl it should check for.

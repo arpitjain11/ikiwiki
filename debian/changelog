@@ -50,8 +50,10 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * chomp trailing newline at the end of templates read in by the template
     plugin, to allow use of the template preprocessor directive in
     whitespace-sensative situations. Closes: #387073
+  * Patch from James Westby to make the location of the estseek.cgi script
+    configurable.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 18 Sep 2006 15:26:01 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 18 Sep 2006 16:43:10 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 

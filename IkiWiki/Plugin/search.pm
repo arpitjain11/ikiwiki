@@ -7,6 +7,8 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
+	hook(type => "getopt", id => "hyperestraier",
+		call => \&getopt);
 	hook(type => "checkconfig", id => "hyperestraier",
 		call => \&checkconfig);
 	hook(type => "pagetemplate", id => "hyperestraier",
@@ -18,6 +20,12 @@ sub import { #{{{
 	hook(type => "cgi", id => "hyperestraier",
 		call => \&cgi);
 } # }}}
+
+sub getopt () { #{{{
+        eval q{use Getopt::Long};
+        Getopt::Long::Configure('pass_through');
+        GetOptions("estseek=s" => \$config{estseek});
+} #}}}
 
 sub checkconfig () { #{{{
 	foreach my $required (qw(url cgiurl)) {
@@ -99,8 +107,9 @@ sub estcfg () { #{{{
 	close TEMPLATE;
 	$cgi="$estdir/".IkiWiki::basename($config{cgiurl});
 	unlink($cgi);
-	symlink("/usr/lib/estraier/estseek.cgi", $cgi) ||
-		error("symlink $cgi: $!");
+	my $estseek = defined $config{estseek} ? $config{estseek} : '/usr/lib/estraier/estseek.cgi';
+	symlink($estseek, $cgi) ||
+		error("symlink $estseek $cgi: $!");
 } # }}}
 
 sub estcmd ($;@) { #{{{
