@@ -32,6 +32,7 @@ sub preprocess (@) { #{{{
         	filter => sub {
                         my $text_ref = shift;
                         $$text_ref=&Encode::decode_utf8($$text_ref);
+			chomp $$text_ref;
                 },
                 filename => srcfile($template_file),
                 die_on_bad_params => 0,
