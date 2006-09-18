@@ -85,6 +85,8 @@ much help I'm afraid.
 >>> and source directory sane (755) and make the cgi suid to your user,
 >>> which is how it's designed to work.
 
+>>>> I realise that now, and I now have a much more sane setup that works.
+
 ----
 
     --- IkiWiki.pm
@@ -162,3 +164,9 @@ informative if that code path is ever taken, but I hope that it never is.
 >>> Given that verification, an untaint contingent on the value of $^V
 >>> sounds reasonable and I'd accept such a patch. I'm not quite sure which
 >>> version(s) of perl it should check for.
+
+>>>> I'm not going to write one though. I don't know what versions either,
+>>>> but I think the evil of the special case is too much in this case. If
+>>>> you are happy to insist on a newer version of perl then I will leave 
+>>>> it at that and sort something out locally. If you want the patch I will 
+>>>> code it though, as I realise you may want to support sarge installs.
