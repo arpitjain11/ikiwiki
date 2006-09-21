@@ -34,7 +34,7 @@ sub setup_standard {
 		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$setup{exclude}/;
 	}
 
-	if (! $config{refresh} || $config{wrappers}) {
+	if (! $config{render} && (! $config{refresh} || $config{wrappers})) {
 		debug("generating wrappers..");
 		my @wrappers=@{$setup{wrappers}};
 		delete $setup{wrappers};
@@ -66,7 +66,10 @@ sub setup_standard {
 		}
 	}
 
-	if (! $config{refresh}) {
+	if ($config{render}) {
+		commandline_render();
+	}
+	elsif (! $config{refresh}) {
 		$config{rebuild}=1;
 		debug("rebuilding wiki..");
 	}

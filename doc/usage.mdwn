@@ -75,6 +75,15 @@ These options control the mode that ikiwiki is operating in.
   along with this one. --rebuild will also force feeds to be polled even if
   they were polled recently.
 
+* --render file
+
+  Renders a single file, outputting the resulting html. Does not save state,
+  so this cannot be used for building whole wikis, but it is useful for
+  previewing an edited file at the command line. Generally used in conjunction
+  with --setup to load in a wiki's setup:
+
+	ikiwiki --setup ~/ikiwiki.setup --render foo.mdwn
+
 * --version
 
   Print ikiwiki version number.

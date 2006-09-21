@@ -374,4 +374,29 @@ FILE:		foreach my $file (@files) {
 	}
 } #}}}
 
+sub commandline_render () { #{{{
+	loadplugins();
+	checkconfig();
+	lockwiki();
+	loadindex();
+	unlockwiki();
+
+	my $srcfile=possibly_foolish_untaint($config{render});
+	my $file=$srcfile;
+	$file=~s/\Q$config{srcdir}\E\/?//;
+
+	my $type=pagetype($file);
+	die "ikiwiki: cannot render $srcfile\n" unless defined $type;
+	my $content=readfile($srcfile);
+	my $page=pagename($file);
+	$pagesources{$page}=$file;
+	$content=filter($page, $content);
+	$content=preprocess($page, $page, $content);
+	$content=linkify($page, $page, $content);
+	$content=htmlize($page, $type, $content);
+
+	print genpage($page, $content, mtime($srcfile));
+	exit 0;
+} #}}}
+
 1

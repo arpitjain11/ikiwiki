@@ -26,6 +26,7 @@ sub getconfig () { #{{{
 			"syslog!" => \$config{syslog},
 			"rebuild!" => \$config{rebuild},
 			"refresh!" => \$config{refresh},
+			"render=s" => \$config{render},
 			"wrappers!" => \$config{wrappers},
 			"getctime" => \$config{getctime},
 			"wrappermode=i" => \$config{wrappermode},
@@ -76,7 +77,7 @@ sub getconfig () { #{{{
 			},
 		) || usage();
 
-		if (! $config{setup}) {
+		if (! $config{setup} && ! $config{render}) {
 			loadplugins();
 			usage() unless @ARGV == 2;
 			$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
@@ -113,6 +114,10 @@ sub main () { #{{{
 		lockwiki();
 		require IkiWiki::Wrapper;
 		gen_wrapper();
+	}
+	elsif ($config{render}) {
+		require IkiWiki::Render;
+		commandline_render();
 	}
 	else {
 		lockwiki();
