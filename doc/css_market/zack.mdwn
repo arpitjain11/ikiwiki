@@ -1,0 +1,135 @@
+    /* local.css stylesheet to be used with ikiwiki
+     *
+     * Copyright: (C) 2006 Stefano Zacchiroli <zack@debian.org>
+     * License: GNU General Public License version 2 or above.
+     *
+     * TODO
+     * - plone-like actions in the toplevel bar, but remember: resiste the
+     *   temptation of making them floating to the right: the breadcrumb trail can
+     *   grow indefinetely
+     * - blog form aligned to the right, keeping the RSS logo to the left
+     * - some rendering for the tags (a la 'xhtml' logo of plone? ...)
+     * - some rendering for backlinks
+     * - some rendering for posting dates
+     */
+
+    body {
+      font-family: sans;
+      width: 760px;
+      margin-left: 20px;
+    }
+
+    div#content {
+      font-size: 11pt;
+    }
+
+    .header span {
+      font-size: 14pt;
+      font-weight: normal;
+    }
+
+    div.actions ul {
+      font-size: 10pt;
+    }
+
+    h1 {
+      font-weight: normal;
+      font-size: 17pt;
+    }
+    h2 {
+      font-weight: normal;
+      font-size: 16pt;
+    }
+    h3 {
+      font-weight: normal;
+      font-size: 15pt;
+    }
+    h4 {
+      font-weight: normal;
+      font-size: 14pt;
+    }
+    h5 {
+      font-weight: normal;
+      font-size: 13pt;
+    }
+    h6 {
+      font-weight: normal;
+      font-size: 12pt;
+    }
+
+    div.inlinepage > span.header > a {
+      float: right;
+      display: block;
+      font-size: 11pt;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+    }
+    div.inlinepage > span.header > a:before {
+      content: "permalink: ";
+      font-size: smaller;
+      text-decoration: none;
+      font-style: italic;
+    }
+
+    div.inlinepage {
+      margin-bottom: 10px;
+    }
+
+    div.inlinepage h1 {
+      font-weight: normal;
+      font-size: 14pt;
+      margin: 0;
+    }
+    div.inlinepage h2 {
+      font-weight: normal;
+      font-size: 13pt;
+      margin: 0;
+    }
+    div.inlinepage h3 {
+      font-weight: normal;
+      font-size: 12pt;
+      margin: 0;
+    }
+    div.inlinepage h4 {
+      font-weight: normal;
+      font-size: 11pt;
+      margin: 0;
+    }
+    div.inlinepage h5 {
+      font-weight: normal;
+      font-size: 11pt;
+      margin: 0;
+    }
+    div.inlinepage h6 {
+      font-weight: normal;
+      font-size: 11pt;
+      margin: 0;
+    }
+
+    div#blogform {
+      padding: 0px 5px;
+      margin-bottom: 10px;
+    }
+
+    pre {
+      width: 90%;
+      font-size: 10pt;
+      font-family: monospace;
+      background: #e1e1e1;
+      margin-left: 4%;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .pagecloud {
+      width: 25%;
+      border-top: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+      background: #eee;
+      color: black !important;
+    }
+
+    .pagecloud a {
+      text-decoration: none;
+    }
