@@ -1,8 +1,5 @@
 ikiwiki (1.27) UNRELEASED; urgency=low
 
-  * Add a googlecalendar plugin. A bit special-purpose, but it shows
-    one way to to deal with user-supplied content that could cause XSS
-    issues w/o the htmlscrubber, and won't survive the scrubber.
   * Work on firming up the plugin interface:
     - Plugins should not need to load IkiWiki::Render to get commonly
       used functions, so moved some functions from there to IkiWiki.
@@ -55,6 +52,9 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Add typography (SmartyPants) plugin by Recai.
   * Add --render mode, which can be used to preview an edit at the command
     line by test rendering a single page.
+  * Add a googlecalendar plugin. A bit special-purpose, but it shows
+    one way to to deal with user-supplied content that could cause XSS
+    issues w/o the htmlscrubber, and won't survive the scrubber.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 21 Sep 2006 17:31:25 -0400
 
