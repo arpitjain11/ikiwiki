@@ -17,7 +17,7 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Add a module version number to IkiWiki, so you can "use IkiWiki '1.00'"
     to declare which version of the interface your plugin needs.
   * Anyone with a third-party ikiwiki plugin is strongly encouraged
-    to make like changes to it and avoid use of non-exported symboles from
+    to make like changes to it and avoid use of non-exported symbols from
     "IkiWiki::".
   * Link debian/changelog and debian/news to NEWS and CHANGELOG.
   * Support hyperestradier version 1.4.2, which adds a new required phraseform
@@ -32,7 +32,7 @@ ikiwiki (1.27) UNRELEASED; urgency=low
   * Add a stub local.css to avoid problems with 404's.
   * Patch from Recai to fix a wide character warning from the search plugin
     during setup if the wikiname contains utf8.
-  * Yet another fix for those poor case-insensative `OSX users.
+  * Yet another fix for those poor case-insensative OS X users.
   * pagetemplate hooks are now also called when generating cgi pages.
   * Add a favicon plugin, which simply adds a link tag for an icon to each
     page (and cgis).
