@@ -1,0 +1,57 @@
+ikiwiki 1.27 released with these changes:
+
+   * Work on firming up the plugin interface:
+     - Plugins should not need to load IkiWiki::Render to get commonly
+       used functions, so moved some functions from there to IkiWiki.
+     - Picked out the set of functions and variables that most plugins
+       use, documented them, and made IkiWiki export them by default,
+       like a proper perl module should.
+     - Use the other functions at your own risk.
+     - This is not quite complete, I still have to decide whether to
+       export some other things.
+   * Changed all plugins included in ikiwiki to not use "IkiWiki::" when
+     referring to stuff now exported by the IkiWiki module.
+   * Add a module version number to IkiWiki, so you can "use IkiWiki '1.00'"
+     to declare which version of the interface your plugin needs.
+   * Anyone with a third-party ikiwiki plugin is strongly encouraged
+     to make like changes to it and avoid use of non-exported symbols from
+     "IkiWiki::".
+   * Link debian/changelog and debian/news to NEWS and CHANGELOG.
+   * Support hyperestradier version 1.4.2, which adds a new required phraseform
+     setting.
+   * If an inlined page has a permalink, link the page title to that.
+   * Patch from Recai to use utf8 when reading the setup file, so that
+     utf8 wikinames from there will be used properly.
+   * Patch from Recai to kill utf-8 on the wiki name when generating the
+     session cookie.
+   * Change ddate plugin to use the DateTime::Calendar::Discordian perl module.
+   * Fix a baseurl problem in hyperestradier search results.
+   * Add a stub local.css to avoid problems with 404's.
+   * Patch from Recai to fix a wide character warning from the search plugin
+     during setup if the wikiname contains utf8.
+   * Yet another fix for those poor case-insensative OS X users.
+   * pagetemplate hooks are now also called when generating cgi pages.
+   * Add a favicon plugin, which simply adds a link tag for an icon to each
+     page (and cgis).
+   * Patch from James Westby to deal with the case where you're editing a
+     new page, hit cancel, and need to be redirected to somewhere sane.
+   * Various documentation improvements by various wiki users.
+   * Support Text::Markdown from CPAN, which has a different interface from
+     the original markdown or the one in Debian.
+   * Version the libcgi-session-perl dependency, some features that need
+     the new version are used in some cases (sslcookie).
+   * Numerous tla fixes from Clint.
+   * Updated ikiwiki.svgz from Recai, includes an icon and is used to generate
+     a multi-resolution favicon.ico.
+   * README.Debian: typo Closes: #[388110](http://bugs.debian.org/388110)
+   * chomp trailing newline at the end of templates read in by the template
+     plugin, to allow use of the template preprocessor directive in
+     whitespace-sensative situations. Closes: #[387073](http://bugs.debian.org/387073)
+   * Patch from James Westby to make the location of the estseek.cgi script
+     configurable.
+   * Add typography (SmartyPants) plugin by Recai.
+   * Add --render mode, which can be used to preview an edit at the command
+     line by test rendering a single page.
+   * Add a googlecalendar plugin. A bit special-purpose, but it shows
+     one way to to deal with user-supplied content that could cause XSS
+     issues w/o the htmlscrubber, and won't survive the scrubber.
