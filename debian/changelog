@@ -1,4 +1,4 @@
-ikiwiki (1.27) UNRELEASED; urgency=low
+ikiwiki (1.27) unstable; urgency=low
 
   * Work on firming up the plugin interface:
     - Plugins should not need to load IkiWiki::Render to get commonly
@@ -56,7 +56,7 @@ ikiwiki (1.27) UNRELEASED; urgency=low
     one way to to deal with user-supplied content that could cause XSS
     issues w/o the htmlscrubber, and won't survive the scrubber.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 21 Sep 2006 17:31:25 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 24 Sep 2006 00:02:21 -0400
 
 ikiwiki (1.26) unstable; urgency=low
 
