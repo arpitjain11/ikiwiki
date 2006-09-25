@@ -59,7 +59,17 @@ sub preprocess_inline (@) { #{{{
 			push @list, $page;
 		}
 	}
-	@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+
+	if (exists $params{sort} && $params{sort} eq 'title') {
+		@list=sort @list;
+	}
+	elsif (! exists $params{sort} || $params{sort} eq 'age') {
+		@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+	}
+	else {
+		return "unknown sort type $params{sort}";
+	}
+
 	if ($params{show} && @list > $params{show}) {
 		@list=@list[0..$params{show} - 1];
 	}
