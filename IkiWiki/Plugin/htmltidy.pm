@@ -19,21 +19,13 @@ sub import { #{{{
 sub sanitize (@) { #{{{
 	my %params=@_;
 
-	my $tries=10;
 	my $pid;
-	while (1) {
-		eval {
-			$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no');
-		};
-		last unless $@;
-		$tries--;
-		if ($tries < 1) {
-			debug("failed to run tidy: $@");
-			return $params{content};
-		}
-	}
+	my $sigpipe=0;
+	$SIG{PIPE}=sub { $sigpipe=1 };
+	$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no');
+	
 	# open2 doesn't respect "use open ':utf8'"
-	binmode (IN, ':utf8'); 
+	binmode (IN, ':utf8');
 	binmode (OUT, ':utf8'); 
 	
 	print OUT $params{content};
@@ -43,6 +35,9 @@ sub sanitize (@) { #{{{
 	my $ret=<IN>;
 	close IN;
 	waitpid $pid, 0;
+
+	return $params{content} if $sigpipe;
+	$SIG{PIPE}="DEFAULT";
 
 	return $ret;
 } # }}}

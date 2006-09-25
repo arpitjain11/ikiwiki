@@ -43,21 +43,11 @@ sub htmlize (@) { #{{{
 	my %params=@_;
 	my $content=$params{content};
 
-	my $tries=10;
 	my $pid;
-	while (1) {
-		eval {
-			# Try to call python and run our command
-			$pid=open2(*IN, *OUT, "python", "-c",  $pyCmnd)
-				or return $content;
-		};
-		last unless $@;
-		$tries--;
-		if ($tries < 1) {
-			debug("failed to run python to convert rst: $@");
-			return $content;
-		}
-	}
+	my $sigpipe=0;
+	$SIG{PIPE}=sub { $sigpipe=1 };
+	$pid=open2(*IN, *OUT, "python", "-c",  $pyCmnd);
+	
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8');
 	binmode (OUT, ':utf8');
@@ -69,6 +59,9 @@ sub htmlize (@) { #{{{
 	my $ret=<IN>;
 	close IN;
 	waitpid $pid, 0;
+
+	return $content if $sigpipe;
+	$SIG{PIPE}="DEFAULT";
 
 	return $ret;
 } # }}}

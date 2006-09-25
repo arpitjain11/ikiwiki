@@ -63,18 +63,11 @@ sub genmap ($) { #{{{
 	# TODO: should really add the png to renderedfiles and call
 	# check_overwrite, but currently renderedfiles
 	# only supports listing one file per page.
-	my $tries=10;
 	my $pid;
-	while (1) {
-		eval {
-			$pid=open2(*IN, *OUT, "dot -Tpng -o '$config{destdir}/$params{page}.png' -Tcmapx");
-		};
-		last unless $@;
-		$tries--;
-		if ($tries < 1) {
-			return "failed to run dot: $@";
-		}
-	}
+	my $sigpipe=0;;
+	$SIG{PIPE}=sub { $sigpipe=1 };
+	$pid=open2(*IN, *OUT, "dot -Tpng -o '$config{destdir}/$params{page}.png' -Tcmapx");
+	
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8'); 
 	binmode (OUT, ':utf8'); 
@@ -96,12 +89,18 @@ sub genmap ($) { #{{{
 
 	local $/=undef;
 	my $ret="<object data=\"".
-	        IkiWiki::abs2rel("$params{page}.png", IkiWiki::dirname($params{page})).
-	        "\" type=\"image/png\" usemap=\"#linkmap$mapnum\">\n".
-	         <IN>.
-	         "</object>";
+	       IkiWiki::abs2rel("$params{page}.png", IkiWiki::dirname($params{page})).
+	       "\" type=\"image/png\" usemap=\"#linkmap$mapnum\">\n".
+	        <IN>.
+	        "</object>";
 	close IN;
+	
 	waitpid $pid, 0;
+	$SIG{PIPE}="DEFAULT";
+	if ($sigpipe) {
+		return  "[[linkmap failed to run dot]]";
+	}
+
 	return $ret;
 } #}}}
 
