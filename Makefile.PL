@@ -59,5 +59,4 @@ WriteMakefile(
 	PREFIX		=> "/usr/local",
 	PM_FILTER	=> './pm_filter $(PREFIX) $(VER)',
 	MAN1PODS	=> {},
-	clean		=> {FILES => 'ikiwiki'},
 );
