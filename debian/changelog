@@ -1,4 +1,4 @@
-ikiwiki (1.28) UNRELEASED; urgency=low
+ikiwiki (1.28) unstable; urgency=low
 
   * inline: Add ability to sort by page name, based on a patch from
     Benjamin A'Lee.
@@ -6,8 +6,10 @@ ikiwiki (1.28) UNRELEASED; urgency=low
     braindead interface. Closes: #389383
   * Don't rm -rf ikiwiki on distclean, since a) there's no such file
     and b) those poor Mac OSX users and their case insensative files!
+  * Don't fail syntax check if Text::Typography isn't installed.
+    Closes: #389406
 
- -- Joey Hess <joeyh@debian.org>  Mon, 25 Sep 2006 17:40:48 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 26 Sep 2006 02:08:17 -0400
 
 ikiwiki (1.27) unstable; urgency=low
 
