@@ -1,0 +1,10 @@
+ikiwiki 1.28 released with these changes:
+
+   * inline: Add ability to sort by page name, based on a patch from
+     Benjamin A'Lee.
+   * Fix a forkbomb in various calls to IPC::Open2, which has a highly
+     braindead interface. Closes: #[389383](http://bugs.debian.org/389383)
+   * Don't rm -rf ikiwiki on distclean, since a) there's no such file
+     and b) those poor Mac OSX users and their case insensative files!
+   * Don't fail syntax check if Text::Typography isn't installed.
+     Closes: #[389406](http://bugs.debian.org/389406)
