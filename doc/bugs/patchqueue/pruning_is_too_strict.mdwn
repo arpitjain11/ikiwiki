@@ -1,0 +1,83 @@
+Preliminary patch for a feature wishlist item: [[bugs/pruning_is_too_strict]].
+
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 1a00f2d..0119a26 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -20,6 +20,8 @@ our $VERSION = 1.00;
+     # Optimisation.
+     use Memoize;
+     memoize("abs2rel");
+    +memoize("basefile");
+    +memoize("is_prune");
+     memoize("pagespec_translate");
+     
+     my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+    @@ -318,6 +320,22 @@ sub baseurl (;$) { #{{{
+     	return $page;
+     } #}}}
+     
+    +sub basefile ($;$) { #{{{
+    +	my $file=shift;
+    +	my $base=shift || $config{srcdir};
+    +
+    +	require File::Spec;
+    +	$base=File::Spec->canonpath($base);
+    +	my $ret=File::Spec->canonpath($file);
+    +
+    +	$ret=~s#^$base/*##;
+    +	return $ret;
+    +} #}}}
+    +
+    +sub is_prune ($;$) { #{{{
+    +	return basefile($_[0], $_[1])=~m/$config{wiki_file_prune_regexp}/;
+    +} #}}}
+    +
+     sub abs2rel ($$) { #{{{
+     	# Work around very innefficient behavior in File::Spec if abs2rel
+     	# is passed two relative paths. It's much faster if paths are
+    diff --git a/IkiWiki/CGI.pm b/IkiWiki/CGI.pm
+    index f550b67..5d1991d 100644
+    --- a/IkiWiki/CGI.pm
+    +++ b/IkiWiki/CGI.pm
+    @@ -386,7 +386,7 @@ sub cgi_editpage ($$) { #{{{
+     	my ($page)=$form->field('page');
+     	$page=titlepage(possibly_foolish_untaint($page));
+     	if (! defined $page || ! length $page ||
+    -	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
+    +	    is_prune($page) || $page=~/^\//) {
+     		error("bad page name");
+     	}
+     	
+    @@ -476,8 +476,7 @@ sub cgi_editpage ($$) { #{{{
+     			my $best_loc;
+     			if (! defined $from || ! length $from ||
+     			    $from ne $form->field('from') ||
+    -			    $from=~/$config{wiki_file_prune_regexp}/ ||
+    -			    $from=~/^\// ||
+    +			    is_prune($from) || $from=~/^\// ||
+     			    $form->submitted eq "Preview") {
+     				@page_locs=$best_loc=$page;
+     			}
+    diff --git a/IkiWiki/Render.pm b/IkiWiki/Render.pm
+    index 48a25be..a083d3f 100644
+    --- a/IkiWiki/Render.pm
+    +++ b/IkiWiki/Render.pm
+    @@ -202,7 +202,7 @@ sub refresh () { #{{{
+     		no_chdir => 1,
+     		wanted => sub {
+     			$_=decode_utf8($_);
+    -			if (/$config{wiki_file_prune_regexp}/) {
+    +			if (is_prune($_)) {
+     				$File::Find::prune=1;
+     			}
+     			elsif (! -d $_ && ! -l $_) {
+    @@ -222,7 +222,7 @@ sub refresh () { #{{{
+     		no_chdir => 1,
+     		wanted => sub {
+     			$_=decode_utf8($_);
+    -			if (/$config{wiki_file_prune_regexp}/) {
+    +			if (is_prune($_, $config{underlaydir})) {
+     				$File::Find::prune=1;
+     			}
+     			elsif (! -d $_ && ! -l $_) {
