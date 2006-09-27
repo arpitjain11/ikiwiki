@@ -1,41 +1,32 @@
 Preliminary patch for a feature wishlist item: [[bugs/pruning_is_too_strict]].
 
     diff --git a/IkiWiki.pm b/IkiWiki.pm
-    index 1a00f2d..0119a26 100644
+    index 1a00f2d..7381ae7 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -20,6 +20,8 @@ our $VERSION = 1.00;
+    @@ -20,6 +20,7 @@ our $VERSION = 1.00;
      # Optimisation.
      use Memoize;
      memoize("abs2rel");
-    +memoize("basefile");
     +memoize("is_prune");
      memoize("pagespec_translate");
      
      my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
-    @@ -318,6 +320,22 @@ sub baseurl (;$) { #{{{
-     	return $page;
+    @@ -331,6 +332,14 @@ sub abs2rel ($$) { #{{{
+     	return $ret;
      } #}}}
      
-    +sub basefile ($;$) { #{{{
+    +sub is_prune ($;$) { #{{{
     +	my $file=shift;
     +	my $base=shift || $config{srcdir};
     +
-    +	require File::Spec;
-    +	$base=File::Spec->canonpath($base);
-    +	my $ret=File::Spec->canonpath($file);
-    +
-    +	$ret=~s#^$base/*##;
-    +	return $ret;
+    +	my $rel=abs2rel($file, $base);
+    +	return $rel eq '.' ? 0 : $rel=~m/$config{wiki_file_prune_regexp}/;
     +} #}}}
     +
-    +sub is_prune ($;$) { #{{{
-    +	return basefile($_[0], $_[1])=~m/$config{wiki_file_prune_regexp}/;
-    +} #}}}
-    +
-     sub abs2rel ($$) { #{{{
-     	# Work around very innefficient behavior in File::Spec if abs2rel
-     	# is passed two relative paths. It's much faster if paths are
+     sub displaytime ($) { #{{{
+     	my $time=shift;
+     
     diff --git a/IkiWiki/CGI.pm b/IkiWiki/CGI.pm
     index f550b67..5d1991d 100644
     --- a/IkiWiki/CGI.pm
