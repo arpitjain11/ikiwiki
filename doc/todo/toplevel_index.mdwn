@@ -19,3 +19,25 @@ Some inconsistences around the toplevel [[index]] page:
 	                if (! $skip) {
 	                        $path.="../";
 
+---
+
+> I would like to suggest another tack, namely a bigger, better special case. 
+> The basic idea is that all indices of the form foo/bar/index get the wiki path foo/bar.
+> This makes some things more elegant:
+>
+> * All files having to do with foo/bar are in the foo/bar directory, rather 
+>   than the (admittedly minor) wart of having the index be in foo/.
+> * This sort of addresses [[bugs/broken_parentlinks]] in that example/ is 
+>   guaranteed to be a valid path. (There might be no index there, though.)
+> * This is more in line with standard HTML practice, as far as I understand it,
+>   namely that linking to a/b means a/b/index.html rather than a/b.html.
+>
+> This would change the inline plugin in strange ways -- I think if foo/index.html
+> contains \[[inline "* and !*/Discussion"]], it should skip inlining foo/index.html 
+> explicitly, but would inline index pages in child directories 
+> foo/bar/baz/index.html as bar/baz.
+>
+> It always bothers me that foo/bar/ files need a foo/bar.html in front of them, 
+> rather than a foo/bar/index.html, as is (to my mind) traditional.
+> 
+> Ethan
