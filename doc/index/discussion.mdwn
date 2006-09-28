@@ -20,3 +20,11 @@ something, that I think is very valuable.
 > I'll be happy to point you in the right directions.. --[[Joey]]
 
 ----
+
+Some questions about the RecentChanges function. 
+
+* Why isn't it statically-genereated, but generated dynamically by CGI? It seems like it could be beneficial to have it rendered in the post-commit hook, just like everything else in the wiki. 
+* Also, is it planned/desired that recent changes generate the same information in RSS feed format? This seems like it could be a useful way to keep track of the wiki as a whole. 
+* Lastly, would it be possible to use the recent changes code with a pagespec? I understand this sort of infringes on territory covered by the inline plugin, but the inline plugin only puts a page in the RSS feed once, when it's created, and I imagine some people -- some deranged, obsessive-compulsive people like myself -- would like to know about the changes made to existing pages as well as newly-created pages.
+
+Thanks for your time. -- Ethan
