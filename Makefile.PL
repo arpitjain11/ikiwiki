@@ -32,10 +32,10 @@ extra_clean:
 
 extra_install:
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/templates
-	cp templates/* $(DESTDIR)$(PREFIX)/share/ikiwiki/templates
+	$(CP) templates/* $(DESTDIR)$(PREFIX)/share/ikiwiki/templates
 
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
-	cp -a basewiki/* $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
+	$(CP) -a basewiki/* $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
 
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1
 	install ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
