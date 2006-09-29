@@ -50,3 +50,14 @@ Some inconsistences around the toplevel [[index]] page:
 > compatibility, as well as allow foo/bar/Discussion.
 >
 > Ethan
+>
+> No, in order for this to work, the wiki path foo/bar/baz could be any of:
+>
+> * foo/bar/baz.html
+> * foo/index/bar/index/baz.html
+> * foo/bar/index/baz.html
+> * foo/bar/index/baz/index.html
+>
+> Or many others. Which is probably even hackier than having both foo.html and foo/.
+>
+> Ethan
