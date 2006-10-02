@@ -3,8 +3,7 @@ If you're using ikiwiki without installing it, the svn post-commit wrapper will 
 I'm not sure how to fix this in a secure way. For now I'm just changing use lib '.' in ikiwiki.pl to point to the hard-coded directory where ikiwiki was unpacked.
 
 > This workaround doesn't work here.  "`./ikiwiki.pl --setup ikiwiki.setup`" is ok, but the
-> wrappers fail in action.  The below patch seems fine (only the relevant part). --[[Roktas]]
-
-    -use lib '.'; # For use without installation, removed by Makefile.
-    +use FindBin qw($Bin); # WILL_BE_REMOVED by Makefile.
-    +use lib ($Bin=~/(.+)/ ? "$1" : '.'); # For use without installation, WILL_BE_REMOVED by Makefile.
+> wrappers fail in action.  Using "`FindBin`" seems a solution.  Here is a (kinda ugly)
+> [patch](http://git.kirkambar.net/?p=ikiwiki.git;a=commitdiff;h=44511c00b98b3efedd4d31f15ea928fcf221401e) 
+> which also allows you to use `basewiki` + `templates` in the source directory.  The patched
+> version works fine in my [homepage](http://kirkambar.net).  --[[Roktas]]
