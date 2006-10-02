@@ -62,6 +62,7 @@ sub defaultconfig () { #{{{
 	timeformat => '%c',
 	locale => undef,
 	sslcookie => 0,
+	httpauth => 0,
 } #}}}
    
 sub checkconfig () { #{{{

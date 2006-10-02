@@ -47,6 +47,7 @@ sub getconfig () { #{{{
 			"adminemail=s" => \$config{adminemail},
 			"timeformat=s" => \$config{timeformat},
 			"sslcookie!" => \$config{sslcookie},
+			"httpauth!" => \$config{httpauth},
 			"exclude=s@" => sub {
 				$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$_[1]/;
 			},

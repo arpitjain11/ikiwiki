@@ -1,8 +1,12 @@
 ikiwiki (1.29) UNRELEASED; urgency=low
 
   * Patch from Paul Tötterman to use CP in the Makefile.
+  * Patch from Alec Berryman adding a http_auth config item that allows
+    using HTTP Authentication instead of ikiwiki's built in authentication.
+    Useful for eg, large sites with their own previously existing user auth
+    setup. Closes: #384534
 
- -- Joey Hess <joeyh@debian.org>  Thu, 28 Sep 2006 19:10:58 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon,  2 Oct 2006 18:50:29 -0400
 
 ikiwiki (1.28) unstable; urgency=low
 

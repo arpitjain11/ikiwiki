@@ -314,6 +314,11 @@ sub cgi_prefs ($$) { #{{{
 	if (! is_admin($user_name)) {
 		$form->field(name => "locked_pages", type => "hidden");
 	}
+
+	if ($config{httpauth}) {
+		$form->field(name => "password", type => "hidden");
+		$form->field(name => "confirm_password", type => "hidden");
+	}
 	
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
@@ -643,6 +648,7 @@ sub cgi () { #{{{
 	
 	# Everything below this point needs the user to be signed in.
 	if (((! $config{anonok} || $do eq 'prefs') &&
+	     (! $config{httpauth}) &&
 	     (! defined $session->param("name") ||
 	     ! userinfo_get($session->param("name"), "regdate"))) || $do eq 'signin') {
 		cgi_signin($q, $session);
@@ -653,6 +659,22 @@ sub cgi () { #{{{
 		umask($oldmask);
 		
 		return;
+	}
+
+	if ($config{httpauth} && (! defined $session->param("name"))) {
+		if (! defined $q->remote_user()) {
+			error("Could not determine authenticated username.");
+		}
+		else {
+			$session->param("name", $q->remote_user());
+			if (!userinfo_get($session->param("name"),"regdate")) {
+				userinfo_setall($session->param("name"), {
+					email => "",
+					password => "",
+					regdate=>time,
+				});
+			}
+		}
 	}
 	
 	if ($do eq 'create' || $do eq 'edit') {

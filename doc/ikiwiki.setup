@@ -86,6 +86,8 @@ use IkiWiki::Setup::Standard {
 	#locale => 'en_US.UTF-8',
 	# Only send cookies over SSL connections.
 	#sslcookie => 1,
+	# Use HTTP Authentication instead of Ikiwiki's.
+	#httpauth => 1,
 	# Logging settings:
 	verbose => 0,
 	syslog => 0,
