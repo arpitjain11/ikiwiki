@@ -1,0 +1,15 @@
+I'd like to run ikiwiki under cygwin.  I'm new to ikiwiki and have tried to follow the setup tutorial as best I could.  I got all the way up to step 7, but I can't get the CGI to run successfully (step 8).
+
+After editing ikiwiki.setup, and running "ikiwiki --setup", the CGI script is successfully created.  However, if I then click on "Edit Page" link, I see
+
+<pre>
+==> /var/log/apache2/access_log <==
+192.168.0.125 - - [06/Oct/2006:15:12:05 -0500] "GET /cgi-bin/ikiwiki.cgi?page=index&do=edit HTTP/1.1" 500 666
+
+==> /var/log/apache2/error_log <==
+[Fri Oct 06 15:12:07 2006] [error] [client 192.168.0.125] HTML::Template::param() : attempt to set parameter 'form-submit' with an array ref - parameter is not a TMPL_LOOP! at /usr/lib/perl5/site_perl/5.8/CGI/FormBuilder.pm line 1415, referer: http://imrisws36/wiki/
+[Fri Oct 06 15:12:07 2006] [error] [client 192.168.0.125] Premature end of script headers: ikiwiki.cgi, referer: http://imrisws36/wiki/
+</pre>
+
+Can anyone decipher this for me?  I spent some time with cpan earlier today downloading the latest version I could find of prerequisite modules such as HTML::Template and CGI::FormBuilder.
+ 
