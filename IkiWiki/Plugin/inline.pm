@@ -25,7 +25,7 @@ sub import { #{{{
 package IkiWiki;
 
 my %toping;
-my %rsslinks;
+my %feedlinks;
 
 sub yesno ($) { #{{{
 	my $val=shift;
@@ -40,7 +40,9 @@ sub preprocess_inline (@) { #{{{
 	}
 	my $raw=yesno($params{raw});
 	my $archive=yesno($params{archive});
-	my $rss=exists $params{rss} ? yesno($params{rss}) : 1;
+	my $rss=($config{rss} && exists $params{rss}) ? yesno($params{rss}) : $config{rss};
+	my $atom=($config{atom} && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
+	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : 1;
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}
@@ -77,22 +79,23 @@ sub preprocess_inline (@) { #{{{
 	add_depends($params{page}, $params{pages});
 
 	my $rssurl=rsspage(basename($params{page}));
+	my $atomurl=atompage(basename($params{page}));
 	my $ret="";
 
 	if (exists $params{rootpage} && $config{cgiurl}) {
-		# Add a blog post form, with a rss link button.
+		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
 		$formtemplate->param(rootpage => $params{rootpage});
-		if ($config{rss}) {
-			$formtemplate->param(rssurl => $rssurl);
-		}
+		$formtemplate->param(rssurl => $rssurl) if $feeds && $rss;
+		$formtemplate->param(atomurl => $atomurl) if $feeds && $atom;
 		$ret.=$formtemplate->output;
 	}
-	elsif ($config{rss} && $rss) {
-		# Add a rss link button.
-		my $linktemplate=template("rsslink.tmpl", blind_cache => 1);
-		$linktemplate->param(rssurl => $rssurl);
+	elsif ($feeds) {
+		# Add feed buttons.
+		my $linktemplate=template("feedlink.tmpl", blind_cache => 1);
+		$linktemplate->param(rssurl => $rssurl) if $rss;
+		$linktemplate->param(atomurl => $atomurl) if $atom;
 		$ret.=$linktemplate->output;
 	}
 	
@@ -154,12 +157,19 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	if ($config{rss} && $rss) {
+	if ($feeds && $rss) {
 		will_render($params{page}, rsspage($params{page}));
 		writefile(rsspage($params{page}), $config{destdir},
-			genrss($desc, $params{page}, @list));
+			genfeed("rss", $rssurl, $desc, $params{page}, @list));
 		$toping{$params{page}}=1 unless $config{rebuild};
-		$rsslinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+		$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+	}
+	if ($feeds && $atom) {
+		will_render($params{page}, atompage($params{page}));
+		writefile(atompage($params{page}), $config{destdir},
+			genfeed("atom", $atomurl, $desc, $params{page}, @list));
+		$toping{$params{page}}=1 unless $config{rebuild};
+		$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
 	}
 	
 	return $ret;
@@ -170,8 +180,8 @@ sub pagetemplate_inline (@) { #{{{
 	my $page=$params{page};
 	my $template=$params{template};
 
-	$template->param(rsslink => $rsslinks{$page})
-		if exists $rsslinks{$page} && $template->query(name => "rsslink");
+	$template->param(feedlinks => $feedlinks{$page})
+		if exists $feedlinks{$page} && $template->query(name => "feedlinks");
 } #}}}
 
 sub get_inline_content ($$) { #{{{
@@ -203,6 +213,17 @@ sub date_822 ($) { #{{{
 	return $ret;
 } #}}}
 
+sub date_3339 ($) { #{{{
+	my $time=shift;
+
+	eval q{use POSIX};
+	my $lc_time= POSIX::setlocale(&POSIX::LC_TIME);
+	POSIX::setlocale(&POSIX::LC_TIME, "C");
+	my $ret=POSIX::strftime("%Y-%m-%dT%H:%M:%SZ", localtime($time));
+	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
+	return $ret;
+} #}}}
+
 sub absolute_urls ($$) { #{{{
 	# sucky sub because rss sucks
 	my $content=shift;
@@ -221,15 +242,24 @@ sub rsspage ($) { #{{{
 	return $page.".rss";
 } #}}}
 
-sub genrss ($$@) { #{{{
-	my $desc=shift;
+sub atompage ($) { #{{{
+	my $page=shift;
+
+	return $page.".atom";
+} #}}}
+
+sub genfeed ($$$$@) { #{{{
+	my $feedtype=shift;
+	my $feedurl=shift;
+	my $feeddesc=shift;
 	my $page=shift;
 	my @pages=@_;
 	
 	my $url=URI->new(encode_utf8($config{url}."/".htmlpage($page)));
 	
-	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1);
+	my $itemtemplate=template($feedtype."item.tmpl", blind_cache => 1);
 	my $content="";
+	my $lasttime = 0;
 	foreach my $p (@pages) {
 		my $u=URI->new(encode_utf8($config{url}."/".htmlpage($p)));
 
@@ -237,7 +267,8 @@ sub genrss ($$@) { #{{{
 			title => pagetitle(basename($p)),
 			url => $u,
 			permalink => $u,
-			pubdate => date_822($pagectime{$p}),
+			date_822 => date_822($pagectime{$p}),
+			date_3339 => date_3339($pagectime{$p}),
 			content => absolute_urls(get_inline_content($p, $page), $url),
 		);
 		run_hooks(pagetemplate => sub {
@@ -247,15 +278,20 @@ sub genrss ($$@) { #{{{
 
 		$content.=$itemtemplate->output;
 		$itemtemplate->clear_params;
+
+		$lasttime = $pagectime{$p} if $pagectime{$p} > $lasttime;
 	}
 
-	my $template=template("rsspage.tmpl", blind_cache => 1);
+	my $template=template($feedtype."page.tmpl", blind_cache => 1);
 	$template->param(
 		title => $config{wikiname},
 		wikiname => $config{wikiname},
 		pageurl => $url,
 		content => $content,
-		rssdesc => $desc,
+		feeddesc => $feeddesc,
+		feeddate => date_3339($lasttime),
+		feedurl => $feedurl,
+		version => $IkiWiki::version,
 	);
 	run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page,

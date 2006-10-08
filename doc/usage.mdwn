@@ -159,7 +159,12 @@ configuration options of their own.
 
 * --rss, --norss
 
-  If rss is set, ikiwiki will generate rss feeds for pages that inline
+  If rss is set, ikiwiki will generate RSS feeds for pages that inline
+  a [[blog]].
+
+* --atom, --noatom
+
+  If atom is set, ikiwiki will generate Arom feeds for pages that inline
   a [[blog]].
 
 * --pingurl url

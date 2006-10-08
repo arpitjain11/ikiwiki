@@ -6,7 +6,7 @@ inside another. For example:
 
 	\[[inline pages="blog/*"]]
 
-The most common use of inlining is generating blogs and RSS feeds.
+The most common use of inlining is generating blogs and RSS or Atom feeds.
 See [[blog]] for details.
 
 ## usage
@@ -18,8 +18,12 @@ directive:
 * `show` - Specify the maximum number of matching pages to inline.
   Default is 10, unless archiving, when the default is to show all.
   Set to 0 to show all matching pages.
-* `rss` - Controls generation of an RSS feed. On by default, set to "no" to
-  disable.
+* `rss` - controls generation of an rss feed. On by default if the wiki is
+  configured to use rss feeds, set to "no" to disable.
+* `atom` - controls generation of an atom feed. On by default if the wiki is
+  configured to use atom feeds, set to "no" to disable.
+* `feeds` - controls generation of all types of feeds. Set to "no" to
+  disable generating any feeds.
 * `rootpage` - Enables a form to post new pages to a [[blog]].
 * `archive` - If set to "yes", only list page titles and some metadata, not
   full controls.

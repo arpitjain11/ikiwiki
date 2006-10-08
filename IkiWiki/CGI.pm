@@ -462,7 +462,7 @@ sub cgi_editpage ($$) { #{{{
 				value => $content, force => 1);
 		$form->field(name => "comments",
 				value => $comments, force => 1);
-		$config{rss}=0; # avoid preview writing an rss feed!
+		$config{rss}=$config{atom}=0; # avoid preview writing a feed!
 		$form->tmpl_param("page_preview",
 			htmlize($page, $type,
 			linkify($page, "",

@@ -3,7 +3,6 @@ $ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
 delete @ENV{qw{IFS CDPATH ENV BASH_ENV}};
 
 package IkiWiki;
-our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 
 use warnings;
 use strict;
@@ -34,6 +33,7 @@ sub getconfig () { #{{{
 			"no-rcs" => sub { $config{rcs}="" },
 			"anonok!" => \$config{anonok},
 			"rss!" => \$config{rss},
+			"atom!" => \$config{atom},
 			"cgi!" => \$config{cgi},
 			"discussion!" => \$config{discussion},
 			"w3mmode!" => \$config{w3mmode},
@@ -73,7 +73,7 @@ sub getconfig () { #{{{
 				push @{$config{pingurl}}, $_[1];
 			},
 			"version" => sub {
-				print "ikiwiki version $version\n";
+				print "ikiwiki version $IkiWiki::version\n";
 				exit;
 			},
 		) || usage();

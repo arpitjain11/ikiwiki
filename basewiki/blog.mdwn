@@ -11,10 +11,6 @@ The optional `rootpage` parameter tells the wiki that new posts to this blog
 should default to being [[SubPage]]s of "blog", and enables a form at the
 top of the blog that can be used to add new items.
 
-There is also an optional `rss` parameter that can control whether an RSS
-feed is generated. The default is to generate an RSS feed, if the wiki is
-globally configured to do so, but you can set `rss=no` to disable this.
-
 If you want your blog to have an archive page listing every post ever made
 to it, you can accomplish that like this:
 

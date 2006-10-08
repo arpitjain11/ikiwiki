@@ -71,8 +71,10 @@ use IkiWiki::Setup::Standard {
 	
 	# Can anonymous web users edit pages?
 	#anonok => 1,
-	# Generate rss feeds for pages?
+	# Generate rss feeds for blogs?
 	rss => 1,
+	# Generate atom feeds for blogs?
+	atom => 1,
 	# Urls to ping with XML-RPC when rss feeds are updated
 	#pingurl => [qw{http://rpc.technorati.com/rpc/ping}],
 	# Include discussion links on all pages?

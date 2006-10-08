@@ -16,7 +16,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime
                  %config %links %renderedfiles %pagesources);
-our $VERSION = 1.01;
+our $VERSION = 1.01; # plugin interface version
 
 # Optimisation.
 use Memoize;
@@ -24,9 +24,10 @@ memoize("abs2rel");
 memoize("pagespec_translate");
 
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 
 sub defaultconfig () { #{{{
-	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$|.arch-ids/|{arch}/)},
+	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$|\.atom$|.arch-ids/|{arch}/)},
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	verbose => 0,
@@ -42,6 +43,7 @@ sub defaultconfig () { #{{{
 	diffurl => '',
 	anonok => 0,
 	rss => 0,
+	atom => 0,
 	discussion => 1,
 	rebuild => 0,
 	refresh => 0,
@@ -90,8 +92,8 @@ sub checkconfig () { #{{{
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi\n");
 	}
-	if ($config{rss} && ! length $config{url}) {
-		error("Must specify url to wiki with --url when using --rss\n");
+	if (($config{rss} || $config{atom}) && ! length $config{url}) {
+		error("Must specify url to wiki with --url when using --rss or --atom\n");
 	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
