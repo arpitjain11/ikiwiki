@@ -4,7 +4,7 @@ package IkiWiki::Plugin::inline;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 1.00;
 use IkiWiki::Render; # for displaytime
 use URI;
 
@@ -154,10 +154,8 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	# TODO: should really add this to renderedfiles and call
-	# check_overwrite, but currently renderedfiles
-	# only supports listing one file per page.
 	if ($config{rss} && $rss) {
+		will_render($params{page}, rsspage($params{page}));
 		writefile(rsspage($params{page}), $config{destdir},
 			genrss($desc, $params{page}, @list));
 		$toping{$params{page}}=1 unless $config{rebuild};
@@ -233,9 +231,7 @@ sub genrss ($$@) { #{{{
 	my $itemtemplate=template("rssitem.tmpl", blind_cache => 1);
 	my $content="";
 	foreach my $p (@pages) {
-		next unless exists $renderedfiles{$p};
-
-		my $u=URI->new(encode_utf8("$config{url}/$renderedfiles{$p}"));
+		my $u=URI->new(encode_utf8($config{url}."/".htmlpage($p)));
 
 		$itemtemplate->param(
 			title => pagetitle(basename($p)),

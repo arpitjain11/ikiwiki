@@ -5,8 +5,17 @@ ikiwiki (1.29) UNRELEASED; urgency=low
     using HTTP Authentication instead of ikiwiki's built in authentication.
     Useful for eg, large sites with their own previously existing user auth
     setup. Closes: #384534
+  * Change %renderedfiles to store an array of files rendered from a given
+    source file, to allow tracking of extra rendered files like rss feeds.
+  * Note that plugins that accessed this variable will need to be updated!
+    The plugin interface has been increased to version 1.01 for this change.
+  * Add will_render function to the plugin interface, used to register that a
+    page renders a destination file, and do some security checks.
+  * Use will_render in the inline and linkmap plugins.
+  * Previously but no longer rendered files will be cleaned up.
+  * You will need to rebuild your wiki on upgrade to this version.
 
- -- Joey Hess <joeyh@debian.org>  Mon,  2 Oct 2006 18:50:29 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun,  8 Oct 2006 16:53:17 -0400
 
 ikiwiki (1.28) unstable; urgency=low
 

@@ -19,7 +19,7 @@ sub linkify ($$$$) {
 	foreach my $page (@existing_pages) {
 		$IkiWiki::pagecase{lc $page}=$page;
 		$links{$page}=[];
-		$renderedfiles{"$page.mdwn"}=$page;
+		$renderedfiles{"$page.mdwn"}=[$page];
 	}
 	%config=IkiWiki::defaultconfig();
 

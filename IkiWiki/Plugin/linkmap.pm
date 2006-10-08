@@ -57,12 +57,10 @@ sub genmap ($) { #{{{
 
 	# Use ikiwiki's function to create the file, this makes sure needed
 	# subdirs are there and does some sanity checking.
-	writefile("$params{page}.png", $config{destdir}, "");
+	will_render($params{page}, $params{page}.".png");
+	writefile($params{page}.".png", $config{destdir}, "");
 
 	# Run dot to create the graphic and get the map data.
-	# TODO: should really add the png to renderedfiles and call
-	# check_overwrite, but currently renderedfiles
-	# only supports listing one file per page.
 	my $pid;
 	my $sigpipe=0;;
 	$SIG{PIPE}=sub { $sigpipe=1 };

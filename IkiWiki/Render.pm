@@ -113,17 +113,6 @@ sub genpage ($$$) { #{{{
 	return $content;
 } #}}}
 
-sub check_overwrite ($$) { #{{{
-	# Important security check. Make sure to call this before saving
-	# any files to the source directory.
-	my $dest=shift;
-	my $src=shift;
-	
-	if (! exists $renderedfiles{$src} && -e $dest && ! $config{rebuild}) {
-		error("$dest already exists and was not rendered from $src before");
-	}
-} #}}}
-
 sub mtime ($) { #{{{
 	my $file=shift;
 	
@@ -157,6 +146,7 @@ sub render ($) { #{{{
 		my $content=readfile($srcfile);
 		my $page=pagename($file);
 		delete $depends{$page};
+		will_render($page, htmlpage($page), 1);
 		
 		$content=filter($page, $content);
 		
@@ -166,20 +156,17 @@ sub render ($) { #{{{
 		$content=linkify($page, $page, $content);
 		$content=htmlize($page, $type, $content);
 		
-		check_overwrite("$config{destdir}/".htmlpage($page), $page);
 		writefile(htmlpage($page), $config{destdir},
 			genpage($page, $content, mtime($srcfile)));
 		$oldpagemtime{$page}=time;
-		$renderedfiles{$page}=htmlpage($page);
 	}
 	else {
 		my $content=readfile($srcfile, 1);
 		$links{$file}=[];
 		delete $depends{$file};
-		check_overwrite("$config{destdir}/$file", $file);
+		will_render($file, $file, 1);
 		writefile($file, $config{destdir}, $content, 1);
 		$oldpagemtime{$file}=time;
-		$renderedfiles{$file}=$file;
 	}
 } #}}}
 
@@ -269,9 +256,10 @@ sub refresh () { #{{{
 		if (! $exists{$page}) {
 			debug("removing old page $page");
 			push @del, $pagesources{$page};
-			prune($config{destdir}."/".$renderedfiles{$page});
-			delete $renderedfiles{$page};
+			$renderedfiles{$page}=[];
 			$oldpagemtime{$page}=0;
+			prune($config{destdir}."/".$_)
+				foreach @{$oldrenderedfiles{$page}};
 			delete $pagesources{$page};
 		}
 	}
@@ -362,6 +350,17 @@ FILE:		foreach my $file (@files) {
 				debug("rendering $linkfile, to update its backlinks");
 				render($linkfile);
 				$rendered{$linkfile}=1;
+			}
+		}
+	}
+
+	# Remove no longer rendered files.
+	foreach my $src (keys %rendered) {
+		my $page=pagename($src);
+		foreach my $file (@{$oldrenderedfiles{$page}}) {
+			if (! grep { $_ eq $file } @{$renderedfiles{$page}}) {
+				debug("removing $file, no longer rendered by $page");
+				prune($config{destdir}."/".$file);
 			}
 		}
 	}

@@ -43,9 +43,9 @@ Benefits of not scaling:
 1. Avoids any security issues with imagemagick.
 2. Avoids issue of how to clean up old scaled images that are no longer being
    used. (Granted, this is a general ikiwiki problem that will eventually
-   be fixed in a general way.)
+   be fixed in a general way. (Update: now fixed in a general way, use the
+   will_render function.))
 3. Makes clicking on thumbnails display the full version really fast, since
    it's cached. :-)
-
 
 --[[Joey]]

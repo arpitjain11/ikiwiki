@@ -8,14 +8,15 @@ use HTML::Entities;
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
-            %renderedfiles %pagesources %depends %hooks %forcerebuild};
+            %renderedfiles %oldrenderedfiles %pagesources %depends %hooks
+	    %forcerebuild};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime
                  %config %links %renderedfiles %pagesources);
-our $VERSION = 1.00;
+our $VERSION = 1.01;
 
 # Optimisation.
 use Memoize;
@@ -261,6 +262,25 @@ sub writefile ($$$;$) { #{{{
 	close OUT;
 } #}}}
 
+sub will_render ($$;$) { #{{{
+	my $page=shift;
+	my $dest=shift;
+	my $clear=shift;
+
+	# Important security check.
+	if (-e "$config{destdir}/$dest" && ! $config{rebuild} &&
+	    ! grep { $_ eq $dest } (@{$renderedfiles{$page}}, @{$oldrenderedfiles{$page}})) {
+		error("$config{destdir}/$dest independently created, not overwriting with version from $page");
+	}
+
+	if (! $clear) {
+		$renderedfiles{$page}=[$dest, grep { $_ ne $dest } @{$renderedfiles{$page}}];
+	}
+	else {
+		$renderedfiles{$page}=[$dest];
+	}
+} #}}}
+
 sub bestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
@@ -366,10 +386,10 @@ sub htmllink ($$$;$$$) { #{{{
 	# TODO BUG: %renderedfiles may not have it, if the linked to page
 	# was also added and isn't yet rendered! Note that this bug is
 	# masked by the bug that makes all new files be rendered twice.
-	if (! grep { $_ eq $bestlink } values %renderedfiles) {
+	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
 		$bestlink=htmlpage($bestlink);
 	}
-	if (! grep { $_ eq $bestlink } values %renderedfiles) {
+	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
 		return "<span><a href=\"".
 			cgiurl(do => "create", page => lc($link), from => $page).
 			"\">?</a>$linktext</span>"
@@ -529,6 +549,7 @@ sub loadindex () { #{{{
 		chomp;
 		my %items;
 		$items{link}=[];
+		$items{dest}=[];
 		foreach my $i (split(/ /, $_)) {
 			my ($item, $val)=split(/=/, $i, 2);
 			push @{$items{$item}}, decode_entities($val);
@@ -543,7 +564,8 @@ sub loadindex () { #{{{
 			$oldlinks{$page}=[@{$items{link}}];
 			$links{$page}=[@{$items{link}}];
 			$depends{$page}=$items{depends}[0] if exists $items{depends};
-			$renderedfiles{$page}=$items{dest}[0];
+			$renderedfiles{$page}=[@{$items{dest}}];
+			$oldrenderedfiles{$page}=[@{$items{dest}}];
 			$pagecase{lc $page}=$page;
 		}
 		$pagectime{$page}=$items{ctime}[0];
@@ -563,8 +585,8 @@ sub saveindex () { #{{{
 		next unless $oldpagemtime{$page};
 		my $line="mtime=$oldpagemtime{$page} ".
 			"ctime=$pagectime{$page} ".
-			"src=$pagesources{$page} ".
-			"dest=$renderedfiles{$page}";
+			"src=$pagesources{$page}";
+		$line.=" dest=$_" foreach @{$renderedfiles{$page}};
 		$line.=" link=$_" foreach @{$links{$page}};
 		if (exists $depends{$page}) {
 			$line.=" depends=".encode_entities($depends{$page}, " \t\n");

@@ -197,7 +197,8 @@ use the following hashes, using a page name as the key:
 
 * `%links` lists the names of each page that a page links to, in an array
   reference.
-* `%renderedfiles` contains the name of the file rendered by a page.
+* `%renderedfiles` lists names of the files rendered by a page, in an array
+  reference.
 * `%pagesources` contains the name of the source file for a page.
 
 ### Library functions
@@ -292,6 +293,13 @@ written in binary mode.
 A failure to write the file will result in it dying with an error.
 
 If the destination directory doesn't exist, it will first be created.
+
+### `will_render($$)`
+
+Given a page name and a destination file name (not including the base
+destination directory), register that the page will result in that file
+being rendered. It's important to call this before writing to any file in
+the destination directory.
 
 #### `pagetype($)`
 
