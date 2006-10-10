@@ -1,0 +1,47 @@
+[[template id=plugin name=shortcuts included=0 author="[[VictorMoral]]"]]
+[[tag type/format]]
+
+*shortcuts* is a plugin for make external links easy in a ikiwiki page.
+It filter the raw source code, searching *wafl expresions* and replacing it
+for ikiwiki links and not for html links. 
+
+*Note: my apologies for my poor english, my mother language is the spanish.
+Any corrections are welcome :-).*
+
+In the source page you need include the expresions as:
+
+    For my {wiki:UPS} APC i need the {deb:apcupsd} package installed. You can 
+    found {google:apc linux|many positive responses}.
+
+and after filter this is the result:
+
+    For my [UPS](http://en.wikipedia.org/wiki/UPS) i need the 
+    [apcupsd](http://packages.debian.org/). You can found 
+    [many positive responses](http://www.google.com/search?q=apc+linux).
+
+If you need escape a walf expression prefix with a backslash character as in:
+
+    This is a \{cpan:example}.
+
+This module is inspired in Kwiki::Shortcuts with minor diferences. The wafl
+expresions are strings between braces with the following elements:
+
+* one name (followed by one colon character)
+* one o many search terms
+* an optional text for the link
+
+The plugin provides some predefined shortcuts, and it can use a external
+definitions file. This file is named *shortcuts.conf* by default, but it can
+be set with the *shortcuts* parameter and configuration variable.
+
+The next shortcuts are predefined:
+
+-   google: http://www.google.com/search?q=
+-   deb:    http://packages.debian.org/
+-   dbug:   http://bugs.debian.org/
+-   cpan:   http://search.cpan.org/search?mode=dist&query=
+-   wiki:   http://en.wikipedia.org/wiki/
+
+Use the external Perl module: URI::Escape and it can be found
+[here](http://taquiones.net/files/misc/IkiWiki-Plugin-shortcuts-0.3.tar.gz).
+
