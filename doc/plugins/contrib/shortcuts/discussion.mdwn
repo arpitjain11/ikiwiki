@@ -1,0 +1,24 @@
+Ah, this is something I've been meaning to look into adding for a while.
+
+I think it might be a good idea to make the page that configures the
+shortcuts be a regular page in the wiki, as was done with the smilies
+plugin. Of course, it would need to avoid abuse since anyone could edit it
+then (unless it were locked).
+
+The other thing that I wondered as I looked at this is, why add a new
+syntax for the shortcuts? It would be less complex, and probably easier to
+implement if it used an existing syntax. The shortcuts could just use a
+preprocessor directive:
+
+	\[[shortcut dbug 30303]]
+
+If that's not short enough, it would be possible to register a preprocessor
+directive per shortcut, yeilding this syntax:
+
+	\[[dbug 30303]]
+
+Unless I'm missing something and a "walf expression" is something already
+standard across wikis, this approach seems cleaner and easier to learn for
+ikiwiki users.
+
+--[[Joey]]
