@@ -19,3 +19,7 @@ Can anyone decipher this for me?  I spent some time with cpan earlier today down
 I have version 3.0401 of CGI::FormBuilder -- the latest from CPAN.  If you are wondering about any other modules, the answer 
 is likely the same: the latest from CPAN.  And you're right: the error string in question does not appear in CGI::FormBuilder.  I found it in HTML::Template (version 2.8).
 
+OK, so downgrading CGI::FormBuilder to 3.0302 makes the problem go away.  I'll leave it to you to figure out whether the bug is in CGI::FormBuilder or in IkiWiki. --[[Steve]]
+
+
+
