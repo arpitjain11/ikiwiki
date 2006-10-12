@@ -19,7 +19,18 @@ Can anyone decipher this for me?  I spent some time with cpan earlier today down
 I have version 3.0401 of CGI::FormBuilder -- the latest from CPAN.  If you are wondering about any other modules, the answer 
 is likely the same: the latest from CPAN.  And you're right: the error string in question does not appear in CGI::FormBuilder.  I found it in HTML::Template (version 2.8).
 
-OK, so downgrading CGI::FormBuilder to 3.0302 makes the problem go away.  I'll leave it to you to figure out whether the bug is in CGI::FormBuilder or in IkiWiki. --[[Steve]]
+OK, so downgrading CGI::FormBuilder to 3.0302 makes the problem go away.  I'll leave it to you to figure out whether the bug is in CGI::FormBuilder or in IkiWiki. --Steve
 
+-----
+
+A different problem has reared its ugly head.  When I click on "RecentChanges", the CGI complains about an undefined subroutine:
+
+<pre>
+==> apache2/error_log <==
+[Thu Oct 12 16:20:52 2006] [error] [client 192.168.0.125] Undefined subroutine &IkiWiki::XMLin called at /usr/lib/perl5/site_perl/5.8/IkiWiki/Rcs/svn.pm line 143., referer: http://imrisws36/wiki/index.html?updated
+[Thu Oct 12 16:20:52 2006] [error] [client 192.168.0.125] Premature end of script headers: ikiwiki.cgi, referer: http://imrisws36/wiki/index.html?updated
+</pre>
+
+Indeed there is no such routine IkiWiki::XMLin().  I don't understand how this can possibly work -- as it manifestly does on linux.
 
 
