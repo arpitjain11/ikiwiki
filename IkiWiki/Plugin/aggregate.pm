@@ -83,6 +83,7 @@ sub preprocess (@) { #{{{
 	$feed->{numposts}=0 unless defined $feed->{numposts};
 	$feed->{newposts}=0 unless defined $feed->{newposts};
 	$feed->{message}="new feed" unless defined $feed->{message};
+	$feed->{error}=0 unless defined $feed->{error};
 	$feed->{tags}=[];
 	while (@_) {
 		my $key=shift;
@@ -93,7 +94,9 @@ sub preprocess (@) { #{{{
 	}
 
 	return "<a href=\"".$feed->{url}."\">".$feed->{name}."</a>: ".
-	       "<i>".$feed->{message}."</i> (".$feed->{numposts}." posts".
+	       ($feed->{error} ? "<em>" : "").$feed->{message}.
+	       ($feed->{error} ? "</em>" : "").
+	       " (".$feed->{numposts}." posts".
 	       ($feed->{newposts} ? "; ".$feed->{newposts}." new" : "").
 	       ")";
 } # }}}
@@ -199,6 +202,7 @@ sub aggregate () { #{{{
 			my @urls=XML::Feed->find_feeds($feed->{url});
 			if (! @urls) {
 				$feed->{message}="could not find feed at ".$feed->{feedurl};
+				$feed->{error}=1;
 				debug($feed->{message});
 				next;
 			}
@@ -207,11 +211,13 @@ sub aggregate () { #{{{
 		my $f=eval{XML::Feed->parse(URI->new($feed->{feedurl}))};
 		if ($@) {
 			$feed->{message}="feed crashed XML::Feed! $@";
+			$feed->{error}=1;
 			debug($feed->{message});
 			next;
 		}
 		if (! $f) {
 			$feed->{message}=XML::Feed->errstr;
+			$feed->{error}=1;
 			debug($feed->{message});
 			next;
 		}
@@ -229,6 +235,7 @@ sub aggregate () { #{{{
 
 		$feed->{message}="processed ok at ".
 			displaytime($feed->{lastupdate});
+		$feed->{error}=0;
 	}
 
 	# TODO: expiry
