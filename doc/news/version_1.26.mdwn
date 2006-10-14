@@ -1,6 +1,0 @@
-ikiwiki 1.26 released with these changes:
-
-   * Add a missing -n to tla undo call.
-   * otl2hmtl can't be safely used with IPC::Open2 since it sometimes
-     writes before consuming its whole stdin. Avoid this deadlock.
-   * Fix alt tags for outline checkboxes.
