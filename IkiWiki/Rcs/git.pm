@@ -356,19 +356,19 @@ sub rcs_recentchanges ($) { #{{{
 		$type = "web";
 		$when = time - $ci->{'author_epoch'};
 
-		foreach my $bit (@{ $ci->{'details'} }) {
+		DETAIL: foreach my $detail (@{ $ci->{'details'} }) {
 			my $diffurl = $config{'diffurl'};
-			my $file    = $bit->{'file'};
+			my $file    = $detail->{'file'};
 
 			$diffurl =~ s/\[\[file\]\]/$file/go;
 			$diffurl =~ s/\[\[sha1_parent\]\]/$ci->{'parent'}/go;
-			$diffurl =~ s/\[\[sha1_from\]\]/$bit->{'sha1_from'}/go;
-			$diffurl =~ s/\[\[sha1_to\]\]/$bit->{'sha1_to'}/go;
+			$diffurl =~ s/\[\[sha1_from\]\]/$detail->{'sha1_from'}/go;
+			$diffurl =~ s/\[\[sha1_to\]\]/$detail->{'sha1_to'}/go;
 
 			push @pages, {
 				page => pagename($file),
 				diffurl => $diffurl,
-			},
+			};
 		}
 
 		push @message, { line => $title };
