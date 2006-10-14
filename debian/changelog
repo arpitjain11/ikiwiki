@@ -22,8 +22,11 @@ ikiwiki (1.29) UNRELEASED; urgency=low
   * $IkiWiki::version now holds the program version, and is accessible to
     plugins.
   * Make the aggregate plugin emphasize error messages.
+  * Patch from Recai to limit recentchanges to displaying max 10 files for a
+    given changeset (to avoid large number of file changes excessively
+    bloating the page).
 
- -- Joey Hess <joeyh@debian.org>  Fri, 13 Oct 2006 14:19:28 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 13 Oct 2006 23:10:40 -0400
 
 ikiwiki (1.28) unstable; urgency=low
 

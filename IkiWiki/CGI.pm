@@ -83,12 +83,16 @@ sub cgi_recentchanges ($) { #{{{
 	foreach my $change (@$changelog) {
 		$change->{when} = concise(ago($change->{when}));
 		$change->{user} = htmllink("", "", escapeHTML($change->{user}), 1);
+
+		my $is_excess = exists $change->{pages}[10]; # limit pages to first 10
+		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
 		$change->{pages} = [
 			map {
 				$_->{link} = htmllink("", "", $_->{page}, 1);
 				$_;
 			} @{$change->{pages}}
 		];
+		push @{$change->{pages}}, { link => '...' } if $is_excess;
 	}
 
 	my $template=template("recentchanges.tmpl"); 
