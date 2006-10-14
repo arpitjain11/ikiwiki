@@ -1,4 +1,15 @@
-ikiwiki 1.29 released with these changes:
+ikiwiki version 1.29 is released.
+
+Wikis need to be rebuilt on upgrade to this version. If you listed your wiki
+in `/etc/ikiwiki/wikilist` this will be done automatically when the Debian
+package is upgraded. Or use `ikiwiki-mass-rebuild` to force a rebuild.
+
+There is a change to the plugin interface in this version. Plugins that use
+`%renderedfiles will` need to be updated, as the hash's values are now arrays
+of rendered files. Plugins that cause a page to render additional files
+should use the new `will_render` function to register the files.
+
+Changelog for this release:
 
    * Patch from Paul Tötterman to use CP in the Makefile.
    * Patch from Alec Berryman adding a http\_auth config item that allows
