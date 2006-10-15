@@ -641,6 +641,8 @@ sub hook (@) { # {{{
 	if (! exists $param{type} || ! ref $param{call} || ! exists $param{id}) {
 		error "hook requires type, call, and id parameters";
 	}
+
+	return if $param{no_override} && exists $hooks{$param{type}}{$param{id}};
 	
 	$hooks{$param{type}}{$param{id}}=\%param;
 } # }}}

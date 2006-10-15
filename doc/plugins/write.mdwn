@@ -210,6 +210,11 @@ ikiwiki program.
 
 Hook into ikiwiki's processing. See the discussion of hooks above.
 
+Note that in addition to the named parameters described above, a parameter
+named no_override is supported, If it's set to a true value, then this hook
+will not override any existing hook with the same id. This is useful if
+the id can be controled by the user.
+
 #### `debug($)`
 
 Logs a debugging message. These are supressed unless verbose mode is turned
