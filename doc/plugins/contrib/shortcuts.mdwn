@@ -2,6 +2,47 @@
 [[tag type/format]]
 [[meta title="shortcuts (third-party plugin)"]]
 
+## version 0.4 
+
+Following the suggestions of Joey i'm rewriting the module and now the old syntax is not supported. 
+
+The plugin process directives as 
+
+  [[shortcut deb ikiwiki "a good wiki"]] 
+
+and transform it in 
+
+  \[a good wiki](http://packages.debian.org/ikiwiki)
+
+It uses a special ikiwiki page named *shortcuts.mdwn* where to extract the shortcuts definitions from one list, similar to the smileys plugin. 
+
+  * DEB http://packages.debian.org 
+  * rfc http://www.ietf.org/rfc/rfc%s.txt
+  * docbook http://www.docbook.org/tdg/en/html/%s.html
+
+If the shortcut name is in uppercase, it is register through *hook()* function (in lowercase) as a new preprocessor directive. In the above example the ikiwiki page should be
+
+  [[deb ikiwiki "a good wiki"]]
+  I need read [[shortcut rfc 14567 "this document"]] before ...
+
+In the URL part of the definition, a **%s** string will be replaced with the first param of the directive. If it's missing that param will be added to the end of the URL.
+
+By default, the module provides a few shortcuts (not preregistered):
+
+* deb   http://packages.debian.org/%s
+* wiki  http://en.wikipedia.org/wiki/%s
+* google http://www.google.com/search?q=%s
+* dbug   http://bugs.debian.org/%s
+* cpan http://search.cpan.org/search?mode=dist&query=%s
+
+The new version can be download from [here](http://taquiones.net/files/misc/IkiWiki-Plugin-shortcuts-0.4.tar.gz).
+
+Joey, could be merge with your module in any form ? 
+
+Again, my apologies for the duplicate efforts.
+
+----
+
 Note: This plugin is different than the "shortcut" plugin now included in
 ikiwiki. I'm leaving it here in case people prefer how this one works.
 --[[Joey]]
