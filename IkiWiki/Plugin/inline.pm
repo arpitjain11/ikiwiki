@@ -310,6 +310,8 @@ sub pingurl (@) { #{{{
 		return;
 	}
 
+	# TODO: daemonize here so slow pings don't slow down wiki updates
+
 	foreach my $page (keys %toping) {
 		my $title=pagetitle(basename($page));
 		my $url="$config{url}/".htmlpage($page);
