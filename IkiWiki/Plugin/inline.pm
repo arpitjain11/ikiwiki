@@ -314,17 +314,22 @@ sub pingurl (@) { #{{{
 		my $title=pagetitle(basename($page));
 		my $url="$config{url}/".htmlpage($page);
 		foreach my $pingurl (@{$config{pingurl}}) {
-			my $client = RPC::XML::Client->new($pingurl);
-			my $req = RPC::XML::request->new('weblogUpdates.ping',
-				$title, $url);
 			debug("Pinging $pingurl for $page");
-			my $res = $client->send_request($req);
-			if (! ref $res) {
-				debug("Did not receive response to ping");
-			}
-			my $r=$res->value;
-			if (! exists $r->{flerror} || $r->{flerror}) {
-				debug("Ping rejected: ".(exists $r->{message} ? $r->{message} : "[unknown reason]"));
+			eval {
+				my $client = RPC::XML::Client->new($pingurl);
+				my $req = RPC::XML::request->new('weblogUpdates.ping',
+				$title, $url);
+				my $res = $client->send_request($req);
+				if (! ref $res) {
+					debug("Did not receive response to ping");
+				}
+				my $r=$res->value;
+				if (! exists $r->{flerror} || $r->{flerror}) {
+					debug("Ping rejected: ".(exists $r->{message} ? $r->{message} : "[unknown reason]"));
+				}
+			};
+			if ($@) {
+				debug "Ping failed: $@";
 			}
 		}
 	}
