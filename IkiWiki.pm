@@ -264,6 +264,7 @@ sub writefile ($$$;$) { #{{{
 	close OUT;
 } #}}}
 
+my %cleared;
 sub will_render ($$;$) { #{{{
 	my $page=shift;
 	my $dest=shift;
@@ -275,11 +276,12 @@ sub will_render ($$;$) { #{{{
 		error("$config{destdir}/$dest independently created, not overwriting with version from $page");
 	}
 
-	if (! $clear) {
+	if (! $clear || $cleared{$page}) {
 		$renderedfiles{$page}=[$dest, grep { $_ ne $dest } @{$renderedfiles{$page}}];
 	}
 	else {
 		$renderedfiles{$page}=[$dest];
+		$cleared{$page}=1;
 	}
 } #}}}
 
