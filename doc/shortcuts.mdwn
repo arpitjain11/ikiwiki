@@ -1,0 +1,9 @@
+This page is used to control what shortcut links are supported by the wiki.
+
+* [[shortcut name=google url="http://www.google.com/search?q=%s"]]
+* [[shortcut name=wikipedia url="http://en.wikipedia.org/wiki/%s"]]
+* [[shortcut name=debbug url="http://bugs.debian.org/%s"]]
+* [[shortcut name=cpan url="http://search.cpan.org/search?mode=dist&query=%s"]]
+
+To add a new shortcut, use the "shortcut" preprocessor directive. "%s" in
+the url is replaced by the text of the shortcut.
