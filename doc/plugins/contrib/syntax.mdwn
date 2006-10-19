@@ -1,5 +1,5 @@
 [[template id=plugin name=syntax author="[[VictorMoral]]"]]
-[[tag type/chrome slow]]
+[[tag type/chrome type/slow]]
 [[meta title="syntax (third-party plugin)"]]
 
 `syntax` is a plugin that add support to ikiwiki for syntax highlighting through the *vim* editor and its perl interface [[cpan Text::VimColor]], so it depends on a vim functional installation.
@@ -15,16 +15,16 @@ The params *file* and *text* are mutually exclusive.
 
 Example:
 
-   \[[syntax type="perl" text="""
-   #!/usr/bin/perl
+       \[[syntax type="perl" text="""  
+       #!/usr/bin/perl
 
-   my $a = "World";
-   print "Hello, ${a}\n";
-   """]]
+       my $a = "World";
+       print "Hello, ${a}\n";
+       """]]
 
 or 
 
-   \\[[syntax file="hello.pl" description="My first perl program"]]
+       \[[syntax file="hello.pl" description="My first perl program"]]
 
 It can be downloaded from [here](http://taquiones.net/files/misc/Ikiwiki-plugin-syntax-0.5.tar.gz) or through my personal debian repository at <http://taquiones.net/files/debian/>.
 
