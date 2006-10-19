@@ -1,0 +1,32 @@
+[[template id=plugin name=syntax author="[[VictorMoral]]"]]
+[[tag type/chrome slow]]
+[[meta title="syntax (third-party plugin)"]]
+
+`syntax` is a plugin that add support to ikiwiki for syntax highlighting through the *vim* editor and its perl interface [[cpan Text::VimColor]], so it depends on a vim functional installation.
+
+The plugin inserts a fragment of HTML with special marks from a file or a string text. It accepts the following parameters:
+
+* **type** (optional): this is the file type for vim syntax highlighthing. It can be omitted if the param *file* exists.
+* **file**: Path to the source file. It must exist on every rebuild of the wiki.
+* **text**: Text string with the source.
+* **description** (optional): little description about the content.
+
+The params *file* and *text* are mutually exclusive.
+
+Example:
+
+   \[[syntax type="perl" text="""
+   #!/usr/bin/perl
+
+   my $a = "World";
+   print "Hello, ${a}\n";
+   """]]
+
+or 
+
+   \\[[syntax file="hello.pl" description="My first perl program"]]
+
+It can be downloaded from [here](http://taquiones.net/files/misc/Ikiwiki-plugin-syntax-0.5.tar.gz) or through my personal debian repository at <http://taquiones.net/files/debian/>.
+
+Any help, comments or critics are welcome at <victor@taquiones.net>.
+
