@@ -284,7 +284,7 @@ sub genfeed ($$$$@) { #{{{
 
 	my $template=template($feedtype."page.tmpl", blind_cache => 1);
 	$template->param(
-		title => $config{wikiname},
+		title => pagetitle($page),
 		wikiname => $config{wikiname},
 		pageurl => $url,
 		content => $content,

@@ -1,8 +1,11 @@
 ikiwiki (1.31) UNRELEASED; urgency=low
 
   * Patch from Pawel Tecza to cp -a the templates in the Makefile.
+  * Change the rss feed title from the wikiname to the page title.
+    Overriding the page title with meta title already overrode the rss feed
+    tittle.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 17 Oct 2006 13:48:26 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 20 Oct 2006 16:53:36 -0400
 
 ikiwiki (1.30) unstable; urgency=low
 
