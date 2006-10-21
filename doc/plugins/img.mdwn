@@ -1,0 +1,28 @@
+[[template id=plugin name=img author="Christian Mock"]]
+[[tag type/chrome]]
+
+This is an image handling plugin. While ikiwiki supports inlining full-size
+images by making a [[WikiLink]] that points to the image, using this plugin
+you can easily scale down an image for inclusion onto a page, providing a
+link to a full-size version.
+
+This plugin uses the [ImageMagick](http://www.imagemagick.org/) tools via
+[PerlMagick](http://www.imagemagick.org/www/perl-magick.html).
+
+Note that this is a stripped down version of Christian Mock's
+[[original_img_plugin|contrib/img]].
+
+## usage
+
+	\[[img image1.jpg size="200x200" alt="clouds"]]
+
+Or set default values that will be applied to all later images on the page,
+unless overridden. Useful when including many images on a page.
+
+	\[[img defaults size=200x200 alt="wedding photo"]]
+	\[[img photo1.jpg]]
+	\[[img photo2.jpg]]
+	\[[img photo3.jpg size=200x600]]
+
+The `alt` parameter is optional. The `size` parameter is also optional,
+defaulting to full size.

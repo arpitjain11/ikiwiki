@@ -4,8 +4,10 @@ ikiwiki (1.31) UNRELEASED; urgency=low
   * Change the rss feed title from the wikiname to the page title.
     Overriding the page title with meta title already overrode the rss feed
     tittle.
+  * Add an img plugin, based on Christian Mock's img plugin, but stripped
+    down to the bare essentials. Useful for handling large images on websites.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 20 Oct 2006 16:53:36 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 21 Oct 2006 17:13:47 -0400
 
 ikiwiki (1.30) unstable; urgency=low
 
