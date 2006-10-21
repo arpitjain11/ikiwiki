@@ -17,10 +17,12 @@ Note that this is a stripped down version of Christian Mock's
 	\[[img image1.jpg size="200x200" alt="clouds"]]
 
 The `alt` parameter is optional. The `size` parameter is also optional,
-defaulting to full size.
+defaulting to full size. Note that the original image's aspect ratio is
+always preserved, even if this means making the image smaller than the
+specified size.
 
-Or set default values that will be applied to all later images on the page,
-unless overridden. Useful when including many images on a page.
+You can also set default values that will be applied to all later images on
+the page, unless overridden. Useful when including many images on a page.
 
 	\[[img defaults size=200x200 alt="wedding photo"]]
 	\[[img photo1.jpg]]
