@@ -16,6 +16,9 @@ Note that this is a stripped down version of Christian Mock's
 
 	\[[img image1.jpg size="200x200" alt="clouds"]]
 
+The `alt` parameter is optional. The `size` parameter is also optional,
+defaulting to full size.
+
 Or set default values that will be applied to all later images on the page,
 unless overridden. Useful when including many images on a page.
 
@@ -23,6 +26,3 @@ unless overridden. Useful when including many images on a page.
 	\[[img photo1.jpg]]
 	\[[img photo2.jpg]]
 	\[[img photo3.jpg size=200x600]]
-
-The `alt` parameter is optional. The `size` parameter is also optional,
-defaulting to full size.
