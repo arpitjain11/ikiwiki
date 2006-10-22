@@ -158,6 +158,20 @@ allowed, so that's not a problem.)
 
 ----
 
+# Plugins
+
+The security of [[plugins]] depends on how well they're written and what
+external tools they use. The plugins included in ikiwiki are all held to
+the same standards as the rest of ikiwiki, but with that said, here are
+some security notes for them.
+
+* The [[plugins/img]] plugin assumes that imagemagick/perlmagick are secure
+  from malformed image attacks. Imagemagick has had security holes in the
+  past. To be able to exploit such a hole, a user would need to be able to
+  upload images to the wiki.
+
+----
+
 # Fixed holes
 
 _(Unless otherwise noted, these were discovered and immediately fixed by the
