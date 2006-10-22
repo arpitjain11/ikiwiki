@@ -1,13 +1,18 @@
 ikiwiki (1.31) UNRELEASED; urgency=low
 
   * Patch from Pawel Tecza to cp -a the templates in the Makefile.
-  * Change the rss feed title from the wikiname to the page title.
+  * Change the rss feed title from the wikiname to the page title, with
+    an exception for the wiki's toplevel index page, which will still use the
+    wikiname as the feed title.
     Overriding the page title with meta title already overrode the rss feed
     tittle.
   * Add an img plugin, based on Christian Mock's img plugin, but stripped
     down to the bare essentials. Useful for handling large images on websites.
+  * Sanitize possibly problimatic characters out of the polygen grammar names,
+    just in case. Should not be exploitable anyway, since it only tries to run
+    polygen after finding the specified grammar file.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 21 Oct 2006 17:13:47 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 22 Oct 2006 15:47:08 -0400
 
 ikiwiki (1.30) unstable; urgency=low
 

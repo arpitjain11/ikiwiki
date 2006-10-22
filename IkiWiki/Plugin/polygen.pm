@@ -21,6 +21,7 @@ sub preprocess (@) { #{{{
 
 	# Sanitize parameters
 	$grammar =~ IkiWiki::basename($grammar);
+	$grammar =~ s/[^A-Za-z0-9]//g;
 	$grammar =~ s/\.grm$//;
 	$grammar .= '.grm';
 	$symbol =~ s/[^A-Za-z0-9]//g if defined $symbol;
