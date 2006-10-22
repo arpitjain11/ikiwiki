@@ -3,6 +3,8 @@ suprising to me, but it seems to work great. Would it be possible to
 license it the same as the rest of ikiwiki (GPL) instead of dragging in the
 perl license?
 
+> Yes, no problem. I'm writing the next version. --[[VictorMoral]]
+
 Text::VimColor will need to be added to Debian..
 
 It looks to me like the file parameter is a security hole, since it allows
@@ -11,7 +13,10 @@ wiki source tree. I think this option should either be removed, or be
 limited to reading files inside the wiki source tree. If it's retained it
 should also add an appropriate dependency on the included file.
 
+> You are right, Joey. I didn't think on it because i don't use the cgi mode. :-) I'm working on it. --[[VictorMoral]]
+
 --[[Joey]]
 
 > It looks like the author of Text::VimColor has already made a Debian package.  I've 
 > contacted him, but no answer back yet.  --[[Roktas]]
+
