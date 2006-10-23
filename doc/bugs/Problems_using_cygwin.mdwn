@@ -19,7 +19,25 @@ Can anyone decipher this for me?  I spent some time with cpan earlier today down
 I have version 3.0401 of CGI::FormBuilder -- the latest from CPAN.  If you are wondering about any other modules, the answer 
 is likely the same: the latest from CPAN.  And you're right: the error string in question does not appear in CGI::FormBuilder.  I found it in HTML::Template (version 2.8).
 
+-----
+
 OK, so downgrading CGI::FormBuilder to 3.0302 makes the problem go away.  I'll leave it to you to figure out whether the bug is in CGI::FormBuilder or in IkiWiki. --Steve
+
+I got same error message on FreeBSD.  
+
+    HTML::Template::param() : attempt to set parameter 'form-submit' with an array 
+    ref - parameter is not a TMPL_LOOP! 
+    at /usr/local/lib/perl5/site_perl/5.8.7/CGI/FormBuilder.pm line 1415
+
+version info:
+
+    root@freedom# pkg_info | grep p5-CGI
+    p5-CGI-FastTemplate-1.09 Perl module for manage templates and parses templates
+    p5-CGI-FormBuilder-3.0401 FormBuilder for CGI
+    p5-CGI-Session-4.14 Perl extension for persistent session management
+
+--Mark
+
 
 -----
 
