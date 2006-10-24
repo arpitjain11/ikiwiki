@@ -1,7 +1,19 @@
 #Disappearing Pages
 
-I have a problem where pages within the rendered wiki become empty.  The headers, footers, and sidepanel are there, but the body is completely missing.  If I do a webedit and change anything (adding whitespace is enough) and commiting the change updates the page and the body appears.  If I then do a rebuild of the wiki from the command line, I get the blank pages again.  I have debug turned up but I don't see anything that makes me suspect anything.  When I do a rebuild from the command line I get the following warning.
+I have a problem where pages within the rendered wiki become empty.  The
+headers, footers, and sidepanel are there, but the body is completely
+missing.  If I do a webedit and change anything (adding whitespace is
+enough) and commiting the change updates the page and the body appears.  If
+I then do a rebuild of the wiki from the command line, I get the blank
+pages again.  I have debug turned up but I don't see anything that makes me
+suspect anything.  When I do a rebuild from the command line I get the
+following warning.
 
 >Use of uninitialized value in substitution (s///) at /usr/share/perl5/IkiWiki/Plugin/inline.pm line 234.
 
-The odd thing is that I have 5 other wikis on this same system and none of them seem to be experiencing the same problems.  The only difference seems to be the use of sidebars and google calendar in the affected wiki.  
+The odd thing is that I have 5 other wikis on this same system and none of
+them seem to be experiencing the same problems.  The only difference seems
+to be the use of sidebars and google calendar in the affected wiki.  
+
+> Could you post a tarball of the wiki and any setup file you use somewhere
+> so I can try to reproduce your problem? --[[Joey]]
