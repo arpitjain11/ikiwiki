@@ -19,3 +19,9 @@ to be the use of sidebars and google calendar in the affected wiki.
 > so I can try to reproduce your problem? --[[Joey]]
 >>[The Wiki](http://www.lcsee.wvu.edu/~scotth/sysstaff.tar.gz) 
 >> I think it has something to do with the plugin selection. --[[ScottHenson]]
+
+>>> Ok, I built your wiki, and got no contentless pages here. I also
+>>> didn't see the uninitialized value warning, which could be connected.
+>>> However, I that uninitialized value come from an inline directive,
+>>> and the wiki source doesn't seem to use inlining at all, so I'm confused
+>>> about that. --[[Joey]]
