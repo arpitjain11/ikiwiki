@@ -5,8 +5,9 @@ most unix-like systems.
 Ikiwiki is a perl program, and needs a recent version of perl such as
 5.8.8. (5.8.0 has been reported not to work).
 
-Ikiwiki requires [[MarkDown]] and the `HTML::Parser` perl module be
-installed, and also uses the following perl modules if available: 
+Ikiwiki requires [[MarkDown]] and the `URI` and `HTML::Parser` perl
+modules be installed, and also uses the following perl modules if
+available: 
 `CGI::Session` `CGI::FormBuilder` (version 3.02.02 or newer)
 `HTML::Template` `Mail::Sendmail` `Time::Duration` `Date::Parse`,
 `HTML::Scrubber`, `RPC::XML`, `XML::Simple`, `XML::Feed`.
