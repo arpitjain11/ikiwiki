@@ -23,7 +23,7 @@ is likely the same: the latest from CPAN.  And you're right: the error string in
 
 OK, so downgrading CGI::FormBuilder to 3.0302 makes the problem go away.  I'll leave it to you to figure out whether the bug is in CGI::FormBuilder or in IkiWiki. --Steve
 
-I got same error message on FreeBSD.  
+Maybee this bug should be renamed as "doesn't work with CGI::FormBuilder (3.04)." I get same error on FreeBSD.  
 
     HTML::Template::param() : attempt to set parameter 'form-submit' with an array 
     ref - parameter is not a TMPL_LOOP! 
