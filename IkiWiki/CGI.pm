@@ -314,9 +314,11 @@ sub cgi_prefs ($$) { #{{{
 		comment => "(".htmllink("", "", "PageSpec", 1).")");
 	$form->field(name => "locked_pages", size => 50,
 		comment => "(".htmllink("", "", "PageSpec", 1).")");
+	$form->field(name => "banned_users", size => 50);
 	
 	if (! is_admin($user_name)) {
 		$form->field(name => "locked_pages", type => "hidden");
+		$form->field(name => "banned_users", type => "hidden");
 	}
 
 	if ($config{httpauth}) {
@@ -331,6 +333,10 @@ sub cgi_prefs ($$) { #{{{
 			value => userinfo_get($user_name, "subscriptions"));
 		$form->field(name => "locked_pages", force => 1,
 			value => userinfo_get($user_name, "locked_pages"));
+		if (is_admin($user_name)) {
+			$form->field(name => "banned_users", force => 1,
+				value => join(" ", get_banned_users()));
+		}
 	}
 	
 	decode_form_utf8($form);
@@ -349,6 +355,10 @@ sub cgi_prefs ($$) { #{{{
 			if (length $form->field($field)) {
 				userinfo_set($user_name, $field, $form->field($field)) || error("failed to set $field");
 			}
+		}
+		if (is_admin($user_name)) {
+			set_banned_users(grep { ! is_admin($_) }
+					split(' ', $form->field("banned_users")));
 		}
 		$form->text("Preferences saved.");
 	}
@@ -671,7 +681,7 @@ sub cgi () { #{{{
 		}
 		else {
 			$session->param("name", $q->remote_user());
-			if (!userinfo_get($session->param("name"),"regdate")) {
+			if (! userinfo_get($session->param("name"), "regdate")) {
 				userinfo_setall($session->param("name"), {
 					email => "",
 					password => "",
@@ -679,6 +689,12 @@ sub cgi () { #{{{
 				});
 			}
 		}
+	}
+
+	if (userinfo_get($session->param("name"), "banned")) {
+		print $q->header(-status => "403 Forbidden");
+		print "You are banned.";
+		exit;
 	}
 	
 	if ($do eq 'create' || $do eq 'edit') {

@@ -67,6 +67,24 @@ sub is_admin ($) { #{{{
 	return grep { $_ eq $user_name } @{$config{adminuser}};
 } #}}}
 
+sub get_banned_users () { #{{{
+	my @ret;
+	my $userinfo=userinfo_retrieve();
+	foreach my $user (keys %{$userinfo}) {
+		push @ret, $user if $userinfo->{$user}->{banned};
+	}
+	return @ret;
+} #}}}
+
+sub set_banned_users (@) { #{{{
+	my %banned=map { $_ => 1 } @_;
+	my $userinfo=userinfo_retrieve();
+	foreach my $user (keys %{$userinfo}) {
+		$userinfo->{$user}->{banned} = $banned{$user};
+	}
+	return userinfo_store($userinfo);
+} #}}}
+
 sub commit_notify_list ($@) { #{{{
 	my $committer=shift;
 	
