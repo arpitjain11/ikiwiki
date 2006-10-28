@@ -13,6 +13,7 @@ sub backlinks ($) { #{{{
 	my @links;
 	foreach my $p (keys %links) {
 		next if bestlink($page, $p) eq $page;
+
 		if (grep { length $_ && bestlink($p, $_) eq $page } @{$links{$p}}) {
 			my $href=abs2rel(htmlpage($p), dirname($page));
 			
@@ -119,21 +120,25 @@ sub mtime ($) { #{{{
 	return (stat($file))[9];
 } #}}}
 
-sub findlinks ($$) { #{{{
-	my $page=shift;
-	my $content=shift;
+sub scan ($) { #{{{
+	my $file=shift;
 
-	my @links;
-	while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
-		push @links, titlepage($2);
-	}
-	if ($config{discussion}) {
-		# Discussion links are a special case since they're not in the
-		# text of the page, but on its template.
-		return @links, "$page/discussion";
-	}
-	else {
-		return @links;
+	my $type=pagetype($file);
+	if (defined $type) {
+		my $srcfile=srcfile($file);
+		my $content=readfile($srcfile);
+		my $page=pagename($file);
+
+		my @links;
+		while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
+			push @links, titlepage($2);
+		}
+		if ($config{discussion}) {
+			# Discussion links are a special case since they're not in the
+			# text of the page, but on its template.
+			push @links, "$page/discussion";
+		}
+		$links{$page}=\@links;
 	}
 } #}}}
 
@@ -149,9 +154,6 @@ sub render ($) { #{{{
 		will_render($page, htmlpage($page), 1);
 		
 		$content=filter($page, $content);
-		
-		$links{$page}=[findlinks($page, $content)];
-		
 		$content=preprocess($page, $page, $content);
 		$content=linkify($page, $page, $content);
 		$content=htmlize($page, $type, $content);
@@ -162,7 +164,6 @@ sub render ($) { #{{{
 	}
 	else {
 		my $content=readfile($srcfile, 1);
-		$links{$file}=[];
 		delete $depends{$file};
 		will_render($file, $file, 1);
 		writefile($file, $config{destdir}, $content, 1);
@@ -238,9 +239,8 @@ sub refresh () { #{{{
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		if (! $oldpagemtime{$page}) {
-			debug("new page $page") unless exists $pagectime{$page};
 			push @add, $file;
-			$links{$page}=[];
+			scan($file);
 			$pagecase{lc $page}=$page;
 			$pagesources{$page}=$file;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
@@ -256,6 +256,7 @@ sub refresh () { #{{{
 		if (! $exists{$page}) {
 			debug("removing old page $page");
 			push @del, $pagesources{$page};
+			$links{$page}=[];
 			$renderedfiles{$page}=[];
 			$oldpagemtime{$page}=0;
 			prune($config{destdir}."/".$_)
@@ -264,6 +265,18 @@ sub refresh () { #{{{
 		}
 	}
 	
+	# scan updated files to update info about them
+	foreach my $file (@files) {
+		my $page=pagename($file);
+		
+		if (! exists $oldpagemtime{$page} ||
+		    mtime(srcfile($file)) > $oldpagemtime{$page} ||
+	    	    $forcerebuild{$page}) {
+		    	debug("scanning $file");
+			scan($file);
+		}
+	}
+
 	# render any updated files
 	foreach my $file (@files) {
 		my $page=pagename($file);
@@ -278,12 +291,10 @@ sub refresh () { #{{{
 	}
 	
 	# if any files were added or removed, check to see if each page
-	# needs an update due to linking to them or inlining them.
-	# TODO: inefficient; pages may get rendered above and again here;
-	# problem is the bestlink may have changed and we won't know until
-	# now
+	# needs an update due to linking to them or inlining them
 	if (@add || @del) {
 FILE:		foreach my $file (@files) {
+			next if $rendered{$file};
 			my $page=pagename($file);
 			foreach my $f (@add, @del) {
 				my $p=pagename($f);
@@ -301,11 +312,9 @@ FILE:		foreach my $file (@files) {
 
 	# Handle backlinks; if a page has added/removed links, update the
 	# pages it links to. Also handles rebuilding dependant pages.
-	# TODO: inefficient; pages may get rendered above and again here;
-	# problem is the backlinks could be wrong in the first pass render
-	# above
 	if (%rendered || @del) {
 		foreach my $f (@files) {
+			next if $rendered{$f};
 			my $p=pagename($f);
 			if (exists $depends{$p}) {
 				foreach my $file (keys %rendered, @del) {
@@ -347,6 +356,7 @@ FILE:		foreach my $file (@files) {
 		foreach my $link (keys %linkchanged) {
 		    	my $linkfile=$pagesources{$link};
 			if (defined $linkfile) {
+				next if $rendered{$linkfile};
 				debug("rendering $linkfile, to update its backlinks");
 				render($linkfile);
 				$rendered{$linkfile}=1;

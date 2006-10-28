@@ -1,3 +1,12 @@
+ikiwiki (1.32) UNRELEASED; urgency=low
+
+  * Add a separate pass to find page links, and only render each page once,
+    instead of over and over. This is up to 8 times faster than before!
+    (This could have introduced some subtle bugs, so it needs to be tested
+    extensively.)
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 27 Oct 2006 23:21:35 -0400
+
 ikiwiki (1.31) unstable; urgency=low
 
   * Patch from Pawel Tecza to cp -a the templates in the Makefile.
