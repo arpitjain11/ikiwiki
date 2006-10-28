@@ -30,6 +30,12 @@ hook, a "id" paramter, which should be a unique string for this plugin, and
 a "call" parameter, which is a reference to a function to call for the
 hook.
 
+An optional "scan" parameter, if set to a true value, makes the hook be
+called during the preliminary scan that ikiwiki makes of updated pages,
+before begining to render pages. This parameter should be set to true if
+the hook modifies data in `%links`. Note that doing so will make the hook
+be run twice per page build, so avoid doing it for expensive hooks.
+
 ## Types of hooks
 
 In roughly the order they are called.
@@ -63,6 +69,14 @@ function is passed no values. It's ok for the function to call
 Runs on the raw source of a page, before anything else touches it, and can
 make arbitrary changes. The function is passed named parameters `page` and
 `content` and should return the filtered content.
+
+### scan
+
+	hook(type => "scan", id => "foo", call => \&scan);
+
+This is identical to a preprocess hook (see below), except that it is
+called in the initial pass that scans pages for data that will be used in
+later passes. Scan hooks are the only hook that should modify 
 
 ### preprocess
 

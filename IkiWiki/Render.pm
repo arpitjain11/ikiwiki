@@ -7,27 +7,42 @@ use strict;
 use IkiWiki;
 use Encode;
 
+my %backlinks;
+my $backlinks_calculated=0;
+
+sub calculate_backlinks () { #{{{
+	%backlinks=();
+	foreach my $page (keys %links) {
+		foreach my $link (@{$links{$page}}) {
+			my $bestlink=bestlink($page, $link);
+			if (length $bestlink && $bestlink ne $page) {
+				$backlinks{$bestlink}{$page}=1;
+			}
+		}
+	}
+	$backlinks_calculated=1;
+} #}}}
+
 sub backlinks ($) { #{{{
 	my $page=shift;
 
-	my @links;
-	foreach my $p (keys %links) {
-		next if bestlink($page, $p) eq $page;
+	calculate_backlinks() unless $backlinks_calculated;
 
-		if (grep { length $_ && bestlink($p, $_) eq $page } @{$links{$p}}) {
-			my $href=abs2rel(htmlpage($p), dirname($page));
+	my @links;
+	return unless $backlinks{$page};
+	foreach my $p (keys %{$backlinks{$page}}) {
+		my $href=abs2rel(htmlpage($p), dirname($page));
 			
-			# Trim common dir prefixes from both pages.
-			my $p_trimmed=$p;
-			my $page_trimmed=$page;
-			my $dir;
-			1 while (($dir)=$page_trimmed=~m!^([^/]+/)!) &&
-			        defined $dir &&
-			        $p_trimmed=~s/^\Q$dir\E// &&
-			        $page_trimmed=~s/^\Q$dir\E//;
-				       
-			push @links, { url => $href, page => pagetitle($p_trimmed) };
-		}
+		# Trim common dir prefixes from both pages.
+		my $p_trimmed=$p;
+		my $page_trimmed=$page;
+		my $dir;
+		1 while (($dir)=$page_trimmed=~m!^([^/]+/)!) &&
+		        defined $dir &&
+		        $p_trimmed=~s/^\Q$dir\E// &&
+		        $page_trimmed=~s/^\Q$dir\E//;
+			       
+		push @links, { url => $href, page => pagetitle($p_trimmed) };
 	}
 
 	return sort { $a->{page} cmp $b->{page} } @links;
@@ -128,6 +143,11 @@ sub scan ($) { #{{{
 		my $srcfile=srcfile($file);
 		my $content=readfile($srcfile);
 		my $page=pagename($file);
+		will_render($page, htmlpage($page), 1);
+
+		# Always needs to be done, since filters might add links
+		# to the content.
+		$content=filter($page, $content);
 
 		my @links;
 		while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
@@ -139,6 +159,9 @@ sub scan ($) { #{{{
 			push @links, "$page/discussion";
 		}
 		$links{$page}=\@links;
+		
+		# Preprocess in scan-only mode.
+		preprocess($page, $page, $content, 1);
 	}
 } #}}}
 
@@ -240,7 +263,6 @@ sub refresh () { #{{{
 		my $page=pagename($file);
 		if (! $oldpagemtime{$page}) {
 			push @add, $file;
-			scan($file);
 			$pagecase{lc $page}=$page;
 			$pagesources{$page}=$file;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
@@ -264,8 +286,9 @@ sub refresh () { #{{{
 			delete $pagesources{$page};
 		}
 	}
-	
-	# scan updated files to update info about them
+
+	# scan changed and new files
+	my @changed;
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		
@@ -273,21 +296,16 @@ sub refresh () { #{{{
 		    mtime(srcfile($file)) > $oldpagemtime{$page} ||
 	    	    $forcerebuild{$page}) {
 		    	debug("scanning $file");
+			push @changed, $file;
 			scan($file);
 		}
 	}
 
-	# render any updated files
-	foreach my $file (@files) {
-		my $page=pagename($file);
-		
-		if (! exists $oldpagemtime{$page} ||
-		    mtime(srcfile($file)) > $oldpagemtime{$page} ||
-	    	    $forcerebuild{$page}) {
-		    	debug("rendering $file");
-			render($file);
-			$rendered{$file}=1;
-		}
+	# render changed and new pages
+	foreach my $file (@changed) {
+		debug("rendering $file");
+		render($file);
+		$rendered{$file}=1;
 	}
 	
 	# if any files were added or removed, check to see if each page
@@ -310,9 +328,8 @@ FILE:		foreach my $file (@files) {
 		}
 	}
 
-	# Handle backlinks; if a page has added/removed links, update the
-	# pages it links to. Also handles rebuilding dependant pages.
 	if (%rendered || @del) {
+		# rebuild dependant pages
 		foreach my $f (@files) {
 			next if $rendered{$f};
 			my $p=pagename($f);
@@ -330,6 +347,8 @@ FILE:		foreach my $file (@files) {
 			}
 		}
 		
+		# handle backlinks; if a page has added/removed links,
+		# update the pages it links to
 		my %linkchanged;
 		foreach my $file (keys %rendered, @del) {
 			my $page=pagename($file);
@@ -364,7 +383,7 @@ FILE:		foreach my $file (@files) {
 		}
 	}
 
-	# Remove no longer rendered files.
+	# remove no longer rendered files
 	foreach my $src (keys %rendered) {
 		my $page=pagename($src);
 		foreach my $file (@{$oldrenderedfiles{$page}}) {

@@ -1,3 +1,11 @@
+ikiwiki (1.32) unstable; urgency=low
+
+  There is a change to the plugin interface in this version. Any plugins that
+  modify data in %links should pass scan => 1 when registering the hook that
+  does so.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 28 Oct 2006 00:13:12 -0400
+
 ikiwiki (1.29) unstable; urgency=low
 
   Wikis need to be rebuilt on upgrade to this version. If you listed your wiki

@@ -13,7 +13,7 @@ my %author;
 my %authorurl;
 
 sub import { #{{{
-	hook(type => "preprocess", id => "meta", call => \&preprocess);
+	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
 	hook(type => "filter", id => "meta", call => \&filter);
 	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
 } # }}}

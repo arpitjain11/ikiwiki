@@ -4,18 +4,6 @@
 * Look at splitting up CGI.pm. But note that too much splitting can slow
   perl down.
 
-* The backlinks code turns out to scale badly to wikis with thousands of
-  pages. The code is O(N^2)! It's called for each page, and it loops
-  through all the pages to find backlinks.
-
-  Need to find a way to calculate and cache all the backlinks in one pass,
-  which could be done in at worst O(N), and possibly less (if they're
-  stored in the index, it could be constant time). But to do this, there
-  would need to be a way to invalidate or update the cache in these
-  situations:
-
-  - A page is added. Note that this can change a backlink to point to 
-    the new page instead of the page it pointed to before.
-  - A page is deleted. This can also change backlinks that pointed to that
-    page.
-  - A page is modified. Links added/removed.
+* The backlinks calculation code is still O(N^2) on the number of pages.
+  If backlinks info were stored in the index file, it would go down to
+  constant time for iterative builds, though still N^2 for rebuilds.

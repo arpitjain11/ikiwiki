@@ -446,10 +446,11 @@ sub linkify ($$$) { #{{{
 } #}}}
 
 my %preprocessing;
-sub preprocess ($$$) { #{{{
+sub preprocess ($$$;$) { #{{{
 	my $page=shift; # the page the data comes from
 	my $destpage=shift; # the page the data will appear in (different for inline)
 	my $content=shift;
+	my $scan=shift;
 
 	my $handle=sub {
 		my $escape=shift;
@@ -459,6 +460,7 @@ sub preprocess ($$$) { #{{{
 			return "[[$command $params]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
+			return "" if $scan && ! $hooks{preprocess}{$command}{scan};
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
 			my @params;

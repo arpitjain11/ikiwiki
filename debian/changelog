@@ -1,11 +1,18 @@
 ikiwiki (1.32) UNRELEASED; urgency=low
 
   * Add a separate pass to find page links, and only render each page once,
-    instead of over and over. This is up to 8 times faster than before!
-    (This could have introduced some subtle bugs, so it needs to be tested
-    extensively.)
+    instead of over and over. Typical speedup is ~4x. Max possible speedup:
+    8x.
+  * Add "scan" parameter to hook(), which is used to make the hook be called
+    during the scanning pass, as well as the render pass. The meta and tag
+    plugins need to use the new scan parameter, so will any others that modify
+    %links.
+  * Now that links are calculated in a separate pass, it can also 
+    precalculate backlinks in one pass, which is O(N^2) instead of the
+    previous code that was O(N^3). A very nice speedup for wikis with lots
+    (thousands) of pages.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 27 Oct 2006 23:21:35 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 27 Oct 2006 23:27:29 -0400
 
 ikiwiki (1.31) unstable; urgency=low
 

@@ -10,7 +10,7 @@ my %tags;
 
 sub import { #{{{
 	hook(type => "getopt", id => "tag", call => \&getopt);
-	hook(type => "preprocess", id => "tag", call => \&preprocess);
+	hook(type => "preprocess", id => "tag", call => \&preprocess, scan => 1);
 	hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
 } # }}}
 
