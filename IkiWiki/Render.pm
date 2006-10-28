@@ -163,6 +163,9 @@ sub scan ($) { #{{{
 		# Preprocess in scan-only mode.
 		preprocess($page, $page, $content, 1);
 	}
+	else {
+		will_render($file, $file, 1);
+	}
 } #}}}
 
 sub render ($) { #{{{
