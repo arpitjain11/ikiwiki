@@ -693,6 +693,7 @@ sub cgi () { #{{{
 
 	if (userinfo_get($session->param("name"), "banned")) {
 		print $q->header(-status => "403 Forbidden");
+		$session->delete();
 		print "You are banned.";
 		exit;
 	}
