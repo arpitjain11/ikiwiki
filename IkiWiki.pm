@@ -509,7 +509,7 @@ sub preprocess ($$$;$) { #{{{
 	return $content;
 } #}}}
 
-sub filter ($$) {
+sub filter ($$) { #{{{
 	my $page=shift;
 	my $content=shift;
 
@@ -518,7 +518,7 @@ sub filter ($$) {
 	});
 
 	return $content;
-}
+} #}}}
 
 sub indexlink () { #{{{
 	return "<a href=\"$config{url}\">$config{wikiname}</a>";
