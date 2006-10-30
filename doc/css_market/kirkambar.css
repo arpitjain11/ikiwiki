@@ -1,0 +1,142 @@
+/*
+ * IkiWiki `local.css` stylesheet following the Gitweb theme.
+ *
+ * Copyright © 2006  Recai Oktaş <roktasATdebian.org>
+ *
+ * Licensed under the GNU General Public License, version 2.
+ * See the file `http://www.gnu.org/copyleft/gpl.txt`.
+ *
+ */
+
+
+/* 
+ * -----------------------------------------------------------------------------
+ * Generic style elements.
+ * -----------------------------------------------------------------------------
+ */
+
+body {
+	font-family: "Trebuchet MS",
+		     "Luxi Sans",
+		     "Bitstream Vera Sans",
+		     "Tahoma",
+		     "Verdana",
+		     "Arial",
+		     "Helvetica",
+		     sans-serif;
+	padding: 1em;
+	margin: 0;
+	font-size: 100.01%;
+	line-height: 1.5em;
+	color: black;
+	background-color: white;
+}
+
+pre, tt, code {
+	font-family: "Bitstream Vera Sans Mono",
+		     "Luxi Mono",
+		     "Courier New",
+		     "Courier",
+		     monospace;
+}
+
+pre, tt, code, tr.changeinfo, #blogform {
+	color: inherit;
+	background-color: #f6f6f0;
+}
+
+pre {
+	margin: 0px 96px 0px 48px;
+	padding: 12px 0px 12px 0px;
+}
+
+h1, h2, h3, h4, h5, h6, dl, dt {
+	font-weight: bold;
+	background-color: inherit;
+	color: #c00040 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	letter-spacing: .04em;
+}
+
+
+/* 
+ * -----------------------------------------------------------------------------
+ * Headers, footers.
+ * -----------------------------------------------------------------------------
+ */
+
+.header, #footer, .changeheader {
+	color: black !important;
+	background-color: #d9d8d1;
+}
+	
+.header, #footer {
+	height: 1.8em;
+	padding: 6px 6px;
+	border: 1px solid #aaa;
+	margin-bottom: 4px;
+	display: block;
+}
+
+.header {
+	font-size: 120.01%;
+	font-weight: normal;
+	letter-spacing: .11em;
+}
+
+span.header {
+	background-image: none !important;
+	text-align: right;
+}
+
+.header { /* Optional header logo (right aligned). */
+	background-image: url(/* ENTER HEADER LOGO PATH */);
+	background-repeat: no-repeat;
+	background-position: 99%;
+}
+
+#footer { /* Optional footer logo (right aligned). */
+	background-image: url(/* ENTER FOOTER LOGO PATH */);
+	background-repeat: no-repeat;
+	background-position: 99%;
+}
+
+
+/* 
+ * -----------------------------------------------------------------------------
+ * Specials.
+ * -----------------------------------------------------------------------------
+ */
+
+#searchform {
+	position: absolute;
+	top: 25px;
+	right: 90px;
+}
+
+
+td.changetime {
+	font-style: italic;
+}
+
+td.changelog {
+	font-style: normal;
+	font-size: x-small;
+	font-weight: bold;
+}
+
+/*
+ * Attribution `div` for IkiWiki.  Use something like as follows:
+ *		<div id="attribution">
+ *		    This site is maintained using Joey Hess's
+ *		    <a href="http://ikiwiki.kitenet.net/">
+ *		        <img src="ikiwiki.png" title="IkiWiki" alt="IkiWiki" />
+ *		    </a>.
+ *		</div>
+ */ 	
+#attribution img {
+	border: 1px solid black;
+	padding: 2px;
+}
