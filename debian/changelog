@@ -20,8 +20,11 @@ ikiwiki (1.32) UNRELEASED; urgency=low
     them together.
   * Install the source of the examples into /usr/share/doc/ikiwiki/examples.
   * Add perlmagick to build-depends so syntax check of img plugin works.
+  * Improve login/register process, the login dialog has only name and
+    password fields, which allows more web browsers to regognise it as a login
+    field, and is less confusing.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 30 Oct 2006 14:30:54 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 30 Oct 2006 18:26:55 -0500
 
 ikiwiki (1.31) unstable; urgency=low
 

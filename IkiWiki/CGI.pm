@@ -116,7 +116,7 @@ sub cgi_signin ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
-		fields => [qw(do title page subpage from name password confirm_password email)],
+		fields => [qw(do title page subpage from name password)],
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
@@ -145,8 +145,14 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "from", type => "hidden");
 	$form->field(name => "subpage", type => "hidden");
 	$form->field(name => "password", type => "password", required => 0);
-	$form->field(name => "confirm_password", type => "password", required => 0);
-	$form->field(name => "email", required => 0);
+	if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
+		$form->title("register");
+		$form->text("");
+		$form->field(name => "name", comment => "use FirstnameLastName");
+		$form->fields(qw(do title page subpage from name password confirm_password email));
+		$form->field(name => "confirm_password", type => "password");
+		$form->field(name => "email", type => "text");
+	}
 	if ($q->param("do") ne "signin" && !$form->submitted) {
 		$form->text("You need to log in first.");
 	}
@@ -155,7 +161,8 @@ sub cgi_signin ($$) { #{{{
 		# Set required fields based on how form was submitted.
 		my %required=(
 			"Login" => [qw(name password)],
-			"Register" => [qw(name password confirm_password email)],
+			"Register" => [],
+			"Create Account" => [qw(name password confirm_password email)],
 			"Mail Password" => [qw(name)],
 		);
 		foreach my $opt (@{$required{$form->submitted}}) {
@@ -179,7 +186,7 @@ sub cgi_signin ($$) { #{{{
 		}
 		# And make sure the entered name exists when logging
 		# in or sending email, and does not when registering.
-		if ($form->submitted eq 'Register') {
+		if ($form->submitted eq 'Create Account') {
 			$form->field(
 				name => "name",
 				validate => sub {
@@ -204,8 +211,6 @@ sub cgi_signin ($$) { #{{{
 	else {
 		# First time settings.
 		$form->field(name => "name", comment => "use FirstnameLastName");
-		$form->field(name => "confirm_password", comment => "(only needed");
-		$form->field(name => "email",            comment => "for registration)");
 		if ($session->param("name")) {
 			$form->field(name => "name", value => $session->param("name"));
 		}
@@ -228,7 +233,7 @@ sub cgi_signin ($$) { #{{{
 				redirect($q, $config{url});
 			}
 		}
-		elsif ($form->submitted eq 'Register') {
+		elsif ($form->submitted eq 'Create Account') {
 			my $user_name=$form->field('name');
 			if (userinfo_setall($user_name, {
 				           'email' => $form->field('email'),
@@ -237,12 +242,12 @@ sub cgi_signin ($$) { #{{{
 				         })) {
 				$form->field(name => "confirm_password", type => "hidden");
 				$form->field(name => "email", type => "hidden");
-				$form->text("Registration successful. Now you can Login.");
+				$form->text("Account creation successful. Now you can Login.");
 				printheader($session);
 				print misctemplate($form->title, $form->render(submit => ["Login"]));
 			}
 			else {
-				error("Error saving registration.");
+				error("Error creating account.");
 			}
 		}
 		elsif ($form->submitted eq 'Mail Password') {
@@ -267,8 +272,16 @@ sub cgi_signin ($$) { #{{{
 			$form->text("Your password has been emailed to you.");
 			$form->field(name => "name", required => 0);
 			printheader($session);
-			print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
+			print misctemplate($form->title, $form->render(submit => ["Login", "Mail Password"]));
 		}
+		elsif ($form->submitted eq "Register") {
+			printheader($session);
+			print misctemplate($form->title, $form->render(submit => ["Create Account"]));
+		}
+	}
+	elsif ($form->submitted eq "Create Account") {
+		printheader($session);
+		print misctemplate($form->title, $form->render(submit => ["Create Account"]));
 	}
 	else {
 		printheader($session);
