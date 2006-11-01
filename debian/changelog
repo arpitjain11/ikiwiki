@@ -30,8 +30,11 @@ ikiwiki (1.32) UNRELEASED; urgency=low
   * Remove duplicate link info when saving index. In some cases it could
     pile up rather badly. (Probably not the best way to deal with this
     problem.)
+  * Patch from James Westby to support podcasting, photoblogging, vidcasting,
+    or what have you, by creating enclosures for non-page items that are
+    included in feeds.
 
- -- Joey Hess <joeyh@debian.org>  Wed,  1 Nov 2006 00:00:10 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed,  1 Nov 2006 01:11:10 -0500
 
 ikiwiki (1.31) unstable; urgency=low
 

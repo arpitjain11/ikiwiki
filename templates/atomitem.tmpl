@@ -12,9 +12,13 @@
 	</TMPL_LOOP>
 	</TMPL_IF>
 	<updated><TMPL_VAR DATE_3339></updated>
+	<TMPL_IF NAME="ENCLOSURE">
+	<link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
+	<TMPL_ELSE>
 	<content type="xhtml" xml:lang="en">
 	 <div xmlns="http://www.w3.org/1999/xhtml">
 	 ![CDATA[<TMPL_VAR CONTENT>]]
 	 </div>
 	</content>
+	</TMPL_IF>
 </entry>

@@ -105,7 +105,9 @@ sub preprocess_inline (@) { #{{{
 	) unless $raw;
 	
 	foreach my $page (@list) {
-		if (! $raw) {
+		my $file = $pagesources{$page};
+		my $type = pagetype($file);
+		if (! $raw || ($raw && ! defined $type)) {
 			# Get the content before populating the template,
 			# since getting the content uses the same template
 			# if inlines are nested.
@@ -116,7 +118,8 @@ sub preprocess_inline (@) { #{{{
 			my $content=get_inline_content($page, $params{destpage});
 			# Don't use htmllink because this way the title is separate
 			# and can be overridden by other plugins.
-			my $link=htmlpage(bestlink($params{page}, $page));
+			my $link=bestlink($params{page}, $page);
+			$link=htmlpage($link) if defined $type;
 			$link=abs2rel($link, dirname($params{destpage}));
 			$template->param(pageurl => $link);
 			$template->param(title => pagetitle(basename($page)));
@@ -145,8 +148,6 @@ sub preprocess_inline (@) { #{{{
 			$template->clear_params;
 		}
 		else {
-			my $file=$pagesources{$page};
-			my $type=pagetype($file);
 			if (defined $type) {
 				$ret.="\n".
 				      linkify($page, $params{page},
@@ -269,8 +270,33 @@ sub genfeed ($$$$@) { #{{{
 			permalink => $u,
 			date_822 => date_822($pagectime{$p}),
 			date_3339 => date_3339($pagectime{$p}),
-			content => absolute_urls(get_inline_content($p, $page), $url),
 		);
+
+		my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
+		if ($itemtemplate->query(name => "enclosure")) {
+			my $file=$pagesources{$p};
+			my $type=pagetype($file);
+			if (defined $type) {
+				$itemtemplate->param(content => $pcontent);
+			}
+			else {
+				my ($a, $b, $c, $d, $e, $f, $g, $size) = stat(srcfile($file));
+				my $mime="unknown";
+				eval q{use File::MimeInfo};
+				if (! $@) {
+					$mime = mimetype($file);
+				}
+				$itemtemplate->param(
+					enclosure => $u,
+					type => $mime,
+					length => $size,
+				);
+			}
+		}
+		else {
+			$itemtemplate->param(content => $pcontent);
+		}
+
 		run_hooks(pagetemplate => sub {
 			shift->(page => $p, destpage => $page,
 				template => $itemtemplate);

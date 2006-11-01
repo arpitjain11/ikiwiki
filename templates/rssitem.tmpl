@@ -13,5 +13,9 @@
 	</TMPL_LOOP>
 	</TMPL_IF>
 	<pubDate><TMPL_VAR DATE_822></pubDate>
+	<TMPL_IF NAME="ENCLOSURE">
+	<enclosure url="<TMPL_VAR ENCLOSURE>" type="<TMPL_VAR TYPE>" length="<TMPL_VAR LENGTH>" />
+	<TMPL_ELSE>
 	<description><![CDATA[<TMPL_VAR CONTENT>]]></description>
+	</TMPL_IF>
 </item>
