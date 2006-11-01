@@ -593,7 +593,8 @@ sub saveindex () { #{{{
 			"ctime=$pagectime{$page} ".
 			"src=$pagesources{$page}";
 		$line.=" dest=$_" foreach @{$renderedfiles{$page}};
-		$line.=" link=$_" foreach @{$links{$page}};
+		my %count;
+		$line.=" link=$_" foreach grep { ++$count{$_} == 1 } @{$links{$page}};
 		if (exists $depends{$page}) {
 			$line.=" depends=".encode_entities($depends{$page}, " \t\n");
 		}

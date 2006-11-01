@@ -34,6 +34,7 @@ sub checkconfig () { #{{{
 	if ($config{aggregate}) {
 		IkiWiki::loadindex();
 		aggregate();
+		expire();
 		savestate();
 	}
 	IkiWiki::unlockwiki();
@@ -79,6 +80,7 @@ sub preprocess (@) { #{{{
 	$feed->{expireage}=defined $params{expireage} ? $params{expireage} : 0;
 	$feed->{expirecount}=defined $params{expirecount} ? $params{expirecount} : 0;
 	delete $feed->{remove};
+	delete $feed->{expired};
 	$feed->{lastupdate}=0 unless defined $feed->{lastupdate};
 	$feed->{numposts}=0 unless defined $feed->{numposts};
 	$feed->{newposts}=0 unless defined $feed->{newposts};
@@ -164,6 +166,11 @@ sub savestate () { #{{{
 			}
 			next;
 		}
+		elsif ($data->{expired} && exists $data->{page}) {
+			unlink pagefile($data->{page});
+			delete $data->{page};
+			delete $data->{md5};
+		}
 
 		my @line;
 		foreach my $field (keys %$data) {
@@ -181,6 +188,32 @@ sub savestate () { #{{{
 		print OUT join(" ", @line)."\n";
 	}
 	close OUT;
+} #}}}
+
+sub expire () { #{{{
+	foreach my $feed (values %feeds) {
+		next unless $feed->{expireage} || $feed->{expirecount};
+		my $count=0;
+		foreach my $item (sort { $IkiWiki::pagectime{$b->{page}} <=> $IkiWiki::pagectime{$a->{page}} }
+		                  grep { exists $_->{page} && $_->{feed} eq $feed->{name} && $IkiWiki::pagectime{$_->{page}} }
+		                  values %guids) {
+			if ($feed->{expireage}) {
+				my $days_old = (time - $IkiWiki::pagectime{$item->{page}}) / 60 / 60 / 24;
+				if ($days_old > $feed->{expireage}) {
+					debug("expiring ".$item->{page}." ($days_old days old)");
+					$item->{expired}=1;
+				}
+			}
+			elsif ($feed->{expirecount} &&
+			       $count >= $feed->{expirecount}) {
+				debug("expiring ".$item->{page});
+				$item->{expired}=1;
+			}
+			else {
+				$count++;
+			}
+		}
+	}
 } #}}}
 
 sub aggregate () { #{{{
@@ -237,8 +270,6 @@ sub aggregate () { #{{{
 			displaytime($feed->{lastupdate});
 		$feed->{error}=0;
 	}
-
-	# TODO: expiry
 } #}}}
 
 sub add_page (@) { #{{{

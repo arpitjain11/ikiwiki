@@ -11,6 +11,7 @@ my %backlinks;
 my $backlinks_calculated=0;
 
 sub calculate_backlinks () { #{{{
+	return if $backlinks_calculated;
 	%backlinks=();
 	foreach my $page (keys %links) {
 		foreach my $link (@{$links{$page}}) {
@@ -26,7 +27,7 @@ sub calculate_backlinks () { #{{{
 sub backlinks ($) { #{{{
 	my $page=shift;
 
-	calculate_backlinks() unless $backlinks_calculated;
+	calculate_backlinks();
 
 	my @links;
 	return unless $backlinks{$page};
@@ -303,6 +304,7 @@ sub refresh () { #{{{
 			scan($file);
 		}
 	}
+	calculate_backlinks();
 
 	# render changed and new pages
 	foreach my $file (@changed) {
@@ -311,22 +313,16 @@ sub refresh () { #{{{
 		$rendered{$file}=1;
 	}
 	
-	# if any files were added or removed, check to see if each page
-	# needs an update due to linking to them or inlining them
+	# rebuild pages that link to added or removed pages
 	if (@add || @del) {
-FILE:		foreach my $file (@files) {
-			next if $rendered{$file};
-			my $page=pagename($file);
-			foreach my $f (@add, @del) {
-				my $p=pagename($f);
-				foreach my $link (@{$links{$page}}) {
-					if (bestlink($page, $link) eq $p) {
-		   				debug("rendering $file, which links to $p");
-						render($file);
-						$rendered{$file}=1;
-						next FILE;
-					}
-				}
+		foreach my $f (@add, @del) {
+			my $p=pagename($f);
+			foreach my $page (keys %{$backlinks{$p}}) {
+				my $file=$pagesources{$page};
+				next if $rendered{$file};
+		   		debug("rendering $file, which links to $p");
+				render($file);
+				$rendered{$file}=1;
 			}
 		}
 	}

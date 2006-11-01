@@ -23,8 +23,15 @@ ikiwiki (1.32) UNRELEASED; urgency=low
   * Improve login/register process, the login dialog has only name and
     password fields, which allows more web browsers to regognise it as a login
     field, and is less confusing.
+  * Implemented expiry options for aggregate plugin.
+  * Use precalculated backlinks info when determining if files need an update
+    due to a page they link to being added/removed. Mostly significant if
+    there are lots of pages.
+  * Remove duplicate link info when saving index. In some cases it could
+    pile up rather badly. (Probably not the best way to deal with this
+    problem.)
 
- -- Joey Hess <joeyh@debian.org>  Mon, 30 Oct 2006 18:26:55 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed,  1 Nov 2006 00:00:10 -0500
 
 ikiwiki (1.31) unstable; urgency=low
 
