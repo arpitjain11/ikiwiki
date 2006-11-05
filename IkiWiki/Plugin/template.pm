@@ -28,17 +28,23 @@ sub preprocess (@) { #{{{
 	       " not found]]"
 		unless defined $template_file;
 
-	my $template=HTML::Template->new(
-        	filter => sub {
-                        my $text_ref = shift;
-                        $$text_ref=&Encode::decode_utf8($$text_ref);
-			chomp $$text_ref;
-                },
-                filename => srcfile($template_file),
-                die_on_bad_params => 0,
-		no_includes => 1,
-		blind_cache => 1,
-	);
+	my $template;
+	eval {
+		$template=HTML::Template->new(
+	        	filter => sub {
+	                        my $text_ref = shift;
+	                        $$text_ref=&Encode::decode_utf8($$text_ref);
+				chomp $$text_ref;
+	                },
+	                filename => srcfile($template_file),
+       			die_on_bad_params => 0,
+			no_includes => 1,
+			blind_cache => 1,
+		);
+	};
+	if ($@) {
+		return "[[template failed to process: $@]]";
+	}
 
 	foreach my $param (keys %params) {
 		$template->param($param => $params{$param});

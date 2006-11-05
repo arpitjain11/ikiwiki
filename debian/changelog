@@ -1,8 +1,10 @@
 ikiwiki (1.33) UNRELEASED; urgency=low
 
   * Fix issue with aggregate plugin updating expired pages.
+  * Avoid syntax errors in templates used by the template plugin crashing
+    ikiwiki.
 
- -- Joey Hess <joeyh@debian.org>  Sat,  4 Nov 2006 14:19:47 -0500
+ -- Joey Hess <joeyh@debian.org>  Sun,  5 Nov 2006 18:41:06 -0500
 
 ikiwiki (1.32) unstable; urgency=low
 
