@@ -281,7 +281,7 @@ sub add_page (@) { #{{{
 	if (exists $guids{$params{guid}}) {
 		# updating an existing post
 		$guid=$guids{$params{guid}};
-		next if $guid->{expired};
+		return if $guid->{expired};
 	}
 	else {
 		# new post
