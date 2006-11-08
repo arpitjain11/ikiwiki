@@ -18,6 +18,8 @@ directive:
 * `show` - Specify the maximum number of matching pages to inline.
   Default is 10, unless archiving, when the default is to show all.
   Set to 0 to show all matching pages.
+* `skip` - Specify a number of pages to skip displaying. Can be useful
+  to produce a feed that only shows archived pages.
 * `rss` - controls generation of an rss feed. On by default if the wiki is
   configured to use rss feeds, set to "no" to disable.
 * `atom` - controls generation of an atom feed. On by default if the wiki is

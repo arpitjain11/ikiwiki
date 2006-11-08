@@ -72,6 +72,10 @@ sub preprocess_inline (@) { #{{{
 		return "unknown sort type $params{sort}";
 	}
 
+	if (exists $params{skip}) {
+		@list=@list[$params{skip} .. scalar @list - 1];
+	}
+	
 	if ($params{show} && @list > $params{show}) {
 		@list=@list[0..$params{show} - 1];
 	}
