@@ -9,6 +9,7 @@ use HTML::Entities;
 use HTML::Parser;
 use HTML::Tagset;
 use URI;
+use open qw{:utf8 :std};
 
 my %feeds;
 my %guids;

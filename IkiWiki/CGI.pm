@@ -148,7 +148,6 @@ sub cgi_signin ($$) { #{{{
 	if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
 		$form->title("register");
 		$form->text("");
-		$form->field(name => "name", comment => "use FirstnameLastName");
 		$form->fields(qw(do title page subpage from name password confirm_password email));
 		$form->field(name => "confirm_password", type => "password");
 		$form->field(name => "email", type => "text");
@@ -186,7 +185,8 @@ sub cgi_signin ($$) { #{{{
 		}
 		# And make sure the entered name exists when logging
 		# in or sending email, and does not when registering.
-		if ($form->submitted eq 'Create Account') {
+		if ($form->submitted eq 'Create Account' ||
+		    $form->submitted eq 'Register') {
 			$form->field(
 				name => "name",
 				validate => sub {
