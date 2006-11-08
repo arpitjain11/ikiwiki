@@ -39,7 +39,7 @@ Preliminary patch for a feature wishlist item: [[bugs/pruning_is_too_strict]].
                 wanted => sub {
                         $_=decode_utf8($_);
     -                   if (/$config{wiki_file_prune_regexp}/) {
-    +                   if (is_prune($_)) {
+    +                   if (is_prune($_, $config{underlaydir})) {
                                 $File::Find::prune=1;
                         }
                         elsif (! -d $_ && ! -l $_) {
