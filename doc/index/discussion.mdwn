@@ -37,4 +37,13 @@ the template. -- Ethan
 
 # Canonical feed location?
 
-Any way to use `inline` but point the feed links to a different feed on the same site?  I have news in news/*, a news archive in news.mdwn, and the first few news items on index.mdwn, but I don't really want two separate feeds, one with all news and one with the latest few articles; I'd rather point the RSS feed links of both to the same feed.  (Which one, the one with all news or the one with the latest news only, I don't know yet.)
+Any way to use `inline` but point the feed links to a different feed on the
+same site?  I have news in news/*, a news archive in news.mdwn, and the
+first few news items on index.mdwn, but I don't really want two separate
+feeds, one with all news and one with the latest few articles; I'd rather
+point the RSS feed links of both to the same feed.  (Which one, the one
+with all news or the one with the latest news only, I don't know yet.)
+
+> Not currently. It could be implemented, or you could just turn off the
+> rss feed for the index page, and manually put in a wikilink to the news
+> page and rss feed. --[[Joey]]
