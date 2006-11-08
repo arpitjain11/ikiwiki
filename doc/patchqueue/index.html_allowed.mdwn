@@ -1,10 +1,9 @@
 Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.html. This patch allows that. Specifically, foo/index.type is translated to $links{'foo/'}, and bestlink looks for either "foo" or "foo/" when linking to pages. There are other miscellaneous changes that go with that -- parentlinks for "foo/" are the same as for "foo", except one directory higher; basename of "foo/" is "foo"; links to "foo/" are translated to "foo/index.html" rather than "foo/.html". (Links to "foo/" might be preferred, but that causes an infinite loop in writefile, because apparently dirname("foo/") == "foo/" on my system for reasons that aren't clear to me.)
 
-    Index: IkiWiki/Render.pm
-    ===================================================================
-    --- IkiWiki/Render.pm       (revision 1497)
-    +++ IkiWiki/Render.pm       (working copy)
-    @@ -40,6 +40,10 @@
+    diff -ur -x .svn ikiwiki-orig/IkiWiki/Render.pm ikiwiki/IkiWiki/Render.pm
+    --- ikiwiki-orig/IkiWiki/Render.pm  2006-11-08 01:02:33.000000000 -0500
+    +++ ikiwiki/IkiWiki/Render.pm       2006-11-08 01:02:46.000000000 -0500
+    @@ -57,6 +57,10 @@
         my $path="";
         my $skip=1;
         return if $page eq 'index'; # toplevel
@@ -15,11 +14,10 @@ Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.
         foreach my $dir (reverse split("/", $page)) {
                 if (! $skip) {
                         $path.="../";
-    Index: IkiWiki.pm
-    ===================================================================
-    --- IkiWiki.pm      (revision 1497)
-    +++ IkiWiki.pm      (working copy)
-    @@ -170,6 +170,7 @@
+    diff -ur -x .svn ikiwiki-orig/IkiWiki.pm ikiwiki/IkiWiki.pm
+    --- ikiwiki-orig/IkiWiki.pm 2006-11-08 01:02:38.000000000 -0500
+    +++ ikiwiki/IkiWiki.pm      2006-11-08 01:02:48.000000000 -0500
+    @@ -174,6 +174,7 @@
      sub basename ($) { #{{{
         my $file=shift;
 
@@ -27,7 +25,7 @@ Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.
         $file=~s!.*/+!!;
         return $file;
      } #}}}
-    @@ -196,12 +197,14 @@
+    @@ -200,12 +201,14 @@
         my $type=pagetype($file);
         my $page=$file;
         $page=~s/\Q.$type\E*$// if defined $type;
@@ -42,7 +40,7 @@ Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.
         return $page.".html";
      } #}}}
 
-    @@ -264,6 +267,7 @@
+    @@ -289,6 +292,7 @@
         my $page=shift;
         my $link=shift;
 
@@ -50,7 +48,7 @@ Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.
         my $cwd=$page;
         do {
                 my $l=$cwd;
-    @@ -273,6 +277,9 @@
+    @@ -298,6 +302,9 @@
                 if (exists $links{$l}) {
                         return $l;
                 }
@@ -60,3 +58,4 @@ Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.
                 elsif (exists $pagecase{lc $l}) {
                         return $pagecase{lc $l};
                 }
+
