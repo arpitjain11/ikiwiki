@@ -23,6 +23,7 @@ sub import { #{{{
 
 sub getopt () { #{{{
         eval q{use Getopt::Long};
+	error($@) if $@;
         Getopt::Long::Configure('pass_through');
         GetOptions("estseek=s" => \$config{estseek});
 } #}}}

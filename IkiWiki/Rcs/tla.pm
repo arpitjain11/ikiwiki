@@ -89,7 +89,9 @@ sub rcs_recentchanges ($) {
 	return unless -d "$config{srcdir}/{arch}";
 
 	eval q{use Date::Parse};
+	error($@) if $@;
 	eval q{use Mail::Header};
+	error($@) if $@;
 
 	my $logs = `tla logs -d $config{srcdir}`;
 	my @changesets = reverse split(/\n/, $logs);
@@ -159,6 +161,7 @@ sub rcs_notify () { #{{{
 	my $rev=int(possibly_foolish_untaint($ENV{REV}));
 
 	eval q{use Mail::Header};
+	error($@) if $@;
 	open(LOG, $ENV{"ARCH_LOG"});
 	my $head = Mail::Header->new(\*LOG);
 	close(LOG);
@@ -214,6 +217,7 @@ sub rcs_notify () { #{{{
 		);
 
 		eval q{use Mail::Sendmail};
+		error($@) if $@;
 		foreach my $email (@email_recipients) {
 			sendmail(
 				To => $email,
@@ -228,7 +232,9 @@ sub rcs_notify () { #{{{
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 	eval q{use Date::Parse};
+	error($@) if $@;
 	eval q{use Mail::Header};
+	error($@) if $@;
 
 	my $logs = `tla logs -d $config{srcdir}`;
 	my @changesets = reverse split(/\n/, $logs);

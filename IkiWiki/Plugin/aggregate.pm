@@ -25,6 +25,7 @@ sub import { #{{{
 
 sub getopt () { #{{{
         eval q{use Getopt::Long};
+	error($@) if $@;
         Getopt::Long::Configure('pass_through');
         GetOptions("aggregate" => \$config{aggregate});
 } #}}}
@@ -150,7 +151,7 @@ sub loadstate () { #{{{
 
 sub savestate () { #{{{
 	eval q{use HTML::Entities};
-	die $@ if $@;
+	error($@) if $@;
 	open (OUT, ">$config{wikistatedir}/aggregate" ||
 		die "$config{wikistatedir}/aggregate: $!");
 	foreach my $data (values %feeds, values %guids) {
@@ -219,9 +220,9 @@ sub expire () { #{{{
 
 sub aggregate () { #{{{
 	eval q{use XML::Feed};
-	die $@ if $@;
+	error($@) if $@;
 	eval q{use HTML::Entities};
-	die $@ if $@;
+	error($@) if $@;
 
 	foreach my $feed (values %feeds) {
 		next unless $config{rebuild} || 
@@ -316,6 +317,7 @@ sub add_page (@) { #{{{
 	# to avoid unneccessary rebuilding. The mtime from rss cannot be
 	# trusted; let's use a digest.
 	eval q{use Digest::MD5 'md5_hex'};
+	error($@) if $@;
 	require Encode;
 	my $digest=md5_hex(Encode::encode_utf8($params{content}));
 	return unless ! exists $guid->{md5} || $guid->{md5} ne $digest || $config{rebuild};

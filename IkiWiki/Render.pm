@@ -213,6 +213,7 @@ sub refresh () { #{{{
 	my %exists;
 	my @files;
 	eval q{use File::Find};
+	error($@) if $@;
 	find({
 		no_chdir => 1,
 		wanted => sub {

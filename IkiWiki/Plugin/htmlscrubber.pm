@@ -19,6 +19,7 @@ sub scrubber { #{{{
 	return $_scrubber if defined $_scrubber;
 	
 	eval q{use HTML::Scrubber};
+	error($@) if $@;
 	# Lists based on http://feedparser.org/docs/html-sanitization.html
 	$_scrubber = HTML::Scrubber->new(
 		allow => [qw{

@@ -344,6 +344,7 @@ sub rcs_recentchanges ($) { #{{{
 	my ($num) = @_;
 
 	eval q{use Date::Parse};
+	error($@) if $@;
 
 	my ($sha1, $type, $when, $diffurl, $user, @pages, @message, @rets);
 	INFO: foreach my $ci (git_commit_info('HEAD', $num)) {
@@ -458,6 +459,7 @@ sub rcs_notify () { #{{{
 	);
 
 	eval q{use Mail::Sendmail};
+	error($@) if $@;
 	foreach my $email (@email_recipients) {
 		sendmail(
 			To      => $email,

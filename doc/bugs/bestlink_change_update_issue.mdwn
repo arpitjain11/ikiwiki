@@ -6,4 +6,6 @@
 * And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
   back to Foo/Baz.
 
-    -- is this still true? (Yes (as of 1.0))
+As of 1.33, this is still true. The buggy code is the %linkchanged
+calculation in refresh(), which doesn't detect that the link has changed in
+this case.

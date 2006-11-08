@@ -76,12 +76,14 @@ sub checkconfig () { #{{{
 	}
 	if (defined $config{locale}) {
 		eval q{use POSIX};
+		error($@) if $@;
 		$ENV{LANG} = $config{locale}
 			if POSIX::setlocale(&POSIX::LC_TIME, $config{locale});
 	}
 
 	if ($config{w3mmode}) {
 		eval q{use Cwd q{abs_path}};
+		error($@) if $@;
 		$config{srcdir}=possibly_foolish_untaint(abs_path($config{srcdir}));
 		$config{destdir}=possibly_foolish_untaint(abs_path($config{destdir}));
 		$config{cgiurl}="file:///\$LIB/ikiwiki-w3m.cgi/".$config{cgiurl}
@@ -360,6 +362,7 @@ sub displaytime ($) { #{{{
 	my $time=shift;
 
 	eval q{use POSIX};
+	error($@) if $@;
 	# strftime doesn't know about encodings, so make sure
 	# its output is properly treated as utf8
 	return decode_utf8(POSIX::strftime(

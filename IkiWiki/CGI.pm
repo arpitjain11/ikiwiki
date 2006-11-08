@@ -74,10 +74,13 @@ sub cgi_recentchanges ($) { #{{{
 	# during page builds as the return values may change, but they
 	# won't here.)
 	eval q{use Memoize};
+	error($@) if $@;
 	memoize("htmllink");
 
 	eval q{use Time::Duration};
+	error($@) if $@;
 	eval q{use CGI 'escapeHTML'};
+	error($@) if $@;
 
 	my $changelog=[rcs_recentchanges(100)];
 	foreach my $change (@$changelog) {
@@ -114,6 +117,7 @@ sub cgi_signin ($$) { #{{{
 	my $session=shift;
 
 	eval q{use CGI::FormBuilder};
+	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
 		fields => [qw(do title page subpage from name password)],
@@ -262,6 +266,7 @@ sub cgi_signin ($$) { #{{{
 			);
 			
 			eval q{use Mail::Sendmail};
+			error($@) if $@;
 			sendmail(
 				To => userinfo_get($user_name, "email"),
 				From => "$config{wikiname} admin <$config{adminemail}>",
@@ -294,6 +299,7 @@ sub cgi_prefs ($$) { #{{{
 	my $session=shift;
 
 	eval q{use CGI::FormBuilder};
+	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "preferences",
 		fields => [qw(do name password confirm_password email 
@@ -388,6 +394,7 @@ sub cgi_editpage ($$) { #{{{
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
 	eval q{use CGI::FormBuilder; use CGI::FormBuilder::Template::HTML};
+	error($@) if $@;
 	my $renderer=CGI::FormBuilder::Template::HTML->new(
 		fields => \@fields,
 		template_params("editpage.tmpl"),
@@ -639,8 +646,8 @@ sub cgi_editpage ($$) { #{{{
 } #}}}
 
 sub cgi () { #{{{
-	eval q{use CGI};
-	eval q{use CGI::Session};
+	eval q{use CGI; use CGI::Session};
+	error($@) if $@;
 	
 	my $q=CGI->new;
 	

@@ -122,10 +122,13 @@ sub rcs_recentchanges ($) { #{{{
 	
 	return unless -d "$config{srcdir}/.svn";
 
-	eval q{use Date::Parse};
-	eval q{use Time::Duration};
-	eval q{use XML::SAX};
-	eval q{use XML::Simple};
+	eval q{
+		use Date::Parse;
+		use Time::Duration;
+		use XML::SAX;
+		use XML::Simple;
+	};
+	error($@) if $@;
 
 	# avoid using XML::SAX::PurePerl, it's buggy with UTF-8 data
 	my @parsers = map { ${$_}{Name} } @{XML::SAX->parsers()};
@@ -241,6 +244,7 @@ sub rcs_notify () { #{{{
 		);
 		
 		eval q{use Mail::Sendmail};
+		error($@) if $@;
 		foreach my $email (@email_recipients) {
 			sendmail(
 				To => $email,
@@ -276,6 +280,7 @@ sub rcs_getctime ($) { #{{{
 	}
 		
 	eval q{use Date::Parse};
+	error($@) if $@;
 	$date=str2time($date);
 	debug("found ctime ".localtime($date)." for $file");
 	return $date;
