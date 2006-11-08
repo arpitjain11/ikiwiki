@@ -38,6 +38,7 @@ version info:
 
 --Mark
 
+> Seems likely.. So far I've been lazy and stuck with the FormBuilder in Debian, so haven't got a system I can debug this on (sorry). --[[Joey]]
 
 -----
 
@@ -51,4 +52,4 @@ A different problem has reared its ugly head.  When I click on "RecentChanges", 
 
 Indeed there is no such routine IkiWiki::XMLin().  I don't understand how this can possibly work -- as it manifestly does on linux.
 
-
+> XMLin is supposed to be exported by XML::Simple. My guess is that, due to a missing error check, XML::Simple is failing to load, and it's not aborting then. You probably need to install that module; in the meantime, I've fixed the missing error check in svn. --[[Joey]]
