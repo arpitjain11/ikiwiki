@@ -7,7 +7,7 @@ This addresses [[todo/skip_option_for_inline_plugin]].
                 return "unknown sort type $params{sort}";
         }
 
-    +   if ($params{skip}) {
+    +   if (exists $params{skip}) {
     +           @list=@list[$params{skip} .. scalar @list - 1];
     +
     +   }
