@@ -7,8 +7,10 @@ ikiwiki (1.33) UNRELEASED; urgency=low
   * Fix some issues with the new registration form.
   * Patch from Ethan Glasser Camp to add a skip option to the inline plugin.
   * Make sure to check for errors from every eval.
+  * Fix img plugin's handling of adding dependencies for images that do not
+    yet exist.
 
- -- Joey Hess <joeyh@debian.org>  Wed,  8 Nov 2006 15:57:35 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu,  9 Nov 2006 15:57:52 -0500
 
 ikiwiki (1.32) unstable; urgency=low
 

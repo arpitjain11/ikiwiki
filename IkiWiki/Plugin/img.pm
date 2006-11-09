@@ -34,8 +34,8 @@ sub preprocess (@) { #{{{
 		return '';
 	}
 
+	add_depends($params{page}, $image);
 	my $file = bestlink($params{page}, $image) || return "[[img $image not found]]";
-	add_depends($params{page}, $file);
 
 	my $dir = IkiWiki::dirname($file);
 	my $base = IkiWiki::basename($file);
