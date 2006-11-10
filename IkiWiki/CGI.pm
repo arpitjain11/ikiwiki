@@ -582,7 +582,6 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("editing ".pagetitle($page));
 		}
 		
-		print "Content-Type: text/html\n\n";
 		print $form->render(submit => \@buttons);
 	}
 	else {
@@ -712,7 +711,7 @@ sub cgi () { #{{{
 		}
 	}
 
-	if (userinfo_get($session->param("name"), "banned")) {
+	if (defined $session->param("name") && userinfo_get($session->param("name"), "banned")) {
 		print $q->header(-status => "403 Forbidden");
 		$session->delete();
 		print "You are banned.";
