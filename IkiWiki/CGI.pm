@@ -582,6 +582,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("editing ".pagetitle($page));
 		}
 		
+		print "Content-Type: text/html\n\n";
 		print $form->render(submit => \@buttons);
 	}
 	else {

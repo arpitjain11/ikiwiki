@@ -1,44 +1,6 @@
 I'd like to run ikiwiki under cygwin.  I'm new to ikiwiki and have tried to follow the setup tutorial as best I could.  I got all the way up to step 7, but I can't get the CGI to run successfully (step 8).
 
-After editing ikiwiki.setup, and running "ikiwiki --setup", the CGI script is successfully created.  However, if I then click on "Edit Page" link, I see nothing in the browser and the following in the logs:
-
-<pre>
-==> /var/log/apache2/access_log <==
-192.168.0.125 - - [06/Oct/2006:15:12:05 -0500] "GET /cgi-bin/ikiwiki.cgi?page=index&do=edit HTTP/1.1" 500 666
-
-==> /var/log/apache2/error_log <==
-[Fri Oct 06 15:12:07 2006] [error] [client 192.168.0.125] HTML::Template::param() : attempt to set parameter 'form-submit' with an array ref - parameter is not a TMPL_LOOP! at /usr/lib/perl5/site_perl/5.8/CGI/FormBuilder.pm line 1415, referer: http://imrisws36/wiki/
-[Fri Oct 06 15:12:07 2006] [error] [client 192.168.0.125] Premature end of script headers: ikiwiki.cgi, referer: http://imrisws36/wiki/
-</pre>
-
-Can anyone decipher this for me?  I spent some time with cpan earlier today downloading the latest version I could find of prerequisite modules such as HTML::Template and CGI::FormBuilder.
-
-> It would help to know what version of CGI::FormBuilder you have. Mine
-> (3.03.01) does not seem to contain this error message. --[[Joey]]
-
-I have version 3.0401 of CGI::FormBuilder -- the latest from CPAN.  If you are wondering about any other modules, the answer 
-is likely the same: the latest from CPAN.  And you're right: the error string in question does not appear in CGI::FormBuilder.  I found it in HTML::Template (version 2.8).
-
------
-
-OK, so downgrading CGI::FormBuilder to 3.0302 makes the problem go away.  I'll leave it to you to figure out whether the bug is in CGI::FormBuilder or in IkiWiki. --Steve
-
-Maybee this bug should be renamed as "doesn't work with CGI::FormBuilder (3.04)." I get same error on FreeBSD.  
-
-    HTML::Template::param() : attempt to set parameter 'form-submit' with an array 
-    ref - parameter is not a TMPL_LOOP! 
-    at /usr/local/lib/perl5/site_perl/5.8.7/CGI/FormBuilder.pm line 1415
-
-version info:
-
-    root@freedom# pkg_info | grep p5-CGI
-    p5-CGI-FastTemplate-1.09 Perl module for manage templates and parses templates
-    p5-CGI-FormBuilder-3.0401 FormBuilder for CGI
-    p5-CGI-Session-4.14 Perl extension for persistent session management
-
---Mark
-
-> Seems likely.. So far I've been lazy and stuck with the FormBuilder in Debian, so haven't got a system I can debug this on (sorry). --[[Joey]]
+> Moved the formbuilder bug to [[formbuilder_3.0401_broken]] --[[Joey]]
 
 -----
 
