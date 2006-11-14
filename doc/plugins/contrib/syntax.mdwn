@@ -15,6 +15,8 @@ The plugin inserts a fragment of HTML with special marks from a file or a string
 
 The params *file* and *text* are mutually exclusive.
 
+In the case of file parameter, `syntax` will build a html link for direct download.
+
 Example:
 
        \[[syntax type="perl" text="""  
@@ -42,9 +44,16 @@ This plugin create the following CSS styles:
 * synTodo
 * synTitle
 
-It can be downloaded from [here](http://taquiones.net/files/misc/IkiWiki-Plugin-syntax-0.7.tar.gz) or through my personal debian repository at <http://taquiones.net/files/debian/>. There is a page with examples: <http://taquiones.net/software/syntax-examples.html>
+It can be downloaded from [here](http://taquiones.net/files/misc/) or through my personal debian repository at <http://taquiones.net/files/debian/>. There is a page with examples: <http://taquiones.net/software/syntax-examples.html>
 
 Any help, comments or critics are welcome at <victor@taquiones.net>.
+
+## version 0.9
+
+- Add a force_subpage parameter for link build
+- Fix a bug in syntax page link
+- Documented a bug with markdown indented text
+- Documented the syntax directive
 
 ## version 0.7
 
