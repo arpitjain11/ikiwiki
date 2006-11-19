@@ -8,27 +8,27 @@
 use IkiWiki::Setup::Standard {
 	wikiname => "MyWiki",
 	#adminuser => ["yourname", ],
-	adminemail => 'me@myhost',
+	adminemail => 'me@example.org',
 	
 	# Be sure to customise these..
 	srcdir => "/path/to/source",
 	destdir => "/var/www/wiki",
 	
-	url => "http://myhost/wiki",
-	cgiurl => "http://myhost/ikiwiki.cgi",
+	url => "http://example.org/wiki",
+	cgiurl => "http://example.org/ikiwiki.cgi",
 	#templatedir => "/usr/share/ikiwiki/templates",
 	
 	# Subversion stuff.
 	rcs => "svn",
-	#historyurl => "http://svn.myhost/trunk/[[file]]",
-	#diffurl => "http://svn.someurl/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
+	#historyurl => "http://svn.example.org/trunk/[[file]]",
+	#diffurl => "http://svn.example.org/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
 	svnrepo => "/svn/wiki",
 	svnpath => "trunk",
 
 	# Git stuff.
 	#rcs => "git",
-	#historyurl => "http://git.host/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
-	#diffurl => "http://git.host/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
+	#historyurl => "http://git.example.org/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
+	#diffurl => "http://git.example.org/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
 
 	# Tla stuff.
 	#rcs => "tla"
@@ -62,7 +62,7 @@ use IkiWiki::Setup::Standard {
 		#	# Note that this will overwrite any existing
 		#	# post-update hook script, which may not be
 		#	# what you want.
-		#	wrapper => "/git/wikirepo/.git/hooks/post-update",
+		#	wrapper => "/git/wiki.git/hooks/post-update",
 		#	wrappermode => "04755",
 		#	# Enable mail notifications of commits.
 		#	notify => 1,
