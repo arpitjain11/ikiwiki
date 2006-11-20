@@ -1,1 +1,5 @@
-ikiwiki supports adding "History" links to the top of pages to browse the revison history of a page. This is enabled by the --historyurl switch, which is used to specify the URL to a web interface such as [[ViewCVS]]. [[Setup]] has an example of setting this up.
+ikiwiki supports adding "History" links to the top of pages to browse the
+revison history of a page. This is enabled by the `historyurl` setting,
+which is used to specify the URL to a web interface such as [[ViewCVS]]
+(for Subversion) or [[Gitweb]]. In that url, "\[[file]]" is replaced with
+the name of the file to view.
