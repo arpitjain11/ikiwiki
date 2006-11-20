@@ -71,8 +71,7 @@ you through setting up a wiki that is stored in [[Subversion]], [[Git]],
 
 5. Build your wiki for the first time.
 
-		ikiwiki --verbose $SRCDIR $DESTDIR \
-			--url=http://host/~you/wiki/
+		ikiwiki --verbose $SRCDIR $DESTDIR --url=http://host/~you/wiki/
 
    Replace the url with the real url to your wiki. You should now
    be able to visit the url and see your wiki.
