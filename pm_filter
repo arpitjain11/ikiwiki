@@ -3,6 +3,7 @@
 BEGIN {
 	$prefix=shift;
 	$ver=shift;
+	$libdir=shift;
 }
 
 if (/INSTALLDIR_AUTOREPLACE/) {
@@ -12,5 +13,10 @@ elsif (/VERSION_AUTOREPLACE/) {
 	$_=qq{our \$version="$ver";};
 }
 elsif (/^use lib/) {
-	$_="";
+	if (grep { $_ eq $libdir } @INC) {
+		$_="";
+	}
+	else {
+		$_="use lib '$libdir';\n";
+	}
 }

@@ -13,8 +13,18 @@ pure_install:: extra_install
 
 VER=$(shell perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)
 
+PROBABLE_INST_LIB=$(shell \\
+	if [ "$(INSTALLDIRS)" = "perl" ]; then \\
+		echo $(INSTALLPRIVLIB); \\
+	elif [ "$(INSTALLDIRS)" = "site" ]; then \\
+		echo $(INSTALLSITELIB); \\
+	elif [ "$(INSTALLDIRS)" = "vendor" ]; then \\
+		echo $(INSTALLVENDORLIB); \\
+	fi \\
+)
+
 extra_build:
-	./ikiwiki.pl doc html --templatedir=templates --underlaydir=basewiki \
+	./ikiwiki.in doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion \
 		--plugin=brokenlinks --plugin=pagecount \
@@ -24,7 +34,7 @@ extra_build:
 		--plugin=template --plugin=toc --plugin=shortcut
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
-	./pm_filter $(PREFIX) $(VER) < ikiwiki.pl > ikiwiki.out
+	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 		
 extra_clean:
 	rm -rf html doc/.ikiwiki
@@ -57,6 +67,6 @@ extra_install:
 WriteMakefile(
 	NAME		=> 'IkiWiki',
 	PREFIX		=> "/usr/local",
-	PM_FILTER	=> './pm_filter $(PREFIX) $(VER)',
+	PM_FILTER	=> './pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB)',
 	MAN1PODS	=> {},
 );

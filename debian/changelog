@@ -20,8 +20,15 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Split out a passwordauth module, that holds all the traditional password
     based authentication etc code. It's enabled by default, but can be disabled
     if you want only openid or some other auth method.
+  * Rename ikiwiki.pl so MakeMaker doesn't see it, and install it.
+  * Add some code to the build system that tries to determine if the
+    lib installation directory is in @INC. If it's not, munge ikiwiki
+    to hardcode the path to the lib directory. This should allow installing
+    ikiwiki in nonstandard locations, including home directories, by just
+    setting PREFIX at build time.
+  * Fix nested examples directory in deb.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 20 Nov 2006 09:17:07 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 20 Nov 2006 16:49:05 -0500
 
 ikiwiki (1.33) unstable; urgency=low
 

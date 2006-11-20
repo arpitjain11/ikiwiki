@@ -3,7 +3,7 @@ use warnings;
 use strict;
 use Test::More;
 
-my @progs="ikiwiki.pl";
+my @progs="ikiwiki.in";
 my @libs="IkiWiki.pm";
 push @libs, map { chomp; $_ } `find IkiWiki -type f -name \\*.pm`;
 

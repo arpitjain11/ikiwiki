@@ -6,7 +6,7 @@ package IkiWiki;
 
 use warnings;
 use strict;
-use lib '.'; # For use without installation, removed by Makefile.
+use lib '.'; # For use in nonstandard directory, munged by Makefile.
 use IkiWiki;
 
 sub usage () { #{{{
