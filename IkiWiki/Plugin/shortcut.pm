@@ -25,14 +25,14 @@ sub preprocess_shortcut (@) { #{{{
 	}
 
 	hook(type => "preprocess", no_override => 1, id => $params{name},
-		call => sub { shortcut_expand($params{name}, $params{url}, @_) });
+		call => sub { shortcut_expand($params{url}, $params{desc}, @_) });
 
 	return "shortcut $params{name} points to $params{url}";
 } # }}}
 
 sub shortcut_expand ($$@) { #{{{
-	my $name=shift;
 	my $url=shift;
+	my $desc=shift;
 	my %params=@_;
 
 	# Get params in original order.
@@ -51,8 +51,15 @@ sub shortcut_expand ($$@) { #{{{
 	my $encoded_text=$text;
 	$encoded_text=~s/([^A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg;
 	
+	if (defined $desc) {
+		$desc=~s/\%s/$text/g;
+	}
+	else {
+		$desc=$text;
+	}
+
 	$url=~s/\%s/$encoded_text/g;
-	return "<a href=\"$url\">$text</a>";
+	return "<a href=\"$url\">$desc</a>";
 } #}}}
 
 1

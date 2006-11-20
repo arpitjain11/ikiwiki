@@ -27,9 +27,10 @@ To create a template, make a page in the wiki named `template/foo`. Note
 that this is a different location than the directory used for the
 [[templates]] used to build the wiki itself, which is not inside the wiki.
 
-The template uses the syntax used by the HTML::Template perl module, which
-allows for some fairly complex things to be done. Consult its documentation
-for the full syntax, but all you really need to know are a few things:
+The template uses the syntax used by the [[cpan HTML::Template]] perl
+module, which allows for some fairly complex things to be done. Consult its
+documentation for the full syntax, but all you really need to know are a
+few things:
 
 * To insert the value of a variable, use `<TMPL_VAR variable>`.
 * To make a block of text conditional on a variable being set use

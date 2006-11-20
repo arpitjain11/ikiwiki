@@ -5,14 +5,16 @@ most unix-like systems.
 Ikiwiki is a perl program, and needs a recent version of perl such as
 5.8.8. (5.8.0 has been reported not to work).
 
-Ikiwiki requires the `Text::MarkDown`, `URI` and `HTML::Parser` perl
-modules be installed, and also uses the following perl modules if
-available: 
-`CGI::Session` `CGI::FormBuilder` (version 3.02.02 or newer)
-`HTML::Template` `Mail::Sendmail` `Time::Duration` `Date::Parse`,
-`HTML::Scrubber`, `RPC::XML`, `XML::Simple`, `XML::Feed`, `File::MimeInfo`.
+Ikiwiki requires the [[cpan Text::MarkDown]], [[cpan URI]] and
+[[cpan HTML::Parser]] perl modules be installed, and also uses the
+following perl modules if available: 
+[[cpan CGI::Session]], [[cpan CGI::FormBuilder]] (version 3.02.02 or newer,
+but 3.0401 might be broken),
+[[cpan HTML::Template]], [[cpan Mail::Sendmail]], [[cpan Time::Duration]]
+[[cpan TimeDate]], [[cpan HTML::Scrubber]], [[cpan RPC::XML]],
+[[cpan XML::Simple]], [[cpan XML::Feed]], [[cpan File::MimeInfo]].
 
-The [[tla]] support also needs the `MailTools` perl module.
+The [[tla]] support also needs the [[cpan MailTools]] perl module.
 
 Various [[plugins]] use other libraries and utlities; see their individual
 documentation for details.
@@ -20,9 +22,9 @@ documentation for details.
 If you want to install from the tarball, you should make sure that the
 required perl modules are installed, then run:
 
-        perl Makefile.PL # PREFIX=/dir to install elsewhere
-        make
+	perl Makefile.PL # PREFIX=/dir to install elsewhere
+	make
 	make test # optional
-        make install
+	make install
 
 See [[download]] for where to get it.
