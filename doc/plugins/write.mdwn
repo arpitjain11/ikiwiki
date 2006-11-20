@@ -175,7 +175,7 @@ called in turn, and passed a CGI object. The hook should examine the
 parameters, and if it will handle this CGI request, output a page and
 terminate the program.
 
-### cgi
+### auth
 
 	hook(type => "cgi", id => "foo", call => \&auth);
 
