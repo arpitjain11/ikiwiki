@@ -46,7 +46,7 @@ sub page_locked ($$;$) { #{{{
 		if (pagespec_match($page, userinfo_get($admin, "locked_pages"))) {
 			return 1 if $nonfatal;
 			error(htmllink("", "", $page, 1)." is locked by ".
-			      htmllink("", "", $admin, 1)." and cannot be edited.");
+			      userlink($admin)." and cannot be edited.");
 		}
 	}
 
@@ -77,22 +77,12 @@ sub cgi_recentchanges ($) { #{{{
 
 	eval q{use Time::Duration};
 	error($@) if $@;
-	eval q{use CGI 'escapeHTML'};
-	error($@) if $@;
 
 	my $changelog=[rcs_recentchanges(100)];
 	foreach my $change (@$changelog) {
 		$change->{when} = concise(ago($change->{when}));
 
-		if ($change->{user} =~ m!^https?://! &&
-		    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
-			# Munge user-urls, as used by eg, OpenID.
-			my $oid=Net::OpenID::VerifiedIdentity->new(identity => $change->{user});
-			$change->{user} = "<a href=\"".$change->{user}."\">".escapeHTML($oid->display)."</a>";
-		}
-		else {
-			$change->{user} = htmllink("", "", escapeHTML($change->{user}), 1);
-		}
+		$change->{user} = userlink($change->{user});
 
 		my $is_excess = exists $change->{pages}[10]; # limit pages to first 10
 		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
@@ -652,6 +642,22 @@ sub cgi (;$$) { #{{{
 	}
 	else {
 		error("unknown do parameter");
+	}
+} #}}}
+
+sub userlink ($) { #{{{
+	my $user=shift;
+
+	eval q{use CGI 'escapeHTML'};
+	error($@) if $@;
+	if ($user =~ m!^https?://! &&
+	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
+		# Munge user-urls, as used by eg, OpenID.
+		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
+		return "<a href=\"$user\">".escapeHTML($oid->display)."</a>";
+	}
+	else {
+		return htmllink("", "", escapeHTML($user), 1);
 	}
 } #}}}
 
