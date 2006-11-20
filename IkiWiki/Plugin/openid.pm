@@ -8,8 +8,9 @@ use IkiWiki;
 
 sub import { #{{{
 	hook(type => "getopt", id => "openid", call => \&getopt);
-	hook(type => "checkconfig", id => "openid", call => \&checkconfig);
 	hook(type => "auth", id => "openid", call => \&auth);
+	hook(type => "formbuilder_setup", id => "openid",
+		call => \&formbuilder_setup, last => 1);
 } # }}}
 
 sub getopt () { #{{{
@@ -19,37 +20,43 @@ sub getopt () { #{{{
 	GetOptions("openidsignup=s" => \$config{openidsignup});
 } #}}}
 
-sub checkconfig () { #{{{
-	# Currently part of the OpenID code is in CGI.pm, and is enabled by
-	# this setting.
-	# TODO: modularise it all out into this plugin..
-	$config{openid}=1;
-} #}}}
+sub formbuilder_setup (@) { #{{{
+	my %params=@_;
 
-sub auth ($$) { #{{{
-	my $q=shift;
-	my $session=shift;
+	my $form=$params{form};
+	my $session=$params{session};
+	my $cgi=$params{cgi};
 
-	if (defined $q->param('openid.mode')) {
-		my $csr=getobj($q, $session);
+	if ($form->title eq "signin") {
+ 		$form->field(
+			name => "openid_url",
+			label => "OpenID",
+			size => 30,
+			comment => '('.
+				htmllink("", "", "OpenID", 1, 0, "What's this?")
+				.($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">Get an OpenID</a>" : "")
+				.')'
+		);
 
-		if (my $setup_url = $csr->user_setup_url) {
-			IkiWiki::redirect($q, $setup_url);
-		}
-		elsif ($csr->user_cancel) {
-			IkiWiki::redirect($q, $config{url});
-		}
-		elsif (my $vident = $csr->verified_identity) {
-			$session->param(name => $vident->url);
-		}
-		else {
-			error("OpenID failure: ".$csr->err);
+		# Handle submission of an OpenID as validation.
+		if ($form->submitted && $form->submitted eq "Login" &&
+		    defined $form->field("openid_url") && 
+		    length $form->field("openid_url")) {
+			$form->field(
+				name => "openid_url",
+				validate => sub {
+					validate($cgi, $session, shift, $form);
+				},
+			);
+			# Skip all other required fields in this case.
+			foreach my $field ($form->field) {
+				next if $field eq "openid_url";
+				$form->field(name => $field, required => 0,
+					validate => '/.*/');
+			}
 		}
 	}
-	elsif (defined $q->param('openid_identifier')) {
-		validate($q, $session, $q->param('openid_identifier'));
-	}
-} #}}}
+}
 
 sub validate ($$$;$) { #{{{
 	my $q=shift;
@@ -77,9 +84,35 @@ sub validate ($$$;$) { #{{{
 		delayed_return => 1,
 	);
 	# Redirect the user to the OpenID server, which will
-	# eventually bounce them back to auth() above.
+	# eventually bounce them back to auth()
 	IkiWiki::redirect($q, $check_url);
 	exit 0;
+} #}}}
+
+sub auth ($$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	if (defined $q->param('openid.mode')) {
+		my $csr=getobj($q, $session);
+
+		if (my $setup_url = $csr->user_setup_url) {
+			IkiWiki::redirect($q, $setup_url);
+		}
+		elsif ($csr->user_cancel) {
+			IkiWiki::redirect($q, $config{url});
+		}
+		elsif (my $vident = $csr->verified_identity) {
+			$session->param(name => $vident->url);
+		}
+		else {
+			error("OpenID failure: ".$csr->err);
+		}
+	}
+	elsif (defined $q->param('openid_identifier')) {
+		# myopenid.com affiliate support
+		validate($q, $session, $q->param('openid_identifier'));
+	}
 } #}}}
 
 sub getobj ($$) { #{{{

@@ -21,6 +21,8 @@ sub import { #{{{
 	hook(type => "change", id => "skeleton", call => \&change);
 	hook(type => "cgi", id => "skeleton", call => \&cgi);
 	hook(type => "auth", id => "skeleton", call => \&auth);
+	hook(type => "formbuilder_setup", id => "skeleton", call => \&formbuilder_setup);
+	hook(type => "formbuilder", id => "skeleton", call => \&formbuilder);
 	hook(type => "savestate", id => "savestate", call => \&savestate);
 } # }}}
 
@@ -102,6 +104,18 @@ sub auth ($$) { #{{{
 
 	debug("skeleton plugin running in auth");
 } #}}}
+
+sub formbuilder_setup (@) { #{{{
+	my %params=@_;
+	
+	debug("skeleton plugin running in formbuilder_setup");
+} # }}}
+
+sub formbuilder (@) { #{{{
+	my %params=@_;
+	
+	debug("skeleton plugin running in formbuilder");
+} # }}}
 
 sub savestate () { #{{{
 	debug("skeleton plugin running in savestate");

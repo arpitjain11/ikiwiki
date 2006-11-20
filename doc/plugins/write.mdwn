@@ -36,6 +36,10 @@ before begining to render pages. This parameter should be set to true if
 the hook modifies data in `%links`. Note that doing so will make the hook
 be run twice per page build, so avoid doing it for expensive hooks.
 
+An optional "last" parameter, if set to a true value, makes the hook run
+after all other hooks of its type. Useful if the hook depends on some other
+hook being run first.
+
 ## Types of hooks
 
 In roughly the order they are called.
@@ -119,13 +123,13 @@ return the htmlized content.
 
 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
-[[Templates]] are filled out for many different things in ikiwiki, 
-like generating a page, or part of a blog page, or an rss feed, or a cgi.
-This hook allows modifying those templates. The function is passed named
+[[Templates]] are filled out for many different things in ikiwiki, like
+generating a page, or part of a blog page, or an rss feed, or a cgi. This
+hook allows modifying those templates. The function is passed named
 parameters. The "page" and "destpage" parameters are the same as for a
-preprocess hook. The "template" parameter is a `HTML::Template` object that
-is the template that will be used to generate the page. The function can
-manipulate that template object.
+preprocess hook. The "template" parameter is a [[cpan HTML::Template]]
+object that is the template that will be used to generate the page. The
+function can manipulate that template object.
 
 The most common thing to do is probably to call $template->param() to add
 a new custom parameter to the template.
@@ -177,7 +181,7 @@ terminate the program.
 
 ### auth
 
-	hook(type => "cgi", id => "foo", call => \&auth);
+	hook(type => "auth", id => "foo", call => \&auth);
 
 This hook can be used to implement a different authentication method than
 the standard web form. When a user needs to be authenticated, each registered
@@ -187,6 +191,28 @@ If the hook is able to authenticate the user, it should set the session
 object's "name" parameter to the authenticated user's name. Note that
 if the name is set to the name of a user who is not registered,
 a basic registration of the user will be automatically performed.
+
+### formbuilder
+
+	hook(type => "formbuilder_setup", id => "foo", call => \&formbuilder_setup);
+	hook(type => "formbuilder", id => "foo", call => \&formbuilder);
+
+These hooks allow tapping into the parts of ikiwiki that use [[cpan
+CGI::FormBuilder]] to generate web forms. These hooks are passed named
+parameters: `cgi`, `session`, and `form`. These are, respectively, the
+`CGI` object, the user's `CGI::Session`, and a `CGI::FormBuilder`.
+
+Each time a form is set up, the formbuilder_setup hook is called.
+Typically the formbuilder_setup hook will check the form's title, and if
+it's a form that it needs to modify, will call various methods to
+add/remove/change fields, tweak the validation code for the fields, etc. It
+will not validate or display the form.
+
+Form validation and display can be overridden by the formbuilder hook.
+By default, ikiwiki will do a basic validation and display of the form,
+but if this hook is registered, it will stop that and let the hook take
+over. This hook is passed an additional named parameter: `buttons` is an
+array of the submit buttons for the form.
 
 ### savestate
 
@@ -259,8 +285,8 @@ appear on the wiki page, rather than calling error().
 
 #### `template($;@)`
 
-Creates and returns a HTML::Template object. The first parameter is the
-name of the file in the template directory. The optional remaining
+Creates and returns a [[cpan HTML::Template]] object. The first parameter
+is the name of the file in the template directory. The optional remaining
 parameters are passed to HTML::Template->new.
 
 #### `htmlpage($)`

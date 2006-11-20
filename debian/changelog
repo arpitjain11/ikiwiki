@@ -14,8 +14,14 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Add optional "desc" parameter to shortcut definitions.
   * Avoid locking the wiki at all when handling some basic cgi stuff
     (searches, recentchanges).
+  * Add "last" parameter to hook function. Very basic ordering, and hopefully
+    nothing more spohisticated will be needed.
+  * Add formbuilder_setup and formbuilder hooks.
+  * Split out a passwordauth module, that holds all the traditional password
+    based authentication etc code. It's enabled by default, but can be disabled
+    if you want only openid or some other auth method.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 20 Nov 2006 06:54:12 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 20 Nov 2006 09:17:07 -0500
 
 ikiwiki (1.33) unstable; urgency=low
 

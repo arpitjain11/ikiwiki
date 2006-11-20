@@ -127,16 +127,9 @@ sub cgi_signin ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
-		fields => [qw(do name password openid_url)],
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
-		validate => {
-			confirm_password => {
-				perl => q{eq $form->field("password")},
-			},
-			email => 'EMAIL',
-		},
 		required => 'NONE',
 		javascript => 0,
 		params => $q,
@@ -146,170 +139,32 @@ sub cgi_signin ($$) { #{{{
 			     {template_params("signin.tmpl")} : ""),
 		stylesheet => baseurl()."style.css",
 	);
-		
-	decode_form_utf8($form);
+	my $buttons=["Login"];
 	
-	$form->field(name => "name", required => 0, size => 30);
 	$form->field(name => "do", type => "hidden");
-	$form->field(name => "password", type => "password", required => 0);
-	if ($config{openid}) {
-		$form->field(name => "openid_url", label => "OpenID", size => 30,
-			comment => '('.
-				htmllink("", "", "OpenID", 1, 0, "What's this?")
-				.($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">Get an OpenID</a>" : "")
-				.')');
-	}
-	else {
-		$form->field(name => "openid_url", type => "hidden");
-	}
-	if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
-		$form->title("register");
-		$form->text("");
-		$form->fields(qw(do name password confirm_password email));
-		$form->field(name => "confirm_password", type => "password");
-		$form->field(name => "email", type => "text");
-		$form->field(name => "openid_url", type => "hidden");
-	}
+	
 	if ($q->param("do") ne "signin" && !$form->submitted) {
 		$form->text("You need to log in first.");
 	}
 	
-	if ($form->submitted) {
-		my $submittype=$form->submitted;
-		# OpenID login uses the Login button, but validates
-		# differently.
-		if ($submittype eq "Login" && $config{openid} && 
-		    length $form->field("openid_url")) {
-			$submittype="OpenID";
-			
-			$form->field(
-				name => "openid_url",
-				validate => sub {
-					# FIXME: ugh
-					IkiWiki::Plugin::openid::validate($q, $session, shift, $form);
-				},
-			);
-		}
-
-		# Set required fields based on how form was submitted.
-		my %required=(
-			"Login" => [qw(name password)],
-			"Register" => [],
-			"Create Account" => [qw(name password confirm_password email)],
-			"Mail Password" => [qw(name)],
-			"OpenID" => [qw(openid_url)],
-		);
-		foreach my $opt (@{$required{$submittype}}) {
-			$form->field(name => $opt, required => 1);
-		}
+	run_hooks(formbuilder_setup => sub {
+		shift->(form => $form, cgi => $q, session => $session);
+	});
 	
-		# Validate password differently depending on how
-		# form was submitted.
-		if ($submittype eq 'Login') {
-			$form->field(
-				name => "password",
-				validate => sub {
-					length $form->field("name") &&
-					shift eq userinfo_get($form->field("name"), 'password');
-				},
-			);
-			$form->field(name => "name", validate => '/^\w+$/');
-		}
-		elsif ($submittype ne 'OpenID') {
-			$form->field(name => "password", validate => 'VALUE');
-		}
-		# And make sure the entered name exists when logging
-		# in or sending email, and does not when registering.
-		if ($submittype eq 'Create Account' ||
-		    $submittype eq 'Register') {
-			$form->field(
-				name => "name",
-				validate => sub {
-					my $name=shift;
-					length $name &&
-					$name=~/$config{wiki_file_regexp}/ &&
-					! userinfo_get($name, "regdate");
-				},
-			);
-		}
-		elsif ($submittype ne 'OpenID') {
-			$form->field(
-				name => "name",
-				validate => sub {
-					my $name=shift;
-					length $name &&
-					userinfo_get($name, "regdate");
-				},
-			);
-		}
-	}
-	else {
-		# First time settings.
-		$form->field(name => "name", comment => "use FirstnameLastName");
-		if ($session->param("name")) {
-			$form->field(name => "name", value => $session->param("name"));
-		}
-	}
+	decode_form_utf8($form);
 
-	if ($form->submitted && $form->validate) {
-		if ($form->submitted eq 'Login') {
-			$session->param("name", $form->field("name"));
-			cgi_postsignin($q, $session);
-		}
-		elsif ($form->submitted eq 'Create Account') {
-			my $user_name=$form->field('name');
-			if (userinfo_setall($user_name, {
-				           'email' => $form->field('email'),
-				           'password' => $form->field('password'),
-				           'regdate' => time
-				         })) {
-				$form->field(name => "confirm_password", type => "hidden");
-				$form->field(name => "email", type => "hidden");
-				$form->text("Account creation successful. Now you can Login.");
-				printheader($session);
-				print misctemplate($form->title, $form->render(submit => ["Login"]));
-			}
-			else {
-				error("Error creating account.");
-			}
-		}
-		elsif ($form->submitted eq 'Mail Password') {
-			my $user_name=$form->field("name");
-			my $template=template("passwordmail.tmpl");
-			$template->param(
-				user_name => $user_name,
-				user_password => userinfo_get($user_name, "password"),
-				wikiurl => $config{url},
-				wikiname => $config{wikiname},
-				REMOTE_ADDR => $ENV{REMOTE_ADDR},
-			);
-			
-			eval q{use Mail::Sendmail};
-			error($@) if $@;
-			sendmail(
-				To => userinfo_get($user_name, "email"),
-				From => "$config{wikiname} admin <$config{adminemail}>",
-				Subject => "$config{wikiname} information",
-				Message => $template->output,
-			) or error("Failed to send mail");
-			
-			$form->text("Your password has been emailed to you.");
-			$form->field(name => "name", required => 0);
-			printheader($session);
-			print misctemplate($form->title, $form->render(submit => ["Login", "Mail Password"]));
-		}
-		elsif ($form->submitted eq "Register") {
-			printheader($session);
-			print misctemplate($form->title, $form->render(submit => ["Create Account"]));
-		}
-	}
-	elsif ($form->submitted eq "Create Account") {
-		printheader($session);
-		print misctemplate($form->title, $form->render(submit => ["Create Account"]));
+	if (exists $hooks{formbuilder}) {
+		run_hooks(formbuilder => sub {
+			shift->(form => $form, cgi => $q, session => $session,
+				buttons => $buttons);
+		});
 	}
 	else {
+		if ($form->submitted) {
+			$form->validate;
+		}
 		printheader($session);
-		print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
+		print misctemplate($form->title, $form->render(submit => $buttons));
 	}
 } #}}}
 
@@ -338,15 +193,10 @@ sub cgi_prefs ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "preferences",
-		fields => [qw(do name password confirm_password email 
-		              subscriptions locked_pages)],
 		header => 0,
 		charset => "utf-8",
 		method => 'POST',
 		validate => {
-			confirm_password => {
-				perl => q{eq $form->field("password")},
-			},
 			email => 'EMAIL',
 		},
 		required => 'NONE',
@@ -357,30 +207,26 @@ sub cgi_prefs ($$) { #{{{
 			     {template_params("prefs.tmpl")} : ""),
 		stylesheet => baseurl()."style.css",
 	);
-	my @buttons=("Save Preferences", "Logout", "Cancel");
+	my $buttons=["Save Preferences", "Logout", "Cancel"];
+
+	run_hooks(formbuilder_setup => sub {
+		shift->(form => $form, cgi => $q, session => $session);
+	});
 	
-	my $user_name=$session->param("name");
 	$form->field(name => "do", type => "hidden");
-	$form->field(name => "name", disabled => 1,
-		value => $user_name, force => 1, size => 30);
-	$form->field(name => "password", type => "password");
-	$form->field(name => "confirm_password", type => "password");
+	$form->field(name => "email", size => 50);
 	$form->field(name => "subscriptions", size => 50,
 		comment => "(".htmllink("", "", "PageSpec", 1).")");
 	$form->field(name => "locked_pages", size => 50,
 		comment => "(".htmllink("", "", "PageSpec", 1).")");
 	$form->field(name => "banned_users", size => 50);
 	
+	my $user_name=$session->param("name");
 	if (! is_admin($user_name)) {
 		$form->field(name => "locked_pages", type => "hidden");
 		$form->field(name => "banned_users", type => "hidden");
 	}
 
-	if ($config{httpauth}) {
-		$form->field(name => "password", type => "hidden");
-		$form->field(name => "confirm_password", type => "hidden");
-	}
-	
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
 			value => userinfo_get($user_name, "email"));
@@ -406,8 +252,8 @@ sub cgi_prefs ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq "Save Preferences" && $form->validate) {
-		foreach my $field (qw(password email subscriptions locked_pages)) {
-			if (length $form->field($field)) {
+		foreach my $field (qw(email subscriptions locked_pages)) {
+			if (defined $form->field($field) && length $form->field($field)) {
 				userinfo_set($user_name, $field, $form->field($field)) || error("failed to set $field");
 			}
 		}
@@ -418,8 +264,16 @@ sub cgi_prefs ($$) { #{{{
 		$form->text("Preferences saved.");
 	}
 	
-	printheader($session);
-	print misctemplate($form->title, $form->render(submit => \@buttons));
+	if (exists $hooks{formbuilder}) {
+		run_hooks(formbuilder => sub {
+			shift->(form => $form, cgi => $q, session => $session,
+				buttons => $buttons);
+		});
+	}
+	else {
+		printheader($session);
+		print misctemplate($form->title, $form->render(submit => $buttons));
+	}
 } #}}}
 
 sub cgi_editpage ($$) { #{{{
@@ -453,6 +307,10 @@ sub cgi_editpage ($$) { #{{{
 		table => 0,
 		template => $renderer,
 	);
+	
+	run_hooks(formbuilder_setup => sub {
+		shift->(form => $form, cgi => $q, session => $session);
+	});
 	
 	decode_form_utf8($form);
 	

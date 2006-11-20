@@ -62,7 +62,7 @@ sub defaultconfig () { #{{{
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
-	plugin => [qw{mdwn inline htmlscrubber}],
+	plugin => [qw{mdwn inline htmlscrubber passwordauth}],
 	timeformat => '%c',
 	locale => undef,
 	sslcookie => 0,
@@ -663,7 +663,15 @@ sub run_hooks ($$) { # {{{
 	my $sub=shift;
 
 	if (exists $hooks{$type}) {
+		my @deferred;
 		foreach my $id (keys %{$hooks{$type}}) {
+			if ($hooks{$type}{$id}{last}) {
+				push @deferred, $id;
+				next;
+			}
+			$sub->($hooks{$type}{$id}{call});
+		}
+		foreach my $id (@deferred) {
 			$sub->($hooks{$type}{$id}{call});
 		}
 	}
