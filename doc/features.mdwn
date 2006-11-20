@@ -129,7 +129,11 @@ and can be enabled by enabling [[CGI]].
 ### User registration
 
 Can optionally be configured to allow only registered users to post
-pages; online user registration form, etc.
+pages.
+
+User registration can be done using a web form, or ikiwiki can be
+configured to accept users authenticated with OpenID, or HTTP basic
+authentication, or other methods implemented via plugins.
 
 ### Discussion pages
 

@@ -120,7 +120,7 @@ sub cgi_signin ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
-		fields => [qw(do title page subpage from name password)],
+		fields => [qw(do title page subpage from name password openid_url)],
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
@@ -149,32 +149,56 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "from", type => "hidden");
 	$form->field(name => "subpage", type => "hidden");
 	$form->field(name => "password", type => "password", required => 0);
+	if ($config{openid}) {
+		$form->field(name => "openid_url", label => "OpenID", comment => "to log in via OpenID");
+	}
+	else {
+		$form->field(name => "openid_url", type => "hidden");
+	}
 	if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
 		$form->title("register");
 		$form->text("");
 		$form->fields(qw(do title page subpage from name password confirm_password email));
 		$form->field(name => "confirm_password", type => "password");
 		$form->field(name => "email", type => "text");
+		$form->field(name => "openid_url", type => "hidden");
 	}
 	if ($q->param("do") ne "signin" && !$form->submitted) {
 		$form->text("You need to log in first.");
 	}
 	
 	if ($form->submitted) {
+		my $submittype=$form->submitted;
+		# OpenID login uses the Login button, but validates
+		# differently.
+		if ($submittype eq "Login" && $config{openid} && 
+		    length $form->field("openid_url")) {
+			$submittype="OpenID";
+			
+			$form->field(
+				name => "openid_url",
+				validate => sub {
+					# FIXME: ugh
+					IkiWiki::Plugin::openid::validate($q, $session, $form, shift);
+				},
+			);
+		}
+
 		# Set required fields based on how form was submitted.
 		my %required=(
 			"Login" => [qw(name password)],
 			"Register" => [],
 			"Create Account" => [qw(name password confirm_password email)],
 			"Mail Password" => [qw(name)],
+			"OpenID" => [qw(openid_url)],
 		);
-		foreach my $opt (@{$required{$form->submitted}}) {
+		foreach my $opt (@{$required{$submittype}}) {
 			$form->field(name => $opt, required => 1);
 		}
 	
 		# Validate password differently depending on how
 		# form was submitted.
-		if ($form->submitted eq 'Login') {
+		if ($submittype eq 'Login') {
 			$form->field(
 				name => "password",
 				validate => sub {
@@ -184,13 +208,13 @@ sub cgi_signin ($$) { #{{{
 			);
 			$form->field(name => "name", validate => '/^\w+$/');
 		}
-		else {
+		elsif ($submittype ne 'OpenID') {
 			$form->field(name => "password", validate => 'VALUE');
 		}
 		# And make sure the entered name exists when logging
 		# in or sending email, and does not when registering.
-		if ($form->submitted eq 'Create Account' ||
-		    $form->submitted eq 'Register') {
+		if ($submittype eq 'Create Account' ||
+		    $submittype eq 'Register') {
 			$form->field(
 				name => "name",
 				validate => sub {
@@ -201,7 +225,7 @@ sub cgi_signin ($$) { #{{{
 				},
 			);
 		}
-		else {
+		elsif ($submittype ne 'OpenID') {
 			$form->field(
 				name => "name",
 				validate => sub {
@@ -229,8 +253,8 @@ sub cgi_signin ($$) { #{{{
 					do => $form->field("do"),
 					page => $form->field("page"),
 					title => $form->field("title"),
-					subpage => $form->field("subpage"),
 					from => $form->field("from"),
+					subpage => $form->field("subpage"),
 				));
 			}
 			else {
@@ -680,11 +704,30 @@ sub cgi () { #{{{
 		{ FileName => "$config{wikistatedir}/sessions.db" });
 	umask($oldmask);
 	
+	# Auth hooks can sign a user in.
+	if ($do ne 'signin' && ! defined $session->param("name")) {
+		run_hooks(auth => sub {
+			shift->($q, $session)
+		});
+		if (defined $session->param("name")) {
+			# Make sure whatever user was authed is in the
+			# userinfo db.
+			if (! userinfo_get($session->param("name"), "regdate")) {
+				userinfo_setall($session->param("name"), {
+					email => "",
+					password => "",
+					regdate => time,
+				});
+			}
+		}
+	}
+
 	# Everything below this point needs the user to be signed in.
 	if (((! $config{anonok} || $do eq 'prefs') &&
 	     (! $config{httpauth}) &&
 	     (! defined $session->param("name") ||
-	     ! userinfo_get($session->param("name"), "regdate"))) || $do eq 'signin') {
+	     ! userinfo_get($session->param("name"), "regdate")))
+            || $do eq 'signin') {
 		cgi_signin($q, $session);
 	
 		# Force session flush with safe umask.
@@ -693,22 +736,6 @@ sub cgi () { #{{{
 		umask($oldmask);
 		
 		return;
-	}
-
-	if ($config{httpauth} && (! defined $session->param("name"))) {
-		if (! defined $q->remote_user()) {
-			error("Could not determine authenticated username.");
-		}
-		else {
-			$session->param("name", $q->remote_user());
-			if (! userinfo_get($session->param("name"), "regdate")) {
-				userinfo_setall($session->param("name"), {
-					email => "",
-					password => "",
-					regdate=>time,
-				});
-			}
-		}
 	}
 
 	if (defined $session->param("name") && userinfo_get($session->param("name"), "banned")) {

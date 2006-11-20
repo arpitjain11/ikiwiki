@@ -1,0 +1,12 @@
+[[template id=plugin name=openid included=1 author="[[Joey]]"]]
+[[tag type/auth]]
+
+This plugin allows users to use their [OpenID](http://openid.net/) to log
+into the wiki.
+
+The plugin needs the `Net::OpenID::Consumer` perl module. The
+`LWPx::ParanoidAgent` perl module is used if available, for added
+security. Finally, the `Crypt::SSLeay` perl module is needed to support
+users entering "https" OpenID urls.
+
+This plugin is included in ikiwiki, but is not enabled by default.

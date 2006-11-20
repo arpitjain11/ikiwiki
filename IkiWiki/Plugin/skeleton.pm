@@ -20,6 +20,7 @@ sub import { #{{{
 	hook(type => "delete", id => "skeleton", call => \&delete);
 	hook(type => "change", id => "skeleton", call => \&change);
 	hook(type => "cgi", id => "skeleton", call => \&cgi);
+	hook(type => "auth", id => "skeleton", call => \&auth);
 	hook(type => "savestate", id => "savestate", call => \&savestate);
 } # }}}
 
@@ -93,6 +94,13 @@ sub cgi ($) { #{{{
 	my $cgi=shift;
 
 	debug("skeleton plugin running in cgi");
+} #}}}
+
+sub auth ($$) { #{{{
+	my $cgi=shift;
+	my $session=shift;
+
+	debug("skeleton plugin running in auth");
 } #}}}
 
 sub savestate () { #{{{
