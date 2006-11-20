@@ -7,9 +7,17 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "smiley", call => \&checkconfig);
-	hook(type => "auth", id => "skeleton", call => \&auth);
+	hook(type => "getopt", id => "openid", call => \&getopt);
+	hook(type => "checkconfig", id => "openid", call => \&checkconfig);
+	hook(type => "auth", id => "openid", call => \&auth);
 } # }}}
+
+sub getopt () { #{{{
+	eval q{use Getopt::Long};
+	error($@) if $@;
+	Getopt::Long::Configure('pass_through');
+	GetOptions("openidsignup=s" => \$config{openidsignup});
+} #}}}
 
 sub checkconfig () { #{{{
 	# Currently part of the OpenID code is in CGI.pm, and is enabled by
@@ -34,31 +42,37 @@ sub auth ($$) { #{{{
 		elsif (my $vident = $csr->verified_identity) {
 			$session->param(name => $vident->url);
 		}
+		else {
+			error("OpenID failure: ".$csr->err);
+		}
+	}
+	elsif (defined $q->param('openid_identifier')) {
+		validate($q, $session, $q->param('openid_identifier'));
 	}
 } #}}}
 
-sub validate ($$$$) { #{{{
+sub validate ($$$;$) { #{{{
 	my $q=shift;
 	my $session=shift;
-	my $form=shift;
 	my $openid_url=shift;
+	my $form=shift;
 
 	my $csr=getobj($q, $session);
 
 	my $claimed_identity = $csr->claimed_identity($openid_url);
 	if (! $claimed_identity) {
-		# Put the error in the form and fail validation.
-		$form->field(name => "openid_url", comment => $csr->err);
-		return 0;
+		if ($form) {
+			# Put the error in the form and fail validation.
+			$form->field(name => "openid_url", comment => $csr->err);
+			return 0;
+		}
+		else {
+			error($csr->err);
+		}
 	}
+
 	my $check_url = $claimed_identity->check_url(
-		return_to => IkiWiki::cgiurl(
-			do => $form->field("do"),
-			page => $form->field("page"),
-			title => $form->field("title"),
-			from => $form->field("from"),
-			subpage => $form->field("subpage")
-		),
+		return_to => IkiWiki::cgiurl(do => "postsignin"),
 		trust_root => $config{cgiurl},
 		delayed_return => 1,
 	);

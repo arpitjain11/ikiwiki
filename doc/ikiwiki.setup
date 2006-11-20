@@ -106,4 +106,8 @@ use IkiWiki::Setup::Standard {
 	# For use with the search plugin if your estseek.cgi is located 
 	# somewhere else.
 	#estseek => "/usr/lib/estraier/estseek.cgi",
+	
+	# For use with the openid plugin, to give an url to a page users
+	# can use to signup for an OpenID.
+	#openidsignup => "http://myopenid.com/",
 }

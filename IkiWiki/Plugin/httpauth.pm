@@ -7,7 +7,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	hook(type => "auth", id => "skeleton", call => \&auth);
+	hook(type => "auth", id => "httpauth", call => \&auth);
 } # }}}
 
 sub auth ($$) { #{{{

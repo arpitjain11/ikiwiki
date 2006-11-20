@@ -9,4 +9,17 @@ The plugin needs the `Net::OpenID::Consumer` perl module. The
 security. Finally, the `Crypt::SSLeay` perl module is needed to support
 users entering "https" OpenID urls.
 
+This plugin supports the
+[myopenid.com affiliate program](http://myopenid.com/affiliate_welcome),
+which can be used to help users sign up for an OpenID and log into your
+site in a single, unified process. When you create the affiliate, specify a
+login url like `http://example.com/ikiwiki.cgi?do=postsignin`. Users who
+create an OpenID will then be logged in and sent on their way in the wiki.
+
+This plugin has a configuration option. You can set `--openidsignup`
+to the url of a third-party site where users can sign up for an OpenID. If
+it's set, the signin page will link to that page. To make the wiki's signin
+page direct users to the affiliate signup page, set the `openidsignup`
+configuration parameter to the URL of the signup page.
+
 This plugin is included in ikiwiki, but is not enabled by default.

@@ -129,7 +129,7 @@ sub cgi_signin ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
-		fields => [qw(do title page subpage from name password openid_url)],
+		fields => [qw(do name password openid_url)],
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
@@ -153,14 +153,13 @@ sub cgi_signin ($$) { #{{{
 	
 	$form->field(name => "name", required => 0);
 	$form->field(name => "do", type => "hidden");
-	$form->field(name => "page", type => "hidden");
-	$form->field(name => "title", type => "hidden");
-	$form->field(name => "from", type => "hidden");
-	$form->field(name => "subpage", type => "hidden");
 	$form->field(name => "password", type => "password", required => 0);
 	if ($config{openid}) {
 		$form->field(name => "openid_url", label => "OpenID",
-			comment => '('.htmllink("", "", "OpenID", 1, 0, "What's this?").')');
+			comment => '('.
+				htmllink("", "", "OpenID", 1, 0, "What's this?")
+				.($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">Get an OpenID</a>" : "")
+				.')');
 	}
 	else {
 		$form->field(name => "openid_url", type => "hidden");
@@ -168,7 +167,7 @@ sub cgi_signin ($$) { #{{{
 	if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
 		$form->title("register");
 		$form->text("");
-		$form->fields(qw(do title page subpage from name password confirm_password email));
+		$form->fields(qw(do name password confirm_password email));
 		$form->field(name => "confirm_password", type => "password");
 		$form->field(name => "email", type => "text");
 		$form->field(name => "openid_url", type => "hidden");
@@ -189,7 +188,7 @@ sub cgi_signin ($$) { #{{{
 				name => "openid_url",
 				validate => sub {
 					# FIXME: ugh
-					IkiWiki::Plugin::openid::validate($q, $session, $form, shift);
+					IkiWiki::Plugin::openid::validate($q, $session, shift, $form);
 				},
 			);
 		}
@@ -257,19 +256,7 @@ sub cgi_signin ($$) { #{{{
 	if ($form->submitted && $form->validate) {
 		if ($form->submitted eq 'Login') {
 			$session->param("name", $form->field("name"));
-			if (defined $form->field("do") && 
-			    $form->field("do") ne 'signin') {
-				redirect($q, cgiurl(
-					do => $form->field("do"),
-					page => $form->field("page"),
-					title => $form->field("title"),
-					from => $form->field("from"),
-					subpage => $form->field("subpage"),
-				));
-			}
-			else {
-				redirect($q, $config{url});
-			}
+			cgi_postsignin($q, $session);
 		}
 		elsif ($form->submitted eq 'Create Account') {
 			my $user_name=$form->field('name');
@@ -325,6 +312,23 @@ sub cgi_signin ($$) { #{{{
 	else {
 		printheader($session);
 		print misctemplate($form->title, $form->render(submit => ["Login", "Register", "Mail Password"]));
+	}
+} #}}}
+
+sub cgi_postsignin ($$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	# Continue with whatever was being done before the signin process.
+	if (defined $q->param("do") && $q->param("do") ne "signin" &&
+	    defined $session->param("postsignin")) {
+		my $postsignin=CGI->new($session->param("postsignin"));
+		$session->clear("postsignin");
+		cgi($postsignin, $session);
+		exit;
+	}
+	else {
+		redirect($q, $config{url});
 	}
 } #}}}
 
@@ -679,14 +683,19 @@ sub cgi_editpage ($$) { #{{{
 	}
 } #}}}
 
-sub cgi () { #{{{
-	eval q{use CGI; use CGI::Session};
-	error($@) if $@;
+sub cgi (;$$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	if (! $q) {
+		eval q{use CGI; use CGI::Session};
+		error($@) if $@;
 	
-	my $q=CGI->new;
+		$q=CGI->new;
 	
-	run_hooks(cgi => sub { shift->($q) });
-	
+		run_hooks(cgi => sub { shift->($q) });
+	}
+
 	my $do=$q->param('do');
 	if (! defined $do || ! length $do) {
 		my $error = $q->cgi_error;
@@ -707,12 +716,14 @@ sub cgi () { #{{{
 		cgi_hyperestraier();
 	}
 	
-	CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
+	if (! $session) {
+		CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
 	
-	my $oldmask=umask(077);
-	my $session = CGI::Session->new("driver:DB_File", $q,
-		{ FileName => "$config{wikistatedir}/sessions.db" });
-	umask($oldmask);
+		my $oldmask=umask(077);
+		$session = CGI::Session->new("driver:DB_File", $q,
+			{ FileName => "$config{wikistatedir}/sessions.db" });
+		umask($oldmask);
+	}
 	
 	# Auth hooks can sign a user in.
 	if ($do ne 'signin' && ! defined $session->param("name")) {
@@ -734,10 +745,12 @@ sub cgi () { #{{{
 
 	# Everything below this point needs the user to be signed in.
 	if (((! $config{anonok} || $do eq 'prefs') &&
-	     (! $config{httpauth}) &&
 	     (! defined $session->param("name") ||
 	     ! userinfo_get($session->param("name"), "regdate")))
             || $do eq 'signin') {
+	    	if ($do ne 'signin' && ! defined $session->param("postsignin")) {
+			$session->param(postsignin => $ENV{QUERY_STRING});
+		}
 		cgi_signin($q, $session);
 	
 		# Force session flush with safe umask.
@@ -746,6 +759,9 @@ sub cgi () { #{{{
 		umask($oldmask);
 		
 		return;
+	}
+	elsif (defined $session->param("postsignin")) {
+		cgi_postsignin($q, $session);
 	}
 
 	if (defined $session->param("name") && userinfo_get($session->param("name"), "banned")) {
