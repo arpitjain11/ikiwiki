@@ -30,6 +30,7 @@ sub defaultconfig () { #{{{
 	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$|\.atom$|.arch-ids/|{arch}/)},
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
+	web_commit_regexp => qr/^web commit (by (.*?(?=: )|[^:]+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
 	verbose => 0,
 	syslog => 0,
 	wikiname => "wiki",

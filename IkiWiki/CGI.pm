@@ -85,7 +85,16 @@ sub cgi_recentchanges ($) { #{{{
 	my $changelog=[rcs_recentchanges(100)];
 	foreach my $change (@$changelog) {
 		$change->{when} = concise(ago($change->{when}));
-		$change->{user} = htmllink("", "", escapeHTML($change->{user}), 1);
+
+		if ($change->{user} =~ m!^https?://! &&
+		    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
+			# Munge user-urls, as used by eg, OpenID.
+			my $oid=Net::OpenID::VerifiedIdentity->new(identity => $change->{user});
+			$change->{user} = "<a href=\"".$change->{user}."\">".escapeHTML($oid->display)."</a>";
+		}
+		else {
+			$change->{user} = htmllink("", "", escapeHTML($change->{user}), 1);
+		}
 
 		my $is_excess = exists $change->{pages}[10]; # limit pages to first 10
 		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;

@@ -7,8 +7,6 @@ use POSIX qw(setlocale LC_CTYPE);
 
 package IkiWiki;
 		
-my $svn_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
-
 # svn needs LC_CTYPE set to a UTF-8 locale, so try to find one. Any will do.
 sub find_lc_ctype() {
 	my $current = setlocale(LC_CTYPE());
@@ -162,7 +160,7 @@ sub rcs_recentchanges ($) { #{{{
 
 		my $committype="web";
 		if (defined $message[0] &&
-		    $message[0]->{line}=~/$svn_webcommit/) {
+		    $message[0]->{line}=~/$config{web_commit_regexp}/) {
 			$user=defined $2 ? "$2" : "$3";
 			$message[0]->{line}=$4;
 		}
@@ -204,7 +202,7 @@ sub rcs_notify () { #{{{
 	my $user=`svnlook author $config{svnrepo} -r $rev`;
 	chomp $user;
 	my $message=`svnlook log $config{svnrepo} -r $rev`;
-	if ($message=~/$svn_webcommit/) {
+	if ($message=~/$config{web_commit_regexp}/) {
 		$user=defined $2 ? "$2" : "$3";
 		$message=$4;
 	}

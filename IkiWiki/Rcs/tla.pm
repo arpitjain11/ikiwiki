@@ -7,8 +7,6 @@ use POSIX qw(setlocale LC_CTYPE);
 
 package IkiWiki;
 
-my $tla_webcommit=qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
-
 sub quiet_system (@) {
 	# See Debian bug #385939.
 	open (SAVEOUT, ">&STDOUT");
@@ -117,7 +115,7 @@ sub rcs_recentchanges ($) {
 		my $when = time - str2time($sdate, 'UTC');
 
 		my $committype = "web";
-		if (defined $summ && $summ =~ /$tla_webcommit/) {
+		if (defined $summ && $summ =~ /$config{web_commit_regexp}/) {
 			$user = defined $2 ? "$2" : "$3";
 			$summ = $4;
 		}
@@ -176,7 +174,7 @@ sub rcs_notify () { #{{{
 	my @changed_pages = grep { !/(^.*\/)?\.arch-ids\/.*\.id$/ }
 		split(/ /, "$newfiles $modfiles $remfiles .arch-ids/fake.id");
 
-	if ($message =~ /$tla_webcommit/) {
+	if ($message =~ /$config{web_commit_regexp}/) {
 		$user=defined $2 ? "$2" : "$3";
 		$message=$4;
 	}

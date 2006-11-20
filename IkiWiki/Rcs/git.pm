@@ -12,7 +12,6 @@ my $origin_branch    = 'origin';            # Git ref for main repository
 my $master_branch    = 'master';            # working branch
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
-my $web_commit_msg   = qr/^web commit (by (\w+)|from (\d+\.\d+\.\d+\.\d+)):?(.*)/;
 
 sub _safe_git (&@) { #{{{
 	# Start a child process safely without resorting /bin/sh.
@@ -375,7 +374,7 @@ sub rcs_recentchanges ($) { #{{{
 		push @message, { line => $title };
 
 		if (defined $message[0] &&
-		    $message[0]->{line} =~ m/$web_commit_msg/) {
+		    $message[0]->{line} =~ m/$config{web_commit_regexp}/) {
 			$user=defined $2 ? "$2" : "$3";
 			$message[0]->{line}=$4;
 		} else {
@@ -424,7 +423,7 @@ sub rcs_notify () { #{{{
 	my @changed_pages = map { $_->{'file'} } @{ $ci->{'details'} };
 
 	my ($user, $message);
-	if (@{ $ci->{'comment'} }[0] =~ m/$web_commit_msg/) {
+	if (@{ $ci->{'comment'} }[0] =~ m/$config{web_commit_regexp}/) {
 		$user    = defined $2 ? "$2" : "$3";
 		$message = $4;
 	} else {
