@@ -1,140 +1,71 @@
-So you want to set up your own wiki using ikiwiki? This tutorial will walk
-you through setting up a wiki that is stored in [[Subversion]], [[Git]],
-[[TLA]] or [[Mercurial]], and that has optional support for commits from the web.
+This tutorial will walk you through setting up a wiki with ikiwiki.
 
 1. [[Install]] ikiwiki. See [[download]] for where to get it.
 
 2. Decide where your wiki's files will go.
 
-   Pick three directories for respectively the repository (contains
-   the "master copy" and history); working copy (checked-out
-   files from the repository); and web pages (served by the web server).
+   As a wiki compiler, ikiwiki builds a wiki from files in a source
+   directory, and outputs the files to a destination directory.
 
    For the purposes of this tutorial, we'll set shell variables
    for these locations, and use those variables in the commands that follow.
 
-		REPOSITORY=~/wikirepo
 		SRCDIR=~/wikiwc
 		DESTDIR=~/public_html/wiki/
 
-3. Create the master rcs repository for your wiki.
+3. Create the beginnings of your wiki.
 
-		# Subversion
-		svnadmin create $REPOSITORY
-		svn mkdir file://$REPOSITORY/trunk -m create
-		 
-		# Git
-		mkdir $REPOSITORY
-		cd $REPOSITORY
-		git init-db
-		# Git requires something be in the repo to start with.
-		cp /usr/share/ikiwiki/basewiki/index.mdwn .
-		git add .
-		git commit -m create -a
-		# No need to keep files in the master repository; so at this
-		# stage, you may want to remove all files (except .git) to
-		# save disk space.
+   This will create a simple main page for the wiki.
 
-		# TLA
-		mkdir $REPOSITORY
-		tla make-archive me@localhost--wiki $REPOSITORY
-		tla my-id "<me@localhost>"
-
-		# Mercurial
-		hg init $REPOSITORY
-
-4. Check out the repository to make the working copy that ikiwiki will use
-   as its source directory.
-
-		# Subversion
-		svn co file://$REPOSITORY/trunk ~/wikiwc
-		 
-		# Git
-		# Create a local clone to save disk space and also to
-		# optimize performance. See git-clone(1).
-		git clone -l -s $REPOSITORY $SRCDIR
-
-		# TLA
-		mkdir $SRCDIR
+   		mkdir $SRCDIR
 		cd $SRCDIR
-		tla archive-setup me@localhost--wiki/wiki--0
-		tla init-tree me@localhost--wiki/wiki--0
-	        # Edit {arch}/=tagging-method and change the precious
-		# line to add the .ikiwiki directory to the regexp.
-		tla import
+		$EDITOR index.mdwn
 
-		# Mercurial
-   		# Mercurial uses a single repo approach, so no need to
-		# clone anything. Because the following examples
-		# refer to $SRCDIR, we symlink it:
-		ln -s $REPOSITORY $SRCDIR
+   In the editor, you could start by entering a simple page like this one:
 
-5. Build your wiki for the first time.
+		Welcome to your new wiki.
+
+		All wikis are supposed to have a [[SandBox]], so this one does too.
+
+		----
+
+		This wiki is powered by [ikiwiki](http://ikiwiki.kitenet.net).
+
+   See [[HelpOnFormatting]] for details about the markup language.
+
+   Note that several standard wiki pages will be added to your wiki, from
+   files in `/usr/share/ikiwiki/basewiki/`, so your wiki will automatically
+   get a [[SandBox]], and some other useful pages.
+
+4. Build your wiki for the first time.
 
 		ikiwiki --verbose $SRCDIR $DESTDIR --url=http://host/~you/wiki/
 
    Replace the url with the real url to your wiki. You should now
    be able to visit the url and see your wiki.
 
-6. Customise your wiki. The files in `/usr/share/ikiwiki/basewiki/` are
-   used if you don't have a custom version, so let's start by making a
-   custom version of the wiki's index page:
-
-		cd $SRCDIR
-   		cp /usr/share/ikiwiki/basewiki/index.mdwn .
-		$EDITOR index.mdwn
-		 
-		# Subversion
-		svn add index.mdwn
-		svn commit -m customised index.mdwn
-		 
-		# Git
-		git add index.mdwn
-		git commit -m customised index.mdwn
-		git push origin
-
-		# TLA
-		tla add index.mdwn
-		tla commit
-
-		# Mercurial
-		hg add index.mdwn
-		hg commit -m customised index.mdwn
-
-   You can also add any files you like from scratch of course. Use the same
-   command as in step 5 to rebuild the wiki.
-
-7. Repeat steps 5 and 6 as desired, editing or adding pages and rebuilding
+5. Repeat steps 3 and 4 as desired, editing or adding pages and rebuilding
    the wiki. You can play around with other ikiwiki parameters such as
    `--wikiname` and `--rebuild` too. Get comfortable with its command line
    (see [[usage]]).
 
-8. By now you should be getting tired of typing in all the command line
-   options each time you change something in your wiki's setup. And it's
-   also getting old to have to manualy rebuild the wiki each time you
-   change a file. Time to introduce setup files. 
+6. By now you should be getting tired of typing in all the command line
+   options each time you change something in your wiki's setup. Time to
+   introduce setup files.
    
    A sample setup file is [[ikiwiki.setup]]. Download it (or copy it from
-   `doc/ikiwiki.setup` in the ikiwiki sources), and edit it. 
+   `doc/ikiwiki.setup` in the ikiwiki sources), and edit it.
    
    Most of the options, like `wikiname` in the setup file are the same as
    ikiwiki's command line options (documented in [[usage]]. `srcdir` and
    `destdir` are the two directories you specify when running ikiwiki by
-   hand. `svnrepo` is the path to your subversion repository.  Make sure
-   that all of these are pointing to the right directories, and read
-   through and configure the rest of the file to your liking.
-
-   If you want to use something other than subversion, comment out the
-   subversion configuration, and uncomment and edit the configuration for
-   your chosen RCS. Note that the default file has a block to configure a
-   [[post-commit]] wrapper to update the wiki. You need to uncomment the
-   related block for whatever RCS you use and comment out the other rcs
-   blocks.
+   hand. Make sure that these are pointing to the right directories, and
+   read through and configure the rest of the file to your liking.
 
    When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
-   will set everything up and update your wiki.
+   will set everything up.
 
-9. Turn on additional features.
+7. Turn on additional features.
 
    Now you have a basic wiki with a configuration file. Time to experiment
    with ikiwiki's many features. 
@@ -148,5 +79,65 @@ you through setting up a wiki that is stored in [[Subversion]], [[Git]],
    can uncomment, configure, and enable by re-running
    `ikiwiki --setup ikiwiki.setup`. Be sure to browse through all the
    [[plugins]]..
+
+8. Put your wiki in revision control.
+
+   At this point you might want to check your wiki in to a revision control
+   system you can get history of past changes and revert edits. Depending
+   on the revision control system you choose, the way this is done varies.
+   
+   There's little that's ikiwiki specific about these instructions; this is
+   just how you put a directory under revision control using the various
+   systems ikiwiki supports:
+   
+		# Subversion
+   		REPOSITORY=~/wikirepo
+		svnadmin create $REPOSITORY
+		svn import $SRCDIR file://$REPOSITORY/trunk -m "initial import"
+		rm -rf $SRCDIR
+		svn co file://$REPOSITORY/trunk $SRCDIR
+		 
+		# Git
+   		REPOSITORY=~/wikirepo
+		mkdir $REPOSITORY
+		cd $REPOSITORY
+		git init-db
+		cp -a $SRCDIR/* .
+		git add .
+		git commit -m "initial import" -a
+		rm -rf $SRCDIR
+		git clone -l -s $REPOSITORY $SRCDIR
+
+		# TLA
+   		REPOSITORY=~/wikirepo
+		tla make-archive me@localhost--wiki $REPOSITORY
+		tla my-id "<me@localhost>"
+		cd $SRCDIR
+		tla archive-setup me@localhost--wiki/wiki--0
+		tla init-tree me@localhost--wiki/wiki--0
+	        # Edit {arch}/=tagging-method and change the precious
+		# line to add the .ikiwiki directory to the regexp.
+		tla add *
+		tla import
+
+		# Mercurial
+		REPOSITORY=$SRCDIR
+		hg init $REPOSITORY
+
+9. Configure ikiwiki to use revision control.
+
+   Once your wiki is checked in to the revision control system,
+   you should configure ikiwiki to use revision control. Edit your
+   ikiwiki.setup, and uncomment the lines for the revision control system
+   you chose to use. Be sure to set `svnrepo` to $REPOSITORY, if using
+   subversion. Uncomment the block for the wrapper for your revision
+   control system, and configure the wrapper path in that block
+   appropriately. 
+   
+   Once it's all set up, run `ikiwiki --setup ikiwiki.setup` once more.
+   Now you should be able to edit files in $SRCDIR, and use your revision
+   control system to commit them, and the wiki will automatically update.
+   And in the web interface, RecentChanges should work, and files changed
+   by web users will also be committed using revision control.
 
 10. Enjoy your new wiki! Add yourself to [[IkiWikiUsers]].
