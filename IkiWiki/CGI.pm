@@ -151,11 +151,11 @@ sub cgi_signin ($$) { #{{{
 		
 	decode_form_utf8($form);
 	
-	$form->field(name => "name", required => 0);
+	$form->field(name => "name", required => 0, size => 30);
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "password", type => "password", required => 0);
 	if ($config{openid}) {
-		$form->field(name => "openid_url", label => "OpenID",
+		$form->field(name => "openid_url", label => "OpenID", size => 30,
 			comment => '('.
 				htmllink("", "", "OpenID", 1, 0, "What's this?")
 				.($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">Get an OpenID</a>" : "")
@@ -364,7 +364,7 @@ sub cgi_prefs ($$) { #{{{
 	my $user_name=$session->param("name");
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "name", disabled => 1,
-		value => $user_name, force => 1);
+		value => $user_name, force => 1, size => 30);
 	$form->field(name => "password", type => "password");
 	$form->field(name => "confirm_password", type => "password");
 	$form->field(name => "subscriptions", size => 50,
