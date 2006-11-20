@@ -160,7 +160,7 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "password", type => "password", required => 0);
 	if ($config{openid}) {
 		$form->field(name => "openid_url", label => "OpenID",
-			comment => htmllink("", "", "OpenID", 1, 0, "What's this?"));
+			comment => '('.htmllink("", "", "OpenID", 1, 0, "What's this?").')');
 	}
 	else {
 		$form->field(name => "openid_url", type => "hidden");
