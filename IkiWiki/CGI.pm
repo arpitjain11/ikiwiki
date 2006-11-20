@@ -67,8 +67,6 @@ sub decode_form_utf8 ($) { #{{{
 sub cgi_recentchanges ($) { #{{{
 	my $q=shift;
 	
-	unlockwiki();
-
 	# Optimisation: building recentchanges means calculating lots of
 	# links. Memoizing htmllink speeds it up a lot (can't be memoized
 	# during page builds as the return values may change, but they
@@ -715,6 +713,9 @@ sub cgi (;$$) { #{{{
 	elsif ($do eq 'hyperestraier') {
 		cgi_hyperestraier();
 	}
+
+	# Need to lock the wiki before getting a session.
+	lockwiki();
 	
 	if (! $session) {
 		CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));

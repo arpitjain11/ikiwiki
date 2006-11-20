@@ -102,7 +102,6 @@ sub main () { #{{{
 	getconfig();
 	
 	if ($config{cgi}) {
-		lockwiki();
 		loadindex();
 		require IkiWiki::CGI;
 		cgi();
