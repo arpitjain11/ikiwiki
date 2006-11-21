@@ -342,7 +342,15 @@ sub pingurl (@) { #{{{
 		return;
 	}
 
-	# TODO: daemonize here so slow pings don't slow down wiki updates
+	# daemonize here so slow pings don't slow down wiki updates
+	eval q{use POSIX ’setsid’};
+	chdir '/';
+	open STDIN, '/dev/null';
+	open STDOUT, '>/dev/null';
+	defined(my $pid = fork) or error("Can't fork: $!");
+	return if $pid;
+	setsid() or error("Can't start a new session: $!");
+	open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
 
 	foreach my $page (keys %toping) {
 		my $title=pagetitle(basename($page));

@@ -164,7 +164,6 @@ sub rcs_notify () { #{{{
 	my $head = Mail::Header->new(\*LOG);
 	close(LOG);
 
-	my $message = $head->get("Summary");
 	my $user = $head->get("Creator");
 
 	my $newfiles = $head->get("New-files");
@@ -174,57 +173,27 @@ sub rcs_notify () { #{{{
 	my @changed_pages = grep { !/(^.*\/)?\.arch-ids\/.*\.id$/ }
 		split(/ /, "$newfiles $modfiles $remfiles .arch-ids/fake.id");
 
-	if ($message =~ /$config{web_commit_regexp}/) {
-		$user=defined $2 ? "$2" : "$3";
-		$message=$4;
-	}
-
 	require IkiWiki::UserInfo;
-	my @email_recipients=commit_notify_list($user, @changed_pages);
-	if (@email_recipients) {
-		# TODO: if a commit spans multiple pages, this will send
-		# subscribers a diff that might contain pages they did not
-		# sign up for. Should separate the diff per page and
-		# reassemble into one mail with just the pages subscribed to.
-		my $logs = `tla logs -d $config{srcdir}`;
-		my @changesets = reverse split(/\n/, $logs);
-		my $i;
+	send_commit_mails(
+		sub {
+			my $message = $head->get("Summary");
+			if ($message =~ /$config{web_commit_regexp}/) {
+				$user=defined $2 ? "$2" : "$3";
+				$message=$4;
+			}
+		},
+		sub {
+			my $logs = `tla logs -d $config{srcdir}`;
+			my @changesets = reverse split(/\n/, $logs);
+			my $i;
 
-		for($i=0;$i<$#changesets;$i++) {
-			last if $changesets[$i] eq $rev;
-		}
-
-		my $revminusone = $changesets[$i+1];
-		my $diff=`tla diff -d $ENV{ARCH_TREE_ROOT} $revminusone`;
-
-		my $subject="update of $config{wikiname}'s ";
-		if (@changed_pages > 2) {
-			$subject.="$changed_pages[0] $changed_pages[1] etc";
-		}
-		else {
-			$subject.=join(" ", @changed_pages);
-		}
-		$subject.=" by $user";
-
-		my $template=template("notifymail.tmpl");
-		$template->param(
-			wikiname => $config{wikiname},
-			diff => $diff,
-			user => $user,
-			message => $message,
-		);
-
-		eval q{use Mail::Sendmail};
-		error($@) if $@;
-		foreach my $email (@email_recipients) {
-			sendmail(
-				To => $email,
-				From => "$config{wikiname} <$config{adminemail}>",
-				Subject => $subject,
-				Message => $template->output,
-			) or error("Failed to send update notification mail");
-		}
-	}
+			for($i=0;$i<$#changesets;$i++) {
+				last if $changesets[$i] eq $rev;
+			}
+	
+			my $revminusone = $changesets[$i+1];
+			`tla diff -d $ENV{ARCH_TREE_ROOT} $revminusone`;
+		}, $user, @changed_pages);
 } #}}}
 
 sub rcs_getctime ($) { #{{{
