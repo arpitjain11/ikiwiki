@@ -15,3 +15,11 @@ To sign in to this wiki using OpenID, just enter it in the OpenID field in
 the signin form. (If the field does not appear, OpenID signin is
 disabled.) You do not need to give this wiki a password or go through any
 registration process when using OpenID.
+
+---
+
+It's also possible to make a page in the wiki usable as an OpenID url,
+by delegating it to an openid server. Here's an example of how to do that:
+
+	\[[meta link="http://www.myopenid.com/server" rel="openid.server"]]
+	\[[meta link="http://yourid.myopenid.com/" rel="openid.delegate"]]
