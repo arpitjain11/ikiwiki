@@ -441,7 +441,7 @@ sub rcs_notify () { #{{{
 	# reassemble into one mail with just the pages subscribed to.
 	my $diff = join "\n", run_or_die('git-diff', "${sha1}^", $sha1);
 
-	my $subject = "$config{wikiname} update of ";
+	my $subject="update of $config{wikiname}'s ";
 	if (@changed_pages > 2) {
 		$subject .= "$changed_pages[0] $changed_pages[1] etc";
 	} else {

@@ -197,7 +197,7 @@ sub rcs_notify () { #{{{
 		my $revminusone = $changesets[$i+1];
 		my $diff=`tla diff -d $ENV{ARCH_TREE_ROOT} $revminusone`;
 
-		my $subject="$config{wikiname} update of ";
+		my $subject="update of $config{wikiname}'s ";
 		if (@changed_pages > 2) {
 			$subject.="$changed_pages[0] $changed_pages[1] etc";
 		}

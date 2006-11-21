@@ -224,7 +224,7 @@ sub rcs_notify () { #{{{
 		# reassemble into one mail with just the pages subscribed to.
 		my $diff=`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
 
-		my $subject="$config{wikiname} update of ";
+		my $subject="update of $config{wikiname}'s ";
 		if (@changed_pages > 2) {
 			$subject.="$changed_pages[0] $changed_pages[1] etc";
 		}
