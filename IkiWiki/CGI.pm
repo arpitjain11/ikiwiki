@@ -657,7 +657,7 @@ sub userlink ($) { #{{{
 		my $display=$oid->display;
 		# Convert "user.somehost.com" to "user [somehost.com]".
 		if ($display !~ /\[/) {
-			$display=~s/^(.*?)\.([^.]+.[^.]+)$/$1 [$2]/;
+			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
 		}
 		return "<a href=\"$user\">".escapeHTML($display)."</a>";
 	}
