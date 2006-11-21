@@ -659,6 +659,7 @@ sub userlink ($) { #{{{
 		if ($display !~ /\[/) {
 			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
 		}
+		$display=~s!^https?://!!; # make sure this is removed
 		return "<a href=\"$user\">".escapeHTML($display)."</a>";
 	}
 	else {
