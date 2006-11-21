@@ -56,6 +56,12 @@ sub formbuilder_setup (@) { #{{{
 			}
 		}
 	}
+	elsif ($form->title eq "preferences") {
+		if (! defined $form->field(name => "name")) {
+			$form->field(name => "OpenID", disabled => 1, value =>
+				$session->param("name"), size => 30, force => 1);
+		}
+	}
 }
 
 sub validate ($$$;$) { #{{{

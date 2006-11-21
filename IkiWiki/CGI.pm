@@ -654,7 +654,12 @@ sub userlink ($) { #{{{
 	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
 		# Munge user-urls, as used by eg, OpenID.
 		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
-		return "<a href=\"$user\">".escapeHTML($oid->display)."</a>";
+		my $display=$oid->display;
+		# Convert "user.somehost.com" to "user [somehost.com]".
+		if ($display !~ /\[/) {
+			$display=~s/^(.*?)\.([^.]+.[^.]+)$/$1 [$2]/;
+		}
+		return "<a href=\"$user\">".escapeHTML($display)."</a>";
 	}
 	else {
 		return htmllink("", "", escapeHTML($user), 1);
