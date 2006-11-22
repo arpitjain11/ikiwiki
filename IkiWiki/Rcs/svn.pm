@@ -201,6 +201,12 @@ sub rcs_notify () { #{{{
 	
 	my $user=`svnlook author $config{svnrepo} -r $rev`;
 	chomp $user;
+	
+	my $message=`svnlook log $config{svnrepo} -r $rev`;
+	if ($message=~/$config{web_commit_regexp}/) {
+		$user=defined $2 ? "$2" : "$3";
+		$message=$4;
+	}
 
 	my @changed_pages;
 	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
@@ -213,11 +219,6 @@ sub rcs_notify () { #{{{
 	require IkiWiki::UserInfo;
 	send_commit_mails(
 		sub {
-			my $message=`svnlook log $config{svnrepo} -r $rev`;
-			if ($message=~/$config{web_commit_regexp}/) {
-				$user=defined $2 ? "$2" : "$3";
-				$message=$4;
-			}
 			return $message;
 		},
 		sub {
