@@ -27,7 +27,7 @@ extra_build:
 	./ikiwiki.in doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion \
-		--plugin=nicebundle \
+		--plugin=goodstuff \
 		--plugin=haiku --plugin=polygen --plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
