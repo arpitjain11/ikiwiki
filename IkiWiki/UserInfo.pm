@@ -150,6 +150,8 @@ sub send_commit_mails ($$$@) { #{{{
 		setsid() or error("Can't start a new session: $!");
 		open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
 
+		unlockwiki(); # don't need to keep a lock on the wiki
+
 		eval q{use Mail::Sendmail};
 		error($@) if $@;
 		foreach my $email (@email_recipients) {
@@ -160,6 +162,8 @@ sub send_commit_mails ($$$@) { #{{{
 				Message => $template->output,
 			) or error("Failed to send update notification mail");
 		}
+
+		exit 0; # daemon process done
 	}
 } #}}}
 

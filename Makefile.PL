@@ -27,11 +27,8 @@ extra_build:
 	./ikiwiki.in doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion \
-		--plugin=brokenlinks --plugin=pagecount \
-		--plugin=orphans --plugin=haiku --plugin=meta \
-		--plugin=tag --plugin=polygen --plugin=pagestats \
-		--plugin=fortune --plugin=aggregate --plugin=map \
-		--plugin=template --plugin=toc --plugin=shortcut
+		--plugin=nicebundle \
+		--plugin=haiku --plugin=polygen --plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out

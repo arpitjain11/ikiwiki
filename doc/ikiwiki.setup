@@ -93,9 +93,8 @@ use IkiWiki::Setup::Standard {
 	syslog => 0,
 	
 	# To add plugins, list them here.
-	#add_plugins => [qw{meta tag pagecount brokenlinks search smiley
-	#                   wikitext camelcase pagestats htmltidy fortune
-	#                   sidebar map rst toc linkmap openid}],
+	#add_plugins => [qw{nicebundle openid search wikitext camelcase
+	#                   htmltidy fortune sidebar map rst}],
 	# If you want to disable any of the default plugins, list them here.
 	#disable_plugins => [qw{inline htmlscrubber passwordauth}],
 

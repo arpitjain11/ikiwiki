@@ -352,6 +352,9 @@ sub pingurl (@) { #{{{
 	setsid() or error("Can't start a new session: $!");
 	open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
 
+	# Don't need to keep a lock on the wiki as a daemon.
+	IkiWiki::unlockwiki();
+
 	foreach my $page (keys %toping) {
 		my $title=pagetitle(basename($page));
 		my $url="$config{url}/".htmlpage($page);
@@ -375,6 +378,8 @@ sub pingurl (@) { #{{{
 			}
 		}
 	}
+
+	exit 0; # daemon done
 } #}}}
 
 1

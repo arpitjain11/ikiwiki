@@ -9,6 +9,12 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Add openidsignup config option.
   * Make the openid plugin support the callbacks from myopenid.com via its
     affiliate program.
+  * Add toggle plugin.
+  * Introduce the nicebundle. This is a kind of plugin, that just enables
+    many other plugins. It's an easy way to boost ikiwiki from its default,
+    basic wiki, to a full-featured wiki, without manually picking the right
+    set of plugins. New plugins will be added to the nicebundle from time to
+    time.
   * Change how post signin actions are propigated through the signin process;
     they're now stored in the session.
   * Add optional "desc" parameter to shortcut definitions.
@@ -35,7 +41,7 @@ ikiwiki (1.34) UNRELEASED; urgency=low
     time/hang if the mail server is unhappy.
   * Factor out commit mail sending code into new function.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 21 Nov 2006 11:58:30 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 21 Nov 2006 19:25:14 -0500
 
 ikiwiki (1.33) unstable; urgency=low
 

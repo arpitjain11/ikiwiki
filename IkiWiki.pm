@@ -116,18 +116,23 @@ sub checkconfig () { #{{{
 } #}}}
 
 sub loadplugins () { #{{{
-	foreach my $plugin (@{$config{plugin}}) {
-		my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
-		eval qq{use $mod};
-		if ($@) {
-			error("Failed to load plugin $mod: $@");
-		}
-	}
+	loadplugin($_) foreach @{$config{plugin}};
+	
 	run_hooks(getopt => sub { shift->() });
 	if (grep /^-/, @ARGV) {
 		print STDERR "Unknown option: $_\n"
 			foreach grep /^-/, @ARGV;
 		usage();
+	}
+} #}}}
+
+sub loadplugin ($) { #{{{
+	my $plugin=shift;
+
+	my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
+	eval qq{use $mod};
+	if ($@) {
+		error("Failed to load plugin $mod: $@");
 	}
 } #}}}
 
