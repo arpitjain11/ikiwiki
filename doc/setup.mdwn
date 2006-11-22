@@ -10,24 +10,28 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    For the purposes of this tutorial, we'll set shell variables
    for these locations, and use those variables in the commands that follow.
 
-		SRCDIR=~/wikiwc
-		DESTDIR=~/public_html/wiki/
+			SRCDIR=~/wikiwc
+			DESTDIR=~/public_html/wiki/
 
 3. Create the beginnings of your wiki.
 
    This will create a simple main page for the wiki.
 
-   		mkdir $SRCDIR
-		cd $SRCDIR
-		$EDITOR index.mdwn
+   			mkdir $SRCDIR
+			cd $SRCDIR
+			$EDITOR index.mdwn
 
-   In the editor, you could start by entering a simple page like this one:
-
-		Welcome to your new wiki.
-		All wikis are supposed to have a [[SandBox]], so this one does too.
-		----
-		This wiki is powered by [ikiwiki](http://ikiwiki.kitenet.net).
-
+   In the editor, you could start by entering a simple page like 
+   [[toggle id=page text="this one"]].
+   
+   [[toggleable id=page text="""
+   			Welcome to your new wiki.
+	   		All wikis are supposed to have a [[SandBox]],
+	   		so this one does too.
+	   		----
+	   		This wiki is powered by [ikiwiki](http://ikiwiki.kitenet.net).
+   """]]
+   
    See [[HelpOnFormatting]] for details about the markup language.
 
    Note that several standard wiki pages will be added to your wiki, from
@@ -36,7 +40,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 
 4. Build your wiki for the first time.
 
-		ikiwiki --verbose $SRCDIR $DESTDIR --url=http://host/~you/wiki/
+			ikiwiki --verbose $SRCDIR $DESTDIR --url=http://host/~you/wiki/
 
    Replace the url with the real url to your wiki. You should now
    be able to visit the url and see your wiki.
@@ -85,41 +89,49 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    
    There's little that's ikiwiki specific about these instructions; this is
    just how you put a directory under revision control using the various
-   systems ikiwiki supports:
+   systems that ikiwiki supports.
+
+   [[toggle id=subversion text="Subversion"]]
+   [[toggleable id=subversion text="""
+			REPOSITORY=~/wikirepo
+			svnadmin create $REPOSITORY
+			svn import $SRCDIR file://$REPOSITORY/trunk -m "initial import"
+			rm -rf $SRCDIR
+			svn co file://$REPOSITORY/trunk $SRCDIR
+   """]]
    
-		# Subversion
-   		REPOSITORY=~/wikirepo
-		svnadmin create $REPOSITORY
-		svn import $SRCDIR file://$REPOSITORY/trunk -m "initial import"
-		rm -rf $SRCDIR
-		svn co file://$REPOSITORY/trunk $SRCDIR
-		 
-		# Git
-   		REPOSITORY=~/wikirepo
-		mkdir $REPOSITORY
-		cd $REPOSITORY
-		git init-db
-		cp -a $SRCDIR/* .
-		git add .
-		git commit -m "initial import" -a
-		rm -rf $SRCDIR
-		git clone -l -s $REPOSITORY $SRCDIR
+   [[toggle id=git text="Git"]]
+   [[toggleable id=git text="""
+   			REPOSITORY=~/wikirepo
+   			mkdir $REPOSITORY
+   			cd $REPOSITORY
+   			git init-db
+   			cp -a $SRCDIR/* .
+   			git add .
+   			git commit -m "initial import" -a
+   			rm -rf $SRCDIR
+   			git clone -l -s $REPOSITORY $SRCDIR
+   """]]
 
-		# TLA
-   		REPOSITORY=~/wikirepo
-		tla make-archive me@localhost--wiki $REPOSITORY
-		tla my-id "<me@localhost>"
-		cd $SRCDIR
-		tla archive-setup me@localhost--wiki/wiki--0
-		tla init-tree me@localhost--wiki/wiki--0
-	        # Edit {arch}/=tagging-method and change the precious
-		# line to add the .ikiwiki directory to the regexp.
-		tla add *
-		tla import
+   [[toggle id=tla text="TLA"]]
+   [[toggleable id=tla text="""
+   			REPOSITORY=~/wikirepo
+   			tla make-archive me@localhost--wiki $REPOSITORY
+   			tla my-id "<me@localhost>"
+   			cd $SRCDIR
+   			tla archive-setup me@localhost--wiki/wiki--0
+   			tla init-tree me@localhost--wiki/wiki--0
+   			# Edit {arch}/=tagging-method and change the precious
+   			# line to add the .ikiwiki directory to the regexp.
+   			tla add *
+   			tla import
+   """]]
 
-		# Mercurial
-		REPOSITORY=$SRCDIR
-		hg init $REPOSITORY
+   [[toggle id=mercurial text="Mercurial"]]
+   [[toggleable id=mercurial text="""
+			REPOSITORY=$SRCDIR
+			hg init $REPOSITORY
+   """]]
 
 9. Configure ikiwiki to use revision control.
 
