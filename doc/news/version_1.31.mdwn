@@ -1,5 +1,6 @@
-ikiwiki 1.31 released with these changes:
+ikiwiki 1.31 released with [[toggle text="these changes"]]
 
+[[toggleable text="""
    * Patch from Pawel Tecza to cp -a the templates in the Makefile.
    * Change the rss feed title from the wikiname to the page title, with
      an exception for the wiki's toplevel index page, which will still use the
@@ -14,3 +15,4 @@ ikiwiki 1.31 released with these changes:
    * Add missing dependency on the URI perl module.
    * Add basic spam fighting tool for admins: An admin's prefs page now allows
      editing a list of banned users.
+"""]]

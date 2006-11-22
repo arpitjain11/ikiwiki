@@ -1,5 +1,6 @@
-ikiwiki 1.33 released with these changes:
+ikiwiki 1.33 released with [[toggle text="these changes"]]
 
+[[toggleable text="""
    * Fix issue with aggregate plugin updating expired pages.
    * Avoid syntax errors in templates used by the template plugin crashing
      ikiwiki.
@@ -14,3 +15,4 @@ ikiwiki 1.33 released with these changes:
      hardcode the submit buttons in editpage.tmpl instead of using the
      template variable, which is ok, since the buttons are static.
    * Work with hyperestraier 1.4.9.
+"""]]

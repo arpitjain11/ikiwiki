@@ -1,5 +1,6 @@
-ikiwiki 1.32 released with these changes:
+ikiwiki 1.32 released with [[toggle text="these changes"]]
 
+[[toggleable text="""
    * Add a separate pass to find page links, and only render each page once,
      instead of over and over. Typical speedup is ~4x. Max possible speedup:
      8x.
@@ -34,3 +35,4 @@ ikiwiki 1.32 released with these changes:
    * Patch from James Westby to support podcasting, photoblogging, vidcasting,
      or what have you, by creating enclosures for non-page items that are
      included in feeds.
+"""]]
