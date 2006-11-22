@@ -62,10 +62,25 @@ sub import { #{{{
 	hook(type => "format", id => "toggle", call => \&format);
 } # }}}
 
+sub genid ($$) { #{{{
+	my $page=shift;
+	my $id=shift;
+
+	$id="$page.$id";
+
+	# make it a legal html id attribute
+	$id=~s/[^-a-zA-Z0-9.]/-/g;
+	if ($id !~ /^[a-zA-Z]/) {
+		$id="id$id";
+	}
+	return $id;
+} #}}}
+
 sub preprocess_toggle (@) { #{{{
 	my %params=(id => "default", text => "more", @_);
 
-	return "<a class=\"toggle\" href=\"#$params{page}.$params{id}\">$params{text}</a>";
+	my $id=genid($params{page}, $params{id});
+	return "<a class=\"toggle\" href=\"#$id\">$params{text}</a>";
 } # }}}
 
 sub preprocess_toggleable (@) { #{{{
@@ -75,10 +90,12 @@ sub preprocess_toggleable (@) { #{{{
 	# embedded inside it. This is why scan is set for this preprocessor
 	# directive, since it could expand to something with a link in it.
 	$params{text}=IkiWiki::preprocess($params{page}, $params{destpage}, $params{text});
+	
+	my $id=genid($params{page}, $params{id});
 
 	# Should really be a postprocessor directive, oh well. Work around
 	# markdown's dislike of markdown inside a <div>.
-	return "<div class=\"toggleable\" id=\"$params{page}.$params{id}\"></div>\n\n$params{text}<div class=\"toggleableend\"></div>";
+	return "<div class=\"toggleable\" id=\"$id\"></div>\n\n$params{text}\n<div class=\"toggleableend\"></div>";
 } # }}}
 
 sub format (@) { #{{{
