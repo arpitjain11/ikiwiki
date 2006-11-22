@@ -1,0 +1,13 @@
+This is an [[example_software_package_website|index]].
+Just copy the softwaresite subdirectory into your wiki to quickly produce
+a website for a piece of software.
+
+Some additional configuration you might want to do:
+
+* Make sure to configure ikiwiki to generate RSS or Atom feeds.
+
+* The softwaresite/doc subdirectory is intended to hold docs about your
+  software package. These docs can be included in the package itself;
+  there is a [[softwaresite/doc/Makefile]] that will use ikiwiki to build
+  static html documentation from the docs directory. ikiwiki itself uses a
+  similar system to build its documentation.
