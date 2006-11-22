@@ -38,10 +38,19 @@ sub rcs_prepedit ($) { #{{{
 	}
 } #}}}
 
-sub rcs_commit ($$$) { #{{{
+sub rcs_commit ($$$;$$) { #{{{
 	my $file=shift;
 	my $message=shift;
 	my $rcstoken=shift;
+	my $user=shift;
+	my $ipaddr=shift;
+
+	if (defined $user) {
+		$message="web commit by $user".(length $message ? ": $message" : "");
+	}
+	elsif (defined $ipaddr) {
+		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+	}
 
 	if (-d "$config{srcdir}/{arch}") {
 		# Check to see if the page has been changed by someone

@@ -294,12 +294,19 @@ sub rcs_prepedit ($) { #{{{
 	return git_sha1($file);
 } #}}}
 
-sub rcs_commit ($$$) { #{{{
+sub rcs_commit ($$$;$$) { #{{{
 	# Try to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on
 	# failure.
 
-	my ($file, $message, $rcstoken) = @_;
+	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
+
+	if (defined $user) {
+		$message="web commit by $user".(length $message ? ": $message" : "");
+	}
+	elsif (defined $ipaddr) {
+		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+	}
 
 	# XXX: Wiki directory is in the unlocked state when starting this
 	# action.  But it takes time for a Git process to finish its job

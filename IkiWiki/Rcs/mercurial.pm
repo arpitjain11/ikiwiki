@@ -66,7 +66,14 @@ sub rcs_prepedit ($) { #{{{
 } #}}}
 
 sub rcs_commit ($$$) { #{{{
-	my ($file, $message, $rcstoken) = @_;
+	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
+
+	if (defined $user) {
+		$message="web commit by $user".(length $message ? ": $message" : "");
+	}
+	elsif (defined $ipaddr) {
+		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+	}
 
 	$message = possibly_foolish_untaint($message);
 

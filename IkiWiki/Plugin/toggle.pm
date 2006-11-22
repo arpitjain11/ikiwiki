@@ -94,8 +94,11 @@ sub preprocess_toggleable (@) { #{{{
 	my $id=genid($params{page}, $params{id});
 
 	# Should really be a postprocessor directive, oh well. Work around
-	# markdown's dislike of markdown inside a <div>.
-	return "<div class=\"toggleable\" id=\"$id\"></div>\n\n$params{text}\n<div class=\"toggleableend\"></div>";
+	# markdown's dislike of markdown inside a <div> with various funky
+	# whitespace.
+	my ($indent)=$params{text}=~/( +)$/;
+	$indent="" unless defined $indent;
+	return "<div class=\"toggleable\" id=\"$id\"></div>\n\n$params{text}\n$indent<div class=\"toggleableend\"></div>";
 } # }}}
 
 sub format (@) { #{{{

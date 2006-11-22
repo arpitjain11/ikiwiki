@@ -40,8 +40,11 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Daemonize before sending commit mails, as that can also take a long
     time/hang if the mail server is unhappy.
   * Factor out commit mail sending code into new function.
+  * Change rcs_commit, it is now passed the name of the user doing the commit
+    and their IP address, and needs to construct its own commit message
+    containing them, or do something more appropriate for the given RCS.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 21 Nov 2006 19:25:14 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed, 22 Nov 2006 09:08:37 -0500
 
 ikiwiki (1.33) unstable; urgency=low
 

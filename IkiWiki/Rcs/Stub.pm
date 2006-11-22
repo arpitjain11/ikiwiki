@@ -20,7 +20,7 @@ sub rcs_prepedit ($) {
 	return ""
 }
 
-sub rcs_commit ($$$) {
+sub rcs_commit ($$$;$$) {
 	# Tries to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on failure.
 	# The file is relative to the srcdir.

@@ -60,13 +60,22 @@ sub rcs_prepedit ($) { #{{{
 	}
 } #}}}
 
-sub rcs_commit ($$$) { #{{{
+sub rcs_commit ($$$;$$) { #{{{
 	# Tries to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on failure.
 	# The file is relative to the srcdir.
 	my $file=shift;
 	my $message=shift;
 	my $rcstoken=shift;
+	my $user=shift;
+	my $ipaddr=shift;
+
+	if (defined $user) {
+		$message="web commit by $user".(length $message ? ": $message" : "");
+	}
+	elsif (defined $ipaddr) {
+		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+	}
 
 	if (-d "$config{srcdir}/.svn") {
 		# Check to see if the page has been changed by someone

@@ -478,20 +478,13 @@ sub cgi_editpage ($$) { #{{{
 		$content=~s/\r/\n/g;
 		writefile($file, $config{srcdir}, $content);
 		
-		my $message="web commit ";
-		if (defined $session->param("name") && 
-		    length $session->param("name")) {
-			$message.="by ".$session->param("name");
-		}
-		else {
-			$message.="from $ENV{REMOTE_ADDR}";
-		}
-		if (defined $form->field('comments') &&
-		    length $form->field('comments')) {
-			$message.=": ".$form->field('comments');
-		}
-		
 		if ($config{rcs}) {
+			my $message="";
+			if (defined $form->field('comments') &&
+			    length $form->field('comments')) {
+				$message=$form->field('comments');
+			}
+			
 			if ($newfile) {
 				rcs_add($file);
 			}
@@ -500,7 +493,8 @@ sub cgi_editpage ($$) { #{{{
 			# presumably the commit will trigger an update
 			# of the wiki
 			my $conflict=rcs_commit($file, $message,
-				$form->field("rcsinfo"));
+				$form->field("rcsinfo"),
+				$session->param("name"), $ENV{REMOTE_ADDR});
 		
 			if (defined $conflict) {
 				$form->field(name => "rcsinfo", value => rcs_prepedit($file),
