@@ -1,0 +1,25 @@
+[[meta title="OpenID"]]
+
+[OpenID](http://openid.net) is a decentralized authentication mechanism
+that allows you to have one login that you can use on a growing number of
+websites.
+
+To sign up for an OpenID, visit one of the following identity providers:
+
+* [MyOpenID](https://www.myopenid.com/affiliate_signup?affiliate_id=26)
+* [GetOpenID](https://getopenid.com/)
+* [LiveJournal](http://www.livejournal.com/openid/)
+* or any of the many others out there..
+
+To sign in to this wiki using OpenID, just enter it in the OpenID field in
+the signin form. (If the field does not appear, OpenID signin is
+disabled.) You do not need to give this wiki a password or go through any
+registration process when using OpenID.
+
+---
+
+It's also possible to make a page in the wiki usable as an OpenID url,
+by delegating it to an openid server. Here's an example of how to do that:
+
+	\[[meta link="http://www.myopenid.com/server" rel="openid.server"]]
+	\[[meta link="http://yourid.myopenid.com/" rel="openid.delegate"]]
