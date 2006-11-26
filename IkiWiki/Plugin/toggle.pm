@@ -58,7 +58,7 @@ sub import { #{{{
 	hook(type => "preprocess", id => "toggle",
 		call => \&preprocess_toggle);
 	hook(type => "preprocess", id => "toggleable",
-		call => \&preprocess_toggleable, scan => 1);
+		call => \&preprocess_toggleable);
 	hook(type => "format", id => "toggle", call => \&format);
 } # }}}
 
@@ -87,8 +87,7 @@ sub preprocess_toggleable (@) { #{{{
 	my %params=(id => "default", text => "", @_);
 
 	# Preprocess the text to expand any preprocessor directives
-	# embedded inside it. This is why scan is set for this preprocessor
-	# directive, since it could expand to something with a link in it.
+	# embedded inside it.
 	$params{text}=IkiWiki::preprocess($params{page}, $params{destpage}, $params{text});
 	
 	my $id=genid($params{page}, $params{id});
