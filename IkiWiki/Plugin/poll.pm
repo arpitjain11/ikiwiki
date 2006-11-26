@@ -108,7 +108,7 @@ sub cgi ($) { #{{{
 			if (--$num == 0) {
 				$params=~s/(^|\s+)(\d+)\s+"?\Q$choice\E"?(\s+|$)/$1.($2+1)." \"$choice\"".$3/se;
 				if (defined $oldchoice) {
-					$params=~s/(^|\s+)(\d+)\s+"?\Q$oldchoice\E"?(\s+|$)/$1.($2-1)." \"$oldchoice\"".$3/se;
+					$params=~s/(^|\s+)(\d+)\s+"?\Q$oldchoice\E"?(\s+|$)/$1.($2-1 >=0 ? $2-1 : 0))." \"$oldchoice\"".$3/se;
 				}
 			}
 			return "[[poll $params]]";
