@@ -37,6 +37,7 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Fix nested examples directory in deb.
   * Add a test suite for the mercurial backend, contributed by Emanuele Aina.
   * Add a test suite for the svn backend.
+  * Add a test suite for the git backend, from Recai 
   * Daemonize before sending RPC pings, since that can take a while
     and/or hang.
   * Daemonize before sending commit mails, as that can also take a long
@@ -48,8 +49,8 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Add softwaresite example.
   * Mercurial backend improvements, including --get-ctime support. (Emanuele
     Aina)
-  * Git backend improvements, including bug fixes and better robustness.
-    (Recai Oktaş)
+  * Git backend improvements, including bug fixes and better robustness,
+    from Recai.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 26 Nov 2006 15:01:14 -0500
 
