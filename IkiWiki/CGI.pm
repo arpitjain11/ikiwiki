@@ -168,6 +168,7 @@ sub cgi_postsignin ($$) { #{{{
 		my $postsignin=CGI->new($session->param("postsignin"));
 		$session->clear("postsignin");
 		cgi($postsignin, $session);
+		cgi_savesession($session);
 		exit;
 	}
 	else {
@@ -523,12 +524,35 @@ sub cgi_editpage ($$) { #{{{
 	}
 } #}}}
 
+sub cgi_getsession ($) { #{{{
+	my $q=shift;
+
+	eval q{use CGI::Session};
+	CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
+	
+	my $oldmask=umask(077);
+	my $session = CGI::Session->new("driver:DB_File", $q,
+		{ FileName => "$config{wikistatedir}/sessions.db" });
+	umask($oldmask);
+
+	return $session;
+} #}}}
+
+sub cgi_savesession ($) { #{{{
+	my $session=shift;
+
+	# Force session flush with safe umask.
+	my $oldmask=umask(077);
+	$session->flush;
+	umask($oldmask);
+}
+
 sub cgi (;$$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
 	if (! $q) {
-		eval q{use CGI; use CGI::Session};
+		eval q{use CGI};
 		error($@) if $@;
 	
 		$q=CGI->new;
@@ -560,12 +584,7 @@ sub cgi (;$$) { #{{{
 	lockwiki();
 	
 	if (! $session) {
-		CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
-	
-		my $oldmask=umask(077);
-		$session = CGI::Session->new("driver:DB_File", $q,
-			{ FileName => "$config{wikistatedir}/sessions.db" });
-		umask($oldmask);
+		$session=cgi_getsession($q);
 	}
 	
 	# Auth hooks can sign a user in.
@@ -595,12 +614,7 @@ sub cgi (;$$) { #{{{
 			$session->param(postsignin => $ENV{QUERY_STRING});
 		}
 		cgi_signin($q, $session);
-	
-		# Force session flush with safe umask.
-		my $oldmask=umask(077);
-		$session->flush;
-		umask($oldmask);
-		
+		cgi_savesession($session);
 		return;
 	}
 	elsif (defined $session->param("postsignin")) {
@@ -611,6 +625,7 @@ sub cgi (;$$) { #{{{
 		print $q->header(-status => "403 Forbidden");
 		$session->delete();
 		print "You are banned.";
+		cgi_savesession($session);
 		exit;
 	}
 	
