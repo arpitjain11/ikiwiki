@@ -171,10 +171,12 @@ sub _parse_diff_tree (@) { #{{{
 		# Regexps are semi-stolen from gitweb.cgi.
 		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
 			$ci{'tree'} = $1;
-		} elsif ($line =~ m/^parent ([0-9a-fA-F]{40})$/) {
+		}
+		elsif ($line =~ m/^parent ([0-9a-fA-F]{40})$/) {
 			# XXX: collecting in reverse order
 			push @{ $ci{'parents'} }, $1;
-		} elsif ($line =~ m/^(author|committer) (.*) ([0-9]+) (.*)$/) {
+		}
+		elsif ($line =~ m/^(author|committer) (.*) ([0-9]+) (.*)$/) {
 			my ($who, $name, $epoch, $tz) =
 			   ($1,   $2,    $3,     $4 );
 
@@ -186,11 +188,13 @@ sub _parse_diff_tree (@) { #{{{
 				my ($fullname, $username) = ($1, $2);
 				$ci{"${who}_fullname"}    = $fullname;
 				$ci{"${who}_username"}    = $username;
-			} else {
+			}
+			else {
 				$ci{"${who}_fullname"} =
 					$ci{"${who}_username"} = $name;
 			}
-		} elsif ($line =~ m/^$/) {
+		}
+		elsif ($line =~ m/^$/) {
 			# Trailing empty line signals next section.
 			last IDENT;
 		}
@@ -303,10 +307,12 @@ sub rcs_commit ($$$;$$) { #{{{
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
 	if (defined $user) {
-		$message="web commit by $user".(length $message ? ": $message" : "");
+		$message = "web commit by $user" .
+		    (length $message ? ": $message" : "");
 	}
 	elsif (defined $ipaddr) {
-		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+		$message = "web commit from $ipaddr" .
+		    (length $message ? ": $message" : "");
 	}
 
 	# XXX: Wiki directory is in the unlocked state when starting this
@@ -386,9 +392,10 @@ sub rcs_recentchanges ($) { #{{{
 
 		if (defined $messages[0] &&
 		    $messages[0]->{line} =~ m/$config{web_commit_regexp}/) {
-			$user=defined $2 ? "$2" : "$3";
-			$messages[0]->{line}=$4;
-		} else {
+			$user = defined $2 ? "$2" : "$3";
+			$messages[0]->{line} = $4;
+		}
+		else {
 			$type ="git";
 			$user = $ci->{'author_username'};
 		}
@@ -436,7 +443,8 @@ sub rcs_notify () { #{{{
 	if (@{ $ci->{'comment'} }[0] =~ m/$config{web_commit_regexp}/) {
 		$user    = defined $2 ? "$2" : "$3";
 		$message = $4;
-	} else {
+	}
+	else {
 		$user    = $ci->{'author_username'};
 		$message = join "\n", @{ $ci->{'comment'} };
 	}
@@ -448,7 +456,8 @@ sub rcs_notify () { #{{{
 		},
 		sub {
 			join "\n", run_or_die('git-diff', "${sha1}^", $sha1);
-		}, $user, @changed_pages);
+		}, $user, @changed_pages
+	);
 } #}}}
 
 sub rcs_getctime ($) { #{{{
