@@ -42,7 +42,8 @@ sub preprocess_inline (@) { #{{{
 	my $archive=yesno($params{archive});
 	my $rss=($config{rss} && exists $params{rss}) ? yesno($params{rss}) : $config{rss};
 	my $atom=($config{atom} && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
-	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : 1;
+	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
+	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}
@@ -112,22 +113,21 @@ sub preprocess_inline (@) { #{{{
 		my $file = $pagesources{$page};
 		my $type = pagetype($file);
 		if (! $raw || ($raw && ! defined $type)) {
-			# Get the content before populating the template,
-			# since getting the content uses the same template
-			# if inlines are nested.
-			# TODO: if $archive=1, the only reason to do this
-			# is to let the meta plugin get page title info; so stop
-			# calling this next line then once the meta plugin can
-			# store that accross runs (also tags plugin).
-			my $content=get_inline_content($page, $params{destpage});
-			# Don't use htmllink because this way the title is separate
-			# and can be overridden by other plugins.
+			if (! $archive && $quick) {
+				# Get the content before populating the
+				# template, since getting the content uses
+				# the same template if inlines are nested.
+				my $content=get_inline_content($page, $params{destpage});
+				$template->param(content => $content);
+			}
+			# Don't use htmllink because this way the
+			# title is separate and can be overridden by
+			# other plugins.
 			my $link=bestlink($params{page}, $page);
 			$link=htmlpage($link) if defined $type;
 			$link=abs2rel($link, dirname($params{destpage}));
 			$template->param(pageurl => $link);
 			$template->param(title => pagetitle(basename($page)));
-			$template->param(content => $content);
 			$template->param(ctime => displaytime($pagectime{$page}));
 
 			if ($actions) {

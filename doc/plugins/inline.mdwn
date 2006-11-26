@@ -29,6 +29,8 @@ directive:
 * `rootpage` - Enables a form to post new pages to a [[blog]].
 * `archive` - If set to "yes", only list page titles and some metadata, not
   full controls.
+* `quick` - Build archives in quick mode, without reading page contents for
+  metadata. By default, this also turns off generation of any feeds.
 * `raw` - Rather than the default behavior of creating a [[blog]],
   if raw is set to "yes", the page will be included raw, without additional
   markup around it, as if it were a literal part of the source of the 
