@@ -45,7 +45,7 @@ sub preprocess (@) { #{{{
 
 	my $ret="";
 	foreach my $choice (@choices) {
-		my $percent=int($choices{$choice} / $total * 100);
+		my $percent=$total > 0 ? int($choices{$choice} / $total * 100) : 0;
 		if ($percent) {
 			$ret.="$choice ($percent%) ";
 		}

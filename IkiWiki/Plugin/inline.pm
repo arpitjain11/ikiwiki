@@ -113,7 +113,7 @@ sub preprocess_inline (@) { #{{{
 		my $file = $pagesources{$page};
 		my $type = pagetype($file);
 		if (! $raw || ($raw && ! defined $type)) {
-			if (! $archive && $quick) {
+			unless ($archive && $quick) {
 				# Get the content before populating the
 				# template, since getting the content uses
 				# the same template if inlines are nested.
