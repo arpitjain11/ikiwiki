@@ -94,6 +94,7 @@ sub cgi ($) { #{{{
 		if (defined $oldchoice && $oldchoice eq $choice) {
 			# Same vote; no-op.
 			IkiWiki::redirect($cgi, "$config{url}/".htmlpage($page));
+			exit;
 		}
 
 		my $content=readfile(srcfile($pagesources{$page}));
@@ -104,28 +105,13 @@ sub cgi ($) { #{{{
 			my $escape=shift;
 			my $params=shift;
 			return "\\[[poll $params]]" if $escape;
-			return $params unless --$num == 0;
-			my @bits=split(' ', $params);
-			my @ret;
-			while (@bits) {
-				my $n=shift @bits;
-				if ($n=~/=/) {
-					# val=param setting
-					push @ret, $n;
-					next;
+			if (--$num == 0) {
+				$params=~s/(^|\s+)(\d+)\s+"?\Q$choice\E"?(\s+|$)/$1.($2+1)." \"$choice\"".$3/se;
+				if (defined $oldchoice) {
+					$params=~s/(^|\s+)(\d+)\s+"?\Q$oldchoice\E"?(\s+|$)/$1.($2-1)." \"$oldchoice\"".$3/se;
 				}
-				my $c=shift @bits;
-				$c=~s/^"(.*)"/$1/g;
-				next unless defined $n && defined $c;
-				if ($c eq $choice) {
-					$n++;
-				}
-				if (defined $oldchoice && $c eq $oldchoice) {
-					$n--;
-				}
-				push @ret, $n, "\"$c\"";
 			}
-			return "[[poll ".join(" ", @ret)."]]";
+			return "[[poll $params]]";
 		};
 		$content =~ s{(\\?)\[\[poll\s+([^]]+)\s*\]\]}{$edit->($1, $2)}seg;
 
