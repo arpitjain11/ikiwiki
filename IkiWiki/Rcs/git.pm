@@ -153,14 +153,15 @@ sub _parse_diff_tree (@) { #{{{
 	my ($dt_ref) = @_;
 
 	# End of stream?
-	return if !defined @{ $dt_ref } || !length @{ $dt_ref }[0];
+	return if !defined @{ $dt_ref } ||
+		  !defined @{ $dt_ref }[0] || !length @{ $dt_ref }[0];
 
 	my %ci;
 	# Header line.
 	HEADER: while (my $line = shift @{ $dt_ref }) {
 		return if $line !~ m/^(.+) ($sha1_pattern)/;
 
-		my $sha1 = $1;
+		my $sha1 = $2;
 		$ci{'sha1'} = $sha1;
 		last HEADER;
 	}
@@ -195,10 +196,10 @@ sub _parse_diff_tree (@) { #{{{
 		}
 	}
 
-	error("No 'tree' or 'parents' seen in diff-tree output")
+	debug("No 'tree' or 'parents' seen in diff-tree output")
 	    if !defined $ci{'tree'} || !defined $ci{'parents'};
 
-	$ci{'parent'} = @{ $ci{'parents'} }[0];
+	$ci{'parent'} = @{ $ci{'parents'} }[0] if defined $ci{'parents'};
 
 	# Commit message.
 	COMMENT: while (my $line = shift @{ $dt_ref }) {
@@ -239,14 +240,14 @@ sub _parse_diff_tree (@) { #{{{
 		last FILE;
 	}
 
-	warn "No detail in diff-tree output" if !defined $ci{'details'};
+	debug("No detail in diff-tree output") if !defined $ci{'details'};
 
 	return \%ci;
 } #}}}
 
-sub git_commit_info (;$$) { #{{{
+sub git_commit_info ($;$) { #{{{
 	# Return an array of commit info hashes of num commits (default: 1)
-	# starting from the given sha1sum (default: HEAD).
+	# starting from the given sha1sum.
 
 	my ($sha1, $num) = @_;
 
@@ -254,7 +255,7 @@ sub git_commit_info (;$$) { #{{{
 
 	my @raw_lines =
 	    run_or_die(qq{git-rev-list --max-count=$num $sha1 |
-		          git-diff-tree --stdin --pretty=raw -M -r});
+		          git-diff-tree --stdin --pretty=raw --always -M -m -r});
 
 	my @ci;
 	while (my $parsed = _parse_diff_tree(\@raw_lines)) {
@@ -352,17 +353,19 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use Date::Parse};
 	error($@) if $@;
 
-	my ($sha1, $type, $when, $diffurl, $user, @pages, @message, @rets);
+	my @rets;
 	INFO: foreach my $ci (git_commit_info('HEAD', $num)) {
 		my $title = @{ $ci->{'comment'} }[0];
 
 		# Skip redundant commits.
 		next INFO if ($title eq $dummy_commit_msg);
 
-		$sha1 = $ci->{'sha1'};
-		$type = "web";
-		$when = time - $ci->{'author_epoch'};
+		my ($sha1, $when) = (
+			$ci->{'sha1'},
+			time - $ci->{'author_epoch'}
+		);
 
+		my (@pages, @messages);
 		DETAIL: foreach my $detail (@{ $ci->{'details'} }) {
 			my $diffurl = $config{'diffurl'};
 			my $file    = $detail->{'file'};
@@ -377,13 +380,14 @@ sub rcs_recentchanges ($) { #{{{
 				diffurl => $diffurl,
 			};
 		}
+		push @messages, { line => $title };
 
-		push @message, { line => $title };
+		my ($user, $type) = (q{}, "web");
 
-		if (defined $message[0] &&
-		    $message[0]->{line} =~ m/$config{web_commit_regexp}/) {
+		if (defined $messages[0] &&
+		    $messages[0]->{line} =~ m/$config{web_commit_regexp}/) {
 			$user=defined $2 ? "$2" : "$3";
-			$message[0]->{line}=$4;
+			$messages[0]->{line}=$4;
 		} else {
 			$type ="git";
 			$user = $ci->{'author_username'};
@@ -394,12 +398,11 @@ sub rcs_recentchanges ($) { #{{{
 			user       => $user,
 			committype => $type,
 			when       => $when,
-			message    => [@message],
+			message    => [@messages],
 			pages      => [@pages],
-		} if @pages;
+		};
 
-		$sha1 = $type = $when = $diffurl = $user = undef;
-		@pages = @message = ();
+		last INFO if @rets >= $num;
 	}
 
 	return @rets;
