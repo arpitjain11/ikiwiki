@@ -22,7 +22,7 @@ sub preprocess (@) { #{{{
 
 	my $open=yesno($params{open});
 	my $showtotal=yesno($params{total});
-	my $percent=yesno($params{percent});
+	my $showpercent=yesno($params{percent});
 	$pagenum{$params{page}}++;
 
 	my %choices;
@@ -46,7 +46,7 @@ sub preprocess (@) { #{{{
 	my $ret="";
 	foreach my $choice (@choices) {
 		my $percent=$total > 0 ? int($choices{$choice} / $total * 100) : 0;
-		if ($percent) {
+		if ($showpercent) {
 			$ret.="$choice ($percent%) ";
 		}
 		else {
