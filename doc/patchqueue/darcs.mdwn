@@ -1,0 +1,198 @@
+Here's Thomas Schwinge unfinished darcs support for ikiwiki.
+
+> I haven't been working on this for months and also won't in the near
+> future.  Feel free to use what I have done so
+> far and bring it into an usable state!  Also, feel free to contact me
+>  if there are questions.
+
+-- [Thomas Schwinge](mailto:tschwinge@gnu.org)
+
+	# Support for the darcs rcs, <URL:http://darcs.net/>.
+	# Copyright (C) 2006  Thomas Schwinge <tschwinge@gnu.org>
+	#
+	# This program is free software; you can redistribute it and/or modify it
+	# under the terms of the GNU General Public License as published by the
+	# Free Software Foundation; either version 2 of the License, or (at your
+	# option) any later version.
+	#
+	# This program is distributed in the hope that it will be useful, but
+	# WITHOUT ANY WARRANTY; without even the implied warranty of
+	# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	# General Public License for more details.
+	#
+	# You should have received a copy of the GNU General Public License along
+	# with this program; if not, write to the Free Software Foundation, Inc.,
+	# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+	
+	
+	# We're guaranteed to be the only instance of ikiwiki running at a given
+	# time.  It is essential that only ikiwiki is working on a particular
+	# repository.  That means one instance of ikiwiki and it also means that
+	# you must not `darcs push' into this repository, as this might create
+	# race conditions, as I understand it.
+	
+	
+	use warnings;
+	use strict;
+	use IkiWiki;
+	
+	package IkiWiki;
+	
+	
+	# Which darcs executable to use.
+	my $darcs = ($ENV{DARCS} or 'darcs');
+	
+	
+	# Internal functions.
+	
+	sub darcs_info ($$$) {
+	    my $field = shift;
+	    my $repodir = shift;
+	    my $file = shift; # Relative to the repodir.
+	
+	    my $child = open(DARCS_CHANGES, "-|");
+	    if (! $child) {
+		exec($darcs, 'changes', '--repo=' . $repodir, '--xml-output', $file) or
+		    error('failed to run `darcs changes\'');
+	    }
+	
+	    # Brute force for now.  :-/
+	    while (<DARCS_CHANGES>) {
+		last if /^<\/created_as>$/;
+	    }
+	    ($_) = <DARCS_CHANGES> =~ /$field=\'([^\']+)/;
+	    $field eq 'hash' and s/\.gz//; # Strip away the `.gz' from `hash'es.
+	
+	    close(DARCS_CHANGES) or error('`darcs changes\' exited ' . $?);
+	
+	    return $_;
+	}
+	
+	
+	# Exported functions.
+	
+	sub rcs_update () {
+	    # Not needed.
+	}
+	
+	sub rcs_prepedit ($) {
+	    # Prepares to edit a file under revision control.  Returns a token that
+	    # must be passed to rcs_commit() when the file is to be commited.  For us,
+	    # this token the hash value of the latest patch that modifies the file,
+	    # i.e. something like its current revision.  If the file is not yet added
+	    # to the repository, we return TODO: the empty string.
+	
+	    my $file = shift; # Relative to the repodir.
+	
+	    my $hash = darcs_info('hash', $config{srcdir}, $file);
+	    return defined $hash ? $hash : "";
+	}
+	
+	sub rcs_commit ($$$) {
+	    # Commit the page.  Returns `undef' on success and a version of the page
+	    # with conflict markers on failure.
+	
+	    my $file = shift; # Relative to the repodir.
+	    my $message = shift;
+	    my $rcstoken = shift;
+	
+	    # Compute if the ``revision'' of $file changed.
+	    my $changed = darcs_info('hash', $config{srcdir}, $file) ne $rcstoken;
+	
+	    # Yes, the following is a bit convoluted.
+	    if ($changed) {
+		# TODO.  Invent a better, non-conflicting name.
+		rename("$config{srcdir}/$file", "$config{srcdir}/$file.save") or
+		    error("failed to rename $file to $file.save: $!");
+	
+		# Roll the repository back to $rcstoken.
+	
+		# TODO.  Can we be sure that no changes are lost?  I think that
+		# we can, if we make sure that the `darcs push' below will always
+		# succeed.
+	
+		# We need to revert everything as `darcs obliterate' might choke
+		# otherwise.
+	        # TODO: `yes | ...' needed?  Doesn't seem so.
+		system($darcs, "revert", "--repodir=" . $config{srcdir}, "--all") and
+		    error("`darcs revert' failed");
+		# Remove all patches starting at $rcstoken.
+		# TODO.  Something like `yes | darcs obliterate ...' seems to be needed.
+		system($darcs, "obliterate", "--quiet", "--repodir" . $config{srcdir},
+		       "--match", "hash " . $rcstoken) and
+			   error("`darcs obliterate' failed");
+		# Restore the $rcstoken one.
+		system($darcs, "pull", "--quiet", "--repodir=" . $config{srcdir},
+		       "--match", "hash " . $rcstoken, "--all") and
+			   error("`darcs pull' failed");
+	
+		# We're back at $rcstoken.  Re-install the modified file.
+		rename("$config{srcdir}/$file.save", "$config{srcdir}/$file") or
+		    error("failed to rename $file.save to $file: $!");
+	    }
+	
+	    # Record the changes.
+	    # TODO: What if $message is empty?
+	    writefile("$file.log", $config{srcdir}, $message);
+	    system($darcs, 'record', '--repodir=' . $config{srcdir}, '--all',
+		   '--logfile=' . "$config{srcdir}/$file.log",
+		   '--author=' . 'web commit <web-hurd@gnu.org>', $file) and
+		       error('`darcs record\' failed');
+	
+	    # Update the repository by pulling from the default repository, which is
+	    # master repository.
+	    system($darcs, "pull", "--quiet", "--repodir=" . $config{srcdir},
+		   "--all") and error("`darcs pull' failed\n");
+	
+	    # If this updating yields any conflicts, we'll record them now to resolve
+	    # them.  If nothing is recorded, there are no conflicts.
+	    $rcstoken = darcs_info('hash', $config{srcdir}, $file);
+	    # TODO: Use only the first line here, i.e. only the patch name?
+	    writefile("$file.log", $config{srcdir}, 'resolve conflicts: ' . $message);
+	    system($darcs, 'record', '--repodir=' . $config{srcdir}, '--all',
+		   '--logfile=' . "$config{srcdir}/$file.log",
+		   '--author=' . 'web commit <web-hurd@gnu.org>', $file) and
+		       error('`darcs record\' failed');
+	    my $conflicts = darcs_info('hash', $config{srcdir}, $file) ne $rcstoken;
+	    unlink("$config{srcdir}/$file.log") or
+		error("failed to remove `$file.log'");
+	
+	    # Push the changes to the main repository.
+	    system($darcs, 'push', '--quiet', '--repodir=' . $config{srcdir}, '--all')
+		and error('`darcs push\' failed');
+	    # TODO: darcs send?
+	
+	    if ($conflicts) {
+		my $document = readfile("$config{srcdir}/$file");
+		# Try to leave everything in a consistent state.
+	        # TODO: `yes | ...' needed?  Doesn't seem so.
+		system($darcs, "revert", "--repodir=" . $config{srcdir}, "--all") and
+		    warn("`darcs revert' failed.\n");
+		return $document;
+	    } else {
+		return undef;
+	    }
+	}
+	
+	sub rcs_add ($) {
+	    my $file = shift; # Relative to the repodir.
+	
+	    # Intermediate directories will be added automagically.
+	    system($darcs, 'add', '--quiet', '--repodir=' . $config{srcdir},
+		   '--boring', $file) and error('`darcs add\' failed');
+	}
+	
+	sub rcs_recentchanges ($) {
+	    warn('rcs_recentchanges() is not implemented');
+	    return 'rcs_recentchanges() is not implemented';
+	}
+	
+	sub rcs_notify () {
+	    warn('rcs_notify() is not implemented');
+	}
+	
+	sub rcs_getctime () {
+	    warn('rcs_getctime() is not implemented');
+	}
+	
+	1
