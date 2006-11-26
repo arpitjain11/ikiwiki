@@ -12,7 +12,7 @@ BEGIN {
 		}
 	}
 }
-use Test::More tests => 9;
+use Test::More tests => 10;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -27,7 +27,7 @@ system "hg init $config{srcdir}";
 my $test1 = readfile("t/test1.mdwn");
 writefile('test1.mdwn', $config{srcdir}, $test1);
 IkiWiki::rcs_add("test1.mdwn");
-IkiWiki::rcs_commit("test1.mdwn", "Added the first page", "moo");
+IkiWiki::rcs_commit("test1.mdwn", "Added the first page", "moo", "Joe User");
 
 my @changes;
 @changes = IkiWiki::rcs_recentchanges(3);
@@ -35,6 +35,7 @@ my @changes;
 is($#changes, 0);
 is($changes[0]{message}[0]{"line"}, "Added the first page");
 is($changes[0]{pages}[0]{"page"}, "test1.mdwn");
+is($changes[0]{user}, "Joe User");
 	
 # Manual commit
 my $username = "Foo Bar";

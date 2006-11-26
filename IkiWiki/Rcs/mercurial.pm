@@ -65,19 +65,23 @@ sub rcs_prepedit ($) { #{{{
 	return "";
 } #}}}
 
-sub rcs_commit ($$$) { #{{{
+sub rcs_commit ($$$;$$) { #{{{
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
 	if (defined $user) {
-		$message="web commit by $user".(length $message ? ": $message" : "");
+		$user = possibly_foolish_untaint($user);
 	}
 	elsif (defined $ipaddr) {
-		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+		$user = "Anonymous from $ipaddr";
+	}
+	else {
+		$user = "Anonymous";
 	}
 
 	$message = possibly_foolish_untaint($message);
 
-	my @cmdline = ("hg", "-R", "$config{srcdir}", "commit", "-m", "$message");
+	my @cmdline = ("hg", "-R", "$config{srcdir}", "commit", 
+	               "-m", "$message", "-u", "$user");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
