@@ -12,7 +12,7 @@ BEGIN {
 		}
 	}
 }
-use Test::More tests => 10;
+use Test::More tests => 11;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -45,7 +45,7 @@ my $message = "Added the second page";
 my $test2 = readfile("t/test2.mdwn");
 writefile('test2.mdwn', $config{srcdir}, $test2);
 system "hg add -R $config{srcdir} $config{srcdir}/test2.mdwn";
-system "hg commit -R $config{srcdir} -u \"$user\" -m \"$message\"";
+system "hg commit -R $config{srcdir} -u \"$user\" -m \"$message\" -d \"0 0\"";
 	
 @changes = IkiWiki::rcs_recentchanges(3);
 
@@ -55,5 +55,8 @@ is($changes[0]{user}, $username);
 is($changes[0]{pages}[0]{"page"}, "test2.mdwn");
 
 is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
+
+my $ctime = IkiWiki::rcs_getctime("test2.mdwn");
+is($ctime, 0);
 
 system "rm -rf $dir";

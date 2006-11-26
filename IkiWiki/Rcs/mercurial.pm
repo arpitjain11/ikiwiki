@@ -107,6 +107,9 @@ sub rcs_recentchanges ($) { #{{{
 	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", $num);
 	open (my $out, "@cmdline |");
 
+	eval q{use Date::Parse};
+	error($@) if $@;
+
 	my @ret;
 	foreach my $info (mercurial_log($out)) {
 		my @pages = ();
@@ -135,7 +138,7 @@ sub rcs_recentchanges ($) { #{{{
 			rev        => $info->{"changeset"},
 			user       => $user,
 			committype => "mercurial",
-			when       => $info->{"date"},
+			when       => str2time($info->{"date"}),
 			message    => [@message],
 			pages      => [@pages],
 		};
@@ -149,7 +152,24 @@ sub rcs_notify () { #{{{
 } #}}}
 
 sub rcs_getctime ($) { #{{{
-	error "getctime not implemented";
+	my ($file) = @_;
+
+	# XXX filename passes through the shell here, should try to avoid
+	# that just in case
+	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", '1', $file);
+	open (my $out, "@cmdline |");
+
+	my @log = mercurial_log($out);
+
+	if (length @log < 1) {
+		return 0;
+	}
+
+	eval q{use Date::Parse};
+	error($@) if $@;
+	
+	my $ctime = str2time($log[0]->{"date"});
+	return $ctime;
 } #}}}
 
 1
