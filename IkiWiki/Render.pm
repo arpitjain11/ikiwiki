@@ -155,8 +155,8 @@ sub scan ($) { #{{{
 			push @links, titlepage($2);
 		}
 		if ($config{discussion}) {
-			# Discussion links are a special case since they're not in the
-			# text of the page, but on its template.
+			# Discussion links are a special case since they're
+			# not in the text of the page, but on its template.
 			push @links, "$page/discussion";
 		}
 		$links{$page}=\@links;
