@@ -1,4 +1,4 @@
-ikiwiki (1.34) UNRELEASED; urgency=low
+ikiwiki (1.34) unstable; urgency=low
 
   * Add an openid plugin to support logging in using OpenID.
   * Web commits by OpenID users will record the full OpenID url for the user,
@@ -37,7 +37,7 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Fix nested examples directory in deb.
   * Add a test suite for the mercurial backend, contributed by Emanuele Aina.
   * Add a test suite for the svn backend.
-  * Add a test suite for the git backend, from Recai 
+  * Add a test suite for the git backend, from Recai
   * Daemonize before sending RPC pings, since that can take a while
     and/or hang.
   * Daemonize before sending commit mails, as that can also take a long
@@ -52,7 +52,7 @@ ikiwiki (1.34) UNRELEASED; urgency=low
   * Git backend improvements, including bug fixes and better robustness,
     from Recai.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 26 Nov 2006 15:01:14 -0500
+ -- Joey Hess <joeyh@debian.org>  Sun, 26 Nov 2006 20:46:56 -0500
 
 ikiwiki (1.33) unstable; urgency=low
 
