@@ -4,4 +4,12 @@ gui or in wikitext and converts edits back to wiki format to be saved to
 the wiki.
 
 It would be awesome to use this in ikiwiki, but to take full advantage of
-it with ikiwiki, it would need to know about MarkDown.
+it with ikiwiki, it would need to know about MarkDown. Wikiwyg does allow
+defining the text that is stuck on each side of a given html element to
+make it wikified, for example, it can add "# " for a h1, "[[" and "]]" for
+a link, etc. This seems easily doable.
+
+The other thing that would need doing is a `saveChanges` function would
+need to be implemented that saves the text back to ikiwiki. 
+http://svn.wikiwyg.net/code/trunk/wikiwyg/share/Kwiki/lib/Wikiwyg/Kwiki.js
+seems like a good starting point for building a submit form on the fly.
