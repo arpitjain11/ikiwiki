@@ -13,3 +13,10 @@ The other thing that would need doing is a `saveChanges` function would
 need to be implemented that saves the text back to ikiwiki. 
 http://svn.wikiwyg.net/code/trunk/wikiwyg/share/Kwiki/lib/Wikiwyg/Kwiki.js
 seems like a good starting point for building a submit form on the fly.
+
+One other problem: Wikiwyg works by parsing html from a div, turning it
+back into the wiki markup, and editing/saving that. That seems to assume
+that there's a way of parsing a page's html and getting back to the underlying
+wiki markup, which is not always the case in ikiwiki. Unless there's some 
+other way to feed it the actual source for a page, this seems like a
+problem.
