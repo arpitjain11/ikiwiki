@@ -131,7 +131,6 @@ sub rcs_recentchanges ($) { #{{{
 
 	eval q{
 		use Date::Parse;
-		use Time::Duration;
 		use XML::SAX;
 		use XML::Simple;
 	};

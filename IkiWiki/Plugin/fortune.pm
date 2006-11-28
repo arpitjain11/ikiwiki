@@ -12,7 +12,7 @@ sub import { #{{{
 
 sub preprocess (@) { #{{{
 	$ENV{PATH}="$ENV{PATH}:/usr/games:/usr/local/games";
-	my $f = `fortune`;
+	my $f = `fortune 2>/dev/null`;
 
 	if ($?) {
 		return "[[fortune failed]]";
