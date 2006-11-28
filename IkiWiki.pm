@@ -396,9 +396,6 @@ sub htmllink ($$$;$$$) { #{{{
 	return "<span class=\"selflink\">$linktext</span>"
 		if length $bestlink && $page eq $bestlink;
 	
-	# TODO BUG: %renderedfiles may not have it, if the linked to page
-	# was also added and isn't yet rendered! Note that this bug is
-	# masked by the bug that makes all new files be rendered twice.
 	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
 		$bestlink=htmlpage($bestlink);
 	}
