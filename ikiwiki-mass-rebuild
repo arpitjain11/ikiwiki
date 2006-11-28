@@ -1,29 +1,80 @@
-#!/bin/sh
-set -e
+#!/usr/bin/perl
+use warnings;
+use strict;
 
-action="$@"
-
-wikilist=/etc/ikiwiki/wikilist
-
-processline () {
-	user="$1"
-	setup="$2"
+sub processline {
+	my $user=shift;
+	my $setup=shift;
 	
-	if [ -z "$user" ] || [ -z "$setup" ]; then
-		echo "parse failure in /etc/ikiwiki/wikilist, line: '$user $setup'" >&2
-		exit 1
-	fi
-	
-	if [ ! -f "$setup" ]; then
-		echo "warning: $setup specified in /etc/ikiwiki/wikilist does not exist, skipping" >&2
-	else
-		echo "Processing $setup as user $user ..."
-		su "$user" -c "ikiwiki -setup $setup $action"
-	fi
+	if (! getpwnam("$user")) {
+		print STDERR "warning: user $user does not exist\n";
+		return
+	}
+	if (! -f "$setup") {
+		print STDERR "warning: $setup does not exist, skipping\n";
+		return;
+	}
+	print "Processing $setup as user $user ...\n";
+	# su is not used because it passes arguments through the shell,
+	# which is not safe for untrusted setup file names.
+	defined(my $pid = fork) or die "Can’t fork: $!";
+	if (! $pid) {
+		my ($uuid, $ugid) = (getpwnam($user))[2, 3];
+		$)="$ugid $ugid";
+		$(=$ugid;
+		$>=$uuid;
+		$<=$uuid;
+		if ($< != $uuid || $> != $uuid || $( != $ugid || $) ne "$ugid $ugid") {
+			die "failed to drop permissions to $user";
+		}
+		%ENV=();
+		$ENV{HOME}=(getpwnam($user))[7];
+		exec("ikiwiki", "-setup", $setup, @ARGV);
+		die "failed to run ikiwiki: $!";
+	}
+	waitpid($pid,0);
+	if ($?) {
+		print STDERR "Processing $setup as user $user failed with code $?\n";
+	}
 }
 
-if [ -e "$wikilist" ]; then
-	grep -v '^#' $wikilist | grep -v '^$' | while read line; do 
-		processline $line
-	done
-fi
+sub processlist {
+	my $file=shift;
+	my $forceuser=shift;
+
+	my $list;
+	open ($list, "<$file") || die "$file: $!";
+	while (<$list>) {
+		chomp;
+		s/^\s+//;
+		s/\s+$//;
+		next if /^#/ || ! length;
+
+		if (/^([^\s]+)\s+([^\s]+)$/) {
+			my $user=$1;
+			my $setup=$2;
+			if (defined $forceuser && $forceuser ne $user) {
+				print STDERR "warning: in $file line $., attempt to set user to $user, but user forced to $forceuser. Skipping\n";
+			}
+			processline($user, $setup);
+		}
+		elsif (/^([^\s]+)$/) {
+			my $user=$1;
+			my $home=(getpwnam($user))[7];
+			if (defined $home && -d $home) {
+				my $dotfile="$home/.ikiwiki/wikilist";
+				if (-e $dotfile) {
+					processlist($dotfile, $user);
+				}
+			}
+		}
+	}
+	close $list;
+}
+
+my $wikilist="/etc/ikiwiki/wikilist";
+
+if (-e $wikilist) {
+	processlist($wikilist);
+}
+
