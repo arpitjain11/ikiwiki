@@ -234,12 +234,14 @@ sub date_3339 ($) { #{{{
 sub absolute_urls ($$) { #{{{
 	# sucky sub because rss sucks
 	my $content=shift;
-	my $url=shift;
+	my $baseurl=shift;
 
+	my $url=$baseurl;
 	$url=~s/[^\/]+$//;
 	
-	$content=~s/<a\s+href="(?![^:]+:\/\/)([^"]+)"/<a href="$url$1"/ig;
-	$content=~s/<img\s+src="(?![^:]+:\/\/)([^"]+)"/<img src="$url$1"/ig;
+	$content=~s/(<a(?:\s+(?:class|id)="?\w+"?)?)\s+href="(#[^"]+)"/$1 href="$baseurl$2"/ig;
+	$content=~s/(<a(?:\s+(?:class|id)="?\w+"?)?)\s+href="(?![^:]+:\/\/)([^"]+)"/$1 href="$url$2"/ig;
+	$content=~s/(<img(?:\s+(?:class|id)="?\w+"?)?)\s+src="(?![^:]+:\/\/)([^"]+)"/$1 src="$url$2"/ig;
 	return $content;
 } #}}}
 
