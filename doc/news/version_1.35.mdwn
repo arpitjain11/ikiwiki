@@ -1,0 +1,8 @@
+ikiwiki 1.35 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Fix daemonisation code to only do daemon setup things after forking the
+     child process.
+   * The hack used to make the pagetemplate hook have access to the editpage
+     template won't work with CGI::FormBuilder 3.0401, so disable it for now.
+   * CGI::FormBuilder 3.0401 seems to work ok now with ikiwiki, although
+     there might still be bugs lurking.."""]]
