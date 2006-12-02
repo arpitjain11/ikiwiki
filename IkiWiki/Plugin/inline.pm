@@ -336,7 +336,7 @@ sub genfeed ($$$$@) { #{{{
 } #}}}
 
 sub pingurl (@) { #{{{
-	return unless $config{pingurl} && %toping;
+	return unless @{$config{pingurl}} && %toping;
 
 	eval q{require RPC::XML::Client};
 	if ($@) {
@@ -345,13 +345,13 @@ sub pingurl (@) { #{{{
 	}
 
 	# daemonize here so slow pings don't slow down wiki updates
-	eval q{use POSIX ’setsid’};
-	chdir '/';
-	open STDIN, '/dev/null';
-	open STDOUT, '>/dev/null';
 	defined(my $pid = fork) or error("Can't fork: $!");
 	return if $pid;
+	chdir '/';
+	eval q{use POSIX ’setsid’};
 	setsid() or error("Can't start a new session: $!");
+	open STDIN, '/dev/null';
+	open STDOUT, '>/dev/null';
 	open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
 
 	# Don't need to keep a lock on the wiki as a daemon.

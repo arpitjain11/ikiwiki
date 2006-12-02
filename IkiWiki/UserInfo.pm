@@ -141,13 +141,13 @@ sub send_commit_mails ($$$@) { #{{{
 		);
 
 		# Daemonize, in case the mail sending takes a while.
+		defined(my $pid = fork) or error("Can't fork: $!");
+		return if $pid;
+		setsid() or error("Can't start a new session: $!");
 		eval q{use POSIX ’setsid’};
 		chdir '/';
 		open STDIN, '/dev/null';
 		open STDOUT, '>/dev/null';
-		defined(my $pid = fork) or error("Can't fork: $!");
-		return if $pid;
-		setsid() or error("Can't start a new session: $!");
 		open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
 
 		unlockwiki(); # don't need to keep a lock on the wiki
