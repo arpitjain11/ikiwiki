@@ -274,15 +274,8 @@ sub cgi_editpage ($$) { #{{{
 	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
-	eval q{use CGI::FormBuilder; use CGI::FormBuilder::Template::HTML};
+	eval q{use CGI::FormBuilder};
 	error($@) if $@;
-	my $renderer=CGI::FormBuilder::Template::HTML->new(
-		fields => \@fields,
-		template_params("editpage.tmpl"),
-	);
-	run_hooks(pagetemplate => sub {
-		shift->(page => "", destpage => "", template => $renderer->engine);
-	});
 	my $form = CGI::FormBuilder->new(
 		fields => \@fields,
 		header => 1,
@@ -296,7 +289,8 @@ sub cgi_editpage ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		table => 0,
-		template => $renderer,
+		template => (-e "$config{templatedir}/editpage.tmpl" ?
+				{template_params("editpage.tmpl")} : ""),
 	);
 	
 	run_hooks(formbuilder_setup => sub {

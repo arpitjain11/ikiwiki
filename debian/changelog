@@ -2,8 +2,12 @@ ikiwiki (1.34.3) UNRELEASED; urgency=low
 
   * Fix daemonisation code to only do daemon setup things after forking the
     child process.
+  * The hack used to make the pagetemplate hook have access to the editpage
+    template won't work with CGI::FormBuilder 3.0401, so disable it for now.
+  * CGI::FormBuilder 3.0401 seems to work ok now with ikiwiki, although
+    there might still be bugs lurking..
 
- -- Joey Hess <joeyh@debian.org>  Fri,  1 Dec 2006 19:11:32 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri,  1 Dec 2006 19:14:36 -0500
 
 ikiwiki (1.34.2) unstable; urgency=low
 
