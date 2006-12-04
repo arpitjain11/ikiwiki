@@ -74,7 +74,7 @@ sub change (@) { #{{{
 sub cgi ($) { #{{{
 	my $cgi=shift;
 
-	if (defined $cgi->param('phrase')) {
+	if (defined $cgi->param('phrase') || defined $cgi->param("navi")) {
 		# only works for GET requests
 		chdir("$config{wikistatedir}/hyperestraier") || error("chdir: $!");
 		exec("./".IkiWiki::basename($config{cgiurl})) || error("estseek.cgi failed");
