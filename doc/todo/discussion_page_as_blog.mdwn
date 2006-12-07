@@ -1,6 +1,23 @@
-Look at a discussion page here or eg on wikipedia. It tends to turn into a mess. One nice way to avoid the mess would be to set it a discussion page as a blog so each new comment is a separate post.
+Look at a discussion page here or eg on wikipedia. It tends to turn into a
+mess. One nice way to avoid the mess would be to set it a discussion page
+as a blog so each new comment is a separate post.
 
-One issue is, would there be a way to do this for all new discussion pages by default somehow? Setting up the blog means inserting a preprocessor directive; and that could somehow happen automatically when the discussion page is first created. (Creating a bunch of empty discussion pages with such directives ahead of time would be silly.) Maybe some kind of new page template system would do the trick, so pages matching */Discussion start off as a clone of DiscussionTemplate. Although the first person to
-try to create the discussion page would still end up in an edit page with that template, which is not ideal. Hmm.
+One issue is, would there be a way to do this for all new discussion pages
+by default somehow? Setting up the blog means inserting a preprocessor
+directive; and that could somehow happen automatically when the discussion
+page is first created. (Creating a bunch of empty discussion pages with
+such directives ahead of time would be silly.) Maybe some kind of new page
+template system would do the trick, so pages matching */Discussion start
+off as a clone of DiscussionTemplate. Although the first person to try to
+create the discussion page would still end up in an edit page with that
+template, which is not ideal. Hmm.
 
-Another issue is that discussions really want to be threaded. Does that mean that a page like foo/discussion/question should have its own foo/discussion/question/(discussion?)/answer page? Of course, rss feeds don't handle threading, and of course doing this might be dependant on the issue above. Worrying about threading may be overkill.
+Thinking about this some more, discussion links for pages that don't yet
+have discussion could go directly to the ikiwiki cgi, which could provide a
+post form, and create a new discussion page with the necessary inlining.
+
+Another issue is that discussions really want to be threaded. Does that
+mean that a page like foo/discussion/question should have its own
+foo/discussion/question/(discussion?)/answer page? Of course, rss feeds
+don't handle threading, and of course doing this might be dependant on the
+issue above. Worrying about threading may be overkill.
