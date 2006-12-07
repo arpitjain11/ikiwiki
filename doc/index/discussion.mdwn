@@ -32,6 +32,11 @@ something, that I think is very valuable.
 >> and then route all page views through ikiwiki.cgi. Am I missing something?
 >> --[[Ethan]]
 
+>>> Or you could just use apache or whatever and set up the access controls
+>>> there. Of course, that wouldn't integrate very well with the wiki,
+>>> unless perhaps you decided to use http basic authentication and the
+>>> httpauth plugin for ikiwiki that integrates with that.. [[--Joey]]
+
 ----
 
 Some questions about the RecentChanges function. -- Ethan
