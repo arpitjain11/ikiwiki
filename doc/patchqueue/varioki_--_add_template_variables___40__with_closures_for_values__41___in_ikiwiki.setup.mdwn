@@ -1,0 +1,14 @@
+varioki - Add variables for use in ikiwiki templates
+
+This plugin attempts to provide a means to add templates for use in ikiwiki templates, based on a hash variable set in the ikiwiki configuration file. The motivation for this plugin was to provide an easy way for end users to add information to be used in templates -- for example, my "Blosxom" blog entry template does fancy things with the date components of the entry, and there was no easy way to get that information into the template. Or if one wants to have a different page template for the top level index page than for the rest of the pages inthe wiki (for example, to only put special content, like, say, 'last.fm" play lists, only on the front page).
+
+This plugin hooks itsef into the "pagetemplate" hook, and adds parameters to the appropriate templates based on the type. For example, the following inserted into "ikiwiki.setup" creates "TMPL_VAR MOTTO" and "TOPLVL" which can then be used in your templates.
+
+    varioki => {
+      ’motto’    => ’"Manoj\’s musings"’,
+      ’toplvl’   => ’sub {return $page eq "index"}’
+    },
+
+For every key in the configured hash, the corresponding value is evaluated.  Based on whether the value was a stringified scalar, code, array, or hash, the value of the template parameter is generated on the fly.  The available variables are whatever is available to "pagetemplate" hook scripts, namely, $page, $destpage, and $template.  Additionally, the global variables and functions as defined in the Ikiwiki documentation (<http://ikiwiki.kitenet.net/plugins/write.html>) may be used.
+
+ManojSrivastava
