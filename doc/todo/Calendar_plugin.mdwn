@@ -1,0 +1,9 @@
+I am serving notice that I am starting work on a calendar plugin inspired by Blosxom's calendar plugin. The current plan is to create a plugin that looks through all the source files matching a certain pagespec, and optionally spit out a month view for the specified month (default to current), or spit out a year view for a given year (defaulting to the current year), of a list  of year with posts in them. The output would be a table, with the same CSS directives that the Blosxom plugin used to use (so that I can just reuse my css file).  The links would be created to a $config{archivedir}/$year or $config{archivedir}/$year-$month file, which can just have 
+
+     \[[inline pages="blog/* and !*/Discussion and creation_year($year) and creation_month($month)" rss="no" atom="no" show="0"]]
+
+or some thing to generate a archive of postings. 
+
+Roland Mas suggested a separate cron job to generate these archive indices automatically, but that is another thread.
+
+ManojSrivastava
