@@ -135,7 +135,7 @@ sub preprocess_inline (@) { #{{{
 				my $type = pagetype($file);
 				if ($config{discussion}) {
 					$template->param(have_actions => 1);
-					$template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
+					$template->param(discussionlink => htmllink($page, $params{page}, "Discussion", 1, 1));
 				}
 				if (length $config{cgiurl} && defined $type) {
 					$template->param(have_actions => 1);
