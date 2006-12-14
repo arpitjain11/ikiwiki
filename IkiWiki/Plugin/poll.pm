@@ -4,7 +4,6 @@ package IkiWiki::Plugin::poll;
 use warnings;
 use strict;
 use IkiWiki;
-use URI;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "poll", call => \&preprocess);
@@ -45,24 +44,28 @@ sub preprocess (@) { #{{{
 
 	my $ret="";
 	foreach my $choice (@choices) {
+		if ($open && exists $config{cgiurl}) {
+			$ret.="<form action=\"$config{cgiurl}\">\n";
+		}
 		my $percent=$total > 0 ? int($choices{$choice} / $total * 100) : 0;
+		$ret.="<p>\n";
 		if ($showpercent) {
-			$ret.="$choice ($percent%) ";
+			$ret.="$choice ($percent%)\n";
 		}
 		else {
-			$ret.="$choice ($choices{$choice}) ";
+			$ret.="$choice ($choices{$choice})\n";
 		}
 		if ($open && exists $config{cgiurl}) {
-			my $url=URI->new($config{cgiurl});
-			$url->query_form(
-				"do" => "poll",
-				"num" => $pagenum{$params{page}}, 
-				"page" => $params{page}, 
-				"choice" => $choice,
-			);
-			$ret.="<a class=pollbutton href=\"$url\">vote</a>";
+			$ret.="<input type=\"hidden\" name=\"do\" value=\"poll\" />\n";
+			$ret.="<input type=\"hidden\" name=\"num\" value=\"$pagenum{$params{page}}\" />\n";
+			$ret.="<input type=\"hidden\" name=\"page\" value=\"$params{page}\" />\n";
+			$ret.="<input type=\"hidden\" name=\"choice\" value=\"$choice\" />\n";
+			$ret.="<input type=\"submit\" value=\"vote\" />\n";
 		}
-		$ret.="<br />\n<hr class=poll align=left width=\"$percent%\"/>\n";
+		$ret.="</p>\n<hr class=poll align=left width=\"$percent%\"/>\n";
+		if ($open && exists $config{cgiurl}) {
+			$ret.="</form>\n";
+		}
 	}
 	if ($showtotal) {
 		$ret.="<span>Total votes: $total</span>\n";
