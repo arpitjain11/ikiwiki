@@ -126,7 +126,7 @@ sub cgi ($) { #{{{
 		if ($config{rcs}) {
 			# prevent deadlock with post-commit hook
 			IkiWiki::unlockwiki();
-			IkiWiki::rcs_commit($pagesources{$page}, "poll vote",
+			IkiWiki::rcs_commit($pagesources{$page}, "poll vote ($choice)",
 				IkiWiki::rcs_prepedit($pagesources{$page}),
 				$session->param("name"), $ENV{REMOTE_ADDR});
 		}
