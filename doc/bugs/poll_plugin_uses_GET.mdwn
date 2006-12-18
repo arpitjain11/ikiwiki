@@ -1,4 +1,6 @@
 The [[plugins/poll]] plugin uses GET for the vote links.  As a result, the
 [[news/openid]] poll has a number of votes from Google. :)
 
-[[bugs/done]] -- [[Joey]]
+done -- [[Joey]]
+
+Not quite; [the `<form>` `method` attribute defaults to GET](http://www.w3.org/TR/html401/interact/forms.html#adef-method).  The forms each need the attribute `method="POST"`.
