@@ -45,7 +45,8 @@ sub preprocess (@) { #{{{
 	my $ret="";
 	foreach my $choice (@choices) {
 		if ($open && exists $config{cgiurl}) {
-			$ret.="<form action=\"$config{cgiurl}\">\n";
+			# use POST to avoid robots
+			$ret.="<form method=\"POST\" action=\"$config{cgiurl}\">\n";
 		}
 		my $percent=$total > 0 ? int($choices{$choice} / $total * 100) : 0;
 		$ret.="<p>\n";
