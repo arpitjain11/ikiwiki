@@ -666,7 +666,9 @@ sub userlink ($) { #{{{
 		return "<a href=\"$user\">".escapeHTML($display)."</a>";
 	}
 	else {
-		return htmllink("", "", escapeHTML($user), 1);
+		return htmllink("", "", escapeHTML(
+			length $config{userdir} ? $config{userdir}."/".$user : $user
+		), 1);
 	}
 } #}}}
 

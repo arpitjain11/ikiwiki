@@ -67,6 +67,7 @@ sub defaultconfig () { #{{{
 	locale => undef,
 	sslcookie => 0,
 	httpauth => 0,
+	userdir => "",
 } #}}}
    
 sub checkconfig () { #{{{
