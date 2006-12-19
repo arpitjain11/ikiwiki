@@ -45,10 +45,10 @@ extra_install:
 	$(CP) -a basewiki/* $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
 
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1
-	install ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
+	install -m 644 ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
 	
 	install -d $(DESTDIR)$(PREFIX)/share/man/man8
-	install ikiwiki-mass-rebuild.man $(DESTDIR)$(PREFIX)/share/man/man8/ikiwiki-mass-rebuild.8
+	install -m 644 ikiwiki-mass-rebuild.man $(DESTDIR)$(PREFIX)/share/man/man8/ikiwiki-mass-rebuild.8
 	
 	install -d $(DESTDIR)$(PREFIX)/sbin
 	install ikiwiki-mass-rebuild $(DESTDIR)$(PREFIX)/sbin
