@@ -5,6 +5,24 @@ Do so here..
 Note that for more formal bug reports or todo items, you can also edit the
 [[bugs]] and [[todo]] pages.
 
+# Installation/Setup questions
+
+I have just installed ikiwiki and it works - at least I have the example index.mdwn page
+complied and visible.  However I have a few issues/problems:-
+
+* A couple of the 'optional' Perl modules aren't optional, you can't install ikiwiki without them,
+these are HTML::Template and HTML::Scrubber (at least I think it was these two, it's a bit messy 
+to go back and find out).
+
+* I don't seem to have got an ikiwiki man page created.
+
+* Running "ikiwiki --setup ikiwiki.setup" doesn't do anything.  I have edited ikiwiki.setup to
+my local settings.  There are no errors but neither does anything get compiled.  An ikiwiki
+command to explicitly do the compile works fine.  Am I misunderstanding something here?
+
+* I wish there was a mailing list, much easier for this sort of stuff than this, apart from
+anything else I get to use a decent editor.
+
 ----
 # Excellent - how do I translate a TWiki site?
 
