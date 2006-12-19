@@ -14,7 +14,15 @@ compiled and visible.  However I have a few issues/problems:-
 these are HTML::Template and HTML::Scrubber (at least I think it was these two, it's a bit messy 
 to go back and find out).
 
+> You're right, HTML::Template is required. HTML::Scrubber is only required
+> in the default configuration, and is optional if the htmlscrubber plugin
+> is disabled. --[[Joey]]
+
 * I don't seem to have got an ikiwiki man page created.
+
+> It should be installed in /usr/share/man, or a similar directory
+> depending on how your perl is set up and how you did the install.
+> --[[Joey]]
 
 * Running "ikiwiki --setup ikiwiki.setup" doesn't do anything.  I have edited ikiwiki.setup to
 my local settings.  There are no errors but neither does anything get compiled.  An ikiwiki
@@ -25,6 +33,13 @@ command to explicitly do the compile works fine.  Am I misunderstanding somethin
 either though it was the command line I originally used to compile.  After a long interval I 'touch'ed 
 the files and then it *did* compile but 'touch'ing the files after a few minutes only doesn't seem to force a recompile.  I'm even more confused!
 
+> ikiwiki only compiles files whose modification times have changed. It
+> should see any change made as close as a second after the last compile.
+> When run with --setup, ikiwiki always rebuilds every file in the wiki. If
+> --setup is not working, you must have it pointed at the wrong path or
+> something; you can pass -v to see what it's doing. I don't know why it
+> would not see recently changed files; you could try stracing it.
+> --[[Joey]]
 
 * I wish there was a mailing list, much easier for this sort of stuff than this, apart from
 anything else I get to use a decent editor.
@@ -42,6 +57,10 @@ markdown for the source and producing static HTML from it.
 I'm currently using TWiki and have a fair number of pages in that format, does
 anyone have any bright ideas for translating?  I can knock up awk scripts fairly
 easily, perl is possible (but I'm not strong in perl).
+
+> Let us know if you come up with something to transition from the other
+> format. Another option would be writing a ikiwiki plugin to support the
+> TWiki format. --[[Joey]]
 
 ----
 
