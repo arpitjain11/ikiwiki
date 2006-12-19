@@ -20,6 +20,12 @@ to go back and find out).
 my local settings.  There are no errors but neither does anything get compiled.  An ikiwiki
 command to explicitly do the compile works fine.  Am I misunderstanding something here?
 
+> Further tests indicate that ikiwiki isn't seeing changed files so doesn't always rebuild.
+> How does ikiwiki decide when to rebuild?  I tried a full command line like "ikiwiki --verbose ikiwiki ~/public_html/ikiwiki --url=http://www.isbd.ltd.uk/~chris/ikiwiki/" and that doesn't do anything
+either though it was the command line I originally used to compile.  After a long interval I 'touch'ed 
+the files and then it *did* compile but 'touch'ing the files after a few minutes only doesn't seem to force a recompile.  I'm even more confused!
+
+
 * I wish there was a mailing list, much easier for this sort of stuff than this, apart from
 anything else I get to use a decent editor.
 
