@@ -48,6 +48,9 @@ the files and then it *did* compile but 'touch'ing the files after a few minutes
 > OK, thanks, I don't quite know what was happening before but it seems to be working right now.
 > --[[Chris]]
 
+>> Weird. I wish I knew what happened, but as it's working now, I'm
+>> guessing some kind of user error was involved. --[[Joey]]
+
 * I wish there was a mailing list, much easier for this sort of stuff than this, apart from
 anything else I get to use a decent editor.
 
@@ -99,7 +102,7 @@ something, that I think is very valuable.
 >>> Or you could just use apache or whatever and set up the access controls
 >>> there. Of course, that wouldn't integrate very well with the wiki,
 >>> unless perhaps you decided to use http basic authentication and the
->>> httpauth plugin for ikiwiki that integrates with that.. [[--Joey]]
+>>> httpauth plugin for ikiwiki that integrates with that.. --[[Joey]]
 
 >>>> Which would rule out openid, or other fun forms of auth. And routing all access 
 >>>> through the CGI sort of defeats the purpose of ikiwiki. --[[Ethan]]
@@ -143,6 +146,10 @@ with all news or the one with the latest news only, I don't know yet.)
 
 Any plugins or support for using asciidoc or txt2tags as the wiki language and/or exporting to asciidoc or txt2tags?
 
+> No, but it should be quite easy to write such a plugin. The otl plugin
+> is a good example of writing a formatting plugin that uses an external
+> conversion program, like asciidoc or txt2tags. --[[Joey]]
+
 ----
 
 # LaTeX support?
@@ -150,11 +157,22 @@ Any plugins or support for using asciidoc or txt2tags as the wiki language and/o
 Any plugins or support for exporting to LaTeX?
 (If not could use asciidoc or txt2tags mentioned above to generated LaTeX.)
 
+> It's already [[been_requested|todo/latex]], although perhaps not
+> working the way you're thinking of. Noone is currently working on it.
+> --[[Joey]]
+
 ----
 
 # Using with RCS?
 
 Any examples of using co(1), ci(1) and other RCS related tools with ikiwiki?
+
+> I don't belive that RCS offers enough SCM features to be useable as a
+> fullfledged backend to ikiwiki. For one thing, there's no way to have
+> hook scripts run when changes are ci'd, is there? So you'd have to ci and
+> then manually run ikiwiki. It should be possible to do an RCS backend
+> that supports web commits with ci, and history (parsing the rcs files by
+> hand?). If you're a masochist. :-) --[[Joey]]
 
 ----
 
@@ -162,9 +180,15 @@ Any examples of using co(1), ci(1) and other RCS related tools with ikiwiki?
 
 Any examples of using ikiwiki with cvs?
 
+> No, although the existing svn backend could fairly esily be modified into
+> a CVS backend, by someone who doesn't mind working with CVS. --[[Joey]]
+
 ----
 
 # Show differences before saving page?
 
 It would be nice to be able to have a button to show "Differences" (or "Show Diff") when
 editing a page. Is that an option that can be enabled?
+
+> It's doable, it could even be done by a [[todo/plugin]], I think.
+> --[[Joey]]
