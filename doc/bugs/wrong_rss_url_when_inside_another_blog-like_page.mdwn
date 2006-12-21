@@ -1,6 +1,8 @@
-I have a blog-like page collecting item, that's ok, display is good, rss url is correct.
-In some of the items, I have another rss. When viewing the item itself, url of the rss is correct.
-But when viewing the item inside the main page, the basepath of the rss is wrong, thus the url doesn't go anywhere.
+I have a blog-like page collecting item, that's ok, display is good, rss
+url is correct. In some of the items, I have another rss. When viewing the
+item itself, url of the rss is correct. But when viewing the item inside
+the main page, the basepath of the rss is wrong, thus the url doesn't go
+anywhere.
 
 For example :
 
@@ -20,3 +22,10 @@ which is containing a rss, listing all the foo-tagged pages.
 * the rss url inside tag/foo.html is /foo.rss, not /tag/foo.rss
 
 Is it a bug or did I miss something ?
+
+> I've fixed at least
+> two bugs in this area in the unreleased ikiwiki in subversion, one just
+> now. If you still see the problem using the ikiwiki version in
+> subversion, it would be helpful if you could post a tarball of your wiki,
+> or a test case derived from it that I can use to reproduce the problem
+> --[[Joey]]
