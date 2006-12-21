@@ -47,7 +47,7 @@ sub getconfig () { #{{{
 			"sslcookie!" => \$config{sslcookie},
 			"httpauth!" => \$config{httpauth},
 			"exclude=s@" => sub {
-				push @{$config{wiki_file_prune_regexp}}, $_[1];
+				push @{$config{wiki_file_prune_regexps}}, $_[1];
 			},
 			"adminuser=s@" => sub {
 				push @{$config{adminuser}}, $_[1]
