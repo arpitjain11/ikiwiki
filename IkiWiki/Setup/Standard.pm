@@ -31,7 +31,7 @@ sub setup_standard {
 		delete $setup{disable_plugins};
 	}
 	if (exists $setup{exclude}) {
-		$config{wiki_file_prune_regexp}=qr/$config{wiki_file_prune_regexp}|$setup{exclude}/;
+		push @{$config{wiki_file_prune_regexps}}, $setup{exclude};
 	}
 
 	if (! $config{render} && (! $config{refresh} || $config{wrappers})) {

@@ -22,12 +22,14 @@ our $VERSION = 1.01; # plugin interface version
 use Memoize;
 memoize("abs2rel");
 memoize("pagespec_translate");
+memoize("file_pruned");
 
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 
 sub defaultconfig () { #{{{
-	wiki_file_prune_regexp => qr{((^|/).svn/|\.\.|^\.|\/\.|\.x?html?$|\.rss$|\.atom$|.arch-ids/|{arch}/)},
+	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./, qr/\.x?html?$/,
+		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//],
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
@@ -95,9 +97,6 @@ sub checkconfig () { #{{{
 
 	if ($config{cgi} && ! length $config{url}) {
 		error("Must specify url to wiki with --url when using --cgi\n");
-	}
-	if (($config{rss} || $config{atom}) && ! length $config{url}) {
-		error("Must specify url to wiki with --url when using --rss or --atom\n");
 	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
@@ -779,6 +778,16 @@ sub add_depends ($$) { #{{{
 		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
 	}
 } # }}}
+
+sub file_pruned ($$) { #{{{
+	require File::Spec;
+	my $file=File::Spec->canonpath(shift);
+	my $base=File::Spec->canonpath(shift);
+	$file=~s#^\Q$base\E/*##;
+
+	my $regexp='('.join('|', @{$config{wiki_file_prune_regexps}}).')';
+	$file =~ m/$regexp/;
+} #}}}
 
 sub pagespec_match ($$) { #{{{
 	my $page=shift;

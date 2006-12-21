@@ -303,8 +303,7 @@ sub cgi_editpage ($$) { #{{{
 	# characters.
 	my ($page)=$form->field('page');
 	$page=titlepage(possibly_foolish_untaint($page));
-	if (! defined $page || ! length $page ||
-	    $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
+	if (! defined $page || ! length $page || file_pruned($page, $config{srcdir}) || $page=~/^\//) {
 		error("bad page name");
 	}
 	
@@ -394,7 +393,7 @@ sub cgi_editpage ($$) { #{{{
 			my $best_loc;
 			if (! defined $from || ! length $from ||
 			    $from ne $form->field('from') ||
-			    $from=~/$config{wiki_file_prune_regexp}/ ||
+			    file_pruned($from, $config{srcdir}) ||
 			    $from=~/^\// ||
 			    $form->submitted eq "Preview") {
 				@page_locs=$best_loc=$page;

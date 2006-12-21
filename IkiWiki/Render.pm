@@ -218,7 +218,7 @@ sub refresh () { #{{{
 		no_chdir => 1,
 		wanted => sub {
 			$_=decode_utf8($_);
-			if (/$config{wiki_file_prune_regexp}/) {
+			if (file_pruned($_, $config{srcdir})) {
 				$File::Find::prune=1;
 			}
 			elsif (! -d $_ && ! -l $_) {
@@ -238,7 +238,7 @@ sub refresh () { #{{{
 		no_chdir => 1,
 		wanted => sub {
 			$_=decode_utf8($_);
-			if (/$config{wiki_file_prune_regexp}/) {
+			if (file_pruned($_, $config{underlaydir})) {
 				$File::Find::prune=1;
 			}
 			elsif (! -d $_ && ! -l $_) {

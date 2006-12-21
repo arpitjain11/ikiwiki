@@ -12,7 +12,7 @@ sub import { #{{{
 
 	# ikiwiki defaults to skipping .html files as a security measure;
 	# make it process them so this plugin can take effect
-	$config{wiki_file_prune_regexp} =~ s/\|\\\.x\?html\?\$//;
+	$config{wiki_file_prune_regexps} = [ grep { !m/\\\.x\?html\?\$/ } @{$config{wiki_file_prune_regexps}} ];
 } # }}}
 
 sub htmlize (@) { #{{{

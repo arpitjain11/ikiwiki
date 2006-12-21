@@ -9,6 +9,8 @@ use IkiWiki::Render; # for displaytime
 use URI;
 
 sub import { #{{{
+	hook(type => "getopt", id => "inline", call => \&getopt);
+	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
 	hook(type => "preprocess", id => "inline", 
 		call => \&IkiWiki::preprocess_inline);
 	hook(type => "pagetemplate", id => "inline",
@@ -19,6 +21,29 @@ sub import { #{{{
 	hook(type => "change", id => "inline", 
 		call => \&IkiWiki::pingurl);
 } # }}}
+
+sub getopt () { #{{{
+	eval q{use Getopt::Long};
+	error($@) if $@;
+	Getopt::Long::Configure('pass_through');
+	GetOptions(
+		"rss!" => \$config{rss},
+		"atom!" => \$config{atom},
+	);
+}
+
+sub checkconfig () { #{{{
+	if (($config{rss} || $config{atom}) && ! length $config{url}) {
+		error("Must specify url to wiki with --url when using --rss or --atom");
+	}
+	if ($config{rss}) {
+		print STDERR "!!\n";
+		push @{$config{wiki_file_prune_regexps}}, qr/\.rss$/;
+	}
+	if ($config{atom}) {
+		push @{$config{wiki_file_prune_regexps}}, qr/\.atom$/;
+	}
+} #}}}
 
 # Back to ikiwiki namespace for the rest, this code is very much
 # internal to ikiwiki even though it's separated into a plugin.
