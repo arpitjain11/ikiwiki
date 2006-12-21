@@ -16,8 +16,10 @@ ikiwiki (1.36) UNRELEASED; urgency=low
   * Applied a rather old patch from Recai to fix the "pruning is too strict"
     issue. Now you can have wiki source directories inside dotdirs and the
     like, if you want.
+  * Patch from Emanuele Aina to fix modification time code in mercurual
+    backend.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 21 Dec 2006 13:54:24 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu, 21 Dec 2006 14:39:26 -0500
 
 ikiwiki (1.35) unstable; urgency=low
 
