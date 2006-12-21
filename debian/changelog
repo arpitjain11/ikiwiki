@@ -18,8 +18,11 @@ ikiwiki (1.36) UNRELEASED; urgency=low
     like, if you want.
   * Patch from Emanuele Aina to fix modification time code in mercurual
     backend.
+  * Add support for links of the form [../foo]], this links to the page 
+    foo a level higher in the directory hierarchy than the one it would link
+    to by default.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 21 Dec 2006 14:39:26 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu, 21 Dec 2006 15:10:03 -0500
 
 ikiwiki (1.35) unstable; urgency=low
 
