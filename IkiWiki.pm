@@ -298,10 +298,9 @@ sub bestlink ($$) { #{{{
 	my $link=shift;
 	
 	my $cwd=$page;
-
-	# relative links
-	while ($link=~s!(^|/)\.\./!!g) {
-		$cwd=~s!/?[^/]+$!!;
+	if ($link=~s/^\/+//) {
+		# absolute links
+		$cwd="";
 	}
 
 	do {

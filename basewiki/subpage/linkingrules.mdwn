@@ -20,8 +20,8 @@ the only way to link to an unrelated [[SubPage]].
 You can use this to, for example, to link from BazBar to "FooBar/SubPage",
 or from BazBar/SubPage to "FooBar/SubPage".
 
-You can also use ".." in a link, to specify exactly which page to link to,
-when there are multiple pages with similar names and the link goes to the
-wrong page by default. For example, linking from "FooBar/SubPage" to 
-".../OtherPage" will link to the "OtherPage" in the root of the wiki, even
-if there is a "FooBar/OtherPage".
+You can also use "/" at the start of a link, to specify exactly which page
+to link to, when there are multiple pages with similar names and the link
+goes to the wrong page by default. For example, linking from
+"FooBar/SubPage" to  "/OtherPage" will link to the "OtherPage" in the root
+of the wiki, even if there is a "FooBar/OtherPage".
