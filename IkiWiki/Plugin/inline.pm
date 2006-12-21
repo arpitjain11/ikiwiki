@@ -37,7 +37,6 @@ sub checkconfig () { #{{{
 		error("Must specify url to wiki with --url when using --rss or --atom");
 	}
 	if ($config{rss}) {
-		print STDERR "!!\n";
 		push @{$config{wiki_file_prune_regexps}}, qr/\.rss$/;
 	}
 	if ($config{atom}) {
@@ -265,8 +264,8 @@ sub absolute_urls ($$) { #{{{
 	$url=~s/[^\/]+$//;
 	
 	$content=~s/(<a(?:\s+(?:class|id)="?\w+"?)?)\s+href="(#[^"]+)"/$1 href="$baseurl$2"/ig;
-	$content=~s/(<a(?:\s+(?:class|id)="?\w+"?)?)\s+href="(?![^:]+:\/\/)([^"]+)"/$1 href="$url$2"/ig;
-	$content=~s/(<img(?:\s+(?:class|id)="?\w+"?)?)\s+src="(?![^:]+:\/\/)([^"]+)"/$1 src="$url$2"/ig;
+	$content=~s/(<a(?:\s+(?:class|id)="?\w+"?)?)\s+href="(?!\w+:\/\/)([^"]+)"/$1 href="$url$2"/ig;
+	$content=~s/(<img(?:\s+(?:class|id)="?\w+"?)?)\s+src="(?!\w+:\/\/)([^"]+)"/$1 src="$url$2"/ig;
 	return $content;
 } #}}}
 
@@ -300,7 +299,7 @@ sub genfeed ($$$$@) { #{{{
 		my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
 
 		$itemtemplate->param(
-			title => pagetitle(basename($p)),
+			title => pagetitle(basename($p), 1),
 			url => $u,
 			permalink => $u,
 			date_822 => date_822($pagectime{$p}),
@@ -344,7 +343,7 @@ sub genfeed ($$$$@) { #{{{
 
 	my $template=template($feedtype."page.tmpl", blind_cache => 1);
 	$template->param(
-		title => $page ne "index" ? pagetitle($page) : $config{wikiname},
+		title => $page ne "index" ? pagetitle($page, 1) : $config{wikiname},
 		wikiname => $config{wikiname},
 		pageurl => $url,
 		content => $content,
@@ -384,14 +383,14 @@ sub pingurl (@) { #{{{
 	IkiWiki::unlockwiki();
 
 	foreach my $page (keys %toping) {
-		my $title=pagetitle(basename($page));
+		my $title=pagetitle(basename($page), 0);
 		my $url="$config{url}/".htmlpage($page);
 		foreach my $pingurl (@{$config{pingurl}}) {
 			debug("Pinging $pingurl for $page");
 			eval {
 				my $client = RPC::XML::Client->new($pingurl);
 				my $req = RPC::XML::request->new('weblogUpdates.ping',
-				$title, $url);
+					$title, $url);
 				my $res = $client->send_request($req);
 				if (! ref $res) {
 					debug("Did not receive response to ping");

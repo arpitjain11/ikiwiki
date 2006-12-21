@@ -327,10 +327,18 @@ sub isinlinableimage ($) { #{{{
 	$file=~/\.(png|gif|jpg|jpeg)$/i;
 } #}}}
 
-sub pagetitle ($) { #{{{
+sub pagetitle ($;$) { #{{{
 	my $page=shift;
-	$page=~s/__(\d+)__/&#$1;/g;
+	my $unescaped=shift;
+
+	if ($unescaped) {
+		$page=~s/__(\d+)__/chr($1)/eg;
+	}
+	else {
+		$page=~s/__(\d+)__/&#$1;/g;
+	}
 	$page=~y/_/ /;
+
 	return $page;
 } #}}}
 
