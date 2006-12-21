@@ -271,6 +271,8 @@ sub genfeed ($$$$@) { #{{{
 	my $lasttime = 0;
 	foreach my $p (@pages) {
 		my $u=URI->new(encode_utf8($config{url}."/".htmlpage($p)));
+		
+		my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
 
 		$itemtemplate->param(
 			title => pagetitle(basename($p)),
@@ -280,7 +282,6 @@ sub genfeed ($$$$@) { #{{{
 			date_3339 => date_3339($pagectime{$p}),
 		);
 
-		my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
 		if ($itemtemplate->query(name => "enclosure")) {
 			my $file=$pagesources{$p};
 			my $type=pagetype($file);
