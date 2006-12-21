@@ -7,3 +7,10 @@ I'm not sure how to fix this in a secure way. For now I'm just changing use lib 
 > [patch](http://git.kirkambar.net/?p=ikiwiki.git;a=commitdiff;h=44511c00b98b3efedd4d31f15ea928fcf221401e) 
 > which also allows you to use `basewiki` + `templates` in the source directory.  The patched
 > version works fine in my [homepage](http://kirkambar.net).  --[[Roktas]]
+
+New versions of ikiwiki support installation to nonstandard paths, just set
+PREFIX to the path when running Makefile.PL, and it will set up ikiwiki to
+look in the place it installed the libraries for its perl libraries, etc.
+
+I don't understand why the wrappers would fail if it were confgured link
+that. --[[Joey]]
