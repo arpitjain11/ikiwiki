@@ -1,0 +1,27 @@
+I have a blog-like page collecting item, that's ok, display is good, rss url is correct.
+
+in some of the items, I have another rss.
+
+When viewing the item itself, url of the rss is correct.
+
+But when viewing the item inside the main page, the basepath of the rss is wrong, thus the url doesn't go anywhere.
+
+For example :
+
+1. a blog-like page which is collecting tag entry :
+
+address of the page : /tag.html
+address of the rss : /tag.rss
+
+2. a tag item "foo"
+
+which is containing a rss listing all the tagged pages.
+
+address of the item : /tag/foo.html
+address of the rss : /tag/foo.rss
+
+3. when viewing /tag.html
+
+the rss url inside tag/foo.html is /foo.rss, not /tag/foo.rss
+
+Is it a bug or did I miss something ?
