@@ -1,0 +1,17 @@
+I can't translate "Discussion" link in `templates/inlinepage.tmpl`
+and `templates/page.tmpl` files, because it's hardcoded in
+ikiwiki sources:
+
+    ptecza@horus:~/svn/ikiwiki$ rgrep -i DISCUSSIONLINK . |grep -v '.svn'
+    ./templates/inlinepage.tmpl:<TMPL_IF NAME="DISCUSSIONLINK">
+    ./templates/inlinepage.tmpl:<li><TMPL_VAR DISCUSSIONLINK></li>
+    ./templates/page.tmpl:<TMPL_IF NAME="DISCUSSIONLINK">
+    ./templates/page.tmpl:<li><TMPL_VAR DISCUSSIONLINK><br /></li>
+    ./IkiWiki/Plugin/inline.pm:                                     $template->param(discussionlink => htmllink($page, $params{page}, "Discussion", 1, 1));
+    ./IkiWiki/Render.pm:            $template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
+
+I hope it's a bug, not a feature, because I don't have the same
+problem with other links, for example "Edit", "RecentChanges"
+or "History".
+
+--Pawel
