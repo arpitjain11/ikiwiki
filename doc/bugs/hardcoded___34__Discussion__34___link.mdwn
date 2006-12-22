@@ -15,3 +15,12 @@ problem with other links, for example "Edit", "RecentChanges"
 or "History".
 
 --Pawel
+
+> There are good reasons for feeding a full html link into the template,
+> rather than the urls used for the other links. For one, the Discussion
+> link needs to be different if the Discussion page doesn't yet exist.
+> 
+> As noted in [[patchqueue/l10n]], there are some other places in ikiwiki
+> that hard code English strings, and I feel that using standard gettext
+> and po files is the best approach for these, although Recai suggested an
+> approach of translating the strings using a template file. --[[Joey]]
