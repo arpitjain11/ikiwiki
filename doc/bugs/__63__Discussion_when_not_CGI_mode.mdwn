@@ -1,0 +1,7 @@
+I used ikiwiki without my --setup configuration that defined my --cgiurl. This regenerated my HTML pages without the "Edit" link as is documented ("Required when building the wiki for links to the cgi script to be generated").
+
+But I did have a "?Discussion" link still and that is CGI.
+
+So the bug (I think) is that it has a hyperlink to a CGI when CGI is not enabled.
+
+(Note that my title above has _63_ but was supposed to be a question mark.)
