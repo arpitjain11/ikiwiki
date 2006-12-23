@@ -3,3 +3,18 @@ I didn't have Time/Duration.pm installed when I clicked RecentChanges. The perl 
 > I can't reproduce this, I get a properly formatted error page.
 > If you'd like to send me the page, I can try to figure out what
 > happened. --[[Joey]]
+
+>> The page is fine. I can reproduce by just putting a typo or error in a
+>> plugin. I used tcpdump. When I am missing plugin I get a newline 0a
+>> before Content-Type:
+
+    0x0030:  0000 0003 0000 0000 0a43 6f6e 7465 6e74  .........Content
+
+>> And with it working, no newline:
+
+    0x0030:  0000 0003 0000 0000 436f 6e74 656e 742d  ........Content-
+
+>> I am using mini_httpd. I guess I could try another webserver real quick.
+>>
+>> --JeremyReed
+
