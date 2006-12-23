@@ -111,4 +111,10 @@ use IkiWiki::Setup::Standard {
 	# For use with the openid plugin, to give an url to a page users
 	# can use to signup for an OpenID.
 	#openidsignup => "http://myopenid.com/",
+	
+	# For use with the mirrorlist plugin, a list of mirrors.
+	#mirrorlist => {
+	#	mirror1 => "http://hostname1",
+	#	mirror2 => "http://hostname2/mirror",
+	#},
 }
