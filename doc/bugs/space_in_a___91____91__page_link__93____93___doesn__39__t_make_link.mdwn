@@ -1,0 +1,20 @@
+I attempted to make a new webpage by having wiki code with
+    [[new page]]
+    [newpage]
+
+This was converted to literal:
+    [[new page]]
+and the correct hyperlink:
+    ?newpage
+
+So when has a space it doesn't let you create a new page. I am using 1.35. Let's see what happens here:
+
+[[new page]]
+
+A moment later ... same thing ... it is not a link (no question mark to create).
+
+Is this documented? How do I create a webpage with space in filename?
+
+Examples in various files show spaces within the double brackets.
+
+(By the way, the Page Location dropdown above has underscores for spaces and underscore91underscore and 93 and 39 instead of left bracket, right bracket and single quote. When rendered on final page it will be correct but in the select option box it looks strange.)
