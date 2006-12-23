@@ -172,6 +172,12 @@ Any plugins or support for exporting to LaTeX?
 > working the way you're thinking of. Noone is currently working on it.
 > --[[Joey]]
 
+>> I did some tests with using Markdown and a customized HTML::Latex and html2latex
+>> and it appears it will work for me now. (I hope to use ikiwiki for many
+>> to collaborate on a printed book that will be generated at least once per day in PDF format.)
+>>
+>> --JeremyReed
+
 ----
 
 # Using with RCS?
@@ -184,6 +190,15 @@ Any examples of using co(1), ci(1) and other RCS related tools with ikiwiki?
 > then manually run ikiwiki. It should be possible to do an RCS backend
 > that supports web commits with ci, and history (parsing the rcs files by
 > hand?). If you're a masochist. :-) --[[Joey]]
+
+>> It does have history using rlog(1) which is similar format to "cvs log".
+>> I don't think it has any possible hooks. What would happen if I call
+>> ikiwiki directly from rcs_commit? (I didn't try yet.) On that note,
+>> I don't see any way for ikiwiki to generate a single file, but I guess
+>> that doesn't matter as --refresh should be fast enough.
+>> I made a Rcs/rcs.pm plugin from Stub. I have been testing it some.
+>>
+>> --JeremyReed
 
 ----
 
