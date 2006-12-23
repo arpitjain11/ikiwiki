@@ -3,8 +3,11 @@ ikiwiki (1.37) UNRELEASED; urgency=low
   * Add mirrorlist plugin.
   * Fixed permissions of some files that were 600 in the tarball. (Did not
     affect the deb).
+  * Avoid creating edit links when not in cgi mode.
+  * Avoid displaying discussion links at all, if there's not a discussion
+    page, when not in cgi mode.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 23 Dec 2006 00:49:16 -0500
+ -- Joey Hess <joeyh@debian.org>  Sat, 23 Dec 2006 01:17:54 -0500
 
 ikiwiki (1.36) unstable; urgency=low
 
