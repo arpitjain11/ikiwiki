@@ -1,0 +1,7 @@
+I am using --setup with a configuration file that enables my CGI wrapper. This works well. This same configuration also defines the locations of my source and my destination website.
+
+Whenever I run ikiwiki with --setup with this same configuration, then each time my cgi wrapper is updated. It says my cgi is generated and it has new timestamp but md5 shows the file never changed.
+
+Should I use a different config? This is confusing because if I use a config without my cgi wrapper defined, I still have my left-over ikiwiki.cgi still in place (so CGI is enabled).
+
+It seems wasteful to update each time when my goal is just to create the HTML pges (since the CGI didn't generate them) as noted in my other bug report.
