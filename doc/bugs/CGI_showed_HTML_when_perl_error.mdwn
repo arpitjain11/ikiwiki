@@ -1,1 +1,5 @@
 I didn't have Time/Duration.pm installed when I clicked RecentChanges. The perl failed. The CGI outputed the Content-type: text/html and the complete HTML which included the error in side of the paragraph tags. Maybe a newline was sent before that Content-type line. The web browser didn't render the HTML but just showed the source.
+
+> I can't reproduce this, I get a properly formatted error page.
+> If you'd like to send me the page, I can try to figure out what
+> happened. --[[Joey]]
