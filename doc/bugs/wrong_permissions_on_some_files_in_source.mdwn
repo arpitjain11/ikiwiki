@@ -1,0 +1,9 @@
+A few files in the source are only readable by root:
+ikiwiki/basewiki/favicon.ico
+ikiwiki/doc/logo/ikiwiki_large.png
+ikiwiki/doc/logo/ikiwiki.svgz
+ikiwiki/templates/atomitem.tmpl
+ikiwiki/templates/atompage.tmpl
+
+This means that (depending on installation) maybe the permissions are wrong for the final install.
+So when ikiwiki is ran (as non-root) it fails.
