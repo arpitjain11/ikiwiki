@@ -93,7 +93,7 @@ sub genpage ($$$) { #{{{
 		$template->param(historyurl => $u);
 		$actions++;
 	}
-	if ($config{discussion} && ($config{cgi} || exists $links{"$page/discussion"})) {
+	if ($config{discussion} && (length $config{cgiurl} || exists $links{"$page/discussion"})) {
 		$template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
 		$actions++;
 	}

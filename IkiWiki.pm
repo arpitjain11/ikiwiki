@@ -413,7 +413,7 @@ sub htmllink ($$$;$$$) { #{{{
 		$bestlink=htmlpage($bestlink);
 	}
 	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
-		return $linktext unless $config{cgi};
+		return $linktext unless length $config{cgiurl};
 		return "<span><a href=\"".
 			cgiurl(do => "create", page => lc($link), from => $page).
 			"\">?</a>$linktext</span>"
