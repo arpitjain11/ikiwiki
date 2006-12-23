@@ -17,3 +17,15 @@ If this is documented, sorry I missed it.
 > writing the file.
 > 
 > --[[Joey]]
+
+>> Thanks for the info. I added --no-rcs to my command-line and it was fixed.
+>> I assumed that using --setup with my configuration file that had no RCS configured
+>> would override the default (subversion). I never configured anything with subversion,
+>> so I don't even know if the content was being committed and if so I don't know where.
+>> Maybe when using --setup the defaults should not be used. Or maybe the manpage can
+>> mention that if no rcs is configured in --setup configuration then it will default to svn.
+>> I wonder what else is going to defaults not in my configuration file.
+>> I don't see any way in my configuration file for disabling this.
+>> (I should figure out what happened with the subversion commits too...)
+>>
+>> --JeremyReed
