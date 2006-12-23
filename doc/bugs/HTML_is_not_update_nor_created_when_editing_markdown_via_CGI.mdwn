@@ -1,0 +1,8 @@
+I don't know if I have a missed configuration. But under 1.35 using the CGI to create login, to login, and to edit and save the markdown works fine. But the resulting HTML is not generated (updated or created). Using ikiwiki from command line will then update the HTML for me.
+
+An example of the problem: edit worked to update source *.mdw file but www version was not updated,
+so when have new page it has a "?Page". (So CGI is working that much.) I edit ("create") by clicking the ? question mark and save but then receive an HTTP 404 error because the testingpage.html?updated file is not found.
+
+How to get that file generated automatically on save (via edit)?
+
+If this is documented, sorry I missed it.
