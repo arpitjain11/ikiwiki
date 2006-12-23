@@ -1,1 +1,18 @@
-Related to using --cgi on command-line. The man page should just be more clear. ikiwiki-1.35 has: "Enable  CGI  mode. ..." To me this implies that is configuring something that will enable CGI mode. If I understand it correctly, it should say "Run ikiwiki as a CGI. Normally this is used from the ikiwiki.cgi CGI wrapper. ..."
+Related to using --cgi on command-line. The man page should just be more
+clear. ikiwiki-1.35 has: "Enable  CGI  mode. ..." To me this implies that
+is configuring something that will enable CGI mode. If I understand it
+correctly, it should say "Run ikiwiki as a CGI. Normally this is used from
+the ikiwiki.cgi CGI wrapper. ..."
+
+> The man page says:
+
+  Enable [[CGI]] mode. In cgi mode ikiwiki __runs as a cgi script__, and
+  supports editing pages, signing in, registration, and displaying
+  [[RecentChanges]].
+
+  __To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
+  to generate a wrapper.__ The wrapper will generally need to run suid 6755
+  to the user who owns the `source` and `destination` directories.
+
+> (emphasis mine). Anyway, if you have ideas to improve the man page, it's
+> over in [[usage]] --[[Joey]]
