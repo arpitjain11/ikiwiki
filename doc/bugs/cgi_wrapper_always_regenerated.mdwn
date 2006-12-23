@@ -5,3 +5,12 @@ Whenever I run ikiwiki with --setup with this same configuration, then each time
 Should I use a different config? This is confusing because if I use a config without my cgi wrapper defined, I still have my left-over ikiwiki.cgi still in place (so CGI is enabled).
 
 It seems wasteful to update each time when my goal is just to create the HTML pges (since the CGI didn't generate them) as noted in my other bug report.
+
+> If ikiwiki is run in refresh mode, it won't regnerate the wrapper. You
+> want to run it in refresh mode, because it's also wastful to rebuild all
+> the unchanged pages, which is done by default when setting up a wiki with
+> --setup.
+> 
+> Example of refresh mode: `ikiwiki -setup ikiwiki.setup --refresh`
+> 
+> Improved the docs slightly, so I'll call this [[bugs/done]] --[[Joey]]

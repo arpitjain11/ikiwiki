@@ -6,3 +6,14 @@ so when have new page it has a "?Page". (So CGI is working that much.) I edit ("
 How to get that file generated automatically on save (via edit)?
 
 If this is documented, sorry I missed it.
+
+> If a revision control system is configured, ikiwiki relies on a hook
+> being triggered by its commit to the RCS, which then runs ikiwiki again
+> to do the build, same as happens when a commit is made to the RCS
+> directly. If the appropriate hook is not uncommented and configured in
+> the setup file, you could see the behavior you describe.
+>
+> If no revision control system is used, ikiwiki handles the build after
+> writing the file.
+> 
+> --[[Joey]]
