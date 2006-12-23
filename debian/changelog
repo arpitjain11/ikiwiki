@@ -6,8 +6,10 @@ ikiwiki (1.37) UNRELEASED; urgency=low
   * Avoid creating edit links when the cgi url is not known.
   * Avoid displaying discussion links at all, if there's not a discussion
     page, when the cgi url isn't known.
+  * Ikiwiki used to use svn as its RCS by default unless configured otherwise,
+    now it defaults to using no RCS unless configured to do so.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 23 Dec 2006 01:17:54 -0500
+ -- Joey Hess <joeyh@debian.org>  Sat, 23 Dec 2006 01:51:49 -0500
 
 ikiwiki (1.36) unstable; urgency=low
 

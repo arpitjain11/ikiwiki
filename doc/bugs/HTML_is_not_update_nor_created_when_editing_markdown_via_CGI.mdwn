@@ -29,3 +29,15 @@ If this is documented, sorry I missed it.
 >> (I should figure out what happened with the subversion commits too...)
 >>
 >> --JeremyReed
+
+>>> Defaulting that to svn in a bug. Fixed. In general, there are defaults
+>>> for various things configurable by the config file, but they should not
+>>> cause suprising behavior like this. For example, it defaults to
+>>> supporting discussion pages. (You can see all the defaults near
+>>> the top of `IkiWiki.pm`).
+>>>
+>>> The svn backend would have noticed that your wiki is not in svn, and
+>>> avoided doing anything, BTW.
+>>>
+>>> I've changed the default setting that was making it use svn, so this
+>>> bug is [[bugs/done]] --[[Joey]]

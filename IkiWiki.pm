@@ -38,7 +38,7 @@ sub defaultconfig () { #{{{
 	wikiname => "wiki",
 	default_pageext => "mdwn",
 	cgi => 0,
-	rcs => 'svn',
+	rcs => '',
 	notify => 0,
 	url => '',
 	cgiurl => '',
