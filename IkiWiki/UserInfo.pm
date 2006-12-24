@@ -112,7 +112,9 @@ sub send_commit_mails ($$$@) { #{{{
 	my $messagesub=shift;
 	my $diffsub=shift;
 	my $user=shift;
-	my @changed_pages=shift;
+	my @changed_pages=@_;
+
+	return unless @changed_pages;
 
 	my @email_recipients=commit_notify_list($user, @changed_pages);
 	if (@email_recipients) {
