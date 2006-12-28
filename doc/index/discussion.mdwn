@@ -188,30 +188,6 @@ Moved to [[bugs]] -- [[Joey]]
 
 ----
 
-# wiki\_file\_regexp and RCS ,v files
-
-I have RCS ,v files in my source directory. But get many "skipping bad filename" warnings.
-
-Also I don't see wiki\_file\_regexp documented. Because it is used with $config{wiki\_file\_regexp} I assume it can be set in the ikiwiki.setup.
-I added a comma to it in my IkiWiki.pm in the defaultconfig(). But that was wrong (so I reverted back), because then the ,v files were copied to my www tree.
-
-What is the correct way to include ,v RCS revision files in my source tree without receiving the "bad" messages and without copying over to www tree?
-
--- [[JeremyReed]]
-
-> Add the ,v to the $config{wiki\_file\_prune\_regexps} array. This is how we
-> skip equivilant files from other revision control systems too.
-> --[[Joey]]]
-
->> Okay, I used in my setup configuration:
->>    exclude => qr/\,v$/,
->> I looked in source for the array you mentioned above and noticed the $setup{exclude}. And now I see that is documented.
->> (By the way, the example there doesn't seem correct with a literal asterisk and period wildcard.
->> Maybe it should be qr/\.wav$/,)
->> --[[JeremyReed]]
-
-----
-
 # Textile Plugin
 
 It was trivial, but I put together a plugin that uses the Textile markup
