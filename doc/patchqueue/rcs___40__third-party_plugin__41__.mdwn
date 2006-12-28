@@ -7,8 +7,10 @@ I have used it probably over hundred times but needs some work.
 > implemented, before it can be included into ikiwiki. 
 > 
 > Notes on individual functions:
+> 
 > * rcs_prepedit - I'm not sure why you do the locking since the comment
 >   notes that the locking does no good..
+> 
 > * rcs_getctime - You ask why this would be better than mtime. It's
 >   because with something like subversion, a file's modification time or
 >   ctime is not necessarily accurate WRT when the file was first checked
