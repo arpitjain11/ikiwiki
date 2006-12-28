@@ -22,6 +22,7 @@ sub linkify ($$$$) {
 		$renderedfiles{"$page.mdwn"}=[$page];
 	}
 	%config=IkiWiki::defaultconfig();
+	$config{cgiurl}="http://somehost/ikiwiki.cgi";
 
 	return IkiWiki::linkify($lpage, $page, $content);
 }
