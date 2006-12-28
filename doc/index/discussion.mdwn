@@ -230,3 +230,5 @@ that sort of thing.  Where or how do I submit it for inclusion?
 >> Until I fix that, you can avoid the one from the underlay directory by
 >> setting `underlaydir` to point to an empty directory. --[[Joey]]
 >>
+>> Ok, fixed (in svn), it will now prefer files in the srcdir over files
+>> in the underlaydir that build the same page, no matter what extension.

@@ -11,8 +11,11 @@ ikiwiki (1.37) UNRELEASED; urgency=low
     suprising behavior when using a setup file and not uncommenting any RCS
     options.
   * Fix some bugs in the commit email sending code.
+  * Improve code that ignores files in the underlaydir if the srcdir has a
+    file building the same page. Now it will work even if the extensions of
+    the source files differ.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 24 Dec 2006 00:51:11 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu, 28 Dec 2006 17:13:43 -0500
 
 ikiwiki (1.36) unstable; urgency=low
 

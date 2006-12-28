@@ -247,13 +247,16 @@ sub refresh () { #{{{
 					warn("skipping bad filename $_\n");
 				}
 				else {
-					# Don't add files that are in the
+					# Don't add pages that are in the
 					# srcdir.
 					$f=~s/^\Q$config{underlaydir}\E\/?//;
 					if (! -e "$config{srcdir}/$f" && 
 					    ! -l "$config{srcdir}/$f") {
-						push @files, $f;
-						$exists{pagename($f)}=1;
+					    	my $page=pagename($f);
+						if (! $exists{$page}) {
+							push @files, $f;
+							$exists{$page}=1;
+						}
 					}
 				}
 			}
@@ -266,10 +269,10 @@ sub refresh () { #{{{
 	my @add;
 	foreach my $file (@files) {
 		my $page=pagename($file);
+		$pagesources{$page}=$file;
 		if (! $oldpagemtime{$page}) {
 			push @add, $file;
 			$pagecase{lc $page}=$page;
-			$pagesources{$page}=$file;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
 				$pagectime{$page}=rcs_getctime("$config{srcdir}/$file");
 			}
