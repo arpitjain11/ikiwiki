@@ -1,0 +1,22 @@
+How about adding ACL? So that you can control which users are allowed
+to read, write certain pages. The moinmoin wiki has that, and it is
+something, that I think is very valuable.
+
+> ikiwiki currently has only the most rudimentary access controls: pages
+> can be locked, or unlocked and only the admin can edit locked pages. That
+> could certianly be expanded on, although it's not an area that I have an
+> overwhelming desire to work on myself right now. Patches appreciated and
+> I'll be happy to point you in the right directions.. --[[Joey]]
+
+>> I'm really curious how you'd suggest implementing ACLs on reading a page.
+>> It seems to me the only way you could do it is .htaccess DenyAll or something,
+>> and then route all page views through ikiwiki.cgi. Am I missing something?
+>> --[[Ethan]]
+
+>>> Or you could just use apache or whatever and set up the access controls
+>>> there. Of course, that wouldn't integrate very well with the wiki,
+>>> unless perhaps you decided to use http basic authentication and the
+>>> httpauth plugin for ikiwiki that integrates with that.. --[[Joey]]
+
+>>>> Which would rule out openid, or other fun forms of auth. And routing all access
+>>>> through the CGI sort of defeats the purpose of ikiwiki. --[[Ethan]]

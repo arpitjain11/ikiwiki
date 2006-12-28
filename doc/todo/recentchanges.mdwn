@@ -2,18 +2,19 @@
   seems like it could be beneficial to have it rendered in the post-commit
   hook, just like everything else in the wiki. 
 
-  I hope to statically generate it eventually, currently the problem is
-  that it takes at least several seconds to generate the recentchanges
-  page, and adding several seconds to every page edit is not desiriable. If
-  the time can be reduced it could be done, I'm also not adverse to
-  adding an optional way to statically render it even at the current speed.
+  > I hope to statically generate it eventually, currently the problem is
+  > that it takes at least several seconds to generate the recentchanges
+  > page, and adding several seconds to every page edit is not desiriable. If
+  > the time can be reduced it could be done, I'm also not adverse to
+  > adding an optional way to statically render it even at the current
+  > speed. --[[Joey]]
 
 * Also, is it planned/desired that recent changes generate the same
   information in RSS feed format? This seems like it could be a useful way
   to keep track of the wiki as a whole. 
 
-  This is used by various interwiki type things, I think, so should be
-  done..
+  > This is used by various interwiki type things, I think, so should be
+  > done.. --[[Joey]]
 
 * Lastly, would it be possible to use the recent changes code with a
   pagespec? I understand this sort of infringes on territory covered by the

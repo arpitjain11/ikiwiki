@@ -95,28 +95,7 @@ I just figured I'd edit something on the page with my OpenID, since you've imple
 
 # ACL
 
-How about adding ACL? So that you can control which users are allowed
-to read, write certain pages. The moinmoin wiki has that, and it is
-something, that I think is very valuable. 
-
-> ikiwiki currently has only the most rudimentary access controls: pages
-> can be locked, or unlocked and only the admin can edit locked pages. That
-> could certianly be expanded on, although it's not an area that I have an
-> overwhelming desire to work on myself right now. Patches appreciated and
-> I'll be happy to point you in the right directions.. --[[Joey]]
-
->> I'm really curious how you'd suggest implementing ACLs on reading a page.
->> It seems to me the only way you could do it is .htaccess DenyAll or something,
->> and then route all page views through ikiwiki.cgi. Am I missing something?
->> --[[Ethan]]
-
->>> Or you could just use apache or whatever and set up the access controls
->>> there. Of course, that wouldn't integrate very well with the wiki,
->>> unless perhaps you decided to use http basic authentication and the
->>> httpauth plugin for ikiwiki that integrates with that.. --[[Joey]]
-
->>>> Which would rule out openid, or other fun forms of auth. And routing all access 
->>>> through the CGI sort of defeats the purpose of ikiwiki. --[[Ethan]]
+> Moved to [[todo/ACL]] --[[Joey]]
 
 ----
 
@@ -136,20 +115,7 @@ the template. -- Ethan
 
 # Canonical feed location?
 
-Any way to use `inline` but point the feed links to a different feed on the
-same site?  I have news in news/*, a news archive in news.mdwn, and the
-first few news items on index.mdwn, but I don't really want two separate
-feeds, one with all news and one with the latest few articles; I'd rather
-point the RSS feed links of both to the same feed.  (Which one, the one
-with all news or the one with the latest news only, I don't know yet.)
-
-> Not currently. It could be implemented, or you could just turn off the
-> rss feed for the index page, and manually put in a wikilink to the news
-> page and rss feed. --[[Joey]]
-
->> That wouldn't use the same style for the RSS and Atom links, and it
->> wouldn't embed the feed link into `<head>` so that browsers can automatically
->> find it.
+Moved to [[todo/canonical_feed_location]] --[[Joey]]
 
 ----
 
@@ -177,34 +143,6 @@ Any plugins or support for exporting to LaTeX?
 >> to collaborate on a printed book that will be generated at least once per day in PDF format.)
 >>
 >> --JeremyReed
-
-----
-
-# Using with RCS?
-
-Any examples of using co(1), ci(1) and other RCS related tools with ikiwiki?
-
-> I don't belive that RCS offers enough SCM features to be useable as a
-> fullfledged backend to ikiwiki. For one thing, there's no way to have
-> hook scripts run when changes are ci'd, is there? So you'd have to ci and
-> then manually run ikiwiki. It should be possible to do an RCS backend
-> that supports web commits with ci, and history (parsing the rcs files by
-> hand?). If you're a masochist. :-) --[[Joey]]
-
->> It does have history using rlog(1) which is similar format to "cvs log".
->> I don't think it has any possible hooks. What would happen if I call
->> ikiwiki directly from rcs_commit? (I didn't try yet.) On that note,
->> I don't see any way for ikiwiki to generate a single file, but I guess
->> that doesn't matter as --refresh should be fast enough.
->> I made a Rcs/rcs.pm plugin from Stub. I have been testing it some.
->>
->> --JeremyReed
-
->> I made a working rcs plugin. And I made a RCS-to-web CGI. Details
->> at [[patchqueue/rcs_(third-party_plugin)]]
->> --[[JeremyReed]]
->>
->> (Moved to patchqueue --[[Joey]])
 
 ----
 
@@ -246,7 +184,7 @@ Any setting for limiting how many kilobytes can be submitted via the "edit" form
 
 # Disable sub-discussion pages?
 
-> Moved to [[bugs]] -- [[Joey]]
+Moved to [[bugs]] -- [[Joey]]
 
 ----
 
