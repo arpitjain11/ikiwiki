@@ -215,4 +215,18 @@ that sort of thing.  Where or how do I submit it for inclusion?
 
 >> Thanks.  I tried using the "Add new post" form there, but apparently made a [mess of things somehow](http://ikiwiki.kitenet.net/contrib/textile___40__third-party_plugin__41__.html).  Sorry about that.
 
-How does one go about making a markup language added by means of a plugin, the default markup language.  In other words, I would like the index page to be written in Textile.  If I include a index.txtl (where txtl is the extension I have assigned to be handled by the textile plugin), ikiwiki will ignore it and make a new index.mdwn.
+>>> No problem, the contrib form had the wrong rootpage setting. I've fixed
+>>> it up and moved it to the right place. A copyright statement would be
+>>> nice.
+
+> How does one go about making a markup language added by means of a plugin, the default markup language.  In other words, I would like the index page to be written in Textile.
+> If I include a index.txtl (where txtl is the extension I have assigned to be handled by the textile plugin), ikiwiki will ignore it and make a new index.mdwn.
+
+>> Sounds like a bug; it should be configurable via `default_pageext`, but
+>> I suspect that currently if there are two competing files with different
+>> extensions that make the same page, they fight it out and some random
+>> one "wins" 
+>> 
+>> Until I fix that, you can avoid the one from the underlay directory by
+>> setting `underlaydir` to point to an empty directory. --[[Joey]]
+>>
