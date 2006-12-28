@@ -232,7 +232,12 @@ editing a page. Is that an option that can be enabled?
 Any setting for limiting how many kilobytes can be submitted via the "edit" form?
 -- [[JeremyReed]]
 
-> Not currently. Worried about abuse? --[[Joey]]
+> Not currently. Worried about abuse? -man -[[Joey]]
+
+>> I didn't want it abused accidently or with malice. I was thinking that Perl's CGI.pm would handle this, but I don't see that.
+>> I read that textarea max bytes may be 500 lines or 28000 characters or 30000 characters or 64kB. It seems like it
+>> varies and I didn't test myself, because I guess it may depend on different clients and different HTTP servers. 
+>> This could be checked using javascript on the client side (before submitting) and by checking size on server side (before saving). --[[JeremyReed]]
 
 ----
 
