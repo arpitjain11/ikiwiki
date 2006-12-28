@@ -17,6 +17,8 @@
 </span>
 <TMPL_VAR CONTENT>
 
+<div class="trailer">
+
 <span class="pageinfo">
 Posted <TMPL_VAR CTIME>
 </span>
@@ -31,7 +33,7 @@ Tags:
 </span>
 
 <TMPL_IF NAME="HAVE_ACTIONS">
-<span class="actions">
+<div class="actions">
 <ul>
 <TMPL_IF NAME="EDITURL">
 <li><a href="<TMPL_VAR EDITURL>">Edit</a></li>
@@ -40,7 +42,9 @@ Tags:
 <li><TMPL_VAR DISCUSSIONLINK></li>
 </TMPL_IF>
 </ul>
-</span>
+</div>
 </TMPL_IF>
+
+</div>
 
 </div>
