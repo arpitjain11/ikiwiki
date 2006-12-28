@@ -2,7 +2,7 @@ I'm writing my own CSS for ikiwiki. During this effort I often found the need of
 
 In this patch I plan to collect changes in this direction.
 
-The first, one-liner, patch is to use a <div class="actions"> for inline page as is done with non-inlined page. This way the same CSS formatting can be applied to div.actions in the CSS, while at the moment it must be duplicated for a span.actions (which I believe is also incorrect, since it will contain an <ul>, not sure though). In case the markup should be differentiated it will still be possible relying on the fact that a div.actions is contained or not in a div.inlinepage.
+The first, one-liner, patch is to use a "div" element with a class="actions" attribute for inline page as is done with non-inlined page. This way the same CSS formatting can be applied to div.actions in the CSS, while at the moment it must be duplicated for a span.actions (which I believe is also incorrect, since it will contain a "ul" element, not sure though). In case the markup should be differentiated it will still be possible relying on the fact that a div.actions is contained or not in a div.inlinepage.
 
 Here's the one-liner:
 
