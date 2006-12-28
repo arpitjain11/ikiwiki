@@ -199,9 +199,16 @@ What is the correct way to include ,v RCS revision files in my source tree witho
 
 -- [[JeremyReed]]
 
-> Add the ,v to the $config{wiki_file_prune_regexps} array. This is how we
+> Add the ,v to the $config{wiki\_file\_prune\_regexps} array. This is how we
 > skip equivilant files from other revision control systems too.
 > --[[Joey]]]
+
+>> Okay, I used in my setup configuration:
+>>    exclude => qr/\,v$/,
+>> I looked in source for the array you mentioned above and noticed the $setup{exclude}. And now I see that is documented.
+>> (By the way, the example there doesn't seem correct with a literal asterisk and period wildcard.
+>> Maybe it should be qr/\.wav$/,)
+>> --[[JeremyReed]]
 
 ----
 
