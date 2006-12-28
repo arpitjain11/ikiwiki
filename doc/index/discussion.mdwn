@@ -242,3 +242,16 @@ Any setting to disable having a discussion of a discussion?
 The [[features]] page says every page, but I don't want every page.
 I do want discussion subpage, but I don't want to have, for example: discussion/ discussion/ discussion.
 -- [[JeremyReed]]
+
+----
+
+# wiki\_file\_regexp and RCS ,v files
+
+I have RCS ,v files in my source directory. But get many "skipping bad filename" warnings.
+
+Also I don't see wiki\_file\_regexp documented. Because it is used with $config{wiki\_file\_regexp} I assume it can be set in the ikiwiki.setup.
+I added a comma to it in my IkiWiki.pm in the defaultconfig(). But that was wrong (so I reverted back), because then the ,v files were copied to my www tree.
+
+What is the correct way to include ,v RCS revision files in my source tree without receiving the "bad" messages and without copying over to www tree?
+
+-- [[JeremyReed]]
