@@ -21,6 +21,10 @@ or "History".
 > link needs to be different if the Discussion page doesn't yet exist.
 
 >> You can always use <tmpl_if> and <tmpl_else> construct in that place ;) --Pawel
+
+>>> Not without duplicating the logic that constructs a link to an
+>>> existing/nonexisting page in two places, one in code in ikiwiki and one
+>>> in the template. Not good design. --[[Joey]]
  
 > As noted in [[patchqueue/l10n]], there are some other places in ikiwiki
 > that hard code English strings, and I feel that using standard gettext
@@ -33,3 +37,6 @@ or "History".
 >> BTW, is there a chance for configurable name of Discussion page?
 >> In my wiki I use only Polish name of pages, so I would like to have
 >> dyskusja.html page, instead of discussion.html page. --Pawel
+
+>>> I have an incomplete i10n patch for such hardcoded strings in the code, 
+>>> which I hope to finish up eventually --[[Joey]]

@@ -232,21 +232,21 @@ editing a page. Is that an option that can be enabled?
 Any setting for limiting how many kilobytes can be submitted via the "edit" form?
 -- [[JeremyReed]]
 
-> Not currently. Worried about abuse? -man -[[Joey]]
+> Not currently. Worried about abuse? --[[Joey]]
 
 >> I didn't want it abused accidently or with malice. I was thinking that Perl's CGI.pm would handle this, but I don't see that.
 >> I read that textarea max bytes may be 500 lines or 28000 characters or 30000 characters or 64kB. It seems like it
 >> varies and I didn't test myself, because I guess it may depend on different clients and different HTTP servers. 
 >> This could be checked using javascript on the client side (before submitting) and by checking size on server side (before saving). --[[JeremyReed]]
 
+>>> The absolute limit varies by browser. If there are web servers that
+>>> also limit it, I don't know of them. --[[Joey]]
+
 ----
 
 # Disable sub-discussion pages?
 
-Any setting to disable having a discussion of a discussion?
-The [[features]] page says every page, but I don't want every page.
-I do want discussion subpage, but I don't want to have, for example: discussion/ discussion/ discussion.
--- [[JeremyReed]]
+> Moved to [[bugs]] -- [[Joey]]
 
 ----
 
@@ -260,6 +260,10 @@ I added a comma to it in my IkiWiki.pm in the defaultconfig(). But that was wron
 What is the correct way to include ,v RCS revision files in my source tree without receiving the "bad" messages and without copying over to www tree?
 
 -- [[JeremyReed]]
+
+> Add the ,v to the $config{wiki_file_prune_regexps} array. This is how we
+> skip equivilant files from other revision control systems too.
+> --[[Joey]]]
 
 ----
 

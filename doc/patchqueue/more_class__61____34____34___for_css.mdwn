@@ -2,32 +2,25 @@ I'm writing my own CSS for ikiwiki. During this effort I often found the need of
 
 In this patch I plan to collect changes in this direction.
 
-The first, one-liner, patch is to use a "div" element with a class="actions" attribute for inline page as is done with non-inlined page.   This way the same CSS formatting can be applied to div.actions in the CSS, while at the moment it must be duplicated for a span.actions (which I believe is also incorrect, since it will contain a "ul" element, not sure though). In case the markup should be differentiated it will still be possible relying on the fact that a div.actions is contained or not in a div.inlinepage.
+The first, one-liner, patch is to use a "div" element with a
+class="actions" attribute for inline page as is done with non-inlined page.
+This way the same CSS formatting can be applied to div.actions in the CSS,
+while at the moment it must be duplicated for a span.actions (which I
+believe is also incorrect, since it will contain a "ul" element, not sure
+though). In case the markup should be differentiated it will still be
+possible relying on the fact that a div.actions is contained or not in a
+div.inlinepage.
 
 Here's the one-liner:
 
-    --- /usr/share/ikiwiki/templates/inlinepage.tmpl        2006-12-28 16:24:06.000000000 +0100
-    +++ inlinepage.tmpl.new 2006-12-28 16:24:04.000000000 +0100
-    @@ -31,7 +31,7 @@
-     </span>
+> applied --[[Joey]]
 
-     <TMPL_IF NAME="HAVE_ACTIONS">
-    -<span class="actions">
-    +<div class="actions">
-     <ul>
-     <TMPL_IF NAME="EDITURL">
-     <li><a href="<TMPL_VAR EDITURL>">Edit</a></li>
-    @@ -40,7 +40,7 @@
-     <li><TMPL_VAR DISCUSSIONLINK></li>
-     </TMPL_IF>
-     </ul>
-    -</span>
-    +</div>
-     </TMPL_IF>
+The following adds a div element with class="trailer" around the
+meta-information added after an inlined page (namely: the post date, the
+tags, and the actions):
 
-     </div>
-
-The following adds a div element with class="trailer" around the meta-information added after an inlined page (namely: the post date, the tags, and the actions):
+The following adds a div element with class="trailer" around the meta-informati
+on added after an inlined page (namely: the post date, the tags, and the actions):
 
     --- inlinepage.tmpl.orig        2006-12-28 16:56:49.000000000 +0100
     +++ inlinepage.tmpl     2006-12-28 17:02:06.000000000 +0100
@@ -47,4 +40,8 @@ The following adds a div element with class="trailer" around the meta-informatio
     +
     +</div>
 
-
+> Unfortunately, the inlinepage content passes through markdown, and markdown
+> gets confused by these nested div's and puts p's around one of them, generating
+> broken html. If you can come up with a way to put in the div that passes
+> the test suite, or a fix to markdown, I will accept it, but the above patch
+> fails the test suite. --[[Joey]] 
