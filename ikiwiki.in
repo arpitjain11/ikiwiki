@@ -65,7 +65,7 @@ sub getconfig () { #{{{
 				push @{$config{plugin}}, $_[1];
 			},
 			"disable-plugin=s@" => sub {
-				$config{plugin}=[grep { $_ ne $_[1] } @{$config{plugin}}];
+				push @{$config{disable_plugins}}, $_[1];
 			},
 			"pingurl=s" => sub {
 				push @{$config{pingurl}}, $_[1];

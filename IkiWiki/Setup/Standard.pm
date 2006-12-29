@@ -24,12 +24,6 @@ sub setup_standard {
 		push @{$setup{plugin}}, @{$setup{add_plugins}};
 		delete $setup{add_plugins};
 	}
-	if (exists $setup{disable_plugins}) {
-		foreach my $plugin (@{$setup{disable_plugins}}) {
-			$setup{plugin}=[grep { $_ ne $plugin } @{$setup{plugin}}];
-		}
-		delete $setup{disable_plugins};
-	}
 	if (exists $setup{exclude}) {
 		push @{$config{wiki_file_prune_regexps}}, $setup{exclude};
 	}

@@ -129,6 +129,8 @@ sub loadplugins () { #{{{
 sub loadplugin ($) { #{{{
 	my $plugin=shift;
 
+	return if grep { $_ eq $plugin} @{$config{disable_plugins}};
+
 	my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
 	eval qq{use $mod};
 	if ($@) {

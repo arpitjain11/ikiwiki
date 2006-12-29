@@ -213,3 +213,5 @@ Ok, that's my last 2 cents for a while. --[Mazirian](http://mazirian.com)
 Some installs of PerlMagick require X11. I tried to first disable using "img" by using "--disable-plugin img"
 in the Makefile. But still failed. My workaround was to remove "img" from the bundle in IkiWiki/Plugin/goodstuff.pm
 before building. What is the recommended way to install ikiwiki without "img" support? --[[JeremyReed]]
+
+> I've fixed this in svn so plugins in goodstuff can be disabled. --[[Joey]]
