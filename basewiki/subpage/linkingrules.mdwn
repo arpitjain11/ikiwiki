@@ -25,3 +25,8 @@ to link to, when there are multiple pages with similar names and the link
 goes to the wrong page by default. For example, linking from
 "FooBar/SubPage" to  "/OtherPage" will link to the "OtherPage" in the root
 of the wiki, even if there is a "FooBar/OtherPage".
+
+Also, if the wiki is configured with a userdir, you can link to pages
+within the userdir without specifying a path to them. This is to allow for
+easy linking to a user's page in the userdir, to sign a comment. These
+links are checked for last of all.

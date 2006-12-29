@@ -419,6 +419,8 @@ sub cgi_editpage ($$) { #{{{
 					push @page_locs, $dir.$page;
 				}
 			}
+			push @page_locs, "$config{userdir}/$page"
+				if length $config{userdir};
 
 			@page_locs = grep {
 				! exists $pagecase{lc $_} &&

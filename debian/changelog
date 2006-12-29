@@ -20,8 +20,11 @@ ikiwiki (1.37) UNRELEASED; urgency=low
   * Don't put discussion links on discussion pages.
   * Allow disabling of plugins included in goodstuff.
   * Add a textile format plugin contributed by mazirian.
+  * If a userdir is configured, links to pages in it can be made without
+    specifying the path. This allows for easy signing of comments by linking
+    to your page in the userdir.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 29 Dec 2006 00:17:58 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri, 29 Dec 2006 00:26:47 -0500
 
 ikiwiki (1.36) unstable; urgency=low
 
