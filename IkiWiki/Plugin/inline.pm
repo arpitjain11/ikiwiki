@@ -157,7 +157,9 @@ sub preprocess_inline (@) { #{{{
 			if ($actions) {
 				my $file = $pagesources{$page};
 				my $type = pagetype($file);
-				if ($config{discussion} && (length $config{cgiurl} || exists $links{$page."/".gettext("discussion")})) {
+				if ($config{discussion} &&
+				    $page !~ /.*\/discussion$/ &&
+				    (length $config{cgiurl} || exists $links{$page."/".gettext("discussion")})) {
 					$template->param(have_actions => 1);
 					$template->param(discussionlink => htmllink($page, $params{page}, "Discussion", 1, 1));
 				}
