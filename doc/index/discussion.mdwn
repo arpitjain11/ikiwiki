@@ -206,6 +206,12 @@ actions.  However, it may not be something everyone appreciates.  Any thoughts?
 It would be nice to be able to edit the stylesheet by means of the cgi.  Or is this possible?  I wasn't able to achieve it.
 Ok, that's my last 2 cents for a while. --[Mazirian](http://mazirian.com)
 
+> I don't support editing it, but if/when ikiwiki gets file upload support,
+> it'll be possible to upload a style sheet. (If .css is in the allowed
+> extensions list.. no idea how safe that would be, a style sheet is
+> probably a great place to put XSS attacks and evil javascript that would
+> be filtered out of any regular page in ikiwiki). --[[Joey]]
+
 ----
 
 # Disable build/install requirement on PerlMagick
