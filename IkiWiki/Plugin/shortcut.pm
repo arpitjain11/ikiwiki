@@ -21,13 +21,13 @@ sub preprocess_shortcut (@) { #{{{
 	my %params=@_;
 
 	if (! defined $params{name} || ! defined $params{url}) {
-		return "[[shortcut missing name or url parameter]]";
+		return "[[".gettext("shortcut missing name or url parameter")."]]";
 	}
 
 	hook(type => "preprocess", no_override => 1, id => $params{name},
 		call => sub { shortcut_expand($params{url}, $params{desc}, @_) });
 
-	return "shortcut $params{name} points to $params{url}";
+	return sprintf(gettext("shortcut %s points to %s"), $params{name}, $params{url});
 } # }}}
 
 sub shortcut_expand ($$@) { #{{{

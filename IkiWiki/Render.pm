@@ -93,8 +93,8 @@ sub genpage ($$$) { #{{{
 		$template->param(historyurl => $u);
 		$actions++;
 	}
-	if ($config{discussion} && (length $config{cgiurl} || exists $links{"$page/discussion"})) {
-		$template->param(discussionlink => htmllink($page, $page, "Discussion", 1, 1));
+	if ($config{discussion} && (length $config{cgiurl} || exists $links{$page."/".gettext("discussion")})) {
+		$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), 1, 1));
 		$actions++;
 	}
 
@@ -157,7 +157,7 @@ sub scan ($) { #{{{
 		if ($config{discussion}) {
 			# Discussion links are a special case since they're
 			# not in the text of the page, but on its template.
-			push @links, "$page/discussion";
+			push @links, $page."/".gettext("discussion");
 		}
 		$links{$page}=\@links;
 		
@@ -224,7 +224,7 @@ sub refresh () { #{{{
 			elsif (! -d $_ && ! -l $_) {
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
 				if (! defined $f) {
-					warn("skipping bad filename $_\n");
+					warn(sprintf(gettext("skipping bad filename %s"), $_)."\n");
 				}
 				else {
 					$f=~s/^\Q$config{srcdir}\E\/?//;
@@ -244,7 +244,7 @@ sub refresh () { #{{{
 			elsif (! -d $_ && ! -l $_) {
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
 				if (! defined $f) {
-					warn("skipping bad filename $_\n");
+					warn(sprintf(gettext("skipping bad filename %s"), $_)."\n");
 				}
 				else {
 					# Don't add pages that are in the
@@ -284,7 +284,7 @@ sub refresh () { #{{{
 	my @del;
 	foreach my $page (keys %oldpagemtime) {
 		if (! $exists{$page}) {
-			debug("removing old page $page");
+			debug(sprintf(gettext("removing old page %s"), $page));
 			push @del, $pagesources{$page};
 			$links{$page}=[];
 			$renderedfiles{$page}=[];
@@ -303,7 +303,7 @@ sub refresh () { #{{{
 		if (! exists $oldpagemtime{$page} ||
 		    mtime(srcfile($file)) > $oldpagemtime{$page} ||
 	    	    $forcerebuild{$page}) {
-		    	debug("scanning $file");
+		    	debug(sprintf(gettext("scanning %s"), $file));
 			push @changed, $file;
 			scan($file);
 		}
@@ -312,7 +312,7 @@ sub refresh () { #{{{
 
 	# render changed and new pages
 	foreach my $file (@changed) {
-		debug("rendering $file");
+		debug(sprintf(gettext("rendering %s"), $file));
 		render($file);
 		$rendered{$file}=1;
 	}
@@ -324,7 +324,7 @@ sub refresh () { #{{{
 			foreach my $page (keys %{$backlinks{$p}}) {
 				my $file=$pagesources{$page};
 				next if $rendered{$file};
-		   		debug("rendering $file, which links to $p");
+		   		debug(sprintf(gettext("rendering %s, which links to %s"), $file, $p));
 				render($file);
 				$rendered{$file}=1;
 			}
@@ -341,7 +341,7 @@ sub refresh () { #{{{
 					next if $f eq $file;
 					my $page=pagename($file);
 					if (pagespec_match($page, $depends{$p})) {
-						debug("rendering $f, which depends on $page");
+						debug(sprintf(gettext("rendering %s, which depends on %s"), $f, $page));
 						render($f);
 						$rendered{$f}=1;
 						last;
@@ -379,7 +379,7 @@ sub refresh () { #{{{
 		    	my $linkfile=$pagesources{$link};
 			if (defined $linkfile) {
 				next if $rendered{$linkfile};
-				debug("rendering $linkfile, to update its backlinks");
+				debug(sprintf(gettext("rendering %s, to update its backlinks"), $linkfile));
 				render($linkfile);
 				$rendered{$linkfile}=1;
 			}
@@ -391,7 +391,7 @@ sub refresh () { #{{{
 		my $page=pagename($src);
 		foreach my $file (@{$oldrenderedfiles{$page}}) {
 			if (! grep { $_ eq $file } @{$renderedfiles{$page}}) {
-				debug("removing $file, no longer rendered by $page");
+				debug(sprintf(gettext("removing %s, no longer rendered by %s"), $file, $page));
 				prune($config{destdir}."/".$file);
 			}
 		}
@@ -417,7 +417,7 @@ sub commandline_render () { #{{{
 	$file=~s/\Q$config{srcdir}\E\/?//;
 
 	my $type=pagetype($file);
-	die "ikiwiki: cannot render $srcfile\n" unless defined $type;
+	die sprintf(gettext("ikiwiki: cannot render %s"), $srcfile)."\n" unless defined $type;
 	my $content=readfile($srcfile);
 	my $page=pagename($file);
 	$pagesources{$page}=$file;

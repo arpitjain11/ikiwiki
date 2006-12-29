@@ -31,7 +31,7 @@ sub getopt () { #{{{
 sub checkconfig () { #{{{
 	foreach my $required (qw(url cgiurl)) {
 		if (! length $config{$required}) {
-			error("Must specify $required when using the search plugin\n");
+			error(sprintf(gettext("Must specify %s when using the search plugin"), $required));
 		}
 	}
 } #}}}
@@ -55,13 +55,13 @@ sub pagetemplate (@) { #{{{
 } #}}}
 
 sub delete (@) { #{{{
-	debug("cleaning hyperestraier search index");
+	debug(gettext("cleaning hyperestraier search index"));
 	estcmd("purge -cl");
 	estcfg();
 } #}}}
 
 sub change (@) { #{{{
-	debug("updating hyperestraier search index");
+	debug(gettext("updating hyperestraier search index"));
 	estcmd("gather -cm -bc -cl -sd",
 		map {
 			Encode::encode_utf8($config{destdir}."/".$_)

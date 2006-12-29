@@ -58,7 +58,7 @@ sub preprocess (@) { #{{{
 
 	foreach my $required (qw{name url}) {
 		if (! exists $params{$required}) {
-			return "[[aggregate plugin missing $required parameter]]";
+			return "[[".sprintf(gettext("aggregate plugin missing %s parameter"), $required)."]]";
 		}
 	}
 
@@ -86,7 +86,7 @@ sub preprocess (@) { #{{{
 	$feed->{lastupdate}=0 unless defined $feed->{lastupdate};
 	$feed->{numposts}=0 unless defined $feed->{numposts};
 	$feed->{newposts}=0 unless defined $feed->{newposts};
-	$feed->{message}="new feed" unless defined $feed->{message};
+	$feed->{message}=gettext("new feed") unless defined $feed->{message};
 	$feed->{error}=0 unless defined $feed->{error};
 	$feed->{tags}=[];
 	while (@_) {
@@ -100,8 +100,9 @@ sub preprocess (@) { #{{{
 	return "<a href=\"".$feed->{url}."\">".$feed->{name}."</a>: ".
 	       ($feed->{error} ? "<em>" : "").$feed->{message}.
 	       ($feed->{error} ? "</em>" : "").
-	       " (".$feed->{numposts}." posts".
-	       ($feed->{newposts} ? "; ".$feed->{newposts}." new" : "").
+	       " (".$feed->{numposts}." ".gettext("posts").
+	       ($feed->{newposts} ? "; ".$feed->{newposts}.
+	                            " ".gettext("new") : "").
 	       ")";
 } # }}}
 
@@ -202,13 +203,14 @@ sub expire () { #{{{
 			if ($feed->{expireage}) {
 				my $days_old = (time - $IkiWiki::pagectime{$item->{page}}) / 60 / 60 / 24;
 				if ($days_old > $feed->{expireage}) {
-					debug("expiring ".$item->{page}." ($days_old days old)");
+					debug(sprintf(gettext("expiring %s (%s days old)"),
+						$item->{page}, $days_old));
 					$item->{expired}=1;
 				}
 			}
 			elsif ($feed->{expirecount} &&
 			       $count >= $feed->{expirecount}) {
-				debug("expiring ".$item->{page});
+				debug(sprintf(gettext("expiring %s"), $item->{page}));
 				$item->{expired}=1;
 			}
 			else {
@@ -231,12 +233,12 @@ sub aggregate () { #{{{
 		$feed->{newposts}=0;
 		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
 
-		debug("checking feed ".$feed->{name}." ...");
+		debug(sprintf(gettext("checking feed %s	..."), $feed->{name}));
 
 		if (! length $feed->{feedurl}) {
 			my @urls=XML::Feed->find_feeds($feed->{url});
 			if (! @urls) {
-				$feed->{message}="could not find feed at ".$feed->{feedurl};
+				$feed->{message}=sprintf(gettext("could not find feed at %s"), $feed->{feedurl});
 				$feed->{error}=1;
 				debug($feed->{message});
 				next;
@@ -245,7 +247,7 @@ sub aggregate () { #{{{
 		}
 		my $f=eval{XML::Feed->parse(URI->new($feed->{feedurl}))};
 		if ($@) {
-			$feed->{message}="feed crashed XML::Feed! $@";
+			$feed->{message}=gettext("feed crashed XML::Feed!")." ($@)";
 			$feed->{error}=1;
 			debug($feed->{message});
 			next;
@@ -268,8 +270,8 @@ sub aggregate () { #{{{
 			);
 		}
 
-		$feed->{message}="processed ok at ".
-			displaytime($feed->{lastupdate});
+		$feed->{message}=sprintf(gettext("processed ok at "),
+			displaytime($feed->{lastupdate}));
 		$feed->{error}=0;
 	}
 } #}}}
@@ -309,7 +311,7 @@ sub add_page (@) { #{{{
 			$c++
 		}
 		$guid->{page}=$page;
-		debug("creating new page $page");
+		debug(sprintf(gettext("creating new page %s"), $page));
 	}
 	$guid->{feed}=$feed->{name};
 	

@@ -35,7 +35,7 @@ sub setup_standard {
 	}
 
 	if (! $config{render} && (! $config{refresh} || $config{wrappers})) {
-		debug("generating wrappers..");
+		debug(gettext("generating wrappers.."));
 		my @wrappers=@{$setup{wrappers}};
 		delete $setup{wrappers};
 		my %startconfig=(%config);
@@ -71,10 +71,10 @@ sub setup_standard {
 	}
 	elsif (! $config{refresh}) {
 		$config{rebuild}=1;
-		debug("rebuilding wiki..");
+		debug(gettext("rebuilding wiki.."));
 	}
 	else {
-		debug("refreshing wiki..");
+		debug(gettext("refreshing wiki.."));
 	}
 
 	loadplugins();
@@ -83,7 +83,7 @@ sub setup_standard {
 	loadindex();
 	refresh();
 
-	debug("done");
+	debug(gettext("done"));
 	saveindex();
 }
 

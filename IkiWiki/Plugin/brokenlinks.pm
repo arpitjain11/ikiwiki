@@ -33,7 +33,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	
-	return "There are no broken links!" unless @broken;
+	return gettext("There are no broken links!") unless @broken;
 	my %seen;
 	return "<ul>\n".join("\n", map { "<li>$_</li>" } grep { ! $seen{$_}++ } sort @broken)."</ul>\n";
 } # }}}

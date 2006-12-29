@@ -19,8 +19,8 @@ sub pagetemplate (@) { #{{{
 
 sub mirrorlist ($) { #{{{
 	my $page=shift;
-	return "<p>Mirror".
-		(keys %{$config{mirrorlist}} > 1 ? "s" : "").
+	return "<p>".
+		(keys %{$config{mirrorlist}} > 1 ? gettext("Mirrors") : gettext("Mirror")).
 		": ".
 		join(", ",
 			map { 

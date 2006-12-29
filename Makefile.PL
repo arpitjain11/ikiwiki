@@ -32,10 +32,12 @@ extra_build:
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
-		
+	$(MAKE) -C po
+
 extra_clean:
 	rm -rf html doc/.ikiwiki
 	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out
+	$(MAKE) -C po clean
 
 extra_install:
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/templates
@@ -58,6 +60,8 @@ extra_install:
 
 	install -d $(DESTDIR)$(PREFIX)/bin
 	install ikiwiki.out $(DESTDIR)$(PREFIX)/bin/ikiwiki
+
+	$(MAKE) -C po install
 }
 }
 

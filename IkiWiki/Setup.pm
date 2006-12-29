@@ -10,7 +10,7 @@ package IkiWiki;
 sub setup () { # {{{
 	my $setup=possibly_foolish_untaint($config{setup});
 	delete $config{setup};
-	open (IN, $setup) || error("read $setup: $!\n");
+	open (IN, $setup) || error(sprintf(gettext("cannot read %s: %s"), $setup, $!));
 	my $code;
 	{
 		local $/=undef;

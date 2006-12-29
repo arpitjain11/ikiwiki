@@ -14,7 +14,7 @@ use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
-                 displaytime will_render
+                 displaytime will_render gettext
                  %config %links %renderedfiles %pagesources);
 our $VERSION = 1.01; # plugin interface version
 
@@ -96,7 +96,7 @@ sub checkconfig () { #{{{
 	}
 
 	if ($config{cgi} && ! length $config{url}) {
-		error("Must specify url to wiki with --url when using --cgi\n");
+		error(gettext("Must specify url to wiki with --url when using --cgi"));
 	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
@@ -139,7 +139,8 @@ sub loadplugin ($) { #{{{
 sub error ($) { #{{{
 	if ($config{cgi}) {
 		print "Content-type: text/html\n\n";
-		print misctemplate("Error", "<p>Error: @_</p>");
+		print misctemplate(gettext("Error"),
+			"<p>".gettext("Error").": @_</p>");
 	}
 	log_message(error => @_);
 	exit(1);
@@ -510,7 +511,9 @@ sub preprocess ($$$;$) { #{{{
 			if ($preprocessing{$page}++ > 3) {
 				# Avoid loops of preprocessed pages preprocessing
 				# other pages that preprocess them, etc.
-				return "[[$command preprocessing loop detected on $page at depth $preprocessing{$page}]]";
+				return "[[".sprintf(gettext("%s preprocessing loop detected on %s at depth %i"),
+					$command, $page, $preprocessing{$page}).
+				"]]";
 			}
 			my $ret=$hooks{preprocess}{$command}{call}->(
 				@params,
@@ -801,6 +804,19 @@ sub file_pruned ($$) { #{{{
 
 	my $regexp='('.join('|', @{$config{wiki_file_prune_regexps}}).')';
 	$file =~ m/$regexp/;
+} #}}}
+
+sub gettext { #{{{
+	# Only use gettext in the rare cases it's needed.
+	# This overrides future calls of this function.
+	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
+		eval q{use Locale::gettext};
+		textdomain('ikiwiki');
+		return Locale::gettext::gettext(shift);
+	}
+	else {
+		return shift;
+	}
 } #}}}
 
 sub pagespec_match ($$) { #{{{

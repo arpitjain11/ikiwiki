@@ -61,7 +61,7 @@ sub preprocess (@) { #{{{
 			$ret.="<input type=\"hidden\" name=\"num\" value=\"$pagenum{$params{page}}\" />\n";
 			$ret.="<input type=\"hidden\" name=\"page\" value=\"$params{page}\" />\n";
 			$ret.="<input type=\"hidden\" name=\"choice\" value=\"$choice\" />\n";
-			$ret.="<input type=\"submit\" value=\"vote\" />\n";
+			$ret.="<input type=\"submit\" value=\"".gettext("vote")."\" />\n";
 		}
 		$ret.="</p>\n<hr class=poll align=left width=\"$percent%\"/>\n";
 		if ($open && exists $config{cgiurl}) {
@@ -69,7 +69,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	if ($showtotal) {
-		$ret.="<span>Total votes: $total</span>\n";
+		$ret.="<span>".gettext("Total votes:")." $total</span>\n";
 	}
 	return "<div class=poll>$ret</div>";
 } # }}}

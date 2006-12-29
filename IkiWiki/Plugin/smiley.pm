@@ -19,7 +19,7 @@ sub setup () { #{{{
 	}
 	
 	if (! %smileys) {
-		debug("failed to parse any smileys, disabling plugin");
+		debug(gettext("failed to parse any smileys, disabling plugin"));
 		return;
 	}
 	

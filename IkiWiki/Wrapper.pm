@@ -13,15 +13,15 @@ sub gen_wrapper () { #{{{
 	$config{destdir}=abs_path($config{destdir});
 	my $this=abs_path($0);
 	if (! -x $this) {
-		error("$this doesn't seem to be executable");
+		error(sprintf(gettext("%s doesn't seem to be executable"), $this));
 	}
 
 	if ($config{setup}) {
-		error("cannot create a wrapper that uses a setup file");
+		error(gettext("cannot create a wrapper that uses a setup file"));
 	}
 	my $wrapper=possibly_foolish_untaint($config{wrapper});
 	if (! defined $wrapper || ! length $wrapper) {
-		error("wrapper filename not specified");
+		error(gettext("wrapper filename not specified"));
 	}
 	delete $config{wrapper};
 	
@@ -59,7 +59,7 @@ EOF
 	$configstring=~s/"/\\"/g;
 	$configstring=~s/\n/\\\n/g;
 	
-	open(OUT, ">$wrapper.c") || error("failed to write $wrapper.c: $!");;
+	open(OUT, ">$wrapper.c") || error(sprintf(gettext("failed to write %s: %s"), "$wrapper.c", $!));;
 	print OUT <<"EOF";
 /* A wrapper for ikiwiki, can be safely made suid. */
 #define _GNU_SOURCE
@@ -94,14 +94,14 @@ $envsave
 EOF
 	close OUT;
 	if (system("gcc", "$wrapper.c", "-o", $wrapper) != 0) {
-		error("failed to compile $wrapper.c");
+		error(sprintf(gettext("failed to compile %s"), "$wrapper.c"));
 	}
 	unlink("$wrapper.c");
 	if (defined $config{wrappermode} &&
 	    ! chmod(oct($config{wrappermode}), $wrapper)) {
 		error("chmod $wrapper: $!");
 	}
-	print "successfully generated $wrapper\n";
+	printf(gettext("successfully generated %s\n"), $wrapper);
 } #}}}
 
 1

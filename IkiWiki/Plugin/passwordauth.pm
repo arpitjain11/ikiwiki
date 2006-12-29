@@ -101,7 +101,7 @@ sub formbuilder_setup (@) { #{{{
 		}
 		else {
 			# First time settings.
-			$form->field(name => "name", comment => "(use FirstnameLastName)");
+			$form->field(name => "name", comment => gettext("(use FirstnameLastName)"));
 			if ($session->param("name")) {
 				$form->field(name => "name", value => $session->param("name"));
 			}
@@ -141,10 +141,10 @@ sub formbuilder (@) { #{{{
 					'regdate' => time})) {
 					$form->field(name => "confirm_password", type => "hidden");
 					$form->field(name => "email", type => "hidden");
-					$form->text("Account creation successful. Now you can Login.");
+					$form->text(gettext("Account creation successful. Now you can Login."));
 				}
 				else {
-					error("Error creating account.");
+					error(gettext("Error creating account."));
 				}
 			}
 			elsif ($form->submitted eq 'Mail Password') {
@@ -165,9 +165,9 @@ sub formbuilder (@) { #{{{
 					From => "$config{wikiname} admin <$config{adminemail}>",
 					Subject => "$config{wikiname} information",
 					Message => $template->output,
-				) or error("Failed to send mail");
+				) or error(gettext("Failed to send mail"));
 			
-				$form->text("Your password has been emailed to you.");
+				$form->text(gettext("Your password has been emailed to you."));
 				$form->field(name => "name", required => 0);
 				push @$buttons, "Mail Password";
 			}

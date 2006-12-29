@@ -16,17 +16,16 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 
 	if (! exists $params{id}) {
-		return "[[template missing id parameter]]"
+		return "[[".gettext("template missing id parameter")."]]";
 	}
 
 	my $template_page="templates/$params{id}";
 	add_depends($params{page}, $template_page);
 
 	my $template_file=$pagesources{$template_page};
-	return "[[template ".
-	       htmllink($params{page}, $params{destpage}, $template_page).
-	       " not found]]"
-		unless defined $template_file;
+	return sprintf(gettext("template %s not found"),
+		htmllink($params{page}, $params{destpage}, $template_page))
+			unless defined $template_file;
 
 	my $template;
 	eval {
@@ -43,7 +42,7 @@ sub preprocess (@) { #{{{
 		);
 	};
 	if ($@) {
-		return "[[template failed to process: $@]]";
+		return "[[".gettext("template failed to process:")." $@]]";
 	}
 
 	foreach my $param (keys %params) {

@@ -63,7 +63,7 @@ sub rcs_notify () {
 
 sub rcs_getctime ($) {
 	# Optional, used to get the page creation time from the RCS.
-	error "getctime not implemented";
+	error gettext("getctime not implemented");
 }
 
 1

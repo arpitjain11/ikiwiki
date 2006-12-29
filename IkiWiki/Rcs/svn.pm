@@ -203,7 +203,7 @@ sub rcs_recentchanges ($) { #{{{
 
 sub rcs_notify () { #{{{
 	if (! exists $ENV{REV}) {
-		error("REV is not set, not running from svn post-commit hook, cannot send notifications");
+		error(gettext("REV is not set, not running from svn post-commit hook, cannot send notifications"));
 	}
 	my $rev=int(possibly_foolish_untaint($ENV{REV}));
 	

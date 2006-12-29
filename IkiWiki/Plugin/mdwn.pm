@@ -34,7 +34,7 @@ sub htmlize (@) { #{{{
 			}
 			else {
 				do "/usr/bin/markdown" ||
-					error("failed to load Markdown.pm perl module ($@) or /usr/bin/markdown ($!)");
+					error(sprintf(gettext("failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"), $@, $!));
 				$markdown_sub=\&Markdown::Markdown;
 			}
 		}

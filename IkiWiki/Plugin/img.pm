@@ -8,8 +8,6 @@ use strict;
 use IkiWiki;
 use Image::Magick;
 
-my $convert = 'convert';
-
 my %imgdefaults;
 
 sub import { #{{{

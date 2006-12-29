@@ -34,7 +34,7 @@ sub getopt () { #{{{
 
 sub checkconfig () { #{{{
 	if (($config{rss} || $config{atom}) && ! length $config{url}) {
-		error("Must specify url to wiki with --url when using --rss or --atom");
+		error(gettext("Must specify url to wiki with --url when using --rss or --atom"));
 	}
 	if ($config{rss}) {
 		push @{$config{wiki_file_prune_regexps}}, qr/\.rss$/;
@@ -94,7 +94,7 @@ sub preprocess_inline (@) { #{{{
 		@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
 	}
 	else {
-		return "unknown sort type $params{sort}";
+		return sprintf(gettext("unknown sort type %s"), $params{sort});
 	}
 
 	if (exists $params{skip}) {
@@ -365,7 +365,7 @@ sub pingurl (@) { #{{{
 
 	eval q{require RPC::XML::Client};
 	if ($@) {
-		debug("RPC::XML::Client not found, not pinging");
+		debug(gettext("RPC::XML::Client not found, not pinging"));
 		return;
 	}
 
@@ -373,11 +373,11 @@ sub pingurl (@) { #{{{
 	defined(my $pid = fork) or error("Can't fork: $!");
 	return if $pid;
 	chdir '/';
-	eval q{use POSIX ’setsid’};
+	eval q{use POSIX 'setsid'};
 	setsid() or error("Can't start a new session: $!");
 	open STDIN, '/dev/null';
 	open STDOUT, '>/dev/null';
-	open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
+	open STDERR, '>&STDOUT' or error("Can't dup stdout: $!");
 
 	# Don't need to keep a lock on the wiki as a daemon.
 	IkiWiki::unlockwiki();

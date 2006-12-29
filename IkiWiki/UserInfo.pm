@@ -125,14 +125,15 @@ sub send_commit_mails ($$$@) { #{{{
 		my $diff=$diffsub->();
 		my $message=$messagesub->();
 
-		my $subject="update of $config{wikiname}'s ";
+		my $pagelist;
 		if (@changed_pages > 2) {
-			$subject.="$changed_pages[0] $changed_pages[1] etc";
+			$pagelist="$changed_pages[0] $changed_pages[1] ...";
 		}
 		else {
-			$subject.=join(" ", @changed_pages);
+			$pagelist.=join(" ", @changed_pages);
 		}
-		$subject.=" by $user";
+		my $subject=sprintf(gettext("update of %s's %s by %s"), 
+			$config{wikiname}, $pagelist, $user);
 
 		my $template=template("notifymail.tmpl");
 		$template->param(
@@ -146,11 +147,11 @@ sub send_commit_mails ($$$@) { #{{{
 		defined(my $pid = fork) or error("Can't fork: $!");
 		return if $pid;
 		setsid() or error("Can't start a new session: $!");
-		eval q{use POSIX ’setsid’};
+		eval q{use POSIX 'setsid'};
 		chdir '/';
 		open STDIN, '/dev/null';
 		open STDOUT, '>/dev/null';
-		open STDERR, '>&STDOUT' or error("Can’t dup stdout: $!");
+		open STDERR, '>&STDOUT' or error("Can't dup stdout: $!");
 
 		unlockwiki(); # don't need to keep a lock on the wiki
 
@@ -162,7 +163,7 @@ sub send_commit_mails ($$$@) { #{{{
 				From => "$config{wikiname} <$config{adminemail}>",
 				Subject => $subject,
 				Message => $template->output,
-			) or error("Failed to send update notification mail");
+			);
 		}
 
 		exit 0; # daemon process done

@@ -45,8 +45,10 @@ sub page_locked ($$;$) { #{{{
 		my $locked_pages=userinfo_get($admin, "locked_pages");
 		if (pagespec_match($page, userinfo_get($admin, "locked_pages"))) {
 			return 1 if $nonfatal;
-			error(htmllink("", "", $page, 1)." is locked by ".
-			      userlink($admin)." and cannot be edited.");
+
+			error(sprintf(gettext("%s is locked by %s and cannot be edited"),
+				htmllink("", "", $page, 1),
+				userlink($admin)));
 		}
 	}
 
@@ -134,7 +136,7 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "do", type => "hidden");
 	
 	if ($q->param("do") ne "signin" && !$form->submitted) {
-		$form->text("You need to log in first.");
+		$form->text(gettext("You need to log in first."));
 	}
 	
 	run_hooks(formbuilder_setup => sub {
@@ -242,7 +244,7 @@ sub cgi_prefs ($$) { #{{{
 		redirect($q, $config{url});
 		return;
 	}
-	elsif ($form->submitted eq "Save Preferences" && $form->validate) {
+	elsif ($form->submitted eq 'Save Preferences' && $form->validate) {
 		foreach my $field (qw(email subscriptions locked_pages)) {
 			if (defined $form->field($field) && length $form->field($field)) {
 				userinfo_set($user_name, $field, $form->field($field)) || error("failed to set $field");
@@ -252,7 +254,7 @@ sub cgi_prefs ($$) { #{{{
 			set_banned_users(grep { ! is_admin($_) }
 					split(' ', $form->field("banned_users")));
 		}
-		$form->text("Preferences saved.");
+		$form->text(gettext("Preferences saved."));
 	}
 	
 	if (exists $hooks{formbuilder}) {
@@ -403,7 +405,7 @@ sub cgi_editpage ($$) { #{{{
 				$dir=~s![^/]+/+$!!;
 				
 				if ((defined $form->field('subpage') && length $form->field('subpage')) ||
-				    $page eq 'discussion') {
+				    $page eq gettext('discussion')) {
 					$best_loc="$from/$page";
 				}
 				else {
@@ -440,7 +442,7 @@ sub cgi_editpage ($$) { #{{{
 				options => \@page_locs, value => $best_loc);
 			$form->field(name => "type", type => 'select',
 				options => \@page_types);
-			$form->title("creating ".pagetitle($page));
+			$form->title(sprintf(gettext("creating %s"), pagetitle($page)));
 		}
 		elsif ($form->field("do") eq "edit") {
 			page_locked($page, $session);
@@ -457,7 +459,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
-			$form->title("editing ".pagetitle($page));
+			$form->title(sprintf(gettext("editing %s"), pagetitle($page)));
 		}
 		
 		print $form->render(submit => \@buttons);
@@ -500,7 +502,7 @@ sub cgi_editpage ($$) { #{{{
 				$form->tmpl_param("page_select", 0);
 				$form->field(name => "page", type => 'hidden');
 				$form->field(name => "type", type => 'hidden');
-				$form->title("editing $page");
+				$form->title(sprintf(gettext("editing %s"), $page));
 				print $form->render(submit => \@buttons);
 				return;
 			}
@@ -617,7 +619,7 @@ sub cgi (;$$) { #{{{
 	if (defined $session->param("name") && userinfo_get($session->param("name"), "banned")) {
 		print $q->header(-status => "403 Forbidden");
 		$session->delete();
-		print "You are banned.";
+		print gettext("You are banned.");
 		cgi_savesession($session);
 		exit;
 	}
