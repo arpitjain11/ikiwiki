@@ -26,7 +26,7 @@ PROBABLE_INST_LIB=$(shell \\
 extra_build:
 	./ikiwiki.in doc html --templatedir=templates --underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
-		--exclude=/discussion --no-discussion \
+		--exclude=/discussion --no-discussion --userdir=users \
 		--plugin=goodstuff \
 		--plugin=haiku --plugin=polygen --plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man

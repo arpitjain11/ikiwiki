@@ -320,7 +320,7 @@ sub bestlink ($$) { #{{{
 	} while $cwd=~s!/?[^/]+$!!;
 
 	if (length $config{userdir} && exists $links{"$config{userdir}/".lc($link)}) {
-		return $links{"$config{userdir}/".lc($link)};
+		return "$config{userdir}/".lc($link);
 	}
 
 	#print STDERR "warning: page $page, broken link: $link\n";
