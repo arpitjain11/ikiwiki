@@ -12,15 +12,13 @@ ikiwiki sources:
 
 I hope it's a bug, not a feature, because I don't have the same
 problem with other links, for example "Edit", "RecentChanges"
-or "History".
-
---Pawel
+or "History". --Pawel
 
 > There are good reasons for feeding a full html link into the template,
 > rather than the urls used for the other links. For one, the Discussion
 > link needs to be different if the Discussion page doesn't yet exist.
 
->> You can always use <tmpl_if> and <tmpl_else> construct in that place ;) --Pawel
+>> You can always use `<tmpl_if>` and `<tmpl_else>` construct in that place ;) --Pawel
 
 >>> Not without duplicating the logic that constructs a link to an
 >>> existing/nonexisting page in two places, one in code in ikiwiki and one
@@ -42,3 +40,5 @@ or "History".
 >>> the Discussion page and quite a lot more (but hardly everything) by
 >>> translating it. [[bugs/done]]! There's a `po/debconf.pot` in the source
 >>> now for translating. See [[translation]]. --[[Joey]]
+
+>>>> Joey, you're great! ;) Thanks a lot! I'll try ikiwiki l10n stuff soon. --Pawel
