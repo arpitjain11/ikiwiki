@@ -199,6 +199,11 @@ actions.  However, it may not be something everyone appreciates.  Any thoughts?
 > Maybe, although it would need to take the critisism at
 > http://www.cs.tut.fi/~jkorpela/forms/accesskey.html into account.
 
+>> Thank you for that link. Given that the edit link is the first thing you tab to
+>> in the current layout, I guess it isn't all that necessary. I have had a 
+>> a user complaint recently that Alt-e in oddmuse was overriding his access
+>> to the browser menu.
+
 ----
 
 # Editing the style sheet.
@@ -211,6 +216,14 @@ Ok, that's my last 2 cents for a while. --[Mazirian](http://mazirian.com)
 > extensions list.. no idea how safe that would be, a style sheet is
 > probably a great place to put XSS attacks and evil javascript that would
 > be filtered out of any regular page in ikiwiki). --[[Joey]]
+
+>> I hadn't thought of that at all.  It's a common feature and one I've
+>> relied on safely, because the wikis I am maintaining at the moment
+>> are all private and restricted to trusted users. Given that the whole
+>> point of ikiwiki is to be able to access and edit via the shell as
+>> well as the web, I suppose the features doesn't add a lot.  By the
+>> way, the w3m mode is brilliant.  I haven't tried it yet, but the idea
+>> is great.
 
 ----
 
