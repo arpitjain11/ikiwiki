@@ -45,3 +45,12 @@ on added after an inlined page (namely: the post date, the tags, and the actions
 > broken html. If you can come up with a way to put in the div that passes
 > the test suite, or a fix to markdown, I will accept it, but the above patch
 > fails the test suite. --[[Joey]] 
+
+>> Just a note...  This discrepancy doesn't exist in [pandoc](http://code.google.com/p/pandoc/) as
+>> demonstrated in the relevant [page](http://code.google.com/p/pandoc/wiki/PandocVsMarkdownPl).
+>> Pandoc is a _real parser_ for markdown (contrasting the regexp based implementation of 
+>> markdown.pl).  I've almost finished the Debian packaging.  John is working on a `--strict` mode
+>> which will hopefully make pandoc a drop-in replacement for markdown.  I'll upload pandoc after 
+>> his work has finished.  Whether it could be used in IkiWiki is an open question, but having
+>> alternatives is always a good thing and perhaps, the fact that pandoc can make markdown->LaTeX
+>> conversion may lead to new possibilities. --[[Roktas]]
