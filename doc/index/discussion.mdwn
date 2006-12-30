@@ -234,3 +234,25 @@ in the Makefile. But still failed. My workaround was to remove "img" from the bu
 before building. What is the recommended way to install ikiwiki without "img" support? --[[JeremyReed]]
 
 > I've fixed this in svn so plugins in goodstuff can be disabled. --[[Joey]]
+
+----
+
+# Documentation for banning users?
+
+The [[todo]] page says admins can ban users. Where is this documented? I search the source and found 
+set\_banned\_users() which led me to the CGI "preferences" form for the admin. Now logged in as an admin (as defined in my setup configuration),
+I see the field for this. But no details on how to use it. From the source it appears to be a space-delimited list of usernames. (I didn't test yet.)
+
+Can you please provide a [[banned_users]] documentation about "banning" users function linked from the [[Features]] page and maybe [[security]] page and linked from the "preferences" for the admin?
+(I don't do this myself as I am unsure about this and still reading the code about banning users.)
+
+----
+
+# Documentation for locking pages?
+
+The [[features]] page, the [[todo]] page and the [[usage]] manual page say pages can be locked and only the admin can edit locked pages.
+Where is locking pages documented? ... A moment later, from searching source I found this is configured via the preferences for the admin
+and that links to [[pagespec]].
+
+Can you please provide a [[page_locking]] doc about locking pages linked from the [[features]] page and elsewhere? And have that link to [[pagespec]]?
+(I don't do this myself as I am unsure about this and still reading the code about locking pages.)
