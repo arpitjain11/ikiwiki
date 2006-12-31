@@ -634,6 +634,7 @@ sub cgi (;$$) { #{{{
 	}
 	elsif ($do eq 'blog') {
 		my $page=titlepage(decode_utf8($q->param('title')));
+		$page=~s/(\/)/"__".ord($1)."__"/eg; # escape slashes too
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
@@ -664,6 +665,10 @@ sub userlink ($) { #{{{
 		# Convert "user.somehost.com" to "user [somehost.com]".
 		if ($display !~ /\[/) {
 			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
+		}
+		# Convert "somehost.com/user" to "user [somehost.com]".
+		if ($display !~ /\[/) {
+			$display=~s/^(.+)\/[^\/](.+)$/$2 [$1]/;
 		}
 		$display=~s!^https?://!!; # make sure this is removed
 		return "<a href=\"$user\">".escapeHTML($display)."</a>";
