@@ -2,8 +2,8 @@ I have a few questions about translating PO file:
 
 1. Assume I copied `ikiwiki.pot` file to `pl.po` file and translated it
 from English to Polish. How can I check that my `pl.po` file works good?
-I have some experience with building Debian packages, but I don't too much
-about working with PO files in Debian packages.
+I have some experience with building Debian packages, but I don't know
+too much about working with PO files in Debian packages.
 
 > Try putting it into the po/ directory and running make and make install
 > in there, that should create the .mo and install it somewhere
@@ -22,6 +22,9 @@ of PO files?
 > not a sourceforge/alioth like thing, it's a bit of a pain and maintenance
 > burden for me.
 
+>> OK, I've picked up Subversion for your ikiwiki, so I can get into
+>> Git now ;)
+
 3. What is the best way to update my PO file when you do some changes in
 `ikiwiki.pot` file? Should I translate my PO file from scratch or
 can I do diff for old and new `ikiwiki.pot` file and update only differences?
@@ -30,9 +33,13 @@ can I do diff for old and new `ikiwiki.pot` file and update only differences?
 > should be updated as part of the wiki build process so that any fuzzy
 > strings are so marked.
 
+>> Could you please point me any good references or write a quick start
+>> for translators? I think it can be very useful for me and other people.
+
 4. What about "gettexting" button titles and link names? Do you really
-think that there should be hardcoded in ikiwiki templates?
+think that there should be hardcoded in ikiwiki templates? --Pawel
 
 > I don't know, really. Recai's approach seems to show promise.
 
---Pawel
+>> BTW, why does ikiwiki number my questions wrongly (1., 1., 1., 1.,
+>> instead of 1., 2., 3., 4.)? Where have I made a Markdown mistake? --Pawel
