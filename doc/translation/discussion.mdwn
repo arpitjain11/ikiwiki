@@ -5,16 +5,34 @@ from English to Polish. How can I check that my `pl.po` file works good?
 I have some experience with building Debian packages, but I don't too much
 about working with PO files in Debian packages.
 
+> Try putting it into the po/ directory and running make and make install
+> in there, that should create the .mo and install it somewhere
+> appropriate. ikiwiki should display translated messages when building the
+> wiki (with -v).
+
 2. I'll send you my translation when I finish it, of course. But what about
 updating my PO file? Should I send it to you for every ikiwiki issue?
 Maybe you should give write access to ikiwiki repository for translators
 of PO files?
- 
+
+> I recently set up a git repository mirroring the main svn repository (see
+> [[download]]) and one idea is that perhaps translators can use that for a
+> distributed revision control system that I can merge back from into svn.
+> I can set up accounts for svn, but as it's on my own personal server and
+> not a sourceforge/alioth like thing, it's a bit of a pain and maintenance
+> burden for me.
+
 3. What is the best way to update my PO file when you do some changes in
 `ikiwiki.pot` file? Should I translate my PO file from scratch or
 can I do diff for old and new `ikiwiki.pot` file and update only differences?
 
+> There are standard tools for working with po files, and the po file
+> should be updated as part of the wiki build process so that any fuzzy
+> strings are so marked.
+
 4. What about "gettexting" button titles and link names? Do you really
 think that there should be hardcoded in ikiwiki templates?
+
+> I don't know, really. Recai's approach seems to show promise.
 
 --Pawel
