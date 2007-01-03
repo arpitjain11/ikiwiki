@@ -1,0 +1,16 @@
+Hi Joey and many thanks for your work on ikiwiki, as usual you give us a very good soft...
+
+I want to be able to edit my website from a navigator (with the CGI) and
+from my favorite editor on my laptop. I have managed to use the subversion wrapper
+so I have write a post-commit hook with : 
+
+    cd /~/wikisrc/ 
+    svn up
+    /usr/bin/ikiwiki --setup ../ikiwiki.setup
+
+at the end.
+
+This configuration works for me, the svn wrapper doesn't seems to
+do the svn up stuff so I wonder if I've missed something...
+
+Regards.
