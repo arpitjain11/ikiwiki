@@ -668,7 +668,7 @@ sub userlink ($) { #{{{
 		}
 		# Convert "http://somehost.com/user" to "user [somehost.com]".
 		if ($display !~ /\[/) {
-			$display=~s/^https?:\/\/(.+)\/[^\/](.+)$/$2 [$1]/;
+			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
 		}
 		$display=~s!^https?://!!; # make sure this is removed
 		return "<a href=\"$user\">".escapeHTML($display)."</a>";
