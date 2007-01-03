@@ -1,16 +1,49 @@
-Markdown supports nice short links to external sites within body text by references defined elsewhere in the source:
+Markdown supports nice short links to external sites within body text by
+references defined elsewhere in the source:
 
         foo [bar][ref]
 
         [ref]: http://example.invalid/
 
-It would be nice to be able to do this or something like this for wikilinks as well, so that you can have long page names without the links cluttering the body text. I think the best way to do this would be to move wikilink resolving after HTML generation: parse the HTML with a proper HTML parser, and replace relative links with links to the proper files (plus something extra for missing pages).
+It would be nice to be able to do this or something like this for wikilinks
+as well, so that you can have long page names without the links cluttering
+the body text. I think the best way to do this would be to move wikilink
+resolving after HTML generation: parse the HTML with a proper HTML parser,
+and replace relative links with links to the proper files (plus something
+extra for missing pages).
 
-A related possibility would be to move a lot of "preprocessing" after HTML generation as well (thus avoiding some conflicts with the htmlifier), by using special tags for the preprocessor stuff. (The old preprocessor could simply replace links and directives with appropriate tags, that the htmlifier is supposed to let through as-is. Possibly the htmlifier plugin could configure the format.)
+> That's difficult to do and have resonable speed as well. Ikiwiki needs to
+> know all about all the links between pages before it can know what pages
+> it needs to build to it can update backlink lists, update links to point
+> to new/moved pages etc. Currently it accomplishes this by a first pass
+> that scans new and changed files, and quickly finds all the wikilinks
+> using a simple regexp. If it had to render the whole page before it was
+> able to scan for hrefs using a html parser, this would make it at least
+> twice as slow, or would require it to cache all the rendered pages in
+> memory to avoid re-rendering. I don't want ikiwiki to be slow or use
+> excessive amounts of memory. YMMV. --[[Joey]]
+
+A related possibility would be to move a lot of "preprocessing" after HTML
+generation as well (thus avoiding some conflicts with the htmlifier), by
+using special tags for the preprocessor stuff. (The old preprocessor could
+simply replace links and directives with appropriate tags, that the
+htmlifier is supposed to let through as-is. Possibly the htmlifier plugin
+could configure the format.)
+
+> Or using postprocessing, though there are problems with that too and it
+> doesn't solve the link scanning issue.
 
 Other alternatives would be
 
   * to understand the source format, but this seems too much work with all the supported formats; or
 
-  * something like the shortcut plugin for external links, with additional support for specifying the link text, but the syntax would be much more cumbersome then.
+  * something like the shortcut plugin for external links, with additional
+    support for specifying the link text, but the syntax would be much more
+    cumbersome then.
 
+> I agree that a plugin would probably be more cumbersome, but it is very
+> doable. It might look something like this:
+
+	\[[link bar]]
+
+	\[[link bar=VeryLongPageName]]
