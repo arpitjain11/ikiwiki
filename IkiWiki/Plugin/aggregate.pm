@@ -233,7 +233,7 @@ sub aggregate () { #{{{
 		$feed->{newposts}=0;
 		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
 
-		debug(sprintf(gettext("checking feed %s	..."), $feed->{name}));
+		debug(sprintf(gettext("checking feed %s ..."), $feed->{name}));
 
 		if (! length $feed->{feedurl}) {
 			my @urls=XML::Feed->find_feeds($feed->{url});
