@@ -26,7 +26,7 @@ clean:
 
 %.po: ikiwiki.pot
 	@echo -n "Merging ikiwiki.pot and $@"
-	@msgmerge $@ ikiwiki.pot -o $@.new
+	@msgmerge $@ ikiwiki.pot -o $@.new 2>&1
 # Typically all that changes was a date. I'd prefer not to commit such
 # changes, so detect and ignore them.
 	@if [ "`diff $@ $@.new | grep '[<>]' | wc -l`" -ne 2 ]; then \
@@ -34,7 +34,7 @@ clean:
 	else \
 		rm -f $@.new; \
 	fi
-	@msgfmt --statistics $@
+	@msgfmt --statistics $@ 2>&1
 
 check:
 	@for file in $(POFILES); do \

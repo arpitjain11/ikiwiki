@@ -61,7 +61,7 @@ extra_install:
 	install -d $(DESTDIR)$(PREFIX)/bin
 	install ikiwiki.out $(DESTDIR)$(PREFIX)/bin/ikiwiki
 
-	$(MAKE) -C po install
+	$(MAKE) -C po install PREFIX=$(PREFIX)
 }
 }
 
