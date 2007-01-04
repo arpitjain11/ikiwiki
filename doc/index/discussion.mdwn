@@ -256,3 +256,12 @@ and that links to [[pagespec]].
 
 Can you please provide a [[page_locking]] doc about locking pages linked from the [[features]] page and elsewhere? And have that link to [[pagespec]]?
 (I don't do this myself as I am unsure about this and still reading the code about locking pages.)
+
+----
+
+# RecentChanges should show path to wiki sub-pages?
+
+The RecentChanges only shows the final file name for the recently changes file,
+for example "discussion". It would be more useful to see "index/discussion"
+or the path to the sub-page. I think this is handled by the htmllink() routine.
+
