@@ -1,3 +1,5 @@
+# A few questions about translating PO file
+
 I have a few questions about translating PO file:
 
 1. Assume I copied `ikiwiki.pot` file to `pl.po` file and translated it
@@ -51,3 +53,22 @@ think that there should be hardcoded in ikiwiki templates? --Pawel
   >>> My indentation mistake, I think. --[[Joey]]
 
   >>>> Now it's perfect :) Thank you very much! --Pawel
+
+----
+
+# Less laconic gettext messages
+
+I'm just translating `ikiwiki.pot` file to Polish and I have
+problems with some gettext messages, because unfortunately
+there are very laconic, for example "update of %s's %s by %s".
+
+Sometimes I don't understand background well, because I don't use
+all ikiwiki plugins and I have to check ikiwiki source code.
+Besides in Polish language we have conjugation of a verb and
+I can't do it correctly if I don't know what subject of
+a message is. Then I have to check the sources again...
+
+So I have a request to Joey and the rest of ikiwiki coders:
+please write more verbose gettext messages and don't fear using
+subject there. It will be huge help for me and other ikiwiki
+translators. Thank you! :) --Pawel
