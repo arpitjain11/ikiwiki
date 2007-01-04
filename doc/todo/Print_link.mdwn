@@ -35,11 +35,22 @@ for all ikiwiki pages. --Pawel
 >
 > --[[Joey]]
 
->> Maybe you could add print.css file for printable version? We just have
->> local.css file for a local styling. --Pawel
+>> Maybe you could add `print.css` file for printable version? We just have
+>> `local.css` file for a local styling. --Pawel
 
 >>> Sure, very doable, but the UI to switch to it when printing, I don't
 >>> know..
->>>
+
+>>>> Is the IU to switch is really necessary? Why don't use only
+>>>> `style.css` and `print.css` files in header of printable version
+>>>> of page? The second file can be equivalent of `local.css` file
+>>>> and it can overwrite default CSS styles.
+
 >>> BTW, I'm sure that the Print link as originally requested could be
 >>> written as a plugin fairly simply. --[[Joey]]
+
+>>>> I'm not a Perl expert, but I can take a look at code of other
+>>>> ikiwiki plugins.
+
+>>>> BTW, I also was thinkig about plugin to CVS support,
+>>>> but unfortunately I don't have too much free time. --Pawel
