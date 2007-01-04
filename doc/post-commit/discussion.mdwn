@@ -14,3 +14,23 @@ This configuration works for me, the svn wrapper doesn't seems to
 do the svn up stuff so I wonder if I've missed something...
 
 Regards.
+
+> Well, you've created a post-commit script that runs ikiwiki in setup mode.
+> That's not how it's generally done, instead you generally configure
+> ikiwiki to generate a post-commit _binary_ that runs ikiwiki in update
+> mode. That binary can be installed directly as the post-commit hook, or
+> called from an existing post-commit hook script, and it will handle the
+> necessary svn up, and will update the wiki much quicker than your --setup
+> command above (which rebuilds the entire wiki and all wrappers each
+> commit)!
+>
+> In this wiki's setup file, I configure ikiwiki to generate a post-commit
+> wrapper binary like so:
+> 
+> 	wrappers => [
+> 	{
+> 		wrapper => "/srv/svn/ikiwiki/hooks/post-commit",
+> 		wrappermode => "04755",
+> 		notify => 1,
+> 	}
+>	],
