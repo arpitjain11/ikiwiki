@@ -72,3 +72,21 @@ So I have a request to Joey and the rest of ikiwiki coders:
 please write more verbose gettext messages and don't fear using
 subject there. It will be huge help for me and other ikiwiki
 translators. Thank you! :) --Pawel
+
+> Well, those messages are mostly laconic because they're output by
+> ikiwiki running in unix program mode and other tight situations, and 
+> it should be clear from context when you see the expanded message what
+> the various bits are. 
+> 
+> For example, "update of foowiki's MooBar by joey" seems to say enough to
+> be clear (and fit in mutt's subject line display), while the corresponding
+> "actualizado el wiki foowiki y la página MooBar por el usuario joey" feels
+> a bit verbose. (And should it say "updated foowiki *and* the MooBar page"
+> like that? My Spanish sucks though..) In my crappy Spanish I might instead
+> say something like "actualizado MooBar de foowiki por joey". Or maybe
+> "actualizado página Moobar por joey"?
+> 
+> Anyway, to get back to your point, it's true that translators often
+> need additonal context about things like what variables expand to, and
+> size limits. This is generally done by adding comments in the pot file,
+> and I've turned that on, and added a few. --[[Joey]]

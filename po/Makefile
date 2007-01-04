@@ -16,7 +16,7 @@ install: all
 
 ikiwiki.pot: $(POTFILES)
 	@echo "Rebuilding the pot file"
-	xgettext $(POTFILES) -o ikiwiki.pot -Lperl
+	xgettext $(POTFILES) -o ikiwiki.pot -Lperl --add-comments=translators
 
 clean:
 	rm -f ikiwiki.pot $(MOFILES) messages messages.mo

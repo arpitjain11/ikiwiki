@@ -132,6 +132,10 @@ sub send_commit_mails ($$$@) { #{{{
 		else {
 			$pagelist.=join(" ", @changed_pages);
 		}
+		#translators: The three variables are the name of the wiki,
+		#translators: A list of one or more pages that were changed,
+		#translators: And the name of the user making the change.
+		#translators: This is used as the subject of a commit email.
 		my $subject=sprintf(gettext("update of %s's %s by %s"), 
 			$config{wikiname}, $pagelist, $user);
 

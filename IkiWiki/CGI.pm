@@ -46,6 +46,8 @@ sub page_locked ($$;$) { #{{{
 		if (pagespec_match($page, userinfo_get($admin, "locked_pages"))) {
 			return 1 if $nonfatal;
 
+			#translators: The first parameter is a page name,
+			#translators: second is the user who locked it.
 			error(sprintf(gettext("%s is locked by %s and cannot be edited"),
 				htmllink("", "", $page, 1),
 				userlink($admin)));

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-03 14:11-0500\n"
+"POT-Creation-Date: 2007-01-04 06:58-0500\n"
 "PO-Revision-Date: 2007-01-03 09:37+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -16,35 +16,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../IkiWiki/CGI.pm:49
+#. translators: The first parameter is a page name,
+#. translators: second is the user who locked it.
+#: ../IkiWiki/CGI.pm:51
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "La página %s está bloqueada por %s y no puede modificarse"
 
-#: ../IkiWiki/CGI.pm:139
+#: ../IkiWiki/CGI.pm:141
 msgid "You need to log in first."
 msgstr "Antes es necesario identificarse"
 
-#: ../IkiWiki/CGI.pm:257
+#: ../IkiWiki/CGI.pm:259
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:408 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/inline.pm:162
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:447
+#: ../IkiWiki/CGI.pm:449
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:464 ../IkiWiki/CGI.pm:507
+#: ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:509
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:624
+#: ../IkiWiki/CGI.pm:626
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
@@ -211,7 +213,10 @@ msgstr "actualizando el índice de búsquedas de hyperstraier"
 msgid "shortcut missing name or url parameter"
 msgstr "shortcut necesita el párametro name ó el parámetro url"
 
-#: ../IkiWiki/Plugin/shortcut.pm:30
+#. translators: This is used to display what shortcuts are defined.
+#. translators: First parameter is the name of the shortcut, the second
+#. translators: is an URL.
+#: ../IkiWiki/Plugin/shortcut.pm:33
 #, perl-format
 msgid "shortcut %s points to %s"
 msgstr "El atajo %s lleva a %s"
@@ -296,7 +301,9 @@ msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"
 
-#: ../IkiWiki/Setup.pm:13
+#. translators: The first parameter is a filename, and the second
+#. translators: is a (probably not translated) error message.
+#: ../IkiWiki/Setup.pm:15
 #, perl-format
 msgid "cannot read %s: %s"
 msgstr "no puedo leer el archivo %s: %s"
@@ -317,7 +324,11 @@ msgstr "actualizando el wiki.."
 msgid "done"
 msgstr "completado"
 
-#: ../IkiWiki/UserInfo.pm:135
+#. translators: The three variables are the name of the wiki,
+#. translators: A list of one or more pages that were changed,
+#. translators: And the name of the user making the change.
+#. translators: This is used as the subject of a commit email.
+#: ../IkiWiki/UserInfo.pm:139
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "actualizado el wiki %s y la página %s por el usuario %s"
@@ -336,17 +347,21 @@ msgstr ""
 msgid "wrapper filename not specified"
 msgstr "el programa envoltorio no ha sido especificado"
 
-#: ../IkiWiki/Wrapper.pm:62
+#. translators: The first parameter is a filename, and the second is
+#. translators: a (probably not translated) error message.
+#: ../IkiWiki/Wrapper.pm:64
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "no puedo escribir en %s: %s"
 
-#: ../IkiWiki/Wrapper.pm:97
+#. translators: The parameter is a C filename.
+#: ../IkiWiki/Wrapper.pm:100
 #, perl-format
 msgid "failed to compile %s"
 msgstr "ha fallado la compilación del programa envoltorio %s"
 
-#: ../IkiWiki/Wrapper.pm:104
+#. translators: The parameter is a filename.
+#: ../IkiWiki/Wrapper.pm:108
 #, perl-format
 msgid "successfully generated %s\n"
 msgstr "creado con éxito el programa envoltorio %s\n"
@@ -365,7 +380,11 @@ msgstr ""
 msgid "Error"
 msgstr "Error"
 
-#: ../IkiWiki.pm:520
+#. translators: The first parameter is a
+#. translators: preprocessor directive name,
+#. translators: the second a page name, the
+#. translators: third a number.
+#: ../IkiWiki.pm:524
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

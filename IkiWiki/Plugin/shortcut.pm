@@ -27,6 +27,9 @@ sub preprocess_shortcut (@) { #{{{
 	hook(type => "preprocess", no_override => 1, id => $params{name},
 		call => sub { shortcut_expand($params{url}, $params{desc}, @_) });
 
+	#translators: This is used to display what shortcuts are defined.
+	#translators: First parameter is the name of the shortcut, the second
+	#translators: is an URL.
 	return sprintf(gettext("shortcut %s points to %s"), $params{name}, $params{url});
 } # }}}
 

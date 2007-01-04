@@ -59,6 +59,8 @@ EOF
 	$configstring=~s/"/\\"/g;
 	$configstring=~s/\n/\\\n/g;
 	
+	#translators: The first parameter is a filename, and the second is
+	#translators: a (probably not translated) error message.
 	open(OUT, ">$wrapper.c") || error(sprintf(gettext("failed to write %s: %s"), "$wrapper.c", $!));;
 	print OUT <<"EOF";
 /* A wrapper for ikiwiki, can be safely made suid. */
@@ -94,6 +96,7 @@ $envsave
 EOF
 	close OUT;
 	if (system("gcc", "$wrapper.c", "-o", $wrapper) != 0) {
+		#translators: The parameter is a C filename.
 		error(sprintf(gettext("failed to compile %s"), "$wrapper.c"));
 	}
 	unlink("$wrapper.c");
@@ -101,6 +104,7 @@ EOF
 	    ! chmod(oct($config{wrappermode}), $wrapper)) {
 		error("chmod $wrapper: $!");
 	}
+	#translators: The parameter is a filename.
 	printf(gettext("successfully generated %s\n"), $wrapper);
 } #}}}
 
