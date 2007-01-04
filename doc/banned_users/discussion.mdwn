@@ -11,3 +11,9 @@ whether OpenID users are stored in .ikiwiki/userdb file. --Pawel
 >> page that I can change my password there. Has it a sense?
 >> After all I store my OpenID password on OpenID server and I don't
 >> want to do it on ikiwiki home page site. --Pawel
+
+> This wiki is currently configured to use both passwordauth and openid, so
+> it's possible to create an account by signing in with an openid, then
+> enter a password for that account, and then log in using the openid and
+> the password. Though I can't imagine why you'd waint to do that.. The
+> password stuff goes away if passwordauth is disabled.
