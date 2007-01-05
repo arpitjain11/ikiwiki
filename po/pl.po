@@ -1,0 +1,391 @@
+# Polish translation of ikiwiki.pot
+# Copyright (C) 2007
+# This file is distributed under the same license as the ikiwiki package.
+# Paweł Tęcza <ptecza@net.icm.edu.pl>, 2007.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ikiwiki 1.37\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-05 13:13-0500\n"
+"PO-Revision-Date: 2007-01-05 16:33+100\n"
+"Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
+"Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. translators: The first parameter is a page name,
+#. translators: second is the user who locked it.
+#: ../IkiWiki/CGI.pm:51
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr ""
+"strona %s jest tymczasowo zablokowana przez użytkownika %s i nie może być "
+"teraz edytowana"
+
+#: ../IkiWiki/CGI.pm:141
+msgid "You need to log in first."
+msgstr "Konieczne jest zalogowanie się."
+
+#: ../IkiWiki/CGI.pm:259
+msgid "Preferences saved."
+msgstr "Ustawienia zostały zapisane."
+
+#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
+msgid "discussion"
+msgstr "dyskusja"
+
+#: ../IkiWiki/CGI.pm:449
+#, perl-format
+msgid "creating %s"
+msgstr "tworzenie strony %s"
+
+#: ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:509
+#, perl-format
+msgid "editing %s"
+msgstr "edycja strony %s"
+
+#: ../IkiWiki/CGI.pm:626
+msgid "You are banned."
+msgstr "Dostęp został zabroniony przez administratora."
+
+#: ../IkiWiki/Plugin/aggregate.pm:61
+#, perl-format
+msgid "aggregate plugin missing %s parameter"
+msgstr "brakujący argument %s dla wtyczki aggregate"
+
+#: ../IkiWiki/Plugin/aggregate.pm:89
+msgid "new feed"
+msgstr "nowy kanał RSS"
+
+#: ../IkiWiki/Plugin/aggregate.pm:103
+msgid "posts"
+msgstr "wpisy"
+
+#: ../IkiWiki/Plugin/aggregate.pm:105
+msgid "new"
+msgstr "nowy wpis"
+
+#: ../IkiWiki/Plugin/aggregate.pm:206
+#, perl-format
+msgid "expiring %s (%s days old)"
+msgstr "wygasający wpis %s (ma już %s dni)"
+
+#: ../IkiWiki/Plugin/aggregate.pm:213
+#, perl-format
+msgid "expiring %s"
+msgstr "wygasający wpis %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:236
+#, perl-format
+msgid "checking feed %s ..."
+msgstr "sprawdzanie kanału RSS %s\t..."
+
+#: ../IkiWiki/Plugin/aggregate.pm:241
+#, perl-format
+msgid "could not find feed at %s"
+msgstr "nie znaleziono kanału RSS pod adresem %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:250
+msgid "feed crashed XML::Feed!"
+msgstr "awaria kanału RSS w module XML::Feed!"
+
+#: ../IkiWiki/Plugin/aggregate.pm:273
+#, perl-format
+msgid "processed ok at "
+msgstr "przetworzony kanał RSS w dniu "
+
+#: ../IkiWiki/Plugin/aggregate.pm:314
+#, perl-format
+msgid "creating new page %s"
+msgstr "tworzenie nowej strony %s"
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
+msgid "There are no broken links!"
+msgstr "odnośniki są aktualne!"
+
+#: ../IkiWiki/Plugin/fortune.pm:18
+msgid "fortune failed"
+msgstr "awaria fortunki"
+
+#: ../IkiWiki/Plugin/googlecalendar.pm:22
+msgid "googlecalendar failed to find url in html"
+msgstr ""
+"awaria wtyczki googlecalendar z powodu nieodnalezionego adresu URL na "
+"stronie HTML"
+
+#: ../IkiWiki/Plugin/inline.pm:37
+msgid "Must specify url to wiki with --url when using --rss or --atom"
+msgstr ""
+"Użycie parametru --rss lub --atom wymaga podania adresu URL do wiki za "
+"pomocą parametru --url"
+
+#: ../IkiWiki/Plugin/inline.pm:97
+#, perl-format
+msgid "unknown sort type %s"
+msgstr "nieznany sposób sortowania %s"
+
+#: ../IkiWiki/Plugin/inline.pm:370
+msgid "RPC::XML::Client not found, not pinging"
+msgstr "Niezainstalowany moduł RPC::XML::Client, brak możliwości pingowania"
+
+#: ../IkiWiki/Plugin/linkmap.pm:99
+msgid "linkmap failed to run dot"
+msgstr "awaria wtyczki linkmap"
+
+#: ../IkiWiki/Plugin/mdwn.pm:37
+#, perl-format
+msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
+msgstr ""
+"Awaria w trakcie ładowania perlowego modułu Markdown.pm (%s) lub "
+"uruchamiania programu /usr/bin/markdown (%s)"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirrors"
+msgstr "Kopie lustrzane"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirror"
+msgstr "Kopia lustrzana"
+
+#: ../IkiWiki/Plugin/openid.pm:36
+msgid "What's this?"
+msgstr "Więcej o OpenID"
+
+#: ../IkiWiki/Plugin/openid.pm:37
+msgid "Get an OpenID"
+msgstr "Pobierz OpenID"
+
+#: ../IkiWiki/Plugin/orphans.pm:41
+msgid "All pages are linked to by other pages."
+msgstr "Dla każdej strony istnieje odnośnik z innej strony"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:104
+msgid "(use FirstnameLastName)"
+msgstr "użyj formy ImieNazwisko"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:144
+msgid "Account creation successful. Now you can Login."
+msgstr "Konto założone pomyślnie. Teraz już można zalogować się."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:147
+msgid "Error creating account."
+msgstr "Błąd w trakcie zakładania konta."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:168
+msgid "Failed to send mail"
+msgstr "Awaria w trakcie wysyłania wiadomości"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:170
+msgid "Your password has been emailed to you."
+msgstr "Wiadomość z hasłem została wysłana."
+
+#: ../IkiWiki/Plugin/poll.pm:64
+msgid "vote"
+msgstr "głosuj"
+
+#: ../IkiWiki/Plugin/poll.pm:72
+msgid "Total votes:"
+msgstr "Oddane głosy:"
+
+#: ../IkiWiki/Plugin/polygen.pm:32
+msgid "polygen not installed"
+msgstr "wtyczka polygen nie jest zainstalowana"
+
+#: ../IkiWiki/Plugin/polygen.pm:51
+msgid "polygen failed"
+msgstr "awaria wtyczki polygen"
+
+#: ../IkiWiki/Plugin/search.pm:34
+#, perl-format
+msgid "Must specify %s when using the search plugin"
+msgstr "Wtyczka do wyszukiwarka wymaga podania %s"
+
+#: ../IkiWiki/Plugin/search.pm:58
+msgid "cleaning hyperestraier search index"
+msgstr "czyszczanie indeksu z wynikami wtyczki hyperestraier"
+
+#: ../IkiWiki/Plugin/search.pm:64
+msgid "updating hyperestraier search index"
+msgstr "aktualizacja indeksu z wynikami wtyczki hyperestraier"
+
+#: ../IkiWiki/Plugin/shortcut.pm:24
+msgid "shortcut missing name or url parameter"
+msgstr "brakująca nazwa lub adres URL we wtyczce shortcut"
+
+#. translators: This is used to display what shortcuts are defined.
+#. translators: First parameter is the name of the shortcut, the second
+#. translators: is an URL.
+#: ../IkiWiki/Plugin/shortcut.pm:33
+#, perl-format
+msgid "shortcut %s points to %s"
+msgstr "skrót %s wskazuje na adres %s"
+
+#: ../IkiWiki/Plugin/smiley.pm:22
+msgid "failed to parse any smileys, disabling plugin"
+msgstr ""
+"Wtyczka smiley wyłączona z powodu awarii w trakcie przetwarzania emitoikonek"
+
+#: ../IkiWiki/Plugin/template.pm:19
+msgid "template missing id parameter"
+msgstr "brakujący parametr id we wtyczce template"
+
+#: ../IkiWiki/Plugin/template.pm:26
+#, perl-format
+msgid "template %s not found"
+msgstr "nieznaleziony szablon %s"
+
+#: ../IkiWiki/Plugin/template.pm:45
+msgid "template failed to process:"
+msgstr "awaria w trakcie przetwarzania szablonu:"
+
+#: ../IkiWiki/Rcs/Stub.pm:66
+msgid "getctime not implemented"
+msgstr "niedostępna funkcja getctime"
+
+#: ../IkiWiki/Rcs/svn.pm:206
+msgid ""
+"REV is not set, not running from svn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+"Brak możliwości wysłania powiadomień przez post-commit SVN-a z powodu "
+"nieustawionego parametru REV"
+
+#: ../IkiWiki/Render.pm:98
+msgid "Discussion"
+msgstr "Dyskusja"
+
+#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
+#, perl-format
+msgid "skipping bad filename %s"
+msgstr "pomijanie nieprawidłowego pliku %s"
+
+#: ../IkiWiki/Render.pm:288
+#, perl-format
+msgid "removing old page %s"
+msgstr "usuwanie starej strony %s"
+
+#: ../IkiWiki/Render.pm:307
+#, perl-format
+msgid "scanning %s"
+msgstr "przeszukiwanie strony %s"
+
+#: ../IkiWiki/Render.pm:316
+#, perl-format
+msgid "rendering %s"
+msgstr "tworzenie strony %s"
+
+#: ../IkiWiki/Render.pm:328
+#, perl-format
+msgid "rendering %s, which links to %s"
+msgstr "tworzenie strony %s z odnośnikiem do strony %s"
+
+#: ../IkiWiki/Render.pm:345
+#, perl-format
+msgid "rendering %s, which depends on %s"
+msgstr "tworzenie strony %s zależącej od strony %s"
+
+#: ../IkiWiki/Render.pm:383
+#, perl-format
+msgid "rendering %s, to update its backlinks"
+msgstr "tworzenie strony %s w celu aktualizacji jej powrotnych odnośników"
+
+#: ../IkiWiki/Render.pm:395
+#, perl-format
+msgid "removing %s, no longer rendered by %s"
+msgstr "usuwanie strony %s nie tworzonej już przez %s"
+
+#: ../IkiWiki/Render.pm:421
+#, perl-format
+msgid "ikiwiki: cannot render %s"
+msgstr "ikiwiki: awaria w trakcie tworzenie strony %s"
+
+#. translators: The first parameter is a filename, and the second
+#. translators: is a (probably not translated) error message.
+#: ../IkiWiki/Setup.pm:15
+#, perl-format
+msgid "cannot read %s: %s"
+msgstr "awaria w trakcie czytania strony %s: %s"
+
+#: ../IkiWiki/Setup/Standard.pm:32
+msgid "generating wrappers.."
+msgstr "tworzenie osłon..."
+
+#: ../IkiWiki/Setup/Standard.pm:68
+msgid "rebuilding wiki.."
+msgstr "przebudowywanie wiki..."
+
+#: ../IkiWiki/Setup/Standard.pm:71
+msgid "refreshing wiki.."
+msgstr "odświeżanie wiki..."
+
+#: ../IkiWiki/Setup/Standard.pm:80
+msgid "done"
+msgstr "gotowe"
+
+#. translators: The three variables are the name of the wiki,
+#. translators: A list of one or more pages that were changed,
+#. translators: And the name of the user making the change.
+#. translators: This is used as the subject of a commit email.
+#: ../IkiWiki/UserInfo.pm:139
+#, perl-format
+msgid "update of %s's %s by %s"
+msgstr "aktualizacja stron wiki %s %s przez użytkownika %s"
+
+#: ../IkiWiki/Wrapper.pm:16
+#, perl-format
+msgid "%s doesn't seem to be executable"
+msgstr "osłona %s nie jest wykonywalna"
+
+#: ../IkiWiki/Wrapper.pm:20
+msgid "cannot create a wrapper that uses a setup file"
+msgstr "awaria w trakcie tworzenia osłony używającej pliku konfiguracyjnego"
+
+#: ../IkiWiki/Wrapper.pm:24
+msgid "wrapper filename not specified"
+msgstr "nieokreślona nazwa pliku osłony"
+
+#. translators: The first parameter is a filename, and the second is
+#. translators: a (probably not translated) error message.
+#: ../IkiWiki/Wrapper.pm:64
+#, perl-format
+msgid "failed to write %s: %s"
+msgstr "awaria w trakcie zapisu strony %s: %s"
+
+#. translators: The parameter is a C filename.
+#: ../IkiWiki/Wrapper.pm:100
+#, perl-format
+msgid "failed to compile %s"
+msgstr "awaria w trakcie zestawiania strony %s"
+
+#. translators: The parameter is a filename.
+#: ../IkiWiki/Wrapper.pm:108
+#, perl-format
+msgid "successfully generated %s\n"
+msgstr "strona pomyślnie utworzona %s\n"
+
+#: ../ikiwiki.in:13
+msgid "usage: ikiwiki [options] source dest"
+msgstr "użycie: ikiwiki [parametry] źródło cel"
+
+#: ../IkiWiki.pm:99
+msgid "Must specify url to wiki with --url when using --cgi"
+msgstr ""
+"Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
+"--url"
+
+#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
+msgid "Error"
+msgstr "Błąd"
+
+#. translators: The first parameter is a
+#. translators: preprocessor directive name,
+#. translators: the second a page name, the
+#. translators: third a number.
+#: ../IkiWiki.pm:524
+#, perl-format
+msgid "%s preprocessing loop detected on %s at depth %i"
+msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
