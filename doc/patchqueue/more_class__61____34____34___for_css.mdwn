@@ -54,3 +54,10 @@ on added after an inlined page (namely: the post date, the tags, and the actions
 >> his work has finished.  Whether it could be used in IkiWiki is an open question, but having
 >> alternatives is always a good thing and perhaps, the fact that pandoc can make markdown->LaTeX
 >> conversion may lead to new possibilities. --[[Roktas]]
+
+>>> I confirm that this ([[debbug 405058]]) has just been fixed in markdown
+>>> [`1.0.2b7`](http://packages.debian.org/experimental/web/markdown) (BTW, thanks to your bug
+>>> report Joey).  FYI, I've observed some performance drop with `1.0.2b7` compared to `1.0.1`,
+>>> especially noticable with big files.  This was also confirmed by someone else, for example,
+>>> see this [thread](http://six.pairlist.net/pipermail/markdown-discuss/2006-August/000152.html)
+>>> --[[Roktas]]
