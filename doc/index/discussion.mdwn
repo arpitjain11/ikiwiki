@@ -276,3 +276,10 @@ or the path to the sub-page. I think this is handled by the htmllink() routine.
 >> a width of the RecentChanges page will be greater then a width of
 >> user's browser. I hate these pages. So I propose to display a list of
 >> changed pages in a column, not in a row. --Pawel
+
+----
+
+# Should not create an existing page
+
+This might be a bug, but will discuss it here first.
+Clicking on an old "?" or going to a create link but new Markdown content exists, should not go into "create" mode, but should do a regular "edit".
