@@ -1,0 +1,13 @@
+[[template id=plugin name=rawhtml included=1 author="[[Joey]]"]]
+[[tag type/html type/format]]
+
+This plugin changes how ikiwiki handles html files, making it treat html
+or xhtml files not as source files but as data files that are copied
+unchanged when the wiki is built. Compared with the [[html]] plugin, which
+treats html files as source files for the wiki, this plugin allows complete
+control over html pages. Note that this means that the html will not be
+sanitised of problimatic content such as javascript, so it can be insecure
+to enable this plugin if untrusted users have write access to your wiki's
+repository.
+
+This plugin is included in ikiwiki, but is not enabled by default.
