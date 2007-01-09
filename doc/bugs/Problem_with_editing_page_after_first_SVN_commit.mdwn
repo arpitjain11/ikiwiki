@@ -1,0 +1,51 @@
+I have a strange problem with editing any page after its first SVN commit.
+I'm not sure whether it's my ikiwiki backport bug or my misunderstanding
+how ikiwiki works.
+
+Assume that I have Foo page with any content and I want to put there link
+to Bar page and next create the page. I do following steps:
+
+1. Click Edit link on Foo page
+
+2. Put the link to Bar page there and commit it by clicking "Save Page"
+  button
+
+  The Bar page is rendered correctly and now I can see ?Bar link. The URL
+  in the address bar of my browser is
+
+  http://my.host.com/wiki/foo.html?updated
+
+3. Click ?Bar link
+
+  Now I can see textarea for editing of page. It's empty, of course.
+
+  The page doesn't exists in my SVN repo yet and my Apache server knows
+  noting about it:
+
+        $ find /my/ikiwiki/src/dir/ -type f -name bar.mdwn
+        $ find /my/ikiwiki/dst/dir/ -type f -name bar.html
+
+4. Add some initial content and click "Save Page" button
+  to commit changes
+
+  The Foo page also is rendered correctly and now I can see what I wrote.
+  The URL in the address bar of my browser is
+
+  http://my.host.com/wiki/bar.html?updated
+
+  The page was added to the SVN repo and my Apache is able to serve it now:
+
+        $ find /my/ikiwiki/src/dir/ -type f -name bar.mdwn
+        /my/ikiwiki/src/dir/bar.mdwn
+        $ find /my/ikiwiki/dst/dir/ -type f -name bar.html
+        /my/ikiwiki/dst/dir/bar.html
+
+5. Change the content of Bar page by clicking Edit link
+
+  I can't do it, because the textarea is empty again. I have to run
+  `ikiwiki --setup ikiwiki.setup` command by hand to rebuild the page.
+  Then I can edit it.
+
+Where is my mistake?
+
+--Pawel
