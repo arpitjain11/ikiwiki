@@ -19,7 +19,7 @@ ikiwiki.pot: $(POTFILES)
 	xgettext $(POTFILES) -o ikiwiki.pot -Lperl --add-comments=translators
 
 clean:
-	rm -f ikiwiki.pot $(MOFILES) messages messages.mo
+	rm -f $(MOFILES) messages messages.mo
 
 %.mo: %.po
 	msgfmt -o $@ $<
