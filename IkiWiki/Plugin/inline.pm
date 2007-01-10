@@ -238,7 +238,7 @@ sub date_822 ($) { #{{{
 
 	eval q{use POSIX};
 	error($@) if $@;
-	my $lc_time= POSIX::setlocale(&POSIX::LC_TIME);
+	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
 	POSIX::setlocale(&POSIX::LC_TIME, "C");
 	my $ret=POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
@@ -250,7 +250,7 @@ sub date_3339 ($) { #{{{
 
 	eval q{use POSIX};
 	error($@) if $@;
-	my $lc_time= POSIX::setlocale(&POSIX::LC_TIME);
+	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
 	POSIX::setlocale(&POSIX::LC_TIME, "C");
 	my $ret=POSIX::strftime("%Y-%m-%dT%H:%M:%SZ", localtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
