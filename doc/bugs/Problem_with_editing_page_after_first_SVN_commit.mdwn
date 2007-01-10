@@ -54,3 +54,18 @@ Where is my mistake?
 > the new page, or the old link back on page Foo that you clicked on before
 > to create Bar? It would also be good to see the URL you're at in step 5.
 > --[[Joey]]
+
+>> It was Edit link on new Bar page, of course. The URL in step 5 was
+>> http://my.host.com/wiki/ikiwiki.cgi?page=bar&do=edit.
+
+>> I've forget to add in my previous post that $pagesources{$page}
+>> (cgi_editpage subroutine of /usr/share/perl5/IkiWiki/CGI.pm file)
+>> doesn't exist in step 5. It exists after rebuilding all ikiwiki
+>> pages by hand.
+
+>> BTW, where does ikiwiki store information about rendered pages?
+>> Is it `/my/ikiwiki/src/dir/.ikiwiki/` directory?
+
+>> --Pawel
+
+
