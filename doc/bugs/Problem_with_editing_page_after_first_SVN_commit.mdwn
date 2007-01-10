@@ -68,4 +68,15 @@ Where is my mistake?
 
 >> --Pawel
 
-
+>>> Well, the missing %pagesources value explains the symptom for sure.
+>>> ikiwiki stores its state in .ikiwiki/index, and that should include
+>>> info about the new page you've created, including the source file for
+>>> it, which is where the data in %pagesources comes from.
+>>>
+>>> It sounds to me like somehow, when you commit a change to svn by
+>>> saving the page, it rebuilds the wiki, but does not update the index
+>>> file. Maybe it's crashing before it can save the index file. Or maybe
+>>> it's possibly be misconfigured, and updating a different index file in
+>>> a different copy of the source? You should be able to figure out what's
+>>> going on my looking at how the index file changes (or not) when you
+>>> create the new page. --[[Joey]]
