@@ -14,3 +14,11 @@ with him Spanish translation.
 
 > Well, do you have your setup file configured to use a polish locale?
 > --[[Joey]]
+
+>> Now I have :) I've just generated pl\_PL.UTF-8 locale via
+>> `dpkg-reconfigure locales` and set locale hash to 'pl_PL.UTF-8'
+>> in my `ikiwiki.setup` file. I also ran `ikiwiki --setup ikiwiki.setup`
+>> and restarted my Apache2 server. Unfortunately, I can still see
+>> "Discussion" link instead of "Dyskusja" link after any page update
+>> via WWW. --Pawel
+
