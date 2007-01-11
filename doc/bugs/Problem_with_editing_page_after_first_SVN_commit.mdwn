@@ -80,3 +80,23 @@ Where is my mistake?
 >>> a different copy of the source? You should be able to figure out what's
 >>> going on my looking at how the index file changes (or not) when you
 >>> create the new page. --[[Joey]]
+
+>>>> I've checked that my ikiwiki really doesn't touch `.ikiwiki/index` file
+>>>> when I create and save a new page. In `error.log` file of my Apache2
+>>>> server I can't see any "Permission denied" messages, but I suspect
+>>>> that a reason of my problem can be the bad access permissions:
+
+>>>>      root@my.host:/my/ikiwiki/src/dir# ls -ld .ikiwiki/
+>>>>      drwxrwsr-x  2 www-data src 4096 2007-01-11 10:00 .ikiwiki/
+>>>>      root@my.host:/my/ikiwiki/src/dir# cd .ikiwiki/
+>>>>      root@my.host:/my/ikiwiki/src/dir/.ikiwiki# ls -l
+>>>>      razem 48
+>>>>      -rw-rw-r--  1 www-data src 17353 2007-01-11 10:00 index
+>>>>      -rw-rw-r--  1 www-data src     0 2007-01-11 10:17 lockfile
+>>>>      -rw-------  1 www-data src 24576 2007-01-11 10:17 sessions.db
+>>>>      -rw-------  1 www-data src     0 2006-11-15 14:45 sessions.db.lck
+>>>>      -rw-------  1 www-data src   404 2007-01-08 10:24 userdb
+
+>>>> What do you think about it? Does it look good? My ikiwiki runs
+>>>> under control of Apache2 server and it's configured to run
+>>>> as `www-data` user and `www-data` group. --Pawel
