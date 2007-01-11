@@ -284,6 +284,9 @@ or the path to the sub-page. I think this is handled by the htmllink() routine.
 This might be a bug, but will discuss it here first.
 Clicking on an old "?" or going to a create link but new Markdown content exists, should not go into "create" mode, but should do a regular "edit".
 
+> I belive that currently it does a redirect to the new static web page.
+> At least that's the intent of the code. --[[Joey]]
+
 ----
 
 # Refreshing RecentChanges page
@@ -291,6 +294,10 @@ Clicking on an old "?" or going to a create link but new Markdown content exists
 What do you think about refreshing RecentChanges page (via Meta Refresh Tag)?
 It can be useful for users like me which rather prefer watching the last changes
 in WWW browser tab than subscribing to page. --Pawel
+
+> Depends, if it were done the time period should be made configurable.
+> Unwanted server load due to refeshing could be a problem for some.
+> --[[Joey]]
 
 ----
 
@@ -302,3 +309,5 @@ And then have it fall back to the location as configured at build time (like /us
 This would be similar to _underlaydir_. I don't think any extra configuration directive is needed.
 As it is now, RecentChanges will have Perl CGI error and Preferences will be an empty page, if you don't have corresponding templates.
 I can quickly make a patch and submit to the patch queue. Any comments?
+
+> I'd probably accept a patch immediately. --[[Joey]]
