@@ -5,8 +5,11 @@ ikiwiki (1.39) UNRELEASED; urgency=low
   * Include the pot file in the source tarball. Closes: #405890
   * Add a Swedish translation by Daniel Nylander. Closes: #406410
   * Add a Czech translation by Miroslav Kure.
+  * Fix encoding issue with use of Locale::Gettext. Seems that the OO
+    interface returns proper utf-8 decoded strings, unlike the traditional
+    interface, so use the OO interface.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 10 Jan 2007 22:24:25 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu, 11 Jan 2007 18:28:05 -0500
 
 ikiwiki (1.38) unstable; urgency=low
 

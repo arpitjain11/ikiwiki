@@ -816,13 +816,15 @@ sub file_pruned ($$) { #{{{
 	$file =~ m/$regexp/;
 } #}}}
 
+my $gettext_obj;
 sub gettext { #{{{
 	# Only use gettext in the rare cases it's needed.
-	# This overrides future calls of this function.
 	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
-		eval q{use Locale::gettext};
-		textdomain('ikiwiki');
-		return Locale::gettext::gettext(shift);
+		if (! $gettext_obj) {
+			eval q{use Locale::gettext ''};
+			$gettext_obj=Locale::gettext->domain('ikiwiki');
+		}
+		return $gettext_obj->get(shift);
 	}
 	else {
 		return shift;
