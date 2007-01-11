@@ -1,0 +1,379 @@
+# Czech translation of ikiwiki.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ikiwiki package.
+# Miroslav Kure <kurem@debian.cz>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ikiwiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-06 13:36+0100\n"
+"PO-Revision-Date: 2007-01-07 11:59+0100\n"
+"Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. translators: The first parameter is a page name,
+#. translators: second is the user who locked it.
+#: ../IkiWiki/CGI.pm:51
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr "Stránka %s je zamknutá uživatelem %s a nelze ji měnit"
+
+#: ../IkiWiki/CGI.pm:141
+msgid "You need to log in first."
+msgstr "Nejprve se musíte přihlásit."
+
+#: ../IkiWiki/CGI.pm:259
+msgid "Preferences saved."
+msgstr "Nastavení uloženo."
+
+#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
+msgid "discussion"
+msgstr "diskuse"
+
+#: ../IkiWiki/CGI.pm:449
+#, perl-format
+msgid "creating %s"
+msgstr "vytvářím %s"
+
+#: ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:509
+#, perl-format
+msgid "editing %s"
+msgstr "upravuji %s"
+
+#: ../IkiWiki/CGI.pm:626
+msgid "You are banned."
+msgstr "Jste vyhoštěni."
+
+#: ../IkiWiki/Plugin/aggregate.pm:61
+#, perl-format
+msgid "aggregate plugin missing %s parameter"
+msgstr "modulu aggregate chybí parametr %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:89
+msgid "new feed"
+msgstr "nový zdroj"
+
+#: ../IkiWiki/Plugin/aggregate.pm:103
+msgid "posts"
+msgstr "příspěvky"
+
+#: ../IkiWiki/Plugin/aggregate.pm:105
+msgid "new"
+msgstr "nový"
+
+#: ../IkiWiki/Plugin/aggregate.pm:206
+#, perl-format
+msgid "expiring %s (%s days old)"
+msgstr "expiruji %s (stará %s dnů)"
+
+#: ../IkiWiki/Plugin/aggregate.pm:213
+#, perl-format
+msgid "expiring %s"
+msgstr "expiruji %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:236
+#, perl-format
+msgid "checking feed %s ..."
+msgstr "kontroluji zdroj %s ..."
+
+#: ../IkiWiki/Plugin/aggregate.pm:241
+#, perl-format
+msgid "could not find feed at %s"
+msgstr "nemohu najít zdroj na %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:250
+msgid "feed crashed XML::Feed!"
+msgstr "zdroj shodil XML::Feed!"
+
+#: ../IkiWiki/Plugin/aggregate.pm:273
+#, perl-format
+msgid "processed ok at "
+msgstr "zpracováno ok "
+
+#: ../IkiWiki/Plugin/aggregate.pm:314
+#, perl-format
+msgid "creating new page %s"
+msgstr "vytvářím novou stránku %s"
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
+msgid "There are no broken links!"
+msgstr "Žádné porušené odkazy!"
+
+#: ../IkiWiki/Plugin/fortune.pm:18
+msgid "fortune failed"
+msgstr "fortune selhal"
+
+#: ../IkiWiki/Plugin/googlecalendar.pm:22
+msgid "googlecalendar failed to find url in html"
+msgstr "googlecalendar v html nenalezl url"
+
+#: ../IkiWiki/Plugin/inline.pm:37
+msgid "Must specify url to wiki with --url when using --rss or --atom"
+msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k wiki"
+
+#: ../IkiWiki/Plugin/inline.pm:97
+#, perl-format
+msgid "unknown sort type %s"
+msgstr "neznámý typ řazení %s"
+
+#: ../IkiWiki/Plugin/inline.pm:370
+msgid "RPC::XML::Client not found, not pinging"
+msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
+
+#: ../IkiWiki/Plugin/linkmap.pm:99
+msgid "linkmap failed to run dot"
+msgstr "linkmapu se nepodařilo spustit dot"
+
+#: ../IkiWiki/Plugin/mdwn.pm:37
+#, perl-format
+msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
+msgstr ""
+"selhalo nahrání perlového modulu Markdown.pm (%s) nebo /usr/bin/markdown (%s)"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirrors"
+msgstr "Zrcadla"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirror"
+msgstr "Zrcadlo"
+
+#: ../IkiWiki/Plugin/openid.pm:36
+msgid "What's this?"
+msgstr "Co to je?"
+
+#: ../IkiWiki/Plugin/openid.pm:37
+msgid "Get an OpenID"
+msgstr "Získat OpenID"
+
+#: ../IkiWiki/Plugin/orphans.pm:41
+msgid "All pages are linked to by other pages."
+msgstr "Na každou stránku vede odkaz z jiné stránky."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:104
+msgid "(use FirstnameLastName)"
+msgstr "(použijte KřestníJménoPříjmení)"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:144
+msgid "Account creation successful. Now you can Login."
+msgstr "Vytvoření účtu bylo úspěšné. Nyní se můžete přihlásit."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:147
+msgid "Error creating account."
+msgstr "Chyba při vytváření účtu."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:168
+msgid "Failed to send mail"
+msgstr "Nepodařilo se odeslat email."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:170
+msgid "Your password has been emailed to you."
+msgstr "Vaše heslo vám bylo zasláno."
+
+#: ../IkiWiki/Plugin/poll.pm:64
+msgid "vote"
+msgstr "hlasovat"
+
+#: ../IkiWiki/Plugin/poll.pm:72
+msgid "Total votes:"
+msgstr "Celkem hlasů:"
+
+#: ../IkiWiki/Plugin/polygen.pm:32
+msgid "polygen not installed"
+msgstr "polygen není nainstalován"
+
+#: ../IkiWiki/Plugin/polygen.pm:51
+msgid "polygen failed"
+msgstr "polygen selhal"
+
+#: ../IkiWiki/Plugin/search.pm:34
+#, perl-format
+msgid "Must specify %s when using the search plugin"
+msgstr "Při používání vyhledávacího modulu musíte zadat %s"
+
+#: ../IkiWiki/Plugin/search.pm:58
+msgid "cleaning hyperestraier search index"
+msgstr "čistím vyhledávací index hyperestraieru"
+
+#: ../IkiWiki/Plugin/search.pm:64
+msgid "updating hyperestraier search index"
+msgstr "aktualizuji vyhledávací index hyperestraieru"
+
+#: ../IkiWiki/Plugin/shortcut.pm:24
+msgid "shortcut missing name or url parameter"
+msgstr "zkratka postrádá jméno nebo url"
+
+#. translators: This is used to display what shortcuts are defined.
+#. translators: First parameter is the name of the shortcut, the second
+#. translators: is an URL.
+#: ../IkiWiki/Plugin/shortcut.pm:33
+#, perl-format
+msgid "shortcut %s points to %s"
+msgstr "zkratka %s odkazuje na %s"
+
+#: ../IkiWiki/Plugin/smiley.pm:22
+msgid "failed to parse any smileys, disabling plugin"
+msgstr "selhalo zpracování jakýchkoliv smajlíků, vypínám modul"
+
+#: ../IkiWiki/Plugin/template.pm:19
+msgid "template missing id parameter"
+msgstr "šabloně chybí parametr id"
+
+#: ../IkiWiki/Plugin/template.pm:26
+#, perl-format
+msgid "template %s not found"
+msgstr "šablona %s nebyla nalezena"
+
+#: ../IkiWiki/Plugin/template.pm:45
+msgid "template failed to process:"
+msgstr "šablonu se nepodařilo zpracovat:"
+
+#: ../IkiWiki/Rcs/Stub.pm:66
+msgid "getctime not implemented"
+msgstr "getctime není implementováno"
+
+#: ../IkiWiki/Rcs/svn.pm:206
+msgid ""
+"REV is not set, not running from svn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+"REV není nastavena, není spuštěna ze svn post-commit, nemohu zaslat oznámení"
+
+#: ../IkiWiki/Render.pm:98
+msgid "Discussion"
+msgstr "Diskuse"
+
+#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
+#, perl-format
+msgid "skipping bad filename %s"
+msgstr "přeskakuji chybné jméno souboru %s"
+
+#: ../IkiWiki/Render.pm:288
+#, perl-format
+msgid "removing old page %s"
+msgstr "odstraňuji starou stránku %s"
+
+#: ../IkiWiki/Render.pm:307
+#, perl-format
+msgid "scanning %s"
+msgstr "prohledávám %s"
+
+#: ../IkiWiki/Render.pm:316
+#, perl-format
+msgid "rendering %s"
+msgstr "zpracovávám %s"
+
+#: ../IkiWiki/Render.pm:328
+#, perl-format
+msgid "rendering %s, which links to %s"
+msgstr "zpracovávám %s, která odkazuje na %s"
+
+#: ../IkiWiki/Render.pm:345
+#, perl-format
+msgid "rendering %s, which depends on %s"
+msgstr "zpracovávám %s, která závisí na %s"
+
+#: ../IkiWiki/Render.pm:383
+#, perl-format
+msgid "rendering %s, to update its backlinks"
+msgstr "zpracovávám %s, aby se aktualizovaly zpětné odkazy"
+
+#: ../IkiWiki/Render.pm:395
+#, perl-format
+msgid "removing %s, no longer rendered by %s"
+msgstr "odstraňuji %s, již není zpracovávána %s"
+
+#: ../IkiWiki/Render.pm:421
+#, perl-format
+msgid "ikiwiki: cannot render %s"
+msgstr "ikiwiki: nelze zpracovat %s"
+
+#. translators: The first parameter is a filename, and the second
+#. translators: is a (probably not translated) error message.
+#: ../IkiWiki/Setup.pm:15
+#, perl-format
+msgid "cannot read %s: %s"
+msgstr "nemohu číst %s: %s"
+
+#: ../IkiWiki/Setup/Standard.pm:32
+msgid "generating wrappers.."
+msgstr "generuji obaly..."
+
+#: ../IkiWiki/Setup/Standard.pm:68
+msgid "rebuilding wiki.."
+msgstr "znovu vytvářím wiki..."
+
+#: ../IkiWiki/Setup/Standard.pm:71
+msgid "refreshing wiki.."
+msgstr "obnovuji wiki..."
+
+#: ../IkiWiki/Setup/Standard.pm:80
+msgid "done"
+msgstr "hotovo"
+
+#. translators: The three variables are the name of the wiki,
+#. translators: A list of one or more pages that were changed,
+#. translators: And the name of the user making the change.
+#. translators: This is used as the subject of a commit email.
+#: ../IkiWiki/UserInfo.pm:139
+#, perl-format
+msgid "update of %s's %s by %s"
+msgstr "aktualizace %s (%s) uživatelem %s"
+
+#: ../IkiWiki/Wrapper.pm:16
+#, perl-format
+msgid "%s doesn't seem to be executable"
+msgstr "%s není spustitelný soubor"
+
+#: ../IkiWiki/Wrapper.pm:20
+msgid "cannot create a wrapper that uses a setup file"
+msgstr "nemohu vytvořit obal, který využívá soubor setup"
+
+#: ../IkiWiki/Wrapper.pm:24
+msgid "wrapper filename not specified"
+msgstr "jméno souboru s obalem nebylo zadáno"
+
+#. translators: The first parameter is a filename, and the second is
+#. translators: a (probably not translated) error message.
+#: ../IkiWiki/Wrapper.pm:64
+#, perl-format
+msgid "failed to write %s: %s"
+msgstr "nelze zapsat %s: %s"
+
+#. translators: The parameter is a C filename.
+#: ../IkiWiki/Wrapper.pm:100
+#, perl-format
+msgid "failed to compile %s"
+msgstr "nelze zkompilovat %s"
+
+#. translators: The parameter is a filename.
+#: ../IkiWiki/Wrapper.pm:108
+#, perl-format
+msgid "successfully generated %s\n"
+msgstr "%s byl úspěšně vytvořen\n"
+
+#: ../ikiwiki.in:13
+msgid "usage: ikiwiki [options] source dest"
+msgstr "použití: ikiwiki [volby] zdroj cíl"
+
+#: ../IkiWiki.pm:99
+msgid "Must specify url to wiki with --url when using --cgi"
+msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
+
+#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
+msgid "Error"
+msgstr "Chyba"
+
+#. translators: The first parameter is a
+#. translators: preprocessor directive name,
+#. translators: the second a page name, the
+#. translators: third a number.
+#: ../IkiWiki.pm:524
+#, perl-format
+msgid "%s preprocessing loop detected on %s at depth %i"
+msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
