@@ -1,0 +1,381 @@
+# Swedish translation for ikiwiki.
+# Copyright (C) 2007  Free Software Foundation, Inc.
+# This file is distributed under the same license as the ikiwiki package.
+# Daniel Nylander <po@danielnylander.se>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ikiwiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-10 15:32-0500\n"
+"PO-Revision-Date: 2007-01-10 23:47+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. translators: The first parameter is a page name,
+#. translators: second is the user who locked it.
+#: ../IkiWiki/CGI.pm:51
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr "%s är låst av %s och kan inte redigeras"
+
+#: ../IkiWiki/CGI.pm:141
+msgid "You need to log in first."
+msgstr "Du måste logga in först."
+
+#: ../IkiWiki/CGI.pm:259
+msgid "Preferences saved."
+msgstr "Inställningar sparades."
+
+#: ../IkiWiki/CGI.pm:410
+#: ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/Render.pm:97
+#: ../IkiWiki/Render.pm:161
+msgid "discussion"
+msgstr "diskussion"
+
+#: ../IkiWiki/CGI.pm:449
+#, perl-format
+msgid "creating %s"
+msgstr "skapar %s"
+
+#: ../IkiWiki/CGI.pm:466
+#: ../IkiWiki/CGI.pm:509
+#, perl-format
+msgid "editing %s"
+msgstr "redigerar %s"
+
+#: ../IkiWiki/CGI.pm:626
+msgid "You are banned."
+msgstr "Du är bannlyst."
+
+#: ../IkiWiki/Plugin/aggregate.pm:61
+#, perl-format
+msgid "aggregate plugin missing %s parameter"
+msgstr "aggregeringsinstick saknar parametern %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:89
+msgid "new feed"
+msgstr "ny kanal"
+
+#: ../IkiWiki/Plugin/aggregate.pm:103
+msgid "posts"
+msgstr "inlägg"
+
+#: ../IkiWiki/Plugin/aggregate.pm:105
+msgid "new"
+msgstr "ny"
+
+#: ../IkiWiki/Plugin/aggregate.pm:206
+#, perl-format
+msgid "expiring %s (%s days old)"
+msgstr "låter %s gå ut (%s dagar gammal)"
+
+#: ../IkiWiki/Plugin/aggregate.pm:213
+#, perl-format
+msgid "expiring %s"
+msgstr "låter %s gå ut"
+
+#: ../IkiWiki/Plugin/aggregate.pm:236
+#, perl-format
+msgid "checking feed %s ..."
+msgstr "kontrollerar kanalen %s ..."
+
+#: ../IkiWiki/Plugin/aggregate.pm:241
+#, perl-format
+msgid "could not find feed at %s"
+msgstr "kunde inte hitta kanalen på %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:250
+msgid "feed crashed XML::Feed!"
+msgstr "kanalen kraschade XML::Feed!"
+
+#: ../IkiWiki/Plugin/aggregate.pm:273
+#, perl-format
+msgid "processed ok at "
+msgstr "behandlad ok på "
+
+#: ../IkiWiki/Plugin/aggregate.pm:314
+#, perl-format
+msgid "creating new page %s"
+msgstr "skapar nya sidan %s"
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
+msgid "There are no broken links!"
+msgstr "Det finns inga trasiga länkar!"
+
+#: ../IkiWiki/Plugin/fortune.pm:18
+msgid "fortune failed"
+msgstr "fortune misslyckades"
+
+#: ../IkiWiki/Plugin/googlecalendar.pm:22
+msgid "googlecalendar failed to find url in html"
+msgstr "googlecalendar misslyckades med att hitta url i html"
+
+#: ../IkiWiki/Plugin/inline.pm:37
+msgid "Must specify url to wiki with --url when using --rss or --atom"
+msgstr "Måste ange url till wiki med --url när --rss eller --atom används"
+
+#: ../IkiWiki/Plugin/inline.pm:97
+#, perl-format
+msgid "unknown sort type %s"
+msgstr "okänd sorteringstyp %s"
+
+#: ../IkiWiki/Plugin/inline.pm:370
+msgid "RPC::XML::Client not found, not pinging"
+msgstr "RPC::XML::Client hittades inte, pingar inte"
+
+#: ../IkiWiki/Plugin/linkmap.pm:99
+msgid "linkmap failed to run dot"
+msgstr "linkmap misslyckades att köra dot"
+
+#: ../IkiWiki/Plugin/mdwn.pm:37
+#, perl-format
+msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
+msgstr "misslyckades med att läsa in Perl-modulen Markdown.pm (%s) eller /usr/bin/markdown (%s)"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirrors"
+msgstr "Speglar"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirror"
+msgstr "Spegel"
+
+#: ../IkiWiki/Plugin/openid.pm:36
+msgid "What's this?"
+msgstr "Vad är det här?"
+
+#: ../IkiWiki/Plugin/openid.pm:37
+msgid "Get an OpenID"
+msgstr "Skaffa ett OpenID"
+
+#: ../IkiWiki/Plugin/orphans.pm:41
+msgid "All pages are linked to by other pages."
+msgstr "Alla sidor länkas till av andra sidor."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:104
+msgid "(use FirstnameLastName)"
+msgstr "(använd FörnamnEfternamn)"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:144
+msgid "Account creation successful. Now you can Login."
+msgstr "Kontot har skapats. Du kan nu logga in."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:147
+msgid "Error creating account."
+msgstr "Fel vid skapandet av konto."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:168
+msgid "Failed to send mail"
+msgstr "Misslyckades med att skicka e-post"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:170
+msgid "Your password has been emailed to you."
+msgstr "Ditt lösenord har skickats till dig via e-post."
+
+#: ../IkiWiki/Plugin/poll.pm:64
+msgid "vote"
+msgstr "röst"
+
+#: ../IkiWiki/Plugin/poll.pm:72
+msgid "Total votes:"
+msgstr "Antal röster:"
+
+#: ../IkiWiki/Plugin/polygen.pm:32
+msgid "polygen not installed"
+msgstr "polygen inte installerad"
+
+#: ../IkiWiki/Plugin/polygen.pm:51
+msgid "polygen failed"
+msgstr "polygen misslyckades"
+
+#: ../IkiWiki/Plugin/search.pm:34
+#, perl-format
+msgid "Must specify %s when using the search plugin"
+msgstr "Måste ange %s när sökinsticket används"
+
+#: ../IkiWiki/Plugin/search.pm:58
+msgid "cleaning hyperestraier search index"
+msgstr "rensar hyperestraier-sökindex"
+
+#: ../IkiWiki/Plugin/search.pm:64
+msgid "updating hyperestraier search index"
+msgstr "uppdaterar hyperestraier-sökindex"
+
+#: ../IkiWiki/Plugin/shortcut.pm:24
+msgid "shortcut missing name or url parameter"
+msgstr "genväg saknar parameter för namn eller url"
+
+#. translators: This is used to display what shortcuts are defined.
+#. translators: First parameter is the name of the shortcut, the second
+#. translators: is an URL.
+#: ../IkiWiki/Plugin/shortcut.pm:33
+#, perl-format
+msgid "shortcut %s points to %s"
+msgstr "genvägen %s pekar på %s"
+
+#: ../IkiWiki/Plugin/smiley.pm:22
+msgid "failed to parse any smileys, disabling plugin"
+msgstr "misslyckades med att tolka smilisar, inaktiverar instick"
+
+#: ../IkiWiki/Plugin/template.pm:19
+msgid "template missing id parameter"
+msgstr "mall saknar id-parameter"
+
+#: ../IkiWiki/Plugin/template.pm:26
+#, perl-format
+msgid "template %s not found"
+msgstr "mallen %s hittades inte"
+
+#: ../IkiWiki/Plugin/template.pm:45
+msgid "template failed to process:"
+msgstr "misslyckades med att behandla mall:"
+
+#: ../IkiWiki/Rcs/Stub.pm:66
+msgid "getctime not implemented"
+msgstr "getctime inte implementerad"
+
+#: ../IkiWiki/Rcs/svn.pm:206
+msgid "REV is not set, not running from svn post-commit hook, cannot send notifications"
+msgstr "REV är inte inställt, kör inte från svn post-commit-hook, kan inte skicka notifieringar"
+
+#: ../IkiWiki/Render.pm:98
+msgid "Discussion"
+msgstr "Diskussion"
+
+#: ../IkiWiki/Render.pm:228
+#: ../IkiWiki/Render.pm:248
+#, perl-format
+msgid "skipping bad filename %s"
+msgstr "hoppar över felaktigt filnamn %s"
+
+#: ../IkiWiki/Render.pm:288
+#, perl-format
+msgid "removing old page %s"
+msgstr "tar bort gammal sida %s"
+
+#: ../IkiWiki/Render.pm:307
+#, perl-format
+msgid "scanning %s"
+msgstr "söker av %s"
+
+#: ../IkiWiki/Render.pm:316
+#, perl-format
+msgid "rendering %s"
+msgstr "ritar upp %s"
+
+#: ../IkiWiki/Render.pm:328
+#, perl-format
+msgid "rendering %s, which links to %s"
+msgstr "ritar upp %s, vilken länkar till %s"
+
+#: ../IkiWiki/Render.pm:345
+#, perl-format
+msgid "rendering %s, which depends on %s"
+msgstr "ritar upp %s, vilken är beroende av %s"
+
+#: ../IkiWiki/Render.pm:383
+#, perl-format
+msgid "rendering %s, to update its backlinks"
+msgstr "ritar upp %s, för att uppdatera dess bakåtlänkar"
+
+#: ../IkiWiki/Render.pm:395
+#, perl-format
+msgid "removing %s, no longer rendered by %s"
+msgstr "tar bort %s, som inte längre ritas upp av %s"
+
+#: ../IkiWiki/Render.pm:421
+#, perl-format
+msgid "ikiwiki: cannot render %s"
+msgstr "ikiwiki: kan inte rita upp %s"
+
+#. translators: The first parameter is a filename, and the second
+#. translators: is a (probably not translated) error message.
+#: ../IkiWiki/Setup.pm:15
+#, perl-format
+msgid "cannot read %s: %s"
+msgstr "kan inte läsa %s: %s"
+
+#: ../IkiWiki/Setup/Standard.pm:32
+msgid "generating wrappers.."
+msgstr "genererar wrappers.."
+
+#: ../IkiWiki/Setup/Standard.pm:68
+msgid "rebuilding wiki.."
+msgstr "bygger om wiki.."
+
+#: ../IkiWiki/Setup/Standard.pm:71
+msgid "refreshing wiki.."
+msgstr "uppdaterar wiki.."
+
+#: ../IkiWiki/Setup/Standard.pm:80
+msgid "done"
+msgstr "klar"
+
+#. translators: The three variables are the name of the wiki,
+#. translators: A list of one or more pages that were changed,
+#. translators: And the name of the user making the change.
+#. translators: This is used as the subject of a commit email.
+#: ../IkiWiki/UserInfo.pm:139
+#, perl-format
+msgid "update of %s's %s by %s"
+msgstr "uppdatering av %s, %s av %s"
+
+#: ../IkiWiki/Wrapper.pm:16
+#, perl-format
+msgid "%s doesn't seem to be executable"
+msgstr "%s verkar inte vara körbar"
+
+#: ../IkiWiki/Wrapper.pm:20
+msgid "cannot create a wrapper that uses a setup file"
+msgstr "kan inte skapa en wrapper som använder en konfigurationsfil"
+
+#: ../IkiWiki/Wrapper.pm:24
+msgid "wrapper filename not specified"
+msgstr "filnamn för wrapper har inte angivits"
+
+#. translators: The first parameter is a filename, and the second is
+#. translators: a (probably not translated) error message.
+#: ../IkiWiki/Wrapper.pm:64
+#, perl-format
+msgid "failed to write %s: %s"
+msgstr "misslyckades med att skriva %s: %s"
+
+#. translators: The parameter is a C filename.
+#: ../IkiWiki/Wrapper.pm:100
+#, perl-format
+msgid "failed to compile %s"
+msgstr "misslyckades med att kompilera %s"
+
+#. translators: The parameter is a filename.
+#: ../IkiWiki/Wrapper.pm:108
+#, perl-format
+msgid "successfully generated %s\n"
+msgstr "generering av %s lyckades\n"
+
+#: ../ikiwiki.in:13
+msgid "usage: ikiwiki [options] source dest"
+msgstr "användning: ikiwiki [flaggor] källa mål"
+
+#: ../IkiWiki.pm:99
+msgid "Must specify url to wiki with --url when using --cgi"
+msgstr "Måste ange url till wiki med --url när --cgi används"
+
+#: ../IkiWiki.pm:144
+#: ../IkiWiki.pm:145
+msgid "Error"
+msgstr "Fel"
+
+#. translators: The first parameter is a
+#. translators: preprocessor directive name,
+#. translators: the second a page name, the
+#. translators: third a number.
+#: ../IkiWiki.pm:524
+#, perl-format
+msgid "%s preprocessing loop detected on %s at depth %i"
+msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"
+
