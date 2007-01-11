@@ -105,7 +105,7 @@ EOF
 		error("chmod $wrapper: $!");
 	}
 	#translators: The parameter is a filename.
-	printf(gettext("successfully generated %s\n"), $wrapper);
+	printf(gettext("successfully generated %s"), $wrapper)."\n";
 } #}}}
 
 1
