@@ -1,5 +1,7 @@
 Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.html. This patch allows that. Specifically, foo/index.type is translated to $links{'foo/'}, and bestlink looks for either "foo" or "foo/" when linking to pages. There are other miscellaneous changes that go with that -- parentlinks for "foo/" are the same as for "foo", except one directory higher; basename of "foo/" is "foo"; links to "foo/" are translated to "foo/index.html" rather than "foo/.html". (Links to "foo/" might be preferred, but that causes an infinite loop in writefile, because apparently dirname("foo/") == "foo/" on my system for reasons that aren't clear to me.)
 
+Looks like this copy got whitespace munged. I'm leaving a copy of the patch on [my site](http://www.betacantrips.com/attic/patch.diff), with correct whitespace, in case anyone else wants to apply it. It should apply cleanly to a freshly unpacked ikiwiki-1.38. --Ethan
+
     diff -ur -x .svn ikiwiki-orig/IkiWiki/Render.pm ikiwiki/IkiWiki/Render.pm
     --- ikiwiki-orig/IkiWiki/Render.pm  2006-11-08 01:02:33.000000000 -0500
     +++ ikiwiki/IkiWiki/Render.pm       2006-11-08 01:02:46.000000000 -0500
