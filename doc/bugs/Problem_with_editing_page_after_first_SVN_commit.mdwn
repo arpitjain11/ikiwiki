@@ -100,3 +100,8 @@ Where is my mistake?
 >>>> What do you think about it? Does it look good? My ikiwiki runs
 >>>> under control of Apache2 server and it's configured to run
 >>>> as `www-data` user and `www-data` group. --Pawel
+
+>>>>> It's a bit weird to run ikiwiki as www-data. This means that www-data
+>>>>> can write to your subversion repository? And the svn post-commit hook
+>>>>> _also_ runs as www-data? It certianly could be some permissions issue
+>>>>> that is not being reported properly. --[[Joey]]
