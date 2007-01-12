@@ -1,0 +1,38 @@
+It would be nice if you didn't have to copy all templates to your custom templatedir so you only have your customizations there. And then have it fall back to the location as configured at build time (like /usr/share/ikiwiki/templates/). This would be similar to underlaydir. I don't think any extra configuration directive is needed. As it is now, RecentChanges will have Perl CGI error and Preferences will be an empty page, if you don't have corresponding templates.
+
+I have been testing the following. Sorry if the don't match up as I may have other changes (unrelated) also.
+
+(no markdown for patch, so open in editor to real)
+
+--- IkiWiki.pm.save	2007-01-12 09:05:48.000000000 +0900
++++ IkiWiki.pm	2007-01-12 09:08:24.000000000 +0900
+@@ -638,7 +638,9 @@
+ 			my $text_ref = shift;
+ 			$$text_ref=&Encode::decode_utf8($$text_ref);
+ 		},
+-		filename => "$config{templatedir}/$filename",
++		filename => (-e "$config{templatedir}/$filename" ?
++			"$config{templatedir}/$filename" :
++			"$installdir/share/ikiwiki/templates/$filename"),
+ 		loop_context_vars => 1,
+ 		die_on_bad_params => 0,
+ 		@_;
+
+--- IkiWiki/CGI.pm.orig	2007-01-01 07:18:26.000000000 +0900
++++ IkiWiki/CGI.pm	2007-01-12 10:29:14.000000000 +0900
+@@ -291,8 +294,7 @@
+ 		params => $q,
+ 		action => $config{cgiurl},
+ 		table => 0,
+-		template => (-e "$config{templatedir}/editpage.tmpl" ?
+-				{template_params("editpage.tmpl")} : ""),
++		template => {template_params("editpage.tmpl")},
+ 	);
+ 	
+ 	run_hooks(formbuilder_setup => sub {
+
+
+Note I don't do prefs nor signin because they are not real users of templates.
+Also, the above is a little redundant as by default it will use same path for both.
+
+Once something like this is in source then usage can be updated
