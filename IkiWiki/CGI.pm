@@ -646,6 +646,9 @@ sub cgi (;$$) { #{{{
 		$q->param('do', 'create');
 		cgi_editpage($q, $session);
 	}
+	elsif ($do eq 'postsignin') {
+		error(gettext("login failed, perhaps you need to turn on cookies?"));
+	}
 	else {
 		error("unknown do parameter");
 	}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-04 06:58-0500\n"
+"POT-Creation-Date: 2007-01-12 15:56-0500\n"
 "PO-Revision-Date: 2007-01-03 09:37+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -23,32 +23,36 @@ msgstr ""
 msgid "%s is locked by %s and cannot be edited"
 msgstr "La página %s está bloqueada por %s y no puede modificarse"
 
-#: ../IkiWiki/CGI.pm:141
+#: ../IkiWiki/CGI.pm:140
 msgid "You need to log in first."
 msgstr "Antes es necesario identificarse"
 
-#: ../IkiWiki/CGI.pm:259
+#: ../IkiWiki/CGI.pm:257
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:162
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:449
+#: ../IkiWiki/CGI.pm:446
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:509
+#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:626
+#: ../IkiWiki/CGI.pm:623
 msgid "You are banned."
 msgstr "Ha sido expulsado."
+
+#: ../IkiWiki/CGI.pm:650
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
 #, perl-format

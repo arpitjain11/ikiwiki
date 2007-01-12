@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 15:32-0500\n"
+"POT-Creation-Date: 2007-01-12 15:56-0500\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -22,35 +22,36 @@ msgstr ""
 msgid "%s is locked by %s and cannot be edited"
 msgstr "%s är låst av %s och kan inte redigeras"
 
-#: ../IkiWiki/CGI.pm:141
+#: ../IkiWiki/CGI.pm:140
 msgid "You need to log in first."
 msgstr "Du måste logga in först."
 
-#: ../IkiWiki/CGI.pm:259
+#: ../IkiWiki/CGI.pm:257
 msgid "Preferences saved."
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:410
-#: ../IkiWiki/Plugin/inline.pm:162
-#: ../IkiWiki/Render.pm:97
-#: ../IkiWiki/Render.pm:161
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:449
+#: ../IkiWiki/CGI.pm:446
 #, perl-format
 msgid "creating %s"
 msgstr "skapar %s"
 
-#: ../IkiWiki/CGI.pm:466
-#: ../IkiWiki/CGI.pm:509
+#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
 #, perl-format
 msgid "editing %s"
 msgstr "redigerar %s"
 
-#: ../IkiWiki/CGI.pm:626
+#: ../IkiWiki/CGI.pm:623
 msgid "You are banned."
 msgstr "Du är bannlyst."
+
+#: ../IkiWiki/CGI.pm:650
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
 #, perl-format
@@ -135,7 +136,9 @@ msgstr "linkmap misslyckades att köra dot"
 #: ../IkiWiki/Plugin/mdwn.pm:37
 #, perl-format
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
-msgstr "misslyckades med att läsa in Perl-modulen Markdown.pm (%s) eller /usr/bin/markdown (%s)"
+msgstr ""
+"misslyckades med att läsa in Perl-modulen Markdown.pm (%s) eller /usr/bin/"
+"markdown (%s)"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -240,15 +243,18 @@ msgid "getctime not implemented"
 msgstr "getctime inte implementerad"
 
 #: ../IkiWiki/Rcs/svn.pm:206
-msgid "REV is not set, not running from svn post-commit hook, cannot send notifications"
-msgstr "REV är inte inställt, kör inte från svn post-commit-hook, kan inte skicka notifieringar"
+msgid ""
+"REV is not set, not running from svn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+"REV är inte inställt, kör inte från svn post-commit-hook, kan inte skicka "
+"notifieringar"
 
 #: ../IkiWiki/Render.pm:98
 msgid "Discussion"
 msgstr "Diskussion"
 
-#: ../IkiWiki/Render.pm:228
-#: ../IkiWiki/Render.pm:248
+#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "hoppar över felaktigt filnamn %s"
@@ -365,8 +371,7 @@ msgstr "användning: ikiwiki [flaggor] källa mål"
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Måste ange url till wiki med --url när --cgi används"
 
-#: ../IkiWiki.pm:144
-#: ../IkiWiki.pm:145
+#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
 msgid "Error"
 msgstr "Fel"
 
@@ -378,4 +383,3 @@ msgstr "Fel"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"
-

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.37\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-05 13:13-0500\n"
+"POT-Creation-Date: 2007-01-12 15:56-0500\n"
 "PO-Revision-Date: 2007-01-05 16:33+100\n"
 "Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -25,32 +25,36 @@ msgstr ""
 "strona %s jest tymczasowo zablokowana przez użytkownika %s i nie może być "
 "teraz edytowana"
 
-#: ../IkiWiki/CGI.pm:141
+#: ../IkiWiki/CGI.pm:140
 msgid "You need to log in first."
 msgstr "Konieczne jest zalogowanie się."
 
-#: ../IkiWiki/CGI.pm:259
+#: ../IkiWiki/CGI.pm:257
 msgid "Preferences saved."
 msgstr "Ustawienia zostały zapisane."
 
-#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:162
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "dyskusja"
 
-#: ../IkiWiki/CGI.pm:449
+#: ../IkiWiki/CGI.pm:446
 #, perl-format
 msgid "creating %s"
 msgstr "tworzenie strony %s"
 
-#: ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:509
+#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
 #, perl-format
 msgid "editing %s"
 msgstr "edycja strony %s"
 
-#: ../IkiWiki/CGI.pm:626
+#: ../IkiWiki/CGI.pm:623
 msgid "You are banned."
 msgstr "Dostęp został zabroniony przez administratora."
+
+#: ../IkiWiki/CGI.pm:650
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
 #, perl-format

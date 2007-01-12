@@ -46,3 +46,7 @@ w/o cookies, but I don't see any easy way of detecting that
 from CGI::Session. Maybe you know a way -- I have never used 
 CGI.pm before, this isn't my forte (in case that  wasn't obvious).
 --Ethan
+
+> It's not easily possible to test for cookies, but it is possible to
+> display a better error message in this failure mode. [[bugs/done]]
+> --[[Joey]]
