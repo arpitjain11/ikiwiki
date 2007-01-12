@@ -32,3 +32,17 @@ Crypt::DH, URI-Fetch. --Ethan
 >>>>> No problem, the error message could certianly use improvement.
 >>>>> Although if I disable cookies, myopenid lets me know. Maybe you
 >>>>> should paste the url. --[[Joey]]
+
+I have cookies disabled on my computer, with a bunch of manual
+exceptions. This includes myopenid, ikiwiki.kitenet.net, livejournal,
+and some others. Unfortunately it didn't include my own domain.
+So the URI that myopenid redirected me to was fine, but because
+I didn't have cookies set, I didn't have a session, and so 
+session->param('postsignin') was undefined, so instead of being
+redirected my query fell through CGI.pm to the bottom of cgi(), 
+where I got the message above. In a perfect world I'd say that
+it would be nice to let the user know that they can't sign in
+w/o cookies, but I don't see any easy way of detecting that 
+from CGI::Session. Maybe you know a way -- I have never used 
+CGI.pm before, this isn't my forte (in case that  wasn't obvious).
+--Ethan
