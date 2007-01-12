@@ -105,3 +105,9 @@ Where is my mistake?
 >>>>> can write to your subversion repository? And the svn post-commit hook
 >>>>> _also_ runs as www-data? It certianly could be some permissions issue
 >>>>> that is not being reported properly. --[[Joey]]
+
+>>>>>> No, my SVN `post-commit` hook runs as `root` (uid) and `www-data` (gid).
+>>>>>> Only `root` user and `src` group have write permissions to my SVN repo.
+
+>>>>>> Could you please show me your permissions for `repodir`, `srcdir`
+>>>>>> and `destdir` and how runs your Apache server? --Pawel
