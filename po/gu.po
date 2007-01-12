@@ -1,0 +1,379 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Kartik Mistry <kartik.mistry@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ikiwiki-gu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-10 15:32-0500\n"
+"PO-Revision-Date: 2007-01-11 16:05+0530\n"
+"Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
+"Language-Team: Gujarati <team@utkarsh.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. translators: The first parameter is a page name,
+#. translators: second is the user who locked it.
+#: ../IkiWiki/CGI.pm:51
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr "%s એ %s દ્વારા તાળું મરાયેલ છે અને તેમાં સુધારો કરી શકાશે નહી"
+
+#: ../IkiWiki/CGI.pm:141
+msgid "You need to log in first."
+msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશે."
+
+#: ../IkiWiki/CGI.pm:259
+msgid "Preferences saved."
+msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
+
+#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
+msgid "discussion"
+msgstr "ચર્ચા"
+
+#: ../IkiWiki/CGI.pm:449
+#, perl-format
+msgid "creating %s"
+msgstr "%s બનાવે છે"
+
+#: ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:509
+#, perl-format
+msgid "editing %s"
+msgstr "%s સુધારે છે"
+
+#: ../IkiWiki/CGI.pm:626
+msgid "You are banned."
+msgstr "તમારા પર પ્રતિબંધ છે."
+
+#: ../IkiWiki/Plugin/aggregate.pm:61
+#, perl-format
+msgid "aggregate plugin missing %s parameter"
+msgstr "એગ્રીગેટ પ્લગઇનમાં %s વિકલ્પ નથી"
+
+#: ../IkiWiki/Plugin/aggregate.pm:89
+msgid "new feed"
+msgstr "નવું ફીડ"
+
+#: ../IkiWiki/Plugin/aggregate.pm:103
+msgid "posts"
+msgstr "પોસ્ટ"
+
+#: ../IkiWiki/Plugin/aggregate.pm:105
+msgid "new"
+msgstr "નવું"
+
+#: ../IkiWiki/Plugin/aggregate.pm:206
+#, perl-format
+msgid "expiring %s (%s days old)"
+msgstr "જુનું કરે છે %s (%s દિવસો જુનું)"
+
+#: ../IkiWiki/Plugin/aggregate.pm:213
+#, perl-format
+msgid "expiring %s"
+msgstr "જુનું કરે છે %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:236
+#, perl-format
+msgid "checking feed %s ..."
+msgstr "ફીડ %s ચકાસે છે ..."
+
+#: ../IkiWiki/Plugin/aggregate.pm:241
+#, perl-format
+msgid "could not find feed at %s"
+msgstr "%s પર ફીડ મળી શક્યું નહી"
+
+#: ../IkiWiki/Plugin/aggregate.pm:250
+msgid "feed crashed XML::Feed!"
+msgstr "ફીડ ભાંગી પડ્યું XML::Feed!"
+
+#: ../IkiWiki/Plugin/aggregate.pm:273
+#, perl-format
+msgid "processed ok at "
+msgstr "આના પર બરાબર છે "
+
+#: ../IkiWiki/Plugin/aggregate.pm:314
+#, perl-format
+msgid "creating new page %s"
+msgstr "નવું પાનું %s બનાવે છે"
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
+msgid "There are no broken links!"
+msgstr "અહીં કોઇ તૂટેલ કડી નથી!"
+
+#: ../IkiWiki/Plugin/fortune.pm:18
+msgid "fortune failed"
+msgstr "ભવિષ્ય નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/googlecalendar.pm:22
+msgid "googlecalendar failed to find url in html"
+msgstr "ગુગલકેલેન્ડરને htmlમાં યુઆરએલ મળ્યું નહી"
+
+#: ../IkiWiki/Plugin/inline.pm:37
+msgid "Must specify url to wiki with --url when using --rss or --atom"
+msgstr "--rss અથવા --atom ઉપયોગ કરતી વખતે વીકીમાં --url ઉપયોગ કરવું જ પડશે"
+
+#: ../IkiWiki/Plugin/inline.pm:97
+#, perl-format
+msgid "unknown sort type %s"
+msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
+
+#: ../IkiWiki/Plugin/inline.pm:370
+msgid "RPC::XML::Client not found, not pinging"
+msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
+
+#: ../IkiWiki/Plugin/linkmap.pm:99
+msgid "linkmap failed to run dot"
+msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/mdwn.pm:37
+#, perl-format
+msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
+msgstr "Markdown.pm પર્લ મોડ્યુલ (%s) અથવા /usr/bin/markdown (%s) લાવવામાં નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirrors"
+msgstr "મિરરો"
+
+#: ../IkiWiki/Plugin/mirrorlist.pm:23
+msgid "Mirror"
+msgstr "મિરર"
+
+#: ../IkiWiki/Plugin/openid.pm:36
+msgid "What's this?"
+msgstr "આ શું છે?"
+
+#: ../IkiWiki/Plugin/openid.pm:37
+msgid "Get an OpenID"
+msgstr "ઓપનઆઇડી મેળવો"
+
+#: ../IkiWiki/Plugin/orphans.pm:41
+msgid "All pages are linked to by other pages."
+msgstr "બધા પાનાંઓ બીજા પાનાંઓ વડે જોડાયેલ છે."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:104
+msgid "(use FirstnameLastName)"
+msgstr "(FirstnameLastName ઉપયોગ કરો)"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:144
+msgid "Account creation successful. Now you can Login."
+msgstr "ખાતું બનાવવાનું સફળ. તમે હવે લોગઇન કરી શકો છો."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:147
+msgid "Error creating account."
+msgstr "ખાતું બનાવવામાં ક્ષતિ."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:168
+msgid "Failed to send mail"
+msgstr "મેઇલ મોકલવામાં નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/passwordauth.pm:170
+msgid "Your password has been emailed to you."
+msgstr "તમારો પાસવર્ડ તમને ઇમેઇલ કરવામાં આવ્યો છે."
+
+#: ../IkiWiki/Plugin/poll.pm:64
+msgid "vote"
+msgstr "મત"
+
+#: ../IkiWiki/Plugin/poll.pm:72
+msgid "Total votes:"
+msgstr "કુલ મત:"
+
+#: ../IkiWiki/Plugin/polygen.pm:32
+msgid "polygen not installed"
+msgstr "પોલિગોન સ્થાપિત નથી"
+
+#: ../IkiWiki/Plugin/polygen.pm:51
+msgid "polygen failed"
+msgstr "પોલિગોન નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/search.pm:34
+#, perl-format
+msgid "Must specify %s when using the search plugin"
+msgstr "જ્યારે શોધ પ્લગઇન ઉપયોગ કરતા હોવ ત્યારે %s સ્પષ્ટ કરવું જ પડશે"
+
+#: ../IkiWiki/Plugin/search.pm:58
+msgid "cleaning hyperestraier search index"
+msgstr "હાયપરસ્ટ્રેઇઝર શોધ અનુક્રમણિકા સાફ કરે છે"
+
+#: ../IkiWiki/Plugin/search.pm:64
+msgid "updating hyperestraier search index"
+msgstr "હાયપરસ્ટ્રેઇઝર શોધ અનુક્રમણિકા સુધારે છે"
+
+#: ../IkiWiki/Plugin/shortcut.pm:24
+msgid "shortcut missing name or url parameter"
+msgstr "ટુંકોરસ્તો નામ અથવા યુઆરએલ વિકલ્પ ધરાવતો નથી"
+
+#. translators: This is used to display what shortcuts are defined.
+#. translators: First parameter is the name of the shortcut, the second
+#. translators: is an URL.
+#: ../IkiWiki/Plugin/shortcut.pm:33
+#, perl-format
+msgid "shortcut %s points to %s"
+msgstr "ટુંકોરસ્તો %s એ %s ને નિર્દેશ કરે છે"
+
+#: ../IkiWiki/Plugin/smiley.pm:22
+msgid "failed to parse any smileys, disabling plugin"
+msgstr "કોઇપણ સ્માઇલીઓ લાવવામાં નિષ્ફળ, પ્લગઇન અસક્રિય કરે છે"
+
+#: ../IkiWiki/Plugin/template.pm:19
+msgid "template missing id parameter"
+msgstr "ટેમ્પલેટને આઇડી વિકલ્પ મળતો નથી"
+
+#: ../IkiWiki/Plugin/template.pm:26
+#, perl-format
+msgid "template %s not found"
+msgstr "ટેમ્પલેટ %s મળ્યું નહી"
+
+#: ../IkiWiki/Plugin/template.pm:45
+msgid "template failed to process:"
+msgstr "ટેમ્પલેટ ક્રિયા કરવામાં નિષ્ફળ:"
+
+#: ../IkiWiki/Rcs/Stub.pm:66
+msgid "getctime not implemented"
+msgstr "getctime અમલમાં મૂકાયેલ નથી"
+
+#: ../IkiWiki/Rcs/svn.pm:206
+msgid ""
+"REV is not set, not running from svn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+"REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી "
+"શકાશે નહી"
+
+#: ../IkiWiki/Render.pm:98
+msgid "Discussion"
+msgstr "ચર્ચા"
+
+#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
+#, perl-format
+msgid "skipping bad filename %s"
+msgstr "ખરાબ ફાઇલ નામ છોડી દે છે %s"
+
+#: ../IkiWiki/Render.pm:288
+#, perl-format
+msgid "removing old page %s"
+msgstr "જુનાં પાનાં દૂર કરે છે %s"
+
+#: ../IkiWiki/Render.pm:307
+#, perl-format
+msgid "scanning %s"
+msgstr "%s શોધે છે"
+
+#: ../IkiWiki/Render.pm:316
+#, perl-format
+msgid "rendering %s"
+msgstr "રેન્ડર કરે છે %s"
+
+#: ../IkiWiki/Render.pm:328
+#, perl-format
+msgid "rendering %s, which links to %s"
+msgstr "રેન્ડર કરે છે %s, જે %s સાથે જોડાણ ધરાવે છે"
+
+#: ../IkiWiki/Render.pm:345
+#, perl-format
+msgid "rendering %s, which depends on %s"
+msgstr "રેન્ડર કરે છે %s, જે %s પર આધારિત છે"
+
+#: ../IkiWiki/Render.pm:383
+#, perl-format
+msgid "rendering %s, to update its backlinks"
+msgstr "રેન્ડર કરે છે %s, તેનાં પાછળનાં જોડાણો સુધારવા માટે"
+
+#: ../IkiWiki/Render.pm:395
+#, perl-format
+msgid "removing %s, no longer rendered by %s"
+msgstr "દૂર કરે છે %s, હવે %s વડે રેન્ડર કરાતું નથી"
+
+#: ../IkiWiki/Render.pm:421
+#, perl-format
+msgid "ikiwiki: cannot render %s"
+msgstr "ikiwiki: %s રેન્ડર કરી શકાતું નથી"
+
+#. translators: The first parameter is a filename, and the second
+#. translators: is a (probably not translated) error message.
+#: ../IkiWiki/Setup.pm:15
+#, perl-format
+msgid "cannot read %s: %s"
+msgstr "વાંચી શકાતી નથી %s: %s"
+
+#: ../IkiWiki/Setup/Standard.pm:32
+msgid "generating wrappers.."
+msgstr "આવરણ બનાવે છે.."
+
+#: ../IkiWiki/Setup/Standard.pm:68
+msgid "rebuilding wiki.."
+msgstr "વીકી ફરીથી બનાવે છે.."
+
+#: ../IkiWiki/Setup/Standard.pm:71
+msgid "refreshing wiki.."
+msgstr "વીકીને તાજી કરે છે.."
+
+#: ../IkiWiki/Setup/Standard.pm:80
+msgid "done"
+msgstr "સંપૂર્ણ"
+
+#. translators: The three variables are the name of the wiki,
+#. translators: A list of one or more pages that were changed,
+#. translators: And the name of the user making the change.
+#. translators: This is used as the subject of a commit email.
+#: ../IkiWiki/UserInfo.pm:139
+#, perl-format
+msgid "update of %s's %s by %s"
+msgstr "%s નો સુધારો %s નાં %s વડે"
+
+#: ../IkiWiki/Wrapper.pm:16
+#, perl-format
+msgid "%s doesn't seem to be executable"
+msgstr "%s એ ચલાવી શકાય તેમ લાગતું નથી"
+
+#: ../IkiWiki/Wrapper.pm:20
+msgid "cannot create a wrapper that uses a setup file"
+msgstr "ગોઠવણ ફાઇલનો ઉપયોગ કરે છે તેનું આવરણ બનાવી શકાતું નથી"
+
+#: ../IkiWiki/Wrapper.pm:24
+msgid "wrapper filename not specified"
+msgstr "આવરણ ફાઇલનામ સ્પષ્ટ કરેલ નથી"
+
+#. translators: The first parameter is a filename, and the second is
+#. translators: a (probably not translated) error message.
+#: ../IkiWiki/Wrapper.pm:64
+#, perl-format
+msgid "failed to write %s: %s"
+msgstr "%s લખવામાં નિષ્ફળ: %s"
+
+#. translators: The parameter is a C filename.
+#: ../IkiWiki/Wrapper.pm:100
+#, perl-format
+msgid "failed to compile %s"
+msgstr "%s કમ્પાઇલ કરવામાં નિષ્ફળ"
+
+#. translators: The parameter is a filename.
+#: ../IkiWiki/Wrapper.pm:108
+#, perl-format
+msgid "successfully generated %s"
+msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"
+
+#: ../ikiwiki.in:13
+msgid "usage: ikiwiki [options] source dest"
+msgstr "ઉપયોગ: ikiwiki [વિકલ્પો] source dest"
+
+#: ../IkiWiki.pm:99
+msgid "Must specify url to wiki with --url when using --cgi"
+msgstr "જ્યારે --cgi ઉપયોગ કરતાં હોય ત્યારે વીકીનું યુઆરએલ સ્પષ્ટ કરવું જ પડશે"
+
+#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
+msgid "Error"
+msgstr "ક્ષતિ"
+
+#. translators: The first parameter is a
+#. translators: preprocessor directive name,
+#. translators: the second a page name, the
+#. translators: third a number.
+#: ../IkiWiki.pm:524
+#, perl-format
+msgid "%s preprocessing loop detected on %s at depth %i"
+msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"
