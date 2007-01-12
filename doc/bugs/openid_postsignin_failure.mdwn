@@ -18,3 +18,8 @@ Crypt::DH, URI-Fetch. --Ethan
 > The url must not have a setting for openid.mode or openid_identifier in
 > it. So the OpenId plugin didn't know that it was trying to log in. I
 > think this points to an issue with the OpenID server. --[[Joey]]
+
+>> I put debugging output in openid.pm and it suggests that the 
+>> verification is taking place successfully. I see "openid.mode=id_res" 
+>> in the URI. On top of that, it's the same Openid server I use
+>> to sign in here on ikiwiki.kitenet.net. --Ethan
