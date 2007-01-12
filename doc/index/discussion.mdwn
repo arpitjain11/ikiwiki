@@ -313,17 +313,4 @@ in WWW browser tab than subscribing to page. --Pawel
 >> to setting refresh period. If it's not defined, then ikiwiki doesn't put
 >> refresh meta tag into `recentchanges.tmpl`. Do you like it? ;) --Pawel
 
-----
-
-# Fall back for templatedir
-
-It would be nice if you didn't have to copy all templates to your custom _templatedir_
-so you only have your customizations there.
-And then have it fall back to the location as configured at build time (like /usr/share/ikiwiki/templates/).
-This would be similar to _underlaydir_. I don't think any extra configuration directive is needed.
-As it is now, RecentChanges will have Perl CGI error and Preferences will be an empty page, if you don't have corresponding templates.
-I can quickly make a patch and submit to the patch queue. Any comments?
-
-> I'd probably accept a patch immediately. --[[Joey]]
-
->> at [[patchqueue/fallback_for_templates]] --reed
+>>> Seems reasonable --[[Joey]]
