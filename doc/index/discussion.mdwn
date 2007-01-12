@@ -85,40 +85,6 @@ easily, perl is possible (but I'm not strong in perl).
 
 ----
 
-# OpenID
-
-I just figured I'd edit something on the page with my OpenID, since you've implemented it! --*[Kyle](http://kitenet.net/~kyle/)*=
-
-> Kyle, If you like openid, I can switch your personal wiki over to use your openid. --[[Joey]]
-
----- 
-
-# ACL
-
-> Moved to [[todo/ACL]] --[[Joey]]
-
-----
-
-Some questions about the RecentChanges function. -- Ethan
-
-> (Moved to [[todo/recentchanges]] --[[Joey]])
-
-----
-
-Also, I'd like to request another template parameter which is just
-$config{url}. That way you won't have to hard-code the URL of the wiki into
-the template. -- Ethan
-
-> That's already available in the BASEURL parameter. --[[Joey]]
-
-----
-
-# Canonical feed location?
-
-Moved to [[todo/canonical_feed_location]] --[[Joey]]
-
-----
-
 # asciidoc or txt2tags ?
 
 Any plugins or support for using asciidoc or txt2tags as the wiki language and/or exporting to asciidoc or txt2tags?
@@ -184,12 +150,6 @@ Any setting for limiting how many kilobytes can be submitted via the "edit" form
 
 ----
 
-# Disable sub-discussion pages?
-
-Moved to [[bugs]] -- [[Joey]]
-
-----
-
 # Access Keys
 
 Would anyone else find this a valuable addition.  In oddmuse and instiki (the only other
@@ -226,16 +186,6 @@ Ok, that's my last 2 cents for a while. --[Mazirian](http://mazirian.com)
 >> well as the web, I suppose the features doesn't add a lot.  By the
 >> way, the w3m mode is brilliant.  I haven't tried it yet, but the idea
 >> is great.
-
-----
-
-# Disable build/install requirement on PerlMagick
-
-Some installs of PerlMagick require X11. I tried to first disable using "img" by using "--disable-plugin img"
-in the Makefile. But still failed. My workaround was to remove "img" from the bundle in IkiWiki/Plugin/goodstuff.pm
-before building. What is the recommended way to install ikiwiki without "img" support? --[[JeremyReed]]
-
-> I've fixed this in svn so plugins in goodstuff can be disabled. --[[Joey]]
 
 ----
 
@@ -276,6 +226,12 @@ or the path to the sub-page. I think this is handled by the htmllink() routine.
 >> a width of the RecentChanges page will be greater then a width of
 >> user's browser. I hate these pages. So I propose to display a list of
 >> changed pages in a column, not in a row. --Pawel
+
+>>> Well, it's a simple [[patch|patchqueue/full_paths_in_recentchanges]].
+>>> For a limited time I have that patch running on this wiki. Undecided if
+>>> I like it or not; the width is not really a problem due to the design
+>>> of the recentchanges page, but all those paths do clutter up the page
+>>> somewhat. Comments? --[[Joey]]
 
 ----
 
