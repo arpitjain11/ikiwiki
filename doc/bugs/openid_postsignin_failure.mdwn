@@ -1,0 +1,16 @@
+I tried enabling the openid plugin on my site. I tried to log in but got an 
+error when coming back to ikiwiki.cgi: "Error: unknown do parameter". I think
+this means that do=postsignin isn't handled by CGI.pm. 
+
+The URI in question is fairly long, but if you want me to add it here, I can do that.
+
+I didn't really know how to debug this so I grepped for "postsignin" in both 
+openid.pm and passwordauth.pm and found:
+
+    IkiWiki/Plugin/openid.pm:               return_to => IkiWiki::cgiurl(do => "postsignin"),
+    IkiWiki/Plugin/passwordauth.pm:                         IkiWiki::cgi_postsignin($cgi, $session);
+
+Am I barking up the wrong tree? Maybe I'm missing something obvious? 
+
+I'm running 1.38 of ikiwiki and the newest CGI::Session, Net::OpenID::Consumer, 
+Crypt::DH, URI-Fetch. --Ethan
