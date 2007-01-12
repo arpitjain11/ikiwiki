@@ -1,0 +1,172 @@
+This is my first cut at a feature like that requested in [[todo/Moving_Pages]]. In case it gets mangled you can find it on [my site](http://www.betacantrips.com//attic/move.patch).
+
+A bunch of obvious shortcomings exist: 
+
+* I'm not sure all the untaints are safe.
+* No precautions whatsoever are made to protect against race conditions or failures
+  in the rcs\_move function.
+* movepage.tmpl doesn't exist yet.
+* Some code is duplicated between cgi\_movepage and cgi\_editpage, as well
+  as rcs\_commit and rcs\_move.
+* The user interface is pretty lame -- there's no handy select list full 
+  of possible places to move it or anything.
+* I don't think I implemented cancelling.
+* from is redundant with page.
+* I don't think I called the right hook functions.
+* No redirect pages like those mentioned on [[todo/Moving_Pages]] exist yet, 
+  so none are created.
+* It's not possible to get there through the actions listed on the wiki page.
+  Instead you can select "Edit" and then change "edit" to "move" in the 
+  location bar.
+
+Anyhow, here's the patch, for whatever good it does.
+
+    diff -urx .svn ikiwiki/IkiWiki/CGI.pm ikiwiki-new/IkiWiki/CGI.pm
+    --- ikiwiki/IkiWiki/CGI.pm	2007-01-04 03:52:47.000000000 -0800
+    +++ ikiwiki-new/IkiWiki/CGI.pm	2007-01-11 18:49:37.000000000 -0800
+    @@ -523,6 +523,97 @@
+     	}
+     } #}}}
+     
+    +sub cgi_movepage($$) {
+    +	my $q = shift;
+    +	my $session = shift;
+    +	eval q{use CGI::FormBuilder};
+    +	error($@) if $@;
+    +	my @fields=qw(do from rcsinfo subpage page newname message); # subpage ignored so far
+    +	my @buttons=("Rename Page", "Cancel");
+    +
+    +	my $form = CGI::FormBuilder->new(
+    +		fields => \@fields,
+    +                header => 1,
+    +                charset => "utf-8",
+    +                method => 'POST',
+    +		action => $config{cgiurl},
+    +                template => (-e "$config{templatedir}/movepage.tmpl" ?
+    +			     {template_params("movepage.tpml")} : ""),
+    +	);
+    +	run_hooks(formbuilder_setup => sub {
+    +		shift->(form => $form, cgi => $q, session => $session);
+    +	});
+    +
+    +	decode_form_utf8($form);
+    +	
+    +	# This untaint is safe because if the page doesn't exist, bail.
+    +	my $page = $form->field('page');
+    +	$page = possibly_foolish_untaint($page);
+    +	if (! exists $pagesources{$page}) {
+    +		error("page does not exist");
+    +	}
+    +	my $file=$pagesources{$page};
+    +	my $type=pagetype($file);
+    +
+    +	my $from;
+    +	if (defined $form->field('from')) {
+    +		($from)=$form->field('from')=~/$config{wiki_file_regexp}/;
+    +	}
+    +	
+    +	$form->field(name => "do", type => 'hidden');
+    +	$form->field(name => "from", type => 'hidden');
+    +	$form->field(name => "rcsinfo", type => 'hidden');
+    +	$form->field(name => "subpage", type => 'hidden');
+    +	$form->field(name => "page", value => $page, force => 1);
+    +	$form->field(name => "newname", type => "text", size => 80);
+    +	$form->field(name => "message", type => "text", size => 80);
+    +
+    +	if (! $form->submitted) {
+    +		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+    +			     force => 1);
+    +	}
+    +
+    +	if ($form->submitted eq "Cancel") {
+    +		redirect($q, "$config{url}/".htmlpage($from));
+    +		return;
+    +	}
+    +		
+    +	if (! $form->submitted || $form->submitted eq "Preview" || 
+    +	    ! $form->validate) {
+    +		if ($form->field("do") eq "move"){
+    +			page_locked($page, $session);
+    +			$form->tmpl_param("page_select", 0);
+    +			$form->field(name => "page", type => 'hidden');
+    +			$form->field(name => "type", type => 'hidden');
+    +			$form->title(sprintf(gettext("moving %s"), pagetitle($page)));
+    +			if (! defined $form->field('newname') ||
+    +			    ! length $form->field('newname')) {
+    +				$form->field(name => "newname", 
+    +					     value => pagetitle($page), force => 1);
+    +			}
+    +
+    +		}
+    +		print $form->render(submit => \@buttons);
+    +	}
+    +	else{
+    +		# This untaint is safe because titlepage removes any problematic
+    +		# characters.
+    +		my ($newname)=$form->field('newname');
+    +		$newname=titlepage(possibly_foolish_untaint($newname));
+    +		if (! defined $newname || ! length $newname || file_pruned($newname, $config{srcdir}) || $newname=~/^\//) {
+    +			error("bad page name");
+    +		}
+    +		page_locked($page, $session);
+    +
+    +		my $newfile = $newname . ".$type";
+    +		my $message = $form->field('message');
+    +		unlockwiki();
+    +		rcs_move($file, $newfile, $message, $form->field("rcsinfo"), 
+    +			 $session->param("name"), $ENV{REMOTE_ADDR});
+    +		redirect($q, "$config{url}/".htmlpage($newname));
+    +	}
+    +}
+    +
+     sub cgi_getsession ($) { #{{{
+     	my $q=shift;
+     
+    @@ -631,6 +722,9 @@
+     	if ($do eq 'create' || $do eq 'edit') {
+     		cgi_editpage($q, $session);
+     	}
+    +	elsif ($do eq 'move') {
+    +		cgi_movepage($q, $session);
+    +	}
+     	elsif ($do eq 'prefs') {
+     		cgi_prefs($q, $session);
+     	}
+    diff -urx .svn ikiwiki/IkiWiki/Rcs/svn.pm ikiwiki-new/IkiWiki/Rcs/svn.pm
+    --- ikiwiki/IkiWiki/Rcs/svn.pm	2006-12-28 17:50:46.000000000 -0800
+    +++ ikiwiki-new/IkiWiki/Rcs/svn.pm	2007-01-11 18:14:30.000000000 -0800
+    @@ -60,6 +60,34 @@
+     	}
+     } #}}}
+     
+    +sub rcs_move ($$$$;$$) {
+    +	my $file=shift;
+    +	my $newname=shift;
+    +	my $message=shift;
+    +	my $rcstoken=shift;
+    +	my $user=shift;
+    +	my $ipaddr=shift;
+    +	if (defined $user) {
+    +		$message="web commit by $user".(length $message ? ": $message" : "");
+    +	}
+    +	elsif (defined $ipaddr) {
+    +		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+    +	}
+    +
+    +	chdir($config{srcdir}); # svn merge wants to be here
+    +
+    +	if (system("svn", "move", "--quiet", 
+    +		   "$file", "$newname") != 0) {
+    +		return 1;
+    +	}
+    +	if (system("svn", "commit", "--quiet", 
+    +		   "--encoding", "UTF-8", "-m",
+    +		   possibly_foolish_untaint($message)) != 0) {
+    +		return 1;
+    +	}
+    +	return undef # success
+    +}
+    +
+     sub rcs_commit ($$$;$$) { #{{{
+     	# Tries to commit the page; returns undef on _success_ and
+     	# a version of the page with the rcs's conflict markers on failure.
