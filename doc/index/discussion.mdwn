@@ -290,6 +290,11 @@ Clicking on an old "?" or going to a create link but new Markdown content exists
 >> Try at your site: `?page=discussion&from=index&do=create`
 >> It brings up an empty textarea to start a new webpage -- even though it already exists here. --reed
 
+>>> Ah, right. Notice that the resulting form allows saving the page as
+>>> discussion, or users/discussion, but not index/discussion, since this
+>>> page already exists. If all the pages existed, it would do the redirect
+>>> thing. --[[Joey]]
+
 ----
 
 # Refreshing RecentChanges page
