@@ -129,8 +129,7 @@ sub cgi_signin ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		header => 0,
-		template => (-e "$config{templatedir}/signin.tmpl" ?
-			     {template_params("signin.tmpl")} : ""),
+		template => scalar template_params("signin.tmpl"),
 		stylesheet => baseurl()."style.css",
 	);
 	my $buttons=["Login"];
@@ -198,8 +197,7 @@ sub cgi_prefs ($$) { #{{{
 		javascript => 0,
 		params => $q,
 		action => $config{cgiurl},
-		template => (-e "$config{templatedir}/prefs.tmpl" ?
-			     {template_params("prefs.tmpl")} : ""),
+		template => scalar template_params("prefs.tmpl"),
 		stylesheet => baseurl()."style.css",
 	);
 	my $buttons=["Save Preferences", "Logout", "Cancel"];
@@ -293,8 +291,7 @@ sub cgi_editpage ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		table => 0,
-		template => (-e "$config{templatedir}/editpage.tmpl" ?
-				{template_params("editpage.tmpl")} : ""),
+		template => scalar template_params("editpage.tmpl"),
 	);
 	
 	run_hooks(formbuilder_setup => sub {

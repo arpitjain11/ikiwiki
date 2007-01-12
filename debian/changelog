@@ -10,8 +10,11 @@ ikiwiki (1.39) UNRELEASED; urgency=low
   * Fix encoding issue with use of Locale::Gettext. Seems that the OO
     interface returns proper utf-8 decoded strings, unlike the traditional
     interface, so use the OO interface.
+  * Search in default location for templates as a fallback when templatedir is
+    pointed elsewhere, so that only modified templates need to be copied into
+    a templatedir. Based on work by JeremyReed.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 11 Jan 2007 18:59:49 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri, 12 Jan 2007 15:34:14 -0500
 
 ikiwiki (1.38) unstable; urgency=low
 

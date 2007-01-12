@@ -101,9 +101,10 @@ configuration options of their own.
 
 * --templatedir
 
-  Specify the directory that the page [[templates]] are stored in.
-  Default is `/usr/share/ikiwiki/templates`, or another location as
-  configured at build time.
+  Specify the directory that the page [[templates]] are stored in. Default
+  is `/usr/share/ikiwiki/templates`, or another location as configured at
+  build time. If the templatedir is changed, missing templates will still
+  be searched for in the default location as a fallback.
 
 * --underlaydir
 

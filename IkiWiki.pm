@@ -636,18 +636,35 @@ sub saveindex () { #{{{
 	close OUT;
 } #}}}
 
+sub template_file ($) { #{{{
+	my $template=shift;
+
+	foreach my $dir ($config{templatedir}, "$installdir/share/ikiwiki/templates") {
+		return "$dir/$template" if -e "$dir/$template";
+	}
+	return undef;
+} #}}}
+
 sub template_params (@) { #{{{
-	my $filename=shift;
-	
+	my $filename=template_file(shift);
+
+	if (! defined $filename) {
+		return if wantarray;
+		return "";
+	}
+
 	require HTML::Template;
-	return filter => sub {
+	my @ret=(
+		filter => sub {
 			my $text_ref = shift;
 			$$text_ref=&Encode::decode_utf8($$text_ref);
 		},
-		filename => "$config{templatedir}/$filename",
+		filename => $filename,
 		loop_context_vars => 1,
 		die_on_bad_params => 0,
-		@_;
+		@_
+	);
+	return wantarray ? @ret : {@ret};
 } #}}}
 
 sub template ($;@) { #{{{
