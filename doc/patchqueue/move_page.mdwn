@@ -21,6 +21,12 @@ A bunch of obvious shortcomings exist:
 
 Anyhow, here's the patch, for whatever good it does.
 
+> Looks like a good start, although I agree about many of the points above,
+> and also feel that something needs to be done about rcses that don't
+> implement a move operation -- falling back to an add and delete.
+> --[[Joey]]
+
+
     diff -urx .svn ikiwiki/IkiWiki/CGI.pm ikiwiki-new/IkiWiki/CGI.pm
     --- ikiwiki/IkiWiki/CGI.pm	2007-01-04 03:52:47.000000000 -0800
     +++ ikiwiki-new/IkiWiki/CGI.pm	2007-01-11 18:49:37.000000000 -0800
