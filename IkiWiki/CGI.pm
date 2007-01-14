@@ -92,7 +92,7 @@ sub cgi_recentchanges ($) { #{{{
 		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
 		$change->{pages} = [
 			map {
-				$_->{link} = htmllink("", "", $_->{page}, 1);
+				$_->{link} = htmllink("", "", $_->{page}, 1, 0, pagetitle($_->{page}));
 				$_;
 			} @{$change->{pages}}
 		];

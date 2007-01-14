@@ -197,21 +197,7 @@ The RecentChanges only shows the final file name for the recently changes file,
 for example "discussion". It would be more useful to see "index/discussion"
 or the path to the sub-page. I think this is handled by the htmllink() routine.
 
->> IMHO it's a good idea and I like it. Often I can see changes in
->> any discussion page, but I don't know without clicking the link
->> what discussion was changed.
-
->> However, I can see one problem here. You can commit via command line
->> changes in many pages. It will be displayed ugly then, because probably
->> a width of the RecentChanges page will be greater then a width of
->> user's browser. I hate these pages. So I propose to display a list of
->> changed pages in a column, not in a row. --Pawel
-
->>> Well, it's a simple [[patch|patchqueue/full_paths_in_recentchanges]].
->>> For a limited time I have that patch running on this wiki. Undecided if
->>> I like it or not; the width is not really a problem due to the design
->>> of the recentchanges page, but all those paths do clutter up the page
->>> somewhat. Comments? --[[Joey]]
+> Went ahead and did this, IMHO the display is ok as-is. --[[Joey]]
 
 ----
 
