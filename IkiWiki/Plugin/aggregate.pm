@@ -317,7 +317,7 @@ sub add_page (@) { #{{{
 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
 		if (defined $max && length(htmlpage($page)) >= $max) {
 			$c="";
-			$page="item";
+			$page=$feed->{dir}."/item";
 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
 			       -e pagefile($page.$c)) {
 				$c++
