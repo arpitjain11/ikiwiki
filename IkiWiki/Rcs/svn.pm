@@ -95,7 +95,7 @@ sub rcs_commit ($$$;$$) { #{{{
 		if (system("svn", "commit", "--quiet", 
 		           "--encoding", "UTF-8", "-m",
 		           possibly_foolish_untaint($message),
-			   "$config{srcdir}") != 0) {
+			   $config{srcdir}) != 0) {
 			my $conflict=readfile("$config{srcdir}/$file");
 			if (system("svn", "revert", "--quiet", "$config{srcdir}/$file") != 0) {
 				warn("svn revert failed\n");
