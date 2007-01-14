@@ -23,6 +23,20 @@ extra for missing pages).
 > memory to avoid re-rendering. I don't want ikiwiki to be slow or use
 > excessive amounts of memory. YMMV. --[[Joey]]
 
+>> Or you could disk cache the incomplete page containing only the body text,
+>> which should often not need re-rendering, as most alterations consist of
+>> changing the link targets exactly, and we can know pages that exist before
+>> rendering a single page. Then after backlinks have been resolved, it would
+>> suffice to feed this body text from the cache file to the template. However, e.g.
+>> the inline plugin would demand extra rendering after the depended-upon pages
+>> have been rendered, but these pages should usually not be that frequent, or
+>> contain that many other pages in full. (And for 'archive' pages we don't need
+>> to remember that much information from the semi-inlined pages.) It would help
+>> if you could get data structures instead of HTML text from the HTMLizer, and
+>> then simply cache these data structures in some quickly-loadeble form (that
+>> I suppose perl itself has support for). Regexp hacks are so ugly compared
+>> to actually parsing a properly-defined syntax...
+
 A related possibility would be to move a lot of "preprocessing" after HTML
 generation as well (thus avoiding some conflicts with the htmlifier), by
 using special tags for the preprocessor stuff. (The old preprocessor could
@@ -47,3 +61,5 @@ Other alternatives would be
 	\[[link bar]]
 
 	\[[link bar=VeryLongPageName]]
+
+>> This is, however, still missing specifying the link text, and adding that option would seem to me to complicate the plugin syntax a lot, unless support is added for the |-syntax for specifying a particular parameter to every plugin.
