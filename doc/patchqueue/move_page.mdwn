@@ -26,6 +26,21 @@ Anyhow, here's the patch, for whatever good it does.
 > implement a move operation -- falling back to an add and delete.
 > --[[Joey]]
 
+Hmm. Shouldn't that be done on a by-RCS basis, though? (i.e. implemented
+by backends in the `rcs_move` function)
+
+Also, how should ikiwiki react if a page is edited (say, by another user)
+before it is moved? Bail, or shrug and proceed?
+
+Could you elaborate on [[commit-internals]]? Can I assume that ikiwiki's 
+working copy W will always reflect a revision of the master copy M? 
+(That is, nobody changes W and leaves it uncommitted.) I would guess 
+probably not; a user probably expects that if he starts editing W it 
+won't get randomly committed by web user actions. But then looking at
+the svn backend, it looks like if I edit foo.mdwn, don't commit, and then
+a web user makes different changes, my changes get wiped out. So does
+W "belong" to ikiwiki? --Ethan
+
 
     diff -urx .svn ikiwiki/IkiWiki/CGI.pm ikiwiki-new/IkiWiki/CGI.pm
     --- ikiwiki/IkiWiki/CGI.pm	2007-01-04 03:52:47.000000000 -0800
