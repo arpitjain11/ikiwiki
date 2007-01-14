@@ -310,6 +310,20 @@ sub add_page (@) { #{{{
 		       -e pagefile($page.$c)) {
 			$c++
 		}
+
+		# Make sure that the file name isn't too long. 
+		# NB: This doesn't check for path length limits.
+		eval q{use POSIX};
+		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
+		if (defined $max && length(htmlpage($page)) >= $max) {
+			$c="";
+			$page="item";
+			while (exists $IkiWiki::pagecase{lc $page.$c} ||
+			       -e pagefile($page.$c)) {
+				$c++
+			}
+		}
+
 		$guid->{page}=$page;
 		debug(sprintf(gettext("creating new page %s"), $page));
 	}
