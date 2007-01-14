@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-12 15:56-0500\n"
+"POT-Creation-Date: 2007-01-13 23:24-0500\n"
 "PO-Revision-Date: 2007-01-03 09:37+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "Antes es necesario identificarse"
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "comentarios"
@@ -97,10 +97,10 @@ msgstr "¡ la entrada ha provocado un error fatal en XML::Feed!"
 
 #: ../IkiWiki/Plugin/aggregate.pm:273
 #, perl-format
-msgid "processed ok at "
-msgstr "proceso completado con éxito a "
+msgid "processed ok at %s"
+msgstr "proceso completado con éxito a %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:314
+#: ../IkiWiki/Plugin/aggregate.pm:328
 #, perl-format
 msgid "creating new page %s"
 msgstr "creando nueva página %s"
@@ -118,18 +118,18 @@ msgid "googlecalendar failed to find url in html"
 msgstr ""
 "El complemento googlecalendar no ha encontrado un URL en el código HTML"
 
-#: ../IkiWiki/Plugin/inline.pm:37
+#: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 "Es obligatorio indicar un url al wiki cuando se usan los parámetros --rss ó "
 "--atom"
 
-#: ../IkiWiki/Plugin/inline.pm:97
+#: ../IkiWiki/Plugin/inline.pm:96
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "no conozco este tipo de ordenación %s"
 
-#: ../IkiWiki/Plugin/inline.pm:370
+#: ../IkiWiki/Plugin/inline.pm:369
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 

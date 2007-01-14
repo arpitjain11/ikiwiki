@@ -270,7 +270,7 @@ sub aggregate () { #{{{
 			);
 		}
 
-		$feed->{message}=sprintf(gettext("processed ok at "),
+		$feed->{message}=sprintf(gettext("processed ok at %s"),
 			displaytime($feed->{lastupdate}));
 		$feed->{error}=0;
 	}

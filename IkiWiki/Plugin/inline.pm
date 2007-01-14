@@ -5,7 +5,6 @@ package IkiWiki::Plugin::inline;
 use warnings;
 use strict;
 use IkiWiki 1.00;
-use IkiWiki::Render; # for displaytime
 use URI;
 
 sub import { #{{{

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-12 15:56-0500\n"
+"POT-Creation-Date: 2007-01-13 23:24-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -32,7 +32,7 @@ msgstr "Първо трябва да влезете."
 msgid "Preferences saved."
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "дискусия"
@@ -98,10 +98,10 @@ msgstr "данните от източника предизвикаха греш
 
 #: ../IkiWiki/Plugin/aggregate.pm:273
 #, perl-format
-msgid "processed ok at "
-msgstr "е обработен нормално от "
+msgid "processed ok at %s"
+msgstr "е обработен нормално от %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:314
+#: ../IkiWiki/Plugin/aggregate.pm:328
 #, perl-format
 msgid "creating new page %s"
 msgstr "създаване на нова страницa „%s”"
@@ -118,18 +118,18 @@ msgstr "грешшка в приставката „fortune”"
 msgid "googlecalendar failed to find url in html"
 msgstr "приставката „googlecalendar” не намери URL в HTML-кода"
 
-#: ../IkiWiki/Plugin/inline.pm:37
+#: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 "Когато се използва „--rss” или „--atom” трябва да се укаже и "
 "местоположението на уикито посредством параметъра „--url”"
 
-#: ../IkiWiki/Plugin/inline.pm:97
+#: ../IkiWiki/Plugin/inline.pm:96
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "непознат вид сортиране „%s”"
 
-#: ../IkiWiki/Plugin/inline.pm:370
+#: ../IkiWiki/Plugin/inline.pm:369
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 

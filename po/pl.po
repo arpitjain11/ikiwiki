@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.37\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-12 15:56-0500\n"
+"POT-Creation-Date: 2007-01-13 23:24-0500\n"
 "PO-Revision-Date: 2007-01-05 16:33+100\n"
 "Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -33,7 +33,7 @@ msgstr "Konieczne jest zalogowanie się."
 msgid "Preferences saved."
 msgstr "Ustawienia zostały zapisane."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:162
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "dyskusja"
@@ -99,10 +99,10 @@ msgstr "awaria kanału RSS w module XML::Feed!"
 
 #: ../IkiWiki/Plugin/aggregate.pm:273
 #, perl-format
-msgid "processed ok at "
-msgstr "przetworzony kanał RSS w dniu "
+msgid "processed ok at %s"
+msgstr "przetworzony kanał RSS w dniu %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:314
+#: ../IkiWiki/Plugin/aggregate.pm:328
 #, perl-format
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
@@ -121,18 +121,18 @@ msgstr ""
 "awaria wtyczki googlecalendar z powodu nieodnalezionego adresu URL na "
 "stronie HTML"
 
-#: ../IkiWiki/Plugin/inline.pm:37
+#: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 "Użycie parametru --rss lub --atom wymaga podania adresu URL do wiki za "
 "pomocą parametru --url"
 
-#: ../IkiWiki/Plugin/inline.pm:97
+#: ../IkiWiki/Plugin/inline.pm:96
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "nieznany sposób sortowania %s"
 
-#: ../IkiWiki/Plugin/inline.pm:370
+#: ../IkiWiki/Plugin/inline.pm:369
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Niezainstalowany moduł RPC::XML::Client, brak możliwości pingowania"
 

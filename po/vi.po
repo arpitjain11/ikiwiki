@@ -3,10 +3,10 @@
 # Clytie Siddall <clytie@riverland.net.au>, 2007
 # 
 msgid ""
-""
-msgstr "Project-Id-Version: ikiwiki\n"
+msgstr ""
+"Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 15:32-0500\n"
+"POT-Creation-Date: 2007-01-13 23:24-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -16,42 +16,43 @@ msgstr "Project-Id-Version: ikiwiki\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
 
-#.translators: The first parameter is a page name,
-#.translators: second is the user who locked it.
+#. translators: The first parameter is a page name,
+#. translators: second is the user who locked it.
 #: ../IkiWiki/CGI.pm:51
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "%s bị %s khoá nên không thể sửa được"
 
-#: ../IkiWiki/CGI.pm:141
+#: ../IkiWiki/CGI.pm:140
 msgid "You need to log in first."
 msgstr "Trước tiên bạn cần phải đăng nhập."
 
-#: ../IkiWiki/CGI.pm:259
+#: ../IkiWiki/CGI.pm:257
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:410
-#: ../IkiWiki/Plugin/inline.pm:162
-#: ../IkiWiki/Render.pm:97
-#: ../IkiWiki/Render.pm:161
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:449
+#: ../IkiWiki/CGI.pm:446
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:466
-#: ../IkiWiki/CGI.pm:509
+#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:626
+#: ../IkiWiki/CGI.pm:623
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
+
+#: ../IkiWiki/CGI.pm:650
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
 #, perl-format
@@ -96,10 +97,10 @@ msgstr "nguồn tin đã gây ra XML::Feed sụp đổ."
 
 #: ../IkiWiki/Plugin/aggregate.pm:273
 #, perl-format
-msgid "processed ok at "
-msgstr "đã xử lý được ở "
+msgid "processed ok at %s"
+msgstr "đã xử lý được ở %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:314
+#: ../IkiWiki/Plugin/aggregate.pm:328
 #, perl-format
 msgid "creating new page %s"
 msgstr "đang tạo trang mới %s"
@@ -116,16 +117,18 @@ msgstr "fortune bị lỗi"
 msgid "googlecalendar failed to find url in html"
 msgstr "googlecalendar không tìm thấy địa chỉ URL trong mã HTML"
 
-#: ../IkiWiki/Plugin/inline.pm:37
+#: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
-msgstr "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --rss » hay « --atom »"
+msgstr ""
+"Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --rss » hay "
+"« --atom »"
 
-#: ../IkiWiki/Plugin/inline.pm:97
+#: ../IkiWiki/Plugin/inline.pm:96
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "kiểu sắp xếp không rõ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:370
+#: ../IkiWiki/Plugin/inline.pm:369
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 
@@ -211,9 +214,9 @@ msgstr "đang cập nhật chỉ mục tìm kiếm hyperestraier"
 msgid "shortcut missing name or url parameter"
 msgstr "lối tắt thiếu tên hay tham số url"
 
-#.translators: This is used to display what shortcuts are defined.
-#.translators: First parameter is the name of the shortcut, the second
-#.translators: is an URL.
+#. translators: This is used to display what shortcuts are defined.
+#. translators: First parameter is the name of the shortcut, the second
+#. translators: is an URL.
 #: ../IkiWiki/Plugin/shortcut.pm:33
 #, perl-format
 msgid "shortcut %s points to %s"
@@ -244,14 +247,14 @@ msgstr "chưa thực hiện getctime"
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
-msgstr "Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
+msgstr ""
+"Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
 
 #: ../IkiWiki/Render.pm:98
 msgid "Discussion"
 msgstr "Thảo luận"
 
-#: ../IkiWiki/Render.pm:228
-#: ../IkiWiki/Render.pm:248
+#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "đang bỏ qua tên tập tin sai %s"
@@ -296,8 +299,8 @@ msgstr "đang gỡ bỏ %s, không còn được vẽ lại bởi %s"
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: không thể vẽ %s"
 
-#.translators: The first parameter is a filename, and the second
-#.translators: is a (probably not translated) error message.
+#. translators: The first parameter is a filename, and the second
+#. translators: is a (probably not translated) error message.
 #: ../IkiWiki/Setup.pm:15
 #, perl-format
 msgid "cannot read %s: %s"
@@ -319,10 +322,10 @@ msgstr "đang làm tươi wiki.."
 msgid "done"
 msgstr "xong"
 
-#.translators: The three variables are the name of the wiki,
-#.translators: A list of one or more pages that were changed,
-#.translators: And the name of the user making the change.
-#.translators: This is used as the subject of a commit email.
+#. translators: The three variables are the name of the wiki,
+#. translators: A list of one or more pages that were changed,
+#. translators: And the name of the user making the change.
+#. translators: This is used as the subject of a commit email.
 #: ../IkiWiki/UserInfo.pm:139
 #, perl-format
 msgid "update of %s's %s by %s"
@@ -341,23 +344,23 @@ msgstr "không thể tạo bộ bao bọc sử dụng tập tin thiết lập"
 msgid "wrapper filename not specified"
 msgstr "chưa xác định tên tập tin bộ bao bọc"
 
-#.translators: The first parameter is a filename, and the second is
-#.translators: a (probably not translated) error message.
+#. translators: The first parameter is a filename, and the second is
+#. translators: a (probably not translated) error message.
 #: ../IkiWiki/Wrapper.pm:64
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "lỗi ghi %s: %s"
 
-#.translators: The parameter is a C filename.
+#. translators: The parameter is a C filename.
 #: ../IkiWiki/Wrapper.pm:100
 #, perl-format
 msgid "failed to compile %s"
 msgstr "lỗi biên dịch %s"
 
-#.translators: The parameter is a filename.
+#. translators: The parameter is a filename.
 #: ../IkiWiki/Wrapper.pm:108
-#, perl-format
-msgid "successfully generated %s\n"
+#, fuzzy, perl-format
+msgid "successfully generated %s"
 msgstr "%s đã được tạo ra\n"
 
 #: ../ikiwiki.in:13
@@ -366,17 +369,17 @@ msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 
 #: ../IkiWiki.pm:99
 msgid "Must specify url to wiki with --url when using --cgi"
-msgstr "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
+msgstr ""
+"Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:144
-#: ../IkiWiki.pm:145
+#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
 msgid "Error"
 msgstr "Lỗi"
 
-#.translators: The first parameter is a
-#.translators: preprocessor directive name,
-#.translators: the second a page name, the
-#.translators: third a number.
+#. translators: The first parameter is a
+#. translators: preprocessor directive name,
+#. translators: the second a page name, the
+#. translators: third a number.
 #: ../IkiWiki.pm:524
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
