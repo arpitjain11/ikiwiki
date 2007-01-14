@@ -63,8 +63,8 @@ sub pagetemplate (@) { #{{{
 		}, @{$tags{$page}}
 	]) if exists $tags{$page} && @{$tags{$page}} && $template->query(name => "tags");
 
-	if ($template->query(name => "pubdate")) {
-		# It's an rss template. Add any categories.
+	if ($template->query(name => "categories")) {
+		# It's an rss/atom template. Add any categories.
 		if (exists $tags{$page} && @{$tags{$page}}) {
 			$template->param(categories => [map { category => $_ }, @{$tags{$page}}]);
 		}
