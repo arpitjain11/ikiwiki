@@ -1,0 +1,18 @@
+I can't build my ikiwiki 1.40 backport for Debian 'sarge':
+
+    $ LANG=C dpkg-buildpackage -us -uc -rfakeroot
+    [...]
+    ./pm_filter /usr 1.40 /usr/share/perl5 <IkiWiki/Plugin/favicon.pm >blib/lib/IkiWiki/Plugin/favicon.pm
+    ./pm_filter /usr 1.40 /usr/share/perl5 <IkiWiki/Plugin/shortcut.pm >blib/lib/IkiWiki/Plugin/shortcut.pm
+    ./pm_filter /usr 1.40 /usr/share/perl5 <IkiWiki/Plugin/aggregate.pm >blib/lib/IkiWiki/Plugin/aggregate.pm
+    ./ikiwiki.in doc html --templatedir=templates --underlaydir=basewiki \
+    --wikiname="ikiwiki" --verbose --no-rcs \
+            --exclude=/discussion --no-discussion --userdir=users \
+            --plugin=goodstuff \
+            --plugin=haiku --plugin=polygen --plugin=fortune
+    Missing constant domain at IkiWiki.pm line 842
+    make[1]: *** [extra_build] Error 22
+    make[1]: Leaving directory `/home/ptecza/svn/ikiwiki'
+    make: *** [build-stamp] Error 2
+
+--Pawel
