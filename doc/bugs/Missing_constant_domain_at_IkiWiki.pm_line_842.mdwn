@@ -20,3 +20,9 @@ I can't build my ikiwiki 1.40 backport for Debian 'sarge':
 This is because of an old version of Locale::gettext which doesn't
 include the OO interface. I had this problem too, but installing a
 new version of Locale::gettext fixed it. --Ethan
+
+> I suppose I should document it needing a new enough version. Or find a
+> way to use the non-OO version while still getting proper UTF-8 strings,
+> which is why I began to use the OO version in the first place..
+> 
+> Looks like the OO interface was added in version 1.04 --[[Joey]]
