@@ -36,3 +36,7 @@ Did I do something stupid again or is this the case on your system too?
 Additional note: this doesn't happen when performing svn commits from another wc, 
 but *does* happen when committing from the web.
 --Ethan
+
+> Yeah, this makes sense now that you bring it up. Perhaps I should make
+> ikiwiki skip the update when called from the post-commit hook if the repo
+> is locked, although this could mask other problems.. --[[Joey]]
