@@ -40,3 +40,11 @@ but *does* happen when committing from the web.
 > Yeah, this makes sense now that you bring it up. Perhaps I should make
 > ikiwiki skip the update when called from the post-commit hook if the repo
 > is locked, although this could mask other problems.. --[[Joey]]
+
+>> I don't think it's (yet) a serious problem, because any commit to the repo
+>> either comes from another WC, in which case, no problem, or it is committed by 
+>> ikiwiki through its own WC, in which case that WC is "the newest". The only problem
+>> is that ikiwiki's rcs information for web commits gets screwed up. I think the
+>> correct fix is to call rcs_update from rcs_commit in svn.pm, if 
+>> the commit succeeds. I'm not sure whether this ought to happen for all RCSes
+>> or just svn. --Ethan
