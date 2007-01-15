@@ -1,0 +1,7 @@
+Extremely minor bug, but ikiwiki.setup has a line that reads:
+
+    #tagbase => "tag".
+
+At the end of this line is a period. I think it should read:
+
+    #tagbase => "tag",
