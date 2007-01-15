@@ -16,3 +16,7 @@ I can't build my ikiwiki 1.40 backport for Debian 'sarge':
     make: *** [build-stamp] Error 2
 
 --Pawel
+
+This is because of an old version of Locale::gettext which doesn't
+include the OO interface. I had this problem too, but installing a
+new version of Locale::gettext fixed it. --Ethan
