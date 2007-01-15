@@ -1,0 +1,34 @@
+In poking around at the svn backend I found that the svn post-commit 
+hook calls to svn update fail regularly with an error code of 256. 
+Apparently during the post-commit hook can't update because the 
+working copy is locked from the commit. Since the post-commit hook doesn't send
+errors anywhere and svn update runs with --quiet anyhow, this error
+isn't usually visible, but on my system:
+
+    ethan@sundance:~/tests/webtemplates/ikiwiki3/wc$ svn commit -m "Blah.."
+    Sending        index.mdwn
+    Transmitting file data .
+    Committed revision 3.
+
+    #verifying output was created
+    ethan@sundance:~/tests/webtemplates/ikiwiki3/wc$ less ../dest/index.html 
+
+    ethan@sundance:~/tests/webtemplates/ikiwiki3/wc$ svn info
+    Path: .
+    URL: file:///home/ethan/tests/webtemplates/ikiwiki3/svn/trunk
+    Repository Root: file:///home/ethan/tests/webtemplates/ikiwiki3/svn
+    Repository UUID: f42bb0d6-3c1e-0410-b2d4-aeaad48dd6c4
+    Revision: 2
+    Node Kind: directory
+    Schedule: normal
+    Last Changed Author: ethan
+    Last Changed Rev: 2
+    Last Changed Date: 2006-09-24 21:15:55 -0400 (Sun, 24 Sep 2006)
+
+A sample error message (obtained through file redirection) is:
+
+    svn: Working copy '.' locked
+    svn: run 'svn cleanup' to remove locks (type 'svn help cleanup' for details)
+
+Did I do something stupid again or is this the case on your system too? 
+--Ethan
