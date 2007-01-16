@@ -48,3 +48,6 @@ but *does* happen when committing from the web.
 >> correct fix is to call rcs_update from rcs_commit in svn.pm, if 
 >> the commit succeeds. I'm not sure whether this ought to happen for all RCSes
 >> or just svn. --Ethan
+
+>>> You say that the rcs information for web commits is screwed up .. how? 
+>>> Does this affect something that I'm not seeing? --[[Joey]]
