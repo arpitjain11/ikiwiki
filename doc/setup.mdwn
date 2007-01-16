@@ -95,7 +95,9 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    
    There's little that's ikiwiki specific about these instructions; this is
    just how you put a directory under revision control using the various
-   systems that ikiwiki supports.
+   systems that ikiwiki supports. Note that the .ikiwiki subdirectory is
+   where ikiwiki keeps its state, and should be preserved, but not checked
+   into revision control.
 
    [[toggle id=subversion text="Subversion"]]
    [[toggleable id=subversion text="""
@@ -117,6 +119,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    			cp -a $SRCDIR/* .
    			git add .
    			git commit -m "initial import" -a
+			mv $SRCDIR/.ikiwiki .
    			rm -rf $SRCDIR
    			git clone -l -s $REPOSITORY $SRCDIR
    """]]
@@ -138,7 +141,6 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    [[toggle id=mercurial text="Mercurial"]]
    [[toggleable id=mercurial text="""
 			REPOSITORY=$SRCDIR
-			rm -rf $SRCDIR/.ikiwiki # not for checkin
 			hg init $REPOSITORY
 			cd $REPOSITORY
 			hg add *
