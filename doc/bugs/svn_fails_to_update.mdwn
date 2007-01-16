@@ -51,3 +51,23 @@ but *does* happen when committing from the web.
 
 >>> You say that the rcs information for web commits is screwed up .. how? 
 >>> Does this affect something that I'm not seeing? --[[Joey]]
+
+I just meant that when you call ikiwiki.cgi?do=edit, it gets the 
+"current" RCS revision, and uses that in the merges later if there
+are other edits in the meantime. So I guess if you have a file a.mdwn,
+and at revision X it contains the list:
+
+    a
+    b
+    c
+    d
+
+And then one user edits it by removing "c" from web, and 
+then starts editing it again, ikiwiki.cgi will think the edit "started"
+at revision X (although it's really X+1). So if another user edits via
+web in the meantime, the subsequent merge will try to remove "c" again.
+To be honest I don't know what will happen in this case (svn merge fails?
+conflict markers?), but I'm pretty sure it's a problem. Anyhow, I think we 
+should call update manually after commit, I just don't know if this should
+be RCS-specific, or whether it's safe to update after commit on all RCSes.
+--Ethan
