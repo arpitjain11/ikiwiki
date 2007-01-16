@@ -3,3 +3,8 @@ Is there some magic way you can make the svn commands (and presumably commands f
 the other VCSs here) ignore the .ikiwiki directory during step 8, when they import it?
 If not, maybe a note should be made that the user should delete this file before 
 they import. --Ethan
+
+> No, .ikiwiki should not be versioned, and a svn:ignore of it is reasonable,
+> although probably too much noise for the setup instructions.
+> I've switched to a different method that preserves .ikiwiki, w/o checking
+> it in. --[[Joey]]

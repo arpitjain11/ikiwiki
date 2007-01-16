@@ -101,9 +101,11 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    [[toggleable id=subversion text="""
 			REPOSITORY=~/wikirepo
 			svnadmin create $REPOSITORY
-			svn import $SRCDIR file://$REPOSITORY/trunk -m "initial import"
-			rm -rf $SRCDIR
-			svn co file://$REPOSITORY/trunk $SRCDIR
+			svn mkdir file://$REPOSITORY/trunk -m "create trunk"
+			cd $SRCDIR
+			svn co file://$REPOSITORY/trunk .
+			svn add *
+			svn commit -m "initial import"
    """]]
    
    [[toggle id=git text="Git"]]
@@ -136,7 +138,11 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    [[toggle id=mercurial text="Mercurial"]]
    [[toggleable id=mercurial text="""
 			REPOSITORY=$SRCDIR
+			rm -rf $SRCDIR/.ikiwiki # not for checkin
 			hg init $REPOSITORY
+			cd $REPOSITORY
+			hg add *
+			hg commit -m "initial import"
    """]]
 
 9. Configure ikiwiki to use revision control.
