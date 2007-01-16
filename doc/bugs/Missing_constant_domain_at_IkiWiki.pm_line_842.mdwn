@@ -34,5 +34,9 @@ new version of Locale::gettext fixed it. --Ethan
 > made it not crash if run with an older version, though it also won't
 > gettext anything in that case. Might be a bit confusing if someone misses
 > the docs about it needing the newer version and wonders why gettext
-> doesn't work, but I consider it good enough to mark this [[bugs/done]. 
+> doesn't work, but I consider it good enough to mark this [[bugs/done]]. 
 > --[[Joey]]
+
+>> Thanks for the hint, guys! :) I've just backported liblocale-gettext-perl
+>> 1.05 package and it seems that now I can build my ikiwiki successfully
+>> and it even works :) --Pawel
