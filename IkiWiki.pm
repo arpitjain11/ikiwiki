@@ -838,8 +838,15 @@ sub gettext { #{{{
 	# Only use gettext in the rare cases it's needed.
 	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
 		if (! $gettext_obj) {
-			eval q{use Locale::gettext ''};
-			$gettext_obj=Locale::gettext->domain('ikiwiki');
+			$gettext_obj=eval q{
+				use Locale::gettext q{textdomain};
+				Locale::gettext->domain('ikiwiki')
+			};
+			if ($@) {
+				print STDERR "$@";
+				$gettext_obj=undef;
+				return shift;
+			}
 		}
 		return $gettext_obj->get(shift);
 	}

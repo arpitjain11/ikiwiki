@@ -25,4 +25,14 @@ new version of Locale::gettext fixed it. --Ethan
 > way to use the non-OO version while still getting proper UTF-8 strings,
 > which is why I began to use the OO version in the first place..
 > 
-> Looks like the OO interface was added in version 1.04 --[[Joey]]
+> Looks like the OO interface was added in version 1.04
+> 
+> And there's no good way to get utf-8 strings w/o the OO interface, that I
+> can see.
+> 
+> So, what I've done is documented that it needs Locale::gettext 1.04, and
+> made it not crash if run with an older version, though it also won't
+> gettext anything in that case. Might be a bit confusing if someone misses
+> the docs about it needing the newer version and wonders why gettext
+> doesn't work, but I consider it good enough to mark this [[bugs/done]. 
+> --[[Joey]]
