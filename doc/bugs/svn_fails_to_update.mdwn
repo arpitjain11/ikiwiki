@@ -71,3 +71,9 @@ conflict markers?), but I'm pretty sure it's a problem. Anyhow, I think we
 should call update manually after commit, I just don't know if this should
 be RCS-specific, or whether it's safe to update after commit on all RCSes.
 --Ethan
+
+Hmm, turns out that isn't the case! svn's prepedit function calls svn info 
+which gets the "right" information even when the WC isn't current. I am 
+having problems merging but that probably has nothing to do with this bug. 
+[This patch](http://ikidev.betacantrips.com/patches/update.patch) calls
+rcs_update after commit in CGI.pm, it might be a good idea anyhow. --Ethan
