@@ -12,3 +12,37 @@ I do want discussion subpage, but I don't want to have, for example: discussion/
 >>> and I can see "Dyskusja" link on my Polish "dyskusja" pages. --Pawel
 
 >>> Yes, I missed that string when internationalizing ikiwiki, fixed now.
+
+>>>> Thanks a lot for the quick fix, Joey! It works for me :)
+
+>>>> BTW, I had to apply the patch manually, because I have a problem
+>>>> with building ikiwiki 1.41 Debian package:
+
+>>>>        ptecza@devel2:~/svn/ikiwiki$ LANG=C dpkg-buildpackage -uc -us -rfakeroot
+>>>>        [...]
+>>>>        make[2]: Entering directory `/home/ptecza/svn/ikiwiki/po'
+>>>>        msgfmt -o bg.mo bg.po
+>>>>        msgfmt -o cs.mo cs.po
+>>>>        msgfmt -o es.mo es.po
+>>>>        msgfmt -o fr.mo fr.po
+>>>>        msgfmt -o gu.mo gu.po
+>>>>        msgfmt -o pl.mo pl.po
+>>>>        Merging ikiwiki.pot and sv.pomsgmerge: sv.po: warning: Charset missing in header.
+>>>>                                  Message conversion to user's charset will not work.
+>>>>        sv.po:10:2: parse error
+>>>>        sv.po:10: keyword "mine" unknown
+>>>>        sv.po:14: keyword "r2262" unknown
+>>>>        sv.po:37:2: parse error
+>>>>        sv.po:37: keyword "mine" unknown
+>>>>        sv.po:43: keyword "r2262" unknown
+>>>>        sv.po:52:2: parse error
+>>>>        sv.po:52: keyword "mine" unknown
+>>>>        sv.po:56: keyword "r2262" unknown
+>>>>        msgmerge: found 9 fatal errors
+>>>>        make[2]: *** [sv.po] Error 1
+>>>>        make[2]: Leaving directory `/home/ptecza/svn/ikiwiki/po'
+>>>>        make[1]: *** [extra_build] Error 2
+>>>>        make[1]: Leaving directory `/home/ptecza/svn/ikiwiki'
+>>>>        make: *** [build-stamp] Error 2
+
+>>>> I think you should be notified about it :) --Pawel
