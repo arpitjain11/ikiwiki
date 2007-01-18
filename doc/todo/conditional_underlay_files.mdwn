@@ -7,3 +7,5 @@ I'd like to see some way to include certain files from the underlay only when th
 * Include favicon.ico only if you enable the [[plugins/favicon]] plugin.
 * Include wikiicons/diff.png (and the wikiicons directory) only if you enable the CGI.
 * Include a hypothetical restructuredtexthelp.rst or similar for other formats only with those formats enabled.
+
+I can see two good ways to implement this.  Ideally, with [[conditional text based on ikiwiki features]] available, ikiwiki could parse a page like conditionalpages.mdwn, which could contain a set of conditional-wrapped page names; that seems like the most elegant and ikiwiki-like approach.  Alternatively, ikiwiki.setup could contain a Perl-generated exclude option by default; that would work, but it seems hackish.
