@@ -1,17 +1,43 @@
 Instead of having files foo.html "in front of" foo/, I prefer to have foo/index.html. This patch allows that. Specifically, foo/index.type is translated to $links{'foo/'}, and bestlink looks for either "foo" or "foo/" when linking to pages. There are other miscellaneous changes that go with that:
 
-1. backlinks from "foo/bar" to "foo/" trim common prefixes as long as there would be something left when the trimming is done (i.e. don't trim "foo/")
-2. parentlinks for "foo/" are the same as for "foo", except one directory higher
-3. rewrite parentlinks so that bestlink is called at each level
-4. basename("foo/") => basename("foo")
-5. links to "foo/" are translated to "foo/index.html" rather than "foo/.html". (Links to "foo/" might be preferred, but that causes an infinite loop in writefile, because apparently dirname("foo/") == "foo/" on my system for reasons that aren't clear to me.)
-6. pagetitle("foo/") => pagetitle("foo")
+1. change the `cgi_editpage` `@page_locs` code so that creating foo from a/b/c prefers a/b/foo and then a/b/c/foo, but if creating foo from a/b/c/, then prefer a/b/c/foo. I'm not really sure why the original was doing what it did (why trim terminal `/` if no pages end in `/`?), so this part might break something.
+2. backlinks from "foo/bar" to "foo/" trim common prefixes as long as there would be something left when the trimming is done (i.e. don't trim "foo/")
+3. parentlinks for "foo/" are the same as for "foo", except one directory higher
+4. rewrite parentlinks so that bestlink is called at each level
+5. basename("foo/") => basename("foo")
+6. links to "foo/" are translated to "foo/index.html" rather than "foo/.html". (Links to "foo/" might be preferred, but that causes an infinite loop in writefile, because apparently dirname("foo/") == "foo/" on my system for reasons that aren't clear to me.)
+7. pagetitle("foo/") => pagetitle("foo")
 
 In case whitespace gets garbled, I'm also leaving a copy of the patch on [my site](http://ikidev.betacantrips.com/patches/index.patch). It should apply cleanly to a freshly unpacked ikiwiki-1.40. You can also see it in action [here](http://ikidev.betacantrips.com/one/). --Ethan
 
-    diff -urx .svn ikiwiki/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
-    --- ikiwiki/IkiWiki/Render.pm	2007-01-11 15:01:51.000000000 -0800
-    +++ ikidev/IkiWiki/Render.pm	2007-01-15 18:38:34.000000000 -0800
+    diff -urx .svn -x doc -x '*.po' -x '*.pot' ikiclean/IkiWiki/CGI.pm ikidev/IkiWiki/CGI.pm
+    --- ikiclean/IkiWiki/CGI.pm	2007-01-17 22:11:41.794805000 -0800
+    +++ ikidev/IkiWiki/CGI.pm	2007-01-17 21:43:33.750363000 -0800
+    @@ -400,8 +400,8 @@
+     				@page_locs=$best_loc=$page;
+     			}
+     			else {
+    -				my $dir=$from."/";
+    -				$dir=~s![^/]+/+$!!;
+    +				my $dir=$from;
+    +				$dir=~s![^/]+$!!;
+     				
+     				if ((defined $form->field('subpage') && length $form->field('subpage')) ||
+     				    $page eq gettext('discussion')) {
+    @@ -412,7 +412,9 @@
+     				}
+     				
+     				push @page_locs, $dir.$page;
+    -				push @page_locs, "$from/$page";
+    +				if ($dir ne $from){ # i.e. $from not a directory
+    +					push @page_locs, "$from/$page";
+    +				}
+     				while (length $dir) {
+     					$dir=~s![^/]+/+$!!;
+     					push @page_locs, $dir.$page;
+    diff -urx .svn -x doc -x '*.po' -x '*.pot' ikiclean/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
+    --- ikiclean/IkiWiki/Render.pm	2007-01-11 15:01:51.000000000 -0800
+    +++ ikidev/IkiWiki/Render.pm	2007-01-17 22:25:13.526856000 -0800
     @@ -40,6 +40,7 @@
      		my $dir;
      		1 while (($dir)=$page_trimmed=~m!^([^/]+/)!) &&
@@ -41,9 +67,9 @@ In case whitespace gets garbled, I'm also leaving a copy of the patch on [my sit
      		}
      		else {
      			$skip=0;
-    diff -urx .svn ikiwiki/IkiWiki.pm ikidev/IkiWiki.pm
-    --- ikiwiki/IkiWiki.pm	2007-01-12 12:47:09.000000000 -0800
-    +++ ikidev/IkiWiki.pm	2007-01-15 16:56:58.000000000 -0800
+    diff -urx .svn -x doc -x '*.po' -x '*.pot' ikiclean/IkiWiki.pm ikidev/IkiWiki.pm
+    --- ikiclean/IkiWiki.pm	2007-01-12 12:47:09.000000000 -0800
+    +++ ikidev/IkiWiki.pm	2007-01-15 16:56:58.973680000 -0800
     @@ -185,6 +185,7 @@
      sub basename ($) { #{{{
      	my $file=shift;
