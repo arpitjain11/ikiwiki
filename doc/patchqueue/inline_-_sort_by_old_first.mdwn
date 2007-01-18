@@ -1,17 +1,19 @@
 Quick hack to be able to list old entries first :
 
---- inline.pm   2007-01-18 18:21:27.000000000 +0100
-+++ /usr/share/perl5/IkiWiki/Plugin/inline.pm   2007-01-18 18:23:01.000000000 +0100
-@@ -92,6 +92,9 @@
-        elsif (! exists $params{sort} || $params{sort} eq 'age') {
-                @list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
-        }
-+       elsif (! exists $params{sort} || $params{sort} eq 'old') {
-+               @list=sort { $pagectime{$a} <=> $pagectime{$b} } @list;
-+       }
-        else {
-                return sprintf(gettext("unknown sort type %s"), $params{sort});
-        }
+    
+    --- inline.pm   2007-01-18 18:21:27.000000000 +0100
+    +++ /usr/share/perl5/IkiWiki/Plugin/inline.pm   2007-01-18 18:23:01.000000000 +0100
+    @@ -92,6 +92,9 @@
+            elsif (! exists $params{sort} || $params{sort} eq 'age') {
+                    @list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+            }
+    +       elsif (! exists $params{sort} || $params{sort} eq 'old') {
+    +               @list=sort { $pagectime{$a} <=> $pagectime{$b} } @list;
+    +       }
+            else {
+                    return sprintf(gettext("unknown sort type %s"), $params{sort});
+            }
+    
 
 this patch adds a new type of sort "old".
 
