@@ -63,3 +63,10 @@ Other alternatives would be
 	\[[link bar=VeryLongPageName]]
 
 >> This is, however, still missing specifying the link text, and adding that option would seem to me to complicate the plugin syntax a lot, unless support is added for the |-syntax for specifying a particular parameter to every plugin.
+
+>> ... Returning to this, the syntax infact wouldn't be so bad with the |-syntax, given a short name for the plugin:
+
+       [[whatever|ref 1]]
+       \[[ref 1=page_with_long_name]]
+
+>> It also shouldn't be difficult to support non-wiki links in this same way, so that you could still link everywhere in an uniform manner, as the (still preferred by me) HTML processing approach would provide. Perhaps a plugin call wouldn't even be necessary for the links themselves: what about aliases for the normal link mechanism? Although the 'ref' call may infact be cleaner, and adding that |-syntax for plugins could offer other possibilities for other plugins.
