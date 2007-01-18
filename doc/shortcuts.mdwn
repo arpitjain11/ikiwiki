@@ -1,0 +1,14 @@
+This page controls what shortcut links the wiki supports.
+
+* [[shortcut name=google url="http://www.google.com/search?q=%s"]]
+* [[shortcut name=wikipedia url="http://en.wikipedia.org/wiki/%s"]]
+* [[shortcut name=debbug url="http://bugs.debian.org/%s" desc="bug #%s"]]
+* [[shortcut name=deblist url="http://lists.debian.org/debian-%s" desc="debian-%s@lists.debian.org"]]
+* [[shortcut name=debpkg url="http://packages.debian.org/%s"]]
+* [[shortcut name=fdobug url="https://bugs.freedesktop.org/show_bug.cgi?id=%s" desc="freedesktop.org bug #%s"]]
+* [[shortcut name=cpan url="http://search.cpan.org/search?mode=dist&query=%s"]]
+* [[shortcut name=iki url="http://ikiwiki.kitenet.net/%s.html"]]
+
+To add a new shortcut, use the "shortcut" preprocessor directive. "%s" is
+replaced with the text passed to the named shortcut. The optional desc
+parameter controls the description of the link.
