@@ -1,0 +1,9 @@
+I'd like to see some way to include certain files from the underlay only when the wiki has certain plugins enabled.  For example:
+
+* Only include smileys.mdwn and the smileys subdirectory if you enable the [[plugins/smiley]] plugin.
+* Only include openid.mdwn if you enable the [[plugins/openid]] plugin.
+* Include shortcuts.mdwn only if you enable the [[plugins/shortcut]] plugin.
+* Include blog.mdwn only if you don't disable the [[plugins/inline]] plugin.
+* Include favicon.ico only if you enable the [[plugins/favicon]] plugin.
+* Include wikiicons/diff.png (and the wikiicons directory) only if you enable the CGI.
+* Include a hypothetical restructuredtexthelp.rst or similar for other formats only with those formats enabled.
