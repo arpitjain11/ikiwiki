@@ -1,0 +1,16 @@
+I'd like to see some way to conditionally include wiki text based on whether the wiki enables or disables certain features.  For example, [[helponformatting]], could use `\[[if (enabled smiley) """Also, because this wiki has the smiley plugin enabled, you can insert \[[smileys]] and some other useful symbols."""]]`, and a standard template for [[plugins]] pages could check for the given plugin name to print "enabled" or "disabled".
+
+Some potentially useful conditionals:
+
+* `enabled pluginname`
+* `disabled pluginname`
+* `any pagespec`: true if any of the pages in the [[PageSpec]] exist
+* `all pagespec`: true if all of the pages in the [[PageSpec]] exist
+* `no pagespec` or `none pagespec`: true if none of the pages in the [[PageSpec]] exist
+* `thispage pagespec`: true if pagespec includes the page getting rendered (possibly one including the page with this content on it).
+* `sourcepage pagespec`: true if pagespec includes the page corresponding to the file actually containing this content, rather than a page including it.
+* `included`: true if included on another page, via [[plugins/inline]], [[plugins/sidebar]], [[plugins/contrib/navbar]], etc.
+
+You may or may not want to include boolean operations (`and`, `or`, and `not`); if you do, you could replace `disabled` with `not enabled`, and `no pagespec` or `none pagespec` with `not any pagespec` (but you may want to keep the aliases for simplicity anyway).  You also may or may not want to include an `else` clause; if so, you could label the text used if true as `then`.
+
+Syntax could vary greatly here, both for the [[PreprocessorDirective]] and for the condition itself.
