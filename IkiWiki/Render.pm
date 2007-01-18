@@ -93,10 +93,14 @@ sub genpage ($$$) { #{{{
 		$template->param(historyurl => $u);
 		$actions++;
 	}
-	if ($config{discussion} && $page !~ /.*\/discussion$/ &&
-	    (length $config{cgiurl} || exists $links{$page."/".gettext("discussion")})) {
-		$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), 1, 1));
-		$actions++;
+	if ($config{discussion}) {
+		my $discussionlink=gettext("discussion");
+		if ($page !~ /.*\/\Q$discussionlink\E$/ &&
+		   (length $config{cgiurl} ||
+		    exists $links{$page."/".$discussionlink})) {
+			$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), 1, 1));
+			$actions++;
+		}
 	}
 
 	if ($actions) {

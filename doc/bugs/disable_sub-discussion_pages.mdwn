@@ -4,13 +4,11 @@ I do want discussion subpage, but I don't want to have, for example: discussion/
 -- [[JeremyReed]]
 
 > Discussion pages should clearly be a special case that don't get Discussion
-> links put at the top... aaand.. [[done]]! --[[Joey]]
+> links put at the top... aaand.. [[bugs/done]]! --[[Joey]]
 
 >>> Joey, I've just seen that you closed that bug in ikiwiki 1.37, but it seems
 >>> you fixed it only for English "discussion" page. The bug still occurs
 >>> for the international "discussion" pages. I have backported ikiwiki 1.40
 >>> and I can see "Dyskusja" link on my Polish "dyskusja" pages. --Pawel
 
->>> I'm so sorry for two commits, but first I clicked "Save Page" button
->>> and next I clicked "Cancel" button, because I forgot about my signature :)
->>> --Pawel
+>>> Yes, I missed that string when internationalizing ikiwiki, fixed now.
