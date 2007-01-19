@@ -29,9 +29,26 @@ size of the header:
 ## ## h2
 ### ### h3
 #### #### h4
+##### ##### h5
+###### ###### h6
 
-To create a horizontal rule, just write three or more dashes on their own
-line:
+You can also make the first two levels of heading by underlining text with
+equals or dash:
+
+heading 1
+=========
+
+    heading 1
+    =========
+
+heading 2
+---------
+
+    heading 2
+    ---------
+
+To create a horizontal rule, just write three or more dashes or stars on
+their own line:
 
 ----
 
@@ -53,8 +70,7 @@ To link to any other web page, or to an email address, you can just put the url 
 
 ----
 
-Advanced users can use [[PreProcessorDirective]]s to do additional cool
-stuff.
+You can also use [[PreProcessorDirective]]s to do additional cool stuff.
 
 Also, if the smiley plugin is enabled in your wiki, you can insert
 [[smileys]] and some other useful symbols.
