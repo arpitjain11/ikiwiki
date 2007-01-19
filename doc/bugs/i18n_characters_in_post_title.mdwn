@@ -2,3 +2,9 @@ It seems that I can't use Polish characters in post title.
 When I try to do it, then I can see error message: "Błąd: bad page name".
 
 I hope it's a bug, not a feature and you fix it soon :) --Pawel
+
+> ikiwiki only allows a very limited set of characters raw in page names,
+> this is done as a deny-by-default security thing. All other characters
+> need to be encoded in __code__ format, where "code" is the character
+> number. This is normally done for you, but if you're adding a page
+> manually, you need to handle it yourself. --[[Joey]]
