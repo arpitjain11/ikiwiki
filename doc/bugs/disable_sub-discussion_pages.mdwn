@@ -48,3 +48,10 @@ I do want discussion subpage, but I don't want to have, for example: discussion/
 >>>> I think you should be notified about it :) --Pawel
 
 >>>>> You have an unresolved svn conflict in some files in po, looks like.
+
+>>>>>> Thanks for the hint! You're absolutely right again, Joey! It's because of
+>>>>>> I always do `svn up` command (for CVS repo `cvs up` is enough :) )
+>>>>>> and I never use `svn status` command. Yes, now I know I should do it :)
+
+>>>>>> First I removed conflicting `sv.po` file and next I updated it and
+>>>>>> it has resolved the problem. --Pawel
