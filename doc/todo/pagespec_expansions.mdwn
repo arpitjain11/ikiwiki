@@ -1,0 +1,9 @@
+A couple of suggestions for improving the usefulness of pagespecs:
+
+* @ to match [^/]* (i.e. all pages exactly one level below this one)
+* initial ./ to mean "from the page the pagespec is running from".
+  This would require some architectural changes and a change to the
+  interface for pagespec_match. What do you think? I have
+  lots of pages a/b/c.mdwn that inline "a/b/c/*".
+
+--Ethan
