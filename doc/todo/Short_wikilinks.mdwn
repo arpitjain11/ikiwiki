@@ -64,9 +64,26 @@ Other alternatives would be
 
 >> This is, however, still missing specifying the link text, and adding that option would seem to me to complicate the plugin syntax a lot, unless support is added for the |-syntax for specifying a particular parameter to every plugin.
 
+>>> Well, the link text in my example above is "bar". It's true that if
+>>> you want to use the same link text for multiple distinct links, or
+>>> different link texts for the same link, this is missing a useful layer of
+>>> indirection; it's optimised for the (probably) more common case. It
+>>> could be done as a degenerate form of the syntax I propose below, BTW.
+>>> --[[Joey]]
+
 >> ... Returning to this, the syntax infact wouldn't be so bad with the |-syntax, given a short name for the plugin:
 
        [[whatever|ref 1]]
        \[[ref 1=page_with_long_name]]
 
+>>> A way to do this that doesn't need hacking at the preprocessor syntax
+>>> follows: --[[Joey]]
+
+	\[[link bar=1]]
+	\[[dest 1=page_with_long_name]]
+
 >> It also shouldn't be difficult to support non-wiki links in this same way, so that you could still link everywhere in an uniform manner, as the (still preferred by me) HTML processing approach would provide. Perhaps a plugin call wouldn't even be necessary for the links themselves: what about aliases for the normal link mechanism? Although the 'ref' call may infact be cleaner, and adding that |-syntax for plugins could offer other possibilities for other plugins.
+
+>>> I agree, it should be easy to make it support non-wiki links too.
+>>> We seem to have converged at something we can both live with that's
+>>> reasonable to implement.. --[[Joey]]
