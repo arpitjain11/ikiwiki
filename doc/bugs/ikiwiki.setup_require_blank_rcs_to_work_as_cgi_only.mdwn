@@ -10,6 +10,11 @@ I had to setup explicitely rcs => "" to force it to work the way I wanted.
 
 Should it be documented ?
 
+>> `rcs => ""` is only needed with ikiwiki before version 1.37. As of 1.37,
+>> you have to manually enable a `rcs => "svn"` etc to get it to use a
+>> revision control system. So no, I don't need to document the `rcs => ""`
+>> thing. --[[Joey]]
+
 > after some tests, the main trouble with this setup is that it won't make the "svn add" for the new files.
 > I wonder what should be the setup if I want to use ikiwiki off line on the laptop and then commit back the changes, 
 > without having to take care of the new files before svn commit-ting...
@@ -26,3 +31,13 @@ Should it be documented ?
 >>> But, yes, someone told me about git, which seems to allow what you are describing. In fact, my needs are typically
 >>> that I want to have 2 ikiwiki web-frontend on two (or more) different machines, with one machine sometimes off-line.
 >>> Imagine a team of auditor that want to report and collaborate on a wiki, but are not allways connected.
+
+>>>> I don't use svk, I just let the ikwiki on my laptop update a source
+>>>> directory that's a subversion checkout, and I manually commit changes
+>>>> back to the central wiki using svn. Yes, this does include manually
+>>>> adding new files. It would be possible to hack the svn module so that it
+>>>> added new files, but did not ever try to commit. Maybe call that a halfsvn
+>>>> module or something.
+>>>>
+>>>> Of course git may be a better fit. It would also be possible to add
+>>>> svk support to ikiwiki, although I've not done it yet. --[[Joey]]
