@@ -9,6 +9,8 @@ Note that for more formal bug reports or todo items, you can also edit the
 
 # Installation/Setup questions
 
+I ran into a problem when installing from svn.  I got "invalid variable interpolation" errors for Wrappers.pm.  I added the flag '--extract-all' to 'po/Makefile' and 'po/t' to the xgettext line.  Once I did that I was able to make and make test just fine.
+ 
 I have just installed ikiwiki and it works - at least I have the example index.mdwn page
 compiled and visible.  However I have a few issues/problems:-
 
