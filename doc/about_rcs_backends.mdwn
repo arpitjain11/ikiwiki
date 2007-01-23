@@ -103,6 +103,8 @@ by Ikiwiki.
 This approach might be applicable to other distributed VCSs as well, although they're not as oriented
 towards transmitting changes with standalone patch bundles (often by email) as darcs is.
 
+> The mercurial plugin seems to just use one repo and edit it directly - is there some reason that's okay there but not for darcs? I agree with tuomov that having just the one repo would be preferable; the point of a dvcs is that there's no difference between one repo and another. I've got a darcs.pm based on mercurial.pm, that's almost usable... --bma
+
 ## [[Git]]
 
 Regarding the Git support, Recai says:
