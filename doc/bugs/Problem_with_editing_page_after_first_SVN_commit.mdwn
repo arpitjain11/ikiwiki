@@ -123,3 +123,15 @@ Where is my mistake?
 
 >>>>>>>>>> Thanks! But I have another situation: a multiuser system and a few
 >>>>>>>>>> ikiwiki commiters. --Pawel
+
+>>>>>>>>>>> Joey, I think I've just fixed the permission, but my ikiwiki still
+>>>>>>>>>>> doesn't update my `.ikiwiki/index` file. Could you please explain me
+>>>>>>>>>>> when ikiwiki calls `saveindex()` subroutine? My ikiwiki doesn't do it
+>>>>>>>>>>> when I create a new page and save it or when I update and save
+>>>>>>>>>>> a existing page. It does it only when I run
+>>>>>>>>>>> `ikiwiki --setup ikiwiki.setup` and I'm desperated...
+
+>>>>>>>>>>> BTW, where should I store my `ikiwiki.setup` file? It must be placed
+>>>>>>>>>>> under `$srcdir/.ikiwiki/` directory or it doesn't matter?
+>>>>>>>>>>> Does `ikiwiki.cgi` wrapper know where the `ikiwiki.setup` file
+>>>>>>>>>>> is stored? --Pawel
