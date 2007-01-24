@@ -4,3 +4,8 @@ I'd like the ability to use a shortcut, but declare an explicit link text rather
 > [XML Schema for the X Window System protocol](src/xcb.xsd)
 >
 > If I don't understand this, can you give an HTML example? --[[JeremyReed]]
+
+>> The problem is like that in [[bugs/shortcuts_don't_escape_from_Markdown]]. We would like to use 
+>> the shortcuts plugin but add a descriptive text -- in this case \[[xcbgit src/xcb.xsd|XML Schema...]]
+>> The file src/xcb.xsd could be any url, and the point of shortcuts is that you get to shorten it.
+>> --Ethan
