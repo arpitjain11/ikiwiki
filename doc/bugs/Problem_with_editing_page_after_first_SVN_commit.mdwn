@@ -135,3 +135,14 @@ Where is my mistake?
 >>>>>>>>>>> under `$srcdir/.ikiwiki/` directory or it doesn't matter?
 >>>>>>>>>>> Does `ikiwiki.cgi` wrapper know where the `ikiwiki.setup` file
 >>>>>>>>>>> is stored? --Pawel
+
+Sorry I am not indenting for my reply (in my browser the responses are very narrow.)
+
+I also had problem with no webpages getting generated via the CGI unless I ran ikiwiki to regen manually.
+I can't find the discussion here about in the ikiwiki website though. I think it was removed and now I can't find it in the history.
+My problem was caused by not having a revision system defined, so it defaulted to subversion (but I didn't have that installed).
+
+As for your .setup file you can put it anywhere. I don't  think the CGI knows where it is at because its settings are set in the "wrapper".
+In my case, my setup file is in a different home and owned by a different user than the CGI or my generated website. By the way, I also don't keep my .ikiwiki private directory in my source directory by setting wikistatedir (which doesn't seem to be documented).
+
+--[[JeremyReed]]
