@@ -146,3 +146,47 @@ As for your .setup file you can put it anywhere. I don't  think the CGI knows wh
 In my case, my setup file is in a different home and owned by a different user than the CGI or my generated website. By the way, I also don't keep my .ikiwiki private directory in my source directory by setting wikistatedir (which doesn't seem to be documented).
 
 --[[JeremyReed]]
+
+> Never mind about indentation, Jeremy! :) Thanks a lot you're interested in
+> my problem and you try to help me.
+
+> I use RCS backend and store my ikiwiki sources in SVN repo. Here is my SVN
+> related settings:
+>
+>        rcs => "svn",
+>        svnrepo => "/var/lib/svn/ikiwiki",
+>        svnpath => "trunk/pages",
+>
+> I've noticed the following piece of code in `/usr/share/perl5/IkiWiki/CGI.pm`
+> file (`cgi_editpage()` subroutine):
+>
+>        # save page
+>        page_locked($page, $session);
+>
+>        my $content=$form->field('editcontent');
+>
+>        $content=~s/\r\n/\n/g;
+>        $content=~s/\r/\n/g;
+>        writefile($file, $config{srcdir}, $content);
+>
+>        if ($config{rcs}) {
+>                # Here is RCS stuff
+>                # ...
+>        }
+>        else {
+>                require IkiWiki::Render;
+>                refresh();
+>                saveindex();
+>        }
+>
+>        # The trailing question mark tries to avoid broken
+>        # caches and get the most recent version of the page.
+>        redirect($q, "$config{url}/".htmlpage($page)."?updated");
+>
+> As you can see ikiwiki calls `saveindex()` subroutine if `rcs` variable
+> is not defined. I don't understand it, because in this way ikiwiki
+> doesn't update my `.ikiwiki/index` file. Joey, could you please
+> enlight me here ;)
+>
+> BTW, I also noticed `wikistatedir` variable in the ikiwiki code
+> and I couldn't find any information about it in ikiwiki docs :) --Pawel
