@@ -1,4 +1,9 @@
-I'd like the ability to use a shortcut, but declare an explicit link text rather than using the link text defined on [[/shortcuts]].  For example, if I create a shortcut "xcbgit" pointing to files in an XCB gitweb repository, I don't always want to use the path to the file as the link text; I would like to src/xcb.xsd, but use the link text "XML Schema for the X Window System protocol".
+I'd like the ability to use a shortcut, but declare an explicit link text
+rather than using the link text defined on [[/shortcuts]].  For example, if I
+create a shortcut `protogit` pointing to files in the xcb/proto.git gitweb
+repository, I don't always want to use the path to the file as the link text;
+I would like to src/xcb.xsd, but use the link text "XML Schema for the X
+Window System protocol".  --[[JoshTriplett]]
 
 > If I understand you correctly, you can use Markdown \[your link text\]\(the path or URL\) . Using your example:
 > [XML Schema for the X Window System protocol](src/xcb.xsd)
@@ -9,3 +14,20 @@ I'd like the ability to use a shortcut, but declare an explicit link text rather
 >> the shortcuts plugin but add a descriptive text -- in this case \[[xcbgit src/xcb.xsd|XML Schema...]]
 >> The file src/xcb.xsd could be any url, and the point of shortcuts is that you get to shorten it.
 >> --Ethan
+
+>>> Some clarifications:
+>>> You can always write something like
+>>> `[XML Schema for the X Window System Protocol](http://gitweb.freedesktop.org/?p=xcb/proto.git;a=blob;hb=HEAD;f=src/xcb.xsd)`
+>>> to get [XML Schema for the X Window System Protocol](http://gitweb.freedesktop.org/?p=xcb/proto.git;a=blob;hb=HEAD;f=src/xcb.xsd).
+>>> However, I want to define a [[plugins/shortcut]] to save the typing.  If I
+>>> define something like `protogit` pointing to
+>>> `http://gitweb.freedesktop.org/?p=xcb/proto.git;a=blob;hb=HEAD;f=%s`, then
+>>> I can write `\[[protogit src/xcb.xsd]]`; however, I then can't change the
+>>> link text to anything other than what the shortcut defines as the link
+>>> text. I want to write something like
+>>> `\[[XML Schema for the X Window System Protocol|protogit src/xcb.xsd]]`,
+>>> just as I would write a wikilink like
+>>> `\[[the_shortcuts_on_this_wiki|shortcuts]]` to get
+>>> [[the_shortcuts_on_this_wiki|shortcuts]]. (The order you suggest, with the
+>>> preprocessor directive first, seems quite confusing since wikilinks work
+>>> the other way around.) --[[JoshTriplett]]
