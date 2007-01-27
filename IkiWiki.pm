@@ -56,6 +56,8 @@ sub defaultconfig () { #{{{
 	wrappermode => undef,
 	svnrepo => undef,
 	svnpath => "trunk",
+	gitorigin_branch => "origin",
+	gitmaster_branch => "master",
 	srcdir => undef,
 	destdir => undef,
 	pingurl => [],

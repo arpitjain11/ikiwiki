@@ -8,8 +8,6 @@ use open qw{:utf8 :std};
 
 package IkiWiki;
 
-my $origin_branch    = 'origin';            # Git ref for main repository
-my $master_branch    = 'master';            # working branch
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 
@@ -112,8 +110,8 @@ sub _merge_past ($$$) { #{{{
 
 		# Switch to throw-away branch for the merge operation.
 		push @undo, sub {
-			if (!run_or_cry('git-checkout', $master_branch)) {
-				run_or_cry('git-checkout','-f',$master_branch);
+			if (!run_or_cry('git-checkout', $config{gitmaster_branch})) {
+				run_or_cry('git-checkout','-f',$config{gitmaster_branch});
 			}
 		};
 		run_or_die('git-checkout', $branch);
@@ -125,7 +123,7 @@ sub _merge_past ($$$) { #{{{
 		# _Silently_ commit all modifications in the current branch.
 		run_or_non('git-commit', '-m', $message, '-a');
 		# ... and re-switch to master.
-		run_or_die('git-checkout', $master_branch);
+		run_or_die('git-checkout', $config{gitmaster_branch});
 
 		# Attempt to merge without complaining.
 		if (!run_or_non('git-pull', '--no-commit', '.', $branch)) {
@@ -287,7 +285,7 @@ sub git_sha1 (;$) { #{{{
 sub rcs_update () { #{{{
 	# Update working directory.
 
-	run_or_cry('git-pull', $origin_branch);
+	run_or_cry('git-pull', $config{gitorigin_branch});
 } #}}}
 
 sub rcs_prepedit ($) { #{{{
@@ -337,7 +335,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	$message = possibly_foolish_untaint($message);
 	if (run_or_non('git-commit', '-m', $message, '-i', $file)) {
 		unlockwiki();
-		run_or_cry('git-push', $origin_branch);
+		run_or_cry('git-push', $config{gitorigin_branch});
 	}
 
 	return undef; # success

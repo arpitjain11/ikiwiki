@@ -29,6 +29,8 @@ use IkiWiki::Setup::Standard {
 	#rcs => "git",
 	#historyurl => "http://git.example.org/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
 	#diffurl => "http://git.example.org/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
+	#gitorigin_branch => "origin",
+	#gitmaster_branch => "master",
 
 	# Tla stuff.
 	#rcs => "tla"
