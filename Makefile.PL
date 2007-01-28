@@ -24,7 +24,8 @@ PROBABLE_INST_LIB=$(shell \\
 )
 
 extra_build:
-	./ikiwiki.in doc html --templatedir=templates --underlaydir=basewiki \
+	LANG=C ./ikiwiki.in doc html --templatedir=templates \
+		--underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion --userdir=users \
 		--plugin=goodstuff \
