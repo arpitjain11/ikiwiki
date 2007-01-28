@@ -55,3 +55,48 @@ for the condition itself.
 >	\[[if test="enabled(smiley)" """foo"""]]
 > 
 > --[[Joey]]
+
+>> [[PageSpec]] syntax seems perfect, and your proposed syntax for the `if`
+>> [[PreprocessorDirective]] looks fine to me.
+>>
+>> [[PageSpec]]s don't give you `none` for free, since `!foo/*` as a boolean
+>> would mean "does any page not matching `foo/*` exist", not "does `foo/*`
+>> match nothing"; however, I don't really care much about `none`, since I
+>> just threw it in while brainstorming, and I don't know any compelling use
+>> cases for it.
+>>
+>> `enabled(pluginname)` will work perfectly, and `!enabled(pluginname)`
+>> makes `disabled` unnecessary.
+>>
+>> A few use cases for `included`, which I would really like to see:
+>>
+>> * On the sidebar page, you could say something like \[[if test="!included"
+>>   """This page, without this help message, appears as a sidebar on all
+>>   pages."""]].  The help text would then only appear on the sidebar page
+>>   itself, not the sidebar included on all pages.
+>>
+>> * On [[blog]] entries, you could use `included` to implement a cut.
+>>   (Please don't take that as an argument against. :) ) For instance, you
+>>   could use included rather than [[plugins/toggle]] for the detailed
+>>   changelogs of ikiwiki, or to embed an image as a link in the feed rather
+>>   than an embedded image.
+>>
+>> Some use cases for `thispage`:
+>>
+>> * You could use `thispage` to include or exclude parts of the sidebar based
+>>   on the page you include it in.  You can already use subpages/sidebar for
+>>   subpages/*, but `thispage` seems more flexible, makes it trivial to have
+>>   common portions rather than using [[plugins/inline]] with the `raw`
+>>   option, and keeps the sidebar in one place.
+>>
+>> * You could use `thispage` to implement multiple different feeds for the
+>>   same content with slightly different presentation.  For instance, using
+>>   templates for image inclusion, you could offer a feed with image links
+>>   and a feed with embedded images. Similarly, using templates for cuts, you
+>>   could offer a feed with cuts and a feed with full content in every post.
+>>
+>> I don't have any particular attachment to `sourcepage`.  It only makes
+>> sense as part of a template, since otherwise you know the source page when
+>> typing in the if.
+>>
+>> --[[JoshTriplett]]
