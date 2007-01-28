@@ -85,9 +85,8 @@ sub rcs_commit ($$$;$$) { #{{{
 		if (defined $rev && defined $oldrev && $rev != $oldrev) {
 			# Merge their changes into the file that we've
 			# changed.
-			chdir($config{srcdir}); # svn merge wants to be here
 			if (system("svn", "merge", "--quiet", "-r$oldrev:$rev",
-			           "$config{srcdir}/$file") != 0) {
+			           "$config{srcdir}/$file", "$config{srcdir}/$file") != 0) {
 				warn("svn merge -r$oldrev:$rev failed\n");
 			}
 		}
