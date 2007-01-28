@@ -24,3 +24,20 @@ I hope it's a bug, not a feature and you fix it soon :) --Pawel
 
 >>> Joey, do you intend to fix that bug or it's a feature
 >>> for you? ;) --Pawel
+
+>>>> Of course you can put Polish characters in the title. but the page
+>>>> title and filename are not identical. Ikiwiki has to place some limits
+>>>> on what filenames are legal to prevent abuse. Since
+>>>> the safest thing to do in a security context is to deny by default and
+>>>> only allow a few well-defined safe things, that's what it does, so
+>>>> filenames are limited to basic alphanumeric characters.
+>>>>
+>>>> It's not especially hard to transform your title into get a legal
+>>>> ikiwiki filename: 
+
+	joey@kodama:~>perl -MIkiWiki -le 'print IkiWiki::titlepage(shift).".mdwn"' "Błąd"
+	B__197____130____196____133__d.mdwn
+
+>>>> Now, as to UTF7, in retrospect, using a standard encoding might be a
+>>>> better idea than coming up with my own encoding for filenames. Can 
+>>>> you provide a pointer to a description to modified-UTF7? --[[Joey]]
