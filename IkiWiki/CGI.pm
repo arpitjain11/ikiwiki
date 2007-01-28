@@ -507,6 +507,12 @@ sub cgi_editpage ($$) { #{{{
 				print $form->render(submit => \@buttons);
 				return;
 			}
+			else {
+				# Make sure that the repo is up-to-date;
+				# locking prevents the post-commit hook
+				# from updating it.
+				rcs_update();
+			}
 		}
 		else {
 			require IkiWiki::Render;

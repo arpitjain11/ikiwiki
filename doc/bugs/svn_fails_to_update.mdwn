@@ -77,3 +77,13 @@ which gets the "right" information even when the WC isn't current. I am
 having problems merging but that probably has nothing to do with this bug. 
 [This patch](http://ikidev.betacantrips.com/patches/update.patch) calls
 rcs_update after commit in CGI.pm, it might be a good idea anyhow. --Ethan
+
+> Ok, I follow you. I am unsure whether this problem effects other rcses
+> besides svn. Depends on how they handle locking, etc. But calling
+> rcs_update will always be safe, so I'll do that. [[bugs/done]]
+> 
+> That still leaves the issue that it calls svn update in the post-commit
+> hook when it's locked and fails with that error message. Granted svn does
+> throw that away by default, but it's still ugly and wasteful. But
+> checking for a lock first is even uglier (and racey) and more wasteful,
+> so I don't see a fix.. --[[Joey]]
