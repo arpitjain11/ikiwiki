@@ -1,0 +1,34 @@
+I ran into a problem when installing from svn.  I got "invalid variable
+interpolation" errors for Wrappers.pm.  I added the flag '--extract-all' to
+'po/Makefile' and 'po/t' to the xgettext line.  Once I did that I was able
+to make and make test just fine. --HarleyPig
+
+> It would be helpful if you could post the actual error message you saw.
+> Also would be nice to know what versions of perl and gettext you have.
+> Perhaps your xgettext is an older version from before it natively
+> supported perl.
+> Adding --extract-all doesn't seem like a good idea, since this causes it
+> to treat every string in the entire wiki as translatable. I don't know
+> what you're talking about regarding 'po/t'. --[[Joey]]
+
+>> make[1]: Entering directory `/home/www/ikiwiki/po'
+>> Rebuilding the pot file
+>> xgettext ../IkiWiki/CGI.pm ../IkiWiki/Plugin/aggregate.pm ../IkiWiki/Plugin/brokenlinks.pm ../IkiWiki/Plugin/camelcase.pm ../IkiWiki/Plugin/ddate.pm ../IkiWiki/Plugin/favicon.pm ../IkiWiki/Plugin/fortune.pm ../IkiWiki/Plugin/goodstuff.pm ../IkiWiki/Plugin/googlecalendar.pm ../IkiWiki/Plugin/haiku.pm ../IkiWiki/Plugin/html.pm ../IkiWiki/Plugin/htmlscrubber.pm ../IkiWiki/Plugin/htmltidy.pm ../IkiWiki/Plugin/httpauth.pm ../IkiWiki/Plugin/img.pm ../IkiWiki/Plugin/inline.pm ../IkiWiki/Plugin/linkmap.pm ../IkiWiki/Plugin/map.pm ../IkiWiki/Plugin/mdwn.pm ../IkiWiki/Plugin/meta.pm ../IkiWiki/Plugin/mirrorlist.pm ../IkiWiki/Plugin/openid.pm ../IkiWiki/Plugin/orphans.pm ../IkiWiki/Plugin/otl.pm ../IkiWiki/Plugin/pagecount.pm ../IkiWiki/Plugin/pagestats.pm ../IkiWiki/Plugin/passwordauth.pm ../IkiWiki/Plugin/poll.pm ../IkiWiki/Plugin/polygen.pm ../IkiWiki/Plugin/rawhtml.pm ../IkiWiki/Plugin/rst.pm ../IkiWiki/Plugin/search.pm ../IkiWiki/Plugin/shortcut.pm ../IkiWiki/Plugin/sidebar.pm ../IkiWiki/Plugin/skeleton.pm ../IkiWiki/Plugin/smiley.pm ../IkiWiki/Plugin/tag.pm ../IkiWiki/Plugin/template.pm ../IkiWiki/Plugin/textile.pm ../IkiWiki/Plugin/toc.pm ../IkiWiki/Plugin/toggle.pm ../IkiWiki/Plugin/typography.pm ../IkiWiki/Plugin/wikitext.pm ../IkiWiki/Rcs/Stub.pm ../IkiWiki/Rcs/git.pm ../IkiWiki/Rcs/mercurial.pm ../IkiWiki/Rcs/svn.pm ../IkiWiki/Rcs/tla.pm ../IkiWiki/Render.pm ../IkiWiki/Setup.pm ../IkiWiki/Setup/Standard.pm ../IkiWiki/UserInfo.pm ../IkiWiki/Wrapper.pm ../ikiwiki.in ../IkiWiki.pm -o ikiwiki.pot -Lperl --add-comments=translators ../IkiWiki/Wrapper.pm:64: invalid variable interpolation at "$"
+>> make[1]: *** [ikiwiki.pot] Error 1
+>> make[1]: Leaving directory `/home/www/ikiwiki/po'
+>> make: *** [extra_build] Error 2
+>>
+>> harleypig ikiwiki # xgettext --version
+>>
+>> xgettext (GNU gettext-tools) 0.15
+>>
+>> harleypig ikiwiki # perl -v
+>>
+>> This is perl, v5.8.8 built for i686-linux
+>>
+>> Sorry about the po/t report ... it was the test file I used to figure out what was wrong and I forgot to remove it.  This is against the subversion repository, version 2338.
+>> The referenced line has a $! variable, which the documentation for gettext indicates is the problem.
+
+>>> Ok, I think that you need to upgrade xgettext to 0.16. However, there's
+>>> no reason why you should need to rebuild the pot file anyway, so I've
+>>> checked it into svn, and that's one problem [[bugs/done]].
