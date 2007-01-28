@@ -54,11 +54,13 @@ etc.) Virtual pages would "expire" and be deleted if they were not
 depended on in some way.
 
 Let's say these pages are created in edits/commit_%d.mdwn. RecentChanges
-would then be a page which did nothing but inline the last 50 edits/*. 
+would then be a page which did nothing but inline the last 50 `edits/*`. 
 This would give static generation and RSS/Atom feeds. The inline 
-plugin could be optionally altered to inline pages from edits/* 
+plugin could be optionally altered to inline pages from `edits/*` 
 that match any pages in its pagespec, and through this we could get
-a recent-changes+pagespec thing.
+a recent-changes+pagespec thing. You could also exclude edits that have
+"minor" in the commit message (or some other thing that marks them as
+unremarkable).
 
 You could make an argument that I care way too much about what amounts
 to edits anyhow, but like Josh says, there are use cases for this. 
