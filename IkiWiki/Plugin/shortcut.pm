@@ -54,6 +54,7 @@ sub shortcut_expand ($$@) { #{{{
 	my $encoded_text=$text;
 	$encoded_text=~s/([^A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg;
 	
+	$text=~s/_/ /g;
 	if (defined $desc) {
 		$desc=~s/\%s/$text/g;
 	}
