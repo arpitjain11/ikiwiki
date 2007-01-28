@@ -18,3 +18,24 @@ A couple of suggestions for improving the usefulness of pagespecs:
 > pagespecs match absolute by default. It would be nice to clear up that
 > inconsistency somehow, it's on my little list of things in ikiwiki that
 > arn't ideal. :-) --[[Joey]]
+
+I've looked at how to implement "./", yes, and I was a little hesitant
+to disturb the elegant implementation of pagespecs as it is now. That's 
+why I wrote this todo item rather than just a patch :). As I see it,
+the simplest thing to do is check globs when building the pagespec 
+expression and translate "./foo" to "$from.'/foo'" in the resulting
+expression, and then add the $from paramater to pagespec_match. This does
+require an API change for all plugins which use pagespecs but hopefully
+it should be minor. I will work on a patch tomorrow.
+
+My use case for "@" (which is kind of a crummy symbol, but whatever) is
+my [projects page](http://www.betacantrips.com/projects/). I want to inline 
+"summary" or "introduction" pages that are exactly one level below the 
+inlining page, but not tarballs or other junk that might be in 
+subdirectories. (The issue is confounded here because of my index.mdwn 
+patch, but the principle is the same.) I chose "@" because it's similar in 
+physical shape to "*" but enclosed, suggesting limitations. I also thought
+it would be useful in simplifying hacks like in [[plugins/map]] but I see
+now that I was mistaken.. "four or fewer levels deep" would be 
+"@ or @/@ or @/@/@ or @/@/@/@". Well, I think it has a certain appeal but
+I can see why it might not be much of an improvement :). --Ethan
