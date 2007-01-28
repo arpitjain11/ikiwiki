@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-13 23:24-0500\n"
+"POT-Creation-Date: 2007-01-27 20:16-0500\n"
 "PO-Revision-Date: 2007-01-07 11:59+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -30,8 +30,8 @@ msgstr "Nejprve se musíte přihlásit."
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
-#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskuse"
 
@@ -45,11 +45,11 @@ msgstr "vytvářím %s"
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:623
+#: ../IkiWiki/CGI.pm:629
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:650
+#: ../IkiWiki/CGI.pm:656
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:369
+#: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -241,58 +241,58 @@ msgstr "šablonu se nepodařilo zpracovat:"
 msgid "getctime not implemented"
 msgstr "getctime není implementováno"
 
-#: ../IkiWiki/Rcs/svn.pm:206
+#: ../IkiWiki/Rcs/svn.pm:205
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
 msgstr ""
 "REV není nastavena, není spuštěna ze svn post-commit, nemohu zaslat oznámení"
 
-#: ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
+#: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "přeskakuji chybné jméno souboru %s"
 
-#: ../IkiWiki/Render.pm:288
+#: ../IkiWiki/Render.pm:292
 #, perl-format
 msgid "removing old page %s"
 msgstr "odstraňuji starou stránku %s"
 
-#: ../IkiWiki/Render.pm:307
+#: ../IkiWiki/Render.pm:311
 #, perl-format
 msgid "scanning %s"
 msgstr "prohledávám %s"
 
-#: ../IkiWiki/Render.pm:316
+#: ../IkiWiki/Render.pm:320
 #, perl-format
 msgid "rendering %s"
 msgstr "zpracovávám %s"
 
-#: ../IkiWiki/Render.pm:328
+#: ../IkiWiki/Render.pm:332
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "zpracovávám %s, která odkazuje na %s"
 
-#: ../IkiWiki/Render.pm:345
+#: ../IkiWiki/Render.pm:349
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "zpracovávám %s, která závisí na %s"
 
-#: ../IkiWiki/Render.pm:383
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "zpracovávám %s, aby se aktualizovaly zpětné odkazy"
 
-#: ../IkiWiki/Render.pm:395
+#: ../IkiWiki/Render.pm:399
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "odstraňuji %s, již není zpracovávána %s"
 
-#: ../IkiWiki/Render.pm:421
+#: ../IkiWiki/Render.pm:425
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: nelze zpracovat %s"
@@ -365,11 +365,11 @@ msgstr "%s byl úspěšně vytvořen"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "použití: ikiwiki [volby] zdroj cíl"
 
-#: ../IkiWiki.pm:99
+#: ../IkiWiki.pm:101
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
+#: ../IkiWiki.pm:146 ../IkiWiki.pm:147
 msgid "Error"
 msgstr "Chyba"
 
@@ -377,7 +377,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:524
+#: ../IkiWiki.pm:526
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"

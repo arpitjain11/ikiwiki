@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-13 23:24-0500\n"
+"POT-Creation-Date: 2007-01-27 20:16-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -31,8 +31,8 @@ msgstr "Trước tiên bạn cần phải đăng nhập."
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
-#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "thảo luận"
 
@@ -46,11 +46,11 @@ msgstr "đang tạo %s"
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:623
+#: ../IkiWiki/CGI.pm:629
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:650
+#: ../IkiWiki/CGI.pm:656
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -128,7 +128,7 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "kiểu sắp xếp không rõ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:369
+#: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 
@@ -243,58 +243,58 @@ msgstr "mẫu không xử lý được:"
 msgid "getctime not implemented"
 msgstr "chưa thực hiện getctime"
 
-#: ../IkiWiki/Rcs/svn.pm:206
+#: ../IkiWiki/Rcs/svn.pm:205
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
 msgstr ""
 "Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
 
-#: ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Thảo luận"
 
-#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
+#: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "đang bỏ qua tên tập tin sai %s"
 
-#: ../IkiWiki/Render.pm:288
+#: ../IkiWiki/Render.pm:292
 #, perl-format
 msgid "removing old page %s"
 msgstr "đang gỡ bỏ trang cũ %s"
 
-#: ../IkiWiki/Render.pm:307
+#: ../IkiWiki/Render.pm:311
 #, perl-format
 msgid "scanning %s"
 msgstr "đang quét %s"
 
-#: ../IkiWiki/Render.pm:316
+#: ../IkiWiki/Render.pm:320
 #, perl-format
 msgid "rendering %s"
 msgstr "đang vẽ %s"
 
-#: ../IkiWiki/Render.pm:328
+#: ../IkiWiki/Render.pm:332
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "đang vẽ %s mà liên kết tới %s"
 
-#: ../IkiWiki/Render.pm:345
+#: ../IkiWiki/Render.pm:349
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "đang vẽ %s mà phụ thuộc vào %s"
 
-#: ../IkiWiki/Render.pm:383
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "đang vẽ %s để cập nhật các liên kết ngược của nó"
 
-#: ../IkiWiki/Render.pm:395
+#: ../IkiWiki/Render.pm:399
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "đang gỡ bỏ %s, không còn được vẽ lại bởi %s"
 
-#: ../IkiWiki/Render.pm:421
+#: ../IkiWiki/Render.pm:425
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: không thể vẽ %s"
@@ -367,12 +367,12 @@ msgstr "%s đã được tạo ra"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 
-#: ../IkiWiki.pm:99
+#: ../IkiWiki.pm:101
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
+#: ../IkiWiki.pm:146 ../IkiWiki.pm:147
 msgid "Error"
 msgstr "Lỗi"
 
@@ -380,7 +380,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:524
+#: ../IkiWiki.pm:526
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.37\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-13 23:24-0500\n"
+"POT-Creation-Date: 2007-01-27 20:16-0500\n"
 "PO-Revision-Date: 2007-01-05 16:33+100\n"
 "Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -33,8 +33,8 @@ msgstr "Konieczne jest zalogowanie się."
 msgid "Preferences saved."
 msgstr "Ustawienia zostały zapisane."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:161
-#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:161
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "dyskusja"
 
@@ -48,11 +48,11 @@ msgstr "tworzenie strony %s"
 msgid "editing %s"
 msgstr "edycja strony %s"
 
-#: ../IkiWiki/CGI.pm:623
+#: ../IkiWiki/CGI.pm:629
 msgid "You are banned."
 msgstr "Dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:650
+#: ../IkiWiki/CGI.pm:656
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "nieznany sposób sortowania %s"
 
-#: ../IkiWiki/Plugin/inline.pm:369
+#: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Niezainstalowany moduł RPC::XML::Client, brak możliwości pingowania"
 
@@ -250,7 +250,7 @@ msgstr "awaria w trakcie przetwarzania szablonu:"
 msgid "getctime not implemented"
 msgstr "niedostępna funkcja getctime"
 
-#: ../IkiWiki/Rcs/svn.pm:206
+#: ../IkiWiki/Rcs/svn.pm:205
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
@@ -258,51 +258,51 @@ msgstr ""
 "Brak możliwości wysłania powiadomień przez post-commit SVN-a z powodu "
 "nieustawionego parametru REV"
 
-#: ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Dyskusja"
 
-#: ../IkiWiki/Render.pm:228 ../IkiWiki/Render.pm:248
+#: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "pomijanie nieprawidłowego pliku %s"
 
-#: ../IkiWiki/Render.pm:288
+#: ../IkiWiki/Render.pm:292
 #, perl-format
 msgid "removing old page %s"
 msgstr "usuwanie starej strony %s"
 
-#: ../IkiWiki/Render.pm:307
+#: ../IkiWiki/Render.pm:311
 #, perl-format
 msgid "scanning %s"
 msgstr "przeszukiwanie strony %s"
 
-#: ../IkiWiki/Render.pm:316
+#: ../IkiWiki/Render.pm:320
 #, perl-format
 msgid "rendering %s"
 msgstr "tworzenie strony %s"
 
-#: ../IkiWiki/Render.pm:328
+#: ../IkiWiki/Render.pm:332
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "tworzenie strony %s z odnośnikiem do strony %s"
 
-#: ../IkiWiki/Render.pm:345
+#: ../IkiWiki/Render.pm:349
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "tworzenie strony %s zależącej od strony %s"
 
-#: ../IkiWiki/Render.pm:383
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "tworzenie strony %s w celu aktualizacji jej powrotnych odnośników"
 
-#: ../IkiWiki/Render.pm:395
+#: ../IkiWiki/Render.pm:399
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "usuwanie strony %s nie tworzonej już przez %s"
 
-#: ../IkiWiki/Render.pm:421
+#: ../IkiWiki/Render.pm:425
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: awaria w trakcie tworzenie strony %s"
@@ -375,13 +375,13 @@ msgstr "strona pomyślnie utworzona %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "użycie: ikiwiki [parametry] źródło cel"
 
-#: ../IkiWiki.pm:99
+#: ../IkiWiki.pm:101
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
 "--url"
 
-#: ../IkiWiki.pm:144 ../IkiWiki.pm:145
+#: ../IkiWiki.pm:146 ../IkiWiki.pm:147
 msgid "Error"
 msgstr "Błąd"
 
@@ -389,7 +389,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:524
+#: ../IkiWiki.pm:526
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
