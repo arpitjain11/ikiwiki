@@ -21,7 +21,7 @@ A couple of suggestions for improving the usefulness of pagespecs:
 
 I've looked at how to implement "./", yes, and I was a little hesitant
 to disturb the elegant implementation of pagespecs as it is now. That's 
-why I wrote this todo item rather than just a patch :). As I see it,
+why I wrote this todo item rather than just a patch. :) As I see it,
 the simplest thing to do is check globs when building the pagespec 
 expression and translate "./foo" to "$from.'/foo'" in the resulting
 expression, and then add the $from paramater to pagespec_match. This does
@@ -38,4 +38,14 @@ physical shape to "*" but enclosed, suggesting limitations. I also thought
 it would be useful in simplifying hacks like in [[plugins/map]] but I see
 now that I was mistaken.. "four or fewer levels deep" would be 
 "@ or @/@ or @/@/@ or @/@/@/@". Well, I think it has a certain appeal but
-I can see why it might not be much of an improvement :). --Ethan
+I can see why it might not be much of an improvement. :) --Ethan
+
+> OK, I took a shot at implementing the changes. I was thinking about making
+> pagespecs relative by default but I couldn't decide whether page
+> `foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
+> So I punted and left things as absolute, with `./*` matching
+> `foo/bar/*`, which I think is pretty clear.
+> The patch is at [ikidev](http://ikidev.betacantrips.com/patches/pagespec_enhancements.patch)
+> and you can see it work at 
+> [this page](http://ikidev.betacantrips.com/one/two/three/index.html) or
+> [this page](http://ikidev.betacantrips.com/one/two/three/princess.html) --Ethan
