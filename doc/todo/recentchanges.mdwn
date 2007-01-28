@@ -32,3 +32,36 @@
   >> I have more thoughts on this topic which I will probably write 
   >> tomorrow. If you thought my other patches were blue-sky, wait until 
   >> you see this. --Ethan
+
+OK, so here's how I see the RecentChanges thing. I write blog posts and
+the inline plugin generates RSS feeds. Readers of RSS feeds are notified 
+of new entries but not changes to old entries. I think it's rude to change
+something without telling your readers, so I'd like to address this.
+To tell the user that there have been changes, we can tell the user which
+page has been changed, the new text, the RCS comment relating to
+the change, and a diff of the actual changes. The new text probably isn't
+too useful (I have a very hard time rereading things for differences), 
+so any modifications to inline to re-inline pages probably won't help,
+even if it were feasible (which I don't think it is). So instead we
+turn to creating diffs automatically and (maybe) inlining them.
+
+I suggest that for every commit, a diff is created automagically 
+but not committed to the RCS. The page containing this diff would be
+a "virtual page", which cannot be edited and is not committed. 
+(Committing here would be bad, because then it would create a new
+commit, which would need a new diff, which would need to be committed, 
+etc.) Virtual pages would "expire" and be deleted if they were not 
+depended on in some way.
+
+Let's say these pages are created in edits/commit_%d.mdwn. RecentChanges
+would then be a page which did nothing but inline the last 50 edits/*. 
+This would give static generation and RSS/Atom feeds. The inline 
+plugin could be optionally altered to inline pages from edits/* 
+that match any pages in its pagespec, and through this we could get
+a recent-changes+pagespec thing.
+
+You could make an argument that I care way too much about what amounts
+to edits anyhow, but like Josh says, there are use cases for this. 
+While this could be done with mail subscriptions, I can think of sites
+where you might want to disable all auth so that people can't edit
+your pages. --Ethan
