@@ -38,6 +38,14 @@ I hope it's a bug, not a feature and you fix it soon :) --Pawel
 	joey@kodama:~>perl -MIkiWiki -le 'print IkiWiki::titlepage(shift).".mdwn"' "Błąd"
 	B__197____130____196____133__d.mdwn
 
+>>>>> Thanks for the hint! It's good for me, but rather not for common users :)
+
 >>>> Now, as to UTF7, in retrospect, using a standard encoding might be a
 >>>> better idea than coming up with my own encoding for filenames. Can 
 >>>> you provide a pointer to a description to modified-UTF7? --[[Joey]]
+
+>>>>> The modified form of UTF7 is defined in [RFC 2060](http://www.ietf.org/rfc/rfc2060.txt)
+>>>>> for IMAP4 protocol (please see section 5.1.3 for details).
+
+>>>>> There is a Perl [Unicode::IMAPUtf7](http://search.cpan.org/~fabpot/Unicode-IMAPUtf7-2.01/lib/Unicode/IMAPUtf7.pm)
+>>>>> module at the CPAN, but probably it hasn't been debianized yet :( --Pawel
