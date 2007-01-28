@@ -1,0 +1,15 @@
+What do you think about refreshing RecentChanges page (via Meta Refresh Tag)?
+It can be useful for users like me which rather prefer watching the last changes
+in WWW browser tab than subscribing to page. --Pawel
+
+> Depends, if it were done the time period should be made configurable.
+> Unwanted server load due to refeshing could be a problem for some.
+> --[[Joey]]
+
+>> Yes, it should be configurable by ikiwiki admin. I believe he's not
+>> stupid and he will not set too short refresh period to kill his server :)
+>> I propose to add `recentchanges_refresh` variable in ikiwiki setup
+>> to setting refresh period. If it's not defined, then ikiwiki doesn't put
+>> refresh meta tag into `recentchanges.tmpl`. Do you like it? ;) --Pawel
+
+>>> Seems reasonable --[[Joey]]
