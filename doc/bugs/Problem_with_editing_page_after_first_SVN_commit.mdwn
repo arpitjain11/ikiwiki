@@ -142,6 +142,9 @@ I also had problem with no webpages getting generated via the CGI unless I ran i
 I can't find the discussion here about in the ikiwiki website though. I think it was removed and now I can't find it in the history.
 My problem was caused by not having a revision system defined, so it defaulted to subversion (but I didn't have that installed).
 
+> Note that that confusing default to svn has been changed.. And you're
+> right about how the setup file is used below, BTW. --[[Joey]]
+
 As for your .setup file you can put it anywhere. I don't  think the CGI knows where it is at because its settings are set in the "wrapper".
 In my case, my setup file is in a different home and owned by a different user than the CGI or my generated website. By the way, I also don't keep my .ikiwiki private directory in my source directory by setting wikistatedir (which doesn't seem to be documented).
 
@@ -190,3 +193,14 @@ In my case, my setup file is in a different home and owned by a different user t
 >
 > BTW, I also noticed `wikistatedir` variable in the ikiwiki code
 > and I couldn't find any information about it in ikiwiki docs :) --Pawel
+
+>> wikistatedir is a non-configurable internal value.
+>> 
+>> What happens during an edit with the code you quoted is that the "rcs
+>> stuff" results in a commit of the page to svn. This results in the
+>> ikiwiki svn post-commit hook running. The post-commit hook updates the
+>> wiki, and calls saveindex. That's why it's not called in the RCS path in
+>> the code above.
+>> 
+>> It sounds like your post-commit hook is still not set up, or is failing
+>> for some reason (permissions perhaps?) --[[Joey]]
