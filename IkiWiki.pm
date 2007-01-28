@@ -9,7 +9,7 @@ use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
             %renderedfiles %oldrenderedfiles %pagesources %depends %hooks
-	    %forcerebuild};
+	    %forcerebuild $gettext_obj};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
@@ -83,8 +83,10 @@ sub checkconfig () { #{{{
 	if (defined $config{locale}) {
 		eval q{use POSIX};
 		error($@) if $@;
-		$ENV{LANG} = $config{locale}
-			if POSIX::setlocale(&POSIX::LC_ALL, $config{locale});
+		if (POSIX::setlocale(&POSIX::LC_ALL, $config{locale})) {
+			$ENV{LANG}=$config{locale};
+			$gettext_obj=undef;
+		}
 	}
 
 	if ($config{w3mmode}) {
@@ -784,7 +786,6 @@ sub file_pruned ($$) { #{{{
 	$file =~ m/$regexp/;
 } #}}}
 
-my $gettext_obj;
 sub gettext { #{{{
 	# Only use gettext in the rare cases it's needed.
 	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
