@@ -1,4 +1,10 @@
-I'd like to see some way to conditionally include wiki text based on whether the wiki enables or disables certain features.  For example, [[helponformatting]], could use `\[[if (enabled smiley) """Also, because this wiki has the smiley plugin enabled, you can insert \[[smileys]] and some other useful symbols."""]]`, and a standard template for [[plugins]] pages could check for the given plugin name to print "enabled" or "disabled".
+I'd like to see some way to conditionally include wiki text based on
+whether the wiki enables or disables certain features.  For example,
+[[helponformatting]], could use `\[[if (enabled smiley) """Also, because
+this wiki has the smiley plugin enabled, you can insert \[[smileys]] and
+some other useful symbols."""]]`, and a standard template for [[plugins]]
+pages could check for the given plugin name to print "enabled" or
+"disabled".
 
 Some potentially useful conditionals:
 
@@ -11,6 +17,41 @@ Some potentially useful conditionals:
 * `sourcepage pagespec`: true if pagespec includes the page corresponding to the file actually containing this content, rather than a page including it.
 * `included`: true if included on another page, via [[plugins/inline]], [[plugins/sidebar]], [[plugins/contrib/navbar]], etc.
 
-You may or may not want to include boolean operations (`and`, `or`, and `not`); if you do, you could replace `disabled` with `not enabled`, and `no pagespec` or `none pagespec` with `not any pagespec` (but you may want to keep the aliases for simplicity anyway).  You also may or may not want to include an `else` clause; if so, you could label the text used if true as `then`.
+You may or may not want to include boolean operations (`and`, `or`, and
+`not`); if you do, you could replace `disabled` with `not enabled`, and `no
+pagespec` or `none pagespec` with `not any pagespec` (but you may want to
+keep the aliases for simplicity anyway).  You also may or may not want to
+include an `else` clause; if so, you could label the text used if true as
+`then`.
 
-Syntax could vary greatly here, both for the [[PreprocessorDirective]] and for the condition itself.
+Syntax could vary greatly here, both for the [[PreprocessorDirective]] and
+for the condition itself.
+
+> I think this is a good thing to consider, although conditionals tend to
+> make everything a lot more complicated, so I also want to KISS, and not
+> use too many of them.
+> 
+> I'd probably implement this using the same method as pagespecs, so 'and',
+> 'or', '!', and paren groupings work.
+> 
+> It could be thought of as simply testing to see if a pagespec matches
+> anything, using a slightly expanded syntax for the pagespec, which would
+> also allow testing for things like link(somepage),
+> created_before(somepage), etc.
+> 
+> That also gives us your "any pagespec" for free: "page or page or page".
+> And for "all pagespec", you can do "page and page and page". 
+> 
+> For plugins testing, maybe just use "enabled(name)"?
+> 
+> I'm not sure what the use cases are for thispage, sourcepage, and
+> included. I don't know if the included test is even doable. I'd be
+> inclined to not bother with these three unless there are use cases I'm
+> not seeing.
+> 
+> As to the syntax, to fit it into standard preprocessor syntax, it would
+> need to look something like this:
+>
+>	\[[if test="enabled(smiley)" """foo"""]]
+> 
+> --[[Joey]]
