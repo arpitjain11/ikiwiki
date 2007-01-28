@@ -762,6 +762,50 @@ sub safequote ($) { #{{{
 	return "q{$s}";
 } #}}}
 
+sub add_depends ($$) { #{{{
+	my $page=shift;
+	my $pagespec=shift;
+	
+	if (! exists $depends{$page}) {
+		$depends{$page}=$pagespec;
+	}
+	else {
+		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
+	}
+} # }}}
+
+sub file_pruned ($$) { #{{{
+	require File::Spec;
+	my $file=File::Spec->canonpath(shift);
+	my $base=File::Spec->canonpath(shift);
+	$file=~s#^\Q$base\E/*##;
+
+	my $regexp='('.join('|', @{$config{wiki_file_prune_regexps}}).')';
+	$file =~ m/$regexp/;
+} #}}}
+
+my $gettext_obj;
+sub gettext { #{{{
+	# Only use gettext in the rare cases it's needed.
+	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
+		if (! $gettext_obj) {
+			$gettext_obj=eval q{
+				use Locale::gettext q{textdomain};
+				Locale::gettext->domain('ikiwiki')
+			};
+			if ($@) {
+				print STDERR "$@";
+				$gettext_obj=undef;
+				return shift;
+			}
+		}
+		return $gettext_obj->get(shift);
+	}
+	else {
+		return shift;
+	}
+} #}}}
+
 sub pagespec_merge ($$) { #{{{
 	my $a=shift;
 	my $b=shift;
@@ -811,50 +855,6 @@ sub pagespec_translate ($) { #{{{
 	}
 
 	return $code;
-} #}}}
-
-sub add_depends ($$) { #{{{
-	my $page=shift;
-	my $pagespec=shift;
-	
-	if (! exists $depends{$page}) {
-		$depends{$page}=$pagespec;
-	}
-	else {
-		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
-	}
-} # }}}
-
-sub file_pruned ($$) { #{{{
-	require File::Spec;
-	my $file=File::Spec->canonpath(shift);
-	my $base=File::Spec->canonpath(shift);
-	$file=~s#^\Q$base\E/*##;
-
-	my $regexp='('.join('|', @{$config{wiki_file_prune_regexps}}).')';
-	$file =~ m/$regexp/;
-} #}}}
-
-my $gettext_obj;
-sub gettext { #{{{
-	# Only use gettext in the rare cases it's needed.
-	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
-		if (! $gettext_obj) {
-			$gettext_obj=eval q{
-				use Locale::gettext q{textdomain};
-				Locale::gettext->domain('ikiwiki')
-			};
-			if ($@) {
-				print STDERR "$@";
-				$gettext_obj=undef;
-				return shift;
-			}
-		}
-		return $gettext_obj->get(shift);
-	}
-	else {
-		return shift;
-	}
 } #}}}
 
 sub pagespec_match ($$) { #{{{
