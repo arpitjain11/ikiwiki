@@ -7,3 +7,14 @@ A couple of suggestions for improving the usefulness of pagespecs:
   lots of pages a/b/c.mdwn that inline "a/b/c/*".
 
 --Ethan
+
+> I want this too, so that the [[examples]] can use pagespecs that don't
+> have to be changed when the pages are moved around. I don't know how I
+> feel about the "@" thing, but "./" seems good. I take it you've looked at
+> how to implement it?
+>
+> It's worth mentioning that there's a bit of an inconsistency; wikilinks
+> match relative by default and absolute if prefixed with a "/", while
+> pagespecs match absolute by default. It would be nice to clear up that
+> inconsistency somehow, it's on my little list of things in ikiwiki that
+> arn't ideal. :-) --[[Joey]]
