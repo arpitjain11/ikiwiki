@@ -17,4 +17,11 @@ Quick hack to be able to list old entries first :
 
 this patch adds a new type of sort "old".
 
+> Hmm, take another look at your patch above. Comapre the added lines with
+> the "age" lines just above them. It's identical; age already does what
+> you want. --[[Joey]]
+
 However, I wonder if it would be better to add another option for inline like "sortorder" with "desc" or "asc" keywords ?
+
+> That might be cleaner, since it would allow sorting pages in reverse by
+> title. If someone ever had a reason to do that. --[[Joey]]
