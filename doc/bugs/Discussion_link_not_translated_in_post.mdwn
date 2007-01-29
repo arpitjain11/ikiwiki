@@ -15,3 +15,38 @@ can see "Discussion" link, instead of Polish "Dyskusja" link. --Pawel
 >>> Joey, what about my bug report? ;) --Pawel
 
 >>>> Found and [[fixed|bugs/done]] --[[Joey]].
+
+>>>>> Hm. I can't see any changes. I've builded ikiwiki 1.41 Debian package
+>>>>> from the latest SVN repo sources and installed it on my machine.
+>>>>> I've also rebuilded all my ikiwiki pages (`ikiwiki --setup ikiwiki.setup`).
+
+>>>>> I added a few debug lines to changed block of code from
+>>>>> `/usr/share/perl5/IkiWiki.pm` file:
+>>>>>
+>>>>>        open(LOG, ">>/var/log/ikiwiki.log");
+>>>>>        print LOG "(1) \$config{locale}=$config{locale}\n";
+>>>>>        print LOG "(1) \$ENV{LANG}=$ENV{LANG}\n";
+>>>>>        if (defined $config{locale}) {
+>>>>>                eval q{use POSIX};
+>>>>>                error($@) if $@;
+>>>>>                print LOG "(2) \$config{locale}=$config{locale}\n";
+>>>>>                print LOG "(2) \$ENV{LANG}=$ENV{LANG}\n";
+>>>>>                if (POSIX::setlocale(&POSIX::LC_ALL, $config{locale})) {
+>>>>>                        $ENV{LANG}=$config{locale};
+>>>>>                        $gettext_obj=undef;
+>>>>>                        print LOG "(3) \$config{locale}=$config{locale}\n";
+>>>>>                        print LOG "(3) \$ENV{LANG}=$ENV{LANG}\n";
+>>>>>                }
+>>>>>        }
+>>>>>        close(LOG);
+>>>>>
+>>>>> Here is a piece of result after rebuild:
+>>>>>
+>>>>>        (1) $config{locale}=pl_PL.UTF-8
+>>>>>        (1) $ENV{LANG}=pl_PL.UTF-8
+>>>>>        (2) $config{locale}=pl_PL.UTF-8
+>>>>>        (2) $ENV{LANG}=pl_PL.UTF-8
+>>>>>        (3) $config{locale}=pl_PL.UTF-8
+>>>>>        (3) $ENV{LANG}=pl_PL.UTF-8
+>>>>>
+>>>>> Is it a useful information for you? :) --Pawel
