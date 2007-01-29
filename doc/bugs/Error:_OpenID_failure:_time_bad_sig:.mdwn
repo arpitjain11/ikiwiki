@@ -11,4 +11,28 @@ and [myopenid.com](http://www.myopenid.com/) servers I use.
 I'm reporting this, but I'm not sure whether a problem is with your
 ikiwiki or my OpenID servers. --Pawel
 
+> I've seen this too, once or twice (using myopenid), and reauthenticating
+> fixed it -- so I can't reproduce it reliably to work on it. I think I've
+> seen it both on this wiki and on the one running on my laptop.
+> 
+> The perl openid client module seems
+> to fail with time_bad_sig if the time in the signature from the other end
+> is "faked". I'm not 100% sure what this code does yet:
 
+	# check age/signature of return_to
+	my $now = time();
+	{
+		my ($sig_time, $sig) = split(/\-/, $self->args("oic.time") || "");
+		# complain if more than an hour since we sent them off
+		return $self->_fail("time_expired")   if $sig_time < $now - 3600;
+		# also complain if the signature is from the future by more than 30 seconds,
+		# which compensates for potential clock drift between nodes in a web farm.
+		return $self->_fail("time_in_future") if $sig_time - 30 > $now;
+		# and check that the time isn't faked
+		my $c_secret = $self->_get_consumer_secret($sig_time);
+		my $good_sig = substr(OpenID::util::hmac_sha1_hex($sig_time, $c_secret), 0, 20);
+		return $self->_fail("time_bad_sig") unless $sig eq $good_sig;
+	}
+
+> At least it doesn't seem to be a time sync problem since the test for too
+> early/too late times have different error messages.. --[[Joey]]
