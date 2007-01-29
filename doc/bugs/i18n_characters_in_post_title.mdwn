@@ -40,6 +40,14 @@ I hope it's a bug, not a feature and you fix it soon :) --Pawel
 
 >>>>> Thanks for the hint! It's good for me, but rather not for common users :)
 
+>>>>>> Interesting... I have another result:
+>>>>>>
+>>>>>>        perl -MIkiWiki -le 'print IkiWiki::titlepage(shift).".mdwn"' "Błąd"
+>>>>>>        B__179____177__d.mdwn
+>>>>>>
+>>>>>> What's your locale? I have both pl\_PL (ISO-8859-2) and pl\_PL.UTF-8,
+>>>>>> but I use pl\_PL. Is it wrong? --Pawel
+
 >>>> Now, as to UTF7, in retrospect, using a standard encoding might be a
 >>>> better idea than coming up with my own encoding for filenames. Can 
 >>>> you provide a pointer to a description to modified-UTF7? --[[Joey]]
