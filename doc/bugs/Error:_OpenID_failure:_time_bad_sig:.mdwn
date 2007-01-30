@@ -25,7 +25,7 @@ ikiwiki or my OpenID servers. --Pawel
 		my ($sig_time, $sig) = split(/\-/, $self->args("oic.time") || "");
 		# complain if more than an hour since we sent them off
 		return $self->_fail("time_expired")   if $sig_time < $now - 3600;
-		# also complain if the signature is from the future by more than 30 seconds,
+		 also complain if the signature is from the future by more than 30 seconds,
 		# which compensates for potential clock drift between nodes in a web farm.
 		return $self->_fail("time_in_future") if $sig_time - 30 > $now;
 		# and check that the time isn't faked
@@ -41,3 +41,6 @@ I've had this problem too, but with my track record of reporting OpenID bugs
 I thought it best if I held my tongue. I usually experience this the first
 time I sign in on any ikiwiki installation of {ikiwiki.kitenet, ikidev, 
 betacantrips}, and I think re-logging in always works. --Ethan
+
+> Does seem easier to repro than I thought.
+> Ok, fixed it.. [[bugs/done]] --[[Joey]]

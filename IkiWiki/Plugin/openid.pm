@@ -140,13 +140,14 @@ sub getobj ($$) { #{{{
 	# Store the secret in the session.
 	my $secret=$session->param("openid_secret");
 	if (! defined $secret) {
-		$secret=$session->param(openid_secret => time);
+		$secret=rand;
+		$session->param(openid_secret => $secret);
 	}
 
 	return Net::OpenID::Consumer->new(
 		ua => $ua,
 		args => $q,
-		consumer_secret => $secret,
+		consumer_secret => sub { return shift()+$secret },
 		required_root => $config{cgiurl},
 	);
 } #}}}
