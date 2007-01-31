@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:18-0500\n"
+"POT-Creation-Date: 2007-01-31 02:17-0500\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -30,7 +30,8 @@ msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશ�
 msgid "Preferences saved."
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "ચર્ચા"
@@ -104,7 +105,7 @@ msgstr "આના પર બરાબર છે %s"
 msgid "creating new page %s"
 msgstr "નવું પાનું %s બનાવે છે"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
 msgstr "અહીં કોઇ તૂટેલ કડી નથી!"
 
@@ -124,6 +125,10 @@ msgstr "--rss અથવા --atom ઉપયોગ કરતી વખતે વ�
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
+
+#: ../IkiWiki/Plugin/inline.pm:165 ../IkiWiki/Render.pm:101
+msgid "Discussion"
+msgstr "ચર્ચા"
 
 #: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
@@ -154,7 +159,7 @@ msgstr "આ શું છે?"
 msgid "Get an OpenID"
 msgstr "ઓપનઆઇડી મેળવો"
 
-#: ../IkiWiki/Plugin/orphans.pm:41
+#: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "બધા પાનાંઓ બીજા પાનાંઓ વડે જોડાયેલ છે."
 
@@ -245,10 +250,6 @@ msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
 msgstr "REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી શકાશે નહી"
-
-#: ../IkiWiki/Render.pm:101
-msgid "Discussion"
-msgstr "ચર્ચા"
 
 #: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format

@@ -21,8 +21,9 @@ sub preprocess (@) { #{{{
 	my @broken;
 	foreach my $page (keys %links) {
 		if (pagespec_match($page, $params{pages})) {
+			my $discussion=gettext("discussion");
 			foreach my $link (@{$links{$page}}) {
-				next if $link =~ /.*\/discussion/i && $config{discussion};
+				next if $link =~ /.*\/\Q$discussion\E/i && $config{discussion};
 				my $bestlink=bestlink($page, $link);
 				next if length $bestlink;
 				push @broken,

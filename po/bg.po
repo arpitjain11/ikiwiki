@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:18-0500\n"
+"POT-Creation-Date: 2007-01-31 02:17-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -32,7 +32,8 @@ msgstr "Първо трябва да влезете."
 msgid "Preferences saved."
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "дискусия"
@@ -106,7 +107,7 @@ msgstr "е обработен нормално от %s"
 msgid "creating new page %s"
 msgstr "създаване на нова страницa „%s”"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
 msgstr "Няма „счупени” връзки!"
 
@@ -128,6 +129,10 @@ msgstr ""
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "непознат вид сортиране „%s”"
+
+#: ../IkiWiki/Plugin/inline.pm:165 ../IkiWiki/Render.pm:101
+msgid "Discussion"
+msgstr "Дискусия"
 
 #: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
@@ -160,7 +165,7 @@ msgstr "Какво е това?"
 msgid "Get an OpenID"
 msgstr "Получаване на OpenID номер"
 
-#: ../IkiWiki/Plugin/orphans.pm:41
+#: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Всички страници имат връзки от други страници."
 
@@ -253,10 +258,6 @@ msgid ""
 msgstr ""
 "Променливата от обкръжението „REV” не е указана. Програмата не се изпълнява "
 "като „svn post-commit hook”. Няма да бъдат разпратени известявания"
-
-#: ../IkiWiki/Render.pm:101
-msgid "Discussion"
-msgstr "Дискусия"
 
 #: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format

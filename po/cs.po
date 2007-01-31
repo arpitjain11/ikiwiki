@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:18-0500\n"
+"POT-Creation-Date: 2007-01-31 02:17-0500\n"
 "PO-Revision-Date: 2007-01-07 11:59+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -30,7 +30,8 @@ msgstr "Nejprve se musíte přihlásit."
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskuse"
@@ -104,7 +105,7 @@ msgstr "zpracováno ok %s"
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
@@ -124,6 +125,10 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
+
+#: ../IkiWiki/Plugin/inline.pm:165 ../IkiWiki/Render.pm:101
+msgid "Discussion"
+msgstr "Diskuse"
 
 #: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
@@ -155,7 +160,7 @@ msgstr "Co to je?"
 msgid "Get an OpenID"
 msgstr "Získat OpenID"
 
-#: ../IkiWiki/Plugin/orphans.pm:41
+#: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Na každou stránku vede odkaz z jiné stránky."
 
@@ -247,10 +252,6 @@ msgid ""
 "notifications"
 msgstr ""
 "REV není nastavena, není spuštěna ze svn post-commit, nemohu zaslat oznámení"
-
-#: ../IkiWiki/Render.pm:101
-msgid "Discussion"
-msgstr "Diskuse"
 
 #: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format

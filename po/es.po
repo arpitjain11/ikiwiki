@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:18-0500\n"
+"POT-Creation-Date: 2007-01-31 02:17-0500\n"
 "PO-Revision-Date: 2007-01-03 09:37+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -31,7 +31,8 @@ msgstr "Antes es necesario identificarse"
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "comentarios"
@@ -105,7 +106,7 @@ msgstr "proceso completado con éxito a %s"
 msgid "creating new page %s"
 msgstr "creando nueva página %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
 msgstr "¡ No hay enlaces rotos !"
 
@@ -128,6 +129,10 @@ msgstr ""
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "no conozco este tipo de ordenación %s"
+
+#: ../IkiWiki/Plugin/inline.pm:165 ../IkiWiki/Render.pm:101
+msgid "Discussion"
+msgstr "Comentarios"
 
 #: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
@@ -160,7 +165,7 @@ msgstr "¿ Qué es esto ?"
 msgid "Get an OpenID"
 msgstr "Obtenga un identificador OpenID"
 
-#: ../IkiWiki/Plugin/orphans.pm:41
+#: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Todas las páginas están referenciadas por otras."
 
@@ -253,10 +258,6 @@ msgid ""
 msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
 "svn post-commit; no puedo enviar notificación alguna."
-
-#: ../IkiWiki/Render.pm:101
-msgid "Discussion"
-msgstr "Comentarios"
 
 #: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format

@@ -25,6 +25,7 @@ sub preprocess (@) { #{{{
 	}
 	
 	my @orphans;
+	my $discussion=gettext("discussion");
 	foreach my $page (keys %renderedfiles) {
 		next if $linkedto{$page};
 		next unless pagespec_match($page, $params{pages});
@@ -32,7 +33,7 @@ sub preprocess (@) { #{{{
 		# indirectly linked to a page via that page's backlinks.
 		next if grep { 
 			length $_ &&
-			($_ !~ /\/Discussion$/i || ! $config{discussion}) &&
+			($_ !~ /\/\Q$discussion\E$/i || ! $config{discussion}) &&
 			bestlink($page, $_) !~ /^($page|)$/ 
 		} @{$links{$page}};
 		push @orphans, $page;

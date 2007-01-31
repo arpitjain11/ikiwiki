@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:18-0500\n"
+"POT-Creation-Date: 2007-01-31 02:17-0500\n"
 "PO-Revision-Date: 2007-01-22 22:12+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -32,7 +32,8 @@ msgstr "Vous devez d'abord vous identifier."
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
@@ -107,7 +108,7 @@ msgstr "A été correctement traité à %s"
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
 msgstr "Il n'y a pas de lien cassé !"
 
@@ -129,6 +130,10 @@ msgstr ""
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
+
+#: ../IkiWiki/Plugin/inline.pm:165 ../IkiWiki/Render.pm:101
+msgid "Discussion"
+msgstr "Discussion"
 
 #: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
@@ -161,7 +166,7 @@ msgstr "Qu'est-ce que c'est ?"
 msgid "Get an OpenID"
 msgstr "Obtenir un identifiant ouvert"
 
-#: ../IkiWiki/Plugin/orphans.pm:41
+#: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Toutes les pages sont liées à d'autres pages."
 
@@ -255,10 +260,6 @@ msgstr ""
 "REV n'est pas défini, pas de lancement depuis le système de rapport par mail "
 "après un commit sur le svn (« hook post-commit »), impossible d'envoyer des "
 "notifications"
-
-#: ../IkiWiki/Render.pm:101
-msgid "Discussion"
-msgstr "Discussion"
 
 #: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:18-0500\n"
+"POT-Creation-Date: 2007-01-31 02:17-0500\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -30,7 +30,8 @@ msgstr "Du måste logga in först."
 msgid "Preferences saved."
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
 #: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskussion"
@@ -104,7 +105,7 @@ msgstr "behandlad ok på %s"
 msgid "creating new page %s"
 msgstr "skapar nya sidan %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
 msgstr "Det finns inga trasiga länkar!"
 
@@ -124,6 +125,10 @@ msgstr "Måste ange url till wiki med --url när --rss eller --atom används"
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "okänd sorteringstyp %s"
+
+#: ../IkiWiki/Plugin/inline.pm:165 ../IkiWiki/Render.pm:101
+msgid "Discussion"
+msgstr "Diskussion"
 
 #: ../IkiWiki/Plugin/inline.pm:372
 msgid "RPC::XML::Client not found, not pinging"
@@ -156,7 +161,7 @@ msgstr "Vad är det här?"
 msgid "Get an OpenID"
 msgstr "Skaffa ett OpenID"
 
-#: ../IkiWiki/Plugin/orphans.pm:41
+#: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Alla sidor länkas till av andra sidor."
 
@@ -249,10 +254,6 @@ msgid ""
 msgstr ""
 "REV är inte inställt, kör inte från svn post-commit-hook, kan inte skicka "
 "notifieringar"
-
-#: ../IkiWiki/Render.pm:101
-msgid "Discussion"
-msgstr "Diskussion"
 
 #: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
 #, perl-format
