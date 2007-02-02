@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-31 02:17-0500\n"
+"POT-Creation-Date: 2007-02-01 21:27-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -16,43 +16,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#. translators: The first parameter is a page name,
-#. translators: second is the user who locked it.
-#: ../IkiWiki/CGI.pm:51
-#, perl-format
-msgid "%s is locked by %s and cannot be edited"
-msgstr ""
-"Страницата „%s” е заключена от потребителя „%s” и не може да бъде променяна"
-
-#: ../IkiWiki/CGI.pm:140
+#: ../IkiWiki/CGI.pm:152
 msgid "You need to log in first."
 msgstr "Първо трябва да влезете."
 
-#: ../IkiWiki/CGI.pm:257
+#: ../IkiWiki/CGI.pm:262
 msgid "Preferences saved."
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
-#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
+#: ../IkiWiki/CGI.pm:412 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
+#: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "дискусия"
 
-#: ../IkiWiki/CGI.pm:446
+#: ../IkiWiki/CGI.pm:457
 #, perl-format
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
+#: ../IkiWiki/CGI.pm:474 ../IkiWiki/CGI.pm:517
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
 
-#: ../IkiWiki/CGI.pm:629
+#: ../IkiWiki/CGI.pm:625
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:656
+#: ../IkiWiki/CGI.pm:657
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -141,6 +134,12 @@ msgstr "модулът „RPC::XML::Client” не е намерен; източ
 #: ../IkiWiki/Plugin/linkmap.pm:99
 msgid "linkmap failed to run dot"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
+
+#: ../IkiWiki/Plugin/lockedit.pm:24
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr ""
+"Страницата „%s” е заключена от потребителя „%s” и не може да бъде променяна"
 
 #: ../IkiWiki/Plugin/mdwn.pm:37
 #, perl-format
@@ -372,13 +371,13 @@ msgstr "успешно генериране на %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "формат: ikiwiki [опции] източник местоназначение"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "При използване на пареметъра „--cgi” е необходимо да се укаже и "
 "местоположението на уикито чрез параметъра „--url”"
 
-#: ../IkiWiki.pm:148 ../IkiWiki.pm:149
+#: ../IkiWiki.pm:147 ../IkiWiki.pm:148
 msgid "Error"
 msgstr "Грешка"
 
@@ -386,7 +385,7 @@ msgstr "Грешка"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:528
+#: ../IkiWiki.pm:527
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-31 02:17-0500\n"
+"POT-Creation-Date: 2007-02-01 21:27-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -16,42 +16,36 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
 
-#. translators: The first parameter is a page name,
-#. translators: second is the user who locked it.
-#: ../IkiWiki/CGI.pm:51
-#, perl-format
-msgid "%s is locked by %s and cannot be edited"
-msgstr "%s bị %s khoá nên không thể sửa được"
-
-#: ../IkiWiki/CGI.pm:140
+#: ../IkiWiki/CGI.pm:152
 msgid "You need to log in first."
 msgstr "Trước tiên bạn cần phải đăng nhập."
 
-#: ../IkiWiki/CGI.pm:257
+#: ../IkiWiki/CGI.pm:262
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
-#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
+#: ../IkiWiki/CGI.pm:412 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
+#: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:446
+#: ../IkiWiki/CGI.pm:457
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
+#: ../IkiWiki/CGI.pm:474 ../IkiWiki/CGI.pm:517
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:629
+#: ../IkiWiki/CGI.pm:625
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:656
+#: ../IkiWiki/CGI.pm:657
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -140,6 +134,11 @@ msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 #: ../IkiWiki/Plugin/linkmap.pm:99
 msgid "linkmap failed to run dot"
 msgstr "linkmap không chạy dot được"
+
+#: ../IkiWiki/Plugin/lockedit.pm:24
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr "%s bị %s khoá nên không thể sửa được"
 
 #: ../IkiWiki/Plugin/mdwn.pm:37
 #, perl-format
@@ -368,12 +367,12 @@ msgstr "%s đã được tạo ra"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:148 ../IkiWiki.pm:149
+#: ../IkiWiki.pm:147 ../IkiWiki.pm:148
 msgid "Error"
 msgstr "Lỗi"
 
@@ -381,7 +380,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:528
+#: ../IkiWiki.pm:527
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

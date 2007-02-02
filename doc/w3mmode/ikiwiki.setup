@@ -26,7 +26,7 @@ use IkiWiki::Setup::Standard {
 		},
 	],
 	
-	anonok => 1,
+	add_plugins => [qw{anonok}],
 	rss => 1,
 	atom => 1,
 	discussion => 1,

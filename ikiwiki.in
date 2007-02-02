@@ -31,7 +31,6 @@ sub getconfig () { #{{{
 			"wrappermode=i" => \$config{wrappermode},
 			"rcs=s" => \$config{rcs},
 			"no-rcs" => sub { $config{rcs}="" },
-			"anonok!" => \$config{anonok},
 			"cgi!" => \$config{cgi},
 			"discussion!" => \$config{discussion},
 			"w3mmode!" => \$config{w3mmode},

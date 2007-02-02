@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-31 02:17-0500\n"
+"POT-Creation-Date: 2007-02-01 21:27-0500\n"
 "PO-Revision-Date: 2007-01-03 09:37+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -16,42 +16,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#. translators: The first parameter is a page name,
-#. translators: second is the user who locked it.
-#: ../IkiWiki/CGI.pm:51
-#, perl-format
-msgid "%s is locked by %s and cannot be edited"
-msgstr "La página %s está bloqueada por %s y no puede modificarse"
-
-#: ../IkiWiki/CGI.pm:140
+#: ../IkiWiki/CGI.pm:152
 msgid "You need to log in first."
 msgstr "Antes es necesario identificarse"
 
-#: ../IkiWiki/CGI.pm:257
+#: ../IkiWiki/CGI.pm:262
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:407 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/orphans.pm:28
-#: ../IkiWiki/Render.pm:97 ../IkiWiki/Render.pm:165
+#: ../IkiWiki/CGI.pm:412 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:160 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
+#: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:446
+#: ../IkiWiki/CGI.pm:457
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:463 ../IkiWiki/CGI.pm:506
+#: ../IkiWiki/CGI.pm:474 ../IkiWiki/CGI.pm:517
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:629
+#: ../IkiWiki/CGI.pm:625
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:656
+#: ../IkiWiki/CGI.pm:657
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -141,6 +135,11 @@ msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna
 #: ../IkiWiki/Plugin/linkmap.pm:99
 msgid "linkmap failed to run dot"
 msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+
+#: ../IkiWiki/Plugin/lockedit.pm:24
+#, perl-format
+msgid "%s is locked by %s and cannot be edited"
+msgstr "La página %s está bloqueada por %s y no puede modificarse"
 
 #: ../IkiWiki/Plugin/mdwn.pm:37
 #, perl-format
@@ -375,13 +374,13 @@ msgstr "creado con éxito el programa envoltorio %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "uso: ikiwiki [opciones] origen destino"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Es obligatorio especicar un url al wiki con el parámetro --url si se utiliza "
 "el parámetro --cgi"
 
-#: ../IkiWiki.pm:148 ../IkiWiki.pm:149
+#: ../IkiWiki.pm:147 ../IkiWiki.pm:148
 msgid "Error"
 msgstr "Error"
 
@@ -389,7 +388,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:528
+#: ../IkiWiki.pm:527
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

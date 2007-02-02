@@ -33,28 +33,25 @@ sub redirect ($$) { #{{{
 	}
 } #}}}
 
-sub page_locked ($$;$) { #{{{
+sub check_canedit ($$$;$) { #{{{
 	my $page=shift;
+	my $q=shift;
 	my $session=shift;
 	my $nonfatal=shift;
 	
-	my $user=$session->param("name");
-	return if defined $user && is_admin($user);
-
-	foreach my $admin (@{$config{adminuser}}) {
-		my $locked_pages=userinfo_get($admin, "locked_pages");
-		if (pagespec_match($page, userinfo_get($admin, "locked_pages"))) {
-			return 1 if $nonfatal;
-
-			#translators: The first parameter is a page name,
-			#translators: second is the user who locked it.
-			error(sprintf(gettext("%s is locked by %s and cannot be edited"),
-				htmllink("", "", $page, 1),
-				userlink($admin)));
+	my $canedit;
+	run_hooks(canedit => sub {
+		return if defined $canedit;
+		my $ret=shift->($page, $q, $session);
+		if (defined $ret && $ret eq "") {
+			$canedit=1;
 		}
-	}
-
-	return 0;
+		elsif (defined $ret) {
+			$canedit=0;
+			error($ret) unless $nonfatal;
+		}
+	});
+	return $canedit;
 } #}}}
 
 sub decode_form_utf8 ($) { #{{{
@@ -113,6 +110,23 @@ sub cgi_recentchanges ($) { #{{{
 	print $q->header(-charset => 'utf-8'), $template->output;
 } #}}}
 
+# Check if the user is signed in. If not, redirect to the signin form and
+# save their place to return to later.
+sub needsignin ($$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	if (! defined $session->param("name") ||
+	    ! userinfo_get($session->param("name"), "regdate")) {
+	    	if (! defined $session->param("postsignin")) {
+			$session->param(postsignin => $ENV{QUERY_STRING});
+		}
+		cgi_signin($q, $session);
+		cgi_savesession($session);
+		exit;
+	}
+} #}}}	
+
 sub cgi_signin ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
@@ -134,11 +148,11 @@ sub cgi_signin ($$) { #{{{
 	);
 	my $buttons=["Login"];
 	
-	$form->field(name => "do", type => "hidden");
-	
 	if ($q->param("do") ne "signin" && !$form->submitted) {
 		$form->text(gettext("You need to log in first."));
 	}
+	$form->field(name => "do", type => "hidden", value => "signin",
+		force => 1);
 	
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session);
@@ -166,22 +180,18 @@ sub cgi_postsignin ($$) { #{{{
 	my $session=shift;
 
 	# Continue with whatever was being done before the signin process.
-	if (defined $q->param("do") && $q->param("do") ne "signin" &&
-	    defined $session->param("postsignin")) {
-		my $postsignin=CGI->new($session->param("postsignin"));
-		$session->clear("postsignin");
-		cgi($postsignin, $session);
-		cgi_savesession($session);
-		exit;
-	}
-	else {
-		redirect($q, $config{url});
-	}
+	my $postsignin=CGI->new($session->param("postsignin"));
+	$session->clear("postsignin");
+	cgi($postsignin, $session);
+	cgi_savesession($session);
+	exit;
 } #}}}
 
 sub cgi_prefs ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
+
+	needsignin($q, $session);
 
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
@@ -210,13 +220,10 @@ sub cgi_prefs ($$) { #{{{
 	$form->field(name => "email", size => 50);
 	$form->field(name => "subscriptions", size => 50,
 		comment => "(".htmllink("", "", "PageSpec", 1).")");
-	$form->field(name => "locked_pages", size => 50,
-		comment => "(".htmllink("", "", "PageSpec", 1).")");
 	$form->field(name => "banned_users", size => 50);
 	
 	my $user_name=$session->param("name");
 	if (! is_admin($user_name)) {
-		$form->field(name => "locked_pages", type => "hidden");
 		$form->field(name => "banned_users", type => "hidden");
 	}
 
@@ -225,8 +232,6 @@ sub cgi_prefs ($$) { #{{{
 			value => userinfo_get($user_name, "email"));
 		$form->field(name => "subscriptions", force => 1,
 			value => userinfo_get($user_name, "subscriptions"));
-		$form->field(name => "locked_pages", force => 1,
-			value => userinfo_get($user_name, "locked_pages"));
 		if (is_admin($user_name)) {
 			$form->field(name => "banned_users", force => 1,
 				value => join(" ", get_banned_users()));
@@ -245,7 +250,7 @@ sub cgi_prefs ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq 'Save Preferences' && $form->validate) {
-		foreach my $field (qw(email subscriptions locked_pages)) {
+		foreach my $field (qw(email subscriptions)) {
 			if (defined $form->field($field) && length $form->field($field)) {
 				userinfo_set($user_name, $field, $form->field($field)) || error("failed to set $field");
 			}
@@ -422,15 +427,21 @@ sub cgi_editpage ($$) { #{{{
 				if length $config{userdir};
 
 			@page_locs = grep {
-				! exists $pagecase{lc $_} &&
-				! page_locked($_, $session, 1)
+				! exists $pagecase{lc $_}
 			} @page_locs;
-			
 			if (! @page_locs) {
 				# hmm, someone else made the page in the
 				# meantime?
 				redirect($q, "$config{url}/".htmlpage($page));
 				return;
+			}
+
+			my @editable_locs = grep {
+				check_canedit($_, $q, $session, 1)
+			} @page_locs;
+			if (! @editable_locs) {
+				# let it throw an error this time
+				map { check_canedit($_, $q, $session) } @page_locs;
 			}
 			
 			my @page_types;
@@ -440,13 +451,13 @@ sub cgi_editpage ($$) { #{{{
 			
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
-				options => \@page_locs, value => $best_loc);
+				options => \@editable_locs, value => $best_loc);
 			$form->field(name => "type", type => 'select',
 				options => \@page_types);
 			$form->title(sprintf(gettext("creating %s"), pagetitle($page)));
 		}
 		elsif ($form->field("do") eq "edit") {
-			page_locked($page, $session);
+			check_canedit($page, $q, $session);
 			if (! defined $form->field('editcontent') || 
 			    ! length $form->field('editcontent')) {
 				my $content="";
@@ -467,7 +478,7 @@ sub cgi_editpage ($$) { #{{{
 	}
 	else {
 		# save page
-		page_locked($page, $session);
+		check_canedit($page, $q, $session);
 		
 		my $content=$form->field('editcontent');
 
@@ -547,7 +558,7 @@ sub cgi_savesession ($) { #{{{
 	my $oldmask=umask(077);
 	$session->flush;
 	umask($oldmask);
-}
+} #}}}
 
 sub cgi (;$$) { #{{{
 	my $q=shift;
@@ -606,36 +617,26 @@ sub cgi (;$$) { #{{{
 			}
 		}
 	}
-
-	# Everything below this point needs the user to be signed in.
-	if (((! $config{anonok} || $do eq 'prefs') &&
-	     (! defined $session->param("name") ||
-	     ! userinfo_get($session->param("name"), "regdate")))
-            || $do eq 'signin') {
-	    	if ($do ne 'signin' && ! defined $session->param("postsignin")) {
-			$session->param(postsignin => $ENV{QUERY_STRING});
-		}
-		cgi_signin($q, $session);
-		cgi_savesession($session);
-		return;
-	}
-	elsif (defined $session->param("postsignin")) {
-		cgi_postsignin($q, $session);
-	}
-
-	if (defined $session->param("name") && userinfo_get($session->param("name"), "banned")) {
+	
+	if (defined $session->param("name") &&
+	    userinfo_get($session->param("name"), "banned")) {
 		print $q->header(-status => "403 Forbidden");
 		$session->delete();
 		print gettext("You are banned.");
 		cgi_savesession($session);
-		exit;
 	}
-	
-	if ($do eq 'create' || $do eq 'edit') {
-		cgi_editpage($q, $session);
+	elsif ($do eq 'signin') {
+		cgi_signin($q, $session);
+		cgi_savesession($session);
+	}
+	elsif (defined $session->param("postsignin")) {
+		cgi_postsignin($q, $session);
 	}
 	elsif ($do eq 'prefs') {
 		cgi_prefs($q, $session);
+	}
+	elsif ($do eq 'create' || $do eq 'edit') {
+		cgi_editpage($q, $session);
 	}
 	elsif ($do eq 'blog') {
 		my $page=titlepage(decode_utf8($q->param('title')));

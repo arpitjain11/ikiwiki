@@ -129,7 +129,7 @@ and can be enabled by enabling [[CGI]].
 
 ### User registration
 
-Can optionally be configured to allow only registered users to post
+Can optionally be configured to allow only registered users to edit
 pages.
 
 User registration can be done using a web form, or ikiwiki can be
@@ -142,10 +142,12 @@ Thanks to subpages, every page can easily and automatically have a
 /Discussion subpage. By default, these links are included in the
 [[templates]] for each page.
 
-### Page locking
+### Edit controls
 
-Wiki admins can [[lock_pages|page_locking]] so that only other admins
-can edit them.
+Wiki admins can [[lock_pages|page_locking]] so that only other admins can
+edit them. Or a wiki can be set up to allow anyone to edit Discussion
+pages, but only registered users to edit other pages. These are just two
+possibilities, since page edit controls can be changed via plugins.
 
 ### [[PageHistory]]
 

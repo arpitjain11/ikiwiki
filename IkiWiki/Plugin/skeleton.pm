@@ -21,6 +21,7 @@ sub import { #{{{
 	hook(type => "change", id => "skeleton", call => \&change);
 	hook(type => "cgi", id => "skeleton", call => \&cgi);
 	hook(type => "auth", id => "skeleton", call => \&auth);
+	hook(type => "canedit", id => "skeleton", call => \&canedit);
 	hook(type => "formbuilder_setup", id => "skeleton", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "skeleton", call => \&formbuilder);
 	hook(type => "savestate", id => "savestate", call => \&savestate);
@@ -103,6 +104,14 @@ sub auth ($$) { #{{{
 	my $session=shift;
 
 	debug("skeleton plugin running in auth");
+} #}}}
+
+sub canedit ($$$) { #{{{
+	my $page=shift;
+	my $cgi=shift;
+	my $session=shift;
+
+	debug("skeleton plugin running in canedit");
 } #}}}
 
 sub formbuilder_setup (@) { #{{{

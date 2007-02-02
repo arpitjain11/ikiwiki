@@ -192,6 +192,20 @@ object's "name" parameter to the authenticated user's name. Note that
 if the name is set to the name of a user who is not registered,
 a basic registration of the user will be automatically performed.
 
+### canedit
+
+	hook(type => "canedit", id => "foo", call => \&pagelocked);
+
+This hook can be used to implement arbitrary access methods to control when
+a page can be edited using the web interface (commits from revision control
+bypass it). When a page is edited, each registered canedit hook is called
+in turn, and passed the page name, a CGI object, and a session object.
+
+If edit can proceed, the hook should return "". If the edit is not allowed
+by this hook, the hook should return an error message for the user to see.
+If the hook has no opinion about whether the edit can proceed, return
+`undef`, and the next plugin will be asked to decide.
+
 ### formbuilder
 
 	hook(type => "formbuilder_setup", id => "foo", call => \&formbuilder_setup);
