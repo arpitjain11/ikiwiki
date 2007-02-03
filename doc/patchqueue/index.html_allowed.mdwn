@@ -119,3 +119,45 @@ In case whitespace gets garbled, I'm also leaving a copy of the patch on [my sit
      
      	return $page;
      } #}}}
+
+I independently implemented a similar, but smaller patch.
+(It's smaller because I only care about rendering; not CGI, for example.)
+The key to this patch is that "A/B/C" is treated as equivalent
+to "A/B/C/index".
+Here it is:  --Per Bothner
+
+    --- IkiWiki/Render.pm~  2007-01-11 15:01:51.000000000 -0800
+    +++ IkiWiki/Render.pm   2007-02-02 22:24:12.000000000 -0800
+    @@ -60,9 +60,9 @@
+            foreach my $dir (reverse split("/", $page)) {
+                    if (! $skip) {
+                            $path.="../";
+    -                       unshift @ret, { url => $path.htmlpage($dir), page => pagetitle($dir) };
+    +                       unshift @ret, { url => abs2rel(htmlpage(bestlink($page, $dir)), dirname($page)), page => pagetitle($dir) };
+                    }
+    -               else {
+    +               elsif ($dir ne "index") {
+                            $skip=0;
+                    }
+            }
+
+    --- IkiWiki.pm~ 2007-01-12 12:47:09.000000000 -0800
+    +++ IkiWiki.pm  2007-02-02 18:02:16.000000000 -0800
+    @@ -315,6 +315,12 @@
+                    elsif (exists $pagecase{lc $l}) {
+                            return $pagecase{lc $l};
+                     }
+    +               else {
+    +                   my $lindex = $l . "/index";
+    +                   if (exists $links{$lindex}) {
+    +                       return $lindex;
+    +               }
+    +               }
+             } while $cwd=~s!/?[^/]+$!!;
+     
+            if (length $config{userdir} && exists $links{"$config{userdir}/".lc($link)}) {
+
+Note I handle setting the url; slightly differently.
+Also note that an initial "index" is ignored.  I.e. a
+page "A/B/index.html" is treated as "A/B".
+
