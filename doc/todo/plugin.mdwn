@@ -1,6 +1,11 @@
 Suggestions of ideas for plugins:
 
 * list of registered users - tricky because it sorta calls for a way to rebuild the page when a new user is registered. Might be better as a cgi?
+> At best, this could only show the users who have logged in, not all
+> permitted by the current auth plugin(s).  HTTP auth would need
+> web-server-specific code to list all users, and openid can't feasibly do so
+> at all. --[[JoshTriplett]]
+
 * [[sigs]] ?
 
 * Support [[RecentChanges]] as a regular page containing a plugin that
@@ -12,6 +17,9 @@ Suggestions of ideas for plugins:
   Or using an iframe
   to inline the cgi, although firefox seems to render that nastily with
   nested scroll bars. :-(
+> Or just link to the equivalent in the version control system, if available;
+> gitweb's shortlog or summary view would work nicely as a
+> RecentChanges. --[[JoshTriplett]]
 
 * It would be nice to be able to have a button to show "Differences" (or 
   "Show Diff") when editing a page. Is that an option that can be enabled?
@@ -34,3 +42,7 @@ Suggestions of ideas for plugins:
 * rcs plugin ([[JeremyReed]] has one he has been using for over a month with over 850 web commits with 13 users with over ten commits each.)
 
 * manpage plugin: convert **"ls(1)"** style content into Markdown like **\[ls(1)\]\(http://example.org/man.cgi?name=ls&sect=1\)** or into HTML directly.
+> With a full installation of groff available, man offers HTML output.  Might
+> take some fiddling to make it fit into the ikiwiki templates, and you might
+> or might not want to convert pages in the SEE ALSO as
+> well. --[[JoshTriplett]]
