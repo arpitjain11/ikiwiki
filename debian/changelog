@@ -5,7 +5,7 @@ ikiwiki (1.42) UNRELEASED; urgency=low
   * Add canedit hook, allowing arbitrary controls over when a page can be
     edited.
   * Move code forcing signing before edit to a new "signinedit" plugin, and
-    code checking for locked pages into a new "lockedit" plugin. Both are 
+    code checking for locked pages into a new "lockedit" plugin. Both are
     enabled by default.
   * Remove the anonok config setting. This is now implemented by a new
     "anonok" plugin. Anyone with a wiki allowing anonymous edits should
@@ -13,8 +13,10 @@ ikiwiki (1.42) UNRELEASED; urgency=low
   * Add an opendiscussion plugin that allows anonymous users to edit
     discussion pages, on a wiki that is otherwise wouldn't allow it.
   * Lots of CGI code reorg and cleanup.
+  * Avoid using lots of memory when copying large non-html files.
+    Yes, you can keep videos in the wiki..
 
- -- Joey Hess <joeyh@debian.org>  Thu,  1 Feb 2007 15:36:38 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri,  2 Feb 2007 21:59:04 -0500
 
 ikiwiki (1.41) unstable; urgency=low
 

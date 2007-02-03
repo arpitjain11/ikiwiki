@@ -231,9 +231,10 @@ sub srcfile ($) { #{{{
 	error("internal error: $file cannot be found");
 } #}}}
 
-sub readfile ($;$) { #{{{
+sub readfile ($;$$) { #{{{
 	my $file=shift;
 	my $binary=shift;
+	my $wantfd=shift;
 
 	if (-l $file) {
 		error("cannot read a symlink ($file)");
@@ -242,16 +243,18 @@ sub readfile ($;$) { #{{{
 	local $/=undef;
 	open (IN, $file) || error("failed to read $file: $!");
 	binmode(IN) if ($binary);
+	return \*IN if $wantfd;
 	my $ret=<IN>;
 	close IN;
 	return $ret;
 } #}}}
 
-sub writefile ($$$;$) { #{{{
+sub writefile ($$$;$$) { #{{{
 	my $file=shift; # can include subdirs
 	my $destdir=shift; # directory to put file in
 	my $content=shift;
 	my $binary=shift;
+	my $wantfd=shift;
 	
 	my $test=$file;
 	while (length $test) {
@@ -274,6 +277,7 @@ sub writefile ($$$;$) { #{{{
 	
 	open (OUT, ">$destdir/$file") || error("failed to write $destdir/$file: $!");
 	binmode(OUT) if ($binary);
+	return \*OUT if $wantfd;
 	print OUT $content;
 	close OUT;
 } #}}}
