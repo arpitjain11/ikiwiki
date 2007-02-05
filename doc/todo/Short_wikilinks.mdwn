@@ -82,9 +82,22 @@ Other alternatives would be
 	\[[link bar=1]]
 	\[[dest 1=page_with_long_name]]
 
->>>> But this doesn't work so well for links that aren't valid keys. Such as stuff with spaces in it. I'd like to be able to write any kind of links conveniently, not just something that looks like a wikilink.
+>>>> But this doesn't work so well for links that aren't valid keys. Such
+>>>> as stuff with spaces in it. I'd like to be able to write any kind of
+>>>> links conveniently, not just something that looks like a wikilink.
 
->> It also shouldn't be difficult to support non-wiki links in this same way, so that you could still link everywhere in an uniform manner, as the (still preferred by me) HTML processing approach would provide. Perhaps a plugin call wouldn't even be necessary for the links themselves: what about aliases for the normal link mechanism? Although the 'ref' call may infact be cleaner, and adding that |-syntax for plugins could offer other possibilities for other plugins.
+>>>>> You're right, and to fix that it could be turned around: --[[Joey]]
+
+	\[[link 1=bar]]
+	\[[dest 1=page_with_long_name]]
+
+>> It also shouldn't be difficult to support non-wiki links in this same
+>> way, so that you could still link everywhere in an uniform manner, as
+>> the (still preferred by me) HTML processing approach would provide.
+>> Perhaps a plugin call wouldn't even be necessary for the links
+>> themselves: what about aliases for the normal link mechanism? Although
+>> the 'ref' call may infact be cleaner, and adding that |-syntax for
+>> plugins could offer other possibilities for other plugins.
 
 >>> I agree, it should be easy to make it support non-wiki links too.
 >>> We seem to have converged at something we can both live with that's
