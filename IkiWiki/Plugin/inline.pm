@@ -190,19 +190,25 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	if ($feeds && $rss) {
-		will_render($params{page}, rsspage($params{page}));
-		writefile(rsspage($params{page}), $config{destdir},
-			genfeed("rss", $rssurl, $desc, $params{page}, @list));
-		$toping{$params{page}}=1 unless $config{rebuild};
-		$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
-	}
-	if ($feeds && $atom) {
-		will_render($params{page}, atompage($params{page}));
-		writefile(atompage($params{page}), $config{destdir},
-			genfeed("atom", $atomurl, $desc, $params{page}, @list));
-		$toping{$params{page}}=1 unless $config{rebuild};
-		$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+	if ($feeds) {
+		if (exists $params{feedshow} && @list > $params{feedshow}) {
+			@list=@list[0..$params{feedshow} - 1];
+		}
+	
+		if ($rss) {
+			will_render($params{page}, rsspage($params{page}));
+			writefile(rsspage($params{page}), $config{destdir},
+				genfeed("rss", $rssurl, $desc, $params{page}, @list));
+			$toping{$params{page}}=1 unless $config{rebuild};
+			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+		}
+		if ($atom) {
+			will_render($params{page}, atompage($params{page}));
+			writefile(atompage($params{page}), $config{destdir},
+				genfeed("atom", $atomurl, $desc, $params{page}, @list));
+			$toping{$params{page}}=1 unless $config{rebuild};
+			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+		}
 	}
 	
 	return $ret;

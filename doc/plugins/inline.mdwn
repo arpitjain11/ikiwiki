@@ -18,6 +18,10 @@ directive:
 * `show` - Specify the maximum number of matching pages to inline.
   Default is 10, unless archiving, when the default is to show all.
   Set to 0 to show all matching pages.
+* `feedshow` - Specify the maximum number of matching pages to include in
+  the rss/atom feeds. The default is the same as the `show` value above,
+  and it cannot be larger than that value, but can be set to a smaller
+  value to avoid producing excessively large feed files.
 * `skip` - Specify a number of pages to skip displaying. Can be useful
   to produce a feed that only shows archived pages.
 * `rss` - controls generation of an rss feed. On by default if the wiki is
