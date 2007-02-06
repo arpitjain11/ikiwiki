@@ -48,7 +48,7 @@ sub genmap ($) { #{{{
 	# Get all the items to map.
 	my %mapitems = ();
 	foreach my $item (keys %links) {
-		if (pagespec_match($item, $params{pages})) {
+		if (pagespec_match($item, $params{pages}, $params{page})) {
 			my $link=htmlpage($item);
 			$link=IkiWiki::abs2rel($link, IkiWiki::dirname($params{page}));
 			$mapitems{$item}=$link;

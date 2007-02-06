@@ -45,6 +45,12 @@ of two tags, use:
 
 	blog/* and (link(tag/foo) or link(tag/bar))
 
+Note that page names in PageSpecs are matched against the absolute
+filenames of the pages in the wiki, so a pagespec "foo" used on page
+"a/b" will not match a page named "a/foo" or "a/b/foo". To match
+relative to the directory of the page containing the pagespec, you can
+use "./". For example, "./foo" on page "a/b" matches page "a/foo".
+
 ## Old syntax
 
 The old PageSpec syntax was called a "GlobList", and worked differently in

@@ -20,7 +20,7 @@ sub preprocess (@) { #{{{
 	
 	my @broken;
 	foreach my $page (keys %links) {
-		if (pagespec_match($page, $params{pages})) {
+		if (pagespec_match($page, $params{pages}, $params{page})) {
 			my $discussion=gettext("discussion");
 			foreach my $link (@{$links{$page}}) {
 				next if $link =~ /.*\/\Q$discussion\E/i && $config{discussion};

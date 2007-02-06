@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-01 21:27-0500\n"
+"POT-Creation-Date: 2007-02-06 15:06-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -127,7 +127,7 @@ msgstr "непознат вид сортиране „%s”"
 msgid "Discussion"
 msgstr "Дискусия"
 
-#: ../IkiWiki/Plugin/inline.pm:372
+#: ../IkiWiki/Plugin/inline.pm:378
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 
@@ -258,47 +258,47 @@ msgstr ""
 "Променливата от обкръжението „REV” не е указана. Програмата не се изпълнява "
 "като „svn post-commit hook”. Няма да бъдат разпратени известявания"
 
-#: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
+#: ../IkiWiki/Render.pm:247 ../IkiWiki/Render.pm:267
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "пропускане на невалидното име на файл „%s”"
 
-#: ../IkiWiki/Render.pm:292
+#: ../IkiWiki/Render.pm:307
 #, perl-format
 msgid "removing old page %s"
 msgstr "премахване на старата страница „%s”"
 
-#: ../IkiWiki/Render.pm:311
+#: ../IkiWiki/Render.pm:326
 #, perl-format
 msgid "scanning %s"
 msgstr "сканиране на „%s”"
 
-#: ../IkiWiki/Render.pm:320
+#: ../IkiWiki/Render.pm:335
 #, perl-format
 msgid "rendering %s"
 msgstr "обновяване на страницата „%s”"
 
-#: ../IkiWiki/Render.pm:332
+#: ../IkiWiki/Render.pm:347
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "обновяване на страницата „%s”, съдържаща препратки към „%s”"
 
-#: ../IkiWiki/Render.pm:349
+#: ../IkiWiki/Render.pm:364
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "обновяване на страницата „%s”, зависеща от „%s”"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:402
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "обновяване на „%s” и осъвременяване на обратните връзки"
 
-#: ../IkiWiki/Render.pm:399
+#: ../IkiWiki/Render.pm:414
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "премахване на „%s” понеже не се генерира от „%s”"
 
-#: ../IkiWiki/Render.pm:425
+#: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: неуспех при обновяване на страницата „%s”"
@@ -385,7 +385,7 @@ msgstr "Грешка"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:527
+#: ../IkiWiki.pm:531
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"

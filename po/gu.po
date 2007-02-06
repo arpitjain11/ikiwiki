@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-01 21:27-0500\n"
+"POT-Creation-Date: 2007-02-06 15:06-0500\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -124,7 +124,7 @@ msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 msgid "Discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/Plugin/inline.pm:372
+#: ../IkiWiki/Plugin/inline.pm:378
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
@@ -250,47 +250,47 @@ msgid ""
 "notifications"
 msgstr "REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી શકાશે નહી"
 
-#: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
+#: ../IkiWiki/Render.pm:247 ../IkiWiki/Render.pm:267
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ખરાબ ફાઇલ નામ છોડી દે છે %s"
 
-#: ../IkiWiki/Render.pm:292
+#: ../IkiWiki/Render.pm:307
 #, perl-format
 msgid "removing old page %s"
 msgstr "જુનાં પાનાં દૂર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:311
+#: ../IkiWiki/Render.pm:326
 #, perl-format
 msgid "scanning %s"
 msgstr "%s શોધે છે"
 
-#: ../IkiWiki/Render.pm:320
+#: ../IkiWiki/Render.pm:335
 #, perl-format
 msgid "rendering %s"
 msgstr "રેન્ડર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:332
+#: ../IkiWiki/Render.pm:347
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "રેન્ડર કરે છે %s, જે %s સાથે જોડાણ ધરાવે છે"
 
-#: ../IkiWiki/Render.pm:349
+#: ../IkiWiki/Render.pm:364
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "રેન્ડર કરે છે %s, જે %s પર આધારિત છે"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:402
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "રેન્ડર કરે છે %s, તેનાં પાછળનાં જોડાણો સુધારવા માટે"
 
-#: ../IkiWiki/Render.pm:399
+#: ../IkiWiki/Render.pm:414
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "દૂર કરે છે %s, હવે %s વડે રેન્ડર કરાતું નથી"
 
-#: ../IkiWiki/Render.pm:425
+#: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: %s રેન્ડર કરી શકાતું નથી"
@@ -375,7 +375,7 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:527
+#: ../IkiWiki.pm:531
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"

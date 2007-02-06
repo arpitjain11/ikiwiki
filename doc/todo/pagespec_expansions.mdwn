@@ -40,12 +40,31 @@ now that I was mistaken.. "four or fewer levels deep" would be
 "@ or @/@ or @/@/@ or @/@/@/@". Well, I think it has a certain appeal but
 I can see why it might not be much of an improvement. :) --Ethan
 
-> OK, I took a shot at implementing the changes. I was thinking about making
-> pagespecs relative by default but I couldn't decide whether page
-> `foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
-> So I punted and left things as absolute, with `./*` matching
-> `foo/bar/*`, which I think is pretty clear.
-> The patch is at [ikidev](http://ikidev.betacantrips.com/patches/pagespec_enhancements.patch)
-> and you can see it work at 
-> [this page](http://ikidev.betacantrips.com/one/two/three/index.html) or
-> [this page](http://ikidev.betacantrips.com/one/two/three/princess.html) --Ethan
+> Seems to me that ".." would be the natural thing to use, not "@". --[[Joey]]
+
+OK, I took a shot at implementing the changes. I was thinking about making
+pagespecs relative by default but I couldn't decide whether page
+`foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
+So I punted and left things as absolute, with `./*` matching
+`foo/bar/*`, which I think is pretty clear.
+The patch is at [ikidev](http://ikidev.betacantrips.com/patches/pagespec_enhancements.patch)
+and you can see it work at 
+[this page](http://ikidev.betacantrips.com/one/two/three/index.html) or
+[this page](http://ikidev.betacantrips.com/one/two/three/princess.html) --Ethan
+
+> Nice patch, though I see the following problems with it:
+> * The sole pagespec_match in IkiWiki::Render probably should have `$p`
+>   as its third parameter. This will allow add_depends to add a
+>   dependency on a pagespec that matches relative to the page. I made this
+>   changes and it seems to work, new pages are noticed in updates.
+> * `! $from` fails to match pages named "0" :-)
+> * '/./ matches any letter, not just "." :-) :-)
+> * One other major problem. If you look at the doc/examples/blog/index.mdwn
+>   I changed it to use relative globs like "./posts/*", but they didn't work,
+>   because it looked for examples/blog/indexposts/* instead of
+>   examples/blog/index/posts/*. And, of course, what I really expected it to
+>   look for was examples/blog/posts/*. I think you may have made the wrong
+>   choice about that, so I changed it to go the other way. What do you think?
+>
+> I've committed support for ./ to ikiwiki now, based on your patch.
+> --[[Joey]]

@@ -26,7 +26,7 @@ sub preprocess (@) { #{{{
 	# Get all the items to map.
 	my @mapitems = ();
 	foreach my $page (keys %links) {
-		if (pagespec_match($page, $params{pages})) {
+		if (pagespec_match($page, $params{pages}, $params{page})) {
 			push @mapitems, $page;
 		}
 	}

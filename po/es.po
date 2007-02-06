@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-01 21:27-0500\n"
+"POT-Creation-Date: 2007-02-06 15:06-0500\n"
 "PO-Revision-Date: 2007-01-03 09:37+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -128,7 +128,7 @@ msgstr "no conozco este tipo de ordenación %s"
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:372
+#: ../IkiWiki/Plugin/inline.pm:378
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
@@ -258,49 +258,49 @@ msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
 "svn post-commit; no puedo enviar notificación alguna."
 
-#: ../IkiWiki/Render.pm:232 ../IkiWiki/Render.pm:252
+#: ../IkiWiki/Render.pm:247 ../IkiWiki/Render.pm:267
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ignorando el archivo %s porque su no nombre no es correcto"
 
-#: ../IkiWiki/Render.pm:292
+#: ../IkiWiki/Render.pm:307
 #, perl-format
 msgid "removing old page %s"
 msgstr "eliminando la antigua página %s"
 
-#: ../IkiWiki/Render.pm:311
+#: ../IkiWiki/Render.pm:326
 #, perl-format
 msgid "scanning %s"
 msgstr "explorando %s"
 
-#: ../IkiWiki/Render.pm:320
+#: ../IkiWiki/Render.pm:335
 #, perl-format
 msgid "rendering %s"
 msgstr "convirtiendo %s"
 
-#: ../IkiWiki/Render.pm:332
+#: ../IkiWiki/Render.pm:347
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "convirtiendo la página %s, la cual referencia a %s"
 
-#: ../IkiWiki/Render.pm:349
+#: ../IkiWiki/Render.pm:364
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "convirtiendo la página %s, la cual depende de %s"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:402
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 "convirtiendo la página %s para poner al día su lista de páginas que la "
 "referencian"
 
-#: ../IkiWiki/Render.pm:399
+#: ../IkiWiki/Render.pm:414
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 
-#: ../IkiWiki/Render.pm:425
+#: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"
@@ -388,7 +388,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:527
+#: ../IkiWiki.pm:531
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

@@ -20,7 +20,7 @@ sub canedit ($$) { #{{{
 	return undef if defined $user && IkiWiki::is_admin($user);
 
 	foreach my $admin (@{$config{adminuser}}) {
-		if (pagespec_match($page, IkiWiki::userinfo_get($admin, "locked_pages"))) {
+		if (pagespec_match($page, IkiWiki::userinfo_get($admin, "locked_pages"), "")) {
 			return sprintf(gettext("%s is locked by %s and cannot be edited"),
 				htmllink("", "", $page, 1),
 				IkiWiki::userlink($admin));

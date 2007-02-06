@@ -28,7 +28,7 @@ sub preprocess (@) { #{{{
 	my $discussion=gettext("discussion");
 	foreach my $page (keys %renderedfiles) {
 		next if $linkedto{$page};
-		next unless pagespec_match($page, $params{pages});
+		next unless pagespec_match($page, $params{pages}, $params{page});
 		# If the page has a link to some other page, it's
 		# indirectly linked to a page via that page's backlinks.
 		next if grep { 

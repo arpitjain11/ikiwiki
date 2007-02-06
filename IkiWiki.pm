@@ -854,23 +854,35 @@ sub pagespec_translate ($) { #{{{
 			$code.=" match_$1(\$page, ".safequote($2).")";
 		}
 		else {
-			$code.=" match_glob(\$page, ".safequote($word).")";
+			$code.=" match_glob(\$page, ".safequote($word).", \$from)";
 		}
 	}
 
 	return $code;
 } #}}}
 
-sub pagespec_match ($$) { #{{{
+sub pagespec_match ($$;$) { #{{{
 	my $page=shift;
 	my $spec=shift;
+	my $from=shift;
+	if (! defined $from){
+		$from = "";
+	}
 
 	return eval pagespec_translate($spec);
 } #}}}
 
-sub match_glob ($$) { #{{{
+sub match_glob ($$$) { #{{{
 	my $page=shift;
 	my $glob=shift;
+	my $from=shift;
+
+	# relative matching
+	if ($glob =~ m!^\./!) {
+		$from=~s!/?[^/]+$!!;
+		$glob=~s!^\./!!;a
+		$glob="$from/$glob";
+	}
 
 	# turn glob into safe regexp
 	$glob=quotemeta($glob);

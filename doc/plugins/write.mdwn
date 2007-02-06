@@ -312,10 +312,12 @@ page created from it. (Ie, it appends ".html".)
 
 Makes the specified page depend on the specified [[PageSpec]].
 
-#### `pagespec_match($$)`
+#### `pagespec_match($$;$)`
 
-Passed a page name, and a [[PageSpec]], returns true if the [[PageSpec]]
-matches the page.
+Passed a page name, a [[PageSpec]], and the location the glob should be
+matched against, returns true if the [[PageSpec]] matches the page. (If the
+third parameter is not passed, relative PageSpecs will match relative to
+the top of the wiki.)
 
 #### `bestlink($$)`
 
