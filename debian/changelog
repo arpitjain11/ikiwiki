@@ -17,9 +17,9 @@ ikiwiki (1.42) UNRELEASED; urgency=low
     Yes, you can keep videos in the wiki..
   * Add feedshow option to allow reducing the number of items included in
     an rss or atom feed.
-  * Patch based on a patch from Ethan to support relative matching in
-    PageSpecs, by using "./". pagespec_match() has grown a new third parameter
-    to support this.
+  * Change based on a patch from Ethan to support relative matching in
+    PageSpecs, by using "./".
+  * pagespec_match() has grown a new third parameter to support this.
 
  -- Joey Hess <joeyh@debian.org>  Tue,  6 Feb 2007 15:49:06 -0500
 
