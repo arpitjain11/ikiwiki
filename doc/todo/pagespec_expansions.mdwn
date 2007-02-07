@@ -45,6 +45,9 @@ I can see why it might not be much of an improvement. :) --Ethan
 >> I don't understand.. "a/b/.." matches a/b/c but not a/b/c/d ? That doesn't 
 >> seem natural to me at all. --Ethan
 
+>>> Ah.. in that case, why not use "a/b/* and !a/b/*/*" ? No need for a new
+>>> symbol. --[[Joey]]
+
 OK, I took a shot at implementing the changes. I was thinking about making
 pagespecs relative by default but I couldn't decide whether page
 `foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
@@ -96,6 +99,20 @@ and you can see it work at
 >> examples/blog/. To resolve this issue we should consider, for example:
 >> clothes/pants inlines `./jeans/*` -- probably means clothes/pants/jeans
 >> vacation/bermuda/blog inlines `./pics/*` -- probably vacation/bermuda/pics
+
+>>> What strikes me about your examples is that the "right thing" is
+>>> utterly contect dependent. Unfortunatly, I don't think that using
+>>> bestlink inside pagespec is possible. bestlinks change as pages are
+>>> added/removed, and dealing with the matches of a pagespec changing when
+>>> some page that is added or removed seems Hard.
+>>>
+>>> Since it seems we have to arbitrarily pick one of the two behaviors, I
+>>> prefer the one I picked for two reasons:
+>>> 1. The other behavior can be obtained easily from it, for example,
+>>>    use ./c/* to limit the matches to that subdir.
+>>> 2. The common case is a bunch of pages in a single directory, not lots
+>>>    of deeply nested subdirs.
+>>> --[[Joey]]
 
 > I've committed support for ./ to ikiwiki now, based on your patch.
 > --[[Joey]]
