@@ -880,7 +880,7 @@ sub match_glob ($$$) { #{{{
 	# relative matching
 	if ($glob =~ m!^\./!) {
 		$from=~s!/?[^/]+$!!;
-		$glob=~s!^\./!!;a
+		$glob=~s!^\./!!;
 		$glob="$from/$glob";
 	}
 
