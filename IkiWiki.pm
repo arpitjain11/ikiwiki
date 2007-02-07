@@ -881,7 +881,7 @@ sub match_glob ($$$) { #{{{
 	if ($glob =~ m!^\./!) {
 		$from=~s!/?[^/]+$!!;
 		$glob=~s!^\./!!;
-		$glob="$from/$glob";
+		$glob="$from/$glob" if length $from;
 	}
 
 	# turn glob into safe regexp

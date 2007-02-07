@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 40;
+use Test::More tests => 41;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -18,10 +18,11 @@ ok(! pagespec_match("foo", "* and !foo", ""));
 ok(! pagespec_match("foo", "foo and !foo", ""));
 ok(! pagespec_match("foo.png", "* and !*.*", ""));
 ok(pagespec_match("foo", "(bar or ((meep and foo) or (baz or foo) or beep))", ""));
-ok(! pagespec_match("foo/bar", "./*", "foo"), "relative fail");
-ok(! pagespec_match("a/foo", "./*", "a/b"), "relative");
-ok(! pagespec_match("a/b/foo", "./*", "a/b"), "relative fail");
-ok(! pagespec_match("foo", "./*", "a"), "relative toplevel");
+ok(! pagespec_match("a/foo", "foo", "a/b"), "nonrelative fail");
+ok(! pagespec_match("foo", "./*", "a/b"), "relative fail");
+ok(pagespec_match("a/foo", "./*", "a/b"), "relative");
+ok(pagespec_match("a/b/foo", "./*", "a/b"), "relative 2");
+ok(pagespec_match("foo", "./*", "a"), "relative toplevel");
 ok(pagespec_match("foo/bar", "*", "baz"), "absolute");
 
 $links{foo}=[qw{bar baz}];
