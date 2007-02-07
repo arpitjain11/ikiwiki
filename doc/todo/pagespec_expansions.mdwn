@@ -42,6 +42,9 @@ I can see why it might not be much of an improvement. :) --Ethan
 
 > Seems to me that ".." would be the natural thing to use, not "@". --[[Joey]]
 
+>> I don't understand.. "a/b/.." matches a/b/c but not a/b/c/d ? That doesn't 
+>> seem natural to me at all. --Ethan
+
 OK, I took a shot at implementing the changes. I was thinking about making
 pagespecs relative by default but I couldn't decide whether page
 `foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
@@ -57,14 +60,47 @@ and you can see it work at
 >   as its third parameter. This will allow add_depends to add a
 >   dependency on a pagespec that matches relative to the page. I made this
 >   changes and it seems to work, new pages are noticed in updates.
+
+>> OK, I was kind of flying blind for a lot of those plugins. You would 
+>> know better than me.
+
 > * `! $from` fails to match pages named "0" :-)
+
+>> I don't understand. How did you even get $from into the 
+>> translated pagespec?
+
 > * '/./ matches any letter, not just "." :-) :-)
+
+>> Oof, thanks for catching that.
+
 > * One other major problem. If you look at the doc/examples/blog/index.mdwn
 >   I changed it to use relative globs like "./posts/*", but they didn't work,
 >   because it looked for examples/blog/indexposts/* instead of
 >   examples/blog/index/posts/*. And, of course, what I really expected it to
 >   look for was examples/blog/posts/*. I think you may have made the wrong
 >   choice about that, so I changed it to go the other way. What do you think?
->
+
+>> I could have sworn I made a change like that -- I was gonna make a call to
+>> basename() or something .. wait, I might have decided not to, because it 
+>> would interfere with my index patch. Yeah, I guess my code was wrong.
+>> Don't "nice patches" usually work? :) My test cases were mostly "./*",
+>> so it slipped under the radar.
+
+>> As for what it should have done, that's much harder! My gut feeling is that
+>> "a/b/c.mdwn" inlining `./*` wants `a/b/c/*` and not `a/b/*`, and this is 
+>> what I programmed for. I also feel that "a/b/c" inlining `./d/*` could go
+>> either way. Ideally we'd check for both, maybe using bestlink?
+
+>> The issue might be confounded some by your use of an index page, and 
+>> ikiwiki doesn't have good support for those yet :) .
+>> I think ideally your index page would be treated as inlining from 
+>> examples/blog/. To resolve this issue we should consider, for example:
+>> clothes/pants inlines `./jeans/*` -- probably means clothes/pants/jeans
+>> vacation/bermuda/blog inlines `./pics/*` -- probably vacation/bermuda/pics
+
 > I've committed support for ./ to ikiwiki now, based on your patch.
 > --[[Joey]]
+
+>> Cool! I haven't played with it yet, but looking over the patch, I see that
+>> you added another parameter to match_glob, which is an approach that didn't
+>> occur to me. I like it, it's more flexible. --Ethan
