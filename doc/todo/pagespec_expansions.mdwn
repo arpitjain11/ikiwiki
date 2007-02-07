@@ -48,6 +48,8 @@ I can see why it might not be much of an improvement. :) --Ethan
 >>> Ah.. in that case, why not use "a/b/* and !a/b/*/*" ? No need for a new
 >>> symbol. --[[Joey]]
 
+>>>> I know it's not necessary, but it would be helpful. --Ethan
+
 OK, I took a shot at implementing the changes. I was thinking about making
 pagespecs relative by default but I couldn't decide whether page
 `foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
@@ -113,6 +115,12 @@ and you can see it work at
 >>> 2. The common case is a bunch of pages in a single directory, not lots
 >>>    of deeply nested subdirs.
 >>> --[[Joey]]
+
+>>>> Context-dependence was my conclusion too. My feeling is that inlining
+>>>> in a subdirectory of the current page is more common, but I don't 
+>>>> really know. However, I think the changes as written should work OK
+>>>> with my index patch and allowing inlining from a/b/c/, so I'm
+>>>> satisfied. --Ethan
 
 > I've committed support for ./ to ikiwiki now, based on your patch.
 > --[[Joey]]
