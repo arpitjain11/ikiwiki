@@ -21,6 +21,8 @@ this patch adds a new type of sort "old".
 > the "age" lines just above them. It's identical; age already does what
 > you want. --[[Joey]]
 
+>> Well, $b and $a are switched in 'old' comparing to 'age'... According to the documentation, *The default, "age" is to sort newest pages first*. I just want the reverse, and that's why I just switched the $a and $b args of the sort func.... --HB
+
 However, I wonder if it would be better to add another option for inline like "sortorder" with "desc" or "asc" keywords ?
 
 > That might be cleaner, since it would allow sorting pages in reverse by
