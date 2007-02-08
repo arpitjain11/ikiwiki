@@ -96,6 +96,10 @@ sub preprocess_inline (@) { #{{{
 		return sprintf(gettext("unknown sort type %s"), $params{sort});
 	}
 
+	if (yesno($params{reverse})) {
+		@list=reverse(@list);
+	}
+
 	if (exists $params{skip}) {
 		@list=@list[$params{skip} .. scalar @list - 1];
 	}
