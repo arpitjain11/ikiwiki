@@ -50,6 +50,10 @@ I can see why it might not be much of an improvement. :) --Ethan
 
 >>>> I know it's not necessary, but it would be helpful. --Ethan
 
+>>>>> I don't see the need for a new syntax since it's only a little long
+>>>>> using the old one. And of course even that can now be shortened: 
+>>>>> "./* and !./*/*" --[[Joey]]
+
 OK, I took a shot at implementing the changes. I was thinking about making
 pagespecs relative by default but I couldn't decide whether page
 `foo/bar` inlining `*` should match `foo/bar/*` or `foo/*`.
@@ -123,6 +127,7 @@ and you can see it work at
 >>>> satisfied. --Ethan
 
 > I've committed support for ./ to ikiwiki now, based on your patch.
+> [[todo/done]]
 > --[[Joey]]
 
 >> Cool! I haven't played with it yet, but looking over the patch, I see that
