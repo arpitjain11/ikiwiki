@@ -133,3 +133,17 @@ and you can see it work at
 >> Cool! I haven't played with it yet, but looking over the patch, I see that
 >> you added another parameter to match_glob, which is an approach that didn't
 >> occur to me. I like it, it's more flexible. --Ethan
+
+One last thing -- could you either change:
+
+                $from=~s!/?[^/]+$!!;
+
+to 
+
+                $from=~s!/?[^/]*$!!;
+
+Or could you put in:
+
+                $glob =~ s!//!/!g;
+
+somewhere? Or should I just add this to my index patch? --Ethan
