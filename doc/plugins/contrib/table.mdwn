@@ -1,14 +1,14 @@
 [[meta title="table (third-party plugin)"]]
 
-This plugin allows build html tables from data in csv (comma-separated values) or dsv (delimiter-separated values) formats.
+This plugin supplies a `table` [[PreprocessorDirective]] to build html tables from data in CSV (comma-separated values) or DSV (delimiter-separated values) format.
 
-It need the perl module [[cpan Text::CSV]] for the csv data. 
+It needs the perl module [[cpan Text::CSV]] for the CSV data.
 
-## usage
+## Usage
 
 In any source page include the following:
 
-    The next table show the results:
+    The next table shows the results:
 
     \[[table class="myclass" format=dsv data="""
     Custom|Amount|
@@ -28,25 +28,25 @@ In any source page include the following:
 
 The parameters are:
 
-- _data_: Contains the values for the table
-- _file_: Wiki page whom contains the data.
+- _data_: Values for the table
+- _file_: Wiki page containing the data.
 - _format_ (optional): format name of the data. By default is `auto` and the options are `csv` or `dsv`.
-- _delimiter_ (optional): Define the character used for separated the fields. By default is the vertical barr "|" in DSV format and the comma "," for the CSV format.
-- _class_ (optional):  CSS class for the table html element
-- _caption_ (optional):   Text string with the table caption.
-- _no\_header_: This switch disable the generation of table header elements. By default this switch is enabled, and the header cells come from the firts data line.
+- _delimiter_ (optional): The character used to separate fields. By default, DSV format uses a pipe (`|`), and CSV uses a comma (`,`).
+- _class_ (optional): CSS class for the table html element
+- _caption_ (optional): Text string for the table caption.
+- _no\_header_: This switch disables the generation of table header (`<th>`) elements. By default, the `table` directive uses the first data line as column headers.
 
-Obviously, the _data_ and _file_ parameters are mutually exclusive. 
+The _data_ and _file_ parameters are mutually exclusive.
 
-Note: the format detection mechanism is still very rudimentary. 
+Note: the automatic format detection mechanism is still very rudimentary.
 
 ## Changelog
 
 ### version 0.5
 
-* Remove a call to a inexistent Text::CSV method.
+* Remove a call to an inexistent [[cpan Text::CSV]] method.
 * Added the sep_char parameter.
-* Parse CVS data in binary mode.
+* Parse CSV data in binary mode.
 * Added a format detection mechanism.
 * Default format now is 'auto'.
 
@@ -56,6 +56,5 @@ Note: the format detection mechanism is still very rudimentary.
     - [[wikipedia CSV]]
     - [[wikipedia DSV]]
 
-- Download of the tar file from <http://taquiones.net/files/misc/>
+- Download the tar file from <http://taquiones.net/files/misc/>
 - Debian package in <http://taquiones.net/files/debian/>
-
