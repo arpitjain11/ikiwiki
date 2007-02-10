@@ -41,3 +41,21 @@ Window System protocol".  --[[JoshTriplett]]
 > I should modify how ikiwiki preprocessors work to make it doable.
 > Although, I seem to have come up with a clear alternative syntax over
 > there. --[[Joey]]
+
+---
+
+One possible alternative, would be a general `\[[url ]]` scheme for all kinds of links. As mentioned in [[Short_wikilinks]], I have wanted a way to enter links to the wiki with markdown-style references,
+specifying the actual target elsewhere from the text, with just a short reference in the text. To facilitate automatic conversion from earlier (already markdownised) "blog", I finally ended up writing a custom plugin that simply gets the location of wikipage, and use markdown mechanisms:
+
+    Here [is][1] a link.
+
+      [1]: [[l a_page_in_the_wiki]]
+
+    Obviously [this]([[l another_page]]) also works, although the syntax is quite cumbersome.
+
+So that the 'l' plugin inserts the location the page there, and markdown does the rest. My plugin currently fails if it can't find the page, as that is sufficient for my needs. Differing colouring for non-existing pages is not doable in a straightforward manner with this approach.
+
+For external links, that is no concern, however. So you could define for each shortcut an alternative directive, that inserts the URL. Perhaps `\[[url shortcutname params]]` or `\[[@shortcutname params]]` (if the preprocessor supported the @), and this could be extended to local links in an obvious manner: `\[[url page]]` or `\[[@page]]`. Now, if you could just get rid off the parantheses for markdown, for the short inline links --[[tuomov]] (who'd really rather not have two separate linking mechanisms: ikiwiki's heavy syntax and markdown's lighter one).
+
+
+  
