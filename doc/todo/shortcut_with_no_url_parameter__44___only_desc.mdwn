@@ -1,0 +1,8 @@
+Currently, [[shortcuts]] must have the `url` parameter, and can optionally
+have the `desc` parameter.  If the `shortcut` directive instead required at
+least one of `url` or `desc`, then shortcuts could just supply a description
+without an URL.  Since desc can contain arbitrary wiki markup, this would
+allow shortcuts with multiple links, such as the mmlist shortcut proposed on
+[[simple_text_parsing_or_regex_in_template_or_shortcut]], or a comprehensive
+Debian package shortcut which linked to the package page and parenthetically
+to the BTS and PTS.
