@@ -3,9 +3,11 @@ News for ikiwiki 1.42:
    The anonok setting in config files has been removed. To enable
    httpauth support on your wiki, you should now enable the anonok plugin,
    instead.
+
    Third-party plugins that use pagespec\_match() should be updated to pass
    the new third parameter (from) to that function. This is needed for the
    new relative glob matching to work.
+
 ikiwiki 1.42 released with [[toggle text="these changes"]]
 [[toggleable text="""
    * Fix several more missing translations of Discussion.
