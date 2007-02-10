@@ -1,0 +1,24 @@
+Consider the "All files in this package search" on
+<http://packages.debian.org>.  The URL for such a search looks like this:
+
+    http://packages.debian.org/cgi-bin/search_contents.pl?word=packagename&searchmode=filelist&case=insensitive&version=unstable&arch=i386
+
+To create a "debfiles" [[shortcut|shortcuts]] that takes a package name, you
+could just hardcode the architecture and distribution:
+
+    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=unstable&arch=i386"]]
+    \[[debfiles ikiwiki]]
+
+But what if you could have them as optional parameters instead?  The syntax
+for the invocation should look like this:
+
+    \[[debfiles ikiwiki dist=testing]]
+
+Some possible syntax choices for the shortcut definition:
+
+    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%(dist)s&arch=%(arch)s" dist="unstable" arch="i386"]]
+    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%(dist=unstable)s&arch=%(arch=i386)s"]]
+    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%{dist=unstable}&arch=%{arch=i386}"]]
+    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=$*&searchmode=filelist&case=insensitive&version=${dist=unstable}&arch=${arch=i386}"]]
+
+--[[JoshTriplett]]
