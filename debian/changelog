@@ -25,8 +25,14 @@ ikiwiki (1.42) UNRELEASED; urgency=low
     to be used as close to public domain as possible.
   * viewcvs is now viewvc (in Debian unstable), update everything to use the
     new name.
+  * Fix a security hole that allowed a web user to edit images and other
+    non-page format files in the wiki. To exploit this, the file already had
+    to exist in the wiki, and the web user would need to somehow use the web
+    based editor to replace it with malicious content.
+    (Sorry Josh, this means you can't edit style.css directly anymore,
+    although I do appreciate your fixes, actually..)
 
- -- Joey Hess <joeyh@debian.org>  Fri,  9 Feb 2007 00:27:59 -0500
+ -- Joey Hess <joeyh@debian.org>  Sat, 10 Feb 2007 15:09:51 -0500
 
 ikiwiki (1.41) unstable; urgency=low
 

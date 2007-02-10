@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-08 14:47-0500\n"
+"POT-Creation-Date: 2007-02-10 15:26-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -24,28 +24,33 @@ msgstr "Trước tiên bạn cần phải đăng nhập."
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:412 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:327
+#, perl-format
+msgid "%s is not an editable page"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:415 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:457
+#: ../IkiWiki/CGI.pm:460
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:474 ../IkiWiki/CGI.pm:517
+#: ../IkiWiki/CGI.pm:477 ../IkiWiki/CGI.pm:520
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:625
+#: ../IkiWiki/CGI.pm:628
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:657
+#: ../IkiWiki/CGI.pm:660
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 

@@ -323,6 +323,9 @@ sub cgi_editpage ($$) { #{{{
 	if (exists $pagesources{$page}) {
 		$file=$pagesources{$page};
 		$type=pagetype($file);
+		if (! defined $type) {
+			error(sprintf(gettext("%s is not an editable page"), $page));
+		}
 	}
 	else {
 		$type=$form->param('type');
