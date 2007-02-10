@@ -1,0 +1,12 @@
+ikiwiki 1.30 released with these changes:
+
+   * Add no\_override parameter to hook().
+   * Add a shortcut plugin, inspired by Victor Moral's contributed shortcuts
+     plugin, but featuring a more ikiwiki-ish syntax and with shortcuts that
+     can be configured using a page in wiki.
+   * Fix support for --pingurl at the command line.
+   * Fix a subtle bug in will\_render that broke some builds, by only clearing
+     items from renderedfiles the first time per build.
+   * Wrap entire technortati ping operation in an eval to catch all possible
+     failure modes, after I observed a simple -&gt;value crashing ikiwiki when
+     a ping failed.

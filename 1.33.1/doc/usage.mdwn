@@ -1,0 +1,267 @@
+# NAME
+
+ikiwiki - a wiki compiler
+
+# SYNOPSIS
+
+ikiwiki [options] source destination
+
+ikiwiki --setup configfile
+
+# DESCRIPTION
+
+`ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from
+`source` in the [[MarkDown]] language (or others), and writes it out to
+`destination`.
+
+Note that most options can be shortened to single letters, and boolean
+flags such as --verbose can be negated with --no-verbose.
+
+# MODE OPTIONS
+
+These options control the mode that ikiwiki is operating in.
+
+* --refresh
+
+  Refresh the wiki, updating any changed pages. This is the default
+  behavior so you don't normally need to specify it.
+
+* --rebuild
+
+  Force a rebuild of all pages.
+
+* --cgi
+
+  Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and
+  supports editing pages, signing in, registration, and displaying
+  [[RecentChanges]].
+
+  To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
+  to generate a wrapper. The wrapper will generally need to run suid 6755 to
+  the user who owns the `source` and `destination` directories.
+
+* --wrapper [file]
+
+  Generate a wrapper binary that is hardcoded to do action specified by
+  the other options, using the specified input files and `destination`
+  directory. The filename to use for the wrapper is optional.
+
+  The wrapper is designed to be safely made suid and be run by untrusted
+  users, as a [[post-commit]] hook, or as a [[CGI]].
+
+  Note that the generated wrapper will ignore all command line parameters.
+
+* --setup configfile
+
+  In setup mode, ikiwiki reads the config file, which is really a perl
+  program that can call ikiwiki internal functions.
+
+  The default action when --setup is specified is to automatically generate
+  wrappers for a wiki based on data in a config file, and rebuild the wiki.
+
+  [[ikiwiki.setup]] is an example of such a config file.
+
+* --wrappers
+
+  If used with --setup --refresh, this makes it also update any configured
+  wrappers.
+
+* --aggregate
+
+  If the [[plugins/aggregate]] plugin is enabled, this makes ikiwiki poll
+  configured feeds and save new posts to the srcdir.
+
+  Note that to rebuild previously aggregated posts, use the --rebuild option
+  along with this one. --rebuild will also force feeds to be polled even if
+  they were polled recently.
+
+* --render file
+
+  Renders a single file, outputting the resulting html. Does not save state,
+  so this cannot be used for building whole wikis, but it is useful for
+  previewing an edited file at the command line. Generally used in conjunction
+  with --setup to load in a wiki's setup:
+
+	ikiwiki --setup ~/ikiwiki.setup --render foo.mdwn
+
+* --version
+
+  Print ikiwiki version number.
+
+# CONFIG OPTIONS
+
+These options configure the wiki. Note that [[plugins]] can add additional
+configuration options of their own.
+
+* --wikiname
+
+  The name of the wiki, default is "wiki".
+
+* --templatedir
+
+  Specify the directory that the page [[templates]] are stored in.
+  Default is `/usr/share/ikiwiki/templates`, or another location as
+  configured at build time.
+
+* --underlaydir
+
+  Specify the directory that is used to underlay the source directory.
+  Source files will be taken from here unless overridden by a file in the
+  source directory. Default is `/usr/share/ikiwiki/basewiki` or another
+  location as configured at build time.
+
+* --wrappermode mode
+
+  Specify a mode to chmod the wrapper to after creating it.
+
+* --notify
+
+  Enable email notification of commits. This should be used when running
+  ikiwiki as a [[post-commit]] hook.
+
+* --rcs=svn, --no-rcs
+
+  Enable or disable use of a revision control system.
+
+  If you use svn, the `source` directory is assumed to be
+  a [[Subversion]] working copy.
+
+  If you use git, the `source` directory is assumed to be a clone of the
+  [[git]] repository.
+
+  If you use tla, the `source` directory is assumed to be a tla import.
+
+  If you use mercurial, the `source` directory is assumed to be the
+  [[mercurial]] repository.
+
+  In [[CGI]] mode, with a revision control system enabled pages edited via
+  the web will be committed. Also, the [[RecentChanges]] link will be placed
+  on pages.
+
+  svn is enabled by default.
+
+* --svnrepo /svn/wiki
+
+  Specify the location of the svn repository for the wiki. This is required
+  for using --notify with [[subversion]].
+
+* --svnpath trunk
+
+  Specify the path inside your svn reporistory where the wiki is located.
+  This defaults to trunk; change it if your wiki is at some other location
+  inside the repository.
+
+* --anonok, --noanonok
+
+  If anonok is set, it will allow anonymous web users, who have not signed in, to make changes to the wiki.
+
+  By default, anonymous users cannot edit the wiki.
+
+* --rss, --norss
+
+  If rss is set, ikiwiki will generate RSS feeds for pages that inline
+  a [[blog]].
+
+* --atom, --noatom
+
+  If atom is set, ikiwiki will generate Arom feeds for pages that inline
+  a [[blog]].
+
+* --pingurl url
+
+  Set this to the url to an XML-RPC service to ping when an RSS feed is
+  updated. For example, to ping Technorati, use the url
+  http://rpc.technorati.com/rpc/ping
+
+  This parameter can be specified multiple times to specify more than one
+  url to ping.
+
+* --url url
+
+  Specifies the url to the wiki. This is a required parameter in [[CGI]] mode.
+
+* --cgiurl http://url/ikiwiki.cgi
+
+  Specifies the url to the ikiwiki [[CGI]] script wrapper. Required when
+  building the wiki for links to the cgi script to be generated.
+
+* --historyurl url
+
+  Specifies the url to link to for page history browsing. In the url,
+  "\[[file]]" is replaced with the file to browse. It's common to use
+  [[ViewCVS]] for this.
+
+* --adminemail you@yourhost
+
+  Specifies the email address that ikiwiki should use for sending email.
+
+* --diffurl url
+
+  Specifies the url to link to for a diff of changes to a page. In the url,
+  "\[[file]]" is replaced with the file to browse, "\[[r1]]" is the old
+  revision of the page, and "\[[r2]]" is the new revision. It's common to use
+  [[ViewCVS]] for this.
+
+* --exclude regexp
+
+  Specifies a rexexp of source files to exclude from processing.
+  May be specified multiple times to add to exclude list.
+
+* --adminuser name
+
+  Specifies a username of a user who has the powers of a wiki admin.
+  Currently allows locking of any page, other powers may be added later.
+  May be specified multiple times for multiple admins.
+
+* --plugin name
+
+  Enables the use of the specified [[plugin|plugins]] in the wiki. 
+  Note that plugin names are case sensative.
+
+* --disable-plugin name
+
+  Disables use of a plugin. For example "--disable-plugin htmlscrubber"
+  to do away with html sanitization.
+
+* --discussion, --no-discussion
+
+  Enables or disables "Discussion" links from being added to the header of
+  every page. The links are enabled by default.
+
+* --timeformat format
+
+  Specify how to display the time or date. The format string is passed to the
+  strftime(3) function.
+
+* --verbose, --no-verbose
+
+  Be vebose about what is being done.
+
+* --syslog, --no-syslog
+
+  Log to syslog.
+
+* --w3mmode, --no-w3mmode
+
+  Enable [[w3mmode]], which allows w3m to use ikiwiki as a local CGI script,
+  without a web server.
+
+* --sslcookie
+
+  Only send cookies over an SSL connection. This should prevent them being
+  intercepted. If you enable this option then you must run at least the 
+  CGI portion of ikiwiki over SSL.
+
+* --getctime
+
+  Pull last changed time for each new page out of the revision control
+  system. This rarely used option provides a way to get the real creation
+  times of items in weblogs, for example when building a wiki from a new
+  subversion checkout. It is unoptimised and quite slow. It is best used
+  with --rebuild, to force ikiwiki to get the ctime for all pages.
+
+# AUTHOR
+
+Joey Hess <joey@kitenet.net>
+
+Warning: this page is automatically made into ikiwiki's man page, edit with care

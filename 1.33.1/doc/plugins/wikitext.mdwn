@@ -1,0 +1,23 @@
+[[template id=plugin name=wikitext included=1 author="[[Joey]]"]]
+[[tag type/format]]
+
+This plugin allows ikiwiki to process pages written in the original wiki
+text format. To use it, you need to have the Text::WikiFormat perl module
+installed, enable the plugin, then files with the extention `.wiki` will be
+processed as wiki text.
+
+Wiki formatting is very simple. An item wrapped in three single quotes is
+strong. An item wrapped in two single quotes is emphasized. Four or more
+hyphen characters at the start of a line create a horizontal line. Newlines
+turn into the appropriate tags. Headers are matching equals signs around
+the header text -- the more signs, the lesser the header.
+
+Links are standard [[WikiLinks|WikiLink]], although you can also enable
+[[CamelCase]] links.
+
+Lists are indented text, by one tab or four spaces. In unordered lists,
+where each item has its own bullet point, each item needs a leading
+asterisk and space. Ordered lists consist of items marked with combination
+of one or more alphanumeric characters followed by a period and an optional
+space. Any indented text without either marking is code, handled literally.
+You can nest lists.

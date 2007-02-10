@@ -1,0 +1,27 @@
+Most of ikiwiki's [[features]] are implemented as plugins. Beyond the
+[[type/core]] features, there are plugins to [[type/format]] text,
+use [[type/tags]], show [[type/meta]] information, do other [[type/useful]]
+stuff, add [[type/chrome]] to the wiki, or just have [[type/fun]].
+
+There's documentation if you want to [[write]] your own plugins, or you can
+install and use plugins contributed by others. 
+
+The [[mdwn]], [[inline]], and [[htmlscrubber]] plugins are enabled by default.
+To enable other plugins, use the `--plugin` switch described in [[usage]],
+or the equivalent `add_plugins` line in [[ikiwiki.setup]].
+
+# Plugin directory
+
+Add all plugins here. Or add ideas to the [[todo|todo/plugin]] page.
+
+[[inline pages="plugins/* and !plugins/type/* and !plugins/write and !plugins/contrib and !*/Discussion" archive="yes" rootpage="plugins/contrib"]]
+
+# Installing third party plugins
+
+Plugins are perl modules and should be installed somewhere in the perl
+module search path. See the @INC list at the end of the output of `perl -V`
+for a list of the directories in that path. All plugins are in the
+IkiWiki::Plugin namespace, so they go in a IkiWiki/Plugin subdirectory
+inside the perl search path. For example, if your perl looks in
+`/usr/local/lib/site_perl` for modules, you can locally install ikiwiki
+plugins to `/usr/local/lib/site_perl/IkiWiki/Plugin`

@@ -1,0 +1,137 @@
+- It would be possible to support rss enclosures for eg, podcasts, pretty easily. 
+
+Here is the last of those items. Using the meta plugin you can give the appropriate 
+info, and the enclosure will be added to the entry. It will also add a <link /> tag
+at the top, but I don't know if this is necessary. It also includes a fix for
+when make is used without PREFIX. 
+
+<http://jameswestby.net/scratch/podcast.diff>
+
+-- JamesWestby
+
+> Hmm. Not quite how I'd envisioned podcasts would work, my idea was
+> more that the sound files would be kept inside the wiki, and the
+> inline plugin could be told to eg, inline *.mp3, and would add
+> those to the rss feed as enclosures. Maybe you'd also inline some
+> regular blog pages to describe the files or the like.
+
+> Do you think that would work or that it's worth pursuing that
+> approach? I haven't looked at podcasts enough to know if that
+> method would be technically feasable; for one thing it would limit
+> the blog items for podcasts to just having an enclosure but no
+> description.
+
+> Even if that doesn't work and pages are needed to desribe the items
+> like you did, it still seems better to keep the podcast items in
+> the wiki..
+
+> --[[Joey]]
+
+That's fair enough. I'm a little unsure of how it all works, so I just did the
+simplest thing I could. 
+
+You don't need a description for podcasts it seems. So there's nothing stopping
+you there. 
+
+I have another patch that I think does what you want. It only supports .mp3 files,
+.ogg or similar could be added easily. 
+
+It has the disadvantage that the filename is all there is to go on, as I can't
+think of a way to associate any information with the mp3 file. I don't 
+want to add a dependency on a IDv3 tag library. You could add another file
+.mp3.info with the title/description in. 
+
+It's obviously up to you which way you want to go.
+
+<http://jameswestby.net/scratch/podcast2.diff>
+
+-- JamesWestby
+
+> Hmm, this could be taken a step further, and assume that if
+> IkiWiki::pagetype doesn't return a defined page type for the page
+> in the blog, then no matter the extension it should be fed into the
+> rss feed in an enclosure. This would allow for not only podcasting,
+> but vidcasting and a form of photo blogging. Or even an rss feed
+> containing the source of ikiwiki. ;-)
+> 
+> --[[Joey]]
+
+Yes I agree that this would be great, but rss2 spec says that enclosure
+must have mime-type. How about I use the File::MimeInfo trick from the 
+first patch to do this? I don't know why I didn't do this before.
+This will probably clean the code up a little as well. 
+
+What do you think of the change that when using raw, if the filetype is not
+known it adds an entry anyway? I did this so that the entries appear if
+this mode is used. It might be that this is not necessary, as can we assume
+that people wont use raw if they want to pod/vid/whatevercast?
+
+-- JamesWestby
+
+> Using File::Mimeinfo makes sense to me.
+
+> I think it probably makes sense to make the (html) blog page
+> add an entry with a link to the file that's in the enclosure in the
+> rss feed. Whether or not raw is being used.
+
+> Note: I'm still unsure about whether podcasts should support
+> descriptions for the enclosures or not. Here's an early podcast
+> that did use descriptions:
+> <http://static.userland.com/gems/backend/gratefulDead.xml>
+> Here's a contemporary podcast, which also uses descriptions:
+> <http://www.lugradio.org/episodes.rss>
+
+> The podcast client I use certianly doesn't care about the
+> descriptions. But it's podracer, probably not the thing most
+> podcast users use. :-)
+
+> --[[Joey]]
+
+I tested with amarok, and that also ignored the description.
+I am thinking of those where you have a mixed feed, and people
+using clients that ignore enclsures get pretty much a blank post,
+with just the filename, and the html page, which also just displays
+the filename.
+
+I don't think this is a big issue though, so I guess it's just which
+you think is the cleaner interface.
+
+I have also added the first of your ideas as well (though you seem to have
+removed it). It adds a parameter to inline `archive_after` which limits
+showing full entries to that number.
+
+<http://jameswestby.net/scratch/limit.diff>
+
+-- JamesWestby
+
+> I removed it because I don't really see the need for it anymore.
+> The added complexity doesn't seem worth it, unless someone needs the
+> features. --[[Joey]]
+
+And here is the updated podcast patch supporting any file type.
+
+<http://jameswestby.net/scratch/podcast2.diff>
+
+-- JamesWestby
+
+And here is a patch for the remaining item. It adds links to the bottom of
+inlined entries for edit and discuss (if they are enabled). It doesn't add
+links for edit if the filetype is not known. 
+
+The stylesheet should probably be done slightly better than I have. I just
+added a bit of spacing as the links were too close to the date. I have no
+skill in this area though. Perhaps you would like to use the list system 
+that you have for the links at the top.
+
+<http://jameswestby.net/scratch/actions.diff>
+
+-- JamesWestby
+
+> Thanks! I did tweak the css a bit. Not totally happy with it, but pretty
+> good I think. (I'll try to get to the other patches soon.) --[[Joey]]
+
+
+---
+
+I'm very happy to report that this is [[todo/done]]. Podcasting patch
+applied (finally!) --[[Joey]]

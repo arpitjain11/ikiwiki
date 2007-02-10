@@ -1,0 +1,51 @@
+This is a good idea, I was just the other day stuck writing ugly html to
+properly size an image for a blog post. Putting the image sizing support
+into a plugin instead of trying to shoehorn it into a wikilink seems like
+the way to go.
+
+I have two issues with this plugin as it's implemented now, the first is
+that the generation of whole pages containing a scaled version of the image
+seems gratuituous, as well as buggy. If you want three pages with
+differently scaled versions of the image, why not just create three pages
+and use the plugin once per page? Something like this on the first one if
+it's got multiple clickable thumbnails:
+
+	\[[img foo.jpg width=256 link=page2]]
+
+This on the second:
+
+	\[[img foo.jpg width=1024 link=page3]]
+	\[[small|page1]]
+	\[[medium|page2]]
+	\[[large|page3]]
+
+This on the third:
+	
+	\[[img foo.jpg link=page3]]
+	\[[small|page1]]
+	\[[medium|page2]]
+	\[[large|parge3]]
+
+Granted, this is more work, but it's more flexible too, and it doesn't have
+it creating new pages on the fly, which I don't personally like..
+
+----
+
+The second issue is whether it should use imagemagick to scale the image
+and generate a new scaled one, or just emit html that sets the sizes of the
+image. Benefits to scaling:
+
+1. Saves download time and bandwidth, especially if generating a page with a
+   lot of thumbnails of large images.
+
+Benefits of not scaling:
+
+1. Avoids any security issues with imagemagick.
+2. Avoids issue of how to clean up old scaled images that are no longer being
+   used. (Granted, this is a general ikiwiki problem that will eventually
+   be fixed in a general way. (Update: now fixed in a general way, use the
+   will_render function.))
+3. Makes clicking on thumbnails display the full version really fast, since
+   it's cached. :-)
+
+--[[Joey]]

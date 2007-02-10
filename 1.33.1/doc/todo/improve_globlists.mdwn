@@ -1,0 +1,8 @@
+Need to improve globlists, adding more powerful boolean expressions.
+The current behavior is to check for negated expressions, and not match if
+there are any, then check for normal expressions and match if any match,
+This fails if you want to do something like match only pages with tag foo
+that are under directory bar. I think we need parens for grouping, and
+probably also boolean OR.
+
+[[todo/done]]

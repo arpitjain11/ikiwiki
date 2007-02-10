@@ -1,0 +1,36 @@
+Suggestions of ideas for plugins:
+
+* list of registered users - tricky because it sorta calls for a way to rebuild the page when a new user is registered. Might be better as a cgi?
+* [[sigs]] ?
+
+* Support [[RecentChanges]] as a regular page containing a plugin that
+  updates each time there is a change, and statically builds the recent
+  changes list. (Would this be too expensive/inflexible? There might be
+  other ways to do it as a plugin, like making all links to RecentChanges
+  link to the cgi and have the cgi render it on demand.) 
+
+  Or using an iframe
+  to inline the cgi, although firefox seems to render that nastily with
+  nested scroll bars. :-(
+
+* For PlaceWiki I want to be able to do some custom plugins, including one
+  that links together subpages about the same place created by different
+  users. This seems to call for a plugin that applies to every page w/o any
+  specific marker being used, and pre-or-post-processes the full page
+  content. It also needs to update pages when related pages are added,
+  so it needs to register dependencies pre-emptively between pages,
+  or something. It's possible that this is a special case of backlinks and
+  is best implemented by making backlinks a plugin somehow. --[[Joey]]
+
+* interwiki links
+
+* random page (cgi plugin; how to link to it easily?)
+
+All the kinds of plugins that blogging software has is also a possibility:
+
+* Blog post calendar
+
+* How about an event calendar. Events could be sub-pages with an embedded 
+ code to detail recurrance and/or event date/time
+
+* Vote taking plugin. It would need to store its data in a file in .ikiwiki/

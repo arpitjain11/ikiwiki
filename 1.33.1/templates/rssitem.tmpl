@@ -1,0 +1,21 @@
+<item>
+	<TMPL_IF NAME="AUTHOR">
+	<title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE ESCAPE=HTML></title>
+	<dc:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dc:creator>
+	<TMPL_ELSE>
+	<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	</TMPL_IF>
+	<guid><TMPL_VAR URL></guid>
+	<link><TMPL_VAR PERMALINK></link>
+	<TMPL_IF NAME="CATEGORIES">
+	<TMPL_LOOP NAME="CATEGORIES">
+	<category><TMPL_VAR CATEGORY></category>
+	</TMPL_LOOP>
+	</TMPL_IF>
+	<pubDate><TMPL_VAR DATE_822></pubDate>
+	<TMPL_IF NAME="ENCLOSURE">
+	<enclosure url="<TMPL_VAR ENCLOSURE>" type="<TMPL_VAR TYPE>" length="<TMPL_VAR LENGTH>" />
+	<TMPL_ELSE>
+	<description><![CDATA[<TMPL_VAR CONTENT>]]></description>
+	</TMPL_IF>
+</item>

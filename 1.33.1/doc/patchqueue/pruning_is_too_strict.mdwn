@@ -1,0 +1,80 @@
+Preliminary patch for a feature wishlist item: [[bugs/pruning_is_too_strict]].
+
+    diff -ur ikiwiki-orig/IkiWiki/CGI.pm ikiwiki/IkiWiki/CGI.pm
+    --- ikiwiki-orig/IkiWiki/CGI.pm     2006-10-27 20:15:17.000000000 -0700
+    +++ ikiwiki/IkiWiki/CGI.pm  2006-11-07 22:32:41.000000000 -0800
+    @@ -405,7 +405,7 @@
+        my ($page)=$form->field('page');
+        $page=titlepage(possibly_foolish_untaint($page));
+        if (! defined $page || ! length $page ||
+    -       $page=~/$config{wiki_file_prune_regexp}/ || $page=~/^\//) {
+    +       is_prune($page) || $page=~/^\//) {
+                error("bad page name");
+        }
+
+    @@ -495,8 +495,7 @@
+                        my $best_loc;
+                        if (! defined $from || ! length $from ||
+                            $from ne $form->field('from') ||
+    -                       $from=~/$config{wiki_file_prune_regexp}/ ||
+    -                       $from=~/^\// ||
+    +                       is_prune($from) || $from=~/^\// ||
+                            $form->submitted eq "Preview") {
+                                @page_locs=$best_loc=$page;
+                        }
+    diff -ur ikiwiki-orig/IkiWiki/Render.pm ikiwiki/IkiWiki/Render.pm
+    --- ikiwiki-orig/IkiWiki/Render.pm  2006-10-27 20:15:17.000000000 -0700
+    +++ ikiwiki/IkiWiki/Render.pm       2006-11-07 22:36:48.000000000 -0800
+    @@ -189,7 +193,7 @@
+                no_chdir => 1,
+                wanted => sub {
+                        $_=decode_utf8($_);
+    -                   if (/$config{wiki_file_prune_regexp}/) {
+    +                   if (is_prune($_)) {
+                                $File::Find::prune=1;
+                        }
+                        elsif (! -d $_ && ! -l $_) {
+    @@ -209,7 +213,7 @@
+                no_chdir => 1,
+                wanted => sub {
+                        $_=decode_utf8($_);
+    -                   if (/$config{wiki_file_prune_regexp}/) {
+    +                   if (is_prune($_, $config{underlaydir})) {
+                                $File::Find::prune=1;
+                        }
+                        elsif (! -d $_ && ! -l $_) {
+    diff -ur ikiwiki-orig/IkiWiki.pm ikiwiki/IkiWiki.pm
+    --- ikiwiki-orig/IkiWiki.pm 2006-10-27 20:15:23.000000000 -0700
+    +++ ikiwiki/IkiWiki.pm      2006-11-07 22:21:17.000000000 -0800
+    @@ -21,6 +21,8 @@
+     # Optimisation.
+     use Memoize;
+     memoize("abs2rel");
+    +memoize("basefile");
+    +memoize("is_prune");
+     memoize("pagespec_translate");
+
+     my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+    @@ -343,6 +352,22 @@
+        return $page;
+     } #}}}
+
+    +sub basefile ($;$) { #{{{
+    +   my $file=shift;
+    +   my $base=shift || $config{srcdir};
+    +
+    +   require File::Spec;
+    +   $base=File::Spec->canonpath($base);
+    +   my $ret=File::Spec->canonpath($file);
+    +
+    +   $ret=~s#^$base/*##;
+    +   return $ret;
+    +} #}}}
+    +
+    +sub is_prune ($;$) { #{{{
+    +   return basefile($_[0], $_[1])=~m/$config{wiki_file_prune_regexp}/;
+    +} #}}}
+    +
+     sub abs2rel ($$) { #{{{
+        # Work around very innefficient behavior in File::Spec if abs2rel
+        # is passed two relative paths. It's much faster if paths are

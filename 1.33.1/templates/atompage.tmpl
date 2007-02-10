@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+<link href="<TMPL_VAR PAGEURL>"/>
+<link href="<TMPL_VAR FEEDURL>" rel="self"/>
+<author>
+<name><TMPL_VAR WIKINAME></name>
+</author>
+<id><TMPL_VAR PAGEURL></id>
+<subtitle type="html"><TMPL_VAR FEEDDESC ESCAPE=HTML></subtitle>
+<generator uri="http://ikiwiki.kitenet.net/" version="<TMPL_VAR VERSION>">ikiwiki</generator>
+<updated><TMPL_VAR FEEDDATE></updated>
+<TMPL_VAR CONTENT>
+</feed>

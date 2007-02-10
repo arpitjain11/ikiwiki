@@ -1,0 +1,59 @@
+Should support mail notification of new and changed pages.
+
+  Hmm, should be easy to implement this.. it runs as a svn post-coommit hook
+  already, so just look at the userdb, svnlook at what's changed, and send
+  mails to people who have subscribed.
+
+  A few details:
+  1. [[Joey]] mentioned that being able to subscribe to globs as well as
+     explicitly named pages would be desirable.
+  2. I think that since we're using Perl on the backend, being able to
+     let users craft their own arbitrary regexes would be good.
+
+     Joey points out that this is actually a security hole, because Perl
+     regexes let you embed (arbitrary?) Perl expressions inside them.  Yuck!
+
+(This is not actually true unless you "use re 'eval';", without which
+(?{ code }) is disabled for expressions which interpolate variables.
+See perldoc re, second paragraph of DESCRIPTION. It's a little iffy
+to allow arbitrary regexen, since it's fairly easy to craft a regular
+expression that takes unbounded time to run, but this can be avoided
+with the use of alarm to add a time limit. Something like
+
+    eval { # catches invalid regexen
+      no re 'eval'; # to be sure
+      local $SIG{ALRM} = sub { die };
+      alarm(1);
+      ... stuff involving m/$some_random_variable/ ...
+      alarm(0);
+    };
+    if ($@) { ... handle the error ... }
+
+should be safe. --[[WillThompson]])
+
+     It would also be good to be able to subscribe to all pages except discussion pages or the SandBox: `* !*/discussion !sandobx`, maybe --[[Joey]]
+
+  3. Of course if you do that, you want to have form processing on the user
+     page that lets them tune it, and probably choose literal or glob by
+     default.
+
+     I think that the new globlist() function should do everything you need.
+     Adding a field to the prefs page will be trivial --[[Joey]]
+
+  The first cut, I suppose, could use one sendmail process to batch-mail all
+  subscribers for a given page.  However, in the long run, I can see users
+  demanding a bit of feature creep:
+
+  4. Each user should be able to tune whether they see the actual diff parts or
+     not.
+  5. Each user should be able to set a maximum desired email size.
+  6. We might want to support a user-specified shibboleth string that will be
+     included in the email they receive so they can easily procmail the messages
+     into a folder.
+
+  --[[BrandenRobinson]]
+
+  I'm deferring these nicities until there's some demonstrated demand
+  --[[Joey]].
+
+[[todo/done]]

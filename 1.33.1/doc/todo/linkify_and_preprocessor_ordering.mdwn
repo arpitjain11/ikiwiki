@@ -1,0 +1,24 @@
+Currently ikiwiki linkifies text, then runs preprocessor directives. This
+allows a directive to contain a wikilink inside a parameter, but since the
+wikilink expands to some arbitrary html, the parameter needs to be
+triple-quoted to avoid quotes in the expanded text from leaking out. This
+is rather non-obvious.
+
+One fix would be to switch the order, since linkification and preprocessing
+are relatively independant. Some directives, like inline, would need to keep
+on linkifiying the inlined pages, to make the links be resolved correctly,
+but that's ok. Any directives that outputed stuff that looked like a
+wikilink, but wasn't, would need to be changed.
+
+> This solution has been implemented and _seems_ ok.
+
+An alternative would be to change the wikilink regexp so it doesn't apply
+to wikilinks that are embedded inside preprocessor directives. I haven't
+found a way to do that yet, since perl doesn't allow variable-width
+negative lookbehind.
+
+Maybe processing wikilinks and preprocessor directives
+as part of the same loop would work, but that probably has its own
+issues.
+
+[[todo/done]]

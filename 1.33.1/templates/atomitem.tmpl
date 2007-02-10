@@ -1,0 +1,24 @@
+<entry>
+	<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	<TMPL_IF NAME="AUTHOR">
+	<author><TMPL_VAR AUTHOR ESCAPE=HTML></author>
+	<TMPL_ELSE>
+	</TMPL_IF>
+	<id><TMPL_VAR URL></id>
+	<link href="<TMPL_VAR PERMALINK>"/>
+	<TMPL_IF NAME="CATEGORIES">
+	<TMPL_LOOP NAME="CATEGORIES">
+	<category><TMPL_VAR CATEGORY></category>
+	</TMPL_LOOP>
+	</TMPL_IF>
+	<updated><TMPL_VAR DATE_3339></updated>
+	<TMPL_IF NAME="ENCLOSURE">
+	<link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
+	<TMPL_ELSE>
+	<content type="xhtml" xml:lang="en">
+	 <div xmlns="http://www.w3.org/1999/xhtml">
+	 ![CDATA[<TMPL_VAR CONTENT>]]
+	 </div>
+	</content>
+	</TMPL_IF>
+</entry>

@@ -1,0 +1,127 @@
+ikiwiki (1.32) unstable; urgency=low
+
+  There is a change to the plugin interface in this version. Any plugins that
+  modify data in %links should pass scan => 1 when registering the hook that
+  does so.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 28 Oct 2006 00:13:12 -0400
+
+ikiwiki (1.29) unstable; urgency=low
+
+  Wikis need to be rebuilt on upgrade to this version. If you listed your wiki
+  in /etc/ikiwiki/wikilist this will be done automatically when the Debian
+  package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
+
+  There is a change to the plugin interface in this version. Plugins that use
+  %renderedfiles will need to be updated, as the hash's values are now arrays
+  of rendered files. Plugins that cause a page to render additional files
+  should use the new will_render function to register the files.
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  8 Oct 2006 17:27:56 -0400
+
+ikiwiki (1.22) unstable; urgency=low
+  
+  Due to some changes in the CSS, wikis should be rebuilt on upgrade to this
+  version. If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+  automatically when the Debian package is upgraded. Or use ikiwiki-mass-rebuild
+  to force a rebuild.
+
+  If you have modified versions of ikiwiki's html templates, you will need
+  to update your templates to link to the stylesheet file using
+  "<TMPL_VAR BASEURL>style.css" instead of the old method which used
+  STYLEURL.
+
+  There have also been some changes to the plugin interface:
+  Any plugins that use santize, htmlize, or format hooks will need to be
+  updated for this version of ikiwiki since these hooks have been changed
+  to use named parameters.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 22 Aug 2006 15:33:12 -0400
+
+ikiwiki (1.13) unstable; urgency=low
+
+  The GlobList format which was used for specifiying sets of pages, has been
+  replaced with a new, more expressive PageSpec format. While GlobLists will
+  continue to work, that format is deprecated, and you are encouraged to use
+  PageSpecs from now on, and also to change any GlobLists in your wiki to
+  PageSpecs. See the new PageSpec page for details.
+  
+  You will need to rebuild your wiki when upgrading to this version. If you
+  listed your wiki in /etc/ikiwiki/wikilist this will be done automatically
+  when the Debian package is upgraded. Or use ikiiki-mass-rebuild to force a
+  rebuild.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  1 Aug 2006 18:29:51 -0400
+
+ikiwiki (1.11) unstable; urgency=low
+
+  Some changes to tags in this release, due to a new tag plugin. If you have
+  been using the meta plugin to tag pages, you'll want to enable the tag
+  plugin too, and change things like this:
+
+  [[meta link="foobar"]]
+
+  To this:
+
+  [[tag foobar]]
+
+  The new tags will appear at page footers, and are also easier to type.
+
+  There have also been some changes to the plugin interface, particularly the
+  interface of pagetemplate hooks has changed. See the changelog for details.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 17:03:09 -0400
+
+ikiwiki (1.8) unstable; urgency=low
+
+  If your wiki is configured with a setup file, you should modify it to
+  stop setting the "plugin" list directly, and instead add or remove plugins
+  via the add_plugins and disable_plugins lines. For example, if you had:
+
+  	plugin => [qw{inline smiley search}],
+
+  Change it to these lines, which disables the default htmlscrubber plugin
+  and adds the two additional plugins:
+
+  	add_plugins => [qw{smiley search}],
+  	disable_plugins => [qw{htmlscrubber}],
+
+  Making this change makes your ikiwiki setup file more future-proof since
+  new default plugins will be automatically used.
+  
+  You will need to rebuild your ikiwiki wrappers when upgrading to this
+  version. If you listed your wiki in /etc/ikiwiki/wikilist this will be
+  done automatically when the Debian package is upgraded. Or use
+  ikiiki-mass-rebuild --refresh to force a refresh.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Jul 2006 16:59:29 -0400
+
+ikiwiki (1.1) unstable; urgency=low
+
+  There have been several configuration changes in this release of ikiwiki:
+
+  The --svn and --no-svn switches are removed, instead you should use
+   --rcs=svn or --no-rcs. ikiwiki setup files that set svn => 1 should
+  be changed to set rcs => "svn"; if your setup file sets svn => 0
+  then change it to use rcs => "" to disable svn.
+
+  The --hyperestraier switch is gone too. To enable searching, turn on the
+  search plugin, by passing --plugin=search or through the plugin setting in
+  the setup file.
+
+  The --sanitize and --no-sanitize switches are also gone, replaced with the
+  htmlscrubber plugin. This plugin is enabled by default, to disable it,
+  use --disable-plugin=htmlscrubber, or modify the plugin setting in the
+  setup file.
+
+  Discussion pages are enabled by default, but if your wiki is configured
+  with a setup file, you need to edit it to keep them enabled on upgrade
+  to this version. Add a line reading:
+  discussion => 1,
+
+  You will need to rebuild your wiki when upgrading to this version.
+  If you listed your wiki in /etc/ikiwiki/wikilist this will be done
+  automatically when the Debian package is upgraded. Or use
+  ikiiki-mass-rebuild to force a rebuild.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  2 May 2006 14:13:59 -0400

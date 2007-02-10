@@ -1,0 +1,42 @@
+[[template id=plugin name=inline core=1 included=1 author="[[Joey]]"]]
+[[tag type/core]]
+
+This is a [[PreProcessorDirective]] that allows including one wiki page
+inside another. For example:
+
+	\[[inline pages="blog/*"]]
+
+The most common use of inlining is generating blogs and RSS or Atom feeds.
+See [[blog]] for details.
+
+## usage
+
+Here are descriptions of all the supported parameters to the `inline`
+directive:
+
+* `pages` - A [[PageSpec]] of the pages to inline.
+* `show` - Specify the maximum number of matching pages to inline.
+  Default is 10, unless archiving, when the default is to show all.
+  Set to 0 to show all matching pages.
+* `skip` - Specify a number of pages to skip displaying. Can be useful
+  to produce a feed that only shows archived pages.
+* `rss` - controls generation of an rss feed. On by default if the wiki is
+  configured to use rss feeds, set to "no" to disable.
+* `atom` - controls generation of an atom feed. On by default if the wiki is
+  configured to use atom feeds, set to "no" to disable.
+* `feeds` - controls generation of all types of feeds. Set to "no" to
+  disable generating any feeds.
+* `rootpage` - Enables a form to post new pages to a [[blog]].
+* `archive` - If set to "yes", only list page titles and some metadata, not
+  full controls.
+* `raw` - Rather than the default behavior of creating a [[blog]],
+  if raw is set to "yes", the page will be included raw, without additional
+  markup around it, as if it were a literal part of the source of the 
+  inlining page.
+* `description` - Sets the description of the rss feed if one is generated.
+  Defaults to the name of the wiki.
+* `actions` - If set to "yes" add links to the bottom of the inlined pages 
+  for editing and discussion (if they would be shown at the top of the page
+  itself).
+* `sort` - Controls how inlined pages are sorted. The default, "age" is to
+  sort newest pages first. Setting it to "title" will sort pages by title.

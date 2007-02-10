@@ -1,0 +1,25 @@
+# NAME
+
+ikiwiki-mass-rebuild - rebuild all ikiwiki wikis on a system
+
+# SYNOPSIS
+
+ikiwiki-mass-rebuild
+
+# DESCRIPTION
+
+`ikiwiki-mass-rebuild` can be used to force a rebuild of all the wikis
+on a system. You will need to list the wikis it shuld build in the file
+/etc/ikiwiki/wikilist, which has the format:
+
+user /path/to/wiki
+
+# OPTIONS
+
+All options are passed on to ikiwiki.
+
+# AUTHOR
+
+Joey Hess <joey@kitenet.net>
+
+Warning: this page is automatically made into ikiwiki-mass-rebuild's man page, edit with care

@@ -1,0 +1,22 @@
+HTML::Template does not read files as utf-8, so modifying ikiwiki's
+template files to contain utf-8 won't currently work.
+
+It seems that the best way to fix this would be to make HTML::Template
+support utf-8.
+
+A workaround is to change all the template reading code like this:
+
+	-     my $template=HTML::Template->new(blind_cache => 1,
+	-             filename => "$config{templatedir}/page.tmpl");
+	+     open(TMPL, "<:utf8", "$config{templatedir}/page.tmpl");
+	+     my $template=HTML::Template->new(filehandle => *TMPL);
+	+     close(TMPL);
+
+However, this will make ikiwiki slower when rebuilding a wiki, since it
+won't cache templates.
+
+Could be approached by using HTML::Template's support for filters. Just make it use a filter that turns on utf-8
+
+Or by subclassing it and overriding the \_init\_template method, though that's a bit uglier
+
+[[bugs/done]]

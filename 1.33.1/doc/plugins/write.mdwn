@@ -1,0 +1,356 @@
+ikiwiki [[plugins]] are written in perl. Each plugin is a perl module, in
+the `IkiWiki::Plugin` namespace. The name of the plugin is typically in
+lowercase, such as `IkiWiki::Plugin::inline`. Ikiwiki includes a
+`IkiWiki::Plugin::skeleton` that can be fleshed out to make a useful
+plugin. `IkiWiki::Plugin::pagecount` is another simple example.
+
+[[toc levels=2]]
+
+## Considerations
+
+One thing to keep in mind when writing a plugin is that ikiwiki is a wiki
+*compiler*. So plugins influence pages when they are built, not when they
+are loaded. A plugin that inserts the current time into a page, for
+example, will insert the build time. Also, as a compiler, ikiwiki avoids
+rebuilding pages unless they have changed, so a plugin that prints some
+random or changing thing on a page will generate a static page that won't
+change until ikiwiki rebuilds the page for some other reason, like the page
+being edited.
+
+## Registering plugins
+
+All plugins should `use IkiWiki` to import the ikiwiki plugin interface.
+
+Plugins should, when imported, call `hook()` to hook into ikiwiki's
+processing. The function uses named parameters, and use varies depending on
+the type of hook being registered -- see below. Note that a plugin can call
+the function more than once to register multiple hooks. All calls to
+`hook()` should be passed a "type" parameter, which gives the type of
+hook, a "id" paramter, which should be a unique string for this plugin, and
+a "call" parameter, which is a reference to a function to call for the
+hook.
+
+An optional "scan" parameter, if set to a true value, makes the hook be
+called during the preliminary scan that ikiwiki makes of updated pages,
+before begining to render pages. This parameter should be set to true if
+the hook modifies data in `%links`. Note that doing so will make the hook
+be run twice per page build, so avoid doing it for expensive hooks.
+
+## Types of hooks
+
+In roughly the order they are called.
+
+### getopt
+
+	hook(type => "getopt", id => "foo", call => \&getopt);
+
+This allows for plugins to perform their own processing of command-line
+options and so add options to the ikiwiki command line. It's called during
+command line processing, with @ARGV full of any options that ikiwiki was
+not able to process on its own. The function should process any options it
+can, removing them from @ARGV, and probably recording the configuration
+settings in %config. It should take care not to abort if it sees
+an option it cannot process, and should just skip over those options and
+leave them in @ARGV.
+
+### checkconfig
+
+	hook(type => "checkconfig", id => "foo", call => \&checkconfig);
+
+This is useful if the plugin needs to check for or modify ikiwiki's
+configuration. It's called early in the startup process. The
+function is passed no values. It's ok for the function to call
+`error()` if something isn't configured right.
+
+### filter
+
+	hook(type => "filter", id => "foo", call => \&filter);
+
+Runs on the raw source of a page, before anything else touches it, and can
+make arbitrary changes. The function is passed named parameters `page` and
+`content` and should return the filtered content.
+
+### scan
+
+	hook(type => "scan", id => "foo", call => \&scan);
+
+This is identical to a preprocess hook (see below), except that it is
+called in the initial pass that scans pages for data that will be used in
+later passes. Scan hooks are the only hook that should modify 
+
+### preprocess
+
+Adding a [[PreProcessorDirective]] is probably the most common use of a
+plugin.
+
+        hook(type => "preprocess", id => "foo", call => \&preprocess);
+
+Replace "foo" with the command name that will be used inside brackets for
+the preprocessor directive.
+
+Each time the directive is processed, the referenced function (`preprocess`
+in the example above) is called, and is passed named parameters. A "page"
+parameter gives the name of the page that embedded the preprocessor
+directive, while a "destpage" parameter gives the name of the page the
+content is going to (different for inlined pages). All parameters included
+in the directive are included as named parameters as well. Whatever the
+function returns goes onto the page in place of the directive.
+
+Note that if the [[htmlscrubber]] is enabled, html in
+[[PreProcessorDirective]] output is sanitised, which may limit what your
+plugin can do. Also, the rest of the page content is not in html format at
+preprocessor time. Text output by a preprocessor directive will be
+linkified and passed through markdown (or whatever engine is used to htmlize
+the page) along with the rest of the page.
+
+### htmlize
+
+	hook(type => "htmlize", id => "ext", call => \&htmlize);
+
+Runs on the raw source of a page and turns it into html. The id parameter
+specifies the filename extension that a file must have to be htmlized using
+this plugin. This is how you can add support for new and exciting markup
+languages to ikiwiki.
+
+The function is passed named parameters: "page" and "content" and should
+return the htmlized content.
+
+### pagetemplate
+
+	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
+
+[[Templates]] are filled out for many different things in ikiwiki, 
+like generating a page, or part of a blog page, or an rss feed, or a cgi.
+This hook allows modifying those templates. The function is passed named
+parameters. The "page" and "destpage" parameters are the same as for a
+preprocess hook. The "template" parameter is a `HTML::Template` object that
+is the template that will be used to generate the page. The function can
+manipulate that template object.
+
+The most common thing to do is probably to call $template->param() to add
+a new custom parameter to the template.
+
+### sanitize
+
+	hook(type => "sanitize", id => "foo", call => \&sanitize);
+
+Use this to implement html sanitization or anything else that needs to
+modify the body of a page after it has been fully converted to html.
+
+The function is passed named parameters: "page" and "content", and 
+should return the sanitized content.
+
+### format
+
+	hook(type => "format", id => "foo", call => \&format);
+
+The difference between format and sanitize is that sanitize only acts on
+the page body, while format can modify the entire html page including the
+header and footer inserted by ikiwiki, the html document type, etc.
+
+The function is passed named parameters: "page" and "content", and 
+should return the formatted content.
+
+### delete
+
+	hook(type => "delete", id => "foo", call => \&delete);
+
+Each time a page or pages is removed from the wiki, the referenced function
+is called, and passed the names of the source files that were removed.
+
+### change
+
+	hook(type => "change", id => "foo", call => \&render);
+
+Each time ikiwiki renders a change or addition (but not deletion) to the
+wiki, the referenced function is called, and passed the names of the
+source files that were rendered.
+
+### cgi
+
+	hook(type => "cgi", id => "foo", call => \&cgi);
+
+Use this to hook into ikiwiki's cgi script. Each registered cgi hook is
+called in turn, and passed a CGI object. The hook should examine the
+parameters, and if it will handle this CGI request, output a page and
+terminate the program.
+
+### savestate
+
+	hook(type => "savestate", id => "foo", call => \&savestate);
+
+This hook is called wheneven ikiwiki normally saves its state, just before
+the state is saved. The function can save other state, modify values before
+they're saved, etc.
+
+## Plugin interface
+
+To import the ikiwiki plugin interface:
+
+	use IkiWiki '1.00';
+
+This will import several variables and functions into your plugin's
+namespace. These variables and functions are the ones most plugins need,
+and a special effort will be made to avoid changing them in incompatible
+ways, and to document any changes that have to be made in the future.
+
+Note that IkiWiki also provides other variables functions that are not
+exported by default. No guarantee is made about these in the future, so if
+it's not exported, the wise choice is to not use it.
+
+### %config
+
+A plugin can access the wiki's configuration via the `%config`
+hash. The best way to understand the contents of the hash is to look at
+[[ikiwiki.setup]], which sets the hash content to configure the wiki.
+
+### Other variables
+
+If your plugin needs to access data about other pages in the wiki. It can
+use the following hashes, using a page name as the key:
+
+* `%links` lists the names of each page that a page links to, in an array
+  reference.
+* `%renderedfiles` lists names of the files rendered by a page, in an array
+  reference.
+* `%pagesources` contains the name of the source file for a page.
+
+Also, the %IkiWiki::version variable contains the version number for the
+ikiwiki program.
+
+### Library functions
+
+#### `hook(@)`
+
+Hook into ikiwiki's processing. See the discussion of hooks above.
+
+Note that in addition to the named parameters described above, a parameter
+named no_override is supported, If it's set to a true value, then this hook
+will not override any existing hook with the same id. This is useful if
+the id can be controled by the user.
+
+#### `debug($)`
+
+Logs a debugging message. These are supressed unless verbose mode is turned
+on.
+
+#### `error($)`
+
+Aborts with an error message.
+
+Note that while any plugin can use this for a fatal error, plugins should
+try to avoid dying on bad input, as that will halt the entire wiki build
+and make the wiki unusable. So for example, if a [[PreProcessorDirective]]
+is passed bad parameters, it's better to return an error message, which can
+appear on the wiki page, rather than calling error().
+
+#### `template($;@)`
+
+Creates and returns a HTML::Template object. The first parameter is the
+name of the file in the template directory. The optional remaining
+parameters are passed to HTML::Template->new.
+
+#### `htmlpage($)`
+
+Passed a page name, returns the base name that will be used for a the html
+page created from it. (Ie, it appends ".html".)
+
+#### `add_depends($$)`
+
+Makes the specified page depend on the specified [[PageSpec]].
+
+#### `pagespec_match($$)`
+
+Passed a page name, and a [[PageSpec]], returns true if the [[PageSpec]]
+matches the page.
+
+#### `bestlink($$)`
+
+Given a page and the text of a link on the page, determine which
+existing page that link best points to. Prefers pages under a
+subdirectory with the same name as the source page, failing that
+goes down the directory tree to the base looking for matching
+pages, as described in [[SubPage/LinkingRules]].
+
+#### `htmllink($$$;$$$)`
+
+Many plugins need to generate html links and add them to a page. This is
+done by using the `htmllink` function. The usual way to call
+`htmlllink` is:
+
+	htmllink($page, $page, $link)
+
+Why is `$page` repeated? Because if a page is inlined inside another, and a
+link is placed on it, the right way to make that link is actually:
+
+	htmllink($page, $destpage, $link)
+
+Here `$destpage` is the inlining page. A `destpage` parameter is passed to
+some of the hook functions above; the ones that are not passed it are not used
+during inlining and don't need to worry about this issue.
+
+The remaining three optional parameters to `htmllink` are:
+
+1. noimageinline - set to true to avoid turning links into inline html images
+1. forcesubpage  - set to force a link to a subpage
+1. linktext - set to force the link text to something
+
+#### `readfile($;$)`
+
+Given a filename, reads and returns the entire file.
+
+The optional second parameter, if set to a true value, makes the file be read
+in binary mode.
+
+A failure to read the file will result in it dying with an error.
+
+#### `writefile($$$;$)`
+
+Given a filename, a directory to put it in, and the file's content,
+writes a file. 
+
+The optional second parameter, if set to a true value, makes the file be
+written in binary mode.
+
+A failure to write the file will result in it dying with an error.
+
+If the destination directory doesn't exist, it will first be created.
+
+### `will_render($$)`
+
+Given a page name and a destination file name (not including the base
+destination directory), register that the page will result in that file
+being rendered. It's important to call this before writing to any file in
+the destination directory.
+
+#### `pagetype($)`
+
+Given the name of a source file, returns the type of page it is, if it's
+a type that ikiwiki knowns how to htmlize. Otherwise, returns undef.
+
+#### `pagename($)`
+
+Given the name of a source file, returns the name of the wiki page
+that corresponds to that file.
+
+#### `srcfile($)`
+
+Given the name of a source file in the wiki, searches for the file in
+the source directory and the underlay directory, and returns the full
+path to the first file found.
+
+#### `displaytime($)`
+
+Given a time, formats it for display.
+
+## RCS plugins
+
+ikiwiki's support for revision control systems also uses pluggable perl
+modules. These are in the `IkiWiki::RCS` namespace, for example
+`IkiWiki::RCS::svn`. 
+
+Each RCS plugin must support all the IkiWiki::rcs\_* functions.
+See IkiWiki::RCS::Stub for the full list of functions. It's ok if
+rcs\_getctime does nothing except for throwing an error.
+
+See [[about_RCS_backends]] for some more info.

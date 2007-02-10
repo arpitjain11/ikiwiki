@@ -1,0 +1,207 @@
+/* ikiwiki style sheet */
+
+/* Note that instead of modifying this style sheet, you can instead edit
+ * local.css and use it to override or change settings in this one.
+ */
+
+.header {
+	margin: 0;
+	font-size: 22px;
+	font-weight: bold;
+	line-height: 1em;
+	display: block;
+}
+
+.author {
+	margin: 0;
+	font-size: 18px;
+	font-weight: bold;
+	display: block;
+}
+
+.actions ul {
+	margin: 0;
+	padding: 6px;
+	list-style-type: none;
+	border-bottom: 1px solid #000;
+}
+
+.inlinepage .actions ul {
+	border-bottom: 0;
+}
+
+.actions li {
+	display: inline;
+	padding: .2em .4em;
+}
+
+#backlinks {
+	margin: 1em 0;
+}
+
+.tags {
+	clear: both;
+}
+
+div.tags {
+	border-top: 1px solid #000;
+}
+
+#footer {
+	margin: 1em 0;
+}
+
+#searchform {
+	display: inline;
+	float: right;
+}
+
+#editcontent {
+	width: 100%;
+}      
+
+/* Stuff for the RecentChanges table. */
+tr.changeheader {
+	background: #eee;
+	color: black !important;
+}
+tr.changeinfo {
+	background: #eee;
+	color: black !important;
+}
+th.changeheader {
+	padding: 1px .3em;
+}
+td.changeinfo { 
+	padding: 1px .3em;
+}
+td.changetime {
+	white-space: nowrap;
+	padding: 1px .3em;
+}
+td.changelog {
+	font-style: italic;
+}
+
+.pagecloud {
+	padding: 10px 10px;
+	border: 1px solid #aaa;
+	background: #eee;
+	color: black !important;
+}
+
+/* Used for adding a blog page. */
+#blogform {
+	padding: 10px 10px;
+	border: 1px solid #aaa;
+	background: #eee;
+	color: black !important;
+}
+
+.inlinepage {
+	padding: 10px 10px;
+	border: 1px solid #aaa;
+}
+
+.pageinfo {
+	clear: both;
+	font-style: italic;
+	display: block;
+}
+
+/* Used for invalid form fields. */
+.fb_invalid {
+	color: red;
+	background: white !important;
+}
+
+/* Used for required form fields. */
+.fb_required {
+	font-weight: bold;
+}
+
+/* Orange feed button. */
+.feedbutton {
+	background: #ff6600;
+	color: white !important;
+	border-left: 1px solid #cc9966;
+	border-top: 1px solid #ccaa99;
+	border-right: 1px solid #993300;
+	border-bottom: 1px solid #331100;
+	padding: 0px 0.5em 0px 0.5em;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	font-size: small;
+	text-decoration: none;
+	margin-top: 1em;
+}
+.feedbutton:hover {
+	color: white !important;
+	background: #ff9900;
+}
+
+/* Tag cloud. */
+.pagecloud {
+	float: right;
+	width: 30%;
+	text-align: center;
+}
+.smallestPC { font-size: 70%; }
+.smallPC { font-size: 85%; }
+.normalPC { font-size: 100%; }
+.bigPC { font-size: 115%; }
+.biggestPC { font-size: 130%; }
+
+#sidebar {
+	line-height: 3ex;
+	width: 20ex;
+	float: right;
+	margin-left: 40px;
+	margin-bottom: 40px;
+	padding: 2ex 2ex;
+}
+
+.infobox {
+	float: right;
+	margin-left: 2ex;
+	margin-top: 1ex;
+	margin-bottom: 1ex;
+	padding: 1ex 1ex;
+	border: 1px solid #aaa;
+}
+
+.notebox {
+	float: right;
+	margin-left: 2ex;
+	margin-top: 1ex;
+	margin-bottom: 1ex;
+	padding: 1ex 1ex;
+	border: 1px solid #aaa;
+	width: 25%
+}
+
+/* outlines  */
+li.L1 {
+	list-style: upper-roman;
+}
+li.L2 {
+	list-style: decimal;
+}
+li.L3 {
+	list-style: lower-alpha;
+}
+li.L4 {
+	list-style: disc;
+}
+li.L5 {
+	list-style: square;
+}
+li.L6 {
+	list-style: circle;
+}
+li.L7 {
+	list-style: lower-roman;
+}
+li.L8 {
+	list-style: upper-alpha;
+}

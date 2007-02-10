@@ -1,0 +1,53 @@
+Seems like there should be a page for you to post your thoughts about
+ikiwiki, both pro and con, anything that didn't work, ideas, or whatever.
+Do so here..
+
+Note that for more formal bug reports or todo items, you can also edit the
+[[bugs]] and [[todo]] pages.
+
+---- 
+
+# ACL
+
+How about adding ACL? So that you can control which users are allowed
+to read, write certain pages. The moinmoin wiki has that, and it is
+something, that I think is very valuable. 
+
+> ikiwiki currently has only the most rudimentary access controls: pages
+> can be locked, or unlocked and only the admin can edit locked pages. That
+> could certianly be expanded on, although it's not an area that I have an
+> overwhelming desire to work on myself right now. Patches appreciated and
+> I'll be happy to point you in the right directions.. --[[Joey]]
+
+----
+
+Some questions about the RecentChanges function. -- Ethan
+
+> (Moved to [[todo/recentchanges]] --[[Joey]])
+
+----
+
+Also, I'd like to request another template parameter which is just
+$config{url}. That way you won't have to hard-code the URL of the wiki into
+the template. -- Ethan
+
+> That's already available in the BASEURL parameter. --[[Joey]]
+
+----
+
+# Canonical feed location?
+
+Any way to use `inline` but point the feed links to a different feed on the
+same site?  I have news in news/*, a news archive in news.mdwn, and the
+first few news items on index.mdwn, but I don't really want two separate
+feeds, one with all news and one with the latest few articles; I'd rather
+point the RSS feed links of both to the same feed.  (Which one, the one
+with all news or the one with the latest news only, I don't know yet.)
+
+> Not currently. It could be implemented, or you could just turn off the
+> rss feed for the index page, and manually put in a wikilink to the news
+> page and rss feed. --[[Joey]]
+
+>> That wouldn't use the same style for the RSS and Atom links, and it
+>> wouldn't embed the feed link into `<head>` so that browsers can automatically
+>> find it.

@@ -1,0 +1,42 @@
+I don't want this interface to be too firm; it's ok for a plugin like
+`ddate` to redefine an internal function like IkiWiki::displaytime if it
+wants to.. But plugins that still access stuff through IkiWiki:: should be
+aware that that stuff can change at any time and break them. Possibly without
+perl's type checking catching the breakage, in some cases. Plugins that
+only use exported symbols should not be broken by future ikiwiki changes.
+
+Functions used by only some plugins, undecided about exporting:
+
+* lockwiki, unlockwiki (aggregate)
+	Too internal to ever be exported.
+* loadindex (aggregate)
+	Too internal to ever be exported.
+* titlepage (aggregate)
+	Not until more than one thing uses it.
+* basename (polygen, inline, search, polygen)
+* dirname (linkmap, inline)
+	For basename and dirname, they could just use standard perl library
+	stuff. Howevever, ikiwiki's versions are slightly different and I'd
+	need to check if the standard versions work for the uses made in
+	these plugins. Inclined not to export.
+* abs2rel (linkmap, inline)
+	This *is* the library version, just optimised to work around a bug.
+	Don't export this.
+* possibly_foolish_untaint (aggregate, polygen)
+	Probably better to implement yourself.
+* htmlize
+* linkify
+* preprocess
+* filter
+	The 4 above are used by a few plugins, but problimatic since plugins 
+	typically also define functions with these names.. I also feel that
+	this part of ikiwiki needs some more work before it's set in stone.
+	These are always called together, in the same order, though
+	sometimes htmlize isn't included.
+
+Variables used by plugins but not exported yet:
+
+* %IkiWiki::pagecase (aggregate)
+* %IkiWIki::backlinks (pagestats)
+
+[[todo/done]]

@@ -1,0 +1,36 @@
+ikiwiki 1.32 released with these changes:
+
+   * Add a separate pass to find page links, and only render each page once,
+     instead of over and over. Typical speedup is ~4x. Max possible speedup:
+     8x.
+   * Add "scan" parameter to hook(), which is used to make the hook be called
+     during the scanning pass, as well as the render pass. The meta and tag
+     plugins need to use the new scan parameter, so will any others that modify
+     %links.
+   * Now that links are calculated in a separate pass, it can also
+     precalculate backlinks in one pass, which is O(N^2) instead of the
+     previous code that was O(N^3). A very nice speedup for wikis with lots
+     (thousands) of pages.
+   * Stylish update to the ikiwiki logo, thanks to Recai Oktaş and Selçuk
+     Erdem.
+   * Add a default stylesheet entry for the pagecloud.
+   * Add examples page with some examples of things that can be done using
+     ikiwiki, like a weblog. The examples can be copied into a user's wiki
+     for a quick start, without needing to learn everything about how to put
+     them together.
+   * Install the source of the examples into /usr/share/doc/ikiwiki/examples.
+   * Add perlmagick to build-depends so syntax check of img plugin works.
+     Closes: #[396702](http://bugs.debian.org/396702)
+   * Improve login/register process, the login dialog has only name and
+     password fields, which allows more web browsers to regognise it as a login
+     field, and is less confusing.
+   * Implemented expiry options for aggregate plugin.
+   * Use precalculated backlinks info when determining if files need an update
+     due to a page they link to being added/removed. Mostly significant if
+     there are lots of pages.
+   * Remove duplicate link info when saving index. In some cases it could
+     pile up rather badly. (Probably not the best way to deal with this
+     problem.)
+   * Patch from James Westby to support podcasting, photoblogging, vidcasting,
+     or what have you, by creating enclosures for non-page items that are
+     included in feeds.

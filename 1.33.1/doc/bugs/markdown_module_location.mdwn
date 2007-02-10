@@ -1,0 +1,34 @@
+If the Markdown module is installed via CPAN rather than apt then
+the module is actually Text::Markdown.
+
+I had to edit the source to change this on my old server. I have filed
+a [bug](http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=387687) against
+the Debian markdown, which I guess you can consider a blocking bug of this.
+
+I tried to come up with the magical invocation to allow either location 
+to be used by ikiwiki, but I couldn't do it.
+
+-- [[JamesWestby]]
+
+Fixed, I think --[[Joey]]
+
+> Fraid not. The import works ok, but I get
+     `Undefined subroutine &Markdown::Markdown called at IkiWiki/Plugin/mdwn.pm line 41.`
+> This is what stumped me, I was trying to import as an alias, but couldn't work
+> out how to do it. A flag if you use the second import would be an ugly solution.
+> -- [[JamesWestby]]
+
+Ok, the markdown in CPAN must be an entirely different version then if it
+doesn't has a Markdown::Markdown. Interesting, I'll have a look at it.
+--[[Joey]]
+
+> It works if you use Text::Markdown::Markdown, sorry, I forgot to mention that.
+> --JamesWestby
+
+I think what I've committed now will work in all cases. Well, unless there
+are even more forks of markdown out there (the CPAN module is a fork
+apparently...) 
+
+[[bugs/done]] --[[Joey]]
+
+> It now compiles here, thanks. --JamesWestby

@@ -1,0 +1,13 @@
+It's a good idea, and in some cases a requirement, to rebuild your wiki
+when upgrading to a new version of ikiwiki. If you have a lot of different
+wikis on a system, this can be a pain to do by hand, and it's a good idea
+to automate it anyway.
+
+This Debian package of ikiwiki supports rebuilding wikis on upgrade. It
+will run ikiwiki-mass-rebuild if necessary when upgraded. The file
+/etc/ikiwiki/wikilist lists the setup files of wikis to rebuild, as well
+as the user who owns the wiki. Edit this file and add any wikis you 
+set up.
+
+
+The examples directory contains the source to some example wiki setups.

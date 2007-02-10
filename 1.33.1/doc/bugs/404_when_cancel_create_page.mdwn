@@ -1,0 +1,60 @@
+If you 
+
+ * Add a link to a non-existant page and save. (e.g. [[somewhere-over-the-rainbow]])
+ * Click the question mark to create the page.
+ * Click the cancel button.
+
+You get a 404 as the page doesn't exist. This patch redirects to the from location
+if it is known.
+
+
+        === modified file 'IkiWiki/CGI.pm'
+        --- IkiWiki/CGI.pm
+        +++ IkiWiki/CGI.pm
+        @@ -427,7 +427,11 @@
+                }
+        
+                if ($form->submitted eq "Cancel") {
+        -               redirect($q, "$config{url}/".htmlpage($page));
+        +               if ( $newpage && defined $from ) {
+        +                       redirect($q, "$config{url}/".htmlpage($from));
+        +               } else {
+        +                       redirect($q, "$config{url}/".htmlpage($page));
+        +               }
+                        return;
+                }
+                elsif ($form->submitted eq "Preview") {
+
+> I think you mean to use `$newfile`? I've applied a modieid version
+> that also deal with creating a new page with no defined $from location.
+> [[bugs/done]] --[[Joey]] 
+
+>> Yes of course, that's what I get for submitting an untested patch!
+>> I must stop doing that.
+
+[P.S. just above that is 
+
+                $type=$form->param('type');
+                if (defined $type && length $type && $hooks{htmlize}{$type}) {
+                        $type=possibly_foolish_untaint($type);
+                }
+                ....
+                $file=$page.".".$type;
+
+I'm a little worried by the `possibly_foolish_untaint` (good name for it by the way,
+makes it stick out). I don't think much can be done to exploit this (if anything), 
+but it seems like you could have a very strict regex there rather than the untaint,
+is there aren't going to be many possible extensions. Something like `/(.\w+)+/`
+(groups of dot separated alpha-num chars if my perl-foo isn't failing me). You could
+at least exclude `/` and `..`. I'm happy to turn this in to a patch if you agree.]
+
+> The reason it's safe to use `possibly_foolish_untaint` here is because
+> of the check for $hooks{htmlize}{$type}. This limits it to types
+> that have a registered htmlize hook (mdwn, etc), and not whatever random
+> garbage an attacker might try to put in. If it wasn't for that check,
+> using `possibly_foolish_untaint` there would be _very_ foolish indeed.. 
+> --[[Joey]]
+
+>> Nice, sorry I missed it. 
+>> I must say thankyou for creating ikiwiki.
+>> The more I look at it, the more I admire what you are doing with it and how you are going about it

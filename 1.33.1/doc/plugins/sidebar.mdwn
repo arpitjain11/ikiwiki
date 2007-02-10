@@ -1,0 +1,15 @@
+[[template id=plugin name=sidebar included=1 author="Tuomo Valkonen"]]
+[[tag type/chrome]]
+
+If this plugin is enabled, then a sidebar is added to pages in the wiki.
+The content of the sidebar is simply the content of a page named
+"sidebar" (ie, create a "sidebar.mdwn").
+
+Typically this will be a page in the root of the wiki, but it can also be a
+[[SubPage]]. In fact, this page, [[plugins/sidebar|plugins/sidebar]], will
+be treated as a sidebar for the [[plugins]] page, and of all of its
+SubPages, if the plugin is enabled.
+
+Note that to disable a sidebar for a [[SubPage]] of a page that has a sidebar,
+you can create a sidebar page that is completely empty. This will turn off
+the sidebar altogether.

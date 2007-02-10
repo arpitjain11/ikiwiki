@@ -1,0 +1,65 @@
+[[template id=plugin name=syntax author="[[VictorMoral]]"]]
+[[tag type/chrome type/slow]]
+[[meta title="syntax (third-party plugin)"]]
+
+
+`syntax` is a plugin that add support to ikiwiki for syntax highlighting through the *vim* editor and its perl interface [[cpan Text::VimColor]], so it depends on a vim functional installation.
+
+The plugin inserts a fragment of HTML with special marks from a file or a string text. It accepts the following parameters:
+
+* **type** (optional): this is the file type for vim syntax highlighthing. It can be omitted if the param *file* exists.
+* **file**: Path to the source file. It must exist on every rebuild of the wiki.
+* **text**: Text string with the source.
+* **description** (optional): little description about the content.
+* **linenumbers** (optional): enable the line numering of the source page. A value greater than zero is the first line number.
+
+The params *file* and *text* are mutually exclusive.
+
+In the case of file parameter, `syntax` will build a html link for direct download.
+
+Example:
+
+       \[[syntax type="perl" text="""  
+       #!/usr/bin/perl
+
+       my $a = "World";
+       print "Hello, ${a}\n";
+       """]]
+
+or 
+
+       \[[syntax file="/examples/hello.pl" description="My first perl program"]]
+
+This plugin create the following CSS styles:
+
+* syntax
+* synComment
+* synConstant
+* syncIdentifier
+* synPreProc
+* synType
+* synSpecial
+* synUnderlined
+* synError
+* synTodo
+* synTitle
+
+It can be downloaded from [here](http://taquiones.net/files/misc/) or through my personal debian repository at <http://taquiones.net/files/debian/>. There is a page with examples: <http://taquiones.net/software/syntax-examples.html>
+
+Any help, comments or critics are welcome at <victor@taquiones.net>.
+
+## version 0.9
+
+- Add a force_subpage parameter for link build
+- Fix a bug in syntax page link
+- Documented a bug with markdown indented text
+- Documented the syntax directive
+
+## version 0.7
+
+- Version change to GPL
+- Add *linenumbers* parameter
+- The *file* parameter should be point to a ikiwiki source page. 
+- The *description* parameter will be converted on a URL if the *file* parameter exist.
+
+I need help for debugging this module. Thanks in advance.

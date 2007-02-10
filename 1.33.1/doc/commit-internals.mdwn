@@ -1,0 +1,20 @@
+Saving this irc transcript here, since it's a fairly in-depth discussion of
+how ikiwiki handles commits, locking, etc, and avoids some races while
+doing so.
+
+	<tschwinge> What happens if I edit a page and in the underground a new version is installed into the svn repository?
+	<tschwinge> The revision when I started editing was saved, right?
+	<joeyh> what happens, exactly is:
+	<joeyh> 1. the new version that was committed first get into svn, and ikiwiki updates its WC to have the new version
+	<joeyh> 2. When you save your edit, ikiwiki detects a conflict.
+	<joeyh> 3. It uses svn merge to try to resolve it; if it's resolved it adds your changes transparently
+	<joeyh> 4. If the conflict needs manual resolution, it displays the page with conflict markers in the editor for you to resolve
+	<tschwinge> Ok.
+	<joeyh> Note that in step 2, it detects the conflict by using svn info to get the current Revision of the page in the WC, and compares that to a revision that is stored when you start to edit the page
+	<joeyh> that's why rcs_prepedit exists, to get that revision info
+	<tschwinge> But isn't there a race condition?
+	<joeyh> well, there is locking going on too
+	<joeyh> ikiwiki won't update the WC in step 1. if another instance of itself is getting the Revision info
+	<tschwinge> Is that lockwiki()?
+	<joeyh> yeah
+	<joeyh> note that when it gets the current Revision info of a page during its conflict detection, svn could have changed the page in the repo, and the WC not been updated yet due to the lock, but this isn't a race since the commit will then fail due to a regular svn conflict and the conflict detction will still work.

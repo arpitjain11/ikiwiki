@@ -1,0 +1,51 @@
+The ikiwiki logo *reflects* ikiwiki turning the regular wiki concept 
+on its head by being a wiki compiler. Or maybe just the fact that "ikiwiki"
+is an anagram. 
+
+Anyway, if you have this logo in other fonts or colors, feel free to send
+it to [[Joey]] for inclusion here. (Or upload it, once that feature is
+added).
+
+* [[ikiwiki_logo|ikiwiki.png]]  
+  [[ikiwiki_logo_large|ikiwiki_large.png]]  
+  [[ikiwiki_button|ikiwiki_button.png]]
+
+  [[SVG_source|ikiwiki.svgz]], can be used to generate a logo at any size
+  with a command like:  
+
+	inkscape -w 90 -i logo -e ikiwiki.png ikiwiki.svgz
+	inkscape -w 150 -i logo -e ikiwiki_large.png ikiwiki.svgz
+
+  The [[favicon.ico]] can also be generated from this file, as follows:
+
+	inkscape -w 16 -i favicon -e favicon.ico ikiwiki.svgz
+
+  The button can also be generated as follows:
+
+  	inkscape -w 80 -i button -e ikiwiki_button.png ikiwiki.svgz
+
+  Some other alternate icons and buttons are also included in the svg file
+  and can be extracted by specifying their names.
+
+  [[img ikiwiki.png alt="bob" size="200x200"]]
+
+  Contributed by Recai Oktaş
+
+* [[ikiwiki_logo|ikiwiki_old2.png]]
+
+  [[SVG_source|ikiwiki_old2.svgz]] to this older version of the logo.
+
+  Contributed by Recai Oktaş
+
+* [[ikiwiki_logo|ikiwiki_old.png]] 
+
+  LaTeX source to an image approximating the above:
+
+  	\documentclass{article}
+  	\usepackage{graphicx}
+  	\begin{document}
+  	\pagestyle{empty}
+  	\huge\reflectbox{iki}wiki
+  	\end{document}
+
+  Contributed by [[JeroenSchot]]
