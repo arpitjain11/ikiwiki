@@ -1,1 +1,6 @@
-Either [[plugins/template]] or [[plugins/shortcut]] should support some form of very simple text parsing or regex application, to make it possible to write something like `\[[mmlist listname@lists.example.org]]` and have this become <listname@lists.example.org> ([mailman page](http://lists.example.org/mailman/listinfo/listname)).
+Either [[plugins/template]] or [[plugins/shortcut]] should support some form
+of very simple text parsing or regex application, to make it possible to write
+shortcuts like these:
+
+    [[mmlist listname@lists.example.org]] -> <listname@example.org> ([mailman page] (http://lists.example.org/mailman/listinfo/listname)
+    [[debchangelog packagename]] -> [packagename changelog](http://packages.debian.org/changelogs/pool/main/p/packagename/current/changelog)
