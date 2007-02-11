@@ -22,3 +22,10 @@ Some possible syntax choices for the shortcut definition:
     \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=$*&searchmode=filelist&case=insensitive&version=${dist=unstable}&arch=${arch=i386}"]]
 
 --[[JoshTriplett]]
+
+Well, you can already do this kind of thing with templates. Invocation does
+look different:
+
+    \[[template id=debfiles package=ikiwiki dist=testing]]
+
+--[[Joey]]

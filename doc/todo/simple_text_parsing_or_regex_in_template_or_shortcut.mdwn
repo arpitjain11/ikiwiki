@@ -8,3 +8,16 @@ shortcuts like these:
 For shortcut definitions, a `match` parameter could supply a regex, and then the `url` and `desc` parameters could make use of the named or numbered groups from the match.
 
 --[[JoshTriplett]]
+
+I'm not comfortable with exposing regexps to web editing. At the very least
+it's trivial to construct regexps that take indefinitely long to match
+certain strings, which could be used to DOS ikiwiki. At worst, perl code
+can be embedded in regexps in a variety of ways that are painful to filter
+out, and perl's regexp engine could also potentially have bugs that could
+be exploited by user-supplied regexps.
+
+It seems that a better place to put this kind of text munging is in
+special-purpose plugins. It should be very simple to write plugins for the
+above two examples, that look identical to the user as what you described.
+
+--[[Joey]]
