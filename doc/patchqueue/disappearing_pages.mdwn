@@ -1,0 +1,107 @@
+If one user (via SVN or otherwise) deletes or moves a page while another user 
+is editing it via the web, bad things happen. This patch addresses this by
+failing gracefully, and allowing the user to commit a new file with the same 
+name if desired.
+
+The patch is [here](http://ikidev.betacantrips.com//patches/disappear.patch).
+It requires a strip level of 4 -- sorry about that. --Ethan
+
+    diff -urX /home/glasserc/ignorepats /home/glasserc/ikiclean/IkiWiki/CGI.pm /home/glasserc/ikidev/IkiWiki/CGI.pm
+    --- /home/glasserc/ikiclean/IkiWiki/CGI.pm	2007-02-11 21:40:32.419641000 -0800
+    +++ /home/glasserc/ikidev/IkiWiki/CGI.pm	2007-02-12 15:35:55.178886000 -0800
+    @@ -278,7 +278,7 @@
+     	my $q=shift;
+     	my $session=shift;
+     
+    -	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
+    +	my @fields=qw(do rcsinfo subpage from page type editcontent comments newfile);
+     	my @buttons=("Save Page", "Preview", "Cancel");
+     	
+     	eval q{use CGI::FormBuilder};
+    @@ -340,10 +340,6 @@
+     		$file=$page.".".$type;
+     	}
+     
+    -	my $newfile=0;
+    -	if (! -e "$config{srcdir}/$file") {
+    -		$newfile=1;
+    -	}
+     
+     	$form->field(name => "do", type => 'hidden');
+     	$form->field(name => "from", type => 'hidden');
+    @@ -354,6 +350,7 @@
+     	$form->field(name => "comments", type => "text", size => 80);
+     	$form->field(name => "editcontent", type => "textarea", rows => 20,
+     		cols => 80);
+    +	$form->field(name => "newfile", type => 'hidden');
+     	$form->tmpl_param("can_commit", $config{rcs});
+     	$form->tmpl_param("indexlink", indexlink());
+     	$form->tmpl_param("helponformattinglink",
+    @@ -362,8 +359,12 @@
+     	if (! $form->submitted) {
+     		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+     			force => 1);
+    +		$form->field(name => "newfile", 
+    +			     value => ! -e "$config{srcdir}/$file",
+    +			     force => 1);
+     	}
+    -	
+    +	my $newfile = $form->field(name => "newfile");
+    +
+     	if ($form->submitted eq "Cancel") {
+     		if ($newfile && defined $from) {
+     			redirect($q, "$config{url}/".htmlpage($from));
+    @@ -482,6 +485,16 @@
+     	else {
+     		# save page
+     		check_canedit($page, $q, $session);
+    +		if (! -e "$config{srcdir}/$file" && ! $form->field(name => 'newfile')){
+    +			$form->tmpl_param("page_gone", 1);
+    +			$form->field(name => "newfile",
+    +				     value => 1, force => 1);
+    +			$form->tmpl_param("page_select", 0);
+    +			$form->field(name => "page", type => 'hidden');
+    +			$form->field(name => "type", type => 'hidden');
+    +			print $form->render(submit => \@buttons);
+    +			return;
+    +		}
+     		
+     		my $content=$form->field('editcontent');
+     
+    @@ -512,8 +525,7 @@
+     					force => 1);
+     				$form->tmpl_param("page_conflict", 1);
+     				$form->field("editcontent", value => $conflict, force => 1);
+    -				$form->field(name => "comments", value => $form->field('comments'), force => 1);
+    -				$form->field("do", "edit)");
+    +				$form->field("do", "edit");
+     				$form->tmpl_param("page_select", 0);
+     				$form->field(name => "page", type => 'hidden');
+     				$form->field(name => "type", type => 'hidden');
+    diff -urX /home/glasserc/ignorepats /home/glasserc/ikiclean/templates/editpage.tmpl /home/glasserc/ikidev/templates/editpage.tmpl
+    --- /home/glasserc/ikiclean/templates/editpage.tmpl	2007-02-11 21:40:35.046470000 -0800
+    +++ /home/glasserc/ikidev/templates/editpage.tmpl	2007-02-12 15:33:38.503571000 -0800
+    @@ -21,6 +21,15 @@
+     conflict and commit again to save your changes.
+     </p>
+     </TMPL_IF>
+    +<TMPL_IF NAME="PAGE_GONE">
+    +<p>
+    +<b>The page you were editing has disappeared.</b>
+    +</p>
+    +<p>
+    +Perhaps someone else has deleted it or moved it. If you want to recreate
+    +this page with your text, click "Save Page" again.
+    +</p>
+    +</TMPL_IF>
+     <TMPL_VAR FORM-START>
+     <div class="header">
+     <span><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></span>
+    @@ -28,6 +37,7 @@
+     <TMPL_VAR FIELD-DO>
+     <TMPL_VAR FIELD-FROM>
+     <TMPL_VAR FIELD-RCSINFO>
+    +<TMPL_VAR FIELD-NEWFILE>
+     <TMPL_IF NAME="PAGE_SELECT">
+     Page location: <TMPL_VAR FIELD-PAGE>
+     Page type: <TMPL_VAR FIELD-TYPE>
