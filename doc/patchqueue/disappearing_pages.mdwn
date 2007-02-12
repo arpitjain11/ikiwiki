@@ -4,7 +4,9 @@ failing gracefully, and allowing the user to commit a new file with the same
 name if desired.
 
 The patch is [here](http://ikidev.betacantrips.com//patches/disappear.patch).
-It requires a strip level of 4 -- sorry about that. --Ethan
+It requires a strip level of 4 -- sorry about that. There are also some
+other changes in the conflict-resolution section which seemed to make sense,
+let me know what you think. --Ethan
 
     diff -urX /home/glasserc/ignorepats /home/glasserc/ikiclean/IkiWiki/CGI.pm /home/glasserc/ikidev/IkiWiki/CGI.pm
     --- /home/glasserc/ikiclean/IkiWiki/CGI.pm	2007-02-11 21:40:32.419641000 -0800
