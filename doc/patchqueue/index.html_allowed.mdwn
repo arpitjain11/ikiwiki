@@ -228,3 +228,7 @@ page "A/B/index.html" is treated as "A/B".
 
 > This is actually a pretty cool hack. I'll have to think about
 > whether I like it better than my way though :) --Ethan
+
+---
+
+How about doing the index stuff only on the output side? (Or does the latter patch do it? I haven't tried them.) That is, render every `foo.type` for the rendered types (mdwn etc.) as `foo/index.html`, generating links to `foo/` instead of `foo.html`, but not earlier than the point where the .html as presently appended to the page name. Then you just flip a build time option on an existing wiki without any changes to that, and the pages appear elsewhere. The `index.type` files might be left out of this scheme, though (and the top-level one, of course, has to). --[[tuomov]]
