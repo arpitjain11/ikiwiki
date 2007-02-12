@@ -65,7 +65,8 @@ sub defaultconfig () { #{{{
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
-	plugin => [qw{mdwn inline htmlscrubber passwordauth signinedit lockedit}],
+	plugin => [qw{mdwn inline htmlscrubber passwordauth signinedit
+	              lockedit conditional}],
 	timeformat => '%c',
 	locale => undef,
 	sslcookie => 0,
@@ -850,11 +851,16 @@ sub pagespec_translate ($) { #{{{
 		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
 			$code.=" ".$word;
 		}
-		elsif ($word =~ /^(link|backlink|created_before|created_after|creation_month|creation_year|creation_day)\((.+)\)$/) {
-			$code.=" match_$1(\$page, ".safequote($2).")";
+		elsif ($word =~ /^(\w+)\((.*)\)$/) {
+			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
+				$code.=" IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).")";
+			}
+			else {
+				$code.=" 0";
+			}
 		}
 		else {
-			$code.=" match_glob(\$page, ".safequote($word).", \$from)";
+			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \$from)";
 		}
 	}
 
@@ -865,17 +871,19 @@ sub pagespec_match ($$;$) { #{{{
 	my $page=shift;
 	my $spec=shift;
 	my $from=shift;
-	if (! defined $from){
-		$from = "";
-	}
 
 	return eval pagespec_translate($spec);
 } #}}}
+
+package IkiWiki::PageSpec;
 
 sub match_glob ($$$) { #{{{
 	my $page=shift;
 	my $glob=shift;
 	my $from=shift;
+	if (! defined $from){
+		$from = "";
+	}
 
 	# relative matching
 	if ($glob =~ m!^\./!) {
@@ -896,7 +904,7 @@ sub match_link ($$) { #{{{
 	my $page=shift;
 	my $link=lc(shift);
 
-	my $links = $links{$page} or return undef;
+	my $links = $IkiWiki::links{$page} or return undef;
 	foreach my $p (@$links) {
 		return 1 if lc $p eq $link;
 	}
@@ -911,8 +919,8 @@ sub match_created_before ($$) { #{{{
 	my $page=shift;
 	my $testpage=shift;
 
-	if (exists $pagectime{$testpage}) {
-		return $pagectime{$page} < $pagectime{$testpage};
+	if (exists $IkiWiki::pagectime{$testpage}) {
+		return $IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage};
 	}
 	else {
 		return 0;
@@ -923,8 +931,8 @@ sub match_created_after ($$) { #{{{
 	my $page=shift;
 	my $testpage=shift;
 
-	if (exists $pagectime{$testpage}) {
-		return $pagectime{$page} > $pagectime{$testpage};
+	if (exists $IkiWiki::pagectime{$testpage}) {
+		return $IkiWiki::pagectime{$page} > $IkiWiki::pagectime{$testpage};
 	}
 	else {
 		return 0;
@@ -932,15 +940,15 @@ sub match_created_after ($$) { #{{{
 } #}}}
 
 sub match_creation_day ($$) { #{{{
-	return ((gmtime($pagectime{shift()}))[3] == shift);
+	return ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift);
 } #}}}
 
 sub match_creation_month ($$) { #{{{
-	return ((gmtime($pagectime{shift()}))[4] + 1 == shift);
+	return ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift);
 } #}}}
 
 sub match_creation_year ($$) { #{{{
-	return ((gmtime($pagectime{shift()}))[5] + 1900 == shift);
+	return ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift);
 } #}}}
 
 1

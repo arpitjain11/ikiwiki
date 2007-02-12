@@ -1,0 +1,41 @@
+[[template id=plugin name=conditional core=1 included=1 author="[[Joey]]"]]
+[[tag type/format]]
+
+With this plugin, you can make text be conditionally displayed on a page.
+For example:
+
+	\[[if test="enabled(smiley)"
+	then="The smiley plugin is enabled :-)"
+	else="No smiley plugin here.."]]
+
+If the specified `test` succeeds, the `then` text will be displayed,
+otherwise the `else` text will be displayed. The `else` part is optional.
+
+The `then` and `else` values can include any markup that would be allowed
+in the wiki page outside the template. Triple-quoting the values even allows
+quotes to be included.
+
+The `test` is a [[PageSpec]]; if it matches any page in the wiki then it
+succeeds. So you can do things like testing for the existence of a page or
+pages, testing to see if any pages were created in a given month, and so
+on. The regular [[PageSpec]] syntax is expanded with the following
+additional tests:
+
+* enabled(plugin)
+
+  Tests whether the specified plugin is enabled.
+
+* sourcepage(glob)
+
+  Tests whether the glob matches the name of the page that contains the
+  conditional.
+
+* destpage(glob)
+
+  Tests whether the glob matches the name of the page that is being built.
+  That might be different than the name of the page that contains the
+  conditional, if it's being inlined into another page.
+
+* included()
+
+  Tests whether the page is being included onto another page.

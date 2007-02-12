@@ -1,3 +1,15 @@
+ikiwiki (1.43) UNRELEASED; urgency=low
+
+  * Allow plugins to add new types of tests that can be used in PageSpecs.
+  * Add a "conditional" plugin, which allows displaying text if a condition
+    is true. It is enabled by default so conditional can be used in the
+    basewiki.
+  * Use conditionals in the template for plugins, so that plugin pages
+    say if they're currently enabled or not, and in various other places
+    in the wiki.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 11 Feb 2007 20:18:51 -0500
+
 ikiwiki (1.42) unstable; urgency=low
 
   * Fix several more missing translations of Discussion.

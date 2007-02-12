@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 41;
+use Test::More tests => 42;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -43,6 +43,8 @@ ok(pagespec_match("foo", "creation_month(8)"), "month");
 ok(! pagespec_match("foo", "creation_month(9)"), "other month");
 ok(pagespec_match("foo", "creation_day(2)"), "day");
 ok(! pagespec_match("foo", "creation_day(3)"), "other day");
+
+ok(! pagespec_match("foo", "no_such_function(foo)"), "foo");
 
 # old style globlists
 ok(pagespec_match("foo", "foo bar"), "simple list");

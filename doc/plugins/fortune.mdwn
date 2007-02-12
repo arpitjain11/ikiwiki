@@ -6,8 +6,10 @@ Usage:
 
 	\[[fortune ]]
 
-If this plugin is enabled, here's a fortune for you:
+[[if test="enabled(fortune)" then="""
+Here's a fortune for you:
 
 ----
 
 [[fortune ]]
+"""]]

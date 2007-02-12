@@ -22,9 +22,8 @@ directive:
   in inches. Both must be specified for the limiting to take effect, otherwise
   the map's size is not limited.
 
-This plugin is included in ikiwiki, but is not enabled by default.
-
-If this plugin is enabled, here is a link map of the index page and all
-pages it links to:
+[[if test="enabled(linkmap)" then="""
+Here is an example link map, of the index page and all pages it links to:
 
 [[linkmap pages="index or (backlink(index) and !*.png)"]]
+"""]

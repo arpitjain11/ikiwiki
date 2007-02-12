@@ -72,5 +72,7 @@ To link to any other web page, or to an email address, you can just put the url 
 
 You can also use [[PreProcessorDirective]]s to do additional cool stuff.
 
-Also, if the smiley plugin is enabled in your wiki, you can insert
-[[smileys]] and some other useful symbols.
+[[if test="enabled(smiley)"  then="""
+Also, because this wiki has the smiley plugin enabled, you can
+insert \[[smileys]] and some other useful symbols.
+"""]]

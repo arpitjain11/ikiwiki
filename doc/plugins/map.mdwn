@@ -11,9 +11,8 @@ the wiki are mapped.
 Hint: To limit the map to displaying pages less than a certian level deep,
 use a [[PageSpec]] like this: `pages="* and !*/*/*"`
 
-This plugin is included in ikiwiki, but is not enabled by default.
-
-If this plugin is enabled, here is a page map for the plugins section
-of this wiki:
+[[if test="enabled(map)" then="""
+Here's an example map, for the plugins section of this wiki:
 
 [[map pages="(plugins or plugins/*) and !*/*/*"]]
+"""]]
