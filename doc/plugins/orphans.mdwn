@@ -14,5 +14,5 @@ orphans.
 [[if test="enabled(orphans)" then="""
 Here's a list of orphaned pages on this wiki:
 
-[[orphans ]]
+[[orphans pages="* and !news/* and !todo/* and !bugs/* and !patchqueue/* and !users/* and !examples/*"]]
 """]]
