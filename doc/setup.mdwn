@@ -1,11 +1,13 @@
 This tutorial will walk you through setting up a wiki with ikiwiki.
 
-1. [[Install]] ikiwiki. See [[download]] for where to get it.
+1. [[Download]] and [[install]] ikiwiki.
 
 2. Decide where your wiki's files will go.
 
-   As a wiki compiler, ikiwiki builds a wiki from files in a source
-   directory, and outputs the files to a destination directory.
+   As a wiki compiler, ikiwiki builds a wiki from files in a source directory,
+   and outputs the files to a destination directory.  If you keep your wiki in
+   a version control system, the source directory will contain a working copy
+   checked out from the version control system.
 
    For the purposes of this tutorial, we'll set shell variables
    for these locations, and use those variables in the commands that follow.
@@ -43,7 +45,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 
 4. Build your wiki for the first time.
 
-			ikiwiki --verbose $SRCDIR $DESTDIR --url=http://host/~you/wiki/
+			ikiwiki --verbose $SRCDIR $DESTDIR --url=http://example.org/~you/wiki/
 
    Replace the url with the real url to your wiki. You should now
    be able to visit the url and see your wiki.
