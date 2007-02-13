@@ -1,0 +1,10 @@
+Several [[PreprocessorDirective]]s take ikiwiki-formatted text as arguments,
+such as the `then` and `else` arguments of the new `if` directive, or the
+`desc` argument of the `shortcut` directive.  However, smileys do not work in
+these arguments.
+
+Since the arguments to [[PreprocessorDirective]]s might use the same syntax as
+smileys for a different meaning, smiley substitution should not happen until
+after [[PreprocessorDirective]]s.
+
+--[[JoshTriplett]]
