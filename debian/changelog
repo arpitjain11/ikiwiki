@@ -8,8 +8,11 @@ ikiwiki (1.43) UNRELEASED; urgency=low
     say if they're currently enabled or not, and in various other places
     in the wiki.
   * Updated Spanish translation.
+  * Make the basewiki be full of symlinks to pages that should be the same
+    in the doc wiki. This will allow direct edits to alter the base wiki
+    without manual munging.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 12 Feb 2007 13:50:25 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 13 Feb 2007 18:06:02 -0500
 
 ikiwiki (1.42) unstable; urgency=low
 

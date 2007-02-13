@@ -45,7 +45,7 @@ extra_install:
 	$(CP) -a templates/* $(DESTDIR)$(PREFIX)/share/ikiwiki/templates
 
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
-	$(CP) -a basewiki/* $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
+	$(CP) -aL basewiki/* $(DESTDIR)$(PREFIX)/share/ikiwiki/basewiki
 
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1
 	install -m 644 ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
