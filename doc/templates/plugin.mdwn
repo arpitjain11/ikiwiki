@@ -1,7 +1,7 @@
 <span class="infobox">
 Plugin: <TMPL_VAR name><br />
 Author: <TMPL_VAR author><br />
-Included in ikiwiki: <TMPL_IF included>yes<TMPL_ELSE>no</TMPL_IF><br />
+Included in ikiwiki: [[if test="sourcepage(plugins/contrib/*)" then="""no""" else="""yes"""]]<br />
 Enabled by default: <TMPL_IF core>yes<TMPL_ELSE>no</TMPL_IF><br />
 Currently enabled: [[if test="enabled(<TMPL_VAR name>)" then="yes" else="no"]]<br />
 </span>
