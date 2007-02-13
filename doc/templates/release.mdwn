@@ -1,0 +1,7 @@
+<TMPL_IF news>News for ikiwiki <TMPL_VAR version>:
+
+<TMPL_VAR news>
+
+</TMPL_IF>
+ikiwiki <TMPL_VAR version> released with [[toggle text="these changes"]]
+[[toggleable text="""<TMPL_VAR changelog>"""]]
