@@ -1,5 +1,11 @@
 [[meta title="OpenID"]]
 
+[[template id=note text="""
+[[if test="enabled(openid)"
+     then="This wiki has OpenID **enabled**."
+     else="This wiki has OpenID **disabled**."]]
+"""]]
+
 [OpenID](http://openid.net) is a decentralized authentication mechanism
 that allows you to have one login that you can use on a growing number of
 websites.
@@ -12,11 +18,12 @@ To sign up for an OpenID, visit one of the following identity providers:
 * [LiveJournal](http://www.livejournal.com/openid/)
 * or any of the many others out there..
 
-Your OpenID is the URL that you are given when you sign up. To sign in to
-this wiki using OpenID, just enter it in the OpenID field in the signin
-form. (If the field does not appear, OpenID signin is disabled.) You do not
-need to give this wiki a password or go through any registration process
-when using OpenID.
+Your OpenID is the URL that you are given when you sign up.
+[[if test="enabled(openid)" then="""
+To sign in to this wiki using OpenID, just enter it in the OpenID field in the
+signin form. You do not need to give this wiki a password or go through any
+registration process when using OpenID.
+"""]]
 
 ---
 
