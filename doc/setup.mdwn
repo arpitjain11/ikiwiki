@@ -13,6 +13,9 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 			SRCDIR=~/wikiwc
 			DESTDIR=~/public_html/wiki/
 
+   Note that ikiwiki owns the working copy directory; do not perform your own
+   edits in ikiwiki's working copy.
+
 3. Create the beginnings of your wiki.
 
    This will create a simple main page for the wiki.
