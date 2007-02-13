@@ -8,3 +8,10 @@ they import. --Ethan
 > although probably too much noise for the setup instructions.
 > I've switched to a different method that preserves .ikiwiki, w/o checking
 > it in. --[[Joey]]
+
+These instructions should probably show how to use a bare Git repository
+(`GIT_DIR=somewhere.git git-init-db`) rather than a repository with a full
+working copy. You can always clone the repository if you want your own local
+working copy. Furthermore, this allows you to make multiple commits to your
+working copy before pushing them to the repository and causing the wiki to
+update. --[[JoshTriplett]]
