@@ -1,5 +1,4 @@
-ikiwiki 1.41 released with [[toggle text="these changes"]]
-[[toggleable text="""
+[[template id=release version="1.41" changelog="""
    * Gettext 1.04 or up is needed for the OO interface that ikiwiki needs,
      if an older version is installed, just don't gettext strings, instead of
      crashing.
@@ -21,4 +20,5 @@ ikiwiki 1.41 released with [[toggle text="these changes"]]
    * More gettext fun.
    * Fix openid signin secret generation code. This fixes the bug that made
      all openid signins fail the first time, and then succeed the second
-     time."""]]
+     time.
+"""]]
