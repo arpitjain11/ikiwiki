@@ -5,8 +5,8 @@ With this plugin, you can make text be conditionally displayed on a page.
 For example:
 
 	\[[if test="enabled(smiley)"
-	then="The smiley plugin is enabled :-)"
-	else="No smiley plugin here.."]]
+	      then="The smiley plugin is enabled :-)"
+	      else="No smiley plugin here.."]]
 
 If the specified `test` succeeds, the `then` text will be displayed,
 otherwise the `else` text will be displayed. The `else` part is optional.
