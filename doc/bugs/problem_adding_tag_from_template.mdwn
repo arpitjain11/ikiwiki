@@ -1,0 +1,7 @@
+I tried to make the [[plugin_template|templates/plugin]] automatically add the
+`type/core` tag if passed the `core` parameter.  However, this did not appear
+to have the desired effect: if I removed `type/core` from the tags on a plugin
+page that used `core=1` in the template (such as [[plugins/mdwn]]), the
+`type/core` tag disappeared, and the template did not supply
+it. --[[JoshTriplett]]
+
