@@ -5,3 +5,6 @@ page that used `core=1` in the template (such as [[plugins/mdwn]]), the
 `type/core` tag disappeared, and the template did not supply
 it. --[[JoshTriplett]]
 
+Problem was that setting a tag cleared all earlier tags. [[bugs/done]], and
+I like the idea of the autotagging..
+--[[Joey]]

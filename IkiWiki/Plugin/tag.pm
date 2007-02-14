@@ -41,9 +41,8 @@ sub preprocess (@) { #{{{
 	delete $params{page};
 	delete $params{destpage};
 
-	$tags{$page} = [];
 	foreach my $tag (keys %params) {
-		push @{$tags{$page}}, $tag;
+		$tags{$page}{$tag}=1;
 		# hidden WikiLink
 		push @{$links{$page}}, tagpage($tag);
 	}
@@ -60,13 +59,14 @@ sub pagetemplate (@) { #{{{
 	$template->param(tags => [
 		map { 
 			link => htmllink($page, $destpage, tagpage($_))
-		}, @{$tags{$page}}
-	]) if exists $tags{$page} && @{$tags{$page}} && $template->query(name => "tags");
+		}, sort keys %{$tags{$page}}
+	]) if exists $tags{$page} && %{$tags{$page}} && $template->query(name => "tags");
 
 	if ($template->query(name => "categories")) {
 		# It's an rss/atom template. Add any categories.
-		if (exists $tags{$page} && @{$tags{$page}}) {
-			$template->param(categories => [map { category => $_ }, @{$tags{$page}}]);
+		if (exists $tags{$page} && %{$tags{$page}}) {
+			$template->param(categories => [map { category => $_ },
+				sort keys %{$tags{$page}}]);
 		}
 	}
 } # }}}
