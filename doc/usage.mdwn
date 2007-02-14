@@ -10,8 +10,8 @@ ikiwiki --setup configfile
 
 # DESCRIPTION
 
-`ikiwiki` is a wiki compiler. It builds static html pages for a wiki, from
-`source` in the [[MarkDown]] language (or others), and writes it out to
+`ikiwiki` is a wiki compiler. It builds static HTML pages for a wiki, from
+`source` in the [[Markdown]] language (or others), and writes it out to
 `destination`.
 
 Note that most options can be shortened to single letters, and boolean
@@ -19,7 +19,7 @@ flags such as --verbose can be negated with --no-verbose.
 
 # MODE OPTIONS
 
-These options control the mode that ikiwiki is operating in.
+These options control the mode that ikiwiki operates in.
 
 * --refresh
 
@@ -88,7 +88,7 @@ These options control the mode that ikiwiki is operating in.
 
 * --version
 
-  Print ikiwiki version number.
+  Print ikiwiki's version number.
 
 # CONFIG OPTIONS
 
@@ -137,7 +137,7 @@ configuration options of their own.
   If you use mercurial, the `source` directory is assumed to be the
   [[mercurial]] repository.
 
-  In [[CGI]] mode, with a revision control system enabled pages edited via
+  In [[CGI]] mode, with a revision control system enabled, pages edited via
   the web will be committed. Also, the [[RecentChanges]] link will be placed
   on pages.
 
@@ -146,12 +146,12 @@ configuration options of their own.
 * --svnrepo /svn/wiki
 
   Specify the location of the svn repository for the wiki. This is required
-  for using --notify with [[subversion]].
+  for using --notify with [[Subversion]].
 
 * --svnpath trunk
 
-  Specify the path inside your svn reporistory where the wiki is located.
-  This defaults to trunk; change it if your wiki is at some other location
+  Specify the path inside your svn repository where the wiki is located.
+  This defaults to `trunk`; change it if your wiki is at some other path
   inside the repository.
 
 * --rss, --norss
@@ -161,40 +161,40 @@ configuration options of their own.
 
 * --atom, --noatom
 
-  If atom is set, ikiwiki will generate Arom feeds for pages that inline
+  If atom is set, ikiwiki will generate Atom feeds for pages that inline
   a [[blog]].
 
-* --pingurl url
+* --pingurl URL
 
-  Set this to the url to an XML-RPC service to ping when an RSS feed is
-  updated. For example, to ping Technorati, use the url
+  Set this to the URL of an XML-RPC service to ping when an RSS feed is
+  updated. For example, to ping Technorati, use the URL
   http://rpc.technorati.com/rpc/ping
 
   This parameter can be specified multiple times to specify more than one
-  url to ping.
+  URL to ping.
 
-* --url url
+* --url URL
 
-  Specifies the url to the wiki. This is a required parameter in [[CGI]] mode.
+  Specifies the URL to the wiki. This is a required parameter in [[CGI]] mode.
 
-* --cgiurl http://url/ikiwiki.cgi
+* --cgiurl http://example.org/ikiwiki.cgi
 
-  Specifies the url to the ikiwiki [[CGI]] script wrapper. Required when
+  Specifies the URL to the ikiwiki [[CGI]] script wrapper. Required when
   building the wiki for links to the cgi script to be generated.
 
-* --historyurl url
+* --historyurl URL
 
-  Specifies the url to link to for page history browsing. In the url,
+  Specifies the URL to link to for page history browsing. In the URL,
   "\[[file]]" is replaced with the file to browse. It's common to use
   [[ViewVC]] for this.
 
-* --adminemail you@yourhost
+* --adminemail you@example.org
 
   Specifies the email address that ikiwiki should use for sending email.
 
-* --diffurl url
+* --diffurl URL
 
-  Specifies the url to link to for a diff of changes to a page. In the url,
+  Specifies the URL to link to for a diff of changes to a page. In the URL,
   "\[[file]]" is replaced with the file to browse, "\[[r1]]" is the old
   revision of the page, and "\[[r2]]" is the new revision. It's common to use
   [[ViewVC]] for this.
@@ -207,18 +207,18 @@ configuration options of their own.
 * --adminuser name
 
   Specifies a username of a user who has the powers of a wiki admin.
-  Currently allows locking of any page, other powers may be added later.
+  Currently allows locking of any page; other powers may be added later.
   May be specified multiple times for multiple admins.
 
 * --plugin name
 
   Enables the use of the specified [[plugin|plugins]] in the wiki. 
-  Note that plugin names are case sensative.
+  Note that plugin names are case sensitive.
 
 * --disable-plugin name
 
   Disables use of a plugin. For example "--disable-plugin htmlscrubber"
-  to do away with html sanitization.
+  to do away with HTML sanitization.
 
 * --discussion, --no-discussion
 
@@ -242,7 +242,7 @@ configuration options of their own.
 
 * --syslog, --no-syslog
 
-  Log to syslog.
+  Log to syslog(3).
 
 * --w3mmode, --no-w3mmode
 
@@ -259,8 +259,8 @@ configuration options of their own.
 
   Pull last changed time for each new page out of the revision control
   system. This rarely used option provides a way to get the real creation
-  times of items in weblogs, for example when building a wiki from a new
-  subversion checkout. It is unoptimised and quite slow. It is best used
+  times of items in weblogs, such as when building a wiki from a new
+  Subversion checkout. It is unoptimised and quite slow. It is best used
   with --rebuild, to force ikiwiki to get the ctime for all pages.
 
 # AUTHOR
