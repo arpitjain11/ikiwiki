@@ -1,5 +1,14 @@
-You can turn any page on this wiki into a weblog by inserting a
-[[PreProcessorDirective]]. Like this:
+[[template id=note text="""
+[[if test="enabled(inline)"
+     then="This wiki has the inline plugin **enabled**."
+     else="This wiki has the inline plugin **disabled**."]]
+"""]]
+
+[[if test="enabled(inline)"
+     then="You can"
+     else="If this wiki had the inline plugin enabled, you could"]]
+turn any page on this wiki into a weblog by using the `inline`
+[[PreProcessorDirective]].  For example:
 
 	\[[inline pages="blog/* and !*/Discussion" show="10" rootpage="blog"]]
 
@@ -25,7 +34,7 @@ wiki, with the most recently added at the top, like this:
 
 If you want to be able to add pages to a given blog feed by tagging them,
 you can do that too. To tag a page, just make it link to a page or pages 
-that represent its tags. Then use the special link() [[PageSpec]] to match
+that represent its tags. Then use the special `link()` [[PageSpec]] to match
 all pages that have a given tag:
 
 	\[[inline pages="link(life)"]]
