@@ -13,3 +13,19 @@ I'd rather not use a template for my release announcements, because these announ
 
 >> No problem. My release script is here:
 >> <http://svn.kitenet.net/trunk/bin/wikiannounce> --[[Joey]]
+
+>>> Thanks for moving the page.
+>>>
+>>> Very nice announcement script.
+>>>
+>>> Minor typo report: s/Wili/Wiki/ :).
+>>>
+>>> Also, why do you subst `&`, `<`, and `>`?  Markdown already replaces those
+>>> with entities.
+>>>
+>>> Finally, have you considered using an [[cpan HTML::Template]] in the
+>>> script itself?  Not on the wiki, just as a means for easy customization.
+>>> Seems like that would simplify any edits to the format, and make the Perl
+>>> code easier to work with at the same time.
+>>>
+>>> --[[JoshTriplett]]
