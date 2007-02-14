@@ -6,3 +6,4 @@ Enabled by default: <TMPL_IF core>yes<TMPL_ELSE>no</TMPL_IF><br />
 Currently enabled: [[if test="enabled(<TMPL_VAR name>)" then="yes" else="no"]]<br />
 </span>
 [[if test="sourcepage(plugins/contrib/*)" then="""[[meta title="<TMPL_VAR name> (third party plugin)"]]"""]]
+<TMPL_IF core>[[tag type/core]]</TMPL_IF>
