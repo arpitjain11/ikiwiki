@@ -1,0 +1,22 @@
+This page is a place to document tips and techniques for using ikiwiki.
+
+----
+
+One thing I use ikiwiki for is the web pages for software projects I
+maintain. Each of my projects has a news page with an announcements feed,
+and to automatically update this when I release a new version, generating
+an announcement from the debian/changelog and debian/NEWS files, I use a
+[wikiannounce](http://svn.kitenet.net/trunk/bin/wikiannounce) program. It's
+somewhat specific to dealing with Debian packages, and uses a special
+`announcedir` target in debian/rules, but the general idea could be useful.
+--[[Joey]]
+
+----
+
+I should mention that I also have a
+[blog](http://svn.kitenet.net/trunk/bin/wikiannounce) program that I use to
+write blog posts in a text editor. The first line I enter is used as the
+title, and it automatically comes up with a unique page name based on the
+title and handles all the details of posting to my blog. --[[Joey]]
+
+----
