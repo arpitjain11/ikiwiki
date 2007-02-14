@@ -34,10 +34,10 @@ sub setup () { #{{{
 sub filter (@) { #{{{
 	my %params=@_;
 	
-	$params{content} =~ s{(?<=\s)(\\?)$smiley_regexp(?=\s)}{
+	$params{content} =~ s{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}{
 		$1 ? $2 : htmllink($params{page}, $params{page}, $smileys{$2}, 0, 0, $2)
 	}egs;
-	
+
 	return $params{content};
 } # }}}
 

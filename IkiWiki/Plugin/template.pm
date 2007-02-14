@@ -50,7 +50,8 @@ sub preprocess (@) { #{{{
 	}
 
 	return IkiWiki::preprocess($params{page}, $params{destpage},
-		$template->output);
+		IkiWiki::filter($params{page},
+		$template->output));
 } # }}}
 
 1

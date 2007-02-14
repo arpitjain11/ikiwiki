@@ -11,8 +11,12 @@ ikiwiki (1.43) UNRELEASED; urgency=low
   * Make the basewiki be full of symlinks to pages that should be the same
     in the doc wiki. This will allow direct edits to alter the base wiki
     without manual munging.
+  * Fix the template, toggle, and conditional plugins to filter text before
+    preprocessing it.
+  * Fix smiley plugin to support smileys at the very beginning or end of
+    the content.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 13 Feb 2007 18:06:02 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 13 Feb 2007 18:40:36 -0500
 
 ikiwiki (1.42) unstable; urgency=low
 
