@@ -279,3 +279,17 @@ Various directives that cause one page to be included into another could
 be exploited to DOS the wiki, by causing a loop. Ikiwiki has always guarded
 against this one way or another; the current solution should detect all
 types of loops involving preprocessor directives.
+
+## Online editing of existing css and images
+
+A bug in ikiwiki allowed the web-based editor to edit any file that was in
+the wiki, not just files that are page sources. So an attacker (or a
+genuinely helpful user, which is how the hole came to light) could edit
+files like style.css. It is also theoretically possible that an attacker
+could have used this hole to edit images or other files in the wiki, with
+some difficulty, since all editing would happen in a textarea.
+
+This hole was discovered on 10 Feb 2007 and fixed the same day with the
+release of ikiwiki 1.42. A fix was also backported to Debian etch, as
+version 1.33.1. I recommend upgrading to one of these versions if your wiki
+allows web editing.
