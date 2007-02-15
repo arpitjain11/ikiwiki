@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-11 22:01-0500\n"
+"POT-Creation-Date: 2007-02-14 20:42-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -20,37 +20,37 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "Първо трябва да влезете."
 
-#: ../IkiWiki/CGI.pm:262
+#: ../IkiWiki/CGI.pm:265
 msgid "Preferences saved."
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:327
+#: ../IkiWiki/CGI.pm:330
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:415 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "дискусия"
 
-#: ../IkiWiki/CGI.pm:460
+#: ../IkiWiki/CGI.pm:463
 #, perl-format
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/CGI.pm:477 ../IkiWiki/CGI.pm:520
+#: ../IkiWiki/CGI.pm:480 ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:539
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
 
-#: ../IkiWiki/CGI.pm:628
+#: ../IkiWiki/CGI.pm:647
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:660
+#: ../IkiWiki/CGI.pm:679
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -71,36 +71,36 @@ msgstr "съобщения"
 msgid "new"
 msgstr "ново"
 
-#: ../IkiWiki/Plugin/aggregate.pm:206
+#: ../IkiWiki/Plugin/aggregate.pm:211
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "премахване на „%s” (на %s дни)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:213
+#: ../IkiWiki/Plugin/aggregate.pm:218
 #, perl-format
 msgid "expiring %s"
 msgstr "премахване на „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:236
+#: ../IkiWiki/Plugin/aggregate.pm:241
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "проверка на източника „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:246
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "не е намерен източник на адрес „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:250
+#: ../IkiWiki/Plugin/aggregate.pm:255
 msgid "feed crashed XML::Feed!"
 msgstr "данните от източника предизвикаха грешка в модула XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:273
+#: ../IkiWiki/Plugin/aggregate.pm:278
 #, perl-format
 msgid "processed ok at %s"
 msgstr "е обработен нормално от %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:328
+#: ../IkiWiki/Plugin/aggregate.pm:333
 #, perl-format
 msgid "creating new page %s"
 msgstr "създаване на нова страницa „%s”"
@@ -263,47 +263,47 @@ msgstr ""
 "Променливата от обкръжението „REV” не е указана. Програмата не се изпълнява "
 "като „svn post-commit hook”. Няма да бъдат разпратени известявания"
 
-#: ../IkiWiki/Render.pm:247 ../IkiWiki/Render.pm:267
+#: ../IkiWiki/Render.pm:251 ../IkiWiki/Render.pm:271
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "пропускане на невалидното име на файл „%s”"
 
-#: ../IkiWiki/Render.pm:307
+#: ../IkiWiki/Render.pm:311
 #, perl-format
 msgid "removing old page %s"
 msgstr "премахване на старата страница „%s”"
 
-#: ../IkiWiki/Render.pm:326
+#: ../IkiWiki/Render.pm:330
 #, perl-format
 msgid "scanning %s"
 msgstr "сканиране на „%s”"
 
-#: ../IkiWiki/Render.pm:335
+#: ../IkiWiki/Render.pm:339
 #, perl-format
 msgid "rendering %s"
 msgstr "обновяване на страницата „%s”"
 
-#: ../IkiWiki/Render.pm:347
+#: ../IkiWiki/Render.pm:351
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "обновяване на страницата „%s”, съдържаща препратки към „%s”"
 
-#: ../IkiWiki/Render.pm:364
+#: ../IkiWiki/Render.pm:368
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "обновяване на страницата „%s”, зависеща от „%s”"
 
-#: ../IkiWiki/Render.pm:402
+#: ../IkiWiki/Render.pm:406
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "обновяване на „%s” и осъвременяване на обратните връзки"
 
-#: ../IkiWiki/Render.pm:414
+#: ../IkiWiki/Render.pm:418
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "премахване на „%s” понеже не се генерира от „%s”"
 
-#: ../IkiWiki/Render.pm:440
+#: ../IkiWiki/Render.pm:444
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: неуспех при обновяване на страницата „%s”"
@@ -335,7 +335,7 @@ msgstr "готово"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:139
+#: ../IkiWiki/UserInfo.pm:146
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "обновяване на страниците от уики „%s”: %s от потребител „%s”"
@@ -376,13 +376,13 @@ msgstr "успешно генериране на %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "формат: ikiwiki [опции] източник местоназначение"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:104
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "При използване на пареметъра „--cgi” е необходимо да се укаже и "
 "местоположението на уикито чрез параметъра „--url”"
 
-#: ../IkiWiki.pm:148 ../IkiWiki.pm:149
+#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
 msgid "Error"
 msgstr "Грешка"
 
@@ -390,7 +390,7 @@ msgstr "Грешка"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:532
+#: ../IkiWiki.pm:549
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"

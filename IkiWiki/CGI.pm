@@ -252,12 +252,15 @@ sub cgi_prefs ($$) { #{{{
 	elsif ($form->submitted eq 'Save Preferences' && $form->validate) {
 		foreach my $field (qw(email subscriptions)) {
 			if (defined $form->field($field) && length $form->field($field)) {
-				userinfo_set($user_name, $field, $form->field($field)) || error("failed to set $field");
+				userinfo_set($user_name, $field, $form->field($field)) ||
+					error("failed to set $field");
 			}
 		}
 		if (is_admin($user_name)) {
 			set_banned_users(grep { ! is_admin($_) }
-					split(' ', $form->field("banned_users")));
+					split(' ',
+						$form->field("banned_users"))) ||
+				error("failed saving changes");
 		}
 		$form->text(gettext("Preferences saved."));
 	}
@@ -487,7 +490,25 @@ sub cgi_editpage ($$) { #{{{
 
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
-		writefile($file, $config{srcdir}, $content);
+
+		$config{cgi}=0; # avoid cgi error message
+		eval { writefile($file, $config{srcdir}, $content) };
+		$config{cgi}=1;
+		if ($@) {
+			$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+				force => 1);
+			$form->tmpl_param("failed_save", 1);
+			$form->tmpl_param("error_message", $@);
+			$form->field("editcontent", value => $content, force => 1);
+			$form->field(name => "comments", value => $form->field('comments'), force => 1);
+			$form->field("do", "edit)");
+			$form->tmpl_param("page_select", 0);
+			$form->field(name => "page", type => 'hidden');
+			$form->field(name => "type", type => 'hidden');
+			$form->title(sprintf(gettext("editing %s"), $page));
+			print $form->render(submit => \@buttons);
+			return;
+		}
 		
 		if ($config{rcs}) {
 			my $message="";
@@ -616,7 +637,7 @@ sub cgi (;$$) { #{{{
 					email => "",
 					password => "",
 					regdate => time,
-				});
+				}) || error("failed adding user");
 			}
 		}
 	}

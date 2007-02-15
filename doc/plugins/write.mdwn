@@ -287,9 +287,11 @@ the id can be controled by the user.
 Logs a debugging message. These are supressed unless verbose mode is turned
 on.
 
-#### `error($)`
+#### `error($;$)`
 
-Aborts with an error message.
+Aborts with an error message. If the second parameter is passed, it is a
+function that is called after the error message is printed, to do any final
+cleanup.
 
 Note that while any plugin can use this for a fatal error, plugins should
 try to avoid dying on bad input, as that will halt the entire wiki build
@@ -359,13 +361,19 @@ in binary mode.
 
 A failure to read the file will result in it dying with an error.
 
-#### `writefile($$$;$)`
+#### `writefile($$$;$$)`
 
 Given a filename, a directory to put it in, and the file's content,
 writes a file. 
 
-The optional second parameter, if set to a true value, makes the file be
+The optional fourth parameter, if set to a true value, makes the file be
 written in binary mode.
+
+The optional fifth parameter can be used to pass a function reference that
+will be called to handle writing to the file. The function will be called
+and passed a file descriptor it should write to, and an error recovery
+function it should call if the writing fails. (You will not normally need to
+use this interface.)
 
 A failure to write the file will result in it dying with an error.
 

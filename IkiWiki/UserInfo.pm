@@ -15,12 +15,19 @@ sub userinfo_retrieve () { #{{{
 sub userinfo_store ($) { #{{{
 	my $userinfo=shift;
 	
+	my $newfile="$config{wikistatedir}/userdb.new";
 	my $oldmask=umask(077);
-	my $ret=Storable::lock_store($userinfo, "$config{wikistatedir}/userdb");
+	my $ret=Storable::lock_store($userinfo, $newfile);
 	umask($oldmask);
+	if (defined $ret && $ret) {
+		if (! rename($newfile, "$config{wikistatedir}/userdb")) {
+			unlink($newfile);
+			$ret=undef;
+		}
+	}
 	return $ret;
 } #}}}
-	
+
 sub userinfo_get ($$) { #{{{
 	my $user=shift;
 	my $field=shift;

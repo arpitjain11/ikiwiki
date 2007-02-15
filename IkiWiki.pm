@@ -28,7 +28,8 @@ my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 
 sub defaultconfig () { #{{{
-	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./, qr/\.x?html?$/,
+	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
+		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//],
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
@@ -142,14 +143,19 @@ sub loadplugin ($) { #{{{
 	}
 } #}}}
 
-sub error ($) { #{{{
+sub error ($;$) { #{{{
+	my $message=shift;
+	my $cleaner=shift;
 	if ($config{cgi}) {
 		print "Content-type: text/html\n\n";
 		print misctemplate(gettext("Error"),
-			"<p>".gettext("Error").": @_</p>");
+			"<p>".gettext("Error").": $message</p>");
 	}
-	log_message(error => @_);
-	exit(1);
+	log_message(debug => $message) if $config{syslog};
+	if (defined $cleaner) {
+		$cleaner->();
+	}
+	die $message."\n";
 } #}}}
 
 sub debug ($) { #{{{
@@ -246,7 +252,7 @@ sub readfile ($;$$) { #{{{
 	binmode(IN) if ($binary);
 	return \*IN if $wantfd;
 	my $ret=<IN>;
-	close IN;
+	close IN || error("failed to read $file: $!");
 	return $ret;
 } #}}}
 
@@ -255,7 +261,7 @@ sub writefile ($$$;$$) { #{{{
 	my $destdir=shift; # directory to put file in
 	my $content=shift;
 	my $binary=shift;
-	my $wantfd=shift;
+	my $writer=shift;
 	
 	my $test=$file;
 	while (length $test) {
@@ -264,8 +270,12 @@ sub writefile ($$$;$$) { #{{{
 		}
 		$test=dirname($test);
 	}
+	my $newfile="$destdir/$file.ikiwiki-new";
+	if (-l $newfile) {
+		error("cannot write to a symlink ($newfile)");
+	}
 
-	my $dir=dirname("$destdir/$file");
+	my $dir=dirname($newfile);
 	if (! -d $dir) {
 		my $d="";
 		foreach my $s (split(m!/+!, $dir)) {
@@ -275,12 +285,19 @@ sub writefile ($$$;$$) { #{{{
 			}
 		}
 	}
-	
-	open (OUT, ">$destdir/$file") || error("failed to write $destdir/$file: $!");
+
+	my $cleanup = sub { unlink($newfile) };
+	open (OUT, ">$newfile") || error("failed to write $newfile: $!", $cleanup);
 	binmode(OUT) if ($binary);
-	return \*OUT if $wantfd;
-	print OUT $content;
-	close OUT;
+	if ($writer) {
+		$writer->(\*OUT, $cleanup);
+	}
+	else {
+		print OUT $content || error("failed writing to $newfile: $!", $cleanup);
+	}
+	close OUT || error("failed saving $newfile: $!", $cleanup);
+	rename($newfile, "$destdir/$file") || 
+		error("failed renaming $newfile to $destdir/$file: $!", $cleanup);
 } #}}}
 
 my %cleared;
@@ -577,7 +594,7 @@ sub lockwiki () { #{{{
 		debug("wiki seems to be locked, waiting for lock");
 		my $wait=600; # arbitrary, but don't hang forever to 
 		              # prevent process pileup
-		for (1..600) {
+		for (1..$wait) {
 			return if flock(WIKILOCK, 2 | 4);
 			sleep 1;
 		}
@@ -626,8 +643,9 @@ sub saveindex () { #{{{
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
 	}
-	open (OUT, ">$config{wikistatedir}/index") || 
-		error("cannot write to $config{wikistatedir}/index: $!");
+	my $newfile="$config{wikistatedir}/index.new";
+	my $cleanup = sub { unlink($newfile) };
+	open (OUT, ">$newfile") || error("cannot write to $newfile: $!", $cleanup);
 	foreach my $page (keys %oldpagemtime) {
 		next unless $oldpagemtime{$page};
 		my $line="mtime=$oldpagemtime{$page} ".
@@ -639,9 +657,11 @@ sub saveindex () { #{{{
 		if (exists $depends{$page}) {
 			$line.=" depends=".encode_entities($depends{$page}, " \t\n");
 		}
-		print OUT $line."\n";
+		print OUT $line."\n" || error("failed writing to $newfile: $!", $cleanup);
 	}
-	close OUT;
+	close OUT || error("failed saving to $newfile: $!", $cleanup);
+	rename($newfile, "$config{wikistatedir}/index") ||
+		error("failed renaming $newfile to $config{wikistatedir}/index", $cleanup);
 } #}}}
 
 sub template_file ($) { #{{{

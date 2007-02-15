@@ -153,8 +153,11 @@ sub loadstate () { #{{{
 sub savestate () { #{{{
 	eval q{use HTML::Entities};
 	error($@) if $@;
-	open (OUT, ">$config{wikistatedir}/aggregate" ||
-		die "$config{wikistatedir}/aggregate: $!");
+	my $newfile="$config{wikistatedir}/aggregate.new";
+	# TODO: This cleanup function could use improvement. Any newly
+	# aggregated files are left behind unrecorded, and should be deleted.
+	my $cleanup = sub { unlink($newfile) };
+	open (OUT, ">$newfile") || error("open $newfile: $!", $cleanup);
 	foreach my $data (values %feeds, values %guids) {
 		if ($data->{remove}) {
 			if ($data->{name}) {
@@ -188,9 +191,11 @@ sub savestate () { #{{{
 				push @line, "$field=".$data->{$field};
 			}
 		}
-		print OUT join(" ", @line)."\n";
+		print OUT join(" ", @line)."\n" || error("write $newfile: $!", $cleanup);
 	}
-	close OUT;
+	close OUT || error("save $newfile: $!", $cleanup);
+	rename($newfile, "$config{wikistatedir}/aggregate") ||
+		error("rename $newfile: $!", $cleanup);
 } #}}}
 
 sub expire () { #{{{

@@ -198,22 +198,26 @@ sub render ($) { #{{{
 		my $srcfd=readfile($srcfile, 1, 1);
 		delete $depends{$file};
 		will_render($file, $file, 1);
-		my $destfd=writefile($file, $config{destdir}, undef, 1, 1);
-		my $blksize = 16384;
-		my ($len, $buf, $written);
-		while ($len = sysread $srcfd, $buf, $blksize) {
-			if (! defined $len) {
-				next if $! =~ /^Interrupted/;
-				error("failed to read $srcfile: $!");
+		writefile($file, $config{destdir}, undef, 1, sub {
+			my $destfd=shift;
+			my $cleanup=shift;
+
+			my $blksize = 16384;
+			my ($len, $buf, $written);
+			while ($len = sysread $srcfd, $buf, $blksize) {
+				if (! defined $len) {
+					next if $! =~ /^Interrupted/;
+					error("failed to read $srcfile: $!", $cleanup);
+				}
+				my $offset = 0;
+				while ($len) {
+					defined($written = syswrite $destfd, $buf, $len, $offset)
+						or error("failed to write $file: $!", $cleanup);
+					$len -= $written;
+					$offset += $written;
+				}
 			}
-			my $offset = 0;
-			while ($len) {
-				defined($written = syswrite OUT, $buf, $len, $offset)
-					or error("failed to write $file: $!");
-				$len -= $written;
-				$offset += $written;
-			}
-		}
+		});
 		$oldpagemtime{$file}=time;
 	}
 } #}}}

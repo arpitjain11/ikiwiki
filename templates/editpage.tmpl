@@ -21,6 +21,18 @@ Conflict markers have been inserted into the page content. Reconcile the
 conflict and commit again to save your changes.
 </p>
 </TMPL_IF>
+<TMPL_IF NAME="FAILED_SAVE">
+<p>
+<b>Failed to save your changes.</b>
+</p>
+<p>
+Your changes were not able to be saved to disk. The system gave the error:
+<blockquote>
+<TMPL_VAR ERROR_MESSAGE>
+</blockquote>
+Your changes are preserved below, and you can try again to save them.
+</p>
+</TMPL_IF>
 <TMPL_VAR FORM-START>
 <div class="header">
 <span><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></span>

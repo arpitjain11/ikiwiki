@@ -89,14 +89,20 @@ sub estcfg () { #{{{
 	my $estdir="$config{wikistatedir}/hyperestraier";
 	my $cgi=IkiWiki::basename($config{cgiurl});
 	$cgi=~s/\..*$//;
-	open(TEMPLATE, ">:utf8", "$estdir/$cgi.tmpl") ||
-		error("write $estdir/$cgi.tmpl: $!");
+
+	my $newfile="$estdir/$cgi.tmpl.new";
+	my $cleanup = sub { unlink($newfile) };
+	open(TEMPLATE, ">:utf8", $newfile) || error("open $newfile: $!", $cleanup);
 	print TEMPLATE IkiWiki::misctemplate("search", 
 		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n",
-		baseurl => IkiWiki::dirname($config{cgiurl})."/");
-	close TEMPLATE;
-	open(TEMPLATE, ">$estdir/$cgi.conf") ||
-		error("write $estdir/$cgi.conf: $!");
+		baseurl => IkiWiki::dirname($config{cgiurl})."/") ||
+			error("write $newfile: $!", $cleanup);
+	close TEMPLATE || error("save $newfile: $!", $cleanup);
+	rename($newfile, "$estdir/$cgi.tmpl") ||
+		error("rename $newfile: $!", $cleanup);
+	
+	$newfile="$estdir/$cgi.conf";
+	open(TEMPLATE, ">$newfile") || error("open $newfile: $!", $cleanup);
 	my $template=template("estseek.conf");
 	eval q{use Cwd 'abs_path'};
 	$template->param(
@@ -105,13 +111,15 @@ sub estcfg () { #{{{
 		destdir => abs_path($config{destdir}),
 		url => $config{url},
 	);
-	print TEMPLATE $template->output;
-	close TEMPLATE;
+	print TEMPLATE $template->output || error("write $newfile: $!", $cleanup);
+	close TEMPLATE || error("save $newfile: $!", $cleanup);
+	rename($newfile, "$estdir/$cgi.conf") ||
+		error("rename $newfile: $!", $cleanup);
+
 	$cgi="$estdir/".IkiWiki::basename($config{cgiurl});
 	unlink($cgi);
 	my $estseek = defined $config{estseek} ? $config{estseek} : '/usr/lib/estraier/estseek.cgi';
-	symlink($estseek, $cgi) ||
-		error("symlink $estseek $cgi: $!");
+	symlink($estseek, $cgi) || error("symlink $estseek $cgi: $!");
 } # }}}
 
 sub estcmd ($;@) { #{{{
