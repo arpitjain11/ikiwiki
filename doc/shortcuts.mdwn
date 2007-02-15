@@ -24,6 +24,15 @@ This page controls what shortcut links the wiki supports.
 * [[shortcut name=perldoc url="http://perldoc.perl.org/search.html?q=%s"]]
 * [[shortcut name=whois url="http://reports.internic.net/cgi/whois?whois_nic=%s&type=domain"]]
 
-To add a new shortcut, use the "shortcut" preprocessor directive. "%s" is
-replaced with the text passed to the named shortcut. The optional desc
+To add a new shortcut, use the `shortcut` [[PreprocessorDirective]]. "%s" is
+replaced with the text passed to the named shortcut. The optional `desc`
 parameter controls the description of the link.
+
+Remember that the `name` you give the shortcut will become a new
+[[PreprocessorDirective]].  Avoid using a `name` that conflicts with an
+existing directive.
+
+If you come up with a shortcut that you think others might find useful,
+consider contributing it to the [[iki shortcuts]] page on the ikiwiki
+ikiwiki, so that future versions of ikiwiki will include your shortcut
+in the standard underlay.
