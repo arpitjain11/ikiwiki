@@ -5,33 +5,39 @@ use warnings;
 no warnings 'redefine';
 use strict;
 
-# Blanks duplicate the time before.
-my $default_timetable=[
-	"late at night on",	# 12
-	"",			# 1
-	"in the wee hours of",	# 2
-	"",			# 3
-	"",			# 4
-	"terribly early in the morning of", # 5
-	"",			# 6
-	"in early morning on",	# 7
-	"",			# 8
-	"",			# 9
-	"in mid-morning of",	# 10
-	"in late morning of",	# 11
-	"at lunch time on",	# 12
-	"",			# 1
-	"in the afternoon of",	# 2
-	"",			# 3
-	"",			# 4
-	"in late afternoon of",	# 5
-	"in the evening of",	# 6
-	"",			# 7
-	"in late evening on",	# 8
-	"",			# 9
-	"at night on",		# 10
-	"",			# 11
-];
+sub default_timetable {
+	# Blanks duplicate the time before.
+	return [
+		#translators: These descriptions of times of day are used
+		#translators: in messages like "last edited <description>".
+		#translators: %A is the name of the day of the week, while
+		#translators: %A- is the name of the previous day.
+		gettext("late %A- night"),			# 12
+		"",						# 1
+		gettext("in the wee hours of %A- night"),	# 2
+		"",						# 3
+		"",						# 4
+		gettext("terribly early %A morning"),		# 5
+		"",						# 6
+		gettext("early %A morning"),			# 7
+		"",						# 8
+		"",						# 9
+		gettext("in mid-morning %A"),			# 10
+		gettext("in late morning %A"),			# 11
+		gettext("at lunch time on %A"),			# 12
+		"",						# 1
+		gettext("%A afternoon"),			# 2
+		"",						# 3
+		"",						# 4
+		gettext("late %A afternoon"),			# 5
+		gettext("%A evening"),				# 6
+		"",						# 7
+		gettext("late %A evening"),			# 8
+		"",			# 9			# 9
+		gettext("%A night"),				# 10
+		"",						# 11
+	];
+}
 
 sub import { #{{{
 	hook(type => "checkconfig", id => "skeleton", call => \&checkconfig);
@@ -40,11 +46,11 @@ sub import { #{{{
 sub checkconfig () { #{{{
 	if (! defined $config{prettydateformat} ||
 	    $config{prettydateformat} eq '%c') {
-	    	$config{prettydateformat}='%X %B %o, %Y';
+	    	$config{prettydateformat}='%X, %B %o, %Y';
 	}
 
 	if (! ref $config{timetable}) {
-		$config{timetable}=$default_timetable;
+		$config{timetable}=default_timetable();
 	}
 
 	# Fill in the blanks.
@@ -57,34 +63,38 @@ sub checkconfig () { #{{{
 
 sub IkiWiki::displaytime ($) { #{{{
 	my $time=shift;
+	
+	eval q{use Date::Format};
+	error($@) if $@;
 
 	my @t=localtime($time);
-	my ($h, $m)=@t[2, 1];
+	my ($h, $m, $wday)=@t[2, 1, 6];
+	my $t;
 	if ($h == 16 && $m < 30) {
-		$time = "at teatime on";
+		$t = gettext("at teatime on %A");
 	}
 	elsif (($h == 0 && $m < 30) || ($h == 23 && $m > 50)) {
 		# well, at 40 minutes it's more like the martian timeslip..
-		$time = "at midnight on";
+		$t = gettext("at midnight");
 	}
 	elsif (($h == 12 && $m < 15) || ($h == 11 && $m > 50)) {
-		$time = "at noon on";
+		$t = gettext("at noon on %A");
 	}
 	# TODO: sunrise and sunset, but to be right I need to do it based on
 	# lat and long, and calculate the appropriate one for the actual
 	# time of year using Astro::Sunrise. Not tonight, it's wee hours
 	# already..
 	else {
-		$time = $config{timetable}[$h];
-		if (! length $time) {
-			$time = "sometime";
+		$t = $config{timetable}[$h];
+		if (! length $t) {
+			$t = "sometime";
 		}
 	}
 
-	eval q{use Date::Format};
-	error($@) if $@;
+	$t=~s{\%A-}{my @yest=@t; $yest[6]--; strftime("%A", \@yest)}eg;
+
 	my $format=$config{prettydateformat};
-	$format=~s/\%X/$time/g;
+	$format=~s/\%X/$t/g;
 	return strftime($format, \@t);
 } #}}}
 

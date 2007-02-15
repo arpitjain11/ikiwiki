@@ -2,8 +2,8 @@
 [[tag type/format]]
 
 Enabling this plugin changes the dates displayed on pages in the wiki to
-a format that is nice and easy to read. Examples: "in late evening on
-February 14th, 2007", "at noon on March 15th, 2007"
+a format that is nice and easy to read. Examples: "late Wednesday evening, 
+February 14th, 2007", "at midnight, March 15th, 2007"
 
 The names given to each of the hours in the day can be customised by
 setting the `timetable` configuration variable in ikiwiki's setup file.
@@ -14,6 +14,6 @@ since they do not occupy the whole hour.
 
 The format used for the date can be customised using the `prettydateformat`
 configuration variable in the setup file. `%X` will be expanded to the
-prettified time value. The default prettydateformat is `"%X %B %o, %Y"`.
+prettified time value. The default prettydateformat is `"%X, %B %o, %Y"`.
 
 This plugin uses the [[cpan TimeDate]] perl module.

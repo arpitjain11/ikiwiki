@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-15 00:37-0500\n"
+"POT-Creation-Date: 2007-02-15 15:01-0500\n"
 "PO-Revision-Date: 2007-01-22 22:12+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -210,6 +210,70 @@ msgstr "polygen n'est pas installé"
 msgid "polygen failed"
 msgstr "Échec de polygen"
 
+#. translators: These descriptions of times of day are used
+#. translators: in messages like "last edited <description>".
+#. translators: %A is the name of the day of the week, while
+#. translators: %A- is the name of the previous day.
+#: ../IkiWiki/Plugin/prettydate.pm:15
+msgid "late %A- night"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:17
+msgid "in the wee hours of %A- night"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:20
+msgid "terribly early %A morning"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:22
+msgid "early %A morning"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:25
+msgid "in mid-morning %A"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:26
+msgid "in late morning %A"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:27
+msgid "at lunch time on %A"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:29
+msgid "%A afternoon"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:32
+msgid "late %A afternoon"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:33
+msgid "%A evening"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:35
+msgid "late %A evening"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:37
+msgid "%A night"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:74
+msgid "at teatime on %A"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:78
+msgid "at midnight"
+msgstr ""
+
+#: ../IkiWiki/Plugin/prettydate.pm:81
+msgid "at noon on %A"
+msgstr ""
+
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
 msgid "Must specify %s when using the search plugin"
@@ -231,8 +295,8 @@ msgstr "Il manque au raccourci un paramètre de nom ou d'url"
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
 #: ../IkiWiki/Plugin/shortcut.pm:33
-#, perl-format
-msgid "shortcut %s points to %s"
+#, fuzzy, perl-format
+msgid "shortcut %s points to <i>%s</i>"
 msgstr "Le raccourci %s pointe vers %s"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
