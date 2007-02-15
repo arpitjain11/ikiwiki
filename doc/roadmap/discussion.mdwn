@@ -1,3 +1,8 @@
 Changing pagespecs to be relative by default is quite feasible now, but it will cause
 backwards compatibility problems. Should this be marked as a future plan, perhaps at a 
 major version number like 2.0? --Ethan
+
+Yes, I'm looking at making this kind of change at 2.0, added to the list.
+However, I have doubts that it makes good sense to go relative by default.
+While it's not consitent with links, it seems to work better overall to
+have pagespecs be absolute by default, IMHO. --[[Joey]]
