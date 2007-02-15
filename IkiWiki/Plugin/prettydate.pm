@@ -23,7 +23,7 @@ sub default_timetable {
 		"",						# 8
 		"",						# 9
 		gettext("in mid-morning %A"),			# 10
-		gettext("in late morning %A"),			# 11
+		gettext("late %A morning"),			# 11
 		gettext("at lunch time on %A"),			# 12
 		"",						# 1
 		gettext("%A afternoon"),			# 2
