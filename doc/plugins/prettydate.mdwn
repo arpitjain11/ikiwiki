@@ -1,0 +1,18 @@
+[[template id=plugin name=prettydate author="[[Joey]]"]]
+[[tag type/format]]
+
+Enabling this plugin changes the dates displayed on pages in the wiki to
+a format that is nice and easy to read.
+
+The names given to each of the hours in the day can be customised by
+setting the `timetable` configuration variable in ikiwiki's setup file.
+The default value of this configuration value can be seen near the top of
+`prettydate.pm`. Note that hours can be left blank, to make it display the
+same as the hour before. Midnight, noon, and teatime are all hardcoded,
+since they do not occupy the whole hour.
+
+The format used for the date can be customised using the `prettydateformat`
+configuration variable in the setup file. `%X` will be expanded to the
+prettified time value. The default prettydateformat is `"%X %B %o, %Y"`.
+
+This plugin uses the [[cpan TimeDate]] perl module.
