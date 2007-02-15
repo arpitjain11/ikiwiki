@@ -15,6 +15,7 @@ This page controls what shortcut links the wiki supports.
 * [[shortcut name=rfc url="http://www.ietf.org/rfc/rfc%s.txt"]]
 * [[shortcut name=c2 url="http://c2.com/cgi/wiki?%s"]]
 * [[shortcut name=dict url="http://www.dict.org/bin/Dict?Form=Dict1&Strategy=*&Database=*&Query=%s"]]
+* [[shortcut name=gpg url="http://pgpkeys.mit.edu:11371/pks/lookup?op=vindex&exact=on&search=0x%s"]]
 
 To add a new shortcut, use the "shortcut" preprocessor directive. "%s" is
 replaced with the text passed to the named shortcut. The optional desc
