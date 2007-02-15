@@ -9,3 +9,5 @@
 As of 1.33, this is still true. The buggy code is the %linkchanged
 calculation in refresh(), which doesn't detect that the link has changed in
 this case.
+
+Still true in 1.43 although the code is much different now..
