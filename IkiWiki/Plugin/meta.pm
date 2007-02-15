@@ -61,6 +61,13 @@ sub preprocess (@) { #{{{
 		$permalink{$page}=$value;
 		$meta{$page}.="<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n";
 	}
+	elsif ($key eq 'date') {
+		eval q{use Date::Parse};
+		if (! $@) {
+			my $time = str2time($value);
+			$IkiWiki::pagectime{$page}=$time if defined $time;
+		}
+	}
 	else {
 		$meta{$page}.="<meta name=\"".encode_entities($key).
 			"\" content=\"".encode_entities($value)."\" />\n";
