@@ -22,6 +22,7 @@ This page controls what shortcut links the wiki supports.
 * [[shortcut name=imdb url="http://imdb.com/find?q=%s"]]
 * [[shortcut name=gpg url="http://pgpkeys.mit.edu:11371/pks/lookup?op=vindex&exact=on&search=0x%s"]]
 * [[shortcut name=perldoc url="http://perldoc.perl.org/search.html?q=%s"]]
+* [[shortcut name=whois url="http://reports.internic.net/cgi/whois?whois_nic=%s&type=domain"]]
 
 To add a new shortcut, use the "shortcut" preprocessor directive. "%s" is
 replaced with the text passed to the named shortcut. The optional desc
