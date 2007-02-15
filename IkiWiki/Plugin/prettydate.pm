@@ -2,6 +2,7 @@
 package IkiWiki::Plugin::prettydate;
 use IkiWiki;
 use warnings;
+no warnings 'redefine';
 use strict;
 
 # Blanks duplicate the time before.
