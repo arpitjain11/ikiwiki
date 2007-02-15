@@ -30,7 +30,7 @@ sub preprocess_shortcut (@) { #{{{
 	#translators: This is used to display what shortcuts are defined.
 	#translators: First parameter is the name of the shortcut, the second
 	#translators: is an URL.
-	return sprintf(gettext("shortcut %s points to %s"), $params{name}, $params{url});
+	return sprintf(gettext("shortcut %s points to <i>%s</i>"), $params{name}, $params{url});
 } # }}}
 
 sub shortcut_expand ($$@) { #{{{
