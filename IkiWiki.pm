@@ -16,16 +16,15 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext
                  %config %links %renderedfiles %pagesources);
-our $VERSION = 1.01; # plugin interface version
+our $VERSION = 1.01; # plugin interface version, next is ikiwiki version
+our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
+my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
 # Optimisation.
 use Memoize;
 memoize("abs2rel");
 memoize("pagespec_translate");
 memoize("file_pruned");
-
-my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
-our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 
 sub defaultconfig () { #{{{
 	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,

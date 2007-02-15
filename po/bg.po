@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-14 20:42-0500\n"
+"POT-Creation-Date: 2007-02-15 00:37-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -41,16 +41,16 @@ msgstr "дискусия"
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/CGI.pm:480 ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:539
+#: ../IkiWiki/CGI.pm:480 ../IkiWiki/CGI.pm:508 ../IkiWiki/CGI.pm:541
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
 
-#: ../IkiWiki/CGI.pm:647
+#: ../IkiWiki/CGI.pm:649
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:679
+#: ../IkiWiki/CGI.pm:681
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -376,13 +376,13 @@ msgstr "успешно генериране на %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "формат: ikiwiki [опции] източник местоназначение"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:103
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "При използване на пареметъра „--cgi” е необходимо да се укаже и "
 "местоположението на уикито чрез параметъра „--url”"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
 msgid "Error"
 msgstr "Грешка"
 
@@ -390,7 +390,7 @@ msgstr "Грешка"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:549
+#: ../IkiWiki.pm:548
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"
