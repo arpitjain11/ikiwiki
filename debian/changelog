@@ -26,8 +26,11 @@ ikiwiki (1.43) UNRELEASED; urgency=low
   * Add a prettydate plugin that formats dates in a more readable fashion.
     (I had to get a pretty date somehow today..)
   * Updated Czech translation.
+  * Avoid potential syslog format string issue, although only older versions
+    of perl are vulnerable and it is not known to really be exploitable from
+    ikiwiki.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 17 Feb 2007 14:02:32 -0500
+ -- Joey Hess <joeyh@debian.org>  Sat, 17 Feb 2007 16:32:35 -0500
 
 ikiwiki (1.42) unstable; urgency=low
 
