@@ -71,4 +71,17 @@ WriteMakefile(
 	PREFIX		=> "/usr/local",
 	PM_FILTER	=> './pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB)',
 	MAN1PODS	=> {},
+	PREREQ_PM	=> {
+		'XML::Simple'		=> 0,
+		'Text::Markdown'	=> 0,
+		'Date::Parse'		=> 0,
+		'HTML::Template'	=> 0,
+		'HTML::Scrubber'	=> 0,
+		'CGI::FormBuilder'	=> 3.02.02,
+		'Time::Duration'	=> 0,
+		'CGI::Session'		=> 0,
+		'Mail::Sendmail'	=> 0,
+		'HTML::Parser'		=> 0,
+		'URI'			=> 0,
+	},
 );
