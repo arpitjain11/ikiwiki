@@ -2,6 +2,17 @@ I'm using Ikiwiki on a box where I don't have root access, so I install all of m
 
 I imagine that there's a clean and elegant solution to this, but the hack I'm currently using is to have `./make` alter `ikiwki.in` before it's run, by inserting `use lib ...` lines for each of the directories in `$ENV{PERL5LIB}`. Again, this is clearly ugly, but it allows me to run `./make`, so I'm submitting it FWIW.
 
+> I don't like this patch because it's not expected that an environment
+> variable will stick around outside the shell that it's set in. It could
+> lead to suprising behavior if PERL5LIB happened to be set during build,
+> and it's even possible for it to lead to security issues, imagine if I
+> accidentially built the debian package of ikiwiki with PERL5LIB set --
+> then it would be hardcoded to look in /home/joey for libraries, which
+> someone with a "joey" account elsewhere could use to exploit it.
+>
+> You could remove the taint switch locally, it's very unlikely to find
+> tainting problems that nobody else has noticed. --[[Joey]]
+
 <pre> 
 Index: Makefile.PL
 ===================================================================
