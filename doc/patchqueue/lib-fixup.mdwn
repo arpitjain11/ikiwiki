@@ -1,0 +1,35 @@
+I'm using Ikiwiki on a box where I don't have root access, so I install all of my Perl modules in `~/lib`. The `ikiwiki.in` script is ran in Taint mode, which means that it ignores the contents of `$ENV{PERL5LIB}`. The result is that the current versions of the pre-requisite modules I've installed in `~/lib` are ignored by `./make`, which uses the outdated, and therefore incompatible versions, from the system-wide `@INC`... ;-)
+
+I imagine that there's a clean and elegant solution to this, but the hack I'm currently using is to have `./make` alter `ikiwki.in` before it's run, by inserting `use lib ...` lines for each of the directories in `$ENV{PERL5LIB}`. Again, this is clearly ugly, but it allows me to run `./make`, so I'm submitting it FWIW.
+
+<pre> 
+Index: lib-fixup.pl
+===================================================================
+--- lib-fixup.pl        (revision 0)
++++ lib-fixup.pl        (revision 0)
+@@ -0,0 +1,7 @@
++#!/usr/bin/perl -i.bak -p
++use strict;
++use warnings;
++my $libs = join('', map { "use lib '$_';\n" } split /:/, $ENV{PERL5LIB});
++s/(use IkiWiki;)/$1\n$libs/;
++
++
+
+Property changes on: lib-fixup.pl
+___________________________________________________________________
+Name: svn:executable
+   + *
+Index: Makefile.PL
+===================================================================
+--- Makefile.PL (revision 2626)
++++ Makefile.PL (working copy)
+@@ -24,6 +24,7 @@
+ )
+ 
+ extra_build:
++       LANG=C ./lib-fixup.pl ikiwki.in
+        LANG=C ./ikiwiki.in doc html --templatedir=templates \
+                --underlaydir=basewiki \
+                --wikiname="ikiwiki" --verbose --no-rcs \
+</pre>
