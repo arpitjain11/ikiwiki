@@ -22,7 +22,7 @@ Crypt::DH, URI-Fetch. --Ethan
 >> I put debugging output in openid.pm and it suggests that the 
 >> verification is taking place successfully. I see "openid.mode=id_res" 
 >> in the URI. On top of that, it's the same Openid server I use
->> to sign in here on ikiwiki.kitenet.net. --Ethan
+>> to sign in here on ikiwiki.info. --Ethan
 
 >>> Yikes, I don't really have the newest CGI::Session after all.. 
 >>> let me try updating that. --Ethan
@@ -34,7 +34,7 @@ Crypt::DH, URI-Fetch. --Ethan
 >>>>> should paste the url. --[[Joey]]
 
 I have cookies disabled on my computer, with a bunch of manual
-exceptions. This includes myopenid, ikiwiki.kitenet.net, livejournal,
+exceptions. This includes myopenid, ikiwiki.info, livejournal,
 and some others. Unfortunately it didn't include my own domain.
 So the URI that myopenid redirected me to was fine, but because
 I didn't have cookies set, I didn't have a session, and so 
