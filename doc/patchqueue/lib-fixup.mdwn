@@ -13,6 +13,9 @@ I imagine that there's a clean and elegant solution to this, but the hack I'm cu
 > You could remove the taint switch locally, it's very unlikely to find
 > tainting problems that nobody else has noticed. --[[Joey]]
 
+>> I completely understand rejecting this patch, but would you accept one to automate the removal of -T as a `make` option, then? I was trying to install Ikiwiki on a very popular
+>> web host, and the aforementioned issue took quite a while to debug; I imagine many people would have simply given up. -- Ben
+
 <pre> 
 Index: Makefile.PL
 ===================================================================
