@@ -22,14 +22,15 @@ Name: svn:executable
    + *
 Index: Makefile.PL
 ===================================================================
---- Makefile.PL (revision 2626)
+--- Makefile.PL (revision 2628)
 +++ Makefile.PL (working copy)
 @@ -24,6 +24,7 @@
  )
  
  extra_build:
-+       LANG=C ./lib-fixup.pl ikiwki.in
++       LANG=C ./lib-fixup.pl ikiwiki.in
         LANG=C ./ikiwiki.in doc html --templatedir=templates \
                 --underlaydir=basewiki \
                 --wikiname="ikiwiki" --verbose --no-rcs \
+
 </pre>
