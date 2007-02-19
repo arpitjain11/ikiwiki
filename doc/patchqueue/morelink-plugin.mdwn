@@ -1,4 +1,4 @@
-Enables _Read more_ links for use in blog posts. Adds a config option for customising the anchor text.
+Enables _Read more_ links for use in blog posts. Adds a config option for customising the anchor text. (The [[/patchqueue/htmllink-anchors]] patch is a dependency).
 
     Index: IkiWiki/Plugin/morelink.pm
     ===================================================================
@@ -35,3 +35,5 @@ Enables _Read more_ links for use in blog posts. Adds a config option for custom
     +}
     +
     +1
+
+--Ben
