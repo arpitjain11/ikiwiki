@@ -1,0 +1,17 @@
+The Atom feed fails validation at http://feedvalidator.org/ because the `<category>` tags are syntactically incorrect ([spec](http://www.atomenabled.org/developers/syndication/atom-format-spec.php#element.category)). With this patch it validates.
+
+<pre>
+Index: templates/atomitem.tmpl
+===================================================================
+--- templates/atomitem.tmpl     (revision 2640)
++++ templates/atomitem.tmpl     (working copy)
+@@ -8,7 +8,7 @@
+        <link href="<TMPL_VAR PERMALINK>"/>
+        <TMPL_IF NAME="CATEGORIES">
+        <TMPL_LOOP NAME="CATEGORIES">
+-       <category><TMPL_VAR CATEGORY></category>
++       <category term="<TMPL_VAR CATEGORY>" />
+        </TMPL_LOOP>
+        </TMPL_IF>
+        <updated><TMPL_VAR DATE_3339></updated>
+</pre>
