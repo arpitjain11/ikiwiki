@@ -1,8 +1,13 @@
 ikiwiki (1.44) UNRELEASED; urgency=low
 
   * Patch to fix validaton of atom feeds by fixing the category tags.
+  * Add a openidlogin-bg.gif to wikiicons and have the stylesheet use it for the
+    OpenID login form rather than linking to a remote logo, to avoid various
+    issues. Since there is not yet a license for the actual OpenID logo, this
+    file is currently a blank image. Users who want to can copy
+    http://openid.net/login-bg.gif into their wiki.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 18 Feb 2007 23:40:32 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 18:34:58 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 

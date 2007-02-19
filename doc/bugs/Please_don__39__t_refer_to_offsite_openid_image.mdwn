@@ -1,1 +1,19 @@
-In style.css, please don't refer to the OpenID image on an external site.  This reference allows that site to track users of ikiwikis and other sites supporting OpenID.  Furthermore, this reference also opens up cross-site scripting vulnerabilities if the external site did something malicious.  If the image has a Free Software license, please include it in ikiwiki, in the basewiki (preferably converted from gif to png).  If the image does not have a Free Software license, please omit it, and allow users to choose to add it to their CSS themselves if they find the risks acceptable.  --[[JoshTriplett]]
+In style.css, please don't refer to the OpenID image on an external site.
+This reference allows that site to track users of ikiwikis and other sites
+supporting OpenID.  Furthermore, this reference also opens up cross-site
+scripting vulnerabilities if the external site did something malicious.  If
+the image has a Free Software license, please include it in ikiwiki, in the
+basewiki (preferably converted from gif to png).  If the image does not
+have a Free Software license, please omit it, and allow users to choose to
+add it to their CSS themselves if they find the risks acceptable.
+--[[JoshTriplett]]
+
+> I wasn't able to get a clear statement of the license of that graphic,
+> back when I was writing the openid support although I didn't try very hard
+> (asked on irc on their irc channel, didn't seem to get anyone who was
+> familiar with DFSG). Googling around, they seem to have not yet decided
+> on a license:
+> <http://openid.net/pipermail/general/2007-January/001421.html>
+> <http://lists.danga.com/pipermail/yadis/2005-June/000990.html>
+> 
+> Changed things around .. [[bugs/done]] --[[Joey]]
