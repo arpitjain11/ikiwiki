@@ -25,3 +25,11 @@ don't exist in the last package:
 
 --Pawel
 
+This seems to be a bug in your 1.43gpal version, whatever that is.. In the package I built, I see:
+
+    joey@kodama:~>dpkg -L ikiwiki | grep smileys.mdwn
+    /usr/share/ikiwiki/basewiki/smileys.mdwn
+    joey@kodama:~>ls -l /usr/share/ikiwiki/basewiki/smileys.mdwn
+    -rw-r--r-- 1 root root 1643 Feb 13 18:03 /usr/share/ikiwiki/basewiki/smileys.mdwn
+
+--[[Joey]]
