@@ -21,37 +21,27 @@ I imagine that there's a clean and elegant solution to this, but the hack I'm cu
 >>> about how to use ikiwiki with $BIG_HOSTING_PROVIDER, that can mention
 >>> the option. --[[Joey]]
 
-<pre> 
-Index: Makefile.PL
+>>>> I was going to write a guide for shared hosting setup anyway, so that sounds great. My `make`-fu is weak, so I don't know the Right Way to add an extra option, but here's a patch for removing the -T flag. -- Ben
+
+<pre>
+Index: pm_filter
 ===================================================================
---- Makefile.PL (revision 2630)
-+++ Makefile.PL (working copy)
-@@ -24,6 +24,7 @@
- )
+--- pm_filter   (revision 2644)
++++ pm_filter   (working copy)
+@@ -4,6 +4,7 @@
+        $prefix=shift;
+        $ver=shift;
+        $libdir=shift;
++       $notaint=shift;
+ }
  
- extra_build:
-+       LANG=C ./lib-fixup.pl ikiwiki.in
-        LANG=C ./ikiwiki.in doc html --templatedir=templates \
-                --underlaydir=basewiki \
-                --wikiname="ikiwiki" --verbose --no-rcs \
-Index: lib-fixup.pl
-===================================================================
---- lib-fixup.pl        (revision 0)
-+++ lib-fixup.pl        (revision 0)
-@@ -0,0 +1,9 @@
-+#!/usr/bin/perl -i.bak -p
-+use strict;
-+use warnings;
-+my @dirs = $ENV{PERL5LIB} =~ /:/ ? split /:/, $ENV{PERL5LIB} : $ENV{PERL5LIB};
-+if (@dirs) {
-+    my $libs = join('', map { " use lib '$_';\n" } @dirs);
-+    s/(use IkiWiki;)/$libs$1/;
-+}
-+ 
-
-Property changes on: lib-fixup.pl
-___________________________________________________________________
-Name: svn:executable
-   + *
-
+ if (/INSTALLDIR_AUTOREPLACE/) {
+@@ -19,4 +20,7 @@
+        else {
+                $_="use lib '$libdir';\n";
+        }
++} 
++elsif ($. == 1 && $notaint && m{^(#!/usr/bin/perl) -T$}) {
++    $_=qq{$1\n};
+ }
 </pre>
