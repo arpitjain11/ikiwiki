@@ -16,6 +16,11 @@ I imagine that there's a clean and elegant solution to this, but the hack I'm cu
 >> I completely understand rejecting this patch, but would you accept one to automate the removal of -T as a `make` option, then? I was trying to install Ikiwiki on a very popular
 >> web host, and the aforementioned issue took quite a while to debug; I imagine many people would have simply given up. -- Ben
 
+>>> Well, the problem with an option is finding the option before you give
+>>> up. Maybe an option and adding some docs to the [[setup]] or [[tips]] page
+>>> about how to use ikiwiki with $BIG_HOSTING_PROVIDER, that can mention
+>>> the option. --[[Joey]]
+
 <pre> 
 Index: Makefile.PL
 ===================================================================
