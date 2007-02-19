@@ -1,0 +1,29 @@
+Here's an attempt to make `htmllink` "do the right thing" with in-page anchors:
+
+<pre>
+Index: IkiWiki.pm
+===================================================================
+--- IkiWiki.pm  (revision 2657)
++++ IkiWiki.pm  (working copy)
+@@ -426,6 +426,8 @@
+        my $noimageinline=shift; # don't turn links into inline html images
+        my $forcesubpage=shift; # force a link to a subpage
+        my $linktext=shift; # set to force the link text to something
++    
++    my $anchor = ($link =~ s/#(.+)$// ? $1 : undef);
+ 
+        my $bestlink;
+        if (! $forcesubpage) {
+@@ -455,7 +457,10 @@
+        if (! $noimageinline && isinlinableimage($bestlink)) {
+                return "<img src=\"$bestlink\" alt=\"$linktext\" />";
+        }
+-       return "<a href=\"$bestlink\">$linktext</a>";
++
++    $bestlink .= "#$anchor" if $anchor;
++    
++    return "<a href=\"$bestlink\">$linktext</a>";
+ } #}}}
+ 
+ sub htmlize ($$$) { #{{{
+</pre>
