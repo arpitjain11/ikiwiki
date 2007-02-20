@@ -24,8 +24,9 @@ ikiwiki (1.44) UNRELEASED; urgency=low
     This lets ikiwiki not build depend on perlmagic.
   * Detect old versions of xgettext and avoid using them.
   * perl is broken: print "" || die fails! Work around this insanity.
+  * Smarter detection of no-op changes to po files.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 17:13:37 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 18:12:44 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 
