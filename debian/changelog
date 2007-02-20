@@ -6,8 +6,10 @@ ikiwiki (1.44) UNRELEASED; urgency=low
     issues. Since there is not yet a license for the actual OpenID logo, this
     file is currently a blank image. Users who want to can copy
     http://openid.net/login-bg.gif into their wiki.
+  * Allow setting NOTAINT=1 when building the wiki to remove taint checking
+    flags, which can be useful on some hosting providers.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 18:34:58 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 20:08:24 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 
