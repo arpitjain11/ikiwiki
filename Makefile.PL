@@ -26,7 +26,7 @@ PROBABLE_INST_LIB=$(shell \\
 extra_build:
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	chmod +x ikiwiki.out
-	PERL5LIB=.:${PERL5LIB} LANG=C ./ikiwiki.in doc html --templatedir=templates \
+	PERL5LIB=.:${PERL5LIB} LANG=C ./ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion --userdir=users \
