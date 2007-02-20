@@ -40,3 +40,22 @@ Index: IkiWiki/Plugin/datearchives.pm
 </pre>
 
 This works (although accessing `%IkiWiki::pagectime` is not too clever), but it would be far more useful if the date pages were automatically created and populated with the relevant posts. A [[Pagespec]] works perfectly for displaying the relevant content, but we're still left with the issue of actually creating the page. What's the Right Way to do this? We could create them in the RCS working copy and check them in, or create them directly in the output directory... (I'd also like to create an option for the tags plugin to auto-create its targets in the same way). Any opinions? :-)
+
+> Ok, first, I don't understand what your plugin does. Maybe I need to get
+> some sleep, but a better explanation might help. :-) It seems to make
+> links from pages to the archive pages? But I don't understand why you
+> want such links .. wouldn't a sidebar with links to the available archive
+> pages work better? Or something else, depending on personal preference.
+> 
+> Secondly, you're certianly not the first to wat to do data based archive
+> pages. So far I have successfully punted the issue of creating these
+> pages out of ikiwiki by pointing out that everyone wants them to be
+> _different_, and suggesting people set up cron jobs or other machinery to
+> generate the kinds of archives that they like. This makes me happy
+> because generalizing all the possible ways people might want to do date
+> based archives and somehow bolting support for creating them onto the
+> size of ikiwiki seems to be a recipe for a mess. 
+> 
+> A few examples of ikiwiki sites with date archives:
+> <http://www.golden-gryphon.com/blog/manoj/> and
+> <http://roland.entierement.nu/categories/geek-en.html> --[[Joey]]
