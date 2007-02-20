@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 13;
+use Test::More tests => 14;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -76,6 +76,7 @@ ok(links_to("bar", linkify("foo", "foo", "link to [[some_page|bar]] ok", ["foo",
 ok(links_text("some page", linkify("foo", "foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link text");
 ok(links_to("bar", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link, with whitespace");
 ok(links_text("some page", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link text, with whitespace");
+ok(links_text("0", linkify("foo", "foo", "link to [[0|bar]] ok", ["foo", "bar"])), "named link to 0");
 ok(links_text("Some long, & complex page name.", linkify("foo", "foo", "link to [[Some long, & complex page name.|bar]] ok, and this is not a link]] here", ["foo", "bar"])), "complex named link text");
 ok(links_to("foo/bar", linkify("foo/item", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "inline page link");
 ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "same except not inline");
