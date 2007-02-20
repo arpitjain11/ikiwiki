@@ -1,0 +1,35 @@
+Support for uploading files is useful for many circumstances:
+
+* Uploading images.
+* Uploading local.css files (admin only).
+* Uploading mp3s for podcasts.
+* Etc.
+
+ikiwiki should have an easy to use interface for this, but the real meat of
+the work is in securing it. Several classes of controls seem appropriate:
+
+* Limits to size of files that can be uploaded. Prevent someone spamming
+  the wiki with CD isos..
+* Limits to the type of files that can be uploaded. To prevent uploads of
+  virii, css, raw html etc, and avoid file types that are not safe.
+  Should default to excluding all files types, or at least all
+  except a very limited set, and should be able to open it up to more
+  types.
+
+  Would checking for file extensions (.gif, .jpg) etc be enough? Some
+  browsers are probably too smart for their own good and may ignore the
+  extension / mime info and process as the actual detected file type. It
+  may be necessary to use `file` to determine a file's true type.
+* Limits to who can upload what type of files.
+* Limits to what files can be uploaded where.
+
+It seems that for max flexability, rules should be configurable by the admin
+to combine these limits in different ways. If we again extend the pagespec
+for this, as was done for [[conditional_text_based_on_ikiwiki_features]],
+the rules might look something like this:
+
+	( maxsize(30kb) and type(webimage) ) or
+	( user(joey) and maxsize(1mb) and (type(webimage) or *.mp3) ) or
+	( user(joey) and maxsize(200mb) and (*.mov or *.avi) and videos/*)
+
+[[tag soc]]
