@@ -251,7 +251,8 @@ I'll attach an updated and slightly modified version below.
   O(N^2) behavior, which could be a scalability problem. This happens because
   of the lookup for `$to` in `%renderedfiles`, which shouldn't be necessary
   most of the time. Couldn't it just be required that `$to` be a html page
-  name on input?
+  name on input? Or require it be a non-html page name and always run
+  htmlpage on it.
 * As we discussed in email, this will break handling of `foo/index.mdwn`
   pages. Needs to be changed to generate `foo/index/index.html` for such
   pages (though not for the toplevel `index`).
@@ -263,11 +264,18 @@ I'll attach an updated and slightly modified version below.
   innefficient since it leads to a http redirect when clicking on that
   link. Seems to be limited to ".." links, and possibly only to
   parentlinks. (Already fixed it for "." links.)
+* It calles abs2rel about 16% more often with the patch, which makes it
+  a bit slower, since abs2rel is not very efficient. (This omits abs2rel
+  calls that might be memoized away already.) This seems to be due to one
+  extra abs2rel for the toplevel wiki page due to the nicely cleaned up code
+  in `parentlinks` -- so I'm not really complaining.. Especially since the
+  patch adds a new nice memoizable `urlto`.
+* The rss page name generation code seems unnecesarily roundabout, I'm sure
+  that can be cleaned up somehow, perhaps by making `htmlpage` more
+  generic.
 
-This is only a first pass, I still need to check to see if there are any
-code paths where it adds expensive operations such as `abs2rel` that were
-not needed before. And I have not audited all the plugins to see if any are
-broken by the changes.
+This is only a first pass, I have not yet audited all the plugins to see if
+any are broken by the changes.
 
 --[[Joey]]
 
