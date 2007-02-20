@@ -1,0 +1,27 @@
+When you create a new page, the choices for page location have underscores and
+numbers in them to represent spaces and "special characters". This patch lets
+ikiwiki display more user-friendly names. --Ethan
+
+<pre>
+diff -urX ignorepats ikiwiki/IkiWiki/CGI.pm ikidev/IkiWiki/CGI.pm
+--- ikiwiki/IkiWiki/CGI.pm      2007-02-14 18:17:12.000000000 -0800
++++ ikidev/IkiWiki/CGI.pm       2007-02-20 15:54:13.761158000 -0800
+@@ -450,6 +450,8 @@
+                                map { check_canedit($_, $q, $session) } @page_locs;
+                        }
+
++                       # don't escape (will be done by formbuilder)
++                       my %loc_options = map { $_ => pagetitle($_, 1) } @editable_locs;
+                        my @page_types;
+                        if (exists $hooks{htmlize}) {
+                                @page_types=keys %{$hooks{htmlize}};
+@@ -457,7 +459,7 @@
+
+                        $form->tmpl_param("page_select", 1);
+                        $form->field(name => "page", type => 'select',
+-                               options => \@editable_locs, value => $best_loc);
++                               options => \%loc_options, value => $best_loc);
+                        $form->field(name => "type", type => 'select',
+                                options => \@page_types);
+                        $form->title(sprintf(gettext("creating %s"), pagetitle($page)));
+</pre>
