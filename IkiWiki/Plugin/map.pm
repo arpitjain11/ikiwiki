@@ -49,7 +49,8 @@ sub preprocess (@) { #{{{
 		}
 		$map .= "</li>\n" if $openli;
 		$map .= "<li>"
-		        .htmllink($params{page}, $params{destpage}, $item) ."\n";
+			.htmllink($params{page}, $params{destpage}, $item)
+			."\n";
 		$openli=1;
 	}
 	while ($indent > 0) {

@@ -22,7 +22,7 @@ sub canedit ($$) { #{{{
 	foreach my $admin (@{$config{adminuser}}) {
 		if (pagespec_match($page, IkiWiki::userinfo_get($admin, "locked_pages"), "")) {
 			return sprintf(gettext("%s is locked by %s and cannot be edited"),
-				htmllink("", "", $page, 1),
+				htmllink("", "", $page, noimageinline => 1),
 				IkiWiki::userlink($admin));
 		}
 	}
@@ -40,7 +40,7 @@ sub formbuilder_setup (@) { #{{{
 
 	if ($form->title eq "preferences") {
 		$form->field(name => "locked_pages", size => 50,
-			comment => "(".htmllink("", "", "PageSpec", 1).")");
+			comment => "(".htmllink("", "", "PageSpec", noimageinline => 1).")");
 		if (! IkiWiki::is_admin($user_name)) {
 			$form->field(name => "locked_pages", type => "hidden");
 		}

@@ -1,3 +1,14 @@
+ikiwiki (1.44) unstable; urgency=low
+
+   The htmllink() function has changed slightly and plugins that use it may
+   need to change how they call it. This function's first three parameters
+   are unchanged, but additional options are now passed using named
+   parameters. If you used htmllink with more than 3 parameters, you will
+   need to change it. The plugin interface version has been increased to 1.02
+   to reflect this change.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 21:10:12 -0500
+
 ikiwiki (1.42) unstable; urgency=low
 
   The anonok setting in config files has been removed. To enable

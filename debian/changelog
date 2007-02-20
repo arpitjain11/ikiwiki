@@ -10,8 +10,16 @@ ikiwiki (1.44) UNRELEASED; urgency=low
     flags, which can be useful on some hosting providers.
   * Fix a bug that made links like [[0|foo]] use "foo" as the link text,
     instead of "0".
+  * Changed calling convention for httmllink slightly. The first three
+    parameters remain the same, but additional options are now passed in using
+    named parameters.
+  * Change plugin interface version to 1.02 to reflect this change.
+  * Add a new anchor option to htmllink. Thanks Ben for the idea.
+  * Support anchors in wikilinks.
+  * Add a "more" plugin based on one contributed by Ben to allow implementing
+    those dreaded "Read more" links in blogs.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 20:08:24 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 20:56:25 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 

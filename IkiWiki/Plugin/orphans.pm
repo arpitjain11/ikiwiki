@@ -40,7 +40,15 @@ sub preprocess (@) { #{{{
 	}
 	
 	return gettext("All pages are linked to by other pages.") unless @orphans;
-	return "<ul>\n".join("\n", map { "<li>".htmllink($params{page}, $params{destpage}, $_, 1)."</li>" } sort @orphans)."</ul>\n";
+	return "<ul>\n".
+		join("\n",
+			map {
+				"<li>".
+				htmllink($params{page}, $params{destpage}, $_,
+					 noimageinline => 1).
+				"</li>"
+			} sort @orphans).
+		"</ul>\n";
 } # }}}
 
 1

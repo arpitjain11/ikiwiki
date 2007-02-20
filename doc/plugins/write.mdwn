@@ -329,7 +329,7 @@ subdirectory with the same name as the source page, failing that
 goes down the directory tree to the base looking for matching
 pages, as described in [[SubPage/LinkingRules]].
 
-#### `htmllink($$$;$$$)`
+#### `htmllink($$$;@)`
 
 Many plugins need to generate html links and add them to a page. This is
 done by using the `htmllink` function. The usual way to call
@@ -346,11 +346,13 @@ Here `$destpage` is the inlining page. A `destpage` parameter is passed to
 some of the hook functions above; the ones that are not passed it are not used
 during inlining and don't need to worry about this issue.
 
-The remaining three optional parameters to `htmllink` are:
+After the three required parameters, named parameters can be used to
+control some options. These are:
 
-1. noimageinline - set to true to avoid turning links into inline html images
-1. forcesubpage  - set to force a link to a subpage
-1. linktext - set to force the link text to something
+* noimageinline - set to true to avoid turning links into inline html images
+* forcesubpage  - set to force a link to a subpage
+* linktext - set to force the link text to something
+* anchor - set to make the link include an anchor
 
 #### `readfile($;$)`
 

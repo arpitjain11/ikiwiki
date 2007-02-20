@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-15 15:01-0500\n"
+"POT-Creation-Date: 2007-02-19 21:47-0500\n"
 "PO-Revision-Date: 2007-01-22 22:12+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -17,41 +17,41 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../IkiWiki/CGI.pm:152
+#: ../IkiWiki/CGI.pm:154
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:265
+#: ../IkiWiki/CGI.pm:267
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:330
+#: ../IkiWiki/CGI.pm:332
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:420 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:463
+#: ../IkiWiki/CGI.pm:465
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:480 ../IkiWiki/CGI.pm:508 ../IkiWiki/CGI.pm:541
+#: ../IkiWiki/CGI.pm:482 ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:543
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:649
+#: ../IkiWiki/CGI.pm:651
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:681
+#: ../IkiWiki/CGI.pm:683
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
@@ -130,11 +130,11 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:169 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:382
+#: ../IkiWiki/Plugin/inline.pm:387
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -161,6 +161,10 @@ msgstr "Miroirs"
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirror"
 msgstr "Miroir"
+
+#: ../IkiWiki/Plugin/more.pm:8
+msgid "more"
+msgstr ""
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -235,7 +239,7 @@ msgid "in mid-morning %A"
 msgstr ""
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
-msgid "in late morning %A"
+msgid "late %A morning"
 msgstr ""
 
 #: ../IkiWiki/Plugin/prettydate.pm:27
@@ -457,7 +461,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:548
+#: ../IkiWiki.pm:558
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

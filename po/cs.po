@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-15 15:01-0500\n"
+"POT-Creation-Date: 2007-02-19 21:47-0500\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -15,41 +15,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:152
+#: ../IkiWiki/CGI.pm:154
 msgid "You need to log in first."
 msgstr "Nejprve se musíte přihlásit."
 
-#: ../IkiWiki/CGI.pm:265
+#: ../IkiWiki/CGI.pm:267
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:330
+#: ../IkiWiki/CGI.pm:332
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:420 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:463
+#: ../IkiWiki/CGI.pm:465
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:480 ../IkiWiki/CGI.pm:508 ../IkiWiki/CGI.pm:541
+#: ../IkiWiki/CGI.pm:482 ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:543
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:649
+#: ../IkiWiki/CGI.pm:651
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:681
+#: ../IkiWiki/CGI.pm:683
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
@@ -125,11 +125,11 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:169 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:382
+#: ../IkiWiki/Plugin/inline.pm:387
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -155,6 +155,10 @@ msgstr "Zrcadla"
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirror"
 msgstr "Zrcadlo"
+
+#: ../IkiWiki/Plugin/more.pm:8
+msgid "more"
+msgstr ""
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -229,8 +233,9 @@ msgid "in mid-morning %A"
 msgstr "%A dopoledne"
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
-msgid "in late morning %A"
-msgstr "%A pozdě dopoledne"
+#, fuzzy
+msgid "late %A morning"
+msgstr "%A pozdě večer"
 
 #: ../IkiWiki/Plugin/prettydate.pm:27
 msgid "at lunch time on %A"
@@ -446,7 +451,10 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:548
+#: ../IkiWiki.pm:558
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
+
+#~ msgid "in late morning %A"
+#~ msgstr "%A pozdě dopoledne"

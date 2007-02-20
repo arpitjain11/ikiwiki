@@ -27,9 +27,9 @@ sub preprocess (@) { #{{{
 				my $bestlink=bestlink($page, $link);
 				next if length $bestlink;
 				push @broken,
-					htmllink($page, $params{destpage}, $link, 1).
+					htmllink($page, $params{destpage}, $link, noimageinline => 1).
 					" from ".
-					htmllink($params{page}, $params{destpage}, $page, 1);
+					htmllink($params{page}, $params{destpage}, $page, noimageinline => 1);
 			}
 		}
 	}

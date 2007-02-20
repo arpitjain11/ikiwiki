@@ -166,7 +166,12 @@ sub preprocess_inline (@) { #{{{
 					    (length $config{cgiurl} ||
 					     exists $links{$page."/".$discussionlink})) {
 						$template->param(have_actions => 1);
-						$template->param(discussionlink => htmllink($page, $params{page}, gettext("Discussion"), 1, 1));
+						$template->param(discussionlink =>
+							htmllink($page,
+								$params{page},
+								gettext("Discussion"),
+								noimageinline => 1,
+								forcesubpage => 1));
 					}
 				}
 				if (length $config{cgiurl} && defined $type) {

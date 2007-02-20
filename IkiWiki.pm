@@ -16,7 +16,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext
                  %config %links %renderedfiles %pagesources);
-our $VERSION = 1.01; # plugin interface version, next is ikiwiki version
+our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
@@ -30,7 +30,7 @@ sub defaultconfig () { #{{{
 	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
 		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//],
-	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]]+)\]\]/,
+	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]#]+)(?:#([^\s\]]+))?\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
 	verbose => 0,
@@ -419,23 +419,27 @@ sub displaytime ($) { #{{{
 			$config{timeformat}, localtime($time)));
 } #}}}
 
-sub htmllink ($$$;$$$) { #{{{
+sub htmllink ($$$;@) { #{{{
 	my $lpage=shift; # the page doing the linking
 	my $page=shift; # the page that will contain the link (different for inline)
 	my $link=shift;
-	my $noimageinline=shift; # don't turn links into inline html images
-	my $forcesubpage=shift; # force a link to a subpage
-	my $linktext=shift; # set to force the link text to something
+	my %opts=@_;
 
 	my $bestlink;
-	if (! $forcesubpage) {
+	if (! $opts{forcesubpage}) {
 		$bestlink=bestlink($lpage, $link);
 	}
 	else {
 		$bestlink="$lpage/".lc($link);
 	}
 
-	$linktext=pagetitle(basename($link)) unless defined $linktext;
+	my $linktext;
+	if (defined $opts{linktext}) {
+		$linktext=$opts{linktext};
+	}
+	else {
+		$linktext=pagetitle(basename($link));
+	}
 	
 	return "<span class=\"selflink\">$linktext</span>"
 		if length $bestlink && $page eq $bestlink;
@@ -452,8 +456,12 @@ sub htmllink ($$$;$$$) { #{{{
 	
 	$bestlink=abs2rel($bestlink, dirname($page));
 	
-	if (! $noimageinline && isinlinableimage($bestlink)) {
+	if (! $opts{noimageinline} && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
+	}
+
+	if (defined $opts{anchor}) {
+		$bestlink.="#".$opts{anchor};
 	}
 
 	return "<a href=\"$bestlink\">$linktext</a>";
@@ -491,8 +499,8 @@ sub linkify ($$$) { #{{{
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
 		defined $2
-			? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), 0, 0, pagetitle($2)))
-			: ( $1 ? "[[$3]]"    : htmllink($lpage, $page, titlepage($3)))
+			? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), anchor => $4, linktext => pagetitle($2)))
+			: ( $1 ? "[[$3]]"    : htmllink($lpage, $page, titlepage($3), anchor => $4))
 	}eg;
 	
 	return $content;

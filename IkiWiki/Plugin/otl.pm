@@ -17,9 +17,9 @@ sub filter (@) { #{{{
         
 	# Munge up check boxes to look a little bit better. This is a hack.
 	my $checked=htmllink($params{page}, $params{page},
-		"smileys/star_on.png", 0, 0, "[X]");
+		"smileys/star_on.png", linktext => "[X]");
 	my $unchecked=htmllink($params{page}, $params{page},
-		"smileys/star_off.png", 0, 0, "[_]");
+		"smileys/star_off.png", linktext => "[_]");
 	$params{content}=~s/^(\s*)\[X\]\s/${1}$checked /mg;
 	$params{content}=~s/^(\s*)\[_\]\s/${1}$unchecked /mg;
         

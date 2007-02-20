@@ -89,7 +89,9 @@ sub cgi_recentchanges ($) { #{{{
 		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
 		$change->{pages} = [
 			map {
-				$_->{link} = htmllink("", "", $_->{page}, 1, 0, pagetitle($_->{page}));
+				$_->{link} = htmllink("", "", $_->{page},
+					noimageinline => 1,
+					linktext => pagetitle($_->{page}));
 				$_;
 			} @{$change->{pages}}
 		];
@@ -219,7 +221,7 @@ sub cgi_prefs ($$) { #{{{
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "email", size => 50);
 	$form->field(name => "subscriptions", size => 50,
-		comment => "(".htmllink("", "", "PageSpec", 1).")");
+		comment => "(".htmllink("", "", "PageSpec", noimageinline => 1).")");
 	$form->field(name => "banned_users", size => 50);
 	
 	my $user_name=$session->param("name");
@@ -360,7 +362,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
-		htmllink("", "", "HelpOnFormatting", 1));
+		htmllink("", "", "HelpOnFormatting", noimageinline => 1));
 	$form->tmpl_param("baseurl", baseurl());
 	if (! $form->submitted) {
 		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
@@ -709,7 +711,7 @@ sub userlink ($) { #{{{
 	else {
 		return htmllink("", "", escapeHTML(
 			length $config{userdir} ? $config{userdir}."/".$user : $user
-		), 1);
+		), noimageinline => 1);
 	}
 } #}}}
 

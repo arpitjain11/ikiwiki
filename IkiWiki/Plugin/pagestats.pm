@@ -45,7 +45,7 @@ sub preprocess (@) { #{{{
 		return "<table class='pageStats'>\n".
 			join("\n", map {
 				"<tr><td>".
-				htmllink($params{page}, $params{destpage}, $_, 1).
+				htmllink($params{page}, $params{destpage}, $_, noimageinline => 1).
 				"</td><td>".$counts{$_}."</td></tr>"
 			}
 			sort { $counts{$b} <=> $counts{$a} } keys %counts).

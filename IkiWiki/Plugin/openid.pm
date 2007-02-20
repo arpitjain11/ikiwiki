@@ -33,7 +33,7 @@ sub formbuilder_setup (@) { #{{{
 			label => "OpenID",
 			size => 30,
 			comment => '('.
-				htmllink("", "", "OpenID", 1, 0, gettext("What's this?"))
+				htmllink("", "", "OpenID", noimageinline => 1, linktext => gettext("What's this?"))
 				.($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>" : "")
 				.')'
 		);

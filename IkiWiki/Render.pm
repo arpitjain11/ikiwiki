@@ -98,7 +98,7 @@ sub genpage ($$$) { #{{{
 		if ($page !~ /.*\/\Q$discussionlink\E$/ &&
 		   (length $config{cgiurl} ||
 		    exists $links{$page."/".$discussionlink})) {
-			$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), 1, 1));
+			$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), noimageinline => 1, forcesubpage => 1));
 			$actions++;
 		}
 	}
