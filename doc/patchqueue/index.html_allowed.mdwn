@@ -283,6 +283,15 @@ I'll attach an updated and slightly modified version below.
   >>>> Oh, I see, this patch doesn't address wanting to use foo/index.mdwn as 
   >>>> an input page. Hmm. --Ethan
 
+  >>>>> No, it doesn't. I originally also was after that, but after discussing the
+  >>>>> complexities of supporting that with Joey, came up with this simpler scheme
+  >>>>> without many of those issues. It is the output that I primarily care about, anyway,
+  >>>>> and I do, in fact, find the present input file organisation quite nice. The output
+  >>>>> locations just aren't very good for conversion of an existing site to ikiwiki, and do
+  >>>>> make for rather ugly URLs with the .html extensions. (I do often type some URLs
+  >>>>> out of memory, when they're gone from the browser's completion history, and the
+  >>>>> .html makes that more laboursome.)
+
 * This does make the resulting wikis much less browsable directly on the
   filesystem, since `dir` to `dir/index.html` conversion is only handled by web
   servers and so you end up browsing to a directory index all the time.
