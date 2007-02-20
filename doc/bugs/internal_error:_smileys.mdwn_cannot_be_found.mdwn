@@ -33,3 +33,7 @@ This seems to be a bug in your 1.43gpal version, whatever that is.. In the packa
     -rw-r--r-- 1 root root 1643 Feb 13 18:03 /usr/share/ikiwiki/basewiki/smileys.mdwn
 
 --[[Joey]]
+
+> You're right. My backport was builded without all symlinks, because I store
+> all rebuilded sources in CVS repo, but it seems that CVS doesn't support symlinks.
+> Grrr... I need to switch to another repo now. --Pawel
