@@ -41,3 +41,29 @@ to make and make test just fine. --HarleyPig
 >>>>> which it generally doesn't if you're just building the package. If
 >>>>> you edit files and build, it will rebuilt the pot and then fail with
 >>>>> older gettexts. --[[Joey]]
+
+>>>>>> I guess I'm confused then, because I do get that error when I just build. :-( To reproduce:
+
+    svn co svn://ikiwiki.kitenet.net/ikiwiki/trunk ikiwiki
+    cd ikiwiki
+    perl Makefile.PL
+    make
+
+>>>>>> Then I see:
+
+<pre>
+./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
+./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
+./pm_filter /usr/local 1.44 /usr/local/share/perl/5.8.8 < ikiwiki.in > ikiwiki.out
+make -C po
+make[1]: Entering directory `/home/ben/tmp/ikiwiki/po'
+Rebuilding the pot file
+xgettext ../IkiWiki/CGI.pm ../IkiWiki/Plugin/aggregate.pm ../IkiWiki/Plugin/anonok.pm ../IkiWiki/Plugin/brokenlinks.pm ../IkiWiki/Plugin/camelcase.pm ../IkiWiki/Plugin/conditional.pm ../IkiWiki/Plugin/ddate.pm ../IkiWiki/Plugin/favicon.pm ../IkiWiki/Plugin/fortune.pm ../IkiWiki/Plugin/goodstuff.pm ../IkiWiki/Plugin/googlecalendar.pm ../IkiWiki/Plugin/haiku.pm ../IkiWiki/Plugin/html.pm ../IkiWiki/Plugin/htmlscrubber.pm ../IkiWiki/Plugin/htmltidy.pm ../IkiWiki/Plugin/httpauth.pm ../IkiWiki/Plugin/img.pm ../IkiWiki/Plugin/inline.pm ../IkiWiki/Plugin/linkmap.pm ../IkiWiki/Plugin/lockedit.pm ../IkiWiki/Plugin/map.pm ../IkiWiki/Plugin/mdwn.pm ../IkiWiki/Plugin/meta.pm ../IkiWiki/Plugin/mirrorlist.pm ../IkiWiki/Plugin/more.pm ../IkiWiki/Plugin/opendiscussion.pm ../IkiWiki/Plugin/openid.pm ../IkiWiki/Plugin/orphans.pm ../IkiWiki/Plugin/otl.pm ../IkiWiki/Plugin/pagecount.pm ../IkiWiki/Plugin/pagestats.pm ../IkiWiki/Plugin/passwordauth.pm ../IkiWiki/Plugin/poll.pm ../IkiWiki/Plugin/polygen.pm ../IkiWiki/Plugin/prettydate.pm ../IkiWiki/Plugin/rawhtml.pm ../IkiWiki/Plugin/rst.pm ../IkiWiki/Plugin/search.pm ../IkiWiki/Plugin/shortcut.pm ../IkiWiki/Plugin/sidebar.pm ../IkiWiki/Plugin/signinedit.pm ../IkiWiki/Plugin/skeleton.pm ../IkiWiki/Plugin/smiley.pm ../IkiWiki/Plugin/tag.pm ../IkiWiki/Plugin/template.pm ../IkiWiki/Plugin/textile.pm ../IkiWiki/Plugin/toc.pm ../IkiWiki/Plugin/toggle.pm ../IkiWiki/Plugin/typography.pm ../IkiWiki/Plugin/wikitext.pm ../IkiWiki/Rcs/Stub.pm ../IkiWiki/Rcs/git.pm ../IkiWiki/Rcs/mercurial.pm ../IkiWiki/Rcs/svn.pm ../IkiWiki/Rcs/tla.pm ../IkiWiki/Render.pm ../IkiWiki/Setup.pm ../IkiWiki/Setup/Standard.pm ../IkiWiki/UserInfo.pm ../IkiWiki/Wrapper.pm ../ikiwiki.in ../IkiWiki.pm -o ikiwiki.pot -Lperl --add-comments=translators
+../IkiWiki/Wrapper.pm:64: invalid variable interpolation at "$"
+make[1]: *** [ikiwiki.pot] Error 1
+make[1]: Leaving directory `/home/ben/tmp/ikiwiki/po'
+make: *** [extra_build] Error 2
+</pre>
+
+>>>>>> Other than installing a newer version of `gettext` from outside of the repos, is there any workaround?  
+
