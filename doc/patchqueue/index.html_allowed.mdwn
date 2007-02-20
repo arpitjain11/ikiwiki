@@ -276,74 +276,80 @@ I'll attach an updated and slightly modified version below.
 * `aggregate.pm` uses htmlpage in a way that breaks with its new behavior.
   It will need to be changed as follows:
 
-	Index: aggregate.pm
-	===================================================================
-	--- aggregate.pm	(revision 2700)
-	+++ aggregate.pm	(working copy)
-	@@ -320,7 +320,7 @@
-	 		# NB: This doesn't check for path length limits.
-	 		eval q{use POSIX};
-	 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
-	-		if (defined $max && length(htmlpage($page)) >= $max) {
-	+		if (defined $max && length(htmlfn($page)) >= $max) {
-	 			$c="";
-	 			$page=$feed->{dir}."/item";
-	 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
-	@@ -356,7 +356,7 @@
-	 	if (ref $feed->{tags}) {
-	 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
-	 	}
-	-	writefile(htmlpage($guid->{page}), $config{srcdir},
-	+	writefile(htmlfn($guid->{page}), $config{srcdir},
-	 		$template->output);
-	 
-	 	# Set the mtime, this lets the build process get the right creation
-	@@ -434,4 +434,8 @@
-	 	return "$config{srcdir}/".htmlpage($page);
-	 } #}}}
-	 
-	+sub htmlfn ($) { #{{{
-	+	return shift().".html";
-	+} #}}}
-	+
-	 1
+<pre>
+Index: aggregate.pm
+===================================================================
+--- aggregate.pm	(revision 2700)
++++ aggregate.pm	(working copy)
+@@ -320,7 +320,7 @@
+ 		# NB: This doesn't check for path length limits.
+ 		eval q{use POSIX};
+ 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
+-		if (defined $max && length(htmlpage($page)) >= $max) {
++		if (defined $max && length(htmlfn($page)) >= $max) {
+ 			$c="";
+ 			$page=$feed->{dir}."/item";
+ 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
+@@ -356,7 +356,7 @@
+ 	if (ref $feed->{tags}) {
+ 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
+ 	}
+-	writefile(htmlpage($guid->{page}), $config{srcdir},
++	writefile(htmlfn($guid->{page}), $config{srcdir},
+ 		$template->output);
+ 
+ 	# Set the mtime, this lets the build process get the right creation
+@@ -434,4 +434,8 @@
+ 	return "$config{srcdir}/".htmlpage($page);
+ } #}}}
+ 
++sub htmlfn ($) { #{{{
++	return shift().".html";
++} #}}}
++
+ 1
+</pre>
 
 * `linkmap.pm` uses `htmlpage` to construct a link and should probably be
   changed like this (untested):
 
-	Index: linkmap.pm
-	===================================================================
-	--- linkmap.pm	(revision 2700)
-	+++ linkmap.pm	(working copy)
-	@@ -50,8 +50,7 @@
-	 	foreach my $item (keys %links) {
-	 		if (pagespec_match($item, $params{pages}, $params{page})) {
-	 			my $link=htmlpage($item);
-	-			$link=IkiWiki::abs2rel($link, IkiWiki::dirname($params{page}));
-	-			$mapitems{$item}=$link;
-	+			$mapitems{$item}=urlto($link, $params{destpage});
-	 		}
-	 	}
+<pre>
+Index: linkmap.pm
+===================================================================
+--- linkmap.pm	(revision 2700)
++++ linkmap.pm	(working copy)
+@@ -50,8 +50,7 @@
+ 	foreach my $item (keys %links) {
+ 		if (pagespec_match($item, $params{pages}, $params{page})) {
+ 			my $link=htmlpage($item);
+-			$link=IkiWiki::abs2rel($link, IkiWiki::dirname($params{page}));
+-			$mapitems{$item}=$link;
++			$mapitems{$item}=urlto($link, $params{destpage});
+ 		}
+ 	}
+</pre>
 
 * `inline.pm` uses htmlpage and `abs2rel` to generate a link, and probably
   needs to be changed to either use `urlto` or to call `beautify_url` like
   htmllink does. This might work:
 
-	Index: inline.pm
-	===================================================================
-	--- inline.pm	(revision 2700)
-	+++ inline.pm	(working copy)
-	@@ -150,10 +150,7 @@
-	 			# Don't use htmllink because this way the
-	 			# title is separate and can be overridden by
-	 			# other plugins.
-	-			my $link=bestlink($params{page}, $page);
-	-			$link=htmlpage($link) if defined $type;
-	-			$link=abs2rel($link, dirname($params{destpage}));
-	-			$template->param(pageurl => $link);
-	+			$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
-	 			$template->param(title => pagetitle(basename($page)));
-	 			$template->param(ctime => displaytime($pagectime{$page}));
+<pre>
+Index: inline.pm
+===================================================================
+--- inline.pm	(revision 2700)
++++ inline.pm	(working copy)
+@@ -150,10 +150,7 @@
+ 			# Don't use htmllink because this way the
+ 			# title is separate and can be overridden by
+ 			# other plugins.
+-			my $link=bestlink($params{page}, $page);
+-			$link=htmlpage($link) if defined $type;
+-			$link=abs2rel($link, dirname($params{destpage}));
+-			$template->param(pageurl => $link);
++			$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
+ 			$template->param(title => pagetitle(basename($page)));
+ 			$template->param(ctime => displaytime($pagectime{$page}));
+</pre>
 
 * `img.pm` makes some assumptions about name of the page that will be
   linking to the image, which are probably broken.
