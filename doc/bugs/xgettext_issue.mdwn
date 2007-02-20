@@ -33,6 +33,6 @@ to make and make test just fine. --HarleyPig
 >>> no reason why you should need to rebuild the pot file anyway, so I've
 >>> checked it into svn, and that's one problem [[bugs/done]].
 
->>>> FWIW, I get the same error when building manually on Ubuntu Edgy. I'm also using xgettext 0.15, because it's the latest version that's in the repos. However, I don't think
->>>> that's the sole problem because I can build fine on another (Debian) box which is running _0.14.4_... I know very little about `gettext`, but could this be related to my 
->>>> language settings? On the Edgy box I have `LANGUAGE=en_GB:en` and `LANG=en_GB.UTF-8`. The `ikiwiki` package installs on Edgy with no problems.
+>>>> FWIW, I get the same error when building manually from SVN trunk on Ubuntu Edgy. I'm also using xgettext 0.15, because it's the latest version that's in the repos. However,
+>>>> I don't think that's the sole problem because I can build fine on another (Debian) box which is running _0.14.4_... I know very little about `gettext`, but could this be
+>>>> related to my language settings? On the Edgy box I have `LANGUAGE=en_GB:en` and `LANG=en_GB.UTF-8`. The `ikiwiki` package installs on Edgy with no problems.
