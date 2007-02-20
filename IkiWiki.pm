@@ -455,6 +455,7 @@ sub htmllink ($$$;$$$) { #{{{
 	if (! $noimageinline && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
 	}
+
 	return "<a href=\"$bestlink\">$linktext</a>";
 } #}}}
 
@@ -489,8 +490,9 @@ sub linkify ($$$) { #{{{
 	my $content=shift;
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
-		$2 ? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), 0, 0, pagetitle($2)))
-		   : ( $1 ? "[[$3]]" :    htmllink($lpage, $page, titlepage($3)))
+		defined $2
+			? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), 0, 0, pagetitle($2)))
+			: ( $1 ? "[[$3]]"    : htmllink($lpage, $page, titlepage($3)))
 	}eg;
 	
 	return $content;

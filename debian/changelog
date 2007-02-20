@@ -8,6 +8,8 @@ ikiwiki (1.44) UNRELEASED; urgency=low
     http://openid.net/login-bg.gif into their wiki.
   * Allow setting NOTAINT=1 when building the wiki to remove taint checking
     flags, which can be useful on some hosting providers.
+  * Fix a bug that made links like [[0|foo]] use "foo" as the link text,
+    instead of "0".
 
  -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 20:08:24 -0500
 
