@@ -18,8 +18,10 @@ ikiwiki (1.44) UNRELEASED; urgency=low
   * Support anchors in wikilinks.
   * Add a "more" plugin based on one contributed by Ben to allow implementing
     those dreaded "Read more" links in blogs.
+  * Don't error out if estcmd fails, just print a warning message. estcmd is
+    to fragile to let it kill ikiwiki.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 20:56:25 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 22:12:25 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 

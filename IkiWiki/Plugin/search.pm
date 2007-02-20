@@ -135,7 +135,7 @@ sub estcmd ($;@) { #{{{
 		foreach (@_) {
 			print CHILD "$_\n";
 		}
-		close(CHILD) || error("estcmd @params exited nonzero: $?");
+		close(CHILD) || print STDERR "estcmd @params exited nonzero: $?\n";
 	}
 	else {
 		# child
