@@ -238,3 +238,5 @@ How about doing the index stuff only on the output side? (Or does the latter pat
 >> FWIW, [use_dirs.diff](http://iki.fi/tuomov/use_dirs.diff) applies cleanly, and works well for me. Given that it makes this behaviour optional, how about merging it? I have some follow-up patches which I'm sitting on for now. ;-) -- Ben
 
 >>> How do you apply a patch created by svn diff? I've been curious about this for a long time. The use_dirs patch looks OK but I'd like to play with it. --Ethan
+
+>>>> Just do `svn co svn://ikiwiki.kitenet.net/ikiwiki/trunk ikiwiki` then `cd ikiwiki && patch -p0 <use_dirs.diff`. :-) Same would work with a tarball as well.   
