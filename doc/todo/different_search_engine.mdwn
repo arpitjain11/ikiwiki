@@ -3,8 +3,14 @@ the [[plugins/search]] plugin, is not robust enough for ikiwiki. It doesn't
 upgrade well, and it has a habit of sig-11 on certian input from time to
 time.
 
-So some other engine should be found and used instead. Enrico had one that
-he was using for debtags stuff that looked pretty good.
+So some other engine should be found and used instead. 
+
+Enrico had one that he was using for debtags stuff that looked pretty good.
+That was [Xapian](http://www.xapian.org/), which has perl bindings in
+libsearch-xapian-perl. The nice thing about xapian is that it does a ranked
+search so it understands what words are most important in a search. (So
+does Lucene..) Another nice thing is it supports "more documents like this
+one" kind of search. --[[Joey]]
 
 >> I've done a bit of prototyping on this. The current hip search library is [Lucene](http://lucene.apache.org/java/docs/). There's a Perl port called [Plucene](http://search.cpan.org/~tmtm/Plucene-1.25/). Given that it's already packaged, as `libplucene-perl`, I assumed it would be a good starting point. I've written a **very rough** patch against `IkiWiki/Plugin/search.pm` to handle the indexing side (there's no facility to view the results yet, although I have a command-line interface working). That's below, and should apply to SVN trunk.
 
@@ -16,6 +22,10 @@ he was using for debtags stuff that looked pretty good.
 >> There is a [C++ port of Lucene](http://sourceforge.net/projects/clucene/) which is packaged as `libclucene0`. The Perl interface to this is called [Lucene](http://search.cpan.org/~tbusch/Lucene-0.09/lib/Lucene.pm). This is supposed to be significantly faster, and presumably won't have the taint bug. The API is virtually the same, so it will be easy to switch over. I'd use this now, were it not for the lack of package. (I assume you won't want to make core functionality depend on installing a module from CPAN). I've never built a Debian package before, so I can either learn then try building this, or somebody else could do the honours. ;-)
 
 >> If this seems a sensible approach, I'll write the CGI interface, and clean up the plugin. -- Ben
+
+>>> The weird thing about lucene is that these are all reimplmentations of
+>>> it. Thank you java.. The C++ version seems like a better choice to me
+>>> (packages are trivial). --[[Joey]]
 
 <pre>
 Index: IkiWiki/Plugin/search.pm
