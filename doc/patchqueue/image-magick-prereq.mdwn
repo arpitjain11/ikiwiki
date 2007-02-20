@@ -1,0 +1,15 @@
+The _img_ plugin is part of the default install and requires _Image::Magick_.
+
+<pre>
+Index: Makefile.PL
+===================================================================
+--- Makefile.PL (revision 2675)
++++ Makefile.PL (working copy)
+@@ -83,5 +83,6 @@
+                'Mail::Sendmail'        => 0,
+                'HTML::Parser'          => 0,
+                'URI'                   => 0,
++               'Image::Magick'         => 0,
+        },
+ );
+</pre>
