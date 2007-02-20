@@ -1,0 +1,42 @@
+I'll be using IkiWiki primarily as a blog, so I want a way to view entries by date. A URL of the form `/date/YYYY/MM/DD.html` (or `/date/YYYY/MM/DD/` when using the `use_dirs` patch) should show posts from that period. ATM, I have this:
+
+<pre>
+Index: IkiWiki/Plugin/datearchives.pm
+===================================================================
+--- IkiWiki/Plugin/datearchives.pm      (revision 0)
++++ IkiWiki/Plugin/datearchives.pm      (revision 0)
+@@ -0,0 +1,31 @@
++#!/usr/bin/perl
++
++package IkiWiki::Plugin::datearchives;
++
++use warnings;
++use strict;
++use IkiWiki;
++
++sub import { #{{{
++    hook(type => "pagetemplate", id => "datearchives", call => \&pagetemplate, scan => 1);
++} # }}}
++
++sub pagetemplate (@) { #{{{
++    my %args = @_;
++    my $dt;
++    eval {
++        use DateTime;
++        $dt = DateTime->from_epoch(epoch => $IkiWiki::pagectime{ $args{page} });
++    };
++    return if $@;
++    my $base = $config{datearchives_base} || 'date';
++    my $link = $base.'/'.$dt->strftime('%Y/%m/%d');
++    push @{$links{$args{page}}}, $link;
++    my $template = $args{template};
++       if ($template->query(name => "ctime")) {
++        $template->param(ctime => htmllink( $args{page}, $args{destpage}, $link, 0, 0,
++                                            $template->param('ctime')));
++       }
++} # }}}
++
++1
+</pre>
+
+This works (although accessing `%IkiWiki::pagectime` is not too clever), but it would be far more useful if the date pages were automatically created and populated with the relevant posts. A [[Pagespec]] works perfectly for displaying the relevant content, but we're still left with the issue of actually creating the page. What's the Right Way to do this? We could create them in the RCS working copy and check them in, or create them directly in the output directory... (I'd also like to create an option for the tags plugin to auto-create its targets in the same way). Any opinions? :-)
