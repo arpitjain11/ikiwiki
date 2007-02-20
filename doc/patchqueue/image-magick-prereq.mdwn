@@ -4,7 +4,31 @@ The _img_ plugin is part of the default install and requires _Image::Magick_.
 > that some plugin can use in there, only the ones in the default install
 > --[[Joey]]
 
->> Isn't it part of the `goodstuff` bundle, which is enabled in the `Makefile.PL`? I was testing out install on another box earlier and the build failed because `Image::Magick` wasn't installed; after `sudo cpan Image::Magick`, that error went away.
+>> Isn't it part of the `goodstuff` bundle, which is enabled in the `Makefile.PL`? I was testing out install on another box earlier and the build failed because `Image::Magick` wasn't installed; after `sudo cpan Image::Magick`, that error went away. --Ben
+
+>> Here's the result of running `make` on a fresh checkout:
+
+<pre>
+[deletia]
+LANG=C ./ikiwiki.in doc html --templatedir=templates \
+                --underlaydir=basewiki \
+                --wikiname="ikiwiki" --verbose --no-rcs \
+                --exclude=/discussion --no-discussion --userdir=users \
+                --plugin=goodstuff \
+                --plugin=haiku --plugin=polygen --plugin=fortune
+Failed to load plugin IkiWiki::Plugin::goodstuff: Failed to load plugin IkiWiki::Plugin::img: Can't locate Image/Magick.pm in @INC (@INC contains: . /etc/perl
+ /usr/local/lib/perl/5.8.8 /usr/local/share/perl/5.8.8 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl
+ /usr/local/lib/perl/5.8.7 /usr/local/share/perl/5.8.7) at IkiWiki/Plugin/img.pm line 9.
+BEGIN failed--compilation aborted at IkiWiki/Plugin/img.pm line 9.
+Compilation failed in require at (eval 14) line 2.
+BEGIN failed--compilation aborted at (eval 14) line 2.
+
+BEGIN failed--compilation aborted at (eval 12) line 2.
+
+make: *** [extra_build] Error 2
+</pre>
+
+>> After `sudo apt-get install perlmagick`, `make` gets past this point. (It then crashes on [[bugs/xgettext_issue]]).
 
 <pre>
 Index: Makefile.PL
