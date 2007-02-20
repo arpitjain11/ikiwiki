@@ -1,3 +1,5 @@
 * Need to get post commit hook working (or an example of how to use it.)
 * rcs_notify is not implemented
 * Is the code sufficiently robust? It just warns when mercurial fails.
+* When rcs_commit is called with a $user that is an openid, it will be
+  passed through to mercurial -u. Will mercurual choke on this?
