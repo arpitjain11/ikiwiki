@@ -59,3 +59,7 @@ This works (although accessing `%IkiWiki::pagectime` is not too clever), but it 
 > A few examples of ikiwiki sites with date archives:
 > <http://www.golden-gryphon.com/blog/manoj/> and
 > <http://roland.entierement.nu/categories/geek-en.html> --[[Joey]]
+
+>> Yeah, it wasn't much of a description, was it? ;-) It's an attempt to emulate the style of Wordpress and other popular blog platforms, which can link a post's creation date to  YYY/MM/DD archive pages, which then list all the relevant posts. My use-case is on a blog page which in-lines (via pagespecs) recent blog posts. 
+
+>> I agree with not adding this kind of functionality to the core. :-) I simply didn't want to have break links when I convert to IkiWiki. I guess I'll just play around with the page-creation thing myself then. Feel free to delete this from the queue. :-) --Ben
