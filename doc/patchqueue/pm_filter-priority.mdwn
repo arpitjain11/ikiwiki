@@ -2,6 +2,7 @@ Thanks to [r2677](http://ikiwiki.info/cgi-bin/viewvc.cgi/trunk/pm_filter?revisio
 
 The main problem is that `pm_filter` runs after `./ikiwiki.in`, so the build still fails. If it runs before, we're fine.
 
+<pre>
 ===================================================================
 --- Makefile.PL (revision 2682)
 +++ Makefile.PL (working copy)
@@ -36,6 +37,8 @@ The main problem is that `pm_filter` runs after `./ikiwiki.in`, so the build sti
 > your environment a no-op. Unless it sets `PERL5LIB=.:$PERL5LIB` or
 > something. --[[Joey]]
 
+>> Heh, I guess it's obvious that I don't normally do packaging/build stuff -- probably best if I stop with these kind of patches. :-) OK, why not try the latter then? I think this is a worthy goal, because if we can make it easy to install on shared hosts, it will reach far more people, IMO.
+
 (Is there any reason to create `ikiwiki.out`? Couldn't we just do an in-place replace on `ikiwiki.in`?)
 
 > Yes, it's there because "ikwiki" == "Ikiwiki" on Mac OS X. Also because 
@@ -59,3 +62,5 @@ The last line is necessary for the CGI, because, as with most shared hosts, the 
 > for you? Maybe that `LIB=~/lib` is defeating it? Not familiar with that
 > variable.
 > --[[Joey]]
+
+>> You're completely right; without the LIB argument the `Makefile.PL` heuristics work perfectly. I think I was juggling too many patches at once. ;-)
