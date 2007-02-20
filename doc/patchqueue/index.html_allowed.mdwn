@@ -294,6 +294,16 @@ I'll attach an updated and slightly modified version below.
   innefficient since it leads to a http redirect when clicking on that
   link. Seems to be limited to ".." links, and possibly only to
   parentlinks. (Already fixed it for "." links.)
+
+      > The solution seems to be to add to `urlto` the following snippet,
+      > which might also help with the next point. (Sorry, no updated patch
+      > yet. Should be on my way out in the cold anyway...)
+
+        if ( !length $to ) {
+                return baseurl($from);
+        }
+      
+
 * It calles abs2rel about 16% more often with the patch, which makes it
   a bit slower, since abs2rel is not very efficient. (This omits abs2rel
   calls that might be memoized away already.) This seems to be due to one
