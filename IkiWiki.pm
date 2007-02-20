@@ -292,7 +292,9 @@ sub writefile ($$$;$$) { #{{{
 		$writer->(\*OUT, $cleanup);
 	}
 	else {
-		print OUT $content || error("failed writing to $newfile: $!", $cleanup);
+		if (length $content) {
+			print OUT $content || error("failed writing to $newfile: $!", $cleanup);
+		}
 	}
 	close OUT || error("failed saving $newfile: $!", $cleanup);
 	rename($newfile, "$destdir/$file") || 

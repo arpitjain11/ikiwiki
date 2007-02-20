@@ -410,6 +410,9 @@ Index: linkmap.pm
 > This is probably supposed to be `$mapitems{$item}=urlto($item, $params{destpage});`,
 > which does indeed remove one more `htmlpage` call from the plugins. I can't actually
 > try it: "failed writing to dst/ts.png.ikiwiki-new: Inappropriate ioctl for device".
+
+>> Crazy perl bug that ioctl thing. Worked around now in svn. --[[Joey]]
+
 > After this probable fix, in fact, all uses of htmlpage in the plugins are used to
 > construct an absolute address: the absolute url in most cases, so an `absurl`
 > call could be added to be used instead of htmlpage, and something else in the

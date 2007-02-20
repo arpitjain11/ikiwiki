@@ -23,8 +23,9 @@ ikiwiki (1.44) UNRELEASED; urgency=low
   * Make img plugin not fail immediately if Image::Magick is not available.
     This lets ikiwiki not build depend on perlmagic.
   * Detect old versions of xgettext and avoid using them.
+  * perl is broken: print "" || die fails! Work around this insanity.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 04:43:31 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 17:13:37 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 
