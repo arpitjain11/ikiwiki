@@ -253,6 +253,15 @@ I'll attach an updated and slightly modified version below.
   most of the time. Couldn't it just be required that `$to` be a html page
   name on input? Or require it be a non-html page name and always run
   htmlpage on it.
+
+      > Perhaps it would be possible to require that, but it seems like a
+      > very artificial restriction.  The renderedfiles search is just a
+      > copy-paste from htmllink, and I'm no perl (or ikiwiki internals)
+      > expert... maybe there would be a faster way to do the check whether
+      > name translation is needed? No more than O(log n) steps should be
+      > needed for a simple search, after all, and maybe there would be shortcuts
+      > for even constant-time (in n) checks. --[[tuomov]]
+
 * As we discussed in email, this will break handling of `foo/index.mdwn`
   pages. Needs to be changed to generate `foo/index/index.html` for such
   pages (though not for the toplevel `index`).
@@ -262,6 +271,12 @@ I'll attach an updated and slightly modified version below.
   Wouldn't it be better to make the links themselves include the index.html?
   (Although that would mean that [[bugs/broken_parentlinks]] would not be
   fixed en passant by this patch..)
+
+     > Yes, the sites are not that browsable on the FS (I blame the browsers
+     > for being stupid!), but linking to the directory produces so much
+     > cleaner URLs for the Web, that I specifically want it. This is,
+     > after all, an optional arrangement. 
+
 * Some of the generated links are missing the trailing / , which is
   innefficient since it leads to a http redirect when clicking on that
   link. Seems to be limited to ".." links, and possibly only to
@@ -275,6 +290,9 @@ I'll attach an updated and slightly modified version below.
 * The rss page name generation code seems unnecesarily roundabout, I'm sure
   that can be cleaned up somehow, perhaps by making `htmlpage` more
   generic.
+
+     > Something like `targetpage(basename, extension)`?
+
 * `aggregate.pm` uses htmlpage in a way that breaks with its new behavior.
   It will need to be changed as follows:
 
