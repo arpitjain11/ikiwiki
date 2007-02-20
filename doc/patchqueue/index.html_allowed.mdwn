@@ -292,6 +292,12 @@ I'll attach an updated and slightly modified version below.
   >>>>> out of memory, when they're gone from the browser's completion history, and the
   >>>>> .html makes that more laboursome.)
 
+  >>>>>> I support your decision, but now this wiki page serves two different patches :).
+  >>>>>> Can we split them somehow?
+  >>>>>> What are the complexities involved?
+  >>>>>> I think I overcomplicated it a little with my patch, and Per Bothner's gets 
+  >>>>>> much closer to the heart of it. --Ethan
+
 * This does make the resulting wikis much less browsable directly on the
   filesystem, since `dir` to `dir/index.html` conversion is only handled by web
   servers and so you end up browsing to a directory index all the time.
