@@ -4,6 +4,8 @@ The _img_ plugin is part of the default install and requires _Image::Magick_.
 > that some plugin can use in there, only the ones in the default install
 > --[[Joey]]
 
+>> Isn't it part of the `goodstuff` bundle, which is enabled in the `Makefile.PL`? I was testing out install on another box earlier and the build failed because `Image::Magick` wasn't installed; after `sudo cpan Image::Magick`, that error went away.
+
 <pre>
 Index: Makefile.PL
 ===================================================================
