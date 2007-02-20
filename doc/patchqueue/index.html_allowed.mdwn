@@ -407,15 +407,15 @@ Index: linkmap.pm
  	}
 </pre>
 
-    > This is probably supposed to be `$mapitems{$item}=urlto($item, $params{destpage});`,
-    > which does indeed remove one more `htmlpage` call from the plugins. I can't actually
-    > try it: "failed writing to dst/ts.png.ikiwiki-new: Inappropriate ioctl for device".
-    > After this probable fix, in fact, all uses of htmlpage in the plugins are used to
-    > construct an absolute address: the absolute url in most cases, so an `absurl`
-    > call could be added to be used instead of htmlpage, and something else in the
-    > aggregate plugin (above), that I also think isn't what's wanted:
-    > aren't `foo.html` pages also "rendered", so that they get moved as `foo/index.html`?
-    > --[[tuomov]]
+> This is probably supposed to be `$mapitems{$item}=urlto($item, $params{destpage});`,
+> which does indeed remove one more `htmlpage` call from the plugins. I can't actually
+> try it: "failed writing to dst/ts.png.ikiwiki-new: Inappropriate ioctl for device".
+> After this probable fix, in fact, all uses of htmlpage in the plugins are used to
+> construct an absolute address: the absolute url in most cases, so an `absurl`
+> call could be added to be used instead of htmlpage, and something else in the
+> aggregate plugin (above), that I also think isn't what's wanted:
+> aren't `foo.html` pages also "rendered", so that they get moved as `foo/index.html`?
+> --[[tuomov]]
 
 * `inline.pm` uses htmlpage and `abs2rel` to generate a link, and probably
   needs to be changed to either use `urlto` or to call `beautify_url` like
