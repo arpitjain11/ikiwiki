@@ -1,0 +1,29 @@
+This is the **ikiwiki** TourBus stop.
+
+This wiki serves as the home for the ikiwiki wiki engine, providing collaborative development, documentation, and support.
+
+[[ikiwiki|/index]] provides a wiki engine with several [[/features]] unique or uncommon amongst wiki engines:
+
+* Rather than inventing yet another simplistic, linear revision control system, ikiwiki uses a standard version control system such as [[Subversion]] or [[Git]].  You can edit a wiki by committing to your repository, as well as through a traditional web interface.  This makes ikiwiki ideal for collaborative software development; just keep your wiki in version control next to your software.  You can also take advantage of the features of these systems; for instance, you can keep a local branch of your wiki via [[Git]].
+
+* You can turn any set of pages into an inline news feed, complete with RSS and Atom support.  You can run your weblog on ikiwiki (and many people do), run a Planet-like aggregator for external feeds, or keep a TODO and bug list with tags for completed items.
+
+* ikiwiki provides a wiki compiler, designed to transform your wiki content into a set of static pages.  You can then serve these pages as static content.  ikiwiki will not fall over during a Slashdotting, because page views don't require the ikiwiki CGI; as long as Apache can keep up, your site will survive.  Furthermore, you can choose whether you want to run the ikiwiki CGI for web edits or only handle commits to the underlying version control system; you can even run ikiwiki privately and just manually copy the content to another server.  So if you want to put a wiki up on a server without installing any software on that server, try ikiwiki.
+
+![Picture of the TourBus](http://www.wikiservice.at/image/wikibus.gif)
+
+Bus connections
+===============
+
+* Bus Nr. 02 - **Wiki Developers Tour** - next stop: [MeatballWiki TourBusStop](http://www.usemod.com/cgi-bin/mb.pl?TourBusStop)
+* Bus Nr. 42 - **Software Developers Tour** - next stop: [Ward's Wiki TourBusStop](http://c2.com/cgi/wiki?TourBusStop)
+
+[TourBusMap](http://www.usemod.com/cgi-bin/mb.pl?TourBusMap)
+
+Famous sights to visit here at **ikiwiki**
+==========================================
+
+* [[features]]: See what ikiwiki can do, and why you might choose it for your wiki.
+* [[ikiwikiusers]]: The list of projects, personal sites, and blogs that use ikiwiki.
+* [[plugins]]: See the many ways people have extended ikiwiki.
+* [[examples]]: Example sites built using ikiwiki.
