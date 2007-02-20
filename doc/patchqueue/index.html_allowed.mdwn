@@ -260,6 +260,8 @@ I'll attach an updated and slightly modified version below.
   filesystem, since `dir` to `dir/index.html` conversion is only handled by web
   servers and so you end up browsing to a directory index all the time.
   Wouldn't it be better to make the links themselves include the index.html?
+  (Although that would mean that [[bugs/broken_parentlinks]] would not be
+  fixed en passant by this patch..)
 * Some of the generated links are missing the trailing / , which is
   innefficient since it leads to a http redirect when clicking on that
   link. Seems to be limited to ".." links, and possibly only to
