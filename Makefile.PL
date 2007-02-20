@@ -24,7 +24,9 @@ PROBABLE_INST_LIB=$(shell \\
 )
 
 extra_build:
-	LANG=C ./ikiwiki.in doc html --templatedir=templates \
+	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
+	chmod +x ikiwiki.out
+	PERL5LIB=.:${PERL5LIB} LANG=C ./ikiwiki.in doc html --templatedir=templates \
 		--underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion --userdir=users \
@@ -32,7 +34,6 @@ extra_build:
 		--plugin=haiku --plugin=polygen --plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
-	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	$(MAKE) -C po
 
 extra_clean:
