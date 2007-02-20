@@ -1,5 +1,9 @@
 OpenID URLs aren't clickable in the ViewVC logs because they're directly followed by a colon. At the expense of, um, proper grammar, here's a patch for SVN. If this is OK, I'll patch the other RCS modules, too.
 
+> Reasonable, but probably needs to modify the wiki_commit_regexp to
+> recognise such commit messages when parsing the logs. Do that and extend
+> to the other modules and I'll accept it. --[[Joey]]
+
 <pre>
 --- IkiWiki/Rcs/svn.pm  (revision 2650)
 +++ IkiWiki/Rcs/svn.pm  (working copy)
