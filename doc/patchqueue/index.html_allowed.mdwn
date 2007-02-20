@@ -280,6 +280,9 @@ I'll attach an updated and slightly modified version below.
   >>> rendered as `foo/index.html`. The easiest and cleanest way to fix this, is to simply
   >>> not handle `index` in such a special manner -- except for the top-level one. --[[tuomov]]
 
+  >>>> Oh, I see, this patch doesn't address wanting to use foo/index.mdwn as 
+  >>>> an input page. Hmm. --Ethan
+
 * This does make the resulting wikis much less browsable directly on the
   filesystem, since `dir` to `dir/index.html` conversion is only handled by web
   servers and so you end up browsing to a directory index all the time.
