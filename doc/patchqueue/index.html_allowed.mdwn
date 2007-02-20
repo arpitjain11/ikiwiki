@@ -263,6 +263,10 @@ I'll attach an updated and slightly modified version below.
       > needed for a simple search, after all, and maybe there would be shortcuts
       > for even constant-time (in n) checks. --[[tuomov]]
 
+      >> Ah, so much easier to critque other people's code than your own.
+      >> You're right, this is a general problem, and I can get it to log n
+      >> if I really want to. --[[Joey]]
+
 * As we discussed in email, this will break handling of `foo/index.mdwn`
   pages. Needs to be changed to generate `foo/index/index.html` for such
   pages (though not for the toplevel `index`).
@@ -282,6 +286,10 @@ I'll attach an updated and slightly modified version below.
      > cleaner URLs for the Web, that I specifically want it. This is,
      > after all, an optional arrangement. 
 
+     >> It's optional for *now* ... I suppose that I could make adding the
+     >> index.html yet another option. I'm not _that_ fond of optioons
+     >> however. --[[Joey]]
+
 * Some of the generated links are missing the trailing / , which is
   innefficient since it leads to a http redirect when clicking on that
   link. Seems to be limited to ".." links, and possibly only to
@@ -297,6 +305,11 @@ I'll attach an updated and slightly modified version below.
   generic.
 
      > Something like `targetpage(basename, extension)`?
+
+     >> Yes exactly. It might also be possible to remove htmlpage from the
+     >> plugin interface entirely (in favour of urlto), which would be a
+     >> good time to make such a changes. Not required to accept this patch
+     >> though.
 
 * `aggregate.pm` uses htmlpage in a way that breaks with its new behavior.
   It will need to be changed as follows:
