@@ -15,8 +15,10 @@ install: all
 	done
 
 ikiwiki.pot: $(POTFILES)
-	@echo "Rebuilding the pot file"
-	xgettext $(POTFILES) -o ikiwiki.pot -Lperl --add-comments=translators
+	@if perl -e '($$ver)=`xgettext -V | head -n 1`=~/.*\s+([0-9]+\.[0-9]+)/; die "gettext $$ver too old, not updating the pot file\n" if $$ver < 0.16'; then \
+		echo "Rebuilding the pot file"; \
+		xgettext $(POTFILES) -o ikiwiki.pot -Lperl --add-comments=translators; \
+	fi
 
 clean:
 	rm -f $(MOFILES) messages messages.mo

@@ -67,3 +67,7 @@ make: *** [extra_build] Error 2
 
 >>>>>> Other than installing a newer version of `gettext` from outside of the repos, is there any workaround?  
 
+>>>>>>> It's probably because you're pulling it from svn, and I don't
+>>>>>>> always update the pot file every time I commit to svn. So this will
+>>>>>>> affect svn checkouts, but not released tarballs. Anyway, I put in a
+>>>>>>> workaround.. [[bugs/done]] --[[Joey]]
