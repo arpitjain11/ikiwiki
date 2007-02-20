@@ -20,6 +20,8 @@ ikiwiki (1.44) UNRELEASED; urgency=low
     those dreaded "Read more" links in blogs.
   * Don't error out if estcmd fails, just print a warning message. estcmd is
     to fragile to let it kill ikiwiki.
+  * Make img plugin not fail immediately if Image::Magick is not available.
+    This lets ikiwiki not build depend on perlmagic.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 22:12:25 -0500
 

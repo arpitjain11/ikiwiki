@@ -6,7 +6,6 @@ package IkiWiki::Plugin::img;
 use warnings;
 use strict;
 use IkiWiki;
-use Image::Magick;
 
 my %imgdefaults;
 
@@ -37,6 +36,9 @@ sub preprocess (@) { #{{{
 
 	my $dir = IkiWiki::dirname($file);
 	my $base = IkiWiki::basename($file);
+
+	eval q{use Image::Magick};
+	error($@) if $@;
 	my $im = Image::Magick->new;
 	my $imglink;
 	my $r;
