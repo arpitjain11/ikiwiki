@@ -2,8 +2,6 @@ Thanks to [r2677](http://ikiwiki.info/cgi-bin/viewvc.cgi/trunk/pm_filter?revisio
 
 The main problem is that `pm_filter` runs after `./ikiwiki.in`, so the build still fails. If it runs before, we're fine.
 
-<pre>
-Index: Makefile.PL
 ===================================================================
 --- Makefile.PL (revision 2682)
 +++ Makefile.PL (working copy)
@@ -30,7 +28,18 @@ Index: Makefile.PL
  extra_clean:
 </pre>
 
+> It was failing before because taint mode was enabled, so it didn't see your PERL5LIB setting. 
+> Your patch is ok, except that needs to set PERL5LIB=. before calling
+> ikiwiki.out, so that it builds using the libs in the source tree, not
+> whatever old ikiwiki libs might already be installed. And if it has to
+> set PERL5LIB=. , well, that makes any PERL5LIB setting you might have in
+> your environment a no-op. Unless it sets `PERL5LIB=.:$PERL5LIB` or
+> something. --[[Joey]]
+
 (Is there any reason to create `ikiwiki.out`? Couldn't we just do an in-place replace on `ikiwiki.in`?)
+
+> Yes, it's there because "ikwiki" == "Ikiwiki" on Mac OS X. Also because 
+> I don't like automatically modifying source files I have in svn. --[[Joey]]
 
 So, to install from the trunk I can say:
 
@@ -44,3 +53,9 @@ So, to install from the trunk I can say:
 
 The last line is necessary for the CGI, because, as with most shared hosts, the user's environment is ignored by the server . It's ugly, but ATM I can't think of a clean way to get rid of it.
 
+> Hmm, the Makefile is supposed to figure out when ikiwiki is installed to
+> a location outside of perl's regular lib dirs, and if so, shove its own
+> "use lib" setting in, to make it find the ikiwiki libs. Is this not working
+> for you? Maybe that `LIB=~/lib` is defeating it? Not familiar with that
+> variable.
+> --[[Joey]]
