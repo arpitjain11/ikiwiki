@@ -277,7 +277,7 @@ I'll attach an updated and slightly modified version below.
   >>> Presently the patch does not move `foo/index.type` as `foo/index/index.html`, but renders
   >>> it as `foo/index.html`, not because I particularly want that (except for the top-level one, of
   >>> course), but because it could be done :). This, however, conflicts with a `foo.mdwn`
-  >>> rendered as `foo/index.html`. The easiest and cleanest way to do this, is to simply
+  >>> rendered as `foo/index.html`. The easiest and cleanest way to fix this, is to simply
   >>> not handle `index` in such a special manner -- except for the top-level one. --[[tuomov]]
 
 * This does make the resulting wikis much less browsable directly on the
