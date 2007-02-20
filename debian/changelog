@@ -19,7 +19,7 @@ ikiwiki (1.44) UNRELEASED; urgency=low
   * Add a "more" plugin based on one contributed by Ben to allow implementing
     those dreaded "Read more" links in blogs.
   * Don't error out if estcmd fails, just print a warning message. estcmd is
-    to fragile to let it kill ikiwiki.
+    too fragile to let it kill ikiwiki.
   * Make img plugin not fail immediately if Image::Magick is not available.
     This lets ikiwiki not build depend on perlmagic.
   * Detect old versions of xgettext and avoid using them.
