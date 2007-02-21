@@ -42,6 +42,8 @@ And if that's done, it can also be used to lock users from editing a pages
 or the whole wiki:
 
 	( user(spammer) and * ) or
+	( user(42.12.*) and * ) or
+	( user(http://evilopenidserver/*) and * ) or
 	( user(annoying) and index) or
 	( immutable_page )
 
