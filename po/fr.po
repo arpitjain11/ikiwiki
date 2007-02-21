@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-19 21:47-0500\n"
-"PO-Revision-Date: 2007-01-22 22:12+0100\n"
+"POT-Creation-Date: 2007-02-10 15:26-0500\n"
+"PO-Revision-Date: 2007-02-13 13:02+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,41 +17,41 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../IkiWiki/CGI.pm:154
+#: ../IkiWiki/CGI.pm:152
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:267
+#: ../IkiWiki/CGI.pm:262
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:332
+#: ../IkiWiki/CGI.pm:327
 #, perl-format
 msgid "%s is not an editable page"
-msgstr ""
+msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:420 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:415 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:465
+#: ../IkiWiki/CGI.pm:460
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:482 ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:543
+#: ../IkiWiki/CGI.pm:477 ../IkiWiki/CGI.pm:520
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:651
+#: ../IkiWiki/CGI.pm:628
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:683
+#: ../IkiWiki/CGI.pm:660
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
@@ -73,36 +73,36 @@ msgstr "Messages"
 msgid "new"
 msgstr "Nouveau"
 
-#: ../IkiWiki/Plugin/aggregate.pm:211
+#: ../IkiWiki/Plugin/aggregate.pm:206
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "Fin de validité de %s (date de %s jours)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:218
+#: ../IkiWiki/Plugin/aggregate.pm:213
 #, perl-format
 msgid "expiring %s"
 msgstr "Fin de validité de %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:236
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "Vérification du flux %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:246
+#: ../IkiWiki/Plugin/aggregate.pm:241
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "Impossible de trouver de flux à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:255
+#: ../IkiWiki/Plugin/aggregate.pm:250
 msgid "feed crashed XML::Feed!"
 msgstr "Plantage du flux XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:273
 #, perl-format
 msgid "processed ok at %s"
 msgstr "A été correctement traité à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:328
 #, perl-format
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
@@ -130,11 +130,11 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:169 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:387
+#: ../IkiWiki/Plugin/inline.pm:382
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -161,10 +161,6 @@ msgstr "Miroirs"
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirror"
 msgstr "Miroir"
-
-#: ../IkiWiki/Plugin/more.pm:8
-msgid "more"
-msgstr ""
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -214,70 +210,6 @@ msgstr "polygen n'est pas installé"
 msgid "polygen failed"
 msgstr "Échec de polygen"
 
-#. translators: These descriptions of times of day are used
-#. translators: in messages like "last edited <description>".
-#. translators: %A is the name of the day of the week, while
-#. translators: %A- is the name of the previous day.
-#: ../IkiWiki/Plugin/prettydate.pm:15
-msgid "late %A- night"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:17
-msgid "in the wee hours of %A- night"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:20
-msgid "terribly early %A morning"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:22
-msgid "early %A morning"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:25
-msgid "in mid-morning %A"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:26
-msgid "late %A morning"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:27
-msgid "at lunch time on %A"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:29
-msgid "%A afternoon"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:32
-msgid "late %A afternoon"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:33
-msgid "%A evening"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:35
-msgid "late %A evening"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:37
-msgid "%A night"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:74
-msgid "at teatime on %A"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:78
-msgid "at midnight"
-msgstr ""
-
-#: ../IkiWiki/Plugin/prettydate.pm:81
-msgid "at noon on %A"
-msgstr ""
-
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
 msgid "Must specify %s when using the search plugin"
@@ -299,8 +231,8 @@ msgstr "Il manque au raccourci un paramètre de nom ou d'url"
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
 #: ../IkiWiki/Plugin/shortcut.pm:33
-#, fuzzy, perl-format
-msgid "shortcut %s points to <i>%s</i>"
+#, perl-format
+msgid "shortcut %s points to %s"
 msgstr "Le raccourci %s pointe vers %s"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
@@ -333,47 +265,47 @@ msgstr ""
 "après un commit sur le svn (« hook post-commit »), impossible d'envoyer des "
 "notifications"
 
-#: ../IkiWiki/Render.pm:251 ../IkiWiki/Render.pm:271
+#: ../IkiWiki/Render.pm:247 ../IkiWiki/Render.pm:267
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "Saut du nom de fichier incorrect %s"
 
-#: ../IkiWiki/Render.pm:311
+#: ../IkiWiki/Render.pm:307
 #, perl-format
 msgid "removing old page %s"
 msgstr "Suppression de l'ancienne page %s"
 
-#: ../IkiWiki/Render.pm:330
+#: ../IkiWiki/Render.pm:326
 #, perl-format
 msgid "scanning %s"
 msgstr "Parcours de %s"
 
-#: ../IkiWiki/Render.pm:339
+#: ../IkiWiki/Render.pm:335
 #, perl-format
 msgid "rendering %s"
 msgstr "Rendu de %s"
 
-#: ../IkiWiki/Render.pm:351
+#: ../IkiWiki/Render.pm:347
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "Rendu de %s, qui est lié à %s"
 
-#: ../IkiWiki/Render.pm:368
+#: ../IkiWiki/Render.pm:364
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "Rendu de %s, qui dépend de %s"
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:402
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "Rendu de %s, afin de mettre à jour ses rétroliens"
 
-#: ../IkiWiki/Render.pm:418
+#: ../IkiWiki/Render.pm:414
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "Suppression de %s, qui n'est plus rendu par %s"
 
-#: ../IkiWiki/Render.pm:444
+#: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki : impossible d'effectuer le rendu de %s"
@@ -405,7 +337,7 @@ msgstr "Terminé"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:139
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "Wiki %s, les pages %s ont été mises à jour par %s"
@@ -447,13 +379,13 @@ msgstr "%s a été créé avec succès"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une url vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
+#: ../IkiWiki.pm:147 ../IkiWiki.pm:148
 msgid "Error"
 msgstr "Erreur"
 
@@ -461,7 +393,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:558
+#: ../IkiWiki.pm:531
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
