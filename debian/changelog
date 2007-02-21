@@ -25,8 +25,10 @@ ikiwiki (1.44) UNRELEASED; urgency=low
   * Detect old versions of xgettext and avoid using them.
   * perl is broken: print "" || die fails! Work around this insanity.
   * Smarter detection of no-op changes to po files.
+  * Elegant patch from Ethan to clean up the display of page names in the
+    dropdown when creating a new page.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 18:12:44 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 19:14:39 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 

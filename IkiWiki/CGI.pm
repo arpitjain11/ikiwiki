@@ -459,7 +459,8 @@ sub cgi_editpage ($$) { #{{{
 			
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
-				options => \@editable_locs, value => $best_loc);
+				options => { map { $_ => pagetitle($_, 1) } @editable_locs },
+				value => $best_loc);
 			$form->field(name => "type", type => 'select',
 				options => \@page_types);
 			$form->title(sprintf(gettext("creating %s"), pagetitle($page)));
