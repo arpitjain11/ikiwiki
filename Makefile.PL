@@ -23,10 +23,12 @@ PROBABLE_INST_LIB=$(shell \\
 	fi \\
 )
 
+tflag=$(shell if [ ! "$$NOTAINT" ]; then printf -- "-T"; fi)
+
 extra_build:
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	chmod +x ikiwiki.out
-	PERL5LIB=.:${PERL5LIB} LANG=C ./ikiwiki.out doc html --templatedir=templates \
+	LANG=C perl -I. $(tflag) ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose --no-rcs \
 		--exclude=/discussion --no-discussion --userdir=users \
