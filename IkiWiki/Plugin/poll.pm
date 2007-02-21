@@ -125,12 +125,12 @@ sub cgi ($) { #{{{
 		IkiWiki::cgi_savesession($session);
 		$oldchoice=$session->param($choice_param);
 		if ($config{rcs}) {
-			disable_commit_hook();
+			IkiWiki::disable_commit_hook();
 			IkiWiki::rcs_commit($pagesources{$page}, "poll vote ($choice)",
 				IkiWiki::rcs_prepedit($pagesources{$page}),
 				$session->param("name"), $ENV{REMOTE_ADDR});
-			enable_commit_hook();
-			rcs_update();
+			IkiWiki::enable_commit_hook();
+			IkiWiki::rcs_update();
 		}
 		require IkiWiki::Render;
 		IkiWiki::refresh();
