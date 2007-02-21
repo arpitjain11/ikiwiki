@@ -32,4 +32,21 @@ the rules might look something like this:
 	( user(joey) and maxsize(1mb) and (type(webimage) or *.mp3) ) or
 	( user(joey) and maxsize(200mb) and (*.mov or *.avi) and videos/*)
 
+With a small extension, this could even be used to limit the max sizes of
+normal wiki pages, which could be useful if someone was abusing an open wiki
+as a wikifs. Maybe.
+
+	( type(page) and maxsize(32k) )
+
+And if that's done, it can also be used to lock users from editing a pages
+or the whole wiki:
+
+	( user(spammer) and * ) or
+	( user(annoying) and index) or
+	( immutable_page )
+
+That would obsolete the current simple admin prefs for banned users and
+locked pages. Suddenly all the access controls live in one place.
+Wonderbar!
+
 [[tag soc]]
