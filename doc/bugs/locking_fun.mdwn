@@ -146,7 +146,9 @@ makes the commit hook a NOOP.
   (it may still need to send commit mails)
 * CGI removes wclock, thus re-enabling the commit hook
 * CGI updates the WC (since the commit hook didn't)
-* CGI renders the wiki
+* CGI renders the wiki (always. commits may have came in and not been
+  rendered)
+* CGI checks for conflicts, and if any are found does its normal dance
 
 > It seems like there are two things to be concerned with: RCS commit between
 > disable of hook and CGI commit, or RCS commit between CGI commit and re-enable
@@ -180,6 +182,7 @@ NOOP:
 * svn commit -m "conflict" (this makes a change to repo immediately, then
   runs the post-commit hook, which becomes a NOOP)
 * cgi calls rcs_commit, which fails due to the conflict just introduced
+* cgi renders the wiki
 
 Actually, the only thing that scares me about this apprach a little is that
 we have two locks. The CGI takes them in the order (wikilock, wclock).
