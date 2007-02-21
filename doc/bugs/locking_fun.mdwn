@@ -3,19 +3,118 @@ changes at once with its commit message (see r2779). The loser gets a
 message that there were conflicts and gets to see his own edits as the
 conflicting edits he's supposed to resolve.
 
-This can happen because CGI.pm writes the change, then drops the lock
-before calling rcs_commit. It can't keep the lock because the commit hook
-needs to be able to lock.
+This can happen because CGI.pm writes the change, then drops the main wiki 
+lock before calling rcs_commit. It can't keep the lock because the commit
+hook needs to be able to lock.
 
-Using a shared reader lock plus an exclusive writer lock would seem to
-allow getting around this. The CGI would need the exclusive lock when
-editing the WC, then it could drop/convert that to the reader lock, keep
-the lock open, and lauch the post-commit hook, which would use the reader
-lock.
+We batted this around for an hour or two on irc. The best solution seems to
+be adding a subsidiary second lock, which is only used to lock the working
+copy and is a blocking read/write lock.
 
-One problem with the reader/writer idea is that the post-commit hook writes
-wiki state.
+* As before, the CGI will take the main wiki lock when starting up.
+* Before writing to the WC, the CGI takes an exclusive lock on the WC.
+* After writing to the WC, the CGI can downgrade it to a shared lock.
+  (This downgrade has to happen atomically, to prevent other CGIs from
+  stealing the exclusive lock.)
+* Then the CGI, as before, drops the main wiki lock to prevent deadlock. It
+  keeps its shared WC lock.
+* The commit hook takes first the main wiki lock and then the shared WC lock
+  when starting up, and holds them until it's done.
+* Once the commit is done, the CGI, as before, does not attempt to regain
+  the main wiki lock (that could deadlock). It does its final stuff and
+  exits, dropping the shared WC lock.
 
-An alternative approach might be setting a flag that prevents the
-post-commit hook from doing anything, and keeping the lock. Then the CGI
-would do the render & etc that the post-commit hook normally does.
+Sample patch, with stub functions for the new lock:
+
+<pre>
+Index: IkiWiki/CGI.pm
+===================================================================
+--- IkiWiki/CGI.pm	(revision 2774)
++++ IkiWiki/CGI.pm	(working copy)
+@@ -494,9 +494,14 @@
+ 		$content=~s/\r\n/\n/g;
+ 		$content=~s/\r/\n/g;
+ 
++		lockwc_exclusive();
++
+ 		$config{cgi}=0; # avoid cgi error message
+ 		eval { writefile($file, $config{srcdir}, $content) };
+ 		$config{cgi}=1;
++
++		lockwc_shared();
++
+ 		if ($@) {
+ 			$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+ 				force => 1);
+Index: IkiWiki/Plugin/poll.pm
+===================================================================
+--- IkiWiki/Plugin/poll.pm	(revision 2770)
++++ IkiWiki/Plugin/poll.pm	(working copy)
+@@ -120,7 +120,9 @@
+ 		$content =~ s{(\\?)\[\[poll\s+([^]]+)\s*\]\]}{$edit->($1, $2)}seg;
+ 
+ 		# Store their vote, update the page, and redirect to it.
++		IkiWiki::lockwc_exclusive();
+ 		writefile($pagesources{$page}, $config{srcdir}, $content);
++		IkiWiki::lockwc_shared();
+ 		$session->param($choice_param, $choice);
+ 		IkiWiki::cgi_savesession($session);
+ 		$oldchoice=$session->param($choice_param);
+@@ -130,6 +132,10 @@
+ 			IkiWiki::rcs_commit($pagesources{$page}, "poll vote ($choice)",
+ 				IkiWiki::rcs_prepedit($pagesources{$page}),
+ 				$session->param("name"), $ENV{REMOTE_ADDR});
++			# Make sure that the repo is up-to-date;
++			# locking prevents the post-commit hook
++			# from updating it.
++			rcs_update();
+ 		}
+ 		else {
+ 			require IkiWiki::Render;
+Index: ikiwiki.in
+===================================================================
+--- ikiwiki.in	(revision 2770)
++++ ikiwiki.in	(working copy)
+@@ -121,6 +121,7 @@
+ 		lockwiki();
+ 		loadindex();
+ 		require IkiWiki::Render;
++		lockwc_shared();
+ 		rcs_update();
+ 		refresh();
+ 		rcs_notify() if $config{notify};
+Index: IkiWiki.pm
+===================================================================
+--- IkiWiki.pm	(revision 2770)
++++ IkiWiki.pm	(working copy)
+@@ -617,6 +617,29 @@
+ 	close WIKILOCK;
+ } #}}}
+ 
++sub lockwc_exclusive () { #{{{
++	# Take an exclusive lock on the working copy.
++	# The lock will be dropped on program exit.
++	# Note: This lock should only be taken _after_ the main wiki
++	# lock.
++	
++	# TODO
++} #}}}
++
++sub lockwc_shared () { #{{{
++	# Take a shared lock on the working copy. If an exclusive lock
++	# already exists, downgrade it to a shared lock.
++	# The lock will be dropped on program exit.
++	# Note: This lock should only be taken _after_ the main wiki
++	# lock.
++	
++	# TODO
++} #}}}
++
++sub unlockwc () { #{{{
++	close WIKIWCLOCK;
++} #}}}
++
+ sub loadindex () { #{{{
+ 	open (IN, "$config{wikistatedir}/index") || return;
+ 	while (<IN>) {
+</pre>
