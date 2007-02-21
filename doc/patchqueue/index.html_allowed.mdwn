@@ -356,13 +356,111 @@ I'll attach an updated and modified version below. --[[Joey]]
 * The changes to htmlpage's behavior probably call for the plugin
   interface version number to be changed.
 
-Updated version of Tumov's patch (with the changes we've discussed
-including fixes for some of the plugins) follows:
+Latest version of my patch... with most of the stuff that's been discussed, including `targetpage`.
+Also available [here](http://iki.fi/tuomov/use_dirs-20070221.diff). (BTW, this posting, applying, and
+updating of plain-old-diffs containing all the previous changes is starting to be painful. Reminds
+me why I use darcs..) --[[tuomov]]
 
 <pre>
+Index: IkiWiki.pm
+===================================================================
+--- IkiWiki.pm	(revision 2806)
++++ IkiWiki.pm	(working copy)
+@@ -14,7 +14,7 @@
+ use Exporter q{import};
+ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+                  bestlink htmllink readfile writefile pagetype srcfile pagename
+-                 displaytime will_render gettext
++                 displaytime will_render gettext urlto targetpage
+                  %config %links %renderedfiles %pagesources);
+ our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
+ our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
+@@ -73,6 +73,7 @@
+ 	sslcookie => 0,
+ 	httpauth => 0,
+ 	userdir => "",
++	usedirs => 0
+ } #}}}
+    
+ sub checkconfig () { #{{{
+@@ -224,10 +225,21 @@
+ 	return $page;
+ } #}}}
+ 
++sub targetpage ($$) { #{{{
++	my $page=shift;
++	my $ext=shift;
++	
++	if (! $config{usedirs} || $page =~ /^index$/ ) {
++		return $page.".".$ext;
++	} else {
++		return $page."/index.".$ext;
++	}
++} #}}}
++
+ sub htmlpage ($) { #{{{
+ 	my $page=shift;
+-
+-	return $page.".html";
++	
++	return targetpage($page, "html");
+ } #}}}
+ 
+ sub srcfile ($) { #{{{
+@@ -393,6 +405,7 @@
+ 
+ 	return "$config{url}/" if ! defined $page;
+ 	
++	$page=htmlpage($page);
+ 	$page=~s/[^\/]+$//;
+ 	$page=~s/[^\/]+\//..\//g;
+ 	return $page;
+@@ -422,6 +435,32 @@
+ 			$config{timeformat}, localtime($time)));
+ } #}}}
+ 
++sub beautify_url ($) { #{{{
++	my $url=shift;
++
++	$url =~ s!/index.html$!/!;
++	$url =~ s!^$!./!; # Browsers don't like empty links...
++
++	return $url;
++} #}}}
++
++sub urlto ($$) { #{{{
++	my $to=shift;
++	my $from=shift;
++
++	if (! length $to) {
++		return beautify_url(baseurl($from));
++	}
++
++	if (! grep { $_ eq $to } map { @{$_} } values %renderedfiles) {
++		$to=htmlpage($to);
++	}
++
++	my $link = abs2rel($to, dirname(htmlpage($from)));
++
++	return beautify_url($link);
++} #}}}
++
+ sub htmllink ($$$;@) { #{{{
+ 	my $lpage=shift; # the page doing the linking
+ 	my $page=shift; # the page that will contain the link (different for inline)
+@@ -457,7 +496,8 @@
+ 			"\">?</a>$linktext</span>"
+ 	}
+ 	
+-	$bestlink=abs2rel($bestlink, dirname($page));
++	$bestlink=abs2rel($bestlink, dirname(htmlpage($page)));
++	$bestlink=beautify_url($bestlink);
+ 	
+ 	if (! $opts{noimageinline} && isinlinableimage($bestlink)) {
+ 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
 Index: IkiWiki/Render.pm
 ===================================================================
---- IkiWiki/Render.pm	(revision 2770)
+--- IkiWiki/Render.pm	(revision 2806)
 +++ IkiWiki/Render.pm	(working copy)
 @@ -32,8 +32,8 @@
  	my @links;
@@ -402,7 +500,7 @@ Index: IkiWiki/Render.pm
  
 Index: IkiWiki/Plugin/inline.pm
 ===================================================================
---- IkiWiki/Plugin/inline.pm	(revision 2770)
+--- IkiWiki/Plugin/inline.pm	(revision 2806)
 +++ IkiWiki/Plugin/inline.pm	(working copy)
 @@ -110,8 +110,8 @@
  
@@ -449,37 +547,36 @@ Index: IkiWiki/Plugin/inline.pm
  				genfeed("atom", $atomurl, $desc, $params{page}, @list));
  			$toping{$params{page}}=1 unless $config{rebuild};
  			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
-@@ -288,16 +287,25 @@
+@@ -288,16 +287,21 @@
  	return $content;
  } #}}}
  
+-sub rsspage ($) { #{{{
 +sub basepage ($) { #{{{
-+	my $page=shift;
+ 	my $page=shift;
 +	
 +	$page=htmlpage($page);
 +	$page =~ s/\.html$//;
 +	
 +	return $page;
 +} #}}}
-+
- sub rsspage ($) { #{{{
- 	my $page=shift;
  
 -	return $page.".rss";
-+	return basepage($page).".rss";
++sub rsspage ($) { #{{{
++	return targetpage(shift, "rss");
  } #}}}
  
  sub atompage ($) { #{{{
- 	my $page=shift;
- 
+-	my $page=shift;
+-
 -	return $page.".atom";
-+	return basepage($page).".atom";
++	return targetpage(shift, "atom");
  } #}}}
  
  sub genfeed ($$$$@) { #{{{
 Index: IkiWiki/Plugin/aggregate.pm
 ===================================================================
---- IkiWiki/Plugin/aggregate.pm	(revision 2770)
+--- IkiWiki/Plugin/aggregate.pm	(revision 2806)
 +++ IkiWiki/Plugin/aggregate.pm	(working copy)
 @@ -320,7 +320,7 @@
  		# NB: This doesn't check for path length limits.
@@ -510,7 +607,7 @@ Index: IkiWiki/Plugin/aggregate.pm
  1
 Index: IkiWiki/Plugin/linkmap.pm
 ===================================================================
---- IkiWiki/Plugin/linkmap.pm	(revision 2770)
+--- IkiWiki/Plugin/linkmap.pm	(revision 2806)
 +++ IkiWiki/Plugin/linkmap.pm	(working copy)
 @@ -49,9 +49,7 @@
  	my %mapitems = ();
@@ -525,7 +622,7 @@ Index: IkiWiki/Plugin/linkmap.pm
  
 Index: doc/usage.mdwn
 ===================================================================
---- doc/usage.mdwn	(revision 2770)
+--- doc/usage.mdwn	(revision 2806)
 +++ doc/usage.mdwn	(working copy)
 @@ -244,6 +244,10 @@
  
@@ -540,7 +637,7 @@ Index: doc/usage.mdwn
    Enable [[w3mmode]], which allows w3m to use ikiwiki as a local CGI script,
 Index: doc/plugins/write.mdwn
 ===================================================================
---- doc/plugins/write.mdwn	(revision 2770)
+--- doc/plugins/write.mdwn	(revision 2806)
 +++ doc/plugins/write.mdwn	(working copy)
 @@ -412,6 +412,10 @@
  
@@ -555,7 +652,7 @@ Index: doc/plugins/write.mdwn
  ikiwiki's support for revision control systems also uses pluggable perl
 Index: doc/ikiwiki.setup
 ===================================================================
---- doc/ikiwiki.setup	(revision 2770)
+--- doc/ikiwiki.setup	(revision 2806)
 +++ doc/ikiwiki.setup	(working copy)
 @@ -94,6 +94,8 @@
  	syslog => 0,
@@ -566,101 +663,4 @@ Index: doc/ikiwiki.setup
  
  	# To add plugins, list them here.
  	#add_plugins => [qw{goodstuff openid search wikitext camelcase
-Index: ikiwiki.in
-===================================================================
---- ikiwiki.in	(revision 2770)
-+++ ikiwiki.in	(working copy)
-@@ -46,6 +46,7 @@
- 			"sslcookie!" => \$config{sslcookie},
- 			"httpauth!" => \$config{httpauth},
- 			"userdir=s" => \$config{userdir},
-+			"usedirs!" => \$config{usedirs},
- 			"exclude=s@" => sub {
- 				push @{$config{wiki_file_prune_regexps}}, $_[1];
- 			},
-Index: IkiWiki.pm
-===================================================================
---- IkiWiki.pm	(revision 2770)
-+++ IkiWiki.pm	(working copy)
-@@ -14,7 +14,7 @@
- use Exporter q{import};
- our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
-                  bestlink htmllink readfile writefile pagetype srcfile pagename
--                 displaytime will_render gettext
-+                 displaytime will_render gettext urlto
-                  %config %links %renderedfiles %pagesources);
- our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
- our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
-@@ -72,6 +72,7 @@
- 	sslcookie => 0,
- 	httpauth => 0,
- 	userdir => "",
-+	usedirs => 0
- } #}}}
-    
- sub checkconfig () { #{{{
-@@ -226,7 +227,11 @@
- sub htmlpage ($) { #{{{
- 	my $page=shift;
- 
--	return $page.".html";
-+	if (! $config{usedirs} || $page =~ /^index$/ || $page =~ /\/index$/) {
-+		return $page.".html";
-+	} else {
-+		return $page."/index.html"; 
-+	}
- } #}}}
- 
- sub srcfile ($) { #{{{
-@@ -392,6 +397,7 @@
- 
- 	return "$config{url}/" if ! defined $page;
- 	
-+	$page=htmlpage($page);
- 	$page=~s/[^\/]+$//;
- 	$page=~s/[^\/]+\//..\//g;
- 	return $page;
-@@ -421,6 +427,32 @@
- 			$config{timeformat}, localtime($time)));
- } #}}}
- 
-+sub beautify_url ($) { #{{{
-+	my $url=shift;
-+
-+	$url =~ s!/index.html$!/!;
-+	$url =~ s!^$!./!; # Browsers don't like empty links...
-+
-+	return $url;
-+} #}}}
-+
-+sub urlto ($$) { #{{{
-+	my $to=shift;
-+	my $from=shift;
-+
-+	if (! length $to) {
-+		return beautify_url(baseurl($from));
-+	}
-+
-+	if (! grep { $_ eq $to } map { @{$_} } values %renderedfiles) {
-+		$to=htmlpage($to);
-+	}
-+
-+	my $link = abs2rel($to, dirname(htmlpage($from)));
-+
-+	return beautify_url($link);
-+} #}}}
-+
- sub htmllink ($$$;@) { #{{{
- 	my $lpage=shift; # the page doing the linking
- 	my $page=shift; # the page that will contain the link (different for inline)
-@@ -456,7 +488,8 @@
- 			"\">?</a>$linktext</span>"
- 	}
- 	
--	$bestlink=abs2rel($bestlink, dirname($page));
-+	$bestlink=abs2rel($bestlink, dirname(htmlpage($page)));
-+	$bestlink=beautify_url($bestlink);
- 	
- 	if (! $opts{noimageinline} && isinlinableimage($bestlink)) {
- 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
 </pre>
