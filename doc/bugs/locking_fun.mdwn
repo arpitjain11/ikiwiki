@@ -14,8 +14,8 @@ copy and is a blocking read/write lock.
 * As before, the CGI will take the main wiki lock when starting up.
 * Before writing to the WC, the CGI takes an exclusive lock on the WC.
 * After writing to the WC, the CGI can downgrade it to a shared lock.
-  (This downgrade has to happen atomically, to prevent other CGIs from
-  stealing the exclusive lock.)
+  (If this downgrade does not happen atomically, other CGIs can
+  steal the exclusive lock.)
 * Then the CGI, as before, drops the main wiki lock to prevent deadlock. It
   keeps its shared WC lock.
 * The commit hook takes first the main wiki lock and then the shared WC lock
@@ -24,8 +24,20 @@ copy and is a blocking read/write lock.
   the main wiki lock (that could deadlock). It does its final stuff and
   exits, dropping the shared WC lock.
 
+Locking:
+
+Using fcntl locking from perl is very hard. flock locking has the problem
+that one some OSes (linux?) converting an exclusive to a shared lock is not
+atomic and can be raced. What happens if this race occurs is that,
+since ikiwiki always uses LOCK_NB, the flock fails. Then we're back to the
+original race. It should be possible though to use a separate exclusive lock,
+wrapped around these flock calls, to force them to be "atomic" and avoid that
+race.
+
 Sample patch, with stub functions for the new lock:
 
+[[toggle text="expand patch"]]
+[[toggleable text="""
 <pre>
 Index: IkiWiki/CGI.pm
 ===================================================================
@@ -118,3 +130,60 @@ Index: IkiWiki.pm
  	open (IN, "$config{wikistatedir}/index") || return;
  	while (<IN>) {
 </pre>
+"""]]
+
+My alternative idea, which seems simpler than all this tricky locking
+stuff, is to introduce a new lock file (really a flag file implemented
+using a lock), which tells the commit hook that the CGI is running, and
+makes the commit hook a NOOP.
+
+* CGI takes the wikilock
+* CGI writes changes to WC
+* CGI sets wclock to disable the commit hook
+* CGI does *not* drop the main wikilock
+* CGI commit
+* The commit hook tries to set the wclock, fails, and becomes a noop
+  (it may still need to send commit mails)
+* CGI removes wclock, thus re-enabling the commit hook
+* CGI updates the WC (since the commit hook didn't)
+* CGI renders the wiki
+
+> It seems like there are two things to be concerned with: RCS commit between
+> disable of hook and CGI commit, or RCS commit between CGI commit and re-enable
+> of hook. The second case isn't a big deal if the CGI is gonna rerender
+> everything anyhow. --[[Ethan]]
+
+I agree, and I think that the second case points to the hooks still being
+responsible for sending out commit mails. Everything else the CGI can do.
+
+I don't believe that the first case is actually a problem: If the RCS
+commit does not introduce a conflict then the CGI commit's changes will be
+merged into the repo cleanly. OTOH, if the RCS commit does introduces a
+conflict then the CGI commit will fail gracefully. This is exactly what
+happens now if RCS commit happens while a CGI commit is in progress! Ie:
+
+* cgi takes the wikilock
+* cgi writes change to wc
+* svn commit -m "conflict" (this makes a change to repo immediately, then
+  runs the post-commit hook, which waits on the wikilock)
+* cgi drops wikilock
+* the post-commit hook from the above manual commit can now run.
+* cgi calls rcs_commit, which fails due to the conflict just introduced
+
+The only difference to this scenario will be that the CGI will not drop the
+wiki lock before its commit, and that the post-commit hook will turn into a
+NOOP:
+
+* cgi takes the wikilock
+* cgi writes change to wc
+* cgi takes the wclock
+* svn commit -m "conflict" (this makes a change to repo immediately, then
+  runs the post-commit hook, which becomes a NOOP)
+* cgi calls rcs_commit, which fails due to the conflict just introduced
+
+Actually, the only thing that scares me about this apprach a little is that
+we have two locks. The CGI takes them in the order (wikilock, wclock).
+The commit hook takes them in the order (wclock, wikilock). This is a
+classic potential deadlock scenario. _However_, the commit hook should
+close the wclock as soon as it successfully opens it, before taking the
+wikilock, so I think that's ok.
