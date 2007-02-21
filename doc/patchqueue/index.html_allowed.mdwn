@@ -341,6 +341,10 @@ I'll attach an updated and modified version below. --[[Joey]]
 
      >>>> Or it could use urlto("index", $page) instead. --[[Joey]]
 
+     >>>>> That is, however, a relative URL, and maybe an absolute one
+     >>>>> is wanted. Perhaps `urlto($targetpage)` should return the
+     >>>>> absolute version --[[tuomov]]
+
 * > and something else in the
   > aggregate plugin (above), that I also think isn't what's wanted:
   > aren't `foo.html` pages also "rendered", so that they get moved as `foo/index.html`?
