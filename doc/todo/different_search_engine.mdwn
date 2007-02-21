@@ -66,20 +66,20 @@ Index: IkiWiki/Plugin/search.pm
 +
  sub import { #{{{
 -       hook(type => "getopt", id => "hyperestraier",
--               call => \&getopt);
+-               call => \&amp;getopt);
 -       hook(type => "checkconfig", id => "hyperestraier",
 +       hook(type => "checkconfig", id => "plucene",
-                call => \&checkconfig);
+                call => \&amp;checkconfig);
 -       hook(type => "pagetemplate", id => "hyperestraier",
--               call => \&pagetemplate);
+-               call => \&amp;pagetemplate);
 -       hook(type => "delete", id => "hyperestraier",
 +       hook(type => "delete", id => "plucene",
-                call => \&delete);
+                call => \&amp;delete);
 -       hook(type => "change", id => "hyperestraier",
 +       hook(type => "change", id => "plucene",
-                call => \&change);
+                call => \&amp;change);
 -       hook(type => "cgi", id => "hyperestraier",
--               call => \&cgi);
+-               call => \&amp;cgi);
  } # }}}
  
 -sub getopt () { #{{{
