@@ -621,11 +621,11 @@ sub unlockwiki () { #{{{
 sub commit_hook_enabled () { #{{{
 	open(COMMITLOCK, "+>$config{wikistatedir}/commitlock") ||
 		error ("cannot write to $config{wikistatedir}/commitlock: $!");
-	if (! flock(WIKILOCK, 1 | 4)) { # LOCK_SH | LOCK_NB to test
-		close WIKILOCK;
+	if (! flock(COMMITLOCK, 1 | 4)) { # LOCK_SH | LOCK_NB to test
+		close COMMITLOCK;
 		return 0;
 	}
-	close WIKILOCK;
+	close COMMITLOCK;
 	return 1;
 } #}}}
 
