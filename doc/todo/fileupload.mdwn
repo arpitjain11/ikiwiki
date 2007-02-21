@@ -41,11 +41,11 @@ as a wikifs. Maybe.
 And if that's done, it can also be used to lock users from editing a pages
 or the whole wiki:
 
-	( user(spammer) and * ) or
-	( user(42.12.*) and * ) or
-	( user(http://evilopenidserver/*) and * ) or
-	( user(annoying) and index) or
-	( immutable_page )
+	!(( user(spammer) and * ) or
+	 ( user(42.12.*) and * ) or
+	 ( user(http://evilopenidserver/*) and * ) or
+	 ( user(annoying) and index) or
+	 ( immutable_page ))
 
 That would obsolete the current simple admin prefs for banned users and
 locked pages. Suddenly all the access controls live in one place.
