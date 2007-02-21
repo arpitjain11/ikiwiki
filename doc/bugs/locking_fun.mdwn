@@ -1,0 +1,21 @@
+It's possible for concurrent web edits to race and the winner commits both
+changes at once with its commit message (see r2779). The loser gets a
+message that there were conflicts and gets to see his own edits as the
+conflicting edits he's supposed to resolve.
+
+This can happen because CGI.pm writes the change, then drops the lock
+before calling rcs_commit. It can't keep the lock because the commit hook
+needs to be able to lock.
+
+Using a shared reader lock plus an exclusive writer lock would seem to
+allow getting around this. The CGI would need the exclusive lock when
+editing the WC, then it could drop/convert that to the reader lock, keep
+the lock open, and lauch the post-commit hook, which would use the reader
+lock.
+
+One problem with the reader/writer idea is that the post-commit hook writes
+wiki state.
+
+An alternative approach might be setting a flag that prevents the
+post-commit hook from doing anything, and keeping the lock. Then the CGI
+would do the render & etc that the post-commit hook normally does.
