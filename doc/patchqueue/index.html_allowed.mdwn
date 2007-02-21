@@ -246,26 +246,7 @@ How about doing the index stuff only on the output side? (Or does the latter pat
 ----
 
 First pass over Tumov's patch -- which doesn't cleanly apply anymore, so
-I'll attach an updated and slightly modified version below.
-
-* `urlto()` is O(N) to the number of pages in the wiki, which leads to
-  O(N^2) behavior, which could be a scalability problem. This happens because
-  of the lookup for `$to` in `%renderedfiles`, which shouldn't be necessary
-  most of the time. Couldn't it just be required that `$to` be a html page
-  name on input? Or require it be a non-html page name and always run
-  htmlpage on it.
-
-      > Perhaps it would be possible to require that, but it seems like a
-      > very artificial restriction.  The renderedfiles search is just a
-      > copy-paste from htmllink, and I'm no perl (or ikiwiki internals)
-      > expert... maybe there would be a faster way to do the check whether
-      > name translation is needed? No more than O(log n) steps should be
-      > needed for a simple search, after all, and maybe there would be shortcuts
-      > for even constant-time (in n) checks. --[[tuomov]]
-
-      >> Ah, so much easier to critque other people's code than your own.
-      >> You're right, this is a general problem, and I can get it to log n
-      >> if I really want to. --[[Joey]]
+I'll attach an updated and modified version below. --[[Joey]]
 
 * As we discussed in email, this will break handling of `foo/index.mdwn`
   pages. Needs to be changed to generate `foo/index/index.html` for such
@@ -332,7 +313,9 @@ I'll attach an updated and slightly modified version below.
         if ( !length $to ) {
                 return baseurl($from);
         }
-      
+ 
+      >> Indeed, this brings the number of abs2rels closer to par, as well
+      >> as fixing the .. links. --[[Joey]]
 
 * It calles abs2rel about 16% more often with the patch, which makes it
   a bit slower, since abs2rel is not very efficient. (This omits abs2rel
@@ -351,96 +334,21 @@ I'll attach an updated and slightly modified version below.
      >> good time to make such a changes. Not required to accept this patch
      >> though.
 
-* `aggregate.pm` uses htmlpage in a way that breaks with its new behavior.
-  It will need to be changed as follows:
+     >>> [...] in fact, all uses of htmlpage in the plugins are used to
+     >>> construct an absolute address: the absolute url in most cases, so an `absurl`
+     >>> call could be added to be used instead of htmlpage
+     >>> --[[tuomov]]
 
-<pre>
-Index: aggregate.pm
-===================================================================
---- aggregate.pm	(revision 2700)
-+++ aggregate.pm	(working copy)
-@@ -320,7 +320,7 @@
- 		# NB: This doesn't check for path length limits.
- 		eval q{use POSIX};
- 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
--		if (defined $max && length(htmlpage($page)) >= $max) {
-+		if (defined $max && length(htmlfn($page)) >= $max) {
- 			$c="";
- 			$page=$feed->{dir}."/item";
- 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
-@@ -356,7 +356,7 @@
- 	if (ref $feed->{tags}) {
- 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
- 	}
--	writefile(htmlpage($guid->{page}), $config{srcdir},
-+	writefile(htmlfn($guid->{page}), $config{srcdir},
- 		$template->output);
- 
- 	# Set the mtime, this lets the build process get the right creation
-@@ -434,4 +434,8 @@
- 	return "$config{srcdir}/".htmlpage($page);
- } #}}}
- 
-+sub htmlfn ($) { #{{{
-+	return shift().".html";
-+} #}}}
-+
- 1
-</pre>
+     >>>> Or it could use urlto("index", $page) instead. --[[Joey]]
 
-* `linkmap.pm` uses `htmlpage` to construct a link and should probably be
-  changed like this (untested):
+* > and something else in the
+  > aggregate plugin (above), that I also think isn't what's wanted:
+  > aren't `foo.html` pages also "rendered", so that they get moved as `foo/index.html`?
+  > --[[tuomov]]
 
-<pre>
-Index: linkmap.pm
-===================================================================
---- linkmap.pm	(revision 2700)
-+++ linkmap.pm	(working copy)
-@@ -50,8 +50,7 @@
- 	foreach my $item (keys %links) {
- 		if (pagespec_match($item, $params{pages}, $params{page})) {
- 			my $link=htmlpage($item);
--			$link=IkiWiki::abs2rel($link, IkiWiki::dirname($params{page}));
--			$mapitems{$item}=$link;
-+			$mapitems{$item}=urlto($link, $params{destpage});
- 		}
- 	}
-</pre>
-
-> This is probably supposed to be `$mapitems{$item}=urlto($item, $params{destpage});`,
-> which does indeed remove one more `htmlpage` call from the plugins. I can't actually
-> try it: "failed writing to dst/ts.png.ikiwiki-new: Inappropriate ioctl for device".
-
->> Crazy perl bug that ioctl thing. Worked around now in svn. --[[Joey]]
-
-> After this probable fix, in fact, all uses of htmlpage in the plugins are used to
-> construct an absolute address: the absolute url in most cases, so an `absurl`
-> call could be added to be used instead of htmlpage, and something else in the
-> aggregate plugin (above), that I also think isn't what's wanted:
-> aren't `foo.html` pages also "rendered", so that they get moved as `foo/index.html`?
-> --[[tuomov]]
-
-* `inline.pm` uses htmlpage and `abs2rel` to generate a link, and probably
-  needs to be changed to either use `urlto` or to call `beautify_url` like
-  htmllink does. This might work:
-
-<pre>
-Index: inline.pm
-===================================================================
---- inline.pm	(revision 2700)
-+++ inline.pm	(working copy)
-@@ -150,10 +150,7 @@
- 			# Don't use htmllink because this way the
- 			# title is separate and can be overridden by
- 			# other plugins.
--			my $link=bestlink($params{page}, $page);
--			$link=htmlpage($link) if defined $type;
--			$link=abs2rel($link, dirname($params{destpage}));
--			$template->param(pageurl => $link);
-+			$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
- 			$template->param(title => pagetitle(basename($page)));
- 			$template->param(ctime => displaytime($pagectime{$page}));
-</pre>
+  >> Yes, the aggregate plugin will save the files as foo.html in the
+  >> sourcedir, and that will result in foo/index.html in the web site, same
+  >> as any other page. --[[Joey]]
 
 * `img.pm` makes some assumptions about name of the page that will be
   linking to the image, which are probably broken.
@@ -448,261 +356,9 @@ Index: inline.pm
 * The changes to htmlpage's behavior probably call for the plugin
   interface version number to be changed.
 
---[[Joey]]
-
-Updated version of Tumov's patch follows:
+Updated version of Tumov's patch (with the changes we've discussed
+including fixes for some of the plugins) follows:
 
 <pre>
-Index: IkiWiki/Render.pm
-===================================================================
---- IkiWiki/Render.pm	(revision 2700)
-+++ IkiWiki/Render.pm	(working copy)
-@@ -32,8 +32,8 @@
- 	my @links;
- 	return unless $backlinks{$page};
- 	foreach my $p (keys %{$backlinks{$page}}) {
--		my $href=abs2rel(htmlpage($p), dirname($page));
--			
-+		my $href=urlto($p, $page);
-+                
- 		# Trim common dir prefixes from both pages.
- 		my $p_trimmed=$p;
- 		my $page_trimmed=$page;
-@@ -55,18 +55,14 @@
- 	my @ret;
- 	my $pagelink="";
- 	my $path="";
--	my $skip=1;
-+	my $title=$config{wikiname};
-+	
- 	return if $page eq 'index'; # toplevel
--	foreach my $dir (reverse split("/", $page)) {
--		if (! $skip) {
--			$path.="../";
--			unshift @ret, { url => $path.htmlpage($dir), page => pagetitle($dir) };
--		}
--		else {
--			$skip=0;
--		}
-+	foreach my $dir (split("/", $page)) {
-+		push @ret, { url => urlto($path, $page), page => $title };
-+		$path.="/".$dir;
-+		$title=pagetitle($dir);
- 	}
--	unshift @ret, { url => length $path ? $path : ".", page => $config{wikiname} };
- 	return @ret;
- } #}}}
- 
-Index: IkiWiki/Plugin/inline.pm
-===================================================================
---- IkiWiki/Plugin/inline.pm	(revision 2700)
-+++ IkiWiki/Plugin/inline.pm	(working copy)
-@@ -110,8 +110,8 @@
- 
- 	add_depends($params{page}, $params{pages});
- 
--	my $rssurl=rsspage(basename($params{page}));
--	my $atomurl=atompage(basename($params{page}));
-+	my $rssurl=basename(rsspage($params{page}));
-+	my $atomurl=basename(atompage($params{page}));
- 	my $ret="";
- 
- 	if (exists $params{rootpage} && $config{cgiurl}) {
-@@ -151,8 +151,7 @@
- 			# title is separate and can be overridden by
- 			# other plugins.
- 			my $link=bestlink($params{page}, $page);
--			$link=htmlpage($link) if defined $type;
--			$link=abs2rel($link, dirname($params{destpage}));
-+			$link=urlto($link, $params{destpage});
- 			$template->param(pageurl => $link);
- 			$template->param(title => pagetitle(basename($page)));
- 			$template->param(ctime => displaytime($pagectime{$page}));
-@@ -205,15 +204,17 @@
- 		}
- 	
- 		if ($rss) {
--			will_render($params{page}, rsspage($params{page}));
--			writefile(rsspage($params{page}), $config{destdir},
-+			my $rssp=rsspage($params{page});
-+			will_render($params{page}, $rssp);
-+			writefile($rssp, $config{destdir},
- 				genfeed("rss", $rssurl, $desc, $params{page}, @list));
- 			$toping{$params{page}}=1 unless $config{rebuild};
- 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
- 		}
- 		if ($atom) {
--			will_render($params{page}, atompage($params{page}));
--			writefile(atompage($params{page}), $config{destdir},
-+			my $atomp=atompage($params{page});
-+			will_render($params{page}, $atomp);
-+			writefile($atomp, $config{destdir},
- 				genfeed("atom", $atomurl, $desc, $params{page}, @list));
- 			$toping{$params{page}}=1 unless $config{rebuild};
- 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
-@@ -288,16 +289,25 @@
- 	return $content;
- } #}}}
- 
-+sub basepage ($) { #{{{
-+	my $page=shift;
-+	
-+	$page=htmlpage($page);
-+	$page =~ s/\.html$//;
-+	
-+	return $page;
-+} #}}}
-+
- sub rsspage ($) { #{{{
- 	my $page=shift;
- 
--	return $page.".rss";
-+	return basepage($page).".rss";
- } #}}}
- 
- sub atompage ($) { #{{{
- 	my $page=shift;
- 
--	return $page.".atom";
-+	return basepage($page).".atom";
- } #}}}
- 
- sub genfeed ($$$$@) { #{{{
-Index: ikiwiki.in
-===================================================================
---- ikiwiki.in	(revision 2700)
-+++ ikiwiki.in	(working copy)
-@@ -46,6 +46,7 @@
- 			"sslcookie!" => \$config{sslcookie},
- 			"httpauth!" => \$config{httpauth},
- 			"userdir=s" => \$config{userdir},
-+			"usedirs!" => \$config{usedirs},
- 			"exclude=s@" => sub {
- 				push @{$config{wiki_file_prune_regexps}}, $_[1];
- 			},
-Index: doc/usage.mdwn
-===================================================================
---- doc/usage.mdwn	(revision 2700)
-+++ doc/usage.mdwn	(working copy)
-@@ -244,6 +244,10 @@
- 
-   Log to syslog(3).
- 
-+* --usedirs
-+
-+  Create output files named page/index.html instead of page.html.
-+
- * --w3mmode, --no-w3mmode
- 
-   Enable [[w3mmode]], which allows w3m to use ikiwiki as a local CGI script,
-Index: doc/plugins/write.mdwn
-===================================================================
---- doc/plugins/write.mdwn	(revision 2700)
-+++ doc/plugins/write.mdwn	(working copy)
-@@ -412,6 +412,10 @@
- 
- This is the standard gettext function, although slightly optimised.
- 
-+#### `urlto($$)`
-+
-+Construct a relative url to the first parameter from the second.
-+
- ## RCS plugins
- 
- ikiwiki's support for revision control systems also uses pluggable perl
-Index: doc/ikiwiki.setup
-===================================================================
---- doc/ikiwiki.setup	(revision 2700)
-+++ doc/ikiwiki.setup	(working copy)
-@@ -94,6 +94,8 @@
- 	syslog => 0,
- 	# To link to user pages in a subdirectory of the wiki.
- 	#userdir => "users",
-+	# To enable alternate output filenames.
-+	#usedirs => 1,
- 
- 	# To add plugins, list them here.
- 	#add_plugins => [qw{goodstuff openid search wikitext camelcase
-Index: IkiWiki.pm
-===================================================================
---- IkiWiki.pm	(revision 2700)
-+++ IkiWiki.pm	(working copy)
-@@ -14,7 +14,7 @@
- use Exporter q{import};
- our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
-                  bestlink htmllink readfile writefile pagetype srcfile pagename
--                 displaytime will_render gettext
-+                 displaytime will_render gettext urlto
-                  %config %links %renderedfiles %pagesources);
- our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
- our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
-@@ -72,6 +72,7 @@
- 	sslcookie => 0,
- 	httpauth => 0,
- 	userdir => "",
-+	usedirs => 0
- } #}}}
-    
- sub checkconfig () { #{{{
-@@ -226,7 +227,11 @@
- sub htmlpage ($) { #{{{
- 	my $page=shift;
- 
--	return $page.".html";
-+	if (! $config{usedirs} || $page =~ /^index$/ || $page =~ /\/index$/) {
-+		return $page.".html";
-+	} else {
-+		return $page."/index.html"; 
-+	}
- } #}}}
- 
- sub srcfile ($) { #{{{
-@@ -390,6 +395,7 @@
- 
- 	return "$config{url}/" if ! defined $page;
- 	
-+	$page=htmlpage($page);
- 	$page=~s/[^\/]+$//;
- 	$page=~s/[^\/]+\//..\//g;
- 	return $page;
-@@ -419,6 +425,29 @@
- 			$config{timeformat}, localtime($time)));
- } #}}}
- 
-+sub beautify_url ($) { #{{{
-+	my $url=shift;
-+
-+	$url =~ s!/index.html$!/!;
-+	$url =~ s!^$!./!; # Browsers don't like empty links...
-+
-+	return $url;
-+} #}}}
-+
-+sub urlto ($$) { #{{{
-+	my $to=shift;
-+	my $from=shift;
-+
-+	if (length $to &&
-+	    ! grep { $_ eq $to } map { @{$_} } values %renderedfiles) {
-+		$to=htmlpage($to);
-+	}
-+
-+	my $link = abs2rel($to, dirname(htmlpage($from)));
-+
-+	return beautify_url($link);
-+} #}}}
-+
- sub htmllink ($$$;@) { #{{{
- 	my $lpage=shift; # the page doing the linking
- 	my $page=shift; # the page that will contain the link (different for inline)
-@@ -454,7 +483,8 @@
- 			"\">?</a>$linktext</span>"
- 	}
- 	
--	$bestlink=abs2rel($bestlink, dirname($page));
-+	$bestlink=abs2rel($bestlink, dirname(htmlpage($page)));
-+	$bestlink=beautify_url($bestlink);
- 	
- 	if (! $opts{noimageinline} && isinlinableimage($bestlink)) {
- 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
+
 </pre>
