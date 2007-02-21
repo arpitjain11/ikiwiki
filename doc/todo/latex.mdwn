@@ -6,4 +6,16 @@ render via [HeVeA](http://pauillac.inria.fr/~maranget/hevea/index.html) or
 similar. Useful for mathematics, as well as for stuff like the LaTeX version
 of the ikiwiki [[/logo]].
 
+----
+
+Conversely, how about adding a plugin to support exporting to LaTeX?
+
+>> I did some tests with using Markdown and a customized HTML::Latex and html2latex
+>> and it appears it will work for me now. (I hope to use ikiwiki for many
+>> to collaborate on a printed book that will be generated at least once per day in PDF format.)
+>>
+>> --JeremyReed
+
+>>> Have a look at [pandoc](http://code.google.com/p/pandoc/).  It can make PDFs via pdflatex. --[[roktas]]
+
 [[tag soc]]

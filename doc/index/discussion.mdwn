@@ -9,8 +9,7 @@ Note that for more formal bug reports or todo items, you can also edit the
 
 # Installation/Setup questions
 
-(I've moved HarleyPig's problem to its [[own_page|bugs/xgettext_issue]]
---[[Joey]])
+Add them here..
 
 ----
 # Excellent - how do I translate a TWiki site?
@@ -43,32 +42,9 @@ easily, perl is possible (but I'm not strong in perl).
 
 ----
 
-# asciidoc or txt2tags ?
-
-Any plugins or support for using asciidoc or txt2tags as the wiki language and/or exporting to asciidoc or txt2tags?
-
-> No, but it should be quite easy to write such a plugin. The otl plugin
-> is a good example of writing a formatting plugin that uses an external
-> conversion program, like asciidoc or txt2tags. --[[Joey]]
-
-----
-
 # LaTeX support?
 
-Any plugins or support for exporting to LaTeX?
-(If not could use asciidoc or txt2tags mentioned above to generated LaTeX.)
-
-> It's already [[been_requested|todo/latex]], although perhaps not
-> working the way you're thinking of. Noone is currently working on it.
-> --[[Joey]]
-
->> I did some tests with using Markdown and a customized HTML::Latex and html2latex
->> and it appears it will work for me now. (I hope to use ikiwiki for many
->> to collaborate on a printed book that will be generated at least once per day in PDF format.)
->>
->> --JeremyReed
-
->>> Have a look at [pandoc](http://code.google.com/p/pandoc/).  It can make PDFs via pdflatex. --[[roktas]]
+Moved to [[todo/latex]] --[[Joey]]
 
 ----
 
@@ -89,15 +65,7 @@ Moved to the existing [[todo_item|todo/preview_changes]]. --[[JoshTriplett]]
 Any setting for limiting how many kilobytes can be submitted via the "edit" form?
 -- [[JeremyReed]]
 
-> Not currently. Worried about abuse? --[[Joey]]
-
->> I didn't want it abused accidently or with malice. I was thinking that Perl's CGI.pm would handle this, but I don't see that.
->> I read that textarea max bytes may be 500 lines or 28000 characters or 30000 characters or 64kB. It seems like it
->> varies and I didn't test myself, because I guess it may depend on different clients and different HTTP servers. 
->> This could be checked using javascript on the client side (before submitting) and by checking size on server side (before saving). --[[JeremyReed]]
-
->>> The absolute limit varies by browser. If there are web servers that
->>> also limit it, I don't know of them. --[[Joey]]
+>>> See [[todo/fileupload]] for an idea on limiting page size. --[[Joey]]
 
 ----
 
@@ -124,7 +92,7 @@ actions.  However, it may not be something everyone appreciates.  Any thoughts?
 It would be nice to be able to edit the stylesheet by means of the cgi.  Or is this possible?  I wasn't able to achieve it.
 Ok, that's my last 2 cents for a while. --[Mazirian](http://mazirian.com)
 
-> I don't support editing it, but if/when ikiwiki gets file upload support,
+> I don't support editing it, but if/when ikiwiki gets [[todo/fileupload]] support,
 > it'll be possible to upload a style sheet. (If .css is in the allowed
 > extensions list.. no idea how safe that would be, a style sheet is
 > probably a great place to put XSS attacks and evil javascript that would
