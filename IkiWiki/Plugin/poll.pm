@@ -125,17 +125,17 @@ sub cgi ($) { #{{{
 		IkiWiki::cgi_savesession($session);
 		$oldchoice=$session->param($choice_param);
 		if ($config{rcs}) {
-			# prevent deadlock with post-commit hook
-			IkiWiki::unlockwiki();
+			disable_commit_hook();
 			IkiWiki::rcs_commit($pagesources{$page}, "poll vote ($choice)",
 				IkiWiki::rcs_prepedit($pagesources{$page}),
 				$session->param("name"), $ENV{REMOTE_ADDR});
+			enable_commit_hook();
+			rcs_update();
 		}
-		else {
-			require IkiWiki::Render;
-			IkiWiki::refresh();
-			IkiWiki::saveindex();
-		}
+		require IkiWiki::Render;
+		IkiWiki::refresh();
+		IkiWiki::saveindex();
+
 		# Need to set cookie in same http response that does the
 		# redir.
 		eval q{use CGI::Cookie};

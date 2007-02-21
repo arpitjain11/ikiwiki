@@ -27,8 +27,14 @@ ikiwiki (1.44) UNRELEASED; urgency=low
   * Smarter detection of no-op changes to po files.
   * Elegant patch from Ethan to clean up the display of page names in the
     dropdown when creating a new page.
+  * Since the CGI had to drop the wiki lock to avoid deadlocking the
+    commit hook, it was possible for one CGI to race another one and "win"
+    the commit of both their files. This race has been fixed by adding a new
+    commitlock, which when locked by the CGI, disables the commit hook
+    (except for commit mails). The CGI then takes care of the updates the
+    commit hook would have done.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 20 Feb 2007 19:14:39 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Feb 2007 03:35:52 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 

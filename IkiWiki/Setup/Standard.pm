@@ -36,6 +36,9 @@ sub setup_standard {
 		foreach my $wrapper (@wrappers) {
 			%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
 			checkconfig();
+			if (! $config{cgi} && ! $config{post_commit}) {
+				$config{post_commit}=1;
+			}
 			gen_wrapper();
 		}
 		%config=(%startconfig);

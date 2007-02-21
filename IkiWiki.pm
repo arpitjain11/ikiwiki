@@ -38,6 +38,7 @@ sub defaultconfig () { #{{{
 	wikiname => "wiki",
 	default_pageext => "mdwn",
 	cgi => 0,
+	post_commit => 0,
 	rcs => '',
 	notify => 0,
 	url => '',
@@ -601,7 +602,7 @@ sub lockwiki () { #{{{
 	}
 	open(WIKILOCK, ">$config{wikistatedir}/lockfile") ||
 		error ("cannot write to $config{wikistatedir}/lockfile: $!");
-	if (! flock(WIKILOCK, 2 | 4)) {
+	if (! flock(WIKILOCK, 2 | 4)) { # LOCK_EX | LOCK_NB
 		debug("wiki seems to be locked, waiting for lock");
 		my $wait=600; # arbitrary, but don't hang forever to 
 		              # prevent process pileup
@@ -615,6 +616,29 @@ sub lockwiki () { #{{{
 
 sub unlockwiki () { #{{{
 	close WIKILOCK;
+} #}}}
+
+sub commit_hook_enabled () { #{{{
+	open(COMMITLOCK, "+>$config{wikistatedir}/commitlock") ||
+		error ("cannot write to $config{wikistatedir}/commitlock: $!");
+	if (! flock(WIKILOCK, 1 | 4)) { # LOCK_SH | LOCK_NB to test
+		close WIKILOCK;
+		return 0;
+	}
+	close WIKILOCK;
+	return 1;
+} #}}}
+
+sub disable_commit_hook () { #{{{
+	open(COMMITLOCK, ">$config{wikistatedir}/commitlock") ||
+		error ("cannot write to $config{wikistatedir}/commitlock: $!");
+	if (! flock(COMMITLOCK, 2)) { # LOCK_EX
+		error("failed to get commit lock");
+	}
+} #}}}
+
+sub enable_commit_hook () { #{{{
+	close COMMITLOCK;
 } #}}}
 
 sub loadindex () { #{{{

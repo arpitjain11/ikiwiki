@@ -117,6 +117,12 @@ sub main () { #{{{
 		require IkiWiki::Render;
 		commandline_render();
 	}
+	elsif ($config{post_commit} && ! commit_hook_enabled()) {
+		if ($config{notify}) {
+			loadindex();
+			rcs_notify();
+		}
+	}
 	else {
 		lockwiki();
 		loadindex();

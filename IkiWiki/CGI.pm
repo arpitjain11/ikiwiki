@@ -513,6 +513,7 @@ sub cgi_editpage ($$) { #{{{
 			return;
 		}
 		
+		my $conflict;
 		if ($config{rcs}) {
 			my $message="";
 			if (defined $form->field('comments') &&
@@ -523,44 +524,44 @@ sub cgi_editpage ($$) { #{{{
 			if ($newfile) {
 				rcs_add($file);
 			}
-			# prevent deadlock with post-commit hook
-			unlockwiki();
-			# presumably the commit will trigger an update
-			# of the wiki
-			my $conflict=rcs_commit($file, $message,
+
+			# Prevent deadlock with post-commit hook by
+			# signaling to it that it should not try to
+			# do anything (except send commit mails).
+			disable_commit_hook();
+			$conflict=rcs_commit($file, $message,
 				$form->field("rcsinfo"),
 				$session->param("name"), $ENV{REMOTE_ADDR});
+			enable_commit_hook();
+			rcs_update();
+		}
 		
-			if (defined $conflict) {
-				$form->field(name => "rcsinfo", value => rcs_prepedit($file),
-					force => 1);
-				$form->tmpl_param("page_conflict", 1);
-				$form->field("editcontent", value => $conflict, force => 1);
-				$form->field(name => "comments", value => $form->field('comments'), force => 1);
-				$form->field("do", "edit)");
-				$form->tmpl_param("page_select", 0);
-				$form->field(name => "page", type => 'hidden');
-				$form->field(name => "type", type => 'hidden');
-				$form->title(sprintf(gettext("editing %s"), $page));
-				print $form->render(submit => \@buttons);
-				return;
-			}
-			else {
-				# Make sure that the repo is up-to-date;
-				# locking prevents the post-commit hook
-				# from updating it.
-				rcs_update();
-			}
+		# Refresh even if there was a conflict, since other changes
+		# may have been committed while the post-commit hook was
+		# disabled.
+		require IkiWiki::Render;
+		refresh();
+		saveindex();
+
+		if (defined $conflict) {
+			$form->field(name => "rcsinfo", value => rcs_prepedit($file),
+				force => 1);
+			$form->tmpl_param("page_conflict", 1);
+			$form->field("editcontent", value => $conflict, force => 1);
+			$form->field(name => "comments", value => $form->field('comments'), force => 1);
+			$form->field("do", "edit)");
+			$form->tmpl_param("page_select", 0);
+			$form->field(name => "page", type => 'hidden');
+			$form->field(name => "type", type => 'hidden');
+			$form->title(sprintf(gettext("editing %s"), $page));
+			print $form->render(submit => \@buttons);
+			return;
 		}
 		else {
-			require IkiWiki::Render;
-			refresh();
-			saveindex();
+			# The trailing question mark tries to avoid broken
+			# caches and get the most recent version of the page.
+			redirect($q, "$config{url}/".htmlpage($page)."?updated");
 		}
-		
-		# The trailing question mark tries to avoid broken
-		# caches and get the most recent version of the page.
-		redirect($q, "$config{url}/".htmlpage($page)."?updated");
 	}
 } #}}}
 
