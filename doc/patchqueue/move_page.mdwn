@@ -3,6 +3,16 @@ This is my first cut at a feature like that requested in [[todo/Moving_Pages]]. 
 A bunch of obvious shortcomings exist: 
 
 * I'm not sure all the untaints are safe.
+
+  > I've looked them over. 
+  >
+  > * one is safe because it only allows existing page names through.
+  > * one is safe because it follows the example of editpage in calling 
+  > titlepage to sanitize.
+  > * the last one follows the example of rcs_commit in svn.pm, so I
+  > hope it's safe.. 
+  >
+  > --Ethan
 * No precautions whatsoever are made to protect against race conditions or failures
   in the rcs\_move function.
 * movepage.tmpl doesn't exist yet.
@@ -49,6 +59,8 @@ before it is moved? Bail, or shrug and proceed?
 > probably errors out instead, but I'm not sure. Of course, this is an
 > issue that occurs if the page is moved using a regular svn commit too, so
 > it's not really your concern in a way. :-)
+
+>> I wrote a patch to address this -- it's in [[disappearing_pages]]. --Ethan
 
 Could you elaborate on [[commit-internals]]? Can I assume that ikiwiki's 
 working copy W will always reflect a revision of the master copy M? 
