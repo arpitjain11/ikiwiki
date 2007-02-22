@@ -1,0 +1,45 @@
+ * Limits to size of files that can be uploaded. Prevent someone
+   spamming the wiki with CD isos..
+
+> CGI.pm has a limitation that you can't prevent someone uploading 
+> something huge and filling up your server.
+> However it is obviously possible to not actually put it in to the
+> wiki if it's too large.
+> Presumably there is also a way to limit the size of POST requests
+> in the server.
+
+* Limits to the type of files that can be uploaded. To prevent uploads of
+  virii, css, raw html etc, and avoid file types that are not safe.
+  Should default to excluding all files types, or at least all except
+  a very limited set, and should be able to open it up to more types.
+
+  Would checking for file extensions (.gif, .jpg) etc be enough? Some
+  browsers are probably too smart for their own good and may ignore
+  the extension / mime info and process as the actual detected file
+  type. It may be necessary to use file to determine a file's true type.
+
+> I think using the extension is too risky, and as much information as
+> possible should go in to the decision. Saving the file to disk, then
+> checking the type before using it seems like the best approach to me,
+> as long as the file is deleted properly.
+
+> Have you any thoughts on what the interface should be? I can see three
+> options. First add a box to the file creation page that allows you
+> to upload a file instead of the page. The second is an upload file
+> link that asks for a page. The last would be an attachments system
+> that e.g. Twiki use, where the file could be uploaded as a subpage.
+
+> How about the limit setting etc.? Add it as a box on the admin's
+> preference page, allow it anywhere using preprocessor directives,
+> or have a configuration page that only the admin is allowed to edit
+> (and perhaps people named on the page?)
+
+> The syntax of the conditionals isn't too hard, as the things that
+> are being added fit in nicely. It might be nice to allow plugins
+> to register new functions for them, and provide callbacks to
+> provide a yes no answer. I'm haven't looked at the code yet,
+> are the pagespecs uniform in all places, or is the conditional
+> usage an extended one? i.e. can I lock pages based on date etc?
+> --[[JamesWestby]]
+
+
