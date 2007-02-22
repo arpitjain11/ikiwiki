@@ -24,4 +24,15 @@ I see the need for:
 
 Brad
 
+> This could be implemented through the use of an HTTP redirect to the 
+> new page, but this has the downside that people may not know they're being 
+> redirected.
+>
+> This could also be implemented using a combination of raw inline and meta
+> to change the title (add a "redirected from etc." page. This could be done
+> with a plugin. A redirect page would be [[redirect page="newpage"]].
+> But then if you click "edit" on this redirect page, you won't be able
+> to edit the new page, only the call to redirect.
+> --Ethan
+
 Note that there is a partial implementation in the [[patchqueoe|patchqueue/move_page]].
