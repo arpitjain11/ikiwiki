@@ -66,7 +66,9 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    introduce setup files.
    
    A sample setup file is [[ikiwiki.setup]]. Download it (or copy it from
-   `doc/ikiwiki.setup` in the ikiwiki sources), and edit it.
+   `doc/ikiwiki.setup` in the ikiwiki sources), and edit it. Note that this
+   file should *not* be put in your wiki's directory with the rest of the
+   files. A good place to put it is in a ~/.ikiwiki/ subdirectory.
    
    Most of the options, like `wikiname` in the setup file are the same as
    ikiwiki's command line options (documented in [[usage]]. `srcdir` and
