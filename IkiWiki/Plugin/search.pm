@@ -64,8 +64,9 @@ sub change (@) { #{{{
 	debug(gettext("updating hyperestraier search index"));
 	estcmd("gather -cm -bc -cl -sd",
 		map {
-			Encode::encode_utf8($config{destdir}."/".$_)
-				foreach @{$renderedfiles{pagename($_)}};
+			map {
+				Encode::encode_utf8($config{destdir}."/".$_)
+			} @{$renderedfiles{pagename($_)}};
 		} @_
 	);
 	estcfg();
