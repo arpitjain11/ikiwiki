@@ -1,0 +1,43 @@
+The map() function used in the hyperestraier search plug-in doesn't work as intended as ilustrated by this simple script:
+
+#!/usr/bin/perl -w
+use strict;
+my @foo = (
+	[ qw/foo bar baz/ ],
+	[ qw/fee faa fum/ ],
+	);
+# similar to current ikiwiki code (defective):
+my @bar = map { "/path/to/$_" foreach @{$_} } @foo;
+# this works:
+#my @bar = map { map { "/path/to/$_" } @{$_} } @foo;
+foreach (@bar) {
+	print "$_\n";
+}
+
+Expected output:
+/path/to/foo
+/path/to/bar
+/path/to/baz
+/path/to/fee
+/path/to/faa
+/path/to/fum
+
+Current output:
+Useless use of string in void context at perl-map.pl line 10.
+
+The patch below fixes this issue:
+
+--- IkiWiki/Plugin/search.pm.orig       Thu Feb  1 23:52:03 2007
++++ IkiWiki/Plugin/search.pm    Thu Feb  1 23:52:41 2007
+@@ -64,8 +64,9 @@
+        debug(gettext("updating hyperestraier search index"));
+        estcmd("gather -cm -bc -cl -sd",
+                map {
+-                       Encode::encode_utf8($config{destdir}."/".$_)
+-                               foreach @{$renderedfiles{pagename($_)}};
++                       map {
++                               Encode::encode_utf8($config{destdir}."/".$_)
++                       } @{$renderedfiles{pagename($_)}};
+                } @_
+        );
+        estcfg();
