@@ -41,16 +41,6 @@ before it is moved? Bail, or shrug and proceed?
 > some way. It seems fine to me to go ahead with the move even if the page
 > was edited. If the page was deleted or moved, it seems reasonable to exit
 > with an error.
->
-> Another set of issues exists if a separate web user is trying to edit the
-> page at the same time. We'll have to make sure that something sane
-> happens there; will ikiwiki re-add the moved page under the old name if
-> the user saves their edit after the move? Could be confusing.. I think it
-> probably errors out instead, but I'm not sure. Of course, this is an
-> issue that occurs if the page is moved using a regular svn commit too, so
-> it's not really your concern in a way. :-)
-
->> I wrote a seperate patch to address this -- it's in [[disappearing_pages]]. --Ethan
 
     diff -urNX ignorepats ikiwiki/IkiWiki/CGI.pm ikidev/IkiWiki/CGI.pm
     --- ikiwiki/IkiWiki/CGI.pm  2007-02-14 18:17:12.000000000 -0800
