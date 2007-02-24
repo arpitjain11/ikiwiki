@@ -290,7 +290,8 @@ sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
-	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
+	my @fields=qw(do rcsinfo subpage from page type editcontent comments
+	              newfile);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
 	eval q{use CGI::FormBuilder};
@@ -352,10 +353,6 @@ sub cgi_editpage ($$) { #{{{
 		$file=$page.".".$type;
 	}
 
-	my $newfile=0;
-	if (! -e "$config{srcdir}/$file") {
-		$newfile=1;
-	}
 
 	$form->field(name => "do", type => 'hidden');
 	$form->field(name => "from", type => 'hidden');
@@ -366,6 +363,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "editcontent", type => "textarea", rows => 20,
 		cols => 80);
+	$form->field(name => "newfile", type => 'hidden');
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
@@ -374,13 +372,16 @@ sub cgi_editpage ($$) { #{{{
 	if (! $form->submitted) {
 		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 			force => 1);
+		$form->field(name => "newfile", 
+			value => ! -e "$config{srcdir}/$file",
+			force => 1);
 	}
 	
 	if ($form->submitted eq "Cancel") {
-		if ($newfile && defined $from) {
+		if ($form->field(name => "newfile") && defined $from) {
 			redirect($q, "$config{url}/".htmlpage($from));
 		}
-		elsif ($newfile) {
+		elsif ($form->field(name => "newfile")) {
 			redirect($q, $config{url});
 		}
 		else {
@@ -495,6 +496,16 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
+		if (! -e "$config{srcdir}/$file" && ! $form->field(name => 'newfile')){
+			$form->tmpl_param("page_gone", 1);
+			$form->field(name => "newfile",
+			             value => 1, force => 1);
+			$form->tmpl_param("page_select", 0);
+			$form->field(name => "page", type => 'hidden');
+			$form->field(name => "type", type => 'hidden');
+			print $form->render(submit => \@buttons);
+			return;
+		}
 		
 		my $content=$form->field('editcontent');
 
@@ -510,8 +521,6 @@ sub cgi_editpage ($$) { #{{{
 			$form->tmpl_param("failed_save", 1);
 			$form->tmpl_param("error_message", $@);
 			$form->field("editcontent", value => $content, force => 1);
-			$form->field(name => "comments", value => $form->field('comments'), force => 1);
-			$form->field("do", "edit)");
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
@@ -528,7 +537,7 @@ sub cgi_editpage ($$) { #{{{
 				$message=$form->field('comments');
 			}
 			
-			if ($newfile) {
+			if ($form->field(name => "newfile")) {
 				rcs_add($file);
 			}
 
@@ -555,8 +564,7 @@ sub cgi_editpage ($$) { #{{{
 				force => 1);
 			$form->tmpl_param("page_conflict", 1);
 			$form->field("editcontent", value => $conflict, force => 1);
-			$form->field(name => "comments", value => $form->field('comments'), force => 1);
-			$form->field("do", "edit)");
+			$form->field("do", "edit", force => 1);
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');

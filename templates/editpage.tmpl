@@ -33,6 +33,15 @@ Your changes were not able to be saved to disk. The system gave the error:
 Your changes are preserved below, and you can try again to save them.
 </p>
 </TMPL_IF>
+<TMPL_IF NAME="PAGE_GONE">
+<p>
+<b>The page you were editing has disappeared.</b>
+</p>
+<p>
+Perhaps someone else has deleted it or moved it. If you want to recreate
+this page with your text, click "Save Page" again.
+</p>
+</TMPL_IF>
 <TMPL_VAR FORM-START>
 <div class="header">
 <span><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></span>
@@ -40,6 +49,7 @@ Your changes are preserved below, and you can try again to save them.
 <TMPL_VAR FIELD-DO>
 <TMPL_VAR FIELD-FROM>
 <TMPL_VAR FIELD-RCSINFO>
+<TMPL_VAR FIELD-NEWFILE>
 <TMPL_IF NAME="PAGE_SELECT">
 Page location: <TMPL_VAR FIELD-PAGE>
 Page type: <TMPL_VAR FIELD-TYPE>

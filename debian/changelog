@@ -38,8 +38,12 @@ ikiwiki (1.44) UNRELEASED; urgency=low
     search plugin.
   * Correct a bug that could lead to infinite looping after signin in some
     circumstances.
+  * Patch from Ethan to improve behavior if a page is deleted or moved while
+    someone is editing it.
+  * Some cleanup of field setting in the failed edit and conflict handling
+    code.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 23 Feb 2007 19:06:13 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri, 23 Feb 2007 19:26:46 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 
