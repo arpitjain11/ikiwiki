@@ -36,8 +36,10 @@ ikiwiki (1.44) UNRELEASED; urgency=low
   * French translation update. Closes: #411899
   * Patch from HenrikBrixAndersen to fix a broken use of foreach in the
     search plugin.
+  * Correct a bug that could lead to infinite looping after signin in some
+    circumstances.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 23 Feb 2007 14:34:18 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri, 23 Feb 2007 19:06:13 -0500
 
 ikiwiki (1.43) unstable; urgency=low
 

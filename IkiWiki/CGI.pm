@@ -180,13 +180,20 @@ sub cgi_signin ($$) { #{{{
 sub cgi_postsignin ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
-
+	
 	# Continue with whatever was being done before the signin process.
-	my $postsignin=CGI->new($session->param("postsignin"));
-	$session->clear("postsignin");
-	cgi($postsignin, $session);
-	cgi_savesession($session);
-	exit;
+	if (defined $session->param("postsignin")) {
+		my $postsignin=CGI->new($session->param("postsignin"));
+		$session->clear("postsignin");
+		cgi($postsignin, $session);
+		cgi_savesession($session);
+		exit;
+	}
+	else {
+		# This can occur, for example, if a user went to the signin
+		# url via a bookmark.
+		redirect($q, $config{url});
+	}
 } #}}}
 
 sub cgi_prefs ($$) { #{{{
