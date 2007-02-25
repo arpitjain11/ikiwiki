@@ -6,3 +6,11 @@ instance. --[[JoshTriplett]]
 > In fact, this would be better handled with a replacement of the "archive" on/off API with something like
 > mode = normal|archive|compact|.... defaulting to normal
 > --hb
+
+>> You also don't need to be restricted to a fixed set of modes: the `mode` parameter could simply specify
+>> the template to be used: `inlinepage-$mode.tmpl`. For producing e.g. bulleted lists of the entries, some extra
+>> container template would be useful in addition to that... 
+>>
+>> In a related note, I'd like an option to include the creation date on some non-inlined pages too. I suppose
+>> that's doable with some template hook in a plugin, and a command-line parameter pagespec (suffices for me),
+>> but I haven't got around to that yet. --[[tuomov]]
