@@ -9,4 +9,23 @@ have pagespecs be absolute by default, IMHO. --[[Joey]]
 
 I think after you work with ikiwiki for a while, it "makes more sense" for 
 them to be absolute, but I definitely remember tripping over absolute
-pagespecs a few times when I was just starting out. --Ethan
+pagespecs a few times when I was just starting out. Thus I think we've
+learned to accept it as natural, where a new user wouldn't.
+
+* bugs, todo, news, blog, users, sandbox, and patchqueue 
+  are all at "toplevel", so they are equivalent whether 
+  pagespecs are absolute or relative.
+* soc doesn't refer to any pages explicitly so it doesn't matter
+* various plugins have pagespecs at plugins/foo.mdwn: map, linkmap, orphans,
+  pagecount, pagestats
+  * I'd say most of these make more sense as having abs. pagespecs
+  * I note that your sitemap is at toplevel, but there's no reason
+    not to allow putting it in a special meta/ directory.
+* examples/blog and examples/software site need to have relative pagespecs,
+  but they're pretty special cases -- for a real site those things
+  will probably be toplevel
+* plugins/contrib makes more sense to inline relative (though it doesn't
+  right now)
+
+Maybe inline should use relative pagespecs by default, and other plugins 
+don't? --Ethan
