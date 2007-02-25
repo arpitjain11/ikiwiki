@@ -1,189 +1,5 @@
 Instead of having files foo.html "in front of" foo/, I prefer to have 
-foo/index.html. This patch allows that. Specifically, foo/index.type 
-is translated to $links{'foo/'}, and bestlink looks for either "foo" or 
-"foo/" when linking to pages. There are other miscellaneous changes that 
-go with that:
-
-1. change the `cgi_editpage` `@page_locs` code so that creating foo from 
-   a/b/c prefers a/b/foo and then a/b/c/foo, but if creating foo from a/b/c/,
-   then prefer a/b/c/foo. I'm not really sure why the original was doing what
-   it did (why trim terminal `/` if no pages end in `/`?), so this part might
-   break something.
-2. tweak things so that index.rss and index.atom are generated if inlining 
-   from 'foo/'
-2. backlinks from "foo/bar" to "foo/" trim common prefixes as long as there 
-   would be something left when the trimming is done (i.e. don't trim "foo/")
-3. parentlinks for "foo/" are the same as for "foo", except one directory 
-   higher
-4. rewrite parentlinks so that bestlink is called at each level
-5. basename("foo/") => basename("foo")
-6. links to "foo/" are translated to "foo/index.html" rather than "foo/.html".
-  (Links to "foo/" might be preferred, but that causes an infinite loop in 
-  writefile, because apparently dirname("foo/") == "foo/" on my system for 
-  reasons that aren't clear to me.)
-7. pagetitle("foo/") => pagetitle("foo")
-8. clip the final slash when matching a relative pagespec, even if there are
-   no characters after it (otherwise inlining "./a" from "foo/" gets 
-   translated to "foo//a")
-
-In case whitespace gets garbled, I'm also leaving a copy of the patch on 
-[my site](http://ikidev.betacantrips.com/patches/index.patch). It should apply 
-cleanly to a freshly unpacked ikiwiki-1.42. You can also see it in action 
-[here](http://ikidev.betacantrips.com/one/). --Ethan
-
-    diff -urX ignorepats ikiclean/IkiWiki/CGI.pm ikidev/IkiWiki/CGI.pm
-    --- ikiclean/IkiWiki/CGI.pm	2007-02-11 21:40:32.419641000 -0800
-    +++ ikidev/IkiWiki/CGI.pm	2007-02-11 21:54:36.252357000 -0800
-    @@ -408,8 +408,8 @@
-     				@page_locs=$best_loc=$page;
-     			}
-     			else {
-    -				my $dir=$from."/";
-    -				$dir=~s![^/]+/+$!!;
-    +				my $dir=$from;
-    +				$dir=~s![^/]+$!!;
-     				
-     				if ((defined $form->field('subpage') && length $form->field('subpage')) ||
-     				    $page eq gettext('discussion')) {
-    @@ -420,7 +420,9 @@
-     				}
-     				
-     				push @page_locs, $dir.$page;
-    -				push @page_locs, "$from/$page";
-    +				if ($dir ne $from){ # i.e. $from not a directory
-    +					push @page_locs, "$from/$page";
-    +				}
-     				while (length $dir) {
-     					$dir=~s![^/]+/+$!!;
-     					push @page_locs, $dir.$page;
-    diff -urX ignorepats ikiclean/IkiWiki/Plugin/inline.pm ikidev/IkiWiki/Plugin/inline.pm
-    --- ikiclean/IkiWiki/Plugin/inline.pm	2007-02-11 21:40:31.996007000 -0800
-    +++ ikidev/IkiWiki/Plugin/inline.pm	2007-02-11 21:54:36.008358000 -0800
-    @@ -110,8 +110,8 @@
-     
-     	add_depends($params{page}, $params{pages});
-     
-    -	my $rssurl=rsspage(basename($params{page}));
-    -	my $atomurl=atompage(basename($params{page}));
-    +	my $rssurl=basename(rsspage($params{page}));
-    +	my $atomurl=basename(atompage($params{page}));
-     	my $ret="";
-     
-     	if (exists $params{rootpage} && $config{cgiurl}) {
-    @@ -285,14 +285,18 @@
-     
-     sub rsspage ($) { #{{{
-     	my $page=shift;
-    +	$page = htmlpage($page);
-    +	$page =~s/\.html$/.rss/;
-     
-    -	return $page.".rss";
-    +	return $page;
-     } #}}}
-     
-     sub atompage ($) { #{{{
-     	my $page=shift;
-    +	$page = htmlpage($page);
-    +	$page =~s/\.html$/.atom/;
-     
-    -	return $page.".atom";
-    +	return $page;
-     } #}}}
-     
-     sub genfeed ($$$$@) { #{{{
-    diff -urX ignorepats ikiclean/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
-    --- ikiclean/IkiWiki/Render.pm	2007-02-11 21:40:32.413641000 -0800
-    +++ ikidev/IkiWiki/Render.pm	2007-02-11 21:54:36.246356000 -0800
-    @@ -40,6 +40,7 @@
-     		my $dir;
-     		1 while (($dir)=$page_trimmed=~m!^([^/]+/)!) &&
-     		        defined $dir &&
-    +			$p_trimmed=~m/^\Q$dir\E(?:.)/ &&
-     		        $p_trimmed=~s/^\Q$dir\E// &&
-     		        $page_trimmed=~s/^\Q$dir\E//;
-     			       
-    @@ -57,10 +58,18 @@
-     	my $path="";
-     	my $skip=1;
-     	return if $page eq 'index'; # toplevel
-    -	foreach my $dir (reverse split("/", $page)) {
-    +	if ($page =~ m{/$}){
-    +		$page =~ s{/$}{};
-    +		$path="../";
-    +	}
-    +
-    +	while ($page =~ m!([^/]+)$!) {
-    +		my $last = $1;
-    +		$page =~ s!/?[^/]+$!!;
-     		if (! $skip) {
-     			$path.="../";
-    -			unshift @ret, { url => $path.htmlpage($dir), page => pagetitle($dir) };
-    +			my $target = abs2rel(htmlpage(bestlink($page, $last)), $page);
-    +			unshift @ret, { url => $path.$target, page => pagetitle($last) };
-     		}
-     		else {
-     			$skip=0;
-    diff -urX ignorepats ikiclean/IkiWiki.pm ikidev/IkiWiki.pm
-    --- ikiclean/IkiWiki.pm	2007-02-11 21:40:35.118406000 -0800
-    +++ ikidev/IkiWiki.pm	2007-02-11 22:22:49.146071000 -0800
-    @@ -188,6 +188,7 @@
-     sub basename ($) { #{{{
-     	my $file=shift;
-     
-    +	$file=~s!/$!!;
-     	$file=~s!.*/+!!;
-     	return $file;
-     } #}}}
-    @@ -214,12 +215,14 @@
-     	my $type=pagetype($file);
-     	my $page=$file;
-     	$page=~s/\Q.$type\E*$// if defined $type;
-    +	$page=~s#index$## if $page=~m{/index$};
-     	return $page;
-     } #}}}
-     
-     sub htmlpage ($) { #{{{
-     	my $page=shift;
-     
-    +	return $page."index.html" if $page=~m{/$};
-     	return $page.".html";
-     } #}}}
-     
-    @@ -307,6 +310,7 @@
-     	my $page=shift;
-     	my $link=shift;
-     	
-    +	$page =~ s!/$!!;
-     	my $cwd=$page;
-     	if ($link=~s/^\/+//) {
-     		# absolute links
-    @@ -321,6 +325,9 @@
-     		if (exists $links{$l}) {
-     			return $l;
-     		}
-    +		if (exists $links{$l.'/'}){
-    +			return $l.'/';
-    +		}
-     		elsif (exists $pagecase{lc $l}) {
-     			return $pagecase{lc $l};
-     		}
-    @@ -351,6 +358,7 @@
-     		$page=~s/__(\d+)__/&#$1;/g;
-     	}
-     	$page=~y/_/ /;
-    +	$page=~s!/$!!;
-     
-     	return $page;
-     } #}}}
-    @@ -879,7 +887,7 @@
-     
-     	# relative matching
-     	if ($glob =~ m!^\./!) {
-    -		$from=~s!/?[^/]+$!!;
-    +		$from=~s!/?[^/]*$!!;
-     		$glob=~s!^\./!!;
-     		$glob="$from/$glob" if length $from;
-     	}
+foo/index.html.
 
 I independently implemented a similar, but smaller patch.
 (It's smaller because I only care about rendering; not CGI, for example.)
@@ -226,8 +42,33 @@ Note I handle setting the url; slightly differently.
 Also note that an initial "index" is ignored.  I.e. a
 page "A/B/index.html" is treated as "A/B".
 
-> This is actually a pretty cool hack. I'll have to think about
-> whether I like it better than my way though :) --Ethan
+> Actually, your patch is shorter because it's more elegant and better :)
+> I'm withdrawing my old patch, because yours is much more in line with
+> ikiwiki's design and architecture.
+> I would like to make one suggestion to your patch, which is:
+
+    diff -urX ignorepats clean-ikidev/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
+    --- clean-ikidev/IkiWiki/Render.pm      2007-02-25 12:26:54.745833000 -0800
+    +++ ikidev/IkiWiki/Render.pm    2007-02-25 12:56:40.711261000 -0800
+    @@ -106,11 +106,15 @@
+            if ($actions) {
+                    $template->param(have_actions => 1);
+            }
+    +       my $title = $page;
+    +       if ($page =~ m!/index$!){
+    +               $title =~ s!/index$!!;
+    +       }
+    
+            $template->param(
+                    title => $page eq 'index'
+                            ? $config{wikiname}
+    -                       : pagetitle(basename($page)),
+    +                       : pagetitle(basename($title)),
+                    wikiname => $config{wikiname},
+                    parentlinks => [parentlinks($page)],
+                    content => $content,
+
+> This way foo/index gets "foo" as its title, not "index". --Ethan
 
 ---
 
