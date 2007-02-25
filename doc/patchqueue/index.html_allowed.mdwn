@@ -47,26 +47,55 @@ page "A/B/index.html" is treated as "A/B".
 > ikiwiki's design and architecture.
 > I would like to make one suggestion to your patch, which is:
 
+    diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/inline.pm ikidev/IkiWiki/Plugin/inline.pm
+    --- clean-ikidev/IkiWiki/Plugin/inline.pm   2007-02-25 12:26:54.099113000 -0800
+    +++ ikidev/IkiWiki/Plugin/inline.pm 2007-02-25 14:55:21.163340000 -0800
+    @@ -154,7 +154,7 @@
+                        $link=htmlpage($link) if defined $type;
+                        $link=abs2rel($link, dirname($params{destpage}));
+                        $template->param(pageurl => $link);
+    -                   $template->param(title => pagetitle(basename($page)));
+    +                   $template->param(title => titlename($page));
+                        $template->param(ctime => displaytime($pagectime{$page}));
+
+                        if ($actions) {
+    @@ -318,7 +318,7 @@
+                my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
+
+                $itemtemplate->param(
+    -                   title => pagetitle(basename($p), 1),
+    +                   title => titlename($p, 1),
+                        url => $u,
+                        permalink => $u,
+                        date_822 => date_822($pagectime{$p}),
     diff -urX ignorepats clean-ikidev/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
-    --- clean-ikidev/IkiWiki/Render.pm      2007-02-25 12:26:54.745833000 -0800
-    +++ ikidev/IkiWiki/Render.pm    2007-02-25 12:56:40.711261000 -0800
-    @@ -106,11 +106,15 @@
-            if ($actions) {
-                    $template->param(have_actions => 1);
-            }
-    +       my $title = $page;
-    +       if ($page =~ m!/index$!){
-    +               $title =~ s!/index$!!;
-    +       }
-    
-            $template->param(
-                    title => $page eq 'index'
-                            ? $config{wikiname}
-    -                       : pagetitle(basename($page)),
-    +                       : pagetitle(basename($title)),
-                    wikiname => $config{wikiname},
-                    parentlinks => [parentlinks($page)],
-                    content => $content,
+    --- clean-ikidev/IkiWiki/Render.pm  2007-02-25 12:26:54.745833000 -0800
+    +++ ikidev/IkiWiki/Render.pm        2007-02-25 14:54:01.564715000 -0800
+    @@ -110,7 +110,7 @@
+        $template->param(
+                title => $page eq 'index'
+                        ? $config{wikiname}
+    -                   : pagetitle(basename($page)),
+    +                   : titlename($page),
+                wikiname => $config{wikiname},
+                parentlinks => [parentlinks($page)],
+                content => $content,
+    diff -urX ignorepats clean-ikidev/IkiWiki.pm ikidev/IkiWiki.pm
+    --- clean-ikidev/IkiWiki.pm 2007-02-25 12:26:58.812850000 -0800
+    +++ ikidev/IkiWiki.pm       2007-02-25 15:05:22.328852000 -0800
+    @@ -192,6 +192,12 @@
+        return $untainted;
+     } #}}}
+
+    +sub titlename($;@) { #{{{
+    +   my $page = shift;
+    +   $page =~ s!/index$!!;
+    +   return pagetitle(basename($page), @_);
+    +} #}}}
+    +
+     sub basename ($) { #{{{
+        my $file=shift;
+
 
 > This way foo/index gets "foo" as its title, not "index". --Ethan
 
