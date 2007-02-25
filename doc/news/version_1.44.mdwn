@@ -1,0 +1,53 @@
+News for ikiwiki 1.44:
+
+    The htmllink() function has changed slightly and plugins that use it may
+    need to change how they call it. This function's first three parameters
+    are unchanged, but additional options are now passed using named
+    parameters. If you used htmllink with more than 3 parameters, you will
+    need to change it. The plugin interface version has been increased to 1.02
+    to reflect this change.
+
+ikiwiki 1.44 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Patch by Ben to fix validaton of atom feeds by fixing the category tags.
+   * Add a openidlogin-bg.gif to wikiicons and have the stylesheet use it for the
+     OpenID login form rather than linking to a remote logo, to avoid various
+     issues. Since there is not yet a license for the actual OpenID logo, this
+     file is currently a blank image. Users who want to can copy
+     http://openid.net/login-bg.gif into their wiki.
+   * Allow setting NOTAINT=1 when building the wiki to remove taint checking
+     flags, which can be useful on some hosting providers.
+   * Fix a bug that made links like [[0|foo]] use "foo" as the link text,
+     instead of "0".
+   * Changed calling convention for httmllink slightly. The first three
+     parameters remain the same, but additional options are now passed in using
+     named parameters.
+   * Change plugin interface version to 1.02 to reflect this change.
+   * Add a new anchor option to htmllink. Thanks Ben for the idea.
+   * Support anchors in wikilinks.
+   * Add a "more" plugin based on one contributed by Ben to allow implementing
+     those dreaded "Read more" links in blogs.
+   * Don't error out if estcmd fails, just print a warning message. estcmd is
+     too fragile to let it kill ikiwiki.
+   * Make img plugin not fail immediately if Image::Magick is not available.
+     This lets ikiwiki not build depend on perlmagic.
+   * Detect old versions of xgettext and avoid using them.
+   * perl is broken: print "" || die fails! Work around this insanity.
+   * Smarter detection of no-op changes to po files.
+   * Elegant patch from Ethan to clean up the display of page names in the
+     dropdown when creating a new page.
+   * Since the CGI had to drop the wiki lock to avoid deadlocking the
+     commit hook, it was possible for one CGI to race another one and "win"
+     the commit of both their files. This race has been fixed by adding a new
+     commitlock, which when locked by the CGI, disables the commit hook
+     (except for commit mails). The CGI then takes care of the updates the
+     commit hook would have done.
+   * French translation update. Closes: #[411899](http://bugs.debian.org/411899)
+   * Patch from HenrikBrixAndersen to fix a broken use of foreach in the
+     search plugin.
+   * Correct a bug that could lead to infinite looping after signin in some
+     circumstances.
+   * Patch from Ethan to improve behavior if a page is deleted or moved while
+     someone is editing it.
+   * Some cleanup of field setting in the failed edit and conflict handling
+     code."""]]
