@@ -1,0 +1,29 @@
+Is [prest][1] the perl version of the reST processor referred to in the text?
+It seems to be reasonably well-maintained to me, and differences between it and
+"standard" reST are pretty minor (a fairly exhaustive list, taken from the 
+prest docs, is at the end of this page).
+
+[1]: http://search.cpan.org/~nodine/Text-Restructured-0.003024/
+
+In addition, reST appears to allow raw HTML pass-through with the `raw` 
+directive, though I think a better solution would be expanding the format plugin
+interface. --Ethan
+
+An exhaustive list of differences between prest and "standard" reST follows:
+
+* fewer alternatives for bullet lists (only "+", "*" and "-")
+* escaped colons are not allowed in field names
+* RCS keyword processing is only activated on "recognized bibliographic 
+    field names"
+* multiple consecutive blockquotes seperated by attributions may not be allowed 
+    (not sure; text could be interpreted either way)
+* a warning about auto-symbol footnotes is missing (maybe it's not relevant?)
+* colons are allowed within hyperlink reference names
+* inline markup can be nested
+* some directives are missing (epigraph, highlights, pull quote, date) and 
+    some have been added (MathML, code execution (disabled by default), enscript)
+* container directive now uses "class" instead of "classes"
+* csv directive doesn't require csv.py
+* references directive doesn't allow options
+
+There may be a few others; my eyes glazed over. --Ethan
