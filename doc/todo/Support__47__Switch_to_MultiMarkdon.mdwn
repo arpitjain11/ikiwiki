@@ -1,0 +1,26 @@
+Supporting or switching to MultiMarkdown would take care of a few of the outstanding feature requests. Quoting from the MultiMarkdown site:
+
+>MultiMarkdown is a modification of John Gruber's original Markdown.pl file. It uses the same basic syntax, with several additions:
+
+>   1.	I have added a basic metadata feature, to allow the inclusion of
+>	metadata within a document that can be used in different ways based
+>	on the output format.
+
+>   2.	I have allowed the automatic use of cross-references within a Markdown
+>	document.  For instance, you can easily jump to
+>	[the Introduction][Introduction].
+
+>   3.	I have incorporated John's proposed syntax for footnotes. Since he
+>	has not determined the output format, I created my own.  Mainly, I 
+>	wanted to be able to add footnotes to the LaTeX output; I was less 
+>	concerned with the XHTML formatting.
+
+>   4.	Most importantly, however, I have changed the way that the processed 
+>	output is created, so that it is quite simple to export Markdown syntax
+>	to a variety of outputs.  By setting the `Format` metadata to `complete`,
+>	you generate a well-formed XHTML page.  You can then use XSLT to convert
+>	to virtually any format you like.
+
+MultiMarkdown would solve the BibTex request and the multiple output formats would make the print_link request an easy fix. MultiMarkdown is actively developed and can be found at:
+
+[MultiMarkdown Homepage](http://fletcher.freeshell.org/wiki/MultiMarkdown)
