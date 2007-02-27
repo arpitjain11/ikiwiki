@@ -1,13 +1,16 @@
+The main problem with more sophisticated RST support is that ikiwiki turns 
+preprocessor directives into raw HTML and reST hates inline HTML.
+inline relies on Markdown's handling of raw HTML, specifically
+that it doesn't wrap paragraph-level `<div>`s in `<p>` tags -- see 
+[[todo/htmlvalidation]]. Other plugins might expect their output to be 
+interpreted in certain ways too -- [[Joey]] mentions toggleable and fortune.
+
 Is [prest][1] the perl version of the reST processor referred to in the text?
 It seems to be reasonably well-maintained to me, and differences between it and
-"standard" reST are pretty minor (a fairly exhaustive list, taken from the 
-prest docs, is at the end of this page).
+"standard" reST are pretty minor. A fairly exhaustive list, taken from the 
+prest docs, follows:
 
 [1]: http://search.cpan.org/~nodine/Text-Restructured-0.003024/
-
-In addition, reST appears to allow raw HTML pass-through with the `raw` 
-directive, though I think a better solution would be expanding the format plugin
-interface. --Ethan
 
 An exhaustive list of differences between prest and "standard" reST follows:
 
