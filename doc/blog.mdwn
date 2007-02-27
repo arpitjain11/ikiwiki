@@ -1,9 +1,3 @@
-[[template id=note text="""
-[[if test="enabled(inline)"
-     then="This wiki has the inline plugin **enabled**."
-     else="This wiki has the inline plugin **disabled**."]]
-"""]]
-
 [[if test="enabled(inline)"
      then="You can"
      else="If this wiki had the inline plugin enabled, you could"]]
