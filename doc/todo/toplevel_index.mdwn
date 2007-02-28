@@ -8,6 +8,8 @@ Some inconsistences around the toplevel [[index]] page:
   It would be better to find a way to make the toplevel index page not be a
   special case at all.
 
+Here is a patch:
+
 	--- IkiWiki/Render.pm   (revision 1187)
 	+++ IkiWiki/Render.pm   (working copy)
 	@@ -71,6 +71,7 @@
