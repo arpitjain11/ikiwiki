@@ -1,0 +1,81 @@
+Since some preprocessor directives insert raw HTML, it would be good to 
+specify, per-format, how to pass HTML so that it goes through the format 
+OK. With Markdown we cross our fingers; with reST we use the "raw" 
+directive.
+
+I added an extra named parameter to the htmlize hook, which feels sort of
+wrong, since none of the other hooks take parameters. Let me know what 
+you think. --Ethan
+
+<pre>
+diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/mdwn.pm ikidev/IkiWiki/Plugin/mdwn.pm
+--- clean-ikidev/IkiWiki/Plugin/mdwn.pm 2007-02-25 12:26:54.031200000 -0800
++++ ikidev/IkiWiki/Plugin/mdwn.pm       2007-02-27 21:26:43.556095000 -0800
+@@ -7,7 +7,12 @@
+ use IkiWiki;
+
+ sub import { #{{{
+-       hook(type => "htmlize", id => "mdwn", call => \&htmlize);
++       hook(type => "htmlize", id => "mdwn", call => \&htmlize, escape => \&escape);
++} # }}}
++
++sub escape ($) { #{{{
++       my $html = shift;
++       return $html;
+ } # }}}
+
+ my $markdown_sub;
+diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/rst.pm ikidev/IkiWiki/Plugin/rst.pm
+--- clean-ikidev/IkiWiki/Plugin/rst.pm  2007-02-25 12:26:54.501830000 -0800
++++ ikidev/IkiWiki/Plugin/rst.pm        2007-02-27 22:44:11.040042000 -0800
+@@ -25,13 +25,19 @@
+ html = publish_string(stdin.read(), writer_name='html',
+        settings_overrides = { 'halt_level': 6,
+                               'file_insertion_enabled': 0,
+-                              'raw_enabled': 0 }
++                              'raw_enabled': 1 }
+ );
+ print html[html.find('<body>')+6:html.find('</body>')].strip();
+ ";
+
+ sub import { #{{{
+-       hook(type => "htmlize", id => "rst", call => \&htmlize);
++       hook(type => "htmlize", id => "rst", call => \&htmlize, escape => \&escape);
++} # }}}
++
++sub escape ($) { #{{{
++       my $html = shift;
++       $html =~ s/^/  /mg;
++       return ".. raw:: html\n\n".$html;
+ } # }}}
+
+ sub htmlize (@) { #{{{
+diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/shortcut.pm ikidev/IkiWiki/Plugin/shortcut.pm
+--- clean-ikidev/IkiWiki/Plugin/shortcut.pm     2007-02-25 12:26:54.538830000 -0800
++++ ikidev/IkiWiki/Plugin/shortcut.pm   2007-02-27 22:09:31.536088000 -0800
+@@ -13,6 +13,7 @@
+ sub checkconfig () { #{{{
+        # Preprocess the shortcuts page to get all the available shortcuts
+        # defined before other pages are rendered.
++       $pagesources{"shortcuts"} = "shortcuts.mdwn";
+        IkiWiki::preprocess("shortcuts", "shortcuts",
+                readfile(srcfile("shortcuts.mdwn")));
+ } # }}}
+diff -urX ignorepats clean-ikidev/IkiWiki.pm ikidev/IkiWiki.pm
+--- clean-ikidev/IkiWiki.pm     2007-02-25 12:26:58.812850000 -0800
++++ ikidev/IkiWiki.pm   2007-02-27 22:09:28.149568000 -0800
+@@ -568,6 +577,13 @@
+                                destpage => $destpage,
+                        );
+                        $preprocessing{$page}--;
++                       if ($ret =~ /[<>]/){
++                               my $type=pagetype($pagesources{$destpage});
++                               $ret = $hooks{htmlize}{$type}{escape}->(
++                                       $ret,
++                               );
++                       }
++
+                        return $ret;
+                }
+                else {
+</pre>
