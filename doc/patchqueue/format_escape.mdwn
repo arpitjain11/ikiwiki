@@ -7,6 +7,10 @@ I added an extra named parameter to the htmlize hook, which feels sort of
 wrong, since none of the other hooks take parameters. Let me know what 
 you think. --Ethan
 
+Seems fairly reasonable, actually. Shouldn't the `$type` come from `$page`
+instead of `$destpage` though? Only other obvious change is to make the
+escape parameter optional, and only call it if set. --[[Joey]]
+
 <pre>
 diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/mdwn.pm ikidev/IkiWiki/Plugin/mdwn.pm
 --- clean-ikidev/IkiWiki/Plugin/mdwn.pm 2007-02-25 12:26:54.031200000 -0800
