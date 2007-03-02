@@ -11,26 +11,12 @@ Seems fairly reasonable, actually. Shouldn't the `$type` come from `$page`
 instead of `$destpage` though? Only other obvious change is to make the
 escape parameter optional, and only call it if set. --[[Joey]]
 
+> I couldn't figure out what to make it from, but thinking it through, 
+> yeah, it should be $page. Revised patch follows. --Ethan
+
 <pre>
-diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/mdwn.pm ikidev/IkiWiki/Plugin/mdwn.pm
---- clean-ikidev/IkiWiki/Plugin/mdwn.pm 2007-02-25 12:26:54.031200000 -0800
-+++ ikidev/IkiWiki/Plugin/mdwn.pm       2007-02-27 21:26:43.556095000 -0800
-@@ -7,7 +7,12 @@
- use IkiWiki;
-
- sub import { #{{{
--       hook(type => "htmlize", id => "mdwn", call => \&htmlize);
-+       hook(type => "htmlize", id => "mdwn", call => \&htmlize, escape => \&escape);
-+} # }}}
-+
-+sub escape ($) { #{{{
-+       my $html = shift;
-+       return $html;
- } # }}}
-
- my $markdown_sub;
-diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/rst.pm ikidev/IkiWiki/Plugin/rst.pm
---- clean-ikidev/IkiWiki/Plugin/rst.pm  2007-02-25 12:26:54.501830000 -0800
+diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/rst.pm ikidev/IkiWiki/Plugin/rst.pm
+--- ikiwiki/IkiWiki/Plugin/rst.pm       2006-09-25 14:30:40.000000000 -0700
 +++ ikidev/IkiWiki/Plugin/rst.pm        2007-02-27 22:44:11.040042000 -0800
 @@ -25,13 +25,19 @@
  html = publish_string(stdin.read(), writer_name='html',
@@ -54,8 +40,8 @@ diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/rst.pm ikidev/IkiWiki/Plugin/rs
  } # }}}
 
  sub htmlize (@) { #{{{
-diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/shortcut.pm ikidev/IkiWiki/Plugin/shortcut.pm
---- clean-ikidev/IkiWiki/Plugin/shortcut.pm     2007-02-25 12:26:54.538830000 -0800
+diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/shortcut.pm ikidev/IkiWiki/Plugin/shortcut.pm
+--- ikiwiki/IkiWiki/Plugin/shortcut.pm  2007-02-15 00:38:48.000000000 -0800
 +++ ikidev/IkiWiki/Plugin/shortcut.pm   2007-02-27 22:09:31.536088000 -0800
 @@ -13,6 +13,7 @@
  sub checkconfig () { #{{{
@@ -65,18 +51,22 @@ diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/shortcut.pm ikidev/IkiWiki/Plug
         IkiWiki::preprocess("shortcuts", "shortcuts",
                 readfile(srcfile("shortcuts.mdwn")));
  } # }}}
-diff -urX ignorepats clean-ikidev/IkiWiki.pm ikidev/IkiWiki.pm
---- clean-ikidev/IkiWiki.pm     2007-02-25 12:26:58.812850000 -0800
-+++ ikidev/IkiWiki.pm   2007-02-27 22:09:28.149568000 -0800
-@@ -568,6 +577,13 @@
+diff -urNX ignorepats ikiwiki/IkiWiki.pm ikidev/IkiWiki.pm
+--- ikiwiki/IkiWiki.pm  2007-02-25 15:01:27.211170000 -0800
++++ ikidev/IkiWiki.pm   2007-03-01 18:20:39.910925000 -0800
+@@ -580,6 +577,17 @@
                                 destpage => $destpage,
                         );
                         $preprocessing{$page}--;
 +                       if ($ret =~ /[<>]/){
-+                               my $type=pagetype($pagesources{$destpage});
-+                               $ret = $hooks{htmlize}{$type}{escape}->(
-+                                       $ret,
-+                               );
++                               if ($pagesources{$page}) {
++                                       my $type=pagetype($pagesources{$page});
++                                       if ($hooks{htmlize}{$type}{escape}) {
++                                               $ret = $hooks{htmlize}{$type}{escape}->(
++                                                       $ret,
++                                               );
++                                       }
++                               }
 +                       }
 +
                         return $ret;
