@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-24 20:17-0500\n"
+"POT-Creation-Date: 2007-03-01 22:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:171 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
@@ -121,16 +121,21 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:96
+#: ../IkiWiki/Plugin/inline.pm:102
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:142
+#, perl-format
+msgid "nonexistant template %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/inline.pm:179 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:387
+#: ../IkiWiki/Plugin/inline.pm:394
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -449,7 +454,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:559
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

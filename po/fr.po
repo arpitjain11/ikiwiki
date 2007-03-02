@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-23 19:44-0500\n"
+"POT-Creation-Date: 2007-03-01 22:55-0500\n"
 "PO-Revision-Date: 2007-02-13 13:02+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -31,7 +31,7 @@ msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
 #: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:171 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
@@ -125,16 +125,21 @@ msgstr ""
 "Vous devez indiquer l'url du wiki par --url lors de l'utilisation de --rss "
 "ou --atom"
 
-#: ../IkiWiki/Plugin/inline.pm:96
+#: ../IkiWiki/Plugin/inline.pm:102
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:142
+#, perl-format
+msgid "nonexistant template %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/inline.pm:179 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:387
+#: ../IkiWiki/Plugin/inline.pm:394
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -461,7 +466,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:559
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

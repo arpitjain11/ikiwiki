@@ -77,6 +77,12 @@ sub preprocess_inline (@) { #{{{
 		$desc = $config{wikiname};
 	}
 	my $actions=yesno($params{actions});
+	if (exists $params{template}) {
+		$params{template}=~s/[^-_a-zA-Z0-9]+//g;
+	}
+	else {
+		$params{template} = $archive ? "archivepage" : "inlinepage";
+	}
 
 	my @list;
 	foreach my $page (keys %pagesources) {
@@ -131,10 +137,11 @@ sub preprocess_inline (@) { #{{{
 		$ret.=$linktemplate->output;
 	}
 	
-	my $template=template(
-		($archive ? "inlinepagetitle.tmpl" : "inlinepage.tmpl"),
-		blind_cache => 1,
-	) unless $raw;
+	my @params=IkiWiki::template_params($params{template}.".tmpl", blind_cache => 1);
+	if (! @params) {
+		return sprintf(gettext("nonexistant template %s @params"), $params{template});
+	}
+	my $template=HTML::Template->new(@params) unless $raw;
 	
 	foreach my $page (@list) {
 		my $file = $pagesources{$page};

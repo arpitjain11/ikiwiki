@@ -4,7 +4,8 @@ to learn.
 
 The aim is to keep almost all html out of ikiwiki and in the templates.
 
-It ships with some basic templates which can be customised:
+It ships with some basic templates which can be customised. These are
+located in /usr/share/ikiwiki/templates by default.
 
 * `page.tmpl` - Used for displaying all regular wiki pages.
 * `misc.tmpl` - Generic template used for any page that doesn't
@@ -22,8 +23,7 @@ It ships with some basic templates which can be customised:
 * `atomitem.tmpl` - Used for generating individual items on atom feeds.
 * `inlinepage.tmpl` - Used for adding a page inline in a blog
   page.
-* `inlinepagetitle.tmpl` - Used for listing a page inline in a blog
-  archive page.
+* `archivepage.tmpl` - Used for listing a page in a blog archive page.
 * `estseek.conf` - Not a html template, this is actually a template for
   a config file for the [[HyperEstraier]] search engine. If you like you
   can read the [[HyperEstraier]] docs and configure it using this.

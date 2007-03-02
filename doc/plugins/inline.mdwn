@@ -34,6 +34,11 @@ directive:
   full controls.
 * `quick` - Build archives in quick mode, without reading page contents for
   metadata. By default, this also turns off generation of any feeds.
+* `template` - Specifies the template to fill out to display each inlined
+  page. By default the `inlinepage` [[template|templates]] is used, while
+  the `archivepage` template is used for archives. Set this parameter to
+  use some other, custom template. Note that you should still set
+  `archive=yes` if your custom template does not include the page content.
 * `raw` - Rather than the default behavior of creating a [[blog]],
   if raw is set to "yes", the page will be included raw, without additional
   markup around it, as if it were a literal part of the source of the 
