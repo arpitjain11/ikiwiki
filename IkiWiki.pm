@@ -365,20 +365,18 @@ sub pagetitle ($;$) { #{{{
 	my $unescaped=shift;
 
 	if ($unescaped) {
-		$page=~s/__(\d+)__/chr($1)/eg;
+		$page=~s/(__(\d+)__|_)/$1 eq '_' ? ' ' : chr($2)/eg;
 	}
 	else {
-		$page=~s/__(\d+)__/&#$1;/g;
+		$page=~s/(__(\d+)__|_)/$1 eq '_' ? ' ' : "&#$2;"/eg;
 	}
-	$page=~y/_/ /;
 
 	return $page;
 } #}}}
 
 sub titlepage ($) { #{{{
 	my $title=shift;
-	$title=~y/ /_/;
-	$title=~s/([^-[:alnum:]_:+\/.])/"__".ord($1)."__"/eg;
+	$title=~s/([^-[:alnum:]:+\/.])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
 	return $title;
 } #}}}
 
