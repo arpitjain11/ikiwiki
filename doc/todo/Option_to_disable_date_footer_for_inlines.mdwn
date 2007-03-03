@@ -16,4 +16,14 @@ instance. --[[JoshTriplett]]
 >> but I haven't got around to that yet. --[[tuomov]]
 
 Customised templates can now be specified with the `templates` parameter,
-so [[todo/done]] --[[Joey]]
+so done --[[Joey]]
+
+> That definitely solves this problem in general; thanks!
+>
+> For this specific case, I'd still like to see a `titleonly.tmpl` template
+> included by default.  How about this simple template, based on
+> archivepage.tmpl?
+>
+>     <p><a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a></p>
+>
+> --[[JoshTriplett]]
