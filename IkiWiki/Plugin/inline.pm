@@ -139,7 +139,7 @@ sub preprocess_inline (@) { #{{{
 	
 	my @params=IkiWiki::template_params($params{template}.".tmpl", blind_cache => 1);
 	if (! @params) {
-		return sprintf(gettext("nonexistant template %s @params"), $params{template});
+		return sprintf(gettext("nonexistant template %s"), $params{template});
 	}
 	my $template=HTML::Template->new(@params) unless $raw;
 	
