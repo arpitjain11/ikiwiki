@@ -4,7 +4,7 @@ Based on ["What should a mentoring organization application look like?"](http://
 
     The ikiwiki project aims to develop a general-purpose wiki engine, with particular emphasis on personal wikis, project wikis, blogs, and collaborative software development.  We provide several features unique or uncommon amongst wikis:
 
-    * Rather than inventing yet another simplistic, linear revision control system, ikiwiki uses a standard version control system such as [[Subversion]] or [[Git]].  You can edit a wiki by committing to your repository, as well as through a traditional web interface.  This makes ikiwiki ideal for collaborative software development; just keep your wiki in version control next to your software.  You can also take advantage of the features of these systems; for instance, you can keep a local branch of your wiki via [[Git]].
+    * Rather than inventing yet another simplistic, linear revision control system, ikiwiki uses a standard version control system such as Subversion or Git.  You can edit a wiki by committing to your repository, as well as through a traditional web interface.  This makes ikiwiki ideal for collaborative software development; just keep your wiki in version control next to your software.  You can also take advantage of the features of these systems; for instance, you can keep a local branch of your wiki via Git.
 
     * You can turn any set of pages into an inline news feed, complete with RSS and Atom support.  You can run your weblog on ikiwiki (and many people do), run a Planet-like aggregator for external feeds, or keep a TODO and bug list with tags for completed items.
 
@@ -28,11 +28,11 @@ Based on ["What should a mentoring organization application look like?"](http://
 
 5. **Who will your organization administrator be? Please include Google Account information.**
 
-
+    Josh Triplett <josh@freedesktop.org>
 
 6. **What license does your project use?**
 
-    ikiwiki uses the GNU General Public License.  The basewiki, incorporated into users' wikis, uses an all-permissive license.  See [[FreeSoftware]] for details.
+    ikiwiki uses the GNU General Public License.  The basewiki, incorporated into users' wikis, uses an all-permissive license.  See <http://ikiwiki.info/freesoftware.html> for details.
 
 7. **What is the URL for your ideas page?**
 
@@ -59,7 +59,8 @@ Based on ["What should a mentoring organization application look like?"](http://
 
 12. **Who will your mentors be? Please include Google Account Information.**
 
-
+    Joey Hess <joey@kitenet.net>
+    Josh Triplett <josh@freedesktop.org>
 
 13. **What criteria did you use to select these individuals as mentors? Please be as specific as possible.**
 
@@ -75,10 +76,12 @@ Based on ["What should a mentoring organization application look like?"](http://
 
 16. **What steps will you take to encourage students to interact with your project's community before, during and after the program?**
 
-    Before the program, we will encourage any students interested in working on ikiwiki to contact us.  We will advise them to create an account on the ikiwiki ikiwiki, look over the TODO items, add ideas of their own, and discuss existing ideas.  We will also help them set up their own ikiwikis, both for experimentation and for actual use.  We will suggest that students begin looking at the ikiwiki codebase and asking questions.
+    Before the program, we will encourage any students interested in working on ikiwiki to contact us.  We will advise them to create an account on the ikiwiki ikiwiki, look over the TODO items (<http://ikiwiki.info/todo.html>), add ideas of their own, and discuss existing ideas.  We will also help them set up their own ikiwikis, both for experimentation and for actual use.  We will suggest that students begin looking at the ikiwiki codebase and asking questions.
 
     During the program, we would like all students working on projects to create a user page with an activity blog, and update that blog regularly with the status of their project.  We also plan to aggregate these blogs into a single Summer of Code newsfeed, and suggest that students subscribe to this feed; this will allow them to observe the activity of their fellow students, to spur each other forward and help each other along the way.  We plan to accept incremental patches towards a feature, or support students who wish to create their own branch.
 
     After the program, we will continue to work towards integrating any projects that have not yet completed, and talk with students about their future plans regarding ikiwiki.  If the students have started using ikiwiki for their own wikis, as we hope they will after we encourage them to experiment with it, then they will likely have a vested interest in ongoing ikiwiki development.  Thus, we will encourage them to remain active by helping them become active and interested users.
 
 17. **What will you do to ensure that your accepted students stick with the project after GSoC concludes?**
+
+    Near the conclusion of GSoC, we will talk to each student about their future plans regarding ikiwiki.  During the program, we will help the students set up their own ikiwikis if they have not already done so, and encourage them to use those ikiwikis to maintain a weblog, maintain their personal website, keep a TODO list, or do any of the other tasks ikiwiki proves useful for.  We plan to encourage the students to remain active developers by helping them become active and interested users, and thus giving them a personal stake in the ongoing development of ikiwiki.
