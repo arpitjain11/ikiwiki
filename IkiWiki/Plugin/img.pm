@@ -49,7 +49,6 @@ sub preprocess (@) { #{{{
 
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
 		$imglink = "$dir/${w}x${h}-$base";
-		will_render($params{page}, $imglink);
 
 		if (-e $outfile && (-M srcfile($file) >= -M $outfile)) {
 			$r = $im->Read($outfile);
@@ -62,8 +61,15 @@ sub preprocess (@) { #{{{
 			$r = $im->Resize(geometry => "${w}x${h}");
 			return "[[img failed to resize: $r]]" if $r;
 
-			my @blob = $im->ImageToBlob();
-			writefile($imglink, $config{destdir}, $blob[0], 1);
+			# don't actually write file in preview mode
+			if (! $params{preview}) {
+				will_render($params{page}, $imglink);
+				my @blob = $im->ImageToBlob();
+				writefile($imglink, $config{destdir}, $blob[0], 1);
+			}
+			else {
+				$imglink = $file;
+			}
 		}
 	}
 	else {
@@ -74,12 +80,19 @@ sub preprocess (@) { #{{{
 
 	add_depends($imglink, $params{page});
 
-	return '<a href="'.
-		IkiWiki::abs2rel($file, IkiWiki::dirname($params{destpage})).
-		'"><img src="'.
-		IkiWiki::abs2rel($imglink, IkiWiki::dirname($params{destpage})).
+	my ($fileurl, $imgurl);
+	if (! $params{preview}) {
+		$fileurl=IkiWiki::abs2rel($file, IkiWiki::dirname($params{destpage}));
+		$imgurl=IkiWiki::abs2rel($imglink, IkiWiki::dirname($params{destpage}));
+	}
+	else {
+		$fileurl="$config{url}/$file";
+		$imgurl="$config{url}/$imglink";
+	}
+
+	return '<a href="'.$fileurl.'"><img src="'.$imgurl.
 		'" alt="'.$alt.'" width="'.$im->Get("width").
 		'" height="'.$im->Get("height").'" /></a>';
 } #}}}
 
-1;
+1

@@ -17,9 +17,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  displaytime will_render gettext
                  %config %links %renderedfiles %pagesources);
 our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
-our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
-my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
-
+our $version="1.45";my $installdir="/usr";
 # Optimisation.
 use Memoize;
 memoize("abs2rel");
@@ -506,11 +504,17 @@ sub linkify ($$$) { #{{{
 } #}}}
 
 my %preprocessing;
-sub preprocess ($$$;$) { #{{{
+our $preprocess_preview=0;
+sub preprocess ($$$;$$) { #{{{
 	my $page=shift; # the page the data comes from
 	my $destpage=shift; # the page the data will appear in (different for inline)
 	my $content=shift;
 	my $scan=shift;
+	my $preview=shift;
+
+	# Using local because it needs to be set within any nested calls
+	# of this function.
+	local $preprocess_preview=$preview if defined $preview;
 
 	my $handle=sub {
 		my $escape=shift;
@@ -562,6 +566,7 @@ sub preprocess ($$$;$) { #{{{
 				@params,
 				page => $page,
 				destpage => $destpage,
+				preview => $preprocess_preview,
 			);
 			$preprocessing{$page}--;
 			return $ret;

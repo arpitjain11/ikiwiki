@@ -67,6 +67,7 @@ sub preprocess_inline (@) { #{{{
 	my $atom=($config{atom} && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
+	$feeds=0 if $params{preview};
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}

@@ -96,9 +96,11 @@ Each time the directive is processed, the referenced function (`preprocess`
 in the example above) is called, and is passed named parameters. A "page"
 parameter gives the name of the page that embedded the preprocessor
 directive, while a "destpage" parameter gives the name of the page the
-content is going to (different for inlined pages). All parameters included
-in the directive are included as named parameters as well. Whatever the
-function returns goes onto the page in place of the directive.
+content is going to (different for inlined pages), and a "preview"
+parameter is set to a true value if the page is being previewed. All
+parameters included in the directive are included as named parameters as
+well. Whatever the function returns goes onto the page in place of the
+directive.
 
 Note that if the [[htmlscrubber]] is enabled, html in
 [[PreProcessorDirective]] output is sanitised, which may limit what your

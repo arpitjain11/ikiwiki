@@ -6,8 +6,14 @@ ikiwiki (1.45) UNRELEASED; urgency=low
   * Add "template" option to inline plugin to allow for use of customised
     templates.
   * Add titlepage template for inline plugin.
+  * Add preview parameter to preprocesser calls, use this rather than the
+    previous ugly hack used to avoid writing rss feeds in previews.
+  * Fix the img plugin to avoid overwriting images in previews. Instead it
+    does all the work to make sure the resizing works, and dummys up a resized
+    image using width and height attributes.
+  * Also fixes img preview display, the links were wrong in preview before.
 
- -- Joey Hess <joeyh@debian.org>  Tue,  6 Mar 2007 14:16:21 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue,  6 Mar 2007 16:41:53 -0500
 
 ikiwiki (1.44) unstable; urgency=low
 
