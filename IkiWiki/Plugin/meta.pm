@@ -37,6 +37,7 @@ sub preprocess (@) { #{{{
 	my $page=$params{page};
 	delete $params{page};
 	delete $params{destpage};
+	delete $params{preview};
 
 	eval q{use HTML::Entities};
 	# Always dencode, even if encoding later, since it might not be

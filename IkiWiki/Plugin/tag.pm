@@ -40,6 +40,7 @@ sub preprocess (@) { #{{{
 	my $page = $params{page};
 	delete $params{page};
 	delete $params{destpage};
+	delete $params{preview};
 
 	foreach my $tag (keys %params) {
 		$tags{$page}{$tag}=1;
