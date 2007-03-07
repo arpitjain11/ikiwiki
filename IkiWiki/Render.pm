@@ -157,7 +157,7 @@ sub scan ($) { #{{{
 
 		my @links;
 		while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
-			push @links, titlepage($2);
+			push @links, linkpage($2);
 		}
 		if ($config{discussion}) {
 			# Discussion links are a special case since they're

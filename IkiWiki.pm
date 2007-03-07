@@ -376,6 +376,12 @@ sub titlepage ($) { #{{{
 	return $title;
 } #}}}
 
+sub linkpage ($) { #{{{
+	my $link=shift;
+	$link=~s/([^-[:alnum:]:+\/._])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+	return $link;
+} #}}}
+
 sub cgiurl (@) { #{{{
 	my %params=@_;
 
@@ -421,6 +427,8 @@ sub htmllink ($$$;@) { #{{{
 	my $page=shift; # the page that will contain the link (different for inline)
 	my $link=shift;
 	my %opts=@_;
+
+print STDERR "bestlink $lpage $link\n" if $lpage eq "roadmap" && $link =~/rcs/;
 
 	my $bestlink;
 	if (! $opts{forcesubpage}) {
@@ -496,8 +504,8 @@ sub linkify ($$$) { #{{{
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
 		defined $2
-			? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, titlepage($3), anchor => $4, linktext => pagetitle($2)))
-			: ( $1 ? "[[$3]]"    : htmllink($lpage, $page, titlepage($3), anchor => $4))
+			? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, linkpage($3), anchor => $4, linktext => pagetitle($2)))
+			: ( $1 ? "[[$3]]"    : htmllink($lpage, $page, linkpage($3), anchor => $4))
 	}eg;
 	
 	return $content;

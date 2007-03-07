@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -68,6 +68,7 @@ sub links_text ($$) {
 
 
 ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "bar"])), "ok link");
+ok(links_to("bar_baz", linkify("foo", "foo", "link to [[bar_baz]] ok", ["foo", "bar_baz"])), "ok link");
 ok(not_links_to("bar", linkify("foo", "foo", "link to \\[[bar]] ok", ["foo", "bar"])), "escaped link");
 ok(links_to("page=bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo"])), "broken link");
 ok(links_to("bar", linkify("foo", "foo", "link to [[baz]] and [[bar]] ok", ["foo", "baz", "bar"])), "dual links");
