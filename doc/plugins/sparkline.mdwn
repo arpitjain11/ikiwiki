@@ -39,8 +39,8 @@ marker, and the low point has a red marker.
 	barspacing=1 height=13]]
 
 [[if test="enabled(sparkline)" then="""
-[[sparkline 1 -1(red) 1 -1(red) 1 1 1 -1(red) -1(red) style=bar barwidth=2
-barspacing=1 height=13]]
+[[sparkline 1 -1(red) 1 -1(red) 1 1 1 -1(red) -1(red)
+style=bar barwidth=2 barspacing=1 height=13]]
 """]]
 
 This more complex example generates a bar graph. The bars are 2 pixels
