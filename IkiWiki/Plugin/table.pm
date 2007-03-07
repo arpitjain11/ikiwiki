@@ -5,7 +5,6 @@ use warnings;
 use strict;
 
 use IkiWiki;
-use IkiWiki::Plugin::mdwn;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "table", call => \&preprocess);
@@ -136,7 +135,7 @@ sub split_dsv ($$) { #{{{
 	return @data;
 } #}}}
 
-sub htmlize ($$$){ #{{{
+sub htmlize ($$$) { #{{{
 	my $page = shift;
 	my $destpage = shift;
 	my $text = shift;
