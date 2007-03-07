@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-01 22:55-0500\n"
+"POT-Creation-Date: 2007-03-07 00:16-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -29,28 +29,28 @@ msgstr "Tùy thích đã được lưu."
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:171 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:474
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:527 ../IkiWiki/CGI.pm:571
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:668
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:700
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -123,21 +123,21 @@ msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --rss » hay "
 "« --atom »"
 
-#: ../IkiWiki/Plugin/inline.pm:102
+#: ../IkiWiki/Plugin/inline.pm:103
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "kiểu sắp xếp không rõ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:142
+#: ../IkiWiki/Plugin/inline.pm:143
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:179 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Thảo luận"
 
-#: ../IkiWiki/Plugin/inline.pm:394
+#: ../IkiWiki/Plugin/inline.pm:395
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 
@@ -308,6 +308,11 @@ msgstr "lối tắt %s chỉ tới %s"
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "lỗi phân tách hình cười nào nên tắt bổ sung"
 
+#: ../IkiWiki/Plugin/sparkline.pm:148
+#, fuzzy
+msgid "sparkline failed to run php"
+msgstr "linkmap không chạy dot được"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "mẫu thiếu tham số id"
@@ -445,12 +450,12 @@ msgstr "%s đã được tạo ra"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
 msgid "Error"
 msgstr "Lỗi"
 
@@ -458,7 +463,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:559
+#: ../IkiWiki.pm:561
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

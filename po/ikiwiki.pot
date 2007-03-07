@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-06 17:08-0500\n"
+"POT-Creation-Date: 2007-03-07 00:16-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -306,6 +306,10 @@ msgstr ""
 msgid "failed to parse any smileys, disabling plugin"
 msgstr ""
 
+#: ../IkiWiki/Plugin/sparkline.pm:148
+msgid "sparkline failed to run php"
+msgstr ""
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr ""
@@ -442,11 +446,11 @@ msgstr ""
 msgid "usage: ikiwiki [options] source dest"
 msgstr ""
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
 msgid "Error"
 msgstr ""
 
@@ -454,7 +458,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:565
+#: ../IkiWiki.pm:561
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

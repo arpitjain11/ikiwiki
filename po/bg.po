@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-01 22:55-0500\n"
+"POT-Creation-Date: 2007-03-07 00:16-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -29,28 +29,28 @@ msgstr "Предпочитанията са запазени."
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:171 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "дискусия"
 
-#: ../IkiWiki/CGI.pm:474
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:527 ../IkiWiki/CGI.pm:571
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
 
-#: ../IkiWiki/CGI.pm:668
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:700
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -123,21 +123,21 @@ msgstr ""
 "Когато се използва „--rss” или „--atom” трябва да се укаже и "
 "местоположението на уикито посредством параметъра „--url”"
 
-#: ../IkiWiki/Plugin/inline.pm:102
+#: ../IkiWiki/Plugin/inline.pm:103
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "непознат вид сортиране „%s”"
 
-#: ../IkiWiki/Plugin/inline.pm:142
+#: ../IkiWiki/Plugin/inline.pm:143
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:179 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Дискусия"
 
-#: ../IkiWiki/Plugin/inline.pm:394
+#: ../IkiWiki/Plugin/inline.pm:395
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 
@@ -311,6 +311,11 @@ msgstr "препратката „%s” сочи към „%s”"
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "няма разпознати усмивки; изключване на приставката „smiley”"
 
+#: ../IkiWiki/Plugin/sparkline.pm:148
+#, fuzzy
+msgid "sparkline failed to run php"
+msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "липсващ параметър „id” на шаблона"
@@ -449,13 +454,13 @@ msgstr "успешно генериране на %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "формат: ikiwiki [опции] източник местоназначение"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "При използване на пареметъра „--cgi” е необходимо да се укаже и "
 "местоположението на уикито чрез параметъра „--url”"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
 msgid "Error"
 msgstr "Грешка"
 
@@ -463,7 +468,7 @@ msgstr "Грешка"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:559
+#: ../IkiWiki.pm:561
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"

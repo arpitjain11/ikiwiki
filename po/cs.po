@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-01 22:55-0500\n"
+"POT-Creation-Date: 2007-03-07 00:16-0500\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -28,28 +28,28 @@ msgstr "Nastavení uloženo."
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:171 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:474
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:527 ../IkiWiki/CGI.pm:571
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:668
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:700
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
@@ -120,21 +120,21 @@ msgstr "googlecalendar v html nenalezl url"
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki/Plugin/inline.pm:102
+#: ../IkiWiki/Plugin/inline.pm:103
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:142
+#: ../IkiWiki/Plugin/inline.pm:143
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:179 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:394
+#: ../IkiWiki/Plugin/inline.pm:395
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -307,6 +307,11 @@ msgstr "zkratka %s odkazuje na <i>%s</i>"
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "selhalo zpracování jakýchkoliv smajlíků, vypínám modul"
 
+#: ../IkiWiki/Plugin/sparkline.pm:148
+#, fuzzy
+msgid "sparkline failed to run php"
+msgstr "linkmapu se nepodařilo spustit dot"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "šabloně chybí parametr id"
@@ -444,11 +449,11 @@ msgstr "%s byl úspěšně vytvořen"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "použití: ikiwiki [volby] zdroj cíl"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
 msgid "Error"
 msgstr "Chyba"
 
@@ -456,7 +461,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:559
+#: ../IkiWiki.pm:561
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"

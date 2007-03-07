@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-01 22:55-0500\n"
+"POT-Creation-Date: 2007-03-07 00:16-0500\n"
 "PO-Revision-Date: 2007-02-13 13:02+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -30,28 +30,28 @@ msgstr "Les préférences ont été enregistrées."
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:171 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:474
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:527 ../IkiWiki/CGI.pm:571
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:668
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:700
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
@@ -125,21 +125,21 @@ msgstr ""
 "Vous devez indiquer l'url du wiki par --url lors de l'utilisation de --rss "
 "ou --atom"
 
-#: ../IkiWiki/Plugin/inline.pm:102
+#: ../IkiWiki/Plugin/inline.pm:103
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:142
+#: ../IkiWiki/Plugin/inline.pm:143
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:179 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:394
+#: ../IkiWiki/Plugin/inline.pm:395
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -312,6 +312,11 @@ msgstr "Le raccourci %s pointe vers %s"
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "Aucun smiley n'a pu être analysé, le greffon est désactivé"
 
+#: ../IkiWiki/Plugin/sparkline.pm:148
+#, fuzzy
+msgid "sparkline failed to run php"
+msgstr "Échec de lancement de dot par linkmap"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "Paramètre d'identification manquant dans le modèle"
@@ -452,13 +457,13 @@ msgstr "%s a été créé avec succès"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:102
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une url vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
 msgid "Error"
 msgstr "Erreur"
 
@@ -466,7 +471,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:559
+#: ../IkiWiki.pm:561
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
