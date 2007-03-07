@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 02:29-0500\n"
+"POT-Creation-Date: 2007-03-07 06:39-0500\n"
 "PO-Revision-Date: 2007-02-12 10:31+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -24,33 +24,33 @@ msgstr "Antes es necesario identificarse."
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:344
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:477
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:671
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:702
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "registro fallido, ¿ tal vez es necesario activar las cookies en el "
@@ -350,6 +350,15 @@ msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
 msgid "sparkline failed to run php"
 msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
 
+#: ../IkiWiki/Plugin/table.pm:77
+msgid "Direct data download"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:124
+#, fuzzy, perl-format
+msgid "parse fail at line %d: %s"
+msgstr "no puedo escribir en %s: %s"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "A el complemento template le falta el parámetro id"
@@ -505,7 +514,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:567
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

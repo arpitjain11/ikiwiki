@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 02:29-0500\n"
+"POT-Creation-Date: 2007-03-07 06:39-0500\n"
 "PO-Revision-Date: 2007-02-13 13:02+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -25,33 +25,33 @@ msgstr "Vous devez d'abord vous identifier."
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:344
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:477
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:671
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:702
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
@@ -349,6 +349,15 @@ msgstr "Échec de lancement de dot par linkmap"
 msgid "sparkline failed to run php"
 msgstr "Échec de lancement de dot par linkmap"
 
+#: ../IkiWiki/Plugin/table.pm:77
+msgid "Direct data download"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:124
+#, fuzzy, perl-format
+msgid "parse fail at line %d: %s"
+msgstr "Échec de l'écriture de %s : %s"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "Paramètre d'identification manquant dans le modèle"
@@ -503,7 +512,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:567
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

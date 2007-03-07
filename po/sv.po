@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 02:29-0500\n"
+"POT-Creation-Date: 2007-03-07 06:39-0500\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -23,33 +23,33 @@ msgstr "Du måste logga in först."
 msgid "Preferences saved."
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:344
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:477
 #, perl-format
 msgid "creating %s"
 msgstr "skapar %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
 #, perl-format
 msgid "editing %s"
 msgstr "redigerar %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:671
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:702
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -344,6 +344,15 @@ msgstr "linkmap misslyckades att köra dot"
 msgid "sparkline failed to run php"
 msgstr "linkmap misslyckades att köra dot"
 
+#: ../IkiWiki/Plugin/table.pm:77
+msgid "Direct data download"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:124
+#, fuzzy, perl-format
+msgid "parse fail at line %d: %s"
+msgstr "misslyckades med att skriva %s: %s"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "mall saknar id-parameter"
@@ -494,7 +503,7 @@ msgstr "Fel"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:567
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"

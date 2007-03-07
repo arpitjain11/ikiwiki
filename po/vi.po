@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 02:29-0500\n"
+"POT-Creation-Date: 2007-03-07 06:39-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -24,33 +24,33 @@ msgstr "Trước tiên bạn cần phải đăng nhập."
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:344
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:477
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:671
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:702
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -345,6 +345,15 @@ msgstr "linkmap không chạy dot được"
 msgid "sparkline failed to run php"
 msgstr "linkmap không chạy dot được"
 
+#: ../IkiWiki/Plugin/table.pm:77
+msgid "Direct data download"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:124
+#, fuzzy, perl-format
+msgid "parse fail at line %d: %s"
+msgstr "lỗi ghi %s: %s"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "mẫu thiếu tham số id"
@@ -495,7 +504,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:567
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

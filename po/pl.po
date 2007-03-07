@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.37\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 02:29-0500\n"
+"POT-Creation-Date: 2007-03-07 06:39-0500\n"
 "PO-Revision-Date: 2007-01-05 16:33+100\n"
 "Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -24,33 +24,33 @@ msgstr "Konieczne jest zalogowanie się."
 msgid "Preferences saved."
 msgstr "Ustawienia zostały zapisane."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:344
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "dyskusja"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:477
 #, perl-format
 msgid "creating %s"
 msgstr "tworzenie strony %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
 #, perl-format
 msgid "editing %s"
 msgstr "edycja strony %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:671
 msgid "You are banned."
 msgstr "Dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:702
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -352,6 +352,15 @@ msgstr "awaria wtyczki linkmap"
 msgid "sparkline failed to run php"
 msgstr "awaria wtyczki linkmap"
 
+#: ../IkiWiki/Plugin/table.pm:77
+msgid "Direct data download"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:124
+#, fuzzy, perl-format
+msgid "parse fail at line %d: %s"
+msgstr "awaria w trakcie zapisu strony %s: %s"
+
 #: ../IkiWiki/Plugin/template.pm:19
 msgid "template missing id parameter"
 msgstr "brakujący parametr id we wtyczce template"
@@ -504,7 +513,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:567
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
