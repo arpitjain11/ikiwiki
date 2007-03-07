@@ -60,13 +60,13 @@ sub preprocess (@) { #{{{
 			}
 		}
 		elsif (! length $value) {
-			return "[[sparkline parse error \"$key\"]]";
+			return "[[".gettext("sparkline parse error")." \"$key\"]]";
 		}
 		elsif ($key eq 'featurepoint') {
 			my ($x, $y, $color, $diameter, $text, $location)=
 				split(/\s*,\s*/, $value);
 			if (! defined $diameter || $diameter < 0) {
-				return "[[sparkline bad featurepoint diameter]]";
+				return "[[".gettext("sparkline bad featurepoint diameter")."]]";
 			}
 			$x=int($x);
 			$y=int($y);
@@ -76,7 +76,7 @@ sub preprocess (@) { #{{{
 			if (defined $location) {
 				$location=$locmap{$location};
 				if (! defined $location) {
-					return "[[sparkline bad featurepoint location]]";
+					return "[[".gettext("sparkline bad featurepoint location")."]]";
 				}
 			}
 			$php.=qq{\$sparkline->SetFeaturePoint($x, $y, '$color', $diameter};
@@ -87,29 +87,29 @@ sub preprocess (@) { #{{{
 	}
 
 	if ($c eq 0) {
-		return "[[sparkline missing values]]";
+		return "[[".gettext("sparkline missing values")."]]";
 	}
 
 	my $height=int($params{height} || 20);
 	if ($height < 2 || $height > 100) {
-		return "[[sparkline bad height value]]";
+		return "[[".gettext("sparkline bad height value")."]]";
 	}
 	if ($style eq "Bar") {
 		$php.=qq{\$sparkline->Render($height);\n};
 	}
 	else {
 		if (! exists $params{width}) {
-			return "[[sparkline missing width parameter]]";
+			return "[[".gettext("sparkline missing width parameter")."]]";
 		}
 		my $width=int($params{width});
 		if ($width < 2 || $width > 1024) {
-			return "[[sparkline bad width value]]";
+			return "[[".gettext("sparkline bad width value")."]]";
 		}
 		$php.=qq{\$sparkline->RenderResampled($width, $height);\n};
 	}
 	
 	if ($params{preview}) {
-		return "[[sparkline previewing not implemented]]";
+		return "[[".gettext("sparkline previewing not implemented")."]]";
 	}
 	
 	$php.=qq{\$sparkline->Output();\n?>\n};

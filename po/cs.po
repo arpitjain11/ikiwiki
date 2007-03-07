@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 00:16-0500\n"
+"POT-Creation-Date: 2007-03-07 01:22-0500\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -306,6 +306,43 @@ msgstr "zkratka %s odkazuje na <i>%s</i>"
 #: ../IkiWiki/Plugin/smiley.pm:22
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "selhalo zpracování jakýchkoliv smajlíků, vypínám modul"
+
+#: ../IkiWiki/Plugin/sparkline.pm:63
+#, fuzzy
+msgid "sparkline parse error"
+msgstr "linkmapu se nepodařilo spustit dot"
+
+#: ../IkiWiki/Plugin/sparkline.pm:69
+msgid "sparkline bad featurepoint diameter"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:79
+msgid "sparkline bad featurepoint location"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:90
+msgid "sparkline missing values"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:95
+#, fuzzy
+msgid "sparkline bad height value"
+msgstr "linkmapu se nepodařilo spustit dot"
+
+#: ../IkiWiki/Plugin/sparkline.pm:102
+#, fuzzy
+msgid "sparkline missing width parameter"
+msgstr "šabloně chybí parametr id"
+
+#: ../IkiWiki/Plugin/sparkline.pm:106
+#, fuzzy
+msgid "sparkline bad width value"
+msgstr "linkmapu se nepodařilo spustit dot"
+
+#: ../IkiWiki/Plugin/sparkline.pm:112
+#, fuzzy
+msgid "sparkline previewing not implemented"
+msgstr "getctime není implementováno"
 
 #: ../IkiWiki/Plugin/sparkline.pm:148
 #, fuzzy

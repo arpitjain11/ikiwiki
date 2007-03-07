@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 00:16-0500\n"
+"POT-Creation-Date: 2007-03-07 01:22-0500\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -306,6 +306,43 @@ msgstr "genvägen %s pekar på %s"
 #: ../IkiWiki/Plugin/smiley.pm:22
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "misslyckades med att tolka smilisar, inaktiverar instick"
+
+#: ../IkiWiki/Plugin/sparkline.pm:63
+#, fuzzy
+msgid "sparkline parse error"
+msgstr "linkmap misslyckades att köra dot"
+
+#: ../IkiWiki/Plugin/sparkline.pm:69
+msgid "sparkline bad featurepoint diameter"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:79
+msgid "sparkline bad featurepoint location"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:90
+msgid "sparkline missing values"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:95
+#, fuzzy
+msgid "sparkline bad height value"
+msgstr "linkmap misslyckades att köra dot"
+
+#: ../IkiWiki/Plugin/sparkline.pm:102
+#, fuzzy
+msgid "sparkline missing width parameter"
+msgstr "mall saknar id-parameter"
+
+#: ../IkiWiki/Plugin/sparkline.pm:106
+#, fuzzy
+msgid "sparkline bad width value"
+msgstr "linkmap misslyckades att köra dot"
+
+#: ../IkiWiki/Plugin/sparkline.pm:112
+#, fuzzy
+msgid "sparkline previewing not implemented"
+msgstr "getctime inte implementerad"
 
 #: ../IkiWiki/Plugin/sparkline.pm:148
 #, fuzzy
