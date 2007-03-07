@@ -108,10 +108,6 @@ sub preprocess (@) { #{{{
 		$php.=qq{\$sparkline->RenderResampled($width, $height);\n};
 	}
 	
-	if ($params{preview}) {
-		return "[[".gettext("sparkline previewing not implemented")."]]";
-	}
-	
 	$php.=qq{\$sparkline->Output();\n?>\n};
 
 	# Use the sha1 of the php code that generates the sparkline as
@@ -148,7 +144,16 @@ sub preprocess (@) { #{{{
 			return  "[[".gettext("sparkline failed to run php")."]]";
 		}
 
-		writefile($fn, $config{destdir}, $png, 1);
+		if (! $params{preview}) {
+			writefile($fn, $config{destdir}, $png, 1);
+		}
+		else {
+			# can't write the file, so embed it in a data uri
+			eval q{use MIME::Base64};
+		        error($@) if $@;
+			return "<img src=\"data:image/png;base64,".
+				encode_base64($png)."\" />";
+		}
 	}
 
 	return '<img src="'.
