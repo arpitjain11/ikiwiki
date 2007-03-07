@@ -428,8 +428,6 @@ sub htmllink ($$$;@) { #{{{
 	my $link=shift;
 	my %opts=@_;
 
-print STDERR "bestlink $lpage $link\n" if $lpage eq "roadmap" && $link =~/rcs/;
-
 	my $bestlink;
 	if (! $opts{forcesubpage}) {
 		$bestlink=bestlink($lpage, $link);
