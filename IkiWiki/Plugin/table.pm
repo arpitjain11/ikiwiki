@@ -7,29 +7,25 @@ use strict;
 use IkiWiki;
 use IkiWiki::Plugin::mdwn;
 
-my %defaults = (
-	data	=> undef,
-	file	=> undef,
-	format	=> 'auto',
-	sep_char	=>  {
-		'csv'	=> ',',
-		'dsv'	=> '\|',
-	},
-	class	=>  undef,
-	header	=>  1,
-);
-                            
 sub import { #{{{
 	hook(type => "preprocess", id => "table", call => \&preprocess);
 } # }}}
 
 sub preprocess (@) { #{{{
-	my %params = (%defaults, @_);
+	my %params =(
+		format		=> 'auto',
+		header		=> 'yes',
+		sep_char	=> {
+			'csv'	=> ',',
+			'dsv'	=> '|',
+		},
+		@_
+	);
 
-	if (defined $params{delimiter}) {
+	if (exists $params{delimiter}) {
 		$params{sep_char}->{$params{format}} = $params{delimiter};
 	}
-	if (defined $params{file}) {
+	if (exists $params{file}) {
 		if (! $pagesources{$params{file}}) {
 			return "[[table ".gettext("cannot find file")."]]";
 		}
@@ -40,7 +36,7 @@ sub preprocess (@) { #{{{
 		# first try the more simple format
 		if (is_dsv_data($params{data})) {
 			$params{format} = 'dsv';
-			$params{sep_char}->{dsv} = '\|';
+			$params{sep_char}->{dsv} = '|';
 		}
 		else {
 			$params{format} = 'csv';
@@ -60,7 +56,7 @@ sub preprocess (@) { #{{{
 	}
 	
 	my $header;
-	if ($params{header} != 1) {
+	if (lc($params{header}) eq "yes") {
 		$header=shift @data;
 	}
 	if (! @data) {
@@ -71,7 +67,7 @@ sub preprocess (@) { #{{{
 			build_rows(\%params, @data),
 			close_table(\%params, $header));
 
-	if (defined $params{file}) {
+	if (exists $params{file}) {
 		return $html."\n\n".
 			htmllink($params{page}, $params{destpage}, $params{file},
 				linktext => gettext('Direct data download'));
@@ -134,7 +130,7 @@ sub read_dsv ($) { #{{{
 	my @text_lines = split(/\n/, $params->{data});
 
 	my @data;
-	my $splitter = qr{$params->{sep_char}->{dsv}};
+	my $splitter = qr{\Q$params->{sep_char}->{dsv}\E};
 	foreach my $line (@text_lines) {
 		push @data, [ split($splitter, $line) ];
 	}
