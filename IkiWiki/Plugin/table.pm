@@ -13,8 +13,8 @@ sub import { #{{{
 
 sub preprocess (@) { #{{{
 	my %params =(
-		format		=> 'auto',
-		header		=> 'yes',
+		format	=> 'auto',
+		header	=> 'yes',
 		@_
 	);
 
@@ -29,11 +29,9 @@ sub preprocess (@) { #{{{
 		# first try the more simple format
 		if (is_dsv_data($params{data})) {
 			$params{format} = 'dsv';
-			$params{sep_char}->{dsv} = '|';
 		}
 		else {
 			$params{format} = 'csv';
-			$params{sep_char}->{csv} = ',';
 		}
 	}
 
