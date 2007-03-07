@@ -466,8 +466,8 @@ sub cgi_editpage ($$) { #{{{
 			
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
-				options => { map { $_ => pagetitle($_, 1) } @editable_locs },
-				value => $best_loc);
+				options => [ map { pagetitle($_, 1) } @editable_locs ],
+				value => pagetitle($best_loc, 1));
 			$form->field(name => "type", type => 'select',
 				options => \@page_types);
 			$form->title(sprintf(gettext("creating %s"), pagetitle($page)));
@@ -681,8 +681,8 @@ sub cgi (;$$) { #{{{
 		cgi_editpage($q, $session);
 	}
 	elsif ($do eq 'blog') {
-		my $page=titlepage(decode_utf8($q->param('title')));
-		$page=~s/(\/)/"__".ord($1)."__"/eg; # escape slashes too
+		my $page=decode_utf8($q->param('title'));
+		$page=~s/\// /g; # remove slashes to avoid accidental subpages
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";

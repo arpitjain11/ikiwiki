@@ -13,8 +13,12 @@ ikiwiki (1.45) UNRELEASED; urgency=low
     image using width and height attributes.
   * Also fixes img preview display, the links were wrong in preview before.
   * Add a sparkline plugin.
+  * The slash escaping when adding to a blog from the CGI was not working
+    since it ended up being double-escaped. Instead, just remove slashes.
+  * Fix some nasty issues with page name escaping during previewing
+    (introduced in 1.44).
 
- -- Joey Hess <joeyh@debian.org>  Wed,  7 Mar 2007 00:16:01 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed,  7 Mar 2007 03:59:39 -0500
 
 ikiwiki (1.44) unstable; urgency=low
 
