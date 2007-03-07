@@ -57,23 +57,12 @@ sub preprocess (@) { #{{{
 	push @lines, defined $params{class}
 			? "<table class=\"".$params{class}.'">'
 			: '<table>';
-	push @lines, "\t<thead>","\t\t<tr>",
-        	(map {
-			"\t\t\t<th>".
-			htmlize($params{page}, $params{destpage}, $_).
-			"</th>"
-		} @$header),
-	        "\t\t</tr>", "\t</thead>" if defined $header;
+	push @lines, "\t<thead>",
+		genrow($params{page}, $params{destpage}, "th", @$header),
+	        "\t</thead>" if defined $header;
 	push @lines, "\t<tbody>";
-	foreach my $record (@data) {
-	        push @lines, "\t\t<tr>",
-			(map {
-				"\t\t\t<td>".
-				htmlize($params{page}, $params{destpage}, $_).
-				"</td>"
-			} @$record),
-			"\t\t</tr>";
-	}
+	push @lines, genrow($params{page}, $params{destpage}, "td", @$_)
+		foreach @data;
 	push @lines, "\t</tbody>" if defined $header;
 	push @lines, '</table>';
 	my $html = join("\n", @lines);
@@ -129,10 +118,37 @@ sub split_dsv ($$) { #{{{
 
 	my @data;
 	foreach my $line (@text_lines) {
-		push @data, [ split(/\Q$delimiter\E/, $line) ];
+		push @data, [ split(/\Q$delimiter\E/, $line, -1) ];
 	}
     
 	return @data;
+} #}}}
+
+sub genrow ($$$@) { #{{{
+	my $page = shift;
+	my $destpage = shift;
+	my $elt = shift;
+	my @data = @_;
+
+	my @ret;
+	push @ret, "\t\t<tr>";
+	for (my $x=0; $x < @data; $x++) {
+		my $cell=htmlize($page, $destpage, $data[$x]);
+		my $colspan=1;
+		while ($x+1 < @data && $data[$x+1] eq '') {
+			$x++;
+			$colspan++;
+		}
+		if ($colspan > 1) {
+			push @ret, "\t\t\t<$elt colspan=\"$colspan\">$cell</$elt>"
+		}
+		else {
+			push @ret, "\t\t\t<$elt>$cell</$elt>"
+		}
+	}
+	push @ret, "\t\t</tr>";
+
+	return @ret;
 } #}}}
 
 sub htmlize ($$$) { #{{{
