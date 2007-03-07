@@ -15,16 +15,9 @@ sub preprocess (@) { #{{{
 	my %params =(
 		format		=> 'auto',
 		header		=> 'yes',
-		sep_char	=> {
-			'csv'	=> ',',
-			'dsv'	=> '|',
-		},
 		@_
 	);
 
-	if (exists $params{delimiter}) {
-		$params{sep_char}->{$params{format}} = $params{delimiter};
-	}
 	if (exists $params{file}) {
 		if (! $pagesources{$params{file}}) {
 			return "[[table ".gettext("cannot find file")."]]";
@@ -46,15 +39,15 @@ sub preprocess (@) { #{{{
 
 	my @data;
 	if (lc $params{format} eq 'csv') {
-		@data=read_csv(\%params);
+		@data=split_csv($params{data}, $params{delimiter});
 	}
 	elsif (lc $params{format} eq 'dsv') {
-		@data=read_dsv(\%params);
+		@data=split_dsv($params{data}, $params{delimiter});
 	}
 	else {
 		return "[[table ".gettext("unknown data format")."]]";
 	}
-	
+
 	my $header;
 	if (lc($params{header}) eq "yes") {
 		$header=shift @data;
@@ -63,9 +56,30 @@ sub preprocess (@) { #{{{
 		return "[[table ".gettext("empty data")."]]";
 	}
 
-	my $html = tidy_up(open_table(\%params, $header),
-			build_rows(\%params, @data),
-			close_table(\%params, $header));
+	my @lines;
+	push @lines, defined $params{class}
+			? "<table class=\"".$params{class}.'">'
+			: '<table>';
+	push @lines, "\t<thead>","\t\t<tr>",
+        	(map {
+			"\t\t\t<th>".
+			htmlize($params{page}, $params{destpage}, $_).
+			"</th>"
+		} @$header),
+	        "\t\t</tr>", "\t</thead>" if defined $header;
+	push @lines, "\t<tbody>";
+	foreach my $record (@data) {
+	        push @lines, "\t\t<tr>",
+			(map {
+				"\t\t\t<td>".
+				htmlize($params{page}, $params{destpage}, $_).
+				"</td>"
+			} @$record),
+			"\t\t</tr>";
+	}
+	push @lines, "\t</tbody>" if defined $header;
+	push @lines, '</table>';
+	my $html = join("\n", @lines);
 
 	if (exists $params{file}) {
 		return $html."\n\n".
@@ -77,20 +91,6 @@ sub preprocess (@) { #{{{
 	}            
 } #}}}
 
-sub tidy_up (@) { #{{{
-	my $html="";
-
-	foreach my $text (@_) {
-		my $indentation = $text =~ m{thead>|tbody>}   ? 0 :
-		                  $text =~ m{tr>}             ? 4 :
-		                  $text =~ m{td>|th>}         ? 8 :
-		                                                0;
-		$html .= (' ' x $indentation)."$text\n";
-	}
-
-	return $html;
-} #}}}
-
 sub is_dsv_data ($) { #{{{
 	my $text = shift;
 
@@ -98,14 +98,14 @@ sub is_dsv_data ($) { #{{{
 	return $line =~ m{.+\|};
 }
 
-sub read_csv ($) { #{{{
-	my $params=shift;
-	my @text_lines = split(/\n/, $params->{data});
+sub split_csv ($$) { #{{{
+	my @text_lines = split(/\n/, shift);
+	my $delimiter = shift;
 
 	eval q{use Text::CSV};
 	error($@) if $@;
 	my $csv = Text::CSV->new({ 
-		sep_char	=> $params->{sep_char}->{csv},
+		sep_char	=> defined $delimiter ? $delimiter : ",",
 		binary		=> 1,
 	}) || error("could not create a Text::CSV object");
 	
@@ -125,65 +125,26 @@ sub read_csv ($) { #{{{
 	return @data;
 } #}}}
 
-sub read_dsv ($) { #{{{
-	my $params = shift;
-	my @text_lines = split(/\n/, $params->{data});
+sub split_dsv ($$) { #{{{
+	my @text_lines = split(/\n/, shift);
+	my $delimiter = shift;
+	$delimiter="|" unless defined $delimiter;
 
 	my @data;
-	my $splitter = qr{\Q$params->{sep_char}->{dsv}\E};
 	foreach my $line (@text_lines) {
-		push @data, [ split($splitter, $line) ];
+		push @data, [ split(/\Q$delimiter\E/, $line) ];
 	}
     
 	return @data;
 } #}}}
 
-sub open_table ($$) { #{{{
-	my $params = shift;
-	my $header = shift;
-
-	my @items;
-	push @items, defined $params->{class}
-			? "<table class=\"".$params->{class}.'">'
-			: '<table>';
-        push @items, '<thead>','<tr>',
-	             (map { "<th>".htmlize($params, $_)."</th>" } @$header),
-                     '</tr>','</thead>' if defined $header;
-	push @items, '<tbody>';
-	
-	return @items;
-}
-
-sub build_rows ($@) { #{{{
-	my $params = shift;
-
-	my @items;
-	foreach my $record (@_) {
-	        push @items, '<tr>',
-		             (map { "<td>".htmlize($params, $_)."</td>" } @$record),
-		             '</tr>';
-	}
-	return @items;
-} #}}}
-                 
-sub close_table ($$) { #{{{
-	my $params = shift;
-	my $header = shift;
-
-	my @items;
-	push @items, '</tbody>' if defined $header;
-	push @items, '</table>';
-	return @items;
-} #}}}
-
-sub htmlize { #{{{
-	my $params = shift;
+sub htmlize ($$$){ #{{{
+	my $page = shift;
+	my $destpage = shift;
 	my $text = shift;
 
-	$text=IkiWiki::preprocess($params->{page},
-		$params->{destpage}, $text);
-	$text=IkiWiki::htmlize($params->{page},
-		pagetype($pagesources{$params->{page}}), $text);
+	$text=IkiWiki::htmlize($page, pagetype($pagesources{$page}),
+		IkiWiki::preprocess($page, $destpage, $text));
 
 	# hack to get rid of enclosing junk added by markdown
 	$text=~s!^<p>!!;
