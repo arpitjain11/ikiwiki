@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 06:39-0500\n"
+"POT-Creation-Date: 2007-03-07 07:04-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -55,9 +55,9 @@ msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
-#, perl-format
-msgid "aggregate plugin missing %s parameter"
-msgstr "приставката „aggregate” изисква указването на параметър „%s”"
+#, fuzzy, perl-format
+msgid "missing %s parameter"
+msgstr "липсващ параметър „id” на шаблона"
 
 #: ../IkiWiki/Plugin/aggregate.pm:89
 msgid "new feed"
@@ -109,13 +109,39 @@ msgstr "създаване на нова страницa „%s”"
 msgid "There are no broken links!"
 msgstr "Няма „счупени” връзки!"
 
+#: ../IkiWiki/Plugin/conditional.pm:20
+msgid "\"test\" and \"then\" parameters are required"
+msgstr ""
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "грешшка в приставката „fortune”"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-msgid "googlecalendar failed to find url in html"
+#, fuzzy
+msgid "failed to find url in html"
 msgstr "приставката „googlecalendar” не намери URL в HTML-кода"
+
+#: ../IkiWiki/Plugin/img.pm:36
+#, fuzzy, perl-format
+msgid "%s not found"
+msgstr "шаблонът „%s” не е намерен"
+
+#: ../IkiWiki/Plugin/img.pm:49
+#, perl-format
+msgid "bad size \"%s\""
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
+#: ../IkiWiki/Plugin/img.pm:79
+#, fuzzy, perl-format
+msgid "failed to read %s: %s"
+msgstr "грешка при запис на файла „%s”: %s"
+
+#: ../IkiWiki/Plugin/img.pm:64
+#, fuzzy, perl-format
+msgid "failed to resize: %s"
+msgstr "грешка при запис на файла „%s”: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -142,7 +168,8 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 
 #: ../IkiWiki/Plugin/linkmap.pm:99
-msgid "linkmap failed to run dot"
+#, fuzzy
+msgid "failed to run dot"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
@@ -296,7 +323,8 @@ msgid "updating hyperestraier search index"
 msgstr "обновяване на индекса за търсене на hyperestraier"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-msgid "shortcut missing name or url parameter"
+#, fuzzy
+msgid "missing name or url parameter"
 msgstr "препратката няма указани параметрите „name” или „url”"
 
 #. translators: This is used to display what shortcuts are defined.
@@ -313,40 +341,52 @@ msgstr "няма разпознати усмивки; изключване на 
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
 #, fuzzy
-msgid "sparkline parse error"
+msgid "parse error"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
-msgid "sparkline bad featurepoint diameter"
+msgid "bad featurepoint diameter"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
-msgid "sparkline bad featurepoint location"
+msgid "bad featurepoint location"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
-msgid "sparkline missing values"
+msgid "missing values"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
 #, fuzzy
-msgid "sparkline bad height value"
+msgid "bad height value"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
 #, fuzzy
-msgid "sparkline missing width parameter"
+msgid "missing width parameter"
 msgstr "липсващ параметър „id” на шаблона"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
 #, fuzzy
-msgid "sparkline bad width value"
+msgid "bad width value"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
 #, fuzzy
-msgid "sparkline failed to run php"
+msgid "failed to run php"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
+
+#: ../IkiWiki/Plugin/table.pm:34
+msgid "cannot find file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:59
+msgid "unknown data format"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:67
+msgid "empty data"
+msgstr ""
 
 #: ../IkiWiki/Plugin/table.pm:77
 msgid "Direct data download"
@@ -358,7 +398,8 @@ msgid "parse fail at line %d: %s"
 msgstr "грешка при запис на файла „%s”: %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
-msgid "template missing id parameter"
+#, fuzzy
+msgid "missing id parameter"
 msgstr "липсващ параметър „id” на шаблона"
 
 #: ../IkiWiki/Plugin/template.pm:26
@@ -367,7 +408,8 @@ msgid "template %s not found"
 msgstr "шаблонът „%s” не е намерен"
 
 #: ../IkiWiki/Plugin/template.pm:45
-msgid "template failed to process:"
+#, fuzzy
+msgid "failed to process:"
 msgstr "грешка при обработване на шаблона"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
@@ -513,6 +555,9 @@ msgstr "Грешка"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"
+
+#~ msgid "aggregate plugin missing %s parameter"
+#~ msgstr "приставката „aggregate” изисква указването на параметър „%s”"
 
 #, fuzzy
 #~ msgid "sparkline previewing not implemented"

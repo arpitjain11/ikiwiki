@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 06:39-0500\n"
+"POT-Creation-Date: 2007-03-07 07:04-0500\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -54,9 +54,9 @@ msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
-#, perl-format
-msgid "aggregate plugin missing %s parameter"
-msgstr "aggregeringsinstick saknar parametern %s"
+#, fuzzy, perl-format
+msgid "missing %s parameter"
+msgstr "mall saknar id-parameter"
 
 #: ../IkiWiki/Plugin/aggregate.pm:89
 msgid "new feed"
@@ -108,13 +108,39 @@ msgstr "skapar nya sidan %s"
 msgid "There are no broken links!"
 msgstr "Det finns inga trasiga länkar!"
 
+#: ../IkiWiki/Plugin/conditional.pm:20
+msgid "\"test\" and \"then\" parameters are required"
+msgstr ""
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "fortune misslyckades"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-msgid "googlecalendar failed to find url in html"
+#, fuzzy
+msgid "failed to find url in html"
 msgstr "googlecalendar misslyckades med att hitta url i html"
+
+#: ../IkiWiki/Plugin/img.pm:36
+#, fuzzy, perl-format
+msgid "%s not found"
+msgstr "mallen %s hittades inte"
+
+#: ../IkiWiki/Plugin/img.pm:49
+#, perl-format
+msgid "bad size \"%s\""
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
+#: ../IkiWiki/Plugin/img.pm:79
+#, fuzzy, perl-format
+msgid "failed to read %s: %s"
+msgstr "misslyckades med att skriva %s: %s"
+
+#: ../IkiWiki/Plugin/img.pm:64
+#, fuzzy, perl-format
+msgid "failed to resize: %s"
+msgstr "misslyckades med att skriva %s: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -139,7 +165,8 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client hittades inte, pingar inte"
 
 #: ../IkiWiki/Plugin/linkmap.pm:99
-msgid "linkmap failed to run dot"
+#, fuzzy
+msgid "failed to run dot"
 msgstr "linkmap misslyckades att köra dot"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
@@ -292,7 +319,8 @@ msgid "updating hyperestraier search index"
 msgstr "uppdaterar hyperestraier-sökindex"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-msgid "shortcut missing name or url parameter"
+#, fuzzy
+msgid "missing name or url parameter"
 msgstr "genväg saknar parameter för namn eller url"
 
 #. translators: This is used to display what shortcuts are defined.
@@ -309,40 +337,52 @@ msgstr "misslyckades med att tolka smilisar, inaktiverar instick"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
 #, fuzzy
-msgid "sparkline parse error"
+msgid "parse error"
 msgstr "linkmap misslyckades att köra dot"
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
-msgid "sparkline bad featurepoint diameter"
+msgid "bad featurepoint diameter"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
-msgid "sparkline bad featurepoint location"
+msgid "bad featurepoint location"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
-msgid "sparkline missing values"
+msgid "missing values"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
 #, fuzzy
-msgid "sparkline bad height value"
+msgid "bad height value"
 msgstr "linkmap misslyckades att köra dot"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
 #, fuzzy
-msgid "sparkline missing width parameter"
+msgid "missing width parameter"
 msgstr "mall saknar id-parameter"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
 #, fuzzy
-msgid "sparkline bad width value"
+msgid "bad width value"
 msgstr "linkmap misslyckades att köra dot"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
 #, fuzzy
-msgid "sparkline failed to run php"
+msgid "failed to run php"
 msgstr "linkmap misslyckades att köra dot"
+
+#: ../IkiWiki/Plugin/table.pm:34
+msgid "cannot find file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:59
+msgid "unknown data format"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:67
+msgid "empty data"
+msgstr ""
 
 #: ../IkiWiki/Plugin/table.pm:77
 msgid "Direct data download"
@@ -354,7 +394,8 @@ msgid "parse fail at line %d: %s"
 msgstr "misslyckades med att skriva %s: %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
-msgid "template missing id parameter"
+#, fuzzy
+msgid "missing id parameter"
 msgstr "mall saknar id-parameter"
 
 #: ../IkiWiki/Plugin/template.pm:26
@@ -363,7 +404,8 @@ msgid "template %s not found"
 msgstr "mallen %s hittades inte"
 
 #: ../IkiWiki/Plugin/template.pm:45
-msgid "template failed to process:"
+#, fuzzy
+msgid "failed to process:"
 msgstr "misslyckades med att behandla mall:"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
@@ -507,6 +549,9 @@ msgstr "Fel"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"
+
+#~ msgid "aggregate plugin missing %s parameter"
+#~ msgstr "aggregeringsinstick saknar parametern %s"
 
 #, fuzzy
 #~ msgid "sparkline previewing not implemented"

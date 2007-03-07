@@ -32,7 +32,8 @@ sub preprocess (@) { #{{{
 	}
 
 	add_depends($params{page}, $image);
-	my $file = bestlink($params{page}, $image) || return "[[img $image not found]]";
+	my $file = bestlink($params{page}, $image)
+		|| return "[[img ".sprintf(gettext("%s not found"), $image)."]]";
 
 	my $dir = IkiWiki::dirname($file);
 	my $base = IkiWiki::basename($file);
@@ -45,21 +46,22 @@ sub preprocess (@) { #{{{
 
 	if ($size ne 'full') {
 		my ($w, $h) = ($size =~ /^(\d+)x(\d+)$/);
-		return "[[img bad size \"$size\"]]" unless (defined $w && defined $h);
+		return "[[img ".sprintf(gettext('bad size "%s"'), $size)."]]"
+			unless (defined $w && defined $h);
 
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
 		$imglink = "$dir/${w}x${h}-$base";
 
 		if (-e $outfile && (-M srcfile($file) >= -M $outfile)) {
 			$r = $im->Read($outfile);
-			return "[[img failed to read $outfile: $r]]" if $r;
+			return "[[img ".sprintf(gettext("failed to read %s: %s"), $outfile, $r)."]]" if $r;
 		}
 		else {
 			$r = $im->Read(srcfile($file));
-			return "[[img failed to read $file: $r]]" if $r;
+			return "[[img ".sprintf(gettext("failed to read %s: %s"), $file, $r)."]]" if $r;
 
 			$r = $im->Resize(geometry => "${w}x${h}");
-			return "[[img failed to resize: $r]]" if $r;
+			return "[[img ".sprinftf(gettext("failed to resize: %s"), $r)."]]" if $r;
 
 			# don't actually write file in preview mode
 			if (! $params{preview}) {
@@ -74,7 +76,7 @@ sub preprocess (@) { #{{{
 	}
 	else {
 		$r = $im->Read(srcfile($file));
-		return "[[img failed to read $file: $r]]" if $r;
+		return "[[img ".sprintf(gettext("failed to read %s: %s"), $file, $r)."]]" if $r;
 		$imglink = $file;
 	}
 

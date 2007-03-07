@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-# Provides [[pagecount ]] to count the number of pages.
 package IkiWiki::Plugin::pagecount;
 
 use warnings;

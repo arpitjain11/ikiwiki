@@ -17,7 +17,7 @@ sub preprocess_if (@) { #{{{
 	my %params=@_;
 
 	if (! exists $params{test} || ! exists $params{then}) {
-		return "[[if requires \"test\" and \"then\" parameters]]";
+		return "[[if ".gettext('"test" and "then" parameters are required')."]]";
 	}
 
 	my $result=0;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 06:39-0500\n"
+"POT-Creation-Date: 2007-03-07 07:04-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:61
 #, perl-format
-msgid "aggregate plugin missing %s parameter"
+msgid "missing %s parameter"
 msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:89
@@ -109,12 +109,37 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr ""
 
+#: ../IkiWiki/Plugin/conditional.pm:20
+msgid "\"test\" and \"then\" parameters are required"
+msgstr ""
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr ""
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-msgid "googlecalendar failed to find url in html"
+msgid "failed to find url in html"
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:36
+#, perl-format
+msgid "%s not found"
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:49
+#, perl-format
+msgid "bad size \"%s\""
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
+#: ../IkiWiki/Plugin/img.pm:79
+#, perl-format
+msgid "failed to read %s: %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:64
+#, perl-format
+msgid "failed to resize: %s"
 msgstr ""
 
 #: ../IkiWiki/Plugin/inline.pm:36
@@ -140,7 +165,7 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
 #: ../IkiWiki/Plugin/linkmap.pm:99
-msgid "linkmap failed to run dot"
+msgid "failed to run dot"
 msgstr ""
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
@@ -291,7 +316,7 @@ msgid "updating hyperestraier search index"
 msgstr ""
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-msgid "shortcut missing name or url parameter"
+msgid "missing name or url parameter"
 msgstr ""
 
 #. translators: This is used to display what shortcuts are defined.
@@ -307,35 +332,47 @@ msgid "failed to parse any smileys, disabling plugin"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
-msgid "sparkline parse error"
+msgid "parse error"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
-msgid "sparkline bad featurepoint diameter"
+msgid "bad featurepoint diameter"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
-msgid "sparkline bad featurepoint location"
+msgid "bad featurepoint location"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
-msgid "sparkline missing values"
+msgid "missing values"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
-msgid "sparkline bad height value"
+msgid "bad height value"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
-msgid "sparkline missing width parameter"
+msgid "missing width parameter"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
-msgid "sparkline bad width value"
+msgid "bad width value"
 msgstr ""
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
-msgid "sparkline failed to run php"
+msgid "failed to run php"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:34
+msgid "cannot find file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:59
+msgid "unknown data format"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:67
+msgid "empty data"
 msgstr ""
 
 #: ../IkiWiki/Plugin/table.pm:77
@@ -348,7 +385,7 @@ msgid "parse fail at line %d: %s"
 msgstr ""
 
 #: ../IkiWiki/Plugin/template.pm:19
-msgid "template missing id parameter"
+msgid "missing id parameter"
 msgstr ""
 
 #: ../IkiWiki/Plugin/template.pm:26
@@ -357,7 +394,7 @@ msgid "template %s not found"
 msgstr ""
 
 #: ../IkiWiki/Plugin/template.pm:45
-msgid "template failed to process:"
+msgid "failed to process:"
 msgstr ""
 
 #: ../IkiWiki/Rcs/Stub.pm:66

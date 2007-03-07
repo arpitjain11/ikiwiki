@@ -96,7 +96,7 @@ sub genmap ($) { #{{{
 	waitpid $pid, 0;
 	$SIG{PIPE}="DEFAULT";
 	if ($sigpipe) {
-		return  "[[".gettext("linkmap failed to run dot")."]]";
+		return  "[[linkmap ".gettext("failed to run dot")."]]";
 	}
 
 	return $ret;

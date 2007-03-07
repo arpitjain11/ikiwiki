@@ -58,7 +58,7 @@ sub preprocess (@) { #{{{
 
 	foreach my $required (qw{name url}) {
 		if (! exists $params{$required}) {
-			return "[[".sprintf(gettext("aggregate plugin missing %s parameter"), $required)."]]";
+			return "[[aggregate ".sprintf(gettext("missing %s parameter"), $required)."]]";
 		}
 	}
 

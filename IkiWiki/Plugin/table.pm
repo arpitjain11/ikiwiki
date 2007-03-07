@@ -31,7 +31,7 @@ sub preprocess (@) { #{{{
 	}
 	if (defined $params{file}) {
 		if (! $pagesources{$params{file}}) {
-			return "[[table cannot find file]]";
+			return "[[table ".gettext("cannot find file")."]]";
 		}
 		$params{data} = readfile(srcfile($params{file}));
 	}
@@ -56,7 +56,7 @@ sub preprocess (@) { #{{{
 		@data=read_dsv(\%params);
 	}
 	else {
-		return "[[table unknown data format]]";
+		return "[[table ".gettext("unknown data format")."]]";
 	}
 	
 	my $header;
@@ -64,7 +64,7 @@ sub preprocess (@) { #{{{
 		$header=shift @data;
 	}
 	if (! @data) {
-		return "[[table has empty data]]";
+		return "[[table ".gettext("empty data")."]]";
 	}
 
 	my $html = tidy_up(open_table(\%params, $header),

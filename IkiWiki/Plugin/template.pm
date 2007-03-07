@@ -16,7 +16,7 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 
 	if (! exists $params{id}) {
-		return "[[".gettext("template missing id parameter")."]]";
+		return "[[template ".gettext("missing id parameter")."]]";
 	}
 
 	my $template_page="templates/$params{id}";
@@ -42,7 +42,7 @@ sub preprocess (@) { #{{{
 		);
 	};
 	if ($@) {
-		return "[[".gettext("template failed to process:")." $@]]";
+		return "[[template ".gettext("failed to process:")." $@]]";
 	}
 
 	foreach my $param (keys %params) {

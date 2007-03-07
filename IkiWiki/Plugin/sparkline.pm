@@ -60,13 +60,13 @@ sub preprocess (@) { #{{{
 			}
 		}
 		elsif (! length $value) {
-			return "[[".gettext("sparkline parse error")." \"$key\"]]";
+			return "[[sparkline ".gettext("parse error")." \"$key\"]]";
 		}
 		elsif ($key eq 'featurepoint') {
 			my ($x, $y, $color, $diameter, $text, $location)=
 				split(/\s*,\s*/, $value);
 			if (! defined $diameter || $diameter < 0) {
-				return "[[".gettext("sparkline bad featurepoint diameter")."]]";
+				return "[[sparkline ".gettext("bad featurepoint diameter")."]]";
 			}
 			$x=int($x);
 			$y=int($y);
@@ -76,7 +76,7 @@ sub preprocess (@) { #{{{
 			if (defined $location) {
 				$location=$locmap{$location};
 				if (! defined $location) {
-					return "[[".gettext("sparkline bad featurepoint location")."]]";
+					return "[[sparkline ".gettext("bad featurepoint location")."]]";
 				}
 			}
 			$php.=qq{\$sparkline->SetFeaturePoint($x, $y, '$color', $diameter};
@@ -87,23 +87,23 @@ sub preprocess (@) { #{{{
 	}
 
 	if ($c eq 0) {
-		return "[[".gettext("sparkline missing values")."]]";
+		return "[[sparkline ".gettext("missing values")."]]";
 	}
 
 	my $height=int($params{height} || 20);
 	if ($height < 2 || $height > 100) {
-		return "[[".gettext("sparkline bad height value")."]]";
+		return "[[sparkline ".gettext("bad height value")."]]";
 	}
 	if ($style eq "Bar") {
 		$php.=qq{\$sparkline->Render($height);\n};
 	}
 	else {
 		if (! exists $params{width}) {
-			return "[[".gettext("sparkline missing width parameter")."]]";
+			return "[[sparkline ".gettext("missing width parameter")."]]";
 		}
 		my $width=int($params{width});
 		if ($width < 2 || $width > 1024) {
-			return "[[".gettext("sparkline bad width value")."]]";
+			return "[[sparkline ".gettext("bad width value")."]]";
 		}
 		$php.=qq{\$sparkline->RenderResampled($width, $height);\n};
 	}
@@ -141,7 +141,7 @@ sub preprocess (@) { #{{{
 		waitpid $pid, 0;
 		$SIG{PIPE}="DEFAULT";
 		if ($sigpipe) {
-			return  "[[".gettext("sparkline failed to run php")."]]";
+			return  "[[sparkline ".gettext("failed to run php")."]]";
 		}
 
 		if (! $params{preview}) {

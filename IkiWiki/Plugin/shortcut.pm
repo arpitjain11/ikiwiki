@@ -21,7 +21,7 @@ sub preprocess_shortcut (@) { #{{{
 	my %params=@_;
 
 	if (! defined $params{name} || ! defined $params{url}) {
-		return "[[".gettext("shortcut missing name or url parameter")."]]";
+		return "[[shortcut ".gettext("missing name or url parameter")."]]";
 	}
 
 	hook(type => "preprocess", no_override => 1, id => $params{name},
