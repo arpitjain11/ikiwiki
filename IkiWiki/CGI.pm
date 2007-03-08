@@ -686,7 +686,7 @@ sub cgi (;$$) { #{{{
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
-		while (exists $pagecase{lc "$from/$page$add"}) {
+		while (exists $pagecase{lc($from."/".titlepage($page).$add)}) {
 			$add=1 unless length $add;
 			$add++;
 		}
