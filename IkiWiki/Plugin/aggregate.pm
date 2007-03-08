@@ -31,7 +31,7 @@ sub getopt () { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	my $nolock=($config{post_commit} && ! commit_hook_enabled());
+	my $nolock=($config{post_commit} && ! IkiWiki::commit_hook_enabled());
 	IkiWiki::lockwiki() unless $nolock;
 	loadstate();
 	if ($config{aggregate} && ! $nolock) {
