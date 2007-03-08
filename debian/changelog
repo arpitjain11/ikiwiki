@@ -18,8 +18,15 @@ ikiwiki (1.45) UNRELEASED; urgency=low
   * Fix some nasty issues with page name escaping during previewing
     (introduced in 1.44).
   * Add a table plugin, derived from the one written by Victor Moral.
+  * The underscore escaping support exposed a bug in edit links: Such links
+    were titlepage escaped in the urls, and then doubly escaped by the CGI
+    when editing. To fix this, I removed the titlepage escaping in the edit
+    urls.
+  * That means that *every edit link* on the wiki is potentially changed.
+    Rebuilding wikis on upgrade to this version therefore necessary; enabled
+    that in postinst.
 
- -- Joey Hess <joeyh@debian.org>  Wed,  7 Mar 2007 06:26:51 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed,  7 Mar 2007 22:58:52 -0500
 
 ikiwiki (1.44) unstable; urgency=low
 

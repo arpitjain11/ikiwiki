@@ -5,6 +5,7 @@ use warnings;
 use strict;
 use Encode;
 use HTML::Entities;
+use URI::Escape;
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
@@ -385,7 +386,8 @@ sub linkpage ($) { #{{{
 sub cgiurl (@) { #{{{
 	my %params=@_;
 
-	return $config{cgiurl}."?".join("&amp;", map "$_=$params{$_}", keys %params);
+	return $config{cgiurl}."?".
+		join("&amp;", map $_."=".uri_escape($params{$_}), keys %params);
 } #}}}
 
 sub baseurl (;$) { #{{{
@@ -453,7 +455,11 @@ sub htmllink ($$$;@) { #{{{
 	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
 		return $linktext unless length $config{cgiurl};
 		return "<span><a href=\"".
-			cgiurl(do => "create", page => lc($link), from => $page).
+			cgiurl(
+				do => "create",
+				page => pagetitle(lc($link), 1),
+				from => $page
+			).
 			"\">?</a>$linktext</span>"
 	}
 	

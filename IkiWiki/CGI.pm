@@ -286,10 +286,9 @@ sub cgi_prefs ($$) { #{{{
 	}
 } #}}}
 
-sub cgi_editpage ($$;$) { #{{{
+sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
-	my $blogpost=shift;
 
 	my @fields=qw(do rcsinfo subpage from page type editcontent comments
 	              newfile);
@@ -323,9 +322,6 @@ sub cgi_editpage ($$;$) { #{{{
 	# characters.
 	my ($page)=$form->field('page');
 	$page=titlepage(possibly_foolish_untaint($page));
-	if ($blogpost) {
-		$page=~s/(\/)/"__".ord($1)."__"/eg;
-	}
 	if (! defined $page || ! length $page || file_pruned($page, $config{srcdir}) || $page=~/^\//) {
 		error("bad page name");
 	}
@@ -362,7 +358,7 @@ sub cgi_editpage ($$;$) { #{{{
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
 	$form->field(name => "subpage", type => 'hidden');
-	$form->field(name => "page", value => $page, force => 1);
+	$form->field(name => "page", value => pagetitle($page, 1), force => 1);
 	$form->field(name => "type", value => $type, force => 1);
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "editcontent", type => "textarea", rows => 20,
@@ -686,6 +682,7 @@ sub cgi (;$$) { #{{{
 	}
 	elsif ($do eq 'blog') {
 		my $page=decode_utf8($q->param('title'));
+		$page=~s/\///g; # no slashes in blog posts
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
@@ -694,9 +691,9 @@ sub cgi (;$$) { #{{{
 			$add++;
 		}
 		$q->param('page', $page.$add);
-		# now run same as create, except escape slashes too
+		# now run same as create
 		$q->param('do', 'create');
-		cgi_editpage($q, $session, 1);
+		cgi_editpage($q, $session);
 	}
 	elsif ($do eq 'postsignin') {
 		error(gettext("login failed, perhaps you need to turn on cookies?"));

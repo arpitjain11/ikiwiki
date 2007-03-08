@@ -184,7 +184,7 @@ sub preprocess_inline (@) { #{{{
 				}
 				if (length $config{cgiurl} && defined $type) {
 					$template->param(have_actions => 1);
-					$template->param(editurl => cgiurl(do => "edit", page => $page));
+					$template->param(editurl => cgiurl(do => "edit", page => pagetitle($page, 1)));
 				}
 			}
 

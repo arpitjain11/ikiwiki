@@ -1,11 +1,19 @@
+ikiwiki (1.45) unstable; urgency=low
+
+  Wikis need to be rebuilt on upgrade to this version. If you listed your wiki
+  in /etc/ikiwiki/wikilist this will be done automatically when the Debian
+  package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  7 Mar 2007 23:02:52 -0500
+
 ikiwiki (1.44) unstable; urgency=low
 
-   The htmllink() function has changed slightly and plugins that use it may
-   need to change how they call it. This function's first three parameters
-   are unchanged, but additional options are now passed using named
-   parameters. If you used htmllink with more than 3 parameters, you will
-   need to change it. The plugin interface version has been increased to 1.02
-   to reflect this change.
+  The htmllink() function has changed slightly and plugins that use it may
+  need to change how they call it. This function's first three parameters
+  are unchanged, but additional options are now passed using named
+  parameters. If you used htmllink with more than 3 parameters, you will
+  need to change it. The plugin interface version has been increased to 1.02
+  to reflect this change.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 19 Feb 2007 21:10:12 -0500
 

@@ -79,7 +79,7 @@ sub genpage ($$$) { #{{{
 	my $actions=0;
 
 	if (length $config{cgiurl}) {
-		$template->param(editurl => cgiurl(do => "edit", page => $page));
+		$template->param(editurl => cgiurl(do => "edit", page => pagetitle($page, 1)));
 		$template->param(prefsurl => cgiurl(do => "prefs"));
 		if ($config{rcs}) {
 			$template->param(recentchangesurl => cgiurl(do => "recentchanges"));
