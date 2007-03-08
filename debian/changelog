@@ -25,8 +25,10 @@ ikiwiki (1.45) UNRELEASED; urgency=low
   * That means that *every edit link* on the wiki is potentially changed.
     Rebuilding wikis on upgrade to this version therefore necessary; enabled
     that in postinst.
+  * Correct a deadlock that could occur in post-commit if the aggregate plugin
+    was enabled and tried to lock the already locked wiki.
 
- -- Joey Hess <joeyh@debian.org>  Wed,  7 Mar 2007 22:58:52 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu,  8 Mar 2007 05:57:49 -0500
 
 ikiwiki (1.44) unstable; urgency=low
 

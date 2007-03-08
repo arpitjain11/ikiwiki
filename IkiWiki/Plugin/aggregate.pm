@@ -31,15 +31,16 @@ sub getopt () { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	IkiWiki::lockwiki();
+	my $nolock=($config{post_commit} && ! commit_hook_enabled());
+	IkiWiki::lockwiki() unless $nolock;
 	loadstate();
-	if ($config{aggregate}) {
+	if ($config{aggregate} && ! $nolock) {
 		IkiWiki::loadindex();
 		aggregate();
 		expire();
 		savestate();
 	}
-	IkiWiki::unlockwiki();
+	IkiWiki::unlockwiki() unless $nolock;
 } #}}}
 
 sub filter (@) { #{{{
