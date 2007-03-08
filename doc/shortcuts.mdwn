@@ -30,6 +30,7 @@ This page controls what shortcut links the wiki supports.
 * [[shortcut name=cve url="http://cve.mitre.org/cgi-bin/cvename.cgi?name=%s"]]
 * [[shortcut name=cia url="http://cia.navi.cx/stats/project/%s"]]
 * [[shortcut name=ciauser url="http://cia.navi.cx/stats/user/%s"]]
+* [[shortcut name=flickr url="http://www.flickr.com/photos/%s"]]
 
 To add a new shortcut, use the `shortcut` [[PreprocessorDirective]]. "%s" is
 replaced with the text passed to the named shortcut. The optional `desc`
