@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use Encode;
 use HTML::Entities;
-use URI::Escape;
+use URI::Escape q{uri_escape_utf8};
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
@@ -387,7 +387,7 @@ sub cgiurl (@) { #{{{
 	my %params=@_;
 
 	return $config{cgiurl}."?".
-		join("&amp;", map $_."=".uri_escape($params{$_}), keys %params);
+		join("&amp;", map $_."=".uri_escape_utf8($params{$_}), keys %params);
 } #}}}
 
 sub baseurl (;$) { #{{{
