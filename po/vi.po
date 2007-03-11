@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 07:04-0500\n"
+"POT-Creation-Date: 2007-03-10 21:24-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -24,83 +24,83 @@ msgstr "Trước tiên bạn cần phải đăng nhập."
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:344
+#: ../IkiWiki/CGI.pm:340
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:477
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:671
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:702
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:61
+#: ../IkiWiki/Plugin/aggregate.pm:62
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "mẫu thiếu tham số id"
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
 msgstr "nguồn tin mới"
 
-#: ../IkiWiki/Plugin/aggregate.pm:103
+#: ../IkiWiki/Plugin/aggregate.pm:104
 msgid "posts"
 msgstr "bài"
 
-#: ../IkiWiki/Plugin/aggregate.pm:105
+#: ../IkiWiki/Plugin/aggregate.pm:106
 msgid "new"
 msgstr "mới"
 
-#: ../IkiWiki/Plugin/aggregate.pm:211
+#: ../IkiWiki/Plugin/aggregate.pm:212
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "đang mãn hạn %s (cũ %s ngày)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:218
+#: ../IkiWiki/Plugin/aggregate.pm:219
 #, perl-format
 msgid "expiring %s"
 msgstr "đang mãn hạn %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "đang kiểm tra nguồn tin %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:246
+#: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "không tìm thấy nguồn tin ở %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:255
+#: ../IkiWiki/Plugin/aggregate.pm:256
 msgid "feed crashed XML::Feed!"
 msgstr "nguồn tin đã gây ra XML::Feed sụp đổ."
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:279
 #, perl-format
 msgid "processed ok at %s"
 msgstr "đã xử lý được ở %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:334
 #, perl-format
 msgid "creating new page %s"
 msgstr "đang tạo trang mới %s"
@@ -242,6 +242,14 @@ msgstr "chưa cài đặt polygen"
 msgid "polygen failed"
 msgstr "lỗi polygen"
 
+#: ../IkiWiki/Plugin/postsparkline.pm:25
+msgid "missing formula"
+msgstr ""
+
+#: ../IkiWiki/Plugin/postsparkline.pm:32
+msgid "unknown formula"
+msgstr ""
+
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
 #. translators: %A is the name of the day of the week, while
@@ -373,23 +381,23 @@ msgstr "linkmap không chạy dot được"
 msgid "failed to run php"
 msgstr "linkmap không chạy dot được"
 
-#: ../IkiWiki/Plugin/table.pm:34
+#: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:59
+#: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:67
+#: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:77
+#: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:124
+#: ../IkiWiki/Plugin/table.pm:106
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "lỗi ghi %s: %s"
@@ -533,12 +541,12 @@ msgstr "%s đã được tạo ra"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 
-#: ../IkiWiki.pm:102
+#: ../IkiWiki.pm:103
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
+#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
 msgid "Error"
 msgstr "Lỗi"
 
@@ -546,7 +554,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:567
+#: ../IkiWiki.pm:573
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

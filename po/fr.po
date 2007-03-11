@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 07:04-0500\n"
+"POT-Creation-Date: 2007-03-10 21:24-0500\n"
 "PO-Revision-Date: 2007-02-13 13:02+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -25,84 +25,84 @@ msgstr "Vous devez d'abord vous identifier."
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:344
+#: ../IkiWiki/CGI.pm:340
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:477
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:671
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:702
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
 
-#: ../IkiWiki/Plugin/aggregate.pm:61
+#: ../IkiWiki/Plugin/aggregate.pm:62
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "Paramètre d'identification manquant dans le modèle"
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
 msgstr "Nouveau flux"
 
-#: ../IkiWiki/Plugin/aggregate.pm:103
+#: ../IkiWiki/Plugin/aggregate.pm:104
 msgid "posts"
 msgstr "Messages"
 
-#: ../IkiWiki/Plugin/aggregate.pm:105
+#: ../IkiWiki/Plugin/aggregate.pm:106
 msgid "new"
 msgstr "Nouveau"
 
-#: ../IkiWiki/Plugin/aggregate.pm:211
+#: ../IkiWiki/Plugin/aggregate.pm:212
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "Fin de validité de %s (date de %s jours)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:218
+#: ../IkiWiki/Plugin/aggregate.pm:219
 #, perl-format
 msgid "expiring %s"
 msgstr "Fin de validité de %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "Vérification du flux %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:246
+#: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "Impossible de trouver de flux à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:255
+#: ../IkiWiki/Plugin/aggregate.pm:256
 msgid "feed crashed XML::Feed!"
 msgstr "Plantage du flux XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:279
 #, perl-format
 msgid "processed ok at %s"
 msgstr "A été correctement traité à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:334
 #, perl-format
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
@@ -246,6 +246,14 @@ msgstr "polygen n'est pas installé"
 msgid "polygen failed"
 msgstr "Échec de polygen"
 
+#: ../IkiWiki/Plugin/postsparkline.pm:25
+msgid "missing formula"
+msgstr ""
+
+#: ../IkiWiki/Plugin/postsparkline.pm:32
+msgid "unknown formula"
+msgstr ""
+
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
 #. translators: %A is the name of the day of the week, while
@@ -377,23 +385,23 @@ msgstr "Échec de lancement de dot par linkmap"
 msgid "failed to run php"
 msgstr "Échec de lancement de dot par linkmap"
 
-#: ../IkiWiki/Plugin/table.pm:34
+#: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:59
+#: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:67
+#: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:77
+#: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:124
+#: ../IkiWiki/Plugin/table.pm:106
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "Échec de l'écriture de %s : %s"
@@ -540,13 +548,13 @@ msgstr "%s a été créé avec succès"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
-#: ../IkiWiki.pm:102
+#: ../IkiWiki.pm:103
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une url vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
+#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
 msgid "Error"
 msgstr "Erreur"
 
@@ -554,7 +562,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:567
+#: ../IkiWiki.pm:573
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

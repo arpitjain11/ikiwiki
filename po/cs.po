@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 07:04-0500\n"
+"POT-Creation-Date: 2007-03-10 21:24-0500\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -23,83 +23,83 @@ msgstr "Nejprve se musíte přihlásit."
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:344
+#: ../IkiWiki/CGI.pm:340
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:477
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:671
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:702
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
-#: ../IkiWiki/Plugin/aggregate.pm:61
+#: ../IkiWiki/Plugin/aggregate.pm:62
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "šabloně chybí parametr id"
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
 msgstr "nový zdroj"
 
-#: ../IkiWiki/Plugin/aggregate.pm:103
+#: ../IkiWiki/Plugin/aggregate.pm:104
 msgid "posts"
 msgstr "příspěvky"
 
-#: ../IkiWiki/Plugin/aggregate.pm:105
+#: ../IkiWiki/Plugin/aggregate.pm:106
 msgid "new"
 msgstr "nový"
 
-#: ../IkiWiki/Plugin/aggregate.pm:211
+#: ../IkiWiki/Plugin/aggregate.pm:212
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "expiruji %s (stará %s dnů)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:218
+#: ../IkiWiki/Plugin/aggregate.pm:219
 #, perl-format
 msgid "expiring %s"
 msgstr "expiruji %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "kontroluji zdroj %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:246
+#: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nemohu najít zdroj na %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:255
+#: ../IkiWiki/Plugin/aggregate.pm:256
 msgid "feed crashed XML::Feed!"
 msgstr "zdroj shodil XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:279
 #, perl-format
 msgid "processed ok at %s"
 msgstr "zpracováno ok %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:334
 #, perl-format
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
@@ -240,6 +240,14 @@ msgstr "polygen není nainstalován"
 msgid "polygen failed"
 msgstr "polygen selhal"
 
+#: ../IkiWiki/Plugin/postsparkline.pm:25
+msgid "missing formula"
+msgstr ""
+
+#: ../IkiWiki/Plugin/postsparkline.pm:32
+msgid "unknown formula"
+msgstr ""
+
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
 #. translators: %A is the name of the day of the week, while
@@ -372,23 +380,23 @@ msgstr "linkmapu se nepodařilo spustit dot"
 msgid "failed to run php"
 msgstr "linkmapu se nepodařilo spustit dot"
 
-#: ../IkiWiki/Plugin/table.pm:34
+#: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:59
+#: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:67
+#: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:77
+#: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:124
+#: ../IkiWiki/Plugin/table.pm:106
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "nelze zapsat %s: %s"
@@ -532,11 +540,11 @@ msgstr "%s byl úspěšně vytvořen"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "použití: ikiwiki [volby] zdroj cíl"
 
-#: ../IkiWiki.pm:102
+#: ../IkiWiki.pm:103
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
+#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
 msgid "Error"
 msgstr "Chyba"
 
@@ -544,7 +552,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:567
+#: ../IkiWiki.pm:573
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"

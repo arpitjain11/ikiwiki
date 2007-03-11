@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 07:04-0500\n"
+"POT-Creation-Date: 2007-03-10 21:24-0500\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -23,83 +23,83 @@ msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશ�
 msgid "Preferences saved."
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:344
+#: ../IkiWiki/CGI.pm:340
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/CGI.pm:477
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "%s બનાવે છે"
 
-#: ../IkiWiki/CGI.pm:494 ../IkiWiki/CGI.pm:530 ../IkiWiki/CGI.pm:574
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
 #, perl-format
 msgid "editing %s"
 msgstr "%s સુધારે છે"
 
-#: ../IkiWiki/CGI.pm:671
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr "તમારા પર પ્રતિબંધ છે."
 
-#: ../IkiWiki/CGI.pm:702
+#: ../IkiWiki/CGI.pm:699
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:61
+#: ../IkiWiki/Plugin/aggregate.pm:62
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "ટેમ્પલેટને આઇડી વિકલ્પ મળતો નથી"
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
 msgstr "નવું ફીડ"
 
-#: ../IkiWiki/Plugin/aggregate.pm:103
+#: ../IkiWiki/Plugin/aggregate.pm:104
 msgid "posts"
 msgstr "પોસ્ટ"
 
-#: ../IkiWiki/Plugin/aggregate.pm:105
+#: ../IkiWiki/Plugin/aggregate.pm:106
 msgid "new"
 msgstr "નવું"
 
-#: ../IkiWiki/Plugin/aggregate.pm:211
+#: ../IkiWiki/Plugin/aggregate.pm:212
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "જુનું કરે છે %s (%s દિવસો જુનું)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:218
+#: ../IkiWiki/Plugin/aggregate.pm:219
 #, perl-format
 msgid "expiring %s"
 msgstr "જુનું કરે છે %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "ફીડ %s ચકાસે છે ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:246
+#: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "%s પર ફીડ મળી શક્યું નહી"
 
-#: ../IkiWiki/Plugin/aggregate.pm:255
+#: ../IkiWiki/Plugin/aggregate.pm:256
 msgid "feed crashed XML::Feed!"
 msgstr "ફીડ ભાંગી પડ્યું XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:279
 #, perl-format
 msgid "processed ok at %s"
 msgstr "આના પર બરાબર છે %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:334
 #, perl-format
 msgid "creating new page %s"
 msgstr "નવું પાનું %s બનાવે છે"
@@ -239,6 +239,14 @@ msgstr "પોલિગોન સ્થાપિત નથી"
 msgid "polygen failed"
 msgstr "પોલિગોન નિષ્ફળ"
 
+#: ../IkiWiki/Plugin/postsparkline.pm:25
+msgid "missing formula"
+msgstr ""
+
+#: ../IkiWiki/Plugin/postsparkline.pm:32
+msgid "unknown formula"
+msgstr ""
+
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
 #. translators: %A is the name of the day of the week, while
@@ -370,23 +378,23 @@ msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્
 msgid "failed to run php"
 msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
 
-#: ../IkiWiki/Plugin/table.pm:34
+#: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:59
+#: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:67
+#: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:77
+#: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:124
+#: ../IkiWiki/Plugin/table.pm:106
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "%s લખવામાં નિષ્ફળ: %s"
@@ -529,11 +537,11 @@ msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "ઉપયોગ: ikiwiki [વિકલ્પો] source dest"
 
-#: ../IkiWiki.pm:102
+#: ../IkiWiki.pm:103
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "જ્યારે --cgi ઉપયોગ કરતાં હોય ત્યારે વીકીનું યુઆરએલ સ્પષ્ટ કરવું જ પડશે"
 
-#: ../IkiWiki.pm:149 ../IkiWiki.pm:150
+#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
 msgid "Error"
 msgstr "ક્ષતિ"
 
@@ -541,7 +549,7 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:567
+#: ../IkiWiki.pm:573
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"
