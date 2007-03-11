@@ -1,0 +1,46 @@
+[[template id=plugin name=postsparkline author="[[Joey]]"]]
+[[tag type/chrome]]
+
+This plugin uses the [[sparkline]] plugin to create a sparkline of
+statistics about a set of pages, such as posts to a blog.
+
+# examples
+
+	Post interval: 
+	\[[postsparkline pages="blog/* and !*/Discussion" max=100
+	formula=interval style=bar barwidth=2 barspacing=1 height=13]]
+	
+	Posts per month this year: 
+	\[[postsparkline pages="blog/* and !*/Discussion" max=12
+	formula=permonth style=bar barwidth=2 barspacing=1 height=13]]
+
+# usage
+
+All options aside fron the `pages`, `max`, and `forumla` options are passed
+on to the sparkline plugin.
+
+You don't need to specify any data points (though you can if you want to).
+Instead, data points are automatically generated based on the creation
+times of pages matched by the specified `pages` [[PageSpec]]. A maximum of
+`max` data points will be generated.
+
+The `formula` parameter controls the formula used to generate data points.
+Available forumlae:
+
+* `interval` - The height of each point represents how long it has been
+  since the previous post.
+* `perday` - Each point represents a day; the height represents how
+  many posts were made that day.
+* `permonth` - Each point represents a month; the height represents how
+  many posts were made that month.
+* `peryear` - Each point represents a day; the height represents how
+  many posts were made that year.
+
+# adding formulae
+
+Additional formulae can be added without modifying this plugin by writing
+plugins that register functions in the
+`IkiWiki::Plugin::postsparkline::formula` namespace. These functions will
+receive on input a reference to a hash of parameters, and a sorted list of
+pages (newest pages first), and should return a list of data points for
+the sparkline plugin.
