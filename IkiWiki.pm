@@ -458,7 +458,7 @@ sub htmllink ($$$;@) { #{{{
 			cgiurl(
 				do => "create",
 				page => pagetitle(lc($link), 1),
-				from => $page
+				from => $lpage
 			).
 			"\">?</a>$linktext</span>"
 	}

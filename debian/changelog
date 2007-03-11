@@ -1,3 +1,11 @@
+ikiwiki (1.46) UNRELEASED; urgency=low
+
+  * Fix a bug with inlined create page links, including Discussion links on
+    blog post pages. The links will now create pages relative to the page that
+    actually contains the link.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 10 Mar 2007 23:56:23 -0500
+
 ikiwiki (1.45) unstable; urgency=low
 
   * Allow for underscores to appear in page titles, if encoded appropriately
