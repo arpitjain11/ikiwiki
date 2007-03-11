@@ -1,0 +1,36 @@
+News for ikiwiki 1.45:
+
+   Wikis need to be rebuilt on upgrade to this version. If you listed your wiki
+   in /etc/ikiwiki/wikilist this will be done automatically when the Debian
+   package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
+
+ikiwiki 1.45 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Allow for underscores to appear in page titles, if encoded appropriately
+     (\_\_95\_\_) in filenames. Previously, all underscores were replaced with
+     spaces. Thanks, Enrico Zini for noticing that bug.
+   * Add "template" option to inline plugin to allow for use of customised
+     templates.
+   * Add titlepage template for inline plugin.
+   * Add preview parameter to preprocesser calls, use this rather than the
+     previous ugly hack used to avoid writing rss feeds in previews.
+   * Fix the img plugin to avoid overwriting images in previews. Instead it
+     does all the work to make sure the resizing works, and dummys up a resized
+     image using width and height attributes.
+   * Also fixes img preview display, the links were wrong in preview before.
+   * Add a sparkline plugin.
+   * Add a postsparkline plugin.
+   * The slash escaping when adding to a blog from the CGI was not working
+     since it ended up being double-escaped. Instead, just remove slashes.
+   * Fix some nasty issues with page name escaping during previewing
+     (introduced in 1.44).
+   * Add a table plugin, derived from the one written by Victor Moral.
+   * The underscore escaping support exposed a bug in edit links: Such links
+     were titlepage escaped in the urls, and then doubly escaped by the CGI
+     when editing. To fix this, I removed the titlepage escaping in the edit
+     urls.
+   * That means that *every edit link* on the wiki is potentially changed.
+     Rebuilding wikis on upgrade to this version therefore necessary; enabled
+     that in postinst.
+   * Correct a deadlock that could occur in post-commit if the aggregate plugin
+     was enabled and tried to lock the already locked wiki."""]]
