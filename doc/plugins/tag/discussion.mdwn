@@ -3,3 +3,9 @@ I'd like to modify this plugin such that the tag pages are automatically created
 There are clearly many ways to do this, but any opinions on which is the cleanest?
 
 --Ben
+
+It might work to use the 'change' hook, since that's called at the very end
+of `refresh()`. The hook could add the tag pages and re-run `refresh()`,
+taking appropriate care to avoid looping forever.
+
+--[[Joey]]
