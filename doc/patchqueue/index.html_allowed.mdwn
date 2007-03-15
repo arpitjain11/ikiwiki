@@ -171,6 +171,20 @@ I'll attach an updated and modified version below. --[[Joey]]
      >>> unless you also want to serve the same copy over the Web, which I
      >>> doubt. --[[tuomov]]
 
+* I suggest keeping the links using foo/index.html in the html file, but use
+  JavaScript to fix the links onload time - but only if the protocol is http or https.
+  This provides nice links without the "index.html" when served by a
+  web server, but degrades nicely when using a file: url, or when JavaScript
+  is disabled.  --Per Bothner
+
+         function fixLinks ( ) {
+           var scheme = location.protocol;
+           if (scheme!="http:" && scheme!="https:") return;
+           var links = document.getElementsByTagName("a");
+           for (var i = links.length; --i >= 0; )
+             links[i].href = links[i].href.replace(/[/]index.html/,"");
+         }
+
 * Some of the generated links are missing the trailing / , which is
   innefficient since it leads to a http redirect when clicking on that
   link. Seems to be limited to ".." links, and possibly only to
