@@ -1,3 +1,16 @@
 It would be useful if ikiwiki was able to create [google sitemap][1] files to allow easy indexing. 
 
 [1]: https://www.google.com/webmasters/tools/docs/en/protocol.html
+
+> Sitemaps are particularly beneficial when users can't reach all areas of a
+> website through a browseable interface. (Generally, this is when users are
+> unable to reach certain pages or regions of a site by following links). For
+> example, any site where certain pages are only accessible via a search form
+> would benefit from creating a Sitemap and submitting it to search engines.
+
+What I don't get is exactly how ikiwiki, as a static wiki that's quite
+deeply hyperlinked, benefits from a sitemap. The orphans plugin can
+produce a map of pages that other pages do not link to, if you're worried
+about having such pages not found by web spiders.
+
+--[[Joey]]
