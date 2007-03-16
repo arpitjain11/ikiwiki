@@ -1,1 +1,13 @@
-If the user interrupts the page loading during the running of `svn commit`, the repository will be left in an inconsistent state. The probability of this happening increases with the size of the repository and the number of plugins installed, because these both affect how long the post-commit hook takes to run. (The core issue, I guess, is that we're abusing the concept of a "working copy" by giving everybody the same one). Here are the main solutions that I can see: (1) CGI queues commits so that a single process can act upon them sequentially, or (2) optionally divorce the `ikiwiki --refresh` from the `svn commit` so that commits happen faster. -- [[Ben]]
+If the user interrupts the page loading during the running of `svn commit`,
+the repository will be left in an inconsistent state. The probability of
+this happening increases with the size of the repository and the number of
+plugins installed, because these both affect how long the post-commit hook
+takes to run. (The core issue, I guess, is that we're abusing the concept
+of a "working copy" by giving everybody the same one). Here are the main
+solutions that I can see: (1) CGI queues commits so that a single process
+can act upon them sequentially, or (2) optionally divorce the `ikiwiki
+--refresh` from the `svn commit` so that commits happen faster. -- [[Ben]]
+
+I'm not aware of web servers, at least apache, killing cgi processes when
+the user stops a page load. If this is happening ikiwiki should be able to
+avoid it by blocking whatever signal is causing it to terminate. --[[Joey]]
