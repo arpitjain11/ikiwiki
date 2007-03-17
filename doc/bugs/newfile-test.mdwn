@@ -7,3 +7,6 @@ The CGI tries to decide whether an user is trying to edit a new file or not with
 Assume the script is called like this `http://example.com/ikiwiki.cgi?page=discussion&from=some-page&do=create`. The `if (exists $pagesources{$page}) {` test determines whether there's a file called `$config{srcdir}/discussion`. Most installs won't have a `$config{srcdir}/discussion` page, so this test will fail causing the else clause to be executed. In this case, the else clause results in `$file` being set to `discussion.mdwn`. Thus, on typical installs `value => ! -e "$config{srcdir}/$file",` always succeeds, which results in the expected behaviour, albeit for the wrong reasons. Similarly, the ` $form->field(name => "rcsinfo", value => rcs_prepedit($file)` line is also meaningless because `$file` isn't what we think it is.
 
 (To confirm that this wasn't just a result of my imagination, I created [[/discussion]] on this site; feel free to delete it now.) 
+
+> I always find bug reports more comprehansible if they describe actual
+> buggy behavior, which you've not done. Could you do so? Thanks. --[[Joey]]
