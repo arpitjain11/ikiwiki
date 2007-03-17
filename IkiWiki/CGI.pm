@@ -497,6 +497,21 @@ sub cgi_editpage ($$) { #{{{
 			print $form->render(submit => \@buttons);
 			return;
 		}
+		elsif (-e "$config{srcdir}/$file" &&
+		       $form->field("do") eq "create") {
+			$form->tmpl_param("creation_conflict", 1);
+			$form->field(name => "do", value => "edit", force => 1);
+			$form->tmpl_param("page_select", 0);
+			$form->field(name => "page", type => 'hidden');
+			$form->field(name => "type", type => 'hidden');
+			$form->title(sprintf(gettext("editing %s"), $page));
+			$form->field("editcontent", 
+				value => readfile("$config{srcdir}/$file").
+				         "\n\n\n".$form->field("editcontent"),
+				force => 1);
+			print $form->render(submit => \@buttons);
+			return;
+		}
 		
 		my $content=$form->field('editcontent');
 
