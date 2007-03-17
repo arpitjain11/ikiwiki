@@ -1,0 +1,10 @@
+ikiwiki 1.45 doesn't work properly for perl installs not in the system path.
+
+ie:
+
+~/tools/perl-5.8.8/perl Makefile.PL
+make
+
+fails, as the 'make' command attempts to use the perl install in PATH, rather than the one ikiwiki is being installed for.
+
+The installed bin/ikiwiki file also refers to /usr/bin/perl rather than the perl it is being installed for.
