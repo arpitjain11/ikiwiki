@@ -1,0 +1,16 @@
+    Index: IkiWiki.pm
+    ===================================================================
+    --- IkiWiki.pm  (revision 2981)
+    +++ IkiWiki.pm  (working copy)
+    @@ -26,7 +26,7 @@
+     memoize("file_pruned");
+     
+     sub defaultconfig () { #{{{
+    -       wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
+    +       wiki_file_prune_regexps => [qr/\.\./, qr/^\.(?!htaccess)/, qr/\/\.(?!htaccess)/,
+                    qr/\.x?html?$/, qr/\.ikiwiki-new$/,
+                    qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//],
+           wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]#]+)(?:#([^\s\]]+))?\]\]/,
+
+
+This lets the site administrator have a `.htaccess` file in their underlay directory, say, then get it copied over when the wiki is built. Without this, installations that are located at the root of a domain don't get the benefit of `.htaccess` such as improved directory listings, IP blocking, URL rewriting, authorisation, etc. 
