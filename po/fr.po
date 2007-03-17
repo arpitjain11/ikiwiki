@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-23 19:44-0500\n"
+"POT-Creation-Date: 2007-03-17 19:21-0400\n"
 "PO-Revision-Date: 2007-03-08 21:18+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -25,84 +25,85 @@ msgstr "Vous devez d'abord vous identifier."
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:164 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:474
+#: ../IkiWiki/CGI.pm:464
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:527 ../IkiWiki/CGI.pm:571
+#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:518
+#: ../IkiWiki/CGI.pm:562
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:668
+#: ../IkiWiki/CGI.pm:659
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:700
+#: ../IkiWiki/CGI.pm:691
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
 
-#: ../IkiWiki/Plugin/aggregate.pm:61
-#, perl-format
-msgid "aggregate plugin missing %s parameter"
-msgstr "Il manque le paramètre %s au greffon « aggregate »"
+#: ../IkiWiki/Plugin/aggregate.pm:62
+#, fuzzy, perl-format
+msgid "missing %s parameter"
+msgstr "Paramètre d'identification manquant dans le modèle"
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
 msgstr "Nouveau flux"
 
-#: ../IkiWiki/Plugin/aggregate.pm:103
+#: ../IkiWiki/Plugin/aggregate.pm:104
 msgid "posts"
 msgstr "Messages"
 
-#: ../IkiWiki/Plugin/aggregate.pm:105
+#: ../IkiWiki/Plugin/aggregate.pm:106
 msgid "new"
 msgstr "Nouveau"
 
-#: ../IkiWiki/Plugin/aggregate.pm:211
+#: ../IkiWiki/Plugin/aggregate.pm:212
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "Fin de validité de %s (date de %s jours)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:218
+#: ../IkiWiki/Plugin/aggregate.pm:219
 #, perl-format
 msgid "expiring %s"
 msgstr "Fin de validité de %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:241
+#: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "Vérification du flux %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:246
+#: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "Impossible de trouver de flux à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:255
+#: ../IkiWiki/Plugin/aggregate.pm:256
 msgid "feed crashed XML::Feed!"
 msgstr "Plantage du flux XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:279
 #, perl-format
 msgid "processed ok at %s"
 msgstr "A été correctement traité à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:334
 #, perl-format
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
@@ -111,13 +112,39 @@ msgstr "Création de la nouvelle page %s"
 msgid "There are no broken links!"
 msgstr "Il n'y a pas de lien cassé !"
 
+#: ../IkiWiki/Plugin/conditional.pm:20
+msgid "\"test\" and \"then\" parameters are required"
+msgstr ""
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "Échec de « fortune »"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-msgid "googlecalendar failed to find url in html"
+#, fuzzy
+msgid "failed to find url in html"
 msgstr "googlecalendar a échoué dans la recherche de l'url dans le code html"
+
+#: ../IkiWiki/Plugin/img.pm:36
+#, fuzzy, perl-format
+msgid "%s not found"
+msgstr "Patron %s introuvable "
+
+#: ../IkiWiki/Plugin/img.pm:49
+#, perl-format
+msgid "bad size \"%s\""
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
+#: ../IkiWiki/Plugin/img.pm:79
+#, fuzzy, perl-format
+msgid "failed to read %s: %s"
+msgstr "Échec de l'écriture de %s : %s"
+
+#: ../IkiWiki/Plugin/img.pm:64
+#, fuzzy, perl-format
+msgid "failed to resize: %s"
+msgstr "Échec de l'écriture de %s : %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -125,21 +152,27 @@ msgstr ""
 "Vous devez indiquer l'url du wiki par --url lors de l'utilisation de --rss "
 "ou --atom"
 
-#: ../IkiWiki/Plugin/inline.pm:96
+#: ../IkiWiki/Plugin/inline.pm:103
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:143
+#, perl-format
+msgid "nonexistant template %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:387
+#: ../IkiWiki/Plugin/inline.pm:395
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
 #: ../IkiWiki/Plugin/linkmap.pm:99
-msgid "linkmap failed to run dot"
+#, fuzzy
+msgid "failed to run dot"
 msgstr "Échec de lancement de dot par linkmap"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
@@ -213,6 +246,14 @@ msgstr "polygen n'est pas installé"
 #: ../IkiWiki/Plugin/polygen.pm:51
 msgid "polygen failed"
 msgstr "Échec de polygen"
+
+#: ../IkiWiki/Plugin/postsparkline.pm:25
+msgid "missing formula"
+msgstr ""
+
+#: ../IkiWiki/Plugin/postsparkline.pm:32
+msgid "unknown formula"
+msgstr ""
 
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
@@ -292,7 +333,8 @@ msgid "updating hyperestraier search index"
 msgstr "Mise à jour de l'index de recherche de hyperestraier"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-msgid "shortcut missing name or url parameter"
+#, fuzzy
+msgid "missing name or url parameter"
 msgstr "Il manque au raccourci un paramètre de nom ou d'url"
 
 #. translators: This is used to display what shortcuts are defined.
@@ -307,8 +349,64 @@ msgstr "Le raccourci %s pointe vers <i>%s</i>"
 msgid "failed to parse any smileys, disabling plugin"
 msgstr "Aucun smiley n'a pu être analysé, le greffon est désactivé"
 
+#: ../IkiWiki/Plugin/sparkline.pm:63
+msgid "parse error"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:69
+msgid "bad featurepoint diameter"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:79
+msgid "bad featurepoint location"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:90
+msgid "missing values"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:95
+msgid "bad height value"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:102
+#, fuzzy
+msgid "missing width parameter"
+msgstr "Paramètre d'identification manquant dans le modèle"
+
+#: ../IkiWiki/Plugin/sparkline.pm:106
+msgid "bad width value"
+msgstr ""
+
+#: ../IkiWiki/Plugin/sparkline.pm:144
+#, fuzzy
+msgid "failed to run php"
+msgstr "Échec de lancement de dot par linkmap"
+
+#: ../IkiWiki/Plugin/table.pm:22
+msgid "cannot find file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:45
+msgid "unknown data format"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:53
+msgid "empty data"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:73
+msgid "Direct data download"
+msgstr ""
+
+#: ../IkiWiki/Plugin/table.pm:106
+#, fuzzy, perl-format
+msgid "parse fail at line %d: %s"
+msgstr "Échec de l'écriture de %s : %s"
+
 #: ../IkiWiki/Plugin/template.pm:19
-msgid "template missing id parameter"
+#, fuzzy
+msgid "missing id parameter"
 msgstr "Paramètre d'identification manquant dans le modèle"
 
 #: ../IkiWiki/Plugin/template.pm:26
@@ -317,7 +415,8 @@ msgid "template %s not found"
 msgstr "Patron %s introuvable "
 
 #: ../IkiWiki/Plugin/template.pm:45
-msgid "template failed to process:"
+#, fuzzy
+msgid "failed to process:"
 msgstr "Échec de traitement du modèle :"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
@@ -447,13 +546,13 @@ msgstr "%s a été créé avec succès"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:103
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une url vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
 msgid "Error"
 msgstr "Erreur"
 
@@ -461,9 +560,12 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:561
+#: ../IkiWiki.pm:573
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
 "%s une boucle a été détectée dans le prétraitement de %s, à la profondeur de "
 "%i"
+
+#~ msgid "aggregate plugin missing %s parameter"
+#~ msgstr "Il manque le paramètre %s au greffon « aggregate »"
