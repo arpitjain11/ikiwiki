@@ -4,8 +4,10 @@ ikiwiki (1.46) UNRELEASED; urgency=low
     blog post pages. The links will now create pages relative to the page that
     actually contains the link.
   * French update. Closes: #414597
+  * Fix some broken logic in cgi creation of a subpage when a toplevel page
+    with the same name already exists, and generally simplify the edit code.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 12 Mar 2007 15:52:33 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 17 Mar 2007 18:25:59 -0400
 
 ikiwiki (1.45) unstable; urgency=low
 

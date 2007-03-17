@@ -290,8 +290,7 @@ sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
-	my @fields=qw(do rcsinfo subpage from page type editcontent comments
-	              newfile);
+	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
 	eval q{use CGI::FormBuilder};
@@ -333,11 +332,15 @@ sub cgi_editpage ($$) { #{{{
 	
 	my $file;
 	my $type;
-	if (exists $pagesources{$page}) {
+	if (exists $pagesources{$page} && $form->field("do") ne "create") {
 		$file=$pagesources{$page};
 		$type=pagetype($file);
 		if (! defined $type) {
 			error(sprintf(gettext("%s is not an editable page"), $page));
+		}
+		if (! $form->submitted) {
+			$form->field(name => "rcsinfo",
+				value => rcs_prepedit($file), force => 1);
 		}
 	}
 	else {
@@ -351,6 +354,9 @@ sub cgi_editpage ($$) { #{{{
 		}
 		$type=$config{default_pageext} unless defined $type;
 		$file=$page.".".$type;
+		if (! $form->submitted) {
+			$form->field(name => "rcsinfo", value => "", force => 1);
+		}
 	}
 
 	$form->field(name => "do", type => 'hidden');
@@ -362,25 +368,17 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "editcontent", type => "textarea", rows => 20,
 		cols => 80);
-	$form->field(name => "newfile", type => 'hidden');
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
 		htmllink("", "", "HelpOnFormatting", noimageinline => 1));
 	$form->tmpl_param("baseurl", baseurl());
-	if (! $form->submitted) {
-		$form->field(name => "rcsinfo", value => rcs_prepedit($file),
-			force => 1);
-		$form->field(name => "newfile", 
-			value => ! -e "$config{srcdir}/$file",
-			force => 1);
-	}
 	
 	if ($form->submitted eq "Cancel") {
-		if ($form->field(name => "newfile") && defined $from) {
+		if ($form->field("do") eq "create" && defined $from) {
 			redirect($q, "$config{url}/".htmlpage($from));
 		}
-		elsif ($form->field(name => "newfile")) {
+		elsif ($form->field("do") eq "create") {
 			redirect($q, $config{url});
 		}
 		else {
@@ -488,13 +486,14 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
-		if (! -e "$config{srcdir}/$file" && ! $form->field(name => 'newfile')){
+		if (! -e "$config{srcdir}/$file" &&
+		    $form->field("do") ne "create") {
 			$form->tmpl_param("page_gone", 1);
-			$form->field(name => "newfile",
-			             value => 1, force => 1);
+			$form->field(name => "do", value => "create", force => 1);
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
+			$form->title(sprintf(gettext("editing %s"), $page));
 			print $form->render(submit => \@buttons);
 			return;
 		}
@@ -529,7 +528,7 @@ sub cgi_editpage ($$) { #{{{
 				$message=$form->field('comments');
 			}
 			
-			if ($form->field(name => "newfile")) {
+			if ($form->field("do") eq "create") {
 				rcs_add($file);
 			}
 
