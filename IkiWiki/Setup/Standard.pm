@@ -45,6 +45,7 @@ sub setup_standard {
 	}
 	
 	foreach my $c (keys %setup) {
+		next if $c eq 'syslog';
 		if (defined $setup{$c}) {
 			if (! ref $setup{$c}) {
 				$config{$c}=possibly_foolish_untaint($setup{$c});
