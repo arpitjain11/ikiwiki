@@ -353,7 +353,6 @@ sub cgi_editpage ($$) { #{{{
 		$file=$page.".".$type;
 	}
 
-
 	$form->field(name => "do", type => 'hidden');
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
@@ -390,17 +389,11 @@ sub cgi_editpage ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq "Preview") {
-		my $content=$form->field('editcontent');
-		my $comments=$form->field('comments');
-		$form->field(name => "editcontent",
-				value => $content, force => 1);
-		$form->field(name => "comments",
-				value => $comments, force => 1);
 		$form->tmpl_param("page_preview",
 			htmlize($page, $type,
 			linkify($page, "",
 			preprocess($page, $page,
-			filter($page, $content), 0, 1))));
+			filter($page, $form->field('editcontent')), 0, 1))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");
