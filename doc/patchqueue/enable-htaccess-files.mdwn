@@ -13,4 +13,16 @@
            wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]#]+)(?:#([^\s\]]+))?\]\]/,
 
 
-This lets the site administrator have a `.htaccess` file in their underlay directory, say, then get it copied over when the wiki is built. Without this, installations that are located at the root of a domain don't get the benefit of `.htaccess` such as improved directory listings, IP blocking, URL rewriting, authorisation, etc. 
+This lets the site administrator have a `.htaccess` file in their underlay
+directory, say, then get it copied over when the wiki is built. Without
+this, installations that are located at the root of a domain don't get the
+benefit of `.htaccess` such as improved directory listings, IP blocking,
+URL rewriting, authorisation, etc. 
+
+> I'm concerned about security ramifications of this patch. While ikiwiki
+> won't allow editing such a .htaccess file in the web interface, it would
+> be possible for a user who has svn commit access to the wiki to use it to
+> add a .htaccess file that does $EVIL.
+> 
+> Perhaps this should be something that is configurable via the setup file
+> instead. --[[Joey]]
