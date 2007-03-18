@@ -30,3 +30,5 @@ messages which are then taken for CGI output, causing errors and general trouble
      	if (system(@cmdline) != 0) {
      		warn "'@cmdline' failed: $!";
      	}
+
+Thanks much for the patch. [[bugs/done]] --[[Joey]]

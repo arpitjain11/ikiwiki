@@ -55,7 +55,7 @@ sub mercurial_log($) {
 }
 
 sub rcs_update () { #{{{
-	my @cmdline = ("hg", "-R", "$config{srcdir}", "update");
+	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "update");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
@@ -80,7 +80,7 @@ sub rcs_commit ($$$;$$) { #{{{
 
 	$message = possibly_foolish_untaint($message);
 
-	my @cmdline = ("hg", "-R", "$config{srcdir}", "commit", 
+	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "commit", 
 	               "-m", "$message", "-u", "$user");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
@@ -92,7 +92,7 @@ sub rcs_commit ($$$;$$) { #{{{
 sub rcs_add ($) { # {{{
 	my ($file) = @_;
 
-	my @cmdline = ("hg", "-R", "$config{srcdir}", "add", "$file");
+	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$file");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}

@@ -10,6 +10,8 @@ ikiwiki (1.46) UNRELEASED; urgency=low
     output the verbose build log to stdout, rather than to the syslog.
   * Detect the case of two people independently creating the same page at the
     same time, and let the second person resolve the conflict.
+  * Applied a patch from Michał to make the mercurial backend pass --quiet to
+    hg.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 17 Mar 2007 19:56:04 -0400
 
