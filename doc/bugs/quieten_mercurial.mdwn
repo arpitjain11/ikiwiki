@@ -1,0 +1,32 @@
+The mercurial backend does not pass the --quiet option to hg, and it sometimes prints
+messages which are then taken for CGI output, causing errors and general trouble. --Michał
+
+    --- iki/usr/share/perl5/IkiWiki/Rcs/mercurial.pm	2006-12-29 02:48:30.000000000 +0100
+    +++ /usr/share/perl5/IkiWiki/Rcs/mercurial.pm	2007-03-18 22:45:24.000000000 +0100
+    @@ -55,7 +55,7 @@
+     }
+ 
+     sub rcs_update () { #{{{
+    -	my @cmdline = ("hg", "-R", "$config{srcdir}", "update");
+    +	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "update");
+     	if (system(@cmdline) != 0) {
+     		warn "'@cmdline' failed: $!";
+     	}
+    @@ -80,7 +80,7 @@
+     
+     	$message = possibly_foolish_untaint($message);
+     
+    -	my @cmdline = ("hg", "-R", "$config{srcdir}", "commit", 
+    +	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "commit", 
+     	               "-m", "$message", "-u", "$user");
+     	if (system(@cmdline) != 0) {
+     		warn "'@cmdline' failed: $!";
+    @@ -92,7 +92,7 @@
+     sub rcs_add ($) { # {{{
+     	my ($file) = @_;
+     
+    -	my @cmdline = ("hg", "-R", "$config{srcdir}", "add", "$file");
+    +	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$file");
+     	if (system(@cmdline) != 0) {
+     		warn "'@cmdline' failed: $!";
+     	}
