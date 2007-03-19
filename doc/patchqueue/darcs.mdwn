@@ -206,8 +206,8 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 
 `rcs_commit()` uses backticks instead of `system()`, to prevent darcs' output being sent to the browser and mucking with the HTTP headers (`darcs record` has no --quiet option). And `rcs_recentchanges()` uses regexes rather than parsing darcs' XML output.
 
-[[toggle text="show"]]
-[[toggleable text="""
+[[toggle text="show" id="bma"]]
+[[toggleable id="bma" text="""
 
 	#!/usr/bin/perl
 	
