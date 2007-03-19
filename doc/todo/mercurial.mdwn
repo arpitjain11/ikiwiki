@@ -3,3 +3,10 @@
 * Is the code sufficiently robust? It just warns when mercurial fails.
 * When rcs_commit is called with a $user that is an openid, it will be
   passed through to mercurial -u. Will mercurial choke on this?
+* The rcs_commit implementation seems not to notice if the file has been
+  changed since a web edit started. Unlike all the other frontends, which
+  use the rcstoken to detect if the web commit started editing an earlier
+  version of the file, and if so, merge the two sets of changes together.
+  It seems that with the current mercurial commit code, it will always
+  blindly overwrite the current file with the web edited version, losing
+  any other changes.
