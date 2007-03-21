@@ -12,9 +12,8 @@ ikiwiki (1.46) unstable; urgency=low
     same time, and let the second person resolve the conflict.
   * Applied a patch from Michał to make the mercurial backend pass --quiet to
     hg.
-  * Fix a few bugs around page titles containing html. The worst of these
-    is an actual security hole as it allows insertion of html into the title
-    element of a page, which is not processed by the htmlscrubber.
+  * Fix a security hole that allowed a web user to insert
+    arbitrary html in the title of a page due to missing escaping.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 01:51:30 -0400
 
