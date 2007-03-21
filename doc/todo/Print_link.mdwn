@@ -55,7 +55,11 @@ for all ikiwiki pages. --Pawel
 >>>> BTW, I also was thinkig about plugin to CVS support,
 >>>> but unfortunately I don't have too much free time. --Pawel
 
->>>> You don't need a stylesheet-switching UI or a printer-friendly
->>>> version; just link to a stylesheet with media="print". --[[JoshTriplett]]
+>> You don't need a stylesheet-switching UI or a printer-friendly
+>> version; just link to a stylesheet with `media="print"`. --[[JoshTriplett]]
 
->>>>> Example? --[[Joey]]
+>>> Example? --[[Joey]]
+
+>>>> I used `meta` to add a `media="print"` stylesheet to the [[sandbox]].  In print or
+>>>> print preview (on browsers supporting data URIs), you should no longer
+>>>> see the search form. --[[JoshTriplett]]
