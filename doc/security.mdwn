@@ -293,3 +293,14 @@ This hole was discovered on 10 Feb 2007 and fixed the same day with the
 release of ikiwiki 1.42. A fix was also backported to Debian etch, as
 version 1.33.1. I recommend upgrading to one of these versions if your wiki
 allows web editing.
+
+## html insertion via title
+
+Missing html escaping of the title contents allowed a web-based editor to
+insert arbitrary html inside the title tag of a page. Since that part of
+the page is not processed by the htmlscrubber, evil html could be injected.
+
+This hole was discovered on 21 March 2007 and fixed the same day (er, hour) 
+with the release of ikiwiki 1.46. A fix was also backported to Debian etch,
+as version 1.33.2. I recommend upgrading to one of these versions if your
+wiki allows web editing or aggregates feeds.

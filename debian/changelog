@@ -1,4 +1,4 @@
-ikiwiki (1.46) UNRELEASED; urgency=low
+ikiwiki (1.46) unstable; urgency=low
 
   * Fix a bug with inlined create page links, including Discussion links on
     blog post pages. The links will now create pages relative to the page that
@@ -12,8 +12,11 @@ ikiwiki (1.46) UNRELEASED; urgency=low
     same time, and let the second person resolve the conflict.
   * Applied a patch from Michał to make the mercurial backend pass --quiet to
     hg.
+  * Fix a few bugs around page titles containing html. The worst of these
+    is an actual security hole as it allows insertion of html into the title
+    element of a page, which is not processed by the htmlscrubber.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 18 Mar 2007 18:22:12 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 01:51:30 -0400
 
 ikiwiki (1.45) unstable; urgency=low
 

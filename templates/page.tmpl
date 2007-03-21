@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><TMPL_VAR TITLE></title>
+<title><TMPL_VAR TITLE ESCAPE=HTML></title>
 <link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
 <link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
 <TMPL_IF NAME="FAVICON">
@@ -19,7 +19,7 @@
 <TMPL_LOOP NAME="PARENTLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
 </TMPL_LOOP>
-<TMPL_VAR TITLE>
+<TMPL_VAR TITLE ESCAPE=HTML>
 </span>
 <TMPL_IF NAME="SEARCHFORM">
 <TMPL_VAR SEARCHFORM>
