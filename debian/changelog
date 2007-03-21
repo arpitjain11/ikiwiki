@@ -1,3 +1,16 @@
+ikiwiki (1.48) UNRELEASED; urgency=low
+
+  * Fix link() PageSpecs to not just look at the raw link text, but at where
+    that given link points based on the page doing the linking. Note that this
+    could make such PageSpecs match different things than before, if you
+    relied on the old behavior of them only matching the raw link text.
+  * This required changing the match_* interface, adding a third parameter.
+  * Allow link() PageSpecs to match relative, as is allowed with globs.a
+  * Add postform option to inline plugin.
+  * Add an bug tracker to the softwaresite example.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 16:58:00 -0400
+
 ikiwiki (1.47) unstable; urgency=low
 
   * Fix a security hole that allowed insertion of unsafe content via the meta

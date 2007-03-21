@@ -28,7 +28,7 @@ sub preprocess_if (@) { #{{{
 	# tests.
 	if ($params{test} =~ /^(enabled|sourcepage|destpage)\((.*)\)$/) {
 		$result=eval "IkiWiki::PageSpec::match_$1(undef, ".
-			IkiWiki::safequote($2).")";
+			IkiWiki::safequote($2).", \$params{page})";
 	}
 	else {
 		add_depends($params{page}, $params{test});
@@ -59,7 +59,7 @@ sub preprocess_if (@) { #{{{
 
 package IkiWiki::PageSpec;
 
-sub match_enabled ($$) { #{{{
+sub match_enabled ($$$) { #{{{
 	shift;
 	my $plugin=shift;
 	
@@ -67,7 +67,7 @@ sub match_enabled ($$) { #{{{
 	return UNIVERSAL::can("IkiWiki::Plugin::".$plugin, "import");
 } #}}}
 
-sub match_sourcepage ($$) { #{{{
+sub match_sourcepage ($$$) { #{{{
 	shift;
 	my $glob=shift;
 	
@@ -75,7 +75,7 @@ sub match_sourcepage ($$) { #{{{
 		$IkiWiki::Plugin::conditional::sourcepage);
 } #}}}
 
-sub match_destpage ($$) { #{{{
+sub match_destpage ($$$) { #{{{
 	shift;
 	my $glob=shift;
 	
@@ -83,7 +83,7 @@ sub match_destpage ($$) { #{{{
 		$IkiWiki::Plugin::conditional::sourcepage);
 } #}}}
 
-sub match_included ($$) { #{{{
+sub match_included ($$$) { #{{{
 	return $IkiWiki::Plugin::conditional::sourcepage ne $IkiWiki::Plugin::conditional::destpage;
 } #}}}
 

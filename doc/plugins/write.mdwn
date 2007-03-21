@@ -431,6 +431,7 @@ See [[about_RCS_backends]] for some more info.
 It's also possible to write plugins that add new functions to
 [[PageSpecs|PageSpec]]. Such a plugin should add a function to the
 IkiWiki::PageSpec package, that is named `match_foo`, where "foo()" is
-how it will be accessed in a [[PageSpec]]. The function will be passed two
-parameters: The name of the page being matched, and the thing to match
-against. It should return true if the page matches.
+how it will be accessed in a [[PageSpec]]. The function will be passed
+three parameters: The name of the page being matched, the thing to match
+against, and the page that the matching is occuring on. It should return
+true if the page matches.

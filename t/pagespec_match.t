@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 42;
+use Test::More tests => 46;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -25,11 +25,28 @@ ok(pagespec_match("a/b/foo", "./*", "a/b"), "relative 2");
 ok(pagespec_match("foo", "./*", "a"), "relative toplevel");
 ok(pagespec_match("foo/bar", "*", "baz"), "absolute");
 
+# The link and backlink stuff needs this.
+$config{userdir}="";
 $links{foo}=[qw{bar baz}];
-ok(pagespec_match("foo", "link(bar)", ""));
-ok(! pagespec_match("foo", "link(quux)", ""));
-ok(pagespec_match("bar", "backlink(foo)", ""));
-ok(! pagespec_match("quux", "backlink(foo)", ""));
+$links{bar}=[];
+$links{baz}=[];
+$links{"bugs/foo"}=[qw{bugs/done}];
+$links{"bugs/done"}=[];
+$links{"bugs/bar"}=[qw{done}];
+$links{"done"}=[];
+$links{"examples/softwaresite/bugs/fails_to_frobnicate"}=[qw{done}];
+$links{"examples/softwaresite/bugs/done"}=[];
+
+ok(pagespec_match("foo", "link(bar)", ""), "link");
+ok(! pagespec_match("foo", "link(quux)", ""), "failed link");
+ok(pagespec_match("bugs/foo", "link(done)", "bugs/done"), "link match to bestlink");
+ok(! pagespec_match("examples/softwaresite/bugs/done", "link(done)", 
+		"bugs/done"), "link match to bestlink");
+ok(pagespec_match("examples/softwaresite/bugs/fails_to_frobnicate", 
+		"link(./done)", "examples/softwaresite/bugs/done"), "link relative");
+ok(! pagespec_match("foo", "link(./bar)", "foo/bar"), "link relative fail");
+ok(pagespec_match("bar", "backlink(foo)", ""), "backlink");
+ok(! pagespec_match("quux", "backlink(foo)", ""), "failed backlink");
 
 $IkiWiki::pagectime{foo}=1154532692; # Wed Aug  2 11:26 EDT 2006
 $IkiWiki::pagectime{bar}=1154532695; # after

@@ -121,11 +121,13 @@ sub preprocess_inline (@) { #{{{
 	my $atomurl=atompage(basename($params{page}));
 	my $ret="";
 
-	if (exists $params{rootpage} && $config{cgiurl}) {
+	if ($config{cgiurl} && (exists $params{rootpage} ||
+			(exists $params{postform} && yesno($params{postform})))) {
 		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
-		$formtemplate->param(rootpage => $params{rootpage});
+		$formtemplate->param(rootpage => 
+			exists $params{rootpage} ? $params{rootpage} : $params{page});
 		$formtemplate->param(rssurl => $rssurl) if $feeds && $rss;
 		$formtemplate->param(atomurl => $atomurl) if $feeds && $atom;
 		$ret.=$formtemplate->output;

@@ -29,7 +29,9 @@ directive:
   configured to use atom feeds, set to "no" to disable.
 * `feeds` - controls generation of all types of feeds. Set to "no" to
   disable generating any feeds.
-* `rootpage` - Enables a form to post new pages to a [[blog]].
+* `postform` - Set to "yes" to enables a form to post new pages to a [[blog]].
+* `rootpage` - Also enables a form to post new pages to a [[blog]], and
+  allows specifying of a page that is used as the parent page for new pages.
 * `archive` - If set to "yes", only list page titles and some metadata, not
   full controls.
 * `quick` - Build archives in quick mode, without reading page contents for

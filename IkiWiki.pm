@@ -921,7 +921,7 @@ sub pagespec_translate ($) { #{{{
 		}
 		elsif ($word =~ /^(\w+)\((.*)\)$/) {
 			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
-				$code.=" IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).")";
+				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \$from)";
 			}
 			else {
 				$code.=" 0";
@@ -968,22 +968,35 @@ sub match_glob ($$$) { #{{{
 	return $page=~/^$glob$/i;
 } #}}}
 
-sub match_link ($$) { #{{{
+sub match_link ($$$) { #{{{
 	my $page=shift;
 	my $link=lc(shift);
+	my $from=shift;
+	if (! defined $from){
+		$from = "";
+	}
+
+	# relative matching
+	if ($link =~ m!^\.! && defined $from) {
+		$from=~s!/?[^/]+$!!;
+		$link=~s!^\./!!;
+		$link="$from/$link" if length $from;
+	}
 
 	my $links = $IkiWiki::links{$page} or return undef;
+	return 0 unless @$links;
+	my $bestlink = IkiWiki::bestlink($from, $link);
 	foreach my $p (@$links) {
-		return 1 if lc $p eq $link;
+		return 1 if $bestlink eq IkiWiki::bestlink($page, $p);
 	}
 	return 0;
 } #}}}
 
-sub match_backlink ($$) { #{{{
-	match_link(pop, pop);
+sub match_backlink ($$$) { #{{{
+	match_link($_[1], $_[0], $_[3]);
 } #}}}
 
-sub match_created_before ($$) { #{{{
+sub match_created_before ($$$) { #{{{
 	my $page=shift;
 	my $testpage=shift;
 
@@ -995,7 +1008,7 @@ sub match_created_before ($$) { #{{{
 	}
 } #}}}
 
-sub match_created_after ($$) { #{{{
+sub match_created_after ($$$) { #{{{
 	my $page=shift;
 	my $testpage=shift;
 
@@ -1007,15 +1020,15 @@ sub match_created_after ($$) { #{{{
 	}
 } #}}}
 
-sub match_creation_day ($$) { #{{{
+sub match_creation_day ($$$) { #{{{
 	return ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift);
 } #}}}
 
-sub match_creation_month ($$) { #{{{
+sub match_creation_month ($$$) { #{{{
 	return ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift);
 } #}}}
 
-sub match_creation_year ($$) { #{{{
+sub match_creation_year ($$$) { #{{{
 	return ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift);
 } #}}}
 
