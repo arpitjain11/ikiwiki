@@ -63,3 +63,9 @@ for all ikiwiki pages. --Pawel
 >>>> I used `meta` to add a `media="print"` stylesheet to the [[sandbox]].  In print or
 >>>> print preview (on browsers supporting data URIs), you should no longer
 >>>> see the search form. --[[JoshTriplett]]
+
+>>>>> (And I broke it, since it was a security hole ;-). So it looks like
+>>>>> media=print can be 
+>>>>> [used inside a style sheet](http://www.w3.org/TR/REC-CSS2/media.html),
+>>>>> so the thing to do would be to edit style.css to automatically disable parts 
+>>>>> not wanted when printing. That would rock. --[[Joey]]
