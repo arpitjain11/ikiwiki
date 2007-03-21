@@ -37,8 +37,8 @@ look different:
 >    with an `id` argument (`\[[template id=templatename]]`).
 > 2. Template invocation allowed bare values in addition to `key=value`
 >    arguments, and template definition supported some means to access the
->    value.  This would allow `\[[debfiles ikiwiki]]` rather than `\[[debfiles
->    package=ikiwiki]]`.
+>    value.  This would allow `\[[debfiles ikiwiki]]` rather than
+>    `\[[debfiles package=ikiwiki]]`.
 > 3. I could use ikiwiki syntax in the template, not just HTML and
 >    HTML::Template.  (If I can already do that, then [[/plugins/template]]
 >    should make that more clear.)
