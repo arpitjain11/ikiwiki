@@ -12,8 +12,8 @@ ikiwiki (1.46) unstable; urgency=low
     same time, and let the second person resolve the conflict.
   * Applied a patch from Michał to make the mercurial backend pass --quiet to
     hg.
-  * Fix a security hole that allowed a web user to insert
-    arbitrary html in the title of a page due to missing escaping.
+  * Fix a security hole that allowed a web user to insert arbitrary html in
+    the title of a page due to missing escaping of titles in the meta plugin.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 01:51:30 -0400
 
