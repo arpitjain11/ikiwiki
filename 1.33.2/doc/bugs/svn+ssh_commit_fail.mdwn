@@ -1,0 +1,5 @@
+If I try to do a web commit, to a svn+ssh repo, it fails with
+"Host key verification failed."
+I think that the setuid isn't fully taking; it should be running as me,
+but commit log shows www-data. So maybe it has the wrong username? Or
+EUID/Real UID screwage. [[bugs/done]]

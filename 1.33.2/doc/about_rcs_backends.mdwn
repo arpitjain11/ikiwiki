@@ -1,0 +1,164 @@
+A few bits about the RCS backends
+
+[[toc ]]
+
+## Terminology
+
+``web-edit'' means that a page is edited by using the web (CGI) interface
+as opposed to using a editor and the RCS interface.
+
+
+## [[Subversion]]
+
+Subversion was the first RCS to be supported by ikiwiki.
+
+### How does it work internally?
+
+Master repository M.
+
+RCS commits from the outside are installed into M.
+
+There is a working copy of M (a checkout of M): W.
+
+HTML is generated from W.  rcs_update() will update from M to W.
+
+CGI operates on W.  rcs_commit() will commit from W to M.
+
+For all the gory details of how ikiwiki handles this behind the scenes,
+see [[commit-internals]].
+
+You browse and web-edit the wiki on W.
+
+
+## [darcs](http://darcs.net/) (not yet included)
+
+Support for using darcs as a backend is being worked on by [Thomas
+Schwinge](mailto:tschwinge@gnu.org).
+
+### How will it work internally?
+
+``Master'' repository R1.
+
+RCS commits from the outside are installed into R1.
+
+HTML is generated from R1.  HTML is automatically generated (by using a
+``post-hook'') each time a new change is installed into R1.  It follows
+that rcs_update() is not needed.
+
+There is a working copy of R1: R2.
+
+CGI operates on R2.  rcs_commit() will push from R2 to R1.
+
+You browse the wiki on R1 and web-edit it on R2.  This means for example
+that R2 needs to be updated from R1 if you are going to web-edit a page,
+as the user otherwise might be irritated otherwise...
+
+How do changes get from R1 to R2?  Currently only internally in
+rcs\_commit().  Is rcs\_prepedit() suitable?
+
+It follows that the HTML rendering and the CGI handling can be completely
+separated parts in ikiwiki.
+
+What repository should [[RecentChanges]] and [[History]] work on?  R1?
+
+#### Rationale for doing it differently than in the Subversion case
+
+darcs is a distributed RCS, which means that every checkout of a
+repository is equal to the repository it was checked-out from.  There is
+no forced hierarchy.
+
+R1 is nevertheless called the master repository.  It's used for
+collecting all the changes and publishing them: on the one hand via the
+rendered HTML and on the other via the standard darcs RCS interface.
+
+R2, the repository the CGI operates on, is just a checkout of R1 and
+doesn't really differ from the other checkouts that people will branch
+off from R1.
+
+(To be continued.)
+
+#### Another possible approach
+
+Here's what I (tuomov) think, would be a “cleaner” approach:
+
+ 1. Upon starting to edit, Ikiwiki gets a copy of the page, and `darcs changes --context`.
+     This context _and_ the present version of the page are stored in as the “version” of the
+     page in a hidden control of the HTML.
+     Thus the HTML includes all that is needed to generate a patch wrt. to the state of the
+     repository at the time the edit was started. This is of course all that darcs needs.
+ 2. Once the user is done with editing, _Ikiwiki generates a patch bundle_ for darcs.
+     This should be easy with existing `Text::Diff` or somesuch modules, as the Web edits
+     only concern single files. The reason why the old version of the page is stored in
+     the HTML (possibly compressed) is that the diff can be generated.
+ 3. Now this patch bundle is applied with `darcs apply`, or sent by email for moderation…
+     there are many possibilities.
+
+This approach avoids some of the problems of concurrent edits that the previous one may have,
+although there may be conflicts, which may or may not propagate to the displayed web page.
+(Unfortunately there is not an option to `darcs apply` to generate some sort of ‘confliction resolution
+bundle’.) Also, only one repository is needed, as it is never directly modified
+by Ikiwiki. 
+
+This approach might be applicable to other distributed VCSs as well, although they're not as oriented
+towards transmitting changes with standalone patch bundles (often by email) as darcs is.
+
+## [[Git]]
+
+Regarding the Git support, Recai says:
+
+I have been testing it for the past few days and it seems satisfactory.  I
+haven't observed any race condition regarding the concurrent blog commits
+and it handles merge conflicts gracefully as far as I can see.
+
+As you may notice from the patch size, GIT support is not so trivial to
+implement (for me, at least).  Being a fairly fresh code base it has some
+bugs.  It also has some drawbacks (especially wrt merge which was the hard
+part).  GIT doesn't have a similar functionality like 'svn merge -rOLD:NEW
+FILE' (please see the relevant comment in mergepast for more details), so I
+had to invent an ugly hack just for the purpose.
+
+By design, Git backend uses a "master-clone" repository pair approach in contrast
+to the single repository approach (here, _clone_ may be considered as the working
+copy of a fictious web user).  Even though a single repository implementation is
+possible, it somewhat increases the code complexity of backend (I couldn't figure
+out a uniform method which doesn't depend on the prefered repository model, yet).
+By exploiting the fact that the master repo and _web user_'s repo (`srcdir`) are all
+on the same local machine, I suggest to create the latter with the "`git clone -l -s`"
+command to save disk space.
+
+Note that, as a rule of thumb, you should always put the rcs wrapper (`post-update`)
+into the master repository (`.git/hooks/`) as can be noticed in the Git wrappers of
+the sample [[ikiwiki.setup]].
+
+## [[Mercurial]]
+
+The Mercurial backend is still in a early phase, so it may not be mature 
+enough, but it should be simple to understand and use.
+
+As Mercurial is a distributed RCS, it lacks the distinction between 
+repository and working copy (every wc is a repo).
+
+This means that the Mercurial backend uses directly the repository as 
+working copy (the master M and the working copy W described in the svn 
+example are the same thing).
+
+You only need to specify 'srcdir' (the repository M) and 'destdir' (where
+the HTML will be generated).
+
+Master repository M.
+
+RCS commit from the outside are installed into M.
+
+M is directly used as working copy (M is also W).
+
+HTML is generated from the working copy in M. rcs_update() will update 
+to the last committed revision in M (the same as 'hg update').
+If you use an 'update' hook you can generate automatically the HTML
+in the destination directory each time 'hg update' is called.
+
+CGI operates on M. rcs_commit() will commit directly in M.
+
+If you have any question or suggestion about the Mercurial backend 
+please refer to [Emanuele](http://nerd.ocracy.org/em/)
+
+## [[tla]]

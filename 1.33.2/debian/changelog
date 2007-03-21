@@ -1,0 +1,805 @@
+ikiwiki (1.33.2) testing-proposed-updates; urgency=medium
+
+  * Backport fix for a security hole that allowed a web user to insert
+    arbitrary html in the title of a page due to missing escaping of
+    titles in the meta plugin.
+  * Fix examples directory location.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 01:55:02 -0400
+
+ikiwiki (1.33.1) testing-proposed-updates; urgency=medium
+
+  * Backport fix for a security hole that allowed a web user to edit images
+    and other non-page format files in the wiki. To exploit this, the file
+    already had to exist in the wiki, and the web user would need to somehow
+    use the web based editor to replace it with malicious content.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 10 Feb 2007 15:30:12 -0500
+
+ikiwiki (1.33) unstable; urgency=low
+
+  * Fix issue with aggregate plugin updating expired pages.
+  * Avoid syntax errors in templates used by the template plugin crashing
+    ikiwiki.
+  * Enable utf8 file IO in aggregate plugin.
+  * Fix some issues with the new registration form.
+  * Patch from Ethan Glasser Camp to add a skip option to the inline plugin.
+  * Make sure to check for errors from every eval.
+  * Fix img plugin's handling of adding dependencies for images that do not
+    yet exist.
+  * Work around a strange bug in CGI::FormBuilder 3.0401 that makes
+    FORM-SUBMIT unusable on customised formbuilder templates. For now,
+    hardcode the submit buttons in editpage.tmpl instead of using the
+    template variable, which is ok, since the buttons are static.
+  * Work with hyperestraier 1.4.9.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 15 Nov 2006 18:32:26 -0500
+
+ikiwiki (1.32) unstable; urgency=low
+
+  * Add a separate pass to find page links, and only render each page once,
+    instead of over and over. Typical speedup is ~4x. Max possible speedup:
+    8x.
+  * Add "scan" parameter to hook(), which is used to make the hook be called
+    during the scanning pass, as well as the render pass. The meta and tag
+    plugins need to use the new scan parameter, so will any others that modify
+    %links.
+  * Now that links are calculated in a separate pass, it can also
+    precalculate backlinks in one pass, which is O(N^2) instead of the
+    previous code that was O(N^3). A very nice speedup for wikis with lots
+    (thousands) of pages.
+  * Stylish update to the ikiwiki logo, thanks to Recai Oktaş and Selçuk
+    Erdem.
+  * Add a default stylesheet entry for the pagecloud.
+  * Add examples page with some examples of things that can be done using
+    ikiwiki, like a weblog. The examples can be copied into a user's wiki
+    for a quick start, without needing to learn everything about how to put
+    them together.
+  * Install the source of the examples into /usr/share/doc/ikiwiki/examples.
+  * Add perlmagick to build-depends so syntax check of img plugin works.
+    Closes: #396702
+  * Improve login/register process, the login dialog has only name and
+    password fields, which allows more web browsers to regognise it as a login
+    field, and is less confusing.
+  * Implemented expiry options for aggregate plugin.
+  * Use precalculated backlinks info when determining if files need an update
+    due to a page they link to being added/removed. Mostly significant if
+    there are lots of pages.
+  * Remove duplicate link info when saving index. In some cases it could
+    pile up rather badly. (Probably not the best way to deal with this
+    problem.)
+  * Patch from James Westby to support podcasting, photoblogging, vidcasting,
+    or what have you, by creating enclosures for non-page items that are
+    included in feeds.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  3 Nov 2006 14:46:37 -0500
+
+ikiwiki (1.31) unstable; urgency=low
+
+  * Patch from Pawel Tecza to cp -a the templates in the Makefile.
+  * Change the rss feed title from the wikiname to the page title, with
+    an exception for the wiki's toplevel index page, which will still use the
+    wikiname as the feed title.
+    Overriding the page title with meta title already overrode the rss feed
+    tittle.
+  * Add an img plugin, based on Christian Mock's img plugin, but stripped
+    down to the bare essentials. Useful for handling large images on websites.
+  * Sanitize possibly problimatic characters out of the polygen grammar names,
+    just in case. Should not be exploitable anyway, since it only tries to run
+    polygen after finding the specified grammar file.
+  * Add missing dependency on the URI perl module.
+  * Add basic spam fighting tool for admins: An admin's prefs page now allows
+    editing a list of banned users.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 27 Oct 2006 23:16:33 -0400
+
+ikiwiki (1.30) unstable; urgency=low
+
+  * Add no_override parameter to hook().
+  * Add a shortcut plugin, inspired by Victor Moral's contributed shortcuts
+    plugin, but featuring a more ikiwiki-ish syntax and with shortcuts that
+    can be configured using a page in wiki.
+  * Fix support for --pingurl at the command line.
+  * Fix a subtle bug in will_render that broke some builds, by only clearing
+    items from renderedfiles the first time per build.
+  * Wrap entire technortati ping operation in an eval to catch all possible
+    failure modes, after I observed a simple ->value crashing ikiwiki when
+    a ping failed.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 16 Oct 2006 15:17:38 -0400
+
+ikiwiki (1.29) unstable; urgency=low
+
+  * Patch from Paul Tötterman to use CP in the Makefile.
+  * Patch from Alec Berryman adding a http_auth config item that allows
+    using HTTP Authentication instead of ikiwiki's built in authentication.
+    Useful for eg, large sites with their own previously existing user auth
+    setup. Closes: #384534
+  * Change %renderedfiles to store an array of files rendered from a given
+    source file, to allow tracking of extra rendered files like rss feeds.
+  * Note that plugins that accessed this variable will need to be updated!
+    The plugin interface has been increased to version 1.01 for this change.
+    As few plugins use %renderedfiles I haven't done anything else to ensure
+    compatability of old plugins.
+  * Add will_render function to the plugin interface, used to register that a
+    page renders a destination file, and do some security checks. Previously
+    but no longer rendered files will be cleaned up.
+  * Use will_render in the inline and linkmap plugins.
+  * You will need to rebuild your wiki on upgrade to this version.
+  * Atom feed support based on a patch by Clint Adams.
+  * Add feeds=no option to inline preprocessor directive to turn off all types
+    of feeds.
+  * $IkiWiki::version now holds the program version, and is accessible to
+    plugins.
+  * Make the aggregate plugin emphasize error messages.
+  * Patch from Recai to limit recentchanges to displaying max 10 files for a
+    given changeset (to avoid large number of file changes excessively
+    bloating the page).
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 13 Oct 2006 23:14:28 -0400
+
+ikiwiki (1.28) unstable; urgency=low
+
+  * inline: Add ability to sort by page name, based on a patch from
+    Benjamin A'Lee.
+  * Fix a forkbomb in various calls to IPC::Open2, which has a highly
+    braindead interface. Closes: #389383
+  * Don't rm -rf ikiwiki on distclean, since a) there's no such file
+    and b) those poor Mac OSX users and their case insensative files!
+  * Don't fail syntax check if Text::Typography isn't installed.
+    Closes: #389406
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 26 Sep 2006 02:08:17 -0400
+
+ikiwiki (1.27) unstable; urgency=low
+
+  * Work on firming up the plugin interface:
+    - Plugins should not need to load IkiWiki::Render to get commonly
+      used functions, so moved some functions from there to IkiWiki.
+    - Picked out the set of functions and variables that most plugins
+      use, documented them, and made IkiWiki export them by default,
+      like a proper perl module should.
+    - Use the other functions at your own risk.
+    - This is not quite complete, I still have to decide whether to
+      export some other things.
+  * Changed all plugins included in ikiwiki to not use "IkiWiki::" when
+    referring to stuff now exported by the IkiWiki module.
+  * Add a module version number to IkiWiki, so you can "use IkiWiki '1.00'"
+    to declare which version of the interface your plugin needs.
+  * Anyone with a third-party ikiwiki plugin is strongly encouraged
+    to make like changes to it and avoid use of non-exported symbols from
+    "IkiWiki::".
+  * Link debian/changelog and debian/news to NEWS and CHANGELOG.
+  * Support hyperestradier version 1.4.2, which adds a new required phraseform
+    setting.
+  * If an inlined page has a permalink, link the page title to that.
+  * Patch from Recai to use utf8 when reading the setup file, so that
+    utf8 wikinames from there will be used properly.
+  * Patch from Recai to kill utf-8 on the wiki name when generating the
+    session cookie.
+  * Change ddate plugin to use the DateTime::Calendar::Discordian perl module.
+  * Fix a baseurl problem in hyperestradier search results.
+  * Add a stub local.css to avoid problems with 404's.
+  * Patch from Recai to fix a wide character warning from the search plugin
+    during setup if the wikiname contains utf8.
+  * Yet another fix for those poor case-insensative OS X users.
+  * pagetemplate hooks are now also called when generating cgi pages.
+  * Add a favicon plugin, which simply adds a link tag for an icon to each
+    page (and cgis).
+  * Patch from James Westby to deal with the case where you're editing a
+    new page, hit cancel, and need to be redirected to somewhere sane.
+  * Various documentation improvements by various wiki users.
+  * Support Text::Markdown from CPAN, which has a different interface from
+    the original markdown or the one in Debian.
+  * Version the libcgi-session-perl dependency, some features that need
+    the new version are used in some cases (sslcookie).
+  * Numerous tla fixes from Clint.
+  * Updated ikiwiki.svgz from Recai, includes an icon and is used to generate
+    a multi-resolution favicon.ico.
+  * README.Debian: typo Closes: #388110
+  * chomp trailing newline at the end of templates read in by the template
+    plugin, to allow use of the template preprocessor directive in
+    whitespace-sensative situations. Closes: #387073
+  * Patch from James Westby to make the location of the estseek.cgi script
+    configurable.
+  * Add typography (SmartyPants) plugin by Recai.
+  * Add --render mode, which can be used to preview an edit at the command
+    line by test rendering a single page.
+  * Add a googlecalendar plugin. A bit special-purpose, but it shows
+    one way to to deal with user-supplied content that could cause XSS
+    issues w/o the htmlscrubber, and won't survive the scrubber.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 24 Sep 2006 00:02:21 -0400
+
+ikiwiki (1.26) unstable; urgency=low
+
+  * Add a missing -n to tla undo call.
+  * otl2hmtl can't be safely used with IPC::Open2 since it sometimes
+    writes before consuming its whole stdin. Avoid this deadlock.
+  * Fix alt tags for outline checkboxes.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  8 Sep 2006 16:24:16 -0400
+
+ikiwiki (1.25) unstable; urgency=low
+
+  * Add proper waitpid calls for open2ed processes throughout to avoid
+    zombies; this hit htmltidy especially badly.
+  * Drop real uid/gid in the suid wrapper, thus allowing commits to remote
+    subversion repos and fixing some other issues.
+  * Add support for tla, contributed by Clint Adams. Closes: #385936
+  * Add support for mercurial, contributed by Emanuele Aina.
+  * Include <link rel> tag for RSS feeds, used by some aggregators and
+    firefox to find the feed.
+  * Add a linkmap plugin (requires graphviz).
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  8 Sep 2006 01:54:14 -0400
+
+ikiwiki (1.24) unstable; urgency=low
+
+  * Simplify the data structure returned by rcs_recentchanges to avoid
+    each rcs plugin needing to form complex strings on its own.
+  * Fix another destpage issue in the inline directive. Closes: #385512
+    again.
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  3 Sep 2006 15:46:45 -0400
+
+ikiwiki (1.23) unstable; urgency=low
+
+  * Allow inline directives to be nested inside eg, sidebars. Closes: #385512
+
+ -- Joey Hess <joeyh@debian.org>  Sun,  3 Sep 2006 12:14:45 -0400
+
+ikiwiki (1.22) unstable; urgency=low
+
+  * Change how the stylesheet url is determined in the templates: Remove
+    STYLEURL and add BASEURL to all templates (some already had it). This
+    new more general variable can be used to link to other things (eg, images)
+    from the template, as well as stylesheets.
+  * Fix a bug introduced last version to do with nested inlines.
+  * Allow preprocessor directives to span multiple lines, both to make
+    long ones with lots of values easier to write, and to allow for ones with
+    multi-line quoted values.
+  * Allow preprocessor directives to contain python-like triple-quoted
+    text blocks, for easy nesting of quotes inside.
+  * Add a template plugin.
+  * Make pagespec merge code smarter about merging duplicate pagespecs.
+  * Patch from Jordà Polo to make Setup::Standard support hashes in config
+    files.
+  * Change order of linkify and preprocess; first preprocess and then linkify.
+    This allows passing a wikilink inside a parameter to a preprocessor
+    directive without it being expanded to html, and leaking out of the
+    parameter, which had required some non-obvious use of triple-quoting
+    to avoid. Note that any preprocessor plugins that output something
+    that looks like a wikilink will now have it treated as such; AFAIK
+    this doesn't change any behavior though except for the template plugin.
+  * Enable preprocessor directives when previewing an edit.
+  * Make all pages pull in a local.css style sheet, if present. This won't
+    be included in ikiwiki, but can be created to make local styling changes
+    w/o needing to merge in every new change to the distributed style.css.
+  * Use DESTDIR and not PREFIX to specify installation prefix for packaging.
+  * Support running "perl Makefile.PL PREFIX=foo" to build ikiwiki to run
+    from a different directory.
+  * Generalised preprocesser loop protection code.
+  * Patch from James Westby to allow a description to be set for rss feeds.
+  * Patch from James Westby to add a template for the search form.
+  * Added a ddate plugin.
+  * Patch from James Westby to add a --sslcookie switch, which forces
+    cookies to only be sent over ssl connections to avoid interception.
+  * Fix preferences page on anonok wikis; still need to sign in to get
+    to the preferences page.
+  * Add toc (table of contents) plugin.
+  * Change htmlize, format, and sanitize hooks to use named parameters.
+  * Patch from James Westby to add an actions option to inline; this
+    adds Edit and Discussion links at the end of blog entries.
+  * Due to some css changes, you'll want to rebuild your wiki on upgrade
+    to this version. Will be handled automatically by the deb.
+  * Add processed date to aggregate preprocessor directive status output.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  1 Sep 2006 22:03:34 -0400
+
+ikiwiki (1.21) unstable; urgency=low
+
+  * Add a tail fin^W^Wsidebar plugin by Tuomo Valkonen.
+  * If a page links to itself, mark up the link text in a span with
+    class="selflink" so that it can be styled. I don't have a useful style
+    defined for that though.
+  * Call filter hooks on inlined page content.
+  * Support inlining pages raw, rather than creating a blog.
+  * Clean up yes/no parameter parsing in inline plugin.
+  * Implemented better cycle detection in the inline plugin; nested inlines
+    will now work.
+  * Add a map plugin contributed by Alessandro Dotti Contra.
+  * Add otl format plugin, which handles files as created by vimoutliner.
+  * Fix ikiwiki-mass-rebuild to work in the way the postinst uses it.
+  * Add first draft at a Restructured Text (rst) plugin, by Sergio
+    Talens-Oliag. Note that this has many known issues -- see the caveats on
+    the plugin's page.
+  * Credit everyone who wrote a plugin on the plugins' wiki pages.
+  * Fix utf-8 in blog post form.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 20 Aug 2006 16:42:54 -0400
+
+ikiwiki (1.20) unstable; urgency=low
+
+  * Relicense the templates and basewiki under the 2-clause BSD license.
+    Since these can easily become part of other people's websites, they
+    should be under as permissive a license as possible.
+  * Add --syslog config option, to log to the syslog.
+  * Catch failing IPC::Open2 in tidy plugin and retry in case this is a
+    transient failure to fork (which I've seen happen in the wild).
+  * Fix a bug in the aggregator introduced last version that caused all
+    aggregator state to be lost during a non-aggregating build.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 Aug 2006 19:05:56 -0400
+
+ikiwiki (1.19) unstable; urgency=low
+
+  * Fix several related bugs in page type determination during online editing.
+  * Add some locking to prevent 2 aggregators from running at once.
+  * Fix an infinite loop in the aggregator when finding a unique filename.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 16 Aug 2006 13:46:25 -0400
+
+ikiwiki (1.18) unstable; urgency=low
+
+  * The last release accidentially installed ikiwiki as ikiwiki.pl, now fixed.
+  * Add --version.
+  * Man page format fixups.
+  * If the meta plugin overides the page title, set a title_overridden
+    variable in the template to true. This allows doing things with the
+    templates conditional on the title being overriden.
+  * Add a %pagecase which maps lower-case page names to the actual case
+    used in the filename. Use this in bestlinks calculation instead of
+    forcing the link to lowercase.
+  * Also use %pagecase in various other places that want to check if a page
+    with a given name exists.
+  * This means that links to pages with mixed case names will now work,
+    even if the link is in some other case mixture, and mixed case pages
+    should be fully supported throughout ikiwiki.
+  * Recommend rebuilding wikis on upgrade to this version.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 12 Aug 2006 22:10:48 -0400
+
+ikiwiki (1.17) unstable; urgency=low
+
+  * Disable tidy generator tag.
+  * Move tidy back to sanitize hook, found out how to only show body.
+  * Turn off tidy indentation too.
+  * Turn on HTML::Template loop_context_vars; not actually used in stock
+    templates but can be useful for things like making comma-delimited lists
+    of tags or what have you.
+  * Remove <br> from end of aggregate preprocessor directive output.
+  * Ship ikiwiki executable as ikiwiki.pl in source to avoid issues on
+    case-sensative filesystems like OSX.
+  * Improve markdown loading. First, try to load it as a proper perl module,
+    in case it was installed as one. Then fall back to trying
+    /usr/bin/markdown.
+  * Document in install page how to install markdown, since it has no
+    installation procedure in the upstream tarball.
+  * Set die_on_bad_params => 0 for all templates, to allow users to modify
+    them without annoyances.
+  * Suck in the page content when generating an inline archive page, to work
+    around the meta plugin's lack of caching of title metadata across runs.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 12 Aug 2006 12:52:13 -0400
+
+ikiwiki (1.16) unstable; urgency=low
+
+  * Try to handle relative links in aggregated feeds. However,
+    the current support is a crude hack due to limitations of XML::Feed:
+    xml:base is not supported, neither is Content-Location. And of course,
+    relative links in RSS feeds are ill-undefined..
+  * Make aggregator save permalinks and author name to pages as metadata.
+  * Add permalink and author support to meta plugin, affecting RSS feeds
+    and blog pages.
+  * Various CSS and formatting changes.
+  * Encode link and guid urls in rss feeds to avoid illegal utf8 slipping in.
+  * Add xhtml files to the default prune regexp.
+  * Also generate rel=bookmark links for permalinks.
+  * Fix the htmltidy plugin, which wasn't working due my breaking it when
+    I added it..
+  * Don't run tidy with -xml as that fails if the input is not well-formed.
+    Run it with -asxhtml instead, so it will output well-formed xhtml no
+    matter what the input.
+  * Disable tidy warnings too.
+  * Add a new format hook, and make tidy use it, since tidy can really only
+    operate on and output complete html documents, not the body chunks
+    that sanitise gets.
+  * Fix dates in rss feeds if running localised, so they're still rfc 822.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  4 Aug 2006 20:48:36 -0400
+
+ikiwiki (1.15) unstable; urgency=low
+
+  * Remove CDPATH and other env vars perl taint checking doesn't like.
+    Closes: #381279
+  * Added created_before and created_after PageSpec limits.
+
+ -- Joey Hess <joeyh@debian.org>  Thu,  3 Aug 2006 13:00:57 -0400
+
+ikiwiki (1.14) unstable; urgency=low
+
+  * Memoize pagespec translation, this speeds up a build of the ikiwiki tree
+    by 10% or so.
+  * Fix stupid bug in date matching, patch from Roland Mas. Closes: #381132
+  * Added many unit tests for pagespec_match.
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  2 Aug 2006 11:34:06 -0400
+
+ikiwiki (1.13) unstable; urgency=low
+
+  * ikiwiki can now download and aggregate feeds with its new aggregate
+    plugin, so it's possible to implement a Planet using ikiwiki!
+  * Add a run_hooks function for the common task of running all hooks of a
+    given type.
+  * Add a savestate hook.
+  * Don't put blog post forms on pages if there's no cgiurl set.
+  * --setup --refresh no longer rebuilds wrappers. Use --setup --refresh
+    --wrappers to do that.
+  * Add %IkiWiki::forcerebuild to provide a way for plugins like aggregate
+    to update pages that haven't changed on disk.
+  * Change meta tags to use html entity-escaped text for values, so that
+    quotes and such can be represented in title tags.
+  * Depend and build-depend on HTML::Parser for HTML::Entities which is used
+    for the above.
+  * Make --rebuild also cause --aggregate to re-download and write aggregated
+    pages.
+  * Avoid outputting duplicate meta info.
+  * Include title metadata on aggregated posts for capitalised and un-munged
+    titles.
+  * Title metadata of inlined pages now shows up in blogs and rss feeds.
+  * Fix issue with unicode filenames and updating the hyper estradier search
+    index. (Aka Please Please Please, let that be the last one.)
+  * Patch from Roland Mas to support an rss=no parameter to inline directives.
+    Closes: #380743
+  * Renamed GlobLists to PageSpecs.
+  * PageSpecs can now include nested parens, "and", and "or". This remains
+    backwards compatible to the old GlobList format. It's implemented by
+    treating the GlobList as a very limited microlanguage that is transformed
+    to perl code that does the matching.
+  * The old GlobList format is deprecated, and I encourage users to switch to
+    using the new PageSpec format. Compatability with the old format will be
+    removed at some point, possibly by 2.0.
+  * Wiki rebuild needed on upgrade to this version due to PageSpec change.
+  * Add support for creation_month and creation_year to PageSpec.
+    Closes: #380680
+  * Changes to index file encoding.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  1 Aug 2006 21:21:19 -0400
+
+ikiwiki (1.12) unstable; urgency=low
+
+  "Viva l'Italia!"
+  * New pagestats plugin from Enrico, which can generate a table counting
+    the backlinks for each page, or a del.icio.us style cloud.
+  * Build-depend on libtext-wikiformat-perl, so that the syntax check of
+    the wikiformat plugin works. Thanks, Emanuele Aina.
+  * Patch from Alessandro Dotti Contra to clean up backlinks and navbar
+    display, running them through pagetitle. This removes ugly underscores and
+    other gunk from the display, much nicer. You may want to rebuild your wiki
+    when upgrading to get the cleanup globally.
+  * Polygen plugin from Enrico.
+  * htmltidy plugin from Faidon.
+  * Locale patch from Faidon:
+    - Adds a locale setting to setup files.
+    - Proper local time, if the locale configuration option is used.
+    - Support for UTF-8 (or ISO-8859-X) filenames in SVN. Before this patch,
+      commiting (or even rcs_updating) on repositories with UTF-8 filenames was
+      impossible.
+  * Add getopt hook type, this allows plugins to add new command-line options.
+  * Add --tagbase option to tag plugin.
+  * Add exclude option in setup files, works same as --exclude.
+  * Put categories in rss feeds for tagged items.
+  * Allow preprocessor directives to be expanded in inlined blog pages.
+    However, to avoid inlining loops etc, don't expand inline directives in
+    inlined pages.
+  * fortune plugin (trivial)
+  * Tag plugins according to type.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 29 Jul 2006 17:12:56 -0400
+
+ikiwiki (1.11) unstable; urgency=low
+
+  * Patch from Enrico that
+    - Adds a tag plugin that allows more easily tagging pages.
+      The meta plugin can also still be used for that, but the tag plugin
+      also lists a page's tags at the bottom of the page.
+    - Allows preprocessor directives to have parameters with no specified
+      value.
+    - Fixes preprocessor directive parameter parsing so that
+      foo=bar baz now means "foo=bar" and a "baz" with no value.
+  * Run pagetemplate hooks when inlining pages so that inlined pages also
+    list their tags.
+  * Make all plugins with pagetemplate hooks check that variables exist
+    on the template before setting them, for robustness.
+  * Switch pagetemplate hooks to using named parameters.
+  * Pass a destpage parameter to preprocessor and pagetemplate hooks.
+    This will be the page that a source page will be part of, which is
+    different than the source page for inlined pages.
+  * Audited all plugins to endure they pass (page, destpage) to htmllink
+    appropriatly. This means inlining of various plugins will not work
+    properly, with correct links generated.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 27 Jul 2006 20:51:23 -0400
+
+ikiwiki (1.10) unstable; urgency=low
+
+  * Run page through any relevant filters when generating a page preview.
+  * Noticed a bug in the wikitext markup plugin -- it made CamelCase links the
+    default throughout the wiki, not only on wikitext pages. Decided to call
+    this a feature, and split the camelcase support out into a separate plugin
+    that is independant of wikitext.
+  * Fix CamelCase regexp to not break [[FooBar|BazBar]] WikiLinks.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 26 Jul 2006 18:06:35 -0400
+
+ikiwiki (1.9) unstable; urgency=low
+
+  * Improve display of parentlinks and page title of toplevel index page.
+  * Patch from Faidon to use svn --limit when possible for recentchanges,
+    speeds up recentchanges a lot for wikis with more history.
+  * Patch from Recai to fix utf8 issues in git backend.
+  * Add wikitext markup plugin, which supports ".wiki" pages written in the
+    original wiki syntax, CamelCase links and all.
+  * Support a w3mmode, which lets w3m run ikiwiki using its local CGI
+    support, to edit pages etc without a web server.
+  * Display CGI processing errors if present.
+  * Fix from Faidon for a XML parser issue that breaks utf-8 for
+    RecentChanges. Avoid using XML::SAX::PurePerl, which is buggy in this
+    area, and also way slow.
+  * Match 'web commit from' in SVN and git, these are web commits too.
+    (Faidon)
+  * Consolidated all decode_utf8 in FormBuilder's fields to make the code more
+    readable and avoid future mistakes. The patch seems to work and for the
+    first time I have a UTF-8 username ;-) (Faidon)
+  * Use form->field consistently, not form->param.
+  * Patch from Recai to allow selection of page type when creating a new page.
+    Default page type is inherited from the link clicked on to create the new
+    page.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 26 Jul 2006 17:25:30 -0400
+
+ikiwiki (1.8) unstable; urgency=low
+
+  * Fix orphans plugin to not count a link to a nonexistant page as a reason
+    for a page not being an orphan.
+  * Support pinging services such as Technorati using XML-RPC to notify them
+    about changes to rss feeds.
+  * Parse svn log as xml for improved utf8 and security. Note that this makes
+    ikiwiki depend on XML::Simple. Patch by Faidon Liambotis.
+  * POSIX::strftime doesn't know about encodings and doesn't return a utf8
+    flagged string even if the locale causes it to generate utf8 output,
+    so make sure to let perl know it should be handled as utf8. Also,
+    the optimised version used for standard time formats won't work if the
+    user has changed locale, so drop it. Thanks, Faidon Liambotis.
+  * Fix re-encoding of the comments field to utf8 if a commit fails
+    due to a conflict. Thanks, Faidon Liambotis.
+  * Let svn know that commits have utf8 commit messages. Thanks, Faidon
+    Liambotis.
+  * Add insane double encode/decode to utf8 around call to markdown.
+    This works around a truely strange bug, which is apparently a bug in
+    perl, #376329. Also added a test case for it.
+  * Improve layout of edit page so formatting help link is always visible w/o
+    getting in the way of the preview.
+  * Centralised all calls to HTML::Template and force all the templates
+    to be read as utf8.
+  * Support pages with utf8 filenames. Patch by Faidon Liambotis.
+  * Introduce add_plugins and disable_plugins config options in setup files.
+    This allows adding or removing plugins w/o overriding the whole list of
+    default plugins, which makes it easier to upgrade when new default plugins
+    are added.
+  * Support htmlize plugins and make mdwn one such plugin, which is enabled by
+    default (of course!). Based on a patch by Faidon Liambotis.
+  * Add a html plugin, which can be used to write wikis in raw html,
+    if you'd ever want to do such a thing. Slightly tricky, since ikiwiki
+    defaults to not processing .html files, since w/o this plugin they would
+    be copied unsanitised. With this plugin, it will process and html
+    sanitise them, like any other page type.
+  * Rebuilding wrappers is necessary on upgrade to this version.
+  * Make ikiwiki --setup --refresh rebuild wrappers, so wrapper rebuild
+    will be automatically done on all upgrades.
+  * Don't send pings if the wiki is being rebuilt.
+  * Work around very innefficient behavior in File::Spec::abs2rel. Result
+    is a savings of 2 pointless fork/execs per link calculation, which
+    results in ~25% speedup of ikiwiki building its own doc wiki, and
+    about 35% speedup displaying RecentChanges!
+  * Make RecentChanges use a table and some CSS, should be much more readable.
+    No code changes involved.
+  * Encode & in diffurl in examples, to conform to pedantic rules.
+  * Speed up RecentChanges by another 40% or so with some memoization.
+  * Memoize abs2rel, which is still kinda slow, for another 30% speedup
+    in time to build the doc wiki.
+
+ -- Joey Hess <joeyh@debian.org>  Tue,  4 Jul 2006 12:46:29 -0400
+
+ikiwiki (1.7) unstable; urgency=low
+
+  * Updated logo from Recai with some kerning and alingment tuning.
+  * Patch from Recai to fix git recentchanges code to work with git 1.4 which
+    changed some output.
+  * Copyright update.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 18 Jun 2006 23:33:35 -0400
+
+ikiwiki (1.6) unstable; urgency=low
+
+  * YA utf-8 patch from Recai, this time to fix previewing a page so that
+    the text in the input box is re-encoded back to utf-8.
+  * -CSD does not affect modules, so readfile() was not using the utf-8 input
+    layer, which led to lots of problems; make it force read files as utf-8.
+    Closes: #373203
+  * Note that as a consequence, this version of ikiwiki will actually try to
+    parse utf8 in source files for the first time, which may expose broken
+    utf8 in wiki sources that was hidden before. Most common will be
+    perl warnings like "utf8 "\xE9" does not map to Unicode"
+  * writefile() likewise needs to use the utf8 output layer.
+  * Remove the -CSD from ikiwiki's hashbang since it's useless to have it
+    there.
+  * Revert some of the decode_utf8 changes in CGI.pm that seem unnecessary
+    given the readfile fix.
+  * Add utf-8 testcases for readfile and htmlize.
+  * Put back the encode_utf8 in the input to markdown; it's really not utf-8
+    safe.
+  * More utf-8 fixes from Recai, partly to things I broke above:
+    - The serious problem is that writefile() saves the content in undecoded
+      format in CGI, hence all (non-ascii) chars are corrupted permanently.
+    - Comment field in edit page is not decoded and all the non-ascii chars in
+      this field are corrupted as the result.  We should decode it as we do it
+      for the content.
+    - Add 'use encoding "utf8"' to CGI.pm to avoid warnings about wide
+      character in print.
+  * New SVG logo from Recai.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 18 Jun 2006 19:18:46 -0400
+
+ikiwiki (1.5) unstable; urgency=low
+
+  * Add --timeformat config option to allow changing how dates are displayed.
+    Note that as a side effect, dates will now be displayed using the local
+    timezone, not as GMT.
+  * More security review.
+  * Patch from Dr. Zini to add link() and backlink() to globlists. This allows
+    for some handy stuff like:
+    - Using links as a kind of tag; creating blog pages that list all pages
+      containing a given tag/link or not containing some other tag.
+    - Subscribing to mail notifications whenever a change is made to a page
+      that is a backlink of page foo. Ie, "Please notify me of changes in all
+      pages that link to my home page in the wiki"
+    - Locking any pages that are linked to from a particular page, so that
+      lists of locks can be exposed in the wiki.
+  * Reorganised the doc wiki's todo/* pages, using a link/tag to flag
+    when a todo item is done, instead of the previous moving it to a different
+    subdir.
+  * Allow pagetemplate plugins to override *anything* in the template.
+  * Add a meta plugin, which allows specifying various metadata about pages,
+    like license and author. It also allows for inserting html link and meta
+    tags into html, overriding the title, and adding hidden WikiLinks, which
+    can be useful when using link-based globbing for page categorisation.
+  * Remove preprocessor directives from inlined pages.
+  * Allow simple preprocessor directive values to be specified w/o quotes.
+  * Add support for using git instead of subversion as the RCS backend,
+    tremendous thanks to Recai Oktaş for this.
+  * Doc updates for git.
+  * Fix absolute url munging in rss generation to support https, ftp, etc urls
+    not just http urls.
+  * Patch from Recai Oktaş to improve utf-8 support, it should now use proper
+    utf-8 for edit and other fields, and for recentchanges. There may still
+    be utf-8 issues with the preferences page though.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 11 Jun 2006 19:56:54 -0400
+
+ikiwiki (1.4) unstable; urgency=low
+
+  * Tell HTML::Scrubber to treat "/" as a valid attribute which is its
+    very strange way of enabling proper XHTML <br /> type tags. Output html
+    should be always valid again now.
+  * The page name and parent links has switched from using a <h1> to a styled
+    <span>, so pages can use <h1> internally instead of needing to use <h2>.
+  * Updated all of ikiwiki's own wiki pages for that.
+  * Add pagetemplate hook, which can be used by plugins that want to mess
+    around with adding new stuff to the page template.
+  * Remove headercontent; the search plugin now adds the search box to the
+    header by registering a pagetemplate hook, and other plugins should do
+    similarly.
+  * Rebuilding on upgrade to this version is recommended.
+  * Add a html validity check to the test suite, using the wdg-html-validator,
+    if available.
+  * Make the html valid when there is nothing in the actions list.
+  * Reordered some function call parameters for consistency.
+  * Enable full utf-8 support for page input and output.
+  * Add a workaround for markdown, which does not work well with utf-8
+    strings.
+  * --getctime had bitrotted (well I only ever used it the once so far..),
+    fix and make it a bit more flexible
+  * rcs_getctime is changed, now rather than needing to loop over all pages,
+    it should just use the rcs to get the ctime of the passed file.
+  * When inlining a page in another one, links from the inlined page are now
+    expanded the same as they are when rendering the inlined page as a
+    standalone page. So rather than being expanded from the POV of the
+    inlining page, they are expanded from the POV of the inlined page.
+
+    For example, a link from blog/foo to "bar" will now link to blog/bar
+    if it exists. Previously this needed to be a link explicitly to
+    "blog/bar"; such links will also continue to work.
+
+    (This was slightly complex to do as the link still has to be constructed
+    relative to the inlining page.)
+  * Make page edit textarea resize to fit browser window.
+  * Add -refresh option to ikiwiki-mass-rebuild and use that on upgrades that
+    do not need a full rebuild, in order to update any basewiki pages.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 27 May 2006 15:08:49 -0400
+
+ikiwiki (1.3) unstable; urgency=low
+
+  * Fix the preinst introduced in the last version. Closes: #367458
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 16 May 2006 02:43:02 -0500
+
+ikiwiki (1.2) unstable; urgency=low
+
+  * Remove dups from the brokenlinks list.
+  * Add libc6-dev to dependencies, needed to build wrappers.
+  * Install wikilist in correct location. Closes: #367371
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 15 May 2006 10:53:49 -0500
+
+ikiwiki (1.1) unstable; urgency=low
+
+  * Rename inlinepage to depends, so that it can be used to refer to more
+    dependency relationships than just inlining. This will require a rebuild
+    on upgrade to this version.
+  * Move the rss link, put it in the blogpost form if there is one and at the
+    top if not. This is both nicer because easier to find, and it cleans up
+    the code which had used inlinepage as a flag for adding the link later.
+  * Allow the depends GlobList to be built up from multiple sources (such as
+    plugins) during a page render.
+  * Which means that more than one blog is now supported to appear on a
+    single page. (With some limitations, like only the last one getting an
+    rss file.)
+  * Added a plugin system.
+  * Added a pagecount plugin, enabled by default.
+  * Support PreProcessorDirectives with no parameters, ie "[[pagecount ]]".
+  * Fixed/optimised backlinks code, to avoid rebuilding pages to update
+    backlinks when the backlinks hadn't really changed.
+  * Moved inline page support, rss generation etc into the inline plugin,
+    enabled by default.
+  * Added brokenlinks plugin, not enabled by default, but rather handy.
+  * Fix several broken links in the doc wiki.
+  * Smarter behavior when creating a page and a page of the same name (but
+    different location) already exists.
+  * Add an orphans plugin for finding pages that nothing links to.
+  * Removed backlinks page, which it turns out nothing used.
+  * Split off an IkiWiki.pm out of ikiwiki and have all the other modules use
+    it, this will allow for adding a unit test suite.
+  * Add unit tests for several core functions, including globlist_match,
+    dirname, basename, bestlink, linkify, pagetitle, titlepage.
+  * Smart globlist merging.
+  * Patch from Thomas Schwinge to switch from --svn to --rcs=svn, etc,
+    to pave the way for adding other RCS support. This also changes the
+    setup files, where before they had svn => 1 or svn => 0, now they have
+    rcs => "svn" or rcs => "".
+  * Add a debian/NEWS file with upgrade notes.
+  * Load whatever rcs module is specified, so new ones can be just dropped in
+    as plugins and work. (Well, in theory.)
+  * Add some basic docs about writing RCS modules.
+  * Broke search capability out into a plugin, removed the --hyperestraier
+    switch.
+  * Added smiley plugin, nicely controlled and documented by the smileys page.
+  * Copied in some smileys from Moin Moin.
+  * Allow links of the form [[some page|page]], with whitespace in the link
+    text.
+  * Removed --sanitize and --no-sanitize, replaced with --plugin htmlscrubber
+    and --disable-plugin htmlscrubber.
+  * Allow discussion links on pages to be turned off with --no-discussion.
+  * Add ikiwiki-mass-rebuild script, ripped out of the postinst.
+  * Add some new config items to the estseek.conf template, which are needed
+    by hyperestraier 1.2.3.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  5 May 2006 17:00:41 -0400
+
+ikiwiki (1.0) unstable; urgency=low
+
+  * First official release.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 25 Apr 2006 02:08:17 -0400

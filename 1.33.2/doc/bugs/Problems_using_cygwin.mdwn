@@ -1,0 +1,17 @@
+I'd like to run ikiwiki under cygwin.  I'm new to ikiwiki and have tried to follow the setup tutorial as best I could.  I got all the way up to step 7, but I can't get the CGI to run successfully (step 8).
+
+> Moved the formbuilder bug to [[formbuilder_3.0401_broken]] --[[Joey]]
+
+-----
+
+A different problem has reared its ugly head.  When I click on "RecentChanges", the CGI complains about an undefined subroutine:
+
+<pre>
+==> apache2/error_log <==
+[Thu Oct 12 16:20:52 2006] [error] [client 192.168.0.125] Undefined subroutine &IkiWiki::XMLin called at /usr/lib/perl5/site_perl/5.8/IkiWiki/Rcs/svn.pm line 143., referer: http://imrisws36/wiki/index.html?updated
+[Thu Oct 12 16:20:52 2006] [error] [client 192.168.0.125] Premature end of script headers: ikiwiki.cgi, referer: http://imrisws36/wiki/index.html?updated
+</pre>
+
+Indeed there is no such routine IkiWiki::XMLin().  I don't understand how this can possibly work -- as it manifestly does on linux.
+
+> XMLin is supposed to be exported by XML::Simple. My guess is that, due to a missing error check, XML::Simple is failing to load, and it's not aborting then. You probably need to install that module; in the meantime, I've fixed the missing error check in svn. --[[Joey]]

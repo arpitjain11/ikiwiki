@@ -1,0 +1,44 @@
+I built ikiwiki using
+
+% perl Makefile.PL PREFIX=/home/ed
+% make
+% make install
+
+This installs the files under /home/ed, for example one of the lines it prints is
+
+cp -a basewiki/* /home/ed/share/ikiwiki/basewiki
+
+However when I try to run ikiwiki I get an error as follows:
+
+% ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ --url=http://membled.com/wiki/ 
+Can't stat /usr/share/ikiwiki/basewiki: No such file or directory 
+ at /home/ed/lib/perl5/site_perl/5.8.7/IkiWiki/Render.pm line 349 
+
+The PREFIX specified at build time should also affect the share directory -
+it shouldn't try to use /usr/share here.
+
+> Actually, the PREFIX, no matter where you specify it, is only
+> intended to control where files are _installed_, not where they're
+> looked for at runtime.
+
+> There's a good reason not to make PREFIX be used to actually
+> change the program's behavior: Most packaging systems use PREFIX
+> when building the package, to make it install into a temporary
+> directory which gets packaged up.
+
+This is not the case.  That is the difference between PREFIX and DESTDIR.
+
+DESTDIR does what you describe; it causes the files to be installed into some
+directory you specify, which may not be the same place you'd eventually
+run it from.
+
+PREFIX means build the software to run under the location given.  Normally it
+will also affect the location files are copied to, so that 'make install'
+installs a working system.
+
+At least, that's the way I've always understood it; the MakeMaker documentation
+isn't entirely clear (perhaps because ordinary Perl modules do not need to be
+configured at build time depending on the installation directory).  It does mention
+that DESTDIR is the thing used by packaging tools.
+
+> Thanks for clarifying that. [[bugs/done]] --[[Joey]]

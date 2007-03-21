@@ -1,0 +1,39 @@
+Here's how to get ikiwiki. See [[setup]] for how to use it, and be sure to
+add your wiki to [[IkiwikiUsers]] if you use ikiwiki.
+
+# tarball
+
+The best place to download a tarball of the latest release is from 
+<http://packages.debian.org/unstable/source/ikiwiki>.
+
+# Debian package
+
+If using Debian unstable or testing:
+
+        apt-get install ikiwiki
+
+Or download the deb from <http://packages.debian.org/unstable/web/ikiwiki>.
+
+While this deb has been developed on Debian unstable, it should also work
+on stable, although to get the CGI stuff working on stable, you will need
+to upgrade to a newer version of libcgi-formbuilder-perl, `3.02.02`, and libcgi-session-perl `4.14-1`
+
+There is also an unofficial backport of ikiwiki for Debian stable, provided by
+Pawel Tecza, at <http://gpa.net.icm.edu.pl/debian/>.
+
+# subversion
+
+The current development version of ikiwiki can be accessed using subversion at 
+`svn://ikiwiki.kitenet.net/ikiwiki/trunk`
+
+The source in subversion can be browsed
+[here](http://ikiwiki.kitenet.net/cgi-bin/viewcvs.cgi/trunk/?root=ikiwiki).
+
+If you would like to be subscribed to svn commit messages for ikiwiki,
+mail joey@kitenet.net.
+
+# arch
+
+An unofficial arch mirror of the subversion repository is at
+`http://arch.debian.org/arch/private/srivasta/archive-2006-misc`
+and can be browsed [here](http://arch.debian.org/cgi-bin/archzoom.cgi/srivasta@debian.org--2006-misc?color=default?layout=larger?expand).

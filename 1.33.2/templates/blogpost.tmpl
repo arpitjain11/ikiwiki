@@ -1,0 +1,15 @@
+<form action="<TMPL_VAR CGIURL>" method="get">
+<div id="blogform">
+<TMPL_IF NAME="RSSURL">
+<a class="feedbutton" type="application/rss+xml" href="<TMPL_VAR NAME=RSSURL>">RSS</a>
+</TMPL_IF>
+<TMPL_IF NAME="ATOMURL">
+<a class="feedbutton" type="application/atom+xml" href="<TMPL_VAR NAME=ATOMURL>">Atom</a>
+</TMPL_IF>
+<input type="hidden" name="do" value="blog" />
+<input type="hidden" name="from" value="<TMPL_VAR ROOTPAGE>" />
+<input type="hidden" name="subpage" value="1" />
+Add a new post titled: <input name="title" size="40" />
+<input type="submit" value="Edit" />
+</div>
+</form>

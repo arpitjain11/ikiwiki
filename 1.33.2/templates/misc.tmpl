@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<base href="<TMPL_VAR BASEURL>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><TMPL_VAR TITLE></title>
+<link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
+<link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
+<TMPL_IF NAME="FAVICON">
+<link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/x-icon" />
+</TMPL_IF>
+</head>
+<body>
+
+<div class="header">
+<span>
+<TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
+</span>
+</div>
+
+<div id="content">
+<TMPL_VAR PAGEBODY>
+</div>
+
+<div id="footer">
+<!-- from <TMPL_VAR NAME=WIKINAME> -->
+</div>
+
+</body>
+</html>

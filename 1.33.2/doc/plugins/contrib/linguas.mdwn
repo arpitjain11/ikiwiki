@@ -1,0 +1,98 @@
+[[template id=plugin name=linguas author="Jordà Polo"]]
+[[meta title="linguas (third-party plugin)"]]
+
+Linguas
+=======
+
+Linguas is a plugin for [ikiwiki](http://ikiwiki.kitenet.net/) that
+allows translations of wiki pages.
+
+Download: [linguas.pm](http://wiki.ettin.org/files/linguas.pm) (2006-08-21).
+
+Usage
+-----
+
+Translatable pages and translations must have the following format:
+`pagename.$LANG`, where `$LANG` is a ISO639-1 (two-letter) language code.
+To enable linguas, add the following line in the source code of the page:
+
+	\[[linguas ]]
+
+Note that linguas is only required in one of the pages (the original,
+for instance); the rest of translations will be automatically
+updated. Additionally, it is also possible to specify the title of
+the translation:
+
+	\[[linguas title="Translated title"]]
+
+
+Template
+--------
+
+This is the template code that should be added to `templates/page.tmpl`:
+
+	<TMPL_IF NAME="LINGUAS">
+	<div id="linguas">
+	<p class="otherlinguas"><TMPL_VAR NAME="OTHERLINGUAS"></p>
+	<ul>
+	<TMPL_LOOP NAME="LINGUAS">
+	<li><TMPL_VAR NAME=LINK></li>
+	</TMPL_LOOP>
+	</ul>
+	</div>
+	</TMPL_IF>
+
+
+TODO/Known Problems
+-------------------
+
+* The current language list only contains 4 languages (ca, de, en,
+es), and is "hardcoded" in linguas.pm. Would be interesting to define
+it in ikiwiki.setup, though some problems were found while trying to do
+so. (Actually, defining hash-like arguments from the command like works
+fine, but it fails from ikiwiki.setup.)
+
+  > My guess about this is that it's because of the way Setup/Standard.pm
+  > untaints the config items from the file. It has code to handle arrays,
+  > but not hashes or more complex data structures. --[[Joey]]
+
+  >  > Right. With this simple
+  >  > [patch](http://wiki.ettin.org/files/hash_setup.patch) it seems to
+  >  > work. However, note that 1) it only allows simple hashes, hashes of
+  >  > hashes will not work (I don't think getops can handle complex hashes
+  >  > anyway); 2) I don't really know when/why you call
+  >  > `possibly_foolish_untaint()`; and 3) I'm no perl guru ;). --Jordà
+
+  >  >  > It's good. Applied..
+
+* Wiki links to other translated pages require the full page name
+including the `.$LANG`. It should be possible to link automatically
+to pages with the same `.$LANG`, but that would probably require some
+changes in IkiWiki. (I'm not sure though, I still haven't looked at
+it... any hints?)
+
+  > Have you considered using the form ll/page? This would let more usual
+  > linking rules  apply amoung pages without needing to specify the
+  > language. I'm not sure if you're supporting browser content
+  > negotiation, or whether that other layout would be harder to support it
+  > though. --[[Joey]]
+
+  >  > Actually, I'm happy with the way it works now (and yeah, it is very
+  >  > easy to take advantage of content negotiation). I just wanted
+  >  > something simple to translatte a single page (or a few pages), not
+  >  > the entire wiki. I'm not even sure it is a good idea to have fully
+  >  > multilingual wikis, in most cases I would go for a different wiki
+  >  > for each language. That said, I think it is an interesting idea, so
+  >  > I'll take a look when I have the time. Thanks for your comments.
+  >  > --Jordà
+
+Examples
+--------
+
+* [Linguas](http://wiki.ettin.org/linguas.en.html). A page with the same
+content than this one.
+
+* [Hello in some languages](http://wiki.ettin.org/hello/hello.en.html). The
+translations were taken from [Hello in many
+languages](http://www.omniglot.com/language/phrases/hello.htm) and from
+the [Debian](http://www.debian.org/) website.

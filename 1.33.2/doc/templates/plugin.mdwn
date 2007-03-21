@@ -1,0 +1,6 @@
+<span class="infobox">
+Plugin: <TMPL_VAR name><br />
+Author: <TMPL_VAR author><br />
+Enabled by default: <TMPL_IF core>yes<TMPL_ELSE>no</TMPL_IF><br />
+Included in ikiwiki: <TMPL_IF included>yes<TMPL_ELSE>no</TMPL_IF><br />
+</span>

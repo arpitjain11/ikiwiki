@@ -1,0 +1,17 @@
+The RSS feeds on a page should be indicated with &lt;link rel&gt;, so that
+they can be found by aggregators.
+
+--tumov
+
+I've been wondering about this. Ikiwiki's rss buttons include a
+type="application/rss+xml" and link to the rss file, and this is enough for
+at least some auto-discovery tools to find the rss feed. But apparently not
+all of them.
+
+For example, firefox requires the following:
+
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="index.rss" />
+
+[[todo/done]]
+
+--[[Joey]]

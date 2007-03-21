@@ -1,0 +1,142 @@
+So you want to set up your own wiki using ikiwiki? This tutorial will walk
+you through setting up a wiki that is stored in [[Subversion]], [[Git]],
+[[TLA]] or [[Mercurial]], and that has optional support for commits from the web.
+
+1. [[Install]] ikiwiki. See [[download]] for where to get it.
+
+2. Create the master rcs repository for your wiki.
+
+		# Subversion
+		svnadmin create /svn/wikirepo
+		svn mkdir file:///svn/wikirepo/trunk -m create
+		 
+		# Git
+		mkdir /git/wikirepo
+		cd /git/wikirepo
+		git init-db
+		# Git requires something be in the repo to start with.
+		cp /usr/share/ikiwiki/basewiki/index.mdwn .
+		git add .
+		git commit -m create -a
+		# No need to keep files in the master repository; so at this
+		# stage, you may want to remove all files (except .git) to
+		# save disk space.
+
+		# TLA
+		mkdir /tla
+		tla make-archive me@localhost--wiki /tla/wikirepo
+		tla my-id "<me@localhost>"
+
+		# Mercurial
+		hg init /hg/wikirepo
+
+3. Check out the repository to make the working copy that ikiwiki will use.
+
+		# Subversion
+		svn co file:///svn/wikirepo/trunk ~/wikiwc
+		 
+		# Git
+		# Create a local clone to save disk space and also to
+		# optimize performance. See git-clone(1).
+		git clone -l -s /git/wikirepo ~/wikiwc
+
+		# TLA
+		mkdir ~/wikiwc
+		cd ~/wikiwc
+		tla archive-setup me@localhost--wiki/wiki--0
+		tla init-tree me@localhost--wiki/wiki--0
+	        # Edit {arch}/=tagging-method and change the precious
+		# line to add the .ikiwiki directory to the regexp.
+		tla import
+
+		# Mercurial
+   		# Mercurial uses a single repo approach, so no need to
+		# clone anything. Because the following examples
+		# refer to the ~/wikiwc working copy we symlink it:
+		ln -s /hg/wikirepo ~/wikiwc
+
+4. Build your wiki for the first time.
+
+		ikiwiki --verbose ~/wikiwc/ ~/public_html/wiki/ \
+			--url=http://host/~you/wiki/
+
+   Replace the url with the real url to your wiki. You should now
+   be able to visit the url and see your wiki.
+
+5. Customise your wiki. The files in `/usr/share/ikiwiki/basewiki/` are
+   used if you don't have a custom version, so let's start by making a
+   custom version of the wiki's index page:
+
+		cd ~/wikiwc
+   		cp /usr/share/ikiwiki/basewiki/index.mdwn .
+		$EDITOR index.mdwn
+		 
+		# Subversion
+		svn add index.mdwn
+		svn commit -m customised index.mdwn
+		 
+		# Git
+		git add index.mdwn
+		git commit -m customised index.mdwn
+		git push origin
+
+		# TLA
+		tla add index.mdwn
+		tla commit
+
+		# Mercurial
+		hg add index.mdwn
+		hg commit -m customised index.mdwn
+
+   You can also add any files you like from scratch of course.
+
+6. Repeat steps 4 and 5 as desired, editing or adding pages and rebuilding
+   the wiki. You can play around with other ikiwiki parameters such as
+   `--wikiname` and `--rebuild` too. Get comfortable with its command line
+   (see [[usage]]).
+
+7. By now you should be getting tired of typing in all the command line
+   options each time you change something in your wiki's setup. And it's
+   also getting old to have to manualy rebuild the wiki each time you
+   change a file. Time to introduce setup files. 
+   
+   A sample setup file is [[ikiwiki.setup]]. Download it (or copy it from
+   `doc/ikiwiki.setup` in the ikiwiki sources), and edit it. 
+   
+   Most of the options, like `wikiname` in the setup file are the same as
+   ikiwiki's command line options (documented in [[usage]]. `srcdir` and
+   `destdir` are the two directories you specify when running ikiwiki by
+   hand. `svnrepo` is the path to your subversion repository.  Make sure
+   that all of these are pointing to the right directories, and read
+   through and configure the rest of the file to your liking.
+
+   If you want to use something other than subversion, comment out the
+   subversion configuration, and uncomment and edit the configuration for
+   your chosen RCS.
+
+   Note that the default file has a block to configure a [[post-commit]] 
+   wrapper to update the wiki. You need to uncomment the related block for
+   whatever RCS you use and comment out the other rcs blocks.
+
+   When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
+   will set everything up and update your wiki.
+
+8. Set up [[CGI]] to allow editing the wiki from the web.
+
+   Just edit ikiwiki.setup, uncomment the block for the cgi wrapper, make
+   sure the filename for the cgi wrapper is ok, run 
+   `ikiwiki --setup ikiwiki.setup`, and you're done!
+
+9. Add [[PageHistory]] links to the top of pages. This requires you to have
+   setup a repository browser.  For Subversion, you may use [[ViewCVS]] or
+   something similar to access your [[Subversion]] repository.  For Git,
+   [[Gitweb]] can be used, etc.
+   
+   The `historyurl` setting makes ikiwiki add the links, and in that url,
+   "\[[file]]" is replaced with the name of the file to view. So edit
+   ikiwiki.setup and ucomment the appropriate `historyurl` setting and edit
+   it for your setup.
+   
+   Then run `ikiwiki --setup ikiwiki.setup` again.
+
+10. Enjoy your new wiki! Add yourself to [[IkiWikiUsers]].

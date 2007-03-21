@@ -1,0 +1,17 @@
+Feature idea: I'd like to be able to tag pages in an ikiwiki blog with a
+publication date, and have the option of building a blog that excludes
+publication dates in the future.  (meta pubdate= ?)
+ 
+I'm using ikiwiki on git for a "tip of the day" RSS feed, and I'd like to
+be able to queue up a bunch of items instead of literally putting in one
+tip per day.  In the future I think this will come in handy for other
+Mainstream Media-oriented requirements such as "embargo dates" and "editor
+on vacation".
+
+> The problem with implementing a feature like this is that, since ikwiiki
+> is a wiki compiler, if something causes content to change based on the
+> date, then the wiki needs to be rebuilt periodically. So you'd need a
+> cron job or something.
+> 
+> Implemeting this feature probably needs 
+> [[todo/plugin_dependency_calulation]] to be implemented. --[[Joey]]

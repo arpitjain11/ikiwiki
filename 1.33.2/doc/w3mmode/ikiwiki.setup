@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+# Configuration file for ikiwiki (w3m mode).
+# Passing this to ikiwiki --setup will make ikiwiki generate wrappers and 
+# build the wiki.
+#
+# Remember to re-run ikiwiki --setup any time you edit this file.
+
+use IkiWiki::Setup::Standard {
+	wikiname => "ikiwiki",
+	
+	# Be sure to customise these..
+	srcdir => "doc",
+	destdir => "html",
+	
+	# Enable w3m mode.
+	w3mmode => 1,
+	cgiurl => 'ikiwiki.cgi',
+	rcs => "",
+
+	wrappers => [
+		{
+			# The cgi wrapper.
+			cgi => 1,
+			wrapper => "$ENV{HOME}/.ikiwiki/wrappers/ikiwiki.cgi",
+			wrappermode => "0755",
+		},
+	],
+	
+	anonok => 1,
+	rss => 1,
+	atom => 1,
+	discussion => 1,
+}

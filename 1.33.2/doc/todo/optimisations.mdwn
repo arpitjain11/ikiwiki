@@ -1,0 +1,11 @@
+Ikiwiki has already been optimised a lot, however..
+
+* Don't render blog archive pages unless a page is added/removed. Just
+  changing a page doesn't affect the archives as they show only the title.
+
+* Look at splitting up CGI.pm. But note that too much splitting can slow
+  perl down.
+
+* The backlinks calculation code is still O(N^2) on the number of pages.
+  If backlinks info were stored in the index file, it would go down to
+  constant time for iterative builds, though still N^2 for rebuilds.

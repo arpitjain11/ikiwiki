@@ -1,0 +1,15 @@
+[[template id=plugin name=img author="Christian Mock"]]
+[[tag type/chrome]]
+[[meta title="img (third-party plugin)"]]
+
+`img` is an enhanced image handling plugin.
+
+the intention is to make image handling as easy as possible, so the
+plugin can scale down images for direct inclusion into the page,
+providing a link to one or more larger or full-size versions on their
+own page. `width` and `height` attributes are included in the `<img>`
+tag, and `alt` text can be specified.
+
+the plugin uses the ImageMagick tools via PerlMagick.
+
+it can be found [here](http://www.tahina.priv.at/hacks/img.html).

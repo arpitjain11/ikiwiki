@@ -1,0 +1,35 @@
+#Disappearing Pages
+
+I have a problem where pages within the rendered wiki become empty.  The
+headers, footers, and sidepanel are there, but the body is completely
+missing.  If I do a webedit and change anything (adding whitespace is
+enough) and commiting the change updates the page and the body appears.  If
+I then do a rebuild of the wiki from the command line, I get the blank
+pages again.  I have debug turned up but I don't see anything that makes me
+suspect anything.  When I do a rebuild from the command line I get the
+following warning.
+
+>Use of uninitialized value in substitution (s///) at /usr/share/perl5/IkiWiki/Plugin/inline.pm line 234.
+
+The odd thing is that I have 5 other wikis on this same system and none of
+them seem to be experiencing the same problems.  The only difference seems
+to be the use of sidebars and google calendar in the affected wiki.  
+
+> Could you post a tarball of the wiki and any setup file you use somewhere
+> so I can try to reproduce your problem? --[[Joey]]
+>>[The Wiki](http://www.lcsee.wvu.edu/~scotth/sysstaff.tar.gz) 
+>> I think it has something to do with the plugin selection. --[[ScottHenson]]
+
+>>> Ok, I built your wiki, and got no contentless pages here. I also
+>>> didn't see the uninitialized value warning, which could be connected.
+>>> However, I that uninitialized value come from an inline directive,
+>>> and the wiki source doesn't seem to use inlining at all, so I'm confused
+>>> about that. --[[Joey]]
+
+>>>> Sorry, thats my fault.  The wiki that was having the problem had some 
+>>>> information that I couldn't distribute.  So I reproduced the bug on 
+>>>> another wiki and sent you that.  Those warnings don't seem to have any 
+>>>> effect on the disappearing content.  Sorry for the confusion.  --[[ScottHenson]]
+
+>>>> That's ok, but since I couldn't reproduce it with the data you sent,
+>>>> I can't really fix it. --[[Joey]]

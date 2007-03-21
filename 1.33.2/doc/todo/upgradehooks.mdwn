@@ -1,0 +1,8 @@
+It's annoying to have to manually run --setup, especially for multiple
+blogs, on upgrade. Is the deb is used, there could be a postinst hook to do
+this.
+
+Let there be an /etc/ikiwiki/wikis, which just lists setup files and the
+user who owns them. postinst loops through, su's, and runs --setup. Voila!
+
+[[todo/done]]

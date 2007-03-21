@@ -1,0 +1,20 @@
+[[template id=plugin name=map included=1 author="Alessandro Dotti Contra"]]
+[[tag type/meta]]
+
+This plugin generates a hierarchical page map for the wiki. Example usage:
+
+	\[[map pages="* and !blog/* and !*/Discussion"]]
+
+If the pages to include are not specified, all pages (and other files) in
+the wiki are mapped.
+
+Hint: To limit the map to displaying pages less than a certian level deep,
+use a [[PageSpec]] like this: `pages="* and !*/*/*"`
+
+This plugin is included in ikiwiki, but is not enabled by default.
+It was contributed by Alessandro Dotti Contra.
+
+If this plugin is enabled, here is a page map for the plugins section
+of this wiki:
+
+[[map pages="(plugins or plugins/*) and !*/*/*"]]

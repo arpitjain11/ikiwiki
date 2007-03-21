@@ -1,0 +1,11 @@
+* Has bugs updating things if the bestlink of a page changes due to
+  adding/removing a page. For example, if Foo/Bar links to "Baz", which is
+  Foo/Baz, and Foo/Bar/Baz gets added, it will update the links in Foo/Bar
+  to point to it, but will forget to update the linkbacks in Foo/Baz.
+
+* And if Foo/Bar/Baz is then removed, it forgets to update Foo/Bar to link
+  back to Foo/Baz.
+
+As of 1.33, this is still true. The buggy code is the %linkchanged
+calculation in refresh(), which doesn't detect that the link has changed in
+this case.

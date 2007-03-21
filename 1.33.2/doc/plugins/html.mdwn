@@ -1,0 +1,11 @@
+[[template id=plugin name=html included=1 author="[[Joey]]"]]
+[[tag type/html type/format]]
+
+This plugin lets raw html pages be used as source pages for the wiki. The
+html pages will still be wrapped in the same html template as any other
+page, so for best results you should include only the page body in the html
+file. Also, if the htmlscrubber plugin is enabled, the html pages will be
+sanitised like any other page. You can also use standard [[WikiLink]]s etc
+in the html pages.
+
+This plugin is included in ikiwiki, but is not enabled by default.

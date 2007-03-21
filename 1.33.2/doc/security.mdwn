@@ -1,0 +1,281 @@
+Let's do an ikiwiki security analysis.
+
+If you are using ikiwiki to render pages that only you can edit, do not
+generate any wrappers, and do not use the cgi, then there are no more
+security issues with this program than with cat(1). If, however, you let
+others edit pages in your wiki, then some possible security issues do need
+to be kept in mind.
+
+[[toc levels=2]]
+
+----
+
+# Probable holes
+
+_(The list of things to fix.)_
+
+## commit spoofing
+
+Anyone with direct commit access can forge "web commit from foo" and
+make it appear on [[RecentChanges]] like foo committed. One way to avoid
+this would be to limit web commits to those done by a certian user.
+
+## other stuff to look at
+
+I need to audit the git backend a bit, and have been meaning to
+see if any CRLF injection type things can be done in the CGI code.
+
+----
+
+# Potential gotchas
+
+_(Things not to do.)_
+
+## image file etc attacks
+
+If it enounters a file type it does not understand, ikiwiki just copies it
+into place. So if you let users add any kind of file they like, they can
+upload images, movies, windows executables, css files, etc (though not html
+files). If these files exploit security holes in the browser of someone
+who's viewing the wiki, that can be a security problem.
+
+Of course nobody else seems to worry about this in other wikis, so should we?
+
+Currently only people with direct svn commit access can upload such files
+(and if you wanted to you could block that with a svn pre-commit hook).
+Users with only web commit access are limited to editing pages as ikiwiki
+doesn't support file uploads from browsers (yet), so they can't exploit
+this.
+
+## multiple accessors of wiki directory
+
+If multiple people can write to the source directory ikiwiki is using, or
+to the destination directory it writes files to, then one can cause trouble
+for the other when they run ikiwiki through symlink attacks.
+
+So it's best if only one person can ever write to those directories.
+
+## setup files
+
+Setup files are not safe to keep in subversion with the rest of the wiki.
+Just don't do it. [[ikiwiki.setup]] is *not* used as the setup file for
+this wiki, BTW.
+
+## page locking can be bypassed via direct svn commits
+
+A locked page can only be edited on the web by an admin, but
+anyone who is allowed to commit direct to svn can bypass this. This is by
+design, although a subversion pre-commit hook could be used to prevent
+editing of locked pages when using subversion, if you really need to.
+
+## web server attacks
+
+If your web server does any parsing of special sorts of files (for example,
+server parsed html files), then if you let anyone else add files to the wiki,
+they can try to use this to exploit your web server.
+
+----
+
+# Hopefully non-holes
+
+_(AKA, the assumptions that will be the root of most security holes...)_
+
+## exploting ikiwiki with bad content
+
+Someone could add bad content to the wiki and hope to exploit ikiwiki.
+Note that ikiwiki runs with perl taint checks on, so this is unlikely.
+
+One fun thing in ikiwiki is its handling of a PageSpec, which involves
+translating it into perl and running the perl. Of course, this is done
+*very* carefully to guard against injecting arbitrary perl code.
+
+## publishing cgi scripts
+
+ikiwiki does not allow cgi scripts to be published as part of the wiki. Or
+rather, the script is published, but it's not marked executable (except in
+the case of "destination directory file replacement" below), so hopefully
+your web server will not run it.
+
+## suid wrappers
+
+ikiwiki --wrapper is intended to generate a wrapper program that
+runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
+for example to be used in a [[post-commit]] hook by people who cannot write
+to the html pages, etc.
+
+If the wrapper script is made suid, then any bugs in this wrapper would be
+security holes. The wrapper is written as securely as I know how, is based
+on code that has a history of security use long before ikiwiki, and there's
+been no problem yet.
+
+## shell exploits
+
+ikiwiki does not expose untrusted data to the shell. In fact it doesn't use
+system() at all, and the only use of backticks is on data supplied by the
+wiki admin and untainted filenames. And it runs with taint checks on of
+course..
+
+## cgi data security
+
+When ikiwiki runs as a cgi to edit a page, it is passed the name of the
+page to edit. It has to make sure to sanitise this page, to prevent eg,
+editing of ../../../foo, or editing of files that are not part of the wiki,
+such as subversion dotfiles. This is done by sanitising the filename
+removing unallowed characters, then making sure it doesn't start with "/"
+or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
+security holes breed. It needs a test suite at the very least.
+
+## CGI::Session security
+
+I've audited this module and it is massively insecure by default. ikiwiki
+uses it in one of the few secure ways; by forcing it to write to a
+directory it controls (and not /tmp) and by setting a umask that makes the
+file not be world readable.
+
+## cgi password security
+
+Login to the wiki involves sending a password in cleartext over the net.
+Cracking the password only allows editing the wiki as that user though.
+If you care, you can use https, I suppose. If you do use https either for
+all of the wiki, or just the cgi access, then consider using the sslcookie
+option.
+
+## XSS holes in CGI output
+
+ikiwiki has not yet been audited to ensure that all cgi script input/output
+is sanitised to prevent XSS attacks. For example, a user can't register
+with a username containing html code (anymore).
+
+It's difficult to know for sure if all such avenues have really been
+closed though.
+
+## HTML::Template security
+
+If the [[plugins/template]] plugin is enabled, users can modify templates
+like any other part of the wiki. This assumes that HTML::Template is secure
+when used with untrusted/malicious templates. (Note that includes are not
+allowed, so that's not a problem.)
+
+----
+
+# Plugins
+
+The security of [[plugins]] depends on how well they're written and what
+external tools they use. The plugins included in ikiwiki are all held to
+the same standards as the rest of ikiwiki, but with that said, here are
+some security notes for them.
+
+* The [[plugins/img]] plugin assumes that imagemagick/perlmagick are secure
+  from malformed image attacks. Imagemagick has had security holes in the
+  past. To be able to exploit such a hole, a user would need to be able to
+  upload images to the wiki.
+
+----
+
+# Fixed holes
+
+_(Unless otherwise noted, these were discovered and immediately fixed by the
+ikiwiki developers.)_
+
+## destination directory file replacement
+
+Any file in the destination directory that is a valid page filename can be
+replaced, even if it was not originally rendered from a page. For example,
+ikiwiki.cgi could be edited in the wiki, and it would write out a
+replacement. File permission is preseved. Yipes!
+
+This was fixed by making ikiwiki check if the file it's writing to exists;
+if it does then it has to be a file that it's aware of creating before, or
+it will refuse to create it.
+
+Still, this sort of attack is something to keep in mind.
+
+## symlink attacks
+
+Could a committer trick ikiwiki into following a symlink and operating on
+some other tree that it shouldn't? svn supports symlinks, so one can get
+into the repo. ikiwiki uses File::Find to traverse the repo, and does not
+tell it to follow symlinks, but it might be possible to race replacing a
+directory with a symlink and trick it into following the link.
+
+Also, if someone checks in a symlink to /etc/passwd, ikiwiki would read and
+publish that, which could be used to expose files a committer otherwise
+wouldn't see.
+
+To avoid this, ikiwiki will skip over symlinks when scanning for pages, and
+uses locking to prevent more than one instance running at a time. The lock
+prevents one ikiwiki from running a svn up at the wrong time to race
+another ikiwiki. So only attackers who can write to the working copy on
+their own can race it.
+
+## symlink + cgi attacks
+
+Similarly, a svn commit of a symlink could be made, ikiwiki ignores it
+because of the above, but the symlink is still there, and then you edit the
+page from the web, which follows the symlink when reading the page
+(exposing the content), and again when saving the changed page (changing
+the content).
+
+This was fixed for page saving by making ikiwiki refuse to write to files
+that are symlinks, or that are in subdirectories that are symlinks,
+combined with the above locking.
+
+For page editing, it's fixed by ikiwiki checking to make sure that it
+already has found a page by scanning the tree, before loading it for
+editing, which as described above, also is done in a way that avoids
+symlink attacks.
+
+## underlaydir override attacks
+
+ikiwiki also scans an underlaydir for pages, this is used to provide stock
+pages to all wikis w/o needing to copy them into the wiki. Since ikiwiki
+internally stores only the base filename from the underlaydir or srcdir,
+and searches for a file in either directory when reading a page source,
+there is the potential for ikiwiki's scanner to reject a file from the
+srcdir for some reason (such as it being contained in a directory that is
+symlinked in), find a valid copy of the file in the underlaydir, and then
+when loading the file, mistakenly load the bad file from the srcdir.
+
+This attack is avoided by making ikiwiki refuse to add any files from the
+underlaydir if a file also exists in the srcdir with the same name.
+
+## multiple page source issues
+
+Note that I previously worried that underlay override attacks could also be
+accomplished if ikiwiki were extended to support other page markup
+languages besides markdown. However, a closer look indicates that this is
+not a problem: ikiwiki does preserve the file extension when storing the
+source filename of a page, so a file with another extension that renders to
+the same page name can't bypass the check. Ie, ikiwiki won't skip foo.rst
+in the srcdir, find foo.mdwn in the underlay, decide to render page foo and
+then read the bad foo.mdwn. Instead it will remember the .rst extension and
+only render a file with that extension.
+
+## XSS attacks in page content
+
+ikiwiki supports protecting users from their own broken browsers via the
+[[plugins/htmlscrubber]] plugin, which is enabled by default.
+
+## svn commit logs
+
+It's was possible to force a whole series of svn commits to appear to
+have come just before yours, by forging svn log output. This was
+guarded against by using svn log --xml.
+
+ikiwiki escapes any html in svn commit logs to prevent other mischief.
+
+## XML::Parser
+
+XML::Parser is used by the aggregation plugin, and has some security holes. 
+Bug #[378411](http://bugs.debian.org/378411) does not
+seem to affect our use, since the data is not encoded as utf-8 at that
+point. #[378412](http://bugs.debian.org/378412) could affect us, although it
+doesn't seem very exploitable. It has a simple fix, and has been fixed in
+Debian unstable.
+
+## include loops
+
+Various directives that cause one page to be included into another could
+be exploited to DOS the wiki, by causing a loop. Ikiwiki has always guarded
+against this one way or another; the current solution should detect all
+types of loops involving preprocessor directives.

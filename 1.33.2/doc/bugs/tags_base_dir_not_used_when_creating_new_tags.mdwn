@@ -1,0 +1,40 @@
+I'm using the tags plugin with tagbase="tags".
+
+Already existing tags, corresponding to pages like tags/foo.html work just
+fine.
+
+If I add to a page a tag which is not existing (e.g. with [[tag newtag]])
+the just modified page will have a link which point to tags/newtag. This is
+in theory correct, but in practice leads to creating a tags/newtag subpage
+of the page I'm editing, while my tagbase is supposed to be relative to the
+wiki root.
+
+When used in a wiki which already have some tags this leads to mixing up
+tags located in tags/ and tags located in whatever/tags/.
+
+> When a new page is being edited, ikiwiki lets you chose where the page
+> will be created, so you'll get a dropdown list of possible locations for
+> the tag page. You should be able to choose between either tags/foo or
+> page/tags/foo.
+>
+> The way that ikiwiki decides which location to default to in this box is
+> fairly involved; but in general it will default to creating the page at
+> the same level as the tagged page. So if the tag is on any toplevel page
+> in the wiki, it will default to creating `tags/foo`; if the tag is on a
+> page in a subdirectory, it will default to creating subdir/tags/foo.
+>
+> I personally like this behavior; it allows me to create a subdirectory
+> for a particular thing and use tags that are specific to that thing,
+> which are kept confined to that subdirectory by default. For example,
+> this is used for ikiwiki's own plugins tags, which are all located
+> under plugins/type/* and which apply to pages under plugins/*.
+>
+> It's clearly not the right default for every situation though. Explcitly
+> setting a tagbase probably lessons the likelyhood that it's the right
+> default for things under that tag base. I'd not be opposed to adding a
+> special case to change the default in this case, or adding a
+> configuration option to change the default globally. On the other hand,
+> it is pretty simple to just check the location and select the right one
+> from the list when creating a new page..
+> 
+> --[[Joey]]

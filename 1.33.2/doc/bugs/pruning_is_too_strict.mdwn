@@ -1,0 +1,8 @@
+ikiwiki compiles my wiki successfully. But the svn post-commit hook it installs doesn't work at all. Instead of rendering the files, it deletes their rendered versions. The reason is that the src directory, /home/.kelli/glasserc/wikiwc, matches the prune regexp, so no files in the wiki get added to @files.
+
+I think the prune regexp would be more useful if it was only used to check the relative path from the src root to a file in the wiki.
+
+> I agree with this feature wish.  Here is a _first cut_
+> [[implementation|patchqueue/pruning_is_too_strict]] for this feature.
+>
+> --[[roktas]]
