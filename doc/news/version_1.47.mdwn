@@ -1,0 +1,17 @@
+News for ikiwiki 1.47:
+
+   Due to a security fix, wikis that have the htmlscrubber enabled can no
+   longer use the meta plugin to insert html link and meta tags.
+   Some special case methods have been added for safely including stylesheets,
+   and for doing openid delegation. See the meta plugin docs for details.
+
+ikiwiki 1.47 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Fix a security hole that allowed insertion of unsafe content via the meta
+     plugins's support for inserting html link and meta tags. Now such content
+     is passed through the htmlscrubber like everything else.
+   * Unfortunatly, that means that some valid uses of those tags are no longer
+     usable, and special case methods needed to be added for including
+     stylesheets, and for doing openid delegation. If you use either of these
+     in your wiki, it will need to be modified. See the meta plugin docs
+     for details."""]]
