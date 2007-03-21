@@ -1,0 +1,12 @@
+I see that ikiwiki has already some [[bugs]] stored on the wiki, but adding
+better support for bug tracking would really make it a good project
+management system for small projects. Storing the sourcecode, wiki, developer
+blog and the issue tracker information under a same revision control
+system really makes sense. At the moment the only part missing from ikiwiki 
+is the bug tracker plugin.
+
+The support would not need to be anything fancy, assignment of bug numbers
+is perhaps the biggest thing missing when compared to a plain wiki page.
+Integration with the revision control system a la [scmbug](http://www.mkgnu.net/?q=scmbug) 
+would really neat though, so that bug tracker commands like (closes: #nnn) could 
+be embedded to the source code repository commit messages.
