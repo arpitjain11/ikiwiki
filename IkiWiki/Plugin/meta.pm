@@ -90,7 +90,7 @@ sub preprocess (@) { #{{{
 		$meta{$page}.='<link href="'.$stylesheet.
 			'" rel="'.encode_entities($rel).
 			'" title="'.encode_entities($title).
-			"style=\"text/css\" />\n";
+			"\" style=\"text/css\" />\n";
 	}
 	elsif ($key eq 'openid') {
 		if (exists $params{server}) {
