@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-10 21:24-0500\n"
+"POT-Creation-Date: 2007-03-21 14:36-0400\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -23,33 +23,34 @@ msgstr "Du måste logga in först."
 msgid "Preferences saved."
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:464
 #, perl-format
 msgid "creating %s"
 msgstr "skapar %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
+#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
 #, perl-format
 msgid "editing %s"
 msgstr "redigerar %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:674
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -180,6 +181,11 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "misslyckades med att läsa in Perl-modulen Markdown.pm (%s) eller /usr/bin/"
 "markdown (%s)"
+
+#: ../IkiWiki/Plugin/meta.pm:88
+#, fuzzy
+msgid "stylesheet not found"
+msgstr "mallen %s hittades inte"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -484,15 +490,15 @@ msgstr "kan inte läsa %s: %s"
 msgid "generating wrappers.."
 msgstr "genererar wrappers.."
 
-#: ../IkiWiki/Setup/Standard.pm:71
+#: ../IkiWiki/Setup/Standard.pm:72
 msgid "rebuilding wiki.."
 msgstr "bygger om wiki.."
 
-#: ../IkiWiki/Setup/Standard.pm:74
+#: ../IkiWiki/Setup/Standard.pm:75
 msgid "refreshing wiki.."
 msgstr "uppdaterar wiki.."
 
-#: ../IkiWiki/Setup/Standard.pm:83
+#: ../IkiWiki/Setup/Standard.pm:84
 msgid "done"
 msgstr "klar"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-10 21:24-0500\n"
+"POT-Creation-Date: 2007-03-21 14:36-0400\n"
 "PO-Revision-Date: 2007-02-12 10:31+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -24,33 +24,34 @@ msgstr "Antes es necesario identificarse."
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:464
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
+#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:674
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "registro fallido, ¿ tal vez es necesario activar las cookies en el "
@@ -186,6 +187,11 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "no he podido cargar el módulo Perl Markdown.pm (%s) ó no he podido ejecutar "
 "el programa /usr/bin/markdown (%s)"
+
+#: ../IkiWiki/Plugin/meta.pm:88
+#, fuzzy
+msgid "stylesheet not found"
+msgstr "no he encontrado la plantilla %s"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -492,15 +498,15 @@ msgstr "no puedo leer el archivo %s: %s"
 msgid "generating wrappers.."
 msgstr "generando programas auxiliares.."
 
-#: ../IkiWiki/Setup/Standard.pm:71
+#: ../IkiWiki/Setup/Standard.pm:72
 msgid "rebuilding wiki.."
 msgstr "reconstruyendo el wiki.."
 
-#: ../IkiWiki/Setup/Standard.pm:74
+#: ../IkiWiki/Setup/Standard.pm:75
 msgid "refreshing wiki.."
 msgstr "actualizando el wiki.."
 
-#: ../IkiWiki/Setup/Standard.pm:83
+#: ../IkiWiki/Setup/Standard.pm:84
 msgid "done"
 msgstr "completado"
 

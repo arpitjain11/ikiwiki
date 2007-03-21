@@ -28,5 +28,5 @@ registration process when using OpenID.
 It's also possible to make a page in the wiki usable as an OpenID url,
 by delegating it to an openid server. Here's an example of how to do that:
 
-	\[[meta link="http://www.myopenid.com/server" rel="openid.server"]]
-	\[[meta link="http://yourid.myopenid.com/" rel="openid.delegate"]]
+	\\[[meta openid="http://yourid.myopenid.com/"
+	server="http://www.myopenid.com/server"]]

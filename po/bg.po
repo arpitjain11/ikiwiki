@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-10 21:24-0500\n"
+"POT-Creation-Date: 2007-03-21 14:36-0400\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -24,33 +24,34 @@ msgstr "Първо трябва да влезете."
 msgid "Preferences saved."
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "дискусия"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:464
 #, perl-format
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
+#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:674
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -184,6 +185,11 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "грешка при зареждането на perl-модула „Markdown.pm” (%s) или „/usr/bin/"
 "markdown” (%s)"
+
+#: ../IkiWiki/Plugin/meta.pm:88
+#, fuzzy
+msgid "stylesheet not found"
+msgstr "шаблонът „%s” не е намерен"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -488,15 +494,15 @@ msgstr "грешка при четене на „%s”: %s"
 msgid "generating wrappers.."
 msgstr "генериране на обвивки..."
 
-#: ../IkiWiki/Setup/Standard.pm:71
+#: ../IkiWiki/Setup/Standard.pm:72
 msgid "rebuilding wiki.."
 msgstr "обновяване на уики..."
 
-#: ../IkiWiki/Setup/Standard.pm:74
+#: ../IkiWiki/Setup/Standard.pm:75
 msgid "refreshing wiki.."
 msgstr "осъвременяване на уики..."
 
-#: ../IkiWiki/Setup/Standard.pm:83
+#: ../IkiWiki/Setup/Standard.pm:84
 msgid "done"
 msgstr "готово"
 

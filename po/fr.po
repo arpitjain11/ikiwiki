@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-17 19:21-0400\n"
+"POT-Creation-Date: 2007-03-21 14:36-0400\n"
 "PO-Revision-Date: 2007-03-08 21:18+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -42,17 +42,17 @@ msgstr "Discussion"
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:518
-#: ../IkiWiki/CGI.pm:562
+#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
+#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:659
+#: ../IkiWiki/CGI.pm:674
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:691
+#: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
@@ -186,6 +186,11 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "Échec de chargement du module perl Markdown.pm (%s) ou de /usr/bin/markdown "
 "(%s)"
+
+#: ../IkiWiki/Plugin/meta.pm:88
+#, fuzzy
+msgid "stylesheet not found"
+msgstr "Patron %s introuvable "
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -488,15 +493,15 @@ msgstr "Lecture impossible de %s : %s"
 msgid "generating wrappers.."
 msgstr "Création des enrobages..."
 
-#: ../IkiWiki/Setup/Standard.pm:71
+#: ../IkiWiki/Setup/Standard.pm:72
 msgid "rebuilding wiki.."
 msgstr "Reconstruction du wiki..."
 
-#: ../IkiWiki/Setup/Standard.pm:74
+#: ../IkiWiki/Setup/Standard.pm:75
 msgid "refreshing wiki.."
 msgstr "Rafraîchissement du wiki..."
 
-#: ../IkiWiki/Setup/Standard.pm:83
+#: ../IkiWiki/Setup/Standard.pm:84
 msgid "done"
 msgstr "Terminé"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-10 21:24-0500\n"
+"POT-Creation-Date: 2007-03-21 14:36-0400\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -23,33 +23,34 @@ msgstr "Nejprve se musíte přihlásit."
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:340
+#: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
 #: ../IkiWiki/Render.pm:165
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:464
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:570
+#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
+#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:674
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
@@ -179,6 +180,11 @@ msgstr "Stránka %s je zamknutá uživatelem %s a nelze ji měnit"
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "selhalo nahrání perlového modulu Markdown.pm (%s) nebo /usr/bin/markdown (%s)"
+
+#: ../IkiWiki/Plugin/meta.pm:88
+#, fuzzy
+msgid "stylesheet not found"
+msgstr "šablona %s nebyla nalezena"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -483,15 +489,15 @@ msgstr "nemohu číst %s: %s"
 msgid "generating wrappers.."
 msgstr "generuji obaly..."
 
-#: ../IkiWiki/Setup/Standard.pm:71
+#: ../IkiWiki/Setup/Standard.pm:72
 msgid "rebuilding wiki.."
 msgstr "znovu vytvářím wiki..."
 
-#: ../IkiWiki/Setup/Standard.pm:74
+#: ../IkiWiki/Setup/Standard.pm:75
 msgid "refreshing wiki.."
 msgstr "obnovuji wiki..."
 
-#: ../IkiWiki/Setup/Standard.pm:83
+#: ../IkiWiki/Setup/Standard.pm:84
 msgid "done"
 msgstr "hotovo"
 

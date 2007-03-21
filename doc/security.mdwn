@@ -304,3 +304,14 @@ This hole was discovered on 21 March 2007 and fixed the same day (er, hour)
 with the release of ikiwiki 1.46. A fix was also backported to Debian etch,
 as version 1.33.2. I recommend upgrading to one of these versions if your
 wiki allows web editing or aggregates feeds.
+
+## javascript insertion via meta tags
+
+It was possible to use the meta plugin's meta tags to insert arbitrary
+url contents, which could be used to insert stylesheet information
+containing javascript. This was fixed by sanitising meta tags.
+
+This hole was discovered on 21 March 2007 and fixed the same day
+with the release of ikiwiki 1.47. A fix was also backported to Debian etch,
+as version 1.33.3. I recommend upgrading to one of these versions if your
+wiki can be edited by third parties.
