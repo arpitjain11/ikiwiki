@@ -226,3 +226,13 @@ input#openid_url {
 	color: #000;
 	padding-left: 18px;
 }
+
+/* Things to hide in printouts. */
+@media print {
+	.actions { display: none; }
+	.tags { display: none; }
+	.feedbutton { display: none; }
+	#searchform { display: none; }
+	#blogform { display: none; }
+	#backlinks { display: none; }
+}
