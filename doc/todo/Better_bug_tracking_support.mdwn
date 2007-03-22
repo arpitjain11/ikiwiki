@@ -27,3 +27,22 @@ be embedded to the source code repository commit messages.
 > bug's page, tag it `done`, and commit that along with the bug fix.
 >
 > --[[Joey]]
+
+>> I think a little bit more structure than in a normal wiki would be
+>> good to have for bug tracking. Bug numbers, automatic timestamps on comments
+>> and maybe an email interface would be nice. The resulting page may not 
+>> look like a wikipage anymore, but rather something like the Debian 
+>> BTS web-interface, but it would still benefit from wikilinks to the 
+>> documentation in the wiki etc.
+>>
+>> About the commit message interface: I was thinking about a project
+>> architecture where the code is kept in a separate revision control
+>> system branch than the metadata (blog, wiki, BTS). This would IMHO
+>> be a cleaner solution for distributing the source and making releases
+>> etc. For this kind of setup, having the BTS scan the messages of the 
+>> source branch (by a commit-hook for example) would be useful.
+>>
+>> By Google BTS, do you mean the issue tracker in the Google code 
+>> project hosting?
+>>
+>> --Teemu
