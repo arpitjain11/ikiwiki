@@ -85,6 +85,22 @@ it... any hints?)
   >  > I'll take a look when I have the time. Thanks for your comments.
   >  > --Jordà
 
+* The changes to htmllink in ikiwiki 1.44 broke this plugin.
+The following fixes it:
+
+        --- linguas.pm.orig     2006-08-23 19:07:04.000000000 +0200
+        +++ linguas.pm  2007-03-24 01:53:18.000000000 +0100
+        @@ -100,7 +100,7 @@
+                        if (exists $linguas{$2} && defined $linguas{$2}) {
+                                $link = $linguas{$2}{'name'};
+                        }
+        -               push @links, IkiWiki::htmllink($page, $destpage, $trans, 0, 0, $link);
+        +               push @links, IkiWiki::htmllink($page, $destpage, $trans, noimageinline => 0, forcesubpage => 0, linktext => $link);
+                }
+         
+                my $otherlinguas = 'Translations:';
+
+
 Examples
 --------
 
