@@ -1,0 +1,22 @@
+The mercurial backend is broken when no changelog message is given.
+
+Here is a quick patch, partialy copying the svn backend. 
+
+    --- /usr/share/perl5/IkiWiki/Rcs/mercurial.pm	2007-03-18 23:19:40.000000000 +0100
+    +++ ./mercurial.pm	2007-03-24 13:11:36.000000000 +0100
+    @@ -70,12 +70,15 @@
+     
+     	if (defined $user) {
+     		$user = possibly_foolish_untaint($user);
+    +		$message="web commit by $user".(length $message ? ": $message" : "");
+     	}
+     	elsif (defined $ipaddr) {
+     		$user = "Anonymous from $ipaddr";
+    +		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+     	}
+     	else {
+     		$user = "Anonymous";
+    +		$message="web commit by Anonymous".(length $message ? ": $message" : "");
+     	}
+     
+     	$message = possibly_foolish_untaint($message);
