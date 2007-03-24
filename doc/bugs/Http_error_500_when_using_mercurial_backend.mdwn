@@ -20,3 +20,9 @@ Here is a quick patch, partialy copying the svn backend.
      	}
      
      	$message = possibly_foolish_untaint($message);
+
+> The svn backend puts the user info in the message because that's the only
+> way to store the user info, unlike with mercurial. The svn plugin also
+> removes that info when getting the RecentChanges info. Since mercurial
+> does not do that, it seemed better to me to test for an empty message and
+> set it to a dummy commit string, which I've [[done]]. --[[Joey]]

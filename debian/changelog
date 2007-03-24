@@ -15,8 +15,9 @@ ikiwiki (1.48) UNRELEASED; urgency=low
   * Renamed %oldpagemtime to a more accurately named %pagemtime and fix it to
     actually store pages' mtimes.
   * Add "mtime" sort parameter to inline plugin.
+  * Fix mercurial backend to deal with empty commit messages.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 23 Mar 2007 16:16:39 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 24 Mar 2007 11:14:10 -0400
 
 ikiwiki (1.47) unstable; urgency=low
 

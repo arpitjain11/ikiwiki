@@ -79,9 +79,12 @@ sub rcs_commit ($$$;$$) { #{{{
 	}
 
 	$message = possibly_foolish_untaint($message);
+	if (! length $message) {
+		$message = "no message given";
+	}
 
-	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "commit", 
-	               "-m", "$message", "-u", "$user");
+	my @cmdline = ("hg", "-q", "-R", $config{srcdir}, "commit", 
+	               "-m", $message, "-u", $user);
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
