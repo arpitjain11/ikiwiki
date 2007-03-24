@@ -192,7 +192,6 @@ sub render ($) { #{{{
 		
 		writefile(htmlpage($page), $config{destdir},
 			genpage($page, $content, mtime($srcfile)));
-		$oldpagemtime{$page}=time;
 	}
 	else {
 		my $srcfd=readfile($srcfile, 1, 1);
@@ -218,7 +217,6 @@ sub render ($) { #{{{
 				}
 			}
 		});
-		$oldpagemtime{$file}=time;
 	}
 } #}}}
 
@@ -294,7 +292,7 @@ sub refresh () { #{{{
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		$pagesources{$page}=$file;
-		if (! $oldpagemtime{$page}) {
+		if (! $pagemtime{$page}) {
 			push @add, $file;
 			$pagecase{lc $page}=$page;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
@@ -306,13 +304,13 @@ sub refresh () { #{{{
 		}
 	}
 	my @del;
-	foreach my $page (keys %oldpagemtime) {
+	foreach my $page (keys %pagemtime) {
 		if (! $exists{$page}) {
 			debug(sprintf(gettext("removing old page %s"), $page));
 			push @del, $pagesources{$page};
 			$links{$page}=[];
 			$renderedfiles{$page}=[];
-			$oldpagemtime{$page}=0;
+			$pagemtime{$page}=0;
 			prune($config{destdir}."/".$_)
 				foreach @{$oldrenderedfiles{$page}};
 			delete $pagesources{$page};
@@ -324,10 +322,12 @@ sub refresh () { #{{{
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		
-		if (! exists $oldpagemtime{$page} ||
-		    mtime(srcfile($file)) > $oldpagemtime{$page} ||
+		my $mtime=mtime(srcfile($file));
+		if (! exists $pagemtime{$page} ||
+		    $mtime > $pagemtime{$page} ||
 	    	    $forcerebuild{$page}) {
 		    	debug(sprintf(gettext("scanning %s"), $file));
+		    	$pagemtime{$page}=$mtime;
 			push @changed, $file;
 			scan($file);
 		}

@@ -8,7 +8,7 @@ use HTML::Entities;
 use URI::Escape q{uri_escape_utf8};
 use open qw{:utf8 :std};
 
-use vars qw{%config %links %oldlinks %oldpagemtime %pagectime %pagecase
+use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
             %renderedfiles %oldrenderedfiles %pagesources %depends %hooks
 	    %forcerebuild $gettext_obj};
 
@@ -672,7 +672,7 @@ sub loadindex () { #{{{
 		my $page=pagename($items{src}[0]);
 		if (! $config{rebuild}) {
 			$pagesources{$page}=$items{src}[0];
-			$oldpagemtime{$page}=$items{mtime}[0];
+			$pagemtime{$page}=$items{mtime}[0];
 			$oldlinks{$page}=[@{$items{link}}];
 			$links{$page}=[@{$items{link}}];
 			$depends{$page}=$items{depends}[0] if exists $items{depends};
@@ -694,9 +694,9 @@ sub saveindex () { #{{{
 	my $newfile="$config{wikistatedir}/index.new";
 	my $cleanup = sub { unlink($newfile) };
 	open (OUT, ">$newfile") || error("cannot write to $newfile: $!", $cleanup);
-	foreach my $page (keys %oldpagemtime) {
-		next unless $oldpagemtime{$page};
-		my $line="mtime=$oldpagemtime{$page} ".
+	foreach my $page (keys %pagemtime) {
+		next unless $pagemtime{$page};
+		my $line="mtime=$pagemtime{$page} ".
 			"ctime=$pagectime{$page} ".
 			"src=$pagesources{$page}";
 		$line.=" dest=$_" foreach @{$renderedfiles{$page}};

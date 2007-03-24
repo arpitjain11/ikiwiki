@@ -52,5 +52,6 @@ directive:
   for editing and discussion (if they would be shown at the top of the page
   itself).
 * `sort` - Controls how inlined pages are sorted. The default, "age" is to
-  sort newest pages first. Setting it to "title" will sort pages by title.
+  sort newest created pages first. Setting it to "title" will sort pages by
+  title, and "mtime" sorts most recently modified pages first.
 * `reverse` - If set to "yes", causes the sort order to be reversed.

@@ -96,6 +96,9 @@ sub preprocess_inline (@) { #{{{
 	if (exists $params{sort} && $params{sort} eq 'title') {
 		@list=sort @list;
 	}
+	elsif (exists $params{sort} && $params{sort} eq 'mtime') {
+		@list=sort { $pagemtime{$b} <=> $pagemtime{$a} } @list;
+	}
 	elsif (! exists $params{sort} || $params{sort} eq 'age') {
 		@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
 	}
@@ -116,6 +119,10 @@ sub preprocess_inline (@) { #{{{
 	}
 
 	add_depends($params{page}, $params{pages});
+	# Explicitly add all currently displayed pages as dependencies, so
+	# that if they are removed or otherwise changed, the inline will be
+	# sure to be updated.
+	add_depends($params{page}, join(" or ", @list));
 
 	my $rssurl=rsspage(basename($params{page}));
 	my $atomurl=atompage(basename($params{page}));

@@ -11,8 +11,12 @@ ikiwiki (1.48) UNRELEASED; urgency=low
   * Make ikiwiki's stylesheet support printing by hiding parts of the page
     that shouldn't appear in a printout: Search box, actions bar,
     blog post form, tags, backlinks, and feed buttons.
+  * Finally fixed the longstanding inline removal bug.
+  * Renamed %oldpagemtime to a more accurately named %pagemtime and fix it to
+    actually store pages' mtimes.
+  * Add "mtime" sort parameter to inline plugin.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 19:46:32 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 23 Mar 2007 16:16:39 -0400
 
 ikiwiki (1.47) unstable; urgency=low
 
