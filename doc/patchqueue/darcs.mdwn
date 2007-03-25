@@ -329,3 +329,136 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 
 
 """]]
+
+---
+
+Well, here's my version too. It only does getctime -- using a real XML parser, instead of regexp ugliness -- and maybe recentchanges, but that may be bitrotted, or maybe I never finished it, as I only need the getctime. As for actual commits, I have previously voiced my opinion, that this should be done by the plugin generating a patch bundle, and forwarding it to darcs in some way (`darcs apply` or even email to another host, possibly moderated), instead of the hacky direct modification of a working copy.
+
+[[toggle text="show" id="tuomov"]]
+[[toggleable id="tuomov" text="""
+<pre>
+#!/usr/bin/perl
+# Stubs for no revision control.
+
+use warnings;
+use strict;
+use IkiWiki;
+
+package IkiWiki;
+
+sub rcs_update () {
+}
+
+sub rcs_prepedit ($) {
+	return ""
+}
+
+sub rcs_commit ($$$) {
+	return undef # success
+}
+
+sub rcs_add ($) {
+}
+
+sub rcs_recentchanges ($) {
+	my $num=shift;
+	my @ret;
+	
+	eval q{use Date::Parse};
+	eval q{use XML::Simple};
+	
+	my $repodir=$config{srcdir};
+	
+	if (-d "$config{srcdir}/_darcs") {
+		my $child = open(LOG, "-|");
+		if (! $child) {
+			exec("darcs", "changes", "--xml", 
+			     "--repodir", "$repodir",
+			     "--last", "$num")
+			|| error("darcs changes failed to run");
+		}
+		my $data=<LOG>;
+		close LOG;
+		
+		my $log = XMLin($data, ForceArray => 1);
+		
+		foreach my $patch ($log->{patch}) {
+			my $date=$patch->{local_date};
+			my $hash=$patch->{hash};
+			my $when=concise(ago(time - str2time($date)));
+			my @pages;
+			
+			my $child = open(SUMMARY, "-|");
+			if (! $child) {
+				exec("darcs", "annotate", "-s", "--xml", 
+				     "--match", "hash: $hash",
+				     "--repodir", "$repodir")
+				|| error("darcs annotate failed to run");
+			}
+			my $data=<SUMMARY>;
+			close SUMMARY;
+		
+			my $summary = XMLin("<lame>$data</lame>", ForceArray => 1);
+
+			# TODO: find @pages
+			
+			push @ret, {
+				#rev => $rev,
+				user => $patch->{author},
+				#committype => $committype,
+				when => $when, 
+				#message => [@message],
+				pages => [@pages],
+			}; # if @pages;
+			return @ret if @ret >= $num;
+		}
+	}
+	
+	return @ret;
+}
+
+sub rcs_notify () {
+}
+
+sub rcs_getctime ($) {
+	my $file=shift;
+	
+	eval q{use Date::Parse};
+	eval q{use XML::Simple};
+	local $/=undef;
+	
+	# Sigh... doing things the hard way again
+	my $repodir=$config{srcdir};
+	
+	my $filer=substr($file, length($repodir));
+	$filer =~ s:^[/]+::;
+	
+	my $child = open(LOG, "-|");
+	if (! $child) {
+		exec("darcs", "changes", "--xml", "--reverse",
+		     "--repodir", "$repodir", "$filer")
+		|| error("darcs changes $filer failed to run");
+	}
+	
+	my $data=<LOG>;
+	close LOG;
+	
+	my $log = XMLin($data, ForceArray => 1);
+	
+	my $datestr=$log->{patch}[0]->{local_date};
+	
+	if (! defined $datestr) {
+		warn "failed to get ctime for $filer";
+		return 0;
+	}
+	
+	my $date=str2time($datestr);
+	
+	debug("found ctime ".localtime($date)." for $file");
+	
+	return $date;
+}
+
+1
+</pre>
+"""]]
