@@ -332,7 +332,7 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 
 ---
 
-Well, here's my version too. It only does getctime -- using a real XML parser, instead of regexp ugliness -- and maybe recentchanges, but that may be bitrotted, or maybe I never finished it, as I only need the getctime. As for actual commits, I have previously voiced my opinion, that this should be done by the plugin generating a patch bundle, and forwarding it to darcs in some way (`darcs apply` or even email to another host, possibly moderated), instead of the hacky direct modification of a working copy.
+Well, here's my version too. It only does getctime -- using a real XML parser, instead of regexp ugliness -- and maybe recentchanges, but that may be bitrotted, or maybe I never finished it, as I only need the getctime. As for actual commits, I have previously voiced my opinion, that this should be done by the plugin generating a patch bundle, and forwarding it to darcs in some way (`darcs apply` or even email to another host, possibly moderated), instead of the hacky direct modification of a working copy. --[[tuomov]]
 
 [[toggle text="show" id="tuomov"]]
 [[toggleable id="tuomov" text="""
