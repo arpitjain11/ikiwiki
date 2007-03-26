@@ -23,6 +23,10 @@ The web's security model is *fundamentally broken*; ikiwiki's html
 sanitisation is only a patch on the underlying gaping hole that is your web
 browser.
 
+Note that enabling or disabling the htmlscrubber plugin also affects some other
+HTML-related functionality, such as whether [[meta]] allows potentially unsafe
+HTML tags.
+
 ----
 
 Some examples of embedded javascript that won't be let through when this
