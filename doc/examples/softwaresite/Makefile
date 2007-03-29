@@ -8,8 +8,8 @@ IKIWIKI=ikiwiki
 endif
 
 all:
-	$(IKIWIKI) `pwd` html -v --plugin=goodstuff \
-		--no-rcs --exclude=html
+	$(IKIWIKI) `pwd` html -v --wikiname FooBar --plugin=goodstuff \
+		--exclude=html --exclude=Makefile
 
 clean:
 	rm -rf .ikiwiki html

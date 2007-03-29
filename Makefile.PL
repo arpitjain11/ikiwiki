@@ -30,7 +30,7 @@ extra_build:
 	chmod +x ikiwiki.out
 	LANG=C perl -I. $(tflag) ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=basewiki \
-		--wikiname="ikiwiki" --verbose --no-rcs \
+		--wikiname="ikiwiki" --verbose \
 		--exclude=/discussion --no-discussion --userdir=users \
 		--plugin=goodstuff \
 		--plugin=haiku --plugin=polygen --plugin=fortune
