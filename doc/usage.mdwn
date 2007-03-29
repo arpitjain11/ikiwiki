@@ -86,6 +86,14 @@ These options control the mode that ikiwiki operates in.
 
 	ikiwiki --setup ~/ikiwiki.setup --render foo.mdwn
 
+* --post-commit
+
+  Run in post-commit mode, the same as if called by a [[post-commit]] hook.
+  This is probably only useful when using ikiwiki with a web server on one host
+  and a repository on another, to allow the repository's real post-commit
+  hook to ssh to the web server host and manually run ikiwiki to update
+  the web site.
+
 * --version
 
   Print ikiwiki's version number.
@@ -117,7 +125,7 @@ configuration options of their own.
 
   Specify a mode to chmod the wrapper to after creating it.
 
-* --notify
+* --notify, --no-notify
 
   Enable email notification of commits. This should be used when running
   ikiwiki as a [[post-commit]] hook.

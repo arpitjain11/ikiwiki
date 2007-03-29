@@ -1,3 +1,12 @@
+ikiwiki (1.49) UNRELEASED; urgency=low
+
+  * Add --post-commit option, which allows for the case of a split web server
+    and RCS server (or a push mirror). With this the RCS server can have a
+    real post-commit hook that sshs back to the web server, and runs ikiwiki
+    in post-commit mode to update the wiki.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 29 Mar 2007 14:22:34 -0400
+
 ikiwiki (1.48) unstable; urgency=low
 
   * Fix link() PageSpecs to not just look at the raw link text, but at where

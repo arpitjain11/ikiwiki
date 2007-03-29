@@ -25,6 +25,7 @@ sub getconfig () { #{{{
 			"syslog!" => \$config{syslog},
 			"rebuild!" => \$config{rebuild},
 			"refresh!" => \$config{refresh},
+			"post-commit" => \$config{post_commit},
 			"render=s" => \$config{render},
 			"wrappers!" => \$config{wrappers},
 			"getctime" => \$config{getctime},
