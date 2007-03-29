@@ -9,7 +9,7 @@ endif
 
 all:
 	$(IKIWIKI) `pwd` html -v --plugin=goodstuff \
-		--no-rcs --exclude=/discussion --exclude=html --no-discussion
+		--no-rcs --exclude=html
 
 clean:
 	rm -rf .ikiwiki html
