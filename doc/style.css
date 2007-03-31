@@ -239,13 +239,14 @@ input#openid_url {
 	width: 25%
 }
 
-/* Used by the popup template. */
+/* Used by the popup template and for backlinks hiding. */
 .popup {
 	border-bottom: 1px dotted #366;
 	color: #366;
 }
 .popup .balloon,
-.popup .paren {
+.popup .paren,
+.popup .expand {
 	display: none;
 }
 .popup:hover .balloon,
@@ -260,4 +261,8 @@ input#openid_url {
 	opacity: 0.95;
 	-moz-opacity: 0.95;
 	filter: alpha(opacity=95);
+}
+.popup:hover .expand,
+.popup:focus .expand {
+	display: inline;
 }

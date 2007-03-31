@@ -30,6 +30,7 @@ sub getconfig () { #{{{
 			"wrappers!" => \$config{wrappers},
 			"getctime" => \$config{getctime},
 			"wrappermode=i" => \$config{wrappermode},
+			"numbacklinks=i" => \$config{numbacklinks},
 			"rcs=s" => \$config{rcs},
 			"no-rcs" => sub { $config{rcs}="" },
 			"cgi!" => \$config{cgi},

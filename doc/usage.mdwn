@@ -233,6 +233,11 @@ configuration options of their own.
   Enables or disables "Discussion" links from being added to the header of
   every page. The links are enabled by default.
 
+* --numbacklinks n
+
+  Controls how many backlinks should be displayed maximum. Excess backlinks
+  will be hidden in a popup. Default is 10.
+
 * --userdir subdir
 
   Optionally, allows links to users of the wiki to link to pages inside a

@@ -30,7 +30,6 @@ sub backlinks ($) { #{{{
 	calculate_backlinks();
 
 	my @links;
-	return unless $backlinks{$page};
 	foreach my $p (keys %{$backlinks{$page}}) {
 		my $href=abs2rel(htmlpage($p), dirname($page));
 			
@@ -45,8 +44,11 @@ sub backlinks ($) { #{{{
 			       
 		push @links, { url => $href, page => pagetitle($p_trimmed) };
 	}
+	@links = sort { $a->{page} cmp $b->{page} } @links;
 
-	return sort { $a->{page} cmp $b->{page} } @links;
+	return \@links, [] if @links <= $config{numbacklinks};
+	return [@links[0..$config{numbacklinks}-1]],
+	       [@links[$config{numbacklinks}..$#links]];
 } #}}}
 
 sub parentlinks ($) { #{{{
@@ -107,6 +109,8 @@ sub genpage ($$$) { #{{{
 		$template->param(have_actions => 1);
 	}
 
+	my ($backlinks, $more_backlinks)=backlinks($page);
+
 	$template->param(
 		title => $page eq 'index' 
 			? $config{wikiname} 
@@ -114,7 +118,8 @@ sub genpage ($$$) { #{{{
 		wikiname => $config{wikiname},
 		parentlinks => [parentlinks($page)],
 		content => $content,
-		backlinks => [backlinks($page)],
+		backlinks => $backlinks,
+		more_backlinks => $more_backlinks,
 		mtime => displaytime($mtime),
 		baseurl => baseurl($page),
 	);

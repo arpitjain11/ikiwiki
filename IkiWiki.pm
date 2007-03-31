@@ -72,6 +72,7 @@ sub defaultconfig () { #{{{
 	sslcookie => 0,
 	httpauth => 0,
 	userdir => "",
+	numbacklinks => 10,
 } #}}}
    
 sub checkconfig () { #{{{

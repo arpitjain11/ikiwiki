@@ -73,6 +73,15 @@ Links:
 <TMPL_LOOP NAME="BACKLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>
 </TMPL_LOOP>
+<TMPL_IF NAME="MORE_BACKLINKS">
+<span class="popup">...
+<span class="expand">
+<TMPL_LOOP NAME="MORE_BACKLINKS">
+<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>
+</TMPL_LOOP>
+</span>
+</span>
+</TMPL_IF>
 </TMPL_IF>
 </div>
 
