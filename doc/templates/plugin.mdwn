@@ -7,3 +7,12 @@ Currently enabled: [[if test="enabled(<TMPL_VAR name>)" then="yes" else="no"]]<b
 </span>
 [[if test="sourcepage(plugins/contrib/*)" then="""[[meta title="<TMPL_VAR name> (third party plugin)"]]"""]]
 <TMPL_IF core>[[tag type/core]]</TMPL_IF>
+<TMPL_UNLESS NAME="name">
+This template is used to create an infobox for an ikiwiki plugin. It uses
+these parameters:
+<ul>
+<li>name - the name of the plugin
+<li>author - the author of the plugin
+<li>core - set to a true value if the plugin is enabled by default
+</ul>
+</TMPL_UNLESS>

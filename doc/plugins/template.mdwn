@@ -23,9 +23,13 @@ large chunks of marked up text to be embedded into a template:
 	* Really 8 and a half.
 	"""]]
 
+Some templates are included in the wiki by default; these are listed in the
+[[templates]] page.
+
 To create a template, make a page in the wiki named `template/foo`. Note
 that this is a different location than the directory used for the
-[[templates]] used to build the wiki itself, which is not part of the wiki.
+[[templates|wikitemplates]] used to build the wiki itself, which is not
+part of the wiki.
 
 The template uses the syntax used by the [[cpan HTML::Template]] perl
 module, which allows for some fairly complex things to be done. Consult its

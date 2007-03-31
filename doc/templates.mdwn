@@ -1,53 +1,9 @@
-ikiwiki uses the HTML::Template module as its template engine. This
-supports things like conditionals and loops in templates and is pretty easy
-to learn.
+[[if test="enabled(template)"
+  then="This wiki has templates **enabled**."
+  else="This wiki has templates **disabled**."]]
 
-The aim is to keep almost all html out of ikiwiki and in the templates.
+These templates are available for inclusion onto other pages in this
+wiki:
 
-It ships with some basic templates which can be customised. These are
-located in /usr/share/ikiwiki/templates by default.
-
-* `page.tmpl` - Used for displaying all regular wiki pages.
-* `misc.tmpl` - Generic template used for any page that doesn't
-  have a custom template.
-* `recentchanges.tmpl` - Used for the RecentChanges page.
-* `editpage.tmpl` - Create/edit page.
-* `notifymail.tmpl` - Not a html template, this is used to
-  generate change notification mails for users who have subscribed to
-  changes to a page.
-* `passwordmail.tmpl` - Not a html template, this is used to
-  generate the mail with the user's password in it.
-* `rsspage.tmpl` - Used for generating rss feeds for [[blog]]s.
-* `rssitem.tmpl` - Used for generating individual items on rss feeds.
-* `atompage.tmpl` - Used for generating atom feeds for [[blog]]s.
-* `atomitem.tmpl` - Used for generating individual items on atom feeds.
-* `inlinepage.tmpl` - Used for adding a page inline in a blog
-  page.
-* `archivepage.tmpl` - Used for listing a page in a blog archive page.
-* `estseek.conf` - Not a html template, this is actually a template for
-  a config file for the [[HyperEstraier]] search engine. If you like you
-  can read the [[HyperEstraier]] docs and configure it using this.
-* `blogpost.tmpl` - Used for a form to add a post to a blog (and a rss/atom links)
-* `feedlink.tmpl` - Used to add rss/atom links if blogpost.tmpl is not used.
-* `aggregatepost.tmpl` - Used by the [[plugins/aggregate]] plugin to create
-  a page for a post.
-* `searchform.tmpl` - Used by the [[plugins/search]] plugin to add a search
-  form to wiki pages.
-
-If you like, you can add these to further customise it:
-
-* `signin.tmpl` - If it exists, it is used for customising the
-  layout of the SignIn form and all assciated forms. The misc.tmpl is
-  wrapped around this, so it should only be a template for the form.
-* `prefs.tmpl` - If it exists, it is used for customising the
-  layout of the Prefs form and all assciated forms. The misc.tmpl is
-  wrapped around this, so it should only be a template for the form.
-  
-Note that the SignIn and Prefs forms are implemented using
-CGI::FormBuilder, which interfaces to HTML::Template, so not all of it can
-be customised with templates, although most of it can, by creating these
-templates. Without the templates, CGI::FormBuilder creates the page bodies
-by itself.
-
-The [[plugins/template]] plugin also uses templates, though those templates
-are stored in the wiki.
+[[inline pages="templates/* and !*/discussion" feeds=no archive=yes
+sort=title template=titlepage]]

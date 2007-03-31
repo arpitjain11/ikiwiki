@@ -161,25 +161,6 @@ td.changelog {
 	padding: 2ex 2ex;
 }
 
-.infobox {
-	float: right;
-	margin-left: 2ex;
-	margin-top: 1ex;
-	margin-bottom: 1ex;
-	padding: 1ex 1ex;
-	border: 1px solid #aaa;
-}
-
-.notebox {
-	float: right;
-	margin-left: 2ex;
-	margin-top: 1ex;
-	margin-bottom: 1ex;
-	padding: 1ex 1ex;
-	border: 1px solid #aaa;
-	width: 25%
-}
-
 /* outlines */
 li.L1 {
 	list-style: upper-roman;
@@ -235,4 +216,48 @@ input#openid_url {
 	#searchform { display: none; }
 	#blogform { display: none; }
 	#backlinks { display: none; }
+}
+
+/* Provided for use by template plugin for floating info boxes. */
+.infobox {
+	float: right;
+	margin-left: 2ex;
+	margin-top: 1ex;
+	margin-bottom: 1ex;
+	padding: 1ex 1ex;
+	border: 1px solid #aaa;
+}
+
+/* Provided for use by template plugin for floating note boxes. */
+.notebox {
+	float: right;
+	margin-left: 2ex;
+	margin-top: 1ex;
+	margin-bottom: 1ex;
+	padding: 1ex 1ex;
+	border: 1px solid #aaa;
+	width: 25%
+}
+
+/* Used by the popup template. */
+.popup {
+	border-bottom: 1px dotted #366;
+	color: #366;
+}
+.popup .balloon,
+.popup .paren {
+	display: none;
+}
+.popup:hover .balloon,
+.popup:focus .balloon {
+	position: absolute;
+	display: inline;
+	margin: 1em 0 0 -2em;
+	padding: 0.625em;
+	border: 2px solid;
+	background-color: #dee;
+	color: black;
+	opacity: 0.95;
+	-moz-opacity: 0.95;
+	filter: alpha(opacity=95);
 }
