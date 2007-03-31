@@ -25,7 +25,7 @@ sub mirrorlist ($) { #{{{
 		join(", ",
 			map { 
 				qq{<a href="}.
-				$config{mirrorlist}->{$_}."/".$page.
+				$config{mirrorlist}->{$_}."/".htmlpage($page).
 				qq{">$_</a>}
 			} keys %{$config{mirrorlist}}
 		).
