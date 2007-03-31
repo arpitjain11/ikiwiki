@@ -244,7 +244,7 @@ sub aggregate () { #{{{
 		if (! length $feed->{feedurl}) {
 			my @urls=XML::Feed->find_feeds($feed->{url});
 			if (! @urls) {
-				$feed->{message}=sprintf(gettext("could not find feed at %s"), $feed->{feedurl});
+				$feed->{message}=sprintf(gettext("could not find feed at %s"), $feed->{url});
 				$feed->{error}=1;
 				debug($feed->{message});
 				next;
