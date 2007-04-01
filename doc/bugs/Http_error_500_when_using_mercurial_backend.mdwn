@@ -25,5 +25,5 @@ Here is a quick patch, partialy copying the svn backend.
 > way to store the user info, unlike with mercurial. The svn plugin also
 > removes that info when getting the RecentChanges info. Since mercurial
 > does not do that, it seemed better to me to test for an empty message and
-> set it to a dummy commit string, which I've [[done]]. --[[Joey]]
+> set it to a dummy commit string, which I've [[bugs/done]]. --[[Joey]]
 >>Thanks for the correct fix, Joey. --hb
