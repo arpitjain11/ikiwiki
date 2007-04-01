@@ -28,6 +28,7 @@ sub getconfig () { #{{{
 			"post-commit" => \$config{post_commit},
 			"render=s" => \$config{render},
 			"wrappers!" => \$config{wrappers},
+			"usedirs!" => \$config{usedirs},
 			"getctime" => \$config{getctime},
 			"wrappermode=i" => \$config{wrappermode},
 			"numbacklinks=i" => \$config{numbacklinks},

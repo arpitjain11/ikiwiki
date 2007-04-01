@@ -21,3 +21,9 @@ without a lot of new complex code being added.
 
 For now the best thing to do is to make sure that you always create
 example if you create example/foo. Which is probably a good idea anyway..
+
+----
+
+Note that this bug does not exist if the wiki is built with the "usedirs"
+option, since in that case, the parent link will link to a subdirectory,
+that will just be missing the index.html file, but still nicely usable.

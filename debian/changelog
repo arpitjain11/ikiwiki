@@ -13,8 +13,12 @@ ikiwiki (1.49) UNRELEASED; urgency=low
     self-documenting, listing the available variables.
   * Hide excess backlinks and expand using CSS trick; control quantiy via
     the numbacklinks setting.
+  * Finally apply the index.html patch, with thanks to everyone who worked
+    on and supported creating it (especially Tumov). This adds a "usedirs"
+    option that makes ikiwiki use foo/index.html instead of foo.html as
+    output page names. It is not yet enabled by default.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 31 Mar 2007 04:27:08 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 01 Apr 2007 15:37:17 -0400
 
 ikiwiki (1.48) unstable; urgency=low
 

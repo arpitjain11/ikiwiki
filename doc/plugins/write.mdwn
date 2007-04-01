@@ -414,6 +414,15 @@ Given a time, formats it for display.
 
 This is the standard gettext function, although slightly optimised.
 
+#### `urlto($$)`
+
+Construct a relative url to the first parameter from the second.
+
+#### `targetpage($$)`
+
+Passed a page and an extension, returns the filename that page will be
+rendered to.
+
 ## RCS plugins
 
 ikiwiki's support for revision control systems also uses pluggable perl

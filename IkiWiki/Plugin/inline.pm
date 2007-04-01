@@ -124,8 +124,8 @@ sub preprocess_inline (@) { #{{{
 	# sure to be updated.
 	add_depends($params{page}, join(" or ", @list));
 
-	my $rssurl=rsspage(basename($params{page}));
-	my $atomurl=atompage(basename($params{page}));
+	my $rssurl=basename(rsspage($params{page}));
+	my $atomurl=basename(atompage($params{page}));
 	my $ret="";
 
 	if ($config{cgiurl} && (exists $params{rootpage} ||
@@ -164,13 +164,7 @@ sub preprocess_inline (@) { #{{{
 				my $content=get_inline_content($page, $params{destpage});
 				$template->param(content => $content);
 			}
-			# Don't use htmllink because this way the
-			# title is separate and can be overridden by
-			# other plugins.
-			my $link=bestlink($params{page}, $page);
-			$link=htmlpage($link) if defined $type;
-			$link=abs2rel($link, dirname($params{destpage}));
-			$template->param(pageurl => $link);
+			$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
 			$template->param(title => pagetitle(basename($page)));
 			$template->param(ctime => displaytime($pagectime{$page}));
 
@@ -222,15 +216,17 @@ sub preprocess_inline (@) { #{{{
 		}
 	
 		if ($rss) {
-			will_render($params{page}, rsspage($params{page}));
-			writefile(rsspage($params{page}), $config{destdir},
+			my $rssp=rsspage($params{page});
+			will_render($params{page}, $rssp);
+			writefile($rssp, $config{destdir},
 				genfeed("rss", $rssurl, $desc, $params{page}, @list));
 			$toping{$params{page}}=1 unless $config{rebuild};
 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 		}
 		if ($atom) {
-			will_render($params{page}, atompage($params{page}));
-			writefile(atompage($params{page}), $config{destdir},
+			my $atomp=atompage($params{page});
+			will_render($params{page}, $atomp);
+			writefile($atomp, $config{destdir},
 				genfeed("atom", $atomurl, $desc, $params{page}, @list));
 			$toping{$params{page}}=1 unless $config{rebuild};
 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
@@ -306,15 +302,11 @@ sub absolute_urls ($$) { #{{{
 } #}}}
 
 sub rsspage ($) { #{{{
-	my $page=shift;
-
-	return $page.".rss";
+	return targetpage(shift, "rss");
 } #}}}
 
 sub atompage ($) { #{{{
-	my $page=shift;
-
-	return $page.".atom";
+	return targetpage(shift, "atom");
 } #}}}
 
 sub genfeed ($$$$@) { #{{{

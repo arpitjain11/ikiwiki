@@ -321,7 +321,7 @@ sub add_page (@) { #{{{
 		# NB: This doesn't check for path length limits.
 		eval q{use POSIX};
 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
-		if (defined $max && length(htmlpage($page)) >= $max) {
+		if (defined $max && length(htmlfn($page)) >= $max) {
 			$c="";
 			$page=$feed->{dir}."/item";
 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
@@ -357,7 +357,7 @@ sub add_page (@) { #{{{
 	if (ref $feed->{tags}) {
 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
 	}
-	writefile(htmlpage($guid->{page}), $config{srcdir},
+	writefile(htmlfn($guid->{page}), $config{srcdir},
 		$template->output);
 
 	# Set the mtime, this lets the build process get the right creation
@@ -433,6 +433,10 @@ sub pagefile ($) { #{{{
 	my $page=shift;
 
 	return "$config{srcdir}/".htmlpage($page);
+} #}}}
+
+sub htmlfn ($) { #{{{
+	return shift().".html";
 } #}}}
 
 1

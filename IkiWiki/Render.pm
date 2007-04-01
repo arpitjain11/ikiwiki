@@ -31,8 +31,8 @@ sub backlinks ($) { #{{{
 
 	my @links;
 	foreach my $p (keys %{$backlinks{$page}}) {
-		my $href=abs2rel(htmlpage($p), dirname($page));
-			
+		my $href=urlto($p, $page);
+                
 		# Trim common dir prefixes from both pages.
 		my $p_trimmed=$p;
 		my $page_trimmed=$page;
@@ -57,18 +57,14 @@ sub parentlinks ($) { #{{{
 	my @ret;
 	my $pagelink="";
 	my $path="";
-	my $skip=1;
+	my $title=$config{wikiname};
+	
 	return if $page eq 'index'; # toplevel
-	foreach my $dir (reverse split("/", $page)) {
-		if (! $skip) {
-			$path.="../";
-			unshift @ret, { url => $path.htmlpage($dir), page => pagetitle($dir) };
-		}
-		else {
-			$skip=0;
-		}
+	foreach my $dir (split("/", $page)) {
+		push @ret, { url => urlto($path, $page), page => $title };
+		$path.="/".$dir;
+		$title=pagetitle($dir);
 	}
-	unshift @ret, { url => length $path ? $path : ".", page => $config{wikiname} };
 	return @ret;
 } #}}}
 

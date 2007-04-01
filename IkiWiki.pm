@@ -15,7 +15,7 @@ use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
-                 displaytime will_render gettext
+                 displaytime will_render gettext urlto targetpage
                  %config %links %renderedfiles %pagesources);
 our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
 our $version="1.45";my $installdir="/usr";
@@ -72,6 +72,7 @@ sub defaultconfig () { #{{{
 	sslcookie => 0,
 	httpauth => 0,
 	userdir => "",
+	usedirs => 0,
 	numbacklinks => 10,
 } #}}}
    
@@ -224,10 +225,21 @@ sub pagename ($) { #{{{
 	return $page;
 } #}}}
 
+sub targetpage ($$) { #{{{
+	my $page=shift;
+	my $ext=shift;
+	
+	if (! $config{usedirs} || $page =~ /^index$/ ) {
+		return $page.".".$ext;
+	} else {
+		return $page."/index.".$ext;
+	}
+} #}}}
+
 sub htmlpage ($) { #{{{
 	my $page=shift;
-
-	return $page.".html";
+	
+	return targetpage($page, "html");
 } #}}}
 
 sub srcfile ($) { #{{{
@@ -396,6 +408,7 @@ sub baseurl (;$) { #{{{
 
 	return "$config{url}/" if ! defined $page;
 	
+	$page=htmlpage($page);
 	$page=~s/[^\/]+$//;
 	$page=~s/[^\/]+\//..\//g;
 	return $page;
@@ -423,6 +436,32 @@ sub displaytime ($) { #{{{
 	# its output is properly treated as utf8
 	return decode_utf8(POSIX::strftime(
 			$config{timeformat}, localtime($time)));
+} #}}}
+
+sub beautify_url ($) { #{{{
+	my $url=shift;
+
+	$url =~ s!/index.html$!/!;
+	$url =~ s!^$!./!; # Browsers don't like empty links...
+
+	return $url;
+} #}}}
+
+sub urlto ($$) { #{{{
+	my $to=shift;
+	my $from=shift;
+
+	if (! length $to) {
+		return beautify_url(baseurl($from));
+	}
+
+	if (! grep { $_ eq $to } map { @{$_} } values %renderedfiles) {
+		$to=htmlpage($to);
+	}
+
+	my $link = abs2rel($to, dirname(htmlpage($from)));
+
+	return beautify_url($link);
 } #}}}
 
 sub htmllink ($$$;@) { #{{{
@@ -464,7 +503,8 @@ sub htmllink ($$$;@) { #{{{
 			"\">?</a>$linktext</span>"
 	}
 	
-	$bestlink=abs2rel($bestlink, dirname($page));
+	$bestlink=abs2rel($bestlink, dirname(htmlpage($page)));
+	$bestlink=beautify_url($bestlink);
 	
 	if (! $opts{noimageinline} && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
