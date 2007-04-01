@@ -51,6 +51,8 @@ sub preprocess (@) { #{{{
 
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
 		$imglink = "$dir/${w}x${h}-$base";
+				
+		will_render($params{page}, $imglink);
 
 		if (-e $outfile && (-M srcfile($file) >= -M $outfile)) {
 			$r = $im->Read($outfile);
@@ -65,7 +67,6 @@ sub preprocess (@) { #{{{
 
 			# don't actually write file in preview mode
 			if (! $params{preview}) {
-				will_render($params{page}, $imglink);
 				my @blob = $im->ImageToBlob();
 				writefile($imglink, $config{destdir}, $blob[0], 1);
 			}
@@ -84,8 +85,8 @@ sub preprocess (@) { #{{{
 
 	my ($fileurl, $imgurl);
 	if (! $params{preview}) {
-		$fileurl=IkiWiki::abs2rel($file, IkiWiki::dirname($params{destpage}));
-		$imgurl=IkiWiki::abs2rel($imglink, IkiWiki::dirname($params{destpage}));
+		$fileurl=urlto($file, $params{destpage});
+		$imgurl=urlto($imglink, $params{destpage});
 	}
 	else {
 		$fileurl="$config{url}/$file";

@@ -17,6 +17,8 @@ ikiwiki (1.49) UNRELEASED; urgency=low
     on and supported creating it (especially Tumov). This adds a "usedirs"
     option that makes ikiwiki use foo/index.html instead of foo.html as
     output page names. It is not yet enabled by default.
+  * Fix a big in the img plugin that caused thumbnailed files to not be
+    tracked properly.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 01 Apr 2007 15:37:17 -0400
 
