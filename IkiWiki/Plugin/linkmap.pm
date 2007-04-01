@@ -53,16 +53,18 @@ sub genmap ($) { #{{{
 		}
 	}
 
+	my $dest=$params{page}."/linkmap.png";
+
 	# Use ikiwiki's function to create the file, this makes sure needed
 	# subdirs are there and does some sanity checking.
-	will_render($params{page}, $params{page}.".png");
-	writefile($params{page}.".png", $config{destdir}, "");
+	will_render($params{page}, $dest);
+	writefile($dest, $config{destdir}, "");
 
 	# Run dot to create the graphic and get the map data.
 	my $pid;
 	my $sigpipe=0;;
 	$SIG{PIPE}=sub { $sigpipe=1 };
-	$pid=open2(*IN, *OUT, "dot -Tpng -o '$config{destdir}/$params{page}.png' -Tcmapx");
+	$pid=open2(*IN, *OUT, "dot -Tpng -o '$config{destdir}/$dest' -Tcmapx");
 	
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8'); 
@@ -84,8 +86,7 @@ sub genmap ($) { #{{{
 	close OUT;
 
 	local $/=undef;
-	my $ret="<object data=\"".
-	       IkiWiki::abs2rel("$params{page}.png", IkiWiki::dirname($params{page})).
+	my $ret="<object data=\"".urlto($dest, $params{page}).
 	       "\" type=\"image/png\" usemap=\"#linkmap$mapnum\">\n".
 	        <IN>.
 	        "</object>";
