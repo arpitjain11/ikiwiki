@@ -432,7 +432,7 @@ sub remove_feeds () { #{{{
 sub pagefile ($) { #{{{
 	my $page=shift;
 
-	return "$config{srcdir}/".htmlpage($page);
+	return "$config{srcdir}/".htmlfn($page);
 } #}}}
 
 sub htmlfn ($) { #{{{
