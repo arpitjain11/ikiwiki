@@ -156,9 +156,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 
-	return '<img src="'.
-		IkiWiki::abs2rel($fn, IkiWiki::dirname($params{destpage})).
-		'" alt="graph" />';
+	return '<img src="'.urlto($fn, $params{destpage}).'" alt="graph" />';
 } # }}}
 
 1

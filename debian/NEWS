@@ -1,7 +1,7 @@
 ikiwiki (1.49) unstable; urgency=low
 
-  Third-party plugins that use htmlpage() may need changes to support the
-  new "userdir" option.
+  Third-party plugins that use htmlpage() or abs2rel() to generate links
+  may need changes to support the new "userdir" option.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 01 Apr 2007 16:20:09 -0400
 
