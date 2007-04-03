@@ -1,0 +1,5 @@
+I installed version 1.48-1 of Debian package of ikiwiki.  When I went to login with an OpenID URL it told me I was missing the Net::OpenID::Consumer Perl module which in turn required the Crypt::DH module.
+
+I assume that these should be pulled in by default since OpenID is enabled by default?
+
+-- Adam.
