@@ -1,0 +1,33 @@
+I just setup my first OpenID account and tried to login to ikiwiki.info.  It all works but being relatively unfamiliar with OpenID, when I was presented with the login page it wasn't at all clear which bits needed to be filled in.
+
+At the moment it looks like this:
+
+    Name:
+    Password: 	
+    OpenID:
+
+    [Login] [Register] [Mail Password]
+
+Really this form is presenting two entirely separate ways to login.  The "normal" user/pass *OR* OpenID.  Also (I assume) the [Register] and [Mail Password] actions are only relevant to user/pass form.  
+
+I would suggest that the form be split into two parts, something like this:
+
+    Login (or register) with a username and password:
+
+    Name:
+    Password: 	
+
+    [Login] [Register] [Mail Password]
+
+    **OR**
+
+    Login with OpenID:
+
+    OpenID URL:
+
+    [Login]
+
+As an example, the first time I went to login I filled in all three fields (user, pass, openid) and then clicked [Register] because from the layout I assumed I still had to instantiate an account with ikiwiki ... and to make it even more confusing, it worked!  Of course it worked by creating me an account based on the username password and ignoring the OpenID URL. 
+
+If you want to keep it as one form, then perhaps using some javascript to disable the other pieces of the form as soon as you fill in one part would help?  Eg. If you put in an OpenID URL then Name/Password/Register/Mail Password gets greyed out.  If you enter a username then the OpenID URL gets greyed out.
+ -- Adam.
