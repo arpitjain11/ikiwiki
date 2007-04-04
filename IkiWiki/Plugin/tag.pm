@@ -43,6 +43,7 @@ sub preprocess (@) { #{{{
 	delete $params{preview};
 
 	foreach my $tag (keys %params) {
+		$tag=IkiWiki::linkpage($tag);
 		$tags{$page}{$tag}=1;
 		# hidden WikiLink
 		push @{$links{$page}}, tagpage($tag);
