@@ -2,3 +2,13 @@ Now that ikiwiki supports using page/index.html rather than page.html, how about
 
 > I was thinking of using an apache RewriteRule for this, haven't written
 > one yet though. --[[Joey]]
+
+> Here's a RewriteRule that I'm using for <http://kitenet.net/>, which
+> has an wiki at the top level that's using index.htmls, and some
+> other stuff that shouldn't be rewritten.
+
+	RewriteCond $1 !^/~
+	RewriteCond $1 !^/doc/
+	RewriteCond $1 !^/cgi-bin/
+	RewriteRule (.+).html $1/ [R]
+	#RewriteRule /~family/(.+).html /~family/$1/ [R]
