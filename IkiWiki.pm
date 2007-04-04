@@ -1027,6 +1027,7 @@ sub match_link ($$$) { #{{{
 	my $links = $IkiWiki::links{$page} or return undef;
 	return 0 unless @$links;
 	my $bestlink = IkiWiki::bestlink($from, $link);
+	return 0 unless length $bestlink;
 	foreach my $p (@$links) {
 		return 1 if $bestlink eq IkiWiki::bestlink($page, $p);
 	}

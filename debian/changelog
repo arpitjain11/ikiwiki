@@ -21,8 +21,9 @@ ikiwiki (1.49) UNRELEASED; urgency=low
     tracked properly.
   * Make the OpenID library a reccommendation of the Debian package, rather
     than just a suggests, since OpenID is enabled by default.
+  * Fix a bug that caused link(foo) to succeed if page foo did not exist.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 03 Apr 2007 20:40:27 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 04 Apr 2007 16:55:36 -0400
 
 ikiwiki (1.48) unstable; urgency=low
 
