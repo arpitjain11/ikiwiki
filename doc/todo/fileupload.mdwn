@@ -20,6 +20,7 @@ the work is in securing it. Several classes of controls seem appropriate:
   browsers are probably too smart for their own good and may ignore the
   extension / mime info and process as the actual detected file type. It
   may be necessary to use `file` to determine a file's true type.
+* Optional ability to test a file using a virus scanner like clamav.
 * Limits to who can upload what type of files.
 * Limits to what files can be uploaded where.
 
