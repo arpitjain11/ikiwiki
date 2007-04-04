@@ -9,8 +9,7 @@ Now that ikiwiki supports using page/index.html rather than page.html, how about
 
 	RewriteCond $1 !^/~
 	RewriteCond $1 !^/doc/
+	RewriteCond $1 !^/ajaxterm
 	RewriteCond $1 !^/cgi-bin/
-	RewriteCond $1 !^/index
+	RewriteCond $1 !.*/index$
 	RewriteRule (.+).html $1/ [R]
-
-	#RewriteRule /~family/(.+).html /~family/$1/ [R]
