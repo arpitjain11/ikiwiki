@@ -31,3 +31,12 @@ As an example, the first time I went to login I filled in all three fields (user
 
 If you want to keep it as one form, then perhaps using some javascript to disable the other pieces of the form as soon as you fill in one part would help?  Eg. If you put in an OpenID URL then Name/Password/Register/Mail Password gets greyed out.  If you enter a username then the OpenID URL gets greyed out.
  -- Adam.
+
+> It's one form for architectural reasons -- the OpenID plugin uses a hook
+> that allows modifying that form, but does not allow creating a separate
+> form. The best way to make it obvious how to use it currently is to just
+> disable password auth, then it's nice and simple. :-) Javascript is an
+> interesting idea. It's also possible to write a custom [[signin.tmpl wikitemplates]] that
+> is displayed instead of the regular signin form, and it should be
+> possible to use that to manually lay it out better than FormBuilder
+> manages with its automatic layout. --[[Joey]]
