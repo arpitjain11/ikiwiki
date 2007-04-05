@@ -2,7 +2,7 @@ A plugin to generate calendars using [pal](http://palcal.sourceforge.net/).
 
 Main issues:
 
-* pal's html output is not well formed
+* pal's html output is not valid (fixed in pal svn)
 * make sure it's secure
 * calendaers change with time, so ikiwiki would need to be run from cron
   daily to update them, and the plugin would need to somehow mark the page
