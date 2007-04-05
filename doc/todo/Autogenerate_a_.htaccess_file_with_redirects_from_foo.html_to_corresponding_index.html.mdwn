@@ -13,3 +13,10 @@ Now that ikiwiki supports using page/index.html rather than page.html, how about
 	RewriteCond $1 !^/cgi-bin/
 	RewriteCond $1 !.*/index$
 	RewriteRule (.+).html $1/ [R]
+
+
+>> Nice solution.  I think this would work for a newly-converted wiki as well,
+>> using a condition to limit rewrites to that wiki's directory, and the
+>> rewrite rule you propose.  Thus, autogenerating seems unnecessary; we
+>> should just have a documented, known-working RewriteCond and RewriteRule
+>> for wikis that want to turn on the `usedirs` option.  --[[JoshTriplett]]
