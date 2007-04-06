@@ -13,16 +13,16 @@ added).
   [[SVG_source|ikiwiki.svgz]], can be used to generate a logo at any size
   with a command like:  
 
-	inkscape -w 90 -i logo -e ikiwiki.png ikiwiki.svgz  
-	inkscape -w 150 -i logo -e ikiwiki_large.png ikiwiki.svgz
+        inkscape -w 90 -i logo -e ikiwiki.png ikiwiki.svgz  
+        inkscape -w 150 -i logo -e ikiwiki_large.png ikiwiki.svgz
 
   The [[favicon.ico]] can also be generated from this file, as follows:
 
-	inkscape -w 16 -i favicon -e favicon.ico ikiwiki.svgz
+        inkscape -w 16 -i favicon -e favicon.ico ikiwiki.svgz
 
   The button can also be generated as follows:
 
-  	inkscape -w 80 -i button -e ikiwiki_button.png ikiwiki.svgz
+        inkscape -w 80 -i button -e ikiwiki_button.png ikiwiki.svgz
 
   Some other alternate icons and buttons are also included in the svg file
   and can be extracted by specifying their names.
@@ -39,11 +39,11 @@ added).
 
   LaTeX source to an image approximating the above:
 
-  	\documentclass{article}
-  	\usepackage{graphicx}
-  	\begin{document}
-  	\pagestyle{empty}
-  	\huge\reflectbox{iki}wiki
-  	\end{document}
+        \documentclass{article}
+        \usepackage{graphicx}
+        \begin{document}
+        \pagestyle{empty}
+        \huge\reflectbox{iki}wiki
+        \end{document}
 
   Contributed by [[JeroenSchot]]
