@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-21 14:36-0400\n"
-"PO-Revision-Date: 2007-03-08 21:18+0100\n"
+"PO-Revision-Date: 2007-04-01 21:03+0200\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,9 +58,9 @@ msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
 
 #: ../IkiWiki/Plugin/aggregate.pm:62
-#, fuzzy, perl-format
+#, perl-format
 msgid "missing %s parameter"
-msgstr "Paramètre d'identification manquant dans le modèle"
+msgstr "Paramètre %s manquant"
 
 #: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
@@ -114,37 +114,36 @@ msgstr "Il n'y a pas de lien cassé !"
 
 #: ../IkiWiki/Plugin/conditional.pm:20
 msgid "\"test\" and \"then\" parameters are required"
-msgstr ""
+msgstr "les paramètres « test » et « then » sont obligatoires"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "Échec de « fortune »"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-#, fuzzy
 msgid "failed to find url in html"
-msgstr "googlecalendar a échoué dans la recherche de l'url dans le code html"
+msgstr "Échec dans la recherche de l'url dans le code html"
 
 #: ../IkiWiki/Plugin/img.pm:36
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s not found"
-msgstr "Patron %s introuvable "
+msgstr "%s introuvable "
 
 #: ../IkiWiki/Plugin/img.pm:49
 #, perl-format
 msgid "bad size \"%s\""
-msgstr ""
+msgstr "taille incorrecte « %s »"
 
 #: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
 #: ../IkiWiki/Plugin/img.pm:79
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to read %s: %s"
-msgstr "Échec de l'écriture de %s : %s"
+msgstr "Échec de la lecture de %s : %s"
 
 #: ../IkiWiki/Plugin/img.pm:64
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to resize: %s"
-msgstr "Échec de l'écriture de %s : %s"
+msgstr "Échec du redimensionnement : %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -160,7 +159,7 @@ msgstr "Type de tri %s inconnu"
 #: ../IkiWiki/Plugin/inline.pm:143
 #, perl-format
 msgid "nonexistant template %s"
-msgstr ""
+msgstr "Le patron %s n'existe pas"
 
 #: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
 msgid "Discussion"
@@ -171,9 +170,8 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
 #: ../IkiWiki/Plugin/linkmap.pm:99
-#, fuzzy
 msgid "failed to run dot"
-msgstr "Échec de lancement de dot par linkmap"
+msgstr "Échec de lancement de dot"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
 #, perl-format
@@ -188,9 +186,8 @@ msgstr ""
 "(%s)"
 
 #: ../IkiWiki/Plugin/meta.pm:88
-#, fuzzy
 msgid "stylesheet not found"
-msgstr "Patron %s introuvable "
+msgstr "Feuille de style introuvable "
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -254,11 +251,11 @@ msgstr "Échec de polygen"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:25
 msgid "missing formula"
-msgstr ""
+msgstr "formule manquante"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "unknown formula"
-msgstr ""
+msgstr "formule inconnue"
 
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
@@ -338,9 +335,8 @@ msgid "updating hyperestraier search index"
 msgstr "Mise à jour de l'index de recherche de hyperestraier"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-#, fuzzy
 msgid "missing name or url parameter"
-msgstr "Il manque au raccourci un paramètre de nom ou d'url"
+msgstr "Il manque le nom ou le paramètre d'url"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
@@ -356,63 +352,60 @@ msgstr "Aucun smiley n'a pu être analysé, le greffon est désactivé"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
 msgid "parse error"
-msgstr ""
+msgstr "Erreur d'analyse"
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
 msgid "bad featurepoint diameter"
-msgstr ""
+msgstr "Diamètre du point incorrect"
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
 msgid "bad featurepoint location"
-msgstr ""
+msgstr "Emplacement du point incorrect"
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
 msgid "missing values"
-msgstr ""
+msgstr "Il manque des valeurs"
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
 msgid "bad height value"
-msgstr ""
+msgstr "Valeur de hauteur incorrecte"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
-#, fuzzy
 msgid "missing width parameter"
 msgstr "Paramètre d'identification manquant dans le modèle"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
 msgid "bad width value"
-msgstr ""
+msgstr "Valeur de largeur incorrecte"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
-#, fuzzy
 msgid "failed to run php"
-msgstr "Échec de lancement de dot par linkmap"
+msgstr "Échec de lancement de php"
 
 #: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
-msgstr ""
+msgstr "Fichier introuvable"
 
 #: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
-msgstr ""
+msgstr "Format des données inconnu"
 
 #: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
-msgstr ""
+msgstr "Données vides"
 
 #: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
-msgstr ""
+msgstr "Téléchargement direct des données"
 
 #: ../IkiWiki/Plugin/table.pm:106
-#, fuzzy, perl-format
+#, perl-format
 msgid "parse fail at line %d: %s"
-msgstr "Échec de l'écriture de %s : %s"
+msgstr "Erreur d'analyse à la ligne %d : %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
-#, fuzzy
 msgid "missing id parameter"
-msgstr "Paramètre d'identification manquant dans le modèle"
+msgstr "Paramètre d'identification manquant"
 
 #: ../IkiWiki/Plugin/template.pm:26
 #, perl-format
@@ -420,9 +413,8 @@ msgid "template %s not found"
 msgstr "Patron %s introuvable "
 
 #: ../IkiWiki/Plugin/template.pm:45
-#, fuzzy
 msgid "failed to process:"
-msgstr "Échec de traitement du modèle :"
+msgstr "Échec de traitement :"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
 msgid "getctime not implemented"
@@ -572,5 +564,4 @@ msgstr ""
 "%s une boucle a été détectée dans le prétraitement de %s, à la profondeur de "
 "%i"
 
-#~ msgid "aggregate plugin missing %s parameter"
-#~ msgstr "Il manque le paramètre %s au greffon « aggregate »"
+
