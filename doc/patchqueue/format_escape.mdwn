@@ -14,62 +14,126 @@ escape parameter optional, and only call it if set. --[[Joey]]
 > I couldn't figure out what to make it from, but thinking it through, 
 > yeah, it should be $page. Revised patch follows. --Ethan
 
+>> I've updated the patch some more, but I think it's incomplete. ikiwiki
+>> emits raw html when expanding WikiLinks too, and it would need to escape
+>> those. Assuming that escaping html embedded in the middle of a sentence
+>> works.. --[[Joey]]
+
 <pre>
-diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/rst.pm ikidev/IkiWiki/Plugin/rst.pm
---- ikiwiki/IkiWiki/Plugin/rst.pm       2006-09-25 14:30:40.000000000 -0700
-+++ ikidev/IkiWiki/Plugin/rst.pm        2007-02-27 22:44:11.040042000 -0800
-@@ -25,13 +25,19 @@
- html = publish_string(stdin.read(), writer_name='html',
-        settings_overrides = { 'halt_level': 6,
+Index: debian/changelog
+===================================================================
+--- debian/changelog	(revision 3158)
++++ debian/changelog	(working copy)
+@@ -44,8 +44,11 @@
+   * Fix smiley plugin to scan smileys.mdwn after it's updated, which fixes
+     a bug caused by committing changes to smilies.mdwn.
+   * Fix display of escaped wikilinks containing anchors.
++  * Based on a patch by Ethan, add a new htmlescape hook, that is called
++    when a preprocssor directive emits inline html. The rst plugin uses this
++    hook to support inlined raw html.
+ 
+- -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 17:17:52 -0400
++ -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 19:19:08 -0400
+ 
+ ikiwiki (1.48) unstable; urgency=low
+ 
+Index: IkiWiki/Plugin/rst.pm
+===================================================================
+--- IkiWiki/Plugin/rst.pm	(revision 3157)
++++ IkiWiki/Plugin/rst.pm	(working copy)
+@@ -30,15 +30,22 @@
+ html = publish_string(stdin.read(), writer_name='html', 
+        settings_overrides = { 'halt_level': 6, 
                                'file_insertion_enabled': 0,
 -                              'raw_enabled': 0 }
 +                              'raw_enabled': 1 }
  );
  print html[html.find('<body>')+6:html.find('</body>')].strip();
  ";
-
+ 
  sub import { #{{{
--       hook(type => "htmlize", id => "rst", call => \&htmlize);
-+       hook(type => "htmlize", id => "rst", call => \&htmlize, escape => \&escape);
+ 	hook(type => "htmlize", id => "rst", call => \&htmlize);
++	hook(type => "htmlescape", id => "rst", call => \&htmlecape);
+ } # }}}
+ 
++sub htmlescape ($) { #{{{
++	my $html=shift;
++	$html=~s/^/  /mg;
++	return ".. raw:: html\n\n".$html;
 +} # }}}
 +
-+sub escape ($) { #{{{
-+       my $html = shift;
-+       $html =~ s/^/  /mg;
-+       return ".. raw:: html\n\n".$html;
- } # }}}
-
  sub htmlize (@) { #{{{
-diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/shortcut.pm ikidev/IkiWiki/Plugin/shortcut.pm
---- ikiwiki/IkiWiki/Plugin/shortcut.pm  2007-02-15 00:38:48.000000000 -0800
-+++ ikidev/IkiWiki/Plugin/shortcut.pm   2007-02-27 22:09:31.536088000 -0800
-@@ -13,6 +13,7 @@
- sub checkconfig () { #{{{
-        # Preprocess the shortcuts page to get all the available shortcuts
-        # defined before other pages are rendered.
-+       $pagesources{"shortcuts"} = "shortcuts.mdwn";
-        IkiWiki::preprocess("shortcuts", "shortcuts",
-                readfile(srcfile("shortcuts.mdwn")));
- } # }}}
-diff -urNX ignorepats ikiwiki/IkiWiki.pm ikidev/IkiWiki.pm
---- ikiwiki/IkiWiki.pm  2007-02-25 15:01:27.211170000 -0800
-+++ ikidev/IkiWiki.pm   2007-03-01 18:20:39.910925000 -0800
-@@ -580,6 +577,17 @@
-                                destpage => $destpage,
-                        );
-                        $preprocessing{$page}--;
-+                       if ($ret =~ /[<>]/){
-+                               if ($pagesources{$page}) {
-+                                       my $type=pagetype($pagesources{$page});
-+                                       if ($hooks{htmlize}{$type}{escape}) {
-+                                               $ret = $hooks{htmlize}{$type}{escape}->(
-+                                                       $ret,
-+                                               );
-+                                       }
-+                               }
-+                       }
+ 	my %params=@_;
+ 	my $content=$params{content};
+Index: doc/plugins/write.mdwn
+===================================================================
+--- doc/plugins/write.mdwn	(revision 3157)
++++ doc/plugins/write.mdwn	(working copy)
+@@ -121,6 +121,16 @@
+ The function is passed named parameters: "page" and "content" and should
+ return the htmlized content.
+ 
++### htmlescape
 +
-                        return $ret;
-                }
-                else {
++	hook(type => "htmlescape", id => "ext", call => \&htmlescape);
++
++Some markup languages do not allow raw html to be mixed in with the markup
++language, and need it to be escaped in some way. This hook is a companion
++to the htmlize hook, and is called when ikiwiki detects that a preprocessor
++directive is inserting raw html. It is passed the chunk of html in
++question, and should return the escaped chunk.
++
+ ### pagetemplate
+ 
+ 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
+Index: doc/plugins/rst.mdwn
+===================================================================
+--- doc/plugins/rst.mdwn	(revision 3157)
++++ doc/plugins/rst.mdwn	(working copy)
+@@ -10,10 +10,8 @@
+ Note that this plugin does not interoperate very well with the rest of
+ ikiwiki. Limitations include:
+ 
+-* reStructuredText does not allow raw html to be inserted into
+-  documents, but ikiwiki does so in many cases, including
+-  [[WikiLinks|WikiLink]] and many
+-  [[PreprocessorDirectives|PreprocessorDirective]].
++* Some bits of ikiwiki may still assume that markdown is used or embed html
++  in ways that break reStructuredText. (Report bugs if you find any.)
+ * It's slow; it forks a copy of python for each page. While there is a
+   perl version of the reStructuredText processor, it is not being kept in
+   sync with the standard version, so is not used.
+Index: IkiWiki.pm
+===================================================================
+--- IkiWiki.pm	(revision 3158)
++++ IkiWiki.pm	(working copy)
+@@ -550,11 +550,11 @@
+ 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
+ 		defined $2
+ 			? ( $1 
+-				? "[[$2|$3".(length $4 ? "#$4" : "")."]]" 
++				? "[[$2|$3".($4 ? "#$4" : "")."]]" 
+ 				: htmllink($lpage, $page, linkpage($3),
+ 					anchor => $4, linktext => pagetitle($2)))
+ 			: ( $1 
+-				? "[[$3".(length $4 ? "#$4" : "")."]]"
++				? "[[$3".($4 ? "#$4" : "")."]]"
+ 				: htmllink($lpage, $page, linkpage($3),
+ 					anchor => $4))
+ 	}eg;
+@@ -628,6 +628,14 @@
+ 				preview => $preprocess_preview,
+ 			);
+ 			$preprocessing{$page}--;
++
++			# Handle escaping html if the htmlizer needs it.
++			if ($ret =~ /[<>]/ && $pagesources{$page}) {
++				my $type=pagetype($pagesources{$page});
++				if ($hooks{htmlescape}{$type}) {
++					return $ret = $hooks{htmlize}{$type}{escape}->($ret);
++				}
++			}
+ 			return $ret;
+ 		}
+ 		else {
 </pre>
