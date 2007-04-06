@@ -1,36 +1,63 @@
-[[meta title="Including more bugs in your tarball: Integrated issue tracking with Ikiwiki"]]
+[[meta title="Integrated issue tracking with Ikiwiki"]]
+
+By Joey Hess, LinuxWorld.com
 
 [[template id=note text="""
-[First published](http://www.linuxworld.com/news/2007/040607-integrated-issue-tracking-ikiwiki.html)
-on [LinuxWorld.com](http:://www.linuxworld.com/), a
+First published on [LinuxWorld.com](http:://www.linuxworld.com/), a
 publication of Network World Inc., 118 Turnpike Rd., Southboro, MA 01772.
 """]]
 
-Wikis are not just for encyclopedias and websites anymore. The
-[Ikiwiki](http://ikiwiki.info) engine can be used to handle issue tracking,
-news feeds, and other needs of a software project. The wiki can become as
-much a part of your software project as its code, with interesting results.
+Wikis are not just for encyclopedias and websites
+anymore. You can use [Ikiwiki](http://ikiwiki.info)
+in combination with your revision control system to
+handle issue tracking, news feeds, and other needs of
+a software project. The wiki can make your bug reports
+as much a part of your software project as its code,
+with interesting results.
 
-Ikiwiki is a wiki engine with a twist. It's best described by the term
-"wiki compiler". Just as a typical software project consists of source code
-that is stored in revision control and compiled with `make` and `gcc`, an
-ikiwiki based wiki is stored as human editable source in a revision control
-system, and built into HTML using ikiwiki.
+Ikiwiki is a wiki engine with a twist.  It's best
+described by the term "wiki compiler". Just as a
+typical software project consists of source code
+that is stored in revision control and compiled with
+`make` and `gcc`, an ikiwiki-based wiki is stored as
+human editable source in a revision control system,
+and built into HTML using ikiwiki.
 
-Ikiwiki is a full-featured wiki that can be used for a variety of purposes,
-from traditional wikis to weblogs, podcasting, or even aggregating together
-other RSS feeds into a Planet. While ikiwiki is being used for purposes
-ranging from genealogy research to shoe accessory sales, one thing it's
-especially well suited for is collaborative software development, including
-issue tracking, announcements, documentation, and managing a software
-project's web site.
+Ikiwiki uses your revision control system to track
+changes and handle tasks such as rolling back changes and
+merging edits.  Because it takes advantage of revision
+control, there are no annoying warnings about other
+people editing a file, or finding yourself locked
+out of a file because someone else started editing it
+and left.  Instead, the other person's changes will
+be automatically merged with yours when you commit.
 
-## Building wikis with ikiwiki
+In the rare cases where automatic merging fails
+because of concurrent edits to the same part of a
+page, regular commit conflict markers are shown in
+the file to let you resolve the conflict, as you
+would for conflicting edit in source code.
 
-The simplest way to use ikiwiki is to build static html files from source
-wiki files. This example builds a wiki for an imaginary software project.
-The wiki source files used in this example are available in the
-`examples/softwaresite` subdirectory of ikiwiki's documentation.
+Ikiwiki is a full-featured wiki that you can use
+for a variety of purposes, from traditional wikis
+to weblogs, podcasting, or even aggregating other
+sites' RSS feeds into a Planet page. While people
+are [using](http://ikiwiki.info/ikiwikiusers.html)
+Ikiwiki for purposes ranging from genealogy research
+to shoe accessory sales, one thing it's especially
+well suited for is collaborative software development,
+including announcements, documentation, managing a
+software project's web site, and even acting as an
+issue tracking system.
+
+## Building a project wiki with ikiwiki
+
+The simplest way to use ikiwiki is to build static
+HTML files from source wiki files. This example builds
+a wiki for an imaginary software project.  The wiki
+source files used in this example are available in the
+[examples/softwaresite](http://ikiwiki.info/examples/softwaresite.html)
+section of ikiwiki's documentation.
 
 	wiki$ ls
 	Makefile  bugs.mdwn     doc/      download.mdwn  news/
@@ -57,23 +84,26 @@ The wiki source files used in this example are available in the
 	Links: contact doc
 	Last edited Wed Nov 22 09:58:35 2006
 
-If all you need is a simple static set of pages, that can be put up on a
-web site, or shipped with a software package, this is a good starting
-point, which includes example pages for a news feed for the project (with
-RSS), an issue tracker, and other pages users expect to see on a project's
-website. The wiki's source code can be checked into revision control as part
-of the software project, and tied into its build system using the Makefile.
+If all you need is a simple static set of pages
+that can be put up on a web site, or shipped with
+a software package, this is a good starting point.
+The examples included with ikiwiki include pages for
+a news feed for the project (with RSS), an issue
+tracker, and other pages users expect to see on a
+project's website. You can check the wiki-format text
+into revision control as part of the software project,
+and tie it into the build system using the Makefile.
 
 Ikiwiki can also be tied into the `post-commit` hook of your revision
 control system, so that whenever a developer commits a change to a wiki
 page in revision control, the project's web site is automatically updated.
-Ikiwiki has a [tutorial](http://ikiwiki.info/setup.html) that explains in
+The [ikiwiki tutorial](http://ikiwiki.info/setup.html) explains in
 detail how to set this up using the Subversion, Git, TLA, and Mercurial
 revision control systems.
 
 The tutorial also explains how to configure ikiwiki so that users can edit
 pages using a web interface, with their changes committed back into revision
-control. After all one of the benefits of keeping a project's docs in a wiki
+control. After all, one of the benefits of keeping a project's docs in a wiki
 is to make it easy for users to improve them, so that busy software developers
 don't have to. And if the wiki is being used for issue tracking, this will
 let users post and follow up on bug reports.
@@ -84,22 +114,27 @@ You might be wondering exactly how a wiki can be used as an issue tracking
 system. Three key parts of ikiwiki come together to create an issue tracker:
 pages, tags, and inlining.
 
-Each issue is described on a separate page in the wiki. There can also be
-an associated Discussion page, as well as other related subpages that can
-be used to hold files used to reproduce the bug, or patches, or other
-related files. Since each issue is a page, standard wiki links can be used
-to link related issues, or link issues with other pages in the wiki, and
-each issue has its own unique URL. Since ikiwiki supports subdirectories,
-it's usual to keep all the bugs in a `bugs/` subdirectory. You might prefer
-to separate bugs and todo items, with todo items in their own 'todo/'
-subdirectory.
+Each issue is described on a separate page in the
+wiki. There can also be an associated Discussion page,
+as well as other related subpages that can be used
+to hold files used to reproduce the bug, or patches,
+or other related files. Since each issue is a page,
+standard wiki links can be used to link related
+issues, or link issues with other pages in the wiki.
+Each issue has its own unique URL. Since ikiwiki
+supports subdirectories, it's usual to keep all the
+bugs in a `bugs/` subdirectory. You might prefer
+to separate bugs and todo items, with todo items in
+their own 'todo/' subdirectory.
 
-While directories are useful for broad hierarchical grouping, tags can be
-used to categorize issues, as bugs, wishlist items, security issues,
-patches, or whatever other categories are useful. Bugs can be tagged
-"moreinfo", "done" or "unreproducible", or "moreinfo", etc, to document
-different stages of their lifecycle. Developers can take ownership of a bug
-by tagging it with something like "owner/Joey".
+While directories are useful for broad hierarchical
+grouping, tags are better for categorizing issues
+as bugs, wishlist items, security issues, patches,
+or whatever other categories are useful. Bugs can
+be tagged "moreinfo", "done" "unreproducible",
+or "moreinfo", etc, to document different stages of
+their lifecycle. A developer can take ownership of a
+bug by tagging it with something like "owner/Joey".
 
 To tag a wiki page, edit it and add text such as "\[[tag done]]". Note that
 adding a wiki link to "\[[done]]" will have the same categorisation effect
@@ -147,11 +182,18 @@ and tags, so if you need lots of queryable data such as what versions a bug
 affects and what version it was fixed in, ikiwiki may not be a good fit for
 your issue tracking. 
 
-On the other hand, by using a wiki for issue tracking, there is one less
-system for users and developers to learn, and all the flexibility of a wiki
-to take advantage of. Ikiwiki even supports OpenID, so it's easy for users
-to use it for filing bugs, without going through an annoying registration
-process.
+On the other hand, by using a wiki for issue
+tracking, there is one less system for users and
+developers to learn, and all the flexibility of a
+wiki to take advantage of. Ikiwiki even supports
+[OpenID](http://openid.net/), so it's easy for users
+to use it for filing bugs without going through an
+annoying registration process.
+
+Developers who work offline, or at the other end of a
+slow connection, might appreciate having a full copy
+of the project bug tracking system, too.
+
 
 ## Benefits
 
@@ -172,7 +214,7 @@ available in a released version yet, so it's probably easier to skip
 updating the website. Maybe once it's released, the web site will be
 updated to mention the feature, but maybe (probably) not.
 
-Now consider what happens if instead the web site is a wiki, that has its
+Now consider what happens if instead the web site is a wiki that has its
 source included in the project's revision control system. The programmer
 codes up the feature, and can easily update the docs in the wiki to match.
 When he commits his changes to a development branch, the docs are committed
@@ -189,7 +231,7 @@ used as an issue tracker, the requests were made using it, and were
 collaboratively edited on the wiki, to develop the specification. Once the
 feature is implemented, that issue can be closed. What better way to close
 it than to move it out of the issue tracking system, and into the project's
-documentation?
+documentation?  In Subversion:
 
 	svn mv wiki/bugs/new_feature.mdwn wiki/doc/
 
@@ -199,17 +241,21 @@ when the feature was designed. By using ikiwiki for issue tracking, plus
 editing the spec, plus documentation, plus the website, each of these steps
 has built on the other and the programmer has had to do less busywork.
 
-A different example of how ikiwiki can tie things together is how a
-security hole might be handled. First it's discovered, and a bug filed
-about it. When it's fixed, the commit that fixes the bug can include a
-change to the bug's page, marking it as done. Since it's a security hole,
-an announcement needs to be made right away so users will know they need to
-upgrade. This announcement can be added to the wiki's news feed, and
-committed along with the fix, and the announcement can use a regular wiki
-link to link to the bug that describes the security hole in detail. If the
-security hole also affects an older version of the software, the fix, along
-with the wiki documentation for that fix, can be merged into the branch for
-the older version.
+A different example of how ikiwiki can tie
+things together is how a security hole might be
+handled. First it's discovered, and a bug filed about
+it. When it's fixed, the commit that fixes the bug
+can include a change to the bug's page, marking it
+as done. Since it's a security hole, the project
+needs to make an announcement right away so users
+will know they need to upgrade. This announcement
+can be added to the wiki's news feed, and committed
+along with the fix, and the announcement can use a
+regular wiki link to link to the bug that describes
+the security hole in detail. If the security hole
+also affects an older version of the software, the
+fix, along with the wiki documentation for that fix,
+can be merged into the branch for the older version.
 
 Another benefit of keeping the bug tracking system in revision control with
 the wiki is that it allows for disconnected development. So there's no need
@@ -225,3 +271,9 @@ large changes are being made in someone's branch, they can choose to put up
 their own version of the website, use it to track bugs for that branch, and
 when the branch is ready, all these changes can be merged back into the
 mainline of the project.
+
+Ikiwiki powers its own bug tracking
+system.  To see how wiki bug tracking
+works in practice, visit the [ikiwiki bugs
+page](http://ikiwiki.info/bugs.html) or the project
+[TODO list](http://ikiwiki.info/todo.html).
