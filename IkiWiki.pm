@@ -549,8 +549,14 @@ sub linkify ($$$) { #{{{
 
 	$content =~ s{(\\?)$config{wiki_link_regexp}}{
 		defined $2
-			? ( $1 ? "[[$2|$3]]" : htmllink($lpage, $page, linkpage($3), anchor => $4, linktext => pagetitle($2)))
-			: ( $1 ? "[[$3]]"    : htmllink($lpage, $page, linkpage($3), anchor => $4))
+			? ( $1 
+				? "[[$2|$3".(length $4 ? "#$4" : "")."]]" 
+				: htmllink($lpage, $page, linkpage($3),
+					anchor => $4, linktext => pagetitle($2)))
+			: ( $1 
+				? "[[$3".(length $4 ? "#$4" : "")."]]"
+				: htmllink($lpage, $page, linkpage($3),
+					anchor => $4))
 	}eg;
 	
 	return $content;
