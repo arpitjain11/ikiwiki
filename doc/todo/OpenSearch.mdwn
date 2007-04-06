@@ -2,4 +2,15 @@
 metadata.  Various software supports OpenSearch (see the Wikipedia article on
 [[wikipedia OpenSearch]]); in particular, browsers like Firefox and Iceweasel
 will automatically discover an OpenSearch search and offer it in the search
-box. --[[JoshTriplett]]
+box.
+
+More specifically, we want to follow the [OpenSearch Description Document
+standard](http://www.opensearch.org/Specifications/OpenSearch/1.1#OpenSearch_description_document),
+by having a `link` with `rel="search"` and
+`type="application/opensearchdescription+xml"` in the headers of HTML, RSS,
+and Atom pages.  The `href` of that `link` should point to an
+OpenSearchDescription XML file with contents generated based on the
+information in `ikiwiki.setup`, and the `title` attribute of the `link` should
+contain the wiki title from `ikiwiki.setup`.
+
+--[[JoshTriplett]]
