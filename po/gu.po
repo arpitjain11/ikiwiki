@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-21 14:36-0400\n"
+"POT-Creation-Date: 2007-04-06 16:36-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -29,9 +29,9 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
-#: ../IkiWiki/Render.pm:165
+#: ../IkiWiki/Plugin/inline.pm:175 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "ચર્ચા"
 
@@ -132,13 +132,13 @@ msgstr "ટેમ્પલેટ %s મળ્યું નહી"
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
-#: ../IkiWiki/Plugin/img.pm:79
+#: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
+#: ../IkiWiki/Plugin/img.pm:80
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
 msgstr "%s લખવામાં નિષ્ફળ: %s"
 
-#: ../IkiWiki/Plugin/img.pm:64
+#: ../IkiWiki/Plugin/img.pm:66
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
 msgstr "%s લખવામાં નિષ્ફળ: %s"
@@ -147,25 +147,25 @@ msgstr "%s લખવામાં નિષ્ફળ: %s"
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr "--rss અથવા --atom ઉપયોગ કરતી વખતે વીકીમાં --url ઉપયોગ કરવું જ પડશે"
 
-#: ../IkiWiki/Plugin/inline.pm:103
+#: ../IkiWiki/Plugin/inline.pm:106
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 
-#: ../IkiWiki/Plugin/inline.pm:143
+#: ../IkiWiki/Plugin/inline.pm:152
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/Plugin/inline.pm:395
+#: ../IkiWiki/Plugin/inline.pm:396
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
-#: ../IkiWiki/Plugin/linkmap.pm:99
+#: ../IkiWiki/Plugin/linkmap.pm:98
 #, fuzzy
 msgid "failed to run dot"
 msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
@@ -344,7 +344,8 @@ msgid "shortcut %s points to <i>%s</i>"
 msgstr "ટુંકોરસ્તો %s એ %s ને નિર્દેશ કરે છે"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
-msgid "failed to parse any smileys, disabling plugin"
+#, fuzzy
+msgid "failed to parse any smileys"
 msgstr "કોઇપણ સ્માઇલીઓ લાવવામાં નિષ્ફળ, પ્લગઇન અસક્રિય કરે છે"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
@@ -430,12 +431,12 @@ msgid ""
 "notifications"
 msgstr "REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી શકાશે નહી"
 
-#: ../IkiWiki/Render.pm:251 ../IkiWiki/Render.pm:271
+#: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ખરાબ ફાઇલ નામ છોડી દે છે %s"
 
-#: ../IkiWiki/Render.pm:311
+#: ../IkiWiki/Render.pm:310
 #, perl-format
 msgid "removing old page %s"
 msgstr "જુનાં પાનાં દૂર કરે છે %s"
@@ -445,32 +446,32 @@ msgstr "જુનાં પાનાં દૂર કરે છે %s"
 msgid "scanning %s"
 msgstr "%s શોધે છે"
 
-#: ../IkiWiki/Render.pm:339
+#: ../IkiWiki/Render.pm:340
 #, perl-format
 msgid "rendering %s"
 msgstr "રેન્ડર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:351
+#: ../IkiWiki/Render.pm:352
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "રેન્ડર કરે છે %s, જે %s સાથે જોડાણ ધરાવે છે"
 
-#: ../IkiWiki/Render.pm:368
+#: ../IkiWiki/Render.pm:369
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "રેન્ડર કરે છે %s, જે %s પર આધારિત છે"
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:407
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "રેન્ડર કરે છે %s, તેનાં પાછળનાં જોડાણો સુધારવા માટે"
 
-#: ../IkiWiki/Render.pm:418
+#: ../IkiWiki/Render.pm:419
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "દૂર કરે છે %s, હવે %s વડે રેન્ડર કરાતું નથી"
 
-#: ../IkiWiki/Render.pm:444
+#: ../IkiWiki/Render.pm:445
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: %s રેન્ડર કરી શકાતું નથી"
@@ -543,11 +544,11 @@ msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "ઉપયોગ: ikiwiki [વિકલ્પો] source dest"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:105
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "જ્યારે --cgi ઉપયોગ કરતાં હોય ત્યારે વીકીનું યુઆરએલ સ્પષ્ટ કરવું જ પડશે"
 
-#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
+#: ../IkiWiki.pm:152 ../IkiWiki.pm:153
 msgid "Error"
 msgstr "ક્ષતિ"
 
@@ -555,7 +556,7 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:573
+#: ../IkiWiki.pm:614
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"

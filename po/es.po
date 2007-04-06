@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-21 14:36-0400\n"
+"POT-Creation-Date: 2007-04-06 16:36-0400\n"
 "PO-Revision-Date: 2007-02-12 10:31+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -30,9 +30,9 @@ msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:172 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:97
-#: ../IkiWiki/Render.pm:165
+#: ../IkiWiki/Plugin/inline.pm:175 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "comentarios"
 
@@ -136,13 +136,13 @@ msgstr "no he encontrado la plantilla %s"
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:57 ../IkiWiki/Plugin/img.pm:61
-#: ../IkiWiki/Plugin/img.pm:79
+#: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
+#: ../IkiWiki/Plugin/img.pm:80
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
 msgstr "no puedo escribir en %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:64
+#: ../IkiWiki/Plugin/img.pm:66
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
 msgstr "no puedo escribir en %s: %s"
@@ -153,25 +153,25 @@ msgstr ""
 "Es obligatorio indicar un url al wiki cuando se usan los parámetros --rss ó "
 "--atom"
 
-#: ../IkiWiki/Plugin/inline.pm:103
+#: ../IkiWiki/Plugin/inline.pm:106
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "no conozco este tipo de ordenación %s"
 
-#: ../IkiWiki/Plugin/inline.pm:143
+#: ../IkiWiki/Plugin/inline.pm:152
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:180 ../IkiWiki/Render.pm:101
+#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:395
+#: ../IkiWiki/Plugin/inline.pm:396
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
-#: ../IkiWiki/Plugin/linkmap.pm:99
+#: ../IkiWiki/Plugin/linkmap.pm:98
 #, fuzzy
 msgid "failed to run dot"
 msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
@@ -352,7 +352,8 @@ msgid "shortcut %s points to <i>%s</i>"
 msgstr "El atajo %s apunta a %s"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
-msgid "failed to parse any smileys, disabling plugin"
+#, fuzzy
+msgid "failed to parse any smileys"
 msgstr "Algunos emoticonos tienen errores, se desactiva el complemento smiley"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
@@ -440,12 +441,12 @@ msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
 "svn post-commit; no puedo enviar notificación alguna."
 
-#: ../IkiWiki/Render.pm:251 ../IkiWiki/Render.pm:271
+#: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ignorando el archivo %s porque su no nombre no es correcto"
 
-#: ../IkiWiki/Render.pm:311
+#: ../IkiWiki/Render.pm:310
 #, perl-format
 msgid "removing old page %s"
 msgstr "eliminando la antigua página %s"
@@ -455,34 +456,34 @@ msgstr "eliminando la antigua página %s"
 msgid "scanning %s"
 msgstr "explorando %s"
 
-#: ../IkiWiki/Render.pm:339
+#: ../IkiWiki/Render.pm:340
 #, perl-format
 msgid "rendering %s"
 msgstr "convirtiendo %s"
 
-#: ../IkiWiki/Render.pm:351
+#: ../IkiWiki/Render.pm:352
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "convirtiendo la página %s, la cual referencia a %s"
 
-#: ../IkiWiki/Render.pm:368
+#: ../IkiWiki/Render.pm:369
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "convirtiendo la página %s, la cual depende de %s"
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:407
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 "convirtiendo la página %s para actualizar la lista de páginas que hacen "
 "referencia a ella."
 
-#: ../IkiWiki/Render.pm:418
+#: ../IkiWiki/Render.pm:419
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 
-#: ../IkiWiki/Render.pm:444
+#: ../IkiWiki/Render.pm:445
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"
@@ -556,13 +557,13 @@ msgstr "creado con éxito el programa envoltorio %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "uso: ikiwiki [opciones] origen destino"
 
-#: ../IkiWiki.pm:103
+#: ../IkiWiki.pm:105
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Es obligatorio especificar un url al wiki con el parámetro --url si se "
 "utiliza el parámetro --cgi"
 
-#: ../IkiWiki.pm:150 ../IkiWiki.pm:151
+#: ../IkiWiki.pm:152 ../IkiWiki.pm:153
 msgid "Error"
 msgstr "Error"
 
@@ -570,7 +571,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:573
+#: ../IkiWiki.pm:614
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

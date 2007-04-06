@@ -41,8 +41,10 @@ ikiwiki (1.49) UNRELEASED; urgency=low
   * Updated French translation from JLC. Closes: #417982
   * Reorder the icon in the template above the stylesheets, to avoid icon
     flashing during page load.
+  * Fix smiley plugin to scan smileys.mdwn after it's updated, which fixes
+    a bug caused by committing changes to smilies.mdwn.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 13:30:20 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 16:32:09 -0400
 
 ikiwiki (1.48) unstable; urgency=low
 

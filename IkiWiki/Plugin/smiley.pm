@@ -9,21 +9,21 @@ my %smileys;
 my $smiley_regexp;
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "smiley", call => \&setup);
+	hook(type => "filter", id => "smiley", call => \&filter);
 } # }}}
 
-sub setup () { #{{{
+sub build_regexp () { #{{{
 	my $list=readfile(srcfile("smileys.mdwn"));
 	while ($list =~ m/^\s*\*\s+\\([^\s]+)\s+\[\[([^]]+)\]\]/mg) {
 		$smileys{$1}=$2;
 	}
 	
 	if (! %smileys) {
-		debug(gettext("failed to parse any smileys, disabling plugin"));
+		debug(gettext("failed to parse any smileys"));
+		$smiley_regexp='';
 		return;
 	}
 	
-	hook(type => "filter", id => "smiley", call => \&filter);
 	# sort and reverse so that substrings come after longer strings
 	# that contain them, in most cases.
 	$smiley_regexp='('.join('|', map { quotemeta }
@@ -34,9 +34,10 @@ sub setup () { #{{{
 sub filter (@) { #{{{
 	my %params=@_;
 	
+	build_regexp() unless defined $smiley_regexp;
 	$params{content} =~ s{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}{
 		$1 ? $2 : htmllink($params{page}, $params{page}, $smileys{$2}, linktext => $2)
-	}egs;
+	}egs if length $smiley_regexp;
 
 	return $params{content};
 } # }}}
