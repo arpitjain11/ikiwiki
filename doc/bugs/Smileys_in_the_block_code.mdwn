@@ -1,0 +1,27 @@
+My backported ikiwiki 1.48 converts smileys in the block code incorrectly.
+I can see the HTML code of smileys image, instead of smileys image.
+
+For example, I'd like to save interesting for me thread of courier-users
+mailing list. Please looks below to see what ikiwiki does with that smileys:
+
+    From: Bernd Wurst <bernd@bw...>
+    Subject: Re: [courier-users] Uploaded my SRS implementation for courier to
+    	the web
+    To: courier-users@li...
+    Date: Sat, 17 Mar 2007 19:02:10 +0100
+    
+    Hi.
+    
+    Am Samstag, 17. Mrz 2007 schrieb Matthias Wimmer:
+    > See the graphic on http://www.openspf.org/SRS at the bottom on the left
+    > side. You will find an example there how rewriting an already rewritten
+    > address works.
+    
+    Ah, ok, didn't know that. :)
+    Thanks for the pointer!
+    
+    cu, Bernd
+
+BTW, maybe converting smileys in the block code should be disabled at all?
+
+--Pawel
