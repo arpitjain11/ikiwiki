@@ -1,5 +1,6 @@
 ikiwiki (1.49) UNRELEASED; urgency=low
 
+  [ Joey Hess ]
   * Add --post-commit option, which allows for the case of a split web server
     and RCS server (or a push mirror). With this the RCS server can have a
     real post-commit hook that sshs back to the web server, and runs ikiwiki
@@ -24,7 +25,10 @@ ikiwiki (1.49) UNRELEASED; urgency=low
   * Fix a bug that caused link(foo) to succeed if page foo did not exist.
   * Fix tags to page names that contain special characters.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 04 Apr 2007 17:06:59 -0400
+  [ Josh Triplett ]
+  * Use pngcrush and optipng on all PNG files.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 05 Apr 2007 17:36:14 -0700
 
 ikiwiki (1.48) unstable; urgency=low
 
