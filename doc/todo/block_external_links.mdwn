@@ -1,0 +1,14 @@
+I'd like the ability to block external links from anonymous users, or from
+untrusted users.  This could work by generating the HTML for the new page and
+comparing it to the HTML for the old page, looking for any new <a> tags with
+href values that didn't exist in the old page and don't start with the URL of
+the wiki.  Comparing the HTML, rather than the input, allows usage with
+various types of input formats, and ensures that a template, shortcut, or some
+new plugin will not bypass the filter.
+
+This would probably benefit from a whitelist of acceptable external URLs.
+
+This may actually form a subset of the general concept of content policies,
+described at [[todo/fileupload]].
+
+--[[JoshTriplett]]
