@@ -3,7 +3,7 @@ of very simple text parsing or regex application, to make it possible to write
 shortcuts like these:
 
     [[mmlist listname@lists.example.org]] -> <listname@example.org> ([mailman page] (http://lists.example.org/mailman/listinfo/listname)
-    [[debchangelog packagename]] -> [packagename changelog](http://packages.debian.org/changelogs/pool/main/p/packagename/current/changelog)
+    [[debcl packagename]] -> [packagename changelog](http://packages.debian.org/changelogs/pool/main/p/packagename/current/changelog)
 
 For shortcut definitions, a `match` parameter could supply a regex, and then the `url` and `desc` parameters could make use of the named or numbered groups from the match.
 
@@ -21,3 +21,12 @@ special-purpose plugins. It should be very simple to write plugins for the
 above two examples, that look identical to the user as what you described.
 
 --[[Joey]]
+
+Fair enough.  I only proposed regexes for the purposes of generality.
+
+That said, some simple text substitution mechanisms might handle many of these
+cases without the need for a specialized plugin beyond [[plugins/shortcut]].
+For instance, substring extraction would suffice for the `debcl` shortcut, and
+something like a split function would work for the `mmlist` shortcut.
+
+--[[JoshTriplett]]
