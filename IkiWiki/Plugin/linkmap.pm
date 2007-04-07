@@ -62,7 +62,7 @@ sub genmap ($) { #{{{
 
 	# Run dot to create the graphic and get the map data.
 	my $pid;
-	my $sigpipe=0;;
+	my $sigpipe=0;
 	$SIG{PIPE}=sub { $sigpipe=1 };
 	$pid=open2(*IN, *OUT, "dot -Tpng -o '$config{destdir}/$dest' -Tcmapx");
 	
