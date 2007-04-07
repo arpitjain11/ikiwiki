@@ -19,12 +19,22 @@ escape parameter optional, and only call it if set. --[[Joey]]
 >> those. Assuming that escaping html embedded in the middle of a sentence
 >> works.. --[[Joey]]
 
+>>> Revised again. I get around this by making another hook, htmlescapelink,
+>>> which is called to generate links in whatever language. This patch is
+>>> completely untested, sorry. In addition, it doesn't (can't?) generate
+>>> spans, and it doesn't handle inlineable image links. If these were 
+>>> desired, the approach to take would probably be to use substitution
+>>> definitions, which would require generating two bits of code for each
+>>> link/html snippet, and putting one at the end of the paragraph (or maybe
+>>> the document?).
+>>> --Ethan
+
 <pre>
 Index: debian/changelog
 ===================================================================
---- debian/changelog	(revision 3158)
+--- debian/changelog	(revision 3182)
 +++ debian/changelog	(working copy)
-@@ -44,8 +44,11 @@
+@@ -44,9 +44,12 @@
    * Fix smiley plugin to scan smileys.mdwn after it's updated, which fixes
      a bug caused by committing changes to smilies.mdwn.
    * Fix display of escaped wikilinks containing anchors.
@@ -32,16 +42,16 @@ Index: debian/changelog
 +    when a preprocssor directive emits inline html. The rst plugin uses this
 +    hook to support inlined raw html.
  
-- -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 17:17:52 -0400
-+ -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 19:19:08 -0400
+   [ Josh Triplett ]
+   * Remove stray semicolon in linkmap.pm.
  
- ikiwiki (1.48) unstable; urgency=low
+  -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 17:28:22 -0700
  
 Index: IkiWiki/Plugin/rst.pm
 ===================================================================
---- IkiWiki/Plugin/rst.pm	(revision 3157)
+--- IkiWiki/Plugin/rst.pm	(revision 3182)
 +++ IkiWiki/Plugin/rst.pm	(working copy)
-@@ -30,15 +30,22 @@
+@@ -30,15 +30,36 @@
  html = publish_string(stdin.read(), writer_name='html', 
         settings_overrides = { 'halt_level': 6, 
                                'file_insertion_enabled': 0,
@@ -54,8 +64,22 @@ Index: IkiWiki/Plugin/rst.pm
  sub import { #{{{
  	hook(type => "htmlize", id => "rst", call => \&htmlize);
 +	hook(type => "htmlescape", id => "rst", call => \&htmlecape);
++	hook(type => "htmlescapelink", id => "rst", call => \&htmllink);
  } # }}}
  
++sub htmllink ($$;@) { #{{{
++	my $url = shift;
++	my $text = shift;
++	my %params = @_;
++
++	if ($params{broken}){
++		return "`? <$url>`_\ $text";
++	}
++	else {
++		return "`$text <$url>`_";
++	}
++} # }}}
++
 +sub htmlescape ($) { #{{{
 +	my $html=shift;
 +	$html=~s/^/  /mg;
@@ -67,9 +91,9 @@ Index: IkiWiki/Plugin/rst.pm
  	my $content=$params{content};
 Index: doc/plugins/write.mdwn
 ===================================================================
---- doc/plugins/write.mdwn	(revision 3157)
+--- doc/plugins/write.mdwn	(revision 3182)
 +++ doc/plugins/write.mdwn	(working copy)
-@@ -121,6 +121,16 @@
+@@ -121,6 +121,26 @@
  The function is passed named parameters: "page" and "content" and should
  return the htmlized content.
  
@@ -83,12 +107,22 @@ Index: doc/plugins/write.mdwn
 +directive is inserting raw html. It is passed the chunk of html in
 +question, and should return the escaped chunk.
 +
++### htmlescapelink
++
++	hook(type => "htmlescapelink", id => "ext", call => \&htmlescapelink);
++
++Some markup languages have special syntax to link to other pages. This hook
++is a companion to the htmlize and htmlescape hooks, and it is called when a
++link is inserted. It is passed the target of the link and the text of the 
++link, and an optional named parameter "broken" if a broken link is being
++generated. It should return the correctly-formatted link.
++
  ### pagetemplate
  
  	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 Index: doc/plugins/rst.mdwn
 ===================================================================
---- doc/plugins/rst.mdwn	(revision 3157)
+--- doc/plugins/rst.mdwn	(revision 3182)
 +++ doc/plugins/rst.mdwn	(working copy)
 @@ -10,10 +10,8 @@
  Note that this plugin does not interoperate very well with the rest of
@@ -105,9 +139,51 @@ Index: doc/plugins/rst.mdwn
    sync with the standard version, so is not used.
 Index: IkiWiki.pm
 ===================================================================
---- IkiWiki.pm	(revision 3158)
+--- IkiWiki.pm	(revision 3182)
 +++ IkiWiki.pm	(working copy)
-@@ -628,6 +628,14 @@
+@@ -469,6 +469,7 @@
+ 	my $page=shift; # the page that will contain the link (different for inline)
+ 	my $link=shift;
+ 	my %opts=@_;
++	my $type=pagetype($pagesources{$page});
+ 
+ 	my $bestlink;
+ 	if (! $opts{forcesubpage}) {
+@@ -494,12 +495,17 @@
+ 	}
+ 	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
+ 		return $linktext unless length $config{cgiurl};
+-		return "<span><a href=\"".
+-			cgiurl(
+-				do => "create",
+-				page => pagetitle(lc($link), 1),
+-				from => $lpage
+-			).
++		my $url = cgiurl(
++				 do => "create",
++				 page => pagetitle(lc($link), 1),
++				 from => $lpage
++				);
++
++		if ($hooks{htmlescapelink}{$type}){
++			return $hooks{htmlescapelink}{$type}->($url, $linktext,
++							       broken => 1);
++		}
++		return "<span><a href=\"". $url.
+ 			"\">?</a>$linktext</span>"
+ 	}
+ 	
+@@ -514,6 +520,9 @@
+ 		$bestlink.="#".$opts{anchor};
+ 	}
+ 
++	if ($hooks{htmlescapelink}{$type}) {
++	  return $hooks{htmlescapelink}{$type}->($bestlink, $linktext);
++	}
+ 	return "<a href=\"$bestlink\">$linktext</a>";
+ } #}}}
+ 
+@@ -628,6 +637,14 @@
  				preview => $preprocess_preview,
  			);
  			$preprocessing{$page}--;
@@ -116,7 +192,7 @@ Index: IkiWiki.pm
 +			if ($ret =~ /[<>]/ && $pagesources{$page}) {
 +				my $type=pagetype($pagesources{$page});
 +				if ($hooks{htmlescape}{$type}) {
-+					return $ret = $hooks{htmlize}{$type}{escape}->($ret);
++					return $ret = $hooks{htmlescape}{$type}->($ret);
 +				}
 +			}
  			return $ret;
