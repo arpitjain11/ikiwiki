@@ -46,7 +46,7 @@ sub backlinks ($) { #{{{
 	}
 	@links = sort { $a->{page} cmp $b->{page} } @links;
 
-	return \@links, [] if @links <= $config{numbacklinks};
+	return \@links, [] if @links <= $config{numbacklinks} && ! $config{numbacklinks};
 	return [@links[0..$config{numbacklinks}-1]],
 	       [@links[$config{numbacklinks}..$#links]];
 } #}}}
