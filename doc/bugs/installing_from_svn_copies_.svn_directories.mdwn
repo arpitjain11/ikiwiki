@@ -1,0 +1,18 @@
+If you do an svn co, and then install from the generated WC, the makefile 
+copies .svn directories to various locations:
+
+$ find ~/ikidev-install/share/ikiwiki/ -name ".svn"
+/home/glasserc/ikidev-install/share/ikiwiki/basewiki/smileys/.svn
+/home/glasserc/ikidev-install/share/ikiwiki/basewiki/subpage/.svn
+/home/glasserc/ikidev-install/share/ikiwiki/basewiki/wikiicons/.svn
+/home/glasserc/ikidev-install/share/ikiwiki/basewiki/templates/.svn
+
+I think the guilty command is this one:
+
+cp -aL basewiki/* /home/glasserc/ikidev-install//share/ikiwiki/basewiki
+
+(PREFIX is ~/ikidev-install here.)
+
+I don't know of a good fix. I wouldn't have discovered this except that I got 
+permission denied errors when I tried to make a change and install again.
+--Ethan
