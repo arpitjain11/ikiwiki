@@ -20,36 +20,49 @@ escape parameter optional, and only call it if set. --[[Joey]]
 >> works.. --[[Joey]]
 
 >>> Revised again. I get around this by making another hook, htmlescapelink,
->>> which is called to generate links in whatever language. This patch is
->>> completely untested, sorry. In addition, it doesn't (can't?) generate
+>>> which is called to generate links in whatever language. In addition, it 
+>>> doesn't (can't?) generate
 >>> spans, and it doesn't handle inlineable image links. If these were 
 >>> desired, the approach to take would probably be to use substitution
 >>> definitions, which would require generating two bits of code for each
 >>> link/html snippet, and putting one at the end of the paragraph (or maybe
 >>> the document?).
+>>> To specify that (for example) Discussion links are meant to be HTML and
+>>> not rst or whatever, I added a "genhtml" parameter to htmllink. It seems
+>>> to work -- see <http://ikidev.betacantrips.com/blah.html> for an example.
 >>> --Ethan
 
 <pre>
 Index: debian/changelog
 ===================================================================
---- debian/changelog	(revision 3182)
+--- debian/changelog	(revision 3197)
 +++ debian/changelog	(working copy)
-@@ -44,9 +44,12 @@
-   * Fix smiley plugin to scan smileys.mdwn after it's updated, which fixes
-     a bug caused by committing changes to smilies.mdwn.
-   * Fix display of escaped wikilinks containing anchors.
+@@ -24,6 +24,9 @@
+     than just a suggests, since OpenID is enabled by default.
+   * Fix a bug that caused link(foo) to succeed if page foo did not exist.
+   * Fix tags to page names that contain special characters.
 +  * Based on a patch by Ethan, add a new htmlescape hook, that is called
 +    when a preprocssor directive emits inline html. The rst plugin uses this
 +    hook to support inlined raw html.
  
    [ Josh Triplett ]
-   * Remove stray semicolon in linkmap.pm.
- 
-  -- Joey Hess <joeyh@debian.org>  Fri, 06 Apr 2007 17:28:22 -0700
- 
+   * Use pngcrush and optipng on all PNG files.
+Index: IkiWiki/Render.pm
+===================================================================
+--- IkiWiki/Render.pm	(revision 3197)
++++ IkiWiki/Render.pm	(working copy)
+@@ -96,7 +96,7 @@
+ 		if ($page !~ /.*\/\Q$discussionlink\E$/ &&
+ 		   (length $config{cgiurl} ||
+ 		    exists $links{$page."/".$discussionlink})) {
+-			$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), noimageinline => 1, forcesubpage => 1));
++			$template->param(discussionlink => htmllink($page, $page, gettext("Discussion"), noimageinline => 1, forcesubpage => 1, genhtml => 1));
+ 			$actions++;
+ 		}
+ 	}
 Index: IkiWiki/Plugin/rst.pm
 ===================================================================
---- IkiWiki/Plugin/rst.pm	(revision 3182)
+--- IkiWiki/Plugin/rst.pm	(revision 3197)
 +++ IkiWiki/Plugin/rst.pm	(working copy)
 @@ -30,15 +30,36 @@
  html = publish_string(stdin.read(), writer_name='html', 
@@ -63,11 +76,11 @@ Index: IkiWiki/Plugin/rst.pm
  
  sub import { #{{{
  	hook(type => "htmlize", id => "rst", call => \&htmlize);
-+	hook(type => "htmlescape", id => "rst", call => \&htmlecape);
-+	hook(type => "htmlescapelink", id => "rst", call => \&htmllink);
++	hook(type => "htmlescape", id => "rst", call => \&htmlescape);
++	hook(type => "htmlescapelink", id => "rst", call => \&htmlescapelink);
  } # }}}
  
-+sub htmllink ($$;@) { #{{{
++sub htmlescapelink ($$;@) { #{{{
 +	my $url = shift;
 +	my $text = shift;
 +	my %params = @_;
@@ -91,7 +104,7 @@ Index: IkiWiki/Plugin/rst.pm
  	my $content=$params{content};
 Index: doc/plugins/write.mdwn
 ===================================================================
---- doc/plugins/write.mdwn	(revision 3182)
+--- doc/plugins/write.mdwn	(revision 3197)
 +++ doc/plugins/write.mdwn	(working copy)
 @@ -121,6 +121,26 @@
  The function is passed named parameters: "page" and "content" and should
@@ -120,9 +133,17 @@ Index: doc/plugins/write.mdwn
  ### pagetemplate
  
  	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
+@@ -355,6 +375,7 @@
+ * forcesubpage  - set to force a link to a subpage
+ * linktext - set to force the link text to something
+ * anchor - set to make the link include an anchor
++* genhtml - set to generate HTML and not escape for correct format
+ 
+ #### `readfile($;$)`
+ 
 Index: doc/plugins/rst.mdwn
 ===================================================================
---- doc/plugins/rst.mdwn	(revision 3182)
+--- doc/plugins/rst.mdwn	(revision 3197)
 +++ doc/plugins/rst.mdwn	(working copy)
 @@ -10,10 +10,8 @@
  Note that this plugin does not interoperate very well with the rest of
@@ -139,17 +160,20 @@ Index: doc/plugins/rst.mdwn
    sync with the standard version, so is not used.
 Index: IkiWiki.pm
 ===================================================================
---- IkiWiki.pm	(revision 3182)
+--- IkiWiki.pm	(revision 3197)
 +++ IkiWiki.pm	(working copy)
-@@ -469,6 +469,7 @@
+@@ -469,6 +469,10 @@
  	my $page=shift; # the page that will contain the link (different for inline)
  	my $link=shift;
  	my %opts=@_;
-+	my $type=pagetype($pagesources{$page});
++	# we are processing $lpage and so we need to format things in accordance
++	# with the formatting language of $lpage. inline generates HTML so links
++	# will be escaped seperately.
++	my $type=pagetype($pagesources{$lpage});
  
  	my $bestlink;
  	if (! $opts{forcesubpage}) {
-@@ -494,12 +495,17 @@
+@@ -494,12 +498,17 @@
  	}
  	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
  		return $linktext unless length $config{cgiurl};
@@ -165,25 +189,25 @@ Index: IkiWiki.pm
 +				 from => $lpage
 +				);
 +
-+		if ($hooks{htmlescapelink}{$type}){
-+			return $hooks{htmlescapelink}{$type}->($url, $linktext,
++		if ($hooks{htmlescapelink}{$type} && ! $opts{genhtml}){
++			return $hooks{htmlescapelink}{$type}{call}->($url, $linktext,
 +							       broken => 1);
 +		}
 +		return "<span><a href=\"". $url.
  			"\">?</a>$linktext</span>"
  	}
  	
-@@ -514,6 +520,9 @@
+@@ -514,6 +523,9 @@
  		$bestlink.="#".$opts{anchor};
  	}
  
-+	if ($hooks{htmlescapelink}{$type}) {
-+	  return $hooks{htmlescapelink}{$type}->($bestlink, $linktext);
++	if ($hooks{htmlescapelink}{$type} && !$opts{genhtml}) {
++	  return $hooks{htmlescapelink}{$type}{call}->($bestlink, $linktext);
 +	}
  	return "<a href=\"$bestlink\">$linktext</a>";
  } #}}}
  
-@@ -628,6 +637,14 @@
+@@ -628,6 +640,14 @@
  				preview => $preprocess_preview,
  			);
  			$preprocessing{$page}--;
@@ -192,7 +216,7 @@ Index: IkiWiki.pm
 +			if ($ret =~ /[<>]/ && $pagesources{$page}) {
 +				my $type=pagetype($pagesources{$page});
 +				if ($hooks{htmlescape}{$type}) {
-+					return $ret = $hooks{htmlescape}{$type}->($ret);
++					return $hooks{htmlescape}{$type}{call}->($ret);
 +				}
 +			}
  			return $ret;
