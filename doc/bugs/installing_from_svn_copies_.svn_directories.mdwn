@@ -19,3 +19,8 @@ permission denied errors when I tried to make a change and install again.
 
 > I observed the same thing by running debuild from an SVN checkout and
 > getting lintian warnings about the .svn directories. --[[JoshTriplett]]
+
+> The .svn directories can be avoided in the deb by setting
+> DH_ALWAYS_EXCLUDE=.svn in the environment before building.
+> I prefer to use that kind of hack exterior to a package rather than
+> putting in RCS-specific exclude hacks. --[[Joey]]
