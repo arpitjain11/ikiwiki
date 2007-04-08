@@ -16,3 +16,6 @@ cp -aL basewiki/* /home/glasserc/ikidev-install//share/ikiwiki/basewiki
 I don't know of a good fix. I wouldn't have discovered this except that I got 
 permission denied errors when I tried to make a change and install again.
 --Ethan
+
+> I observed the same thing by running debuild from an SVN checkout and
+> getting lintian warnings about the .svn directories. --[[JoshTriplett]]
