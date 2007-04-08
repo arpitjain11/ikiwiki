@@ -80,7 +80,7 @@ make arbitrary changes. The function is passed named parameters `page` and
 
 This is identical to a preprocess hook (see below), except that it is
 called in the initial pass that scans pages for data that will be used in
-later passes. Scan hooks are the only hook that should modify 
+later passes. Scan hooks are the only hook that should modify `%links`.
 
 ### preprocess
 
@@ -264,7 +264,7 @@ hash. The best way to understand the contents of the hash is to look at
 If your plugin needs to access data about other pages in the wiki. It can
 use the following hashes, using a page name as the key:
 
-* `%links` lists the names of each page that a page links to, in an array
+* `links` lists the names of each page that a page links to, in an array
   reference.
 * `%renderedfiles` lists names of the files rendered by a page, in an array
   reference.
