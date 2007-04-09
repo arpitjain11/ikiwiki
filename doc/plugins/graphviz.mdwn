@@ -1,0 +1,39 @@
+[[template id=plugin name=graphviz author="[[JoshTriplett]]"]]
+[[tag type/chrome type/format]]
+
+This plugin allows embedding [graphviz](http://www.graphviz.org/) graphs in a
+page.  Example usage:
+
+	\[[graph src="a -> b -> c; a -> c;"]]
+
+Note that graphs will only show up in previews if your browser has
+[[wikipedia data: URI]] support, or if the same graph already exists on that
+page.
+
+Security implications: graphviz does not seem to have any syntax exploitable to
+perform file access or shell commands on the server.  However, the graphviz
+plugin does make denial of service attacks somewhat easier: any user with edit
+privileges can use this plugin to create large files without the need to send
+large amounts of data, allowing them to more quickly fill the disk, run the
+server out of memory, or use up large amounts of bandwidth.  Any user can
+already do these things with just the core of ikiwiki, but the graphviz plugin
+allows for an amplification attack, since users can send less data to use large
+amounts of processing time and disk usage.
+
+The `graph` directive supports the following parameters:
+
+- `src` - The graphviz source to render.
+- `type` - The type of graph to render: `graph` or `digraph`.  Defaults to
+  `digraph`.
+- `prog` - The graphviz program to render with: `dot`, `neato`, `fdp`, `twopi`,
+  or `circo`.  Defaults to `dot`.
+- `height`, `width` - Limit the size of the graph to a given height and width,
+  in inches. You must specify both to limit the size; otherwise, graphviz will
+  choose a size, without any limit.
+
+[[if test="enabled(graphviz)" then="""
+Some example graphs:
+
+[[graph src="a -> b -> c; a -> b;"]]
+[[graph src="a -- b -- c -- a;" prog="circo" type="graph"]]
+"""]]

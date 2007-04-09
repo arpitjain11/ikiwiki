@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 16:36-0400\n"
+"POT-Creation-Date: 2007-04-09 01:55-0700\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -122,6 +122,15 @@ msgstr "грешшка в приставката „fortune”"
 #, fuzzy
 msgid "failed to find url in html"
 msgstr "приставката „googlecalendar” не намери URL в HTML-кода"
+
+#: ../IkiWiki/Plugin/graphviz.pm:59
+#, fuzzy
+msgid "failed to run graphviz"
+msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
+
+#: ../IkiWiki/Plugin/graphviz.pm:81
+msgid "prog not a valid graphviz program"
+msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:36
 #, fuzzy, perl-format
@@ -566,7 +575,7 @@ msgstr "Грешка"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:614
+#: ../IkiWiki.pm:620
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 16:36-0400\n"
+"POT-Creation-Date: 2007-04-09 01:55-0700\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -121,6 +121,15 @@ msgstr "fortune misslyckades"
 #, fuzzy
 msgid "failed to find url in html"
 msgstr "googlecalendar misslyckades med att hitta url i html"
+
+#: ../IkiWiki/Plugin/graphviz.pm:59
+#, fuzzy
+msgid "failed to run graphviz"
+msgstr "linkmap misslyckades att köra dot"
+
+#: ../IkiWiki/Plugin/graphviz.pm:81
+msgid "prog not a valid graphviz program"
+msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:36
 #, fuzzy, perl-format
@@ -560,7 +569,7 @@ msgstr "Fel"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:614
+#: ../IkiWiki.pm:620
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"

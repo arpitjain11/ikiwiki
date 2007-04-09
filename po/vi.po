@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 16:36-0400\n"
+"POT-Creation-Date: 2007-04-09 01:55-0700\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -122,6 +122,15 @@ msgstr "fortune bị lỗi"
 #, fuzzy
 msgid "failed to find url in html"
 msgstr "googlecalendar không tìm thấy địa chỉ URL trong mã HTML"
+
+#: ../IkiWiki/Plugin/graphviz.pm:59
+#, fuzzy
+msgid "failed to run graphviz"
+msgstr "linkmap không chạy dot được"
+
+#: ../IkiWiki/Plugin/graphviz.pm:81
+msgid "prog not a valid graphviz program"
+msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:36
 #, fuzzy, perl-format
@@ -561,7 +570,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:614
+#: ../IkiWiki.pm:620
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

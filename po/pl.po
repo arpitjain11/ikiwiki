@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.37\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 16:36-0400\n"
+"POT-Creation-Date: 2007-04-09 01:55-0700\n"
 "PO-Revision-Date: 2007-01-05 16:33+100\n"
 "Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -124,6 +124,15 @@ msgid "failed to find url in html"
 msgstr ""
 "awaria wtyczki googlecalendar z powodu nieodnalezionego adresu URL na "
 "stronie HTML"
+
+#: ../IkiWiki/Plugin/graphviz.pm:59
+#, fuzzy
+msgid "failed to run graphviz"
+msgstr "awaria wtyczki linkmap"
+
+#: ../IkiWiki/Plugin/graphviz.pm:81
+msgid "prog not a valid graphviz program"
+msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:36
 #, fuzzy, perl-format
@@ -570,7 +579,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:614
+#: ../IkiWiki.pm:620
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"

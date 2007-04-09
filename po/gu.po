@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 16:36-0400\n"
+"POT-Creation-Date: 2007-04-09 01:55-0700\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -121,6 +121,15 @@ msgstr "ભવિષ્ય નિષ્ફળ"
 #, fuzzy
 msgid "failed to find url in html"
 msgstr "ગુગલકેલેન્ડરને htmlમાં યુઆરએલ મળ્યું નહી"
+
+#: ../IkiWiki/Plugin/graphviz.pm:59
+#, fuzzy
+msgid "failed to run graphviz"
+msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/graphviz.pm:81
+msgid "prog not a valid graphviz program"
+msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:36
 #, fuzzy, perl-format
@@ -556,7 +565,7 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:614
+#: ../IkiWiki.pm:620
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"

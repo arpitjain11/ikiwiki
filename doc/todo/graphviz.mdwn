@@ -5,4 +5,7 @@ To complement this, ikiwiki could support creating and editing graphviz files th
 > Editing graphviz files safely online might be tricky. Graphvis would need
 > to be audited. --[[Joey]]
 
-[[tag soc]]
+>> I've added a [[graphviz_plugin|plugins/graphviz]] which adds a preprocessor
+>> directive to render inline graphviz graphs, addressing part of this todo
+>> item.  It doesn't yet support graphviz files as a separate page type, image
+>> maps, or wikilinks.--[[JoshTriplett]]
