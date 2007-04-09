@@ -6,3 +6,11 @@ friend here). Is there any way to improve this?
 > page. --[[JoshTriplett]]
 
 >> Would it be useful to allow a "max width" plugin, which would force on commit the split of long lines ?
+
+>>> Please, no.  That would wreak havoc on code blocks and arguments to
+>>> preprocessor directives, and it would make bulleted lists and quoted
+>>> blocks look bogus (because the subsequent lines would not match), among
+>>> other problems.  On the other hand, if you want to propose a piece of
+>>> client-side JavaScript that looks at the active selection in a text area
+>>> and word-wraps it, and have a plugin that adds a "Word-Wrap Selection"
+>>> button to the editor, that seems fine. --[[JoshTriplett]]
