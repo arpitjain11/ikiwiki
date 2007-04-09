@@ -59,6 +59,9 @@ use IkiWiki::Setup::Standard {
 		#	wrappermode => "04755",
 		#	# Enable mail notifications of commits.
 		#	notify => 1,
+		#	# Log to syslog since svn post-commit hooks
+		#	# hide output and errors.
+		#	syslog => 1,
 		#},
 		#{
 		#	# The git post-update wrapper.
