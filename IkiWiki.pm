@@ -152,7 +152,7 @@ sub error ($;$) { #{{{
 		print misctemplate(gettext("Error"),
 			"<p>".gettext("Error").": $message</p>");
 	}
-	log_message(debug => $message) if $config{syslog};
+	log_message('err' => $message) if $config{syslog};
 	if (defined $cleaner) {
 		$cleaner->();
 	}
@@ -177,7 +177,7 @@ sub log_message ($$) { #{{{
 		}
 		eval {
 			Sys::Syslog::syslog($type, "%s", join(" ", @_));
-		}
+		};
 	}
 	elsif (! $config{cgi}) {
 		print "@_\n";
