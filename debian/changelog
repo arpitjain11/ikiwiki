@@ -7,7 +7,11 @@ ikiwiki (1.50) UNRELEASED; urgency=low
     information about available preprocessor directives.
   * Add myself as a co-maintainer, with Joey's approval.
 
- -- Josh Triplett <josh@freedesktop.org>  Mon, 09 Apr 2007 16:35:18 -0700
+  [ Joey Hess ]
+  * Add support for PROFILE=1 to the Makefile, this turns on profiling of the
+    wiki build using Devel::Profiler (Dprof can't handle ikiwiki).
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 09 Apr 2007 20:22:44 -0400
 
 ikiwiki (1.49) unstable; urgency=low
 

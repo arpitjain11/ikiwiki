@@ -23,12 +23,13 @@ PROBABLE_INST_LIB=$(shell \\
 	fi \\
 )
 
-tflag=$(shell if [ ! "$$NOTAINT" ]; then printf -- "-T"; fi)
+tflag=$(shell if [ "$$NOTAINT" != 0 ]; then printf -- "-T"; fi)
+extramodules=$(shell if [ "$$PROFILE" = 1 ]; then printf -- "-MDevel::Profiler"; fi)
 
 extra_build:
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	chmod +x ikiwiki.out
-	LANG=C perl -I. $(tflag) ikiwiki.out doc html --templatedir=templates \
+	LANG=C perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=basewiki \
 		--wikiname="ikiwiki" --verbose \
 		--exclude=/discussion --no-discussion --userdir=users \
@@ -37,10 +38,11 @@ extra_build:
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 	$(MAKE) -C po
+	if [ "$$PROFILE" = 1 ]; then dprofpp; fi
 
 extra_clean:
 	rm -rf html doc/.ikiwiki
-	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out
+	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out tmon.out
 	$(MAKE) -C po clean
 
 extra_install:
