@@ -3,7 +3,6 @@
 use warnings;
 use strict;
 use IkiWiki;
-use POSIX qw(setlocale LC_CTYPE);
 
 package IkiWiki;
 

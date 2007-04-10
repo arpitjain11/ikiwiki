@@ -6,6 +6,7 @@ use strict;
 use Encode;
 use HTML::Entities;
 use URI::Escape q{uri_escape_utf8};
+use POSIX;
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
@@ -83,8 +84,6 @@ sub checkconfig () { #{{{
 		delete $ENV{LC_ALL};
 	}
 	if (defined $config{locale}) {
-		eval q{use POSIX};
-		error($@) if $@;
 		if (POSIX::setlocale(&POSIX::LC_ALL, $config{locale})) {
 			$ENV{LANG}=$config{locale};
 			$gettext_obj=undef;
@@ -434,8 +433,6 @@ sub abs2rel ($$) { #{{{
 sub displaytime ($) { #{{{
 	my $time=shift;
 
-	eval q{use POSIX};
-	error($@) if $@;
 	# strftime doesn't know about encodings, so make sure
 	# its output is properly treated as utf8
 	return decode_utf8(POSIX::strftime(

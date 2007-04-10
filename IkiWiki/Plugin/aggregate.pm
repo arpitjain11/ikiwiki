@@ -319,7 +319,6 @@ sub add_page (@) { #{{{
 
 		# Make sure that the file name isn't too long. 
 		# NB: This doesn't check for path length limits.
-		eval q{use POSIX};
 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
 		if (defined $max && length(htmlfn($page)) >= $max) {
 			$c="";

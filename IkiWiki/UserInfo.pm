@@ -157,7 +157,6 @@ sub send_commit_mails ($$$@) { #{{{
 		# Daemonize, in case the mail sending takes a while.
 		defined(my $pid = fork) or error("Can't fork: $!");
 		return if $pid;
-		eval q{use POSIX 'setsid'};
 		setsid() or error("Can't start a new session: $!");
 		chdir '/';
 		open STDIN, '/dev/null';
