@@ -9,8 +9,8 @@ use URI::Escape q{uri_escape_utf8};
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
-            %renderedfiles %oldrenderedfiles %pagesources %depends %hooks
-	    %forcerebuild $gettext_obj};
+            %renderedfiles %oldrenderedfiles %pagesources %destsources
+	    %depends %hooks %forcerebuild $gettext_obj};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
@@ -328,9 +328,13 @@ sub will_render ($$;$) { #{{{
 		$renderedfiles{$page}=[$dest, grep { $_ ne $dest } @{$renderedfiles{$page}}];
 	}
 	else {
+		foreach my $old (@{$renderedfiles{$page}}) {
+			delete $destsources{$old};
+		}
 		$renderedfiles{$page}=[$dest];
 		$cleared{$page}=1;
 	}
+	$destsources{$dest}=$page;
 } #}}}
 
 sub bestlink ($$) { #{{{
@@ -455,7 +459,7 @@ sub urlto ($$) { #{{{
 		return beautify_url(baseurl($from));
 	}
 
-	if (! grep { $_ eq $to } map { @{$_} } values %renderedfiles) {
+	if (! $destsources{$to}) {
 		$to=htmlpage($to);
 	}
 
@@ -489,18 +493,19 @@ sub htmllink ($$$;@) { #{{{
 	return "<span class=\"selflink\">$linktext</span>"
 		if length $bestlink && $page eq $bestlink;
 	
-	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
+	if (! $destsources{$bestlink}) {
 		$bestlink=htmlpage($bestlink);
-	}
-	if (! grep { $_ eq $bestlink } map { @{$_} } values %renderedfiles) {
-		return $linktext unless length $config{cgiurl};
-		return "<span><a href=\"".
-			cgiurl(
-				do => "create",
-				page => pagetitle(lc($link), 1),
-				from => $lpage
-			).
-			"\">?</a>$linktext</span>"
+
+		if (! $destsources{$bestlink}) {
+			return $linktext unless length $config{cgiurl};
+			return "<span><a href=\"".
+				cgiurl(
+					do => "create",
+					page => pagetitle(lc($link), 1),
+					from => $lpage
+				).
+				"\">?</a>$linktext</span>"
+		}
 	}
 	
 	$bestlink=abs2rel($bestlink, dirname(htmlpage($page)));
@@ -723,6 +728,7 @@ sub loadindex () { #{{{
 			$oldlinks{$page}=[@{$items{link}}];
 			$links{$page}=[@{$items{link}}];
 			$depends{$page}=$items{depends}[0] if exists $items{depends};
+			$destsources{$_}=$page foreach @{$items{dest}};
 			$renderedfiles{$page}=[@{$items{dest}}];
 			$oldrenderedfiles{$page}=[@{$items{dest}}];
 			$pagecase{lc $page}=$page;

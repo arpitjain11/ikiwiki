@@ -10,8 +10,11 @@ ikiwiki (1.50) UNRELEASED; urgency=low
   [ Joey Hess ]
   * Add support for PROFILE=1 to the Makefile, this turns on profiling of the
     wiki build using Devel::Profiler (Dprof can't handle ikiwiki).
+  * Add a new %destsources hash, which maps between a destination file and
+    the source page used to create it, ie it's the reverse of %renderedfiles.
+  * Use %destsources in htmllink and urlto for 20-50% speedup.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 09 Apr 2007 20:22:44 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 09 Apr 2007 21:09:32 -0400
 
 ikiwiki (1.49) unstable; urgency=low
 

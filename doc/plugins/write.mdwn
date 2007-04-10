@@ -266,9 +266,9 @@ use the following hashes, using a page name as the key:
 
 * `links` lists the names of each page that a page links to, in an array
   reference.
-* `%renderedfiles` lists names of the files rendered by a page, in an array
-  reference.
-* `%pagesources` contains the name of the source file for a page.
+* `%destsources` contains the name of the source file used to create each
+  destination file.
+* `%pagesources` contains the name of the source file for each page.
 
 Also, the %IkiWiki::version variable contains the version number for the
 ikiwiki program.
