@@ -1,0 +1,1 @@
+When run with the [[Git]] backend, ikiwiki should use `GIT_AUTHOR_NAME` and `GIT_AUTHOR_EMAIL` rather than munging the commit message.  Depending on the semantics you want to imply (does a web edit constitute a commit by the user or by the script?), it could also set `GIT_COMMITTER_NAME` and `GIT_COMMITTER_EMAIL` to the same values.  --[[JoshTriplett]]
