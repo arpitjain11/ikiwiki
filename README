@@ -1,5 +1,10 @@
 Use ./Makefile.PL to generate a Makefile, "make" will build the
 documentation wiki and a man page, and "make install" will install ikiwiki.
 
+A few special variables you can set while using the Makefile:
+
+PROFILE=1 turns on profiling for the build of the doc wiki. Uses Devel::Profile
+NOTAINT=1 turns off the taint flag in the ikiwiki program
+
 All other documentation is in the ikiwiki documentation wiki, which is also
 available online at <http://ikiwiki.info/>
