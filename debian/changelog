@@ -12,7 +12,8 @@ ikiwiki (1.50) UNRELEASED; urgency=low
     wiki build using Devel::Profiler (Dprof can't handle ikiwiki).
   * Add a new %destsources hash, which maps between a destination file and
     the source page used to create it, ie it's the reverse of %renderedfiles.
-  * Use %destsources in htmllink and urlto for 20-50% speedup.
+  * Use %destsources in htmllink and urlto for 20-50% speedup. Thanks
+    JoshTripplett for the idea.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 09 Apr 2007 21:09:32 -0400
 
