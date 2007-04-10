@@ -26,7 +26,7 @@ sub preprocess (@) { #{{{
 	
 	my @orphans;
 	my $discussion=gettext("discussion");
-	foreach my $page (keys %renderedfiles) {
+	foreach my $page (keys %pagesources) {
 		next if $linkedto{$page};
 		next unless pagespec_match($page, $params{pages}, $params{page});
 		# If the page has a link to some other page, it's
