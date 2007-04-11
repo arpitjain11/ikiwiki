@@ -4,10 +4,10 @@ RewriteEngine. This example is for a wiki at the top of a web site, but can
 be adapted to other situations.
 
 	# pages
-	RewriteCond $1 !^/~		# these pages
-	RewriteCond $1 !^/doc/		# are not part of
-	RewriteCond $1 !^/ajaxterm	# the wiki, so
-	RewriteCond $1 !^/cgi-bin/	# don't rewrite them
+	RewriteCond $1 !^/~          # these pages
+	RewriteCond $1 !^/doc/       # are not part of
+	RewriteCond $1 !^/ajaxterm   # the wiki, so
+	RewriteCond $1 !^/cgi-bin/   # don't rewrite them
 	RewriteCond $1 !.*/index$
 	RewriteRule (.+).html $1/ [R]
 	
