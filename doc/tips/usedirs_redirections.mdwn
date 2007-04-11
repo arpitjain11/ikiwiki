@@ -1,0 +1,22 @@
+Want to turn on the `usedirs` setting on an existing wiki without breaking
+all the links into it? Here's a way to do it for Apache, using the
+RewriteEngine. This example is for a wiki at the top of a web site, but can
+be adapted to other situations.
+
+	# pages
+	RewriteCond $1 !^/~		# these pages
+	RewriteCond $1 !^/doc/		# are not part of
+	RewriteCond $1 !^/ajaxterm	# the wiki, so
+	RewriteCond $1 !^/cgi-bin/	# don't rewrite them
+	RewriteCond $1 !.*/index$
+	RewriteRule (.+).html $1/ [R]
+	
+	# rss feeds
+	RewriteCond $1 !^/~
+	RewriteCond $1 !.*/index$
+	RewriteRule (.+).rss $1/index.rss
+	
+	# atom feeds
+	RewriteCond $1 !^/~
+	RewriteCond $1 !.*/index$
+	RewriteRule (.+).atom $1/index.atom
