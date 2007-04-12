@@ -1,1 +1,25 @@
 When --usedirs is used, RSS and Atom feeds seem to link to the index.html directly, both for the site and for the feed items, instead of the directory, as pages otherwise do.
+
+Patch:
+
+<pre>
+Index: IkiWiki/Plugin/inline.pm
+===================================================================
+--- IkiWiki/Plugin/inline.pm    (revision 3241)
++++ IkiWiki/Plugin/inline.pm    (working copy)
+@@ -312,13 +312,13 @@
+        my $page=shift;
+        my @pages=@_;
+ 
+-       my $url=URI->new(encode_utf8($config{url}."/".htmlpage($page)));
++       my $url=URI->new(encode_utf8($config{url}."/".urlto($page, "")));
+ 
+        my $itemtemplate=template($feedtype."item.tmpl", blind_cache => 1);
+        my $content="";
+        my $lasttime = 0;
+        foreach my $p (@pages) {
+-               my $u=URI->new(encode_utf8($config{url}."/".htmlpage($p)));
++               my $u=URI->new(encode_utf8($config{url}."/".urlto($p, "")));
+ 
+                my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
+</pre>
