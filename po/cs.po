@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-09 01:55-0700\n"
+"POT-Creation-Date: 2007-04-12 00:10-0400\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -29,7 +29,7 @@ msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:175 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:186 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
@@ -100,7 +100,7 @@ msgstr "zdroj shodil XML::Feed!"
 msgid "processed ok at %s"
 msgstr "zpracováno ok %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:334
+#: ../IkiWiki/Plugin/aggregate.pm:333
 #, perl-format
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
@@ -161,16 +161,20 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:152
+#: ../IkiWiki/Plugin/inline.pm:149
+msgid "Add a new post titled:"
+msgstr ""
+
+#: ../IkiWiki/Plugin/inline.pm:163
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:194 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:396
+#: ../IkiWiki/Plugin/inline.pm:403
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -556,11 +560,11 @@ msgstr "%s byl úspěšně vytvořen"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "použití: ikiwiki [volby] zdroj cíl"
 
-#: ../IkiWiki.pm:105
+#: ../IkiWiki.pm:104
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:152 ../IkiWiki.pm:153
+#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
 msgid "Error"
 msgstr "Chyba"
 
@@ -568,7 +572,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:620
+#: ../IkiWiki.pm:622
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"

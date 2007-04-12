@@ -137,6 +137,14 @@ sub preprocess_inline (@) { #{{{
 			exists $params{rootpage} ? $params{rootpage} : $params{page});
 		$formtemplate->param(rssurl => $rssurl) if $feeds && $rss;
 		$formtemplate->param(atomurl => $atomurl) if $feeds && $atom;
+		if (exists $params{postformtext}) {
+			$formtemplate->param(postformtext =>
+				$params{postformtext});
+		}
+		else {
+			$formtemplate->param(postformtext =>
+				gettext("Add a new post titled:"));
+		}
 		$ret.=$formtemplate->output;
 	}
 	elsif ($feeds) {

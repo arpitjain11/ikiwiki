@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.37\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-09 01:55-0700\n"
+"POT-Creation-Date: 2007-04-12 00:10-0400\n"
 "PO-Revision-Date: 2007-01-05 16:33+100\n"
 "Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -30,7 +30,7 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:175 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:186 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
@@ -101,7 +101,7 @@ msgstr "awaria kanału RSS w module XML::Feed!"
 msgid "processed ok at %s"
 msgstr "przetworzony kanał RSS w dniu %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:334
+#: ../IkiWiki/Plugin/aggregate.pm:333
 #, perl-format
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
@@ -166,16 +166,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "nieznany sposób sortowania %s"
 
-#: ../IkiWiki/Plugin/inline.pm:152
+#: ../IkiWiki/Plugin/inline.pm:149
+msgid "Add a new post titled:"
+msgstr ""
+
+#: ../IkiWiki/Plugin/inline.pm:163
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:194 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Dyskusja"
 
-#: ../IkiWiki/Plugin/inline.pm:396
+#: ../IkiWiki/Plugin/inline.pm:403
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Niezainstalowany moduł RPC::XML::Client, brak możliwości pingowania"
 
@@ -565,13 +569,13 @@ msgstr "strona pomyślnie utworzona %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "użycie: ikiwiki [parametry] źródło cel"
 
-#: ../IkiWiki.pm:105
+#: ../IkiWiki.pm:104
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
 "--url"
 
-#: ../IkiWiki.pm:152 ../IkiWiki.pm:153
+#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
 msgid "Error"
 msgstr "Błąd"
 
@@ -579,7 +583,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:620
+#: ../IkiWiki.pm:622
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
