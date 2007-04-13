@@ -1,4 +1,4 @@
-Ikiwiki does not seem to support non-UTF-8 file content, although there's no reason it should assume anything other than ASCII-compatibility from the encoding, at least if the Web interface is not used. It suffices that users use the same encoding as the templates specify. If I try to run it on `.mdwn` with content in a ISO-8859-1 format, I get:
+Ikiwiki does not seem to support non-UTF-8 file content, although there's no reason it should assume anything other than ASCII-compatibility from the encoding, at least if the Web interface is not used. It suffices that users use the same encoding as the templates specify. If I try to run it on `.mdwn` with content in ISO-8859-1 format, in an ISO-8859-1 locale, I get:
 
     Malformed UTF-8 character (unexpected non-continuation byte 0x74, immediately after start byte 0xe4) in substitution iterator at /usr/local/share/perl/5.8.8/IkiWiki.pm line 640.
 
