@@ -19,7 +19,9 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  displaytime will_render gettext urlto targetpage
                  %config %links %renderedfiles %pagesources);
 our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
-our $version="1.45";my $installdir="/usr";
+our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
+my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+
 # Optimisation.
 use Memoize;
 memoize("abs2rel");
