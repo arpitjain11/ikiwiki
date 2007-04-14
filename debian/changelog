@@ -29,8 +29,11 @@ ikiwiki (1.50) UNRELEASED; urgency=low
   * Internal version number and installdir substitutions were lost, fix.
   * Apply patch from Ethan to improve an error message that should never
     happen.
+  * Patch from Tuomov to link to the directory in feeds when usedirs is in
+    effect. Note that this changes permalinks, so if you are already using
+    usedirs you'll have to deal with that on upgrade to this version.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 14 Apr 2007 16:06:01 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 14 Apr 2007 16:11:30 -0400
 
 ikiwiki (1.49) unstable; urgency=low
 

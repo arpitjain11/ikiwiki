@@ -1,7 +1,15 @@
+ikiwiki (1.50) unstable; urgency=low
+
+  Permalinks and guids in rss and atom feeds for wikis using the usedirs
+  options will change in this release. If you have already enabled usedirs,
+  you may need to take steps to avoid flooding aggregators.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 14 Apr 2007 16:08:46 -0400
+
 ikiwiki (1.49) unstable; urgency=low
 
   Third-party plugins that use htmlpage() or abs2rel() to generate links
-  may need changes to support the new "userdir" option.
+  may need changes to support the new "usedirs" option.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 01 Apr 2007 16:20:09 -0400
 
