@@ -20,6 +20,7 @@ sub linkify ($$$$) {
 		$IkiWiki::pagecase{lc $page}=$page;
 		$links{$page}=[];
 		$renderedfiles{"$page.mdwn"}=[$page];
+		$destsources{$page}="$page.mdwn";
 	}
 	%config=IkiWiki::defaultconfig();
 	$config{cgiurl}="http://somehost/ikiwiki.cgi";
