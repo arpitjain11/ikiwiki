@@ -1,42 +1,4 @@
 This page is a place to document tips and techniques for using ikiwiki.
 
-[[toc ]]
-
-## wikiannounce
-
-One thing I use ikiwiki for is the web pages for software projects I
-maintain. Each of my projects has a news page with an announcements feed,
-and to automatically update this when I release a new version, generating
-an announcement from the debian/changelog and debian/NEWS files, I use a
-[wikiannounce](http://svn.kitenet.net/trunk/bin/wikiannounce) program. It's
-somewhat specific to dealing with Debian packages, and uses a special
-`announcedir` target in debian/rules, but the general idea could be useful.
---[[Joey]]
-
-## blog script
-
-I should mention that I also have a
-[blog](http://svn.kitenet.net/trunk/bin/blog) program that I use to
-write blog posts in a text editor. The first line I enter is used as the
-title, and it automatically comes up with a unique page name based on the
-title and handles all the details of posting to my blog. --[[Joey]]
-
-## using the web interface with a real text editor
-
-If you use Firefox or Iceweasel, the [It's All
-Text](https://addons.mozilla.org/en-US/firefox/addon/4125) extension allows
-you to use a real text editor like Emacs or Vim to edit the contents of text
-areas.  This allows you to edit ikiwiki pages with a real text editor through
-the ikiwiki web interface, rather than only with direct commit
-access. --[[JoshTriplett]]
-
-## using ikiwiki as an issue tracker
-
-[[This_article|issue_tracking]] has some thoughts and tips on using ikiwiki
-as a BTS, as is done on this very wiki to track [[bugs]] and [[todo]] items
-for ikiwiki.
-
-## redirections for usedirs
-
-Want to turn on the `usedirs` setting on an existing wiki without breaking
-all the links into it? Here's [[how|usedirs_redirections]].
+[[inline pages="tips/* and !*/Discussion" archive="yes"
+rootpage="tips" postformtext="Add a new tip about:" show=0]]
