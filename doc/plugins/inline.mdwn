@@ -17,10 +17,6 @@ directive:
 * `show` - Specify the maximum number of matching pages to inline.
   Default is 10, unless archiving, when the default is to show all.
   Set to 0 to show all matching pages.
-* `feedshow` - Specify the maximum number of matching pages to include in
-  the rss/atom feeds. The default is the same as the `show` value above,
-  and it cannot be larger than that value, but can be set to a smaller
-  value to avoid producing excessively large feed files.
 * `skip` - Specify a number of pages to skip displaying. Can be useful
   to produce a feed that only shows archived pages.
 * `rss` - controls generation of an rss feed. On by default if the wiki is
@@ -56,3 +52,11 @@ directive:
   sort newest created pages first. Setting it to "title" will sort pages by
   title, and "mtime" sorts most recently modified pages first.
 * `reverse` - If set to "yes", causes the sort order to be reversed.
+* `feedpages` - A [[PageSpec]] of inlined pages to include in the rss/atom
+  feeds. The default is the same as the `pages` value above, and only pages
+  matches by that value are included, but some of those can be excluded by
+  specifying a tighter [[PageSpec]] here.
+* `feedshow` - Specify the maximum number of matching pages to include in
+  the rss/atom feeds. The default is the same as the `show` value above,
+  and it cannot be larger than that value, but can be set to a smaller
+  value to avoid producing excessively large feed files.

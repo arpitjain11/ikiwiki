@@ -222,6 +222,9 @@ sub preprocess_inline (@) { #{{{
 		if (exists $params{feedshow} && @list > $params{feedshow}) {
 			@list=@list[0..$params{feedshow} - 1];
 		}
+		if (exists $params{feedpages}) {
+			@list=grep { pagespec_match($_, $params{feedpages}, $params{page}) } @list;
+		}
 	
 		if ($rss) {
 			my $rssp=rsspage($params{page});
