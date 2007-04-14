@@ -1,0 +1,25 @@
+If you have a [[blog]] that is aggregated, either on a site like Planet
+Debian, or just through user subscriptions, one common problem is that
+changes to the guids of items in the blog can "flood" the aggregator,
+causing all recent blog entries to be posted to the top of it. 
+
+This can happen in a lot of situations:
+
+* Perhaps you've just switched to ikiwiki from some other blog engine and
+  imported your data.
+* Perhaps you've turned on the `usedirs` setting, which changes all the
+  urls in your wiki. Even if you set up
+  [[redirections|redirections_for_usedirs]] for the old urls, you still face
+  the issue of flooding aggregators.
+* Perhaps you've just moved stuff around in your wiki.
+
+To avoid annoying readers in these situations, it's a good idea to remove
+and existing items from your blog's news feed. That way only new items will
+show up in the aggregator. The best way to do this is currently to modify
+the [[PageSpec]] for your [[blog]] and add a condition such as:
+
+	and created_after(blog/posts/old_post)
+
+Where "old_post" is the name of the last post you made to the blog before
+making the change. This will limit the feed to only newer posts (the older
+posts will still be available in the archives).
