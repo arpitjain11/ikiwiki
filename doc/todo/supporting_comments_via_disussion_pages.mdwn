@@ -1,0 +1,31 @@
+I would love to see more traditional support for comments in ikiwiki.   One way would be to structure data on the discussion page in such a way that a "comment" plugin could parse it and yet the discussion page would still be a valid and usable wiki page.
+
+For example if the discussion page looked like this:
+
+    # Subject of First Comment
+    Posted by [Adam Shand](http://adam.shand.net/) at 10:34PM on 14/04/2007
+
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi consectetuer nunc quis 
+    magna.  Etiam non est eget sapien vulputate varius. Vivamus magna. Sed justo. Donec 
+    pellentesque ultrices urna.
+
+    # Subject of the Second Comment
+    Posted by [Foo Bar](http://foobar.net/) at 11:41PM on 14/04/2007
+
+    Quisque lacinia, lorem eget ornare facilisis, enim eros iaculis felis, id volutpat nibh
+    mauris ut felis. Vestibulum risus nibh, adipiscing volutpat, volutpat et, lacinia ut, 
+    pede. Maecenas dolor. Vivamus feugiat volutpat ligula.
+
+Each header marks the start of a new comment and the line immediately following is the comments meta data (author, email/url, datestamp).  Hopefully you could structure it in such a way that the scope 
+
+This would allow:
+
+ * A comment plugin to render the comments in "traditional blog" format .  
+ * Possibly even support nesting comments by the header level?
+ * A comment plugin to create a form at the bottom of the page for people to add comments in the appropriate format to the discussion page
+ * Still remain usable and readable by people who work via svn.
+ * When there is ACL support you could mark the discussion page as read only so it could only be updated by the comment plugin (if that's what you wanted)
+
+Is this simple enough to be sensible?
+
+-- [[AdamShand]]
