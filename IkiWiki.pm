@@ -248,7 +248,7 @@ sub srcfile ($) { #{{{
 
 	return "$config{srcdir}/$file" if -e "$config{srcdir}/$file";
 	return "$config{underlaydir}/$file" if -e "$config{underlaydir}/$file";
-	error("internal error: $file cannot be found");
+	error("internal error: $file cannot be found in $config{srcdir} or $config{underlaydir}");
 } #}}}
 
 sub readfile ($;$$) { #{{{
