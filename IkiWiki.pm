@@ -31,7 +31,8 @@ memoize("file_pruned");
 sub defaultconfig () { #{{{
 	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
 		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
-		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//],
+		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
+		qr/\.dpkg-tmp$/],
 	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]#]+)(?:#([^\s\]]+))?\]\]/,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
