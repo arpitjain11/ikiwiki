@@ -1,0 +1,46 @@
+I'm using the aggregate plugin (which is wonderful, thanks!) at this URL http://adam.shand.net/blog/planet/
+
+When I run ikiwiki with "--aggregate" I get this error:
+
+    ronin(adam)$ /usr/bin/ikiwiki --setup ~adam/.ikiwiki/asni.setup --aggregategate
+    successfully generated /var/www/adam.shand.net/iki.cgi
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
+
+Also, feeds from DokuWiki seem to crash the aggregate plugin completely, it's not a completely valid feed but presumably crashing is still bad.  The feed I'm seeing this with is http://www.wirelesscommons.org/feed.php
+
+    -- System Information:
+    Debian Release: 3.1
+      APT prefers testing
+      APT policy: (650, 'testing')
+    Architecture: i386 (i686)
+    Kernel: Linux 2.4.25-1um
+    Locale: LANG=C, LC_CTYPE=C (charmap=ANSI_X3.4-1968)
+
+    Versions of packages ikiwiki depends on:
+    ii  gcc [c-compiler]             4:3.3.5-3   The GNU C compiler
+    ii  gcc-2.95 [c-compiler]        1:2.95.4-22 The GNU C compiler
+    ii  gcc-3.3 [c-compiler]         1:3.3.5-13  The GNU C compiler
+    ii  libc6-dev [libc-dev]         2.3.6-7     GNU C Library: Development Librari
+    ii  libcgi-formbuilder-perl      3.03.01-1   Easily generate and process statef
+    ii  libcgi-session-perl          4.14-1      Persistent session data in CGI app
+    ii  libhtml-parser-perl          3.45-2      A collection of modules that parse
+    ii  libhtml-scrubber-perl        0.08-3      Perl extension for scrubbing/sanit
+    ii  libhtml-template-perl        2.8-1       HTML::Template : A module for usin
+    ii  libmail-sendmail-perl        0.79-1      Send email from a perl script
+    ii  libtime-duration-perl        1.02-1      Time::Duration -- rounded or exact
+    ii  libtimedate-perl             1.1600-4    Time and date functions for Perl
+    ii  liburi-perl                  1.35-1      Manipulates and accesses URI strin
+    ii  libxml-simple-perl           2.14-5      Perl module for reading and writin
+    ii  markdown                     1.0.1-3     Text-to-HTML conversion tool
+    ii  perl                         5.8.8-6.1   Larry Wall's Practical Extraction
+
+
+Cheers,
+--[[AdamShand]]
