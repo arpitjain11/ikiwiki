@@ -1,0 +1,41 @@
+News for ikiwiki 1.50:
+
+   Permalinks and guids in rss and atom feeds for wikis using the usedirs
+   options will change in this release. If you have already enabled usedirs,
+   you may need to take steps to avoid flooding aggregators.
+
+ikiwiki 1.50 released with [[toggle text="these changes"]]
+[[toggleable text="""
+ * [ Josh Triplett ]
+   * Add a graphviz plugin.
+   * Suggests: graphviz
+   * Enhance helponformatting and related documentation to supply more
+     information about available preprocessor directives.
+   * Add myself as a co-maintainer, with Joey's approval.
+ * [ Joey Hess ]
+   * Add support for PROFILE=1 to the Makefile, this turns on profiling of the
+     wiki build using Devel::Profiler (Dprof can't handle ikiwiki).
+   * Add a new %destsources hash, which maps between a destination file and
+     the source page used to create it, ie it's the reverse of %renderedfiles.
+   * Use %destsources in htmllink and urlto for 20-50% speedup. Thanks
+     Josh Triplett for the idea.
+   * Optimise displaytime, trimming maybe 6% off the build time.
+ * [ Josh Triplett ]
+   * Conflicts/Replaces/Provides the unofficial ikiwiki-plugin-table
+     package, because ikiwiki now provides the table plugin, and thus has
+     a file overlap with ikiwiki-plugin-table.
+   * Add libtext-csv-perl to Suggests, for the table plugin.
+   * Add libdigest-sha1-perl to Suggests, for sparkline and graphviz.
+   * Add libtext-typography-perl to Suggests for the typography plugin.
+ * [ Joey Hess ]
+   * Add postformtext parameter to inline.
+   * Internal version number and installdir substitutions were lost, fix.
+   * Apply patch from Ethan to improve an error message that should never
+     happen.
+   * Patch from Tuomov to link to the directory in feeds when usedirs is in
+     effect. Note that this changes permalinks, so if you are already using
+     usedirs you'll have to deal with that on upgrade to this version.
+   * Add feedshow parameter to inline, which can be useful for eg, removing
+     old posts from feeds when permalinks change.
+   * Add .dpkg-tmp to prune regexp, so that if ikiwiki is run right as it's
+     being upgraded by dpkg it will ignore dpkg temp files in the basewiki."""]]
