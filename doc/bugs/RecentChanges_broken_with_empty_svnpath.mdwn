@@ -1,0 +1,23 @@
+The [[RecentChanges]] page is broken (doesn't show any history at all) when used with an empty svnpath in the ikiwiki.setup file.
+
+Say you have the following configuration:
+
+    rcs => "svn",
+    svnrepo => "ssh+svn://foo.bar.com/wiki",
+    svnpath => "",
+
+In the above, $svnpath need to be either empty or "/" - both trigger the 'next unless' check in IkiWiki/Rcs/svn.pm:rcs_recentchanges() as shown in the patch below, thus causing all files to be ignored for [[RecentChanges]].
+
+I can not see why this check is needed in the first place, so here's a patch for removing it :)
+
+    diff -upr ikiwiki-1.49.orig/IkiWiki/Rcs/svn.pm ikiwiki-1.49/IkiWiki/Rcs/svn.pm
+    --- ikiwiki-1.49.orig/IkiWiki/Rcs/svn.pm	Mon Apr 16 15:15:09 2007
+    +++ ikiwiki-1.49/IkiWiki/Rcs/svn.pm	Mon Apr 16 15:15:47 2007
+    @@ -176,7 +176,6 @@ sub rcs_recentchanges ($) { #{{{
+     		}
+     
+     		foreach (keys %{$logentry->{paths}}) {
+    -			next unless /^\/\Q$config{svnpath}\E\/([^ ]+)(?:$|\s)/;
+     			my $file=$1;
+     			my $diffurl=$config{diffurl};
+     			$diffurl=~s/\[\[file\]\]/$file/g;
