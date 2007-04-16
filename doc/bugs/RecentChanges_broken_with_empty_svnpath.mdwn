@@ -21,3 +21,6 @@ I can not see why this check is needed in the first place, so here's a patch for
      			my $file=$1;
      			my $diffurl=$config{diffurl};
      			$diffurl=~s/\[\[file\]\]/$file/g;
+
+> It's necessary for wikis, such as this one, that keep other things in the
+> same svn repository. Bug [[fixed|done]]. --[[Joey]]

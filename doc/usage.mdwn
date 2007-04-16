@@ -160,7 +160,8 @@ configuration options of their own.
 
   Specify the path inside your svn repository where the wiki is located.
   This defaults to `trunk`; change it if your wiki is at some other path
-  inside the repository.
+  inside the repository. If your wiki is rooted at the top of the repository,
+  set svnpath to "".
 
 * --rss, --norss
 
