@@ -58,17 +58,17 @@
 <TMPL_VAR CONTENT>
 </div>
 
-<div class="tags">
 <TMPL_IF NAME="TAGS">
+<div class="tags">
 Tags:
 <TMPL_LOOP NAME="TAGS">
 <TMPL_VAR NAME=LINK>
 </TMPL_LOOP>
-</TMPL_IF>
 </div>
+</TMPL_IF>
 
-<div id="backlinks">
 <TMPL_IF NAME="BACKLINKS">
+<div id="backlinks">
 Links:
 <TMPL_LOOP NAME="BACKLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>
@@ -82,8 +82,8 @@ Links:
 </span>
 </span>
 </TMPL_IF>
-</TMPL_IF>
 </div>
+</TMPL_IF>
 
 <div id="footer">
 <div class="pageinfo">
