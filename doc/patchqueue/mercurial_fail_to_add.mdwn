@@ -1,0 +1,18 @@
+I don't know what's wrong but I can't add a file with the mercurial backend (the file is created but not added).
+
+Here is a patch that's seems to work, although I'm not quite sure what's wrong with current code :
+
+  hbernard@tactic:/usr/share/perl5/IkiWiki/Rcs$ diff mercurial.pm /home/hbernard/mercurial.pm -Nau
+  --- mercurial.pm        2007-03-24 16:14:35.000000000 +0100
+  +++ /home/hbernard/mercurial.pm 2007-04-19 19:05:47.000000000 +0200
+  @@ -95,7 +95,7 @@
+   sub rcs_add ($) { # {{{
+          my ($file) = @_;
+   
+  -       my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$file");
+  +       my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$config{srcdir}/$file");
+          if (system(@cmdline) != 0) {
+                  warn "'@cmdline' failed: $!";
+          }
+
+My srcdir path has some symbolics links and hidden directorys... maybe that's it ?
