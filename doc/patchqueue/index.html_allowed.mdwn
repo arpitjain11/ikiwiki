@@ -1,0 +1,100 @@
+Instead of having files foo.html "in front of" foo/, I prefer to have 
+foo/index.html.
+
+I independently implemented a similar, but smaller patch.
+(It's smaller because I only care about rendering; not CGI, for example.)
+The key to this patch is that "A/B/C" is treated as equivalent
+to "A/B/C/index".
+Here it is:  --Per Bothner
+
+    --- IkiWiki/Render.pm~  2007-01-11 15:01:51.000000000 -0800
+    +++ IkiWiki/Render.pm   2007-02-02 22:24:12.000000000 -0800
+    @@ -60,9 +60,9 @@
+            foreach my $dir (reverse split("/", $page)) {
+                    if (! $skip) {
+                            $path.="../";
+    -                       unshift @ret, { url => $path.htmlpage($dir), page => pagetitle($dir) };
+    +                       unshift @ret, { url => abs2rel(htmlpage(bestlink($page, $dir)), dirname($page)), page => pagetitle($dir) };
+                    }
+    -               else {
+    +               elsif ($dir ne "index") {
+                            $skip=0;
+                    }
+            }
+
+    --- IkiWiki.pm~ 2007-01-12 12:47:09.000000000 -0800
+    +++ IkiWiki.pm  2007-02-02 18:02:16.000000000 -0800
+    @@ -315,6 +315,12 @@
+                    elsif (exists $pagecase{lc $l}) {
+                            return $pagecase{lc $l};
+                     }
+    +               else {
+    +                   my $lindex = $l . "/index";
+    +                   if (exists $links{$lindex}) {
+    +                       return $lindex;
+    +               }
+    +               }
+             } while $cwd=~s!/?[^/]+$!!;
+     
+            if (length $config{userdir} && exists $links{"$config{userdir}/".lc($link)}) {
+
+Note I handle setting the url; slightly differently.
+Also note that an initial "index" is ignored.  I.e. a
+page "A/B/index.html" is treated as "A/B".
+
+> Actually, your patch is shorter because it's more elegant and better :)
+> I'm withdrawing my old patch, because yours is much more in line with
+> ikiwiki's design and architecture.
+> I would like to make one suggestion to your patch, which is:
+
+    diff -urX ignorepats clean-ikidev/IkiWiki/Plugin/inline.pm ikidev/IkiWiki/Plugin/inline.pm
+    --- clean-ikidev/IkiWiki/Plugin/inline.pm   2007-02-25 12:26:54.099113000 -0800
+    +++ ikidev/IkiWiki/Plugin/inline.pm 2007-02-25 14:55:21.163340000 -0800
+    @@ -154,7 +154,7 @@
+                        $link=htmlpage($link) if defined $type;
+                        $link=abs2rel($link, dirname($params{destpage}));
+                        $template->param(pageurl => $link);
+    -                   $template->param(title => pagetitle(basename($page)));
+    +                   $template->param(title => titlename($page));
+                        $template->param(ctime => displaytime($pagectime{$page}));
+
+                        if ($actions) {
+    @@ -318,7 +318,7 @@
+                my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
+
+                $itemtemplate->param(
+    -                   title => pagetitle(basename($p), 1),
+    +                   title => titlename($p, 1),
+                        url => $u,
+                        permalink => $u,
+                        date_822 => date_822($pagectime{$p}),
+    diff -urX ignorepats clean-ikidev/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
+    --- clean-ikidev/IkiWiki/Render.pm  2007-02-25 12:26:54.745833000 -0800
+    +++ ikidev/IkiWiki/Render.pm        2007-02-25 14:54:01.564715000 -0800
+    @@ -110,7 +110,7 @@
+        $template->param(
+                title => $page eq 'index'
+                        ? $config{wikiname}
+    -                   : pagetitle(basename($page)),
+    +                   : titlename($page),
+                wikiname => $config{wikiname},
+                parentlinks => [parentlinks($page)],
+                content => $content,
+    diff -urX ignorepats clean-ikidev/IkiWiki.pm ikidev/IkiWiki.pm
+    --- clean-ikidev/IkiWiki.pm 2007-02-25 12:26:58.812850000 -0800
+    +++ ikidev/IkiWiki.pm       2007-02-25 15:05:22.328852000 -0800
+    @@ -192,6 +192,12 @@
+        return $untainted;
+     } #}}}
+
+    +sub titlename($;@) { #{{{
+    +   my $page = shift;
+    +   $page =~ s!/index$!!;
+    +   return pagetitle(basename($page), @_);
+    +} #}}}
+    +
+     sub basename ($) { #{{{
+        my $file=shift;
+
+
+> This way foo/index gets "foo" as its title, not "index". --Ethan
