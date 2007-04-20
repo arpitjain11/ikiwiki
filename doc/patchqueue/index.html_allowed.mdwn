@@ -1,5 +1,9 @@
-Instead of having files foo.html "in front of" foo/, I prefer to have 
-foo/index.html.
+This page used to be used for two patches, one of which is applied
+providing the usedirs option for output. The remaining patch, discussed
+below, concerns wanting to use foo/index.mdwn source files and get an
+output page name of foo, rather than foo/index. --[[Joey]]
+
+---
 
 I independently implemented a similar, but smaller patch.
 (It's smaller because I only care about rendering; not CGI, for example.)
