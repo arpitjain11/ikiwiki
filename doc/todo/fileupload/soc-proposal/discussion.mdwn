@@ -10,6 +10,10 @@ It's not clear to me that the concept of attaching files to a page fits ikiwiki 
 
 >>> So _some-dir/some-page_ would feature an upload form that stored its payload in _some-dir/some-page/file_? IOW, we'd still be attaching files, but making the relationship between attacher and attached more explicit? --Ben
 
+>>>> More explicit or less, I don't know.. :-) It seems to make sense for most of the use cases I've thought of to put the uploaded file there, but there might be use cases where it would go somewhere else, and so maybe the UI should allow specifying where it goes (similarly to how ikwiki allows specifying where to put a page when creating a new page).
+
+>>>> Exactly where the upload form should be I don't know. Putting it directly on the page seems somewhat strange, I know that some wikis have an actions menu that includes file upload and deletion, I think others make the Edit form include support for uploading files. Maybe survey other wikis and base it on a UI that works well.
+
 > As for the attachment list, I envisaged that being optional. --Ben
 
 >> So some kind of preprocessor directive that is added to a page to generate the attachment list?
