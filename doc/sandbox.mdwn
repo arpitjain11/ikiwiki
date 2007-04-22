@@ -2,13 +2,6 @@ This is the SandBox, a page anyone can edit to try out ikiwiki.
 
 ----
 
-So, I'm wondering why ikiwiki requires links to have no spaces in their names, and uses .html suffixes. I really don't like having to use [[CamelCase]] for multi-word links, and it's generally not good practice to encode stuff like filetype or specific technologies in the URL; that's what we have a MIME type for. Anyhow, this is really just a test for playing around in the sanbox, but those are the two things that bother me the most off the bat about ikiwiki.
-
-> For the former: because links with spaces get parsed as [[preprocessor_directives|preprocessordirective]].  You can get away with it if the first word doesn't correspond to a preprocessor directive.  If you have another syntax you'd prefer, feel free to propose it.  For instance, I can imagine extending the syntax with something like [["link with spaces"]].
-> For the latter: see the new `usedirs` option if you want to avoid .html suffixes.
-
-----
-
 testing openid ... ignore.
 
 Test. Проверка. テスト ığüşöçİ ทดสอบ éphémère
