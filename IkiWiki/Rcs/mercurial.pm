@@ -72,7 +72,7 @@ sub rcs_commit ($$$;$$) { #{{{
 		$user = possibly_foolish_untaint($user);
 	}
 	elsif (defined $ipaddr) {
-		$user = "Anonymous from $ipaddr";
+		$user = "Anonymous from ".possibly_foolish_untaint($ipaddr);
 	}
 	else {
 		$user = "Anonymous";

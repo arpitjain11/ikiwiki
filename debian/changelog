@@ -3,8 +3,10 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Support setting svnpath to "" for wikis that are rooted at the top of
     their svn repositories, with no trunk directory.
   * Minor template improvements by Alessandro.
+  * In mercurial backend, untaint ipaddr when using it as the user for the
+    commit. Thanks, Alexander Wirt. Closes: #420428
 
- -- Joey Hess <joeyh@debian.org>  Wed, 18 Apr 2007 19:35:29 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 22 Apr 2007 13:43:49 -0400
 
 ikiwiki (1.50) unstable; urgency=low
 
