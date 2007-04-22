@@ -1,0 +1,11 @@
+Firefox and Iceweasel, when encountering a news feed, display a page that
+allows the user to subscribe to the feed, using Live Bookmarks, Google Reader,
+Bloglines, My Yahoo!, or an external reader program.  The list of available
+applications comes from URIs and titles in the preferences, under
+`browser.contentHandlers.types.*`.  For the benefit of people who use
+[[plugin/aggregate]] as their feed reader, the ikiwiki CGI could expose a URI
+to directly add a new feed to the aggregated list; this would allow users to
+configure their browser to subscribe to feeds via [[plugin/aggregate]] running
+on their site.  We could then provide the manual configuration settings as a
+[[tip|tips]], and perhaps provide an extension or other mechanism to set them
+automatically. --[[JoshTriplett]]
