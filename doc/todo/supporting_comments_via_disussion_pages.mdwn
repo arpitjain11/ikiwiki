@@ -1,4 +1,7 @@
-I would love to see more traditional support for comments in ikiwiki.   One way would be to structure data on the discussion page in such a way that a "comment" plugin could parse it and yet the discussion page would still be a valid and usable wiki page.
+I would love to see more traditional support for comments in ikiwiki.   One
+way would be to structure data on the discussion page in such a way that a
+"comment" plugin could parse it and yet the discussion page would still be
+a valid and usable wiki page.
 
 For example if the discussion page looked like this:
 
@@ -16,7 +19,9 @@ For example if the discussion page looked like this:
     mauris ut felis. Vestibulum risus nibh, adipiscing volutpat, volutpat et, lacinia ut, 
     pede. Maecenas dolor. Vivamus feugiat volutpat ligula.
 
-Each header marks the start of a new comment and the line immediately following is the comments meta data (author, email/url, datestamp).  Hopefully you could structure it in such a way that the scope 
+Each header marks the start of a new comment and the line immediately
+following is the comments meta data (author, email/url, datestamp).
+Hopefully you could structure it in such a way that the scope 
 
 This would allow:
 
@@ -30,6 +35,19 @@ Is this simple enough to be sensible?
 
 -- [[AdamShand]]
 
-I've been looking into this.  I'd like to implement a "blogcomments" plugin.  Looking at the code, I think the way to go is to have a formbuilder_setup hook that uses a different template instead of the standard editpage one.  That template would not display the editcontent field.  The problem that I'm running into is that I need to append the new content to the old one.
+> Well, if it's going to look like a blog, why not store the data the same
+> way ikiwiki stores blogs, with a separate page per comment? As already
+> suggested in [[discussion_page_as_blog]] though there are some things to
+> be worked out also discussed there.
+> --[[Joey]]
+
+I've been looking into this.  I'd like to implement a "blogcomments"
+plugin.  Looking at the code, I think the way to go is to have a
+formbuilder_setup hook that uses a different template instead of the
+standard editpage one.  That template would not display the editcontent
+field.  The problem that I'm running into is that I need to append the new
+content to the old one.
 
 -- [[MarceloMagallon]]
+
+> Anything I can do to help? --[[Joey]]
