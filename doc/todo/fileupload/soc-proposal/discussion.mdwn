@@ -8,9 +8,13 @@ It's not clear to me that the concept of attaching files to a page fits ikiwiki 
 
 >> I'd suggest `some-dir/some-page/file`, which nicely makes clear that the file is "attached" to some-page, allows easy wikilinks to "file" from some-page, and has other nice properties.
 
+>>> So _some-dir/some-page_ would feature an upload form that stored its payload in _some-dir/some-page/file_? IOW, we'd still be attaching files, but making the relationship between attacher and attached more explicit? --Ben
+
 > As for the attachment list, I envisaged that being optional. --Ben
 
 >> So some kind of preprocessor directive that is added to a page to generate the attachment list?
+
+>>> Absolutely. 
 
 I don't understand why the file size would need to be stored in the index file; this information is available by statting the file, surely? Similarly, the mime type can be determined through inspection, unless there turns out to be a reason to need to cache it for speed.
 
