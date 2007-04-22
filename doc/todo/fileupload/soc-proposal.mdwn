@@ -1,0 +1,92 @@
+# SoC Proposal for Implementation of a File Upload Interface
+
+I intend to extend Ikiwiki such that it accepts file uploads, subject to access
+control, and displays image collections in a gallery format. Since the latter
+component is dependent on the former, I will defer its planning for now. What
+follows is a very rough draft of my thoughts on the matter. Comments are
+welcomed, either on the discussion page or via e-mail (_me_ at _inelegant.org_).
+
+I suggest we adopt the Trac/Wikipedia concept of "attaching" files to a given
+page. In this scenario, each page for which file upload has been enabled, will
+sport an `<input type="file">` construct along with an _Attach_ button. Upon
+successfully attaching a file, its name will be appended to an _"Attachments"_
+list at the bottom of the page. The names in the list will link to the
+appropriate files. Architecturally, this means that after a file has been attached to a page, the
+page will have to be rebuilt. 
+
+## Metadata
+
+Uploaded files will have at least the following pieces of metadata:
+
+ * Filename
+ * Upload date
+ * Page attached to  
+ * Uploader's name
+ * File size  
+ * File type  
+
+The first three pieces of data are associated with every new page on the wiki by
+means of the _.ikiwiki/index_ file (_src_/_dest_, _ctime_, and _link_,
+respectively). The next two are stored in the RCS log.
+
+Ideally, the list of attachments for a given page will detail, at least, each attachment's
+type (so the user knows whether they can open it), size (so the user knows
+whether it is worth downloading), and potentially a thumbnail of some sort for
+images and videos. It is potentially expensive to query the RCS for this data on
+every page rebuild, so I propose the addition of two optional fields to the
+index file: _mime_, which contains the MIME type of the _dest_ file, and _size_,
+which contains the size in bytes of _dest_. 
+
+If a user attached a photograph (_my-cat.png_) to a page (_my-cat_), the
+following lines are representative of what _index_ may store:
+
+    mtime=1174347925 ctime=1169220485 src=my-cat.png dest=my-cat.png link=my-cat mime=image/png size=73100
+    mtime=1174347927 ctime=1174347927 src=my-cat.mdwn dest=my-cat/index.html link=my-cat.png
+
+Thus, we define an attachment as file linked from an existing page, with a
+non-_text/html_ MIME type.
+
+## Configuration
+
+In [[todo/fileupload]] it is specified that the upload feature must be highly
+configurable. It is suggested that this configuration be achieved by embedding
+directives in the wiki pages directly.
+
+Consider an ikiwiki for photographers. The admin decides to allow users to
+upload their photographs. Using the Pagespec suggestion, he must enforce this
+policy on the front page of his wiki (as preferences cascade horizontally
+downwards). He must then lock the front page from editing, in order to prevent
+his users from reversing his decision. IOW, he is forced to lock a page purely
+to register a configuration preference. He will need to repeat this process for
+each layer of the hierarchy he wants to apply a different policy to.
+
+Further, these embedded configuration directives risk overshadowing the content
+of the page, and thus confusing users. This would become particularly
+problematic for wikis which need to maintain blacklists/whitelists for access
+control -- they would need to continually update wiki pages (thus polluting the
+RCS logs) just to stem abuse.
+
+I suspect that we can accommodate most use cases by allowing these options to be
+set globally in the _ikiwiki.setup_ file. They can then be optionally set on a
+page-by-page basis by use of pagespecs or a reworking of the config system such
+that ikiwiki dotfiles can be placed at arbitrary levels of the hierarchy, and
+have their directives supersede those set by their parents. Clearly, the first
+option is significantly simpler.
+
+## Operation
+
+1. File upload forms will be rendered on all wiki pages which have been allowed
+in the global configuration file. By default, this will probably be none of
+them.
+2. The forms will interface with _ikiwiki.cgi_, passing it the filename, the
+file contents, and the name of the page to which it is being attached.
+3. The CGI will consult the config file and any embedded pagespecs in turn, to
+determine whether the access controls permit the upload. If they don't, an error
+message will be displayed to the user, and the process will abort.
+4. The uploaded file will be saved to the appropriate directory.
+5. The uploaded file will be committed to the RCS.
+6. _.ikiwiki/index_ will be modified to reflect the new upload (as above).
+7. The page to which the file is attached (and any other
+affected pages) will be regenerated.
+
+--Ben   
