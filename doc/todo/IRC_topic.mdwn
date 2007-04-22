@@ -2,3 +2,7 @@ ikiwiki could support grabbing the /topic from an IRC channel and putting the
 result in a page.  See <http://wiki.debian.org/TopicDebianDevel> for an
 example.  Like [[plugins/aggregate]], the page and its updates should not go
 in version control. --[[JoshTriplett]]
+
+A simple script should be able to poll for the irc topic and update a page,
+then run ikiwiki -refresh to update the wiki. No need to put that in
+ikiwiki or a plugin, though. --[[Joey]]
