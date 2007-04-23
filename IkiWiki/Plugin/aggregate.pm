@@ -229,6 +229,8 @@ sub expire () { #{{{
 sub aggregate () { #{{{
 	eval q{use XML::Feed};
 	error($@) if $@;
+	eval q{use URI::Fetch};
+	error($@) if $@;
 	eval q{use HTML::Entities};
 	error($@) if $@;
 
@@ -237,6 +239,9 @@ sub aggregate () { #{{{
 			time - $feed->{lastupdate} >= $feed->{updateinterval};
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
+		$feed->{message}=sprintf(gettext("processed ok at %s"),
+			displaytime($feed->{lastupdate}));
+		$feed->{error}=0;
 		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
 
 		debug(sprintf(gettext("checking feed %s ..."), $feed->{name}));
@@ -251,7 +256,29 @@ sub aggregate () { #{{{
 			}
 			$feed->{feedurl}=pop @urls;
 		}
-		my $f=eval{XML::Feed->parse(URI->new($feed->{feedurl}))};
+		my $res=URI::Fetch->fetch($feed->{feedurl});
+		if (! $res) {
+			$feed->{message}=URI::Fetch->errstr;
+			$feed->{error}=1;
+			debug($feed->{message});
+			next;
+		}
+		if ($res->status == URI::Fetch::URI_GONE()) {
+			$feed->{message}=gettext("feed not found");
+			$feed->{error}=1;
+			debug($feed->{message});
+			next;
+		}
+		my $content=$res->content;
+		my $f=eval{XML::Feed->parse(\$content)};
+		if ($@) {
+			# One common cause of XML::Feed crashing is a feed
+			# that contains invalid UTF-8 sequences. Convert
+			# feed to ascii to try to work around.
+			$feed->{message}=sprintf(gettext("invalid UTF-8 stripped from feed"));
+			$content=Encode::decode_utf8($content);
+			$f=eval{XML::Feed->parse(\$content)};
+		}
 		if ($@) {
 			$feed->{message}=gettext("feed crashed XML::Feed!")." ($@)";
 			$feed->{error}=1;
@@ -270,15 +297,11 @@ sub aggregate () { #{{{
 				feed => $feed,
 				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 				link => $entry->link,
-				content => $entry->content->body,
+				content => defined $entry->content->body ? $entry->content->body : "",
 				guid => defined $entry->id ? $entry->id : time."_".$feed->name,
 				ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
 			);
 		}
-
-		$feed->{message}=sprintf(gettext("processed ok at %s"),
-			displaytime($feed->{lastupdate}));
-		$feed->{error}=0;
 	}
 } #}}}
 

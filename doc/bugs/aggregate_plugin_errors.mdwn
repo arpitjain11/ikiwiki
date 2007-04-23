@@ -13,7 +13,21 @@ When I run ikiwiki with "--aggregate" I get this error:
     Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
     Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki/Plugin/aggregate.pm line 414.
 
-Also, feeds from DokuWiki seem to crash the aggregate plugin completely, it's not a completely valid feed but presumably crashing is still bad.  The feed I'm seeing this with is http://www.wirelesscommons.org/feed.php
+> Fixed, this occurred when a feed did not include any body content tag.
+> --[[Joey]]
+
+Also, feeds from DokuWiki seem to crash the aggregate plugin completely,
+it's not a completely valid feed but presumably crashing is still bad.  The
+feed I'm seeing this with is http://www.wirelesscommons.org/feed.php
+
+> This is a bug in XML::Parser. Unfortunately, perl does not have a feed
+> parser that handles invalid feeds, and in particular, XML::Parser has
+> issues with feeds that claim to be encoded in utf-8 and contain invalid
+> utf sequences, as well as other encoding issues. See also [[debbug 380426]].
+> Note though that this invalid feed does not really crash the aggregate plugin,
+> it just notes that XML::Parser crashed on it and continues. This is the
+> best I can do in ikiwiki. I have filed a bug on XML::Parser about this,
+> it's [[debbug 420636]].  I've also put in a workaround, so [[done]].
 
     -- System Information:
     Debian Release: 3.1
