@@ -275,7 +275,7 @@ sub aggregate () { #{{{
 			# One common cause of XML::Feed crashing is a feed
 			# that contains invalid UTF-8 sequences. Convert
 			# feed to ascii to try to work around.
-			$feed->{message}=sprintf(gettext("invalid UTF-8 stripped from feed"));
+			$feed->{message}.=" ".sprintf(gettext("(invalid UTF-8 stripped from feed)"));
 			$content=Encode::decode_utf8($content);
 			$f=eval{XML::Feed->parse(\$content)};
 		}

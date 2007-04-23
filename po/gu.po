@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-12 00:10-0400\n"
+"POT-Creation-Date: 2007-04-23 14:43-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -29,7 +29,7 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:186 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
@@ -83,24 +83,34 @@ msgstr "જુનું કરે છે %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
+msgid "processed ok at %s"
+msgstr "આના પર બરાબર છે %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:247
+#, perl-format
 msgid "checking feed %s ..."
 msgstr "ફીડ %s ચકાસે છે ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:247
+#: ../IkiWiki/Plugin/aggregate.pm:252
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "%s પર ફીડ મળી શક્યું નહી"
 
-#: ../IkiWiki/Plugin/aggregate.pm:256
+#: ../IkiWiki/Plugin/aggregate.pm:267
+#, fuzzy
+msgid "feed not found"
+msgstr "ટેમ્પલેટ %s મળ્યું નહી"
+
+#: ../IkiWiki/Plugin/aggregate.pm:278
+#, perl-format
+msgid "invalid UTF-8 stripped from feed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:283
 msgid "feed crashed XML::Feed!"
 msgstr "ફીડ ભાંગી પડ્યું XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:279
-#, perl-format
-msgid "processed ok at %s"
-msgstr "આના પર બરાબર છે %s"
-
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:356
 #, perl-format
 msgid "creating new page %s"
 msgstr "નવું પાનું %s બનાવે છે"
@@ -161,20 +171,20 @@ msgstr "--rss અથવા --atom ઉપયોગ કરતી વખતે વ�
 msgid "unknown sort type %s"
 msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 
-#: ../IkiWiki/Plugin/inline.pm:149
+#: ../IkiWiki/Plugin/inline.pm:146
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:163
+#: ../IkiWiki/Plugin/inline.pm:160
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:194 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/Plugin/inline.pm:403
+#: ../IkiWiki/Plugin/inline.pm:402
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
@@ -438,7 +448,7 @@ msgstr "ટેમ્પલેટ ક્રિયા કરવામાં નિ
 msgid "getctime not implemented"
 msgstr "getctime અમલમાં મૂકાયેલ નથી"
 
-#: ../IkiWiki/Rcs/svn.pm:205
+#: ../IkiWiki/Rcs/svn.pm:206
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
@@ -557,11 +567,11 @@ msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "ઉપયોગ: ikiwiki [વિકલ્પો] source dest"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:107
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "જ્યારે --cgi ઉપયોગ કરતાં હોય ત્યારે વીકીનું યુઆરએલ સ્પષ્ટ કરવું જ પડશે"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:154 ../IkiWiki.pm:155
 msgid "Error"
 msgstr "ક્ષતિ"
 
@@ -569,7 +579,7 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:622
+#: ../IkiWiki.pm:625
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"

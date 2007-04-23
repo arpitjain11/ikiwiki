@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-12 00:10-0400\n"
+"POT-Creation-Date: 2007-04-23 14:43-0400\n"
 "PO-Revision-Date: 2007-02-17 12:07+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -29,7 +29,7 @@ msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:186 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
@@ -83,24 +83,34 @@ msgstr "expiruji %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
+msgid "processed ok at %s"
+msgstr "zpracováno ok %s"
+
+#: ../IkiWiki/Plugin/aggregate.pm:247
+#, perl-format
 msgid "checking feed %s ..."
 msgstr "kontroluji zdroj %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:247
+#: ../IkiWiki/Plugin/aggregate.pm:252
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nemohu najít zdroj na %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:256
+#: ../IkiWiki/Plugin/aggregate.pm:267
+#, fuzzy
+msgid "feed not found"
+msgstr "šablona %s nebyla nalezena"
+
+#: ../IkiWiki/Plugin/aggregate.pm:278
+#, perl-format
+msgid "invalid UTF-8 stripped from feed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:283
 msgid "feed crashed XML::Feed!"
 msgstr "zdroj shodil XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:279
-#, perl-format
-msgid "processed ok at %s"
-msgstr "zpracováno ok %s"
-
-#: ../IkiWiki/Plugin/aggregate.pm:333
+#: ../IkiWiki/Plugin/aggregate.pm:356
 #, perl-format
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
@@ -161,20 +171,20 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:149
+#: ../IkiWiki/Plugin/inline.pm:146
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:163
+#: ../IkiWiki/Plugin/inline.pm:160
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:194 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:403
+#: ../IkiWiki/Plugin/inline.pm:402
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -440,7 +450,7 @@ msgstr "šablonu se nepodařilo zpracovat:"
 msgid "getctime not implemented"
 msgstr "getctime není implementováno"
 
-#: ../IkiWiki/Rcs/svn.pm:205
+#: ../IkiWiki/Rcs/svn.pm:206
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
@@ -560,11 +570,11 @@ msgstr "%s byl úspěšně vytvořen"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "použití: ikiwiki [volby] zdroj cíl"
 
-#: ../IkiWiki.pm:104
+#: ../IkiWiki.pm:107
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:151 ../IkiWiki.pm:152
+#: ../IkiWiki.pm:154 ../IkiWiki.pm:155
 msgid "Error"
 msgstr "Chyba"
 
@@ -572,7 +582,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:622
+#: ../IkiWiki.pm:625
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
