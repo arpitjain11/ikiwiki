@@ -1,5 +1,6 @@
 ikiwiki (1.51) UNRELEASED; urgency=low
 
+  [ Joey Hess ]
   * Support setting svnpath to "" for wikis that are rooted at the top of
     their svn repositories, with no trunk directory.
   * Minor template improvements by Alessandro.
@@ -9,7 +10,10 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Work around bug #420636 by, if XML::Parser crashes, running the feed
     content though Encode::decode_utf8.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 23 Apr 2007 14:31:57 -0400
+  [ Josh Triplett ]
+  * Change basewiki CSS to not put a border around images used as links.
+
+ -- Josh Triplett <josh@freedesktop.org>  Tue, 24 Apr 2007 13:50:51 -0700
 
 ikiwiki (1.50) unstable; urgency=low
 
