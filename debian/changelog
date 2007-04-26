@@ -9,11 +9,14 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Fix aggregator to not warn when a feed contains no body content at all.
   * Work around bug #420636 by, if XML::Parser crashes, running the feed
     content though Encode::decode_utf8.
+  * Move the footer div to enclose tags and links too.
+  * More style sheet updates, remove the hack that used the tags div to create
+    the footer border.
 
   [ Josh Triplett ]
   * Change basewiki CSS to not put a border around images used as links.
 
- -- Josh Triplett <josh@freedesktop.org>  Tue, 24 Apr 2007 13:50:51 -0700
+ -- Joey Hess <joeyh@debian.org>  Thu, 26 Apr 2007 15:24:22 -0400
 
 ikiwiki (1.50) unstable; urgency=low
 
