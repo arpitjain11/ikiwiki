@@ -23,4 +23,6 @@ permission denied errors when I tried to make a change and install again.
 > The .svn directories can be avoided in the deb by setting
 > DH_ALWAYS_EXCLUDE=.svn in the environment before building.
 > I prefer to use that kind of hack exterior to a package rather than
-> putting in RCS-specific exclude hacks. --[[Joey]]
+> putting in RCS-specific exclude hacks. 
+> 
+> [[Done]] for the install from svn checkout case. --[[Joey]]
