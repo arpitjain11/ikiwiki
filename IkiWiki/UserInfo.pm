@@ -94,12 +94,8 @@ sub set_banned_users (@) { #{{{
 
 sub commit_notify_list ($@) { #{{{
 	my $committer=shift;
-	
-	my @pages;
-	foreach my $file (@_) {
-		push @pages, grep { $pagesources{$_} eq $file } keys %pagesources;
-	}
-	
+	my @pages = map pagename($_), @_;
+
 	my @ret;
 	my $userinfo=userinfo_retrieve();
 	foreach my $user (keys %{$userinfo}) {
@@ -108,7 +104,8 @@ sub commit_notify_list ($@) { #{{{
 		    length $userinfo->{$user}->{subscriptions} &&
 		    exists $userinfo->{$user}->{email} &&
 		    length $userinfo->{$user}->{email} &&
-		    grep { pagespec_match($_, $userinfo->{$user}->{subscriptions}, "") } @pages) {
+		    grep { pagespec_match($_, $userinfo->{$user}->{subscriptions}, "") }
+	    	    	map pagename($_), @_) {
 			push @ret, $userinfo->{$user}->{email};
 		}
 	}

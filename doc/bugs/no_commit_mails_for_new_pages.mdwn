@@ -4,3 +4,7 @@ the same page do result in commit mails.
 
 (Granted, this could be almost considered a feature, if the new page is in
 an rss feed..)
+
+Turned out to occur only for web commits that added a new file, since now
+the wiki does not rebuild during the commit hook in a web commit, it could
+not rely on `%pagesources` having the file. [[done]] --[[Joey]]
