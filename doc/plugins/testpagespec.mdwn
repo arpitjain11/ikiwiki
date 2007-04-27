@@ -1,0 +1,12 @@
+[[template id=plugin name=testpagespec author="[[Joey]]"]]
+[[tag type/useful]]
+
+This plugin allows testing a [[PageSpec]] to see if it matches a page, and
+if not, why it fails to match.
+
+Example use:
+
+	\[[testpagespec pagespec="foopage and barpage" match="foopage"]]
+
+This will print out something like "barpage does not match foopage",
+highlighting which part of the [[PageSpec]] is causing the match to fail.

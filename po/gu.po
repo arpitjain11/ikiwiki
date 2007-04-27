@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-23 14:43-0400\n"
+"POT-Creation-Date: 2007-04-27 03:55-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -101,8 +101,8 @@ msgid "feed not found"
 msgstr "ફીડ મળ્યું નહી"
 
 #: ../IkiWiki/Plugin/aggregate.pm:278
-#, perl-format
-msgid "invalid UTF-8 stripped from feed"
+#, fuzzy, perl-format
+msgid "(invalid UTF-8 stripped from feed)"
 msgstr "ફીડમાંથી અયોગ્ય રીતે UTF-8 નીકાળેલ છે"
 
 #: ../IkiWiki/Plugin/aggregate.pm:283
@@ -118,7 +118,7 @@ msgstr "નવું પાનું %s બનાવે છે"
 msgid "There are no broken links!"
 msgstr "અહીં કોઇ તૂટેલ કડી નથી!"
 
-#: ../IkiWiki/Plugin/conditional.pm:20
+#: ../IkiWiki/Plugin/conditional.pm:17
 msgid "\"test\" and \"then\" parameters are required"
 msgstr "\"test\" અને \"then\" વિકલ્પો જરૂરી છે"
 
@@ -396,23 +396,23 @@ msgstr "ખરાબ પહોળાઇ કિંમત"
 msgid "failed to run php"
 msgstr "php ચલાવવામાં નિષ્ફળ"
 
-#: ../IkiWiki/Plugin/table.pm:22
+#: ../IkiWiki/Plugin/table.pm:21
 msgid "cannot find file"
 msgstr "ફાઇલ મળી શકી નહી"
 
-#: ../IkiWiki/Plugin/table.pm:45
+#: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
 msgstr "અજાણ્યો માહિતી પ્રકાર"
 
-#: ../IkiWiki/Plugin/table.pm:53
+#: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
 msgstr "ખાલી માહિતી"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "Direct data download"
 msgstr "સીધી માહિતી ડાઉનલોડ"
 
-#: ../IkiWiki/Plugin/table.pm:106
+#: ../IkiWiki/Plugin/table.pm:105
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "ઉકેલવાનું લીટી %d પર નિષ્ફળ: %s"
@@ -512,7 +512,7 @@ msgstr "સંપૂર્ણ"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:145
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "%s નો સુધારો %s નાં %s વડે"

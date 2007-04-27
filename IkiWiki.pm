@@ -998,8 +998,22 @@ sub pagespec_match ($$;@) { #{{{
 		unshift @params, "location";
 	}
 
-	return eval pagespec_translate($spec);
+	my $ret=eval pagespec_translate($spec);
+	return IkiWiki::FailReason->new("syntax error") if $@;
+	return $ret;
 } #}}}
+
+package IkiWiki::FailReason;
+
+use overload (
+	'""' => sub { return ${$_[0]} },
+	'0+' => sub { return 0 },
+	fallback => 1,
+);
+
+sub new {
+	bless \$_[1], $_[0];
+}
 
 package IkiWiki::PageSpec;
 
@@ -1022,7 +1036,12 @@ sub match_glob ($$;@) { #{{{
 	$glob=~s/\\\*/.*/g;
 	$glob=~s/\\\?/./g;
 
-	return $page=~/^$glob$/i;
+	if ($page=~/^$glob$/i) {
+		return 1
+	}
+	else {
+		return IkiWiki::FailReason->new("$glob does not match $page");
+	}
 } #}}}
 
 sub match_link ($$;@) { #{{{
@@ -1040,13 +1059,13 @@ sub match_link ($$;@) { #{{{
 	}
 
 	my $links = $IkiWiki::links{$page} or return undef;
-	return 0 unless @$links;
+	return IkiWiki::FailReason->new("$page has no links") unless @$links;
 	my $bestlink = IkiWiki::bestlink($from, $link);
-	return 0 unless length $bestlink;
+	return IkiWiki::FailReason->new("no such link") unless length $bestlink;
 	foreach my $p (@$links) {
 		return 1 if $bestlink eq IkiWiki::bestlink($page, $p);
 	}
-	return 0;
+	return IkiWiki::FailReason->new("$page does not link to $link");
 } #}}}
 
 sub match_backlink ($$;@) { #{{{
@@ -1061,7 +1080,7 @@ sub match_created_before ($$;@) { #{{{
 		return $IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage};
 	}
 	else {
-		return 0;
+		return IkiWiki::FailReason->new("$page not created before $testpage");
 	}
 } #}}}
 
@@ -1073,20 +1092,23 @@ sub match_created_after ($$;@) { #{{{
 		return $IkiWiki::pagectime{$page} > $IkiWiki::pagectime{$testpage};
 	}
 	else {
-		return 0;
+		return IkiWiki::FailReason->new("$page not created after $testpage");
 	}
 } #}}}
 
 sub match_creation_day ($$;@) { #{{{
-	return ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift);
+	return 1 if ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift);
+	return IkiWiki::FailReason->new("creation_day did not match");
 } #}}}
 
 sub match_creation_month ($$;@) { #{{{
-	return ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift);
+	return 1 if ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift);
+	return IkiWiki::FailReason->new("creation_month did not match");
 } #}}}
 
 sub match_creation_year ($$;@) { #{{{
-	return ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift);
+	return 1 if ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift);
+	return IkiWiki::FailReason->new("creation_year did not match");
 } #}}}
 
 sub match_user ($$;@) { #{{{
@@ -1094,8 +1116,9 @@ sub match_user ($$;@) { #{{{
 	my $user=shift;
 	my %params=@_;
 
-	return unless exists $params{user};
-	return $user eq $params{user};
+	return IkiWiki::FailReason->new("cannot match user") unless exists $params{user};
+	return 1 if $user eq $params{user};
+	return IkiWiki::FailReason->new("user is not $user");
 } #}}}
 
 1

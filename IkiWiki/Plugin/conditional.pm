@@ -62,7 +62,8 @@ sub match_enabled ($$;@) { #{{{
 	my $plugin=shift;
 	
 	# test if the plugin is enabled
-	return UNIVERSAL::can("IkiWiki::Plugin::".$plugin, "import");
+	return 1 if UNIVERSAL::can("IkiWiki::Plugin::".$plugin, "import");
+	return IkiWiki::FailReason->new("$plugin is not enabled");
 } #}}}
 
 sub match_sourcepage ($$;@) { #{{{
@@ -70,8 +71,9 @@ sub match_sourcepage ($$;@) { #{{{
 	my $glob=shift;
 	my %params=@_;
 
-	return unless exists $params{sourcepage};
-	return match_glob($params{sourcepage}, $glob, @_);
+	return IkiWiki::FailReason->new("cannot match sourcepage") unless exists $params{sourcepage};
+	return 1 if match_glob($params{sourcepage}, $glob, @_);
+	return IkiWiki::FailReason->new("sourcepage does not match $glob");
 } #}}}
 
 sub match_destpage ($$;@) { #{{{
@@ -79,8 +81,9 @@ sub match_destpage ($$;@) { #{{{
 	my $glob=shift;
 	my %params=@_;
 	
-	return unless exists $params{destpage};
-	return match_glob($params{destpage}, $glob, @_);
+	return IkiWiki::FailReason->new("cannot match destpage") unless exists $params{destpage};
+	return 1 if match_glob($params{destpage}, $glob, @_);
+	return IkiWiki::FailReason->new("destpage does not match $glob");
 } #}}}
 
 sub match_included ($$;$) { #{{{
@@ -88,8 +91,9 @@ sub match_included ($$;$) { #{{{
 	shift;
 	my %params=@_;
 
-	return unless exists $params{sourcepage} && exists $params{destpage};
-	return $params{sourcepage} ne $params{destpage};
+	return IkiWiki::FailReason->new("cannot match included") unless exists $params{sourcepage} && exists $params{destpage};
+	return 1 if $params{sourcepage} ne $params{destpage};
+	return IkiWiki::FailReason->new("page $params{sourcepage} is not included");
 } #}}}
 
 1

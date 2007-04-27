@@ -328,6 +328,10 @@ The most often used is "location", which specifies the location the
 PageSpec should match against. If not passed, relative PageSpecs will match
 relative to the top of the wiki.
 
+If the PageSpec fails to match, it may return a IkiWiki::FailReason object,
+which evaluates to false in a boolean context, but in a string context,
+evaulates to the reason the PageSpec failed to match.
+
 #### `bestlink($$)`
 
 Given a page and the text of a link on the page, determine which
@@ -448,4 +452,5 @@ IkiWiki::PageSpec package, that is named `match_foo`, where "foo()" is
 how it will be accessed in a [[PageSpec]]. The function will be passed
 two parameters: The name of the page being matched, and the thing to match
 against. It may also be passed additional, named parameters. It should return
-true if the page matches.
+true if the match succeeds, and either false or a IkiWiki::FailReason object
+if the match fails.

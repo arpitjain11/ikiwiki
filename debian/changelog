@@ -30,8 +30,12 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Plugin interface version increased to 2.00 since I don't anticipate any
     more interface changes before 2.0.
   * Updated Gujarati translation from Kartik Mistry. Closes: #421198
+  * Make pagespec_match on failure return a value that is false, but in a
+    scalar context, evaluates to a reason why the match failed.
+  * Add testpagespec plugin, which might be useful to see why a pagespec isn't
+    matching something.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 27 Apr 2007 01:30:34 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 27 Apr 2007 03:41:52 -0400
 
 ikiwiki (1.50) unstable; urgency=low
 

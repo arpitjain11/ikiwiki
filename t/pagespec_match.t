@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 49;
+use Test::More tests => 51;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -66,6 +66,10 @@ ok(! pagespec_match("foo", "no_such_function(foo)"), "foo");
 
 ok(pagespec_match("foo", "foo and user(bar)", user => "bar"), "user");
 ok(! pagespec_match("foo", "foo and user(bar)", user => "baz"), "user fail");
+
+my $ret=pagespec_match("foo", "(invalid");
+ok(! $ret, "syntax error");
+ok($ret eq "syntax error", "error message");
 
 # old style globlists
 ok(pagespec_match("foo", "foo bar"), "simple list");
