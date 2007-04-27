@@ -1,0 +1,6 @@
+We run many ikiwikis on wiki.cs.pdx.edu, and we occasionally get messages like this in the syslog `user.log` file:
+
+    Apr 26 07:31:41 svcs ikiwiki: bad page name 
+    Apr 26 07:43:26 svcs ikiwiki: bad page name 
+
+Those don't give us any information about which ikiwiki they came from.  ikiwiki needs to provide the wiki name in syslog messages. --[[JoshTriplett]]
