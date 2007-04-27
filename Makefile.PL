@@ -42,7 +42,7 @@ extra_build:
 
 extra_clean:
 	rm -rf html doc/.ikiwiki
-	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out tmon.out
+	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out
 	$(MAKE) -C po clean
 
 extra_install:
