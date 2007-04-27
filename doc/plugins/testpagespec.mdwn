@@ -13,10 +13,10 @@ highlighting which part of the [[PageSpec]] is causing the match to fail.
 	
 	\[[testpagespec pagespec="foopage or !bar*" match="barpage"]]
 
-This will print out something like "no match: bar* matches barpage", since the part
-of the [[PageSpec]] that fails is this negated match.
+This will print out something like "no match: bar* matches barpage", since
+the part of the [[PageSpec]] that fails is this negated match.
 	
 	\[[testpagespec pagespec="foopage or barpage" match="barpage"]]
 
 This will print out something like "match: barpage matches barpage",
-indicating the part of the [[PageSpec]] that did match.
+indicating the part of the [[PageSpec]] that caused it to match.

@@ -1012,8 +1012,8 @@ sub pagespec_match ($$;@) { #{{{
 package IkiWiki::FailReason;
 
 use overload (
-	'""'	=> sub { return ${$_[0]} },
-	'0+'	=> sub { return 0 },
+	'""'	=> sub { ${$_[0]} },
+	'0+'	=> sub { 0 },
 	'!'	=> sub { bless $_[0], 'IkiWiki::SuccessReason'},
 	fallback => 1,
 );
@@ -1025,8 +1025,8 @@ sub new {
 package IkiWiki::SuccessReason;
 
 use overload (
-	'""'	=> sub { return ${$_[0]} },
-	'0+'	=> sub { return 1 },
+	'""'	=> sub { ${$_[0]} },
+	'0+'	=> sub { 1 },
 	'!'	=> sub { bless $_[0], 'IkiWiki::FailReason'},
 	fallback => 1,
 );

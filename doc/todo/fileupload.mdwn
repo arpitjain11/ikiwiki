@@ -54,4 +54,10 @@ That would obsolete the current simple admin prefs for banned users and
 locked pages. Suddenly all the access controls live in one place.
 Wonderbar!
 
+(Note that pagespec_match will now return an object that stringifies to a
+message indicating why the pagespec matched, or failed to match, so if a
+pagespec lock like the above prevents an edit or upload from happening,
+ikiwiki could display a reasonable message to the user, indicating what
+they've done wrong.)
+
 [[tag soc]]
