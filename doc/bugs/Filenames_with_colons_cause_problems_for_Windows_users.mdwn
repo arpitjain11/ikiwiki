@@ -6,3 +6,5 @@ Windows does not support filenames containing any of these characters: `/ \ * : 
 
 > I take it this is a problem when checking out a wiki in windows, not when
 > browsing to urls that have colons in them from windows? --[[Joey]]
+
+>> Correct.  You can't directly check out a wiki's repository from Windows if it includes filenames with those characters; you will get errors on those filenames.
