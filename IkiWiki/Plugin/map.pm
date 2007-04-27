@@ -9,7 +9,7 @@ package IkiWiki::Plugin::map;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "map", call => \&preprocess);
@@ -26,7 +26,7 @@ sub preprocess (@) { #{{{
 	# Get all the items to map.
 	my @mapitems = ();
 	foreach my $page (keys %links) {
-		if (pagespec_match($page, $params{pages}, $params{page})) {
+		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			push @mapitems, $page;
 		}
 	}

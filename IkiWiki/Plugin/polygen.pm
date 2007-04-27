@@ -7,7 +7,7 @@ package IkiWiki::Plugin::polygen;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 use File::Find;
 
 sub import { #{{{

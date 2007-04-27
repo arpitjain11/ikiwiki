@@ -6,7 +6,7 @@ package IkiWiki::Plugin::textile;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "htmlize", id => "txtl", call => \&htmlize);

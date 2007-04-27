@@ -3,7 +3,7 @@ package IkiWiki::Plugin::signinedit;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "canedit", id => "signinedit", call => \&canedit,

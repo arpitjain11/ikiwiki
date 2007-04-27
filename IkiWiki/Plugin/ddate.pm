@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 # Discordian date support fnord ikiwiki.
 package IkiWiki::Plugin::ddate;
-use IkiWiki;
+
+use IkiWiki 2.00;
 no warnings;
 
 sub import { #{{{

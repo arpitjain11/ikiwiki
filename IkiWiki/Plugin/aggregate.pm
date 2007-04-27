@@ -4,7 +4,7 @@ package IkiWiki::Plugin::aggregate;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 use HTML::Entities;
 use HTML::Parser;
 use HTML::Tagset;

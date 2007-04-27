@@ -92,11 +92,8 @@ sub set_banned_users (@) { #{{{
 	return userinfo_store($userinfo);
 } #}}}
 
-# Global used to pass information into the PageSpec function.
-our $committer;
-
 sub commit_notify_list ($@) { #{{{
-	$committer=shift;
+	my $committer=shift;
 	my @pages = map pagename($_), @_;
 
 	my @ret;
@@ -107,7 +104,9 @@ sub commit_notify_list ($@) { #{{{
 		    length $userinfo->{$user}->{subscriptions} &&
 		    exists $userinfo->{$user}->{email} &&
 		    length $userinfo->{$user}->{email} &&
-		    grep { pagespec_match($_, $userinfo->{$user}->{subscriptions}, "") }
+		    grep { pagespec_match($_,
+				    $userinfo->{$user}->{subscriptions}, 
+				    user => $committer) }
 	    	    	map pagename($_), @_) {
 			push @ret, $userinfo->{$user}->{email};
 		}
@@ -178,15 +177,6 @@ sub send_commit_mails ($$$@) { #{{{
 
 		exit 0; # daemon process done
 	}
-} #}}}
-
-package IkiWiki::PageSpec;
-
-sub match_user ($$$) { #{{{
-	shift;
-	my $user=shift;
-
-	return $user eq $committer;
 } #}}}
 
 1

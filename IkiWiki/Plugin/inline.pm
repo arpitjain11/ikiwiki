@@ -4,7 +4,7 @@ package IkiWiki::Plugin::inline;
 
 use warnings;
 use strict;
-use IkiWiki 1.00;
+use IkiWiki 2.00;
 use URI;
 
 sub import { #{{{
@@ -88,7 +88,7 @@ sub preprocess_inline (@) { #{{{
 	my @list;
 	foreach my $page (keys %pagesources) {
 		next if $page eq $params{page};
-		if (pagespec_match($page, $params{pages}, $params{page})) {
+		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			push @list, $page;
 		}
 	}
@@ -223,7 +223,7 @@ sub preprocess_inline (@) { #{{{
 			@list=@list[0..$params{feedshow} - 1];
 		}
 		if (exists $params{feedpages}) {
-			@list=grep { pagespec_match($_, $params{feedpages}, $params{page}) } @list;
+			@list=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @list;
 		}
 	
 		if ($rss) {

@@ -3,7 +3,7 @@ package IkiWiki::Plugin::linkmap;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 use IPC::Open2;
 
 sub import { #{{{
@@ -48,7 +48,7 @@ sub genmap ($) { #{{{
 	# Get all the items to map.
 	my %mapitems = ();
 	foreach my $item (keys %links) {
-		if (pagespec_match($item, $params{pages}, $params{page})) {
+		if (pagespec_match($item, $params{pages}, location => $params{page})) {
 			$mapitems{$item}=urlto($item, $params{destpage});
 		}
 	}

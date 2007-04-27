@@ -12,7 +12,7 @@ package IkiWiki::Plugin::pagestats;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 # Names of the HTML classes to use for the tag cloud
 our @classes = ('smallestPC', 'smallPC', 'normalPC', 'bigPC', 'biggestPC' );
@@ -33,7 +33,7 @@ sub preprocess (@) { #{{{
 	my %counts;
 	my $max = 0;
 	foreach my $page (keys %links) {
-		if (pagespec_match($page, $params{pages}, $params{page})) {
+		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			use IkiWiki::Render;
 			my @bl = IkiWiki::backlinks($page);
 			$counts{$page} = scalar(@bl);

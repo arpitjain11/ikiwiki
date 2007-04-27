@@ -18,7 +18,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
                  %config %links %renderedfiles %pagesources %destsources);
-our $VERSION = 1.02; # plugin interface version, next is ikiwiki version
+our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
@@ -974,38 +974,42 @@ sub pagespec_translate ($) { #{{{
 		}
 		elsif ($word =~ /^(\w+)\((.*)\)$/) {
 			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
-				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \$from)";
+				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@params)";
 			}
 			else {
 				$code.=" 0";
 			}
 		}
 		else {
-			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \$from)";
+			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \@params)";
 		}
 	}
 
 	return $code;
 } #}}}
 
-sub pagespec_match ($$;$) { #{{{
+sub pagespec_match ($$;@) { #{{{
 	my $page=shift;
 	my $spec=shift;
-	my $from=shift;
+	my @params=@_;
+
+	# Backwards compatability with old calling convention.
+	if (@params == 1) {
+		unshift @params, "location";
+	}
 
 	return eval pagespec_translate($spec);
 } #}}}
 
 package IkiWiki::PageSpec;
 
-sub match_glob ($$$) { #{{{
+sub match_glob ($$;@) { #{{{
 	my $page=shift;
 	my $glob=shift;
-	my $from=shift;
-	if (! defined $from){
-		$from = "";
-	}
-
+	my %params=@_;
+	
+	my $from=exists $params{location} ? $params{location} : "";
+	
 	# relative matching
 	if ($glob =~ m!^\./!) {
 		$from=~s!/?[^/]+$!!;
@@ -1021,13 +1025,12 @@ sub match_glob ($$$) { #{{{
 	return $page=~/^$glob$/i;
 } #}}}
 
-sub match_link ($$$) { #{{{
+sub match_link ($$;@) { #{{{
 	my $page=shift;
 	my $link=lc(shift);
-	my $from=shift;
-	if (! defined $from){
-		$from = "";
-	}
+	my %params=@_;
+
+	my $from=exists $params{location} ? $params{location} : "";
 
 	# relative matching
 	if ($link =~ m!^\.! && defined $from) {
@@ -1046,11 +1049,11 @@ sub match_link ($$$) { #{{{
 	return 0;
 } #}}}
 
-sub match_backlink ($$$) { #{{{
-	match_link($_[1], $_[0], $_[3]);
+sub match_backlink ($$;@) { #{{{
+	match_link($_[1], $_[0], @_);
 } #}}}
 
-sub match_created_before ($$$) { #{{{
+sub match_created_before ($$;@) { #{{{
 	my $page=shift;
 	my $testpage=shift;
 
@@ -1062,7 +1065,7 @@ sub match_created_before ($$$) { #{{{
 	}
 } #}}}
 
-sub match_created_after ($$$) { #{{{
+sub match_created_after ($$;@) { #{{{
 	my $page=shift;
 	my $testpage=shift;
 
@@ -1074,16 +1077,25 @@ sub match_created_after ($$$) { #{{{
 	}
 } #}}}
 
-sub match_creation_day ($$$) { #{{{
+sub match_creation_day ($$;@) { #{{{
 	return ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift);
 } #}}}
 
-sub match_creation_month ($$$) { #{{{
+sub match_creation_month ($$;@) { #{{{
 	return ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift);
 } #}}}
 
-sub match_creation_year ($$$) { #{{{
+sub match_creation_year ($$;@) { #{{{
 	return ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift);
+} #}}}
+
+sub match_user ($$;@) { #{{{
+	shift;
+	my $user=shift;
+	my %params=@_;
+
+	return unless exists $params{user};
+	return $user eq $params{user};
 } #}}}
 
 1

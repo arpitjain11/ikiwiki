@@ -3,7 +3,7 @@ package IkiWiki::Plugin::pagecount;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "pagecount", call => \&preprocess);
@@ -21,7 +21,7 @@ sub preprocess (@) { #{{{
 	return $#pages+1 if $params{pages} eq "*"; # optimisation
 	my $count=0;
 	foreach my $page (@pages) {
-		$count++ if pagespec_match($page, $params{pages}, $params{page});
+		$count++ if pagespec_match($page, $params{pages}, location => $params{page});
 	}
 	return $count;
 } # }}}

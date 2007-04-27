@@ -3,11 +3,8 @@ package IkiWiki::Plugin::conditional;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 use UNIVERSAL;
-
-# Globals used to pass information into the PageSpec functions.
-our ($sourcepage, $destpage);
 
 sub import { #{{{
 	hook(type => "preprocess", id => "if", call => \&preprocess_if);
@@ -21,27 +18,28 @@ sub preprocess_if (@) { #{{{
 	}
 
 	my $result=0;
-	$sourcepage=$params{page};
-	$destpage=$params{destpage};
 	# An optimisation to avoid needless looping over every page
 	# and adding of dependencies for simple uses of some of the
 	# tests.
 	if ($params{test} =~ /^(enabled|sourcepage|destpage)\((.*)\)$/) {
-		$result=eval "IkiWiki::PageSpec::match_$1(undef, ".
-			IkiWiki::safequote($2).", \$params{page})";
+		$result=pagespec_match($params{page}, $params{test},
+				location => $params{page},
+				sourcepage => $params{page},
+				destpage => $params{destpage});
 	}
 	else {
 		add_depends($params{page}, $params{test});
 
 		foreach my $page (keys %pagesources) {
-			if (pagespec_match($page, $params{test}, $params{page})) {
+			if (pagespec_match($page, $params{test}, 
+					location => $params{page},
+					sourcepage => $params{page},
+					destpage => $params{destpage})) {
 				$result=1;
 				last;
 			}
 		}
 	}
-	$sourcepage="";
-	$destpage="";
 
 	my $ret;
 	if ($result) {
@@ -59,7 +57,7 @@ sub preprocess_if (@) { #{{{
 
 package IkiWiki::PageSpec;
 
-sub match_enabled ($$$) { #{{{
+sub match_enabled ($$;@) { #{{{
 	shift;
 	my $plugin=shift;
 	
@@ -67,24 +65,31 @@ sub match_enabled ($$$) { #{{{
 	return UNIVERSAL::can("IkiWiki::Plugin::".$plugin, "import");
 } #}}}
 
-sub match_sourcepage ($$$) { #{{{
+sub match_sourcepage ($$;@) { #{{{
 	shift;
 	my $glob=shift;
-	
-	return match_glob($IkiWiki::Plugin::conditional::sourcepage, $glob,
-		$IkiWiki::Plugin::conditional::sourcepage);
+	my %params=@_;
+
+	return unless exists $params{sourcepage};
+	return match_glob($params{sourcepage}, $glob, @_);
 } #}}}
 
-sub match_destpage ($$$) { #{{{
+sub match_destpage ($$;@) { #{{{
 	shift;
 	my $glob=shift;
+	my %params=@_;
 	
-	return match_glob($IkiWiki::Plugin::conditional::destpage, $glob,
-		$IkiWiki::Plugin::conditional::sourcepage);
+	return unless exists $params{destpage};
+	return match_glob($params{destpage}, $glob, @_);
 } #}}}
 
-sub match_included ($$$) { #{{{
-	return $IkiWiki::Plugin::conditional::sourcepage ne $IkiWiki::Plugin::conditional::destpage;
+sub match_included ($$;$) { #{{{
+	shift;
+	shift;
+	my %params=@_;
+
+	return unless exists $params{sourcepage} && exists $params{destpage};
+	return $params{sourcepage} ne $params{destpage};
 } #}}}
 
 1

@@ -20,6 +20,8 @@ being edited.
 ## Registering plugins
 
 All plugins should `use IkiWiki` to import the ikiwiki plugin interface.
+It's a good idea to include the version number of the plugin interface that
+your plugin expects: `use IkiWiki 2.00`
 
 Plugins should, when imported, call `hook()` to hook into ikiwiki's
 processing. The function uses named parameters, and use varies depending on
@@ -316,12 +318,15 @@ page created from it. (Ie, it appends ".html".)
 
 Makes the specified page depend on the specified [[PageSpec]].
 
-#### `pagespec_match($$;$)`
+#### `pagespec_match($$;@)`
 
-Passed a page name, a [[PageSpec]], and the location the [[PageSpec]] should
-be matched against, returns true if the [[PageSpec]] matches the page. (If
-the third parameter is not passed, relative PageSpecs will match relative to
-the top of the wiki.)
+Passed a page name, and [[PageSpec]], returns true if the [[PageSpec]]
+matches the page.
+
+Additional named parameters can be passed, to further limit the match.
+The most often used is "location", which specifies the location the
+PageSpec should match against. If not passed, relative PageSpecs will match
+relative to the top of the wiki.
 
 #### `bestlink($$)`
 
@@ -441,6 +446,6 @@ It's also possible to write plugins that add new functions to
 [[PageSpecs|PageSpec]]. Such a plugin should add a function to the
 IkiWiki::PageSpec package, that is named `match_foo`, where "foo()" is
 how it will be accessed in a [[PageSpec]]. The function will be passed
-three parameters: The name of the page being matched, the thing to match
-against, and the page that the matching is occuring on. It should return
+two parameters: The name of the page being matched, and the thing to match
+against. It may also be passed additional, named parameters. It should return
 true if the page matches.

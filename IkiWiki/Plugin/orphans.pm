@@ -4,7 +4,7 @@ package IkiWiki::Plugin::orphans;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "orphans", call => \&preprocess);
@@ -28,7 +28,7 @@ sub preprocess (@) { #{{{
 	my $discussion=gettext("discussion");
 	foreach my $page (keys %pagesources) {
 		next if $linkedto{$page};
-		next unless pagespec_match($page, $params{pages}, $params{page});
+		next unless pagespec_match($page, $params{pages}, location => $params{page});
 		# If the page has a link to some other page, it's
 		# indirectly linked to a page via that page's backlinks.
 		next if grep { 

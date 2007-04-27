@@ -18,7 +18,7 @@ package IkiWiki::Plugin::rst;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 use IPC::Open2;
 
 # Simple python script, maybe it should be implemented using an external script.

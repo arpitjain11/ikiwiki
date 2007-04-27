@@ -6,7 +6,7 @@ package IkiWiki::Plugin::sidebar;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "pagetemplate", id => "sidebar", call => \&pagetemplate);

@@ -3,7 +3,7 @@ package IkiWiki::Plugin::smiley;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 my %smileys;
 my $smiley_regexp;

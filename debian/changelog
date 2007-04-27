@@ -22,8 +22,15 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Avoid .svn directories when installing from svn checkout.
   * Fix sending of commit mails when new pages are added via the web.
   * Add user(name) to the PageSpec for commit subscriptions.
+  * pagespec_match() has changed to take named parameters, to better allow
+    for extended pagespecs. The old calling convention will still work for
+    back-compat for now.
+  * The calling convention for functions in the IkiWiki::PageSpec namespace
+    has changed so they are passed named parameters.
+  * Plugin interface version increased to 2.00 since I don't anticipate any
+    more interface changes before 2.0.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 26 Apr 2007 20:25:53 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 26 Apr 2007 22:18:47 -0400
 
 ikiwiki (1.50) unstable; urgency=low
 

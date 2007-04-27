@@ -2,9 +2,9 @@
 # Include a fortune in a page
 package IkiWiki::Plugin::fortune;
 
-use IkiWiki;
 use warnings;
 use strict;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "fortune", call => \&preprocess);

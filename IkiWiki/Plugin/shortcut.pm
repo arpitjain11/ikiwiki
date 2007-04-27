@@ -3,7 +3,7 @@ package IkiWiki::Plugin::shortcut;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "checkconfig", id => "shortcut", call => \&checkconfig);

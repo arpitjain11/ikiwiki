@@ -3,7 +3,7 @@ package IkiWiki::Plugin::postsparkline;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	IkiWiki::loadplugin('sparkline');
@@ -37,7 +37,7 @@ sub preprocess (@) { #{{{
 	my @list;
 	foreach my $page (keys %pagesources) {
 		next if $page eq $params{page};
-		if (pagespec_match($page, $params{pages}, $params{page})) {
+		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			push @list, $page;
 		}
 	}

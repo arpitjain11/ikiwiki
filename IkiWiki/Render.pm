@@ -365,7 +365,7 @@ sub refresh () { #{{{
 				foreach my $file (keys %rendered, @del) {
 					next if $f eq $file;
 					my $page=pagename($file);
-					if (pagespec_match($page, $depends{$p}, $p)) {
+					if (pagespec_match($page, $depends{$p}, location => $p)) {
 						debug(sprintf(gettext("rendering %s, which depends on %s"), $f, $page));
 						render($f);
 						$rendered{$f}=1;

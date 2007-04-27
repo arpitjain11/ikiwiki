@@ -4,7 +4,7 @@ package IkiWiki::Plugin::meta;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 my %meta;
 my %title;

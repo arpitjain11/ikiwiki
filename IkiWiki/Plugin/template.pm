@@ -4,7 +4,7 @@ package IkiWiki::Plugin::template;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 use HTML::Template;
 use Encode;
 

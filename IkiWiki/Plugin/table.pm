@@ -3,8 +3,7 @@ package IkiWiki::Plugin::table;
 
 use warnings;
 use strict;
-
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "table", call => \&preprocess);

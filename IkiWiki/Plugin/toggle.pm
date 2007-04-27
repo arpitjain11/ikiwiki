@@ -3,7 +3,7 @@ package IkiWiki::Plugin::toggle;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 # Here's the javascript that makes this possible. A key feature is the use
 # of css to hide toggleables, to avoid any flashing on page load. The css

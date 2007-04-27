@@ -4,7 +4,7 @@ package IkiWiki::Plugin::search;
 
 use warnings;
 use strict;
-use IkiWiki;
+use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "getopt", id => "hyperestraier",
