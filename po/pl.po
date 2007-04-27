@@ -1,16 +1,16 @@
 # Polish translation of ikiwiki.pot
 # Copyright (C) 2007
 # This file is distributed under the same license as the ikiwiki package.
-# Paweł Tęcza <ptecza@net.icm.edu.pl>, 2007.
+# Pawel Tecza <ptecza@net.icm.edu.pl>, 2007.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ikiwiki 1.37\n"
+"Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 20:28-0400\n"
-"PO-Revision-Date: 2007-01-05 16:33+100\n"
-"Last-Translator: Paweł Tęcza <ptecza@net.icm.edu.pl>\n"
+"POT-Creation-Date: 2007-04-23 14:43-0400\n"
+"PO-Revision-Date: 2007-04-27 22:05+0200\n"
+"Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,16 +18,16 @@ msgstr ""
 
 #: ../IkiWiki/CGI.pm:154
 msgid "You need to log in first."
-msgstr "Konieczne jest zalogowanie się."
+msgstr "Proszę najpierw zalogować się."
 
 #: ../IkiWiki/CGI.pm:274
 msgid "Preferences saved."
-msgstr "Ustawienia zostały zapisane."
+msgstr "Preferencje zapisane."
 
 #: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
-msgstr ""
+msgstr "Strona %s nie może być edytowana"
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
@@ -39,26 +39,28 @@ msgstr "dyskusja"
 #: ../IkiWiki/CGI.pm:464
 #, perl-format
 msgid "creating %s"
-msgstr "tworzenie strony %s"
+msgstr "tworzenie %s"
 
 #: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
 #: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
 #, perl-format
 msgid "editing %s"
-msgstr "edycja strony %s"
+msgstr "edycja %s"
 
 #: ../IkiWiki/CGI.pm:674
 msgid "You are banned."
-msgstr "Dostęp został zabroniony przez administratora."
+msgstr "Twój dostęp został zabroniony przez administratora."
 
 #: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
+"Nieudane logowanie. Proszę sprawdzić czy w przeglądarce włączone są "
+"ciasteczka (ang. cookies)"
 
 #: ../IkiWiki/Plugin/aggregate.pm:62
 #, fuzzy, perl-format
 msgid "missing %s parameter"
-msgstr "brakujący parametr id we wtyczce template"
+msgstr "brakujący parametr %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
@@ -85,12 +87,12 @@ msgstr "wygasający wpis %s"
 #: ../IkiWiki/Plugin/aggregate.pm:242
 #, perl-format
 msgid "processed ok at %s"
-msgstr "przetworzony kanał RSS w dniu %s"
+msgstr "kanał RSS przetworzony w dniu %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "checking feed %s ..."
-msgstr "sprawdzanie kanału RSS %s\t..."
+msgstr "sprawdzanie kanału RSS %s..."
 
 #: ../IkiWiki/Plugin/aggregate.pm:252
 #, perl-format
@@ -100,12 +102,12 @@ msgstr "nie znaleziono kanału RSS pod adresem %s"
 #: ../IkiWiki/Plugin/aggregate.pm:267
 #, fuzzy
 msgid "feed not found"
-msgstr "nieznaleziony szablon %s"
+msgstr "nieznaleziony kanał RSS"
 
 #: ../IkiWiki/Plugin/aggregate.pm:278
 #, perl-format
-msgid "(invalid UTF-8 stripped from feed)"
-msgstr ""
+msgid "invalid UTF-8 stripped from feed"
+msgstr "Nieprawidłowe kodowanie UTF-8 usunięte z kanału RSS"
 
 #: ../IkiWiki/Plugin/aggregate.pm:283
 msgid "feed crashed XML::Feed!"
@@ -118,11 +120,11 @@ msgstr "tworzenie nowej strony %s"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:37
 msgid "There are no broken links!"
-msgstr "odnośniki są aktualne!"
+msgstr "Wszystkie odnośniki są aktualne!"
 
 #: ../IkiWiki/Plugin/conditional.pm:20
 msgid "\"test\" and \"then\" parameters are required"
-msgstr ""
+msgstr "Parametry \"test\" i \"then\" są wymagane"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
@@ -131,39 +133,37 @@ msgstr "awaria fortunki"
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
 #, fuzzy
 msgid "failed to find url in html"
-msgstr ""
-"awaria wtyczki googlecalendar z powodu nieodnalezionego adresu URL na "
-"stronie HTML"
+msgstr "awaria w trakcie wyszukiwania adresu URL na stronie HTML"
 
 #: ../IkiWiki/Plugin/graphviz.pm:59
 #, fuzzy
 msgid "failed to run graphviz"
-msgstr "awaria wtyczki linkmap"
+msgstr "awaria w trakcie uruchamiania wtyczki graphviz"
 
 #: ../IkiWiki/Plugin/graphviz.pm:81
 msgid "prog not a valid graphviz program"
-msgstr ""
+msgstr "prog nie jest poprawnym programem graphviz"
 
 #: ../IkiWiki/Plugin/img.pm:36
 #, fuzzy, perl-format
 msgid "%s not found"
-msgstr "nieznaleziony szablon %s"
+msgstr "nie znaleziono %s"
 
 #: ../IkiWiki/Plugin/img.pm:49
 #, perl-format
 msgid "bad size \"%s\""
-msgstr ""
+msgstr "nieprawidłowy rozmiar \"%s\""
 
 #: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
 #: ../IkiWiki/Plugin/img.pm:80
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
-msgstr "awaria w trakcie zapisu strony %s: %s"
+msgstr "awaria w trakcie odczytu %s: %s"
 
 #: ../IkiWiki/Plugin/img.pm:66
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
-msgstr "awaria w trakcie zapisu strony %s: %s"
+msgstr "awaria w trakcie zmiany rozmiaru: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -178,12 +178,12 @@ msgstr "nieznany sposób sortowania %s"
 
 #: ../IkiWiki/Plugin/inline.pm:146
 msgid "Add a new post titled:"
-msgstr ""
+msgstr "Tytuł nowego wpisu"
 
 #: ../IkiWiki/Plugin/inline.pm:160
 #, perl-format
 msgid "nonexistant template %s"
-msgstr ""
+msgstr "brakujący szablon %s"
 
 #: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
 msgid "Discussion"
@@ -191,12 +191,12 @@ msgstr "Dyskusja"
 
 #: ../IkiWiki/Plugin/inline.pm:402
 msgid "RPC::XML::Client not found, not pinging"
-msgstr "Niezainstalowany moduł RPC::XML::Client, brak możliwości pingowania"
+msgstr "Nieznaleziony moduł RPC::XML::Client, brak możliwości pingowania"
 
 #: ../IkiWiki/Plugin/linkmap.pm:98
 #, fuzzy
 msgid "failed to run dot"
-msgstr "awaria wtyczki linkmap"
+msgstr "awaria w trakcie uruchamiania dot"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
 #, perl-format
@@ -215,7 +215,7 @@ msgstr ""
 #: ../IkiWiki/Plugin/meta.pm:88
 #, fuzzy
 msgid "stylesheet not found"
-msgstr "nieznaleziony szablon %s"
+msgstr "nieznaleziony szablon ze stylami CSS"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -227,7 +227,7 @@ msgstr "Kopia lustrzana"
 
 #: ../IkiWiki/Plugin/more.pm:8
 msgid "more"
-msgstr ""
+msgstr "więcej"
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -247,7 +247,7 @@ msgstr "użyj formy ImieNazwisko"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:144
 msgid "Account creation successful. Now you can Login."
-msgstr "Konto założone pomyślnie. Teraz już można zalogować się."
+msgstr "Konto założone pomyślnie. Teraz można zalogować się."
 
 #: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Error creating account."
@@ -279,11 +279,11 @@ msgstr "awaria wtyczki polygen"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:25
 msgid "missing formula"
-msgstr ""
+msgstr "brakująca reguła"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "unknown formula"
-msgstr ""
+msgstr "nieznana reguła"
 
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
@@ -291,63 +291,63 @@ msgstr ""
 #. translators: %A- is the name of the previous day.
 #: ../IkiWiki/Plugin/prettydate.pm:15
 msgid "late %A- night"
-msgstr ""
+msgstr "późną nocą w %A-"
 
 #: ../IkiWiki/Plugin/prettydate.pm:17
 msgid "in the wee hours of %A- night"
-msgstr ""
+msgstr "po północy w %A-"
 
 #: ../IkiWiki/Plugin/prettydate.pm:20
 msgid "terribly early %A morning"
-msgstr ""
+msgstr "bardzo wczesnym rankiem w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:22
 msgid "early %A morning"
-msgstr ""
+msgstr "wcześnym rankiem w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:25
 msgid "in mid-morning %A"
-msgstr ""
+msgstr "rankiem w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
 msgid "late %A morning"
-msgstr ""
+msgstr "późnym rankiem w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:27
 msgid "at lunch time on %A"
-msgstr ""
+msgstr "w porze obiadowej w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:29
 msgid "%A afternoon"
-msgstr ""
+msgstr "po południu w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:32
 msgid "late %A afternoon"
-msgstr ""
+msgstr "późnym popołudniem %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:33
 msgid "%A evening"
-msgstr ""
+msgstr "wieczorem w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:35
 msgid "late %A evening"
-msgstr ""
+msgstr "późnym wieczorem w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:37
 msgid "%A night"
-msgstr ""
+msgstr "nocą w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:74
 msgid "at teatime on %A"
-msgstr ""
+msgstr "w porze śniadaniowej w %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:78
 msgid "at midnight"
-msgstr ""
+msgstr "o północy"
 
 #: ../IkiWiki/Plugin/prettydate.pm:81
 msgid "at noon on %A"
-msgstr ""
+msgstr "w południe w %A"
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
@@ -365,7 +365,7 @@ msgstr "aktualizacja indeksu z wynikami wtyczki hyperestraier"
 #: ../IkiWiki/Plugin/shortcut.pm:24
 #, fuzzy
 msgid "missing name or url parameter"
-msgstr "brakująca nazwa lub adres URL we wtyczce shortcut"
+msgstr "brakujący parametr name lub url"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
@@ -373,76 +373,75 @@ msgstr "brakująca nazwa lub adres URL we wtyczce shortcut"
 #: ../IkiWiki/Plugin/shortcut.pm:33
 #, fuzzy, perl-format
 msgid "shortcut %s points to <i>%s</i>"
-msgstr "skrót %s wskazuje na adres %s"
+msgstr "skrót %s wskazuje na adres <i>%s</i>"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
 #, fuzzy
 msgid "failed to parse any smileys"
-msgstr ""
-"Wtyczka smiley wyłączona z powodu awarii w trakcie przetwarzania emitoikonek"
+msgstr "awaria w trakcie przetwarzania emitoikonki"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
 #, fuzzy
 msgid "parse error"
-msgstr "awaria wtyczki linkmap"
+msgstr "błąd w trakcie przetwarzania"
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
 msgid "bad featurepoint diameter"
-msgstr ""
+msgstr "nieprawidłowa średnica dla featurepoint"
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
 msgid "bad featurepoint location"
-msgstr ""
+msgstr "nieprawidłowe położenie dla featurepoint"
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
 msgid "missing values"
-msgstr ""
+msgstr "brakujące wartości"
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
 #, fuzzy
 msgid "bad height value"
-msgstr "awaria wtyczki linkmap"
+msgstr "nieprawidłowa wysokość"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
 #, fuzzy
 msgid "missing width parameter"
-msgstr "brakujący parametr id we wtyczce template"
+msgstr "brakujący parametr width"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
 #, fuzzy
 msgid "bad width value"
-msgstr "awaria wtyczki linkmap"
+msgstr "nieprawidłowa szerokość"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
 #, fuzzy
 msgid "failed to run php"
-msgstr "awaria wtyczki linkmap"
+msgstr "awaria w trakcie uruchamiania php"
 
 #: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
-msgstr ""
+msgstr "nie można znaleźć pliku"
 
 #: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
-msgstr ""
+msgstr "nieznany format danych"
 
 #: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
-msgstr ""
+msgstr "brak danych"
 
 #: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
-msgstr ""
+msgstr "Bezpośrednie pobieranie danych"
 
 #: ../IkiWiki/Plugin/table.pm:106
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
-msgstr "awaria w trakcie zapisu strony %s: %s"
+msgstr "awaria w trakcie przetwarzania linii %d: %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
 #, fuzzy
 msgid "missing id parameter"
-msgstr "brakujący parametr id we wtyczce template"
+msgstr "brakujący parametr id"
 
 #: ../IkiWiki/Plugin/template.pm:26
 #, perl-format
@@ -452,7 +451,7 @@ msgstr "nieznaleziony szablon %s"
 #: ../IkiWiki/Plugin/template.pm:45
 #, fuzzy
 msgid "failed to process:"
-msgstr "awaria w trakcie przetwarzania szablonu:"
+msgstr "awaria w trakcie przetwarzania:"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
 msgid "getctime not implemented"
@@ -463,13 +462,13 @@ msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
 msgstr ""
-"Brak możliwości wysłania powiadomień przez post-commit SVN-a z powodu "
-"nieustawionego parametru REV"
+"Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" "
+"post-commit z powodu nieustawionego parametru REV"
 
 #: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
 #, perl-format
 msgid "skipping bad filename %s"
-msgstr "pomijanie nieprawidłowego pliku %s"
+msgstr "pomijanie nieprawidłowej nazwy pliku %s"
 
 #: ../IkiWiki/Render.pm:310
 #, perl-format
@@ -479,44 +478,44 @@ msgstr "usuwanie starej strony %s"
 #: ../IkiWiki/Render.pm:330
 #, perl-format
 msgid "scanning %s"
-msgstr "przeszukiwanie strony %s"
+msgstr "skanowanie %s"
 
 #: ../IkiWiki/Render.pm:340
 #, perl-format
 msgid "rendering %s"
-msgstr "tworzenie strony %s"
+msgstr "renderowanie %s"
 
 #: ../IkiWiki/Render.pm:352
 #, perl-format
 msgid "rendering %s, which links to %s"
-msgstr "tworzenie strony %s z odnośnikiem do strony %s"
+msgstr "renderowanie %s z odnośnikiem do %s"
 
 #: ../IkiWiki/Render.pm:369
 #, perl-format
 msgid "rendering %s, which depends on %s"
-msgstr "tworzenie strony %s zależącej od strony %s"
+msgstr "renderowanie %s zależącego od %s"
 
 #: ../IkiWiki/Render.pm:407
 #, perl-format
 msgid "rendering %s, to update its backlinks"
-msgstr "tworzenie strony %s w celu aktualizacji jej powrotnych odnośników"
+msgstr "renderowanie %s w celu aktualizacji powrotnych odnośników"
 
 #: ../IkiWiki/Render.pm:419
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
-msgstr "usuwanie strony %s nie tworzonej już przez %s"
+msgstr "usuwanie %s nie tworzonego już przez %s"
 
 #: ../IkiWiki/Render.pm:445
 #, perl-format
 msgid "ikiwiki: cannot render %s"
-msgstr "ikiwiki: awaria w trakcie tworzenie strony %s"
+msgstr "ikiwiki: awaria w trakcie tworzenia %s"
 
 #. translators: The first parameter is a filename, and the second
 #. translators: is a (probably not translated) error message.
 #: ../IkiWiki/Setup.pm:15
 #, perl-format
 msgid "cannot read %s: %s"
-msgstr "awaria w trakcie czytania strony %s: %s"
+msgstr "awaria w trakcie odczytu %s: %s"
 
 #: ../IkiWiki/Setup/Standard.pm:32
 msgid "generating wrappers.."
@@ -541,7 +540,7 @@ msgstr "gotowe"
 #: ../IkiWiki/UserInfo.pm:146
 #, perl-format
 msgid "update of %s's %s by %s"
-msgstr "aktualizacja stron wiki %s %s przez użytkownika %s"
+msgstr "aktualizacja stron wiki %s: %s przez użytkownika %s"
 
 #: ../IkiWiki/Wrapper.pm:16
 #, perl-format
@@ -561,19 +560,19 @@ msgstr "nieokreślona nazwa pliku osłony"
 #: ../IkiWiki/Wrapper.pm:64
 #, perl-format
 msgid "failed to write %s: %s"
-msgstr "awaria w trakcie zapisu strony %s: %s"
+msgstr "awaria w trakcie zapisu %s: %s"
 
 #. translators: The parameter is a C filename.
 #: ../IkiWiki/Wrapper.pm:100
 #, perl-format
 msgid "failed to compile %s"
-msgstr "awaria w trakcie zestawiania strony %s"
+msgstr "awaria w trakcie kompilowania %s"
 
 #. translators: The parameter is a filename.
 #: ../IkiWiki/Wrapper.pm:108
 #, perl-format
 msgid "successfully generated %s"
-msgstr "strona pomyślnie utworzona %s"
+msgstr "pomyślnie utworzono %s"
 
 #: ../ikiwiki.in:13
 msgid "usage: ikiwiki [options] source dest"
@@ -582,8 +581,8 @@ msgstr "użycie: ikiwiki [parametry] źródło cel"
 #: ../IkiWiki.pm:107
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
-"Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
-"--url"
+"Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą "
+"parametru --url"
 
 #: ../IkiWiki.pm:154 ../IkiWiki.pm:155
 msgid "Error"
@@ -603,4 +602,4 @@ msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
 
 #, fuzzy
 #~ msgid "sparkline previewing not implemented"
-#~ msgstr "niedostępna funkcja getctime"
+#~ msgstr "niedostępny podgląd dla wtyczki sparkline"
