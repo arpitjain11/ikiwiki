@@ -30,7 +30,7 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Plugin interface version increased to 2.00 since I don't anticipate any
     more interface changes before 2.0.
   * Updated Gujarati translation from Kartik Mistry. Closes: #421198
-  * Make pagespec_match return an object that can be stringified to tell 
+  * Make pagespec_match return an object that can be stringified to tell
     the reason why the match failed or succeeded.
   * Add testpagespec plugin, which might be useful to see why a pagespec isn't
     working as desired.
@@ -39,7 +39,10 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Fix bestlink to use pagecase for pages in userdir, to support pages
     with non-lowercase filenames.
 
- -- Josh Triplett <josh@freedesktop.org>  Fri, 27 Apr 2007 02:08:58 -0700
+  [ Joey Hess ]
+  * Include wikiname in syslogged messages.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 27 Apr 2007 13:47:54 -0400
 
 ikiwiki (1.50) unstable; urgency=low
 

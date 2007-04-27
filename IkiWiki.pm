@@ -178,7 +178,7 @@ sub log_message ($$) { #{{{
 			$log_open=1;
 		}
 		eval {
-			Sys::Syslog::syslog($type, "%s", join(" ", @_));
+			Sys::Syslog::syslog($type, "[$config{wikiname}] %s", join(" ", @_));
 		};
 	}
 	elsif (! $config{cgi}) {
