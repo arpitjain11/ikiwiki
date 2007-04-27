@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 20:28-0400\n"
+"POT-Creation-Date: 2007-04-23 14:43-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -26,7 +26,7 @@ msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 #: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
-msgstr ""
+msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
 #: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
@@ -52,12 +52,12 @@ msgstr "તમારા પર પ્રતિબંધ છે."
 
 #: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
-msgstr ""
+msgstr "પ્રવેશ નિષ્ફળ, કદાચ તમારી કુકીઓ સક્રિય બનાવવી પડશે?"
 
 #: ../IkiWiki/Plugin/aggregate.pm:62
-#, fuzzy, perl-format
+#, perl-format
 msgid "missing %s parameter"
-msgstr "ટેમ્પલેટને આઇડી વિકલ્પ મળતો નથી"
+msgstr "ખોવાયેલ %s વિકલ્પ"
 
 #: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
@@ -97,18 +97,17 @@ msgid "could not find feed at %s"
 msgstr "%s પર ફીડ મળી શક્યું નહી"
 
 #: ../IkiWiki/Plugin/aggregate.pm:267
-#, fuzzy
 msgid "feed not found"
-msgstr "ટેમ્પલેટ %s મળ્યું નહી"
+msgstr "ફીડ મળ્યું નહી"
 
 #: ../IkiWiki/Plugin/aggregate.pm:278
 #, perl-format
-msgid "(invalid UTF-8 stripped from feed)"
-msgstr ""
+msgid "invalid UTF-8 stripped from feed"
+msgstr "ફીડમાંથી અયોગ્ય રીતે UTF-8 નીકાળેલ છે"
 
 #: ../IkiWiki/Plugin/aggregate.pm:283
 msgid "feed crashed XML::Feed!"
-msgstr "ફીડ ભાંગી પડ્યું XML::Feed!"
+msgstr "ફીડ ભાંગી ગયું XML::Feed!"
 
 #: ../IkiWiki/Plugin/aggregate.pm:356
 #, perl-format
@@ -121,46 +120,44 @@ msgstr "અહીં કોઇ તૂટેલ કડી નથી!"
 
 #: ../IkiWiki/Plugin/conditional.pm:20
 msgid "\"test\" and \"then\" parameters are required"
-msgstr ""
+msgstr "\"test\" અને \"then\" વિકલ્પો જરૂરી છે"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "ભવિષ્ય નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-#, fuzzy
 msgid "failed to find url in html"
-msgstr "ગુગલકેલેન્ડરને htmlમાં યુઆરએલ મળ્યું નહી"
+msgstr "htmlમાં યુઆરએલ શોધવામાં નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/graphviz.pm:59
-#, fuzzy
 msgid "failed to run graphviz"
-msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+msgstr "ગ્રાફવિઝ ચલાવવામાં નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/graphviz.pm:81
 msgid "prog not a valid graphviz program"
-msgstr ""
+msgstr "કાર્યક્રમએ યોગ્ય ગ્રાફવિઝ કાર્યક્રમ નથી"
 
 #: ../IkiWiki/Plugin/img.pm:36
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s not found"
 msgstr "ટેમ્પલેટ %s મળ્યું નહી"
 
 #: ../IkiWiki/Plugin/img.pm:49
 #, perl-format
 msgid "bad size \"%s\""
-msgstr ""
+msgstr "અયોગ્ય માપ \"%s\""
 
 #: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
 #: ../IkiWiki/Plugin/img.pm:80
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to read %s: %s"
-msgstr "%s લખવામાં નિષ્ફળ: %s"
+msgstr "%s વાંચવામાં નિષ્ફળ: %s"
 
 #: ../IkiWiki/Plugin/img.pm:66
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to resize: %s"
-msgstr "%s લખવામાં નિષ્ફળ: %s"
+msgstr "માપ બદલવામાં નિષ્ફળ: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -173,12 +170,12 @@ msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 
 #: ../IkiWiki/Plugin/inline.pm:146
 msgid "Add a new post titled:"
-msgstr ""
+msgstr "આ શિર્ષકથી નવું પોસ્ટ ઉમેરો:"
 
 #: ../IkiWiki/Plugin/inline.pm:160
 #, perl-format
 msgid "nonexistant template %s"
-msgstr ""
+msgstr "અસ્તિત્વમાં ન હોય તેવું ટેમ્પલેટ %s"
 
 #: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
 msgid "Discussion"
@@ -189,9 +186,8 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
 #: ../IkiWiki/Plugin/linkmap.pm:98
-#, fuzzy
 msgid "failed to run dot"
-msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+msgstr "ડોટ ચલાવવામાં નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
 #, perl-format
@@ -204,9 +200,8 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr "Markdown.pm પર્લ મોડ્યુલ (%s) અથવા /usr/bin/markdown (%s) લાવવામાં નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/meta.pm:88
-#, fuzzy
 msgid "stylesheet not found"
-msgstr "ટેમ્પલેટ %s મળ્યું નહી"
+msgstr "સ્ટાઇલશીટ મળ્યું નહી"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -218,7 +213,7 @@ msgstr "મિરર"
 
 #: ../IkiWiki/Plugin/more.pm:8
 msgid "more"
-msgstr ""
+msgstr "વધુ"
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -270,11 +265,11 @@ msgstr "પોલિગોન નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:25
 msgid "missing formula"
-msgstr ""
+msgstr "ખોવાયેલ સૂત્ર"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "unknown formula"
-msgstr ""
+msgstr "અજાણ્યું સૂત્ર"
 
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
@@ -282,63 +277,63 @@ msgstr ""
 #. translators: %A- is the name of the previous day.
 #: ../IkiWiki/Plugin/prettydate.pm:15
 msgid "late %A- night"
-msgstr ""
+msgstr "મોડાં %A- રાત્રે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:17
 msgid "in the wee hours of %A- night"
-msgstr ""
+msgstr "%A- રાતનાં કલાકમાં"
 
 #: ../IkiWiki/Plugin/prettydate.pm:20
 msgid "terribly early %A morning"
-msgstr ""
+msgstr "ખૂબ જ વહેલાં %A સવારે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:22
 msgid "early %A morning"
-msgstr ""
+msgstr "વહેલા %A સવારે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:25
 msgid "in mid-morning %A"
-msgstr ""
+msgstr "સવારે મધ્યમાં %A પર"
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
 msgid "late %A morning"
-msgstr ""
+msgstr "મોડા %A સવારે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:27
 msgid "at lunch time on %A"
-msgstr ""
+msgstr "જમવાનાં સમયે %A પર"
 
 #: ../IkiWiki/Plugin/prettydate.pm:29
 msgid "%A afternoon"
-msgstr ""
+msgstr "%A બપોર પછી"
 
 #: ../IkiWiki/Plugin/prettydate.pm:32
 msgid "late %A afternoon"
-msgstr ""
+msgstr "મોડા %A બપોર પછી"
 
 #: ../IkiWiki/Plugin/prettydate.pm:33
 msgid "%A evening"
-msgstr ""
+msgstr "%A સાંજે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:35
 msgid "late %A evening"
-msgstr ""
+msgstr "મોડા %A સાંજે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:37
 msgid "%A night"
-msgstr ""
+msgstr "%A રાત્રે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:74
 msgid "at teatime on %A"
-msgstr ""
+msgstr "ચા ના સમયે %A પર"
 
 #: ../IkiWiki/Plugin/prettydate.pm:78
 msgid "at midnight"
-msgstr ""
+msgstr "મધ્યરાત્રે"
 
 #: ../IkiWiki/Plugin/prettydate.pm:81
 msgid "at noon on %A"
-msgstr ""
+msgstr "બપોરે %A પર"
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
@@ -354,85 +349,77 @@ msgid "updating hyperestraier search index"
 msgstr "હાયપરસ્ટ્રેઇઝર શોધ અનુક્રમણિકા સુધારે છે"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-#, fuzzy
 msgid "missing name or url parameter"
-msgstr "ટુંકોરસ્તો નામ અથવા યુઆરએલ વિકલ્પ ધરાવતો નથી"
+msgstr "ખોવાયેલ નામ અથવા યુઆરએલ વિકલ્પ"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
 #: ../IkiWiki/Plugin/shortcut.pm:33
-#, fuzzy, perl-format
+#, perl-format
 msgid "shortcut %s points to <i>%s</i>"
-msgstr "ટુંકોરસ્તો %s એ %s ને નિર્દેશ કરે છે"
+msgstr "ટુંકોરસ્તો %s એ <i>%s</i> નો નિર્દેશ કરે છે"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
-#, fuzzy
 msgid "failed to parse any smileys"
-msgstr "કોઇપણ સ્માઇલીઓ લાવવામાં નિષ્ફળ, પ્લગઇન અસક્રિય કરે છે"
+msgstr "કોઇપણ સ્માઇલીઓ ઉકેલવામાં નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
-#, fuzzy
 msgid "parse error"
-msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+msgstr "ઉકેલવામાં ક્ષતિ"
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
 msgid "bad featurepoint diameter"
-msgstr ""
+msgstr "ખરાબ લાક્ષણિકબિંદુ વ્યાસ"
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
 msgid "bad featurepoint location"
-msgstr ""
+msgstr "ખરાબ લાક્ષણિકબિંદુ સ્થિતિ"
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
 msgid "missing values"
-msgstr ""
+msgstr "ખોવાયેલ કિંમતો"
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
-#, fuzzy
 msgid "bad height value"
-msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+msgstr "ખરાબ ઉંચાઇ કિંમત"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
-#, fuzzy
 msgid "missing width parameter"
-msgstr "ટેમ્પલેટને આઇડી વિકલ્પ મળતો નથી"
+msgstr "ખોવાયેલ પહોળાઇ વિકલ્પ"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
-#, fuzzy
 msgid "bad width value"
-msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+msgstr "ખરાબ પહોળાઇ કિંમત"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
-#, fuzzy
 msgid "failed to run php"
-msgstr "લીંકમેપ ડોટ ચલાવવામાં નિષ્ફળ"
+msgstr "php ચલાવવામાં નિષ્ફળ"
 
 #: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
-msgstr ""
+msgstr "ફાઇલ મળી શકી નહી"
 
 #: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
-msgstr ""
+msgstr "અજાણ્યો માહિતી પ્રકાર"
 
 #: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
-msgstr ""
+msgstr "ખાલી માહિતી"
 
 #: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
-msgstr ""
+msgstr "સીધી માહિતી ડાઉનલોડ"
 
 #: ../IkiWiki/Plugin/table.pm:106
-#, fuzzy, perl-format
+#, perl-format
 msgid "parse fail at line %d: %s"
-msgstr "%s લખવામાં નિષ્ફળ: %s"
+msgstr "ઉકેલવાનું લીટી %d પર નિષ્ફળ: %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
-#, fuzzy
 msgid "missing id parameter"
-msgstr "ટેમ્પલેટને આઇડી વિકલ્પ મળતો નથી"
+msgstr "ખોવાયેલ આઇડી વિકલ્પ"
 
 #: ../IkiWiki/Plugin/template.pm:26
 #, perl-format
@@ -440,9 +427,8 @@ msgid "template %s not found"
 msgstr "ટેમ્પલેટ %s મળ્યું નહી"
 
 #: ../IkiWiki/Plugin/template.pm:45
-#, fuzzy
 msgid "failed to process:"
-msgstr "ટેમ્પલેટ ક્રિયા કરવામાં નિષ્ફળ:"
+msgstr "ક્રિયા કરવામાં નિષ્ફળ:"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
 msgid "getctime not implemented"
