@@ -16,8 +16,12 @@ sub preprocess (@) { #{{{
 	
 	my $ret=pagespec_match($params{match}, $params{pagespec}, 
 			location => $params{page});
-	return $ret if ! $ret;
-	return "the pagespec matches";
+	if ($ret) {
+		return "match: $ret";
+	}
+	else {
+		return "no match: $ret";
+	}
 } # }}}
 
 1

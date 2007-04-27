@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 51;
+use Test::More tests => 52;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -25,6 +25,7 @@ ok(pagespec_match("a/b/foo", "./*", location => "a/b"), "relative 2");
 ok(pagespec_match("a/foo", "./*", "a/b"), "relative oldstyle call");
 ok(pagespec_match("foo", "./*", location => "a"), "relative toplevel");
 ok(pagespec_match("foo/bar", "*", location => "baz"), "absolute");
+ok(! pagespec_match("foo", "foo and bar"), "foo and bar");
 
 # The link and backlink stuff needs this.
 $config{userdir}="";

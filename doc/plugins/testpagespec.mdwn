@@ -2,11 +2,21 @@
 [[tag type/useful]]
 
 This plugin allows testing a [[PageSpec]] to see if it matches a page, and
-if not, why it fails to match.
+to see the part that matches, or causes the match to fail.
 
-Example use:
+Example uses:
 
 	\[[testpagespec pagespec="foopage and barpage" match="foopage"]]
 
-This will print out something like "barpage does not match foopage",
+This will print out something like "no match: barpage does not match foopage",
 highlighting which part of the [[PageSpec]] is causing the match to fail.
+	
+	\[[testpagespec pagespec="foopage or !bar*" match="barpage"]]
+
+This will print out something like "no match: bar* matches barpage", since the part
+of the [[PageSpec]] that fails is this negated match.
+	
+	\[[testpagespec pagespec="foopage or barpage" match="barpage"]]
+
+This will print out something like "match: barpage matches barpage",
+indicating the part of the [[PageSpec]] that did match.
