@@ -4,6 +4,22 @@ Sorry, I know the title is ridiculously vague for a bug but I don't know what th
 
 -- [[AdamShand]]
 
-> Well, they seem fine in this post? --[[Joey]]
+> The page is fine if I download it and view it locally, or put it on my
+> laptop's web server. I imagine that the problem is due to your web server
+> not saying that the encoding of the page is utf8. For apache you could
+> try setting this: 
+> 
+> AddDefaultCharset UTF-8
+> 
+> Although I don't need that setting here.. Maybe your apache config has
+> some problem, because your web server is doing this: --[[Joey]]
 
->> Yowza that was fast, that save was just my first test to see if it effected ikiwiki! :-)   More info included now. -- Adam.
+	Accept-Ranges: bytes
+	Content-Length: 2135
+	Content-Type: text/html; charset=iso-8859-1
+
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
