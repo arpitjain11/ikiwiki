@@ -35,7 +35,11 @@ ikiwiki (1.51) UNRELEASED; urgency=low
   * Add testpagespec plugin, which might be useful to see why a pagespec isn't
     working as desired.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 27 Apr 2007 03:41:52 -0400
+  [ Josh Triplett ]
+  * Fix bestlink to use pagecase for pages in userdir, to support pages
+    with non-lowercase filenames.
+
+ -- Josh Triplett <josh@freedesktop.org>  Fri, 27 Apr 2007 02:08:58 -0700
 
 ikiwiki (1.50) unstable; urgency=low
 
