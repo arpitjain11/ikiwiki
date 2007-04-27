@@ -1011,29 +1011,29 @@ sub pagespec_match ($$;@) { #{{{
 
 package IkiWiki::FailReason;
 
-use overload (
+use overload ( #{{{
 	'""'	=> sub { ${$_[0]} },
 	'0+'	=> sub { 0 },
 	'!'	=> sub { bless $_[0], 'IkiWiki::SuccessReason'},
 	fallback => 1,
-);
+); #}}}
 
-sub new {
+sub new { #{{{
 	bless \$_[1], $_[0];
-}
+} #}}}
 
 package IkiWiki::SuccessReason;
 
-use overload (
+use overload ( #{{{
 	'""'	=> sub { ${$_[0]} },
 	'0+'	=> sub { 1 },
 	'!'	=> sub { bless $_[0], 'IkiWiki::FailReason'},
 	fallback => 1,
-);
+); #}}}
 
-sub new {
+sub new { #{{{
 	bless \$_[1], $_[0];
-}
+}; #}}}
 
 package IkiWiki::PageSpec;
 
