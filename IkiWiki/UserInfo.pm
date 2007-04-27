@@ -92,8 +92,11 @@ sub set_banned_users (@) { #{{{
 	return userinfo_store($userinfo);
 } #}}}
 
+# Global used to pass information into the PageSpec function.
+our $committer;
+
 sub commit_notify_list ($@) { #{{{
-	my $committer=shift;
+	$committer=shift;
 	my @pages = map pagename($_), @_;
 
 	my @ret;
@@ -175,6 +178,15 @@ sub send_commit_mails ($$$@) { #{{{
 
 		exit 0; # daemon process done
 	}
+} #}}}
+
+package IkiWiki::PageSpec;
+
+sub match_user ($$$) { #{{{
+	shift;
+	my $user=shift;
+
+	return $user eq $committer;
 } #}}}
 
 1
