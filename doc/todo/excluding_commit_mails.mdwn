@@ -1,0 +1,17 @@
+It would be good to be able to exclude commits made by a given user from
+generating commit mails. 
+
+My immediate need for this is because I subscribed to commit mails using my
+openid. So I don't get commit mails for changes I make over the web, using
+that id. But, if I do a svn commit, that's from a "different" user, so a
+commit mail is sent to me. This particular case could be treated as ikiwiki
+needing some way to link together openids and other accounts, which could
+also be good, but I think the general case of not wanting to see changes
+some other user makes is reasonable.
+
+Extending pagespecs for commit mails would be a nice approach. Then I could
+subscribe to:
+
+	* and !SandBox and !user(joey)
+
+Insert standard argument about how wonderfly flexible this is. :-)
