@@ -40,3 +40,5 @@ new version of Locale::gettext fixed it. --Ethan
 >> Thanks for the hint, guys! :) I've just backported liblocale-gettext-perl
 >> 1.05 package and it seems that now I can build my ikiwiki successfully
 >> and it even works :) --Pawel
+
+Thanks for the note on this, made it very easy to figure out what was going on.  Just pointing out though that the Debian package doesn't require a new version of liblocale-gettext-perl.  I just got bit by this bug setting up a dev ikiwiki box on a mixed stable/testing box.  -- [[Adam]]
