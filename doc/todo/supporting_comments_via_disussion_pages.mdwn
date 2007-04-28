@@ -55,3 +55,72 @@ content to the old one.
 -- [[MarceloMagallon]]
 
 > Anything I can do to help? --[[Joey]]
+
+>> Figured it out.  Can you comment on the code below?  Thanks. -- [[MarceloMagallon]]
+
+    sub formbuilder_setup (@) { #{{{
+        my %params=@_;
+        my $cgi = $params{cgi};
+        my $form = $params{form};
+        my $session = $params{session};
+
+        # XXX: This needs something to make it blog specific
+        unless ($cgi->param('page') =~ m{/discussion$} &&
+                $cgi->param('do') eq 'edit' &&
+                ! defined $form->{title})
+        {
+            return;
+        }
+
+        $form->template(IkiWiki::template_file("makeblogcomment.tmpl"));
+        $form->field(name => "blogcomment", type => "textarea", rows => 20,
+                cols => 80);
+
+        my ($page)=$form->field('page');
+        my $content="";
+        if (exists $pagesources{$page}) {
+            $content=readfile(srcfile($pagesources{$page}));
+            $content.="\n\n";
+        }
+        $content.="----\n\n";
+        my $name=$session->param('name');
+        $name||="Anonymous";
+        $content.=sprintf(gettext("From: %s\n\n"), $name);
+        $content.=sprintf(gettext("Date: %s\n\n"), scalar(localtime));
+        if (defined $cgi->param('comments'))
+        {
+            $content.=sprintf(gettext("Subject: %s\n\n"),
+                    $cgi->param('comments'));
+        }
+        $content.=$cgi->param('blogcomment');
+        $content=~s/\n/\r\n/g;
+        $form->field(name => "editcontent", value => $content, force => 1);
+    } # }}}
+
+The above produces a page that looks like this:
+
+    From: Marcelo
+    
+    Date: Fri Apr 27 21:16:27 2007
+    
+    Subject: Pi
+    
+    3.14
+
+    ----
+
+    From: Marcelo
+
+    Date: Fri Apr 27 21:20:21 2007
+
+    Subject: 
+
+    A comment...
+
+Questions:
+
+ * Notice how this assumes that the page it's writing to is in mdwn format.
+
+ * What to do about the bit marked XXX?
+
+ * What about special formatting?  Is mdwn enough?
