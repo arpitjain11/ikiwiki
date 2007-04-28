@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 20:28-0400\n"
-"PO-Revision-Date: 2007-02-17 12:07+0100\n"
+"POT-Creation-Date: 2007-04-27 04:24-0400\n"
+"PO-Revision-Date: 2007-04-28 11:52+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -55,9 +55,9 @@ msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
 #: ../IkiWiki/Plugin/aggregate.pm:62
-#, fuzzy, perl-format
+#, perl-format
 msgid "missing %s parameter"
-msgstr "šabloně chybí parametr id"
+msgstr "chybí parametr %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
@@ -97,14 +97,13 @@ msgid "could not find feed at %s"
 msgstr "nemohu najít zdroj na %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:267
-#, fuzzy
 msgid "feed not found"
-msgstr "šablona %s nebyla nalezena"
+msgstr "zdroj nebyl nalezen"
 
 #: ../IkiWiki/Plugin/aggregate.pm:278
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
-msgstr ""
+msgstr "(neplatné UTF-8 bylo ze zdroje odstraněno)"
 
 #: ../IkiWiki/Plugin/aggregate.pm:283
 msgid "feed crashed XML::Feed!"
@@ -119,48 +118,46 @@ msgstr "vytvářím novou stránku %s"
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
-#: ../IkiWiki/Plugin/conditional.pm:20
+#: ../IkiWiki/Plugin/conditional.pm:17
 msgid "\"test\" and \"then\" parameters are required"
-msgstr ""
+msgstr "parametry \"test\" a \"then\" jsou vyžadovány"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "fortune selhal"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-#, fuzzy
 msgid "failed to find url in html"
-msgstr "googlecalendar v html nenalezl url"
+msgstr "v html se nepodařilo nalézt url"
 
 #: ../IkiWiki/Plugin/graphviz.pm:59
-#, fuzzy
 msgid "failed to run graphviz"
-msgstr "linkmapu se nepodařilo spustit dot"
+msgstr "nepodařilo se spustit graphviz"
 
 #: ../IkiWiki/Plugin/graphviz.pm:81
 msgid "prog not a valid graphviz program"
-msgstr ""
+msgstr "program není platným programem graphviz"
 
 #: ../IkiWiki/Plugin/img.pm:36
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s not found"
-msgstr "šablona %s nebyla nalezena"
+msgstr "%s nenalezen"
 
 #: ../IkiWiki/Plugin/img.pm:49
 #, perl-format
 msgid "bad size \"%s\""
-msgstr ""
+msgstr "chybná velikost \"%s\""
 
 #: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
 #: ../IkiWiki/Plugin/img.pm:80
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to read %s: %s"
-msgstr "nelze zapsat %s: %s"
+msgstr "nelze číst %s: %s"
 
 #: ../IkiWiki/Plugin/img.pm:66
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to resize: %s"
-msgstr "nelze zapsat %s: %s"
+msgstr "nelze změnit velikost: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -173,12 +170,12 @@ msgstr "neznámý typ řazení %s"
 
 #: ../IkiWiki/Plugin/inline.pm:146
 msgid "Add a new post titled:"
-msgstr ""
+msgstr "Přidat nový příspěvek nazvaný:"
 
 #: ../IkiWiki/Plugin/inline.pm:160
 #, perl-format
 msgid "nonexistant template %s"
-msgstr ""
+msgstr "neexistující šablona %s"
 
 #: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
 msgid "Discussion"
@@ -189,9 +186,8 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
 #: ../IkiWiki/Plugin/linkmap.pm:98
-#, fuzzy
 msgid "failed to run dot"
-msgstr "linkmapu se nepodařilo spustit dot"
+msgstr "nepodařilo se spustit dot"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
 #, perl-format
@@ -205,9 +201,8 @@ msgstr ""
 "selhalo nahrání perlového modulu Markdown.pm (%s) nebo /usr/bin/markdown (%s)"
 
 #: ../IkiWiki/Plugin/meta.pm:88
-#, fuzzy
 msgid "stylesheet not found"
-msgstr "šablona %s nebyla nalezena"
+msgstr "styl nebyl nalezen"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -219,7 +214,7 @@ msgstr "Zrcadlo"
 
 #: ../IkiWiki/Plugin/more.pm:8
 msgid "more"
-msgstr ""
+msgstr "více"
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -271,11 +266,11 @@ msgstr "polygen selhal"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:25
 msgid "missing formula"
-msgstr ""
+msgstr "chybí vzorec"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "unknown formula"
-msgstr ""
+msgstr "neznámý vzorec"
 
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
@@ -302,9 +297,8 @@ msgid "in mid-morning %A"
 msgstr "%A dopoledne"
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
-#, fuzzy
 msgid "late %A morning"
-msgstr "%A pozdě večer"
+msgstr "%A pozdě dopoledne"
 
 #: ../IkiWiki/Plugin/prettydate.pm:27
 msgid "at lunch time on %A"
@@ -356,9 +350,8 @@ msgid "updating hyperestraier search index"
 msgstr "aktualizuji vyhledávací index hyperestraieru"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-#, fuzzy
 msgid "missing name or url parameter"
-msgstr "zkratka postrádá jméno nebo url"
+msgstr "chybí parametr jméno nebo url"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
@@ -369,72 +362,65 @@ msgid "shortcut %s points to <i>%s</i>"
 msgstr "zkratka %s odkazuje na <i>%s</i>"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
-#, fuzzy
 msgid "failed to parse any smileys"
-msgstr "selhalo zpracování jakýchkoliv smajlíků, vypínám modul"
+msgstr "nepodařilo se rozpoznat žádné smajlíky"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
-#, fuzzy
 msgid "parse error"
-msgstr "linkmapu se nepodařilo spustit dot"
+msgstr "chyba rozpoznávání"
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
 msgid "bad featurepoint diameter"
-msgstr ""
+msgstr "chybný průměr zvýrazněného bodu (featurepoint)"
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
 msgid "bad featurepoint location"
-msgstr ""
+msgstr "chybné umístění zvýrazněného bodu (featurepoint)"
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
 msgid "missing values"
-msgstr ""
+msgstr "chybí hodnoty"
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
-#, fuzzy
 msgid "bad height value"
-msgstr "linkmapu se nepodařilo spustit dot"
+msgstr "chybná výška"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
-#, fuzzy
 msgid "missing width parameter"
-msgstr "šabloně chybí parametr id"
+msgstr "chybí parametr šířka (width)"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
-#, fuzzy
 msgid "bad width value"
-msgstr "linkmapu se nepodařilo spustit dot"
+msgstr "chybná šířka"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
-#, fuzzy
 msgid "failed to run php"
-msgstr "linkmapu se nepodařilo spustit dot"
+msgstr "nepodařilo se spustit php"
 
-#: ../IkiWiki/Plugin/table.pm:22
+#: ../IkiWiki/Plugin/table.pm:21
 msgid "cannot find file"
-msgstr ""
+msgstr "nemohu najít soubor"
 
-#: ../IkiWiki/Plugin/table.pm:45
+#: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
-msgstr ""
+msgstr "neznámý formát dat"
 
-#: ../IkiWiki/Plugin/table.pm:53
+#: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
-msgstr ""
+msgstr "prázdná data"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "Direct data download"
-msgstr ""
+msgstr "Stáhnout zdrojová data"
 
-#: ../IkiWiki/Plugin/table.pm:106
-#, fuzzy, perl-format
+#: ../IkiWiki/Plugin/table.pm:105
+#, perl-format
 msgid "parse fail at line %d: %s"
-msgstr "nelze zapsat %s: %s"
+msgstr "zpracovávání selhalo na řádku %d: %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
-#, fuzzy
 msgid "missing id parameter"
-msgstr "šabloně chybí parametr id"
+msgstr "chybí parametr id"
 
 #: ../IkiWiki/Plugin/template.pm:26
 #, perl-format
@@ -442,9 +428,8 @@ msgid "template %s not found"
 msgstr "šablona %s nebyla nalezena"
 
 #: ../IkiWiki/Plugin/template.pm:45
-#, fuzzy
 msgid "failed to process:"
-msgstr "šablonu se nepodařilo zpracovat:"
+msgstr "nepodařilo se zpracovat:"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
 msgid "getctime not implemented"
@@ -529,7 +514,7 @@ msgstr "hotovo"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:145
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "aktualizace %s (%s) uživatelem %s"
@@ -586,13 +571,3 @@ msgstr "Chyba"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
-
-#~ msgid "aggregate plugin missing %s parameter"
-#~ msgstr "modulu aggregate chybí parametr %s"
-
-#, fuzzy
-#~ msgid "sparkline previewing not implemented"
-#~ msgstr "getctime není implementováno"
-
-#~ msgid "in late morning %A"
-#~ msgstr "%A pozdě dopoledne"
