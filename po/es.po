@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 20:28-0400\n"
+"POT-Creation-Date: 2007-04-29 00:02-0400\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -53,8 +53,7 @@ msgstr "Ha sido expulsado."
 #: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
-"registro fallido, ¿ tal vez necesita activar las cookies en el "
-"navegador ?"
+"registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
 
 #: ../IkiWiki/Plugin/aggregate.pm:62
 #, perl-format
@@ -120,7 +119,7 @@ msgstr "creando nueva página %s"
 msgid "There are no broken links!"
 msgstr "¡ No hay enlaces rotos !"
 
-#: ../IkiWiki/Plugin/conditional.pm:20
+#: ../IkiWiki/Plugin/conditional.pm:17
 msgid "\"test\" and \"then\" parameters are required"
 msgstr "los parámetros \"test\" y \"then\" son obligatorios "
 
@@ -130,7 +129,8 @@ msgstr "el programa fortune ha fallado"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
 msgid "failed to find url in html"
-msgstr "El complemento googlecalendar no ha encontrado un URL en el código html "
+msgstr ""
+"El complemento googlecalendar no ha encontrado un URL en el código html "
 
 #: ../IkiWiki/Plugin/graphviz.pm:59
 msgid "failed to run graphviz"
@@ -402,23 +402,23 @@ msgstr "valor incorrecto para el ancho"
 msgid "failed to run php"
 msgstr "error fatal invocando el programa php"
 
-#: ../IkiWiki/Plugin/table.pm:22
+#: ../IkiWiki/Plugin/table.pm:21
 msgid "cannot find file"
 msgstr "no puedo encontrar el archivo"
 
-#: ../IkiWiki/Plugin/table.pm:45
+#: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
 msgstr "formato de datos desconocido"
 
-#: ../IkiWiki/Plugin/table.pm:53
+#: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
 msgstr "sin datos"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "Direct data download"
 msgstr "Enlace directo para descarga"
 
-#: ../IkiWiki/Plugin/table.pm:106
+#: ../IkiWiki/Plugin/table.pm:105
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "error de análisis en la línea %d: %s"
@@ -522,7 +522,7 @@ msgstr "completado"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:145
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "actualizado el wiki %s y la página %s por el usuario %s"
@@ -534,7 +534,8 @@ msgstr "el programa %s no parece ser ejecutable"
 
 #: ../IkiWiki/Wrapper.pm:20
 msgid "cannot create a wrapper that uses a setup file"
-msgstr "no puedo crear un programa envoltorio que utiliza un archivo de configuración"
+msgstr ""
+"no puedo crear un programa envoltorio que utiliza un archivo de configuración"
 
 #: ../IkiWiki/Wrapper.pm:24
 msgid "wrapper filename not specified"
@@ -577,10 +578,9 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:625
+#: ../IkiWiki.pm:631
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
 "se ha detectado un bucle de preprocesado %s en la página %s en la vuelta "
 "número %i"
-
