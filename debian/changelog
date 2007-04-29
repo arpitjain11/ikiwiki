@@ -1,3 +1,10 @@
+ikiwiki (1.52) UNRELEASED; urgency=low
+
+  * Avoid using GNU extensions to cp during "make install", which did
+    not work on FreeBSD.  Thanks to Henrik Brix Andersen for the patch.
+
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 29 Apr 2007 15:23:00 -0700
+
 ikiwiki (1.51) unstable; urgency=low
 
   [ Joey Hess ]
