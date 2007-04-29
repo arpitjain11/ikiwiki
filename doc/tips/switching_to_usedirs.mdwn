@@ -1,0 +1,19 @@
+As of version 2.0, ikiwiki will switch to enabling the 'usedirs' setting by
+default. This *will* break all URLs to wikis that did not have 'usedirs'
+turned on before. You can either follow this procedure to convert your wiki
+to usedirs, or edit your setup file and turn usedirs back off.
+
+* Upgrade ikiwiki to 2.0.
+* Force ikiwiki to rebuild your wiki, by using `ikiwiki-mass-rebuild`,
+  or manually.
+* Since usedirs is enabled, ikiwiki will have created a bunch of new
+  html files. Where before ikiwiki generated a `dest/foo.html`, now it will
+  generate `dest/foo/index.html`. But, the old html files will still be
+  present too. Remove them:
+	find dest -name \*.html -not -name index.html -exec rm {} \;
+* If you have a blog that is aggregated on a Planet or similar, all the
+  items in the RSS or atom feed will seem like new posts, since their URLs
+  have changed. See [[howto_avoid_flooding_aggregators]] for a workaround.
+* Now all the URLs to pages in your wiki have changed. See
+  [[redirections_for_usedirs]] for instructions on setting up redirections
+  to keep the old URLs working.
