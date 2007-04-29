@@ -69,14 +69,14 @@ sub defaultconfig () { #{{{
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
-	plugin => [qw{mdwn inline htmlscrubber passwordauth signinedit
+	plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
 	              lockedit conditional}],
 	timeformat => '%c',
 	locale => undef,
 	sslcookie => 0,
 	httpauth => 0,
 	userdir => "",
-	usedirs => 0,
+	usedirs => 1,
 	numbacklinks => 10,
 } #}}}
    

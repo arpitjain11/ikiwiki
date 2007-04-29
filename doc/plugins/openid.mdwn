@@ -1,4 +1,4 @@
-[[template id=plugin name=openid author="[[Joey]]"]]
+[[template id=plugin name=openid core=1 author="[[Joey]]"]]
 [[tag type/auth]]
 
 This plugin allows users to use their [OpenID](http://openid.net/) to log
@@ -21,4 +21,5 @@ login url like `http://example.com/ikiwiki.cgi?do=continue`. Once the
 affiliate is created, set `openidsignup` to point to the affiliate's signup
 url.
 
-This plugin is included in ikiwiki, but is not enabled by default.
+This plugin is enabled by default, but can be turned off if you want to
+only use some other form of authentication, such as [[passwordauth]].

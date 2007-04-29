@@ -1,3 +1,21 @@
+ikiwiki (2.00) unstable; urgency=low
+
+  With the 2.0 release of ikiwiki, some major changes have been made to the
+  default configuration:
+
+  * The 'usedirs' setting is enabled by default. This *will* break all URLs
+    to wikis that did not have 'usedirs' turned on before, unless you follow
+    the procedure described at <http://ikiwiki.info/tips/switching_to_usedirs>,
+    or edit your setup file to turn usedirs off:
+       usedirs => 0,
+
+  * OpenID logins are now enabled by default. So ikiwiki now depends on the
+    Net::OpenID::Consumer perl module. Password logins are also still on by
+    default. If you like, you can turn either OpenID or password logins off
+    via the 'disable_plugins' setting.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 29 Apr 2007 19:00:43 -0400
+
 ikiwiki (1.51) unstable; urgency=low
 
   Some wikis need to be rebuilt on upgrade to this version, due to changes to
