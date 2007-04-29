@@ -1,4 +1,4 @@
-Currently ikiwiki uses cp(1) with GNU extensions in Makefile.PL for installing files, thus causing problems on FreeBSD which doesn't have a cp(1) with GNU extentions in the base system.
+Currently ikiwiki uses cp(1) with GNU extensions in Makefile.PL for installing files, thus causing problems on FreeBSD which doesn't have a cp(1) with GNU extensions in the base system.
 
 Here is a patch againt ikiwiki-1.51 for using find(1) and install(1) instead of cp(1).
 
