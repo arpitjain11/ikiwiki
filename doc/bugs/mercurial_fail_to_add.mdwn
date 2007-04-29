@@ -16,3 +16,11 @@ Here is a patch that's seems to work, although I'm not quite sure what's wrong w
            }
 
 My srcdir path has some symbolics links and hidden directorys... maybe that's it ?
+
+> Interesting, the mercurial test suite shows the add without the path
+> working ok. OTOH, it also continues to work if I apply your patch, so I
+> guess it's safe enough. It would be good to know why it's failing w/o the
+> path in your case. --[[Joey]]
+
+> As I applied the patch, I'm moving this out of the patchqueue to bugs and
+> marking it [[done]]. --[[Joey]]

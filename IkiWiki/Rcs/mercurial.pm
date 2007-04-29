@@ -95,7 +95,7 @@ sub rcs_commit ($$$;$$) { #{{{
 sub rcs_add ($) { # {{{
 	my ($file) = @_;
 
-	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$file");
+	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$config{srcdir}/$file");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
