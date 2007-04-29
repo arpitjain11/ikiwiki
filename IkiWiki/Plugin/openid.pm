@@ -30,12 +30,10 @@ sub formbuilder_setup (@) { #{{{
 	if ($form->title eq "signin") {
  		$form->field(
 			name => "openid_url",
-			label => "OpenID",
+			label => "",
+			fieldset => gettext("Log in with")." ".htmllink("", "", "OpenID", noimageinline => 1),
 			size => 30,
-			comment => '('.
-				htmllink("", "", "OpenID", noimageinline => 1, linktext => gettext("What's this?"))
-				.($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>" : "")
-				.')'
+			comment => ($config{openidsignup} ? "(<a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>)" : "")
 		);
 
 		# Handle submission of an OpenID as validation.
