@@ -30,7 +30,7 @@ extra_build:
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	chmod +x ikiwiki.out
 	LANG=C perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
-		--underlaydir=basewiki \
+		--underlaydir=basewiki --nousedirs\
 		--wikiname="ikiwiki" --verbose \
 		--exclude=/discussion --no-discussion --userdir=users \
 		--plugin=goodstuff \
