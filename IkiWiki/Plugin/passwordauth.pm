@@ -101,7 +101,7 @@ sub formbuilder_setup (@) { #{{{
 		}
 		else {
 			# First time settings.
-			$form->field(name => "name", comment => gettext("(use FirstnameLastName)"));
+			$form->field(name => "name", size => 30);
 			if ($session->param("name")) {
 				$form->field(name => "name", value => $session->param("name"));
 			}
