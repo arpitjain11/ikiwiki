@@ -58,8 +58,10 @@ sub formbuilder_setup (@) { #{{{
 	}
 	elsif ($form->title eq "preferences") {
 		if (! defined $form->field(name => "name")) {
-			$form->field(name => "OpenID", disabled => 1, value =>
-				$session->param("name"), size => 50, force => 1);
+			$form->field(name => "OpenID", disabled => 1,
+				value => $session->param("name"), 
+				size => 50, force => 1,
+				fieldset => "login");
 		}
 	}
 }

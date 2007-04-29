@@ -218,6 +218,11 @@ sub cgi_prefs ($$) { #{{{
 		action => $config{cgiurl},
 		template => scalar template_params("prefs.tmpl"),
 		stylesheet => baseurl()."style.css",
+		fieldsets => [
+			[login => gettext("Login")],
+			[preferences => gettext("Preferences")],
+			[admin => gettext("Admin")]
+		],
 	);
 	my $buttons=["Save Preferences", "Logout", "Cancel"];
 
@@ -226,10 +231,12 @@ sub cgi_prefs ($$) { #{{{
 	});
 	
 	$form->field(name => "do", type => "hidden");
-	$form->field(name => "email", size => 50);
+	$form->field(name => "email", size => 50, fieldset => "preferences");
 	$form->field(name => "subscriptions", size => 50,
+		fieldset => "preferences",
 		comment => "(".htmllink("", "", "PageSpec", noimageinline => 1).")");
-	$form->field(name => "banned_users", size => 50);
+	$form->field(name => "banned_users", size => 50,
+		fieldset => "admin");
 	
 	my $user_name=$session->param("name");
 	if (! is_admin($user_name)) {

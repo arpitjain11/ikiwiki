@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-23 14:43-0400\n"
+"POT-Creation-Date: 2007-04-29 17:55-0400\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -20,38 +20,38 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "Proszę najpierw zalogować się."
 
-#: ../IkiWiki/CGI.pm:274
+#: ../IkiWiki/CGI.pm:277
 msgid "Preferences saved."
 msgstr "Preferencje zapisane."
 
-#: ../IkiWiki/CGI.pm:339
+#: ../IkiWiki/CGI.pm:342
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "Strona %s nie może być edytowana"
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:421 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "dyskusja"
 
-#: ../IkiWiki/CGI.pm:464
+#: ../IkiWiki/CGI.pm:467
 #, perl-format
 msgid "creating %s"
 msgstr "tworzenie %s"
 
-#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
-#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
+#: ../IkiWiki/CGI.pm:484 ../IkiWiki/CGI.pm:499 ../IkiWiki/CGI.pm:510
+#: ../IkiWiki/CGI.pm:536 ../IkiWiki/CGI.pm:580
 #, perl-format
 msgid "editing %s"
 msgstr "edycja %s"
 
-#: ../IkiWiki/CGI.pm:674
+#: ../IkiWiki/CGI.pm:677
 msgid "You are banned."
 msgstr "Twój dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:709
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Nieudane logowanie. Proszę sprawdzić czy w przeglądarce włączone są "
@@ -105,8 +105,8 @@ msgid "feed not found"
 msgstr "nieznaleziony kanał RSS"
 
 #: ../IkiWiki/Plugin/aggregate.pm:278
-#, perl-format
-msgid "invalid UTF-8 stripped from feed"
+#, fuzzy, perl-format
+msgid "(invalid UTF-8 stripped from feed)"
 msgstr "Nieprawidłowe kodowanie UTF-8 usunięte z kanału RSS"
 
 #: ../IkiWiki/Plugin/aggregate.pm:283
@@ -122,7 +122,7 @@ msgstr "tworzenie nowej strony %s"
 msgid "There are no broken links!"
 msgstr "Wszystkie odnośniki są aktualne!"
 
-#: ../IkiWiki/Plugin/conditional.pm:20
+#: ../IkiWiki/Plugin/conditional.pm:17
 msgid "\"test\" and \"then\" parameters are required"
 msgstr "Parametry \"test\" i \"then\" są wymagane"
 
@@ -245,19 +245,19 @@ msgstr "Dla każdej strony istnieje odnośnik z innej strony"
 msgid "(use FirstnameLastName)"
 msgstr "użyj formy ImieNazwisko"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:144
+#: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Account creation successful. Now you can Login."
 msgstr "Konto założone pomyślnie. Teraz można zalogować się."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:150
 msgid "Error creating account."
 msgstr "Błąd w trakcie zakładania konta."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:168
+#: ../IkiWiki/Plugin/passwordauth.pm:171
 msgid "Failed to send mail"
 msgstr "Awaria w trakcie wysyłania wiadomości"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:170
+#: ../IkiWiki/Plugin/passwordauth.pm:173
 msgid "Your password has been emailed to you."
 msgstr "Wiadomość z hasłem została wysłana."
 
@@ -417,23 +417,23 @@ msgstr "nieprawidłowa szerokość"
 msgid "failed to run php"
 msgstr "awaria w trakcie uruchamiania php"
 
-#: ../IkiWiki/Plugin/table.pm:22
+#: ../IkiWiki/Plugin/table.pm:21
 msgid "cannot find file"
 msgstr "nie można znaleźć pliku"
 
-#: ../IkiWiki/Plugin/table.pm:45
+#: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
 msgstr "nieznany format danych"
 
-#: ../IkiWiki/Plugin/table.pm:53
+#: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
 msgstr "brak danych"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "Direct data download"
 msgstr "Bezpośrednie pobieranie danych"
 
-#: ../IkiWiki/Plugin/table.pm:106
+#: ../IkiWiki/Plugin/table.pm:105
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "awaria w trakcie przetwarzania linii %d: %s"
@@ -462,8 +462,8 @@ msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
 msgstr ""
-"Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" "
-"post-commit z powodu nieustawionego parametru REV"
+"Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" post-"
+"commit z powodu nieustawionego parametru REV"
 
 #: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
 #, perl-format
@@ -537,7 +537,7 @@ msgstr "gotowe"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:145
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "aktualizacja stron wiki %s: %s przez użytkownika %s"
@@ -581,8 +581,8 @@ msgstr "użycie: ikiwiki [parametry] źródło cel"
 #: ../IkiWiki.pm:107
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
-"Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą "
-"parametru --url"
+"Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
+"--url"
 
 #: ../IkiWiki.pm:154 ../IkiWiki.pm:155
 msgid "Error"
@@ -592,7 +592,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:625
+#: ../IkiWiki.pm:631
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"

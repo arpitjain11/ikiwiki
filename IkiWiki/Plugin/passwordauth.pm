@@ -108,10 +108,13 @@ sub formbuilder_setup (@) { #{{{
 		}
 	}
 	elsif ($form->title eq "preferences") {
-		$form->field(name => "name", disabled => 1, value =>
-			$session->param("name"), force => 1);
-		$form->field(name => "password", type => "password");
+		$form->field(name => "name", disabled => 1, 
+			value => $session->param("name"), force => 1,
+			fieldset => "login");
+		$form->field(name => "password", type => "password",
+			fieldset => "login");
 		$form->field(name => "confirm_password", type => "password",
+			fieldset => "login",
 			validate => sub {
 				shift eq $form->field("password");
 			});

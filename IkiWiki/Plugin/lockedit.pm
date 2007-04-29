@@ -40,6 +40,7 @@ sub formbuilder_setup (@) { #{{{
 
 	if ($form->title eq "preferences") {
 		$form->field(name => "locked_pages", size => 50,
+			fieldset => "admin",
 			comment => "(".htmllink("", "", "PageSpec", noimageinline => 1).")");
 		if (! IkiWiki::is_admin($user_name)) {
 			$form->field(name => "locked_pages", type => "hidden");
