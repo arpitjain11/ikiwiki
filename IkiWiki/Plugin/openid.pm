@@ -33,7 +33,7 @@ sub formbuilder_setup (@) { #{{{
 			label => "",
 			fieldset => gettext("Log in with")." ".htmllink("", "", "OpenID", noimageinline => 1),
 			size => 30,
-			comment => ($config{openidsignup} ? "(<a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>)" : "")
+			comment => ($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>" : "")
 		);
 
 		# Handle submission of an OpenID as validation.
