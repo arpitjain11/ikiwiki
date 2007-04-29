@@ -1,6 +1,6 @@
-# translation of es.po to spanish
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# ikiwiki spanish translation
+# Copyright (C) 2007 The Free Software Foundation, Inc
+# This file is distributed under the same license as the ikiwiki package.
 #
 # Víctor Moral <victor@taquiones.net>, 2007.
 msgid ""
@@ -8,13 +8,12 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-26 20:28-0400\n"
-"PO-Revision-Date: 2007-02-12 10:31+0100\n"
+"PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
-"Language-Team: spanish <es@li.org>\n"
+"Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: ../IkiWiki/CGI.pm:154
 msgid "You need to log in first."
@@ -54,13 +53,13 @@ msgstr "Ha sido expulsado."
 #: ../IkiWiki/CGI.pm:706
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
-"registro fallido, ¿ tal vez es necesario activar las cookies en el "
+"registro fallido, ¿ tal vez necesita activar las cookies en el "
 "navegador ?"
 
 #: ../IkiWiki/Plugin/aggregate.pm:62
-#, fuzzy, perl-format
+#, perl-format
 msgid "missing %s parameter"
-msgstr "A el complemento template le falta el parámetro id"
+msgstr "falta el parámetro %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:90
 msgid "new feed"
@@ -92,26 +91,25 @@ msgstr "proceso completado con éxito a %s"
 #: ../IkiWiki/Plugin/aggregate.pm:247
 #, perl-format
 msgid "checking feed %s ..."
-msgstr "comprobando entrada %s ..."
+msgstr "comprobando fuente de datos %s ..."
 
 #: ../IkiWiki/Plugin/aggregate.pm:252
 #, perl-format
 msgid "could not find feed at %s"
-msgstr "no puedo encontrar la entrada en %s"
+msgstr "no puedo encontrar la fuente de datos en %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:267
-#, fuzzy
 msgid "feed not found"
-msgstr "no he encontrado la plantilla %s"
+msgstr "fuente de datos no encontrada"
 
 #: ../IkiWiki/Plugin/aggregate.pm:278
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
-msgstr ""
+msgstr "(una secuencia UTF-8 inválida ha sido eliminada de la fuente de datos)"
 
 #: ../IkiWiki/Plugin/aggregate.pm:283
 msgid "feed crashed XML::Feed!"
-msgstr "¡ la entrada ha provocado un error fatal en XML::Feed!"
+msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed!"
 
 #: ../IkiWiki/Plugin/aggregate.pm:356
 #, perl-format
@@ -124,47 +122,44 @@ msgstr "¡ No hay enlaces rotos !"
 
 #: ../IkiWiki/Plugin/conditional.pm:20
 msgid "\"test\" and \"then\" parameters are required"
-msgstr ""
+msgstr "los parámetros \"test\" y \"then\" son obligatorios "
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "el programa fortune ha fallado"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
-#, fuzzy
 msgid "failed to find url in html"
-msgstr ""
-"El complemento googlecalendar no ha encontrado un URL en el código HTML"
+msgstr "El complemento googlecalendar no ha encontrado un URL en el código html "
 
 #: ../IkiWiki/Plugin/graphviz.pm:59
-#, fuzzy
 msgid "failed to run graphviz"
-msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+msgstr "no he podido ejecutar el programa graphviz "
 
 #: ../IkiWiki/Plugin/graphviz.pm:81
 msgid "prog not a valid graphviz program"
-msgstr ""
+msgstr "prog no es un programa graphviz válido "
 
 #: ../IkiWiki/Plugin/img.pm:36
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s not found"
-msgstr "no he encontrado la plantilla %s"
+msgstr "no he encontrado la plantilla %s "
 
 #: ../IkiWiki/Plugin/img.pm:49
 #, perl-format
 msgid "bad size \"%s\""
-msgstr ""
+msgstr "tamaño erróneo \"%s\""
 
 #: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
 #: ../IkiWiki/Plugin/img.pm:80
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to read %s: %s"
-msgstr "no puedo escribir en %s: %s"
+msgstr "no puedo leer de %s: %s "
 
 #: ../IkiWiki/Plugin/img.pm:66
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to resize: %s"
-msgstr "no puedo escribir en %s: %s"
+msgstr "redimensionado fallido: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -179,12 +174,12 @@ msgstr "no conozco este tipo de ordenación %s"
 
 #: ../IkiWiki/Plugin/inline.pm:146
 msgid "Add a new post titled:"
-msgstr ""
+msgstr "Añadir una entrada nueva titulada:"
 
 #: ../IkiWiki/Plugin/inline.pm:160
 #, perl-format
 msgid "nonexistant template %s"
-msgstr ""
+msgstr "la plantilla %s no existe "
 
 #: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
 msgid "Discussion"
@@ -195,9 +190,8 @@ msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
 #: ../IkiWiki/Plugin/linkmap.pm:98
-#, fuzzy
 msgid "failed to run dot"
-msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+msgstr "no he podido ejecutar el programa dot"
 
 #: ../IkiWiki/Plugin/lockedit.pm:24
 #, perl-format
@@ -212,9 +206,8 @@ msgstr ""
 "el programa /usr/bin/markdown (%s)"
 
 #: ../IkiWiki/Plugin/meta.pm:88
-#, fuzzy
 msgid "stylesheet not found"
-msgstr "no he encontrado la plantilla %s"
+msgstr "hoja de estilo no encontrada "
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -226,7 +219,7 @@ msgstr "Réplica"
 
 #: ../IkiWiki/Plugin/more.pm:8
 msgid "more"
-msgstr ""
+msgstr "ver más"
 
 #: ../IkiWiki/Plugin/openid.pm:36
 msgid "What's this?"
@@ -234,7 +227,7 @@ msgstr "¿ Qué es esto ?"
 
 #: ../IkiWiki/Plugin/openid.pm:37
 msgid "Get an OpenID"
-msgstr "Obtenga un identificador OpenID"
+msgstr "Consiga un identificador OpenID"
 
 #: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
@@ -254,7 +247,7 @@ msgstr "Error creando la cuenta de usuario."
 
 #: ../IkiWiki/Plugin/passwordauth.pm:168
 msgid "Failed to send mail"
-msgstr "No he podido enviar un correo electrónico"
+msgstr "No he podido enviar el mensaje de correo electrónico"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:170
 msgid "Your password has been emailed to you."
@@ -278,11 +271,11 @@ msgstr "El programa polygen ha fallado"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:25
 msgid "missing formula"
-msgstr ""
+msgstr "falta la fórmula"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "unknown formula"
-msgstr ""
+msgstr "fórmula desconocida "
 
 #. translators: These descriptions of times of day are used
 #. translators: in messages like "last edited <description>".
@@ -290,63 +283,63 @@ msgstr ""
 #. translators: %A- is the name of the previous day.
 #: ../IkiWiki/Plugin/prettydate.pm:15
 msgid "late %A- night"
-msgstr ""
+msgstr "a última hora de la noche del %A "
 
 #: ../IkiWiki/Plugin/prettydate.pm:17
 msgid "in the wee hours of %A- night"
-msgstr ""
+msgstr "a altas horas de la madrugada del %A- "
 
 #: ../IkiWiki/Plugin/prettydate.pm:20
 msgid "terribly early %A morning"
-msgstr ""
+msgstr "al amanecer del %A "
 
 #: ../IkiWiki/Plugin/prettydate.pm:22
 msgid "early %A morning"
-msgstr ""
+msgstr "a primera hora de la mañana del %A "
 
 #: ../IkiWiki/Plugin/prettydate.pm:25
 msgid "in mid-morning %A"
-msgstr ""
+msgstr "a media mañana del %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
 msgid "late %A morning"
-msgstr ""
+msgstr "a última hora de la mañana del %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:27
 msgid "at lunch time on %A"
-msgstr ""
+msgstr "a la hora de la comida del %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:29
 msgid "%A afternoon"
-msgstr ""
+msgstr "la sobremesa del %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:32
 msgid "late %A afternoon"
-msgstr ""
+msgstr "a finales de la sobremesa del %A "
 
 #: ../IkiWiki/Plugin/prettydate.pm:33
 msgid "%A evening"
-msgstr ""
+msgstr "la tarde del %A "
 
 #: ../IkiWiki/Plugin/prettydate.pm:35
 msgid "late %A evening"
-msgstr ""
+msgstr "a última hora de la tarde del $A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:37
 msgid "%A night"
-msgstr ""
+msgstr "la noche del %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:74
 msgid "at teatime on %A"
-msgstr ""
+msgstr "el %A a la hora del té"
 
 #: ../IkiWiki/Plugin/prettydate.pm:78
 msgid "at midnight"
-msgstr ""
+msgstr "a medianoche"
 
 #: ../IkiWiki/Plugin/prettydate.pm:81
 msgid "at noon on %A"
-msgstr ""
+msgstr "el %A a media tarde"
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
@@ -362,85 +355,77 @@ msgid "updating hyperestraier search index"
 msgstr "actualizando el índice de búsquedas de hyperstraier"
 
 #: ../IkiWiki/Plugin/shortcut.pm:24
-#, fuzzy
 msgid "missing name or url parameter"
-msgstr "shortcut necesita el parámetro name ó el parámetro url"
+msgstr "shortcut necesita el parámetro 'name' ó el parámetro 'url'"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
 #: ../IkiWiki/Plugin/shortcut.pm:33
-#, fuzzy, perl-format
+#, perl-format
 msgid "shortcut %s points to <i>%s</i>"
-msgstr "El atajo %s apunta a %s"
+msgstr "El atajo %s apunta a <i>%s</i>"
 
 #: ../IkiWiki/Plugin/smiley.pm:22
-#, fuzzy
 msgid "failed to parse any smileys"
-msgstr "Algunos emoticonos tienen errores, se desactiva el complemento smiley"
+msgstr "Algunos emoticonos tienen errores"
 
 #: ../IkiWiki/Plugin/sparkline.pm:63
-#, fuzzy
 msgid "parse error"
-msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+msgstr "error de análisis "
 
 #: ../IkiWiki/Plugin/sparkline.pm:69
 msgid "bad featurepoint diameter"
-msgstr ""
+msgstr "diámetro inválido "
 
 #: ../IkiWiki/Plugin/sparkline.pm:79
 msgid "bad featurepoint location"
-msgstr ""
+msgstr "localización errónea "
 
 #: ../IkiWiki/Plugin/sparkline.pm:90
 msgid "missing values"
-msgstr ""
+msgstr "faltan valores"
 
 #: ../IkiWiki/Plugin/sparkline.pm:95
-#, fuzzy
 msgid "bad height value"
-msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+msgstr "valor incorrecto para la altura"
 
 #: ../IkiWiki/Plugin/sparkline.pm:102
-#, fuzzy
 msgid "missing width parameter"
-msgstr "A el complemento template le falta el parámetro id"
+msgstr "falta el parámetro que indica el ancho"
 
 #: ../IkiWiki/Plugin/sparkline.pm:106
-#, fuzzy
 msgid "bad width value"
-msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+msgstr "valor incorrecto para el ancho"
 
 #: ../IkiWiki/Plugin/sparkline.pm:144
-#, fuzzy
 msgid "failed to run php"
-msgstr "El complemento linkmap no ha podido ejecutar el programa dot"
+msgstr "error fatal invocando el programa php"
 
 #: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
-msgstr ""
+msgstr "no puedo encontrar el archivo"
 
 #: ../IkiWiki/Plugin/table.pm:45
 msgid "unknown data format"
-msgstr ""
+msgstr "formato de datos desconocido"
 
 #: ../IkiWiki/Plugin/table.pm:53
 msgid "empty data"
-msgstr ""
+msgstr "sin datos"
 
 #: ../IkiWiki/Plugin/table.pm:73
 msgid "Direct data download"
-msgstr ""
+msgstr "Enlace directo para descarga"
 
 #: ../IkiWiki/Plugin/table.pm:106
-#, fuzzy, perl-format
+#, perl-format
 msgid "parse fail at line %d: %s"
-msgstr "no puedo escribir en %s: %s"
+msgstr "error de análisis en la línea %d: %s"
 
 #: ../IkiWiki/Plugin/template.pm:19
-#, fuzzy
 msgid "missing id parameter"
-msgstr "A el complemento template le falta el parámetro id"
+msgstr "falta el parámetro \"id\""
 
 #: ../IkiWiki/Plugin/template.pm:26
 #, perl-format
@@ -448,9 +433,8 @@ msgid "template %s not found"
 msgstr "no he encontrado la plantilla %s"
 
 #: ../IkiWiki/Plugin/template.pm:45
-#, fuzzy
 msgid "failed to process:"
-msgstr "se ha producido un error fatal mientras procesaba la plantilla: "
+msgstr "se ha producido un error fatal mientras procesaba la plantilla:"
 
 #: ../IkiWiki/Rcs/Stub.pm:66
 msgid "getctime not implemented"
@@ -462,12 +446,12 @@ msgid ""
 "notifications"
 msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
-"svn post-commit; no puedo enviar notificación alguna."
+"svn post-commit; no puedo enviar ninguna notificación"
 
 #: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
 #, perl-format
 msgid "skipping bad filename %s"
-msgstr "ignorando el archivo %s porque su no nombre no es correcto"
+msgstr "ignorando el archivo %s porque su nombre no es correcto"
 
 #: ../IkiWiki/Render.pm:310
 #, perl-format
@@ -550,8 +534,7 @@ msgstr "el programa %s no parece ser ejecutable"
 
 #: ../IkiWiki/Wrapper.pm:20
 msgid "cannot create a wrapper that uses a setup file"
-msgstr ""
-"no puedo crear un programa envoltorio que utiliza un archivo de configuración"
+msgstr "no puedo crear un programa envoltorio que utiliza un archivo de configuración"
 
 #: ../IkiWiki/Wrapper.pm:24
 msgid "wrapper filename not specified"
@@ -568,7 +551,7 @@ msgstr "no puedo escribir en %s: %s"
 #: ../IkiWiki/Wrapper.pm:100
 #, perl-format
 msgid "failed to compile %s"
-msgstr "ha fallado la compilación del programa envoltorio %s"
+msgstr "ha fallado la compilación del programa %s"
 
 #. translators: The parameter is a filename.
 #: ../IkiWiki/Wrapper.pm:108
@@ -601,9 +584,3 @@ msgstr ""
 "se ha detectado un bucle de preprocesado %s en la página %s en la vuelta "
 "número %i"
 
-#~ msgid "aggregate plugin missing %s parameter"
-#~ msgstr "Al complemento aggregate le falta el parámetro %s"
-
-#, fuzzy
-#~ msgid "sparkline previewing not implemented"
-#~ msgstr "la funcionalidad getctime no está incluida"
