@@ -22,5 +22,13 @@ My srcdir path has some symbolics links and hidden directorys... maybe that's it
 > guess it's safe enough. It would be good to know why it's failing w/o the
 > path in your case. --[[Joey]]
 
+>> I didn't have time to investigate, but here is the path :
+>>
+>>      /home/hbernard/.hiddendatas/hg/ikigtd/
+>>
+>> but ~/.hiddendatas is itself a symbolic to .dotfiles/.hiddendatas (this seems weird I know ;))
+>> As I was trying to resolve this, the interesting thing is that keying directly in a terminal the same command was working...
+>> I suspect something with the symbolic link... but didn't investigate further. I will setup a test wiki with symlink in the path to check this.
+
 > As I applied the patch, I'm moving this out of the patchqueue to bugs and
 > marking it [[done]]. --[[Joey]]
