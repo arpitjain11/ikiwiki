@@ -2,51 +2,47 @@ This is the roadmap for ikiwiki development.
 
 # 1.0
 
-Generally usable release.
-
-* No severe [[security]] bugs. (./)
-* All the [[features]] people would expect in a wiki. Needs to be a plausible
-  promise of being a wiki that people can commit to [[using|ikiwikiusers]].
-  (./)
+* No severe [[security]] bugs.
+* All the basic [[features]] people would expect in a wiki.
 
 Released 29 April 2006.
 
+The 1.x series changed a great deal over the more than 50 releases in its
+lifetime. It is now in maintenance mode, only security issues or really bad
+bugs will be fixed in 1.x going forward.
+
+----
+
 # 2.0
 
-* Unit test suite (with tests of at least core stuff like
-  [[PageSpec]]). _(status: exists, could of course use more tests)_ (./)
-* [[Plugins]] (./)
-* [[Tags]] (./)
-* Should have fully working [[todo/utf8]] support. (./)
-* [[Optimised_rendering|todo/optimisations]] if possible. Deal with other
-  scalability issues. _(status: scales to thousands of pages, and approximatly
-  3.5 times as fast as version 1.0)_ (./)
-* Improved [[todo/html]] stylesheets and templates. _(status: [[css_market]] exists; it could always provide more stylesheets.  No alternate templates yet, though.)_
-* Improved scalable [[logo]]. (./)
-* Support for other revision control systems aside from svn.
-  See [[about_rcs_backends]] _(status: supports git, tla, mercurial)_ (./)
-* Support for other markup languages than markdown
-  _(status: done with rst, textile, etc. Markdown still works best though.)_
-  (./)
-* No serious known [[bugs]]
-* No severe-to-moderate known [[security]] issues.
+* New improved URLs to pages via `usedirs`.
+* [[plugins/OpenID]] support, enabled by default.
+* [[plugins/write||interface]] added, with some 60 [[plugins]] available,
+  greatly expanding the capabilities of ikiwiki.
+* [[Tags]], atom feeds, and generally full-fledged blogging support.
+* Fully working [[todo/utf8]].
+* Optimisations, approximately 3.5 times as fast as version 1.0.
+* Improved scalability to large numbers of pages.
+* Improved scalable [[logo]].
+* Support for additional revision control systems besides svn: git,
+  tla, mercurial.
+* Some support for other markup languages than markdown: rst, textile.
+* Unit test suite, with more than 300 tests.
+
+Will be released 29 April 2007.
+
+The 2.x series is expected to undergo continuing development for some time,
+adding improvements and new features, but avoiding changes that break
+backwards compatability.
+
+----
+
+# future goals
+
+* Improved [[todo/html]] stylesheets and templates.
+  _(status: [[css_market]] exists; it could always provide more stylesheets.  No alternate templates yet, though.)_
 * Conversion support for existing other wikis.
   (Being worked on for MoinMoin and TWiki by [[Josh_Triplett|JoshTriplett]]
   and Jamey Sharp; support for other wikis should fit into the same
   framework.)
-
-2.0 will also be an opportunity to remove old backwards compatibility
-features and make other changes to the default configuration. Some things
-I'm considering:
-
-* Enabling OpenID by default (and disabling password logins by default).
-* Dropping GlobLists. However, they can lurk in preferences settings in wikis,
-  which may make getting rid of them hard, and it may be worth keeping them
-  so users can list pages without anding them together.
-* Making page/index.html be the default output filename, rather than page.html.
-  _(status: option `usedirs` exists; not yet the default)_
-* Enabling [[plugins/goodstuff]] by default?
-* Possibly making [[PageSpecs|pagespec]] match relative by default, rather than the current absolute
-  (see [[Discussion]])
-
-Estimated release date for 2.0: 29 April 2007.
+* [[TODO]], [[bugs]], [[soc]], ...
