@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-27 03:55-0400\n"
+"POT-Creation-Date: 2007-04-29 19:27-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -19,38 +19,51 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશે."
 
-#: ../IkiWiki/CGI.pm:274
+#: ../IkiWiki/CGI.pm:222
+msgid "Login"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:223
+#, fuzzy
+msgid "Preferences"
+msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
+
+#: ../IkiWiki/CGI.pm:224
+msgid "Admin"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:281
 msgid "Preferences saved."
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:339
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/CGI.pm:464
+#: ../IkiWiki/CGI.pm:471
 #, perl-format
 msgid "creating %s"
 msgstr "%s બનાવે છે"
 
-#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
-#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
+#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
+#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
 #, perl-format
 msgid "editing %s"
 msgstr "%s સુધારે છે"
 
-#: ../IkiWiki/CGI.pm:674
+#: ../IkiWiki/CGI.pm:681
 msgid "You are banned."
 msgstr "તમારા પર પ્રતિબંધ છે."
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:713
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "પ્રવેશ નિષ્ફળ, કદાચ તમારી કુકીઓ સક્રિય બનાવવી પડશે?"
 
@@ -215,11 +228,11 @@ msgstr "મિરર"
 msgid "more"
 msgstr "વધુ"
 
-#: ../IkiWiki/Plugin/openid.pm:36
-msgid "What's this?"
-msgstr "આ શું છે?"
+#: ../IkiWiki/Plugin/openid.pm:34
+msgid "Log in with"
+msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:37
+#: ../IkiWiki/Plugin/openid.pm:36
 msgid "Get an OpenID"
 msgstr "ઓપનઆઇડી મેળવો"
 
@@ -227,23 +240,19 @@ msgstr "ઓપનઆઇડી મેળવો"
 msgid "All pages are linked to by other pages."
 msgstr "બધા પાનાંઓ બીજા પાનાંઓ વડે જોડાયેલ છે."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:104
-msgid "(use FirstnameLastName)"
-msgstr "(FirstnameLastName ઉપયોગ કરો)"
-
-#: ../IkiWiki/Plugin/passwordauth.pm:144
+#: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Account creation successful. Now you can Login."
 msgstr "ખાતું બનાવવાનું સફળ. તમે હવે લોગઇન કરી શકો છો."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:150
 msgid "Error creating account."
 msgstr "ખાતું બનાવવામાં ક્ષતિ."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:168
+#: ../IkiWiki/Plugin/passwordauth.pm:171
 msgid "Failed to send mail"
 msgstr "મેઇલ મોકલવામાં નિષ્ફળ"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:170
+#: ../IkiWiki/Plugin/passwordauth.pm:173
 msgid "Your password has been emailed to you."
 msgstr "તમારો પાસવર્ડ તમને ઇમેઇલ કરવામાં આવ્યો છે."
 
@@ -565,10 +574,16 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:625
+#: ../IkiWiki.pm:631
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"
+
+#~ msgid "What's this?"
+#~ msgstr "આ શું છે?"
+
+#~ msgid "(use FirstnameLastName)"
+#~ msgstr "(FirstnameLastName ઉપયોગ કરો)"
 
 #~ msgid "aggregate plugin missing %s parameter"
 #~ msgstr "એગ્રીગેટ પ્લગઇનમાં %s વિકલ્પ નથી"

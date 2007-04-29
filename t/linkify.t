@@ -5,9 +5,6 @@ use Test::More tests => 16;
 
 BEGIN { use_ok("IkiWiki"); }
 
-# currently coded for non usedirs mode (TODO: check both)
-$config{usedirs}=0;
-
 sub linkify ($$$$) {
 	my $lpage=shift;
 	my $page=shift;
@@ -27,6 +24,8 @@ sub linkify ($$$$) {
 	}
 	%config=IkiWiki::defaultconfig();
 	$config{cgiurl}="http://somehost/ikiwiki.cgi";
+	# currently coded for non usedirs mode (TODO: check both)
+	$config{usedirs}=0;
 
 	return IkiWiki::linkify($lpage, $page, $content);
 }

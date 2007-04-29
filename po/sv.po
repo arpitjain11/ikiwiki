@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 20:28-0400\n"
+"POT-Creation-Date: 2007-04-29 19:27-0400\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -19,38 +19,51 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "Du måste logga in först."
 
-#: ../IkiWiki/CGI.pm:274
+#: ../IkiWiki/CGI.pm:222
+msgid "Login"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:223
+#, fuzzy
+msgid "Preferences"
+msgstr "Inställningar sparades."
+
+#: ../IkiWiki/CGI.pm:224
+msgid "Admin"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:281
 msgid "Preferences saved."
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:339
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:464
+#: ../IkiWiki/CGI.pm:471
 #, perl-format
 msgid "creating %s"
 msgstr "skapar %s"
 
-#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
-#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
+#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
+#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
 #, perl-format
 msgid "editing %s"
 msgstr "redigerar %s"
 
-#: ../IkiWiki/CGI.pm:674
+#: ../IkiWiki/CGI.pm:681
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:713
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -119,7 +132,7 @@ msgstr "skapar nya sidan %s"
 msgid "There are no broken links!"
 msgstr "Det finns inga trasiga länkar!"
 
-#: ../IkiWiki/Plugin/conditional.pm:20
+#: ../IkiWiki/Plugin/conditional.pm:17
 msgid "\"test\" and \"then\" parameters are required"
 msgstr ""
 
@@ -222,11 +235,11 @@ msgstr "Spegel"
 msgid "more"
 msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:36
-msgid "What's this?"
-msgstr "Vad är det här?"
+#: ../IkiWiki/Plugin/openid.pm:34
+msgid "Log in with"
+msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:37
+#: ../IkiWiki/Plugin/openid.pm:36
 msgid "Get an OpenID"
 msgstr "Skaffa ett OpenID"
 
@@ -234,23 +247,19 @@ msgstr "Skaffa ett OpenID"
 msgid "All pages are linked to by other pages."
 msgstr "Alla sidor länkas till av andra sidor."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:104
-msgid "(use FirstnameLastName)"
-msgstr "(använd FörnamnEfternamn)"
-
-#: ../IkiWiki/Plugin/passwordauth.pm:144
+#: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Account creation successful. Now you can Login."
 msgstr "Kontot har skapats. Du kan nu logga in."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:150
 msgid "Error creating account."
 msgstr "Fel vid skapandet av konto."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:168
+#: ../IkiWiki/Plugin/passwordauth.pm:171
 msgid "Failed to send mail"
 msgstr "Misslyckades med att skicka e-post"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:170
+#: ../IkiWiki/Plugin/passwordauth.pm:173
 msgid "Your password has been emailed to you."
 msgstr "Ditt lösenord har skickats till dig via e-post."
 
@@ -410,23 +419,23 @@ msgstr "linkmap misslyckades att köra dot"
 msgid "failed to run php"
 msgstr "linkmap misslyckades att köra dot"
 
-#: ../IkiWiki/Plugin/table.pm:22
+#: ../IkiWiki/Plugin/table.pm:21
 msgid "cannot find file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:45
+#: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:53
+#: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:106
+#: ../IkiWiki/Plugin/table.pm:105
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "misslyckades med att skriva %s: %s"
@@ -530,7 +539,7 @@ msgstr "klar"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:145
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "uppdatering av %s, %s av %s"
@@ -583,10 +592,16 @@ msgstr "Fel"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:625
+#: ../IkiWiki.pm:631
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"
+
+#~ msgid "What's this?"
+#~ msgstr "Vad är det här?"
+
+#~ msgid "(use FirstnameLastName)"
+#~ msgstr "(använd FörnamnEfternamn)"
 
 #~ msgid "aggregate plugin missing %s parameter"
 #~ msgstr "aggregeringsinstick saknar parametern %s"

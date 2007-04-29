@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-27 04:24-0400\n"
+"POT-Creation-Date: 2007-04-29 19:27-0400\n"
 "PO-Revision-Date: 2007-04-28 11:52+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -19,38 +19,51 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "Nejprve se musíte přihlásit."
 
-#: ../IkiWiki/CGI.pm:274
+#: ../IkiWiki/CGI.pm:222
+msgid "Login"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:223
+#, fuzzy
+msgid "Preferences"
+msgstr "Nastavení uloženo."
+
+#: ../IkiWiki/CGI.pm:224
+msgid "Admin"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:281
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:339
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:464
+#: ../IkiWiki/CGI.pm:471
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
-#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
+#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
+#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:674
+#: ../IkiWiki/CGI.pm:681
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:713
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
@@ -216,11 +229,11 @@ msgstr "Zrcadlo"
 msgid "more"
 msgstr "více"
 
-#: ../IkiWiki/Plugin/openid.pm:36
-msgid "What's this?"
-msgstr "Co to je?"
+#: ../IkiWiki/Plugin/openid.pm:34
+msgid "Log in with"
+msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:37
+#: ../IkiWiki/Plugin/openid.pm:36
 msgid "Get an OpenID"
 msgstr "Získat OpenID"
 
@@ -228,23 +241,19 @@ msgstr "Získat OpenID"
 msgid "All pages are linked to by other pages."
 msgstr "Na každou stránku vede odkaz z jiné stránky."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:104
-msgid "(use FirstnameLastName)"
-msgstr "(použijte KřestníJménoPříjmení)"
-
-#: ../IkiWiki/Plugin/passwordauth.pm:144
+#: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Account creation successful. Now you can Login."
 msgstr "Vytvoření účtu bylo úspěšné. Nyní se můžete přihlásit."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:150
 msgid "Error creating account."
 msgstr "Chyba při vytváření účtu."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:168
+#: ../IkiWiki/Plugin/passwordauth.pm:171
 msgid "Failed to send mail"
 msgstr "Nepodařilo se odeslat email."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:170
+#: ../IkiWiki/Plugin/passwordauth.pm:173
 msgid "Your password has been emailed to you."
 msgstr "Vaše heslo vám bylo zasláno."
 
@@ -567,7 +576,13 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:625
+#: ../IkiWiki.pm:631
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
+
+#~ msgid "What's this?"
+#~ msgstr "Co to je?"
+
+#~ msgid "(use FirstnameLastName)"
+#~ msgstr "(použijte KřestníJménoPříjmení)"

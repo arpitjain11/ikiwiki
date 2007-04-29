@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-29 17:55-0400\n"
+"POT-Creation-Date: 2007-04-29 19:27-0400\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -20,38 +20,51 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "Proszę najpierw zalogować się."
 
-#: ../IkiWiki/CGI.pm:277
+#: ../IkiWiki/CGI.pm:222
+msgid "Login"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:223
+#, fuzzy
+msgid "Preferences"
+msgstr "Preferencje zapisane."
+
+#: ../IkiWiki/CGI.pm:224
+msgid "Admin"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:281
 msgid "Preferences saved."
 msgstr "Preferencje zapisane."
 
-#: ../IkiWiki/CGI.pm:342
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "Strona %s nie może być edytowana"
 
-#: ../IkiWiki/CGI.pm:421 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "dyskusja"
 
-#: ../IkiWiki/CGI.pm:467
+#: ../IkiWiki/CGI.pm:471
 #, perl-format
 msgid "creating %s"
 msgstr "tworzenie %s"
 
-#: ../IkiWiki/CGI.pm:484 ../IkiWiki/CGI.pm:499 ../IkiWiki/CGI.pm:510
-#: ../IkiWiki/CGI.pm:536 ../IkiWiki/CGI.pm:580
+#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
+#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
 #, perl-format
 msgid "editing %s"
 msgstr "edycja %s"
 
-#: ../IkiWiki/CGI.pm:677
+#: ../IkiWiki/CGI.pm:681
 msgid "You are banned."
 msgstr "Twój dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:709
+#: ../IkiWiki/CGI.pm:713
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Nieudane logowanie. Proszę sprawdzić czy w przeglądarce włączone są "
@@ -229,21 +242,17 @@ msgstr "Kopia lustrzana"
 msgid "more"
 msgstr "więcej"
 
-#: ../IkiWiki/Plugin/openid.pm:36
-msgid "What's this?"
-msgstr "Więcej o OpenID"
+#: ../IkiWiki/Plugin/openid.pm:34
+msgid "Log in with"
+msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:37
+#: ../IkiWiki/Plugin/openid.pm:36
 msgid "Get an OpenID"
 msgstr "Pobierz OpenID"
 
 #: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Dla każdej strony istnieje odnośnik z innej strony"
-
-#: ../IkiWiki/Plugin/passwordauth.pm:104
-msgid "(use FirstnameLastName)"
-msgstr "użyj formy ImieNazwisko"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Account creation successful. Now you can Login."
@@ -596,6 +605,12 @@ msgstr "Błąd"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
+
+#~ msgid "What's this?"
+#~ msgstr "Więcej o OpenID"
+
+#~ msgid "(use FirstnameLastName)"
+#~ msgstr "użyj formy ImieNazwisko"
 
 #~ msgid "aggregate plugin missing %s parameter"
 #~ msgstr "brakujący argument %s dla wtyczki aggregate"

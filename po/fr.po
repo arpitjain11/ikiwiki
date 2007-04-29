@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 20:28-0400\n"
+"POT-Creation-Date: 2007-04-29 19:27-0400\n"
 "PO-Revision-Date: 2007-04-01 21:03+0200\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -21,38 +21,51 @@ msgstr ""
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:274
+#: ../IkiWiki/CGI.pm:222
+msgid "Login"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:223
+#, fuzzy
+msgid "Preferences"
+msgstr "Les préférences ont été enregistrées."
+
+#: ../IkiWiki/CGI.pm:224
+msgid "Admin"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:281
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:339
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:418 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:464
+#: ../IkiWiki/CGI.pm:471
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:481 ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:507
-#: ../IkiWiki/CGI.pm:533 ../IkiWiki/CGI.pm:577
+#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
+#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:674
+#: ../IkiWiki/CGI.pm:681
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:713
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
@@ -122,7 +135,7 @@ msgstr "Création de la nouvelle page %s"
 msgid "There are no broken links!"
 msgstr "Il n'y a pas de lien cassé !"
 
-#: ../IkiWiki/Plugin/conditional.pm:20
+#: ../IkiWiki/Plugin/conditional.pm:17
 msgid "\"test\" and \"then\" parameters are required"
 msgstr "les paramètres « test » et « then » sont obligatoires"
 
@@ -224,11 +237,11 @@ msgstr "Miroir"
 msgid "more"
 msgstr "lire la suite"
 
-#: ../IkiWiki/Plugin/openid.pm:36
-msgid "What's this?"
-msgstr "Qu'est-ce que c'est ?"
+#: ../IkiWiki/Plugin/openid.pm:34
+msgid "Log in with"
+msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:37
+#: ../IkiWiki/Plugin/openid.pm:36
 msgid "Get an OpenID"
 msgstr "Obtenir un OpenID"
 
@@ -236,23 +249,19 @@ msgstr "Obtenir un OpenID"
 msgid "All pages are linked to by other pages."
 msgstr "Toutes les pages sont liées à d'autres pages."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:104
-msgid "(use FirstnameLastName)"
-msgstr "(utiliser NomPrénom)"
-
-#: ../IkiWiki/Plugin/passwordauth.pm:144
+#: ../IkiWiki/Plugin/passwordauth.pm:147
 msgid "Account creation successful. Now you can Login."
 msgstr "Le compte a été créé. Vous pouvez maintenant vous identifier."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:150
 msgid "Error creating account."
 msgstr "Erreur lors de la création du compte."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:168
+#: ../IkiWiki/Plugin/passwordauth.pm:171
 msgid "Failed to send mail"
 msgstr "Échec de l'envoi du courriel"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:170
+#: ../IkiWiki/Plugin/passwordauth.pm:173
 msgid "Your password has been emailed to you."
 msgstr "Votre mot de passe vous a été envoyé par courriel."
 
@@ -406,23 +415,23 @@ msgstr "Valeur de largeur incorrecte"
 msgid "failed to run php"
 msgstr "Échec de lancement de php"
 
-#: ../IkiWiki/Plugin/table.pm:22
+#: ../IkiWiki/Plugin/table.pm:21
 msgid "cannot find file"
 msgstr "Fichier introuvable"
 
-#: ../IkiWiki/Plugin/table.pm:45
+#: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
 msgstr "Format des données inconnu"
 
-#: ../IkiWiki/Plugin/table.pm:53
+#: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
 msgstr "Données vides"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "Direct data download"
 msgstr "Téléchargement direct des données"
 
-#: ../IkiWiki/Plugin/table.pm:106
+#: ../IkiWiki/Plugin/table.pm:105
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "Erreur d'analyse à la ligne %d : %s"
@@ -525,7 +534,7 @@ msgstr "Terminé"
 #. translators: A list of one or more pages that were changed,
 #. translators: And the name of the user making the change.
 #. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:146
+#: ../IkiWiki/UserInfo.pm:145
 #, perl-format
 msgid "update of %s's %s by %s"
 msgstr "Wiki %s, les pages %s ont été mises à jour par %s"
@@ -581,9 +590,15 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:625
+#: ../IkiWiki.pm:631
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
 "%s une boucle a été détectée dans le prétraitement de %s, à la profondeur de "
 "%i"
+
+#~ msgid "What's this?"
+#~ msgstr "Qu'est-ce que c'est ?"
+
+#~ msgid "(use FirstnameLastName)"
+#~ msgstr "(utiliser NomPrénom)"
