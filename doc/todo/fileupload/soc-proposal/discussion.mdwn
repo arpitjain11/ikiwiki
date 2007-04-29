@@ -40,3 +40,7 @@ the image/video/file/... and a discussion page. Probably named image.mdwn and im
 > I also pondered about putting this info in the rcs log, but that is problematic when you just 'cp'/'mv'/whatever the directory. Same goes for using something like svn properties, which git does not even support. Storing this info in the index file is problematic, because that isn't versioned. Major problem I see with this approach would be the disconnected nature of having two files. Posix extended attributes? ;-(
 
 > This could also be used to specify the license of the file.
+
+> I did an proof of concept implementation of this idea [here](http://ng.l4x.org/brainstorm/gallery/) yesterday night, including the link to the source code. I'd really love to hear comments about this approach.
+  (note1: I'm really not interested in any kind of http interface to that thing, just testing ways of storing the meta
+   data, note2: I'm no perl programmer)
