@@ -19,3 +19,5 @@ Here is a patch againt ikiwiki-1.51 for using find(1) and install(1) instead of 
      
      	install -d $(DESTDIR)$(PREFIX)/share/man/man1
      	install -m 644 ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
+
+> Couldn't it just use install -D ? --[[Joey]]
