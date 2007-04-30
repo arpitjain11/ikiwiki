@@ -10,7 +10,7 @@ again. --[[JoshTriplett]]
 FormBuilder forms can be made much more ameanable to styling by passing
 these parameters:
 
-	name => "prefs",
+	name => "signin",
 	template => {type => 'div'},
 
 This results in a form that uses div instead of a table for layout, and adds
@@ -19,5 +19,23 @@ different forms can be styled separately. The only downside is that it doesn't
 allow creating a custom template for the form, but a) nobody has done that and
 b) stylesheets are much easier probably. So I think this is the way to go, we
 just have to get stylin'. :-)
+
+	.fb_submit {
+		float: left;
+		margin: 2px 0;
+	}
+	#signin_openid_url_label {
+		float: left;
+		margin-right: 1ex;
+	}
+	#signin_openid {
+	        padding: 10px 10px;
+	        border: 1px solid #aaa;
+	        background: #eee; 
+	        color: black !important;
+	}
+
+That looks pretty good.. putting the passwordauth part in a box of its own with
+the submit buttons I don't know how to do.
 
 --[[Joey]]
