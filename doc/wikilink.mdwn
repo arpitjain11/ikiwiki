@@ -1,9 +1,9 @@
 WikiLinks provide easy linking between pages of the wiki. To create a
 [[WikiLink]], just put the name of the page to link to in double brackets.
-For example "\[[WikiLink]]".
+For example `\[[WikiLink]]`.
 
-If you ever need to write something like "\[[WikiLink]]" without creating a
-wikilink, just prefix it with a "\", like "\\\\[[WikiLink]]".
+If you ever need to write something like `\[[WikiLink]]` without creating a
+wikilink, just prefix it with a `\`, like `\\\\[[WikiLink]]`.
 
 There are some special [[SubPage/LinkingRules]] that come into play when
 linking between [[SubPages|SubPage]].
@@ -16,11 +16,11 @@ don't need to worry about getting the case the same, and can capitalise
 links at the start of a sentence, and so on.
 
 It's also possible to write a WikiLink that uses something other than the
-page name as the link text. For example "\[[foo_bar|SandBox]]" links to the
+page name as the link text. For example `\[[foo_bar|SandBox]]` links to the
 SandBox page, but the link will appear like this: [[foo_bar|SandBox]]
 
 To link to an anchor inside a page, you can use something like
-"\[[WikiLink#foo]]"
+`\[[WikiLink#foo]]`
 
 **Note that you cannot use spaces in WikiLinks**. Replace spaces with
 underscores.
