@@ -137,6 +137,7 @@ sub cgi_signin ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
+		name => "signin",
 		header => 1,
 		charset => "utf-8",
 		method => 'POST',
@@ -145,7 +146,7 @@ sub cgi_signin ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		header => 0,
-		template => scalar template_params("signin.tmpl"),
+		template => {type => 'div'},
 		stylesheet => baseurl()."style.css",
 	);
 	my $buttons=["Login"];
@@ -206,6 +207,7 @@ sub cgi_prefs ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		title => "preferences",
+		name => "preferences",
 		header => 0,
 		charset => "utf-8",
 		method => 'POST',
@@ -216,7 +218,7 @@ sub cgi_prefs ($$) { #{{{
 		javascript => 0,
 		params => $q,
 		action => $config{cgiurl},
-		template => scalar template_params("prefs.tmpl"),
+		template => {type => 'div'},
 		stylesheet => baseurl()."style.css",
 		fieldsets => [
 			[login => gettext("Login")],

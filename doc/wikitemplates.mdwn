@@ -34,20 +34,5 @@ located in /usr/share/ikiwiki/templates by default.
 * `searchform.tmpl` - Used by the [[plugins/search]] plugin to add a search
   form to wiki pages.
 
-If you like, you can add these to further customise it:
-
-* `signin.tmpl` - If it exists, it is used for customising the
-  layout of the SignIn form and all assciated forms. The misc.tmpl is
-  wrapped around this, so it should only be a template for the form.
-* `prefs.tmpl` - If it exists, it is used for customising the
-  layout of the Prefs form and all assciated forms. The misc.tmpl is
-  wrapped around this, so it should only be a template for the form.
-  
-Note that the SignIn and Prefs forms are implemented using
-CGI::FormBuilder, which interfaces to HTML::Template, so not all of it can
-be customised with templates, although most of it can, by creating these
-templates. Without the templates, CGI::FormBuilder creates the page bodies
-by itself.
-
 The [[plugins/template]] plugin also uses templates, though those
 [[templates]] are stored in the wiki.

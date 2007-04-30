@@ -265,6 +265,8 @@ input#openid_url {
 	border: 2px solid;
 	background-color: #dee;
 	color: black;
+	
+	/* Nonstandard, but very nice. */
 	opacity: 0.95;
 	-moz-opacity: 0.95;
 	filter: alpha(opacity=95);
@@ -277,4 +279,18 @@ fieldset {
 }
 legend {
 	padding: 0 1ex;
+}
+.fb_submit {
+	float: left;
+	margin: 2px 0;
+}
+#signin_openid_url_label {
+	float: left;
+	margin-right: 1ex;
+}
+#signin_openid {
+	padding: 10px 10px;
+	border: 1px solid #aaa;
+	background: #eee; 
+	color: black !important;
 }
