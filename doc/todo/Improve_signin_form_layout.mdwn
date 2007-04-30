@@ -1,1 +1,23 @@
-In SVN commits [[ikirev 3478]], [[ikirev 3480]], [[ikirev 3482]], and [[ikirev 3485]], I added a fieldset around the passwordauth fields, and some additional documentation.  However, this needs some additional work to work correctly with the registration part of the form, as well as the buttons.  It may also need some CSS love, and some means to style multiple formbuilder fieldsets differently.  I reverted these four commits to avoid regressions before the 2.0 release; after the release, we should look at it again. --[[JoshTriplett]]
+In SVN commits [[ikirev 3478]], [[ikirev 3480]], [[ikirev 3482]], and
+[[ikirev 3485]], I added a fieldset around the passwordauth fields, and
+some additional documentation.  However, this needs some additional work to
+work correctly with the registration part of the form, as well as the
+buttons.  It may also need some CSS love, and some means to style multiple
+formbuilder fieldsets differently.  I reverted these four commits to avoid
+regressions before the 2.0 release; after the release, we should look at it
+again. --[[JoshTriplett]]
+
+FormBuilder forms can be made much more ameanable to styling by passing
+these parameters:
+
+	name => "prefs",
+	template => {type => 'div'},
+
+This results in a form that uses div instead of a table for layout, and adds
+separate id attributes to every form element, including the fieldsets, so that
+different forms can be styled separately. The only downside is that it doesn't
+allow creating a custom template for the form, but a) nobody has done that and
+b) stylesheets are much easier probably. So I think this is the way to go, we
+just have to get stylin'. :-)
+
+--[[Joey]]
