@@ -6,7 +6,7 @@ default configuration:
 * The `usedirs` setting is enabled by default. This *will* break all URLs
   to wikis that did not have `usedirs` turned on before, unless you follow
   the procedure described at [[tips/switching_to_usedirs]]
-  or edit your setup file to turn` usedirs` off: `usedirs => 0,`
+  or edit your setup file to turn `usedirs` off: `usedirs => 0,`
 * [[plugins/OpenID]] logins are now enabled by default, if the
   [[cpan Net::OpenID::Consumer]] perl module is available. Password logins
   are also still enabled by default. If you like, you can turn either OpenID
