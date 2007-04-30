@@ -189,7 +189,7 @@ sub formbuilder (@) { #{{{
 		if ($form->submitted eq "Save Preferences" && $form->validate) {
 			my $user_name=$form->field('name');
 	                foreach my $field (qw(password)) {
-        	                if (defined $form->field($field) && length $form->field($field)) {
+        	                if (defined $form->field($field)) {
 					IkiWiki::userinfo_set($user_name, $field, $form->field($field)) ||
 						error("failed to set $field");
 	                        }
