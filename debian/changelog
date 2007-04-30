@@ -1,4 +1,4 @@
-ikiwiki (2.00) UNRELEASED; urgency=low
+ikiwiki (2.00) unstable; urgency=low
 
   [ Josh Triplett ]
   * Avoid using GNU extensions to cp during "make install", which did
@@ -16,7 +16,11 @@ ikiwiki (2.00) UNRELEASED; urgency=low
   * fieldset support appeared in CGI::FormBuilder 3.05, so increase
     version in Depends on libcgi-formbuilder-perl to 3.05
 
- -- Josh Triplett <josh@freedesktop.org>  Sun, 29 Apr 2007 19:52:16 -0700
+  [ Joey Hess ]
+  * If Net::OpenID::Consumer is not available, the openid module will quietly
+    disable itself, this avoids needing a hard dependency on the perl module.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 30 Apr 2007 00:43:02 -0400
 
 ikiwiki (1.51) unstable; urgency=low
 

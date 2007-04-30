@@ -9,10 +9,10 @@ ikiwiki (2.00) unstable; urgency=low
     or edit your setup file to turn usedirs off:
        usedirs => 0,
 
-  * OpenID logins are now enabled by default. So ikiwiki now depends on the
-    Net::OpenID::Consumer perl module. Password logins are also still on by
-    default. If you like, you can turn either OpenID or password logins off
-    via the 'disable_plugins' setting.
+  * OpenID logins are now enabled by default, if the Net::OpenID::Consumer
+    perl module is available. Password logins are also still enabled
+    by default. If you like, you can turn either OpenID or password logins
+    off via the 'disable_plugins' setting.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 29 Apr 2007 19:00:43 -0400
 
