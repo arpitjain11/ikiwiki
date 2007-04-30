@@ -28,10 +28,14 @@ sub formbuilder_setup (@) { #{{{
 	my $cgi=$params{cgi};
 
 	if ($form->title eq "signin") {
+		# This avoids it displaying a redundant label for the
+		# OpenID fieldset.
+		$form->fieldsets("OpenID");
+
  		$form->field(
 			name => "openid_url",
-			label => "OpenID",
-			fieldset => gettext("Log in with")." ".htmllink("", "", "OpenID", noimageinline => 1),
+			label => gettext("Log in with")." ".htmllink("", "", "OpenID", noimageinline => 1),
+			fieldset => "OpenID",
 			size => 30,
 			comment => ($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>" : "")
 		);
