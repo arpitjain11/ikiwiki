@@ -21,12 +21,8 @@ sub formbuilder_setup (@) { #{{{
 	my $cgi=$params{cgi};
 
 	if ($form->title eq "signin" || $form->title eq "register") {
-		my %fieldset = ();
-		if ($form->title eq "signin") {
-			$fieldset{"fieldset"} = gettext("Log in with")." ".htmllink("", "", "passwordauth", noimageinline => 1);
-		}
-		$form->field(name => "name", required => 0, size => 50, %fieldset);
-		$form->field(name => "password", type => "password", required => 0, %fieldset);
+		$form->field(name => "name", required => 0, size => 50);
+		$form->field(name => "password", type => "password", required => 0);
 		
 		if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
 			$form->field(name => "confirm_password", type => "password");

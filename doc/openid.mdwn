@@ -2,11 +2,7 @@
 
 [[if test="enabled(openid)"
      then="This wiki has OpenID **enabled**."
-     else="""
-This wiki has OpenID **disabled**.
-[[if test="enabled(passwordauth) and passwordauth"
-     then="You can sign into this wiki using [[passwordauth]]."]]
-"""]]
+     else="This wiki has OpenID **disabled**."]]
 
 [OpenID](http://openid.net) is a decentralized authentication mechanism
 that allows you to have one login that you can use on a growing number of
@@ -26,9 +22,6 @@ To sign in to this wiki using OpenID, just enter it in the OpenID field in the
 signin form. You do not need to give this wiki a password or go through any
 registration process when using OpenID.
 """]]
-
-[[if test="enabled(openid) and enabled(passwordauth) and passwordauth"
-     then="You can also sign into this wiki using [[passwordauth]]."]]
 
 ---
 

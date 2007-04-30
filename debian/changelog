@@ -15,14 +15,8 @@ ikiwiki (2.00) UNRELEASED; urgency=low
   [ Josh Triplett ]
   * fieldset support appeared in CGI::FormBuilder 3.05, so increase
     version in Depends on libcgi-formbuilder-perl to 3.05
-  * Group passwordauth fields with a fieldset as well.  Add a new
-    passwordauth page to the basewiki describing password
-    authentication; like openid, it uses conditional to check which
-    forms of authentication the wiki allows.  Add conditional cross-
-    links between the openid and passwordauth pages, to help the user
-    understand how they can log in.
 
- -- Josh Triplett <josh@freedesktop.org>  Sun, 29 Apr 2007 19:58:24 -0700
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 29 Apr 2007 19:52:16 -0700
 
 ikiwiki (1.51) unstable; urgency=low
 
