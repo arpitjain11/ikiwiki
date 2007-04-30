@@ -12,7 +12,11 @@ ikiwiki (2.00) UNRELEASED; urgency=low
   * Enable openid logins by default.
   * Enable usedirs by default.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 29 Apr 2007 19:00:15 -0400
+  [ Josh Triplett ]
+  * fieldset support appeared in CGI::FormBuilder 3.05, so increase
+    version in Depends on libcgi-formbuilder-perl to 3.05
+
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 29 Apr 2007 19:52:16 -0700
 
 ikiwiki (1.51) unstable; urgency=low
 
