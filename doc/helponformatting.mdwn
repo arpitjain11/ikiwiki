@@ -58,22 +58,22 @@ form \[link text\]\(url\)
 
 You can also use [[PreProcessorDirective]]s to do additional cool stuff.
 
-[[if test="enabled(inline)" then="""
+[[if test="enabled(inline) and blog" then="""
 This wiki has the inline plugin enabled, so you can create a [[blog]] on any
 page.
 """]]
 
-[[if test="enabled(smiley)" then="""
+[[if test="enabled(smiley) and smileys" then="""
 This wiki has the smiley plugin enabled, so you can insert [[smileys]] and some
 other useful symbols.
 """]]
 
-[[if test="enabled(shortcut)" then="""
+[[if test="enabled(shortcut) and shortcuts" then="""
 This wiki has the shortcut plugin enabled, so you can use [[shortcuts]] to link
 to common resources.
 """]]
 
-[[if test="enabled(template)" then="""
+[[if test="enabled(template) and templates" then="""
 This wiki has the template plugin enabled, so you can create and use
 [[templates]] for repeated chunks of parameterized wiki text.
 """]]
