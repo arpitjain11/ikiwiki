@@ -21,14 +21,14 @@
 Posted <TMPL_VAR CTIME>
 </span>
 
-<span class="tags">
 <TMPL_IF NAME="TAGS">
+<span class="tags">
 Tags:
 <TMPL_LOOP NAME="TAGS">
 <TMPL_VAR NAME=LINK>
 </TMPL_LOOP>
-</TMPL_IF>
 </span>
+</TMPL_IF>
 
 <TMPL_IF NAME="HAVE_ACTIONS">
 <div class="actions">
