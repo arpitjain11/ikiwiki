@@ -3,5 +3,5 @@ This is ikiwiki's bug list. Link bugs to [[bugs/done]] when done.
 Also see the [Debian bugs](http://bugs.debian.org/ikiwiki).
 
 [[inline pages="bugs/* and !bugs/done and !link(bugs/done) and !bugs/*/*"
-feedpages="created_after(no_commit_mails_for_new_pages)"
+feedpages="created_after(bugs/no_commit_mails_for_new_pages)"
 actions=yes rootpage="bugs" postformtext="Add a new bug titled:" show=0]]
