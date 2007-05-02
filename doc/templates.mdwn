@@ -1,13 +1,12 @@
-[[if test="enabled(template)" then="""
-This wiki has templates **enabled**.
+[[if test="enabled(template)"
+then="This wiki has templates **enabled**."
+else="This wiki has templates **disabled**."
+]]
 
-[[if test="enabled(inline)" then="""
+[[if test="enabled(template) and enabled(inline)" then="""
 These templates are available for inclusion onto other pages in this
 wiki:
 
 [[inline pages="templates/* and !*/discussion" feeds=no archive=yes
 sort=title template=titlepage]]
 """]]
-"""
-else="This wiki has templates **disabled**."
-]]
