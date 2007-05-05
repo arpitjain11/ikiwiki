@@ -64,7 +64,19 @@ What I ended up doing is write something like this to the page:
 
     [[blogcomment from="""Username""" timestamp="""12345""" subject="""Some text""" text="""the text of the comment"""]]
 
-Each comment is processed to a <<div>> with a <<dl>> and the text inside it.  In this way the comments can be styled using CSS.
+Each comment is processed to something like this:
+
+    <div>
+        <dl>
+            <dt>From</dt><dd>Username</dd>
+            <dt>Date</dt><dd>Date (needs fixing)</dd>
+            <dt>Subject</dt><dd>Subject text</dd>
+        </dl>
+
+        <p>Text of the comment...</p>
+    </div>
+
+.  In this way the comments can be styled using CSS.
 
 -- [[MarceloMagallon]]
 
