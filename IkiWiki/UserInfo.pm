@@ -11,7 +11,7 @@ sub userinfo_retrieve () { #{{{
 	my $userinfo=eval{ Storable::lock_retrieve("$config{wikistatedir}/userdb") };
 	return $userinfo;
 } #}}}
-	
+
 sub userinfo_store ($) { #{{{
 	my $userinfo=shift;
 	
