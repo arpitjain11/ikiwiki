@@ -25,9 +25,6 @@ sub preprocess (@) { #{{{
 	if ($ret) {
 		return "match: $ret";
 	}
-	elsif (! defined $ret) {
-		return "match failed: $@";
-	}
 	else {
 		return "no match: $ret";
 	}
