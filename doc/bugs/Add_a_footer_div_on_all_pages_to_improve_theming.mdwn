@@ -1,6 +1,11 @@
 The following patch adds a footer div on all pages to ease CSS themeing.
 Indeed, the misc.tmpl, recentchanges.tmpl and editpage.tmpl templates lack such a div.
 
+> So, the problem with this is that the default css inserts a horizontal
+> line at the top of the footer div, and putting an empty footer on these
+> other pages looks a bit weird. Any idea how to get around that?
+> --[[Joey]]
+
 This patch is against current svn.
 
 	Index: templates/recentchanges.tmpl
