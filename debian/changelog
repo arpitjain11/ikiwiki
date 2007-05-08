@@ -7,8 +7,10 @@ ikiwiki (2.1) UNRELEASED; urgency=low
   * Fix a bug that prevented clearing email or subscriptions.
   * Improve handling of edits of locked pages by users who are not yet signed
     in.
+  * Make testpagespec more robust, including checking for missing/bad
+    parameters, and detecting if a pagespec failed to compile.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 07 May 2007 02:02:53 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 08 May 2007 17:21:13 -0400
 
 ikiwiki (2.00) unstable; urgency=low
 

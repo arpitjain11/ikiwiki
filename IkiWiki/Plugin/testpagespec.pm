@@ -12,12 +12,21 @@ sub import { #{{{
 sub preprocess (@) { #{{{
 	my %params=@_;
 	
+	foreach my $param (qw{match pagespec}) {
+		if (! exists $params{$param}) {
+			return "[[testpagespec missing $param parameter]]";
+		}
+	}
+
 	add_depends($params{page}, $params{pagespec});
 	
 	my $ret=pagespec_match($params{match}, $params{pagespec}, 
 			location => $params{page});
 	if ($ret) {
 		return "match: $ret";
+	}
+	elsif (! defined $ret) {
+		return "match failed: $@";
 	}
 	else {
 		return "no match: $ret";
