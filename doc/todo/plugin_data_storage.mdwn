@@ -45,7 +45,9 @@ Note that for the aggregate plugin to use this, it will need some changes:
 
 * guid data will need to be stored as part of the data for the page
   that was aggregated from that guid. Except, expired pages don't exit, but
-  still have guid data to store. Hmm.
+  still have guid data to store. Hmm. I suppose the guid data could be
+  considered to be associated with the page that contains the aggregate
+  directive then.
 * All feeds will need to be marked as removable in loadstate, and only
   unmarked if seen in preprocess. Then savestate will need to not only
   remove any feeds still marked as such, but do the unlinking of pages

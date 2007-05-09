@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-05-08 20:46-0400\n"
-"PO-Revision-Date: 2007-04-28 11:52+0200\n"
+"PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,16 +21,15 @@ msgstr "Nejprve se musíte přihlásit."
 
 #: ../IkiWiki/CGI.pm:224
 msgid "Login"
-msgstr ""
+msgstr "Přihlášení"
 
 #: ../IkiWiki/CGI.pm:225
-#, fuzzy
 msgid "Preferences"
-msgstr "Nastavení uloženo."
+msgstr "Předvolby"
 
 #: ../IkiWiki/CGI.pm:226
 msgid "Admin"
-msgstr ""
+msgstr "Správce"
 
 #: ../IkiWiki/CGI.pm:283
 msgid "Preferences saved."
@@ -132,9 +131,9 @@ msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
 #: ../IkiWiki/Plugin/conditional.pm:18
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s parameter is required"
-msgstr "parametry \"test\" a \"then\" jsou vyžadovány"
+msgstr "parametr %s je vyžadován"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
@@ -232,7 +231,7 @@ msgstr "více"
 
 #: ../IkiWiki/Plugin/openid.pm:45
 msgid "Log in with"
-msgstr ""
+msgstr "Přihlásit pomocí"
 
 #: ../IkiWiki/Plugin/openid.pm:48
 msgid "Get an OpenID"
@@ -303,7 +302,6 @@ msgid "early %A morning"
 msgstr "%A brzo ráno"
 
 #: ../IkiWiki/Plugin/prettydate.pm:25
-#, fuzzy
 msgid "mid-morning %A"
 msgstr "%A dopoledne"
 
