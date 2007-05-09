@@ -13,15 +13,19 @@ sub import { #{{{
 sub preprocess_if (@) { #{{{
 	my %params=@_;
 
-	if (! exists $params{test} || ! exists $params{then}) {
-		return "[[if ".gettext('"test" and "then" parameters are required')."]]";
+	foreach my $param (qw{test then}) {
+		if (! exists $params{$param}) {
+			return "[[if ".sprintf(gettext('%s parameter is required'), $param)."]]";
+		}
 	}
 
 	my $result=0;
-	# An optimisation to avoid needless looping over every page
-	# and adding of dependencies for simple uses of some of the
-	# tests.
-	if ($params{test} =~ /^(enabled|sourcepage|destpage)\((.*)\)$/) {
+	if ((exists $params{all} && lc $params{all} eq "no") ||
+		# An optimisation to avoid needless looping over every page
+		# and adding of dependencies for simple uses of some of the
+		# tests.
+		$params{test} =~ /^(enabled|sourcepage|destpage)\((.*)\)$/) {
+		add_depends($params{page}, "$params{test} and $params{page}");
 		$result=pagespec_match($params{page}, $params{test},
 				location => $params{page},
 				sourcepage => $params{page},

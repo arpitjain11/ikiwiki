@@ -9,8 +9,11 @@ ikiwiki (2.1) UNRELEASED; urgency=low
     in.
   * Make testpagespec more robust, including checking for missing/bad
     parameters.
+  * Add all=no option to conditional, can be used to form conditionals that do
+    not need to examine every page in the wiki.
+  * Use this to simplify the goodstuff detection in the plugin template.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 08 May 2007 17:21:13 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 08 May 2007 20:12:25 -0400
 
 ikiwiki (2.00) unstable; urgency=low
 

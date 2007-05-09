@@ -18,8 +18,14 @@ quotes to be included.
 The `test` is a [[PageSpec]]; if it matches any page in the wiki then it
 succeeds. So you can do things like testing for the existence of a page or
 pages, testing to see if any pages were created in a given month, and so
-on. The regular [[PageSpec]] syntax is expanded with the following
-additional tests:
+on.
+
+If you want the [[PageSpec]] to only match against the page that
+contains the conditional, rather than matching against all pages in the
+wiki, set the "all" parameter to "no".
+
+The regular [[PageSpec]] syntax is expanded with the following additional
+tests:
 
 * enabled(plugin)
 
