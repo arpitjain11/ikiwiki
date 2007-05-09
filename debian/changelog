@@ -11,7 +11,6 @@ ikiwiki (2.1) UNRELEASED; urgency=low
     parameters.
   * Add all=no option to conditional, can be used to form conditionals that do
     not need to examine every page in the wiki.
-  * Use this to simplify the goodstuff detection in the plugin template.
   * Add the needsbuild hook. Plugins can use this to manipulate which files
     ikiwiki builds when refreshing the wiki.
 
