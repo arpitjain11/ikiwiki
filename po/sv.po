@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-29 19:27-0400\n"
+"POT-Creation-Date: 2007-05-08 20:46-0400\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -15,55 +15,55 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:154
+#: ../IkiWiki/CGI.pm:155
 msgid "You need to log in first."
 msgstr "Du måste logga in först."
 
-#: ../IkiWiki/CGI.pm:222
+#: ../IkiWiki/CGI.pm:224
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:223
+#: ../IkiWiki/CGI.pm:225
 #, fuzzy
 msgid "Preferences"
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:224
+#: ../IkiWiki/CGI.pm:226
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:281
+#: ../IkiWiki/CGI.pm:283
 msgid "Preferences saved."
 msgstr "Inställningar sparades."
 
-#: ../IkiWiki/CGI.pm:346
+#: ../IkiWiki/CGI.pm:348
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:471
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "skapar %s"
 
-#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
-#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:516
+#: ../IkiWiki/CGI.pm:542 ../IkiWiki/CGI.pm:586
 #, perl-format
 msgid "editing %s"
 msgstr "redigerar %s"
 
-#: ../IkiWiki/CGI.pm:681
+#: ../IkiWiki/CGI.pm:683
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:713
+#: ../IkiWiki/CGI.pm:715
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -132,8 +132,9 @@ msgstr "skapar nya sidan %s"
 msgid "There are no broken links!"
 msgstr "Det finns inga trasiga länkar!"
 
-#: ../IkiWiki/Plugin/conditional.pm:17
-msgid "\"test\" and \"then\" parameters are required"
+#: ../IkiWiki/Plugin/conditional.pm:18
+#, perl-format
+msgid "%s parameter is required"
 msgstr ""
 
 #: ../IkiWiki/Plugin/fortune.pm:18
@@ -206,7 +207,7 @@ msgstr "RPC::XML::Client hittades inte, pingar inte"
 msgid "failed to run dot"
 msgstr "linkmap misslyckades att köra dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:24
+#: ../IkiWiki/Plugin/lockedit.pm:25
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "%s är låst av %s och kan inte redigeras"
@@ -235,11 +236,11 @@ msgstr "Spegel"
 msgid "more"
 msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:34
+#: ../IkiWiki/Plugin/openid.pm:45
 msgid "Log in with"
 msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:36
+#: ../IkiWiki/Plugin/openid.pm:48
 msgid "Get an OpenID"
 msgstr "Skaffa ett OpenID"
 
@@ -308,7 +309,7 @@ msgid "early %A morning"
 msgstr ""
 
 #: ../IkiWiki/Plugin/prettydate.pm:25
-msgid "in mid-morning %A"
+msgid "mid-morning %A"
 msgstr ""
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
@@ -477,37 +478,37 @@ msgstr "hoppar över felaktigt filnamn %s"
 msgid "removing old page %s"
 msgstr "tar bort gammal sida %s"
 
-#: ../IkiWiki/Render.pm:330
+#: ../IkiWiki/Render.pm:338
 #, perl-format
 msgid "scanning %s"
 msgstr "söker av %s"
 
-#: ../IkiWiki/Render.pm:340
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "rendering %s"
 msgstr "ritar upp %s"
 
-#: ../IkiWiki/Render.pm:352
+#: ../IkiWiki/Render.pm:355
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "ritar upp %s, vilken länkar till %s"
 
-#: ../IkiWiki/Render.pm:369
+#: ../IkiWiki/Render.pm:372
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "ritar upp %s, vilken är beroende av %s"
 
-#: ../IkiWiki/Render.pm:407
+#: ../IkiWiki/Render.pm:410
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "ritar upp %s, för att uppdatera dess bakåtlänkar"
 
-#: ../IkiWiki/Render.pm:419
+#: ../IkiWiki/Render.pm:422
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "tar bort %s, som inte längre ritas upp av %s"
 
-#: ../IkiWiki/Render.pm:445
+#: ../IkiWiki/Render.pm:448
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: kan inte rita upp %s"

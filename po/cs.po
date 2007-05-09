@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-29 19:27-0400\n"
+"POT-Creation-Date: 2007-05-08 20:46-0400\n"
 "PO-Revision-Date: 2007-04-28 11:52+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -15,55 +15,55 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:154
+#: ../IkiWiki/CGI.pm:155
 msgid "You need to log in first."
 msgstr "Nejprve se musíte přihlásit."
 
-#: ../IkiWiki/CGI.pm:222
+#: ../IkiWiki/CGI.pm:224
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:223
+#: ../IkiWiki/CGI.pm:225
 #, fuzzy
 msgid "Preferences"
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:224
+#: ../IkiWiki/CGI.pm:226
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:281
+#: ../IkiWiki/CGI.pm:283
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:346
+#: ../IkiWiki/CGI.pm:348
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:425 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:471
+#: ../IkiWiki/CGI.pm:473
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:488 ../IkiWiki/CGI.pm:503 ../IkiWiki/CGI.pm:514
-#: ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:584
+#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:516
+#: ../IkiWiki/CGI.pm:542 ../IkiWiki/CGI.pm:586
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:681
+#: ../IkiWiki/CGI.pm:683
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:713
+#: ../IkiWiki/CGI.pm:715
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
@@ -131,8 +131,9 @@ msgstr "vytvářím novou stránku %s"
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
-#: ../IkiWiki/Plugin/conditional.pm:17
-msgid "\"test\" and \"then\" parameters are required"
+#: ../IkiWiki/Plugin/conditional.pm:18
+#, fuzzy, perl-format
+msgid "%s parameter is required"
 msgstr "parametry \"test\" a \"then\" jsou vyžadovány"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
@@ -202,7 +203,7 @@ msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 msgid "failed to run dot"
 msgstr "nepodařilo se spustit dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:24
+#: ../IkiWiki/Plugin/lockedit.pm:25
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "Stránka %s je zamknutá uživatelem %s a nelze ji měnit"
@@ -229,11 +230,11 @@ msgstr "Zrcadlo"
 msgid "more"
 msgstr "více"
 
-#: ../IkiWiki/Plugin/openid.pm:34
+#: ../IkiWiki/Plugin/openid.pm:45
 msgid "Log in with"
 msgstr ""
 
-#: ../IkiWiki/Plugin/openid.pm:36
+#: ../IkiWiki/Plugin/openid.pm:48
 msgid "Get an OpenID"
 msgstr "Získat OpenID"
 
@@ -302,7 +303,8 @@ msgid "early %A morning"
 msgstr "%A brzo ráno"
 
 #: ../IkiWiki/Plugin/prettydate.pm:25
-msgid "in mid-morning %A"
+#, fuzzy
+msgid "mid-morning %A"
 msgstr "%A dopoledne"
 
 #: ../IkiWiki/Plugin/prettydate.pm:26
@@ -461,37 +463,37 @@ msgstr "přeskakuji chybné jméno souboru %s"
 msgid "removing old page %s"
 msgstr "odstraňuji starou stránku %s"
 
-#: ../IkiWiki/Render.pm:330
+#: ../IkiWiki/Render.pm:338
 #, perl-format
 msgid "scanning %s"
 msgstr "prohledávám %s"
 
-#: ../IkiWiki/Render.pm:340
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "rendering %s"
 msgstr "zpracovávám %s"
 
-#: ../IkiWiki/Render.pm:352
+#: ../IkiWiki/Render.pm:355
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "zpracovávám %s, která odkazuje na %s"
 
-#: ../IkiWiki/Render.pm:369
+#: ../IkiWiki/Render.pm:372
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "zpracovávám %s, která závisí na %s"
 
-#: ../IkiWiki/Render.pm:407
+#: ../IkiWiki/Render.pm:410
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "zpracovávám %s, aby se aktualizovaly zpětné odkazy"
 
-#: ../IkiWiki/Render.pm:419
+#: ../IkiWiki/Render.pm:422
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "odstraňuji %s, již není zpracovávána %s"
 
-#: ../IkiWiki/Render.pm:445
+#: ../IkiWiki/Render.pm:448
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: nelze zpracovat %s"

@@ -11,6 +11,7 @@ use IkiWiki 2.00;
 sub import { #{{{
 	hook(type => "getopt", id => "skeleton",  call => \&getopt);
 	hook(type => "checkconfig", id => "skeleton", call => \&checkconfig);
+	hook(type => "needsbuild", id => "skeleton", call => \&needsbuild);
 	hook(type => "preprocess", id => "skeleton", call => \&preprocess);
 	hook(type => "filter", id => "skeleton", call => \&filter);
 	hook(type => "htmlize", id => "skeleton", call => \&htmlize);
@@ -33,6 +34,10 @@ sub getopt () { #{{{
 
 sub checkconfig () { #{{{
 	debug("skeleton plugin checkconfig");
+} #}}}
+
+sub needsbuild () { #{{{
+	debug("skeleton plugin needsbuild");
 } #}}}
 
 sub preprocess (@) { #{{{

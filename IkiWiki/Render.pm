@@ -318,8 +318,8 @@ sub refresh () { #{{{
 		}
 	}
 
-	# scan changed and new files
-	my @changed;
+	# find changed and new files
+	my @needsbuild;
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		
@@ -327,16 +327,19 @@ sub refresh () { #{{{
 		if (! exists $pagemtime{$page} ||
 		    $mtime > $pagemtime{$page} ||
 	    	    $forcerebuild{$page}) {
-		    	debug(sprintf(gettext("scanning %s"), $file));
-		    	$pagemtime{$page}=$mtime;
-			push @changed, $file;
-			scan($file);
+			$pagemtime{$page}=$mtime;
+			push @needsbuild, $file;
 		}
 	}
-	calculate_backlinks();
+	run_hooks(needsbuild => sub { shift->(\@needsbuild) });
 
-	# render changed and new pages
-	foreach my $file (@changed) {
+	# scan and rendder files
+	foreach my $file (@needsbuild) {
+		debug(sprintf(gettext("scanning %s"), $file));
+		scan($file);
+	}
+	calculate_backlinks();
+	foreach my $file (@needsbuild) {
 		debug(sprintf(gettext("rendering %s"), $file));
 		render($file);
 		$rendered{$file}=1;

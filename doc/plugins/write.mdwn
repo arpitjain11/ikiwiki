@@ -62,6 +62,15 @@ configuration. It's called early in the startup process. The
 function is passed no values. It's ok for the function to call
 `error()` if something isn't configured right.
 
+### needsbuild
+
+	hook(type => "needsbuild", id => "foo", call => \&needsbuild);
+
+This allows a plugin the manipulate the list of files that need to be
+built when the wiki is refreshed. The function is passed a reference to an
+array of pages that will be rebuilt, and can modify the array, either
+adding or removing files from it.
+
 ### filter
 
 	hook(type => "filter", id => "foo", call => \&filter);
