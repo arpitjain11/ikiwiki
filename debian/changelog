@@ -1,5 +1,6 @@
 ikiwiki (2.1) UNRELEASED; urgency=low
 
+  [ Joey Hess ]
   * Use div layout for the signin and preferences forms, so that they can be
     styled using the stylesheet, rather than by creating signin and prefs
     templates.
@@ -14,7 +15,12 @@ ikiwiki (2.1) UNRELEASED; urgency=low
   * Add the needsbuild hook. Plugins can use this to manipulate which files
     ikiwiki builds when refreshing the wiki.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 08 May 2007 20:44:27 -0400
+  [ Josh Triplett ]
+  * Add an account-creation password as a simple anti-spam mechanism. If
+    set in the wiki setup, passwordauth will require the password in
+    order to create an account.
+
+ -- Josh Triplett <josh@freedesktop.org>  Tue, 08 May 2007 19:05:21 -0700
 
 ikiwiki (2.00) unstable; urgency=low
 

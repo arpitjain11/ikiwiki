@@ -78,6 +78,7 @@ sub defaultconfig () { #{{{
 	userdir => "",
 	usedirs => 1,
 	numbacklinks => 10,
+	account_creation_password => "",
 } #}}}
    
 sub checkconfig () { #{{{

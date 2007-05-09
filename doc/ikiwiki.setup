@@ -99,6 +99,8 @@ use IkiWiki::Setup::Standard {
 	#userdir => "users",
 	# To create output files named page.html rather than page/index.html.
 	#usedirs => 0,
+	# Simple spam prevention: require an account-creation password.
+	#account_creation_password => "example",
 
 	# To add plugins, list them here.
 	#add_plugins => [qw{goodstuff search wikitext camelcase
