@@ -6,6 +6,31 @@ Indeed, the misc.tmpl, recentchanges.tmpl and editpage.tmpl templates lack such 
 > other pages looks a bit weird. Any idea how to get around that?
 > --[[Joey]]
 
+>> Sorry I didn't see that. It definitely looks weird. We could add text  
+>> in all footers or change the CSS stylesheet, but it's not clean IMHO.
+
+>> The idea was about to ease themeing by giving all the pages the same
+>> structure. The current structure is the following one:
+
+>> div header - div actions ... div content - div footer (sometimes)
+
+>> So we could add some new divs in all templates. By default, they will  
+>> be empty and no CSS will be defined for them. This way ikiwiki
+>> standard appearance is not changed but themeing will be eased.
+>> The new page structure could be:
+
+>> * div banner (to show up a logo for example)
+
+>> * div content-wrap containing div header, div actions, ... div content
+>> and div footer
+
+>> * div realfooter (to put credits, "Powered by ikiwiki", "Valid XHTML"...)
+
+>> From my tests, it works: Just adding the divs, without touching the stylesheet,
+>> doesn't change ikiwiki appearance. And themeing is eased :-)
+
+>> I can update the patch, if you want to follow and test this idea. --Fred
+
 This patch is against current svn.
 
 	Index: templates/recentchanges.tmpl
