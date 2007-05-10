@@ -16,3 +16,55 @@ Temporarily I've disabled conditional plugin to avoid that bug.
 PS. I still use ikiwiki 1.50 backported for Debian 'sarge'.
 
 -- Pawel
+
+---
+
+Hello again :)
+
+I've just builded successfully ikiwiki 2.00 package for Debian 'sarge'.
+Unfortunately, now I still can't to rebuild my ikiwiki pages:
+
+    ikiwiki --setup ikiwiki.setup
+    [...]
+    renderowanie ikiwiki/backport.mdwn
+    renderowanie ikiwiki/instalacja.mdwn
+    renderowanie ikiwiki/problemy.mdwn
+    Insecure dependency in eval while running with -T switch at /usr/share/perl5/IkiWiki.pm line 1005.
+    BEGIN failed--compilation aborted at (eval 5) line 111.
+
+I didn't apply your following old patch against `Ikiwiki.pm` file:
+
+    --- IkiWiki.pm-orig 2007-05-10 11:16:47.000000000 +0200
+    +++ IkiWiki.pm      2007-05-10 11:16:07.000000000 +0200
+    @@ -993,7 +993,18 @@
+        my $spec=shift;
+        my $from=shift;
+ 
+    -   return eval pagespec_translate($spec);
+    +   my $pagespec = pagespec_translate($spec);
+    +
+    +   my $newpagespec;
+    +
+    +   local($1);
+    +   if ($pagespec =~ /(.*)/) {
+    +           $newpagespec = $1;
+    +   } else {
+    +           die "oh";
+    +   }
+    +
+    +   return eval $newpagespec;
+     } #}}}
+ 
+     package IkiWiki::PageSpec;
+
+because `patch` command fails:
+
+    patch -p0 < ../IkiWiki.pm.patch 
+    patching file IkiWiki.pm
+    Hunk #1 FAILED at 993.
+    1 out of 1 hunk FAILED -- saving rejects to file IkiWiki.pm.rej
+
+Could you please fix that patch?  I guess how to do it, but I don't want
+to break the code I distribute in my backport ;)
+
+-- Pawel
