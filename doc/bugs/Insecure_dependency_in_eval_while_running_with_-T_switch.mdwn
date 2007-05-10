@@ -68,3 +68,19 @@ Could you please fix that patch?  I guess how to do it, but I don't want
 to break the code I distribute in my backport ;)
 
 -- Pawel
+
+> It's not my patch.. IIRC my suggestion was simply to do this: --[Joey]]
+
+	Index: IkiWiki.pm
+	===================================================================
+	--- IkiWiki.pm	(revision 3565)
+	+++ IkiWiki.pm	(working copy)
+	@@ -1005,7 +1005,7 @@
+ 			unshift @params, "location";
+	 	}
+	 
+	-	my $ret=eval pagespec_translate($spec);
+	+	my $ret=eval possibly_foolish_untaint(pagespec_translate($spec));
+	 	return IkiWiki::FailReason->new("syntax error") if $@;
+	 	return $ret;
+	 } #}}}
