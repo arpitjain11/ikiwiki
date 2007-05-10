@@ -22,8 +22,10 @@ ikiwiki (2.1) UNRELEASED; urgency=low
 
   [ Joey Hess ]
   * Updated Czech translation from Miroslav Kure.
+  * Apply patch from Pawel to avoid using -L in Makefile as it's not available
+    in older finds.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 09 May 2007 16:01:28 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 10 May 2007 14:56:07 -0400
 
 ikiwiki (2.00) unstable; urgency=low
 

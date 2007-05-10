@@ -47,9 +47,9 @@ extra_clean:
 
 extra_install:
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki
-	for dir in `find -L basewiki templates -type d ! -regex '.*\.svn.*'`; do \
+	for dir in `find basewiki templates -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
-		for file in `find -L $$dir -maxdepth 1 -type f`; do \
+		for file in `find $$dir -follow -maxdepth 1 -type f`; do \
 			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		done; \
 	done
