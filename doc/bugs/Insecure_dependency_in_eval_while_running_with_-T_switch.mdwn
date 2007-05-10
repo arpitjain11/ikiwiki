@@ -1,0 +1,18 @@
+Hello,
+
+I had to fix a location of one page in my repo via `svn move` and now I have
+a problem with rebuilding my ikiwiki pages:
+
+    ikiwiki --setup ikiwiki.setup
+    [...]
+    tworzenie strony ubuntu/linki.mdwn
+    tworzenie strony knoppix/bootowalny_pendrive_usb.mdwn
+    tworzenie strony helponformatting.mdwn
+    Insecure dependency in eval while running with -T switch at /usr/share/perl5/IkiWiki/Plugin/conditional.pm line 30.
+    BEGIN failed--compilation aborted at (eval 5) line 110.
+
+Temporarily I've disabled conditional plugin to avoid that bug.
+
+PS. I still use ikiwiki 1.50 backported for Debian 'sarge'.
+
+-- Pawel
