@@ -46,6 +46,10 @@ Suggestions of ideas for plugins:
   Should be quite easy to write, the otl plugin is a good example of a
   similar formatter.
 
+>>Isn't there a conflict between ikiwiki using \[\[  \]\] and asciidoc using the same?
+>>There is a start of an asciidoc plugin at <http://www.mail-archive.com/asciidoc-discuss@metaperl.com/msg00120.html>
+>>-- KarlMW
+
 * manpage plugin: convert **"ls(1)"** style content into Markdown like **\[ls(1)\]\(http://example.org/man.cgi?name=ls&sect=1\)** or into HTML directly.
 > With a full installation of groff available, man offers HTML output.  Might
 > take some fiddling to make it fit into the ikiwiki templates, and you might
