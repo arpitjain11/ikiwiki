@@ -1,3 +1,12 @@
+ikiwiki (2.1) unstable; urgency=low
+
+  Some wikis need to be rebuilt on upgrade to this version, due to changes to
+  page templates and the style sheet. If you listed your wiki in
+  /etc/ikiwiki/wikilist this will be done automatically when the Debian
+  package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 26 Apr 2007 15:50:36 -0400
+
 ikiwiki (2.00) unstable; urgency=low
 
   With the 2.0 release of ikiwiki, some major changes have been made to the

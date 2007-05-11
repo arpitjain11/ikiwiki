@@ -59,6 +59,7 @@
 </div>
 
 <div id="footer">
+<div id="pageinfo">
 
 <TMPL_IF NAME="TAGS">
 <div class="tags">
@@ -87,12 +88,13 @@ Links:
 </div>
 </TMPL_IF>
 
-<div class="pageinfo">
-<!-- from <TMPL_VAR NAME=WIKINAME> -->
+<div class="pagedate">
 Last edited <TMPL_VAR NAME=MTIME>
 </div>
 
+</div>
 <TMPL_IF EXTRAFOOTER><TMPL_VAR EXTRAFOOTER></TMPL_IF>
+<!-- from <TMPL_VAR NAME=WIKINAME> -->
 </div>
 
 </body>

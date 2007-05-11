@@ -318,6 +318,7 @@ sub cgi_editpage ($$) { #{{{
 		action => $config{cgiurl},
 		table => 0,
 		template => scalar template_params("editpage.tmpl"),
+		wikiname => $config{wikiname},
 	);
 	
 	run_hooks(formbuilder_setup => sub {

@@ -24,8 +24,14 @@ ikiwiki (2.1) UNRELEASED; urgency=low
   * Updated Czech translation from Miroslav Kure.
   * Apply patch from Pawel to avoid using -L in Makefile as it's not available
     in older finds.
+  * Make all templates have a footer div to ease themeing. Required template
+    and style sheet updates, and unless you're using customised versions,
+    you'll want to rebuild wikis on upgrade to this version to avoid
+    inconsistencies.
+  * Allow WIKINAME to to used in footers, as an example of something to put
+    there.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 10 May 2007 14:56:07 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 11 May 2007 15:35:12 -0400
 
 ikiwiki (2.00) unstable; urgency=low
 
