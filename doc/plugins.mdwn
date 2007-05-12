@@ -1,5 +1,7 @@
 Most of ikiwiki's [[features]] are implemented as plugins.
 
+[[pagestats pages="plugins/type/* and !plugins/type/slow"]]
+
 There's documentation if you want to [[write]] your own plugins, or you can
 install and use plugins [[contributed|contrib]] by others.
 
@@ -9,8 +11,6 @@ Enable the [[goodstuff]] plugin to get a nice selection of plugins that
 will fit most uses of ikiwiki.
 
 # Plugin directory
-
-[[pagestats pages="plugins/type/* and !plugins/type/slow"]]
 
 [[inline pages="plugins/* and !plugins/type/* and !plugins/write and
 !plugins/contrib and !*/Discussion"
