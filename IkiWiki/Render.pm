@@ -44,11 +44,7 @@ sub backlinks ($) { #{{{
 			       
 		push @links, { url => $href, page => pagetitle($p_trimmed) };
 	}
-	@links = sort { $a->{page} cmp $b->{page} } @links;
-
-	return \@links, [] if @links <= $config{numbacklinks} || ! $config{numbacklinks};
-	return [@links[0..$config{numbacklinks}-1]],
-	       [@links[$config{numbacklinks}..$#links]];
+	return @links;
 } #}}}
 
 sub parentlinks ($) { #{{{
@@ -105,7 +101,16 @@ sub genpage ($$$) { #{{{
 		$template->param(have_actions => 1);
 	}
 
-	my ($backlinks, $more_backlinks)=backlinks($page);
+	my @backlinks=sort { $a->{page} cmp $b->{page} } backlinks($page);
+	my ($backlinks, $more_backlinks);
+	if (@backlinks <= $config{numbacklinks} || ! $config{numbacklinks}) {
+		$backlinks=\@backlinks;
+		$more_backlinks=[];
+	}
+	else {
+		$backlinks=[@backlinks[0..$config{numbacklinks}-1]];
+		$more_backlinks=[@backlinks[$config{numbacklinks}..$#backlinks]];
+	}
 
 	$template->param(
 		title => $page eq 'index' 

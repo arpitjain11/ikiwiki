@@ -35,8 +35,7 @@ sub preprocess (@) { #{{{
 	foreach my $page (keys %links) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			use IkiWiki::Render;
-			my @bl = IkiWiki::backlinks($page);
-			$counts{$page} = scalar(@{$bl[0]})+scalar(@{$bl[1]});
+			$counts{$page} = scalar(IkiWiki::backlinks($page));
 			$max = $counts{$page} if $counts{$page} > $max;
 		}
 	}
