@@ -8,6 +8,20 @@ My perl knowledge is very limited, but the call :
 
 return allways 2, which seems to me "obvious", because the backlinks() function is returning two array of links...
 
-Did I forget something ?
+Patch is :
+
+    --- /usr/share/perl5/IkiWiki/Plugin/pagestats.pm        2007-04-27 04:33:43.000000000 +0200
+    +++ ./pagestats.pm      2007-05-12 16:47:14.000000000 +0200
+    @@ -36,7 +36,7 @@
+                    if (pagespec_match($page, $params{pages}, location => $params{page})) {
+                            use IkiWiki::Render;
+                            my @bl = IkiWiki::backlinks($page);
+    -                       $counts{$page} = scalar(@bl);
+    +                       $counts{$page} = scalar(@{$bl[0]})+scalar(@{$bl[1]});
+                            $max = $counts{$page} if $counts{$page} > $max;
+                    }
+            }
+
+
 
 --[[users/hb]]
