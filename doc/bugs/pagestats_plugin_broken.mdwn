@@ -1,0 +1,13 @@
+Since at least version 2.0 (and certainly a few version before), it seems that the pagestats plugin is broken : each matched page has a count of 2.
+This is also (of course) producing flat tag cloud.
+
+My perl knowledge is very limited, but the call :
+
+    my @bl = IkiWiki::backlinks($page);
+    $counts{$page} = scalar(@bl);
+
+return allways 2, which seems to me "obvious", because the backlinks() function is returning two array of links...
+
+Did I forget something ?
+
+--[hb]
