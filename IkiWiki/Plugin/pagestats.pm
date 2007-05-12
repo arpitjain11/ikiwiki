@@ -49,7 +49,8 @@ sub preprocess (@) { #{{{
 			}
 			sort { $counts{$b} <=> $counts{$a} } keys %counts).
 			"\n</table>\n" ;
-	} else {
+	}
+	else {
 		# In case of misspelling, default to a page cloud
 
 		my $res = "<div class='pagecloud'>\n";
