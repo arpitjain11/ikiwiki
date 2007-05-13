@@ -1,5 +1,9 @@
 Want to turn on the `usedirs` setting on an existing wiki without breaking
-all the links into it? Here's a way to do it for Apache, using the
+all the links into it?
+
+#Apache and RewriteEngine
+
+Here's a way to do it for Apache, using the
 RewriteEngine. This example is for a wiki at the top of a web site, but can
 be adapted to other situations.
 
@@ -20,6 +24,8 @@ be adapted to other situations.
 	RewriteCond $1 !^/~
 	RewriteCond $1 !.*/index$
 	RewriteRule (.+).atom$ $1/index.atom
+
+#lighttpd and mod_redirect
 
 The following example is exactly the same thing written for lighttpd by using mod_redirect:
 
