@@ -401,7 +401,7 @@ sub cgi_editpage ($$) { #{{{
 			htmlize($page, $type,
 			linkify($page, "",
 			preprocess($page, $page,
-			filter($page, $form->field('editcontent')), 0, 1))));
+			filter($page, $page, $form->field('editcontent')), 0, 1))));
 	}
 	else {
 		$form->tmpl_param("page_preview", "");

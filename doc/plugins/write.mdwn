@@ -76,8 +76,8 @@ adding or removing files from it.
 	hook(type => "filter", id => "foo", call => \&filter);
 
 Runs on the raw source of a page, before anything else touches it, and can
-make arbitrary changes. The function is passed named parameters `page` and
-`content` and should return the filtered content.
+make arbitrary changes. The function is passed named parameters "page",
+"destpage", and "content". It should return the filtered content.
 
 ### preprocess
 

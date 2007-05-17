@@ -36,7 +36,7 @@ sub filter (@) { #{{{
 	
 	build_regexp() unless defined $smiley_regexp;
 	$params{content} =~ s{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}{
-		$1 ? $2 : htmllink($params{page}, $params{page}, $smileys{$2}, linktext => $2)
+		$1 ? $2 : htmllink($params{page}, $params{destpage}, $smileys{$2}, linktext => $2)
 	}egs if length $smiley_regexp;
 
 	return $params{content};

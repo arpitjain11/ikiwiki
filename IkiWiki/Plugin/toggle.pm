@@ -89,7 +89,7 @@ sub preprocess_toggleable (@) { #{{{
 	# Preprocess the text to expand any preprocessor directives
 	# embedded inside it.
 	$params{text}=IkiWiki::preprocess($params{page}, $params{destpage}, 
-		IkiWiki::filter($params{page}, $params{text}));
+		IkiWiki::filter($params{page}, $params{destpage}, $params{text}));
 	
 	my $id=genid($params{page}, $params{id});
 

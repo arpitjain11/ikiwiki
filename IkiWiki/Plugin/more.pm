@@ -24,7 +24,7 @@ sub preprocess (@) { #{{{
 	}
 	else {
 		$params{text}=IkiWiki::preprocess($params{page}, $params{destpage},
-			IkiWiki::filter($params{page}, $params{text}));
+			IkiWiki::filter($params{page}, $params{destpage}, $params{text}));
 		return "<a name=\"more\"></a>\n\n".$params{text};
 	}
 }

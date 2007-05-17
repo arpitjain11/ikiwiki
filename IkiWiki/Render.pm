@@ -159,7 +159,7 @@ sub scan ($) { #{{{
 
 		# Always needs to be done, since filters might add links
 		# to the content.
-		$content=filter($page, $content);
+		$content=filter($page, $page, $content);
 
 		my @links;
 		while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
@@ -186,15 +186,15 @@ sub render ($) { #{{{
 	my $type=pagetype($file);
 	my $srcfile=srcfile($file);
 	if (defined $type) {
-		my $content=readfile($srcfile);
 		my $page=pagename($file);
 		delete $depends{$page};
 		will_render($page, htmlpage($page), 1);
 		
-		$content=filter($page, $content);
-		$content=preprocess($page, $page, $content);
-		$content=linkify($page, $page, $content);
-		$content=htmlize($page, $type, $content);
+		my $content=htmlize($page, $type,
+			linkify($page, $page,
+			preprocess($page, $page,
+			filter($page, $page,
+			readfile($srcfile)))));
 		
 		writefile(htmlpage($page), $config{destdir},
 			genpage($page, $content, mtime($srcfile)));
@@ -454,7 +454,7 @@ sub commandline_render () { #{{{
 	my $content=readfile($srcfile);
 	my $page=pagename($file);
 	$pagesources{$page}=$file;
-	$content=filter($page, $content);
+	$content=filter($page, $page, $content);
 	$content=preprocess($page, $page, $content);
 	$content=linkify($page, $page, $content);
 	$content=htmlize($page, $type, $content);

@@ -651,12 +651,14 @@ sub preprocess ($$$;$$) { #{{{
 	return $content;
 } #}}}
 
-sub filter ($$) { #{{{
+sub filter ($$$) { #{{{
 	my $page=shift;
+	my $destpage=shift;
 	my $content=shift;
 
 	run_hooks(filter => sub {
-		$content=shift->(page => $page, content => $content);
+		$content=shift->(page => $page, destpage => $destpage, 
+			content => $content);
 	});
 
 	return $content;

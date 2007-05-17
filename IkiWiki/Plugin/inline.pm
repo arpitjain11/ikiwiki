@@ -212,7 +212,7 @@ sub preprocess_inline (@) { #{{{
 				$ret.="\n".
 				      linkify($page, $params{page},
 				      preprocess($page, $params{page},
-				      filter($page,
+				      filter($page, $params{page},
 				      readfile(srcfile($file)))));
 			}
 		}
@@ -266,7 +266,7 @@ sub get_inline_content ($$) { #{{{
 		return htmlize($page, $type,
 		       linkify($page, $destpage,
 		       preprocess($page, $destpage,
-		       filter($page,
+		       filter($page, $destpage,
 		       readfile(srcfile($file))))));
 	}
 	else {
