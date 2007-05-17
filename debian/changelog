@@ -32,8 +32,12 @@ ikiwiki (2.1) UNRELEASED; urgency=low
     there.
   * Patch from hb to fix the pagestats plugin, which was broken by a past
     change to the backlinks() function.
+  * Fix some bugs in password handling:
+    - If the password is empty in preferences, don't clear the existing
+      password.
+    - Actually check the confirm password field, even if it's left empty.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 12 May 2007 13:55:19 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 17 May 2007 04:02:04 -0400
 
 ikiwiki (2.00) unstable; urgency=low
 

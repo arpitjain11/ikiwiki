@@ -30,6 +30,17 @@ sub formbuilder_setup (@) { #{{{
 			$form->field(name => "email", size => 50);
 			$form->title("register");
 			$form->text("");
+		
+			$form->field(name => "confirm_password",
+				validate => sub {
+					shift eq $form->field("password");
+				},
+			);
+			$form->field(name => "password",
+				validate => sub {
+					shift eq $form->field("confirm_password");
+				},
+			);
 		}
 
 		if ($form->submitted) {
@@ -46,12 +57,6 @@ sub formbuilder_setup (@) { #{{{
 			}
 	
 			if ($submittype eq "Create Account") {
-				$form->field(
-					name => "confirm_password",
-					validate => sub {
-						shift eq $form->field("password");
-					},
-				);
 				$form->field(
 					name => "account_creation_password",
 					validate => sub {
@@ -120,13 +125,15 @@ sub formbuilder_setup (@) { #{{{
 			value => $session->param("name"), force => 1,
 			fieldset => "login");
 		$form->field(name => "password", type => "password",
-			fieldset => "login");
+			fieldset => "login",
+			validate => sub {
+				shift eq $form->field("confirm_password");
+			}),
 		$form->field(name => "confirm_password", type => "password",
 			fieldset => "login",
 			validate => sub {
 				shift eq $form->field("password");
-			});
-		
+			}),
 	}
 }
 
@@ -197,7 +204,7 @@ sub formbuilder (@) { #{{{
 		if ($form->submitted eq "Save Preferences" && $form->validate) {
 			my $user_name=$form->field('name');
 	                foreach my $field (qw(password)) {
-        	                if (defined $form->field($field)) {
+        	                if (defined $form->field($field) && length $form->field($field)) {
 					IkiWiki::userinfo_set($user_name, $field, $form->field($field)) ||
 						error("failed to set $field");
 	                        }
