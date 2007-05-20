@@ -1,0 +1,6 @@
+Ikiwiki's preprocessor parser cannot deal with arbitrary nested preprocesor
+directives. It's possible to nest a directive with single quoted values
+inside a triple-quoted value of a directive, but that's all.
+
+It's not possible to unambiguously parse nested quotes, so to support
+nesting, a new syntax would be needed. Maybe something xml-like?
