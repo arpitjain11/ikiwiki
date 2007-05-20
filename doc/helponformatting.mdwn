@@ -47,10 +47,7 @@ To write a code block, indent each line with a tab or 4 spaces:
 	10 PRINT "Hello, world!"
 	20 GOTO 10
 
-To link to another page on the wiki, place the page's name inside double
-square brackets, so you would use `\[[WikiLink]]` to link to [[WikiLink]].
-
-To link to any other web page, or to an email address, you can just put the
+To link to an url or email address, you can just put the
 url in angle brackets: <<http://ikiwiki.info>>, or you can use the
 form \[link text\]\(url\)
 
@@ -58,6 +55,9 @@ form \[link text\]\(url\)
 
 In addition to basic html formatting using [[MarkDown]], this wiki lets
 you use the following additional features:
+
+* To link to another page on the wiki, place the page's name inside double
+  square brackets. So you would use `\[[WikiLink]]` to link to [[WikiLink]].
 
 [[if test="enabled(smiley) and smileys" then="""
 * Insert [[smileys]] and some other useful symbols. :-)
