@@ -75,6 +75,13 @@ you use the following additional features:
 	\[[toc ]]
 """]]
 
+
+[[if test="enabled(meta)" then="""
+* Change the title of a page:
+
+	\[[meta title="full page title"]]
+"""]]
+
 [[if test="enabled(inline) and blog" then="""
 * Create a [[blog]] by inlining a set of pages:
 
