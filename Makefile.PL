@@ -26,9 +26,11 @@ PROBABLE_INST_LIB=$(shell \\
 tflag=$(shell if [ "$$NOTAINT" != 0 ]; then printf -- "-T"; fi)
 extramodules=$(shell if [ "$$PROFILE" = 1 ]; then printf -- "-MDevel::Profiler"; fi)
 
-extra_build:
+ikiwiki.out: ikiwiki.in
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	chmod +x ikiwiki.out
+
+extra_build: ikiwiki.out
 	LANG=C perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=basewiki --nousedirs\
 		--wikiname="ikiwiki" --verbose \
