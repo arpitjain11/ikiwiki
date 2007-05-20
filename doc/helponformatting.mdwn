@@ -1,4 +1,4 @@
-# Help on formatting text
+[[meta title="Help on formatting wiki pages"]]
 
 Text on this wiki is, by default, written in a form very close to how you
 might write text for an email message. This style of text formatting is
@@ -56,24 +56,32 @@ form \[link text\]\(url\)
 
 ----
 
-You can also use [[PreProcessorDirective]]s to do additional cool stuff.
-
-[[if test="enabled(inline) and blog" then="""
-This wiki has the inline plugin enabled, so you can create a [[blog]] on any
-page.
-"""]]
+In addition to basic html formatting using [[MarkDown]], this wiki lets
+you use the following additional features:
 
 [[if test="enabled(smiley) and smileys" then="""
-This wiki has the smiley plugin enabled, so you can insert [[smileys]] and some
-other useful symbols.
+* Insert [[smileys]] and some other useful symbols. :-)
 """]]
 
 [[if test="enabled(shortcut) and shortcuts" then="""
-This wiki has the shortcut plugin enabled, so you can use [[shortcuts]] to link
-to common resources.
+* Use [[shortcuts]] to link to common resources.
+
+	\[[wikipedia War\_of\_1812]]
+"""]]
+
+[[if test="enabled(toc)" then="""
+* Add a table of contents to a page:
+
+	\[[toc ]]
+"""]]
+
+[[if test="enabled(inline) and blog" then="""
+* Create a [[blog]] by inlining a set of pages:
+
+	\[[inline pages="blog/*"]]
 """]]
 
 [[if test="enabled(template) and templates" then="""
-This wiki has the template plugin enabled, so you can create and use
-[[templates]] for repeated chunks of parameterized wiki text.
+* Create and fill out [[templates]] for repeated chunks of
+  parameterized wiki text.
 """]]
