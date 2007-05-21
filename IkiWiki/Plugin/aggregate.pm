@@ -33,8 +33,10 @@ sub getopt () { #{{{
 sub checkconfig () { #{{{
 	if ($config{aggregate} && ! ($config{post_commit} && 
 	                             IkiWiki::commit_hook_enabled())) {
-		# don't wait for the lock
-		IkiWiki::lockwiki(0) || exit 1;
+		if (! IkiWiki::lockwiki(0)) {
+			debug("wiki is locked by another process, not aggregating");
+			exit 1;
+		}
 	
 		loadstate();
 		IkiWiki::loadindex();

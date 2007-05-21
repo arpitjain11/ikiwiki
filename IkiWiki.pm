@@ -689,7 +689,6 @@ sub lockwiki (;$) { #{{{
 			error("wiki is locked; waited $wait seconds without lock being freed (possible stuck process or stale lock?)");
 		}
 		else {
-			debug("wiki is locked");
 			return 0;
 		}
 	}
