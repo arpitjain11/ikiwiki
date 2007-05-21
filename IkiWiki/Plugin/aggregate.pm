@@ -31,22 +31,26 @@ sub getopt () { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	my $nolock=($config{post_commit} && ! IkiWiki::commit_hook_enabled());
-	IkiWiki::lockwiki() unless $nolock;
-	loadstate();
-	if ($config{aggregate} && ! $nolock) {
+	if ($config{aggregate} && ! ($config{post_commit} && 
+	                             IkiWiki::commit_hook_enabled())) {
+		# don't wait for the lock
+		IkiWiki::lockwiki(0) || exit 1;
+	
+		loadstate();
 		IkiWiki::loadindex();
 		aggregate();
 		expire();
 		savestate();
+
+		IkiWiki::unlockwiki();
 	}
-	IkiWiki::unlockwiki() unless $nolock;
 } #}}}
 
 sub filter (@) { #{{{
 	my %params=@_;
 	my $page=$params{page};
 
+	loadstate(); # if not already loaded
 	# Mark all feeds originating on this page as removable;
 	# preprocess will unmark those that still exist.
 	remove_feeds($page);
@@ -117,7 +121,9 @@ sub delete (@) { #{{{
 	}
 } #}}}
 
+my $state_loaded=0;
 sub loadstate () { #{{{
+	return if $state_loaded;
 	if (-e "$config{wikistatedir}/aggregate") {
 		open (IN, "$config{wikistatedir}/aggregate" ||
 			die "$config{wikistatedir}/aggregate: $!");
@@ -148,6 +154,8 @@ sub loadstate () { #{{{
 		}
 
 		close IN;
+		
+		$state_loaded=1;
 	}
 } #}}}
 

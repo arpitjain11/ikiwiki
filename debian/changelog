@@ -1,3 +1,12 @@
+ikiwiki (2.2) UNRELEASED; urgency=low
+
+  * Change the aggregate plugin's locking strategy. Now it defers loading state
+    until the wiki is building and already locked, unless it's aggregating.
+    When aggregating, it does not wait for the lock if it cannot get it, and
+    instead exits, to prevent aggregating processes from piling up.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 20 May 2007 22:23:09 -0400
+
 ikiwiki (2.1) unstable; urgency=low
 
   [ Joey Hess ]
