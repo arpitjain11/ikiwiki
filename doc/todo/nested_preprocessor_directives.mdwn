@@ -4,3 +4,15 @@ inside a triple-quoted value of a directive, but that's all.
 
 It's not possible to unambiguously parse nested quotes, so to support
 nesting, a new syntax would be needed. Maybe something xml-like?
+
+> You can, however, unambiguously parse nested square brackets, and I think
+> that would solve the problem, as long as you never allow the contents of a
+> directive to contain a *partial* directive, which seems reasonable to me.
+>
+> For example, I *think* you can unambiguously parse the following:
+>
+>     \[[if test="enabled(template) and templates/foo" then="""
+>     [[template id=foo content="""Flying Purple People Eater"""]]
+>     """]]
+>
+> --[[JoshTriplett]]
