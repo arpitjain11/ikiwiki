@@ -41,6 +41,7 @@ sub checkconfig () { #{{{
 		aggregate();
 		expire();
 		savestate();
+		clearstate();
 
 		IkiWiki::unlockwiki();
 	}
@@ -205,6 +206,12 @@ sub savestate () { #{{{
 	close OUT || error("save $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/aggregate") ||
 		error("rename $newfile: $!", $cleanup);
+} #}}}
+
+sub clearstate () { #{{{
+	%feeds=();
+	%guids=();
+	$state_loaded=0;
 } #}}}
 
 sub expire () { #{{{
