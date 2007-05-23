@@ -10,7 +10,7 @@ use IkiWiki 2.00;
 my %imgdefaults;
 
 sub import { #{{{
-	hook(type => "preprocess", id => "img", call => \&preprocess);
+	hook(type => "preprocess", id => "img", call => \&preprocess, scan => 1);
 } #}}}
 
 sub preprocess (@) { #{{{
@@ -31,17 +31,8 @@ sub preprocess (@) { #{{{
 		return '';
 	}
 
+	push @{$links{$params{page}}}, $image;
 	my $file = bestlink($params{page}, $image);
-	if (! $file) {
-		# TODO: this may not be right, depending on where the file is
-		# created in the end
-		add_depends($params{page}, $image);
-
-		return "[[img ".sprintf(gettext("%s not found"), $image)."]]";
-	}
-	else {
-		add_depends($params{page}, $file);
-	}
 
 	my $dir = IkiWiki::dirname($file);
 	my $base = IkiWiki::basename($file);
