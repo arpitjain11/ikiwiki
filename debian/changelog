@@ -5,8 +5,10 @@ ikiwiki (2.2) UNRELEASED; urgency=low
     When aggregating, it does not wait for the lock if it cannot get it, and
     instead exits, to prevent aggregating processes from piling up.
   * Updated Spanish translation from Victor Moral.
+  * Correct bug in the img plugin that caused dependencies on images to not
+    always be tracked correctly.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 21 May 2007 13:18:37 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 22 May 2007 21:29:13 -0400
 
 ikiwiki (2.1) unstable; urgency=low
 

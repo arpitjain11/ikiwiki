@@ -31,9 +31,17 @@ sub preprocess (@) { #{{{
 		return '';
 	}
 
-	add_depends($params{page}, $image);
-	my $file = bestlink($params{page}, $image)
-		|| return "[[img ".sprintf(gettext("%s not found"), $image)."]]";
+	my $file = bestlink($params{page}, $image);
+	if (! $file) {
+		# TODO: this may not be right, depending on where the file is
+		# created in the end
+		add_depends($params{page}, $image);
+
+		return "[[img ".sprintf(gettext("%s not found"), $image)."]]";
+	}
+	else {
+		add_depends($params{page}, $file);
+	}
 
 	my $dir = IkiWiki::dirname($file);
 	my $base = IkiWiki::basename($file);
@@ -91,6 +99,10 @@ sub preprocess (@) { #{{{
 	else {
 		$fileurl="$config{url}/$file";
 		$imgurl="$config{url}/$imglink";
+	}
+
+	if (! defined($im->Get("width")) || ! defined($im->Get("height"))) {
+		return "[[img ".sprintf(gettext("failed to determine size of image %s"), $file)."]]";
 	}
 
 	return '<a href="'.$fileurl.'"><img src="'.$imgurl.
