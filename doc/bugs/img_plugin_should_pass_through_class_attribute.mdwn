@@ -1,0 +1,47 @@
+I wanted to make images float left or right, so I thought it would be nice to be able to pass a class attribute through the img plugin to the final img tag.
+
+An example of the feature in use can be seen here (notice class="floatleft" and class="floatright"):
+
+        http://www.cworth.org/
+
+And here's a patch to implement it. Will this survive markdown munging? It seems quite unlikely... How does one protect a block like this? Oh well, we'll see what happens.
+
+-Carl
+
+From 405c29ba2ef97a514bade33ef826e71fe825962b Mon Sep 17 00:00:00 2001
+From: Carl Worth <cworth@cworth.org>
+Date: Wed, 23 May 2007 15:27:51 +0200
+Subject: [PATCH] img plugin: Pass a class attribute through to the final img tag.
+
+This is particularly useful for allowing the image to float.
+For example, in my usage I use class=floatleft and then
+in the css do .floatleft { float: left; }.
+---
+ Plugin/img.pm |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/Plugin/img.pm b/Plugin/img.pm
+index 7226231..3eb1ae7 100644
+--- a/Plugin/img.pm
++++ b/Plugin/img.pm
+@@ -93,9 +93,15 @@ sub preprocess (@) { #{{{
+                $imgurl="$config{url}/$imglink";
+        }
+ 
+-       return '<a href="'.$fileurl.'"><img src="'.$imgurl.
+-               '" alt="'.$alt.'" width="'.$im->Get("width").
+-               '" height="'.$im->Get("height").'" /></a>';
++        my $result = '<a href="'.$fileurl.'"><img src="'.$imgurl.
++            '" alt="'.$alt.'" width="'.$im->Get("width").
++            '" height="'.$im->Get("height").'" ';
++        if (exists $params{class}) {
++            $result .= ' class="'.$params{class}.'"';
++        }
++        $result .= '/></a>';
++
++        return $result;
+ } #}}}
+ 
+ 1
+-- 
+1.5.1.gee969
