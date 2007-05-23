@@ -1,0 +1,5 @@
+The Atom and RSS templates use `ESCAPE=HTML` in the title elements. However, HTML-escaped characters aren't valid according to <http://feedvalidator.org/>.
+
+Removing `ESCAPE=HTML` works fine, but I haven't checked to see if there are any characters it won't work for.
+
+For Atom, at least, I believe adding `type="xhtml"` to the title element will work. I don't think there's an equivalent for RSS.
