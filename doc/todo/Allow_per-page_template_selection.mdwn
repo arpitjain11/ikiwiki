@@ -1,0 +1,8 @@
+It'd be nice to be able to specify an altenate template file to be
+used for some pages. For example, I'd like most of my pages to use
+page.tmpl but I want my front page to be formatted in some unique way,
+so I'd like it to use a separate front.tmp template instead.
+
+I'm not sure what syntax to use for this, (\[[template]] seems to be
+taken for another purpose already). Perhaps something like
+\[[page-template front]] ?).
