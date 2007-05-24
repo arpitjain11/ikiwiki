@@ -1,1 +1,14 @@
-In [[markdown]] syntax, none of the other special characters get processed inside a code block.  However, in ikiwiki, [[wiki links|wikilink]] and [[preprocessor directives|preprocessordirective]] still get processed inside a code block, requiring additional escaping.  For example, `[links don't work](#here)`, but `a [[wikilink]] becomes HTML`.
+In [[markdown]] syntax, none of the other special characters get processed inside a code block.  However, in ikiwiki, [[wiki links|wikilink]] and [[preprocessor directives|preprocessordirective]] still get processed inside a code block, requiring additional escaping.  For example, `[links don't work](#here)`, but `a [[wikilink]] becomes HTML`. --[[JoshTriplett]]
+
+Indented lines provide a good way to escape a block of text containing
+markdown syntax, but ikiwiki links like \[[this]] are still
+interpreted within such a block. I think that intepretation should not
+be happening. That is I should be able to write:
+
+	[[this]]
+
+and have it render like:
+
+	\[[this]]
+
+--[[cworth]]
