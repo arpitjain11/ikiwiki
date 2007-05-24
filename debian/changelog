@@ -7,8 +7,16 @@ ikiwiki (2.2) UNRELEASED; urgency=low
   * Updated Spanish translation from Victor Moral.
   * Correct bug in the img plugin that caused dependencies on images to not
     always be tracked correctly.
+  * Deal better with rebuilds that involve moving files; track and clean up the
+    old files.
+  * Change where the img plugin puts scaled images. It's better to make the
+    scaled images subpages of the page that embeds them, rather than putting
+    them alongside the original image, since if two pages scale the same image
+    the same way, this prevents complications in dealing with two pages
+    creating the same file. The move will be handled transparently, though you
+    might want to rebuild your wiki to make it occur in one step.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 22 May 2007 21:29:13 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 24 May 2007 15:31:03 -0400
 
 ikiwiki (2.1) unstable; urgency=low
 

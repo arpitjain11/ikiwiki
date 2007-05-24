@@ -746,9 +746,9 @@ sub loadindex () { #{{{
 			$depends{$page}=$items{depends}[0] if exists $items{depends};
 			$destsources{$_}=$page foreach @{$items{dest}};
 			$renderedfiles{$page}=[@{$items{dest}}];
-			$oldrenderedfiles{$page}=[@{$items{dest}}];
 			$pagecase{lc $page}=$page;
 		}
+		$oldrenderedfiles{$page}=[@{$items{dest}}];
 		$pagectime{$page}=$items{ctime}[0];
 	}
 	close IN;

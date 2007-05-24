@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-08 20:46-0400\n"
+"POT-Creation-Date: 2007-05-24 15:47-0400\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -35,93 +35,94 @@ msgstr "Administración"
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:348
+#: ../IkiWiki/CGI.pm:349
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
-#: ../IkiWiki/Render.pm:166
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:91
+#: ../IkiWiki/Render.pm:171
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:474
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:516
-#: ../IkiWiki/CGI.pm:542 ../IkiWiki/CGI.pm:586
+#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:517
+#: ../IkiWiki/CGI.pm:543 ../IkiWiki/CGI.pm:587
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:683
+#: ../IkiWiki/CGI.pm:684
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:715
+#: ../IkiWiki/CGI.pm:716
 msgid "login failed, perhaps you need to turn on cookies?"
-msgstr "registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
+msgstr ""
+"registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
 
-#: ../IkiWiki/Plugin/aggregate.pm:62
+#: ../IkiWiki/Plugin/aggregate.pm:69
 #, perl-format
 msgid "missing %s parameter"
 msgstr "falta el parámetro %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:90
+#: ../IkiWiki/Plugin/aggregate.pm:97
 msgid "new feed"
 msgstr "nueva entrada"
 
-#: ../IkiWiki/Plugin/aggregate.pm:104
+#: ../IkiWiki/Plugin/aggregate.pm:111
 msgid "posts"
 msgstr "entradas"
 
-#: ../IkiWiki/Plugin/aggregate.pm:106
+#: ../IkiWiki/Plugin/aggregate.pm:113
 msgid "new"
 msgstr "nuevo"
 
-#: ../IkiWiki/Plugin/aggregate.pm:212
+#: ../IkiWiki/Plugin/aggregate.pm:229
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "%s caducada (%s días de antigüedad)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:219
+#: ../IkiWiki/Plugin/aggregate.pm:236
 #, perl-format
 msgid "expiring %s"
 msgstr "%s caducada"
 
-#: ../IkiWiki/Plugin/aggregate.pm:242
+#: ../IkiWiki/Plugin/aggregate.pm:259
 #, perl-format
 msgid "processed ok at %s"
 msgstr "proceso completado con éxito a %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:247
+#: ../IkiWiki/Plugin/aggregate.pm:264
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "comprobando fuente de datos %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:252
+#: ../IkiWiki/Plugin/aggregate.pm:269
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "no puedo encontrar la fuente de datos en %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:267
+#: ../IkiWiki/Plugin/aggregate.pm:284
 msgid "feed not found"
 msgstr "fuente de datos no encontrada"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:295
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(una secuencia UTF-8 inválida ha sido eliminada de la fuente de datos)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:283
+#: ../IkiWiki/Plugin/aggregate.pm:300
 msgid "feed crashed XML::Feed!"
 msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:356
+#: ../IkiWiki/Plugin/aggregate.pm:373
 #, perl-format
 msgid "creating new page %s"
 msgstr "creando nueva página %s"
@@ -131,6 +132,7 @@ msgid "There are no broken links!"
 msgstr "¡ No hay enlaces rotos !"
 
 #: ../IkiWiki/Plugin/conditional.pm:18
+#, perl-format
 msgid "%s parameter is required"
 msgstr "el parámetro %s es obligatorio"
 
@@ -140,7 +142,8 @@ msgstr "el programa fortune ha fallado"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
 msgid "failed to find url in html"
-msgstr "El complemento googlecalendar no ha encontrado un URL en el código html "
+msgstr ""
+"El complemento googlecalendar no ha encontrado un URL en el código html "
 
 #: ../IkiWiki/Plugin/graphviz.pm:59
 msgid "failed to run graphviz"
@@ -150,30 +153,32 @@ msgstr "no he podido ejecutar el programa graphviz "
 msgid "prog not a valid graphviz program"
 msgstr "prog no es un programa graphviz válido "
 
-#: ../IkiWiki/Plugin/img.pm:36
-#, perl-format
-msgid "%s not found"
-msgstr "no he encontrado la plantilla %s "
-
-#: ../IkiWiki/Plugin/img.pm:49
+#: ../IkiWiki/Plugin/img.pm:48
 #, perl-format
 msgid "bad size \"%s\""
 msgstr "tamaño erróneo \"%s\""
 
-#: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
-#: ../IkiWiki/Plugin/img.pm:80
+#: ../IkiWiki/Plugin/img.pm:58 ../IkiWiki/Plugin/img.pm:62
+#: ../IkiWiki/Plugin/img.pm:79
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr "no puedo leer de %s: %s "
 
-#: ../IkiWiki/Plugin/img.pm:66
+#: ../IkiWiki/Plugin/img.pm:65
 #, perl-format
 msgid "failed to resize: %s"
 msgstr "redimensionado fallido: %s"
 
+#: ../IkiWiki/Plugin/img.pm:96
+#, fuzzy, perl-format
+msgid "failed to determine size of image %s"
+msgstr "redimensionado fallido: %s"
+
 #: ../IkiWiki/Plugin/inline.pm:36
 msgid "Must specify url to wiki with --url when using --rss or --atom"
-msgstr "Es obligatorio indicar un url al wiki cuando se usan los parámetros --rss ó --atom"
+msgstr ""
+"Es obligatorio indicar un url al wiki cuando se usan los parámetros --rss ó "
+"--atom"
 
 #: ../IkiWiki/Plugin/inline.pm:106
 #, perl-format
@@ -189,7 +194,7 @@ msgstr "Añadir una entrada nueva titulada:"
 msgid "nonexistant template %s"
 msgstr "la plantilla %s no existe "
 
-#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:95
 msgid "Discussion"
 msgstr "Comentarios"
 
@@ -209,7 +214,9 @@ msgstr "La página %s está bloqueada por %s y no puede modificarse"
 #: ../IkiWiki/Plugin/mdwn.pm:37
 #, perl-format
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
-msgstr "no he podido cargar el módulo Perl Markdown.pm (%s) ó no he podido ejecutar el programa /usr/bin/markdown (%s)"
+msgstr ""
+"no he podido cargar el módulo Perl Markdown.pm (%s) ó no he podido ejecutar "
+"el programa /usr/bin/markdown (%s)"
 
 #: ../IkiWiki/Plugin/meta.pm:88
 msgid "stylesheet not found"
@@ -239,19 +246,19 @@ msgstr "Consiga un identificador OpenID"
 msgid "All pages are linked to by other pages."
 msgstr "Todas las páginas están referenciadas entre sí."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:162
 msgid "Account creation successful. Now you can Login."
 msgstr "Cuenta de usuario creada con éxito. Ahora puede identificarse."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:150
+#: ../IkiWiki/Plugin/passwordauth.pm:165
 msgid "Error creating account."
 msgstr "Error creando la cuenta de usuario."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:171
+#: ../IkiWiki/Plugin/passwordauth.pm:186
 msgid "Failed to send mail"
 msgstr "No he podido enviar el mensaje de correo electrónico"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:173
+#: ../IkiWiki/Plugin/passwordauth.pm:188
 msgid "Your password has been emailed to you."
 msgstr "Se le ha enviado su contraseña por correo electrónico."
 
@@ -450,49 +457,49 @@ msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
 "svn post-commit; no puedo enviar ninguna notificación"
 
-#: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
+#: ../IkiWiki/Render.pm:255 ../IkiWiki/Render.pm:275
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ignorando el archivo %s porque su nombre no es correcto"
 
-#: ../IkiWiki/Render.pm:310
+#: ../IkiWiki/Render.pm:315
 #, perl-format
 msgid "removing old page %s"
 msgstr "eliminando la antigua página %s"
 
-#: ../IkiWiki/Render.pm:338
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "scanning %s"
 msgstr "explorando %s"
 
-#: ../IkiWiki/Render.pm:343
+#: ../IkiWiki/Render.pm:348
 #, perl-format
 msgid "rendering %s"
 msgstr "convirtiendo %s"
 
-#: ../IkiWiki/Render.pm:355
+#: ../IkiWiki/Render.pm:360
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "convirtiendo la página %s, la cual referencia a %s"
 
-#: ../IkiWiki/Render.pm:372
+#: ../IkiWiki/Render.pm:377
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "convirtiendo la página %s, la cual depende de %s"
 
-#: ../IkiWiki/Render.pm:410
+#: ../IkiWiki/Render.pm:415
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 "convirtiendo la página %s para actualizar la lista de páginas que hacen "
 "referencia a ella."
 
-#: ../IkiWiki/Render.pm:422
+#: ../IkiWiki/Render.pm:427
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 
-#: ../IkiWiki/Render.pm:448
+#: ../IkiWiki/Render.pm:453
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"
@@ -566,13 +573,13 @@ msgstr "creado con éxito el programa envoltorio %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "uso: ikiwiki [opciones] origen destino"
 
-#: ../IkiWiki.pm:107
+#: ../IkiWiki.pm:108
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Es obligatorio especificar un url al wiki con el parámetro --url si se "
 "utiliza el parámetro --cgi"
 
-#: ../IkiWiki.pm:154 ../IkiWiki.pm:155
+#: ../IkiWiki.pm:155 ../IkiWiki.pm:156
 msgid "Error"
 msgstr "Error"
 
@@ -580,12 +587,15 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:631
+#: ../IkiWiki.pm:632
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
 "se ha detectado un bucle de preprocesado %s en la página %s en la vuelta "
 "número %i"
+
+#~ msgid "%s not found"
+#~ msgstr "no he encontrado la plantilla %s "
 
 #~ msgid "What's this?"
 #~ msgstr "¿ Qué es esto ?"

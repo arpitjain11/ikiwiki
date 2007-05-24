@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-08 20:46-0400\n"
+"POT-Creation-Date: 2007-05-24 15:47-0400\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -37,94 +37,94 @@ msgstr ""
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:348
+#: ../IkiWiki/CGI.pm:349
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:427 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
-#: ../IkiWiki/Render.pm:166
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:91
+#: ../IkiWiki/Render.pm:171
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:473
+#: ../IkiWiki/CGI.pm:474
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:516
-#: ../IkiWiki/CGI.pm:542 ../IkiWiki/CGI.pm:586
+#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:517
+#: ../IkiWiki/CGI.pm:543 ../IkiWiki/CGI.pm:587
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:683
+#: ../IkiWiki/CGI.pm:684
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:715
+#: ../IkiWiki/CGI.pm:716
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:62
+#: ../IkiWiki/Plugin/aggregate.pm:69
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "mẫu thiếu tham số id"
 
-#: ../IkiWiki/Plugin/aggregate.pm:90
+#: ../IkiWiki/Plugin/aggregate.pm:97
 msgid "new feed"
 msgstr "nguồn tin mới"
 
-#: ../IkiWiki/Plugin/aggregate.pm:104
+#: ../IkiWiki/Plugin/aggregate.pm:111
 msgid "posts"
 msgstr "bài"
 
-#: ../IkiWiki/Plugin/aggregate.pm:106
+#: ../IkiWiki/Plugin/aggregate.pm:113
 msgid "new"
 msgstr "mới"
 
-#: ../IkiWiki/Plugin/aggregate.pm:212
+#: ../IkiWiki/Plugin/aggregate.pm:229
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "đang mãn hạn %s (cũ %s ngày)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:219
+#: ../IkiWiki/Plugin/aggregate.pm:236
 #, perl-format
 msgid "expiring %s"
 msgstr "đang mãn hạn %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:242
+#: ../IkiWiki/Plugin/aggregate.pm:259
 #, perl-format
 msgid "processed ok at %s"
 msgstr "đã xử lý được ở %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:247
+#: ../IkiWiki/Plugin/aggregate.pm:264
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "đang kiểm tra nguồn tin %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:252
+#: ../IkiWiki/Plugin/aggregate.pm:269
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "không tìm thấy nguồn tin ở %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:267
+#: ../IkiWiki/Plugin/aggregate.pm:284
 #, fuzzy
 msgid "feed not found"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:278
+#: ../IkiWiki/Plugin/aggregate.pm:295
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:283
+#: ../IkiWiki/Plugin/aggregate.pm:300
 msgid "feed crashed XML::Feed!"
 msgstr "nguồn tin đã gây ra XML::Feed sụp đổ."
 
-#: ../IkiWiki/Plugin/aggregate.pm:356
+#: ../IkiWiki/Plugin/aggregate.pm:373
 #, perl-format
 msgid "creating new page %s"
 msgstr "đang tạo trang mới %s"
@@ -156,25 +156,25 @@ msgstr "linkmap không chạy dot được"
 msgid "prog not a valid graphviz program"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:36
-#, fuzzy, perl-format
-msgid "%s not found"
-msgstr "không tìm thấy mẫu %s"
-
-#: ../IkiWiki/Plugin/img.pm:49
+#: ../IkiWiki/Plugin/img.pm:48
 #, perl-format
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:59 ../IkiWiki/Plugin/img.pm:63
-#: ../IkiWiki/Plugin/img.pm:80
+#: ../IkiWiki/Plugin/img.pm:58 ../IkiWiki/Plugin/img.pm:62
+#: ../IkiWiki/Plugin/img.pm:79
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
 msgstr "lỗi ghi %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:66
+#: ../IkiWiki/Plugin/img.pm:65
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
+msgstr "lỗi ghi %s: %s"
+
+#: ../IkiWiki/Plugin/img.pm:96
+#, fuzzy, perl-format
+msgid "failed to determine size of image %s"
 msgstr "lỗi ghi %s: %s"
 
 #: ../IkiWiki/Plugin/inline.pm:36
@@ -197,7 +197,7 @@ msgstr ""
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:95
 msgid "Discussion"
 msgstr "Thảo luận"
 
@@ -249,19 +249,19 @@ msgstr "Lấy OpenID"
 msgid "All pages are linked to by other pages."
 msgstr "Mọi trang được liên kết với trang khác."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:147
+#: ../IkiWiki/Plugin/passwordauth.pm:162
 msgid "Account creation successful. Now you can Login."
 msgstr "Tài khoản đã được tạo. Lúc bây giờ bạn có thể đăng nhập."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:150
+#: ../IkiWiki/Plugin/passwordauth.pm:165
 msgid "Error creating account."
 msgstr "Gặp lỗi khi tạo tài khoản."
 
-#: ../IkiWiki/Plugin/passwordauth.pm:171
+#: ../IkiWiki/Plugin/passwordauth.pm:186
 msgid "Failed to send mail"
 msgstr "Lỗi gửi thư"
 
-#: ../IkiWiki/Plugin/passwordauth.pm:173
+#: ../IkiWiki/Plugin/passwordauth.pm:188
 msgid "Your password has been emailed to you."
 msgstr "Mật khẩu đã được gửi đính kèm thư cho bạn."
 
@@ -468,47 +468,47 @@ msgid ""
 msgstr ""
 "Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
 
-#: ../IkiWiki/Render.pm:250 ../IkiWiki/Render.pm:270
+#: ../IkiWiki/Render.pm:255 ../IkiWiki/Render.pm:275
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "đang bỏ qua tên tập tin sai %s"
 
-#: ../IkiWiki/Render.pm:310
+#: ../IkiWiki/Render.pm:315
 #, perl-format
 msgid "removing old page %s"
 msgstr "đang gỡ bỏ trang cũ %s"
 
-#: ../IkiWiki/Render.pm:338
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "scanning %s"
 msgstr "đang quét %s"
 
-#: ../IkiWiki/Render.pm:343
+#: ../IkiWiki/Render.pm:348
 #, perl-format
 msgid "rendering %s"
 msgstr "đang vẽ %s"
 
-#: ../IkiWiki/Render.pm:355
+#: ../IkiWiki/Render.pm:360
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "đang vẽ %s mà liên kết tới %s"
 
-#: ../IkiWiki/Render.pm:372
+#: ../IkiWiki/Render.pm:377
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "đang vẽ %s mà phụ thuộc vào %s"
 
-#: ../IkiWiki/Render.pm:410
+#: ../IkiWiki/Render.pm:415
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "đang vẽ %s để cập nhật các liên kết ngược của nó"
 
-#: ../IkiWiki/Render.pm:422
+#: ../IkiWiki/Render.pm:427
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "đang gỡ bỏ %s, không còn được vẽ lại bởi %s"
 
-#: ../IkiWiki/Render.pm:448
+#: ../IkiWiki/Render.pm:453
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: không thể vẽ %s"
@@ -581,12 +581,12 @@ msgstr "%s đã được tạo ra"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 
-#: ../IkiWiki.pm:107
+#: ../IkiWiki.pm:108
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:154 ../IkiWiki.pm:155
+#: ../IkiWiki.pm:155 ../IkiWiki.pm:156
 msgid "Error"
 msgstr "Lỗi"
 
@@ -594,10 +594,14 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:631
+#: ../IkiWiki.pm:632
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"
+
+#, fuzzy
+#~ msgid "%s not found"
+#~ msgstr "không tìm thấy mẫu %s"
 
 #~ msgid "What's this?"
 #~ msgstr "Cái này là gì?"
