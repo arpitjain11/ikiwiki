@@ -1,0 +1,29 @@
+Version 2.0 of ikiwiki is now available.
+
+With the 2.0 release of ikiwiki, some major changes have been made to the
+default configuration:
+
+* The `usedirs` setting is enabled by default. This *will* break all URLs
+  to wikis that did not have `usedirs` turned on before, unless you follow
+  the procedure described at [[tips/switching_to_usedirs]]
+  or edit your setup file to turn `usedirs` off: `usedirs => 0,`
+* [[plugins/OpenID]] logins are now enabled by default, if the
+  [[cpan Net::OpenID::Consumer]] perl module is available. Password logins
+  are also still enabled by default. If you like, you can turn either OpenID
+  or password logins off via the `disable_plugins` setting.
+
+An overview of changes in the year since the 1.0 release:
+
+* New improved URLs to pages via `usedirs`.
+* [[plugins/OpenID]] support, enabled by default.
+* Plugin [[interface|plugins/write]] added, with some 60 [[plugins]] available,
+  greatly expanding the capabilities of ikiwiki.
+* [[Tags]], atom feeds, and generally full-fledged blogging support.
+* Fully working [[todo/utf8]].
+* Optimisations, approximately 3.5 times as fast as version 1.0.
+* Improved scalability to large numbers of pages.
+* Improved scalable [[logo]].
+* Support for additional revision control systems besides svn: git,
+  tla, mercurial.
+* Some support for other markup languages than markdown: rst, textile.
+* Unit test suite, with more than 300 tests.
