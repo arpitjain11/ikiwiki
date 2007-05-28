@@ -65,7 +65,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'title') {
-		$title{$page}=encode_entities($value);
+		$title{$page}=HTML::Entities::encode_numeric($value);
 	}
 	elsif ($key eq 'permalink') {
 		$permalink{$page}=$value;

@@ -1,9 +1,9 @@
 <item>
 	<TMPL_IF NAME="AUTHOR">
-	<title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE ESCAPE=HTML></title>
+	<title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE></title>
 	<dc:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dc:creator>
 	<TMPL_ELSE>
-	<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	<title><TMPL_VAR TITLE></title>
 	</TMPL_IF>
 	<guid><TMPL_VAR URL></guid>
 	<link><TMPL_VAR PERMALINK></link>

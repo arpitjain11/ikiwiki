@@ -18,8 +18,17 @@ ikiwiki (2.2) UNRELEASED; urgency=low
   * Fix FTBFS in test suite introduced in last version. Closes: #425891
   * Apply a patch from Carl Worth allowing a class attribute to be passed
     through the img plugin. Also allow the id attribute to be passed through.
+  * More consistent encoding of titles in rss and atom feeds. Don't use
+    ESCAPE=HTML for titles in the templates for these feeds, and instead
+    escape the title going in to the template. Previously, the title was
+    sometimes double-escaped in a feed (if set via meta title), and sometimes
+    not (if set from the page filename).
+  * In the meta plugin, when a title is set, encode the html entities in it
+    numerically. This works better in the current landscape of a rss spec that
+    doesn't specify encoding, and variously broken feed consumers, according
+    to <http://www.rssboard.org/rss-profile#data-types-characterdata>.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 28 May 2007 15:00:02 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 28 May 2007 15:34:27 -0400
 
 ikiwiki (2.1) unstable; urgency=low
 

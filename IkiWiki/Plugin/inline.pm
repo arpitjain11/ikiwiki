@@ -333,7 +333,7 @@ sub genfeed ($$$$@) { #{{{
 		my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
 
 		$itemtemplate->param(
-			title => pagetitle(basename($p), 1),
+			title => pagetitle(basename($p)),
 			url => $u,
 			permalink => $u,
 			date_822 => date_822($pagectime{$p}),
@@ -377,7 +377,7 @@ sub genfeed ($$$$@) { #{{{
 
 	my $template=template($feedtype."page.tmpl", blind_cache => 1);
 	$template->param(
-		title => $page ne "index" ? pagetitle($page, 1) : $config{wikiname},
+		title => $page ne "index" ? pagetitle($page) : $config{wikiname},
 		wikiname => $config{wikiname},
 		pageurl => $url,
 		content => $content,
