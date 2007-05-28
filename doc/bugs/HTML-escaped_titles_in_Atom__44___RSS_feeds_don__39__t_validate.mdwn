@@ -3,3 +3,30 @@ The Atom and RSS templates use `ESCAPE=HTML` in the title elements. However, HTM
 Removing `ESCAPE=HTML` works fine, but I haven't checked to see if there are any characters it won't work for.
 
 For Atom, at least, I believe adding `type="xhtml"` to the title element will work. I don't think there's an equivalent for RSS.
+
+> Removing the ESCAPE=HTML will not work, feed validator hates that just as
+> much. It wants rss feeds to use a specific style of escaping that happens
+> to work in some large percentage of all rss consumers. (Most of which are
+> broken).
+> <http://www.rssboard.org/rss-profile#data-types-characterdata>
+> There's also no actual spec about how this should work.
+> 
+> This will be a total beast to fix. The current design is very clean in
+> that all (well, nearly all) xml/html escaping is pushed back to the
+> templates. This allows plugins to substitute fields in the templates
+> without worrying about getting escaping right in the plugins -- and a
+> plugin doesn't even know what kind of template is being filled out when
+> it changes a field's value, so it can't do different types of escaping
+> for different templates.
+>
+> The only reasonable approach seems to be extending HTML::Template with an
+> ESCAPE=RSS and using that. Unfortunately its design does not allow doing
+> so without hacking its code in several places. I've contacted its author
+> to see if he'd accept such a patch.
+>
+> (A secondary bug is that using meta title currently results in unnecessry
+> escaping of the title value before it reaches the template. This makes
+> the escaping issues show up much more than they need to, since lots more
+> characters are currently being double-escaped in the rss.)
+> 
+> --[[Joey]]
