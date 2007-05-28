@@ -136,7 +136,7 @@ preprocess hook. The "template" parameter is a [[cpan HTML::Template]]
 object that is the template that will be used to generate the page. The
 function can manipulate that template object.
 
-The most common thing to do is probably to call $template->param() to add
+The most common thing to do is probably to call `$template->param()` to add
 a new custom parameter to the template.
 
 ### sanitize
@@ -283,7 +283,7 @@ ikiwiki program.
 Hook into ikiwiki's processing. See the discussion of hooks above.
 
 Note that in addition to the named parameters described above, a parameter
-named no_override is supported, If it's set to a true value, then this hook
+named `no_override` is supported, If it's set to a true value, then this hook
 will not override any existing hook with the same id. This is useful if
 the id can be controled by the user.
 
@@ -308,7 +308,7 @@ appear on the wiki page, rather than calling error().
 
 Creates and returns a [[cpan HTML::Template]] object. The first parameter
 is the name of the file in the template directory. The optional remaining
-parameters are passed to HTML::Template->new.
+parameters are passed to `HTML::Template->new`.
 
 #### `htmlpage($)`
 
@@ -435,9 +435,9 @@ ikiwiki's support for revision control systems also uses pluggable perl
 modules. These are in the `IkiWiki::RCS` namespace, for example
 `IkiWiki::RCS::svn`. 
 
-Each RCS plugin must support all the IkiWiki::rcs\_* functions.
+Each RCS plugin must support all the `IkiWiki::rcs_*` functions.
 See IkiWiki::RCS::Stub for the full list of functions. It's ok if
-rcs\_getctime does nothing except for throwing an error.
+`rcs_getctime` does nothing except for throwing an error.
 
 See [[about_RCS_backends]] for some more info.
 
