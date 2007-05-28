@@ -98,7 +98,10 @@ sub preprocess (@) { #{{{
 
 	return '<a href="'.$fileurl.'"><img src="'.$imgurl.
 		'" alt="'.$alt.'" width="'.$im->Get("width").
-		'" height="'.$im->Get("height").'" /></a>';
+		'" height="'.$im->Get("height").'"'.
+		(exists $params{class} ? ' class="'.$params{class}.'"' : '').
+		(exists $params{id} ? ' id="'.$params{id}.'"' : '').
+		' /></a>';
 } #}}}
 
 1
