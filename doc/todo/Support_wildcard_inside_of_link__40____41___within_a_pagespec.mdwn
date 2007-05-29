@@ -4,5 +4,40 @@ I'd like to have my blog page look like this:
 
 	\[[inline pages="link(tag/*)"]]
 
-But I [tried](http://www.cworth.org/blog) that and it doesn't seem to
-work in ikiwiki 2.1 at least.
+That doesn't work in ikiwiki 2.1, but I have it
+[working](http://www.cworth.org/blog) with the following patch:
+
+	From 6149386084417fb8375d08446438b20ed52d6882 Mon Sep 17 00:00:00 2001
+	From: Carl Worth <cworth@cworth.org>
+	Date: Tue, 29 May 2007 11:43:21 -0700
+	Subject: [PATCH] Allow for glob matching inside of link() within a pagespec
+	
+	---
+	 IkiWiki.pm |   11 ++++++++---
+	 1 files changed, 8 insertions(+), 3 deletions(-)
+	
+	diff --git a/IkiWiki.pm b/IkiWiki.pm
+	index 38aa46a..cd42e8d 100644
+	--- a/IkiWiki.pm
+	+++ b/IkiWiki.pm
+	@@ -1082,10 +1082,15 @@ sub match_link ($$;@) { #{{{
+	 	my $links = $IkiWiki::links{$page} or return undef;
+	 	return IkiWiki::FailReason->new("$page has no links") unless @$links;
+	 	my $bestlink = IkiWiki::bestlink($from, $link);
+	-	return IkiWiki::FailReason->new("no such link") unless length $bestlink;
+	 	foreach my $p (@$links) {
+	-		return IkiWiki::SuccessReason->new("$page links to $link")
+	-			if $bestlink eq IkiWiki::bestlink($page, $p);
+	+		if (length $bestlink) {
+	+			return IkiWiki::SuccessReason->new("$page links to $link")
+	+				if $bestlink eq IkiWiki::bestlink($page, $p);
+	+		}
+	+		else {
+	+			return IkiWiki::SuccessReason->new("$page links to page matching $link")
+	+				if match_glob ($p, $link, %params);
+	+		}
+	 	}
+	 	return IkiWiki::FailReason->new("$page does not link to $link");
+	 } #}}}
+	-- 
+	1.5.1.1.g6aead
