@@ -6,3 +6,24 @@ so I'd like it to use a separate front.tmp template instead.
 I'm not sure what syntax to use for this, (\[[template]] seems to be
 taken for another purpose already). Perhaps something like
 \[[page-template front]] ?).
+
+Joey provided a nice suggestion for implementing this feature, ("I
+would probably add a hook that allowed overriding the default template
+constuction and returning a template object"). I did start looking
+into that, but finally I wimped out and just put the following hack
+into the genpage() function in Render.pm:
+
+
+	if ($page eq 'index') {
+		$template->param(suppresstitle => 1);
+	}
+
+That lets me use a <TMPL_UNLESS SUPPRESSTITLE> in my template to get
+the effect I want. I don't think that's anything that upstream should
+pick-up as is, (maybe with an appropriate configuration option, but
+then again allowing for per-page template selection would be more
+powerful anyway). But I'm happy enough now that I probably won't
+pursue implementing this feature further myself.
+
+But I'd still happily switch to using this feature if someone were to
+implement it.
