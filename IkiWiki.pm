@@ -643,7 +643,7 @@ sub preprocess ($$$;$$) { #{{{
 			return $ret;
 		}
 		else {
-			return "[[$command $params]]";
+			return "\\[[$command $params]]";
 		}
 	};
 	
