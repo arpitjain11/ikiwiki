@@ -1,0 +1,30 @@
+I am trying to install Ikiwiki version 2.1 from the source tarball.
+
+It has all gone fairly smoothly until I try and run 'make'.
+
+I.e. I have downloaded and unpacked ikiwiki_2.1.tar.gz and have run
+
+    perl Makefile.PL
+
+... which has run OK.
+
+
+However when I then run 'make' I get:-
+
+    LANG=C perl -I.  -T ikiwiki.out doc html --templatedir=templates \
+                    --underlaydir=basewiki --nousedirs\
+                    --wikiname="ikiwiki" --verbose \
+                    --exclude=/discussion --no-discussion --userdir=users \
+                    --plugin=goodstuff \
+                    --plugin=haiku --plugin=polygen --plugin=fortune
+    Failed to load plugin IkiWiki::Plugin::mdwn: IkiWiki version 2 required--this is only version 1.01 at IkiWiki/Plugin/mdwn.pm line 7.
+    BEGIN failed--compilation aborted at IkiWiki/Plugin/mdwn.pm line 7.
+    Compilation failed in require at (eval 4) line 2.
+    BEGIN failed--compilation aborted at (eval 4) line 2.
+
+    make: *** [extra_build] Error 1
+ 
+How do I fix this?  There may be a bit of old ikiwiki left behind because
+I did once have an older version installed but I thought I had removed all
+traces of it.
+
