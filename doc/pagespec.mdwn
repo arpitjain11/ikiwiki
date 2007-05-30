@@ -24,7 +24,7 @@ match all pages except for Discussion pages and the SandBox:
 Some more elaborate limits can be added to what matches using any of these
 functions:
 
-* "`link(page)`" - match only pages that link to a given page
+* "`link(page)`" - match only pages that link to a given page (or glob)
 * "`backlink(page)`" - match only pages that a given page links to
 * "`creation_month(month)`" - match only pages created on the given month
 * "`creation_day(mday)`" - or day of the month

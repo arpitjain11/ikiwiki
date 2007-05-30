@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 52;
+use Test::More tests => 54;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -40,7 +40,9 @@ $links{"examples/softwaresite/bugs/fails_to_frobnicate"}=[qw{done}];
 $links{"examples/softwaresite/bugs/done"}=[];
 
 ok(pagespec_match("foo", "link(bar)"), "link");
+ok(pagespec_match("foo", "link(ba?)"), "glob link");
 ok(! pagespec_match("foo", "link(quux)"), "failed link");
+ok(! pagespec_match("foo", "link(qu*)"), "failed glob link");
 ok(pagespec_match("bugs/foo", "link(done)", location => "bugs/done"), "link match to bestlink");
 ok(! pagespec_match("examples/softwaresite/bugs/done", "link(done)", 
 		location => "bugs/done"), "link match to bestlink");

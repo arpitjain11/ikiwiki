@@ -28,6 +28,8 @@ ikiwiki (2.2) UNRELEASED; urgency=low
     doesn't specify encoding, and variously broken feed consumers, according
     to <http://www.rssboard.org/rss-profile#data-types-characterdata>.
   * Correct some issues with display of unhandled preprocessor directives.
+  * Apply a patch from Carl Worth adding support for using globs in link()
+    in a PageSpec.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 28 May 2007 21:56:11 -0400
 

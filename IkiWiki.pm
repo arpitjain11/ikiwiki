@@ -1056,8 +1056,8 @@ sub match_glob ($$;@) { #{{{
 	
 	# relative matching
 	if ($glob =~ m!^\./!) {
-		$from=~s!/?[^/]+$!!;
-		$glob=~s!^\./!!;
+		$from=~s#/?[^/]+$##;
+		$glob=~s#^\./##;
 		$glob="$from/$glob" if length $from;
 	}
 
@@ -1083,18 +1083,23 @@ sub match_link ($$;@) { #{{{
 
 	# relative matching
 	if ($link =~ m!^\.! && defined $from) {
-		$from=~s!/?[^/]+$!!;
-		$link=~s!^\./!!;
+		$from=~s#/?[^/]+$##;
+		$link=~s#^\./##;
 		$link="$from/$link" if length $from;
 	}
 
 	my $links = $IkiWiki::links{$page} or return undef;
 	return IkiWiki::FailReason->new("$page has no links") unless @$links;
 	my $bestlink = IkiWiki::bestlink($from, $link);
-	return IkiWiki::FailReason->new("no such link") unless length $bestlink;
 	foreach my $p (@$links) {
-		return IkiWiki::SuccessReason->new("$page links to $link")
-			if $bestlink eq IkiWiki::bestlink($page, $p);
+		if (length $bestlink) {
+			return IkiWiki::SuccessReason->new("$page links to $link")
+				if $bestlink eq IkiWiki::bestlink($page, $p);
+		}
+		else {
+			return IkiWiki::SuccessReason->new("$page links to page matching $link")
+				if match_glob($p, $link, %params);
+		}
 	}
 	return IkiWiki::FailReason->new("$page does not link to $link");
 } #}}}
