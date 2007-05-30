@@ -42,6 +42,10 @@ and started from the beginning again and I see exactly the same error.
 
 Is it that I maybe have a too old version of some of the Perl dependencies?  The only mdwn.pm files
 that I have are the two I have just extracted from the new tar file.  There is *no* ./IkiWiki.pm file
+
+> It's interesting that you say you have no ./IkiWiki.pm file, since one is
+> included in the tarball. What happened to it, I wonder? 
+
 so what/where is it loading to satisfy the ....... aaaaaaaaaaahhhhhhhhhhhhhh!!!!!!
 
 I wasn't noticing the case of the filename, I'd missed the upper case W and guess what 'find' shows me:-
@@ -57,18 +61,29 @@ sort that out.
 
 OK, I've now got it to compile and install and presumably it's basically working.  However there
 are a few errors when I run 'make test'.  Several errors have disappeared by installing more Perl
-stuff (specifically XML::SAX) and one error disappeared when I did a 'make install', i.e. the 'make
+stuff (specifically XML::SAX) 
+
+> XML::SAX is a requirement of XML::Simple, which is a documented build
+> requirement. (Only really needed if you'll be using subversion actually).
+
+and one error disappeared when I did a 'make install', i.e. the 'make
 test' has a test which requires IkiWiki to be installed first.
+
+> Yes, that bug is already fixed in subversion for the next release
+> --[[Joey]]
 
 However I'm still getting the following error in 'make test':-
 
-t/pagename.................ok                                                
-t/pagespec_match...........ok 1/52Modification of a read-only value attempted at /home/chris/webdev/ikiwiki/blib/lib/IkiWiki.pm line 1023.
-# Looks like you planned 52 tests but only ran 23.
-# Looks like your test died just after 23.
-t/pagespec_match...........dubious                                           
-        Test returned status 255 (wstat 65280, 0xff00)
-DIED. FAILED tests 24-52
-        Failed 29/52 tests, 44.23% okay
-t/pagespec_merge...........ok                                                
+	t/pagename.................ok                                                
+	t/pagespec_match...........ok 1/52Modification of a read-only value attempted at /home/chris/webdev/ikiwiki/blib/lib/IkiWiki.pm line 1023.
+	# Looks like you planned 52 tests but only ran 23.
+	# Looks like your test died just after 23.
+	t/pagespec_match...........dubious                                           
+	        Test returned status 255 (wstat 65280, 0xff00)
+	DIED. FAILED tests 24-52
+	        Failed 29/52 tests, 44.23% okay
+	t/pagespec_merge...........ok                                                
 
+> What version of perl are you using? It seems to have some problem with
+> operator overloading.
+> --[[Joey]]
