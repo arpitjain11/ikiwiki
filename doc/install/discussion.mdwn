@@ -34,3 +34,22 @@ traces of it.
 > I don't understand though why it's not finding ./IkiWiki.pm first. The
 > `-I` in the command line should make it look for files in the current
 > directory first. --[[Joey]]
+
+Well I have searched around and there really is nothing left that I can see.
+
+I have removed *everything* found by 'find' and 'locate' that contains 'ikiwiki' except the tar file
+and started from the beginning again and I see exactly the same error.
+
+Is it that I maybe have a too old version of some of the Perl dependencies?  The only mdwn.pm files
+that I have are the two I have just extracted from the new tar file.  There is *no* ./IkiWiki.pm file
+so what/where is it loading to satisfy the ....... aaaaaaaaaaahhhhhhhhhhhhhh!!!!!!
+
+I wasn't noticing the case of the filename, I'd missed the upper case W and guess what 'find' shows me:-
+
+    /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki.pm
+
+Removing the above file has fixed my basic problem, now I'm getting lots of (non-fatal) errors
+about "Can't locate Locale/gettext.pm", presumably that's a missing Perl module, I can probably
+sort that out.
+
+
