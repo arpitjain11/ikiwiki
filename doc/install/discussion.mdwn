@@ -53,3 +53,22 @@ about "Can't locate Locale/gettext.pm", presumably that's a missing Perl module,
 sort that out.
 
 
+## Errors when running 'make test'
+
+OK, I've now got it to compile and install and presumably it's basically working.  However there
+are a few errors when I run 'make test'.  Several errors have disappeared by installing more Perl
+stuff (specifically XML::SAX) and one error disappeared when I did a 'make install', i.e. the 'make
+test' has a test which requires IkiWiki to be installed first.
+
+However I'm still getting the following error in 'make test':-
+
+t/pagename.................ok                                                
+t/pagespec_match...........ok 1/52Modification of a read-only value attempted at /home/chris/webdev/ikiwiki/blib/lib/IkiWiki.pm line 1023.
+# Looks like you planned 52 tests but only ran 23.
+# Looks like your test died just after 23.
+t/pagespec_match...........dubious                                           
+        Test returned status 255 (wstat 65280, 0xff00)
+DIED. FAILED tests 24-52
+        Failed 29/52 tests, 44.23% okay
+t/pagespec_merge...........ok                                                
+
