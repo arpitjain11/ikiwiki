@@ -1,0 +1,115 @@
+The meta plugin escapes the overridden title of a page, which makes the title doubly escaped in RSS feeds.
+Instead, the meta plugin should not escape the overridden title, but the templates should escape the title (overridden or not) whenever needed.
+
+	=== perl/IkiWiki/Plugin/meta.pm
+	==================================================================
+	--- perl/IkiWiki/Plugin/meta.pm	(revision 6730)
+	+++ perl/IkiWiki/Plugin/meta.pm	(revision 6731)
+	@@ -122,7 +122,7 @@
+	 	$template->param(meta => $meta{$page})
+	 		if exists $meta{$page} && $template->query(name => "meta");
+	 	if (exists $title{$page} && $template->query(name => "title")) {
+	-		$template->param(title => $title{$page});
+	+		$template->param(title => decode_entities($title{$page}));
+	 		$template->param(title_overridden => 1);
+	 	}
+	 	$template->param(permalink => $permalink{$page})
+	=== templates/recentchanges.tmpl
+	==================================================================
+	--- templates/recentchanges.tmpl	(revision 6730)
+	+++ templates/recentchanges.tmpl	(revision 6731)
+	@@ -4,7 +4,7 @@
+	 <head>
+	 <base href="<TMPL_VAR BASEURL>" />
+	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	-<title><TMPL_VAR TITLE></title>
+	+<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	 <link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
+	 <link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
+	 <TMPL_IF NAME="FAVICON">
+	@@ -15,7 +15,7 @@
+	 
+	 <div class="header">
+	 <span>
+	-<TMPL_VAR INDEXLINK>/ <span class="title"><TMPL_VAR TITLE></span>
+	+<TMPL_VAR INDEXLINK>/ <span class="title"><TMPL_VAR TITLE ESCAPE=HTML></span>
+	 </span>
+	 </div>
+	 
+	=== templates/inlinepage.tmpl
+	==================================================================
+	--- templates/inlinepage.tmpl	(revision 6730)
+	+++ templates/inlinepage.tmpl	(revision 6731)
+	@@ -10,9 +10,9 @@
+	 </TMPL_IF>
+	 <span class="header">
+	 <TMPL_IF NAME="PERMALINK">
+	-<a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a>
+	+<a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE ESCAPE=HTML></a>
+	 <TMPL_ELSE>
+	-<a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a>
+	+<a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE ESCAPE=HTML></a>
+	 </TMPL_IF>
+	 </span>
+	 <TMPL_VAR CONTENT>
+	=== templates/misc.tmpl
+	==================================================================
+	--- templates/misc.tmpl	(revision 6730)
+	+++ templates/misc.tmpl	(revision 6731)
+	@@ -4,7 +4,7 @@
+	 <head>
+	 <base href="<TMPL_VAR BASEURL>" />
+	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	-<title><TMPL_VAR TITLE></title>
+	+<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	 <link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
+	 <link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
+	 <TMPL_IF NAME="FAVICON">
+	@@ -15,7 +15,7 @@
+	 
+	 <div class="header">
+	 <span>
+	-<TMPL_VAR INDEXLINK>/ <span class="title"><TMPL_VAR TITLE></span>
+	+<TMPL_VAR INDEXLINK>/ <span class="title"><TMPL_VAR TITLE ESCAPE=HTML></span>
+	 </span>
+	 </div>
+	 
+	=== templates/page.tmpl
+	==================================================================
+	--- templates/page.tmpl	(revision 6730)
+	+++ templates/page.tmpl	(revision 6731)
+	@@ -3,7 +3,7 @@
+	 <html>
+	 <head>
+	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	-<title><TMPL_VAR TITLE></title>
+	+<title><TMPL_VAR TITLE ESCAPE=HTML></title>
+	 <TMPL_IF NAME="FAVICON">
+	 <link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/x-icon" />
+	 </TMPL_IF>
+	@@ -18,7 +18,7 @@
+	 <span>
+	 <span class="parentlinks"><TMPL_LOOP NAME="PARENTLINKS">
+	 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
+	-</TMPL_LOOP></span><span class="title"><TMPL_VAR TITLE></span>
+	+</TMPL_LOOP></span><span class="title"><TMPL_VAR TITLE ESCAPE=HTML></span>
+	 </span>
+	 <TMPL_IF NAME="SEARCHFORM">
+	 <TMPL_VAR SEARCHFORM>
+	=== templates/archivepage.tmpl
+	==================================================================
+	--- templates/archivepage.tmpl	(revision 6730)
+	+++ templates/archivepage.tmpl	(revision 6731)
+	@@ -1,4 +1,4 @@
+	 <p>
+	 <i><TMPL_VAR CTIME></i>
+	-<a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a>
+	+<a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE ESCAPE=HTML></a>
+	 </p>
+	=== templates/titlepage.tmpl
+	==================================================================
+	--- templates/titlepage.tmpl	(revision 6730)
+	+++ templates/titlepage.tmpl	(revision 6731)
+	@@ -1 +1 @@
+	-<p><a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a></p>
+	+<p><a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE ESCAPE=HTML></a></p>
