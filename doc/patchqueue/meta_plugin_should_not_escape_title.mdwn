@@ -1,5 +1,12 @@
 The meta plugin escapes the overridden title of a page, which makes the title doubly escaped in RSS feeds.
+
+> Er, didn't that already get fixed in svn?
+
 Instead, the meta plugin should not escape the overridden title, but the templates should escape the title (overridden or not) whenever needed.
+
+> That doesn't work; now nonoverridden titles will be double escaped. And
+> if you look at removing the code that esapes them the first time, things
+> become complex.. --[[Joey]]
 
 	=== perl/IkiWiki/Plugin/meta.pm
 	==================================================================
