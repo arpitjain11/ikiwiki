@@ -1,1 +1,9 @@
 If sandbox/page.mdwn has been generated and sandbox/sidebar.mdwn is created, the sidebar is only added to sandbox and none of the subpages. --[[TaylorKillian]]
+
+> Yes, a known bug. As noted in the code: --[[Joey]]
+
+	# FIXME: This isn't quite right; it won't take into account
+	# adding a new sidebar page. So adding such a page
+	# currently requires a wiki rebuild.
+	add_depends($page, $sidebar_page);
+
