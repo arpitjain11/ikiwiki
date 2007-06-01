@@ -5,6 +5,12 @@ any feed.
 I found that the problem only occurs in the presence of a file that
 contains \[[inline pages="*"]].
 
+> How is this unexpected? By inlining _every_ page in the wiki, you're
+> making that page depend on every other page; any change to any page in
+> the wiki will result in the inlining page and its rss feed needing to be
+> updated to include the changed page.
+> --[[Joey]]
+
 Here's a short script for replicating the bug. Just cut and paste this
 to a shell, (it will only muck in a new /tmp/ikiwiki-test directory
 that it will create):
