@@ -1,0 +1,10 @@
+I have tried `--numbacklinks 0` on ikiwiki commandline, but I still get backlinks.  The man page says:
+
+    --numbacklinks n
+        Controls how many backlinks should be displayed maximum. 
+        Excess backlinks will be hidden in a popup. 
+        Default is 10. Set to 0 to disable this feature.
+
+My first reading (and second and third) of this was that backlinks would be disabled entirely if I set numbacklinks=0, but now that I look again, I see the possibility that it is just controlling how many may be displayed before moving excess to a popup. If this is in fact how it is meant, I'll just get rid of the backlinks via the page template. Is this the case, that numbacklinks controls the popup, rather than backlinks in general?
+
+--[[KarlMW]]
