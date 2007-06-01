@@ -33,7 +33,21 @@ sub defaultconfig () { #{{{
 		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
 		qr/\.dpkg-tmp$/],
-	wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]#]+)(?:#([^\s\]]+))?\]\]/,
+	wiki_link_regexp => qr{
+		\[\[			# beginning of link
+		(?:
+			([^\]\|]+)	# 1: link text
+			\|		# followed by '|'
+		)?			# optional
+
+		([^\s\]#]+)		# 2: page to link to
+		(?:
+			\#		# '#', beginning of anchor
+			([^\s\]]+)	# 3: anchor text
+		)?			# optional
+
+		\]\]			# end of link
+	}x,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
 	verbose => 0,
@@ -599,7 +613,17 @@ sub preprocess ($$$;$$) { #{{{
 			# Note: preserve order of params, some plugins may
 			# consider it significant.
 			my @params;
-			while ($params =~ /(?:(\w+)=)?(?:"""(.*?)"""|"([^"]+)"|(\S+))(?:\s+|$)/sg) {
+			while ($params =~ m{
+				(?:(\w+)=)?		# 1: named parameter key?
+				(?:
+					"""(.*?)"""	# 2: triple-quoted value
+				|
+					"([^"]+)"	# 3: single-quoted value
+				|
+					(\S+)		# 4: unquoted value
+				)
+				(?:\s+|$)		# delimiter to next param
+			}sgx) {
 				my $key=$1;
 				my $val;
 				if (defined $2) {
@@ -647,7 +671,27 @@ sub preprocess ($$$;$$) { #{{{
 		}
 	};
 	
-	$content =~ s{(\\?)\[\[(\w+)\s+((?:(?:\w+=)?(?:""".*?"""|"[^"]+"|[^\s\]]+)\s*)*)\]\]}{$handle->($1, $2, $3)}seg;
+	$content =~ s{
+		(\\?)		# 1: escape?
+		\[\[		# directive open
+		(\w+)		# 2: command
+		\s+
+		(		# 3: the parameters..
+			(?:
+				(?:\w+=)?		# named parameter key?
+				(?:
+					""".*?"""	# triple-quoted value
+					|
+					"[^"]+"		# single-quoted value
+					|
+					[^\s\]]+	# unquoted value
+				)
+				\s*			# whitespace or end
+							# of directive
+			)
+		*)		# 0 or more parameters
+		\]\]		# directive closed
+	}{$handle->($1, $2, $3)}sexg;
 	return $content;
 } #}}}
 
@@ -977,7 +1021,21 @@ sub pagespec_translate ($) { #{{{
 
 	# Convert spec to perl code.
 	my $code="";
-	while ($spec=~m/\s*(\!|\(|\)|\w+\([^\)]+\)|[^\s()]+)\s*/ig) {
+	while ($spec=~m{
+		\s*		# ignore whitespace
+		(		# 1: match a single word
+			\!		# !
+		|
+			\(		# (
+		|
+			\)		# )
+		|
+			\w+\([^\)]+\)	# command(params)
+		|
+			[^\s()]+	# any other text
+		)
+		\s*		# ignore whitespace
+	}igx) {
 		my $word=$1;
 		if (lc $word eq "and") {
 			$code.=" &&";

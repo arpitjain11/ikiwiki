@@ -15,7 +15,20 @@ sub filter (@) { #{{{
 
 	# Make CamelCase links work by promoting them to fullfledged
 	# WikiLinks. This regexp is based on the one in Text::WikiFormat.
-	$params{content}=~s#(?<![[|"/>=])\b((?:[A-Z][a-z0-9]\w*){2,})#[[$1]]#g;
+	$params{content}=~s{
+		(?<![[|"/>=])	# try to avoid expanding non-links
+				# with a zero width negative lookbehind for
+				# characters that suggest it's not a link
+		\b		# word boundry
+		(
+			(?:
+				[A-Z]		# Uppercase start
+				[a-z0-9]	# followed by lowercase
+				\w*		# and rest of word
+			)
+			{2,}			# repeated twice
+		)
+	}{[[$1]]}gx;
 
 	return $params{content};
 } #}}}
