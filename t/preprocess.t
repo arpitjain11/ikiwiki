@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 14;
+use Test::More tests => 17;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -24,11 +24,16 @@ $IkiWiki::hooks{preprocess}{foo}{call}=sub {
 is(IkiWiki::preprocess("foo", "foo", "[[foo]]", 0, 0), "[[foo]]", "not wikilink");
 is(IkiWiki::preprocess("foo", "foo", "[[foo ]]", 0, 0), "foo()", "simple");
 is(IkiWiki::preprocess("foo", "foo", "[[foo a=1]]", 0, 0), "foo(a => 1)");
+is(IkiWiki::preprocess("foo", "foo", "[[foo a=\"1 2 3 4\"]]", 0, 0), "foo(a => 1 2 3 4)");
 is(IkiWiki::preprocess("foo", "foo", "[[foo ]] then [[foo a=2]]", 0, 0),
 	"foo() then foo(a => 2)");
-is(IkiWiki::preprocess("foo", "foo", "[[foo b c \"d\"]]", 0, 0), "foo(b, c, d)");
+is(IkiWiki::preprocess("foo", "foo", "[[foo b c \"d and e=f\"]]", 0, 0), "foo(b, c, d and e=f)");
 is(IkiWiki::preprocess("foo", "foo", "[[foo a=1 b c=1]]", 0, 0),
 	"foo(a => 1, b, c => 1)");
+is(IkiWiki::preprocess("foo", "foo", "[[foo    a=1 b   c=1    \t\t]]", 0, 0),
+	"foo(a => 1, b, c => 1)", "whitespace");
+is(IkiWiki::preprocess("foo", "foo", "[[foo a=1\nb \nc=1]]", 0, 0),
+	"foo(a => 1, b, c => 1)", "multiline directive");
 is(IkiWiki::preprocess("foo", "foo", "[[foo a=1 a=2 a=3]]", 0, 0),
 	"foo(a => 1, a => 2, a => 3)", "dup item");
 is(IkiWiki::preprocess("foo", "foo", '[[foo a="[[bracketed]]" b=1]]', 0, 0),
