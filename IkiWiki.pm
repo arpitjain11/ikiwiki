@@ -206,7 +206,7 @@ sub log_message ($$) { #{{{
 
 sub possibly_foolish_untaint ($) { #{{{
 	my $tainted=shift;
-	my ($untainted)=$tainted=~/(.*)/;
+	my ($untainted)=$tainted=~/(.*)/s;
 	return $untainted;
 } #}}}
 

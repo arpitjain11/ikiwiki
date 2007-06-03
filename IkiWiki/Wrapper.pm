@@ -57,7 +57,7 @@ EOF
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);
 	$configstring=~s/\\/\\\\/g;
 	$configstring=~s/"/\\"/g;
-	$configstring=~s/\n/\\\n/g;
+	$configstring=~s/\n/\\n/g;
 	
 	#translators: The first parameter is a filename, and the second is
 	#translators: a (probably not translated) error message.
