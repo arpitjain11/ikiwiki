@@ -22,7 +22,7 @@ sub sanitize (@) { #{{{
 	my %params=@_;
 
 	eval q{use Text::Typography};
-	return $params{content} if $@;
+	error($@) if $@;
 
 	my $attributes=defined $config{typographyattributes} ? $config{typographyattributes} : '3';
 	return Text::Typography::typography($params{content}, $attributes);
