@@ -1,0 +1,28 @@
+The graphviz.pm plug-in currently attempts to read PNG data in UTF-8 mode, which sometimes fail with a message similar to the following (depending on the input):
+
+    utf8 "\x89" does not map to Unicode at /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki/Plugin/graphviz.pm line 53, <IN> chunk 1.
+    Wide character in subroutine entry at /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki/Plugin/graphviz.pm line 68.
+
+It also generates image URLs relative to the page being rendered, which means the URLs wont work when previewing a graph from the CGI script.
+
+The patch below fixes these two issues.
+
+    --- graphviz.pm.orig	Thu Jun  7 15:45:16 2007
+    +++ graphviz.pm	Thu Jun  7 15:52:27 2007
+    @@ -41,7 +41,6 @@ sub render_graph (\%) { #{{{
+     		$pid=open2(*IN, *OUT, "$params{prog} -Tpng");
+     
+     		# open2 doesn't respect "use open ':utf8'"
+    -		binmode (IN, ':utf8');
+     		binmode (OUT, ':utf8');
+     
+     		print OUT $src;
+    @@ -70,7 +69,7 @@ sub render_graph (\%) { #{{{
+     		}
+     	}
+     
+    -	return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+    +	return "<img src=\"".urlto($dest, "/")."\" />\n";
+     } #}}}
+     
+     sub graph (@) { #{{{
