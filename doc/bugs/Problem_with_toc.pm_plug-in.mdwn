@@ -1,6 +1,3 @@
-Problem with toc.pm plug-in
-===========================
-
 The toc.pm plug-in currently renders empty 'a' tag elements. This seems to confuse at least Firefox, possibly others. The result is that the following text is rendered as an anchor (visible if you style 'a' elements in a different color).
 
 Here is a patch for toc.pm for producing non-empty 'a' elements.
