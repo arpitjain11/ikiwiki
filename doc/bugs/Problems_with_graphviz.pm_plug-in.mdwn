@@ -8,7 +8,7 @@ It also generates image URLs relative to the page being rendered, which means th
 The patch below fixes these two issues.
 
     --- graphviz.pm.orig	Thu Jun  7 15:45:16 2007
-    +++ graphviz.pm	Thu Jun  7 15:52:27 2007
+    +++ graphviz.pm	Fri Jun  8 12:03:38 2007
     @@ -41,7 +41,6 @@ sub render_graph (\%) { #{{{
      		$pid=open2(*IN, *OUT, "$params{prog} -Tpng");
      
@@ -17,12 +17,17 @@ The patch below fixes these two issues.
      		binmode (OUT, ':utf8');
      
      		print OUT $src;
-    @@ -70,7 +69,7 @@ sub render_graph (\%) { #{{{
+    @@ -70,7 +69,12 @@ sub render_graph (\%) { #{{{
      		}
      	}
      
     -	return "<img src=\"".urlto($dest, $params{page})."\" />\n";
-    +	return "<img src=\"".urlto($dest, "/")."\" />\n";
+    +	if ($params{preview}) {
+    +		return "<img src=\"".urlto($dest, "")."\" />\n";
+    +	}
+    +	else {
+    +		return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+    +	}
      } #}}}
      
      sub graph (@) { #{{{
