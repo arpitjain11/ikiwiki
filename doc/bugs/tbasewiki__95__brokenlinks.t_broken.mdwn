@@ -1,0 +1,54 @@
+t/basewiki_brokenlinks.t was failing with the following error:
+
+    t/basewiki_brokenlinks.....Can't locate IkiWiki.pm in @INC (@INC contains: /etc/perl /usr/lib/perl5/vendor_perl/5.8.8/i686-linux
+    /usr/lib/perl5/vendor_perl/5.8.8 /usr/lib/perl5/vendor_perl /usr/lib/perl5/site_perl/5.8.8/i686-linux /usr/lib/perl5/site_perl/5.8.8
+    /usr/lib/perl5/site_perl /usr/lib/perl5/5.8.8/i686-linux /usr/lib/perl5/5.8.8 /usr/local/lib/site_perl) at ./ikiwiki.out line 9.
+
+When ikiwiki.out is executed the 'blib/lib' directory isn't inherited by the child process.  I can add "use lib 'blib/lib'" to ikiwiki.out easily enough, but I can't figure out how to add it to ikiwiki.in so that pm_filter doesn't strip it out.
+
+Anyway, once the 'use lib' is added I get the following error:
+
+    t/basewiki_brokenlinks.....ok 1/3Can't locate object method "new" via package "HTML::Template" at blib/lib/IkiWiki.pm line 858.
+
+After some digging I found that HTML::Template is being required after the new statement, again, easily fixed:
+
+    Index: IkiWiki.pm
+    ===================================================================
+    --- IkiWiki.pm  (revision 3724)
+    +++ IkiWiki.pm  (working copy)
+    @@ -842,7 +842,6 @@
+                    return "";
+            }
+
+    -       require HTML::Template;
+            my @ret=(
+                    filter => sub {
+                            my $text_ref = shift;
+    @@ -857,6 +856,7 @@
+     } #}}}
+
+     sub template ($;@) { #{{{
+    +       require HTML::Template;
+            HTML::Template->new(template_params(@_));
+     } #}}}
+
+**That** gave me:
+
+    t/basewiki_brokenlinks.....ok 1/3HTML::Template->new called with multiple (or no) template sources specified!  A valid call to new() has exactly one filename => 'file' OR exactly one scalarref => \$scalar OR exactly one arrayref => \@array OR exactly one filehandle => *FH at blib/lib/IkiWiki.pm line 858
+
+After some step through I figured out that the template directory was invalid, again easily fixed:
+
+    Index: t/basewiki_brokenlinks.t
+    ===================================================================
+    --- t/basewiki_brokenlinks.t    (revision 3724)
+    +++ t/basewiki_brokenlinks.t    (working copy)
+    @@ -4,6 +4,6 @@
+     use Test::More tests => 3;
+
+     ok(! system("make ikiwiki.out"));
+    -ok(! system("PERL5LIB=. ./ikiwiki.out -plugin brokenlinks -rebuild -underlaydir=basewiki t/basewiki_brokenlinks t/basewiki_brokenlinks/out"));
+    +ok(! system("PERL5LIB=. ./ikiwiki.out -plugin brokenlinks -rebuild -underlaydir=basewiki -templatedir=templates t/basewiki_brokenlinks t/basewiki_brokenlinks/out"));
+     ok(`grep 'no broken links' t/basewiki_brokenlinks/out/index.html`);
+     system("rm -rf t/basewiki_brokenlinks/out t/basewiki_brokenlinks/.ikiwiki");
+
+Other than ikiwiki.in, am I missing something here?
