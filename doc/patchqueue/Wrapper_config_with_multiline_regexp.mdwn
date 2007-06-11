@@ -1,0 +1,29 @@
+Turning the wikilink regexp into an extended regexp on the svn trunk seems to have broken the setuid wrapper on my system, because of two reasons: First, the wrapper generator should turn each newline in $configstring into `\n` in the C code rather than `\` followed by a newline in the C code.  Second, the untainting of $configstring should allow newlines.
+
+    Modified: wiki-meta/perl/IkiWiki.pm
+    ==============================================================================
+    --- wiki-meta/perl/IkiWiki.pm (original)
+    +++ wiki-meta/perl/IkiWiki.pm Mon Jun 11 10:52:07 2007
+    @@ -205,7 +205,7 @@
+     
+     sub possibly_foolish_untaint ($) { #{{{
+      my $tainted=shift;
+    - my ($untainted)=$tainted=~/(.*)/;
+    + my ($untainted)=$tainted=~/(.*)/s;
+      return $untainted;
+     } #}}}
+     
+    
+    Modified: wiki-meta/perl/IkiWiki/Wrapper.pm
+    ==============================================================================
+    --- wiki-meta/perl/IkiWiki/Wrapper.pm (original)
+    +++ wiki-meta/perl/IkiWiki/Wrapper.pm Mon Jun 11 10:52:07 2007
+    @@ -62,7 +62,7 @@
+      }
+      $configstring=~s/\\/\\\\/g;
+      $configstring=~s/"/\\"/g;
+    - $configstring=~s/\n/\\\n/g;
+    + $configstring=~s/\n/\\n/g;
+     
+      #translators: The first parameter is a filename, and the second is
+      #translators: a (probably not translated) error message.
