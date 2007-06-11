@@ -1,9 +1,8 @@
 # SoC Proposal for Implementation of a File Upload Interface
 
 I intend to extend Ikiwiki such that it accepts file uploads, subject to access
-control, and displays image collections in a gallery format. Since the latter
-component is dependent on the former, I will defer its planning for now. What
-follows is a very rough draft of my thoughts on the matter. Comments are
+control, and integrates said uploads with the interface. What
+follows is a **very rough draft** of my thoughts on the matter. Comments are
 welcomed, either on the discussion page or via e-mail (_me_ at _inelegant.org_).
 
 I suggest we adopt the Trac/Wikipedia concept of "attaching" files to a given
@@ -14,64 +13,41 @@ list at the bottom of the page. The names in the list will link to the
 appropriate files. Architecturally, this means that after a file has been attached to a page, the
 page will have to be rebuilt. 
 
+Files will be uploaded in a background thread via XMLHTTPRequest. This allows us to provide visual indicators of upload status, support multiple uploads at a time, and reduces the amount of template code we must write.
+
+After an upload has been started, another text entry field will be rendered, enabling the user to commence a new upload.
+
 ## Metadata
 
-Uploaded files will have at least the following pieces of metadata:
+It is necessary to associate metadata with the uploaded file. The IkiWiki index file already associates rudimentary metadata with the files it renders, but there has been interest from multiple sources in creating a general purpose metadata layer for IkiWiki which supports the association of arbitrary metadata with a file. This work is outside the scope of the file upload feature, but I will attempt a basic implementation nevertheless.
 
- * Filename
- * Upload date
- * Page attached to  
- * Uploader's name
- * File size  
- * File type  
+A key decision involves the storage of the metadata. IkiWiki must be as usable from the CLI as from the web, so the data being stored must be easily manipulatable using standard command line tools. It is infeasible to expect users to embed arbitrary metadata in arbitrary files, so we will use a plaintext file consisting of name-value pairs for recording metadata. Each file in the IkiWiki source directory may have its own metadata file, but they are always optional. The metadata for a file, _F_, will be stored in a file named _F.meta_. For example, the metadata for this page would be in _todo/fileupload/soc-proposal.mdwn.meta_.
 
-The first three pieces of data are associated with every new page on the wiki by
-means of the _.ikiwiki/index_ file (_src_/_dest_, _ctime_, and _link_,
-respectively). The next two are stored in the RCS log.
+For instance: `cat "license: gpl\n" >> software.tar.gz.meta`. It would be trivial to distribute a tool with IkiWiki that made this even easier, too, e.g. `ikiwiki-meta license gpl software.tar.gz`. An open issue is how this metadata will be added from the web interface. 
 
-Ideally, the list of attachments for a given page will detail, at least, each attachment's
-type (so the user knows whether they can open it), size (so the user knows
-whether it is worth downloading), and potentially a thumbnail of some sort for
-images and videos. It is potentially expensive to query the RCS for this data on
-every page rebuild, so I propose the addition of two optional fields to the
-index file: _mime_, which contains the MIME type of the _dest_ file, and _size_,
-which contains the size in bytes of _dest_. 
+For source files, this approach conflicts with the [_meta_ plugin](http://ikiwiki.info/plugins/meta/), so there needs to be some integration between the two.
 
-If a user attached a photograph (_my-cat.png_) to a page (_my-cat_), the
-following lines are representative of what _index_ may store:
+In keeping with the current architecture of IkiWiki, we can make this metadata available to plugins by using a hash keyed on the filename, e.g. `$metadata{'software/software.tar.gz'}{'license'} eq 'gpl'`. 
 
-    mtime=1174347925 ctime=1169220485 src=my-cat.png dest=my-cat.png link=my-cat mime=image/png size=73100
-    mtime=1174347927 ctime=1174347927 src=my-cat.mdwn dest=my-cat/index.html link=my-cat.png
-
-Thus, we define an attachment as file linked from an existing page, with a
-non-_text/html_ MIME type.
+In general, we will only use the _.meta_ files to store data that cannot be automatically determined from the file itself. For uploaded files this will be probably include the uploader's IP address, for example.
 
 ## Configuration
 
 In [[todo/fileupload]] it is specified that the upload feature must be highly
-configurable. It is suggested that this configuration be achieved by embedding
-directives in the wiki pages directly.
+configurable. Joey suggests the use of the preferences page to specify some of these options, but it is not yet clear which ones are important enough to expose in this way. All options will be configurable via the config file.
 
-Consider an ikiwiki for photographers. The admin decides to allow users to
-upload their photographs. Using the Pagespec suggestion, he must enforce this
-policy on the front page of his wiki (as preferences cascade horizontally
-downwards). He must then lock the front page from editing, in order to prevent
-his users from reversing his decision. IOW, he is forced to lock a page purely
-to register a configuration preference. He will need to repeat this process for
-each layer of the hierarchy he wants to apply a different policy to.
+We will (or do) support configuring:
 
-Further, these embedded configuration directives risk overshadowing the content
-of the page, and thus confusing users. This would become particularly
-problematic for wikis which need to maintain blacklists/whitelists for access
-control -- they would need to continually update wiki pages (thus polluting the
-RCS logs) just to stem abuse.
+* The allowable MIME types of uploaded files.
+* The maximum size of the uploaded file.
+* The maximum size of the upload temporary directory.
+* The maximum size of the source directory.
+* The IP addresses allowed to upload.
+* The pages which can have files attached to them.
+* The users who are allowed to upload.
+* The users who are prohibited from uploading.
 
-I suspect that we can accommodate most use cases by allowing these options to be
-set globally in the _ikiwiki.setup_ file. They can then be optionally set on a
-page-by-page basis by use of pagespecs or a reworking of the config system such
-that ikiwiki dotfiles can be placed at arbitrary levels of the hierarchy, and
-have their directives supersede those set by their parents. Clearly, the first
-option is significantly simpler.
+etc.
 
 ## Operation
 
@@ -83,10 +59,13 @@ file contents, and the name of the page to which it is being attached.
 3. The CGI will consult the config file and any embedded pagespecs in turn, to
 determine whether the access controls permit the upload. If they don't, an error
 message will be displayed to the user, and the process will abort.
-4. The uploaded file will be saved to the appropriate directory.
-5. The uploaded file will be committed to the RCS.
-6. _.ikiwiki/index_ will be modified to reflect the new upload (as above).
-7. The page to which the file is attached (and any other
+4. The uploaded file will be saved to a temporary upload directory.
+5. Access controls which work on the entire file will be ran. The process will abort if they fail, or if the upload appears to have been aborted. Before the process is aborted, the file will be deleted from the temp directory.
+6. The file is moved to the appropriate directory.
+7. The _$file.meta_ file will be created and populated.
+8. The uploaded file will be committed to the RCS.
+9. _.ikiwiki/index_ will be modified to reflect the new upload (as above).
+10. The page to which the file is attached (and any other
 affected pages) will be regenerated.
 
 --Ben   
