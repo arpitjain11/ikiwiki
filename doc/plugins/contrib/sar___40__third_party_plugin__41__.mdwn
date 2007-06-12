@@ -1,0 +1,103 @@
+[[meta title="sar (third party plugin)" ]]
+[[template id=plugin name=sar author="[[VictorMoral]]"]]
+[[tag type/chrome type/slow ]]
+
+The `sar` plugin is useful to make global or local search and replace operations
+using common or specific terms.
+
+The characteristics are:
+
+- Support for a global dictionary page (optional but recommended).
+- Is possible to replace the first appearance with a text and the rest with
+other.
+- Support for enable or disable sar engine in any page.
+- Support for disable sar engine on any term in any page.
+
+The global dictionary page is like this:
+
+    ## Sites and projects
+
+    - [[sar search="ikiwiki" first="[IkiWiki](http://ikiwiki.info)" next="_IkiWiki_"]]
+    - [[sar search="debian" first="[Debian](http://debian.org)" next="_Debian_"]]
+    - [[sar search="perl" first="[Perl](http://perl.org)" next="_Perl_"]]
+    - [[sar search="linux" replace="GNU/Linux"]]
+   
+    ## Persons
+    - [[sar search="joey" first="[Joey Hess](http://ikiwiki.info/users/joey]]" next="_Joey_" ]]
+    - [[sar search="angel" first="[Angel](http://triptico.com)" next="Angel"]]
+
+    ## Technical terms
+
+    - [[sar search="smtp" first="\[[wp SMTP]]" next="‘SMTP‘"]]
+    - [[sar search="pop3" first="\[[wp POP3]]" next="’POP3’"]]
+
+The search parameter is a literal text; later will be used as part of the
+final regular expression.
+
+A _search and replace_ directive has the following parameters:
+
+- `search`: define the text to search.
+- `first`: define the replace text in the first match.
+- `next`: define the replace text in all matches except the first.
+- `replace`: define the replace text in all matches.
+- `disable`: disable the sar plugin in the current page or the current term if
+there is a search parameter.
+
+## Configuration
+
+The plugin need the following global values:
+
+- `sar_mainpage`: define the global dictionary page. The default value is `sar`.
+- `sar_pagespec`: enable the plugin with a selection of pages. The default
+value is `*`, but a recommended value is `link(tag/sar)`.
+
+## Caveats
+
+This plugin works as a filter hook on the source markdown text; the dictionary
+terms must be carefully selected, because they could interfere with URLs and
+other preprocessor directives.
+
+The code is highly experimental and the author will appreciate any help with
+his development or his english. I'm using at my site with minor problems.
+
+## sinopsys
+
+In a ikiwiki source page we can write this
+
+    \[[sar]]
+
+for enable the sar plugin in this page or
+
+    \[[sar disable = 1]]
+
+for disable the sar plugin or
+
+    \[[sar search=debian replace="__Debian__"]]
+
+to define a global replace for the term `debian` or
+
+    \[[sar search=ibm first=’[IBM](http://www.ibm.com)’
+            next="_IBM_"]]
+
+to define a replace for the first match of the string `ibm` and a different
+replace for the rest, and
+
+    \[[sar search=hp ]]
+    \[[sar search=hp disable=1]]
+
+to disable the sar plugin in the current page for the term `hp`.
+
+## Changelog
+
+### version 0.5
+
+This is the first functional version.
+
+## Download 
+
+The module can be downloaded from:
+
+- [My personal site](http://taquiones.net/files/misc)
+- [My personal Debian repository](http://taquiones.net/files/debian)
+
+
