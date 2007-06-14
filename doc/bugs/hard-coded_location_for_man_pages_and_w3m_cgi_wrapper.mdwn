@@ -1,0 +1,88 @@
+Hi,
+
+some operating systems use PREFIX/man instead of PREFIX/share/man as the base
+directory for man pages and PREFIX/libexec/ instead of PREFIX/lib/ for files
+like CGI programs.
+At the moment the location of the installed man pages and the w3m cgi wrapper
+is hard-coded in Makefile.PL.
+The patch below makes it possible to install those files to alternative directories
+while the default stays as it is now.
+
+<pre>
+
+  - Introduce two variables, IKI_MANDIR and IKI_W3MCGIDIR, to be set from
+    the command line. This enables locations for man pages and the w3m
+    cgi wrapper other than the hard-coded defaults in Makefile.PL.
+
+--- Makefile.PL.orig    2007-05-20 03:03:58.000000000 +0200
++++ Makefile.PL
+@@ -3,9 +3,32 @@ use warnings;
+ use strict;
+ use ExtUtils::MakeMaker;
+ 
++my %params = ( 'IKI_MANDIR' => '$(PREFIX)/share/man',
++               'IKI_W3MCGIDIR' => '$(PREFIX)/lib/w3m/cgi-bin'
++             );
++
++@ARGV = grep {
++  my ($key, $value) = split(/=/, $_, 2);
++  if ( exists $params{$key} ) {
++    $params{$key} = $value;
++    print "Using $params{$key} for $key.\n";
++    0
++  } else {
++    1
++  }
++} @ARGV;
++
++
+ # Add a few more targets.
+ sub MY::postamble {
+-q{
++  package MY;
++
++  my $scriptvars = <<"EOSCRIPTVARS";
++IKI_MANDIR = $params{'IKI_MANDIR'}
++IKI_W3MCGIDIR = $params{'IKI_W3MCGIDIR'}
++EOSCRIPTVARS
++
++  my $script = q{
+ all:: extra_build
+ clean:: extra_clean
+ install:: extra_install
+@@ -56,23 +79,24 @@ extra_install:
+                done; \
+        done
+ 
+-       install -d $(DESTDIR)$(PREFIX)/share/man/man1
+-       install -m 644 ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
++       install -d $(DESTDIR)$(IKI_MANDIR)/man1
++       install -m 644 ikiwiki.man $(DESTDIR)$(IKI_MANDIR)/man1/ikiwiki.1
+        
+-       install -d $(DESTDIR)$(PREFIX)/share/man/man8
+-       install -m 644 ikiwiki-mass-rebuild.man $(DESTDIR)$(PREFIX)/share/man/ma
+n8/ikiwiki-mass-rebuild.8
++       install -d $(DESTDIR)$(IKI_MANDIR)/man8
++       install -m 644 ikiwiki-mass-rebuild.man $(DESTDIR)$(IKI_MANDIR)/man8/iki
+wiki-mass-rebuild.8
+        
+        install -d $(DESTDIR)$(PREFIX)/sbin
+        install ikiwiki-mass-rebuild $(DESTDIR)$(PREFIX)/sbin
+ 
+-       install -d $(DESTDIR)$(PREFIX)/lib/w3m/cgi-bin
+-       install ikiwiki-w3m.cgi $(DESTDIR)$(PREFIX)/lib/w3m/cgi-bin
++       install -d $(DESTDIR)$(IKI_W3MCGIDIR)
++       install ikiwiki-w3m.cgi $(DESTDIR)$(IKI_W3MCGIDIR)
+ 
+        install -d $(DESTDIR)$(PREFIX)/bin
+        install ikiwiki.out $(DESTDIR)$(PREFIX)/bin/ikiwiki
+ 
+        $(MAKE) -C po install PREFIX=$(PREFIX)
+-}
++};
++  return $scriptvars.$script;
+ }
+ 
+ WriteMakefile(
+
+</pre>
