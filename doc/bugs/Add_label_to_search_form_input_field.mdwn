@@ -1,0 +1,13 @@
+The default searchform.tmpl looks rather bare and unintuitive with just an input field.
+
+The patch below adds a label for the field to improve usability:
+
+    --- templates/searchform.tmpl.orig	Fri Jun 15 15:02:34 2007
+    +++ templates/searchform.tmpl	Fri Jun 15 15:02:41 2007
+    @@ -1,5 +1,6 @@
+     <form method="get" action="<TMPL_VAR SEARCHACTION>" id="searchform">
+     <div>
+    +<label for="phrase">Search:</label>
+     <input type="text" name="phrase" value="" size="16" />
+     <input type="hidden" name="enc" value="UTF-8" />
+     <input type="hidden" name="do" value="hyperestraier" />
