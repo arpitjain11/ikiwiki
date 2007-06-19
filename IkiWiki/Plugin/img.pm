@@ -62,7 +62,7 @@ sub preprocess (@) { #{{{
 			return "[[img ".sprintf(gettext("failed to read %s: %s"), $file, $r)."]]" if $r;
 
 			$r = $im->Resize(geometry => "${w}x${h}");
-			return "[[img ".sprinftf(gettext("failed to resize: %s"), $r)."]]" if $r;
+			return "[[img ".sprintf(gettext("failed to resize: %s"), $r)."]]" if $r;
 
 			# don't actually write file in preview mode
 			if (! $params{preview}) {
