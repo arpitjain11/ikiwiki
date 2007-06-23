@@ -5,8 +5,20 @@ use strict;
 use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
 
+package IkiWiki::Rcs::svn;
+
+sub import { #{{{
+	if (exists $IkiWiki::config{svnpath}) {
+		# code depends on the path not having extraneous slashes
+		$IkiWiki::config{svnpath}=~tr#/#/#s;
+		$IkiWiki::config{svnpath}=~s/\/$//;
+		$IkiWiki::config{svnpath}=~s/^\///;
+	}
+} #}}}
+
+
 package IkiWiki;
-		
+
 # svn needs LC_CTYPE set to a UTF-8 locale, so try to find one. Any will do.
 sub find_lc_ctype() {
 	my $current = setlocale(LC_CTYPE());

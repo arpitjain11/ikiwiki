@@ -126,7 +126,7 @@ sub checkconfig () { #{{{
 		unless exists $config{wikistatedir};
 	
 	if ($config{rcs}) {
-		eval qq{require IkiWiki::Rcs::$config{rcs}};
+		eval qq{use IkiWiki::Rcs::$config{rcs}};
 		if ($@) {
 			error("Failed to load RCS module IkiWiki::Rcs::$config{rcs}: $@");
 		}

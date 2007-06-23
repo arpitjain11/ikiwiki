@@ -14,7 +14,7 @@ BEGIN {
 		}
 	}
 }
-use Test::More tests => 8;
+use Test::More tests => 12;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -51,11 +51,18 @@ system "svn add $config{srcdir}/test2.mdwn >/dev/null";
 system "svn commit $config{srcdir}/test2.mdwn -m \"$message\" >/dev/null";
 
 @changes = IkiWiki::rcs_recentchanges(3);
-
 is($#changes, 1);
 is($changes[0]{message}[0]{"line"}, $message);
 is($changes[0]{pages}[0]{"page"}, "test2.mdwn");
+is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
 
+# extra slashes in the path shouldn't break things
+$config{svnpath} = "/trunk//";
+IkiWiki::checkconfig();
+@changes = IkiWiki::rcs_recentchanges(3);
+is($#changes, 1);
+is($changes[0]{message}[0]{"line"}, $message);
+is($changes[0]{pages}[0]{"page"}, "test2.mdwn");
 is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
 
 system "rm -rf $dir";
