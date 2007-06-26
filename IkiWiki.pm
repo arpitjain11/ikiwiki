@@ -842,7 +842,6 @@ sub template_params (@) { #{{{
 		return "";
 	}
 
-	require HTML::Template;
 	my @ret=(
 		filter => sub {
 			my $text_ref = shift;
@@ -857,6 +856,7 @@ sub template_params (@) { #{{{
 } #}}}
 
 sub template ($;@) { #{{{
+	require HTML::Template;
 	HTML::Template->new(template_params(@_));
 } #}}}
 
