@@ -1,0 +1,14 @@
+ikiwiki 2.3 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Corrected a typo in an error handler in the image plugin.
+   * Allow svnpath config option to contain additional extra slashes anywhere
+     w/o confusing ikiwiki.
+   * Rcs modules are now imported, so other modules that need similar
+     normalisation of configs etc can do so.
+   * Patch fixing various additional problems with test suite. Closes: #[425891](http://bugs.debian.org/425891)
+     once more.
+   * French update from Jean-Luc Coulon. Closes: #[430771](http://bugs.debian.org/430771)
+   * Correct a longstanding bug that could cause the edit form to be empty.
+     This turns out to have occured if the cgi wrapper was created by an
+     ikiwiki invocation that included --rebuild. Thanks to Carl Worth for
+     tracking that down."""]]
