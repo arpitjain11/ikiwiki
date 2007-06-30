@@ -34,7 +34,7 @@ sub setup_standard {
 		delete $setup{wrappers};
 		my %startconfig=(%config);
 		foreach my $wrapper (@wrappers) {
-			%config=(%startconfig, verbose => 0, %setup, %{$wrapper});
+			%config=(%startconfig, rebuild => 0, verbose => 0, %setup, %{$wrapper});
 			checkconfig();
 			if (! $config{cgi} && ! $config{post_commit}) {
 				$config{post_commit}=1;

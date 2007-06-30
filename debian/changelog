@@ -1,4 +1,4 @@
-ikiwiki (2.3) UNRELEASED; urgency=low
+ikiwiki (2.3) unstable; urgency=low
 
   * Corrected a typo in an error handler in the image plugin.
   * Allow svnpath config option to contain additional extra slashes anywhere
@@ -8,8 +8,12 @@ ikiwiki (2.3) UNRELEASED; urgency=low
   * Patch fixing various additional problems with test suite. Closes: #425891
     once more.
   * French update from Jean-Luc Coulon. Closes: #430771
+  * Correct a longstanding bug that could cause the edit form to be empty.
+    This turns out to have occured if the cgi wrapper was created by an
+    ikiwiki invocation that included --rebuild. Thanks to Carl Worth for
+    tracking that down.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 28 Jun 2007 13:46:56 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 29 Jun 2007 18:30:38 -0400
 
 ikiwiki (2.2) unstable; urgency=low
 
