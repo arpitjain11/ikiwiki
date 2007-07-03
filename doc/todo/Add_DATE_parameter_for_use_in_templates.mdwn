@@ -1,0 +1,86 @@
+I sometimes want to inline things with the complete date and time, and
+sometimes need only the date. I know about the prettydate plugin that
+already makes the time a bit "nicer" to read, but sometimes I just
+don't want it at all.
+
+Here's a patch to add a DATE parameter for use in templates as
+controlled by a Tdateformat setting in the setup.
+
+I explicitly did not edit any date-related plugins, (for fear of
+breaking them as I don't use them so I wouldn't be testing them). But
+it occurs to me that it might be correct to not touch them anyway,
+(since things like prettydate are really more concerned with changing
+the presentation of the time, not the date).
+
+I also didn't edit the sample setup file, (since I'm just using a git
+repository setup on my local /usr/share/perl5/IkiWiki directory
+here). But, ah, now that I look, I do see that there's a "real" git
+repository advertised with the ikiwiki source. I'll have to start
+using that for future patches, (so let me know if you want me to
+regenerate this one against that).
+
+-Carl
+
+	From 325d208d8dc8016a377bb7c923a51af2bd3355b0 Mon Sep 17 00:00:00 2001
+	From: Carl Worth <cworth@cworth.org>
+	Date: Tue, 3 Jul 2007 11:39:03 -0700
+	Subject: [PATCH] Allow DATE as a template parameter (with format controlled by dateformat setting)
+
+	---
+	 IkiWiki.pm       |   12 +++++++++++-
+	 Plugin/inline.pm |    1 +
+	 2 files changed, 12 insertions(+), 1 deletions(-)
+
+	diff --git a/IkiWiki.pm b/IkiWiki.pm
+	index cd42e8d..ebf0474 100644
+	--- a/IkiWiki.pm
+	+++ b/IkiWiki.pm
+	@@ -16,7 +16,7 @@ use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
+	 use Exporter q{import};
+	 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+			  bestlink htmllink readfile writefile pagetype srcfile pagename
+	-                 displaytime will_render gettext urlto targetpage
+	+                 displaytime displaydate will_render gettext urlto targetpage
+			  %config %links %renderedfiles %pagesources %destsources);
+	 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
+	 our $version="2.1";my $installdir="/usr";
+	@@ -70,6 +70,7 @@ sub defaultconfig () { #{{{
+		plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
+			      lockedit conditional}],
+		timeformat => '%c',
+	+	dateformat => '%x',
+		locale => undef,
+		sslcookie => 0,
+		httpauth => 0,
+	@@ -447,6 +448,15 @@ sub displaytime ($) { #{{{
+				$config{timeformat}, localtime($time)));
+	 } #}}}
+
+	+sub displaydate ($) { #{{{
+	+	my $time=shift;
+	+
+	+	# strftime doesn't know about encodings, so make sure
+	+	# its output is properly treated as utf8
+	+	return decode_utf8(POSIX::strftime(
+	+			$config{dateformat}, localtime($time)));
+	+} #}}}
+	+
+	 sub beautify_url ($) { #{{{
+		my $url=shift;
+
+	diff --git a/Plugin/inline.pm b/Plugin/inline.pm
+	index 8f6ab51..7bd6147 100644
+	--- a/Plugin/inline.pm
+	+++ b/Plugin/inline.pm
+	@@ -148,6 +148,7 @@ sub preprocess_inline (@) { #{{{
+				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
+				$template->param(title => pagetitle(basename($page)));
+				$template->param(ctime => displaytime($pagectime{$page}));
+	+			$template->param(date => displaydate($pagectime{$page}));
+
+				if ($actions) {
+					my $file = $pagesources{$page};
+	-- 
+	1.5.2.2
+
+
