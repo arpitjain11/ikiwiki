@@ -27,3 +27,15 @@ pursue implementing this feature further myself.
 
 But I'd still happily switch to using this feature if someone were to
 implement it.
+
+UPDATE: My latest hack is as follows:
+
+	if ($page eq 'index') {
+		$template->param(toplevelindex => 1);
+	}
+
+And that's something that I'm not actually embarrassed to suggest
+could be accepted upstream. Joey, what do you think? And would a
+proper patch be helpful (it really just adds those lines to the right
+place).
+
