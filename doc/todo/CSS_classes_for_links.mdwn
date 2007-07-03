@@ -1,0 +1,35 @@
+Hi Joey,
+
+What do you think about CSS classes for links to display link with icon?
+You probably know that there are wikis with that feature, for example
+Moin Moin.
+
+Here is a piece of `common.css` file grabbed from <http://wiki.openwrt.org>
+site which is powered by Moin Moin wiki:
+
+    a.www:before {content: url(../img/moin-www.png); margin: 0 0.2em;}
+    a.http:before {content: url(../img/moin-www.png); margin: 0 0.2em;}
+    a.https:before {content: url(../img/moin-www.png); margin: 0 0.2em;}
+    a.file:before {content: url(../img/moin-ftp.png); margin: 0 0.2em;}
+    a.ftp:before {content: url(../img/moin-ftp.png); margin: 0 0.2em;}
+    a.nntp:before {content: url(../img/moin-news.png); margin: 0 0.2em;}
+    a.news:before {content: url(../img/moin-news.png); margin: 0 0.2em;}
+    a.telnet:before {content: url(../img/moin-telnet.png); margin: 0 0.2em;}
+    a.irc:before {content: url(../img/moin-telnet.png); margin: 0 0.2em;}
+    a.mailto:before {content: url(../img/moin-email.png); margin: 0 0.2em;}
+    a.attachment:before {content: url(../img/moin-attach.png); margin: 0 0.2em;}
+    a.badinterwiki:before {content: url(../img/moin-inter.png); margin: 0 0.2em;}
+    a.interwiki:before {content: url(../img/moin-inter.png); margin: 0 0.2em;}
+
+You can see that they use a lot of CSS classes for links, but only one CSS class
+for external links is enough for me :) Please look at my example:
+
+    \[[Foo]]                    -> <a href="http://www.mywiki.org/foo.html">Foo</a>
+    \[[Bar|foo/bar]]            -> <a href="http://www.mywiki.org/foo/bar.html">Bar</a>
+    <http://www.gnu.org/>      -> <a class="external" href="http://www.gnu.org/">http://www.gnu.org/</a>
+    [GNU](http://www.gnu.org/) -> <a class="external" href="http://www.gnu.org/">GNU</a>
+    [RMS](mailto:rms@gnu.org)  -> <a href="mailto:rms@gnu.org">RMS</a>
+
+My best regards,
+
+--Pawel
