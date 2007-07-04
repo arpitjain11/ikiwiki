@@ -67,3 +67,22 @@ to edits anyhow, but like Josh says, there are use cases for this.
 While this could be done with mail subscriptions, I can think of sites
 where you might want to disable all auth so that people can't edit
 your pages. --Ethan
+
+> I really dislike all Wiki engine recentchanges pages.  They all tend to be
+> fairly machine readable, but confusing for non-wiki users to grok.  And I've
+> yet to see an _attractive_ recentchanges implementation.  IkiWikis' is no
+> better or worse than the others.
+>
+> I really like the frontpage of [Bill
+> Seitz](http://webseitz.fluxent.com/wiki/FrontPage) as an recentchanges
+> format.  Note how he uses some clever css to show changes in different
+> sections of the website.  I modeled my own
+> [recentchanges](http://xtermin.us/recentchange) page page on his ideas.  This
+> probably isn't appropriate for non-WikiLog style setups, but is this
+> something closer to what you what was requested?
+>
+> BTW: My recentchanges plugin does not seem to add a lot processing time
+> to compiling.  Then again, I'm not pulling changelog message from the RCS 
+> backend.
+>
+> -- CharlesMauch
