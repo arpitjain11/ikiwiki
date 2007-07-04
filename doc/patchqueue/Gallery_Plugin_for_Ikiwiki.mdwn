@@ -1,0 +1,24 @@
+I have implemented the first version of the Gallery Plugin for [[Ikiwiki]] as part of [[soc]]. This plugin would create a nice looking gallery of the images once the directory containing images is specified with some additional parameters. It has been build over the img plugin. 
+
+Plugin can be downloaded from [here](http://www.arpitjain.com/gallery.tar). 
+
+It can be used as : 
+\[[gallery imagedir="images" thumbnailsize="200x200" cols="3" alt="Can not be displayed" title="My Pictures"]]
+
+where 
+* imagedir  => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.
+* thumbnailsize(optional) => Size of the thumbnail that you want to generate for the gallery.
+* alt(optional) => If image can not be displayed, it will display the text contained in alt argument.
+* cols(optional) => Number of columns of thumbnails that you want to generate.
+* title(optional) => Title of the gallery.
+
+Features of the Gallery Plugin:
+* You can go the next image by clicking on the right side of the image or by pressing 'n'.
+* Similary, you can go the previous image by clicking on the left side of the image or by pressing 'p'.
+* Press esc to close the gallery.
+* While on image, nearby images are preloaded in the background, so as to make the browsing fast.
+
+Right now, it features only one template namely [Lightbox](http://www.hudddletogether.com). Later on, I will add few more templates.
+For any feedback or query, feel free to mail me at arpitjain11 [AT] gmail.com 
+
+Additional details are available [here](http://www.arpitjain.com/ikiwikigallery.html).
