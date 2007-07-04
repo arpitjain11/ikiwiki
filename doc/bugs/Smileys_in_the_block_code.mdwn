@@ -29,3 +29,22 @@ BTW, maybe converting smileys in the block code should be disabled at all?
 > Looks similar to [[wiki_links_still_processed_inside_code_blocks]]; in both
 > cases, substitution happens in a code block, which it shouldn't.
 > --[[JoshTriplett]]
+
+----
+
+> Has there been any progress or ideas on this bug recently?  I use an
+> expanded CamelCase regexp, and without much escaping in freelink text, or
+> url links, or in codeblocks I get IkiWiki's attempt at creating a "link
+> within a link".
+>
+> I have no ideas other than perhaps once IkiWiki encounters \[\[ or the
+> position is reset with a backreference from a CamelCased word, further
+> processing of wikilinks is disabled until the position is reset and a "no
+> not makelinks" flag or variable is cleared.
+>
+> I've come up with some _really_ ugly workarounds to handle case specific
+> stuff like codeblocks but the problem creeps up again and again in
+> unexpected places.  I'd be happy to come up with a patch if anyone has a
+> bright idea on a nice clean way (_in theroy_) to fix this.  I'm out of ideas.
+>
+> --CharlesMauch
