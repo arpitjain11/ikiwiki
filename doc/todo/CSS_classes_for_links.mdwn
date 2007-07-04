@@ -33,3 +33,15 @@ for external links is enough for me :) Please look at my example:
 My best regards,
 
 --Pawel
+
+> If you did not already know, you can achieve similar results using CSS3
+> selectors.  Eg: `a[href="http://www.foobar.com/"] { foobar: css }` or
+> `a[title~="Mail"] {text-decoration: none; }`.  See
+> <http://www.w3.org/TR/2001/CR-css3-selectors-20011113/> for a complete list.
+>
+> If you need to achieve this in IkiWiki itself, I imagine you could create a
+> plugin which runs in the `format` phase of rendering and search/replaces
+> specific link patterns.  This should be a fairly simple exercise in regular
+> expressions.
+>
+> --CharlesMauch
