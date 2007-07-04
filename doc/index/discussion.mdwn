@@ -205,3 +205,5 @@ More specifically,
 Thanks, Joey et al., for a really cool tool.
 
 --Mike
+
+> Looks like the ikiwiki wrapper uses asprintf.  glibc has that, and I think some other libc implementations have that, but apparently the Solaris libc does not.  The same problem will come up on other platforms that don't use glibc.  The ikiwiki wrapper needs to either avoid asprintf or use a portable asprintf implementation from somewhere like gnulib. --[[JoshTriplett]]
