@@ -38,10 +38,19 @@ My best regards,
 > selectors.  Eg: `a[href="http://www.foobar.com/"] { foobar: css }` or
 > `a[title~="Mail"] {text-decoration: none; }`.  See
 > <http://www.w3.org/TR/2001/CR-css3-selectors-20011113/> for a complete list.
->
+
+>> Hi Charles,
+>>
+>> Thanks for the hint! I don't know CSS3 yet :) What modern and popular
+>> WWW browsers do support it now?
+
 > If you need to achieve this in IkiWiki itself, I imagine you could create a
 > plugin which runs in the `format` phase of rendering and search/replaces
 > specific link patterns.  This should be a fairly simple exercise in regular
 > expressions.
 >
 > --CharlesMauch
+
+>> I've never written plugin for ikiwiki, but I can try if it's simple job :)
+>>
+>> --Pawel
