@@ -2,8 +2,6 @@
 [[template id=plugin name=sar author="[[VictorMoral]]"]]
 [[tag type/chrome type/slow ]]
 
->__Warning__: i'm using this plugin at my site and i have found too much problems with him. I discourage his use until a new version has been released. My apologies for the inconveniences. I think that is a good idea with a bad initial design.
-
 The `sar` plugin is useful to make global or local search and replace operations
 using common or specific terms.
 
@@ -12,8 +10,6 @@ The characteristics are:
 - Support for a global dictionary page (optional but recommended).
 - Is possible to replace the first appearance with a text and the rest with
 other.
-- Support for enable or disable sar engine in any page.
-- Support for disable sar engine on any term in any page.
 
 The global dictionary page is like this:
 
@@ -33,8 +29,26 @@ The global dictionary page is like this:
     - [[sar search="smtp" first="\[[wp SMTP]]" next="‘SMTP‘"]]
     - [[sar search="pop3" first="\[[wp POP3]]" next="’POP3’"]]
 
-The search parameter is a literal text; later will be used as part of the
-final regular expression.
+The search expressions must be surrounded by double dashes in a source ikiwiki
+page, like this:
+
+    Mis programas están escritos en lenguaje --perl--, funcionando con el 
+    sistema --debian--, y mis páginas web funcionan con --ikiwiki-- cuyo autor
+    es --joey--.
+
+    --ikiwiki-- es un buen software.
+
+After a filter operation the content is:
+
+    Mis programas están escritos en lenguaje [Perl](http://perl.org),
+    funcionando con el sistema [Debian](http://debian.org), y mis páginas web
+    funcionan con [IkiWiki](http://ikiwiki.info) cuyo autor es [Joey
+    Hess](http://ikiwiki.info/users/joey).
+
+    _IkiWiki_ es un buen software.
+
+>Disclaimer: I chose this syntax because don't clashes with markdown and it is
+>easy to write. 
 
 A _search and replace_ directive has the following parameters:
 
@@ -42,8 +56,9 @@ A _search and replace_ directive has the following parameters:
 - `first`: define the replace text in the first match.
 - `next`: define the replace text in all matches except the first.
 - `replace`: define the replace text in all matches.
-- `disable`: disable the sar plugin in the current page or the current term if
-there is a search parameter.
+
+Now the code is used at my site without problems, and the author will
+appreciate any help with his development or his english. 
 
 ## Configuration
 
@@ -53,43 +68,29 @@ The plugin need the following global values:
 - `sar_pagespec`: enable the plugin with a selection of pages. The default
 value is `*`, but a recommended value is `link(tag/sar)`.
 
-## Caveats
-
-This plugin works as a filter hook on the source markdown text; the dictionary
-terms must be carefully selected, because they could interfere with URLs and
-other preprocessor directives.
-
-The code is highly experimental and the author will appreciate any help with
-his development or his english. I'm using at my site with minor problems.
-
-## sinopsys
+## Sinopsys
 
 In a ikiwiki source page we can write this
 
-    \[[sar]]
-
-for enable the sar plugin in this page or
-
-    \[[sar disable = 1]]
-
-for disable the sar plugin or
-
     \[[sar search=debian replace="__Debian__"]]
 
-to define a global replace for the term `debian` or
+for define a global replace for the term `--debian--` or
 
     \[[sar search=ibm first=’[IBM](http://www.ibm.com)’
             next="_IBM_"]]
 
-to define a replace for the first match of the string `ibm` and a different
-replace for the rest, and
-
-    \[[sar search=hp ]]
-    \[[sar search=hp disable=1]]
-
-to disable the sar plugin in the current page for the term `hp`.
+to define a replace for the first match of the string `--ibm--` and a different
+replace for the rest.
 
 ## Changelog
+
+### version 0.8
+
+- First functional version with the new sar expressions.
+
+### version 0.7 
+
+- New design for the search expressions.
 
 ### version 0.6
 
