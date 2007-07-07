@@ -48,7 +48,7 @@ to Bar page and next create the page. I do following steps:
 
 Where is my mistake?
 
---Pawel
+--[[Paweł|ptecza]]
 
 > It's not clear which Edit link you clicked in step 5. Is it the link on
 > the new page, or the old link back on page Foo that you clicked on before
@@ -66,7 +66,7 @@ Where is my mistake?
 >> BTW, where does ikiwiki store information about rendered pages?
 >> Is it `/my/ikiwiki/src/dir/.ikiwiki/` directory?
 
->> --Pawel
+>> --[[Paweł|ptecza]]
 
 >>> Well, the missing %pagesources value explains the symptom for sure.
 >>> ikiwiki stores its state in .ikiwiki/index, and that should include
@@ -99,7 +99,7 @@ Where is my mistake?
 
 >>>> What do you think about it? Does it look good? My ikiwiki runs
 >>>> under control of Apache2 server and it's configured to run
->>>> as `www-data` user and `www-data` group. --Pawel
+>>>> as `www-data` user and `www-data` group. --[[Paweł|ptecza]]
 
 >>>>> It's a bit weird to run ikiwiki as www-data. This means that www-data
 >>>>> can write to your subversion repository? And the svn post-commit hook
@@ -110,19 +110,19 @@ Where is my mistake?
 >>>>>> Only `root` user and `src` group have write permissions to my SVN repo.
 
 >>>>>> Could you please show me your permissions for `repodir`, `srcdir`
->>>>>> and `destdir` and how runs your Apache server? --Pawel
+>>>>>> and `destdir` and how runs your Apache server? --[[Paweł|ptecza]]
 
 >>>>>>> Ugh, root? My permissions setup is simple, ikiwiki runs as a single
 >>>>>>> user, and that same user can commit to the svn repo and write to
 >>>>>>> all files. --[[Joey]]
 
 >>>>>>>> What's your user? Please show me result of `ls -ld dir` for
->>>>>>>> directories above :) --Pawel
+>>>>>>>> directories above :) --[[Paweł|ptecza]]
 
 >>>>>>>>> All my directories are 755 joey:joey. --[[Joey]]
 
 >>>>>>>>>> Thanks! But I have another situation: a multiuser system and a few
->>>>>>>>>> ikiwiki commiters. --Pawel
+>>>>>>>>>> ikiwiki commiters. --[[Paweł|ptecza]]
 
 >>>>>>>>>>> Joey, I think I've just fixed the permission, but my ikiwiki still
 >>>>>>>>>>> doesn't update my `.ikiwiki/index` file. Could you please explain me
@@ -134,7 +134,7 @@ Where is my mistake?
 >>>>>>>>>>> BTW, where should I store my `ikiwiki.setup` file? It must be placed
 >>>>>>>>>>> under `$srcdir/.ikiwiki/` directory or it doesn't matter?
 >>>>>>>>>>> Does `ikiwiki.cgi` wrapper know where the `ikiwiki.setup` file
->>>>>>>>>>> is stored? --Pawel
+>>>>>>>>>>> is stored? --[[Paweł|ptecza]]
 
 Sorry I am not indenting for my reply (in my browser the responses are very narrow.)
 
@@ -192,7 +192,7 @@ In my case, my setup file is in a different home and owned by a different user t
 > enlight me here ;)
 >
 > BTW, I also noticed `wikistatedir` variable in the ikiwiki code
-> and I couldn't find any information about it in ikiwiki docs :) --Pawel
+> and I couldn't find any information about it in ikiwiki docs :) --[[Paweł|ptecza]]
 
 >> wikistatedir is a non-configurable internal value.
 >> 
@@ -206,4 +206,4 @@ In my case, my setup file is in a different home and owned by a different user t
 >> for some reason (permissions perhaps?) --[[Joey]]
 
 >>> OK, [[bugs/done]]! It was problem with permissions and not upgraded
->>> `editpage.tmpl` template :) --Pawel
+>>> `editpage.tmpl` template :) --[[Paweł|ptecza]]

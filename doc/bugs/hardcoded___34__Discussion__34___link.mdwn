@@ -12,13 +12,13 @@ ikiwiki sources:
 
 I hope it's a bug, not a feature, because I don't have the same
 problem with other links, for example "Edit", "RecentChanges"
-or "History". --Pawel
+or "History". --[[Paweł|ptecza]]
 
 > There are good reasons for feeding a full html link into the template,
 > rather than the urls used for the other links. For one, the Discussion
 > link needs to be different if the Discussion page doesn't yet exist.
 
->> You can always use `<tmpl_if>` and `<tmpl_else>` construct in that place ;) --Pawel
+>> You can always use `<tmpl_if>` and `<tmpl_else>` construct in that place ;) --[[Paweł|ptecza]]
 
 >>> Not without duplicating the logic that constructs a link to an
 >>> existing/nonexisting page in two places, one in code in ikiwiki and one
@@ -34,11 +34,11 @@ or "History". --Pawel
 >> 
 >> BTW, is there a chance for configurable name of Discussion page?
 >> In my wiki I use only Polish name of pages, so I would like to have
->> dyskusja.html page, instead of discussion.html page. --Pawel
+>> dyskusja.html page, instead of discussion.html page. --[[Paweł|ptecza]]
 
 >>> Ikiwiki is now fully internationalised, so you can change the name of
 >>> the Discussion page and quite a lot more (but hardly everything) by
 >>> translating it. [[bugs/done]]! There's a `po/debconf.pot` in the source
 >>> now for translating. See [[translation]]. --[[Joey]]
 
->>>> Joey, you're great! ;) Thanks a lot! I'll try ikiwiki l10n stuff soon. --Pawel
+>>>> Joey, you're great! ;) Thanks a lot! I'll try ikiwiki l10n stuff soon. --[[Paweł|ptecza]]

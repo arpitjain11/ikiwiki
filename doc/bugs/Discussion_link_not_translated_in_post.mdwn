@@ -1,5 +1,5 @@
 In my sent post (without Polish characters in title, of course ;) ) I still
-can see "Discussion" link, instead of Polish "Dyskusja" link. --Pawel
+can see "Discussion" link, instead of Polish "Dyskusja" link. --[[Paweł|ptecza]]
 
 > I don't know what post you're referring to, more details please.
 > --[[Joey]]
@@ -10,9 +10,9 @@ can see "Discussion" link, instead of Polish "Dyskusja" link. --Pawel
 
 >> So, I sent the post to my blog and I can see that "Discussion" link
 >> from `inlinepage.tmpl` file is not translated to Polish. Now I hope
->> you know what I mean :) --Pawel
+>> you know what I mean :) --[[Paweł|ptecza]]
 
->>> Joey, what about my bug report? ;) --Pawel
+>>> Joey, what about my bug report? ;) --[[Paweł|ptecza]]
 
 >>>> Found and [[fixed|bugs/done]] --[[Joey]].
 
@@ -49,7 +49,7 @@ can see "Discussion" link, instead of Polish "Dyskusja" link. --Pawel
 >>>>>        (3) $config{locale}=pl_PL.UTF-8
 >>>>>        (3) $ENV{LANG}=pl_PL.UTF-8
 >>>>>
->>>>> Is it a useful information for you? :) --Pawel
+>>>>> Is it a useful information for you? :) --[[Paweł|ptecza]]
 
 >>>>>> Not really.. I was able to reproduce the problem you desciribed and
 >>>>>> my changes fixed the problem I reproduced. --[[Joey]]
@@ -60,7 +60,7 @@ can see "Discussion" link, instead of Polish "Dyskusja" link. --Pawel
 >> Yes, now it's fixed :) Thank you very much, Joey!
 
 >> BTW, what about translating buttons to editing page ("Save Page",
->> "Preview" and "Cancel")? There are still hard-coded :( --Pawel
+>> "Preview" and "Cancel")? There are still hard-coded :( --[[Paweł|ptecza]]
 
 >>> Those come via the formbuilder form, and currently my best plan for
 >>> them is to add templates for them, as described in [[translation]]

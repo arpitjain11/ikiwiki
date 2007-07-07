@@ -80,8 +80,8 @@ ikiwiki (2.1) unstable; urgency=low
 
   [ Joey Hess ]
   * Updated Czech translation from Miroslav Kure.
-  * Apply patch from Pawel to avoid using -L in Makefile as it's not available
-    in older finds.
+  * Apply patch from Paweł Tęcza to avoid using -L in Makefile as it's not
+    available in older finds.
   * Make all templates have a footer div to ease themeing. Required template
     and style sheet updates, and unless you're using customised versions,
     you'll want to rebuild wikis on upgrade to this version to avoid
@@ -169,7 +169,7 @@ ikiwiki (1.51) unstable; urgency=low
 
   [ Joey Hess ]
   * Include wikiname in syslogged messages.
-  * Updated Polish translation from Pawel Tecza.
+  * Updated Polish translation from Paweł Tęcza.
   * Updated Czech translation from Miroslav Kure.
   * Updated Spanish translation from Victor Moral.
   * Apply patch from hb that uses the full path to a file when adding a file
@@ -746,7 +746,7 @@ ikiwiki (1.32) unstable; urgency=low
 
 ikiwiki (1.31) unstable; urgency=low
 
-  * Patch from Pawel Tecza to cp -a the templates in the Makefile.
+  * Patch from Paweł Tęcza to cp -a the templates in the Makefile.
   * Change the rss feed title from the wikiname to the page title, with
     an exception for the wiki's toplevel index page, which will still use the
     wikiname as the feed title.

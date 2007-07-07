@@ -23,7 +23,7 @@ don't exist in the last package:
 
     $ dpkg -L ikiwiki |grep smileys.mdwn
 
---Pawel
+--[[Paweł|ptecza]]
 
 This seems to be a bug in your 1.43gpal version, whatever that is.. In the package I built, I see:
 
@@ -36,6 +36,6 @@ This seems to be a bug in your 1.43gpal version, whatever that is.. In the packa
 
 > You're right. My backport was builded without all symlinks, because I store
 > all rebuilded sources in CVS repo, but it seems that CVS doesn't support symlinks.
-> Grrr... I need to switch to another repo now. --Pawel
+> Grrr... I need to switch to another repo now. --[[Paweł|ptecza]]
 
 >> Ok, [[bugs/done]] then --[[Joey]]

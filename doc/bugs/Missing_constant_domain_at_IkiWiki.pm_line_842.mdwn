@@ -15,7 +15,7 @@ I can't build my ikiwiki 1.40 backport for Debian 'sarge':
     make[1]: Leaving directory `/home/ptecza/svn/ikiwiki'
     make: *** [build-stamp] Error 2
 
---Pawel
+--[[Paweł|ptecza]]
 
 This is because of an old version of Locale::gettext which doesn't
 include the OO interface. I had this problem too, but installing a
@@ -39,7 +39,7 @@ new version of Locale::gettext fixed it. --Ethan
 
 >> Thanks for the hint, guys! :) I've just backported liblocale-gettext-perl
 >> 1.05 package and it seems that now I can build my ikiwiki successfully
->> and it even works :) --Pawel
+>> and it even works :) --[[Paweł|ptecza]]
 
 Thanks for the note on this, made it very easy to figure out what was going on.  Just pointing out though that the Debian package doesn't require a new version of liblocale-gettext-perl.  I just got bit by this bug setting up a dev ikiwiki box on a mixed stable/testing box.  -- [[Adam]]
 

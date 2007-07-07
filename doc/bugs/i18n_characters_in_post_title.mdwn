@@ -1,7 +1,7 @@
 It seems that I can't use Polish characters in post title.
 When I try to do it, then I can see error message: "Błąd: bad page name".
 
-I hope it's a bug, not a feature and you fix it soon :) --Pawel
+I hope it's a bug, not a feature and you fix it soon :) --[[Paweł|ptecza]]
 
 > ikiwiki only allows a very limited set of characters raw in page names,
 > this is done as a deny-by-default security thing. All other characters
@@ -20,10 +20,10 @@ I hope it's a bug, not a feature and you fix it soon :) --Pawel
 >> what the character number is. I only want to blog :)
 
 >> BTW, why don't you use the modified-UTF7 coding for page names
->> as used in IMAP folder names with non-Latin letters? --Pawel
+>> as used in IMAP folder names with non-Latin letters? --[[Paweł|ptecza]]
 
 >>> Joey, do you intend to fix that bug or it's a feature
->>> for you? ;) --Pawel
+>>> for you? ;) --[[Paweł|ptecza]]
 
 >>>> Of course you can put Polish characters in the title. but the page
 >>>> title and filename are not identical. Ikiwiki has to place some limits
@@ -46,7 +46,7 @@ I hope it's a bug, not a feature and you fix it soon :) --Pawel
 >>>>>>        B__179____177__d.mdwn
 >>>>>>
 >>>>>> What's your locale? I have both pl\_PL (ISO-8859-2) and pl\_PL.UTF-8,
->>>>>> but I use pl\_PL. Is it wrong? --Pawel
+>>>>>> but I use pl\_PL. Is it wrong? --[[Paweł|ptecza]]
 
 >>>> Now, as to UTF7, in retrospect, using a standard encoding might be a
 >>>> better idea than coming up with my own encoding for filenames. Can 
@@ -56,4 +56,4 @@ I hope it's a bug, not a feature and you fix it soon :) --Pawel
 >>>>> for IMAP4 protocol (please see section 5.1.3 for details).
 
 >>>>> There is a Perl [Unicode::IMAPUtf7](http://search.cpan.org/~fabpot/Unicode-IMAPUtf7-2.01/lib/Unicode/IMAPUtf7.pm)
->>>>> module at the CPAN, but probably it hasn't been debianized yet :( --Pawel
+>>>>> module at the CPAN, but probably it hasn't been debianized yet :( --[[Paweł|ptecza]]
