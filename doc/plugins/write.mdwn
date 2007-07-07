@@ -181,7 +181,7 @@ source files that were rendered.
 
 Use this to hook into ikiwiki's cgi script. Each registered cgi hook is
 called in turn, and passed a CGI object. The hook should examine the
-parameters, and if it will handle this CGI request, output a page and
+parameters, and if it will handle this CGI request, output a page (including the http headers) and
 terminate the program.
 
 ### auth
