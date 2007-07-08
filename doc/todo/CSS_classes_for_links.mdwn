@@ -54,3 +54,10 @@ My best regards,
 >> I've never written plugin for ikiwiki, but I can try if it's simple job :)
 >>
 >> --[[Paweł|ptecza]]
+
+> I wouldn't mind adding a _single_ css class to ikiwiki links, but it
+> would have to be a class added to all internal, not all external, links.
+> Reason is that there are many ways for external links to get into an
+> ikiwiki page, including being entered as raw html. The only time ikiwiki
+> controls a link is when an internal link is added using a WikiLink.
+> --[[Joey]]
