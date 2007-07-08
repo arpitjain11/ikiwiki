@@ -1,0 +1,33 @@
+I've learned I'm not yet clever enough to get IkiWiki to build in OpenSolaris (as running on a [Joyent Accelerator][ja]). Anyone figured this out already?
+
+I think problem lies mostly, if not entirely, in getting ikiwiki.cgi.c to compile in an OpenSolaris context (this is ikiwiki-2.2):
+
+> <code>$ ikiwiki --setup ~/etc/ikiwiki/ikiwiki-edit.setup  
+> [...]  
+> Error: failed to compile /home/username/domains/domain.tld/cgi-bin/ikiwiki.cgi.c at /opt/local/lib/perl5/site_perl/IkiWiki.pm line 104.
+BEGIN failed--compilation aborted at (eval 3) line 145.</code>
+
+More specifically, 
+
+> <code>$ /usr/sfw/bin/gcc ikiwiki.cgi.c  
+> Undefined               first referenced  
+> symbol                     in file  
+> asprintf                   /var/tmp//cczPaG7R.o  
+> ld: fatal: Symbol referencing errors. No output written to a.out  
+> collect2: ld returned 1 exit status</code>
+
+[ja]: <http://www.joyent.com/accelerator/technical-specifications/>
+
+Thanks, Joey et al., for a really cool tool.
+
+--Mike
+
+> Looks like the ikiwiki wrapper uses asprintf.  glibc has that, and I think some other libc implementations have that, but apparently the Solaris libc does not.  The same problem will come up on other platforms that don't use glibc.  The ikiwiki wrapper needs to either avoid asprintf or use a portable asprintf implementation from somewhere like gnulib. --[[JoshTriplett]]
+
+>> I used asprintf because it was easy, and safe. That is a good reason for
+>> C libraries to support asprintf, IMHO. Note that both linux and *BSD
+>> support asprintf.
+>> 
+>> Of the possible patches to make this more portable, I'd generally prefer
+>> one that uses portable functions (safely), rather than one that includes
+>> an asprintf implementation in ikiwiki. --[[Joey]]
