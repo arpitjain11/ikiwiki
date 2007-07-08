@@ -1,3 +1,12 @@
+ikiwiki (2.4) UNRELEASED; urgency=low
+
+  * Make the toc plugin use html-compatible anchors. This is necessary since
+    most web sites serve ikiwiki xhtml files as text/html and mozilla browsers
+    get confused. So it's best for ikiwiki to follow the compatability 
+    recommendations in appendix C of the XHTML spec. Closes: #432045
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 08 Jul 2007 12:54:55 -0400
+
 ikiwiki (2.3) unstable; urgency=low
 
   * Corrected a typo in an error handler in the image plugin.
