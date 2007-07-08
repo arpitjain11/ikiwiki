@@ -4,4 +4,10 @@ Example:
 
         http://monkey.linuxworld.com/lwce-2007/
 
-Is there any way for ikiwiki to spot when .wiki files have this BOM and deal with it, or should I make sure to strip it out before committing?
+Is there any way for ikiwiki to spot when .wiki files have this BOM and
+deal with it, or should I make sure to strip it out before committing?
+
+> It would be easy to make ikiwiki strip out the BOM. For example, a simple
+> plugin could be written to s/// them out as a filter.
+>
+> I'm unsure if ikiwiki should do this by default. --[[Joey]]
