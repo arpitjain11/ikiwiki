@@ -1,3 +1,23 @@
+ikiwiki (2.4) unstable; urgency=low
+
+  Ikiwiki now outputs HTML 4.01, not XHTML 1.0. For the many reasons, see
+  http://www.hixie.ch/advocacy/xhtml and note that even if a web server is
+  set up to serve XHTML appropriately as application/xhtml+xml, mozilla
+  doesn't support that mime type.
+
+  It's possible that your wiki contains some hardcoded XHTML tags. No
+  need to worry about these too much though. Since before ikiwiki generated
+  XHTML before, but your web server almost certianly served it up as 
+  text/html, web browsers actually were processing it as HTML all along and
+  if an XHTML tag worked before, it will continue to work. Also,
+  both the htmlscrubber and htmlsanitizer modules will convert any such
+  XHTML tags to valid HTML tags.
+
+  You might want to rebuild your wiki on upgrade to this version, to switch
+  everything over to HTML 4.01 at once.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 08 Jul 2007 11:55:00 -0400
+
 ikiwiki (2.1) unstable; urgency=low
 
   Some wikis need to be rebuilt on upgrade to this version, due to changes to

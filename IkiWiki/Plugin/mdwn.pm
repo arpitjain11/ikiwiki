@@ -26,16 +26,19 @@ sub htmlize (@) { #{{{
 		eval q{use Markdown};
 		if (! $@) {
 			$markdown_sub=\&Markdown::Markdown;
+			$Markdown::g_empty_element_suffix=">"; # HTML output
 		}
 		else {
 			eval q{use Text::Markdown};
 			if (! $@) {
 				$markdown_sub=\&Text::Markdown::Markdown;
+				$Text::Markdown::g_empty_element_suffix=">"; # HTML output
 			}
 			else {
 				do "/usr/bin/markdown" ||
 					error(sprintf(gettext("failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"), $@, $!));
 				$markdown_sub=\&Markdown::Markdown;
+				$Markdown::g_empty_element_suffix=">"; # HTML output
 			}
 		}
 		require Encode;

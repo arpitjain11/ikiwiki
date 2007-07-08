@@ -57,13 +57,13 @@ sub preprocess (@) { #{{{
 			$ret.="$choice ($choices{$choice})\n";
 		}
 		if ($open && exists $config{cgiurl}) {
-			$ret.="<input type=\"hidden\" name=\"do\" value=\"poll\" />\n";
-			$ret.="<input type=\"hidden\" name=\"num\" value=\"$pagenum{$params{page}}\" />\n";
-			$ret.="<input type=\"hidden\" name=\"page\" value=\"$params{page}\" />\n";
-			$ret.="<input type=\"hidden\" name=\"choice\" value=\"$choice\" />\n";
-			$ret.="<input type=\"submit\" value=\"".gettext("vote")."\" />\n";
+			$ret.="<input type=\"hidden\" name=\"do\" value=\"poll\">\n";
+			$ret.="<input type=\"hidden\" name=\"num\" value=\"$pagenum{$params{page}}\">\n";
+			$ret.="<input type=\"hidden\" name=\"page\" value=\"$params{page}\">\n";
+			$ret.="<input type=\"hidden\" name=\"choice\" value=\"$choice\">\n";
+			$ret.="<input type=\"submit\" value=\"".gettext("vote")."\">\n";
 		}
-		$ret.="</p>\n<hr class=poll align=left width=\"$percent%\"/>\n";
+		$ret.="</p>\n<hr class=poll align=left width=\"$percent%\">\n";
 		if ($open && exists $config{cgiurl}) {
 			$ret.="</form>\n";
 		}

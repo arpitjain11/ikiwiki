@@ -152,11 +152,11 @@ sub preprocess (@) { #{{{
 			eval q{use MIME::Base64};
 		        error($@) if $@;
 			return "<img src=\"data:image/png;base64,".
-				encode_base64($png)."\" />";
+				encode_base64($png)."\">";
 		}
 	}
 
-	return '<img src="'.urlto($fn, $params{destpage}).'" alt="graph" />';
+	return '<img src="'.urlto($fn, $params{destpage}).'" alt="graph">';
 } # }}}
 
 1

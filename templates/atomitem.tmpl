@@ -15,10 +15,6 @@
 	<TMPL_IF NAME="ENCLOSURE">
 	<link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
 	<TMPL_ELSE>
-	<content type="xhtml" xml:lang="en">
-	 <div xmlns="http://www.w3.org/1999/xhtml">
-	 <TMPL_VAR CONTENT>
-	 </div>
-	</content>
+	<content type="html"><![CDATA[<TMPL_VAR CONTENT>]]></content>
 	</TMPL_IF>
 </entry>

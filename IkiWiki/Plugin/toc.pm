@@ -47,7 +47,7 @@ sub format (@) { #{{{
 		if ($tagname =~ /^h(\d+)$/i) {
 			my $level=$1;
 			my $anchor="index".++$anchors{$level}."h$level";
-			$page.="$text<a name=\"$anchor\" />";
+			$page.="$text<a name=\"$anchor\"></a>";
 	
 			# Take the first header level seen as the topmost level,
 			# even if there are higher levels seen later on.

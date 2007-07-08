@@ -66,11 +66,11 @@ sub render_graph (\%) { #{{{
 			eval q{use MIME::Base64};
 			error($@) if $@;
 			return "<img src=\"data:image/png;base64,".
-				encode_base64($png)."\" />";
+				encode_base64($png)."\">";
 		}
 	}
 
-	return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+	return "<img src=\"".urlto($dest, $params{page})."\">\n";
 } #}}}
 
 sub graph (@) { #{{{

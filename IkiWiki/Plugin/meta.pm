@@ -57,7 +57,7 @@ sub preprocess (@) { #{{{
 		if (%params) {
 			$meta{$page}.=scrub("<link href=\"".encode_entities($value)."\" ".
 				join(" ", map { encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\"" } keys %params).
-				" />\n");
+				">\n");
 		}
 		else {
 			# hidden WikiLink
@@ -69,7 +69,7 @@ sub preprocess (@) { #{{{
 	}
 	elsif ($key eq 'permalink') {
 		$permalink{$page}=$value;
-		$meta{$page}.=scrub("<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n");
+		$meta{$page}.=scrub("<link rel=\"bookmark\" href=\"".encode_entities($value)."\">\n");
 	}
 	elsif ($key eq 'date') {
 		eval q{use Date::Parse};
@@ -90,19 +90,19 @@ sub preprocess (@) { #{{{
 		$meta{$page}.='<link href="'.$stylesheet.
 			'" rel="'.encode_entities($rel).
 			'" title="'.encode_entities($title).
-			"\" style=\"text/css\" />\n";
+			"\" style=\"text/css\">\n";
 	}
 	elsif ($key eq 'openid') {
 		if (exists $params{server}) {
 			$meta{$page}.='<link href="'.encode_entities($params{server}).
-				"\" rel=\"openid.server\" />\n";
+				"\" rel=\"openid.server\">\n";
 		}
 		$meta{$page}.='<link href="'.encode_entities($value).
-			"\" rel=\"openid.delegate\" />\n";
+			"\" rel=\"openid.delegate\">\n";
 	}
 	else {
 		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
-			"\" content=\"".encode_entities($value)."\" />\n");
+			"\" content=\"".encode_entities($value)."\">\n");
 		if ($key eq 'author') {
 			$author{$page}=$value;
 		}

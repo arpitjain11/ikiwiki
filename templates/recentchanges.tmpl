@@ -1,14 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="<TMPL_VAR BASEURL>" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<base href="<TMPL_VAR BASEURL>">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><TMPL_VAR TITLE></title>
-<link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
-<link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
+<link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css">
+<link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css">
 <TMPL_IF NAME="FAVICON">
-<link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/x-icon" />
+<link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/x-icon">
 </TMPL_IF>
 </head>
 <body>
@@ -20,7 +20,7 @@
 </div>
 
 <div id="content">
-<br />
+<br>
 <table border="1" frame="border" rules="groups">
 <thead>
 	<tr class="changeheader">
@@ -39,7 +39,7 @@
 		<TMPL_LOOP NAME="PAGES">
 			<TMPL_IF NAME="DIFFURL">
 				<a href="<TMPL_VAR NAME="DIFFURL">">
-				<img alt="diff" src="wikiicons/diff.png" />
+				<img alt="diff" src="wikiicons/diff.png">
 				</a>
 				<TMPL_VAR NAME="LINK">
 			<TMPL_ELSE>
@@ -53,7 +53,7 @@
 		<td class="changelog" colspan="4">
 			<TMPL_LOOP NAME="MESSAGE">
 				<TMPL_IF NAME="LINE">
-					<TMPL_VAR NAME="LINE" ESCAPE="HTML"><br />
+					<TMPL_VAR NAME="LINE" ESCAPE="HTML"><br>
 				</TMPL_IF>
 			</TMPL_LOOP>
 		</td>

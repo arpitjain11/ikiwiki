@@ -101,7 +101,7 @@ sub preprocess (@) { #{{{
 		'" height="'.$im->Get("height").'"'.
 		(exists $params{class} ? ' class="'.$params{class}.'"' : '').
 		(exists $params{id} ? ' id="'.$params{id}.'"' : '').
-		' /></a>';
+		'></a>';
 } #}}}
 
 1
