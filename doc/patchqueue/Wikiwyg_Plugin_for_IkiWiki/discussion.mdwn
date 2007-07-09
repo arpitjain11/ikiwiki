@@ -1,0 +1,33 @@
+Very nice! There are some rough spots yes, but this looks exactly as I'd
+hoped it would, and seems close to being ready for merging.
+
+A few observations, in approximate order of priority:
+
+* What's the copyright and license of showdown? Please include that from
+  the original zip file.
+* What happens if there are concurrent edits? The CGI.pm modification to
+  save an edited wikiwyg part doesn't seem to check if the source file has
+  changed in the meantime, so if the part has moved around, it might
+  replace the wrong part on saving. I've not tested this.
+* The stuff you have in destdir now really belongs in basewiki so it's
+  copied over to any destdir.
+* Personally, I'm not sure if I need double-click to edit a section in my
+  wiki, but I'd love it if the edit form in the cgi could use wikiwyg. Seems
+  like both of these could be independent options. Doable, I'm sure?
+* It would be good to move as much as possible of the inlined javascript in
+  wikiwyg.tmpl out to a separate .js file to save space in the rendered
+  pages.
+* Both this plugin and the [[Gallery_Plugin_for_Ikiwiki/]] are turning out
+  to need to add a bunch of pages to the basewiki. I wonder what would be a
+  good way to do this, without bloating the basewiki when the plugins arn't
+  used. Perhaps the underlaydir concept needs to be expanded so it's a set
+  of directories, which plugins can add to. Perhaps you should work with
+  arpitjain on this so both plugins can benefit. (The smiley plugin would
+  also benefit from this..)
+* Is there any way of only loading enough of wikiwyg by default to catch
+  the section double-clicks, and have it load the rest on the fly? I'm
+  thinking about initial page load time when visiting a wikiwyg-using wiki
+  for the first time. I count 230k or so of data that a browser downloads
+  in that case..
+
+--[[Joey]]
