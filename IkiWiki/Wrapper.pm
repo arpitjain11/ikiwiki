@@ -33,7 +33,7 @@ sub gen_wrapper () { #{{{
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"
 	if ((s=getenv("$var")))
-		asprintf(&newenviron[i++], "%s=%s", "$var", s);
+		addenv("$var", s);
 EOF
 	}
 	if ($config{rcs} eq "svn" && $config{notify}) {
@@ -41,15 +41,15 @@ EOF
 		# $2 in REV in the environment.
 		$envsave.=<<"EOF"
 	if (argc == 3)
-		asprintf(&newenviron[i++], "REV=%s", argv[2]);
+		addenv("REV", argv[2]);
 	else if ((s=getenv("REV")))
-		asprintf(&newenviron[i++], "%s=%s", "REV", s);
+		addenv("REV", s);
 EOF
 	}
 	if ($config{rcs} eq "tla" && $config{notify}) {
 		$envsave.=<<"EOF"
 	if ((s=getenv("ARCH_VERSION")))
-		asprintf(&newenviron[i++], "%s=%s", "ARCH_VERSION", s);
+		addenv("ARCH_VERSION", s);
 EOF
 	}
 	
@@ -64,7 +64,6 @@ EOF
 	open(OUT, ">$wrapper.c") || error(sprintf(gettext("failed to write %s: %s"), "$wrapper.c", $!));;
 	print OUT <<"EOF";
 /* A wrapper for ikiwiki, can be safely made suid. */
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -72,12 +71,20 @@ EOF
 #include <string.h>
 
 extern char **environ;
+char *newenviron[$#envsave+5];
+int i=0;
+
+addenv(char *var, char *val) {
+	char *s=malloc(strlen(var)+1+strlen(val)+1);
+	if (!s)
+		perror("malloc");
+	sprintf(s, "%s=%s", var, val);
+	newenviron[i++]=s;
+}
 
 int main (int argc, char **argv) {
 	/* Sanitize environment. */
 	char *s;
-	char *newenviron[$#envsave+5];
-	int i=0;
 $envsave
 	newenviron[i++]="HOME=$ENV{HOME}";
 	newenviron[i++]="WRAPPED_OPTIONS=$configstring";
@@ -90,7 +97,7 @@ $envsave
 	}
 
 	execl("$this", "$this", NULL);
-	perror("failed to run $this");
+	perror("exec $this");
 	exit(1);
 }
 EOF
