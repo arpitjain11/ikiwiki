@@ -31,21 +31,26 @@ sub scrubber { #{{{
 			span strike strong sub sup table tbody td textarea
 			tfoot th thead tr tt u ul var
 		}],
-		default => [undef, { map { $_ => 1 } qw{
-			abbr accept accept-charset accesskey action
-			align alt axis border cellpadding cellspacing
-			char charoff charset checked cite class
-			clear cols colspan color compact coords
-			datetime dir disabled enctype for frame
-			headers height href hreflang hspace id ismap
-			label lang longdesc maxlength media method
-			multiple name nohref noshade nowrap prompt
-			readonly rel rev rows rowspan rules scope
-			selected shape size span src start summary
-			tabindex target title type usemap valign
-			value vspace width
-		}, "/" => 1, # emit proper <hr /> XHTML
-		}],
+		default => [undef, { (
+			map { $_ => 1 } qw{
+				abbr accept accept-charset accesskey action
+				align alt axis border cellpadding cellspacing
+				char charoff charset checked cite class
+				clear cols colspan color compact coords
+				datetime dir disabled enctype for frame
+				headers height href hreflang hspace id ismap
+				label lang longdesc maxlength media method
+				multiple name nohref noshade nowrap prompt
+				readonly rel rev rows rowspan rules scope
+				selected shape size span src start summary
+				tabindex target title type usemap valign
+				value vspace width
+			} ),
+			"/" => 1, # emit proper <hr /> XHTML
+			"style" => qr{^[-a-zA-Z0-9]+$}, # only very simple
+							# references allowed,
+							# to avoid javascript
+			}],
 	);
 	return $_scrubber;
 } # }}}
