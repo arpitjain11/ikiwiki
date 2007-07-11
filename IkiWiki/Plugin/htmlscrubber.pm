@@ -47,9 +47,6 @@ sub scrubber { #{{{
 				value vspace width
 			} ),
 			"/" => 1, # emit proper <hr /> XHTML
-			"style" => qr{^[-a-zA-Z0-9]+$}, # only very simple
-							# references allowed,
-							# to avoid javascript
 			}],
 	);
 	return $_scrubber;
