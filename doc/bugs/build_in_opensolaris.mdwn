@@ -32,4 +32,42 @@ Thanks, Joey et al., for a really cool tool.
 >> one that uses portable functions (safely), rather than one that includes
 >> an asprintf implementation in ikiwiki. --[[Joey]]
 
+> I got ikiwiki working (sort of) on OpenSolaris today.  I ran into this problem too, and wrote a version of asprintf() from scratch which uses more portable APIs:
+ 
+<code>
+    #include &lt;stdarg.h&gt;
+ 
+    int
+    asprintf(char **string_ptr, const char *format, ...)
+    {
+        va_list arg;
+        char *str;
+        int size;
+        int rv;
+ 
+        va_start(arg, format);
+        size = vsnprintf(NULL, 0, format, arg);
+        size++;
+        va_start(arg, format);
+        str = malloc(size);
+        if (str == NULL) {
+                va_end(arg);
+                /*
+                 * Strictly speaking, GNU asprintf doesn't do this,
+                 * but the caller isn't checking the return value.
+                 */
+                fprintf(stderr, "failed to allocate memory\\n");
+                exit(1);
+        }
+        rv = vsnprintf(str, size, format, arg);
+        va_end(arg);
+ 
+        *string_ptr = str;
+        return (rv);
+    }
+
+</code>
+
+> I added this after the rest of the #include's in Wrapper.pm, and it seems to work. --Blake
+
 [[bugs/done]]
