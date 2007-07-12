@@ -18,3 +18,216 @@ ManojSrivastava
 >     \[[if test="destpage(/index)" then="""...""" else="""..."""]]
 >
 > --[[JoshTriplett]]
+
+> Here's a dump of the file Manoj sent me, for reference.
+> 
+> My take on this is that simple plugins can do the same sort of things, this is
+> kind of wanting to avoid the plugin mechanism and just use templates and
+> stuff in the config file. Not too thrilled about that. --[[Joey]]
+
+----
+
+<pre>
+* looking for srivasta@debian.org--2006-misc/ikiwiki--upstream--1.0--patch-488 to compare with
+* comparing to srivasta@debian.org--2006-misc/ikiwiki--upstream--1.0--patch-488: ................................................................ done.
+
+* added files
+
+--- /dev/null
++++ mod/IkiWiki/Plugin/.arch-ids/varioki.pm.id
+@@ -0,0 +1 @@
++Manoj Srivastava <srivasta@debian.org> Thu Dec  7 12:59:07 2006 12659.0
+--- /dev/null
++++ mod/IkiWiki/Plugin/varioki.pm
+@@ -0,0 +1,190 @@
++#!/usr/bin/perl
++#                              -*- Mode: Cperl -*- 
++# varioki.pm --- 
++# Author           : Manoj Srivastava ( srivasta@glaurung.internal.golden-gryphon.com ) 
++# Created On       : Wed Dec  6 22:25:44 2006
++# Created On Node  : glaurung.internal.golden-gryphon.com
++# Last Modified By : Manoj Srivastava
++# Last Modified On : Thu Dec  7 13:07:36 2006
++# Last Machine Used: glaurung.internal.golden-gryphon.com
++# Update Count     : 127
++# Status           : Unknown, Use with caution!
++# HISTORY          : 
++# Description      : 
++# 
++# arch-tag: 6961717b-156f-4ab2-980f-0d6a973aea21
++#
++# Copyright (c) 2006 Manoj Srivastava <srivasta@debian.org>
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++#
++
++require 5.002;
++
++package IkiWiki::Plugin::varioki;
++
++use warnings;
++use strict;
++use IkiWiki '1.00';
++
++our $VERSION = "0.1";
++my $file = __FILE__;
++
++
++=head1 NAME
++
++varioki - Add variables for use in ikiwiki templates
++
++=cut
++
++=head1 DESCRIPTION
++
++This plugin attempts to provide a means to add templates for use in
++ikiwiki templates, based on a hash variable set in the ikiwiki
++configuration file. The motivation for this plugin was to provide an
++easy way for end users to add information to be used in templates --
++for example, my C<Blosxom> blog entry template does fancy things with
++the date components of the entry, and there was no easy way to get
++that information into the template. Or if one wants to have a
++different page template for the top level index page than for the rest
++of the pages in the wiki (for example, to only put special content,
++like, say, C<last.fm> play lists, only on the front page).
++
++This plugin hooks itsef into the C<pagetemplate> hook, and adds
++parameters to the appropriate templates based on the type. For
++example, the following inseted into C<ikiwiki.setup> creates
++C<TMPL_VAR MOTTO>, C<ARRAYVAR>, C<HASHVAR> and C<TOPLVL> which can
++then be used in your templates. The array and hash variables are only
++for completeness; I suspect that the first two forms are all that are
++really required.
++
++ varioki => {
++   'motto'    => '"Manoj\'s musings"',
++   'toplvl'   => 'sub {return $page eq "index"}',
++   'arrayvar' => '[0, 1, 2, 3]',
++   'hashvar'  => '{1, 1, 2, 2}'
++ },
++
++Please note that the values in the hash must be simple strings which
++are then eval'd, so a string value has to be double quoted, as above
++(the eval strips off the outer quotes).  
++
++=cut
++
++
++sub import { #{{{
++	hook(type => "pagetemplate", id => "varioki", call => \&pagetemplate);
++} # }}}
++
++
++=pod
++
++For every key in the configured hash, the corresponding value is
++evaluated.  Based on whether the value was a stringified scalar, code,
++array, or hash, the value of the template parameter is generated on
++the fly.  The available variables are whatever is available to
++C<pagetemplate> hook scripts, namely, C<$page>, C<$destpage>, and
++C<$template>.  Additionally, the global variables and functions as
++defined in the Ikiwiki documentation
++(L<http://ikiwiki.kitenet.net/plugins/write.html>) may be used.
++
++=cut
++
++sub pagetemplate (@) { #{{{
++	my %params=@_;
++	my $page=$params{page};
++	my $template=$params{template};
++        
++        return unless defined $config{varioki};
++         for my $var (keys %{$config{varioki}}) {
++           my $value;
++           my $foo;
++           eval "\$foo=$config{varioki}{$var}";
++           if (ref($foo) eq "CODE") {
++             $value = $foo->();
++           }
++           elsif (ref($foo) eq "SCALAR") {
++             $value = $foo;
++           }
++           elsif (ref($foo) eq "ARRAY") {
++             $value = join ' ', @$foo;
++           }
++           elsif (ref($foo) eq "HASH") {
++             for my $i (values %$foo ) {
++               $value .= ' ' . "$i";
++             }
++           }
++           else {
++             $value = $foo;
++           }
++           warn "$page $var $value\n";
++           if ($template->query(name => "$var")) {
++             $template->param("$var" =>"$value");
++           }
++        }
++} # }}}
++
++1;
++
++=head1 CAVEATS
++
++This is very inchoate, at the moment, and needs testing. Also, there
++is no good way to determine how to handle hashes as values --
++currently, the code just joins all hash values with spaces, but it
++would be easier for the user to just use an anonymous sub instead of
++passing in a hash or an array.
++
++=cut
++
++=head1 BUGS
++
++Since C<ikiwiki> evals the configuration file, the values have to all
++on a single physical line. This is the reason we need to use strings
++and eval, instead of just passing in real anonymous sub references,
++since the eval pass converts the coderef into a string of the form
++"(CODE 12de345657)" which can't be dereferenced.
++
++=cut
++
++=head1 AUTHOR
++
++Manoj Srivastava <srivasta@debian.org>
++
++=head1 COPYRIGHT AND LICENSE
++
++This script is a part of the Devotee package, and is 
++
++Copyright (c) 2002 Manoj Srivastava <srivasta@debian.org>
++
++This program is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation; either version 2 of the License, or
++(at your option) any later version.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with this program; if not, write to the Free Software
++Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++
++=cut
++
++1;
++
++__END__
++
+</pre>
