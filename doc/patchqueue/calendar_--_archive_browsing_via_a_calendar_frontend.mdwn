@@ -593,16 +593,16 @@ I've been looking over the calendar plugin. Some items:
   that emitting the whole calendar in the preprocess hook would simplify
   things and you'd not need to save state about calendars.
 
-> A) I am scared of the html scrubber, and have never turned it on,
+> I am scared of the html scrubber, and have never turned it on,
 >        and did not look too deeply into what would be scrubbed out --ManojSrivastava
 >> Unless you're using javascript, a few annoyances link <blink>, or inline
 >> css, it's unlikly to object to any html you might write. The list of
 >> allowed tags and attributes is easy to find near the top of the plugin.
 
->     B) In case the option that gets the ctime of the pages from the
->        SCM itself, %IkiWiki::pagectime  is not populated that early,
->        is it? So I waited until the last possible moment to look at
->        the time information.
+> In case the option that gets the ctime of the pages from the
+> SCM itself, %IkiWiki::pagectime  is not populated that early,
+> is it? So I waited until the last possible moment to look at
+> the time information.
 >
 >> Actually, since my big rewrite of the rendering path a few months ago,
 >> ikiwiki scans and populates almost all page information before starting
