@@ -7,7 +7,7 @@ ikiwiki (2.4) UNRELEASED; urgency=low
   * Support building on systems that lack asprintf.
   * mercurial getctime is currently broken, apparently by some change in
     mercurial version 0.9.4. Turn the failing test case into a TODO test case.
-  * Fix links to alternate stylesheets when usedirs is enabled.
+  * Fix links to alternate stylesheets when usedirs is enabled. Closes: #432556
   * Use type= not style= in html for alternate stylesheets, which is more
     correct (but in my testing both epiphany and iceweasel work ok with
     style=text/css).
