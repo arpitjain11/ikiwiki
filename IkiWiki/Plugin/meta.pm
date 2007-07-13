@@ -87,7 +87,7 @@ sub preprocess (@) { #{{{
 		if (! length $stylesheet) {
 			return "[[meta ".gettext("stylesheet not found")."]]";
 		}
-		$meta{$page}.='<link href="'.$stylesheet.
+		$meta{$page}.='<link href="'.urlto($stylesheet, $page).
 			'" rel="'.encode_entities($rel).
 			'" title="'.encode_entities($title).
 			"\" style=\"text/css\" />\n";
