@@ -29,5 +29,26 @@ Conversely, how about adding a plugin to support exporting to LaTeX?
 a latex plugin. Examples [here](http://ng.l4x.org/latex/). Currently without image support for hevea. And the latex2html
 output has the wrong charset and no command line switch to change that. Dreamland.
 
+----
+
+Okay, now is the time for a mid term report i think.
+
+The LaTeX Plugin for ikiwiki is now usable, except for the security check. This means at the moment the latex code is not validated, but only added into a very basic latex template. and the image is generated via this path: latex -> dvips -> convert (.tex -> .dvi -> .ps -> .png).
+The resulting .png is moved into the imagefolder. The name of this image is the md5hash of the code the user wrote into the wiki. So on a second run there is no need to recreate this image, if it exists. This will fasten up all but the first generation of the page. 
+The generation of the image is done in an temporary folder in /tmp created with tempdir from File::Temp. The tmp-folder name is something like: $md5sumdigest.XXXXXXXX. if there is an .tex file already in this dir it will be overwritten. 
+
+So until now i finished the basic things, now the most important task is to make an good input validation.
+This is a bit eased since it is not possible to execute shell commands in perl. Furthermore adding additional packages won't work since the code comes from the user is inserted after \begin{document}. Therefore this will result in an error (and this will stop latex from working --> no image is created).
+
+So my task for the next weeks is to write an good input validation. 
+I think this progress is okay, since I'll had to learn the last 5-6 weeks for my final exams in university therefore I can't do anything. From now on I have 3 months of freetime and I'll use them to work heavily on this plugin. 
+So I think I'm inside my own timetable. :)
+
+ps: Since I found nothere the possibility to upload an file, here is an link to my page where you can have a look. Comments are very welcome ;-)
+https://www.der-winnie.de/~winnie/gsoc07/tex.pm
+
+-- Patrick Winnertz
+
+----
 
 [[tag soc]]
