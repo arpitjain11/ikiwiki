@@ -53,6 +53,26 @@ I'll add some more complex formulas over the days. But this is basically only pu
 
 -- Patrick Winnertz
 
+> Looks like you're very well on schedule.
+
+> The main problem I see with the code is that you seem to unnecessarily create a dummy div tag
+> in preprocess, and then in format you call create(), which generates an img tag. So, why not 
+> just create the img tag in preprocess?
+
+> Another problem: Looks like if latex fails to create the image, the user won't be shown any
+> of its error message, but just "failed to generate image from code". I suspect that in this 
+> case being able to see the error message would be important.
+
+> The url handling could stand to be improved. Currently it uses $config{url}, so it depends on that being set. Some ikiwiki builds don't have an url set. The thing to do is to use urlto(), to generate a nice relative url from the page to the image. 
+
+> Another (minor) problem with the url handling is that you put all the images in a "teximages" directory in the toplevel of the wiki. I think it would be better to put each image in the subdirectory for the page that created it. See how the `img` and `sparkline` plugins handle this.
+
+> It looks like if the tempdir already exists, tempdir() will croak(), thus crashing ikiwiki. It would be good to catch a failure there and fail more gracefully.
+
+> I'm not sure why you're sanitising the PATH before calling latex. This could be problimatic on systems where latex is not in /bin or /usr/bin.
+
+> --[[Joey]]
+
 ----
 
 [[tag soc]]
