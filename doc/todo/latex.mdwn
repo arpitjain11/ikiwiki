@@ -55,6 +55,12 @@ I'll add some more complex formulas over the days. But this is basically only pu
 
 > Looks like you're very well on schedule.
 
+> I wonder, do you have any plans to work on the latex to html side of
+> things too? This page kinda combines both uses of latex; creating gifs
+> for formulas etc, and creating html. Dreamland already has a latex2html
+> using plugin submitted above, but it still needs some work, and
+> particularly, needs the same input validation stuff.
+
 > The main problem I see with the code is that you seem to unnecessarily create a dummy div tag
 > in preprocess, and then in format you call create(), which generates an img tag. So, why not 
 > just create the img tag in preprocess?
