@@ -11,8 +11,10 @@ ikiwiki (2.4) UNRELEASED; urgency=low
   * Use type= not style= in html for alternate stylesheets, which is more
     correct (but in my testing both epiphany and iceweasel work ok with
     style=text/css).
+  * In img tag, allow link=no to disable link to full size image. Thanks,
+    Nis Martensen. Closes: #433188
 
- -- Joey Hess <joeyh@debian.org>  Fri, 13 Jul 2007 16:28:47 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 15 Jul 2007 14:59:23 -0400
 
 ikiwiki (2.3) unstable; urgency=low
 

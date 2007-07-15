@@ -96,12 +96,19 @@ sub preprocess (@) { #{{{
 		return "[[img ".sprintf(gettext("failed to determine size of image %s"), $file)."]]";
 	}
 
-	return '<a href="'.$fileurl.'"><img src="'.$imgurl.
+	my $imgtag='<img src="'.$imgurl.
 		'" alt="'.$alt.'" width="'.$im->Get("width").
 		'" height="'.$im->Get("height").'"'.
 		(exists $params{class} ? ' class="'.$params{class}.'"' : '').
 		(exists $params{id} ? ' id="'.$params{id}.'"' : '').
-		' /></a>';
+		' />';
+
+	if (! defined $params{link} || lc($params{link}) eq 'yes') {
+		return  '<a href="'.$fileurl.'">'.$imgtag.'</a>';
+	}
+	else {
+		return $imgtag;
+	}
 } #}}}
 
 1

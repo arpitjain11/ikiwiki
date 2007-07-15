@@ -26,6 +26,10 @@ making the image smaller than the specified size.
 You can also pass `alt`, `class` and `id` parameters. These are passed through
 unchanged to the html img tag.
 
+The `link` parameter is used to control whether the scaled down image links
+to the full size version. By default it does; set "link=no" to disable
+this.
+
 You can also set default values that will be applied to all later images on
 the page, unless overridden. Useful when including many images on a page.
 
