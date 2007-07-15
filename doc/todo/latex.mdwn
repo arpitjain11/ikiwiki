@@ -82,6 +82,8 @@ I'll add some more complex formulas over the days. But this is basically only pu
 
 >> Mh okay, I'll improve this. 
 
+Fixed
+
 > Another problem: Looks like if latex fails to create the image, the user won't be shown any
 > of its error message, but just "failed to generate image from code". I suspect that in this 
 > case being able to see the error message would be important.
@@ -94,12 +96,16 @@ I'll add some more complex formulas over the days. But this is basically only pu
 >>> from the rest of the page. (Actually, ikiwiki preprocessor directives in
 >>> general could mark up their errors better.)
 
+Okay, I'll provide the log as an link in the wiki. But there should be a kind of mechanism how they can be removed. This could lead to an DOS (create via a bot so much nonsense code that the disk is full.)
+
 > The url handling could stand to be improved. Currently it uses $config{url}, so it depends on that being set. Some ikiwiki builds don't have an url set. The thing to do is to use urlto(), to generate a nice relative url from the page to the image. 
 
 >> Mh... i choose one single dir explizitly since if you use on several pages the same formula  this would really improve the time to generate the formulas and it would waste extra space if you store every formula 3-4 times. But if you really like I'll change this behaviour. 
 
 >>> No, that makes sense! (My comments about $config{url} still stand
 >>> though.
+
+Yes of course, I'll improve the url handling. My comment was only about the several folder ;-)
 
 > Another (minor) problem with the url handling is that you put all the images in a "teximages" directory in the toplevel of the wiki. I think it would be better to put each image in the subdirectory for the page that created it. See how the `img` and `sparkline` plugins handle this.
 
@@ -111,6 +117,7 @@ I'll add some more complex formulas over the days. But this is basically only pu
 >>> Or just propigate up an error message. If it's failing, someone is
 >>> probably trying to DOS ikiwiki or something. :-)
 
+
 > I'm not sure why you're sanitising the PATH before calling latex. This could be problimatic on systems where latex is not in /bin or /usr/bin
 
 >> Okay what do you suggest to use as PATH? 
@@ -118,6 +125,8 @@ I'll add some more complex formulas over the days. But this is basically only pu
 
 >>> But, ikiwiki already sanitises path and deletes the IFS and CDPATH etc.
 >>> See ikiwiki.in.
+
+Fixed. I'll removed these two lines completly.
 
 > --[[Joey]]
 
