@@ -64,25 +64,45 @@ I'll add some more complex formulas over the days. But this is basically only pu
 > plans to work on that too? I guess I'm not sure what the scope is of what
 > you plan to do as part of GSoC.
 
+Yes I plan to write an html -> tex (or pdf) plugin as well. But I think it is better to work first on the first one and complete it and then work and complete the second one. If it is in the scope of GSoC i don't know, but I'll write it since it is fun to write on an Opensource project ;-)
+
+For latex-> html:
+I have the problem that I don't really see the sense to create html code (this means text or charts) from latex code. But if you like I can also add this variant to create html code. In my eyes it is much more important that it is possible to have complex chemical/physical & math formulas on the website without the need to use extern programs. (and upload the pictures manually).
+
+
 ### code review
 
 > The main problem I see with the code is that you seem to unnecessarily create a dummy div tag
 > in preprocess, and then in format you call create(), which generates an img tag. So, why not 
 > just create the img tag in preprocess?
 
+Mh okay, I'll improve this. 
+
 > Another problem: Looks like if latex fails to create the image, the user won't be shown any
 > of its error message, but just "failed to generate image from code". I suspect that in this 
 > case being able to see the error message would be important.
 
+Yes, that's true. It would be _very_ hard to provide the user the output of latex since this is really very much. For an simple formula as \frac{1}{2} this could be 2 printed out.
+
 > The url handling could stand to be improved. Currently it uses $config{url}, so it depends on that being set. Some ikiwiki builds don't have an url set. The thing to do is to use urlto(), to generate a nice relative url from the page to the image. 
+
+Mh... i choose one single dir explizitly since if you use on several pages the same formula  this would really improve the time to generate the formulas and it would waste extra space if you store every formula 3-4 times. But if you really like I'll change this behaviour. 
+
 
 > Another (minor) problem with the url handling is that you put all the images in a "teximages" directory in the toplevel of the wiki. I think it would be better to put each image in the subdirectory for the page that created it. See how the `img` and `sparkline` plugins handle this.
 
 > It looks like if the tempdir already exists, tempdir() will croak(), thus crashing ikiwiki. It would be good to catch a failure there and fail more gracefully.
+Okay, I'll improve this behaviour. Maybe: if tempdir croak rerun it to get another not existing dir? (But only x times so that this is no endless loop, with x maybe = 3). 
+Then it would not be necessary to inform the user about not generating the image. 
 
-> I'm not sure why you're sanitising the PATH before calling latex. This could be problimatic on systems where latex is not in /bin or /usr/bin.
+> I'm not sure why you're sanitising the PATH before calling latex. This could be problimatic on systems where latex is not in /bin or /usr/bin
+
+Okay what do you suggest to use as PATH? 
+I'll have to change the default settings, since we ikiwiki runs in taint mode. (which is good ;-))
 
 > --[[Joey]]
+
+-- [[PatrickWinnertz]]
 
 ----
 
