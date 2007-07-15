@@ -55,11 +55,16 @@ I'll add some more complex formulas over the days. But this is basically only pu
 
 > Looks like you're very well on schedule.
 
-> I wonder, do you have any plans to work on the latex to html side of
+> But I wonder: Do you have any plans to work on the latex to html side of
 > things too? This page kinda combines both uses of latex; creating gifs
 > for formulas etc, and creating html. Dreamland already has a latex2html
 > using plugin submitted above, but it still needs some work, and
-> particularly, needs the same input validation stuff.
+> particularly, needs the same input validation stuff. And then there's the
+> idea of using html2latex, to convert an ikiwiki site into a book. Any
+> plans to work on that too? I guess I'm not sure what the scope is of what
+> you plan to do as part of GSoC.
+
+### code review
 
 > The main problem I see with the code is that you seem to unnecessarily create a dummy div tag
 > in preprocess, and then in format you call create(), which generates an img tag. So, why not 
