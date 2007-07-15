@@ -116,8 +116,8 @@ I'll add some more complex formulas over the days. But this is basically only pu
 >> Okay what do you suggest to use as PATH? 
 >> I'll have to change the default settings, since we ikiwiki runs in taint mode. (which is good ;-))
 
->>> Take a look at the fortune plugin, I made it use the full standard
->>> path.
+>>> But, ikiwiki already sanitises path and deletes the IFS and CDPATH etc.
+>>> See ikiwiki.in.
 
 > --[[Joey]]
 
