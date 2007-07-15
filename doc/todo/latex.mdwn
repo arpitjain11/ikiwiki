@@ -117,6 +117,8 @@ Yes of course, I'll improve the url handling. My comment was only about the seve
 >>> Or just propigate up an error message. If it's failing, someone is
 >>> probably trying to DOS ikiwiki or something. :-)
 
+Fixed. I now use eval { create_tmp } and then:  if ($?) { $returncode = 0 } else { save .tex file ... } ...
+
 
 > I'm not sure why you're sanitising the PATH before calling latex. This could be problimatic on systems where latex is not in /bin or /usr/bin
 
