@@ -316,6 +316,7 @@ sub cgi_editpage ($$) { #{{{
 		javascript => 0,
 		params => $q,
 		action => $config{cgiurl},
+		header => 0,
 		table => 0,
 		template => scalar template_params("editpage.tmpl"),
 		wikiname => $config{wikiname},
@@ -472,6 +473,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "type", type => 'select',
 				options => \@page_types);
 			$form->title(sprintf(gettext("creating %s"), pagetitle($page)));
+			
 		}
 		elsif ($form->field("do") eq "edit") {
 			check_canedit($page, $q, $session);
@@ -491,7 +493,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->title(sprintf(gettext("editing %s"), pagetitle($page)));
 		}
 		
-		print $form->render(submit => \@buttons);
+		printheader($session);
+		print misctemplate($form->title, $form->render(submit => \@buttons));
 	}
 	else {
 		# save page
@@ -504,7 +507,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			print $form->render(submit => \@buttons);
+			printheader($session);
+			print misctemplate($form->title, $form->render(submit => \@buttons));
 			return;
 		}
 		elsif (-e "$config{srcdir}/$file" &&
@@ -519,7 +523,8 @@ sub cgi_editpage ($$) { #{{{
 				value => readfile("$config{srcdir}/$file").
 				         "\n\n\n".$form->field("editcontent"),
 				force => 1);
-			print $form->render(submit => \@buttons);
+			printheader($session);
+			print misctemplate($form->title, $form->render(submit => \@buttons));
 			return;
 		}
 		
@@ -541,7 +546,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			print $form->render(submit => \@buttons);
+			printheader($session);
+			print misctemplate($form->title, $form->render(submit => \@buttons));
 			return;
 		}
 		
@@ -585,7 +591,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			print $form->render(submit => \@buttons);
+			printheader($session);
+			print misctemplate($form->title, $form->render(submit => \@buttons));
 			return;
 		}
 		else {

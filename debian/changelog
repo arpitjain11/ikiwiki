@@ -1,3 +1,11 @@
+ikiwiki (2.5) UNRELEASED; urgency=low
+
+  * Wrap the editpage template in the standard misctemplate, this allows the
+    pagetemplate hook to work for that page.
+  * Above change fixes the favicon plugin to work on edit pages.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 16 Jul 2007 01:11:03 -0400
+
 ikiwiki (2.4) unstable; urgency=low
 
   * Make the toc plugin use html-compatible anchors. This is necessary since
