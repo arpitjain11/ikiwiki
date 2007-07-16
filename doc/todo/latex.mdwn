@@ -130,6 +130,17 @@ Fixed. I now use eval { create_tmp } and then:  if ($?) { $returncode = 0 } else
 
 Fixed. I'll removed these two lines completly.
 
+-----
+Okay here an short timetable how I want to proceed further:
+
+* Until weekend (21-22. July) I'll try to fix all errors above.
+* From 22.July until 29. July I'll try to set up a first security check
+  My plans are two parts of a security check:
+    * One with an array of blacklisted regular expression. (This would blacklist all the well known and easy to fetch things like \include {/path/to/something} and things like closing the math formula environment ($$).
+    * the second step will be based on Tom::latex, which will help to parse and get a tree view of the code.
+
+Okay what do you think of this procedure?
+
 > --[[Joey]]
 
 >> -- [[PatrickWinnertz]]
