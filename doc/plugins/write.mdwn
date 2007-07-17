@@ -422,7 +422,9 @@ This is the standard gettext function, although slightly optimised.
 
 #### `urlto($$)`
 
-Construct a relative url to the first parameter from the second.
+Construct a relative url to the first parameter from the page named by the
+second. The first parameter can be either a page name, or some other
+destination file, as registered by `will_render`.
 
 #### `targetpage($$)`
 
