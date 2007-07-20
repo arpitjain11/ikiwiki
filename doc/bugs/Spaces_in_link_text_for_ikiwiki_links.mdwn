@@ -1,3 +1,36 @@
-Versions 2.0 and 2.1 of ikiwiki, and I think earlier versions as well, allowed wiki links to have spaces in the link text. For example, [[ikiwiki logo page|logo]] should create an anchor tag referencing the logo page, and [[ikiwiki logo|logo/ikiwiki.png]] should create an image tag referencing the logo.
+Versions 2.0 and 2.1 of ikiwiki, and I think earlier versions as well,
+allowed wiki links to have spaces in the link text. For example, [[ikiwiki
+logo page|logo]] should create an anchor tag referencing the logo page, and
+[[ikiwiki logo|logo/ikiwiki.png]] should create an image tag referencing
+the logo.
 
-As of version 2.2, this no longer works. I think the pattern \\[[...|...]] should allow spaces before the pipe. I suspect this is the same problem as reported in [[index/discussion#index11h1]].
+As of version 2.2, this no longer works. I think the pattern \\[[...|...]]
+should allow spaces before the pipe. I suspect this is the same problem as
+reported in [[index/discussion#index11h1]].
+
+> The above examples are ambiguous, only worked due to a bug, and were
+> never documented to work. So I'm not inclined to re-add support for them.
+> 
+> If you look at [[WikiLink]], it is clear that spaces cannot be used in
+> WikiLinks. It also shows how to use underscores in the link text if you
+> want multiple words.
+>
+> This was a decision I made a long time ago due to the ambiguity between a
+> WikiLink and a [[PreProcessorDirective]]. Is "\[[foo bar|baz]]" a wikilink to
+> baz with a link text of "foo bar", or an instance of preprocessor
+> directive "foo" with a parameter of "bar|baz"? If it's interpreted as a 
+> wikilink today, that could change tomorrow if a new preprocessor directive
+> is added.
+> 
+> Before version 2.2, ikiwiki actually first treated it as a preprocessor
+> directive. If that failed, it output the preprocessor directive back onto
+> the page, and next the wikilink code tried treating it as a wikilink.
+> In 2.2, I fixed several problems with the way an unhandled preprocessor
+> directive was re-output onto the page, by prefixing it with a '\' ...
+> which makes it not be treated as a WikiLink.
+> 
+> If WikiLinks had ever been documented to work with spaces in them, then
+> I'd feel I needed to support the pre 2.2 behavior, but I don't feel that
+> I have to support old behavior that was never documented and happened due
+> to a bug, so I current have no plans to bring the old behavior back.
+> --[[Joey]]
