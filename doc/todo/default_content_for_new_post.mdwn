@@ -13,3 +13,11 @@ every new post, which could help for [[/plugins]] (automatically use the
 plugin template), or for [[/bugs]] and [[todo_items|/todo]] (automatically use
 a template that appends "(done)" to the title if the page links to
 "done"). --[[JoshTriplett]]
+
+> This is a feature I miss a lot from MoinMoin, and is especially helpful when you maintain pages which have a regular format (eg. recipe pages).  I understand that using svn would bypass this feature but I think it's worth considering anyway because:
+
+> * For any given site often it's only the admin user who makes changes via svn, everyone else uses the web
+> * It's remote and casual users who benefit most from having standard templates to use for new pages
+> * When using svn to make changes it's easier to manually provide template functionality (eg. cp recipe_template.mdwn newpage.mdwn)
+
+> All of course bearing in mind that I'm just commenting because I don't have the skills to actually make the required changes. ;-) -- [[AdamShand]]
