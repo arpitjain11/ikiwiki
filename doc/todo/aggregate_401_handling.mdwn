@@ -1,11 +1,11 @@
-The aggregate plugin's handling of http 401 (moved permanently) could be
+The aggregate plugin's handling of http 301 (moved permanently) could be
 improved. Per [[rfc 1945]]:
 
 > The requested resource has been assigned a new permanent URL
 > and any future references to this resource should be done
 > using that URL.
 
-So ideally aggregate would notice the 401 and use the new url henceforth.
+So ideally aggregate would notice the 301 and use the new url henceforth.
 
 It's a little tricky because the aggregate plugin can't just edit the page and
 change the url in the preprocessor directive. (Because committing such an
@@ -14,3 +14,7 @@ url for the site, which may also have changed. Perhaps the thing to do is
 record the new url in the aggregate plugin's state file, and change the message
 to "Processed ok (new url http://..)", and let the user deal with updating
 the page later.
+
+----
+
+Assuming they really mean **301** (because 401 is "Unauthorized"), I've updated the body of the text but the page itself should really be renamed. -- adam.
