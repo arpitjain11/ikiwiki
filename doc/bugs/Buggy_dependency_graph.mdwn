@@ -3,29 +3,27 @@ I think there is a problem in my "dependency graph". As an example,
 ikiwiki generated for [my site](http://poivron.org/~nil/misc/ikiwiki_buggy_index)
 (note that the site changed since this index was generated).
 
-Some **HUGE** dependencies appear, like
+Some **HUGE** dependencies appear, clearly non optimal, like
 
-    depends=((((((....((((((A|B)|A)|C)|A)|D)|A)|E)|A)|F)|A)|G....)
+    depends = A｜ B | A | C | A | D | A | E | A | F | A | G | 
 
-    depends=((((((....((((((A|B)|C)|D)|A)|B)|C)|D)|A)|B)|C)|A)|B....)
+or 
+
+    depends= A | B | C | D | A | B | C | D | A | B | C | D |
 
 Couldn't isolate the cause, but some sources for this problem may be:
 
 * related to the img module
-
-* very visible because one of my pages includes 80 resized images
+* easily observable in my sire because one of my pages includes 80 resized images
 
 Other special things in my templates and site:
 
 * a sidebar with \[[include pages="notes/\*" template=foo]] while notes.mdwn has 
   a \[[include pages="notes/*"]] and uses the sidebar; removed it, doesn't change
-
 * a template (biblio.tmpl) calling the "img" plugin with a template parameter as the
   image filename; removed it, doesn't change
-
 * some strange games with tags whose page calls a "map" directive to show other tags
   shile tags are also used in tagclouds (in the sidebar and in the main pages)
-
 * ...
 
 I observed these problems (same *kind*, I didn't check in details) on
@@ -33,6 +31,6 @@ I observed these problems (same *kind*, I didn't check in details) on
 * ikiwiki 2.00gpa1 + v5.8.4 + Debian 3.1
 * ikiwiki 2.3 + v5.8.8 + Ubuntu 7.04
 
-I can think about stripping down my wiki source and making it available online for analysis.
+I can think about reducung the size of my wiki source and making it available online for analysis.
 
 -- NicolasLimare
