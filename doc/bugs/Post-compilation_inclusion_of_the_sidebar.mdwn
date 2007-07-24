@@ -12,7 +12,7 @@ Different things could be possible:
 * consider the *real* dependencies; pageA may include the title (only) of pageB, but don't need to be recompiled 
 after each typo correction on pageB.
 
-shtml output is a potential security hole and can DoS the site, but it's not a problem for a 
+shtml output with open cgi web access is a potential security hole and can DoS the site, but it's not a problem for a 
 single-editor site.
 
 NicolasLimare
