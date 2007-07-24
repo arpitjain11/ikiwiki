@@ -1,0 +1,18 @@
+In some sites (mine, for example), the pages are quasi-static, while the sidebar must be updated at each commit
+(because it contains some lists, like "last posts" or "last updates", or a tagcloud). As this sidebar is included
+in every page of the site, many commits can potentialy leat to a full re-compilation....
+
+I think a sidebar included after the compilation (via a SSI mechanism for example) would make sense and 
+reduce the dependencies.
+
+Different things could be possible:
+
+* output as .shtml instead of .html
+* ignore the sidebar->page dependency links
+* consider the *real* dependencies; pageA may include the title (only) of pageB, but don't need to be recompiled 
+after each typo correction on pageB.
+
+shtml output is a potential security hole and can DoS the site, but it's not a problem for a 
+single-editor site.
+
+NicolasLimare
