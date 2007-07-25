@@ -1,4 +1,7 @@
-I'll be using IkiWiki primarily as a blog, so I want a way to view entries by date. A URL of the form `/date/YYYY/MM/DD.html` (or `/date/YYYY/MM/DD/` when using the `use_dirs` patch) should show posts from that period. ATM, I have this:
+I'll be using IkiWiki primarily as a blog, so I want a way to view entries
+by date. A URL of the form `/date/YYYY/MM/DD.html` (or `/date/YYYY/MM/DD/`
+when using the `use_dirs` patch) should show posts from that period. ATM, I
+have this:
 
 <pre>
 Index: IkiWiki/Plugin/datearchives.pm
@@ -68,3 +71,5 @@ This works (although accessing `%IkiWiki::pagectime` is not too clever), but it 
 >>> No reason to delete this from the queue, it's a reasonable plugin. I
 >>> might move it to the contributed plugins directory as it's a bit
 >>> specialised to be included in ikiwiki though. --[[Joey]]
+
+[[tag patch]]

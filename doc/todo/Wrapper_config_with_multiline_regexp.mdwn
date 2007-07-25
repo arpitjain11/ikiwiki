@@ -1,7 +1,11 @@
-Turning the wikilink regexp into an extended regexp on the svn trunk seems to have broken the setuid wrapper on my system, because of two reasons: First, the wrapper generator should turn each newline in $configstring into `\n` in the C code rather than `\` followed by a newline in the C code.  Second, the untainting of $configstring should allow newlines.
+Turning the wikilink regexp into an extended regexp on the svn trunk seems
+to have broken the setuid wrapper on my system, because of two reasons:
+First, the wrapper generator should turn each newline in $configstring into
+`\n` in the C code rather than `\` followed by a newline in the C code.
+Second, the untainting of $configstring should allow newlines.
 
 > Both of these problems were already dealt with in commit r3714, on June
-> 3rd. Confused why you're posting patches for them now. --[[Joey]]
+> 3rd. Confused why you're posting patches for them now. [[done]] --[[Joey]]
 
     Modified: wiki-meta/perl/IkiWiki.pm
     ==============================================================================
