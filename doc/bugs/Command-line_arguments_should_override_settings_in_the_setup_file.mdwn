@@ -16,8 +16,13 @@ So two suggestions to fix this:
 
 1. Make command-line arguments override settings in the setup file
 
+> This is difficult to do, since reading a setup file replaces values for
+> config items with the values in the setup file.
+
 2. Comment out all settings in the example setup file that are simply
    setting options to their default values. That way, the file will
    still be self-documenting, but command-line arguments will at least
    work for these settings while they remain commented out.
 
+> I've done that, I also fixed some issues with --verbose handling earlier.
+> --[[Joey]]

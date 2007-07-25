@@ -1,1 +1,15 @@
 After editing a page `pagename`, ikiwiki redirects to `pagename/index.html?updated`.  Ignoring for the moment that ?updated seems like a bad idea to begin with, this should at least not introduce /index.html into the URL.
+
+> The "?updated" works around caching issues with certain broken browsers,
+> web proxys, and/or webservers. These assume that since the "?" is there,
+> the page is not static, or is a different page, thus forcing the page to
+> be reloaded and the edited version seen. So no, not a bad idea, really.
+> 
+> Removing the index.html would probably break this workaround.
+> http://foo/bar/?updated will redirect to http://foo/bar/index.html, and
+> said broken software will then display its old out of date cached
+> version.
+> 
+> So, not changing this. [[tag done]]
+> 
+> --[[Joey]]
