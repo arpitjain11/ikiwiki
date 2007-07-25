@@ -54,6 +54,7 @@ sub defaultconfig () { #{{{
 	syslog => 0,
 	wikiname => "wiki",
 	default_pageext => "mdwn",
+	htmlext => "html",
 	cgi => 0,
 	post_commit => 0,
 	rcs => '',
@@ -256,7 +257,7 @@ sub targetpage ($$) { #{{{
 sub htmlpage ($) { #{{{
 	my $page=shift;
 	
-	return targetpage($page, "html");
+	return targetpage($page, $config{htmlext});
 } #}}}
 
 sub srcfile ($) { #{{{
@@ -466,7 +467,7 @@ sub displaytime ($) { #{{{
 sub beautify_url ($) { #{{{
 	my $url=shift;
 
-	$url =~ s!/index.html$!/!;
+	$url =~ s!/index.$config{htmlext}$!/!;
 	$url =~ s!^$!./!; # Browsers don't like empty links...
 
 	return $url;

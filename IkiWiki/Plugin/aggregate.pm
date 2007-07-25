@@ -475,7 +475,7 @@ sub pagefile ($) { #{{{
 } #}}}
 
 sub htmlfn ($) { #{{{
-	return shift().".html";
+	return shift().".".$config{htmlext};
 } #}}}
 
 1
