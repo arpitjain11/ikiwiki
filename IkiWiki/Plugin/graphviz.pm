@@ -41,7 +41,6 @@ sub render_graph (\%) { #{{{
 		$pid=open2(*IN, *OUT, "$params{prog} -Tpng");
 
 		# open2 doesn't respect "use open ':utf8'"
-		binmode (IN, ':utf8');
 		binmode (OUT, ':utf8');
 
 		print OUT $src;

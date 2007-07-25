@@ -8,6 +8,10 @@ is hard-coded in Makefile.PL.
 The patch below makes it possible to install those files to alternative directories
 while the default stays as it is now.
 
+> It should be possible to use the existing MakeMaker variables such as
+> INSTALLMAN1DIR (though MakeMaker lacks one for man8). I'd prefer not
+> adding new variables where MakeMaker already has them. --[[Joey]]
+
 <pre>
 
   - Introduce two variables, IKI_MANDIR and IKI_W3MCGIDIR, to be set from

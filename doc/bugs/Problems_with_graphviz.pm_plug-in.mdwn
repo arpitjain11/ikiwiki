@@ -3,7 +3,13 @@ The graphviz.pm plug-in currently attempts to read PNG data in UTF-8 mode, which
     utf8 "\x89" does not map to Unicode at /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki/Plugin/graphviz.pm line 53, <IN> chunk 1.
     Wide character in subroutine entry at /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki/Plugin/graphviz.pm line 68.
 
+> Ok, will remove the binmode IN then. [[done]] --[[Joey]]
+
 It also generates image URLs relative to the page being rendered, which means the URLs wont work when previewing a graph from the CGI script.
+
+> You seem to be using an old version of ikiwiki, these preview isues have
+> been fixed for some time, and the code doesn't look like what you patch
+> in your second hunk. --[[Joey]]
 
 The patch below fixes these two issues.
 

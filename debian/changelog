@@ -8,8 +8,11 @@ ikiwiki (2.5) UNRELEASED; urgency=low
     it.
   * Add a htmlext config option, this can be used to make ikiwiki generate
     html files with a different extension.
+  * Fix graphviz plugin to not try to read images as utf-8; they might
+    sometimes contain invalid utf-8 byte sequences. Thanks,
+    HenrikBrixAndersen.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 24 Jul 2007 21:11:30 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 24 Jul 2007 22:14:41 -0400
 
 ikiwiki (2.4) unstable; urgency=low
 
