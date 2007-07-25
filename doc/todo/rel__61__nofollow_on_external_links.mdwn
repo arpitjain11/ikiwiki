@@ -1,1 +1,4 @@
 Ikiwiki could optionally use rel=nofollow on all external links, or on all those from a configurable subset of pages (such as */discussion if using [[plugins/opendiscussion]]). --[[JoshTriplett]]
+
+> This is tricky, and would need a html parser, since external links can be
+> added in lots of ways including raw in markdown. --[[Joey]]

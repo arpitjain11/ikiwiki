@@ -17,7 +17,9 @@ So two suggestions to fix this:
 1. Make command-line arguments override settings in the setup file
 
 > This is difficult to do, since reading a setup file replaces values for
-> config items with the values in the setup file.
+> config items with the values in the setup file. Also, when you say
+> --setup foo, you're asking ikiwiki to set up the wiki using the
+> comnfiguration in file foo. Which is what it does.
 
 2. Comment out all settings in the example setup file that are simply
    setting options to their default values. That way, the file will
@@ -25,4 +27,6 @@ So two suggestions to fix this:
    work for these settings while they remain commented out.
 
 > I've done that, I also fixed some issues with --verbose handling earlier.
+> I'm pretty sure that those fixes fix the real issue, so calling this
+> [[done]].
 > --[[Joey]]
