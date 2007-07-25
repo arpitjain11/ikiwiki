@@ -1,7 +1,8 @@
 Welcome to ikiwiki's todo list. Link items to [[todo/done]] when done.
 
-Also see the [Debian bugs](http://bugs.debian.org/ikiwiki).
+Also see the [[wishlist]] and [[bugs]] pages.
 
-[[inline pages="todo/* and !todo/done and !link(todo/done) and !todo/*/*"
+[[inline pages="todo/* and !todo/done and !link(todo/done) and
+!link(wishlist) and !todo/*/*"
 feedpages="created_after(todo/supporting_comments_via_disussion_pages)"
 actions=yes rootpage="todo" postformtext="Add a new todo item titled:" show=0]]
