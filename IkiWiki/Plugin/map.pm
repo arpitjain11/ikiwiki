@@ -19,17 +19,20 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 	$params{pages}="*" unless defined $params{pages};
 	
-	# Needs to update whenever a page is added or removed, so
-	# register a dependency.
-	add_depends($params{page}, $params{pages});
-	
 	# Get all the items to map.
 	my @mapitems = ();
-	foreach my $page (keys %links) {
+	foreach my $page (keys %pagesources) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			push @mapitems, $page;
 		}
 	}
+
+	# Needs to update whenever a page is added or removed, so
+	# register a dependency.
+	add_depends($params{page}, $params{pages});
+	# Explicitly add all currently shown pages, to detect when pages
+	# are removed.
+	add_depends($params{page}, join(" or ", @mapitems));
 
 	# Create the map.
 	my $indent=0;
