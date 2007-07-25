@@ -34,3 +34,47 @@ I observed these problems (same *kind*, I didn't check in details) on
 I can think about reducung the size of my wiki source and making it available online for analysis.
 
 -- NicolasLimare
+
+> As long as these dependencies don't grow over time (ie, when a page is
+> edited and nothing changed that should add a dependency), I wouldn't
+> worry about them. There are many things that can cause non-optimal
+> dependencies to be recorded. For one thing, if you inline something, ikiwiki
+> creates a dependency like:
+> 
+> (PageSpec) or (file1 or file2 or file3 ...)
+> 
+> Where fileN are all the files that the PageSpec currently matches. (This
+> is ncessary to detect when a currently inlined file is deleted, and know
+> the inlining page needs an update.) Now consider what it does if you have
+> a single page with two inline statements, that inline the same set of
+> stuff twice:
+> 
+> ((PageSpec) or (file1 or file2 or file3 ...) or (PageSpec) or (file1 or file2 or file3 ...)
+>
+> Clearly non-optimal, indeed.
+> 
+> Ikiwiki doesn't bother to simplify complex PageSpecs
+> because it's difficult to do, and because all they use is some disk
+> space. Consider what ikiwiki uses these dependencies for.
+> All it wants to know is: does the PageSpec for this page it's considering
+> rebuilding match any of the pages that have changed? Determining this is
+> a simple operation -- the PageSpec is converted to perl code. The perl
+> code is run.
+> 
+> So the total impact of an ugly dependency like this is:
+> 
+> 1. Some extra data read/written to disk.
+> 2. Some extra space in memory.
+> 3. A bit more data for the PageSpec translation code to handle. But that
+>    code is quite fast.
+> 4. Typically one extra function call when the generated perl code is run.
+>    Ie, when the expression on the left-hand side fails, which typically
+>    happens after one (inexpensive) function call, it has to check
+>    the identical expression on the right hand side.
+> 
+> So this is at best a wishlist todo item, not a bug. A PageSpec simplifier
+> (or improved `pagespec_merge()` function) could be written and improve
+> ikiwiki's memory and disk usage, but would it actually speed it up any?
+> We'd have to see the code to the simplifier to know.
+> 
+> --[[Joey]]
