@@ -104,3 +104,21 @@ page "A/B/index.html" is treated as "A/B".
 
 
 > This way foo/index gets "foo" as its title, not "index". --Ethan
+
+I took another swing at this and subverted the dominant paradigm. Here goes:
+
+<pre>
+diff -ru ikiwiki-2.4/IkiWiki.pm ikiwiki/IkiWiki.pm
+--- ikiwiki-2.4/IkiWiki.pm	2007-06-26 15:01:57.000000000 -0700
++++ ikiwiki/IkiWiki.pm	2007-07-25 15:58:00.990749000 -0700
+@@ -239,6 +239,7 @@
+ 	my $type=pagetype($file);
+ 	my $page=$file;
+ 	$page=~s/\Q.$type\E*$// if defined $type;
++	$page=~s/\/index$// if $page =~ /\/index$/;
+ 	return $page;
+ } #}}}
+ 
+</pre>
+
+This just makes it so that all files named foo/index become pages called foo, which is the desired effect. I haven't tested everything so far, so be careful! But you can see it working at http://ikidev.betacantrips.com/one/ again, as before. --Ethan
