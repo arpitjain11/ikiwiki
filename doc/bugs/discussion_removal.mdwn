@@ -3,3 +3,8 @@ to notice that the discussion page has gone away, and does not update the
 link to it in the action bar.
 
 > Reprocued with 2.5 --[[Joey]]
+
+Looks to me like loadindex is populating %destsources with information
+that the old discussion page exists, which isn't invalidated when ikiwiki
+discovers that the page is gone. This leaves dangling links whenever *any*
+page is deleted, not just a discussion page. --Ethan
