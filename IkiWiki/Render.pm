@@ -69,7 +69,15 @@ sub genpage ($$$) { #{{{
 	my $content=shift;
 	my $mtime=shift;
 
-	my $template=template("page.tmpl", blind_cache => 1);
+	my $templatefile;
+	run_hooks(templatefile => sub {
+		return if defined $templatefile;
+		my $file=shift->(page => $page);
+		if (defined $file && defined template_file($file)) {
+			$templatefile=$file;
+		}
+	});
+	my $template=template(defined $templatefile ? $templatefile : 'page.tmpl', blind_cache => 1);
 	my $actions=0;
 
 	if (length $config{cgiurl}) {

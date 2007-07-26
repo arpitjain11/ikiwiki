@@ -14,8 +14,11 @@ ikiwiki (2.5) UNRELEASED; urgency=low
   * Fix re-rendering of pages when a linked to page goes away. This was broken
     in version 1.50 with the addition of %destsources. Thanks, Ethan
     Glasser-Camp.
+  * Add templatefile hook.
+  * Add pagetemplate plugin, which allows changing the template used for
+    a page. (Not to be confused with the hook of the same name..)
 
- -- Joey Hess <joeyh@debian.org>  Thu, 26 Jul 2007 15:30:22 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 26 Jul 2007 16:16:55 -0400
 
 ikiwiki (2.4) unstable; urgency=low
 

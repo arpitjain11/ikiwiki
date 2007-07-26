@@ -128,16 +128,27 @@ return the htmlized content.
 
 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
-[[Templates]] are filled out for many different things in ikiwiki, like
-generating a page, or part of a blog page, or an rss feed, or a cgi. This
-hook allows modifying those templates. The function is passed named
-parameters. The "page" and "destpage" parameters are the same as for a
-preprocess hook. The "template" parameter is a [[cpan HTML::Template]]
-object that is the template that will be used to generate the page. The
-function can manipulate that template object.
+[[Templates|wikitemplate]] are filled out for many different things in
+ikiwiki, like generating a page, or part of a blog page, or an rss feed, or
+a cgi. This hook allows modifying the variables available on those
+templates. The function is passed named parameters. The "page" and
+"destpage" parameters are the same as for a preprocess hook. The "template"
+parameter is a [[cpan HTML::Template]] object that is the template that
+will be used to generate the page. The function can manipulate that
+template object.
 
 The most common thing to do is probably to call `$template->param()` to add
 a new custom parameter to the template.
+
+### templatefile
+
+	hook(type => "templatefile", id => "foo", call => \&templatefile);
+
+This hook allows plugins to change the [[template|wikitemplate]] that is
+used for a page in the wiki. The hook is passed a "page" parameter, and
+should return the name of the template file to use, or undef if it doesn't
+want to change the default ("page.tmpl"). Template files are looked for in
+/usr/share/ikiwiki/templates by default.
 
 ### sanitize
 

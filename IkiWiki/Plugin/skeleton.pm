@@ -18,6 +18,7 @@ sub import { #{{{
 	hook(type => "sanitize", id => "skeleton", call => \&sanitize);
 	hook(type => "format", id => "skeleton", call => \&format);
 	hook(type => "pagetemplate", id => "skeleton", call => \&pagetemplate);
+	hook(type => "templatefile", id => "skeleton", call => \&templatefile);
 	hook(type => "delete", id => "skeleton", call => \&delete);
 	hook(type => "change", id => "skeleton", call => \&change);
 	hook(type => "cgi", id => "skeleton", call => \&cgi);
@@ -84,6 +85,13 @@ sub pagetemplate (@) { #{{{
 	my $template=$params{template};
 	
 	debug("skeleton plugin running as a pagetemplate hook");
+} # }}}
+
+sub templatefile (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	
+	debug("skeleton plugin running as a templatefile hook");
 } # }}}
 
 sub delete (@) { #{{{
