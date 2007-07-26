@@ -8,3 +8,26 @@ Looks to me like loadindex is populating %destsources with information
 that the old discussion page exists, which isn't invalidated when ikiwiki
 discovers that the page is gone. This leaves dangling links whenever *any*
 page is deleted, not just a discussion page. --Ethan
+
+Here's a patch that trawls through %destsources deleting pages when they
+are found to be deleted. It's a little inelegant, but it's simple and it 
+works. --Ethan
+
+<pre>
+diff -urX ignorepats ikiwiki/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
+--- ikiwiki/IkiWiki/Render.pm	2007-07-25 15:58:24.501068000 -0700
++++ ikidev/IkiWiki/Render.pm	2007-07-25 20:08:32.966449000 -0700
+@@ -320,6 +320,11 @@
+ 			prune($config{destdir}."/".$_)
+ 				foreach @{$oldrenderedfiles{$page}};
+ 			delete $pagesources{$page};
++			foreach (keys %destsources){
++				if ($destsources{$_} == $page) {
++					delete $destsources{$_};
++				}
++			}
+ 		}
+ 	}
+ 
+</pre>
+
