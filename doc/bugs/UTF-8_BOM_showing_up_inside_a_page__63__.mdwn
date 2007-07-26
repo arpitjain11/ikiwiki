@@ -1,4 +1,4 @@
-I have a git-backed ikiwiki install, and when I commit and push a file from an x86 host (LANG=en_US.UTF-8) to the Ikiwiki box, which is Debian GNU/Linux on Sparc, I sometimes get unusual characters (ef bb ff) before the first character of the wiki text.  It seems that this is a UTF-8 "byte order mark" that is getting inserted automatically into the .wiki file by my editor: http://vim.wikia.com/wiki/VimTip246#Tip:_.23246_-_Working_with_Unicode 
+﻿I have a git-backed ikiwiki install, and when I commit and push a file from an x86 host (LANG=en_US.UTF-8) to the Ikiwiki box, which is Debian GNU/Linux on Sparc, I sometimes get unusual characters (ef bb ff) before the first character of the wiki text.  It seems that this is a UTF-8 "byte order mark" that is getting inserted automatically into the .wiki file by my editor: http://vim.wikia.com/wiki/VimTip246#Tip:_.23246_-_Working_with_Unicode 
 
 Example:
 
@@ -11,3 +11,7 @@ deal with it, or should I make sure to strip it out before committing?
 > plugin could be written to s/// them out as a filter.
 >
 > I'm unsure if ikiwiki should do this by default. --[[Joey]]
+
+> Looked at this some more. It seems this would be a browser bug, after
+> all, it's not displaying the BOM properly (as a zero-width character).
+> To test, I've added a BOM to this file. --[[Joey]]
