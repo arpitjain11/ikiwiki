@@ -25,41 +25,6 @@ Here is a patch:
 
 > I would like to suggest another tack, namely a bigger, better special case. 
 > The basic idea is that all indices of the form foo/bar/index get the wiki path foo/bar.
-> This makes some things more elegant:
->
-> * All files having to do with foo/bar are in the foo/bar directory, rather 
->   than the (admittedly minor) wart of having the index be in foo/.
-> * This sort of addresses [[bugs/broken_parentlinks]] in that example/ is 
->   guaranteed to be a valid path. (There might be no index there, though.)
-> * This is more in line with standard HTML practice, as far as I understand it,
->   namely that linking to a/b means a/b/index.html rather than a/b.html.
->
-> This would change the inline plugin in strange ways -- I think if foo/index.html
-> contains \[[inline "* and !*/Discussion"]], it should skip inlining foo/index.html 
-> explicitly, but would inline index pages in child directories 
-> foo/bar/baz/index.html as bar/baz.
->
-> It always bothers me that foo/bar/ files need a foo/bar.html in front of them, 
-> rather than a foo/bar/index.html, as is (to my mind) traditional.
-> 
-> Ethan
->
-> Hmm, now I've had time to think about this, and this does conflict pretty hard with foo.html/Discussion 
-> pages. Well, back to the drawing board.
->
-> Well, it seems unlikely that you'll have both foo/bar.html and foo/bar/index.html, 
-> so why not accept either as foo/bar? This would both preserve backwards
-> compatibility, as well as allow foo/bar/Discussion.
->
-> Ethan
->
-> No, in order for this to work, the wiki path foo/bar/baz could be any of:
->
-> * foo/bar/baz.html
-> * foo/index/bar/index/baz.html
-> * foo/bar/index/baz.html
-> * foo/bar/index/baz/index.html
->
-> Or many others. Which is probably even hackier than having both foo.html and foo/.
->
-> Ethan
+> You could do this today using [[todo/index.html_allowed]], except that the toplevel 
+> page "index" becomes "", which causes all sorts of chaos. The discussion page would 
+> become /discussion, and the weird parentlinks behavior would go away. --Ethan
