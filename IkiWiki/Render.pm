@@ -320,6 +320,11 @@ sub refresh () { #{{{
 			prune($config{destdir}."/".$_)
 				foreach @{$oldrenderedfiles{$page}};
 			delete $pagesources{$page};
+			foreach (keys %destsources) {
+				if ($destsources{$_} eq $page) {
+					delete $destsources{$_};
+				}
+			}
 		}
 	}
 
