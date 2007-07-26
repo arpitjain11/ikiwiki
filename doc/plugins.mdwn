@@ -11,6 +11,14 @@ To enable plugins, use the `--plugin` switch described in
 Enable the [[goodstuff]] plugin to get a nice selection of plugins that
 will fit most uses of ikiwiki.
 
+Without administrator access, you can add some custom plugins by storing 
+yourcustomplugin.pm in /home/user/.ikiwiki/IkiWiki/Plugins (or any other
+place, keeping the "IkiWiki/Plugins" part of the path) and adding this
+line at the begining of your ikiwiki.setup file:
+
+    BEGIN { push @INC, "/home/user/.ikiwiki" } 
+
+
 ## Plugin directory
 
 [[inline pages="plugins/* and !plugins/type/* and !plugins/write and
