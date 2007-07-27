@@ -1,0 +1,89 @@
+Sometimes you want to match a page only if it has certain properties. The use
+case I have in mind is this: show me all the pages that have children. You
+can't do that with a pagespec, so I created a plugin that adds some pagespec
+functions.
+
+`match_relative(blah)` will match a page x if a pagespec from x would match 
+`blah`. This is only actually useful with relative pagespecs.
+
+`match_has_child(blah)` will match a child if it has a descendant named 
+`blah`. If blah is empty, any child will match.
+
+So if I have:
+
+* foo
+* foo/blah
+* foo/bar
+* foo/bar/blah
+* foo/bar/bahoo
+* foo/baz
+* foo/baz/goo
+* foo/baz/goo/blah
+
+A pagespec `match_relative(./blah)` will match `foo/bar/bahoo`, because
+a pagespec of `./blah` from `bahoo` would match `foo/bar/blah`. A
+pagespec of `match_has_child(blah)` would match `foo`, `foo/bar`,
+`foo/baz`, and `foo/baz/goo`.
+
+Note that if you try to inline `*/blah` you will match `foo/blah`,
+`foo/bar/blah`, and `foo/baz/goo/blah` -- that is, the blah pages 
+themselves rather than any relatives of theirs.
+
+This patch is useful for (among other things) constructing blogging 
+systems where leaf nodes are organized hierarchically; using has_child,
+you can inline only leaf nodes and ignore "intermediate" nodes.
+match_relative can be used recursively to match properties of arbitrary
+complexity: "show me all the pages who have children called foo that 
+have children called blah". I'm not sure what use it is, though.
+
+You can see the patch in action at 
+<http://ikidev.betacantrips.com/conditionaltest/>,
+so named because I had hoped that something in conditional.pm could 
+help me. I know the name "relative" sucks, feel free to come up with a 
+better one. --Ethan
+
+<pre>
+diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/relative.pm ikidev/IkiWiki/Plugin/relative.pm
+--- ikiwiki/IkiWiki/Plugin/relative.pm	1969-12-31 16:00:00.000000000 -0800
++++ ikidev/IkiWiki/Plugin/relative.pm	2007-07-26 21:48:10.642686000 -0700
+@@ -0,0 +1,39 @@
++#!/usr/bin/perl
++# relative.pm: support for pagespecs on possible matches
++package IkiWiki::Plugin::relative;
++
++use warnings;
++use strict;
++use IkiWiki 2.00;
++
++package IkiWiki::PageSpec;
++
++sub match_relative($$;@) { #{{{
++	my $parent = shift;
++	my $spec = shift;
++	my %params = @_;
++
++	foreach my $page (keys %IkiWiki::pagesources) {
++		next if $page eq $parent;
++		if (IkiWiki::pagespec_match($page, $spec, location => $parent)) {
++			return IkiWiki::SuccessReason->new("$parent can match $spec against $page");
++		}
++	}
++	return IkiWiki::FailReason->new("$parent can't match $spec against anything");
++} #}}}
++
++sub match_has_child($$;@) { #{{{
++	my $page = shift;
++	my $childname = shift;
++	my $spec;
++	if ($childname) { #{{{
++		$spec = "$page/$childname or $page/*/$childname";
++	} #}}}
++	else { #{{{
++		$spec = "$page/*";
++	} #}}}
++
++	return match_relative($page, $spec, @_);
++} #}}}
++
++1
+</pre>
