@@ -1,7 +1,23 @@
 ### Add more fields to the RSS output
 
-I'd like to see more fields in the RSS output, specifically an author indication and a comments link. These would be useful for blogging, especially on aggregator sites like http://planet.debian.org. I think maybe the meta plugin can be used to set the author field, though I haven't tried it, but in my opinion a better way would be to have the author taken from the user name who created the page (either from the svn commit or from the user name in the web commit). Maybe there are issues with this though.
+I'd like to see more fields in the RSS output, specifically an author
+indication and a comments link. These would be useful for blogging,
+especially on aggregator sites like http://planet.debian.org. I think maybe
+the meta plugin can be used to set the author field, though I haven't tried
+it, but in my opinion a better way would be to have the author taken from
+the user name who created the page (either from the svn commit or from the
+user name in the web commit). Maybe there are issues with this though.
 
-I'd also like to see a comments field added with a link to the discussion page so that comments can be made there. One thing I'm not sure how to deal with is the way the discussion page link changes after it has been created. There would need to be some way of specifying to ikiwiki.cgi to create the page if it doesn't exist, or to just edit the page if it does. Alternatively, the discussion pages could be automatically created when a new blog post is created, and then the edit link would work fine.
+> Yes, the meta plugin will add fields if author meta-info is speficied.
+> To get author info from commits it would need to store it in the index file,
+> similarly to how pagectime is stored. Doable.
+
+I'd also like to see a comments field added with a link to the discussion
+page so that comments can be made there. One thing I'm not sure how to deal
+with is the way the discussion page link changes after it has been created.
+There would need to be some way of specifying to ikiwiki.cgi to create the
+page if it doesn't exist, or to just edit the page if it does.
+Alternatively, the discussion pages could be automatically created when a
+new blog post is created, and then the edit link would work fine.
 
 [[tag wishlist]]
