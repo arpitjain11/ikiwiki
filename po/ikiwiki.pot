@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 15:36-0400\n"
+"POT-Creation-Date: 2007-07-26 21:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgstr ""
 
 #: ../IkiWiki/CGI.pm:429 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:184 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:91
-#: ../IkiWiki/Render.pm:171
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:192 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Plugin/inline.pm:192 ../IkiWiki/Render.pm:103
 msgid "Discussion"
 msgstr ""
 
@@ -239,6 +239,10 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
+msgstr ""
+
+#: ../IkiWiki/Plugin/pagetemplate.pm:21
+msgid "bad or missing template"
 msgstr ""
 
 #: ../IkiWiki/Plugin/passwordauth.pm:162
@@ -450,47 +454,47 @@ msgid ""
 "notifications"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:255 ../IkiWiki/Render.pm:275
+#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:283
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:315
+#: ../IkiWiki/Render.pm:323
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:348
+#: ../IkiWiki/Render.pm:356
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:353
+#: ../IkiWiki/Render.pm:361
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:365
+#: ../IkiWiki/Render.pm:373
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:382
+#: ../IkiWiki/Render.pm:390
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:420
+#: ../IkiWiki/Render.pm:428
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:432
+#: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:458
+#: ../IkiWiki/Render.pm:466
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -563,11 +567,11 @@ msgstr ""
 msgid "usage: ikiwiki [options] source dest"
 msgstr ""
 
-#: ../IkiWiki.pm:123
+#: ../IkiWiki.pm:124
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:170 ../IkiWiki.pm:171
+#: ../IkiWiki.pm:175 ../IkiWiki.pm:176
 msgid "Error"
 msgstr ""
 
@@ -575,7 +579,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:657
+#: ../IkiWiki.pm:662
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

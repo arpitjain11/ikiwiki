@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-24 15:47-0400\n"
+"POT-Creation-Date: 2007-07-26 21:44-0400\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -35,34 +35,34 @@ msgstr "Správce"
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:349
+#: ../IkiWiki/CGI.pm:350
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:428 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:183 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:91
-#: ../IkiWiki/Render.pm:171
+#: ../IkiWiki/CGI.pm:429 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:184 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:474
+#: ../IkiWiki/CGI.pm:475
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:517
-#: ../IkiWiki/CGI.pm:543 ../IkiWiki/CGI.pm:587
+#: ../IkiWiki/CGI.pm:493 ../IkiWiki/CGI.pm:509 ../IkiWiki/CGI.pm:521
+#: ../IkiWiki/CGI.pm:548 ../IkiWiki/CGI.pm:593
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:684
+#: ../IkiWiki/CGI.pm:691
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:716
+#: ../IkiWiki/CGI.pm:723
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
@@ -143,11 +143,11 @@ msgstr "fortune selhal"
 msgid "failed to find url in html"
 msgstr "v html se nepodařilo nalézt url"
 
-#: ../IkiWiki/Plugin/graphviz.pm:59
+#: ../IkiWiki/Plugin/graphviz.pm:58
 msgid "failed to run graphviz"
 msgstr "nepodařilo se spustit graphviz"
 
-#: ../IkiWiki/Plugin/graphviz.pm:81
+#: ../IkiWiki/Plugin/graphviz.pm:80
 msgid "prog not a valid graphviz program"
 msgstr "program není platným programem graphviz"
 
@@ -185,16 +185,16 @@ msgstr "neznámý typ řazení %s"
 msgid "Add a new post titled:"
 msgstr "Přidat nový příspěvek nazvaný:"
 
-#: ../IkiWiki/Plugin/inline.pm:160
+#: ../IkiWiki/Plugin/inline.pm:161
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "neexistující šablona %s"
 
-#: ../IkiWiki/Plugin/inline.pm:191 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Plugin/inline.pm:192 ../IkiWiki/Render.pm:103
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:402
+#: ../IkiWiki/Plugin/inline.pm:403
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -240,6 +240,10 @@ msgstr "Získat OpenID"
 #: ../IkiWiki/Plugin/orphans.pm:42
 msgid "All pages are linked to by other pages."
 msgstr "Na každou stránku vede odkaz z jiné stránky."
+
+#: ../IkiWiki/Plugin/pagetemplate.pm:21
+msgid "bad or missing template"
+msgstr ""
 
 #: ../IkiWiki/Plugin/passwordauth.pm:162
 msgid "Account creation successful. Now you can Login."
@@ -444,54 +448,54 @@ msgstr "nepodařilo se zpracovat:"
 msgid "getctime not implemented"
 msgstr "getctime není implementováno"
 
-#: ../IkiWiki/Rcs/svn.pm:206
+#: ../IkiWiki/Rcs/svn.pm:218
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
 msgstr ""
 "REV není nastavena, není spuštěna ze svn post-commit, nemohu zaslat oznámení"
 
-#: ../IkiWiki/Render.pm:255 ../IkiWiki/Render.pm:275
+#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:283
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "přeskakuji chybné jméno souboru %s"
 
-#: ../IkiWiki/Render.pm:315
+#: ../IkiWiki/Render.pm:323
 #, perl-format
 msgid "removing old page %s"
 msgstr "odstraňuji starou stránku %s"
 
-#: ../IkiWiki/Render.pm:343
+#: ../IkiWiki/Render.pm:356
 #, perl-format
 msgid "scanning %s"
 msgstr "prohledávám %s"
 
-#: ../IkiWiki/Render.pm:348
+#: ../IkiWiki/Render.pm:361
 #, perl-format
 msgid "rendering %s"
 msgstr "zpracovávám %s"
 
-#: ../IkiWiki/Render.pm:360
+#: ../IkiWiki/Render.pm:373
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "zpracovávám %s, která odkazuje na %s"
 
-#: ../IkiWiki/Render.pm:377
+#: ../IkiWiki/Render.pm:390
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "zpracovávám %s, která závisí na %s"
 
-#: ../IkiWiki/Render.pm:415
+#: ../IkiWiki/Render.pm:428
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "zpracovávám %s, aby se aktualizovaly zpětné odkazy"
 
-#: ../IkiWiki/Render.pm:427
+#: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "odstraňuji %s, již není zpracovávána %s"
 
-#: ../IkiWiki/Render.pm:453
+#: ../IkiWiki/Render.pm:466
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: nelze zpracovat %s"
@@ -549,13 +553,13 @@ msgid "failed to write %s: %s"
 msgstr "nelze zapsat %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:100
+#: ../IkiWiki/Wrapper.pm:107
 #, perl-format
 msgid "failed to compile %s"
 msgstr "nelze zkompilovat %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:108
+#: ../IkiWiki/Wrapper.pm:115
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s byl úspěšně vytvořen"
@@ -564,11 +568,11 @@ msgstr "%s byl úspěšně vytvořen"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "použití: ikiwiki [volby] zdroj cíl"
 
-#: ../IkiWiki.pm:108
+#: ../IkiWiki.pm:124
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:155 ../IkiWiki.pm:156
+#: ../IkiWiki.pm:175 ../IkiWiki.pm:176
 msgid "Error"
 msgstr "Chyba"
 
@@ -576,7 +580,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:632
+#: ../IkiWiki.pm:662
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
