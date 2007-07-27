@@ -1,0 +1,21 @@
+ikiwiki 2.5 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Wrap the editpage template in the standard misctemplate, this allows the
+     pagetemplate hook to work for that page.
+   * Above change fixes the favicon plugin to work on edit pages.
+   * Correct some issues with escaped preprocessor directives.
+   * Make the map plugin notice when pages in the map are deleted and update
+     it.
+   * Add a htmlext config option, this can be used to make ikiwiki generate
+     html files with a different extension.
+   * Fix graphviz plugin to not try to read images as utf-8; they might
+     sometimes contain invalid utf-8 byte sequences. Thanks,
+     HenrikBrixAndersen.
+   * Fix re-rendering of pages when a linked to page goes away. This was broken
+     in version 1.50 with the addition of %destsources. Thanks, Ethan
+     Glasser-Camp.
+   * Add templatefile hook.
+   * Add pagetemplate plugin, which allows changing the template used for
+     a page. (Not to be confused with the hook of the same name..)
+   * Add a libdir config option to let ikiwiki load perl modules, including
+     plugins, from a user-configurable directory."""]]
