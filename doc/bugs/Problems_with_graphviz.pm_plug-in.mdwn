@@ -5,11 +5,41 @@ The graphviz.pm plug-in currently attempts to read PNG data in UTF-8 mode, which
 
 > Ok, will remove the binmode IN then. [[done]] --[[Joey]]
 
+>> Thanks --[[HenrikBrixAndersen]]
+
 It also generates image URLs relative to the page being rendered, which means the URLs wont work when previewing a graph from the CGI script.
 
 > You seem to be using an old version of ikiwiki, these preview isues have
 > been fixed for some time, and the code doesn't look like what you patch
 > in your second hunk. --[[Joey]]
+
+>> I have just tested ikiwiki-2.5. The code in question still looks
+>> the same, and the patch is still needed for making the graphviz
+>> plug-in work in preview mode here.
+>>
+>> Here is an updated patch againt ikiwiki-2.5:
+
+
+    --- IkiWiki/Plugin/graphviz.pm.orig	2007-07-27 11:35:05.000000000 +0200
+    +++ IkiWiki/Plugin/graphviz.pm	2007-07-27 11:36:02.000000000 +0200
+    @@ -69,7 +69,12 @@ sub render_graph (\%) { #{{{
+     		}
+     	}
+     
+    -	return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+    +	if ($params{preview}) {
+    +		return "<img src=\"".urlto($dest, "")."\" />\n";
+    +	}
+    +	else {
+    +		return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+    +	}
+     } #}}}
+     
+     sub graph (@) { #{{{
+
+
+>> --[[HenrikBrixAndersen]]
+
 
 The patch below fixes these two issues.
 
