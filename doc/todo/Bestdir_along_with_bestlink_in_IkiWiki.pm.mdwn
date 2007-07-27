@@ -2,45 +2,45 @@ This patch adds function bestdir() which returns best directory from the directo
 
 -------
 
-Index: IkiWiki.pm
-===================================================================
---- IkiWiki.pm  (revision 9)
-+++ IkiWiki.pm  (working copy)
-@@ -391,6 +391,35 @@
-        return "";
- } #}}}
-
-+sub bestdir ($$) { #{{{
-+    my $page=shift;
-+       my $link=shift;
-+       my $cwd=$page;
-+
-+       if ($link=~s/^\/+//) {
-+               $cwd="";
-+       }
-+
-+       do {
-+               my $l=$cwd;
-+               $l.="/" if length $l;
-+               $l.=$link;
-+               if (-d "$config{srcdir}/$l") {
-+                       return $l;
-+               }
-+       } while $cwd=~s!/?[^/]+$!!;
-+
-+       if (length $config{userdir}) {
-+               my $l = "$config{userdir}/".lc($link);
-+
-+               if (-d $l) {
-+                       return $l;
-+               }
-+       }
-+
-+       return "";
-+} #}}}
-+
- sub isinlinableimage ($) { #{{{
-        my $file=shift;
-
+    Index: IkiWiki.pm
+    ===================================================================
+    --- IkiWiki.pm  (revision 9)
+    +++ IkiWiki.pm  (working copy)
+    @@ -391,6 +391,35 @@
+            return "";
+     } #}}}
+    
+    +sub bestdir ($$) { #{{{
+    +    my $page=shift;
+    +       my $link=shift;
+    +       my $cwd=$page;
+    +
+    +       if ($link=~s/^\/+//) {
+    +               $cwd="";
+    +       }
+    +
+    +       do {
+    +               my $l=$cwd;
+    +               $l.="/" if length $l;
+    +               $l.=$link;
+    +               if (-d "$config{srcdir}/$l") {
+    +                       return $l;
+    +               }
+    +       } while $cwd=~s!/?[^/]+$!!;
+    +
+    +       if (length $config{userdir}) {
+    +               my $l = "$config{userdir}/".lc($link);
+    +
+    +               if (-d $l) {
+    +                       return $l;
+    +               }
+    +       }
+    +
+    +       return "";
+    +} #}}}
+    +
+     sub isinlinableimage ($) { #{{{
+            my $file=shift;
+    
 ---- 
 -[[users/arpitjain]]
