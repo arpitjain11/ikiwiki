@@ -86,6 +86,7 @@ sub defaultconfig () { #{{{
 	adminemail => undef,
 	plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
 	              lockedit conditional}],
+	libdir => undef,
 	timeformat => '%c',
 	locale => undef,
 	sslcookie => 0,
@@ -140,8 +141,12 @@ sub checkconfig () { #{{{
 } #}}}
 
 sub loadplugins () { #{{{
+	if (defined $config{libdir}) {
+		unshift @INC, $config{libdir};
+	}
+
 	loadplugin($_) foreach @{$config{plugin}};
-	
+
 	run_hooks(getopt => sub { shift->() });
 	if (grep /^-/, @ARGV) {
 		print STDERR "Unknown option: $_\n"

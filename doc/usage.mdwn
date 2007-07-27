@@ -229,6 +229,12 @@ configuration options of their own.
   Disables use of a plugin. For example "--disable-plugin htmlscrubber"
   to do away with HTML sanitization.
 
+* --libdir directory
+
+  Makes ikiwiki look in the specified directory first, before the regular perl
+  library directories. For example, if you set libdir to "/home/you/.ikiwiki/",
+  you can install plugins in "/home/you/.ikiwiki/IkiWiki/Plugins/".
+
 * --discussion, --no-discussion
 
   Enables or disables "Discussion" links from being added to the header of

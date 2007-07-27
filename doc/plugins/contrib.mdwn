@@ -13,3 +13,7 @@ IkiWiki::Plugin namespace, so they go in a IkiWiki/Plugin subdirectory
 inside the perl search path. For example, if your perl looks in
 `/usr/local/lib/site_perl` for modules, you can locally install ikiwiki
 plugins to `/usr/local/lib/site_perl/IkiWiki/Plugin`
+
+You can use the `libdir` configuration option to add a directory to the
+search path. For example, if you set `libdir` to `/home/you/.ikiwiki/`,
+then ikiwiki will look for plugins in `/home/you/.ikiwiki/IkiWiki/Plugins`.
