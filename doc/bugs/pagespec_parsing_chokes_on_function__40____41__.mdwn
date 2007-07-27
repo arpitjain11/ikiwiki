@@ -1,0 +1,58 @@
+The pagespec regexes don't allow functions with no arguments.
+
+IkiWiki.pm, around line 1035:
+
+<pre>
+$spec=~m{
+                \s*             # ignore whitespace
+                (               # 1: match a single word
+                        \!              # !
+                |
+                        \(              # (
+                |
+                        \)              # )
+                |
+                        \w+\([^\)]+\)   # command(params)
+                |
+                        [^\s()]+        # any other text
+                )
+                \s*             # ignore whitespace
+        }igx
+</pre>
+
+command(params) of course might be just command(). (See 
+conditional.pm: match_included.) Trying to feed 
+ikiwiki a pagespec without params will get you instead:
+
+IkiWiki::PageSpec::match_glob($page, q{function}, @params) ( )
+
+Which is completely not desired. The second + on that line should be a *.
+
+None of the builtin pagespecs "work" with no parameters, so it's hard to 
+write a unit test for this. But can we at least write a helpful note in
+case the user is given to rebuilding the wiki by hand. --Ethan
+
+<pre>
+--- ikiwiki/IkiWiki.pm	2007-07-26 15:15:22.716860000 -0700
++++ ikidev/IkiWiki.pm	2007-07-26 21:34:45.542248000 -0700
+@@ -1032,7 +1032,7 @@
+ 		|
+ 			\)		# )
+ 		|
+-			\w+\([^\)]+\)	# command(params)
++			\w+\([^\)]*\)	# command(params)
+ 		|
+ 			[^\s()]+	# any other text
+ 		)
+@@ -1075,6 +1075,10 @@
+ 	}
+ 
+ 	my $ret=eval pagespec_translate($spec);
++	if ($@){
++		my $t = pagespec_translate($spec);
++		print "evaluating pagespec failed: $t $@\n";
++	}
+ 	return IkiWiki::FailReason->new("syntax error") if $@;
+ 	return $ret;
+ } #}}}
+</pre>
