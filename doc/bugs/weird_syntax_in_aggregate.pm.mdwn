@@ -5,3 +5,5 @@ It looks like the intent was "open this file, and die if you can't",
 but I'm pretty sure it actually means "open this file and ignore errors
 silently". Shouldn't this be `open(IN, $file) || die "$file: $!";`
 (i.e. with the parens before the call to `die`)? --Ethan
+
+> Thanks, [[done]] --[[Joey]]

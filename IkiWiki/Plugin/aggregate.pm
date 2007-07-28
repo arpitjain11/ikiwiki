@@ -128,8 +128,8 @@ my $state_loaded=0;
 sub loadstate () { #{{{
 	return if $state_loaded;
 	if (-e "$config{wikistatedir}/aggregate") {
-		open (IN, "$config{wikistatedir}/aggregate" ||
-			die "$config{wikistatedir}/aggregate: $!");
+		open(IN, "$config{wikistatedir}/aggregate") ||
+			die "$config{wikistatedir}/aggregate: $!";
 		while (<IN>) {
 			$_=IkiWiki::possibly_foolish_untaint($_);
 			chomp;
