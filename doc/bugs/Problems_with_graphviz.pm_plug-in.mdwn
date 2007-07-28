@@ -3,7 +3,7 @@ The graphviz.pm plug-in currently attempts to read PNG data in UTF-8 mode, which
     utf8 "\x89" does not map to Unicode at /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki/Plugin/graphviz.pm line 53, <IN> chunk 1.
     Wide character in subroutine entry at /usr/local/lib/perl5/site_perl/5.8.8/IkiWiki/Plugin/graphviz.pm line 68.
 
-> Ok, will remove the binmode IN then. [[done]] --[[Joey]]
+> Ok, will remove the binmode IN then. done --[[Joey]]
 
 >> Thanks --[[HenrikBrixAndersen]]
 
@@ -16,7 +16,13 @@ It also generates image URLs relative to the page being rendered, which means th
 >> I have just tested ikiwiki-2.5. The code in question still looks
 >> the same, and the patch is still needed for making the graphviz
 >> plug-in work in preview mode here.
->>
+
+>>> You're right, it doesn't preview properly. However, your patch doesn't
+>>> really fix it, since it only makes it show any old files that are lying
+>>> around, and not a current one updated for the current page. Fixing it
+>>> really right calls for embedding the file in a data uri in the preview
+>>> page, as the sparkline plugin does. --[[Joey]]
+
 >> Here is an updated patch againt ikiwiki-2.5:
 
 
