@@ -26,7 +26,7 @@ sub import { #{{{
 	hook(type => "canedit", id => "skeleton", call => \&canedit);
 	hook(type => "formbuilder_setup", id => "skeleton", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "skeleton", call => \&formbuilder);
-	hook(type => "savestate", id => "savestate", call => \&savestate);
+	hook(type => "savestate", id => "skeleton", call => \&savestate);
 } # }}}
 
 sub getopt () { #{{{
