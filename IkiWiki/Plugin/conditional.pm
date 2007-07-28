@@ -102,7 +102,7 @@ sub match_destpage ($$;@) { #{{{
 	}
 } #}}}
 
-sub match_included ($$;$) { #{{{
+sub match_included ($$;@) { #{{{
 	shift;
 	shift;
 	my %params=@_;
