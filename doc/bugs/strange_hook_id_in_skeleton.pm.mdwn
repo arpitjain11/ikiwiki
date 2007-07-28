@@ -1,0 +1,3 @@
+	hook(type => "savestate", id => "savestate", call => \&savestate);
+
+Shouldn't that id be "skeleton", like all the other ids? --Ethan
