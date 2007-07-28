@@ -351,7 +351,7 @@ sub refresh () { #{{{
 	}
 	run_hooks(needsbuild => sub { shift->(\@needsbuild) });
 
-	# scan and rendder files
+	# scan and render files
 	foreach my $file (@needsbuild) {
 		debug(sprintf(gettext("scanning %s"), $file));
 		scan($file);
