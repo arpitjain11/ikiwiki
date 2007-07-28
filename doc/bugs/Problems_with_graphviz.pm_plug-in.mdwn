@@ -17,11 +17,10 @@ It also generates image URLs relative to the page being rendered, which means th
 >> the same, and the patch is still needed for making the graphviz
 >> plug-in work in preview mode here.
 
->>> You're right, it doesn't preview properly. However, your patch doesn't
->>> really fix it, since it only makes it show any old files that are lying
->>> around, and not a current one updated for the current page. Fixing it
->>> really right calls for embedding the file in a data uri in the preview
->>> page, as the sparkline plugin does. --[[Joey]]
+>>> No, the relevant code is just above the bit you patched. Notice that in
+>>> preview mode, it returns an img tag with the graphviz drawing embedded
+>>> in it, using base64 encoding. Unless you can show me why that doesn't
+>>> work, I still think this bug is done. --[[Joey]]
 
 >> Here is an updated patch againt ikiwiki-2.5:
 
