@@ -98,6 +98,8 @@ Fixed
 
 Okay, I'll provide the log as an link in the wiki. But there should be a kind of mechanism how they can be removed. This could lead to an DOS (create via a bot so much nonsense code that the disk is full.)
 
+Fixed, the log is now provided if latex will fail.
+
 > The url handling could stand to be improved. Currently it uses $config{url}, so it depends on that being set. Some ikiwiki builds don't have an url set. The thing to do is to use urlto(), to generate a nice relative url from the page to the image. 
 
 >> Mh... i choose one single dir explizitly since if you use on several pages the same formula  this would really improve the time to generate the formulas and it would waste extra space if you store every formula 3-4 times. But if you really like I'll change this behaviour. 
@@ -138,7 +140,7 @@ Okay here an short timetable how I want to proceed further:
 * Until weekend (21-22. July) I'll try to fix all errors above. (done)
 * From 22.July until 29. July I'll try to set up a first security check
   My plans are two parts of a security check:
-    * One with an array of blacklisted regular expression. (This would blacklist all the well known and easy to fetch things like \include {/path/to/something} and things like closing the math formula environment ($$).
+    * One with an array of blacklisted regular expression. (This would blacklist all the well known and easy to fetch things like \include {/path/to/something} and things like closing the math formula environment ($$). (done)
     * the second step will be based on Tom::latex, which will help to parse and get a tree view of the code.
 
 Okay what do you think of this procedure?
@@ -153,7 +155,8 @@ Okay what do you think of this procedure?
 > with the rest of the text if you change the font size in your browser (ctrl + +/-).
 
 
-Thanks for the comment.. is fixed.
+Thanks for the comment.. is fixed. 
+Mh... not really fixed :S I added it into the return but it is somehow ignored. I'll figure out why.
 
 -----
 
