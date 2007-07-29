@@ -69,7 +69,12 @@ sub render_graph (\%) { #{{{
 		}
 	}
 
-	return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+	if ($params{preview}) {
+		return "<img src=\"".urlto($dest, "")."\" />\n";
+	}
+	else {
+		return "<img src=\"".urlto($dest, $params{page})."\" />\n";
+	}
 } #}}}
 
 sub graph (@) { #{{{
