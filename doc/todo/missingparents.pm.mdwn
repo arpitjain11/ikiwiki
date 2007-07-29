@@ -69,7 +69,7 @@ Index: IkiWiki/Plugin/missingparents.pm
 ===================================================================
 --- IkiWiki/Plugin/missingparents.pm	(revision 0)
 +++ IkiWiki/Plugin/missingparents.pm	(revision 0)
-@@ -0,0 +1,136 @@
+@@ -0,0 +1,142 @@
 +#!/usr/bin/perl
 +# missingparents plugin: detect missing parents of pages and create them
 +package IkiWiki::Plugin::missingparents;
@@ -190,6 +190,12 @@ Index: IkiWiki/Plugin/missingparents.pm
 +	my @new;
 +
 +	foreach my $file (@{$files}) {
++		if ($ownfiles{$file}) {
++			# someone edited our file, making it the
++			# user's problem
++			delete $ownfiles{$file};
++			next;
++		}
 +		my $page = pagename $file;
 +		my $newfile = "";
 +		foreach my $parent (split '/', $page) {
@@ -206,19 +212,6 @@ Index: IkiWiki/Plugin/missingparents.pm
 +} #}}}
 +
 +1
-Index: IkiWiki/Plugin/rst.pm
-===================================================================
---- IkiWiki/Plugin/rst.pm	(revision 3926)
-+++ IkiWiki/Plugin/rst.pm	(working copy)
-@@ -25,7 +25,7 @@
- html = publish_string(stdin.read(), writer_name='html', 
-        settings_overrides = { 'halt_level': 6, 
-                               'file_insertion_enabled': 0,
--                              'raw_enabled': 0 }
-+                              'raw_enabled': 1 }
- );
- print html[html.find('<body>')+6:html.find('</body>')].strip();
- ";
 Index: IkiWiki.pm
 ===================================================================
 --- IkiWiki.pm	(revision 3926)
