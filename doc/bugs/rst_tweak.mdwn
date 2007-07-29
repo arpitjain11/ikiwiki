@@ -1,0 +1,19 @@
+rst.pm disallows raw HTML input. (It's meant as a security feature.)
+IkiWiki generates HTML in rst files pretty much all the time. As
+such, we should enable raw HTML support. --Ethan
+
+<pre>
+Index: IkiWiki/Plugin/rst.pm
+===================================================================
+--- IkiWiki/Plugin/rst.pm	(revision 3926)
++++ IkiWiki/Plugin/rst.pm	(working copy)
+@@ -30,7 +30,7 @@
+ html = publish_string(stdin.read(), writer_name='html', 
+        settings_overrides = { 'halt_level': 6, 
+                               'file_insertion_enabled': 0,
+-                              'raw_enabled': 0 }
++                              'raw_enabled': 1 }
+ );
+ print html[html.find('<body>')+6:html.find('</body>')].strip();
+ ";
+</pre>
