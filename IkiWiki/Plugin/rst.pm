@@ -30,7 +30,7 @@ from sys import stdin;
 html = publish_string(stdin.read(), writer_name='html', 
        settings_overrides = { 'halt_level': 6, 
                               'file_insertion_enabled': 0,
-                              'raw_enabled': 0 }
+                              'raw_enabled': 1 }
 );
 print html[html.find('<body>')+6:html.find('</body>')].strip();
 ";

@@ -1,5 +1,14 @@
 ikiwiki (2.5) unstable; urgency=low
 
+  In this version the rst plugin allows raw html to be embedded in rst files.
+  As long as the htmlscrubber is enabled, this should be safe. If you are
+  using the rst plugin without the htmlscrubber in a publically writable wiki,
+  you should turn on the htmlscrubber.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 29 Jul 2007 18:37:22 -0400
+
+ikiwiki (2.5) unstable; urgency=low
+
   Due to some config changes in this version, wrappers need to be rebuilt on
   upgrade. If you listed your wiki in /etc/ikiwiki/wikilist this will be
   one automatically when the Debian package is upgraded.
