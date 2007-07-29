@@ -19,3 +19,7 @@ ikiwiki 2.5 released with [[toggle text="these changes"]]
      a page. (Not to be confused with the hook of the same name..)
    * Add a libdir config option to let ikiwiki load perl modules, including
      plugins, from a user-configurable directory."""]]
+  
+Due to some config changes in this version, wrappers need to be rebuilt on
+upgrade. If you listed your wiki in /etc/ikiwiki/wikilist this will be
+one automatically when the Debian package is upgraded.
