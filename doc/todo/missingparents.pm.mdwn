@@ -1,0 +1,266 @@
+This is another blogging support thing, and it relies on 
+[[pagespec_relative_to_a_target]] (but only to figure out whether a given page
+has a child). Basically, you give it a page called missingparents.mdwn,
+something like this:
+
+<pre>
+[[missingparents pages="posts/* and !posts/*/*" generate="""[[template id=year text="$page"]]"""]]
+[[missingparents pages="posts/*/* and !posts/*/*/*" generate="""[[template id=month text="$page"]]"""]]
+[[missingparents pages="posts/*/*/* and !posts/*/*/*/*" generate="""[[template id=day text="$page"]]"""]]
+</pre>
+
+And it scans the whole wiki for pages that match the pagespecs but are missing
+parents. If any are found, they are generated automatically using the text in
+the "generate" parameter (except $page is substituted for the page title).
+*These generated pages aren't kept in version control*, but of course they're
+ordinary wiki pages and can be edited by the web form or otherwise added, at 
+which point the missingparents plugin lets go of them. (TODO: CGI.pm needs to
+know to rcs_add these pages if they are edited, and it doesn't.) If all of the
+children of a missingparent page goes away, the missingparent itself is 
+unlinked automatically, and all missingparents are deleted on wiki rebuild.
+
+To implement this, I needed to tell ikiwiki that pages were being added and
+removed in a non-standard way, and so created functions newpage and delpage
+in the IkiWiki namespace to do these things. delpage is modeled on the 
+Render.pm code that deletes pages, so I re-used it in Render.pm. I also
+needed a way to add files to be deleted on a refresh(), so I added a 
+needsdelete hook, parallel in form to needsbuild.
+
+This patch, or one like it, would enable better blogging support, by adding
+the ability to hierarchically organize blog posts and automatically generate
+structural pages for year, month, or day. Please apply. --Ethan
+
+<pre>
+Index: IkiWiki/Render.pm
+===================================================================
+--- IkiWiki/Render.pm	(revision 3926)
++++ IkiWiki/Render.pm	(working copy)
+@@ -322,17 +322,7 @@
+ 		if (! $exists{$page}) {
+ 			debug(sprintf(gettext("removing old page %s"), $page));
+ 			push @del, $pagesources{$page};
+-			$links{$page}=[];
+-			$renderedfiles{$page}=[];
+-			$pagemtime{$page}=0;
+-			prune($config{destdir}."/".$_)
+-				foreach @{$oldrenderedfiles{$page}};
+-			delete $pagesources{$page};
+-			foreach (keys %destsources) {
+-				if ($destsources{$_} eq $page) {
+-					delete $destsources{$_};
+-				}
+-			}
++			delpage($page);
+ 		}
+ 	}
+ 
+@@ -377,6 +367,10 @@
+ 		}
+ 	}
+ 
++	if (@del) {
++		run_hooks(needsdelete => sub { shift->(\@del) });
++	}
++
+ 	if (%rendered || @del) {
+ 		# rebuild dependant pages
+ 		foreach my $f (@files) {
+Index: IkiWiki/Plugin/missingparents.pm
+===================================================================
+--- IkiWiki/Plugin/missingparents.pm	(revision 0)
++++ IkiWiki/Plugin/missingparents.pm	(revision 0)
+@@ -0,0 +1,136 @@
++#!/usr/bin/perl
++# missingparents plugin: detect missing parents of pages and create them
++package IkiWiki::Plugin::missingparents;
++
++use warnings;
++use strict;
++use IkiWiki 2.00;
++use IkiWiki::Plugin::relative;
++
++my %ownfiles;
++my @pagespecs;
++
++sub import { #{{{
++	hook(type => "checkconfig", id => "missingparents", call => \&checkconfig);
++	hook(type => "needsdelete", id => "missingparents", call => \&needsdelete);
++	hook(type => "needsbuild", id => "missingparents", call => \&needsbuild);
++	hook(type => "savestate", id => "missingparents", call => \&savestate);
++	hook(type => "preprocess", id => "missingparents", call => \&preprocess_missingparents);
++} # }}}
++
++sub checkconfig () { #{{{
++	IkiWiki::preprocess("missingparents", "missingparents",
++		readfile(srcfile("missingparents.mdwn")));
++	loadstate();
++	if ($config{rebuild}){
++		foreach my $file (keys %ownfiles) {
++			unlink $config{srcdir}.'/'.$file;
++		}
++	}
++} #}}}
++
++sub preprocess_missingparents (@) { #{{{
++	my %params=@_;
++
++	if (! defined $params{pages} || ! defined $params{generate}) {
++		return "[[missingparents ".gettext("missing pages or generate parameter")."]]";
++	}
++
++	push @pagespecs, \%params;
++
++	#translators: This is used to display what missingparents are defined.
++	#translators: First parameter is a pagespec, the second
++	#translators: is text for pages that match that pagespec.
++	return sprintf(gettext("missingparents in %s will be %s"), 
++		       '`'.$params{pages}.'`', '`\\'.$params{generate}.'`');
++} # }}}
++
++my $state_loaded=0;
++sub loadstate() { #{{{
++	my $filename = "$config{wikistatedir}/missingparents";
++	if (-e $filename) {
++		open (IN, $filename) ||
++		      die "$filename: $!";
++		while (<IN>) {
++			chomp;
++			$ownfiles{$_} = 1;
++		}
++
++		close IN;
++
++		$state_loaded=1;
++	}
++} #}}}
++
++sub savestate() { #{{{
++	my $filename = "$config{wikistatedir}/missingparents.new";
++	my $cleanup = sub { unlink ($filename) };
++	open (OUT, ">$filename") || error("open $filename: $!", $cleanup);
++	foreach my $data (keys %ownfiles) {
++		print OUT "$data\n" if $ownfiles{$data};
++	}
++	rename($filename, "$config{wikistatedir}/missingparents") ||
++		error("rename $filename: $!", $cleanup);
++} #}}}
++
++sub needsdelete (@) { #{{{
++	my $files=shift;
++	
++	my @mydel;
++	my $pruned = 1;
++	do {
++		$pruned = 0;
++		foreach my $file (keys %ownfiles) {
++			my $page = pagename($file);
++			if (! IkiWiki::PageSpec::match_has_child($page, "")) {
++				# No children -- get rid of it
++				push @mydel, $page;
++				delete $ownfiles{$file};
++				IkiWiki::delpage($page);
++				unlink $config{srcdir}."/".$file;
++				$pruned = 1;
++			}
++		}
++	} while($pruned);
++	foreach my $page (@mydel){
++		push @{$files}, $page;
++	}
++} #}}}
++
++sub check_matches($) { #{{{
++	my $page = shift;
++	return if $IkiWiki::pagesources{$page};
++
++	foreach my $miss (@pagespecs) {
++		next unless pagespec_match($page, $miss->{pages});
++		my $text = $miss->{generate};
++		$text =~ s/\$page/$page/;
++		my $output = $page.".mdwn";
++		writefile($output, "$config{srcdir}/", $text);
++		IkiWiki::newpage($output, $page);
++		return $output;
++	}
++	return "";
++} #}}}
++
++sub needsbuild ($) { #{{{
++	my $files=shift;
++	my @new;
++
++	foreach my $file (@{$files}) {
++		my $page = pagename $file;
++		my $newfile = "";
++		foreach my $parent (split '/', $page) {
++			$newfile .= $parent;
++			my $output = check_matches($newfile);
++			push @new, $output if $output;
++			$newfile .= "/";
++		}
++	}
++	foreach my $file (@new) {
++		$ownfiles{$file} = 1;
++		push @{$files}, $file;
++	}
++} #}}}
++
++1
+Index: IkiWiki/Plugin/rst.pm
+===================================================================
+--- IkiWiki/Plugin/rst.pm	(revision 3926)
++++ IkiWiki/Plugin/rst.pm	(working copy)
+@@ -25,7 +25,7 @@
+ html = publish_string(stdin.read(), writer_name='html', 
+        settings_overrides = { 'halt_level': 6, 
+                               'file_insertion_enabled': 0,
+-                              'raw_enabled': 0 }
++                              'raw_enabled': 1 }
+ );
+ print html[html.find('<body>')+6:html.find('</body>')].strip();
+ ";
+Index: IkiWiki.pm
+===================================================================
+--- IkiWiki.pm	(revision 3926)
++++ IkiWiki.pm	(working copy)
+@@ -16,7 +16,7 @@
+ use Exporter q{import};
+ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+                  bestlink htmllink readfile writefile pagetype srcfile pagename
+-                 displaytime will_render gettext urlto targetpage
++                 displaytime will_render gettext urlto targetpage newpage delpage
+                  %config %links %renderedfiles %pagesources %destsources);
+ our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
+ our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
+@@ -330,6 +336,30 @@
+ 		error("failed renaming $newfile to $destdir/$file: $!", $cleanup);
+ } #}}}
+ 
++sub newpage($$) { #{{{
++	my $file=shift;
++	my $page=shift;
++
++	$pagemtime{$page} = $pagectime{$page} = time;
++	$pagesources{$page} = $file;
++	$pagecase{lc $page} = $page;
++} #}}}
++
++sub delpage($) { #{{{
++	my $page=shift;
++	$links{$page}=[];
++	$renderedfiles{$page}=[];
++	$pagemtime{$page}=0;
++	prune($config{destdir}."/".$_)
++	    foreach @{$oldrenderedfiles{$page}};
++	delete $pagesources{$page};
++	foreach (keys %destsources) {
++		if ($destsources{$_} eq $page) {
++			delete $destsources{$_};
++			}
++		}
++} #}}}
++
+ my %cleared;
+ sub will_render ($$;$) { #{{{
+ 	my $page=shift;
+</pre>
