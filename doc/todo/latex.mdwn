@@ -107,6 +107,8 @@ Okay, I'll provide the log as an link in the wiki. But there should be a kind of
 
 Yes of course, I'll improve the url handling. My comment was only about the several folder ;-)
 
+Fixed. Now I use urlto and will_render.
+
 > Another (minor) problem with the url handling is that you put all the images in a "teximages" directory in the toplevel of the wiki. I think it would be better to put each image in the subdirectory for the page that created it. See how the `img` and `sparkline` plugins handle this.
 
 > It looks like if the tempdir already exists, tempdir() will croak(), thus crashing ikiwiki. It would be good to catch a failure there and fail more gracefully.
@@ -133,7 +135,7 @@ Fixed. I'll removed these two lines completly.
 -----
 Okay here an short timetable how I want to proceed further:
 
-* Until weekend (21-22. July) I'll try to fix all errors above.
+* Until weekend (21-22. July) I'll try to fix all errors above. (done)
 * From 22.July until 29. July I'll try to set up a first security check
   My plans are two parts of a security check:
     * One with an array of blacklisted regular expression. (This would blacklist all the well known and easy to fetch things like \include {/path/to/something} and things like closing the math formula environment ($$).
