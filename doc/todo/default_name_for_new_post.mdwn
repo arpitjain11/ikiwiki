@@ -1,1 +1,3 @@
 How about an option in [[plugins/inline]] for providing a default post name in the form, consisting of the current date in ISO format?
+
+> It would render to static HTML. In order to get a dynamic "today's date", you'd have to do it in Javascript, which htmlscrubber might not let through. I thought a better approach would be a plugin, so I wrote [[blogpost_plugin]]. --Ethan
