@@ -1,0 +1,154 @@
+This is a plugin that prompts the user for a title for a post, and then 
+redirects the user to post in a hierarchically organized directory
+structure. It supports limiting blog posts only to certain users, and 
+this applies to creating new as well as editing old ones. It's a little
+clumsy so far:
+
+* Although Joey said specifically not to, I export the printheader
+  function so that the plugin can create a form.
+* The form doesn't invoke the formbuilder hooks; I couldn't figure
+  out a way to do that easily from inside the plugin (unless I
+  exported run_hooks and that didn't seem right).
+* This invokes a new hook, authcgi, although Joey said that
+  "the best approach was adding a flag that makes a cgi hook get 
+  postponed and called after a session is set up". I don't know
+  if this is a good idea; authenticated CGI plugins need sessions,
+  and unauthenticated CGI plugins don't, so it seems like a new hook
+  is a better idea.
+* This creates a lot of broken parents unless you use something 
+  like [[missingparents.pm]].
+
+I don't expect that this will be applied; it's more like a first draft.
+I would like to hear good ideas on how to solve the first two problems.
+Maybe make the hook return a form, which is printed by CGI.pm? --Ethan
+
+<pre>
+Index: IkiWiki/CGI.pm
+===================================================================
+--- IkiWiki/CGI.pm	(revision 3968)
++++ IkiWiki/CGI.pm	(working copy)
+@@ -684,6 +684,9 @@
+ 		}
+ 	}
+ 	
++	run_hooks(authcgi => sub { shift->($q, $session); });
++	my $do=$q->param('do'); # in case the hook changed it
++
+ 	if (defined $session->param("name") &&
+ 	    userinfo_get($session->param("name"), "banned")) {
+ 		print $q->header(-status => "403 Forbidden");
+Index: IkiWiki/Plugin/blogpost.pm
+===================================================================
+--- IkiWiki/Plugin/blogpost.pm	(revision 0)
++++ IkiWiki/Plugin/blogpost.pm	(revision 0)
+@@ -0,0 +1,97 @@
++#!/usr/bin/perl
++# blogpost plugin: interprets cgi "blogpost" commands as create commands.
++package IkiWiki::Plugin::blogpost;
++
++use warnings;
++use strict;
++use POSIX;
++use IkiWiki 2.00;
++
++sub import { #{{{
++	hook(type => "checkconfig", id => "blogpost", call => \&checkconfig);
++	hook(type => "authcgi", id => "blogpost", call => \&authcgi);
++	hook(type => "canedit", id => "blogpost", call => \&canedit);
++} # }}}
++
++sub checkconfig () { #{{{
++	if (! defined $config{blogformat}){
++		$config{blogformat} = 'posts/%Y/%m/%d/$title';
++	}
++
++	if (! defined $config{blogpagespec}){
++		my $spec = $config{blogformat};
++		$spec =~ s/%./\*/g;
++		$spec =~ s/\$title/*/;
++		$config{blogpagespec} = "$spec and ! $spec/*";
++	}
++	
++	if (! defined $config{blogusers}) {
++		$config{blogusers} = (); # disallow all posting by default
++	}
++} #}}}
++
++sub authcgi ($$) { #{{{
++	my $cgi=shift;
++	my $session=shift;
++
++	return unless (defined $cgi->param('do') && $cgi->param('do') eq "blogpost");
++	my $user=$session->param("name");
++	error ("not allowed to blog, $user") unless
++	    $config{blogusers} eq "*" ||
++		grep {$_ eq $user} $config{blogusers};
++	eval q{use CGI::FormBuilder};
++	error($@) if $@;
++	my @fields=qw(title);
++	my $form = CGI::FormBuilder->new(
++		fields => \@fields,
++		title => "post title",
++		name => "post title",
++		header => 1,
++		charset => "utf-8",
++		method => 'POST',
++		required => 'NONE',
++		javascript => 0,
++		params => $cgi,
++		action => $config{cgiurl},
++		header => 0,
++		template => {type => 'div'},
++		stylesheet => $config{url}."/style.css",
++	);
++	my $buttons=["Blog!"];
++	$form->field(name => "do", type => "hidden", value => "blogpost",
++		force => 1);
++	if (! $form->submitted){
++		printheader($session);
++		print misctemplate($form->title, $form->render(submit => $buttons));
++		exit;
++	}
++	else {
++		my $page = blogpage($form->field("title"));
++		$cgi->param("do", "create");
++		$cgi->param("page", $page);
++	}
++
++} #}}}
++
++sub blogpage ($) { #{{{
++	my $title=shift;
++	my $page=POSIX::strftime $config{blogformat}, localtime;
++	$page =~ s/\$title/$title/;
++	return $page;
++} #}}}
++
++sub canedit ($$$) { #{{{
++	my $page=shift;
++	my $cgi=shift;
++	my $session=shift;
++
++	return "" unless pagespec_match($page, $config{blogpagespec});
++	my $user=$session->param("name");
++	IkiWiki::needsignin($cgi, $session) unless defined $user;
++
++	return "" if ($config{blogusers} eq "*" ||
++		      grep {$_ eq $user} $config{blogusers});
++	return ("not allowed to blog, $user");
++} #}}}
++
++1
+Index: IkiWiki.pm
+===================================================================
+--- IkiWiki.pm	(revision 3968)
++++ IkiWiki.pm	(working copy)
+@@ -17,6 +17,7 @@
+ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+                  bestlink htmllink readfile writefile pagetype srcfile pagename
+                  displaytime will_render gettext urlto targetpage
++                 misctemplate printheader
+                  %config %links %renderedfiles %pagesources %destsources);
+ our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
+ our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
+</pre>
