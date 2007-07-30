@@ -1,0 +1,44 @@
+This patch gives CGI hooks access to the session object. This enables more 
+complicated CGI plugins (that require access control, for example). --Ethan
+
+<pre>
+Index: IkiWiki/CGI.pm
+===================================================================
+--- IkiWiki/CGI.pm	(revision 3946)
++++ IkiWiki/CGI.pm	(working copy)
+@@ -636,7 +636,7 @@
+ 	
+ 		$q=CGI->new;
+ 	
+-		run_hooks(cgi => sub { shift->($q) });
++		run_hooks(cgi => sub { shift->($q, $session) });
+ 	}
+ 
+ 	my $do=$q->param('do');
+Index: IkiWiki/Plugin/search.pm
+===================================================================
+--- IkiWiki/Plugin/search.pm	(revision 3946)
++++ IkiWiki/Plugin/search.pm	(working copy)
+@@ -72,7 +72,7 @@
+ 	estcfg();
+ } #}}}
+ 
+-sub cgi ($) { #{{{
++sub cgi ($$) { #{{{
+ 	my $cgi=shift;
+ 
+ 	if (defined $cgi->param('phrase') || defined $cgi->param("navi")) {
+Index: IkiWiki/Plugin/poll.pm
+===================================================================
+--- IkiWiki/Plugin/poll.pm	(revision 3946)
++++ IkiWiki/Plugin/poll.pm	(working copy)
+@@ -74,7 +74,7 @@
+ 	return "<div class=poll>$ret</div>";
+ } # }}}
+ 
+-sub cgi ($) { #{{{
++sub cgi ($$) { #{{{
+ 	my $cgi=shift;
+ 	if (defined $cgi->param('do') && $cgi->param('do') eq "poll") {
+ 		my $choice=$cgi->param('choice');
+</pre>
