@@ -129,7 +129,7 @@ Index: IkiWiki/Plugin/blogpost.pm
 +	my $cgi=shift;
 +	my $session=shift;
 +
-+	return "" unless pagespec_match($page, $config{blogpagespec});
++	return undef unless pagespec_match($page, $config{blogpagespec});
 +	my $user=$session->param("name");
 +	IkiWiki::needsignin($cgi, $session) unless defined $user;
 +
