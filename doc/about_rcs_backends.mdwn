@@ -178,6 +178,64 @@ please refer to [Emanuele](http://nerd.ocracy.org/em/)
 
 ## [[tla]]
 
-## [[bugs/Monotone_rcs_support]]
+## [Monotone](http://monotone.ca/)
 
-Available as an unfinished patch curently.
+There is an unfinished patch in [[bugs/Monotone_rcs_support]].
+
+In normal use, monotone has a local database as well as a workspace/working copy.
+In ikiwiki terms, the local database takes the role of the master repository, and
+the srcdir is the workspace.  As all monotone workspaces point to a default
+database, there is no need to tell ikiwiki explicitly about the "master" database.  It
+will know.  (BTW - this is also true of subversion.  It might be possible to simplify the svn config?)
+
+The patch currently supports normal committing and getting the history of the page.
+To understand the parallel commit approach, you need to understand monotone's
+approach to conflicts:
+
+Monotone allows multiple micro-branches in the database.  There is a command,
+`mtn merge`, that takes the heads of all these branches and merges them back together
+(turning the tree of branches into a dag).  Conflicts in monotone (at time of writing)
+need to be resolved interactively during this merge process.
+It is important to note that having multiple heads is not an error condition in a
+monotone database.  This condition will occur in normal use.  In this case
+'update' will choose a head if it can, or complain and tell the user to merge.
+
+For the ikiwiki plugin, the monotone ikiwiki plugin borrows some ideas from the svn ikiwiki plugin.
+On prepedit() we record the revision that this change is based on (I'll refer to this as the prepedit revision).  When the web user
+saves the page, we check if that is still the current revision.  If it is, then we commit.
+If it isn't then we check to see if there were any changes by anyone else to the file
+we're editing while we've been editing (a diff bewteen the prepedit revision and the current rev).
+If there were no changes to the file we're editing then we commit as normal.
+All of this should work with the current patch.
+
+It is only if there have been parallel changes to the file we're trying to commit that
+things get hairy.  In this case the current (implemented but untested) approach is to
+commit the web changes as a branch from the prepedit revision.  This
+will leave the repository with multiple heads.  At this stage, all data is saved, but there
+is no way to resolve the potential conflict using the web interface.
+
+In the specific case of a branch caused by a web edit, it may be possible to 
+make monotone use the current web interface.  This may be possible because we
+know that merging between the two revisions we have (the new branch
+and the prepedit revision) involves at most one conflicted file.
+We could use `mtn explicit_merge` to merge the revisions.  If that
+succeeds without conflicts then good.  If that fails, then we could
+use a special lua merge hook to spit out the conflict marked file
+and hand it back to the web interface and then abort the merge.  At the same time, we'd have
+to modify the 'prepedit' data to include both parents so that when
+the user saves again we know we're in this case.
+
+If you get a commit and your prepedit data includes two revids then
+we form a commit manually using the automate interface - same way
+we currently build the micro-branch.  However, while conflicts were being resolved,
+someone could have come
+along and introduced *another* one.  So after forming this merge revision,
+you need to go back and check to see if the workspace revision has changed
+and possibly go through the whole process again.  The repeats until you're
+merged.
+
+The end result of all of this is a system that can resolve all web conflicts without race
+conditions. (And because of the way monotone works it saves all data, including
+both sides of the merge, before the merge.  You can go back later and check that
+the merge was reasonable.)  It still doesn't provide a web-based way of merging multiple
+heads that come in through non-web interaction with monotone.
