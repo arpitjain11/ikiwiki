@@ -1,0 +1,10 @@
+#Ikiwiki plugin for the Monotone revision control system.
+
+I've just made a patch to the ikiwiki code that allows it to use the [Monotone](http://monotone.ca/) revision control system.  It is available at:
+
+<http://www.cse.unsw.edu.au/~willu/monotone-ikiwiki.diff>
+
+At the moment it supports basic committing and listing recent changes.  It does not support rcs_notify() or rcs_getctime() yet.  Moreover,
+while there is support for simultaneous commits (e.g. conflicts), it is untested and if it happens to work would leave the repository in an unmerged state.
+
+But it is better than nothing.
