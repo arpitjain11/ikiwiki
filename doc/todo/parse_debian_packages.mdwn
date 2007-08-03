@@ -1,0 +1,29 @@
+A parser, similar in functionality to [[plugins/inline]] that would find
+and parse debian packages from a repository and include links to
+them. Functionality would be similar to the
+[PHP Apt-file parser](http://php-apt-parser.alioth.debian.org/)
+(for an example of the output, see
+[my repository](http://debian.camrdale.org/)). This would create
+a helpful index page to a small repository, listing all the
+packages, and possibly their descriptions as well, with links to
+download them or their sources.
+
+I think this is easily possible (and I might be able to work on
+it myself, though Perl is not my strong suit). The trickiest
+part is probably figuring out how and when to parse the packages.
+The packages could be included in the ikiwiki RCS repository,
+which might be difficult when the Packages/Release files need to
+be generated (especially if it's via an external tool like
+reprepro/debarchiver/etc.). Or, the packages could be kept
+separate, with only a link given to the plugin, though changes
+would then not be picked up until the ikiwiki is recompiled.
+
+Perhaps a better (though infinitely more complicated) solution
+would be to include the reprepro/debarchiver functionality in
+ikiwiki. Packages could be posted, like blog entries, and tagged
+with the target distribution (sid/lenny/etc.). Then compiling
+ikiwiki would generate the needed Packages/Release files
+automatically.
+
+Just some thoughts I had, hope it's not too crazy.<br>
+--Cameron
