@@ -1,0 +1,48 @@
+A rel="" attribute is desirable for links, for example to
+
+* limit the interest of comment spam with rel="nofollow" for anonymous wiki contributions (see [Google](http://googleblog.blogspot.com/2005/01/preventing-comment-spam.html))
+* identify page tags with rel="tag" (see [microformats](http://microformats.org/wiki/rel-tag))
+* define a social network with rel="friend co-worker met ..." for contacts (see [XFN](http://www.gmpg.org/xfn/))
+* define a license with rel="license" for contacts (see [microformats](http://microformats.org/wiki/rel-license))
+
+This patch adds this possibility to htmllink().
+
+    --- IkiWiki.pm.orig     2007-08-04 19:04:36.000000000 +0200
+    +++ IkiWiki.pm  2007-08-04 19:19:24.000000000 +0200
+    @@ -517,6 +517,8 @@
+                    $linktext=pagetitle(basename($link));
+            }
+     
+    +       my $rel=(defined $opts{rel} ? $rel=" rel=\"".$opts{rel}."\"" : '');
+    +
+            return "<span class=\"selflink\">$linktext</span>"
+                    if length $bestlink && $page eq $bestlink;
+     
+    @@ -546,7 +548,7 @@
+                    $bestlink.="#".$opts{anchor};
+            }
+     
+    -       return "<a href=\"$bestlink\">$linktext</a>";
+    +       return "<a href=\"$bestlink\"$rel>$linktext</a>";
+     } #}}}
+     
+     sub htmlize ($$$) { #{{{
+
+This one uses it for tags:
+
+    <pre>
+    --- tag.pm.orig 2007-08-04 19:06:15.000000000 +0200
+    +++ tag.pm      2007-08-04 19:20:47.000000000 +0200
+    @@ -60,7 +60,8 @@
+     
+            $template->param(tags => [
+                    map { 
+    -                       link => htmllink($page, $destpage, tagpage($_))
+    +                       link => htmllink($page, $destpage, 
+    +                                        tagpage($_), rel => "tag")
+                    }, sort keys %{$tags{$page}}
+            ]) if exists $tags{$page} && %{$tags{$page}} && $template->query(name => "tags");
+
+This can also help for css decoraton. An example of these patches in use: http://poivron.org/~nil/iki/japonesie/horizon_large/
+
+— NicolasLimare
