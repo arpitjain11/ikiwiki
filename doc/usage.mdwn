@@ -292,6 +292,13 @@ configuration options of their own.
   Subversion checkout. It is unoptimised and quite slow. It is best used
   with --rebuild, to force ikiwiki to get the ctime for all pages.
 
+* --set var=value
+  
+  This allows setting an arbitrary configuration variable, the same as if it
+  were set via a configuration file. Since most options can be configured
+  using command-line switches, you will rarely need to use this, but it can be
+  useful for the odd option that lacks a command-line switch.
+
 # AUTHOR
 
 Joey Hess <joey@ikiwiki.info>
