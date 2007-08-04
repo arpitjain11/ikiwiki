@@ -3,8 +3,6 @@ on its own:
 
 * Use of a version plugin should only make the page rebuild when it's built
   with a new version of ikiwiki.
-* The [[plugins/sidebar]] plugin should make any page get rebuilt if a
-  sidebar is created "closer" to it than the current sidebar.
 * Some plugin might want to _always_ rebuild the page that uses it.
 * If backlinks were turned into a plugin, it would need to make a page
   rebuild when its backlinks changed.
@@ -21,3 +19,6 @@ It also suggests that plugins will want to examine pages and/or
 [[store_data|plugin_data_storage]] about them to use in the dependency
 calculations. For example, the version plugin would need to store info
 about what pages use it.
+
+> I fixed this without realizing it when I added the needsbuild hook!
+> --[[Joey]]

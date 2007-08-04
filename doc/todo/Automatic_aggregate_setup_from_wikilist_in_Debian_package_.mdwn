@@ -1,1 +1,29 @@
-ikiwiki could have an option to process /etc/ikiwiki/wikilist and run ikiwiki in aggregate mode for all wikis that need it.  The Debian package could then include an optional cron job to automatically handle aggregation.
+ikiwiki could have an option to process /etc/ikiwiki/wikilist and run ikiwiki
+in aggregate mode for all wikis that need it.  The Debian package could then
+include an optional cron job to automatically handle aggregation.
+
+> You can actually use ikiwiki-mass-rebuild for this. Just pass --aggregate
+> --refresh to it. (The program could have a clearer name, perhaps I should
+> rename it to mass-ikiwiki? ikiwiki-map? ikiwiki-all? ...)
+> 
+> A cron job like the one
+> you suggest could also handle cases when plugins call for a page
+> to be rebuilt. For example, a calendar plugin could use this to refresh a
+> calendar daily.
+> 
+> I do worry that such a cron job would produce more load than might be optimal.
+> If you have one wiki that never needs to updated,
+> another that might want to update daily, and a third that wants to update
+> every 15 minutes for aggregation, updating all three every 15 minutes wastes
+> a bit of CPU time. Two cron jobs seem like a better fit
+> in this situation, rather than a one size fits all master cron job. But it
+> would be fine adding a cron job as an example, at least.
+> 
+> Another problem is that ikiwiki --aggregate will fail on any wikis that don't
+> have the aggregate plugin enabled. This is really a problem with the plugin's
+> special-casey approach of adding a new flag. This could be fixed by adding
+> a more general syntax like "--set aggregate=1". (done)
+> 
+> Sorry for making this sound so complex, it's a good idea, but I'm on an
+> airplane and have nothing good to do except blather on here, and read
+> haskell tutorials. ;-) --[[Joey]]
