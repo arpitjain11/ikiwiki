@@ -75,6 +75,13 @@ sub getconfig () { #{{{
 			"pingurl=s" => sub {
 				push @{$config{pingurl}}, $_[1];
 			},
+			"set=s" => sub {
+				my ($var, $val)=split('=', $_[1], 2);
+				if (! defined $var || ! defined $val) {
+					die gettext("usage: --set var=value"), "\n";
+				}
+				$config{$var}=$val;
+			},
 			"version" => sub {
 				print "ikiwiki version $IkiWiki::version\n";
 				exit;
