@@ -27,7 +27,10 @@ would then not be picked up until the ikiwiki is recompiled.
 > This could be done by adding a hook to reprepro/whatever that calls
 > ikiwiki --refresh at the end of updating a repo. (I don't
 > remember if reprepro has such hooks; mini-dinstall certianly does.)
-> 
+
+>> reprepro doesn't seem to have one, :( though of course creating a
+>> script to do both would work (but it's not optimal). --Cameron
+
 > For ikiwiki to notice that the Packages file outside its tree has
 > changed and things need to be updated, a `needsbuild` hook could be
 > used. This seems very doable.
@@ -44,7 +47,14 @@ automatically.
 > want to use it for a big repo, and I'd ideally want to keep the packages
 > in a different svn repo, pulled in via svn:externals.
 
-Just some thoughts I had, hope it's not too crazy.<br>
+>> I like it too, more than the easier options, why are the most
+>> interesting solutions always the most complicated? ;)
+
+>> Parsing the files sounds like it might require some outside
+>> dependencies, and given the complexity maybe this should be
+>> a separate package from ikiwiki. Is it possible to package
+>> plugins separately? --Cameron
+
 --Cameron
 
 [[tag wishlist]]
