@@ -25,6 +25,7 @@ sub preprocess (@) { #{{{
 		$templates{$params{page}}=$params{template};
 	}
 
+	return "";
 } # }}}
 
 sub templatefile (@) { #{{{
