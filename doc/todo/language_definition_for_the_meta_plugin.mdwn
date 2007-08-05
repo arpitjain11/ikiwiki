@@ -24,6 +24,11 @@ This may be useful for sites with a few pages in different languages, but no ful
 >>> Yes, that seems reasonable. I guess there's no problem with defaulting
 >>> to en if it can be overridden in the setup. --[[Joey]]
 
+>>>> Yes, english default makes sense. But maybe this option should also be used to define the 
+>>>> language used for the messages, ie override the locale?
+>>>> Or just --html-lang=XX, only used by the templates? 
+>>>> — NicolasLimare
+
 <pre>
 --- meta.orig.pm  2007-07-27 00:19:51.000000000 +0200
 +++ meta.pm       2007-08-05 22:37:40.000000000 +0200
