@@ -17,6 +17,12 @@ This may be useful for sites with a few pages in different languages, but no ful
 > Looks good, but the need to modify the template and include a default
 > language in it is a bit problimatic, I think. --[[Joey]]
 
+>> --lang=XX could be a setup option, with a default value, then the template would be 
+>>    <html xmlns="http://www.w3.org/1999/xhtml"
+>>          lang="<TMPL_VAR LANG>"
+>>          xml:lang="<TMPL_VAR LANG>">
+>> — NicolasLimare
+
 <pre>
 --- meta.orig.pm  2007-07-27 00:19:51.000000000 +0200
 +++ meta.pm       2007-08-05 22:37:40.000000000 +0200
