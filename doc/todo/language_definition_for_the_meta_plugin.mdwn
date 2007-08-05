@@ -21,6 +21,8 @@ This may be useful for sites with a few pages in different languages, but no ful
 
                 <html xmlns="http://www.w3.org/1999/xhtml" lang="<TMPL_VAR LANG>" xml:lang="<TMPL_VAR LANG>">
 
+>>> Yes, that seems reasonable. I guess there's no problem with defaulting
+>>> to en if it can be overridden in the setup. --[[Joey]]
 
 <pre>
 --- meta.orig.pm  2007-07-27 00:19:51.000000000 +0200
