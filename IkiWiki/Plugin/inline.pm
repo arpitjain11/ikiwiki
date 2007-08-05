@@ -4,12 +4,14 @@ package IkiWiki::Plugin::inline;
 
 use warnings;
 use strict;
+use Encode;
 use IkiWiki 2.00;
 use URI;
 
 sub import { #{{{
 	hook(type => "getopt", id => "inline", call => \&getopt);
 	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
+	hook(type => "sessioncgi", id => "skeleton", call => \&sessioncgi);
 	hook(type => "preprocess", id => "inline", 
 		call => \&IkiWiki::preprocess_inline);
 	hook(type => "pagetemplate", id => "inline",
@@ -19,6 +21,7 @@ sub import { #{{{
 	# pings interrupting page builds.
 	hook(type => "change", id => "inline", 
 		call => \&IkiWiki::pingurl);
+
 } # }}}
 
 sub getopt () { #{{{
@@ -42,6 +45,27 @@ sub checkconfig () { #{{{
 		push @{$config{wiki_file_prune_regexps}}, qr/\.atom$/;
 	}
 } #}}}
+
+sub sessioncgi () { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	if ($q->param('do') eq 'blog') {
+		my $page=decode_utf8($q->param('title'));
+		$page=~s/\///g; # no slashes in blog posts
+		# if the page already exists, munge it to be unique
+		my $from=$q->param('from');
+		my $add="";
+		while (exists $IkiWiki::pagecase{lc($from."/".IkiWiki::titlepage($page).$add)}) {
+			$add=1 unless length $add;
+			$add++;
+		}
+		$q->param('page', $page.$add);
+		# now go create the page
+		$q->param('do', 'create');
+		IkiWiki::cgi_editpage($q, $session);
+	}
+}
 
 # Back to ikiwiki namespace for the rest, this code is very much
 # internal to ikiwiki even though it's separated into a plugin.

@@ -704,21 +704,6 @@ sub cgi (;$$) { #{{{
 	elsif ($do eq 'create' || $do eq 'edit') {
 		cgi_editpage($q, $session);
 	}
-	elsif ($do eq 'blog') {
-		my $page=decode_utf8($q->param('title'));
-		$page=~s/\///g; # no slashes in blog posts
-		# if the page already exists, munge it to be unique
-		my $from=$q->param('from');
-		my $add="";
-		while (exists $pagecase{lc($from."/".titlepage($page).$add)}) {
-			$add=1 unless length $add;
-			$add++;
-		}
-		$q->param('page', $page.$add);
-		# now run same as create
-		$q->param('do', 'create');
-		cgi_editpage($q, $session);
-	}
 	elsif ($do eq 'postsignin') {
 		error(gettext("login failed, perhaps you need to turn on cookies?"));
 	}

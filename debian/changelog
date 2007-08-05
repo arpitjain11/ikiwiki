@@ -10,6 +10,7 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Add rel=tag attribute to tag links, supporting that microformat, as well
     as allowing them to be styled specially. Thanks, NicolasLimare.
   * Add sessioncgi hook. 
+  * Move blog form code out of CGI.pm and into the inline plugin.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 05 Aug 2007 14:36:55 -0700
 
