@@ -1,0 +1,51 @@
+Here is a patch for the [[plugins/meta]] plugin. It adds the possibility to define the language 
+used for a page, with
+    [[meta lang="ja"]]
+
+It doesn't insert the langage information in the xhtml meta elements, but defines a LANG
+variable to use in the templates, for example with
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          lang="<TMPL_IF NAME="LANG"><TMPL_VAR LANG><TMPL_ELSE>fr</TMPL_IF>"
+          xml:lang="<TMPL_IF NAME="LANG"><TMPL_VAR LANG><TMPL_ELSE>fr</TMPL_IF>">
+
+This way also allows to define a language for a subset of the final page, with custom
+templates and inclusion. 
+
+This may be useful for sites with a few pages in different languages, but no full i18n.
+
+<pre>
+--- meta.orig.pm  2007-07-27 00:19:51.000000000 +0200
++++ meta.pm       2007-08-05 22:37:40.000000000 +0200
+@@ -11,6 +11,7 @@
+ my %permalink;
+ my %author;
+ my %authorurl;
++my %lang;
+ 
+ sub import { #{{{
+        hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
+@@ -100,6 +101,11 @@
+                $meta{$page}.='<link href="'.encode_entities($value).
+                        "\" rel=\"openid.delegate\" />\n";
+        }
++       elsif ($key eq 'lang') {
++           if ($value =~ /^[A-Za-z]{2}$/) {
++               $lang{$page}=$value;
++           }
++       }
+        else {
+                $meta{$page}.=scrub("<meta name=\"".encode_entities($key).
+                        "\" content=\"".encode_entities($value)."\" />\n");
+@@ -131,6 +137,8 @@
+                if exists $author{$page} && $template->query(name => "author");
+        $template->param(authorurl => $authorurl{$page})
+                if exists $authorurl{$page} && $template->query(name => "authorurl");
++       $template->param(lang => $lang{$page})
++               if exists $lang{$page} && $template->query(name => "lang");
+ 
+ } # }}}
+</pre>
+
+
+[[tag wishlist patch plugin/meta translation]]
