@@ -655,9 +655,6 @@ sub cgi (;$$) { #{{{
 		cgi_recentchanges($q);
 		return;
 	}
-	elsif ($do eq 'hyperestraier') {
-		cgi_hyperestraier();
-	}
 
 	# Need to lock the wiki before getting a session.
 	lockwiki();
