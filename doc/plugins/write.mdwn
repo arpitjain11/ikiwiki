@@ -208,6 +208,15 @@ object's "name" parameter to the authenticated user's name. Note that
 if the name is set to the name of a user who is not registered,
 a basic registration of the user will be automatically performed.
 
+### sessioncgi
+
+	hook(type => "sessioncgi", id => "foo", call => \&sessioncgi);
+
+Unlike the cgi hook, which is run as soon as possible, the sessioncgi hook
+is only run once a session object is available. It is passed both a CGI
+object and a session object. To check if the user is in fact signed in, you
+can check if the session object has a "name" parameter set.
+
 ### canedit
 
 	hook(type => "canedit", id => "foo", call => \&pagelocked);

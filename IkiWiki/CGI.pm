@@ -688,7 +688,10 @@ sub cgi (;$$) { #{{{
 		print gettext("You are banned.");
 		cgi_savesession($session);
 	}
-	elsif ($do eq 'signin') {
+
+	run_hooks(sessioncgi => sub { shift->($q, $session) });
+
+	if ($do eq 'signin') {
 		cgi_signin($q, $session);
 		cgi_savesession($session);
 	}
