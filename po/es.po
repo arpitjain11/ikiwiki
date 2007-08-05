@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 21:44-0400\n"
+"POT-Creation-Date: 2007-08-05 13:46-0700\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -149,7 +149,7 @@ msgstr ""
 msgid "failed to run graphviz"
 msgstr "no he podido ejecutar el programa graphviz "
 
-#: ../IkiWiki/Plugin/graphviz.pm:80
+#: ../IkiWiki/Plugin/graphviz.pm:85
 msgid "prog not a valid graphviz program"
 msgstr "prog no es un programa graphviz válido "
 
@@ -577,6 +577,10 @@ msgstr "creado con éxito el programa envoltorio %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "uso: ikiwiki [opciones] origen destino"
 
+#: ../ikiwiki.in:81
+msgid "usage: --set var=value"
+msgstr ""
+
 #: ../IkiWiki.pm:124
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
@@ -591,7 +595,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:662
+#: ../IkiWiki.pm:667
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

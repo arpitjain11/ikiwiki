@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 21:44-0400\n"
+"POT-Creation-Date: 2007-08-05 13:46-0700\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -154,7 +154,7 @@ msgstr "awaria w trakcie wyszukiwania adresu URL na stronie HTML"
 msgid "failed to run graphviz"
 msgstr "awaria w trakcie uruchamiania wtyczki graphviz"
 
-#: ../IkiWiki/Plugin/graphviz.pm:80
+#: ../IkiWiki/Plugin/graphviz.pm:85
 msgid "prog not a valid graphviz program"
 msgstr "prog nie jest poprawnym programem graphviz"
 
@@ -593,6 +593,10 @@ msgstr "pomyślnie utworzono %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "użycie: ikiwiki [parametry] źródło cel"
 
+#: ../ikiwiki.in:81
+msgid "usage: --set var=value"
+msgstr ""
+
 #: ../IkiWiki.pm:124
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
@@ -607,7 +611,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:662
+#: ../IkiWiki.pm:667
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"

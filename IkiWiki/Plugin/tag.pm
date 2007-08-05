@@ -60,7 +60,8 @@ sub pagetemplate (@) { #{{{
 
 	$template->param(tags => [
 		map { 
-			link => htmllink($page, $destpage, tagpage($_))
+			link => htmllink($page, $destpage, tagpage($_),
+					rel => "tag")
 		}, sort keys %{$tags{$page}}
 	]) if exists $tags{$page} && %{$tags{$page}} && $template->query(name => "tags");
 

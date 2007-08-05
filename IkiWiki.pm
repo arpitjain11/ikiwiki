@@ -546,7 +546,12 @@ sub htmllink ($$$;@) { #{{{
 		$bestlink.="#".$opts{anchor};
 	}
 
-	return "<a href=\"$bestlink\">$linktext</a>";
+	my @attrs;
+	if (defined $opts{rel}) {
+		push @attrs, ' rel="'.$opts{rel}.'"';
+	}
+
+	return "<a href=\"$bestlink\"@attrs>$linktext</a>";
 } #}}}
 
 sub htmlize ($$$) { #{{{
