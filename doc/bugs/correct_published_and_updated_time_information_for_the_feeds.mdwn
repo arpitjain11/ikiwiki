@@ -1,0 +1,44 @@
+In [Atom](http://www.ietf.org/rfc/rfc4287.txt), we can provide `published` and `updated` information.
+In [RSS](http://cyber.law.harvard.edu/rss/rss.html), there is only `pubDate`, for the 
+publication date, but an update can be mentioned with the [`dc:modified`](http://www.ietf.org/rfc/rfc2413.txt) 
+element (whose datetime format is [iso 8601](http://www.w3.org/TR/NOTE-datetime)). 
+This patch updates :) `inline.pm` and the two relevant templates.
+
+    --- inline.pm.orig      2007-08-07 05:44:26.000000000 +0200
+    +++ inline.pm   2007-08-07 05:47:37.000000000 +0200
+    @@ -362,7 +362,9 @@
+                            url => $u,
+                            permalink => $u,
+                            date_822 => date_822($pagectime{$p}),
+    +                       mdate_822 => date_822($pagemtime{$p}),
+                            date_3339 => date_3339($pagectime{$p}),
+    +                       mdate_3339 => date_3339($pagemtime{$p}),
+                    );
+     
+                    if ($itemtemplate->query(name => "enclosure")) {
+    --- atomitem.tmpl.orig  2007-08-07 05:44:43.000000000 +0200
+    +++ atomitem.tmpl       2007-08-07 05:46:14.000000000 +0200
+    @@ -11,7 +11,8 @@
+            <category term="<TMPL_VAR CATEGORY>" />
+            </TMPL_LOOP>
+            </TMPL_IF>
+    -       <updated><TMPL_VAR DATE_3339></updated>
+    +       <updated><TMPL_VAR MDATE_3339></updated>
+    +       <published><TMPL_VAR DATE_3339></published>
+            <TMPL_IF NAME="ENCLOSURE">
+            <link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
+            <TMPL_ELSE>
+    --- rssitem.tmpl.orig   2007-08-07 05:44:58.000000000 +0200
+    +++ rssitem.tmpl        2007-08-07 06:06:36.000000000 +0200
+    @@ -5,6 +5,7 @@
+            <TMPL_ELSE>
+            <title><TMPL_VAR TITLE></title>
+            </TMPL_IF>
+    +       <dc:modified><TMPL_VAR MDATE_3339></dc:modified>
+            <guid><TMPL_VAR URL></guid>
+            <link><TMPL_VAR PERMALINK></link>
+            <TMPL_IF NAME="CATEGORIES">
+
+— NicolasLimare
+
+[[tag patch]]
