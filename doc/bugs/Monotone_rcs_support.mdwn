@@ -4,14 +4,17 @@ I've just made a patch to the ikiwiki code that allows it to use the [Monotone](
 
 <http://www.cse.unsw.edu.au/~willu/monotone-ikiwiki.diff>
 
-At the moment it supports basic committing and listing recent changes.  It implements rcs_notify() and rcs_getctime(), but they're untested.  Moreover,
-while there is support for simultaneous commits, any conflicts leave the repository in an unmerged state which has to be cleaned up using the non-web
-monotone interface.  The user's data is still stored, and the user is informed if this happens.
+At the moment it is basically complete.  It implements rcs_notify() and rcs_getctime(), but they're untested.
+
+In an older version of the patch 
+there was support for simultaneous commits, but any conflicts left the repository in an unmerged state which had to be cleaned up using the non-web
+monotone interface.  The user's data was still stored, and the user was informed if that happened.
 
 > The conflict issue seems like the main problem. I might just add it to ikiwiki and mark is as experimental and known buggy though. :-) --[[Joey]]
 
-Note: This patch requires the Monotone perl module, which is only available in Monotone 0.36 or later.  The module is in the Monotone contrib/ directory.  While 0.36 is relatively new, that Monotone module itself will work with a monotone binary back quite a few releases.
+The current version of the patch handles conflicts through the web interface.  It is still not perfect as it will break if there is a rename that conflicts with a web change (but so will the other Rcs plugins I think).  It also commits a revision with conflict markers if there is a conflict requiring such markers... ick.
 
+Note: This patch requires the Monotone perl module, which is only available in Monotone 0.36 or later.  The module is in the Monotone contrib/ directory.  While 0.36 is relatively new, that Monotone module itself will work with a monotone binary back quite a few releases.
 Apparently this module did't make some versions of the monotone 0.36 release tarball.  It is available from the monotone repository here: <http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone>.
 
 [[tag patch]]
