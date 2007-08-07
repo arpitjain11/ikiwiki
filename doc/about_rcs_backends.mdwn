@@ -184,7 +184,7 @@ There is a patch that needs a bit of work linked to from [[todo/rcs]].
 
 ## [Monotone](http://monotone.ca/)
 
-There is an unfinished patch in [[bugs/Monotone_rcs_support]].
+There is a patch in [[bugs/Monotone_rcs_support]].  It works, but its conflict handling is a little ugly.
 
 In normal use, monotone has a local database as well as a workspace/working copy.
 In ikiwiki terms, the local database takes the role of the master repository, and
@@ -210,36 +210,16 @@ saves the page, we check if that is still the current revision.  If it is, then 
 If it isn't then we check to see if there were any changes by anyone else to the file
 we're editing while we've been editing (a diff bewteen the prepedit revision and the current rev).
 If there were no changes to the file we're editing then we commit as normal.
-All of this should work with the current patch.
 
 It is only if there have been parallel changes to the file we're trying to commit that
-things get hairy.  In this case the current (implemented but untested) approach is to
+things get hairy.  In this case the current approach is to
 commit the web changes as a branch from the prepedit revision.  This
-will leave the repository with multiple heads.  At this stage, all data is saved, but there
-is no way to resolve the potential conflict using the web interface.
+will leave the repository with multiple heads.  At this point, all data is saved.
+The system then tries to merge the heads with a merger that will fail if it cannot
+resolve the conflict.  If the merge succeeds then everything is ok.
 
-In the specific case of a branch caused by a web edit, it may be possible to 
-make monotone use the current web interface.  This may be possible because we
-know that merging between the two revisions we have (the new branch
-and the prepedit revision) involves at most one conflicted file.
-We could use `mtn explicit_merge` to merge the revisions.  If that
-succeeds without conflicts then good.  If that fails, then we could
-use a special lua merge hook to spit out the conflict marked file
-and hand it back to the web interface and then abort the merge.  At the same time, we'd have
-to modify the 'prepedit' data to include both parents so that when
-the user saves again we know we're in this case.
-
-If you get a commit and your prepedit data includes two revids then
-we form a commit manually using the automate interface - same way
-we currently build the micro-branch.  However, while conflicts were being resolved,
-someone could have come
-along and introduced *another* one.  So after forming this merge revision,
-you need to go back and check to see if the workspace revision has changed
-and possibly go through the whole process again.  The repeats until you're
-merged.
-
-The end result of all of this is a system that can resolve all web conflicts without race
-conditions. (And because of the way monotone works it saves all data, including
-both sides of the merge, before the merge.  You can go back later and check that
-the merge was reasonable.)  It still doesn't provide a web-based way of merging multiple
-heads that come in through non-web interaction with monotone.
+If that merge failed then there are conflicts.  In this case, the current patch calls
+merge again with a merger that inserts conflict markers.  It commits this new
+revision with conflict markers to the repository.  It then returns the text to the
+user for cleanup.  This is less neat than it could be, in that a conflict marked
+revision gets committed to the repository.
