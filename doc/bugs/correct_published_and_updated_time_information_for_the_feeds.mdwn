@@ -16,6 +16,15 @@ This patch updates :) `inline.pm` and the two relevant templates.
                     );
      
                     if ($itemtemplate->query(name => "enclosure")) {
+    @@ -397,7 +399,7 @@
+                    $content.=$itemtemplate->output;
+                    $itemtemplate->clear_params;
+     
+    -               $lasttime = $pagectime{$p} if $pagectime{$p} > $lasttime;
+    +               $lasttime = $pagemtime{$p} if $pagemtime{$p} > $lasttime;
+            }
+     
+            my $template=template($feedtype."page.tmpl", blind_cache => 1);
     --- atomitem.tmpl.orig  2007-08-07 05:44:43.000000000 +0200
     +++ atomitem.tmpl       2007-08-07 05:46:14.000000000 +0200
     @@ -11,7 +11,8 @@
