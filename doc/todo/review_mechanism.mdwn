@@ -18,3 +18,16 @@ Change queues would be wiki pages as well (probably using [[inlines|plugins/inli
 [[Pagespecs|Pagespec]] and [[tags]] would be used to control the queues to which a given change would belong.
 
 --[[JeremieKoenig]]
+
+> You can achieve something like this right now, by using Git.  The
+> development and published versions each have their own repository, with
+> remotes set up so they push either to two backend repositories or to two
+> different branches of the same backend repository.  You can then merge from
+> one to the other whenever you want.
+>
+> You could theoretically do this with SVN as well.
+>
+> I do like the idea you suggest of reviewing and merging changes through the
+> web interface, though.
+>
+> -- [[JoshTriplett]]
