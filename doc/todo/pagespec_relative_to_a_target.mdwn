@@ -30,9 +30,9 @@ Note that if you try to inline `*/blah` you will match `foo/blah`,
 themselves rather than any relatives of theirs.
 
 This patch is useful for (among other things) constructing blogging 
-systems where leaf nodes are organized hierarchically; using has_child,
+systems where leaf nodes are organized hierarchically; using `has_child`,
 you can inline only leaf nodes and ignore "intermediate" nodes.
-match_relative can be used recursively to match properties of arbitrary
+`match_relative` can be used recursively to match properties of arbitrary
 complexity: "show me all the pages who have children called foo that 
 have children called blah". I'm not sure what use it is, though.
 
