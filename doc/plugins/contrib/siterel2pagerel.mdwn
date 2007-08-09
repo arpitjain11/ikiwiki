@@ -1,7 +1,7 @@
 This is a simple plugin to convert all site-relative links to page-relative links (converts /foo into ../../../foo or similar). It works as a postprocessing filter, allowing it to work on mdwn, wiki, html, rst and any other format that produces html. The code is available here:
 
 	#!/usr/bin/perl
-	# quick HTML abs2rel link hack by Paul Wise
+	# quick HTML siterel2pagerel link hack by Paul Wise
 	package IkiWiki::Plugin::siterel2pagerel;
 
 	use warnings;
