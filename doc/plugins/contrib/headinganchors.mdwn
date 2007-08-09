@@ -26,7 +26,6 @@ This is a simple plugin to add ids to all headings, based on their text. It work
 	        my %params=@_;
 	        my $content=$params{content};
 	        $content=~s{<h([0-9])>([^>]*)</h([0-9])>}{'<h'.$1.' id="'.text_to_anchor($2).'">'.$2.'</h'.$3.'>'}gie;
-	        #$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"\/([^"]*)"/$1 src="$baseurl$2"/mig;
 	        return $content;
 	} # }}}
 
