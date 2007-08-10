@@ -23,10 +23,11 @@ This may be useful for sites with a few pages in different languages, but no ful
 >>> Yes, that seems reasonable. I guess there's no problem with defaulting
 >>> to en if it can be overridden in the setup. --[[Joey]]
 
->>>> Yes, english default makes sense. But maybe this option should also be used to define the 
->>>> language used for the messages, ie override the locale?
->>>> Or just --html-lang=XX, only used by the templates? 
->>>> — NicolasLimare
+>>>> Yes, english default makes sense. I guess we should use the `$config{lang}`, 
+>>>> defined from the setup file or command-line options to define the default language
+>>>> (`$config{lang}` defaults to `en` which is fine) if the html pages, and override
+>>>> it from the `meta` directive.
+>>>> — [[NicolasLimare]]
 
 <pre>
 --- meta.orig.pm  2007-07-27 00:19:51.000000000 +0200
