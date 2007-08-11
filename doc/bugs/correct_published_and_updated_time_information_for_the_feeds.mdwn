@@ -83,6 +83,29 @@ Index: IkiWiki/Plugin/inline.pm
  	my $template=template($feedtype."page.tmpl", blind_cache => 1);
 </pre>
 
-— NicolasLimare
+
+
+>> Yes I noticedthe bug today; the correct (tested on feedvalidator) rssitem.tmpl template must start with the following content:
+
+    <item>
+        <TMPL_IF NAME="AUTHOR">                                                    
+        <title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE></title>             
+        <dcterms:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dcterms:creator>           
+        <TMPL_ELSE>                                                                
+        <title><TMPL_VAR TITLE></title>                                            
+        </TMPL_IF>                                                                 
+        <dcterms:modified><TMPL_VAR MDATE_3339></dcterms:modified>                 
+        <dcterms:created><TMPL_VAR DATE_3339></dcterms:created>                    
+        ....
+ 
+>> and rsspage.tmpl must start with:
+
+    <?xml version="1.0"?>                                                              
+    <rss version="2.0"                                                                 
+         xmlns:dc="http://purl.org/dc/elements/1.1/"                                   
+         xmlns:dcterms="http://purl.org/dc/terms/" >        
+         ....
+
+>> — [[NicolasLimare]]
 
 [[tag patch]]
