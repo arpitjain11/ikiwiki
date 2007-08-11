@@ -361,8 +361,10 @@ sub genfeed ($$$$@) { #{{{
 			title => pagetitle(basename($p)),
 			url => $u,
 			permalink => $u,
-			date_822 => date_822($pagectime{$p}),
-			date_3339 => date_3339($pagectime{$p}),
+			cdate_822 => date_822($pagectime{$p}),
+			mdate_822 => date_822($pagemtime{$p}),
+			cdate_3339 => date_3339($pagectime{$p}),
+			mdate_3339 => date_3339($pagemtime{$p}),
 		);
 
 		if ($itemtemplate->query(name => "enclosure")) {
@@ -397,7 +399,7 @@ sub genfeed ($$$$@) { #{{{
 		$content.=$itemtemplate->output;
 		$itemtemplate->clear_params;
 
-		$lasttime = $pagectime{$p} if $pagectime{$p} > $lasttime;
+		$lasttime = $pagemtime{$p} if $pagemtime{$p} > $lasttime;
 	}
 
 	my $template=template($feedtype."page.tmpl", blind_cache => 1);

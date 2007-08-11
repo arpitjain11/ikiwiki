@@ -1,7 +1,7 @@
 <item>
 	<TMPL_IF NAME="AUTHOR">
 	<title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE></title>
-	<dc:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dc:creator>
+	<dcterms:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dcterms:creator>
 	<TMPL_ELSE>
 	<title><TMPL_VAR TITLE></title>
 	</TMPL_IF>
@@ -12,7 +12,8 @@
 	<category><TMPL_VAR CATEGORY></category>
 	</TMPL_LOOP>
 	</TMPL_IF>
-	<pubDate><TMPL_VAR DATE_822></pubDate>
+	<pubDate><TMPL_VAR CDATE_822></pubDate>
+	<dcterms:modified><TMPL_VAR MDATE_3339></dcterms:modified>
 	<TMPL_IF NAME="ENCLOSURE">
 	<enclosure url="<TMPL_VAR ENCLOSURE>" type="<TMPL_VAR TYPE>" length="<TMPL_VAR LENGTH>" />
 	<TMPL_ELSE>

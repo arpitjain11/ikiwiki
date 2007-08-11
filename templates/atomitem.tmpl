@@ -11,7 +11,8 @@
 	<category term="<TMPL_VAR CATEGORY>" />
 	</TMPL_LOOP>
 	</TMPL_IF>
-	<updated><TMPL_VAR DATE_3339></updated>
+	<updated><TMPL_VAR MDATE_3339></updated>
+	<published><TMPL_VAR CDATE_3339></published>
 	<TMPL_IF NAME="ENCLOSURE">
 	<link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
 	<TMPL_ELSE>
