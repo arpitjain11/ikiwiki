@@ -184,13 +184,11 @@ There is a patch that needs a bit of work linked to from [[todo/rcs]].
 
 ## [Monotone](http://monotone.ca/)
 
-There is a patch in [[bugs/Monotone_rcs_support]].  It works, but its conflict handling is a little ugly.
-
 In normal use, monotone has a local database as well as a workspace/working copy.
 In ikiwiki terms, the local database takes the role of the master repository, and
 the srcdir is the workspace.  As all monotone workspaces point to a default
 database, there is no need to tell ikiwiki explicitly about the "master" database.  It
-will know.  (BTW - this is also true of subversion.  It might be possible to simplify the svn config?)
+will know.
 
 The patch currently supports normal committing and getting the history of the page.
 To understand the parallel commit approach, you need to understand monotone's
