@@ -10,11 +10,18 @@ In an older version of the patch
 there was support for simultaneous commits, but any conflicts left the repository in an unmerged state which had to be cleaned up using the non-web
 monotone interface.  The user's data was still stored, and the user was informed if that happened.
 
-> The conflict issue seems like the main problem. I might just add it to ikiwiki and mark is as experimental and known buggy though. :-) --[[Joey]]
-
 The current version of the patch handles conflicts through the web interface.  It is still not perfect as it will break if there is a rename that conflicts with a web change (but so will the other Rcs plugins I think).  It also commits a revision with conflict markers if there is a conflict requiring such markers... ick.
 
 Note: This patch requires the Monotone perl module, which is only available in Monotone 0.36 or later.  The module is in the Monotone contrib/ directory.  While 0.36 is relatively new, that Monotone module itself will work with a monotone binary back quite a few releases.
 Apparently this module did't make some versions of the monotone 0.36 release tarball.  It is available from the monotone repository here: <http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone>.
+
+> The setup instructions to add 40 lines of code to monotonerc is pretty frightning stuff.
+> Is there some way this can be automated? --[[Joey]]
+
+> Having rcs_commit return a warning message when there's an unresolved conflict
+> isn't right; that message will populate the page edit box. You might want
+> to use the error() function here?
+
+> There'an incomplete comment ending with "note, this relies on the fact that"
 
 [[tag patch]]
