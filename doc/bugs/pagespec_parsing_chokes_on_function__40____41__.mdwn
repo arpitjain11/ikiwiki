@@ -56,3 +56,9 @@ case the user is given to rebuilding the wiki by hand. --Ethan
  	return $ret;
  } #}}}
 </pre>
+
+> Thanks, [[done]] --[[Joey]]
+>
+> Note that the printing of the error isn't needed though. pagespec_match()
+> returns an IkiWiki::FailReason object if parsing fails, and its caller
+> can use that as desired to print the error.

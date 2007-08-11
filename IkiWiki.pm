@@ -1041,7 +1041,7 @@ sub pagespec_translate ($) { #{{{
 		|
 			\)		# )
 		|
-			\w+\([^\)]+\)	# command(params)
+			\w+\([^\)]*\)	# command(params)
 		|
 			[^\s()]+	# any other text
 		)
