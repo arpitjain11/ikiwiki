@@ -4,7 +4,7 @@ I've just made a patch to the ikiwiki code that allows it to use the [Monotone](
 
 <http://www.cse.unsw.edu.au/~willu/monotone-ikiwiki.diff>
 
-At the moment it is basically complete.  It implements rcs_notify() and rcs_getctime(), but they're untested.
+At the moment it is basically complete.  At present rcs_notify() is implemeted but untested, the rest is implemented and tested.
 
 In an older version of the patch 
 there was support for simultaneous commits, but any conflicts left the repository in an unmerged state which had to be cleaned up using the non-web
