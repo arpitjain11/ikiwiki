@@ -13,8 +13,10 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Move blog form code out of CGI.pm and into the inline plugin.
   * Updated Spanish translation from Victor Moral.
   * Updated French translation from Cyril Brulebois. Closes: #437181
+  * The toc directive doesn't work well or make sense inside an inlined page.
+    Disable it when the page with the toc is nested inside another page.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 11 Aug 2007 17:24:46 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 11 Aug 2007 17:40:45 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 

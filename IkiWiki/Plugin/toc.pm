@@ -17,13 +17,20 @@ my %tocpages;
 sub preprocess (@) { #{{{
 	my %params=@_;
 
-	$params{levels}=1 unless exists $params{levels};
+	if ($params{page} eq $params{destpage}) {
+		$params{levels}=1 unless exists $params{levels};
 
-	# It's too early to generate the toc here, so just record the
-	# info.
-	$tocpages{$params{destpage}}=\%params;
+		# It's too early to generate the toc here, so just record the
+		# info.
+		$tocpages{$params{destpage}}=\%params;
 
-	return "\n<div class=\"toc\"></div>\n";
+		return "\n<div class=\"toc\"></div>\n";
+	}
+	else {
+		# Don't generate toc in an inlined page, doesn't work
+		# right.
+		return "";
+	}
 } # }}}
 
 sub format (@) { #{{{
