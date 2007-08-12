@@ -10,10 +10,10 @@ max=12 ymin=10 formula=permonth style=bar barwidth=2 barspacing=1 height=13]]
 this many are being added per month  
 [[postsparkline pages="todo/* and !todo and link(todo/done)"
 max=12 ymin=10 formula=permonth time=mtime style=bar barwidth=2 barspacing=1 height=13]]
-while this many are being fixed,
-([[postsparkline pages="todo/* and !todo and (link(todo/done) or link(patch))"
+while this many are being fixed (these
+[[postsparkline pages="todo/* and !todo and (link(todo/done) or link(patch))"
 max=12 ymin=10 formula=permonth time=mtime style=bar barwidth=2 barspacing=1 height=13]]
-these thanks to users' patches).
+thanks to users' patches).
 """]]
 
 [[inline pages="todo/* and !todo/done and !link(todo/done) and
