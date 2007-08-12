@@ -12,7 +12,7 @@ this many are being added per month
 max=12 ymin=10 formula=permonth time=mtime style=bar barwidth=2 barspacing=1 height=13]]
 while this many are being fixed,  
 """]]
-[[postsparkline pages="todo/* and !todo and link(todo/done) and link(patch)"
+[[postsparkline pages="todo/* and !todo and (link(todo/done) or link(patch))"
 max=12 ymin=10 formula=permonth time=mtime style=bar barwidth=2 barspacing=1 height=13]]
 and these were fixed by a patch.
 """]]
