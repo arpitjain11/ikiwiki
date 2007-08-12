@@ -6,3 +6,11 @@ post it to [[bugs]] instead. Link items to [[todo/done]] when done.
 !link(patch) and !link(wishlist) and !todo/*/*"
 feedpages="created_after(todo/supporting_comments_via_disussion_pages)"
 actions=yes archive=yes rootpage="todo" postformtext="Add a new todo item titled:" show=0]]
+
+* [[postsparkline pages="todo/* and !todo/done and !link(todo/done) and
+!link(patch) and !link(wishlist) and !todo/*/*" max=60
+formula=perday style=bar barwidth=2 barspacing=1 height=13]]
+number of items added per day
+* [[postsparkline pages="todo/* and !todo and link(todo/done)" max=60
+formula=perday style=bar barwidth=2 barspacing=1 height=13]]
+number of items fixed per day
