@@ -8,19 +8,22 @@ that, never again.)
 
 Instead, I'm considering using XML RPC to let ikiwiki communicate with a
 child process that it can spawn. The child could then be any program,
-written in any language. It could talk XML RPC via stdio.
+written in any language. It could talk XML RPC via stdio. (This assumes
+that most languages allow easily serialising XML::RPC calls and responses
+to a file descriptor. Some XML RPC implementations may be hardcoded to use
+http..)
 
 Here's how it would basically look, not showing the actual XML RPC used to
 pass values.
 
-	-> init
+	-> import
 	<- 1
 	<- hook type => preprocess, id => foo
 	-> 1
 	<- done 1
 	-> 1
 
-	-> callback type => preprocess id => foo, page => bar
+	-> callback type => preprocess, id => foo, page => bar
 	<- 1
 	<- getconfig url
 	-> "http://example.com", ...
@@ -41,7 +44,18 @@ From the plugin's POV:
 
 * It's probably sitting in an XML::RPC loop.
 * Get a command from ikiwiki.
-* Call the appropriate callback.
-* The callback can use XML::RPC to communicate with ikiwiki to get things
+* Disaptch the command to the appropriate function. The main commands seem
+  to be "import" and "callback"; callback can call any function that the
+  plugin has registered a hook for. Others commands might include
+  "rcs_*" for RCS plugins..
+* The function can use XML::RPC to communicate with ikiwiki to get things
   like config values; and to call ikiwiki functions.
 * When the callback returns, use XML::RPC to send a "done" command to ikiwiki.
+
+Simple enough, really. ikiwiki would need to add accessor functions for
+all important variables, such as "getconfig" and "setconfig". It would
+probably be easiest for ikiwiki to dispatch a command by just evaling
+IkiWiki::$command.
+
+Plugin programs could be dropped into /usr/share/ikiwiki/plugins/, and
+load_plugin() would just open2 the plugin program and call import.
