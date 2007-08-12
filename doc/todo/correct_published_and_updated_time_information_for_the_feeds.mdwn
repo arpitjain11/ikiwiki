@@ -1,0 +1,113 @@
+In [Atom](http://www.ietf.org/rfc/rfc4287.txt), we can provide `published` and `updated` information.
+In [RSS](http://cyber.law.harvard.edu/rss/rss.html), there is only `pubDate`, for the 
+publication date, but an update can be mentioned with the [`dc:modified`](http://www.ietf.org/rfc/rfc2413.txt) 
+element (whose datetime format is [iso 8601](http://www.w3.org/TR/NOTE-datetime)). 
+This patch updates :) `inline.pm` and the two relevant templates.
+
+> I tested a slightly modified patch, which I've put below for now.
+> feedvalidator.org complains that dc:modified is not a known element. I'll
+> bet some header needs to be added to make the dublin core stuff available.
+> The atom feeds seem ok. --[[Joey]]
+
+<pre>
+Index: debian/changelog
+===================================================================
+--- debian/changelog	(revision 4066)
++++ debian/changelog	(working copy)
+@@ -15,8 +15,11 @@
+   * Updated French translation from Cyril Brulebois. Closes: #437181
+   * The toc directive doesn't work well or make sense inside an inlined page.
+     Disable it when the page with the toc is nested inside another page.
++  * Apply a patch from NicolasLimare adding modification date tags to rss and
++    atom feeds, and also changing the publication time for a feed to the
++    newest modiciation time (was newest creation time).
+ 
+- -- Joey Hess <joeyh@debian.org>  Sat, 11 Aug 2007 17:40:45 -0400
++ -- Joey Hess <joeyh@debian.org>  Sat, 11 Aug 2007 18:25:28 -0400
+ 
+ ikiwiki (2.5) unstable; urgency=low
+ 
+Index: templates/atomitem.tmpl
+===================================================================
+--- templates/atomitem.tmpl	(revision 4066)
++++ templates/atomitem.tmpl	(working copy)
+@@ -11,7 +11,8 @@
+ 	<category term="<TMPL_VAR CATEGORY>" />
+ 	</TMPL_LOOP>
+ 	</TMPL_IF>
+-	<updated><TMPL_VAR DATE_3339></updated>
++	<updated><TMPL_VAR MDATE_3339></updated>
++	<published><TMPL_VAR CDATE_3339></published>
+ 	<TMPL_IF NAME="ENCLOSURE">
+ 	<link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
+ 	<TMPL_ELSE>
+Index: templates/rssitem.tmpl
+===================================================================
+--- templates/rssitem.tmpl	(revision 4066)
++++ templates/rssitem.tmpl	(working copy)
+@@ -12,7 +12,8 @@
+ 	<category><TMPL_VAR CATEGORY></category>
+ 	</TMPL_LOOP>
+ 	</TMPL_IF>
+-	<pubDate><TMPL_VAR DATE_822></pubDate>
++	<pubDate><TMPL_VAR CDATE_822></pubDate>
++	<dc:modified><TMPL_VAR MDATE_3339></dc:modified>
+ 	<TMPL_IF NAME="ENCLOSURE">
+ 	<enclosure url="<TMPL_VAR ENCLOSURE>" type="<TMPL_VAR TYPE>" length="<TMPL_VAR LENGTH>" />
+ 	<TMPL_ELSE>
+Index: IkiWiki/Plugin/inline.pm
+===================================================================
+--- IkiWiki/Plugin/inline.pm	(revision 4066)
++++ IkiWiki/Plugin/inline.pm	(working copy)
+@@ -361,8 +361,10 @@
+ 			title => pagetitle(basename($p)),
+ 			url => $u,
+ 			permalink => $u,
+-			date_822 => date_822($pagectime{$p}),
+-			date_3339 => date_3339($pagectime{$p}),
++			cdate_822 => date_822($pagectime{$p}),
++			mdate_822 => date_822($pagemtime{$p}),
++			cdate_3339 => date_3339($pagectime{$p}),
++			mdate_3339 => date_3339($pagemtime{$p}),
+ 		);
+ 
+ 		if ($itemtemplate->query(name => "enclosure")) {
+@@ -397,7 +399,7 @@
+ 		$content.=$itemtemplate->output;
+ 		$itemtemplate->clear_params;
+ 
+-		$lasttime = $pagectime{$p} if $pagectime{$p} > $lasttime;
++		$lasttime = $pagemtime{$p} if $pagemtime{$p} > $lasttime;
+ 	}
+ 
+ 	my $template=template($feedtype."page.tmpl", blind_cache => 1);
+</pre>
+
+
+
+>> Yes I noticedthe bug today; the correct (tested on feedvalidator) rssitem.tmpl template must start with the following content:
+
+    <item>
+        <TMPL_IF NAME="AUTHOR">                                                    
+        <title><TMPL_VAR AUTHOR ESCAPE=HTML>: <TMPL_VAR TITLE></title>             
+        <dcterms:creator><TMPL_VAR AUTHOR ESCAPE=HTML></dcterms:creator>           
+        <TMPL_ELSE>                                                                
+        <title><TMPL_VAR TITLE></title>                                            
+        </TMPL_IF>                                                                 
+        <dcterms:modified><TMPL_VAR MDATE_3339></dcterms:modified>                 
+        <dcterms:created><TMPL_VAR DATE_3339></dcterms:created>                    
+        ....
+ 
+>> and rsspage.tmpl must start with:
+
+    <?xml version="1.0"?>                                                              
+    <rss version="2.0"                                                                 
+         xmlns:dc="http://purl.org/dc/elements/1.1/"                                   
+         xmlns:dcterms="http://purl.org/dc/terms/" >        
+         ....
+
+>> — [[NicolasLimare]]
+
+[[done]] --[[Joey]]
+
+[[tag patch]]
