@@ -2,18 +2,6 @@ Feel free to post your ideas for todo and [[wishlist]] items here, as well
 as any [[patches|patch]]. If it seems more like a bug in the existing code,
 post it to [[bugs]] instead. Link items to [[todo/done]] when done.
 
-[[if test="enabled(postsparkline)"
-then="""
-How long will it take your todo item to be fixed? Well...
-[[postsparkline pages="todo/* and !todo/done and !link(todo/done) and
-!link(patch) and !link(wishlist) and !todo/*/*" max=120
-formula=perday style=bar barwidth=2 barspacing=1 height=13]]
-this many are being added per day  
-[[postsparkline pages="todo/* and !todo and link(todo/done)" max=120
-formula=perday style=bar barwidth=2 barspacing=1 height=13]]
-while this many are being fixed.
-"""]]
-
 [[inline pages="todo/* and !todo/done and !link(todo/done) and
 !link(patch) and !link(wishlist) and !todo/*/*"
 feedpages="created_after(todo/supporting_comments_via_disussion_pages)"
