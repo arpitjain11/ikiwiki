@@ -16,8 +16,8 @@ statistics about a set of pages, such as posts to a blog.
 
 # usage
 
-All options aside fron the `pages`, `max`, and `forumla` options are passed
-on to the sparkline plugin.
+All options aside fron the `pages`, `max`, `formula`, and `time` options
+are passed on to the sparkline plugin.
 
 You don't need to specify any data points (though you can if you want to).
 Instead, data points are automatically generated based on the creation
@@ -36,11 +36,14 @@ Available forumlae:
 * `peryear` - Each point represents a day; the height represents how
   many posts were made that year.
 
+The `time` parameter has a default value of "ctime", since forumae use
+the creation times of pages by default. If you instead want
+them to use the modification times of pages, set it to "mtime".
+
 # adding formulae
 
 Additional formulae can be added without modifying this plugin by writing
 plugins that register functions in the
 `IkiWiki::Plugin::postsparkline::formula` namespace. These functions will
 receive on input a reference to a hash of parameters, and a sorted list of
-pages (newest pages first), and should return a list of data points for
-the sparkline plugin.
+pages, and should return a list of data points for the sparkline plugin.

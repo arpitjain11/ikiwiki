@@ -21,6 +21,13 @@ sub preprocess (@) { #{{{
 		return "";
 	}
 
+	if (! exists $params{time} || $params{time} ne 'mtime') {
+		$params{timehash} = \%IkiWiki::pagectime;
+	}
+	else {
+		$params{timehash} = \%IkiWiki::pagemtime;
+	}
+
 	if (! exists $params{formula}) {
 		return "[[postsparkline ".gettext("missing formula")."]]";
 	}
@@ -42,14 +49,15 @@ sub preprocess (@) { #{{{
 		}
 	}
 	
-	@list = sort { $IkiWiki::pagectime{$b} <=> $IkiWiki::pagectime{$a} } @list;
+	@list = sort { $params{timehash}->{$b} <=> $params{timehash}->{$a} } @list;
 
-	delete $params{pages};
-	delete $params{formula};
 	my @data=eval qq{IkiWiki::Plugin::postsparkline::formula::$formula(\\\%params, \@list)};
 	if ($@) {
 		return "[[postsparkline error $@]]";
 	}
+	delete $params{pages};
+	delete $params{formula};
+	delete $params{ftime};
 	return IkiWiki::Plugin::sparkline::preprocess(%params, 
 		map { $_ => "" } reverse @data);
 } # }}}
@@ -63,7 +71,7 @@ sub perfoo ($@) {
 	my $count=0;
 	my @data;
 	foreach (@_) {
-		$cur=$sub->($IkiWiki::pagectime{$_});
+		$cur=$sub->($params->{timehash}->{$_});
 		if (defined $prev) {
 			if ($prev != $cur) {
 				push @data, "$prev,$count";
@@ -114,7 +122,7 @@ sub interval ($@) {
 	my $max=$params->{max};
 	my @data;
 	for (my $i=1; $i < @_; $i++) {
-		push @data, $IkiWiki::pagectime{$_[$i-1]} - $IkiWiki::pagectime{$_[$i]};
+		push @data, $params->{timehash}->{$_[$i-1]} - $params->{timehash}->{$_[$i]};
 		last if --$max <= 0;
 	}
 	return @data;
