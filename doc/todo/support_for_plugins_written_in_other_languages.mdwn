@@ -1,0 +1,47 @@
+ikiwiki should support writing plugins in other languages
+
+While it should be possible to call ikiwiki from C, doing the callbacks in C is
+probably hard. And accessing perl at all from C is ugly. It also doesn't
+make it very easy to write plugins in an interpreted language, since that
+would mean linking perl and eg, python in one binary. (Been there, done
+that, never again.)
+
+Instead, I'm considering using XML RPC to let ikiwiki communicate with a
+child process that it can spawn. The child could then be any program,
+written in any language. It could talk XML RPC via stdio.
+
+Here's how it would basically look, not showing the actual XML RPC used to
+pass values.
+
+	-> init
+	<- 1
+	<- hook type => preprocess, id => foo
+	-> 1
+	<- done 1
+	-> 1
+
+	-> callback type => preprocess id => foo, page => bar
+	<- 1
+	<- getconfig url
+	-> "http://example.com", ...
+	<- debug "foo"
+	-> 1
+	<- done "my return value"
+	-> 1
+
+From ikiwiki's POV:
+
+* ikiwiki always initiates each conversation with a command
+* After sending a command, ikiwiki reads commands, dispatches them, and 
+  returns the results, in a loop.
+* The loop continues until the plugin calls the "done" command, with a value
+  that is the return value for the command that initiated the conversation.
+
+From the plugin's POV:
+
+* It's probably sitting in an XML::RPC loop.
+* Get a command from ikiwiki.
+* Call the appropriate callback.
+* The callback can use XML::RPC to communicate with ikiwiki to get things
+  like config values; and to call ikiwiki functions.
+* When the callback returns, use XML::RPC to send a "done" command to ikiwiki.
