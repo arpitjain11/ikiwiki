@@ -18,10 +18,23 @@ Apparently this module did't make some versions of the monotone 0.36 release tar
 > The setup instructions to add 40 lines of code to monotonerc is pretty frightning stuff.
 > Is there some way this can be automated? --[[Joey]]
 
+>> I've committed a bunch of this to monotone so that in future it could be removed.  I didn't
+>> want to remove it from the instructions until it was in a monotone release though.
+
+>> The real issue here is that there is a mismatch between ikiwiki's conflict model and
+>> monotone's.  I need to get code into monotone to add conflict markers - that is
+>> the code that goes in the monotonerc.  In practice I could add this to any file I know
+>> how to reference and I can then tell monotone about it with a command line arg.
+>> Is there a good place for such a file?
+
 > Having rcs_commit return a warning message when there's an unresolved conflict
 > isn't right; that message will populate the page edit box. You might want
 > to use the error() function here?
 
+>> It should never reach that case, so yes, I can change that to error.
+
 > There'an incomplete comment ending with "note, this relies on the fact that"
+
+>> erg... sorry, will fix.
 
 [[tag patch]]
