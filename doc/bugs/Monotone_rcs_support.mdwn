@@ -21,11 +21,21 @@ Apparently this module did't make some versions of the monotone 0.36 release tar
 >> I've committed a bunch of this to monotone so that in future it could be removed.  I didn't
 >> want to remove it from the instructions until it was in a monotone release though.
 
+>>> Fair enough. Didn't realize you were a monotone committer. :-) As long as it goes away later I don't mind having it in setup initially.
+
 >> The real issue here is that there is a mismatch between ikiwiki's conflict model and
 >> monotone's.  I need to get code into monotone to add conflict markers - that is
 >> the code that goes in the monotonerc.  In practice I could add this to any file I know
 >> how to reference and I can then tell monotone about it with a command line arg.
 >> Is there a good place for such a file?
+
+>>> There's not a really good place. /usr/share/ikiwiki/foo would do, 
+>>> except for the systems where /usr/share/ is elsewhere. It would need to be
+>>> runtime configurable just like the basewiki and template locations are.
+>>> 
+>>> Hmm, another option would be to put it in the wiki's .ikiwiki directory when
+>>> ikiwiki starts up. This is the technique used by the search plugin to create
+>>> various data and config files that hyperestradier needs.
 
 > Having rcs_commit return a warning message when there's an unresolved conflict
 > isn't right; that message will populate the page edit box. You might want
