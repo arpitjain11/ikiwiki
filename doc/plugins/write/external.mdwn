@@ -86,3 +86,33 @@ use XML RPC for `cgi` or `formbuilder` hooks (which are passed CGI and
 FormBuilder perl objects), or use it to call `template()` (which returns a
 perl HTML::Template object).
 
+Also. the `getopt` hook doesn't work, as ARGV is not available to the external
+plugin.
+
+## Performance issues
+
+Since each external plugin is a separate process, when ikiwiki is
+configured to use lots of external plugins, it will start up slower, and
+use more resources. One or two should not be a problem though.
+
+There is some overhead in using XML RPC for function calls. Most plugins
+should find it to be pretty minimal though. In one benchmark, ikiwiki was
+able to perform 10000 simple XML RPC calls in 11 seconds -- 900 per second.
+
+Using external plugins for hooks such as `sanitize` and `format`, which
+pass around entire pages, and are run for each page rendered, will cause
+more XML RPC overhead than usual, due to the larger number of calls, and the
+large quantity of data conversion going on. In contrast, `preprocess` hooks
+are called generally rarely, and pass around minimal data.
+
+External plugins should avoid making RPC calls unnecessarily (ie, in a loop).
+Memoizing the results of appropriate RPC calls is one good way to minimise the
+number of calls.
+
+Injecting a replacement for a commonly called ikiwiki function
+could result in a lot more RPC calls than expected and slow
+eveything down. `pagetitle`, for instance, is called about 100 times
+per page build.
+
+In general, use common sense, and your external plugin will probably
+perform ok.
