@@ -25,8 +25,10 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Fix --libdir to work at the command line.
   * Plugins can now be written as standalone external programs, which can
     be written in any language that can do XML RPC.
+  * Change yet again how unhandled and escaped preprocessor directives are
+    re-output onto the page. Hopefully I finally got it right..
 
- -- Joey Hess <joeyh@debian.org>  Sun, 12 Aug 2007 20:49:23 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 13 Aug 2007 13:34:29 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 

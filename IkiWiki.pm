@@ -626,7 +626,7 @@ sub preprocess ($$$;$$) { #{{{
 		my $command=shift;
 		my $params=shift;
 		if (length $escape) {
-			return "\\[[$command $params]]";
+			return "[[$command $params]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			return "" if $scan && ! $hooks{preprocess}{$command}{scan};
@@ -687,7 +687,7 @@ sub preprocess ($$$;$$) { #{{{
 			return $ret;
 		}
 		else {
-			return "\\[[$command $params]]";
+			return "[[$command $params]]";
 		}
 	};
 	
