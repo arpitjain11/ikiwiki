@@ -22,8 +22,11 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Support pagespec "functions" with no parameters, like included() in the
     conditional plugin.
   * Add time=mtime option to postsparkline.
+  * Fix --libdir to work at the command line.
+  * Plugins can now be written as standalone external programs, which can
+    be written in any language that can do XML::RPC.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 12 Aug 2007 05:17:23 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 12 Aug 2007 20:49:23 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 

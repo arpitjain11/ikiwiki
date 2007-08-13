@@ -160,11 +160,20 @@ sub loadplugin ($) { #{{{
 
 	return if grep { $_ eq $plugin} @{$config{disable_plugins}};
 
+	foreach my $dir ($config{libdir}, "$installdir/lib/ikiwiki") {
+		if (defined $dir && -x "$dir/plugins/$plugin") {
+			require IkiWiki::Plugin::external;
+			import IkiWiki::Plugin::external "$dir/plugins/$plugin";
+			return 1;
+		}
+	}
+
 	my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
 	eval qq{use $mod};
 	if ($@) {
 		error("Failed to load plugin $mod: $@");
 	}
+	return 1;
 } #}}}
 
 sub error ($;$) { #{{{

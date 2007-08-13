@@ -1,8 +1,26 @@
-ikiwiki [[plugins]] are written in perl. Each plugin is a perl module, in
-the `IkiWiki::Plugin` namespace. The name of the plugin is typically in
-lowercase, such as `IkiWiki::Plugin::inline`. Ikiwiki includes a
-`IkiWiki::Plugin::skeleton` that can be fleshed out to make a useful
-plugin. `IkiWiki::Plugin::pagecount` is another simple example.
+Most ikiwiki [[plugins]] are written in perl, like ikiwiki. This gives the
+plugin full access to ikiwiki's internals, and is the most efficient.
+However, plugins can actually be written in any language that supports XML
+RPC. These are called [[external]] plugins.
+
+A plugin written in perl is a perl module, in the `IkiWiki::Plugin`
+namespace. The name of the plugin is typically in lowercase, such as
+`IkiWiki::Plugin::inline`. Ikiwiki includes a `IkiWiki::Plugin::skeleton`
+that can be fleshed out to make a useful plugin.
+`IkiWiki::Plugin::pagecount` is another simple example. All perl plugins
+should `use IkiWiki` to import the ikiwiki plugin interface. It's a good
+idea to include the version number of the plugin interface that your plugin
+expects: `use IkiWiki 2.00`.
+
+An external plugin is an executable program. It can be written in any
+language. Its interface to ikiwiki is via XML RPC, which it reads from
+ikiwiki on its standard input, and writes to ikiwiki on its standard
+output. For more details on writing external plugins, see [[external]].
+
+Despite these two types of plugins having such different interfaces,
+they're the same as far as how they hook into ikiwiki. This document will
+explain how to write both sorts of plugins, albeit with an emphasis on perl
+plugins.
 
 [[toc levels=2]]
 
@@ -19,18 +37,13 @@ being edited.
 
 ## Registering plugins
 
-All plugins should `use IkiWiki` to import the ikiwiki plugin interface.
-It's a good idea to include the version number of the plugin interface that
-your plugin expects: `use IkiWiki 2.00`
-
 Plugins should, when imported, call `hook()` to hook into ikiwiki's
 processing. The function uses named parameters, and use varies depending on
 the type of hook being registered -- see below. Note that a plugin can call
 the function more than once to register multiple hooks. All calls to
 `hook()` should be passed a "type" parameter, which gives the type of
 hook, a "id" paramter, which should be a unique string for this plugin, and
-a "call" parameter, which is a reference to a function to call for the
-hook.
+a "call" parameter, which tells what function to call for the hook.
 
 An optional "last" parameter, if set to a true value, makes the hook run
 after all other hooks of its type. Useful if the hook depends on some other
@@ -272,7 +285,7 @@ namespace. These variables and functions are the ones most plugins need,
 and a special effort will be made to avoid changing them in incompatible
 ways, and to document any changes that have to be made in the future.
 
-Note that IkiWiki also provides other variables functions that are not
+Note that IkiWiki also provides other variables and functions that are not
 exported by default. No guarantee is made about these in the future, so if
 it's not exported, the wise choice is to not use it.
 
@@ -287,7 +300,7 @@ hash. The best way to understand the contents of the hash is to look at
 If your plugin needs to access data about other pages in the wiki. It can
 use the following hashes, using a page name as the key:
 
-* `links` lists the names of each page that a page links to, in an array
+* `%links` lists the names of each page that a page links to, in an array
   reference.
 * `%destsources` contains the name of the source file used to create each
   destination file.

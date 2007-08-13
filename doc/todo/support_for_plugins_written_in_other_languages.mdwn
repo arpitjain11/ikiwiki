@@ -1,5 +1,7 @@
 ikiwiki should support writing plugins in other languages
 
+> [[done]] !!
+
 While it should be possible to call ikiwiki from C, doing the callbacks in C is
 probably hard. And accessing perl at all from C is ugly. It also doesn't
 make it very easy to write plugins in an interpreted language, since that
@@ -11,46 +13,39 @@ child process that it can spawn. The child could then be any program,
 written in any language. It could talk XML RPC via stdio. (This assumes
 that most languages allow easily serialising XML::RPC calls and responses
 to a file descriptor. Some XML RPC implementations may be hardcoded to use
-http..)
+http..) For ease of implementation, each rpc request sent via stio should
+end with a newline, and begin with "<?xml ..>".
 
 Here's how it would basically look, not showing the actual XML RPC used to
 pass values.
 
-	-> import
-	<- 1
-	<- hook type => preprocess, id => foo
-	-> 1
-	<- done 1
-	-> 1
+	-> call import
+	<- call hook type => preprocess, id => foo, call => plugin_preprocess
+	-> result 1
+	<- result 1
 
-	-> callback type => preprocess, id => foo, page => bar
-	<- 1
-	<- getconfig url
-	-> "http://example.com", ...
-	<- debug "foo"
-	-> 1
-	<- done "my return value"
-	-> 1
+	-> call plugin_preprocess page => bar
+	<- call getconfig url
+	-> result "http://example.com", ...
+	<- call debug "foo"
+	-> result 1
+	<- result done "my return value"
 
 From ikiwiki's POV:
 
 * ikiwiki always initiates each conversation with a command
 * After sending a command, ikiwiki reads commands, dispatches them, and 
-  returns the results, in a loop.
-* The loop continues until the plugin calls the "done" command, with a value
-  that is the return value for the command that initiated the conversation.
+  returns the results, in a loop, until it gets a result for the command it
+  called.
 
 From the plugin's POV:
 
 * It's probably sitting in an XML::RPC loop.
 * Get a command from ikiwiki.
-* Disaptch the command to the appropriate function. The main commands seem
-  to be "import" and "callback"; callback can call any function that the
-  plugin has registered a hook for. Others commands might include
-  "rcs_*" for RCS plugins..
+* Dispatch the command to the appropriate function.
 * The function can use XML::RPC to communicate with ikiwiki to get things
   like config values; and to call ikiwiki functions.
-* When the callback returns, use XML::RPC to send a "done" command to ikiwiki.
+* Send the function's return value back to ikiwiki.
 
 Simple enough, really. ikiwiki would need to add accessor functions for
 all important variables, such as "getconfig" and "setconfig". It would

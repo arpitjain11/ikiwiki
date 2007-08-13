@@ -50,7 +50,7 @@ sub getconfig () { #{{{
 			"httpauth!" => \$config{httpauth},
 			"userdir=s" => \$config{userdir},
 			"htmlext=s" => \$config{htmlext},
-			"libdir" => \$config{libdir},
+			"libdir=s" => \$config{libdir},
 			"exclude=s@" => sub {
 				push @{$config{wiki_file_prune_regexps}}, $_[1];
 			},

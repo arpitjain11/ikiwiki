@@ -1,0 +1,88 @@
+External plugins are standalone, executable programs, that can be written
+in any language. When ikiwiki starts up, it runs the program, and
+communicates with it using XML RPC. If you want to [[write]] an external
+plugin, read on..
+
+ikiwiki contains one sample external plugin, named `externaldemo`. This is
+written in perl, but is intended to be an example of how to write an
+external plugin in your favorite programming language. Wow us at how much
+easier you can do the same thing in your favorite language. ;-)
+
+## How external plugins use XML RPC
+
+While XML RPC is typically used over http, ikiwiki doesn't do that.
+Instead, the external plugin reads XML RPC data from stdin, and writes it
+to stdout. To ease parsing, each separate XML RPC request or response must
+start at the beginning of a line, and end with a newline. When outputting
+XML RPC to stdout, be _sure_ to flush stdout. Failure to do so will result
+in deadlock!
+
+An external plugin should operate in a loop. First, read a command from
+stdin, using XML RPC. Dispatch the command, and return its result to
+stdout, also using XML RPC. After reading a command, and before returning
+the result, the plugin can output XML RPC requests of its own, calling
+functions in ikiwiki. Note: *Never* make an XML RPC request at any other
+time. Ikiwiki won't be listening for it, and you will deadlock.
+
+When ikiwiki starts up an external plugin, the first RPC it will make
+is to call the plugin's `import()` function. That function typically makes
+an RPC to ikiwiki's `hook()` function, registering a callback.
+
+An external plugin can use XML RPC to call any of the exported functions
+documented in the [[plugin_interface_documentation|write]]. It can also
+actually call any non-exported IkiWiki function, but doing so is a good way
+to break your plugin when ikiwiki changes. There is currently no versioned
+interface like there is for perl plugins, but external plugins were first
+supported in ikiwiki version 2.6.
+
+## Accessing data structures
+
+Ikiwiki has a few global data structures such as `%config`, which holds
+its configuration. External plugins can use the `getvar` and `setvar` RPCs
+to access any such global hash. To get the "url" configuration value,
+call `getvar("config", "url")`. To set it, call 
+`setvar("config", "url", "http://example.com/)`.
+
+## Notes on function parameters
+
+The [[plugin_interface_documentation|write]] talks about functions that take
+"named parameters". When such a function is called over XML RPC, such named
+parameters look like a list of keys and values:
+
+	page, foo, destpage, bar, magnify, 1
+
+If a name is repeated in the list, the later value overrides the earlier
+one:
+
+	name, Bob, age, 20, name, Sally, gender, female
+
+In perl, boiling this down to an associative array of named parameters is
+very easy:
+
+	sub foo {
+		my %params=@list;
+
+Other languages might not find it so easy. If not, it might be a good idea
+to convert these named parameters into something more natural for the
+language as part of their XML RPC interface.
+
+## Function injection
+
+Some parts of ikiwiki are extensible by adding functions. For example, the
+RCS interface relies on plugins providing several IkiWiki::rcs_* functions.
+It's actually possible to do this from an external plugin too. 
+
+To make your external plugin provide an `IkiWiki::rcs_update` function, for
+example, make an RPC call to `inject`. Pass it named parameters "name" and
+"call", where "name" is the name of the function to inject into perl (here
+"Ikiwiki::rcs_update" and "call" is the RPC call ikiwiki will make whenever
+that function is run.
+
+## Limitations of XML RPC
+
+Since XML RPC can't pass around references to objects, it can't be used
+with functions that take or return such references. That means you can't
+use XML RPC for `cgi` or `formbuilder` hooks (which are passed CGI and
+FormBuilder perl objects), or use it to call `template()` (which returns a
+perl HTML::Template object).
+

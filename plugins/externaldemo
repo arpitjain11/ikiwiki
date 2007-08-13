@@ -1,0 +1,132 @@
+#!/usr/bin/perl
+# Demo external plugin. Kinda pointless, since it's a perl script, but
+# useful for testing or as an hint of how to write an external plugin in
+# other languages.
+use warnings;
+use strict;
+
+print STDERR "externaldemo plugin running as pid $$\n";
+
+use RPC::XML;
+use RPC::XML::Parser;
+use IO::Handle;
+
+# autoflush stdout
+$|=1;
+
+# Used to build up RPC calls as they're read from stdin.
+my $accum="";
+
+sub rpc_read {
+	# Read stdin, a line at a time, until a whole RPC call is accumulated.
+	# Parse to XML::RPC object and return.
+	while (<>) {
+		$accum.=$_;
+
+		# Kinda hackish approch to parse a single XML RPC out of the
+		# accumulated input. Relies on calls always ending with a
+		# newline, which ikiwiki's protocol requires be true.
+		if ($accum =~ /^\s*(<\?xml\s.*?<\/(?:methodCall|methodResponse)>)\n(.*)/s) {
+			$accum=$2; # the rest
+	
+			# Now parse the XML RPC.
+			my $r = RPC::XML::Parser->new->parse($1);
+			if (! ref $r) {
+				die "error: XML RPC parse failure $r";
+			}
+			return $r;
+		}
+	}
+
+	return undef;
+}
+
+sub rpc_handle {
+	# Handle an incoming XML RPC command.
+	my $r=rpc_read();
+	if (! defined $r) {
+		return 0;
+	}
+	if ($r->isa("RPC::XML::request")) {
+		my $name=$r->name;
+		my @args=map { $_->value } @{$r->args};
+		# Dispatch the requested function. This could be
+		# done with a switch statement on the name, or
+		# whatever. I'll use eval to call the function with
+		# the name.
+		my $ret = eval $name.'(@args)';
+		die $@ if $@;
+	
+		# Now send the repsonse from the function back,
+		# followed by a newline.
+		my $resp=RPC::XML::response->new($ret);
+		$resp->serialize(\*STDOUT);
+		print "\n";
+		# stdout needs to be flushed here. If it isn't,
+		# things will deadlock. Perl flushes it
+		# automatically when $| is set.
+		return 1;
+	}
+	elsif ($r->isa("RPC::XML::response")) {
+		die "protocol error; got a response when expecting a request";
+	}
+}
+
+sub rpc_call {
+	# Make an XML RPC call and return the result.
+	my $command=shift;
+	my @params=@_;
+
+	my $req=RPC::XML::request->new($command, @params);
+	$req->serialize(\*STDOUT);
+	print "\n";
+	# stdout needs to be flushed here to prevent deadlock. Perl does it
+	# automatically when $| is set.
+	
+	my $r=rpc_read();
+	if ($r->isa("RPC::XML::response")) {
+		return $r->value->value;
+	}
+	else {
+		die "protocol error; got a request when expecting a response";
+	}
+}
+
+# Now on with the actual plugin. Let's do a simple preprocessor plugin.
+
+sub import {
+	# The import function will be called by ikiwiki when the plugin is
+	# loaded. When it's imported, it needs to hook into the preprocessor
+	# stage of ikiwiki.
+	rpc_call("hook", type => "preprocess", id => "externaldemo", call => "preprocess");
+
+	# Here's an example of how to inject an arbitrary function into
+	# ikiwiki. Ikiwiki will be able to call bob() just like any other
+	# function.
+	rpc_call("inject", name => "IkiWiki::bob", call => "bob");
+
+	# Here's an exmaple of how to access values in %IkiWiki::config.
+	print STDERR "url is set to: ".
+		rpc_call("getvar", "config", "url")."\n";
+
+	print STDERR "externaldemo plugin successfully imported\n";
+}
+
+sub preprocess {
+	# This function will be called when ikiwiki wants to preprocess
+	# something.
+	my %params=@_;
+
+	# Let's use IkiWiki's pagetitle function to turn the page name into
+	# a title.
+	my $title=rpc_call("pagetitle", $params{page});
+
+	return "externaldemo plugin preprocessing on $title!";
+}
+
+sub bob {
+	print STDERR "externaldemo plugin's bob called via RPC";
+}
+
+# Now all that's left to do is loop and handle each incoming RPC request.
+while (rpc_handle()) { print STDERR "externaldemo plugin handled RPC request\n" }
