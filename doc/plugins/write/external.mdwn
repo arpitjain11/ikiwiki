@@ -117,8 +117,8 @@ number of calls.
 Injecting a replacement for a commonly called ikiwiki function
 could result in a lot more RPC calls than expected and slow
 eveything down. `pagetitle`, for instance, is called about 100 times
-per page build. Memoizing injected functions whenever possible is a very
-good idea.
+per page build. Whenever possible, you should tell ikiwiki to memoize
+injected functions.
 
 In general, use common sense, and your external plugin will probably
 perform ok.
