@@ -107,6 +107,7 @@ sub rpc_call ($$;@) { #{{{
 } #}}}
 
 package IkiWiki::RPC::XML;
+use Memoize;
 
 sub getvar ($$$) { #{{{
 	my $plugin=shift;
@@ -142,6 +143,7 @@ sub inject ($@) { #{{{
 		IkiWiki::Plugin::external::rpc_call($plugin, $params{call}, @_)
 	};
 	eval qq{*$params{name}=\$sub};
+	memoize($params{name}) if $params{memoize};
 	return 1;
 } #}}}
 

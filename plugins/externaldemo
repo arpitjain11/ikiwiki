@@ -102,8 +102,9 @@ sub import {
 
 	# Here's an example of how to inject an arbitrary function into
 	# ikiwiki. Ikiwiki will be able to call bob() just like any other
-	# function.
-	rpc_call("inject", name => "IkiWiki::bob", call => "bob");
+	# function. Note use of automatic memoization.
+	rpc_call("inject", name => "IkiWiki::bob", call => "bob",
+		memoize => 1);
 
 	# Here's an exmaple of how to access values in %IkiWiki::config.
 	print STDERR "url is set to: ".

@@ -78,6 +78,9 @@ example, make an RPC call to `inject`. Pass it named parameters "name" and
 "Ikiwiki::rcs_update" and "call" is the RPC call ikiwiki will make whenever
 that function is run.
 
+If the RPC call is memoizable, you can also pass a "memoize" parameter, set
+to 1.
+
 ## Limitations of XML RPC
 
 Since XML RPC can't pass around references to objects, it can't be used
@@ -112,7 +115,8 @@ number of calls.
 Injecting a replacement for a commonly called ikiwiki function
 could result in a lot more RPC calls than expected and slow
 eveything down. `pagetitle`, for instance, is called about 100 times
-per page build.
+per page build. Memoizing injected functions whenever possible is a very
+good idea.
 
 In general, use common sense, and your external plugin will probably
 perform ok.
