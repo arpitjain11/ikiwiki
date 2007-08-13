@@ -1,24 +1,7 @@
 Contributed [[plugins]]:
 
+(See [[install]] for installation help.)
+
 [[inline pages="plugins/contrib/* !*/Discussion" 
 feedpages="created_after(plugins/contrib/navbar)" archive="yes"
 rootpage="plugins/contrib" postformtext="Add a new plugin named:" show=0]]
-
-# Installing third party plugins
-
-Most ikiwiki plugins are perl modules and should be installed somewhere in
-the perl module search path. See the @INC list at the end of the output of
-`perl -V` for a list of the directories in that path. All plugins are in
-the IkiWiki::Plugin namespace, so they go in a IkiWiki/Plugin subdirectory
-inside the perl search path. For example, if your perl looks in
-`/usr/local/lib/site_perl` for modules, you can locally install ikiwiki
-plugins to `/usr/local/lib/site_perl/IkiWiki/Plugin`
-
-You can use the `libdir` configuration option to add a directory to the
-search path. For example, if you set `libdir` to `/home/you/.ikiwiki/`,
-then ikiwiki will look for plugins in `/home/you/.ikiwiki/IkiWiki/Plugins`.
-
-Ikiwiki also supports plugins that are external programs. These are
-typically written in some other language than perl. Ikiwiki searches for
-these in /usr/lib/ikiwiki/plugins by default. If `libdir` is set, it will
-also look in that directory, for example in `/home/you/.ikiwiki/plugins`.

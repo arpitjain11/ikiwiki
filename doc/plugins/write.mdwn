@@ -1,3 +1,12 @@
+Ikiwiki's plugin interface allows all kinds of useful [[plugins]] to be
+written to extend ikiwiki in many ways. Despite the length of this page,
+it's not really hard. This page is a complete reference to everything a
+plugin might want to do. There is also a quick [[tutorial]].
+
+[[toc levels=2]]
+
+## Types of plugins
+
 Most ikiwiki [[plugins]] are written in perl, like ikiwiki. This gives the
 plugin full access to ikiwiki's internals, and is the most efficient.
 However, plugins can actually be written in any language that supports XML
@@ -21,8 +30,6 @@ Despite these two types of plugins having such different interfaces,
 they're the same as far as how they hook into ikiwiki. This document will
 explain how to write both sorts of plugins, albeit with an emphasis on perl
 plugins.
-
-[[toc levels=2]]
 
 ## Considerations
 

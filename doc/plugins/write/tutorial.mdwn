@@ -1,0 +1,189 @@
+This tutorial will walk you through [[writing|write]] your first ikiwiki
+plugin.
+
+What should the plugin do? Let's make it calculate and output the Fibonachi
+sequense. To output the next number in the sequence, all a user has to do
+is write this on a wiki page:
+
+	\[[fib ]]
+
+When the page is built, that'll be replaced by the next number in the
+sequence.
+
+Most of ikiwiki's plugins are written in perl, and it's currently easiest
+to write them in perl. So, open your favorite text editor, and start
+editing a file named "fib.pm".
+
+	#!/usr/bin/perl
+
+This isn't really necessary, since fib.pm will be a perl module, but it's
+nice to have. Since it's a module, the next bit is this. Notice the "fib"
+at the end, matching the "fib" in the filename.
+
+	package IkiWiki::Plugin::fib;
+
+Now let's import a few modules. Warnings and strict are good ideas, but the
+important one is the IkiWiki module.
+
+	use warnings;
+	use strict;
+	use IkiWiki 2.00;
+
+Ok, boilerplate is out of the way. Now to add the one function that ikiwiki
+expects to find in any module: `import`. The import function is called when
+the module is first loaded, and what modules typically do with it is
+register hooks that ikiwiki will call later.
+
+	sub import {
+		hook(type => "preprocess", id => "fib", call => \&preprocess);
+	}
+
+This has hooked our plugin into the preprocess hook, which ikiwiki uses to
+expand [[PreprocessorDirectives|preprocessordirectives]]. Notice that "fib"
+has shown up again. It doesn't actually have to match the module name this
+time, but it generally will. This "fib" is telling ikiwiki what kind of
+PreprocessorDirective to handle, namely one that looks like this:
+
+	\[[fib ]]
+
+Notice the `\&preprocess`? This is how you pass a reference to a function,
+and the `preprocess` function is the one that ikiwiki will call to expand
+the PreprocessorDirective. So, time to write that function:
+
+	sub preprocess {
+		my %params=@_;
+		return 1;
+	}
+
+Whatever this function returns is what will show up on the wiki page.
+Since this is the Fibonachi sequence, returning 1 will be right for the
+first two calls anways, so our plugin isn't _too_ buggy. ;-) Before we fix
+the bug, let's finish up the plugin.
+
+	1
+
+Always put this as the last line in your perl modules. Perl likes it.
+
+Ok, done! If you save the plugin, you can copy it to a place your ikiwiki
+looks for plugins (`/usr/share/perl5/IkiWiki/Plugins/` is a good bet; see
+[[plugin/install]] for the details of how to figure out where to
+install it). Then configure ikiwiki to use the plugin, and you're ready to
+insert at least the first two numbers of the Fibonachi sequence on web
+pages. Behold, the power of ikiwiki! ...
+
+----
+
+You could stop here, if you like, and go write your own plugin that does
+something more useful. Rather than leave you with a broken fib plugin
+though, this tutorial will go ahead and complete it. Let's add a simple
+Fibonachi generating function to the plugin. This is right out of a
+textbook.
+
+	sub fib {
+		my $num=shift;
+		return 0 if $num == 1;
+		return 1 if $num == 2;
+		return fib($num - 1) + fib($num - 2);
+	}
+
+And let's change the `preprocess` sub to use it:
+
+	my $last=0;
+
+	sub preprocess {
+		my %params=@_;
+		my $num=$last++;
+		return fib($num);
+	}
+
+Feel free to try it out with a simple page like this:
+
+	\[[fib ]], \[[fib ]], \[[fib ]], \[[fib ]], \[[fib ]]
+
+Looks like it works ok, doesn't it? That creates a page that lists:
+
+	1, 1, 3, 5, 8
+
+But what happens if there are two pages that both use fib? Try it out.
+If ikiwiki builds both pages in one pass, the sequence will continue
+counting up from one page to the next. But if that second page is modified
+later and needs to be rebuilt, the sequence will start over from 1. This is
+because `$last` only remembers what was output during the current
+ikiwiki run.
+
+But that's not the end of the strange behavior. Create a page that inlines
+a page that uses fib. Now the inlined page will have one set of numbers,
+and the standalone page another. The numbers might even skip over part of
+the sequence in some cases.
+
+Obviously, using a global `$last` veriable was a bad idea. It would
+work ok in a more regular cgi-based wiki, which only outputs one page per
+run. But since ikiwiki is a wiki *compiler*, things are a bit more
+complicated. It't not very hard to fix, though, if we do want the seqense
+to start from 1 in every page that uses it.
+
+	my %last;
+
+	sub preprocess {
+		my %params=@_;
+		my $page=$params{destpage};
+		my $num=$last{$page}++;
+		return fib($num);
+	}
+
+All this is doing is using a hash to store the last number on a per-page
+basis. To get the name of the page that's being built, it looks in the
+`%params` hash.
+
+Ok, one more enhancement. Just incrementing the numbers is pretty boring.
+It would be nice to be able to jump directly to a given point in the
+sequence:
+
+	\[[fib seed=20]], [[fib ]], [[fib ]]
+
+Just insert these lines of code inside `preprocess`, in the appropriate
+spot:
+
+		if (exists $params{seed}) {
+			$last{$page}=$params{seed}-1;
+		}
+
+But this highlights another issue with the plugin. The `fib()` function is
+highly recursive and gets quite slow for large numbers. If a user enters
+seed=1000, it will run for a very long time, blocking ikiwiki from
+finishing. This denial of service attack also uses an ever-increasing
+amount of memory due to all the recursion. 
+
+Now, we could try to fix `fib()` to run in constant time for any number,
+but that's not the focus of this tutorial. Instead, let's concentrate on
+making the plugin use the existing function safely. A good first step would
+be a guard on how high it will go.
+	
+	my %last;
+
+	sub preprocess {
+		my %params=@_;
+		my $page=$params{destpage};
+		if (exists $params{seed}) {
+			$last{$page}=$params{seed}-1;
+		}
+		my $num=$last{$page}++;
+		if ($num > 25) {
+			return "[[fib will only calculate the first 25 numbers in the sequence]]";
+		}
+		return fib($num);
+	}
+
+Returning an error message like this is standard for preprocessor plugins,
+so that the user can look at the built page and see what went wrong.
+
+Are we done? Nope, there's still a security hole. Consider what `fib()`
+does for numbers less than 1. Or for any number that's not an integer. In
+either case, it will run forever. Here's one way to fix that:
+
+		if (int($num) != $num || $num < 1) {
+			return "[[fib positive integers only, please]]";
+		}
+
+As these security problems have demonstrated, even a simple input from the
+user needs to be checked thuroughly before being used by an ikiwiki plugin.
