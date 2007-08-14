@@ -50,6 +50,10 @@ Why do they appear two times with conflicting values in the very same hashes?
 
 >> Probably thttpd and mini-httpd read stderr as well as stdout, while apache
 >> and boa don't. When using a shell-script wrapper as the CGI,
->> which redirects ikiwiki's error output to /dev/null, it works properly.
+>> which redirects ikiwiki's error output to /dev/null, it works better.
+
+>> The edit still fails to commit, because in my wiki, index.mdwn is
+>> pulled from the base wiki and somehow ikiwiki wants to change it
+>> rather that create it.
 
 >> --[[JeremieKoenig]]
