@@ -292,11 +292,11 @@ sub readfile ($;$$) { #{{{
 	}
 	
 	local $/=undef;
-	open (IN, $file) || error("failed to read $file: $!");
-	binmode(IN) if ($binary);
-	return \*IN if $wantfd;
-	my $ret=<IN>;
-	close IN || error("failed to read $file: $!");
+	open (my $in, $file) || error("failed to read $file: $!");
+	binmode($in) if ($binary);
+	return \*$in if $wantfd;
+	my $ret=<$in>;
+	close $in || error("failed to read $file: $!");
 	return $ret;
 } #}}}
 
@@ -331,15 +331,15 @@ sub writefile ($$$;$$) { #{{{
 	}
 
 	my $cleanup = sub { unlink($newfile) };
-	open (OUT, ">$newfile") || error("failed to write $newfile: $!", $cleanup);
-	binmode(OUT) if ($binary);
+	open (my $out, '>', $newfile) || error("failed to write $newfile: $!", $cleanup);
+	binmode($out) if ($binary);
 	if ($writer) {
-		$writer->(\*OUT, $cleanup);
+		$writer->(\*$out, $cleanup);
 	}
 	else {
-		print OUT $content or error("failed writing to $newfile: $!", $cleanup);
+		print $out $content or error("failed writing to $newfile: $!", $cleanup);
 	}
-	close OUT || error("failed saving $newfile: $!", $cleanup);
+	close $out || error("failed saving $newfile: $!", $cleanup);
 	rename($newfile, "$destdir/$file") || 
 		error("failed renaming $newfile to $destdir/$file: $!", $cleanup);
 } #}}}
@@ -787,8 +787,8 @@ sub enable_commit_hook () { #{{{
 } #}}}
 
 sub loadindex () { #{{{
-	open (IN, "$config{wikistatedir}/index") || return;
-	while (<IN>) {
+	open (my $in, "$config{wikistatedir}/index") || return;
+	while (<$in>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
 		my %items;
@@ -815,7 +815,7 @@ sub loadindex () { #{{{
 		$oldrenderedfiles{$page}=[@{$items{dest}}];
 		$pagectime{$page}=$items{ctime}[0];
 	}
-	close IN;
+	close $in;
 } #}}}
 
 sub saveindex () { #{{{
@@ -826,7 +826,7 @@ sub saveindex () { #{{{
 	}
 	my $newfile="$config{wikistatedir}/index.new";
 	my $cleanup = sub { unlink($newfile) };
-	open (OUT, ">$newfile") || error("cannot write to $newfile: $!", $cleanup);
+	open (my $out, '>', $newfile) || error("cannot write to $newfile: $!", $cleanup);
 	foreach my $page (keys %pagemtime) {
 		next unless $pagemtime{$page};
 		my $line="mtime=$pagemtime{$page} ".
@@ -838,9 +838,9 @@ sub saveindex () { #{{{
 		if (exists $depends{$page}) {
 			$line.=" depends=".encode_entities($depends{$page}, " \t\n");
 		}
-		print OUT $line."\n" || error("failed writing to $newfile: $!", $cleanup);
+		print $out $line."\n" || error("failed writing to $newfile: $!", $cleanup);
 	}
-	close OUT || error("failed saving to $newfile: $!", $cleanup);
+	close $out || error("failed saving to $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/index") ||
 		error("failed renaming $newfile to $config{wikistatedir}/index", $cleanup);
 } #}}}
