@@ -558,7 +558,7 @@ sub cgi_editpage ($$) { #{{{
 				$message=$form->field('comments');
 			}
 			
-			if ($form->field("do") eq "create") {
+			if (! -e "$config{srcdir}/$file") {
 				rcs_add($file);
 			}
 
