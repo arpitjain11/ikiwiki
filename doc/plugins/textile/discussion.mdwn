@@ -1,13 +1,1 @@
-# How can I enable textile?
-
-What I did:
-
-1. Install textile.pm in $HOME/bin and added this directory to @INC in ikiwiki.
-
-1. wrote <pre>add_plugins => [qw{textile}],</pre> into .ikiwiki/ikiwiki.setup
-
-1. wrote a short test.txtl in the $SRCDIR
-
-1. executed <pre>ikiwiki --setup .ikiwiki/ikiwiki.setup</pre>
-
-1. found the test.html-file but is was not parsed for textile-syntax :-(
+.
