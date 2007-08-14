@@ -138,7 +138,6 @@ sub cgi_signin ($$) { #{{{
 	my $form = CGI::FormBuilder->new(
 		title => "signin",
 		name => "signin",
-		header => 1,
 		charset => "utf-8",
 		method => 'POST',
 		required => 'NONE',
@@ -306,7 +305,6 @@ sub cgi_editpage ($$) { #{{{
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
 		fields => \@fields,
-		header => 1,
 		charset => "utf-8",
 		method => 'POST',
 		validate => {
