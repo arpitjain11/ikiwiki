@@ -57,3 +57,9 @@ Why do they appear two times with conflicting values in the very same hashes?
 >> rather that create it.
 
 >> --[[JeremieKoenig]]
+
+>>> If thttpd and mini-httpd interpret CGI's stderr as stdout, then
+>>> they're not properly following the CGI spec, and will break with tons
+>>> of cgi scripts besides ikiwiki. And of course there are many many cases
+>>> where ikiwiki might output to stderr, and that's the right thing to do.
+>>> So I don't see any way to address this in ikiwiki. --[[Joey]]
