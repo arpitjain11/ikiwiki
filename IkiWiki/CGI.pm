@@ -497,7 +497,8 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
-		if (! -e "$config{srcdir}/$file" &&
+		if (! -e "$config{srcdir}/$file" && 
+		    ! -e "$config{underlaydir}/$file" &&
 		    $form->field("do") ne "create") {
 			$form->tmpl_param("page_gone", 1);
 			$form->field(name => "do", value => "create", force => 1);

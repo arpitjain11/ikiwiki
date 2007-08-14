@@ -11,7 +11,7 @@ use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
             %renderedfiles %oldrenderedfiles %pagesources %destsources
-	    %depends %hooks %forcerebuild $gettext_obj};
+            %depends %hooks %forcerebuild $gettext_obj};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
@@ -96,7 +96,7 @@ sub defaultconfig () { #{{{
 	numbacklinks => 10,
 	account_creation_password => "",
 } #}}}
-   
+
 sub checkconfig () { #{{{
 	# locale stuff; avoid LC_ALL since it overrides everything
 	if (defined $ENV{LC_ALL}) {
