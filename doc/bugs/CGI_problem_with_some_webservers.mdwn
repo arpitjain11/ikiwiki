@@ -41,3 +41,15 @@ Why do they appear two times with conflicting values in the very same hashes?
 
 > Do thttpd and mini-httpd perhaps not realize that Set-Cookis is the start of
 > the headers? --[[Joey]]
+
+>> Thanks for your help: I think I found the problem!
+>> Ikiwiki outputs (in my case) the following
+>> error message on stderr, followed by an empty line:
+
+    /srv/ikiwiki/wc/index.mdwn:  (Not a versioned resource)
+
+>> Probably thttpd and mini-httpd read stderr as well as stdout, while apache
+>> and boa don't. When using a shell-script wrapper as the CGI,
+>> which redirects ikiwiki's error output to /dev/null, it works properly.
+
+>> --[[JeremieKoenig]]
