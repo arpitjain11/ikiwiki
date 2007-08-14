@@ -24,3 +24,20 @@ What is the reason for these "header => 1" in FormBuilder initialisations?
 Why do they appear two times with conflicting values in the very same hashes?
 
 --[[JeremieKoenig]]
+
+> Clearly those duplicate header settings are a mistake. But in all cases, the
+> `header => 0` came second, so it _should_ override the other value and
+> can't be causing this problem. (cgi_signin only sets it to 0, too).
+> 
+> What version of formbuilder are you using? If you run ikiwiki.cgi at the
+> command line, do you actually see duplicate headers? I don't:
+
+	joey@kodama:~/html>REQUEST_METHOD=GET QUERY_STRING="page=index&do=edit" ./ikiwiki.cgi
+	Set-Cookie: ikiwiki_session_joey=41a847ac9c31574c1e8f5c6081c74d12; path=/
+	Date: Tue, 14 Aug 2007 18:04:06 GMT
+	Content-Type: text/html; charset=utf-8
+	
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+
+> Do thttpd and mini-httpd perhaps not realize that Set-Cookis is the start of
+> the headers? --[[Joey]]
