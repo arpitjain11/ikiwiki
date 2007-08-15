@@ -4,11 +4,56 @@ theme = core + pbp + cosmetic + bugs + maintenance + complexity + security
 # use them, and changing away from them could lead to subtle bugs in stuff
 # using the library. So for now, demote errors about them.
 [Subroutines::ProhibitSubroutinePrototypes]
-severity = 3
+severity = 1
 
-# ProhibitStringyEval is broken; it doesn't take into account that
-# eval q{use Foo};
-# defers the use until the eval runs.
-# eval {use Foo}
-# does not defer the use at all.
+# Nice to have, but low priority. I do it for the hairy regexps.
+[RegularExpressions::RequireExtendedFormatting]
+severity = 1
+
+# ProhibitStringyEval doesn't take into account that eval q{use Foo};
+# defers the use until the eval runs, which is often a useful optimisation.
+# While eval {use Foo}; does not defer the use at all.
 [-BuiltinFunctions::ProhibitStringyEval]
+
+# ikiwiki uses the method of switching other files to the IkiWiki package
+# when they are part of the core program. I don't plan to have more than
+# the one exporting module in IkiWiki, so let's ignore this test.
+[-Modules::RequireFilenameMatchesPackage]
+# IkiWIki also switches _out_ of the core package when a package namespace
+# is a good way to group a set of functions. This doesn't mean I want it
+# loading up a separate file though, so it's in the same file.
+[-Modules::ProhibitMultiplePackages]
+
+# ikiwiki uses this when it makes sense, ie, for conditional variable
+# localisation.
+[-Variables::ProhibitConditionalDeclarations]
+
+# IkiWiki exports symbols, and uses globals, if it's bad form, that's too
+# bad. :-)
+[-Modules::ProhibitAutomaticExportation]
+[-Variables::ProhibitPackageVars]
+
+# Stylistic checks that I don't agree with. Larry put both forms there for
+# a reason; both forms can be abused.
+[-BuiltinFunctions::RequireBlockGrep]
+[-BuiltinFunctions::RequireBlockMap]
+[-Variables::ProhibitPunctuationVars]
+[-ControlStructures::ProhibitPostfixControls]
+
+# Sadly doesn't match my coding style.
+[-CodeLayout::ProhibitHardTabs]
+
+# Sillyness.
+[-Miscellanea::RequireRcsKeywords]
+
+# Sadly, perl doesn't offer a builtin better way in many cases.
+[-ControlStructures::ProhibitCascadingIfElse]
+
+# Good god, man, it's perl. Get over it!
+[-ValuesAndExpressions::ProhibitNoisyQuotes]
+[-ValuesAndExpressions::ProhibitEmptyQuotes]
+[-RegularExpressions::RequireLineBoundaryMatching]
+
+# When I use local vars, I have a damn good reason.
+# (A shower after with lots of strong soap is also a nice thing.)
+[-Variables::ProhibitLocalVars]

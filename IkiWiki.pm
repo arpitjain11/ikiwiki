@@ -29,24 +29,25 @@ memoize("pagespec_translate");
 memoize("file_pruned");
 
 sub defaultconfig () { #{{{
+	return
 	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
 		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
 		qr/\.dpkg-tmp$/],
 	wiki_link_regexp => qr{
-		\[\[			# beginning of link
+		\[\[                    # beginning of link
 		(?:
-			([^\]\|]+)	# 1: link text
-			\|		# followed by '|'
-		)?			# optional
-
-		([^\s\]#]+)		# 2: page to link to
+			([^\]\|]+)      # 1: link text
+			\|              # followed by '|'
+		)?                      # optional
+		
+		([^\s\]#]+)             # 2: page to link to
 		(?:
-			\#		# '#', beginning of anchor
-			([^\s\]]+)	# 3: anchor text
-		)?			# optional
-
-		\]\]			# end of link
+			\#              # '#', beginning of anchor
+			([^\s\]]+)      # 3: anchor text
+		)?                      # optional
+		
+		\]\]                    # end of link
 	}x,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
@@ -138,6 +139,8 @@ sub checkconfig () { #{{{
 	}
 
 	run_hooks(checkconfig => sub { shift->() });
+
+	return 1;
 } #}}}
 
 sub loadplugins () { #{{{
@@ -153,6 +156,8 @@ sub loadplugins () { #{{{
 			foreach grep /^-/, @ARGV;
 		usage();
 	}
+
+	return 1;
 } #}}}
 
 sub loadplugin ($) { #{{{
@@ -193,7 +198,7 @@ sub error ($;$) { #{{{
 
 sub debug ($) { #{{{
 	return unless $config{verbose};
-	log_message(debug => @_);
+	return log_message(debug => @_);
 } #}}}
 
 my $log_open=0;
@@ -202,20 +207,20 @@ sub log_message ($$) { #{{{
 
 	if ($config{syslog}) {
 		require Sys::Syslog;
-		unless ($log_open) {
+		if (! $log_open) {
 			Sys::Syslog::setlogsock('unix');
 			Sys::Syslog::openlog('ikiwiki', '', 'user');
 			$log_open=1;
 		}
-		eval {
+		return eval {
 			Sys::Syslog::syslog($type, "[$config{wikiname}] %s", join(" ", @_));
 		};
 	}
 	elsif (! $config{cgi}) {
-		print "@_\n";
+		return print "@_\n";
 	}
 	else {
-		print STDERR "@_\n";
+		return print STDERR "@_\n";
 	}
 } #}}}
 
@@ -245,7 +250,7 @@ sub pagetype ($) { #{{{
 	if ($page =~ /\.([^.]+)$/) {
 		return $1 if exists $hooks{htmlize}{$1};
 	}
-	return undef;
+	return;
 } #}}}
 
 sub pagename ($) { #{{{
@@ -280,6 +285,7 @@ sub srcfile ($) { #{{{
 	return "$config{srcdir}/$file" if -e "$config{srcdir}/$file";
 	return "$config{underlaydir}/$file" if -e "$config{underlaydir}/$file";
 	error("internal error: $file cannot be found in $config{srcdir} or $config{underlaydir}");
+	return;
 } #}}}
 
 sub readfile ($;$$) { #{{{
@@ -292,7 +298,7 @@ sub readfile ($;$$) { #{{{
 	}
 	
 	local $/=undef;
-	open (my $in, $file) || error("failed to read $file: $!");
+	open (my $in, "<", $file) || error("failed to read $file: $!");
 	binmode($in) if ($binary);
 	return \*$in if $wantfd;
 	my $ret=<$in>;
@@ -342,6 +348,8 @@ sub writefile ($$$;$$) { #{{{
 	close $out || error("failed saving $newfile: $!", $cleanup);
 	rename($newfile, "$destdir/$file") || 
 		error("failed renaming $newfile to $destdir/$file: $!", $cleanup);
+
+	return 1;
 } #}}}
 
 my %cleared;
@@ -367,6 +375,8 @@ sub will_render ($$;$) { #{{{
 		$cleared{$page}=1;
 	}
 	$destsources{$dest}=$page;
+
+	return 1;
 } #}}}
 
 sub bestlink ($$) { #{{{
@@ -409,7 +419,7 @@ sub bestlink ($$) { #{{{
 sub isinlinableimage ($) { #{{{
 	my $file=shift;
 	
-	$file=~/\.(png|gif|jpg|jpeg)$/i;
+	return $file =~ /\.(png|gif|jpg|jpeg)$/i;
 } #}}}
 
 sub pagetitle ($;$) { #{{{
@@ -732,6 +742,8 @@ sub indexlink () { #{{{
 	return "<a href=\"$config{url}\">$config{wikiname}</a>";
 } #}}}
 
+my $wikilock;
+
 sub lockwiki (;$) { #{{{
 	my $wait=@_ ? shift : 1;
 	# Take an exclusive lock on the wiki to prevent multiple concurrent
@@ -739,15 +751,15 @@ sub lockwiki (;$) { #{{{
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
 	}
-	open(WIKILOCK, ">$config{wikistatedir}/lockfile") ||
+	open($wikilock, '>', "$config{wikistatedir}/lockfile") ||
 		error ("cannot write to $config{wikistatedir}/lockfile: $!");
-	if (! flock(WIKILOCK, 2 | 4)) { # LOCK_EX | LOCK_NB
+	if (! flock($wikilock, 2 | 4)) { # LOCK_EX | LOCK_NB
 		if ($wait) {
 			debug("wiki seems to be locked, waiting for lock");
 			my $wait=600; # arbitrary, but don't hang forever to 
 			              # prevent process pileup
 			for (1..$wait) {
-				return if flock(WIKILOCK, 2 | 4);
+				return if flock($wikilock, 2 | 4);
 				sleep 1;
 			}
 			error("wiki is locked; waited $wait seconds without lock being freed (possible stuck process or stale lock?)");
@@ -760,34 +772,37 @@ sub lockwiki (;$) { #{{{
 } #}}}
 
 sub unlockwiki () { #{{{
-	close WIKILOCK;
+	return close($wikilock);
 } #}}}
 
+my $commitlock;
+
 sub commit_hook_enabled () { #{{{
-	open(COMMITLOCK, "+>$config{wikistatedir}/commitlock") ||
-		error ("cannot write to $config{wikistatedir}/commitlock: $!");
-	if (! flock(COMMITLOCK, 1 | 4)) { # LOCK_SH | LOCK_NB to test
-		close COMMITLOCK;
+	open($commitlock, '+>', "$config{wikistatedir}/commitlock") ||
+		error("cannot write to $config{wikistatedir}/commitlock: $!");
+	if (! flock($commitlock, 1 | 4)) { # LOCK_SH | LOCK_NB to test
+		close($commitlock) || error("failed closing commitlock: $!");
 		return 0;
 	}
-	close COMMITLOCK;
+	close($commitlock) || error("failed closing commitlock: $!");
 	return 1;
 } #}}}
 
 sub disable_commit_hook () { #{{{
-	open(COMMITLOCK, ">$config{wikistatedir}/commitlock") ||
-		error ("cannot write to $config{wikistatedir}/commitlock: $!");
-	if (! flock(COMMITLOCK, 2)) { # LOCK_EX
+	open($commitlock, '>', "$config{wikistatedir}/commitlock") ||
+		error("cannot write to $config{wikistatedir}/commitlock: $!");
+	if (! flock($commitlock, 2)) { # LOCK_EX
 		error("failed to get commit lock");
 	}
+	return 1;
 } #}}}
 
 sub enable_commit_hook () { #{{{
-	close COMMITLOCK;
+	return close($commitlock);
 } #}}}
 
 sub loadindex () { #{{{
-	open (my $in, "$config{wikistatedir}/index") || return;
+	open (my $in, "<", "$config{wikistatedir}/index") || return;
 	while (<$in>) {
 		$_=possibly_foolish_untaint($_);
 		chomp;
@@ -815,7 +830,7 @@ sub loadindex () { #{{{
 		$oldrenderedfiles{$page}=[@{$items{dest}}];
 		$pagectime{$page}=$items{ctime}[0];
 	}
-	close $in;
+	return close($in);
 } #}}}
 
 sub saveindex () { #{{{
@@ -843,6 +858,8 @@ sub saveindex () { #{{{
 	close $out || error("failed saving to $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/index") ||
 		error("failed renaming $newfile to $config{wikistatedir}/index", $cleanup);
+	
+	return 1;
 } #}}}
 
 sub template_file ($) { #{{{
@@ -851,7 +868,7 @@ sub template_file ($) { #{{{
 	foreach my $dir ($config{templatedir}, "$installdir/share/ikiwiki/templates") {
 		return "$dir/$template" if -e "$dir/$template";
 	}
-	return undef;
+	return;
 } #}}}
 
 sub template_params (@) { #{{{
@@ -865,7 +882,7 @@ sub template_params (@) { #{{{
 	my @ret=(
 		filter => sub {
 			my $text_ref = shift;
-			$$text_ref=&Encode::decode_utf8($$text_ref);
+			${$text_ref} = Encode::decode_utf8(${$text_ref});
 		},
 		filename => $filename,
 		loop_context_vars => 1,
@@ -877,7 +894,7 @@ sub template_params (@) { #{{{
 
 sub template ($;@) { #{{{
 	require HTML::Template;
-	HTML::Template->new(template_params(@_));
+	return HTML::Template->new(template_params(@_));
 } #}}}
 
 sub misctemplate ($$;@) { #{{{
@@ -903,12 +920,13 @@ sub hook (@) { # {{{
 	my %param=@_;
 	
 	if (! exists $param{type} || ! ref $param{call} || ! exists $param{id}) {
-		error "hook requires type, call, and id parameters";
+		error 'hook requires type, call, and id parameters';
 	}
 
 	return if $param{no_override} && exists $hooks{$param{type}}{$param{id}};
 	
 	$hooks{$param{type}}{$param{id}}=\%param;
+	return 1;
 } # }}}
 
 sub run_hooks ($$) { # {{{
@@ -930,6 +948,8 @@ sub run_hooks ($$) { # {{{
 			$sub->($hooks{$type}{$id}{call});
 		}
 	}
+
+	return 1;
 } #}}}
 
 sub globlist_to_pagespec ($) { #{{{
@@ -945,9 +965,9 @@ sub globlist_to_pagespec ($) { #{{{
 		}
 	}
 
-	my $spec=join(" or ", @spec);
+	my $spec=join(' or ', @spec);
 	if (@skip) {
-		my $skip=join(" and ", @skip);
+		my $skip=join(' and ', @skip);
 		if (length $spec) {
 			$spec="$skip and ($spec)";
 		}
@@ -960,7 +980,7 @@ sub globlist_to_pagespec ($) { #{{{
 
 sub is_globlist ($) { #{{{
 	my $s=shift;
-	$s=~/[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or";
+	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
 } #}}}
 
 sub safequote ($) { #{{{
@@ -979,16 +999,18 @@ sub add_depends ($$) { #{{{
 	else {
 		$depends{$page}=pagespec_merge($depends{$page}, $pagespec);
 	}
+
+	return 1;
 } # }}}
 
 sub file_pruned ($$) { #{{{
 	require File::Spec;
 	my $file=File::Spec->canonpath(shift);
 	my $base=File::Spec->canonpath(shift);
-	$file=~s#^\Q$base\E/*##;
+	$file =~ s#^\Q$base\E/*##;
 
 	my $regexp='('.join('|', @{$config{wiki_file_prune_regexps}}).')';
-	$file =~ m/$regexp/;
+	return $file =~ m/$regexp/;
 } #}}}
 
 sub gettext { #{{{
@@ -1057,21 +1079,21 @@ sub pagespec_translate ($) { #{{{
 		\s*		# ignore whitespace
 	}igx) {
 		my $word=$1;
-		if (lc $word eq "and") {
-			$code.=" &&";
+		if (lc $word eq 'and') {
+			$code.=' &&';
 		}
-		elsif (lc $word eq "or") {
-			$code.=" ||";
+		elsif (lc $word eq 'or') {
+			$code.=' ||';
 		}
 		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
-			$code.=" ".$word;
+			$code.=' '.$word;
 		}
 		elsif ($word =~ /^(\w+)\((.*)\)$/) {
 			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
 				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@params)";
 			}
 			else {
-				$code.=" 0";
+				$code.=' 0';
 			}
 		}
 		else {
@@ -1089,11 +1111,11 @@ sub pagespec_match ($$;@) { #{{{
 
 	# Backwards compatability with old calling convention.
 	if (@params == 1) {
-		unshift @params, "location";
+		unshift @params, 'location';
 	}
 
 	my $ret=eval pagespec_translate($spec);
-	return IkiWiki::FailReason->new("syntax error") if $@;
+	return IkiWiki::FailReason->new('syntax error') if $@;
 	return $ret;
 } #}}}
 
@@ -1107,7 +1129,7 @@ use overload ( #{{{
 ); #}}}
 
 sub new { #{{{
-	bless \$_[1], $_[0];
+	return bless \$_[1], $_[0];
 } #}}}
 
 package IkiWiki::SuccessReason;
@@ -1120,7 +1142,7 @@ use overload ( #{{{
 ); #}}}
 
 sub new { #{{{
-	bless \$_[1], $_[0];
+	return bless \$_[1], $_[0];
 }; #}}}
 
 package IkiWiki::PageSpec;
@@ -1130,7 +1152,7 @@ sub match_glob ($$;@) { #{{{
 	my $glob=shift;
 	my %params=@_;
 	
-	my $from=exists $params{location} ? $params{location} : "";
+	my $from=exists $params{location} ? $params{location} : '';
 	
 	# relative matching
 	if ($glob =~ m!^\./!) {
@@ -1157,7 +1179,7 @@ sub match_link ($$;@) { #{{{
 	my $link=lc(shift);
 	my %params=@_;
 
-	my $from=exists $params{location} ? $params{location} : "";
+	my $from=exists $params{location} ? $params{location} : '';
 
 	# relative matching
 	if ($link =~ m!^\.! && defined $from) {
@@ -1166,10 +1188,10 @@ sub match_link ($$;@) { #{{{
 		$link="$from/$link" if length $from;
 	}
 
-	my $links = $IkiWiki::links{$page} or return undef;
-	return IkiWiki::FailReason->new("$page has no links") unless @$links;
+	my $links = $IkiWiki::links{$page};
+	return IkiWiki::FailReason->new("$page has no links") unless $links && @{$links};
 	my $bestlink = IkiWiki::bestlink($from, $link);
-	foreach my $p (@$links) {
+	foreach my $p (@{$links}) {
 		if (length $bestlink) {
 			return IkiWiki::SuccessReason->new("$page links to $link")
 				if $bestlink eq IkiWiki::bestlink($page, $p);
@@ -1183,7 +1205,7 @@ sub match_link ($$;@) { #{{{
 } #}}}
 
 sub match_backlink ($$;@) { #{{{
-	match_link($_[1], $_[0], @_);
+	return match_link($_[1], $_[0], @_);
 } #}}}
 
 sub match_created_before ($$;@) { #{{{
@@ -1192,10 +1214,10 @@ sub match_created_before ($$;@) { #{{{
 
 	if (exists $IkiWiki::pagectime{$testpage}) {
 		if ($IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage}) {
-			IkiWiki::SuccessReason->new("$page created before $testpage");
+			return IkiWiki::SuccessReason->new("$page created before $testpage");
 		}
 		else {
-			IkiWiki::FailReason->new("$page not created before $testpage");
+			return IkiWiki::FailReason->new("$page not created before $testpage");
 		}
 	}
 	else {
@@ -1209,10 +1231,10 @@ sub match_created_after ($$;@) { #{{{
 
 	if (exists $IkiWiki::pagectime{$testpage}) {
 		if ($IkiWiki::pagectime{$page} > $IkiWiki::pagectime{$testpage}) {
-			IkiWiki::SuccessReason->new("$page created after $testpage");
+			return IkiWiki::SuccessReason->new("$page created after $testpage");
 		}
 		else {
-			IkiWiki::FailReason->new("$page not created after $testpage");
+			return IkiWiki::FailReason->new("$page not created after $testpage");
 		}
 	}
 	else {
@@ -1222,28 +1244,28 @@ sub match_created_after ($$;@) { #{{{
 
 sub match_creation_day ($$;@) { #{{{
 	if ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift) {
-		return IkiWiki::SuccessReason->new("creation_day matched");
+		return IkiWiki::SuccessReason->new('creation_day matched');
 	}
 	else {
-		return IkiWiki::FailReason->new("creation_day did not match");
+		return IkiWiki::FailReason->new('creation_day did not match');
 	}
 } #}}}
 
 sub match_creation_month ($$;@) { #{{{
 	if ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift) {
-		return IkiWiki::SuccessReason->new("creation_month matched");
+		return IkiWiki::SuccessReason->new('creation_month matched');
 	}
 	else {
-		return IkiWiki::FailReason->new("creation_month did not match");
+		return IkiWiki::FailReason->new('creation_month did not match');
 	}
 } #}}}
 
 sub match_creation_year ($$;@) { #{{{
 	if ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift) {
-		return IkiWiki::SuccessReason->new("creation_year matched");
+		return IkiWiki::SuccessReason->new('creation_year matched');
 	}
 	else {
-		return IkiWiki::FailReason->new("creation_year did not match");
+		return IkiWiki::FailReason->new('creation_year did not match');
 	}
 } #}}}
 
@@ -1252,7 +1274,8 @@ sub match_user ($$;@) { #{{{
 	my $user=shift;
 	my %params=@_;
 
-	return IkiWiki::FailReason->new("cannot match user") unless exists $params{user};
+	return IkiWiki::FailReason->new('cannot match user')
+		unless exists $params{user};
 	if ($user eq $params{user}) {
 		return IkiWiki::SuccessReason->new("user is $user")
 	}
