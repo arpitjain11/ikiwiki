@@ -1,0 +1,43 @@
+There are some kind of changes to the underlying repository
+which can't be made through the web interface:
+
+  * changes to files outside the wiki, to locked pages;
+  * advanced RCS operations such as merge, move, copy or del;
+  * changes you're not confident enough to apply outright.
+
+Of course in these cases, you can add your request to a discussion page
+and wait for someone with the access/confidence to apply them.
+Maybe this can be enhanced with a [[PreprocessorDirective]]:
+
+<pre>
+\[[suggest op=merge dstfile=trunk srcfile=branches/jk oldrev=1234 newrev=1342]]
+
+\[[suggest op=move srcpage=/blog dstpage=/blog_support]]
+
+\[[suggest patch="""
+Index: IkiWiki/CGI.pm
+===================================================================
+--- IkiWiki/CGI.pm      (révision 4119)
++++ IkiWiki/CGI.pm      (copie de travail)
+@@ -497,9 +497,11 @@
+(...)
+"""]]
+</pre>
+
+These would expand to a description of the changes to be effected, a toggleable diff
+of them if appropriate, and of course an "apply theses changes" button.
+Ultimately my planned [[review_mechanism]] would manage pages with such directives
+by itself.
+
+I'm still uncertain about many things, so please anyone feel free to comment.
+Specifically:
+
+  * What would an optimal syntax look like?
+  * Do I need to / should I define a new rcs_ function to handle such operations?
+  * Would it be acceptable for an ikiwiki module to use temporary file (ie. to calculate diffs)?
+  * Should the diff be calculated at page build time (which means the page should be rebuilt
+    whenever a target file changes), or should the CGI be used when someone requests it?
+  * Would it be possible to detect already applied changes (without extra state, that is),
+    and propose to "revert changes" in that case?
+
+--[[JeremieKoenig]]
