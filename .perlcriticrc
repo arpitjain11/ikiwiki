@@ -1,0 +1,14 @@
+theme = core + pbp + cosmetic + bugs + maintenance + complexity + security
+
+# While there's good reason to not use subroutine prototypes, ikiwiki does
+# use them, and changing away from them could lead to subtle bugs in stuff
+# using the library. So for now, demote errors about them.
+[Subroutines::ProhibitSubroutinePrototypes]
+severity = 3
+
+# ProhibitStringyEval is broken; it doesn't take into account that
+# eval q{use Foo};
+# defers the use until the eval runs.
+# eval {use Foo}
+# does not defer the use at all.
+[-BuiltinFunctions::ProhibitStringyEval]
