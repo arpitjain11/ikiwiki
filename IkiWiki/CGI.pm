@@ -497,9 +497,11 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
-		if (! -e "$config{srcdir}/$file" && 
-		    ! -e "$config{underlaydir}/$file" &&
-		    $form->field("do") ne "create") {
+
+		my $exists=-e "$config{srcdir}/$file";
+
+		if ($form->field("do") ne "create" &&
+		    ! $exists && ! -e "$config{underlaydir}/$file") {
 			$form->tmpl_param("page_gone", 1);
 			$form->field(name => "do", value => "create", force => 1);
 			$form->tmpl_param("page_select", 0);
@@ -510,8 +512,7 @@ sub cgi_editpage ($$) { #{{{
 			print misctemplate($form->title, $form->render(submit => \@buttons));
 			return;
 		}
-		elsif (-e "$config{srcdir}/$file" &&
-		       $form->field("do") eq "create") {
+		elsif ($form->field("do") eq "create" && $exists) {
 			$form->tmpl_param("creation_conflict", 1);
 			$form->field(name => "do", value => "edit", force => 1);
 			$form->tmpl_param("page_select", 0);
@@ -558,7 +559,7 @@ sub cgi_editpage ($$) { #{{{
 				$message=$form->field('comments');
 			}
 			
-			if (! -e "$config{srcdir}/$file") {
+			if (! $exists) {
 				rcs_add($file);
 			}
 

@@ -29,6 +29,8 @@ sub rcs_commit ($$$;$$) {
 
 sub rcs_add ($) {
 	# Add a file. The filename is relative to the root of the srcdir.
+	# Note that this should not check the new file in, it should only
+	# prepare for it to be checked in when rcs_commit is called.
 }
 
 sub rcs_recentchanges ($) {
