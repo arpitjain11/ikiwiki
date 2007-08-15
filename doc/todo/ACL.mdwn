@@ -20,3 +20,26 @@ something, that I think is very valuable.
 
 >>>> Which would rule out openid, or other fun forms of auth. And routing all access
 >>>> through the CGI sort of defeats the purpose of ikiwiki. --[[Ethan]]
+
+I am considering giving this a try, implementing it as a module.
+Here is how I see it:
+
+  * a new preprocessor directive allows to define ACL entries providing permissions
+    for a given (user, page, operation), as in:
+
+    <pre>
+    \[[acl user=joe page=*.png allow=upload]]
+    \[[acl user=bob page=/blog/bob/* allow=*]]
+    \[[acl user=* page=/blog/bob/* deny=*]]
+    \[[acl user=http://jeremie.koenig.myopenid.com/ page=/todo/* deny=create
+           reason="spends his time writing todo items instead of source code"]]
+    </pre>
+
+    Each would expand to a description of the resulting rule.
+
+  * a configurable page of the wiki would be used as an ACL list.
+    Possibly could refer to other ACL pages, as in:
+
+    <pre>
+    \[[acl user=* page=/subsite/* acl=/subsite/acl.mdwn]]
+    </pre>
