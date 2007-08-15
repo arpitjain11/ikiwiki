@@ -21,3 +21,11 @@ is supposed to have *no* blank lines between...
 
 >>> Seems ok, no? The only linebreaks I see in the source are the ones you
 >>> put at the end of the lines. --[[Joey]]
+
+>>>> Okay, that would explain the linebreak between 1 and 3.  But then, why are all linebreaks removed between 3 and 5?
+
+>>>> 1 No, that's unfortunately not it, see here:
+>>>> [[if test="enabled(trallala)" then="foot"]]
+>>>> 3 Continued.  But on the other
+>>>> [[if test="enabled(trallala)" then="foot" else="hand:"]]
+>>>> 5 Continued.  --[[tschwinge]]
