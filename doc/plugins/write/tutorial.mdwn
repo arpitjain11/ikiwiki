@@ -2,7 +2,7 @@ This tutorial will walk you through [[writing|write]] your first ikiwiki
 plugin.
 
 What should the plugin do? Let's make it calculate and output the Fibonachi
-sequense. To output the next number in the sequence, all a user has to do
+sequence. To output the next number in the sequence, all a user has to do
 is write this on a wiki page:
 
 	[[fib ]]
@@ -119,7 +119,7 @@ the sequence in some cases.
 Obviously, using a global `$last` veriable was a bad idea. It would
 work ok in a more regular cgi-based wiki, which only outputs one page per
 run. But since ikiwiki is a wiki *compiler*, things are a bit more
-complicated. It't not very hard to fix, though, if we do want the seqense
+complicated. It's not very hard to fix, though, if we do want the sequence
 to start from 1 in every page that uses it.
 
 	my %last;
