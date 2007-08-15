@@ -9,6 +9,12 @@ is supposed to have *no* blank lines between...
 * *Todo* and **Mach**,
 * **Mach** and **Mig**.
 
--- [[tschwinge]]
+--[[tschwinge]]
 
 > The blank lines in this example are coming from the newline after `then="`, and also from the newline before the close quote. If you remove those newlines, I think it should work. --[[Joey]]
+
+>> No, that's unfortunately not it, see here:
+>> [[if test="enabled(trallala)" then="foot"]]
+>> Continued.  But on the other
+>> [[if test="enabled(trallala)" then="foot" else="hand:"]]
+>> Continued.  --[[tschwinge]]
