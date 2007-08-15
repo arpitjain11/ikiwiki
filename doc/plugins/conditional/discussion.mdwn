@@ -29,3 +29,7 @@ is supposed to have *no* blank lines between...
 >>>> 3 Continued.  But on the other
 >>>> [[if test="enabled(trallala)" then="foot" else="hand:"]]
 >>>> 5 Continued.  --[[tschwinge]]
+
+>>>>> The conditional after 1 evaluates to "", so there's a blank line
+>>>>> there. The one after 3 evaluates to "hand:", so no blank line there.
+>>>>> --[[Joey]]
