@@ -5,8 +5,7 @@ I was surprised that no plugin seems to be available to render plaintext pages;
 as I need one to implement the "[[todo/preview_changes]]" todo item,
 I quickly wrote it. Maybe this can be included in ikiwiki?
 
-This plugins changes `<`, `>` and `&` characters into the
-corresponding entities (`&lt;`, `&gt;`, `&amp;`), and wraps its input inside
-a `<pre>`...`</pre>` tag. I'm not sure if this is sufficient.
+This plugins uses HTML::Entities::encode_entities() on the page's content
+and wraps it in a `<pre>`...`</pre>` tag.
 
 Download from [here](http://www.jk.fr.eu.org/ikiwiki/plaintext.pm).
