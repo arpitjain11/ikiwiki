@@ -21,12 +21,12 @@ But:
   * How could the case of concurrent editing be handled ?
     Especially as (I think) only the RCS backend can know that
     this has happened.
-  * Doing the formbuilder trick for adding a button needs the following
-    patch. (note that this is not the only template which has its submit
-    buttons hardcoded; is this supposed to work around something?)
-  * Coercing `editpage()` into showing the edit form again rather that
-    saving the page would be tricky and hackish to do from a module;
-    maybe this would better be implemented directly in `showpage`?
+  * May I hijack the `page_preview` template variable to show
+    my diff output? (the patch below assumes this).
+  * Using the formbuilder hook to add a button, and coerce `editpage()`
+    into showing the edit form again rather that saving the page needs
+    the following patch. (note that this is not the only template which has
+    its submit buttons hardcoded; is this supposed to work around something?)
 
 <pre>
 Index: templates/editpage.tmpl
@@ -58,14 +58,29 @@ Index: IkiWiki/CGI.pm
                 method => 'POST',
 @@ -321,7 +322,8 @@
         );
- 
+        
         run_hooks(formbuilder_setup => sub {
 -               shift->(form => $form, cgi => $q, session => $session);
 +               shift->(form => $form, cgi => $q, session => $session,
 +                       buttons => \@buttons);
         });
- 
+        
         decode_form_utf8($form);
+@@ -402,12 +404,12 @@
+                        preprocess($page, $page,
+                        filter($page, $page, $form->field('editcontent')), 0, 1))));
+        }
+-       else {
++       elsif ($form->submitted eq "Save Page") {
+                $form->tmpl_param("page_preview", "");
+        }
+        $form->tmpl_param("page_conflict", "");
+        
+-       if (! $form->submitted || $form->submitted eq "Preview" || 
++       if ($form->submitted ne "Save Page" || 
+            ! $form->validate) {
+                if ($form->field("do") eq "create") {
+                        my @page_locs;
 </pre>
 
 --[[JeremieKoenig]]
