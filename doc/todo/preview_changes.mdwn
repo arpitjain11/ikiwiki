@@ -28,59 +28,10 @@ But:
     the following patch. (note that this is not the only template which has
     its submit buttons hardcoded; is this supposed to work around something?)
 
-<pre>
-Index: templates/editpage.tmpl
-===================================================================
---- templates/editpage.tmpl     (révision 4130)
-+++ templates/editpage.tmpl     (copie de travail)
-@@ -57,9 +57,7 @@
- Optional comment about this change:<br />
- <TMPL_VAR FIELD-COMMENTS><br />
- </TMPL_IF>
--<input id="_submit" name="_submit" type="submit" value="Save Page" />
--<input id="_submit_2" name="_submit" type="submit" value="Preview" />
--<input id="_submit_3" name="_submit" type="submit" value="Cancel" />
-+<TMPL_VAR FORM-SUBMIT>
- <TMPL_VAR HELPONFORMATTINGLINK>
- <TMPL_VAR FORM-END>
- 
-Index: IkiWiki/CGI.pm
-===================================================================
---- IkiWiki/CGI.pm      (révision 4130)
-+++ IkiWiki/CGI.pm      (copie de travail)
-@@ -304,6 +304,7 @@
-        eval q{use CGI::FormBuilder};
-        error($@) if $@;
-        my $form = CGI::FormBuilder->new(
-+               title => "editpage",
-                fields => \@fields,
-                charset => "utf-8",
-                method => 'POST',
-@@ -321,7 +322,8 @@
-        );
-        
-        run_hooks(formbuilder_setup => sub {
--               shift->(form => $form, cgi => $q, session => $session);
-+               shift->(form => $form, cgi => $q, session => $session,
-+                       buttons => \@buttons);
-        });
-        
-        decode_form_utf8($form);
-@@ -402,12 +404,12 @@
-                        preprocess($page, $page,
-                        filter($page, $page, $form->field('editcontent')), 0, 1))));
-        }
--       else {
-+       elsif ($form->submitted eq "Save Page") {
-                $form->tmpl_param("page_preview", "");
-        }
-        $form->tmpl_param("page_conflict", "");
-        
--       if (! $form->submitted || $form->submitted eq "Preview" || 
-+       if ($form->submitted ne "Save Page" || 
-            ! $form->validate) {
-                if ($form->field("do") eq "create") {
-                        my @page_locs;
-</pre>
+I've got a [preliminary implementation](http://www.jk.fr.eu.org/ikiwiki/showdiff.pm),
+which depends on [this patch](http://www.jk.fr.eu.org/ikiwiki/pluggable_editpage_buttons.diff)
+and the [[plugins/contrib/plaintext]] plugin.
+
+There is still some tweaking needed, though.
 
 --[[JeremieKoenig]]
