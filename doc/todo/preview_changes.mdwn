@@ -7,3 +7,62 @@ Some discussion from the main [[/index/discussion]] page:
 >
 >> It's doable, it could even be done by a [[todo/plugin]], I think.
 >> --[[Joey]]
+
+---
+
+I need help with this. Supposedly, such a plugin would provide a `formbuilder_setup`
+hook which would add the button, and a cgi hook which would interecept
+"Show Diff" clicks. This would show a diff between
+`titlepage(possibly_foolish_untaint($form->field("page")))`
+and the provided `$form->field("editcontent")`.
+
+But:
+
+  * How could the case of concurrent editing be handled ?
+    Especially as (I think) only the RCS backend can know that
+    this has happened.
+  * Doing the formbuilder trick for adding a button needs the following
+    patch. (note that this is not the only template which has its submit
+    buttons hardcoded; is this supposed to work around something?)
+
+<pre>
+Index: templates/editpage.tmpl
+===================================================================
+--- templates/editpage.tmpl     (révision 4130)
++++ templates/editpage.tmpl     (copie de travail)
+@@ -57,9 +57,7 @@
+ Optional comment about this change:<br />
+ <TMPL_VAR FIELD-COMMENTS><br />
+ </TMPL_IF>
+-<input id="_submit" name="_submit" type="submit" value="Save Page" />
+-<input id="_submit_2" name="_submit" type="submit" value="Preview" />
+-<input id="_submit_3" name="_submit" type="submit" value="Cancel" />
++<TMPL_VAR FORM-SUBMIT>
+ <TMPL_VAR HELPONFORMATTINGLINK>
+ <TMPL_VAR FORM-END>
+ 
+Index: IkiWiki/CGI.pm
+===================================================================
+--- IkiWiki/CGI.pm      (révision 4130)
++++ IkiWiki/CGI.pm      (copie de travail)
+@@ -304,6 +304,7 @@
+        eval q{use CGI::FormBuilder};
+        error($@) if $@;
+        my $form = CGI::FormBuilder->new(
++               title => "editpage",
+                fields => \@fields,
+                charset => "utf-8",
+                method => 'POST',
+@@ -321,7 +322,8 @@
+        );
+ 
+        run_hooks(formbuilder_setup => sub {
+-               shift->(form => $form, cgi => $q, session => $session);
++               shift->(form => $form, cgi => $q, session => $session,
++                       buttons => \@buttons);
+        });
+ 
+        decode_form_utf8($form);
+</pre>
+
+--[[JeremieKoenig]]
