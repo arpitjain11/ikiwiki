@@ -24,6 +24,9 @@ But:
   * Doing the formbuilder trick for adding a button needs the following
     patch. (note that this is not the only template which has its submit
     buttons hardcoded; is this supposed to work around something?)
+  * Coercing `editpage()` into showing the edit form again rather that
+    saving the page would be tricky and hackish to do from a module;
+    maybe this would better be implemented directly in `showpage`?
 
 <pre>
 Index: templates/editpage.tmpl
