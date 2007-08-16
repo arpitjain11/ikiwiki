@@ -9,3 +9,9 @@ This plugins uses HTML::Entities::encode_entities() on the page's content
 and wraps it in a `<pre>`...`</pre>` tag.
 
 Download from [here](http://www.jk.fr.eu.org/ikiwiki/plaintext.pm).
+
+## Problems
+
+Wikilinks are expanded as usual, and as such produce `<a href=...>text</a>`
+tags, which are displayed as plain text. Is there a way to disable the preprocessor
+for some types of pages?
