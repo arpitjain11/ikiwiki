@@ -7,9 +7,15 @@ It uses the [reStructuredText](http://docutils.sourceforge.net/rst.html)
 markup syntax. You need to have the python-docutils module installed to use
 it.
 
-Note that this plugin is rather slow; it forks a copy of python for each
-page. While there is a perl version of the reStructuredText processor, it
-is not being kept in sync with the standard version, so is not used.
+Note that this plugin does not interoperate very well with the rest of
+ikiwiki. Limitations include:
+
+* There are issues with inserting raw html into documents, as ikiwiki 
+  does with [[WikiLinks|WikiLink]] and many 
+  [[PreprocessorDirectives|PreprocessorDirective]].
+* It's slow; it forks a copy of python for each page. While there is a
+  perl version of the reStructuredText processor, it is not being kept in
+  sync with the standard version, so is not used.
 
 So while you may find this useful for importing old files into your wiki,
 using this as your main markup language in ikiwiki isn't recommended at
