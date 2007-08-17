@@ -7,31 +7,6 @@ Some discussion from the main [[/index/discussion]] page:
 >
 >> It's doable, it could even be done by a [[todo/plugin]], I think.
 >> --[[Joey]]
+>>
 
----
-
-I need help with this. Supposedly, such a plugin would provide a `formbuilder_setup`
-hook which would add the button, and a cgi hook which would interecept
-"Show Diff" clicks. This would show a diff between
-`titlepage(possibly_foolish_untaint($form->field("page")))`
-and the provided `$form->field("editcontent")`.
-
-But:
-
-  * How could the case of concurrent editing be handled ?
-    Especially as (I think) only the RCS backend can know that
-    this has happened.
-  * May I hijack the `page_preview` template variable to show
-    my diff output? (the patch below assumes this).
-  * Using the formbuilder hook to add a button, and coerce `editpage()`
-    into showing the edit form again rather that saving the page needs
-    the following patch. (note that this is not the only template which has
-    its submit buttons hardcoded; is this supposed to work around something?)
-
-I've got a [preliminary implementation](http://www.jk.fr.eu.org/ikiwiki/showdiff.pm),
-which depends on [this patch](http://www.jk.fr.eu.org/ikiwiki/pluggable_editpage_buttons.diff)
-and the [[plugins/contrib/plaintext]] plugin.
-
-There is still some tweaking needed, though.
-
---[[JeremieKoenig]]
+See the [[plugins/contrib/showdiff]] plugin --[[JeremieKoenig]]
