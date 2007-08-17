@@ -271,8 +271,7 @@ will not validate or display the form.
 Form validation and display can be overridden by the formbuilder hook.
 By default, ikiwiki will do a basic validation and display of the form,
 but if this hook is registered, it will stop that and let the hook take
-over. This hook is passed an additional named parameter: `buttons` is an
-array of the submit buttons for the form.
+over.
 
 ### savestate
 
