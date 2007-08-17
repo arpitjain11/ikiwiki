@@ -194,6 +194,17 @@ I'm playing around with various ways that I can use subversion with ikiwiki.
 
 * Is it possible to have ikiwiki point to a subversion repository which is on a different server?  The basic checkin/checkout functionality seems to work but there doesn't seem to be any way to make the post-commit hook work for a non-local server?
 
+> This is difficult to do since ikiwiki's post-commit wrapper expects to
+> run on a machine that contains both the svn repository and the .ikiwiki
+> state directory. However, with recent versions of ikiwiki, you can get
+> away without running the post-commit wrapper on commit, and all you lose
+> is the ability to send commit notification emails.
+
 * Is it possible / sensible to have ikiwiki share a subversion repository with other data (either completely unrelated files or another ikiwiki instance)?  This works in part but again the post-commit hook seems problematic.
 
 --[[AdamShand]]
+
+> Sure, see ikiwiki's subversion repository for example of non-wiki files
+> in the same repo. If you have two wikis in one repository, you will need
+> to write a post-commit script that calls the post-commit wrappers for each
+> wiki.
