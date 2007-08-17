@@ -185,3 +185,15 @@ My best regards,
 # Build in OpenSolaris?
 
 Moved to [[bugs/build_in_opensolaris]] --[[Joey]]
+
+----
+
+# Various ways to use Subversion with ikiwiki
+
+I'm playing around with various ways that I can use subversion with ikiwiki.
+
+* Is it possible to have ikiwiki point to a subversion repository which is on a different server?  The basic checkin/checkout functionality seems to work but there doesn't seem to be any way to make the post-commit hook work for a non-local server?
+
+* Is it possible / sensible to have ikiwiki share a subversion repository with other data (either completely unrelated files or another ikiwiki instance)?  This works in part but again the post-commit hook seems problematic.
+
+--[[AdamShand]]
