@@ -32,8 +32,18 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Fix bug when editing file from underlaydir, need to rcs_add it even though
     a page creation isn't occuring.
   * Various minor fixes and stylistic improvements suggested by Perl::Critic.
+  * Applied Jeremie Koenig's pluggable editpage buttons patch:
+    - add a title to the editpage form;
+    - pass a reference to the list of buttons to the formbuilder_setup
+      hooks, so we can add ours;
+    - relax asumption about the possible submit values (use "Save Page"
+      explicitly);
+    - de-hardcode the submit buttons from the editpage template
+      (This was needed for compatability with a bug in CGI::FormBuilder
+      3.0401, but ikiwiki already needs a newer version.)
+  * Pass buttons to all other formbuilder_setup hooks too.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 15 Aug 2007 03:05:15 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 17 Aug 2007 01:19:44 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 

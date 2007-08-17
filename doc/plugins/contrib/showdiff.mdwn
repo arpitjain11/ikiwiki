@@ -19,6 +19,11 @@ which does the following:
   * de-hardcode the submit buttons from the editpage template
     (was this intended to work around something?).
 
+> That was there to work around a bug in CGI::FormBuilder 3.0401
+> that broke FORM-SUBMIT on customised templates. That seems to be
+> fixed in the newer version ikiwiki already depends on. Patch accepted.
+> --[[Joey]]
+
 ## Problems
 
 No special handling is done of concurrent edits: changes introduced

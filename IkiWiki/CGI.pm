@@ -157,7 +157,8 @@ sub cgi_signin ($$) { #{{{
 		force => 1);
 	
 	run_hooks(formbuilder_setup => sub {
-		shift->(form => $form, cgi => $q, session => $session);
+		shift->(form => $form, cgi => $q, session => $session,
+		        buttons => $buttons);
 	});
 	
 	decode_form_utf8($form);
@@ -228,7 +229,8 @@ sub cgi_prefs ($$) { #{{{
 	my $buttons=["Save Preferences", "Logout", "Cancel"];
 
 	run_hooks(formbuilder_setup => sub {
-		shift->(form => $form, cgi => $q, session => $session);
+		shift->(form => $form, cgi => $q, session => $session,
+		        buttons => $buttons);
 	});
 	
 	$form->field(name => "do", type => "hidden");
@@ -304,6 +306,7 @@ sub cgi_editpage ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
+		title => "editpage",
 		fields => \@fields,
 		charset => "utf-8",
 		method => 'POST',
@@ -321,7 +324,8 @@ sub cgi_editpage ($$) { #{{{
 	);
 	
 	run_hooks(formbuilder_setup => sub {
-		shift->(form => $form, cgi => $q, session => $session);
+		shift->(form => $form, cgi => $q, session => $session,
+			buttons => \@buttons);
 	});
 	
 	decode_form_utf8($form);
@@ -402,12 +406,12 @@ sub cgi_editpage ($$) { #{{{
 			preprocess($page, $page,
 			filter($page, $page, $form->field('editcontent')), 0, 1))));
 	}
-	else {
+	elsif ($form->submitted eq "Save Page") {
 		$form->tmpl_param("page_preview", "");
 	}
 	$form->tmpl_param("page_conflict", "");
 	
-	if (! $form->submitted || $form->submitted eq "Preview" || 
+	if ($form->submitted ne "Save Page" || 
 	    ! $form->validate) {
 		if ($form->field("do") eq "create") {
 			my @page_locs;

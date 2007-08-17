@@ -258,8 +258,9 @@ If the hook has no opinion about whether the edit can proceed, return
 
 These hooks allow tapping into the parts of ikiwiki that use [[cpan
 CGI::FormBuilder]] to generate web forms. These hooks are passed named
-parameters: `cgi`, `session`, and `form`. These are, respectively, the
-`CGI` object, the user's `CGI::Session`, and a `CGI::FormBuilder`.
+parameters: `cgi`, `session`, `form`, and `buttons`. These are, respectively,
+the `CGI` object, the user's `CGI::Session`, a `CGI::FormBuilder`, and a
+reference to an array of names of buttons to go on the form.
 
 Each time a form is set up, the `formbuilder_setup` hook is called.
 Typically the `formbuilder_setup` hook will check the form's title, and if
