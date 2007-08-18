@@ -6,45 +6,28 @@ I've just made a patch to the ikiwiki code that allows it to use the [Monotone](
 
 At the moment it is basically complete.  At present rcs_notify() is implemeted but untested, the rest is implemented and tested.
 
-In an older version of the patch 
-there was support for simultaneous commits, but any conflicts left the repository in an unmerged state which had to be cleaned up using the non-web
-monotone interface.  The user's data was still stored, and the user was informed if that happened.
-
 The current version of the patch handles conflicts through the web interface.  It is still not perfect as it will break if there is a rename that conflicts with a web change (but so will the other Rcs plugins I think).  It also commits a revision with conflict markers if there is a conflict requiring such markers... ick.
 
-Note: This patch requires the Monotone perl module, which is only available in Monotone 0.36 or later.  The module is in the Monotone contrib/ directory.  While 0.36 is relatively new, that Monotone module itself will work with a monotone binary back quite a few releases.
-Apparently this module did't make some versions of the monotone 0.36 release tarball.  It is available from the monotone repository here: <http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone>.
+Note: This patch requires a rather recent Monotone perl module (18 August 2007 or later).  It is available from the monotone repository here: <http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone>.
 
 > The setup instructions to add 40 lines of code to monotonerc is pretty frightning stuff.
 > Is there some way this can be automated? --[[Joey]]
 
->> I've committed a bunch of this to monotone so that in future it could be removed.  I didn't
->> want to remove it from the instructions until it was in a monotone release though.
+>> I've committed a bunch of this to monotone so that in future it could be removed.
+>> I've also just fixed this so it is in a separate, automagically generated, rc file.
 
->>> Fair enough. Didn't realize you were a monotone committer. :-) As long as it goes away later I don't mind having it in setup initially.
+>>> Fair enough. Didn't realize you were a monotone committer. :-)
 
->> The real issue here is that there is a mismatch between ikiwiki's conflict model and
->> monotone's.  I need to get code into monotone to add conflict markers - that is
->> the code that goes in the monotonerc.  In practice I could add this to any file I know
->> how to reference and I can then tell monotone about it with a command line arg.
->> Is there a good place for such a file?
-
->>> There's not a really good place. /usr/share/ikiwiki/foo would do, 
->>> except for the systems where /usr/share/ is elsewhere. It would need to be
->>> runtime configurable just like the basewiki and template locations are.
->>> 
->>> Hmm, another option would be to put it in the wiki's .ikiwiki directory when
->>> ikiwiki starts up. This is the technique used by the search plugin to create
->>> various data and config files that hyperestradier needs.
+>>>> I am, but still a little newish.  Feedback is good.
 
 > Having rcs_commit return a warning message when there's an unresolved conflict
 > isn't right; that message will populate the page edit box. You might want
 > to use the error() function here?
 
->> It should never reach that case, so yes, I can change that to error.
+>> It should never reach that case, so I have changed that to error.
 
 > There'an incomplete comment ending with "note, this relies on the fact that"
 
->> erg... sorry, will fix.
+>> erg... sorry, fixed.
 
 [[tag patch]]
