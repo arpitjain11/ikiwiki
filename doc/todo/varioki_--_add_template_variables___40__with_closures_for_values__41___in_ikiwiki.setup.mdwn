@@ -39,7 +39,7 @@ ManojSrivastava
                         'hashvar'  => '{1, 1, 2, 2}',
                         'toplvl'   => 'sub {return $page eq "index"}',
                         'isblog'   => 'sub {return $page =~ m,blog/.*,}',
-                        'category' => 'sub { return " " unless $page=~ m,^blog/,; my  $p=""; my $i="<a href=\"$config{url}/blog\">Top::</a>"; my @a=split ("/",$page); shift @a; pop @a; foreach my $dir (@a) { $p.=$dir; $i.="<a href=\"$config{url}/tag/$p\">$dir</a>::"; $p.="/"; }; return $i }',
+                        'category' => 'sub { return " " unless $page=~ m,^blog/,; my  $p=""; my $i="&lt;a href=\"$config{url}/blog\"&gt;Top::&lt;/a&gt;"; my @a=split ("/",$page); shift @a; pop @a; foreach my $dir (@a) { $p.=$dir; $i.="&lt;a href=\"$config{url}/tag/$p\"&gt;$dir&lt;/a&lt;::"; $p.="/"; }; return $i }',
                         'date'     => 'sub { return POSIX::strftime("%d", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
                         'year'     => 'sub { return POSIX::strftime("%Y", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
                         'month'    => 'sub { return POSIX::strftime("%B", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
