@@ -35,6 +35,8 @@ ManojSrivastava
 Since this is a little bit er, stalled, I'll post here the stuff Manoj
 mailed me, and my response to it. --[[Joey]]
 
+
+
 [[tag patch]]
 
 <pre>
@@ -665,3 +667,15 @@ I've been looking over the calendar plugin. Some items:
 And that's all I've heard so far. Hoping I didn't miss another patch?
 
 --[[Joey]]
+
+No, you did not.  But I am back to hacking on this, and I think I have discovered a major problem with my approach. One of the problems with the current plugin is that the goal of a calendar is to create a calendar, either a month or year based on,  that provides links to blogs for all the days in (for the month calendar), and all the months (in a year calendar) in which there have been blog postings. For the monthly calendar, it needs to know the  previous and next months where there is a posting, and  for the year calendar, it needs to know  which of the previous (next) years had entries.
+
+Now, this means that it needs to know about at _all_ pages that meet the pagespec, and stash that information, before it begins generating the calandar in question, in order to calculate how to create the symlinks. And, of course, all pages that have calendars on them might need to change anytime a page that meets the pagespec is added; and again at midnight, when the current day changes.
+
+keys %IkiWiki::pagectime  followed by pagespec_match would probably do the trick -- 
+
+        @Interesting = grep (pagespec_match($_,$pagespec), keys %IkiWiki::pagectime);
+
+When is the %IkiWiki::pagectime hash created? Can it be used in the preprocess hook?
+
+--[[ManojSrivastava]]
