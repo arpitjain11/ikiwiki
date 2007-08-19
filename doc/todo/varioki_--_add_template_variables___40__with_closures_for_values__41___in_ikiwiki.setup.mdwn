@@ -19,11 +19,33 @@ ManojSrivastava
 >
 > --[[JoshTriplett]]
 
+> > Right. But how about some more complex stuff, for example, from my varioki settings below? --ManojSrivastava
+
 > Here's a dump of the file Manoj sent me, for reference.
 > 
 > My take on this is that simple plugins can do the same sort of things, this is
 > kind of wanting to avoid the plugin mechanism and just use templates and
 > stuff in the config file. Not too thrilled about that. --[[Joey]]
+
+> > OK. How do you implement something like category I have in my varioki
+> >  settings? As a user, I can just add new stuff to my config and my template;
+> >  with a plugin I'll have to write a plugin, and install it in the ikiwiki plugin
+> > directory,  which is not very easy for a plain ol' user.  Not everyone is the
+> >  sysadmin of their own machines with access to system dirs. --ManojSrivastava
+
+<pre>
+                varioki => {'motto'    => '"Manoj\'s musings"',
+                        'arrayvar' => '[0, 1, 2, 3]',
+                        'hashvar'  => '{1, 1, 2, 2}',
+                        'toplvl'   => 'sub {return $page eq "index"}',
+                        'isblog'   => 'sub {return $page =~ m,blog/.*,}',
+                        'category' => 'sub { return " " unless $page=~ m,^blog/,; my  $p=""; my $i="<a href=\"$config{url}/blog\">Top::</a>"; my @a=split ("/",$page); shift @a; pop @a; foreach my $dir (@a) { $p.=$dir; $i.="<a href=\"$config{url}/tag/$p\">$dir</a>::"; $p.="/"; }; return $i }',
+                        'date'     => 'sub { return POSIX::strftime("%d", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
+                        'year'     => 'sub { return POSIX::strftime("%Y", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
+                        'month'    => 'sub { return POSIX::strftime("%B", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
+                       'day'      => 'sub { return POSIX::strftime("%A", gmtime((stat(srcfile($pagesources{$page})))[9])); }',
+                      },
+</pre>
 
 ----
 
