@@ -6,6 +6,7 @@ Build-Depends-Indep: dpkg-dev (>= 1.9.0), libxml-simple-perl, markdown, libtimed
 Maintainer: Joey Hess <joeyh@debian.org>
 Uploaders: Joey Hess <joeyh@debian.org>, Josh Triplett <josh@freedesktop.org>
 Standards-Version: 3.7.2
+Homepage: http://ikiwiki.info/
 XS-Vcs-Svn: svn://svn.kitenet.net/ikiwiki/trunk
 XS-Vcs-Browser: http://ikiwiki.info/cgi-bin/viewvc.cgi/trunk/?root=ikiwiki
 
@@ -32,5 +33,3 @@ Description: a wiki compiler
  ikiwiki provides a plugin system which allows many other features to be
  added. Some of the plugins have additional dependencies, found among the
  Recommends and Suggests of this package.
- .
-  Homepage: http://ikiwiki.info/
