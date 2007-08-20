@@ -5,18 +5,24 @@ A few observations, in approximate order of priority:
 
 * What's the copyright and license of showdown? Please include that from
   the original zip file.
+ * Done. Check licences folder
 * What happens if there are concurrent edits? The CGI.pm modification to
   save an edited wikiwyg part doesn't seem to check if the source file has
   changed in the meantime, so if the part has moved around, it might
   replace the wrong part on saving. I've not tested this.
+ * When you click the edit button, the exact same protocol is used for saving.
+   However when you double click to edit, this still is possibly an issue.
 * The stuff you have in destdir now really belongs in basewiki so it's
   copied over to any destdir.
+ * Done.
 * Personally, I'm not sure if I need double-click to edit a section in my
   wiki, but I'd love it if the edit form in the cgi could use wikiwyg. Seems
   like both of these could be independent options. Doable, I'm sure?
+ * Done.
 * It would be good to move as much as possible of the inlined javascript in
   wikiwyg.tmpl out to a separate .js file to save space in the rendered
   pages.
+ * Done.
 * Both this plugin and the [[Gallery_Plugin_for_Ikiwiki]] are turning out
   to need to add a bunch of pages to the basewiki. I wonder what would be a
   good way to do this, without bloating the basewiki when the plugins arn't
@@ -24,10 +30,24 @@ A few observations, in approximate order of priority:
   of directories, which plugins can add to. Perhaps you should work with
   arpitjain on this so both plugins can benefit. (The smiley plugin would
   also benefit from this..)
+ * Done. All plugin files are now stored in a tarball. IkiWiki checks for
+   <plugin name>.tar.gz in the basedir and if the plugin is being used, then
+   it extracts the files to destdir. Currently IkiWiki does not render these
+   files though (my plugin doesn't need them to be rendered). However it wouldn't
+   be too hard to modify it to render them.
 * Is there any way of only loading enough of wikiwyg by default to catch
   the section double-clicks, and have it load the rest on the fly? I'm
   thinking about initial page load time when visiting a wikiwyg-using wiki
   for the first time. I count 230k or so of data that a browser downloads
   in that case..
+ * Done-ish. I fixed it so that all of the javascript files(except for the main two)
+   are loaded after the content is loaded. It is possible to make is so that
+   the files are only loaded when you double click, however that is *a lot* 
+   more work, plus it will slow the load time for wikiwyg. But if you would
+   prefer that the files only load after double clicking, I can do that. Also,
+   I'm working on reducing the file sizes via [Javascript Compression][]. Theoretically,
+   I can get the size down to about 70kb, I'm working out the kinks now.
 
 --[[Joey]]
+
+[Javascript Compression]: http://javascriptcompressor.com/
