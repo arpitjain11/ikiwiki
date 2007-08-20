@@ -28,17 +28,32 @@ off in WikiText mode.
 
 [[tag patch]]
 
-Project IkiWiki::WIKIWYG v0.8 - <http://ikiwiki.xbaud.com/>
+Project IkiWiki::WIKIWYG v1.6 - <http://ikiwiki.xbaud.com/>
 ===========================================================
 
-[Wikiwyg][] is a "What you see is what you get" editor for wikis. It will allow you to double click on the text in a wiki and save it without reloading the page. The IkiWiki version will allow you to edit your wiki in Markdown or WYSIWYG.
+[Wikiwyg][] is a "What you see is what you get" editor for wikis. It will allow you to double click on the text in a wiki and save it without reloading the page. The IkiWiki version will allow you to edit your wiki in Markdown or WYSIWYG. You will also be able to edit a page with the wikiwyg editor by clicking the "Edit" link at the top of the page.
 
-The plugin can be downloaded from <http://ikiwiki.xbaud.com/wikiwyg-0.8.tar.gz>
+This plugin requires that you have Archive::Tar intalled.
+
+The plugin can be downloaded from <http://ikiwiki.xbaud.com/wikiwyg-1.6.tar.gz>
+
+### Installation Instructions
+
+1. Copy the files from the wikiwyg tarball to the corrosponding folders in your ikiwiki installation
+2. Add "wikiwyg" (no quotes) to the add_plugins section of your ikiwiki.setup
+3. Rebuild your wiki
+4. That's it!
 
 ### Current Issues
 
-* Code sections starting with 4 spaces do not work
-* Adding links in the WYSIWYG editor is difficult
+* Some versions of Mozilla Firefox require you to click Wysiwyg, then another mode, then Wysiwyg again to get Wysiwyg mode working in the Edit link
 * Double lists don't work
+
+### Upcoming Features
+
+* More supported ikiwiki plugins (such as img, smilies, etc.)
+* More wiki languages (such as wiki and otl)
+* Ability to upload directly through wikiwyg (pending the upload plugin)
+* Personalized settings
 
 [Wikiwyg]: http://www.wikiwyg.net/
