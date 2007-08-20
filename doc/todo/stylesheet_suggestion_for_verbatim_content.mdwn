@@ -1,0 +1,29 @@
+I suggest the attached change for verbatim contents.  Paddings/margins are
+optional, but IMHO, we should at least define a monospace font.
+
+-- Recai (via email)
+
+[[tag patch]]
+
+<pre>
+diff --git a/basewiki/style.css b/basewiki/style.css
+index 6ec6f89..1970561 100644
+--- a/basewiki/style.css
++++ b/basewiki/style.css
+@@ -198,3 +198,15 @@ li.L7 {
+ li.L8 {
+ 	list-style: upper-alpha;
+ }
++
++/* verbatim content */
++pre, tt, code {
++	font-family: "Courier", monospace;
++	color: black;
++}
++
++pre {
++	margin-left: 1.5em;
++	padding: 0.5em;
++	overflow: hidden;
++}
+</pre>
