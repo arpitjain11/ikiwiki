@@ -16,8 +16,8 @@ statistics about a set of pages, such as posts to a blog.
 
 # usage
 
-All options aside fron the `pages`, `max`, `formula`, and `time` options
-are passed on to the sparkline plugin.
+All options aside fron the `pages`, `max`, `formula`, `time`, and `color`
+options are passed on to the sparkline plugin.
 
 You don't need to specify any data points (though you can if you want to).
 Instead, data points are automatically generated based on the creation
@@ -39,6 +39,9 @@ Available forumlae:
 The `time` parameter has a default value of "ctime", since forumae use
 the creation times of pages by default. If you instead want
 them to use the modification times of pages, set it to "mtime".
+
+To change the color used to draw the sparkline, use the `color` parameter.
+For example, "color=red".
 
 # adding formulae
 

@@ -55,11 +55,15 @@ sub preprocess (@) { #{{{
 	if ($@) {
 		return "[[postsparkline error $@]]";
 	}
+
+	my $color=exists $params{color} ? "($params{color})" : "";
+
 	delete $params{pages};
 	delete $params{formula};
 	delete $params{ftime};
+	delete $params{color};
 	return IkiWiki::Plugin::sparkline::preprocess(%params, 
-		map { $_ => "" } reverse @data);
+		map { $_.$color => "" } reverse @data);
 } # }}}
 
 sub perfoo ($@) {
