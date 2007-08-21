@@ -1017,7 +1017,9 @@ sub file_pruned ($$) { #{{{
 
 sub gettext { #{{{
 	# Only use gettext in the rare cases it's needed.
-	if (exists $ENV{LANG} || exists $ENV{LC_ALL} || exists $ENV{LC_MESSAGES}) {
+	if ((exists $ENV{LANG} && length $ENV{LANG}) ||
+	    (exists $ENV{LC_ALL} && length $ENV{LC_ALL}) ||
+	    (exists $ENV{LC_MESSAGES} && length $ENV{LC_MESSAGES})) {
 		if (! $gettext_obj) {
 			$gettext_obj=eval q{
 				use Locale::gettext q{textdomain};

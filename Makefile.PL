@@ -31,7 +31,7 @@ ikiwiki.out: ikiwiki.in
 	chmod +x ikiwiki.out
 
 extra_build: ikiwiki.out
-	LANG=C perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
+	LANG= perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=basewiki --nousedirs\
 		--wikiname="ikiwiki" --verbose \
 		--exclude=/discussion --no-discussion --userdir=users \

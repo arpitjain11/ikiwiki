@@ -45,8 +45,9 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Add color parameter to postsparkline. Closes: #438900
   * Add proper Homepage field to Debian package (needs uber-new dpkg).
   * Add monotone support, contributed by William Uther.
+  * Avoid ugly gettext messages if LANG is empty. Closes: #439035
 
- -- Joey Hess <joeyh@debian.org>  Mon, 20 Aug 2007 23:09:11 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 21 Aug 2007 17:18:50 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 
