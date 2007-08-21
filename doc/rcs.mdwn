@@ -1,0 +1,16 @@
+[[meta title="Revision Control Systems"]]
+
+Ikiwiki supports using several revision control systems for storing page
+histories. 
+
+Ikiwiki started out supporting only [[Subversion|svn]], but the interface
+ikiwiki uses to a revision control system is sufficiently simple and
+generic that it can be adapted to work with many systems by writing a
+[[plugin|plugins/write]]. [[Subversion|svn]] is still a recommended choice
+(since [[Joey]] uses it); [[git]] is another well-tested option.
+
+These are all the supported revision control systems:
+[[inline pages="rcs/* and !*/Discussion and !details" archive=yes]]
+
+There is a page with [[details]] about how the different systems work with
+ikiwiki, for the curious.
