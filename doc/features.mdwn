@@ -9,10 +9,8 @@ lazy, it's because a real RCS is a good thing to have, and there are
 advantages to using one that are not possible with a standard wiki.
 
 Instead of editing pages in a stupid web form, you can use vim and commit
-changes via [[Subversion]]. Or work disconnected using svk and push your
-changes out when you come online. Or use [[git]], [[tla]], or [[mercurial]]
-to work in a distributed fashion all the time. (It's also possible to
-[[plugins/write]] a plugin to support other systems.)
+changes via [[Subversion|rcs/svn]], [[rcs/git]], or any of a number of other
+[[Revision_Control_Systems|rcs]].
 
 ikiwiki can be run from a [[post-commit]] hook to update your wiki
 immediately whenever you commit a change using the RCS.

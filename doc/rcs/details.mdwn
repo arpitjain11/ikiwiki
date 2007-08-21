@@ -8,7 +8,7 @@ A few bits about the RCS backends
 as opposed to using a editor and the RCS interface.
 
 
-## [[Subversion]]
+## [[svn]]
 
 Subversion was the first RCS to be supported by ikiwiki.
 
@@ -182,7 +182,7 @@ please refer to [Emanuele](http://nerd.ocracy.org/em/)
 
 There is a patch that needs a bit of work linked to from [[todo/rcs]].
 
-## [Monotone](http://monotone.ca/)
+## [[Monotone]]
 
 In normal use, monotone has a local database as well as a workspace/working copy.
 In ikiwiki terms, the local database takes the role of the master repository, and
@@ -190,7 +190,7 @@ the srcdir is the workspace.  As all monotone workspaces point to a default
 database, there is no need to tell ikiwiki explicitly about the "master" database.  It
 will know.
 
-The patch currently supports normal committing and getting the history of the page.
+The backend currently supports normal committing and getting the history of the page.
 To understand the parallel commit approach, you need to understand monotone's
 approach to conflicts:
 
@@ -216,7 +216,7 @@ will leave the repository with multiple heads.  At this point, all data is saved
 The system then tries to merge the heads with a merger that will fail if it cannot
 resolve the conflict.  If the merge succeeds then everything is ok.
 
-If that merge failed then there are conflicts.  In this case, the current patch calls
+If that merge failed then there are conflicts.  In this case, the current code calls
 merge again with a merger that inserts conflict markers.  It commits this new
 revision with conflict markers to the repository.  It then returns the text to the
 user for cleanup.  This is less neat than it could be, in that a conflict marked

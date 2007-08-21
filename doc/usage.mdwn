@@ -130,20 +130,12 @@ configuration options of their own.
   Enable email notification of commits. This should be used when running
   ikiwiki as a [[post-commit]] hook.
 
-* --rcs=svn, --no-rcs
+* --rcs=svn|git|.., --no-rcs
 
-  Enable or disable use of a revision control system.
+  Enable or disable use of a [[revision_control_system|rcs]].
 
-  If you use svn, the `source` directory is assumed to be
-  a [[Subversion]] working copy.
-
-  If you use git, the `source` directory is assumed to be a clone of the
-  [[git]] repository.
-
-  If you use tla, the `source` directory is assumed to be a tla import.
-
-  If you use mercurial, the `source` directory is assumed to be the
-  [[mercurial]] repository.
+  The `source` directory will be assumed to be a working copy, or clone, or
+  whatever the revision control system you select uses.
 
   In [[CGI]] mode, with a revision control system enabled, pages edited via
   the web will be committed. Also, the [[RecentChanges]] link will be placed
@@ -154,7 +146,7 @@ configuration options of their own.
 * --svnrepo /svn/wiki
 
   Specify the location of the svn repository for the wiki. This is required
-  for using --notify with [[Subversion]].
+  for using --notify with [[Subversion|rcs/svn]].
 
 * --svnpath trunk
 

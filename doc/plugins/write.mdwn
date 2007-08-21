@@ -474,15 +474,15 @@ rendered to.
 
 ## RCS plugins
 
-ikiwiki's support for revision control systems also uses pluggable perl
-modules. These are in the `IkiWiki::RCS` namespace, for example
+ikiwiki's support for [[revision_control_systems|rcs]] also uses pluggable
+perl modules. These are in the `IkiWiki::RCS` namespace, for example
 `IkiWiki::RCS::svn`. 
 
 Each RCS plugin must support all the `IkiWiki::rcs_*` functions.
 See IkiWiki::RCS::Stub for the full list of functions. It's ok if
 `rcs_getctime` does nothing except for throwing an error.
 
-See [[about_RCS_backends]] for some more info.
+See [[RCS_details|rcs/details]] for some more info.
 
 ## PageSpec plugins
 
