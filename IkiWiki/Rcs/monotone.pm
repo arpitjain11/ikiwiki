@@ -245,6 +245,9 @@ sub rcs_commit ($$$;$$) { #{{{
 		# FIXME: use of $file in these backticks is not wise from a
 		# security POV. Probably safe, but should be avoided
 		# anyway.
+		# At the moment the backticks are used because the above call using the automate
+		# interface was failing.  When that bug in monotone is fixed, we should switch
+		# back.
 		my $diff = `mtn --root=$config{mtnrootdir} au content_diff -r $oldrev -r $rev $file`; # was just $out;
 
 		if ($diff) {
@@ -314,8 +317,6 @@ sub rcs_commit ($$$;$$) { #{{{
 						"Please use the non-web interface to resolve the conflicts.");
 				}
 				
-				# suspend this revision because it has
-				# conflict markers...
 				if (system("mtn", "--root=$config{mtnrootdir}",
 				           "update", "-r", $mergeResult) != 0) {
 					debug("Unable to update to rev $mergeResult after conflict-enhanced merge on conflicted commit!");
@@ -363,7 +364,7 @@ sub rcs_add ($) { #{{{
 	check_config();
 
 	if (system("mtn", "--root=$config{mtnrootdir}", "add", "--quiet",
-	           "$config{srcdir}/$file") != 0) {
+	           $file) != 0) {
 		error("Monotone add failed");
 	}
 } #}}}

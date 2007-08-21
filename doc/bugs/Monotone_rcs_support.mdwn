@@ -44,38 +44,7 @@ Note: This patch requires a rather recent Monotone perl module (18 August 2007 o
 >>> and a bug in page adding.
 >>> Here is a small patch for them:
 
-    Index: IkiWiki/Rcs/monotone.pm
-    ===================================================================
-    --- IkiWiki/Rcs/monotone.pm	(revision 4195)
-    +++ IkiWiki/Rcs/monotone.pm	(working copy)
-    @@ -245,6 +245,9 @@
-     		# FIXME: use of $file in these backticks is not wise from a
-     		# security POV. Probably safe, but should be avoided
-     		# anyway.
-    +		# At the moment the backticks are used because the above call using the automate
-    +		# interface was failing.  When that bug in monotone is fixed, we should switch
-    +		# back.
-     		my $diff = `mtn --root=$config{mtnrootdir} au content_diff -r $oldrev -r $rev $file`; # was just $out;
-     
-     		if ($diff) {
-    @@ -314,8 +317,6 @@
-     						"Please use the non-web interface to resolve the conflicts.");
-     				}
-     				
-    -				# suspend this revision because it has
-    -				# conflict markers...
-     				if (system("mtn", "--root=$config{mtnrootdir}",
-     				           "update", "-r", $mergeResult) != 0) {
-     					debug("Unable to update to rev $mergeResult after conflict-enhanced merge on conflicted commit!");
-    @@ -363,7 +364,7 @@
-     	check_config();
-     
-     	if (system("mtn", "--root=$config{mtnrootdir}", "add", "--quiet",
-    -	           "$config{srcdir}/$file") != 0) {
-    +	           $file) != 0) {
-     		error("Monotone add failed");
-     	}
-     } #}}}
+>>>> applied
 
 >> BTW, will all the monotone output parsing work if LANG != C?
 
@@ -91,4 +60,5 @@ Note: This patch requires a rather recent Monotone perl module (18 August 2007 o
 >>> calling Ikiwiki seems reasonable, but I've not written the
 >>> Lua hook.
 
->> --[[Joey]]
+>>>> So the rcs_notify support is not just untested, but can't work
+>>>> at all w/o further development.
