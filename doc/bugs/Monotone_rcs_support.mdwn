@@ -18,7 +18,7 @@ Note: This patch requires a rather recent Monotone perl module (18 August 2007 o
 
 >>> Fair enough. Didn't realize you were a monotone committer. :-)
 
->>>> I am, but still a little newish.  Feedback is good.
+>>>> I am, but still a little newish.  Feedback is good.  In particular, this is my first major bit of PERL.
 
 > Having rcs_commit return a warning message when there's an unresolved conflict
 > isn't right; that message will populate the page edit box. You might want
@@ -33,11 +33,62 @@ Note: This patch requires a rather recent Monotone perl module (18 August 2007 o
 [[tag patch]]
 
 >> I've [[accepted|done]] this patch, thank you! 
->> 
+
+>>> Thanks for committing it.  I hate keeping my own diffs. :)
+
 >> I did make a few changes. Please review, and make sure it still works
 >> (a test case like we have for some of the other RCSes would be nice..)
->> 
+
+>>> Tested.  It still works at least as well as it did.  I'll try to get to a test case soon.
+>>> In checking the source I noticed a few bogus comments I left in when editing,
+>>> and a bug in page adding.
+>>> Here is a small patch for them:
+
+    Index: IkiWiki/Rcs/monotone.pm
+    ===================================================================
+    --- IkiWiki/Rcs/monotone.pm	(revision 4195)
+    +++ IkiWiki/Rcs/monotone.pm	(working copy)
+    @@ -245,6 +245,9 @@
+     		# FIXME: use of $file in these backticks is not wise from a
+     		# security POV. Probably safe, but should be avoided
+     		# anyway.
+    +		# At the moment the backticks are used because the above call using the automate
+    +		# interface was failing.  When that bug in monotone is fixed, we should switch
+    +		# back.
+     		my $diff = `mtn --root=$config{mtnrootdir} au content_diff -r $oldrev -r $rev $file`; # was just $out;
+     
+     		if ($diff) {
+    @@ -314,8 +317,6 @@
+     						"Please use the non-web interface to resolve the conflicts.");
+     				}
+     				
+    -				# suspend this revision because it has
+    -				# conflict markers...
+     				if (system("mtn", "--root=$config{mtnrootdir}",
+     				           "update", "-r", $mergeResult) != 0) {
+     					debug("Unable to update to rev $mergeResult after conflict-enhanced merge on conflicted commit!");
+    @@ -363,7 +364,7 @@
+     	check_config();
+     
+     	if (system("mtn", "--root=$config{mtnrootdir}", "add", "--quiet",
+    -	           "$config{srcdir}/$file") != 0) {
+    +	           $file) != 0) {
+     		error("Monotone add failed");
+     	}
+     } #}}}
+
 >> BTW, will all the monotone output parsing work if LANG != C?
->> 
+
+>>> It should (he says crossing fingers).
+>>> In the places where I do any complex parsing I'm using a special
+>>> version of the mtn commands designed for scripting.  They have a
+>>> stable, easy to parse, output that doesn't get translated (I think).
+
 >> Do monotone post-commit hooks actually use REV?
+
+>>> Monotone post-commit hooks are written in Lua and can do
+>>> what they please.  Setting the REV environment var before
+>>> calling Ikiwiki seems reasonable, but I've not written the
+>>> Lua hook.
+
 >> --[[Joey]]
