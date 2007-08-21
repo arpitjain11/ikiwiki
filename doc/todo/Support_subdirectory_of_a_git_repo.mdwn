@@ -1,4 +1,4 @@
-Git does not support checking out a subdirectory of a repository as a repository.  In order to allow a software project managed with Git to keep its [[wiki,_bug-tracker,_TODO-list,_and_stuff|integrated_issue_tracking_with_ikiwiki]] in a subdirectory of the same repository (rather than a parallel `foo-wiki.git` repository, which does not stay in sync with the code), ikiwiki should support checking out a repository but only using a subdirectory of that repository. --[[JoshTriplett]]
+Git does not support checking out a subdirectory of a repository as a repository.  In order to allow a software project managed with Git to keep its [[wiki,_bug-tracker,_TODO-list,_and_stuff|tips/integrated_issue_tracking_with_ikiwiki]] in a subdirectory of the same repository (rather than a parallel `foo-wiki.git` repository, which does not stay in sync with the code), ikiwiki should support checking out a repository but only using a subdirectory of that repository. --[[JoshTriplett]]
 
 > This seems to be a mandatory feature.  I'll start working to implement it as soon as possible  --[[Roktas]]
 
