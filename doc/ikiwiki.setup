@@ -46,16 +46,17 @@ use IkiWiki::Setup::Standard {
 	# Monotone stuff
 	#rcs => "monotone",
 	#mtnkey => "web\@machine.company.com",
-	# Monotone options
-	#mtnsync => 0,                              # set this if you want the wiki to sync on update and commit
-	#mtnrootdir => "path/to/root/of/workspace", # The path to your workspace (defaults to the srcdir itself)
-	                                            # e.g. use if your srcdir is a subdirectory of the workspace
-	#mtnbinpath => "path/to/montone/binary",    # by default we just use "mtn" and assume it is in your path.
-	#mtnmergerc => "path/to/mergerc",           # this is a monotone lua hook file used by ikiwiki for
-	                                            # inserting conflict markers.  By default we use
-	                                            # mtnrootdir/_MTN/mergerc.  This hook will be populated with
-	                                            # default code the first time you use ikiwiki.  You can
-	                                            # change it to alter how conflict markers are inserted.
+	# Set if you want the wiki to sync on update and commit.
+	#mtnsync => 0,
+	# The path to your workspace (defaults to the srcdir itself)
+	# e.g. use if your srcdir is a subdirectory of the workspace.
+	#mtnrootdir => "path/to/root/of/workspace",
+	# This is a monotone lua hook file used by ikiwiki for
+	# inserting conflict markers. By default it will use
+	# mtnrootdir/_MTN/mergerc. This hook will be populated with
+	# default code the first time you use ikiwiki.  You can
+	# change it to alter how conflict markers are inserted.
+	#mtnmergerc => "path/to/mergerc",
 
 	wrappers => [
 		#{

@@ -1,12 +1,4 @@
 #!/usr/bin/perl
-# Monotone revision control.
-# http://monotone.ca/
-
-# This requires the Monotone perl module from the monotone contrib/ directory to be installed.
-# In particlar, we require version 0.03 or higher of that module.
-# It is available from the monotone source repository at:
-# http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone
-
 use warnings;
 use strict;
 use IkiWiki;
@@ -16,12 +8,9 @@ use Date::Format qw(time2str);
 
 package IkiWiki;
 
-my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
+my $sha1_pattern = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
 
 sub check_config() {
-	if (!defined($config{srcdir})) {
-		error("Ikiwiki srcdir not defined!");
-	}
 	if (!defined($config{mtnrootdir})) {
 		$config{mtnrootdir} = $config{srcdir};
 	}
@@ -303,11 +292,15 @@ sub rcs_commit ($$$;$$) {
 		#$automator->setOpts("-r", $oldrev, "-r", $rev);
 		#my ($out, $err) = $automator->call("content_diff", $file);
 		#debug("Problem committing $file") if ($err ne "");
+		# FIXME: use of $file in these backticks is not wise from a
+		# security POV. Probably safe, but should be avoided
+		# anyway.
 		my $diff = `mtn --root=$config{mtnrootdir} au content_diff -r $oldrev -r $rev $file`; # was just $out;
 
 		if ($diff) {
 			# this file has changed
-			# commit a revision with just this file changed off the old revision
+			# commit a revision with just this file changed off
+			# the old revision
 			# first get the contents
 			warn("File changed: forming branch\n");
 			my $newfile=readfile("$config{srcdir}/$file");
@@ -330,7 +323,7 @@ sub rcs_commit ($$$;$$) {
 			$automator->close();
 
 			# if we made it to here then the file has been committed... revert the local copy
-			if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "revert", $file) != 0) {
+			if (system("mtn", "--root=$config{mtnrootdir}", "revert", $file) != 0) {
 				warn("Unable to revert $file after merge on conflicted commit!");
 			}
 			warn("Divergence created!  Attempting auto-merge.");
@@ -344,14 +337,14 @@ sub rcs_commit ($$$;$$) {
 
 			# push any changes so far
 			if (defined($config{mtnsync}) && $config{mtnsync}) {
-				if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "push", "--quiet", "--ticker=none", "--key", $config{mtnkey}) != 0) {
+				if (system("mtn", "--root=$config{mtnrootdir}", "push", "--quiet", "--ticker=none", "--key", $config{mtnkey}) != 0) {
 					warn("monotone push failed\n");
 				}
 			}
 			
 			if (defined($mergeResult)) {
 				# everything is merged - bring outselves up to date
-				if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "update", "-r", $mergeResult) != 0) {
+				if (system("mtn", "--root=$config{mtnrootdir}", "update", "-r", $mergeResult) != 0) {
 					warn("Unable to update to rev $mergeResult after merge on conflicted commit!");
 				}
 			} else {
@@ -370,7 +363,7 @@ sub rcs_commit ($$$;$$) {
 				}
 				
 				# suspend this revision because it has conflict markers...
-				if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "update", "-r", $mergeResult) != 0) {
+				if (system("mtn", "--root=$config{mtnrootdir}", "update", "-r", $mergeResult) != 0) {
 					warn("Unable to update to rev $mergeResult after conflict-enhanced merge on conflicted commit!");
 				}
 				
@@ -386,17 +379,17 @@ sub rcs_commit ($$$;$$) {
 
 	# if we reached here then the file we're looking at hasn't changed since $oldrev.  Commit it.
 
-	if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "commit", "--quiet", "--author", $author, "--key", $config{mtnkey},
+	if (system("mtn", "--root=$config{mtnrootdir}", "commit", "--quiet", "--author", $author, "--key", $config{mtnkey},
 				"-m", possibly_foolish_untaint($message), $file) != 0) {
 		warn("Traditional commit failed!\nReturning data as conflict.\n");
 		my $conflict=readfile("$config{srcdir}/$file");
-		if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "revert", "--quiet", $file) != 0) {
+		if (system("mtn", "--root=$config{mtnrootdir}", "revert", "--quiet", $file) != 0) {
 			warn("monotone revert failed\n");
 		}
 		return $conflict;
 	}
 	if (defined($config{mtnsync}) && $config{mtnsync}) {
-		if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "sync", "--quiet", "--ticker=none", "--key", $config{mtnkey}) != 0) {
+		if (system("mtn", "--root=$config{mtnrootdir}", "sync", "--quiet", "--ticker=none", "--key", $config{mtnkey}) != 0) {
 			warn("monotone sync failed\n");
 		}
 	}
@@ -410,7 +403,7 @@ sub rcs_add ($) {
 
 	check_config();
 
-	if (system($config{mtnbinpath}, "--root=$config{mtnrootdir}", "add", "--quiet", "$config{srcdir}/$file") != 0) {
+	if (system("mtn", "--root=$config{mtnrootdir}", "add", "--quiet", "$config{srcdir}/$file") != 0) {
 		error("Monotone add failed");
 	}
 }
@@ -450,7 +443,7 @@ sub rcs_recentchanges ($) {
 
 	my $child = open(MTNLOG, "-|");
 	if (! $child) {
-		exec($config{mtnbinpath}, "log", "--root=$config{mtnrootdir}", "--no-graph", "--brief") || error("mtn log failed to run");
+		exec("mtn", "log", "--root=$config{mtnrootdir}", "--no-graph", "--brief") || error("mtn log failed to run");
 	}
 
 	my $line;
@@ -571,7 +564,7 @@ sub rcs_notify () {
 			return $message;
 		},
 		sub {
-			`$config{mtnbinpath} --root=$config{mtnrootdir} au content_diff -r $rev`;
+			`mtn --root=$config{mtnrootdir} au content_diff -r $rev`;
 		}, $user, @changed_pages);
 }
 
@@ -584,7 +577,7 @@ sub rcs_getctime ($) {
 
 	my $child = open(MTNLOG, "-|");
 	if (! $child) {
-		exec($config{mtnbinpath}, "log", "--root=$config{mtnrootdir}", "--no-graph", "--brief", $file) || error("mtn log $file failed to run");
+		exec("mtn", "log", "--root=$config{mtnrootdir}", "--no-graph", "--brief", $file) || error("mtn log $file failed to run");
 	}
 
 	my $firstRev;
