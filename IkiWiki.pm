@@ -33,6 +33,7 @@ sub defaultconfig () { #{{{
 	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
 		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
+		qr/(^|\/)_MTN\//,
 		qr/\.dpkg-tmp$/],
 	wiki_link_regexp => qr{
 		\[\[                    # beginning of link
