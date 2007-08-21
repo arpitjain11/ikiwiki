@@ -27,3 +27,7 @@ sub prune ($) { #{{{
         }
 } #}}}
 </pre>
+
+> Old versions of perl are known to have bugs with taint checking.
+> I don't really support using ikiwiki with the perl 5.8.4 in debian
+> oldstable, and would recommend upgrading. --[[Joey]]
