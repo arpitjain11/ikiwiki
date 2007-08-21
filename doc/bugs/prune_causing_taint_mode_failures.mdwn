@@ -1,8 +1,8 @@
 Using ikiwiki version 2.5gpa1 (the backport to Debian 3.1), I suddenly started getting the following error when rebuilding the wiki:
 
-successfully generated /home/ikiwiki/cgi-bin/ikiwiki.cgi
-Insecure dependency in rmdir while running with -T switch at /usr/share/perl5/IkiWiki/Render.pm line 242.
-BEGIN failed--compilation aborted at (eval 5) line 130.
+> successfully generated /home/ikiwiki/cgi-bin/ikiwiki.cgi
+> Insecure dependency in rmdir while running with -T switch at /usr/share/perl5/IkiWiki/Render.pm line 242.
+> BEGIN failed--compilation aborted at (eval 5) line 130.
 
 I've no idea what's happening (hey, I'm a C programmer), but I've hacked prune() to workaround this as follows:
 
