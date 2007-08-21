@@ -129,59 +129,9 @@ sub check_mergerc() {
 	my $mergerc = $config{mtnmergerc};
 	if (! -r $mergerc ) {
 		warn("$mergerc doesn't exist.  Creating file with default mergers.");
-		open(DATA, ">$mergerc") or error("can't open $mergerc $!");
-		my $defaultrc = "".
-"	function local_execute_redirected(stdin, stdout, stderr, path, ...)\n".
-"	   local pid\n".
-"	   local ret = -1\n".
-"	   io.flush();\n".
-"	   pid = spawn_redirected(stdin, stdout, stderr, path, unpack(arg))\n".
-"	   if (pid ~= -1) then ret, pid = wait(pid) end\n".
-"	   return ret\n".
-"	end\n".
-"	if (not execute_redirected) then -- use standard function if available\n".
-"	   execute_redirected = local_execute_redirected\n".
-"	end\n".
-"	if (not mergers.fail) then -- use standard merger if available\n".
-"	   mergers.fail = {\n".
-"	      cmd = function (tbl) return false end,\n".
-"	      available = function () return true end,\n".
-"	      wanted = function () return true end\n".
-"	   }\n".
-"	end\n".
-"	mergers.diffutils_force = {\n".
-"	   cmd = function (tbl)\n".
-"	      local ret = execute_redirected(\n".
-"	          \"\",\n".
-"	          tbl.outfile,\n".
-"	          \"\",\n".
-"	          \"diff3\",\n".
-"	          \"--merge\",\n".
-"	          \"--show-overlap\",\n".
-"	          \"--label\", string.format(\"[Yours]\",     tbl.left_path ),\n".
-"	          \"--label\", string.format(\"[Original]\",  tbl.anc_path  ),\n".
-"	          \"--label\", string.format(\"[Theirs]\",    tbl.right_path),\n".
-"	          tbl.lfile,\n".
-"	          tbl.afile,\n".
-"	          tbl.rfile\n".
-"	      )\n".
-"	      if (ret > 1) then\n".
-"	         io.write(gettext(\"Error running GNU diffutils 3-way difference tool 'diff3'\"))\n".
-"	         return false\n".
-"	      end\n".
-"	      return tbl.outfile\n".
-"	   end,\n".
-"	   available =\n".
-"	      function ()\n".
-"	          return program_exists_in_path(\"diff3\");\n".
-"	      end,\n".
-"	   wanted =\n".
-"	      function ()\n".
-"	           return true\n".
-"	      end\n".
-"	}\n";
-		print DATA $defaultrc;
-		close(DATA);
+		open(my $out, ">$mergerc") or error("can't open $mergerc: $!");
+		print $out <DATA>;
+		close $out;
 	}
 }
 
@@ -351,7 +301,7 @@ sub rcs_commit ($$$;$$) {
 				warn("Auto-merge failed.  Using diff-merge to add conflict markers.");
 				
 				$ENV{MTN_MERGE}="diffutils_force";
-				my $mergeResult = mtn_merge($newRevID, $rev, $branch, $author, "Merge parallel conflicting web edits (adding inline conflict markers).\nThis revision should be cleaned up manually.");
+				$mergeResult = mtn_merge($newRevID, $rev, $branch, $author, "Merge parallel conflicting web edits (adding inline conflict markers).\nThis revision should be cleaned up manually.");
 				$ENV{MTN_MERGE}="";
 				
 				if (!defined($mergeResult)) {
@@ -619,3 +569,58 @@ sub rcs_getctime ($) {
 	debug("found ctime ".localtime($date)." for $file");
 	return $date;
 }
+
+1
+
+# default mergerc content
+__DATA__
+	function local_execute_redirected(stdin, stdout, stderr, path, ...)
+	   local pid
+	   local ret = -1
+	   io.flush();
+	   pid = spawn_redirected(stdin, stdout, stderr, path, unpack(arg))
+	   if (pid ~= -1) then ret, pid = wait(pid) end
+	   return ret
+	end
+	if (not execute_redirected) then -- use standard function if available
+	   execute_redirected = local_execute_redirected
+	end
+	if (not mergers.fail) then -- use standard merger if available
+	   mergers.fail = {
+	      cmd = function (tbl) return false end,
+	      available = function () return true end,
+	      wanted = function () return true end
+	   }
+	end
+	mergers.diffutils_force = {
+	   cmd = function (tbl)
+	      local ret = execute_redirected(
+	          "",
+	          tbl.outfile,
+	          "",
+	          "diff3",
+	          "--merge",
+	          "--show-overlap",
+	          "--label", string.format("[Yours]",     tbl.left_path ),
+	          "--label", string.format("[Original]",  tbl.anc_path  ),
+	          "--label", string.format("[Theirs]",    tbl.right_path),
+	          tbl.lfile,
+	          tbl.afile,
+	          tbl.rfile
+	      )
+	      if (ret > 1) then
+	         io.write(gettext("Error running GNU diffutils 3-way difference tool 'diff3'"))
+	         return false
+	      end
+	      return tbl.outfile
+	   end,
+	   available =
+	      function ()
+	          return program_exists_in_path("diff3");
+	      end,
+	   wanted =
+	      function ()
+	           return true
+	      end
+	}
+EOF
