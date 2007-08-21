@@ -166,7 +166,7 @@ sub loadplugin ($) { #{{{
 
 	return if grep { $_ eq $plugin} @{$config{disable_plugins}};
 
-	foreach my $dir (possibly_foolish_untaint($config{libdir}),
+	foreach my $dir (defined $config{libdir} ? possibly_foolish_untaint($config{libdir}) : undef,
 	                 "$installdir/lib/ikiwiki") {
 		if (defined $dir && -x "$dir/plugins/$plugin") {
 			require IkiWiki::Plugin::external;
