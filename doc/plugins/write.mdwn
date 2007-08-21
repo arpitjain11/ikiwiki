@@ -148,7 +148,7 @@ return the htmlized content.
 
 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
-[[Templates|wikitemplate]] are filled out for many different things in
+[[Templates|wikitemplates]] are filled out for many different things in
 ikiwiki, like generating a page, or part of a blog page, or an rss feed, or
 a cgi. This hook allows modifying the variables available on those
 templates. The function is passed named parameters. The "page" and
