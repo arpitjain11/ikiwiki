@@ -39,7 +39,7 @@ register hooks that ikiwiki will call later.
 	}
 
 This has hooked our plugin into the preprocess hook, which ikiwiki uses to
-expand [[PreprocessorDirectives|preprocessordirectives]]. Notice that "fib"
+expand [[PreprocessorDirectives|preprocessordirective]]. Notice that "fib"
 has shown up again. It doesn't actually have to match the module name this
 time, but it generally will. This "fib" is telling ikiwiki what kind of
 PreprocessorDirective to handle, namely one that looks like this:
