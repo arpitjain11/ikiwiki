@@ -9,7 +9,7 @@ BEGIN failed--compilation aborted at (eval 5) line 130.
 I've no idea what's happening (hey, I'm a C programmer), but I've hacked prune() to workaround this as follows:
 
 <pre>
-use Scalar::Util qw(t>inted);
+use Scalar::Util qw(tainted);
 
 sub prune ($) { #{{{
         my $file=shift;
