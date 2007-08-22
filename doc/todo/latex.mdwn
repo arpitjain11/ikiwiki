@@ -162,7 +162,29 @@ Mh... not really fixed :S I added it into the return but it is somehow ignored. 
 
 Okay, the last version of the tex plugin for ikiwiki can be downloaded [here](https://www.der-winnie.de/~winnie/gsoc07/tex.pm). 
 
+> I've looked this over, fixed the indenting, fixed some variable names
+> ("$foo" is a bad variable name), removed a gratuotuous use of `tie`,
+> fixed a bug (the first time it was run, it tried to write the png file
+> before the teximages/ directory existed) and checked the result in.
+> 
+> Can you please flesh out [[plugins/tex]] with
+> whatever documentation people who know tex will expect to see?
+>
+> Also, please review my changes. In particular, I changed the @badthings
+> array to use qr//, which is much clearer, but it needs to be tested that
+> I didn't break the checking code when I did it. It would be nice to write
+> a test case that tries to feed it bad code and makes sure it rejects it.
+>
+> Question: does it really make sense to have an alt tag for the image
+> that contains the tex code? Will that make any sense when browsing
+> without images?
+>
+> Note: I removed the style= attribute, since as I've told you, the
+> htmlsanitizer strips those since they can be used to insert javascript. I
+> put in a class=teximage instead; the style sheet could be modified to
+> style that, if you want to send a patch for that.
+> 
+> --[[Joey]]
 
 [[tag soc]]
-
 [[tag wishlist]]
