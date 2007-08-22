@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-17 15:44-0400\n"
+"POT-Creation-Date: 2007-08-22 16:57-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,54 +16,54 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:154
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:224
+#: ../IkiWiki/CGI.pm:234
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:225
+#: ../IkiWiki/CGI.pm:235
 msgid "Preferences"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:226
+#: ../IkiWiki/CGI.pm:236
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:284
+#: ../IkiWiki/CGI.pm:294
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:352
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:431 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:208 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:477
+#: ../IkiWiki/CGI.pm:478
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:495 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:525
-#: ../IkiWiki/CGI.pm:552 ../IkiWiki/CGI.pm:597
+#: ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:524
+#: ../IkiWiki/CGI.pm:550 ../IkiWiki/CGI.pm:594
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:692
+#: ../IkiWiki/CGI.pm:688
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:712
+#: ../IkiWiki/CGI.pm:708
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -444,8 +444,30 @@ msgstr ""
 msgid "failed to process:"
 msgstr ""
 
+#: ../IkiWiki/Plugin/tex.pm:30
+msgid "missing tex code"
+msgstr ""
+
+#: ../IkiWiki/Plugin/tex.pm:37
+msgid "code includes disallowed latex commands"
+msgstr ""
+
+#: ../IkiWiki/Plugin/tex.pm:95
+msgid "failed to generate image from code"
+msgstr ""
+
 #: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
+msgstr ""
+
+#: ../IkiWiki/Rcs/monotone.pm:465
+msgid ""
+"REV is not set, not running from mtn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+
+#: ../IkiWiki/Rcs/monotone.pm:468
+msgid "REV is not a valid revision identifier, cannot send notifications"
 msgstr ""
 
 #: ../IkiWiki/Rcs/svn.pm:218
@@ -571,11 +593,11 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:125
+#: ../IkiWiki.pm:126
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:189 ../IkiWiki.pm:190
+#: ../IkiWiki.pm:191 ../IkiWiki.pm:192
 msgid "Error"
 msgstr ""
 
@@ -583,7 +605,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:686
+#: ../IkiWiki.pm:688
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

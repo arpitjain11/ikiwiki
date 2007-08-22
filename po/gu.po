@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-05 13:46-0700\n"
+"POT-Creation-Date: 2007-08-22 16:49-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -15,55 +15,55 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:155
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશે."
 
-#: ../IkiWiki/CGI.pm:224
+#: ../IkiWiki/CGI.pm:234
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:225
+#: ../IkiWiki/CGI.pm:235
 #, fuzzy
 msgid "Preferences"
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:226
+#: ../IkiWiki/CGI.pm:236
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:283
+#: ../IkiWiki/CGI.pm:294
 msgid "Preferences saved."
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:350
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/CGI.pm:429 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:184 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:208 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/CGI.pm:475
+#: ../IkiWiki/CGI.pm:478
 #, perl-format
 msgid "creating %s"
 msgstr "%s બનાવે છે"
 
-#: ../IkiWiki/CGI.pm:493 ../IkiWiki/CGI.pm:509 ../IkiWiki/CGI.pm:521
-#: ../IkiWiki/CGI.pm:548 ../IkiWiki/CGI.pm:593
+#: ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:524
+#: ../IkiWiki/CGI.pm:550 ../IkiWiki/CGI.pm:594
 #, perl-format
 msgid "editing %s"
 msgstr "%s સુધારે છે"
 
-#: ../IkiWiki/CGI.pm:691
+#: ../IkiWiki/CGI.pm:688
 msgid "You are banned."
 msgstr "તમારા પર પ્રતિબંધ છે."
 
-#: ../IkiWiki/CGI.pm:723
+#: ../IkiWiki/CGI.pm:708
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "પ્રવેશ નિષ્ફળ, કદાચ તમારી કુકીઓ સક્રિય બનાવવી પડશે?"
 
@@ -173,29 +173,29 @@ msgstr "માપ બદલવામાં નિષ્ફળ: %s"
 msgid "failed to determine size of image %s"
 msgstr "માપ બદલવામાં નિષ્ફળ: %s"
 
-#: ../IkiWiki/Plugin/inline.pm:36
+#: ../IkiWiki/Plugin/inline.pm:39
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr "--rss અથવા --atom ઉપયોગ કરતી વખતે વીકીમાં --url ઉપયોગ કરવું જ પડશે"
 
-#: ../IkiWiki/Plugin/inline.pm:106
+#: ../IkiWiki/Plugin/inline.pm:130
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 
-#: ../IkiWiki/Plugin/inline.pm:146
+#: ../IkiWiki/Plugin/inline.pm:170
 msgid "Add a new post titled:"
 msgstr "આ શિર્ષકથી નવું પોસ્ટ ઉમેરો:"
 
-#: ../IkiWiki/Plugin/inline.pm:161
+#: ../IkiWiki/Plugin/inline.pm:185
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "અસ્તિત્વમાં ન હોય તેવું ટેમ્પલેટ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:192 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:216 ../IkiWiki/Render.pm:103
 msgid "Discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/Plugin/inline.pm:403
+#: ../IkiWiki/Plugin/inline.pm:429
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
@@ -277,11 +277,11 @@ msgstr "પોલિગોન સ્થાપિત નથી"
 msgid "polygen failed"
 msgstr "પોલિગોન નિષ્ફળ"
 
-#: ../IkiWiki/Plugin/postsparkline.pm:25
+#: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "missing formula"
 msgstr "ખોવાયેલ સૂત્ર"
 
-#: ../IkiWiki/Plugin/postsparkline.pm:32
+#: ../IkiWiki/Plugin/postsparkline.pm:39
 msgid "unknown formula"
 msgstr "અજાણ્યું સૂત્ર"
 
@@ -445,9 +445,35 @@ msgstr "ટેમ્પલેટ %s મળ્યું નહી"
 msgid "failed to process:"
 msgstr "ક્રિયા કરવામાં નિષ્ફળ:"
 
-#: ../IkiWiki/Rcs/Stub.pm:66
+#: ../IkiWiki/Plugin/tex.pm:30
+#, fuzzy
+msgid "missing tex code"
+msgstr "ખોવાયેલ કિંમતો"
+
+#: ../IkiWiki/Plugin/tex.pm:37
+msgid "code includes disallowed latex commands"
+msgstr ""
+
+#: ../IkiWiki/Plugin/tex.pm:95
+#, fuzzy
+msgid "failed to generate image from code"
+msgstr "માપ બદલવામાં નિષ્ફળ: %s"
+
+#: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
 msgstr "getctime અમલમાં મૂકાયેલ નથી"
+
+#: ../IkiWiki/Rcs/monotone.pm:465
+#, fuzzy
+msgid ""
+"REV is not set, not running from mtn post-commit hook, cannot send "
+"notifications"
+msgstr "REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી શકાશે નહી"
+
+#: ../IkiWiki/Rcs/monotone.pm:468
+#, fuzzy
+msgid "REV is not a valid revision identifier, cannot send notifications"
+msgstr "REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી શકાશે નહી"
 
 #: ../IkiWiki/Rcs/svn.pm:218
 msgid ""
@@ -572,11 +598,11 @@ msgstr "ઉપયોગ: ikiwiki [વિકલ્પો] source dest"
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:124
+#: ../IkiWiki.pm:126
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "જ્યારે --cgi ઉપયોગ કરતાં હોય ત્યારે વીકીનું યુઆરએલ સ્પષ્ટ કરવું જ પડશે"
 
-#: ../IkiWiki.pm:175 ../IkiWiki.pm:176
+#: ../IkiWiki.pm:191 ../IkiWiki.pm:192
 msgid "Error"
 msgstr "ક્ષતિ"
 
@@ -584,7 +610,7 @@ msgstr "ક્ષતિ"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:667
+#: ../IkiWiki.pm:688
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"

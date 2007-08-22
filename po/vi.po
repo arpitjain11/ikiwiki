@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-05 13:46-0700\n"
+"POT-Creation-Date: 2007-08-22 16:49-0400\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -16,55 +16,55 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
 
-#: ../IkiWiki/CGI.pm:155
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr "Trước tiên bạn cần phải đăng nhập."
 
-#: ../IkiWiki/CGI.pm:224
+#: ../IkiWiki/CGI.pm:234
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:225
+#: ../IkiWiki/CGI.pm:235
 #, fuzzy
 msgid "Preferences"
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:226
+#: ../IkiWiki/CGI.pm:236
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:283
+#: ../IkiWiki/CGI.pm:294
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:350
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:429 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:184 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:208 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:475
+#: ../IkiWiki/CGI.pm:478
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:493 ../IkiWiki/CGI.pm:509 ../IkiWiki/CGI.pm:521
-#: ../IkiWiki/CGI.pm:548 ../IkiWiki/CGI.pm:593
+#: ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:524
+#: ../IkiWiki/CGI.pm:550 ../IkiWiki/CGI.pm:594
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:691
+#: ../IkiWiki/CGI.pm:688
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:723
+#: ../IkiWiki/CGI.pm:708
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -177,31 +177,31 @@ msgstr "lỗi ghi %s: %s"
 msgid "failed to determine size of image %s"
 msgstr "lỗi ghi %s: %s"
 
-#: ../IkiWiki/Plugin/inline.pm:36
+#: ../IkiWiki/Plugin/inline.pm:39
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --rss » hay "
 "« --atom »"
 
-#: ../IkiWiki/Plugin/inline.pm:106
+#: ../IkiWiki/Plugin/inline.pm:130
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "kiểu sắp xếp không rõ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:146
+#: ../IkiWiki/Plugin/inline.pm:170
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:161
+#: ../IkiWiki/Plugin/inline.pm:185
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:192 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:216 ../IkiWiki/Render.pm:103
 msgid "Discussion"
 msgstr "Thảo luận"
 
-#: ../IkiWiki/Plugin/inline.pm:403
+#: ../IkiWiki/Plugin/inline.pm:429
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 
@@ -285,11 +285,11 @@ msgstr "chưa cài đặt polygen"
 msgid "polygen failed"
 msgstr "lỗi polygen"
 
-#: ../IkiWiki/Plugin/postsparkline.pm:25
+#: ../IkiWiki/Plugin/postsparkline.pm:32
 msgid "missing formula"
 msgstr ""
 
-#: ../IkiWiki/Plugin/postsparkline.pm:32
+#: ../IkiWiki/Plugin/postsparkline.pm:39
 msgid "unknown formula"
 msgstr ""
 
@@ -461,9 +461,36 @@ msgstr "không tìm thấy mẫu %s"
 msgid "failed to process:"
 msgstr "mẫu không xử lý được:"
 
-#: ../IkiWiki/Rcs/Stub.pm:66
+#: ../IkiWiki/Plugin/tex.pm:30
+msgid "missing tex code"
+msgstr ""
+
+#: ../IkiWiki/Plugin/tex.pm:37
+msgid "code includes disallowed latex commands"
+msgstr ""
+
+#: ../IkiWiki/Plugin/tex.pm:95
+#, fuzzy
+msgid "failed to generate image from code"
+msgstr "lỗi ghi %s: %s"
+
+#: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
 msgstr "chưa thực hiện getctime"
+
+#: ../IkiWiki/Rcs/monotone.pm:465
+#, fuzzy
+msgid ""
+"REV is not set, not running from mtn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+"Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
+
+#: ../IkiWiki/Rcs/monotone.pm:468
+#, fuzzy
+msgid "REV is not a valid revision identifier, cannot send notifications"
+msgstr ""
+"Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
 
 #: ../IkiWiki/Rcs/svn.pm:218
 msgid ""
@@ -589,12 +616,12 @@ msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:124
+#: ../IkiWiki.pm:126
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:175 ../IkiWiki.pm:176
+#: ../IkiWiki.pm:191 ../IkiWiki.pm:192
 msgid "Error"
 msgstr "Lỗi"
 
@@ -602,7 +629,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:667
+#: ../IkiWiki.pm:688
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

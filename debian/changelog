@@ -48,8 +48,12 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Avoid ugly gettext messages if LANG is empty. Closes: #439035
   * Added tex plugin to generate images from latex code.
     Contributed by Patrick Winnertz as a GSoC project.
+  * Call the formbuilder hook for the edit page.
+  * Call decode_form_utf8 before running formbuilder_setup hooks.
+  * Add editdiff plugin contributed by Jeremie Koenig.
+  * Fix it to not leak path info.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 21 Aug 2007 20:34:59 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 22 Aug 2007 16:56:22 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 

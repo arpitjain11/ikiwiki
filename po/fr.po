@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-12 22:57-0400\n"
+"POT-Creation-Date: 2007-08-22 16:49-0400\n"
 "PO-Revision-Date: 2007-08-05 23:38+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -17,45 +17,45 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../IkiWiki/CGI.pm:155
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:224
+#: ../IkiWiki/CGI.pm:234
 msgid "Login"
 msgstr "S’identifier"
 
-#: ../IkiWiki/CGI.pm:225
+#: ../IkiWiki/CGI.pm:235
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../IkiWiki/CGI.pm:226
+#: ../IkiWiki/CGI.pm:236
 msgid "Admin"
 msgstr "Administrateur"
 
-#: ../IkiWiki/CGI.pm:283
+#: ../IkiWiki/CGI.pm:294
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:350
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:429 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:208 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:475
+#: ../IkiWiki/CGI.pm:478
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:493 ../IkiWiki/CGI.pm:509 ../IkiWiki/CGI.pm:521
-#: ../IkiWiki/CGI.pm:548 ../IkiWiki/CGI.pm:593
+#: ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:524
+#: ../IkiWiki/CGI.pm:550 ../IkiWiki/CGI.pm:594
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
@@ -450,9 +450,41 @@ msgstr "Modèle (« template ») %s introuvable "
 msgid "failed to process:"
 msgstr "Échec du traitement :"
 
-#: ../IkiWiki/Rcs/Stub.pm:66
+#: ../IkiWiki/Plugin/tex.pm:30
+#, fuzzy
+msgid "missing tex code"
+msgstr "Il manque des valeurs"
+
+#: ../IkiWiki/Plugin/tex.pm:37
+msgid "code includes disallowed latex commands"
+msgstr ""
+
+#: ../IkiWiki/Plugin/tex.pm:95
+#, fuzzy
+msgid "failed to generate image from code"
+msgstr "Échec du redimensionnement : %s"
+
+#: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
 msgstr "getctime n'est pas implémenté"
+
+#: ../IkiWiki/Rcs/monotone.pm:465
+#, fuzzy
+msgid ""
+"REV is not set, not running from mtn post-commit hook, cannot send "
+"notifications"
+msgstr ""
+"REV n'est pas défini, pas de lancement depuis le système de rapport par mail "
+"après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
+"notifications"
+
+#: ../IkiWiki/Rcs/monotone.pm:468
+#, fuzzy
+msgid "REV is not a valid revision identifier, cannot send notifications"
+msgstr ""
+"REV n'est pas défini, pas de lancement depuis le système de rapport par mail "
+"après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
+"notifications"
 
 #: ../IkiWiki/Rcs/svn.pm:218
 msgid ""
@@ -581,13 +613,13 @@ msgstr "Syntaxe : ikiwiki [options] source destination"
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:124
+#: ../IkiWiki.pm:126
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une URL vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:184 ../IkiWiki.pm:185
+#: ../IkiWiki.pm:191 ../IkiWiki.pm:192
 msgid "Error"
 msgstr "Erreur"
 
@@ -595,7 +627,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:676
+#: ../IkiWiki.pm:688
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

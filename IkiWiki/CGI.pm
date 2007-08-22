@@ -20,6 +20,24 @@ sub printheader ($) { #{{{
 	}
 
 } #}}}
+	
+sub showform ($$$$) { #{{{
+	my $form=shift;
+	my $buttons=shift;
+	my $session=shift;
+	my $cgi=shift;
+
+	if (exists $hooks{formbuilder}) {
+		run_hooks(formbuilder => sub {
+			shift->(form => $form, cgi => $cgi, session => $session,
+				buttons => $buttons);
+		});
+	}
+	else {
+		printheader($session);
+		print misctemplate($form->title, $form->render(submit => $buttons));
+	}
+}
 
 sub redirect ($$) { #{{{
 	my $q=shift;
@@ -156,26 +174,18 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "do", type => "hidden", value => "signin",
 		force => 1);
 	
+	decode_form_utf8($form);
+	
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
 		        buttons => $buttons);
 	});
-	
-	decode_form_utf8($form);
 
-	if (exists $hooks{formbuilder}) {
-		run_hooks(formbuilder => sub {
-			shift->(form => $form, cgi => $q, session => $session,
-				buttons => $buttons);
-		});
+	if ($form->submitted) {
+		$form->validate;
 	}
-	else {
-		if ($form->submitted) {
-			$form->validate;
-		}
-		printheader($session);
-		print misctemplate($form->title, $form->render(submit => $buttons));
-	}
+
+	showform($form, $buttons, $session, $q);
 } #}}}
 
 sub cgi_postsignin ($$) { #{{{
@@ -228,6 +238,8 @@ sub cgi_prefs ($$) { #{{{
 	);
 	my $buttons=["Save Preferences", "Logout", "Cancel"];
 
+	decode_form_utf8($form);
+
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
 		        buttons => $buttons);
@@ -257,8 +269,6 @@ sub cgi_prefs ($$) { #{{{
 		}
 	}
 	
-	decode_form_utf8($form);
-	
 	if ($form->submitted eq 'Logout') {
 		$session->delete();
 		redirect($q, $config{url});
@@ -284,16 +294,7 @@ sub cgi_prefs ($$) { #{{{
 		$form->text(gettext("Preferences saved."));
 	}
 	
-	if (exists $hooks{formbuilder}) {
-		run_hooks(formbuilder => sub {
-			shift->(form => $form, cgi => $q, session => $session,
-				buttons => $buttons);
-		});
-	}
-	else {
-		printheader($session);
-		print misctemplate($form->title, $form->render(submit => $buttons));
-	}
+	showform($form, $buttons, $session, $q);
 } #}}}
 
 sub cgi_editpage ($$) { #{{{
@@ -323,12 +324,12 @@ sub cgi_editpage ($$) { #{{{
 		wikiname => $config{wikiname},
 	);
 	
+	decode_form_utf8($form);
+	
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
 			buttons => \@buttons);
 	});
-	
-	decode_form_utf8($form);
 	
 	# This untaint is safe because titlepage removes any problematic
 	# characters.
@@ -495,8 +496,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->title(sprintf(gettext("editing %s"), pagetitle($page)));
 		}
 		
-		printheader($session);
-		print misctemplate($form->title, $form->render(submit => \@buttons));
+		showform($form, \@buttons, $session, $q);
 	}
 	else {
 		# save page
@@ -512,8 +512,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			printheader($session);
-			print misctemplate($form->title, $form->render(submit => \@buttons));
+			showform($form, \@buttons, $session, $q);
 			return;
 		}
 		elsif ($form->field("do") eq "create" && $exists) {
@@ -527,8 +526,7 @@ sub cgi_editpage ($$) { #{{{
 				value => readfile("$config{srcdir}/$file").
 				         "\n\n\n".$form->field("editcontent"),
 				force => 1);
-			printheader($session);
-			print misctemplate($form->title, $form->render(submit => \@buttons));
+			showform($form, \@buttons, $session, $q);
 			return;
 		}
 		
@@ -550,8 +548,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			printheader($session);
-			print misctemplate($form->title, $form->render(submit => \@buttons));
+			showform($form, \@buttons, $session, $q);
 			return;
 		}
 		
@@ -595,8 +592,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			printheader($session);
-			print misctemplate($form->title, $form->render(submit => \@buttons));
+			showform($form, \@buttons, $session, $q);
 			return;
 		}
 		else {

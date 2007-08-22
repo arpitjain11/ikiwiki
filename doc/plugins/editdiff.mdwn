@@ -1,0 +1,13 @@
+[[template id=plugin name=editdiff author="[[JeremieKoenig]]"]]
+[[tag type/useful]]
+
+This plugin adds a "Diff" button when a page is being added.
+When clicked, a diff between the stored page and provided content
+is shown in the "Page Preview" area.
+
+## Problems
+
+No special handling is done of concurrent edits: changes introduced
+independently will show up in the requested diff, although they will
+be merged when the page is saved. I suspect even detecting this case
+would require changes in the RCS backends.
