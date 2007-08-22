@@ -175,9 +175,14 @@ Okay, the last version of the tex plugin for ikiwiki can be downloaded [here](ht
 > I didn't break the checking code when I did it. It would be nice to write
 > a test case that tries to feed it bad code and makes sure it rejects it.
 >
-> Question: does it really make sense to have an alt tag for the image
+> Does it really make sense to have an alt tag for the image
 > that contains the tex code? Will that make any sense when browsing
 > without images?
+> 
+> I'm thinking about renameing the preprocessor directive to teximg.
+> \[[teximg code="" alt="foo"]] makes sense.. Would it make sense to rename
+> the whole plugin, or do you think that other tex stuff should go in this
+> same plugin?
 >
 > Note: I removed the style= attribute, since as I've told you, the
 > htmlsanitizer strips those since they can be used to insert javascript. I
