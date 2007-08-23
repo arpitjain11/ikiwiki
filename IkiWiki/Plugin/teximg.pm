@@ -7,7 +7,7 @@ use warnings;
 use strict;
 use Digest::MD5 qw(md5_hex);
 use File::Temp qw(tempdir);
-use URI::Escape qw(uri_escape);
+use HTML::Entities;
 use IkiWiki 2.00;
 
 sub import { #{{{
@@ -90,7 +90,7 @@ sub create ($$$) { #{{{
 	if (-e "$config{destdir}/$imglink" ||
 	    gen_image($code, $height, $digest, $teximgdir)) {
 		return qq{<img src="$imgurl" alt="}
-			.(exists $params{alt} ? $params{alt} : uri_escape($code))
+			.(exists $params{alt} ? $params{alt} : encode_entities($code))
 			.qq{" class="teximg" />};
 	}
 	else {
