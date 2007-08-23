@@ -33,3 +33,19 @@ is supposed to have *no* blank lines between...
 >>>>> The conditional after 1 evaluates to "", so there's a blank line
 >>>>> there. The one after 3 evaluates to "hand:", so no blank line there.
 >>>>> --[[Joey]]
+
+I have a sidebar that contains
+<pre>
+  #### Archives
+
+  \[[calendar type="year" months_per_row="6"  pages="blog/* and !*/Discussion"]]
+  \[[calendar type="month" pages="blog/* and !*/Discussion"]]
+  &lt;h4&gt;Indices&lt;/h4&gt
+  \[[map pages="archives/* and !*/Discussion"]]
+</pre>
+I am trying to make it so that the archives and index only show up if the destpage is either blog/* or / -- the top of the wiki. Unfortunately, I don't think I am getting the
+conditional right -- I have a "]] left over at the end (looking at the rendered html). Ideally, I would like to be able to do todays calendar on the top level pagel and 
+the annual calendar on archives/200[4567].mdwn, and monthly calendars for the proper month on archives/200[4567]/[0..12].mdwn. Do I have to create separate sidebars?
+I do not use the usedir directive, so all my annual archive pages live in archives/, and all my monthly archive pages live in, say, archives/2007/ --ManojSrivastava
+
+ 
