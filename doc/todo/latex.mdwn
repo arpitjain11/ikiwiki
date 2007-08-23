@@ -172,11 +172,16 @@ Okay, the last version of the tex plugin for ikiwiki can be downloaded [here](ht
 
 Okay, I'll fill this up today I think with information about the plugin
 
+Done. Is that docu fine with you?
+
 
 > Also, please review my changes. In particular, I changed the @badthings
 > array to use qr//, which is much clearer, but it needs to be tested that
 > I didn't break the checking code when I did it. It would be nice to write
 > a test case that tries to feed it bad code and makes sure it rejects it.
+
+I'll test this now on my server. I'll report here later.
+
 >
 > Does it really make sense to have an alt tag for the image
 > that contains the tex code? Will that make any sense when browsing
@@ -192,7 +197,8 @@ This are of course the minority of people (but I guess also the minority of peop
 > the whole plugin, or do you think that other tex stuff should go in this
 > same plugin?
 
-I'll think over this until I'm at work ;)
+I'll think over this until I'm at work ;) Only for rendering images... not for generating .tex files ...
+the name is all the same i think. If you like teximg better than switch :)
 
 
 > Note: I removed the style= attribute, since as I've told you, the
