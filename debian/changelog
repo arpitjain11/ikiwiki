@@ -46,7 +46,7 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Add proper Homepage field to Debian package (needs uber-new dpkg).
   * Add monotone support, contributed by William Uther.
   * Avoid ugly gettext messages if LANG is empty. Closes: #439035
-  * Added tex plugin to generate images from latex code.
+  * Added teximg plugin to generate images from latex code.
     Contributed by Patrick Winnertz as a GSoC project.
   * Call the formbuilder hook for the edit page.
   * Call decode_form_utf8 before running formbuilder_setup hooks.

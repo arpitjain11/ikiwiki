@@ -2,7 +2,7 @@
 # Licensed under GPL v2 or greater
 # (c) 2007 Patrick Winnertz <patrick.winnertz@skolelinux.org>
 
-package IkiWiki::Plugin::tex;
+package IkiWiki::Plugin::teximg;
 use warnings;
 use strict;
 use Digest::MD5 qw(md5_hex);
@@ -11,7 +11,7 @@ use URI::Escape qw(uri_escape);
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "preprocess", id => "tex", call => \&preprocess);
+	hook(type => "preprocess", id => "teximg", call => \&preprocess);
 } #}}}
 
 sub preprocess (@) { #{{{
@@ -27,14 +27,14 @@ sub preprocess (@) { #{{{
 	
 	my $code = $params{code};
 	if (! defined $code && ! length $code) {
-		return "[[tex ".gettext("missing tex code"). "]]";
+		return "[[teximg ".gettext("missing tex code"). "]]";
 	}
 
 	if (check($code)) {
 		return create($code, check_height($height), \%params);
 	}
 	else {
-		return "[[tex ".gettext("code includes disallowed latex commands"). "]]";
+		return "[[teximg ".gettext("code includes disallowed latex commands"). "]]";
 	}
 } #}}}
 
@@ -70,7 +70,7 @@ sub create ($$$) { #{{{
 
 	my $digest = md5_hex($code, $height);
 
-	my $teximgdir = "/teximages";
+	my $teximgdir = "/teximag";
 	my $imglink = "$teximgdir/$digest.png";
 	my $imglog = "$teximgdir/$digest.log";
 	will_render($params->{destpage}, $imglink);
@@ -89,10 +89,12 @@ sub create ($$$) { #{{{
 	
 	if (-e "$config{destdir}/$imglink" ||
 	    gen_image($code, $height, $digest, $teximgdir)) {
-		return qq{<img src="$imgurl" alt="}.uri_escape($code).qq{" class="teximage" />};
+		return qq{<img src="$imgurl" alt="}
+			.(exists $params{alt} ? $params{alt} : uri_escape($code))
+			.qq{" class="teximg" />};
 	}
 	else {
-		return qq{[[tex <a href="$logurl">}.gettext("failed to generate image from code")."</a>]]";
+		return qq{[[teximg <a href="$logurl">}.gettext("failed to generate image from code")."</a>]]";
 	}
 } #}}}
 

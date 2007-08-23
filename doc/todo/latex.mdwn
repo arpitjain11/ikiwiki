@@ -167,13 +167,16 @@ Okay, the last version of the tex plugin for ikiwiki can be downloaded [here](ht
 > fixed a bug (the first time it was run, it tried to write the png file
 > before the teximages/ directory existed) and checked the result in.
 > 
-> Can you please flesh out [[plugins/tex]] with
+> Can you please flesh out [[plugins/teximg]] with
 > whatever documentation people who know tex will expect to see?
 
 Okay, I'll fill this up today I think with information about the plugin
 
 Done. Is that docu fine with you?
 
+>> Perhaps add some documentation about the kind of tex code that can be
+>> used, or a link to some documentation so people who don't know latex
+>> well can figure this out?
 
 > Also, please review my changes. In particular, I changed the @badthings
 > array to use qr//, which is much clearer, but it needs to be tested that
