@@ -52,8 +52,13 @@ ikiwiki (2.6) UNRELEASED; urgency=low
   * Call decode_form_utf8 before running formbuilder_setup hooks.
   * Add editdiff plugin contributed by Jeremie Koenig.
   * Fix it to not leak path info.
+  * Add embed plugin, which allows embedding content from google maps, video,
+    calendar, and youtube. Normally, the htmlsanitiser eats these since they
+    use unsafe tags, the embed plugin overrides it for trusted sites.
+  * The googlecalendar plugin is now deprecated, and will be removed
+    eventually. Please switch to using the embed plugin.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 22 Aug 2007 16:56:22 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 23 Aug 2007 14:08:46 -0400
 
 ikiwiki (2.5) unstable; urgency=low
 

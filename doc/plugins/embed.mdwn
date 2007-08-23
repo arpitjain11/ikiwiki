@@ -1,0 +1,45 @@
+[[template id=plugin name=embed author="[[Joey]]"]]
+[[tag type/html]]
+
+This plugin allows embedding content from external sites on 
+wiki pages.
+
+Normally, the [[htmlscrubber]] does not allow the tags that are used for
+embedding content from external sites, since `<iframe>`, `<embed>`, and
+`<object>` tags can be used for various sorts of attacks. This plugin
+allows such tags to be put on a page, if they look like they are safe.
+
+In the examples below, the parts of the html that you can change are denoted
+with "XXX"; everything else must appear exactly as shown to be accepted by the
+plugin.
+
+## google maps
+
+Use html like this to embed a map:
+
+	<iframe width="XXX" height="XXX" frameborder="XXX" scrolling="XXXX" marginheight="XXXX" marginwidth="XXXX" src="http://maps.google.com/?XXX"></iframe>
+
+(This method only allows embeddeding a simple map. To use the full
+[Google Maps API](http://www.google.com/apis/maps/) from ikiwiki, including
+drawing points and GPS tracks on the map, try the [[contrib/googlemaps]]
+plugin.)
+
+## youtube
+
+Use html like this to embed a video:
+
+	<object width="XXX" height="XXX"><param name="movie" value="http://www.youtube.com/v/XXX"></param><param name="wmode" value="transparent"></param>
+	<embed src="http://www.youtube.com/v/XXX" type="application/x-shockwave-flash" wmode="transparent" width="XXX" height="XXX"></embed></object>
+
+## google video
+
+Use html like this to embed a video:
+
+	<embed style="width:XXXpx; height:XXXpx;" id="XXX" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?XXX" flashvars=""></embed>
+
+## google calendar
+
+Use html like this to embed a calendar:
+
+	<iframe src="http://www.google.com/calendar/embed?XXX" style="border-width:XXX" width="XXX" frameborder="XXX" height="XXX"></iframe>
+
