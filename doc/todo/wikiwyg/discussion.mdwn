@@ -53,3 +53,39 @@ A few observations, in approximate order of priority:
 Oh, by the way, let me know if I forgot to tarball anything. --[[TaylorKillian]] 
 
 [Javascript Compression]: http://javascriptcompressor.com/
+
+---
+
+Some more comments, on version 1.6. You seem to be making nice progress.
+
+changes.diff:
+
+* I don't really like the tarball approach. Doesn't feel like the right
+  approach somehow. A list of underlay directories feels to me like a
+  better approach. One reason is that it's more general than a tarball tied
+  to a given plugin. A list of underlay directories could also be used to
+  prefer a translated underlay, and use the english version of untranslated
+  pages, for example.
+* When is the WIKIWYG variable in misc.tmpl used?
+* I wish there were a good way to move the code to handle saving a part of
+  a page into the plugin. But there doesn't seem to be one that's any
+  cleaner than keeping the code where it is. So I'll probably just apply
+  that hunk.
+* Your patch exports run_hooks, but I don't see the plugin using that.
+* I don't know about exporting pagetitle. So far, only the inline plugin
+  needs to use that function, I generally only export things after it's
+  clear a lot of plugins will need them.
+
+wikiwyg.tar.gz
+
+* Would it be possible to provide a diff between wikiwyg upstream and any
+  modifications you made to its files? I'm not sure which version you used,
+  so I'm seeing changes in diffing that I'm unsure if you made.. 
+* If the files aren't modified, would it be better for users to get them
+  from the wikiwgy upstream, instead of including them in the plugin? (If so,
+  they'd go in their own Debian package..)
+
+Everything else looks fine and ready for merging. If, that is, you think
+I should include the plugin with all of its java code in ikiwiki. Thoughts?
+
+--[[Joey]]
