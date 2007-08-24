@@ -46,6 +46,39 @@ Note: This patch requires a rather recent Monotone perl module (18 August 2007 o
 
 >>>> applied
 
+Here is another patch.  It fixes a FIXME you added.  I was using $file within backticks because
+I was getting an error trying to do it right.  I've figured out the error, and now do it right.  This
+should also speed things up (very slightly)
+
+    Index: IkiWiki/Rcs/monotone.pm
+    ===================================================================
+    --- IkiWiki/Rcs/monotone.pm	(revision 4234)
+    +++ IkiWiki/Rcs/monotone.pm	(working copy)
+    @@ -239,17 +239,11 @@
+     
+     		# Something has been committed, has this file changed?
+     		my ($out, $err);
+    -		#$automator->setOpts("-r", $oldrev, "-r", $rev);
+    -		#my ($out, $err) = $automator->call("content_diff", $file);
+    -		#debug("Problem committing $file") if ($err ne "");
+    -		# FIXME: use of $file in these backticks is not wise from a
+    -		# security POV. Probably safe, but should be avoided
+    -		# anyway.
+    -		# At the moment the backticks are used because the above call using the automate
+    -		# interface was failing.  When that bug in monotone is fixed, we should switch
+    -		# back.
+    -		my $diff = `mtn --root=$config{mtnrootdir} au content_diff -r $oldrev -r $rev $file`; # was just $out;
+    -
+    +		$automator->setOpts("r", $oldrev, "r", $rev);
+    +		($out, $err) = $automator->call("content_diff", $file);
+    +		debug("Problem committing $file") if ($err ne "");
+    +		my $diff = $out;
+    +		
+     		if ($diff) {
+     			# Commit a revision with just this file changed off
+     			# the old revision.
+
+
 >> BTW, will all the monotone output parsing work if LANG != C?
 
 >>> It should (he says crossing fingers).
