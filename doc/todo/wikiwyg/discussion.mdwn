@@ -85,6 +85,20 @@ wikiwyg.tar.gz
   from the wikiwgy upstream, instead of including them in the plugin? (If so,
   they'd go in their own Debian package..)
 
+misc:
+
+* What are your thoughts on handling plugins? Just make preview do a
+  server-side callback? 
+* How do I configure it to only support whole-page editing with wikiwyg and
+  not insert the javascript into html pages?
+* When editing a whole page with wikiwyg, I think it would be good to keep
+  the save, preview, cancel buttons at the bottom like they are in a
+  regular page edit. Kind of a least suprise thing, so that enabling
+  wikiwyg for whole-page editing basically just changes how the edit box
+  behaves and keeps the rest of the behavior the same. And I think the preview
+  button should show a preview rendered server-side, like with a regular edit,
+  since such a preview is able to support all plugins.
+
 Everything else looks fine and ready for merging. If, that is, you think
 I should include the plugin with all of its java code in ikiwiki. Thoughts?
 
