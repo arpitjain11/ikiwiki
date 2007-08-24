@@ -70,7 +70,7 @@ sub create ($$$) { #{{{
 
 	my $digest = md5_hex($code, $height);
 
-	my $teximgdir = "/teximag";
+	my $teximgdir = "/teximg";
 	my $imglink = "$teximgdir/$digest.png";
 	my $imglog = "$teximgdir/$digest.log";
 	will_render($params->{destpage}, $imglink);
