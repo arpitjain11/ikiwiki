@@ -239,17 +239,11 @@ sub rcs_commit ($$$;$$) { #{{{
 
 		# Something has been committed, has this file changed?
 		my ($out, $err);
-		#$automator->setOpts("-r", $oldrev, "-r", $rev);
-		#my ($out, $err) = $automator->call("content_diff", $file);
-		#debug("Problem committing $file") if ($err ne "");
-		# FIXME: use of $file in these backticks is not wise from a
-		# security POV. Probably safe, but should be avoided
-		# anyway.
-		# At the moment the backticks are used because the above call using the automate
-		# interface was failing.  When that bug in monotone is fixed, we should switch
-		# back.
-		my $diff = `mtn --root=$config{mtnrootdir} au content_diff -r $oldrev -r $rev $file`; # was just $out;
-
+		$automator->setOpts("r", $oldrev, "r", $rev);
+		($out, $err) = $automator->call("content_diff", $file);
+		debug("Problem committing $file") if ($err ne "");
+		my $diff = $out;
+		
 		if ($diff) {
 			# Commit a revision with just this file changed off
 			# the old revision.
