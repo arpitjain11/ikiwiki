@@ -156,16 +156,16 @@ sub _parse_diff_tree (@) { #{{{
 
 	my %ci;
 	# Header line.
-	HEADER: while (my $line = shift @{ $dt_ref }) {
+	while (my $line = shift @{ $dt_ref }) {
 		return if $line !~ m/^(.+) ($sha1_pattern)/;
 
 		my $sha1 = $2;
 		$ci{'sha1'} = $sha1;
-		last HEADER;
+		last;
 	}
 
 	# Identification lines for the commit.
-	IDENT: while (my $line = shift @{ $dt_ref }) {
+	while (my $line = shift @{ $dt_ref }) {
 		# Regexps are semi-stolen from gitweb.cgi.
 		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
 			$ci{'tree'} = $1;
@@ -194,7 +194,7 @@ sub _parse_diff_tree (@) { #{{{
 		}
 		elsif ($line =~ m/^$/) {
 			# Trailing empty line signals next section.
-			last IDENT;
+			last;
 		}
 	}
 
@@ -204,17 +204,17 @@ sub _parse_diff_tree (@) { #{{{
 	$ci{'parent'} = @{ $ci{'parents'} }[0] if defined $ci{'parents'};
 
 	# Commit message.
-	COMMENT: while (my $line = shift @{ $dt_ref }) {
+	while (my $line = shift @{ $dt_ref }) {
 		if ($line =~ m/^$/) {
 			# Trailing empty line signals next section.
-			last COMMENT;
+			last;
 		};
 		$line =~ s/^    //;
 		push @{ $ci{'comment'} }, $line;
 	}
 
 	# Modified files.
-	FILE: while (my $line = shift @{ $dt_ref }) {
+	while (my $line = shift @{ $dt_ref }) {
 		if ($line =~ m{^:
 			([0-7]{6})[ ]      # from mode
 			([0-7]{6})[ ]      # to mode
@@ -237,9 +237,9 @@ sub _parse_diff_tree (@) { #{{{
 					'sha1_to'   => $sha1_to,
 				};
 			}
-			next FILE;
+			next;
 		};
-		last FILE;
+		last;
 	}
 
 	debug("No detail in diff-tree output") if !defined $ci{'details'};
@@ -358,11 +358,11 @@ sub rcs_recentchanges ($) { #{{{
 	error($@) if $@;
 
 	my @rets;
-	INFO: foreach my $ci (git_commit_info('HEAD', $num)) {
+	foreach my $ci (git_commit_info('HEAD', $num)) {
 		my $title = @{ $ci->{'comment'} }[0];
 
 		# Skip redundant commits.
-		next INFO if ($title eq $dummy_commit_msg);
+		next if ($title eq $dummy_commit_msg);
 
 		my ($sha1, $when) = (
 			$ci->{'sha1'},
@@ -370,7 +370,7 @@ sub rcs_recentchanges ($) { #{{{
 		);
 
 		my (@pages, @messages);
-		DETAIL: foreach my $detail (@{ $ci->{'details'} }) {
+		foreach my $detail (@{ $ci->{'details'} }) {
 			my $diffurl = $config{'diffurl'};
 			my $file    = $detail->{'file'};
 
@@ -407,7 +407,7 @@ sub rcs_recentchanges ($) { #{{{
 			pages      => [@pages],
 		};
 
-		last INFO if @rets >= $num;
+		last if @rets >= $num;
 	}
 
 	return @rets;
