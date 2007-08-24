@@ -1,3 +1,17 @@
 IkiWiki doesn't actually need a C compiler etc. except for CGI (and other wrappers?). As it's perfectly possible to use IkiWiki without the CGI mode, would it be possible to make the Debian package Recommend gcc/libc6-dev/etc., rather than Depending on them?
 
+> My approach with the dependencies of the package is to depend on
+> everything that is needed to use ikiwiki for a fairly full-featured wiki (but
+> not things that are only needed to turn on special features like specific
+> plugins). That's why ikiwiki also depends on the FormBuilder, for
+> example.
+>
+> I feel that making it easier to get going with ikiwiki is preferable to
+> making everyone cherry-pick exactly the packages they need. I realize
+> that this is not optimal for everyone.
+>
+> I might move these things to recommends once recommends are automatically
+> installed by apt. That will be sorting itself out over the next month or
+> so. --[[Joey]]
+
 [[wishlist]]
