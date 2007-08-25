@@ -22,4 +22,17 @@ The patch below adds a label for the field to improve usability:
 >> <http://universalusability.com/access_by_design/forms/auto.html> for
 >> an explanation why. --[[HenrikBrixAndersen]]
 
+>>> If you really want to do this, this is one way:
+
+    --- searchform.tmpl.orig        Sat Aug 25 11:54:28 2007
+    +++ searchform.tmpl     Sat Aug 25 11:56:19 2007
+    @@ -1,6 +1,6 @@
+     <form method="get" action="<TMPL_VAR SEARCHACTION>" id="searchform">
+     <div>
+    -<input type="text" name="phrase" value="" size="16" />
+    +<input type="text" name="phrase" value="Search" size="16" onfocus="this.value=''" />
+     <input type="hidden" name="enc" value="UTF-8" />
+     <input type="hidden" name="do" value="hyperestraier" />
+     </div>
+
 [[wishlist]]
