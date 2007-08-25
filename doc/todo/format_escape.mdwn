@@ -32,6 +32,22 @@ escape parameter optional, and only call it if set. --[[Joey]]
 >>> to work -- see <http://ikidev.betacantrips.com/blah.html> for an example.
 >>> --Ethan
 
+## Alternative solution
+
+[Here](http://www.jk.fr.eu.org/ikiwiki/format-escapes-2.diff) is a patch
+largely inspired from the one below, which is up to date and written with
+[[todo/multiple_output_formats]] in mind. "htmlize" hooks are generalized
+to "convert" ones, which can be registered for any pair of filename
+extensions.
+
+Preprocessor directives are allowed to return the content to be inserted
+as a hash, in any format they want, provided they provide htmlize hooks for it.
+Pseudo filename extensions (such as `"_link"`) can also be introduced,
+which aren't used as real extensions but provide useful intermediate types.
+
+--[[JeremieKoenig]]
+
+## Original patch
 [[tag patch]]
 
 <pre>
