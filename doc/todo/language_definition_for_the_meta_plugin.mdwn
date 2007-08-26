@@ -34,6 +34,17 @@ This may be useful for sites with a few pages in different languages, but no ful
 
 >>>>>> My mistake, I meant $config{locale} --[[NicolasLimare]]
 
+> So the patch below could be changed to parse `$config{locale}` for the
+> language, and pass it if no specific lang was set for the page. The only
+> problem with that would be that this is all done inside the meta plugin,
+> so if that plugin were disabled, the lang would be empty. To avoid that,
+> I guess that the template needs to look like:
+
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          <TMPL_IF NAME="LANG">lang="<TMPL_VAR LANG>" xml:lang="<TMPL_VAR LANG>"</TMPL_IF>>
+
+> Now it just needs to be finished up.. --[[Joey]]
+
 <pre>
 --- meta.orig.pm  2007-07-27 00:19:51.000000000 +0200
 +++ meta.pm       2007-08-05 22:37:40.000000000 +0200
