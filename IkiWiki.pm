@@ -774,7 +774,8 @@ sub lockwiki (;$) { #{{{
 } #}}}
 
 sub unlockwiki () { #{{{
-	return close($wikilock);
+	return close($wikilock) if $wikilock;
+	return;
 } #}}}
 
 my $commitlock;
@@ -800,7 +801,8 @@ sub disable_commit_hook () { #{{{
 } #}}}
 
 sub enable_commit_hook () { #{{{
-	return close($commitlock);
+	return close($commitlock) if $commitlock;
+	return;
 } #}}}
 
 sub loadindex () { #{{{
