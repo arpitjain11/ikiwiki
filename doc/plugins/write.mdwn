@@ -251,6 +251,17 @@ by this hook, the hook should return an error message for the user to see.
 If the hook has no opinion about whether the edit can proceed, return
 `undef`, and the next plugin will be asked to decide.
 
+### editcontent
+
+	hook(type => "editcontent", id => "foo", call => \&editcontent);
+
+This hook is called when a page is saved (or previewed) using the web
+interface. It is passed named parameters: `content`, `page`, `cgi`, and
+`session`. These are, respectively, the new page content as entered by the
+user, the page name, a `CGI` object, and the user's `CGI::Session`. 
+
+It can modify the content as desired, and should return the content.
+
 ### formbuilder
 
 	hook(type => "formbuilder_setup", id => "foo", call => \&formbuilder_setup);

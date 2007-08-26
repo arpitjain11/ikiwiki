@@ -401,19 +401,27 @@ sub cgi_editpage ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq "Preview") {
+		my $content=$form->field('editcontent');
+		run_hooks(editcontent => sub {
+			$content=shift->(
+				content => $content,
+				page => $page,
+				cgi => $q,
+				session => $session,
+			);
+		});
 		$form->tmpl_param("page_preview",
 			htmlize($page, $type,
 			linkify($page, "",
 			preprocess($page, $page,
-			filter($page, $page, $form->field('editcontent')), 0, 1))));
+			filter($page, $page, $content), 0, 1))));
 	}
 	elsif ($form->submitted eq "Save Page") {
 		$form->tmpl_param("page_preview", "");
 	}
 	$form->tmpl_param("page_conflict", "");
 	
-	if ($form->submitted ne "Save Page" || 
-	    ! $form->validate) {
+	if ($form->submitted ne "Save Page" || ! $form->validate) {
 		if ($form->field("do") eq "create") {
 			my @page_locs;
 			my $best_loc;
@@ -531,7 +539,14 @@ sub cgi_editpage ($$) { #{{{
 		}
 		
 		my $content=$form->field('editcontent');
-
+		run_hooks(editcontent => sub {
+			$content=shift->(
+				content => $content,
+				page => $page,
+				cgi => $q,
+				session => $session,
+			);
+		});
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
 

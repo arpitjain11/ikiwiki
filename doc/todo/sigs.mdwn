@@ -1,8 +1,8 @@
 Need a way to sign name in page that's easier to type than "--\[[Joey]]"
 and that includes the date.
 
-What syntax do other wikis use for this? I'm considering "\[[--]]" (with
-spaces removed) as it has a nice nmemonic.
+What syntax do other wikis use for this? I'm considering "\[[--]]"
+as it has a nice nmemonic.
 
 OTOH, adding additional syntax for this would be counter to one of the
 design goals for ikiwiki: keeping as much markup as possible out of the
@@ -15,7 +15,11 @@ out svn commits.
 
 ---
 
-Alternate idea: Make a sig plugin, which would expand --Name to
---[[user/Name]] (the "user/" bit would be configurable). This would be very
-easy to do, although it would need to try to avoid false positives, such 
-as `--foo` in C code..
+Or, just make a sig plugin that expands `~~~~` and `~~~` as wikipedia does.
+The plugin could be an editcontent hook, so it would take effect only when a
+page was edited via the web.
+
+I tried implementing this, but to make the link to the user, I wanted to
+use `userlink()`, which generates html. But the right thing to generate is
+really a wikilink. Except for openid, when the best thing to generate is a
+markdown link. Except when the page isn't formatted in markdown..
