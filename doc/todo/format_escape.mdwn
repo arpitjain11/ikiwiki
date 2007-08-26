@@ -47,6 +47,16 @@ which aren't used as real extensions but provide useful intermediate types.
 
 --[[JeremieKoenig]]
 
+> Wow, this is in many ways a beautiful patch. I did notice one problem,
+> if a link is converted to rst and then from there to a hyperlink, the
+> styling info usially added to such a link is lost. I wonder if it would
+> be better to lose _link stuff and just create link html that is fed into
+> the rst,html converter. Other advantage to doing that is that link
+> creation has a rather complex interface, with selflink, attrs, url, and
+> content parameters.
+> 
+> --[[Joey]]
+
 ## Original patch
 [[tag patch]]
 
