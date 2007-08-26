@@ -57,6 +57,47 @@ which aren't used as real extensions but provide useful intermediate types.
 > 
 > --[[Joey]]
 
+>> Thanks for the compliment. I must confess that I'm not too familiar with
+>> rst. I am using this todo item somewhat as a pretext to get the conversion
+>> stuff in, which I need to implement some other stuff. As a result I was
+>> less careful with the rst plugin than with the rest of the patch.
+
+>> This being said, as I understand it rst cannot embed raw html in
+>> the middle of a paragraph. I just found with more tests that even
+>> links are a bit tricky, and won't work if they're not surrounded by
+>> whitespace; the problem is that if we add this space, links
+>> and preprocessor directives at the beginning of a line will be indented,
+>> and this means something to rst. Also, rst complains about "?"
+>> being used multiple times when the page contains more than one broken link,
+>> apparently it uses it as a name for the reference as well as the link text.
+
+>> The idea behind _link and other "intermediate
+>> forms" was also that, when we can use rst's ability to target other output
+>> formats, raw html won't be included in this process, and that
+>> complications will happen with all markup languages if html continues
+>> to be used as the language for preprocessor directive output.
+>> Of course this could have been postponed until we actually need it,
+>> but since we do... :-)
+
+>> I think I will document the limitations, and tune the bugs of the
+>> rst plugin code to do the most sensible thing after some more reading
+>> of the rst docs. Expect an updated patch in the next few days, and feel
+>> free to ask for other adjustments in the meantime.
+
+>> Beyond being buggy in the least horrible way, I'm afraid I won't have
+>> much time for ikiwiki in the next two or three weeks (exams),
+>> but I think that ultimately these limitations could be worked around.
+>> I'm not sure it is desirable for ikiwiki to know too much about the
+>> syntax of its markup languages. Maybe the tricky "format" stuff
+>> the toc plugin does could be used; maybe we need to think about more
+>> generic ways to put "marks" in the various types of pages, which could
+>> be expanded afer htmlization, and maybe the convert stuff could be used
+>> to do this in an elegant way;
+>> but then this is not very [[multiple_output_formats]] friendly either.
+>> What do you think?
+
+>> --[[JeremieKoenig]]
+
 ## Original patch
 [[tag patch]]
 
