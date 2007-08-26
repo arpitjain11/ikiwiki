@@ -64,6 +64,7 @@ sub sessioncgi () { #{{{
 		# now go create the page
 		$q->param('do', 'create');
 		IkiWiki::cgi_editpage($q, $session);
+		exit;
 	}
 }
 
