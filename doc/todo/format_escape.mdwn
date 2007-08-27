@@ -87,14 +87,14 @@ which aren't used as real extensions but provide useful intermediate types.
 >> Beyond being buggy in the least horrible way, I'm afraid I won't have
 >> much time for ikiwiki in the next two or three weeks (exams),
 >> but I think that ultimately these limitations could be worked around.
->> I'm not sure it is desirable for ikiwiki to know too much about the
->> syntax of its markup languages. Maybe the tricky "format" stuff
->> the toc plugin does could be used; maybe we need to think about more
->> generic ways to put "marks" in the various types of pages, which could
->> be expanded afer htmlization, and maybe the convert stuff could be used
->> to do this in an elegant way;
->> but then this is not very [[multiple_output_formats]] friendly either.
->> What do you think?
+
+>> Update:
+
+>> Thanks to the rst specification, I found that most of the glitches with
+>> links can be solved. The remaining restrictions would be that wikilinks
+>> expand with a trailing space (ie. pre\[[process]] works but \[[html]]ize
+>> doesn't), and preprocessor directives which output HTML can only be used
+>> as a standalone paragraph. I will update the patch tomorrow.
 
 >> --[[JeremieKoenig]]
 
