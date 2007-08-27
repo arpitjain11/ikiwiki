@@ -66,6 +66,9 @@ This is using my custom rcs.pm which has been used thousands of times.
 > version 2.3. The only other way it could happen is if ikiwiki does not
 > have saved state about the page that it's editing (in .ikiwiki/index).
 
+>> Rebuilt it several times. Now that I think of it, I think my early problem of having
+>> no content in the textbox was before I rebuilt the cgi. And after I rebuilt the whole webpage was empty.
+
 Now I regenerated my ikiwiki.cgi again (no change to my configuration,
 and I just get an empty HTML page when attempting editing or "create".
 
@@ -88,6 +91,10 @@ Is there any webpage with upgrade steps?
 > Users are expected to read [[news]], which points out any incompatible
 > changes or cases where manual action is needed.
 
+>> I read it but read the userdirs option wrong :(.
+>> Also it appears to be missing the news from between 1.40 to 2.0 unless they dont' exist.
+>> If they do exist maybe they have release notes I need?
+
 --JeremyReed
 
 My followup: I used a new ikiwiki.setup based on the latest version. But no changes for me.
@@ -108,6 +115,8 @@ on changes to revision control modules. Has something changed? I will also look.
 
 > No, the rcs interface has not needed to change in a long time. Also,
 > nothing is done with the rcs for do=prefs.
+
+>> Thanks. I also checked differences between 1.40 Rcs plugins and didn't notice anything significant.
 
 --JeremyReed
 
