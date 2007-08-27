@@ -25,9 +25,11 @@ of via syslog?
 > > The reason is that I'm not logged in on the web server regularly to
 > > check the log files. I'll see whether I can install a logwatch instance.
 
+----
+
 # Upgrade steps
 
-I upgrades from 1.37 to 2.6.1. I ran "ikiwiki --setup" using my existing ikiwiki.setup configuration.
+I upgrades from 1.40  to 2.6.1. I ran "ikiwiki --setup" using my existing ikiwiki.setup configuration.
 I had many errors like:
 
     /home/bsdwiki/www/wiki/wikilink/index.html independently created, not overwriting with version from wikilink
@@ -44,11 +46,16 @@ Finally it finished.
 > As of version 2.0, ikiwiki enables usedirs by default. See
 > [[tips/switching_to_usedirs]] for details. --[[Joey]]
 
+>> I read the config wrong. I was thinking that it showed the defaults even though commented out
+>> (like ssh configs do). I fixed that part. --JeremyReed
+
 My next problem was that ikiwiki start letting me edit without any password authentication. It used to prompt
 me for a password but now just goes right into the "editing" mode.
 The release notes for 2.0 say password auth is still on by default.
 
 > It sounds like you have the anonok plugin enabled?
+
+>> Where is the default documented? My config doesn't have it uncommented.
 
 The third problem is that when editing my textbox is empty -- no content.
 
@@ -70,6 +77,9 @@ usedirs (I see that is in the release notes for 2.0) and rerunning ikiwiki --set
 but I still have empty pages for editing (no textbox no html at all).
 
 > Is IkiWiki crashing? If so, it would probably leave error text in the apache logs. --[[TaylorKillian]]
+
+>> Not using apache. Nothing useful in logs other thn the HTTP return codes are "0" and bytes is "-"
+>> on the empty ikiwiki.cgi output (should say " 200 " followed by bytes).
 
 (I am posting this now, but will do some research and post some more.)
 
@@ -103,10 +113,10 @@ on changes to revision control modules. Has something changed? I will also look.
 
 Another Followup: I created a new ikiwiki configuration and did the --setup to 
 create an entirely different website. I have same problem there. No prompt for password
-and empty webpage when using the cgi. Here is the site: http://bsdwiki.reedmedia.net/testing-wiki/
+and empty webpage when using the cgi.
 I never upgraded any perl modules so maybe a new perl module is required but I don't see any errors so I don't know.
 
-The onmly errors I see when building and installing ikiwiki are:
+The only errors I see when building and installing ikiwiki are:
 
     Can't exec "otl2html": No such file or directory at IkiWiki/Plugin/otl.pm line 66.
 
@@ -119,7 +129,10 @@ I may need to revert back to my old ikiwiki install which has been used to thous
 
 --JeremyReed
 
+I downgraded to version 1.40 (that was what I had before I wrote wrong above).
+Now ikiwiki is working for me again (but using 1.40). I shouldn't have tested on production system :)
 
+--JeremyReed
 
 ----
 # Excellent - how do I translate a TWiki site?
