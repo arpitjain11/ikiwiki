@@ -61,40 +61,24 @@ which aren't used as real extensions but provide useful intermediate types.
 >> rst. I am using this todo item somewhat as a pretext to get the conversion
 >> stuff in, which I need to implement some other stuff. As a result I was
 >> less careful with the rst plugin than with the rest of the patch.
+>> I just updated the patch to fix some other problems which I found with
+>> more testing, and document the current limitations.
 
->> This being said, as I understand it rst cannot embed raw html in
->> the middle of a paragraph. I just found with more tests that even
->> links are a bit tricky, and won't work if they're not surrounded by
->> whitespace; the problem is that if we add this space, links
->> and preprocessor directives at the beginning of a line will be indented,
->> and this means something to rst. Also, rst complains about "?"
->> being used multiple times when the page contains more than one broken link,
->> apparently it uses it as a name for the reference as well as the link text.
+>> Rst cannot embed raw html in the middle of a paragraph, which is why
+>> "_link" was necessary. Rst links are themselves tricky and can't be made to
+>> work inside of words without knowledge about the context.
+>> Both problems could be fixed by inserting marks instead of the html/link,
+>> which would be replaced at a later stage (htmlize, format), somewhat
+>> similiar to the way the toc plugin works. When I get more time I will
+>> try to fix the remaining glitches this way.
 
->> The idea behind _link and other "intermediate
->> forms" was also that, when we can use rst's ability to target other output
->> formats, raw html won't be included in this process, and that
->> complications will happen with all markup languages if html continues
->> to be used as the language for preprocessor directive output.
->> Of course this could have been postponed until we actually need it,
->> but since we do... :-)
-
->> I think I will document the limitations, and tune the bugs of the
->> rst plugin code to do the most sensible thing after some more reading
->> of the rst docs. Expect an updated patch in the next few days, and feel
->> free to ask for other adjustments in the meantime.
-
->> Beyond being buggy in the least horrible way, I'm afraid I won't have
->> much time for ikiwiki in the next two or three weeks (exams),
->> but I think that ultimately these limitations could be worked around.
-
->> Update:
-
->> Thanks to the rst specification, I found that most of the glitches with
->> links can be solved. The remaining restrictions would be that wikilinks
->> expand with a trailing space (ie. pre\[[process]] works but \[[html]]ize
->> doesn't), and preprocessor directives which output HTML can only be used
->> as a standalone paragraph. I will update the patch tomorrow.
+>> Also, I think it would be useful if ikiwiki had an option to export
+>> the preprocessed source. This way you can use docutils to convert your
+>> rst documents to other formats. Raw html would be loosed in such a
+>> process (both with directives and marks), which is another
+>> argument for "_link" and other intermediate forms. I think I can
+>> come up with a way for rst's convert_link to be used only for export
+>> purposes, though.
 
 >> --[[JeremieKoenig]]
 
