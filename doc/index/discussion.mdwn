@@ -101,6 +101,26 @@ on changes to revision control modules. Has something changed? I will also look.
 
 --JeremyReed
 
+Another Followup: I created a new ikiwiki configuration and did the --setup to 
+create an entirely different website. I have same problem there. No prompt for password
+and empty webpage when using the cgi. Here is the site: http://bsdwiki.reedmedia.net/testing-wiki/
+I never upgraded any perl modules so maybe a new perl module is required but I don't see any errors so I don't know.
+
+The onmly errors I see when building and installing ikiwiki are:
+
+    Can't exec "otl2html": No such file or directory at IkiWiki/Plugin/otl.pm line 66.
+
+    gettext 0.14 too old, not updating the pot file
+
+I don't use GNU gettext on here.
+
+I may need to revert back to my old ikiwiki install which has been used to thousands of times (with around
+1000 rcs commits via ikiwiki).
+
+--JeremyReed
+
+
+
 ----
 # Excellent - how do I translate a TWiki site?
 
