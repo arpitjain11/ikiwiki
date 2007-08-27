@@ -41,16 +41,29 @@ and:
 Probably about six errors like this. I worked around this by removing the files and directories it complained about.
 Finally it finished.
 
+> As of version 2.0, ikiwiki enables usedirs by default. See
+> [[tips/switching_to_usedirs]] for details. --[[Joey]]
+
 My next problem was that ikiwiki start letting me edit without any password authentication. It used to prompt
 me for a password but now just goes right into the "editing" mode.
 The release notes for 2.0 say password auth is still on by default.
+
+> It sounds like you have the anonok plugin enabled?
 
 The third problem is that when editing my textbox is empty -- no content.
 
 This is using my custom rcs.pm which has been used thousands of times.
 
+> Have you rebuilt the cgi wrapper since you upgraded ikiwiki? AFAIK I
+> fixed a bug that could result in the edit box always being empty back in
+> version 2.3. The only other way it could happen is if ikiwiki does not
+> have saved state about the page that it's editing (in .ikiwiki/index).
+
 Now I regenerated my ikiwiki.cgi again (no change to my configuration,
 and I just get an empty HTML page when attempting editing or "create".
+
+> If the page is completly empty then ikiwiki is crashing before it can
+> output anything, though this seems unlikely. Check the webserver logs.
 
 Now I see it created directories for my data. I fixed that by setting 
 usedirs (I see that is in the release notes for 2.0) and rerunning ikiwiki --setup
@@ -62,6 +75,9 @@ but I still have empty pages for editing (no textbox no html at all).
 
 Is there any webpage with upgrade steps?
 
+> Users are expected to read [[news]], which points out any incompatible
+> changes or cases where manual action is needed.
+
 --JeremyReed
 
 My followup: I used a new ikiwiki.setup based on the latest version. But no changes for me.
@@ -71,11 +87,17 @@ rcs_recentchanges in my rcs perl module.
 
 The do=prefs does nothing though -- just a blank webpage.
 
+> You need to figure out why ikiwiki is crashing. The webserver logs should
+> tell you.
+
 I also set verbose => 1 and running ikiwiki --setup was verbose, but no changes in running CGI.
 I was hoping for some output.
 
 I am guessing that my rcs perl module stopped working on the upgrade. I didn't notice any release notes
 on changes to revision control modules. Has something changed? I will also look.
+
+> No, the rcs interface has not needed to change in a long time. Also,
+> nothing is done with the rcs for do=prefs.
 
 --JeremyReed
 
