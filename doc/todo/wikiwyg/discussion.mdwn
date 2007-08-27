@@ -69,9 +69,11 @@ changes.diff:
   * I don't quite get what you want to do with the underlay directory, it sounds like 
     you have something pretty specific in mind. I can talk to you about that more
     on IRC later(assuming my internet is working right).
+    * Basically the idea is to change `$config{underlaydir}` to an array..
 * When is the WIKIWYG variable in misc.tmpl used?
   * The WIKIWYG variable in misc.tmpl is used for the edit page. I believe that is what
     you wanted me to do (Check [Revision 3840][]).
+    * Ah, right.
 * Could you move the code that handles saving a page of the page into the
   plugin? I just added an editcontent hook, which should allow you to do
   that.
@@ -84,6 +86,7 @@ changes.diff:
   * Just looked through the inline plugin. So if I want to use pagetitle in my code,
     I have to use the IkiWiki package instead of IkiWiki::Plugin::Wikiwyg? Or would a 
     better approach be to just copy that function into the Wikiwyg plugin?
+    * You can just call `IkiWiki::pagetitle()`.
 
 wikiwyg.tar.gz
 
@@ -92,6 +95,7 @@ wikiwyg.tar.gz
   so I'm seeing changes in diffing that I'm unsure if you made.. 
   * <http://ikiwiki.xbaud.com/JavaScript_Diffs.tar.gz>, also emailed them to you
     in case my internet goes down.
+    * Could you redo that with diff -u plz?
 * If the files aren't modified, would it be better for users to get them
   from the wikiwgy upstream, instead of including them in the plugin? (If so,
   they'd go in their own Debian package..)
@@ -99,6 +103,11 @@ wikiwyg.tar.gz
     been no updates to Wikiwyg since 5/30/07 so I'm pretty sure it's unmaintained
     now. Showdown is the same case, they haven't changed anything since SoC began.
     I could separate them diff's though if you feel it is worth it.
+    * Well, from a packaging perspective, the question is whether some
+      other package might want to use the wikiwyg/showdown javascript
+      files. And whether your mods might break that. If the answers to
+      these questions are yes and no, then it would make sense to package
+      them as standalone packages rather than embedding them in ikiwiki.
 
 misc:
 
@@ -108,6 +117,10 @@ misc:
     concerns (Two reasons I really like IkiWiki). I was planning on just manually
     implementing some of the easier ones (such as img), however I'm still trying to
     think of a way for the more complex ones.
+    * It just seems like it would never be able to support everything, 
+      and would mean reimplementing stuff in javscript and would constantly
+      need to be kept up to date. Ikiwiki's preview is actually pretty
+      fast, the only real overhead being the cgi call.
 * How do I configure it to only support whole-page editing with wikiwyg and
   not insert the javascript into html pages?
   * There currently is no option to do that, however it is a 2 line change that I'll work
