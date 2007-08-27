@@ -64,6 +64,20 @@ Is there any webpage with upgrade steps?
 
 --JeremyReed
 
+My followup: I used a new ikiwiki.setup based on the latest version. But no changes for me.
+
+Also I forgot to mention that do=recentchanges works good for me. It uses my 
+rcs_recentchanges in my rcs perl module.
+
+The do=prefs does nothing though -- just a blank webpage.
+
+I also set verbose => 1 and running ikiwiki --setup was verbose, but no changes in running CGI.
+I was hoping for some output.
+
+I am guessing that my rcs perl module stopped working on the upgrade. I didn't notice any release notes
+on changes to revision control modules. Has something changed? I will also look.
+
+--JeremyReed
 
 ----
 # Excellent - how do I translate a TWiki site?
