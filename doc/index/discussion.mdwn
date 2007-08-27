@@ -25,6 +25,44 @@ of via syslog?
 > > The reason is that I'm not logged in on the web server regularly to
 > > check the log files. I'll see whether I can install a logwatch instance.
 
+# Upgrade steps
+
+I upgrades from 1.37 to 2.6.1. I ran "ikiwiki --setup" using my existing ikiwiki.setup configuration.
+I had many errors like:
+
+    /home/bsdwiki/www/wiki/wikilink/index.html independently created, not overwriting with version from wikilink
+    BEGIN failed--compilation aborted at (eval 5) line 129.
+
+and:
+
+    failed renaming /home/bsdwiki/www/wiki/smileys.ikiwiki-new to /home/bsdwiki/www/wiki/smileys: Is a directory
+    BEGIN failed--compilation aborted at (eval 5) line 129.
+
+Probably about six errors like this. I worked around this by removing the files and directories it complained about.
+Finally it finished.
+
+My next problem was that ikiwiki start letting me edit without any password authentication. It used to prompt
+me for a password but now just goes right into the "editing" mode.
+The release notes for 2.0 say password auth is still on by default.
+
+The third problem is that when editing my textbox is empty -- no content.
+
+This is using my custom rcs.pm which has been used thousands of times.
+
+Now I regenerated my ikiwiki.cgi again (no change to my configuration,
+and I just get an empty HTML page when attempting editing or "create".
+
+Now I see it created directories for my data. I fixed that by setting 
+usedirs (I see that is in the release notes for 2.0) and rerunning ikiwiki --setup
+but I still have empty pages for editing (no textbox no html at all).
+
+(I am posting this now, but will do some research and post some more.)
+
+Is there any webpage with upgrade steps?
+
+--JeremyReed
+
+
 ----
 # Excellent - how do I translate a TWiki site?
 
