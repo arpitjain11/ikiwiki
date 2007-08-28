@@ -1,13 +1,24 @@
 I try to create wikilink in table. But it does not work. Here is example:
 
-    [[table class=table1 data="""
-    [[wikilink_test|servers/webmail1]]
-    [[wikilink_test\|servers/webmail1]]
-    [wikilink test](/servers/webmail1)
-    """]]
+     ||table class=table1 data="""
+     ||wikilink_test|servers/webmail1]]
+     ||wikilink_test\|servers/webmail1]]
+     [wikilink test](/servers/webmail1)
+     """]]
 
-First two do not work.
+First two wikilink entries do not work.
 
-The last one is url link and it works but it is not a wikilink. Or maybe it does not matter if I use URL links in stead of wikilinks ?
+The last one is url link and it works but it is not a wikilink. Or maybe it does not matter if I use URL links in stead of wikilinks for local wiki content?
 
 What exactly is a difference between wikilink and URL reference to the same page ?
+
+Trying to report this I found something weird. I changed in the example [[ with || because wiki renders something wrongly. You can see what I tried originally here:
+
+     [[table class=table1 data="""
+     [[wikilink_test|servers/webmail1]]
+     [[wikilink_test\|servers/webmail1]]
+     [wikilink test](/servers/webmail1)
+     """]]
+
+Please click edit to see unrendered text. First, it is not monospace-d (I have 4 spaces) and second, some wierd html is shown...
+Am I doing something wrong ?
