@@ -84,6 +84,11 @@ but I still have empty pages for editing (no textbox no html at all).
 >> Not using apache. Nothing useful in logs other thn the HTTP return codes are "0" and bytes is "-"
 >> on the empty ikiwiki.cgi output (should say " 200 " followed by bytes).
 
+>>> You need to either figure out what your web server does with stderr
+>>> from cgi programs, or run ikiwiki.cgi at the command line with an
+>>> appropriate environment so it thinks it's being called from a web
+>>> server, so you can see how it's failing. --[[Joey]]
+
 (I am posting this now, but will do some research and post some more.)
 
 Is there any webpage with upgrade steps?
@@ -94,6 +99,8 @@ Is there any webpage with upgrade steps?
 >> I read it but read the usedirs option wrong :(.
 >> Also it appears to be missing the news from between 1.40 to 2.0 unless they dont' exist.
 >> If they do exist maybe they have release notes I need?
+
+>>> All the old ones are in the NEWS file. --[[Joey]]
 
 --JeremyReed
 
