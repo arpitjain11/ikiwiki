@@ -1,24 +1,32 @@
 I try to create wikilink in table. But it does not work. Here is example:
 
-     ||table class=table1 data="""
-     ||wikilink_test|servers/webmail1]]
-     ||wikilink_test\|servers/webmail1]]
-     [wikilink test](/servers/webmail1)
-     """]]
+[[table class=table1 data="""
+[[wikilink_test|index]]
+[[wikilink_test\|index]]
+[wikilink test](/servers/webmail1)
+"""]]
 
 First two wikilink entries do not work.
 
 The last one is url link and it works but it is not a wikilink. Or maybe it does not matter if I use URL links in stead of wikilinks for local wiki content?
 
+> [[fixed|done]] --[[Joey]]
+
 What exactly is a difference between wikilink and URL reference to the same page ?
+
+> ikiwiki will not be able to track pages linked using urls as having a
+> link.
 
 Trying to report this I found something weird. I changed in the example [[ with || because wiki renders something wrongly. You can see what I tried originally here:
 
-     [[table class=table1 data="""
-     [[wikilink_test|servers/webmail1]]
-     [[wikilink_test\|servers/webmail1]]
-     [wikilink test](/servers/webmail1)
-     """]]
+	\[[table class=table1 data="""
+	[[wikilink_test|servers/webmail1]]
+	[[wikilink_test|servers/webmail1]]
+	[wikilink test](/servers/webmail1)
+	"""]]
 
 Please click edit to see unrendered text. First, it is not monospace-d (I have 4 spaces) and second, some wierd html is shown...
 Am I doing something wrong ?
+
+> See above for the right way to do it. Note that I also fixed a minor bug
+> in ikiwiki that makes it not display the opening `[[` above. --[[Joey]]

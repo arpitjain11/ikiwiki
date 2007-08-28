@@ -10,8 +10,13 @@ ikiwiki (2.7) UNRELEASED; urgency=low
     wrapper.
   * Fix some taint issues with generating wrappers using the command line.
   * Don't allow newlines in link text in a wikilink.
+  * Tables containing links with a link text were misparsed, because the "|"
+    in the wikilink looked like a table field separator. Avoid this ambiguity
+    by linkifying the data before parsing it as a table.
+  * Turn on allow_loose_quotes in the table plugin's Text::CSV object,
+    so that links from wikilinks don't confuse the parser.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 28 Aug 2007 18:54:06 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 28 Aug 2007 19:03:34 -0400
 
 ikiwiki (2.6.1) unstable; urgency=low
 

@@ -22,6 +22,10 @@ sub preprocess (@) { #{{{
 		}
 		$params{data} = readfile(srcfile($params{file}));
 	}
+	else {
+		$params{data} = IkiWiki::linkify($params{page},
+			$params{destpage}, $params{data});
+	}
 
 	if (lc $params{format} eq 'auto') {
 		# first try the more simple format
@@ -92,6 +96,7 @@ sub split_csv ($$) { #{{{
 	my $csv = Text::CSV->new({ 
 		sep_char	=> defined $delimiter ? $delimiter : ",",
 		binary		=> 1,
+		allow_loose_quotes => 1,
 	}) || error("could not create a Text::CSV object");
 	
 	my $l=0;
