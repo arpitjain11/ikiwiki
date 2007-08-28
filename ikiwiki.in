@@ -30,7 +30,6 @@ sub getconfig () { #{{{
 			"wrappers!" => \$config{wrappers},
 			"usedirs!" => \$config{usedirs},
 			"getctime" => \$config{getctime},
-			"wrappermode=i" => \$config{wrappermode},
 			"numbacklinks=i" => \$config{numbacklinks},
 			"rcs=s" => \$config{rcs},
 			"no-rcs" => sub { $config{rcs}="" },
@@ -64,7 +63,10 @@ sub getconfig () { #{{{
 				$config{underlaydir}=possibly_foolish_untaint($_[1])
 			},
 			"wrapper:s" => sub {
-				$config{wrapper}=$_[1] ? $_[1] : "ikiwiki-wrap"
+				$config{wrapper}=$_[1] ? possibly_foolish_untaint($_[1]) : "ikiwiki-wrap"
+			},
+			"wrappermode=i" => sub {
+				$config{wrappermode}=possibly_foolish_untaint($_[1])
 			},
 			"plugin=s@" => sub {
 				push @{$config{plugin}}, $_[1];
@@ -111,12 +113,7 @@ sub getconfig () { #{{{
 sub main () { #{{{
 	getconfig();
 	
-	if ($config{cgi}) {
-		loadindex();
-		require IkiWiki::CGI;
-		cgi();
-	}
-	elsif ($config{setup}) {
+	if ($config{setup}) {
 		require IkiWiki::Setup;
 		setup();
 	}
@@ -124,6 +121,11 @@ sub main () { #{{{
 		lockwiki();
 		require IkiWiki::Wrapper;
 		gen_wrapper();
+	}
+	elsif ($config{cgi}) {
+		loadindex();
+		require IkiWiki::CGI;
+		cgi();
 	}
 	elsif ($config{render}) {
 		require IkiWiki::Render;
