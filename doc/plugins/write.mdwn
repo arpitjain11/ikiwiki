@@ -461,8 +461,16 @@ that corresponds to that file.
 #### `srcfile($)`
 
 Given the name of a source file in the wiki, searches for the file in
-the source directory and the underlay directory, and returns the full
-path to the first file found.
+the source directory and the underlay directories (most recently added
+underlays first), and returns the full path to the first file found.
+
+#### `add_underlay($)`
+
+Adds a directory to the set of underlay directories that ikiwiki will
+search for files.
+
+If the directory name is not absolute, ikiwiki will assume it is in
+the parent directory of the configured underlaydir.
 
 #### `displaytime($)`
 

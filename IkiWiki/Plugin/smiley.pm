@@ -9,6 +9,7 @@ my %smileys;
 my $smiley_regexp;
 
 sub import { #{{{
+	add_underlay("smiley");
 	hook(type => "filter", id => "smiley", call => \&filter);
 } # }}}
 

@@ -32,7 +32,7 @@ ikiwiki.out: ikiwiki.in
 
 extra_build: ikiwiki.out
 	LANG= perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
-		--underlaydir=basewiki --nousedirs\
+		--underlaydir=underlays/basewiki --nousedirs\
 		--wikiname="ikiwiki" --verbose \
 		--exclude=/discussion --no-discussion --userdir=users \
 		--plugin=goodstuff \
@@ -49,7 +49,13 @@ extra_clean:
 
 extra_install:
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki
-	for dir in `find basewiki templates -follow -type d ! -regex '.*\.svn.*'`; do \
+	for dir in `cd underlays && find . -follow -type d ! -regex '.*\.svn.*'`; do \
+		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
+		for file in `find underlays/$$dir -follow -maxdepth 1 -type f`; do \
+			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
+		done; \
+	done
+	for dir in `find templates -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		for file in `find $$dir -follow -maxdepth 1 -type f`; do \
 			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \

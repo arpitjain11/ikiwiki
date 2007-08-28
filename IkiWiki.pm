@@ -17,6 +17,7 @@ use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
+		 add_underlay
                  %config %links %renderedfiles %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
@@ -83,6 +84,7 @@ sub defaultconfig () { #{{{
 	pingurl => [],
 	templatedir => "$installdir/share/ikiwiki/templates",
 	underlaydir => "$installdir/share/ikiwiki/basewiki",
+	underlaydirs => [],
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
@@ -285,9 +287,24 @@ sub srcfile ($) { #{{{
 	my $file=shift;
 
 	return "$config{srcdir}/$file" if -e "$config{srcdir}/$file";
-	return "$config{underlaydir}/$file" if -e "$config{underlaydir}/$file";
-	error("internal error: $file cannot be found in $config{srcdir} or $config{underlaydir}");
+	foreach my $dir (@{$config{underlaydirs}}, $config{underlaydir}) {
+		return "$dir/$file" if -e "$dir/$file";
+	}
+	error("internal error: $file cannot be found in $config{srcdir} or underlay");
 	return;
+} #}}}
+
+sub add_underlay ($) { #{{{
+	my $dir=shift;
+
+	if ($dir=~/^\//) {
+		unshift @{$config{underlaydirs}}, $dir;
+	}
+	else {
+		unshift @{$config{underlaydirs}}, "$config{underlaydir}/../$dir";
+	}
+
+	return 1;
 } #}}}
 
 sub readfile ($;$$) { #{{{

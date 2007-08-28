@@ -1,8 +1,13 @@
-ikiwiki (2.6.2) UNRELEASED; urgency=low
+ikiwiki (2.7) UNRELEASED; urgency=low
 
   * Add an editcontent hook.
+  * Support for looking in multiple directories for underlay files.
+  * Plugins can add new directories to the search path with the add_underlay
+    function.
+  * Split out smiley underlay files into a separate underlay, so if the plugin
+    isn't used, the wiki isn't bloated with all those files.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 26 Aug 2007 16:50:24 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 27 Aug 2007 20:48:51 -0400
 
 ikiwiki (2.6.1) unstable; urgency=low
 

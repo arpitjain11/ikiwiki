@@ -70,6 +70,9 @@ changes.diff:
     you have something pretty specific in mind. I can talk to you about that more
     on IRC later(assuming my internet is working right).
     * Basically the idea is to change `$config{underlaydir}` to an array..
+      Ok, take a look at the new `add_underlay()` function. You can now just
+      `add_underlay("wikiwyg")` and it'll look in
+      /usr/share/ikiwiki/wikiwyg/ for the files.
 * When is the WIKIWYG variable in misc.tmpl used?
   * The WIKIWYG variable in misc.tmpl is used for the edit page. I believe that is what
     you wanted me to do (Check [Revision 3840][]).

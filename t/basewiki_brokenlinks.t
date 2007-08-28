@@ -1,9 +1,12 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 3;
+use Test::More 'no_plan';
 
-ok(! system("make ikiwiki.out"));
-ok(! system("LANG=C perl -T -I. ./ikiwiki.out -plugin brokenlinks -rebuild -underlaydir=basewiki -templatedir=templates t/basewiki_brokenlinks t/basewiki_brokenlinks/out"));
-ok(`grep 'no broken links' t/basewiki_brokenlinks/out/index.html`);
-system("rm -rf t/basewiki_brokenlinks/out t/basewiki_brokenlinks/.ikiwiki");
+ok(! system("mkdir t/tmp"));
+ok(! system("make -q ikiwiki.out"));
+ok(! system("make extra_install DESTDIR=t/tmp/install PREFIX=/usr >/dev/null"));
+ok(! system("LANG= perl -T -I. ./ikiwiki.out -plugin smiley -plugin brokenlinks -rebuild -underlaydir=t/tmp/install/usr/share/ikiwiki/basewiki -templatedir=templates t/basewiki_brokenlinks t/tmp/out"));
+ok(`grep 'no broken links' t/tmp/out/index.html`);
+ok(-e "t/tmp/out/style.css");
+ok(! system("rm -rf t/tmp t/basewiki_brokenlinks/.ikiwiki"));

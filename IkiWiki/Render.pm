@@ -270,34 +270,37 @@ sub refresh () { #{{{
 			}
 		},
 	}, $config{srcdir});
-	find({
-		no_chdir => 1,
-		wanted => sub {
-			$_=decode_utf8($_);
-			if (file_pruned($_, $config{underlaydir})) {
-				$File::Find::prune=1;
-			}
-			elsif (! -d $_ && ! -l $_) {
-				my ($f)=/$config{wiki_file_regexp}/; # untaint
-				if (! defined $f) {
-					warn(sprintf(gettext("skipping bad filename %s"), $_)."\n");
+	foreach my $dir (@{$config{underlaydirs}}, $config{underlaydir}) {
+		find({
+			no_chdir => 1,
+			wanted => sub {
+				$_=decode_utf8($_);
+				if (file_pruned($_, $dir)) {
+					$File::Find::prune=1;
 				}
-				else {
-					# Don't add pages that are in the
-					# srcdir.
-					$f=~s/^\Q$config{underlaydir}\E\/?//;
-					if (! -e "$config{srcdir}/$f" && 
-					    ! -l "$config{srcdir}/$f") {
-					    	my $page=pagename($f);
-						if (! $exists{$page}) {
-							push @files, $f;
-							$exists{$page}=1;
+				elsif (! -d $_ && ! -l $_) {
+					my ($f)=/$config{wiki_file_regexp}/; # untaint
+					if (! defined $f) {
+						warn(sprintf(gettext("skipping bad filename %s"), $_)."\n");
+					}
+					else {
+						$f=~s/^\Q$dir\E\/?//;
+						# avoid underlaydir
+						# override attacks; see
+						# security.mdwn
+						if (! -e "$config{srcdir}/$f" && 
+						    ! -l "$config{srcdir}/$f") {
+						    	my $page=pagename($f);
+							if (! $exists{$page}) {
+								push @files, $f;
+								$exists{$page}=1;
+							}
 						}
 					}
 				}
-			}
-		},
-	}, $config{underlaydir});
+			},
+		}, $dir);
+	};
 
 	my %rendered;
 

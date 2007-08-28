@@ -335,7 +335,8 @@ sub cgi_editpage ($$) { #{{{
 	# characters.
 	my ($page)=$form->field('page');
 	$page=titlepage(possibly_foolish_untaint($page));
-	if (! defined $page || ! length $page || file_pruned($page, $config{srcdir}) || $page=~/^\//) {
+	if (! defined $page || ! length $page ||
+	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
 		error("bad page name");
 	}
 	
@@ -512,8 +513,8 @@ sub cgi_editpage ($$) { #{{{
 
 		my $exists=-e "$config{srcdir}/$file";
 
-		if ($form->field("do") ne "create" &&
-		    ! $exists && ! -e "$config{underlaydir}/$file") {
+		if ($form->field("do") ne "create" && ! $exists &&
+		    ! eval { srcfile($file) }) {
 			$form->tmpl_param("page_gone", 1);
 			$form->field(name => "do", value => "create", force => 1);
 			$form->tmpl_param("page_select", 0);

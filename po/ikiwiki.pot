@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-26 13:39-0400\n"
+"POT-Creation-Date: 2007-08-27 21:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,34 +36,34 @@ msgstr ""
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:353
+#: ../IkiWiki/CGI.pm:354
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:209 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:478
+#: ../IkiWiki/CGI.pm:487
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:524
-#: ../IkiWiki/CGI.pm:550 ../IkiWiki/CGI.pm:594
+#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:523 ../IkiWiki/CGI.pm:533
+#: ../IkiWiki/CGI.pm:566 ../IkiWiki/CGI.pm:610
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:688
+#: ../IkiWiki/CGI.pm:704
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:708
+#: ../IkiWiki/CGI.pm:724
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 msgid "shortcut %s points to <i>%s</i>"
 msgstr ""
 
-#: ../IkiWiki/Plugin/smiley.pm:22
+#: ../IkiWiki/Plugin/smiley.pm:23
 msgid "failed to parse any smileys"
 msgstr ""
 
@@ -476,47 +476,47 @@ msgid ""
 "notifications"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:283
+#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:284
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:323
+#: ../IkiWiki/Render.pm:326
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:356
+#: ../IkiWiki/Render.pm:359
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:361
+#: ../IkiWiki/Render.pm:364
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:373
+#: ../IkiWiki/Render.pm:376
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:390
+#: ../IkiWiki/Render.pm:393
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:428
+#: ../IkiWiki/Render.pm:431
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:440
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:466
+#: ../IkiWiki/Render.pm:469
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -593,11 +593,11 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:126
+#: ../IkiWiki.pm:128
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:191 ../IkiWiki.pm:192
+#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
 msgid "Error"
 msgstr ""
 
@@ -605,7 +605,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:688
+#: ../IkiWiki.pm:705
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
