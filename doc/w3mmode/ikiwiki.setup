@@ -21,8 +21,10 @@ use IkiWiki::Setup::Standard {
 		{
 			# The cgi wrapper.
 			cgi => 1,
-			# This path can't be changed, since
+			# The wrapper must be put in ~/.ikiwiki/wrappers/, since
 			# ikiwiki-w3m.cgi only looks in this one location.
+			# The wrapper can be given any name as long as it's 
+			# in that directory.
 			wrapper => "$ENV{HOME}/.ikiwiki/wrappers/ikiwiki.cgi",
 			wrappermode => "0755",
 		},
