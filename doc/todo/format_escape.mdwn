@@ -82,6 +82,12 @@ which aren't used as real extensions but provide useful intermediate types.
 
 >> --[[JeremieKoenig]]
 
+> Another problem with this approach is when there is some html (say a
+> table), that contains a wikilink. If the link is left up to the markup
+> lamguage to handle, it will never convert it to a link, since the table
+> will be processed as a chunk of raw html.
+> --[[Joey]]
+
 ## Original patch
 [[tag patch]]
 
