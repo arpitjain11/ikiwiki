@@ -108,7 +108,7 @@ sub rcs_recentchanges ($) { #{{{
 	error($@) if $@;
 
 	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", $num,
-		"--style", "defaults");
+		"--style", "default");
 	open (my $out, "@cmdline |");
 
 	eval q{use Date::Parse};
