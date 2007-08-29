@@ -15,8 +15,9 @@ ikiwiki (2.7) UNRELEASED; urgency=low
     by linkifying the data before parsing it as a table.
   * Turn on allow_loose_quotes in the table plugin's Text::CSV object,
     so that links from wikilinks don't confuse the parser.
+  * mercurial: Pass --style defaults to hg log to ensure right format is used.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 28 Aug 2007 19:03:34 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 28 Aug 2007 22:00:29 -0400
 
 ikiwiki (2.6.1) unstable; urgency=low
 

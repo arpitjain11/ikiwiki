@@ -107,7 +107,8 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use CGI 'escapeHTML'};
 	error($@) if $@;
 
-	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", $num);
+	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", $num,
+		"--style", "defaults");
 	open (my $out, "@cmdline |");
 
 	eval q{use Date::Parse};
