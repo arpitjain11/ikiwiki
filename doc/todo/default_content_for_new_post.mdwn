@@ -3,10 +3,29 @@ to include default content in a new [[plugins/inline]] post would help with
 tasks like using an inline for a comment form on each new blog post.
 --[[JoshTriplett]]
 
-> No, it would only help if the new blog post were being made via the form.
-> If you're editing it in vi, and committing, it doesn't help. :-) This is
-> another reason why I prefer the approach in [[discussion_page_as_blog]]
-> --[[Joey]]
+No, it would only help if the new blog post were being made via the form.
+If you're editing it in vi, and committing, it doesn't help. :-) This is
+another reason why I prefer the approach in [[discussion_page_as_blog]].
+Although I don't mind getting this implemented too, for other reasons.
+
+I see three possible designs:
+
+1. Simply use the bestlink(new_page_content) as the default content. Thomas
+   Schwinge emailed me an implementation of this. It has the problem that 
+   it doesn't make sense to use the same new page template for a Discussion
+   page as for the page being discussed. (That's a specific case of a more
+   general problem.)
+
+1. Modify inline so that "template=foo" uses page foo as the template for
+   new posts made to the blog. This doesn't cater to every case, but
+   perhaps it would be enough?
+
+1. Make pages able to embed in them a pagespec that says they are the
+   template when new pages are created that match that pagespec. 
+   This is the most general solution, but depends on
+   [[plugin_data_storage]].
+
+--[[Joey]]
 
 This feature would also allow the automatic inclusion of a given template in
 every new post, which could help for [[/plugins]] (automatically use the
@@ -21,3 +40,4 @@ a template that appends "(done)" to the title if the page links to
 > * When using svn to make changes it's easier to manually provide template functionality (eg. cp recipe_template.mdwn newpage.mdwn)
 
 > All of course bearing in mind that I'm just commenting because I don't have the skills to actually make the required changes. ;-) -- [[AdamShand]]
+
