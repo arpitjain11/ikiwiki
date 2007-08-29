@@ -161,7 +161,7 @@ sub rcs_getctime ($) { #{{{
 	# XXX filename passes through the shell here, should try to avoid
 	# that just in case
 	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", '1', 
-		"$config{srcdir}/$file");
+		"--style", "default", "$config{srcdir}/$file");
 	open (my $out, "@cmdline |");
 
 	my @log = mercurial_log($out);
