@@ -11,6 +11,20 @@ You can see that wikilink is rendered in one line and 'here's paragraph' is not 
 
 All this is displayed correctly if toc is removed.
 
+> Thanks for the clear explanation and example. This is a bug in markdown.
+> Version 1.0.1 gets confused by the toc div, which is followed by a few
+> lines of markdown, and then by a second div for the inlined page. It
+> doesn't convert the markdown in the middle to html.
+> 
+> I've tested with markdown 1.0.2 and it seems to render this ok. 1.0.2 has
+> a much improved parser, which is known to fix several block-related
+> problems, including this one. It is currently packaged in experimental in
+> Debian, and I suggest you give it a try if you're experiencing this
+> problem.
+> 
+> I'm going to close this bug report since it's a markdown bug. --[[Joey]]
+[[tag done]]
+
 
 TEST1
 =====
