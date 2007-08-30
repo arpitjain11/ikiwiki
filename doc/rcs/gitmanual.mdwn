@@ -1,0 +1,47 @@
+# on webconverger.org hosted on si.dabase.com (hendry)
+
+Wiki page created with [ikiwiki](http://ikiwiki.info). Example usb.mdwn [[usb]]
+
+Use case I am trying to accomplish: Edit wiki pages offline.
+
+# on monty (my laptop)
+
+I wonder why a "pull" doesn't just init a repo like a "svn co" does?
+
+    monty:~/git-testing% git-init
+    Initialized empty Git repository in .git/
+
+    monty:~/git-testing% git-pull ssh://si.dabase.com/home/hendry/wikiwc/.git/
+    warning: no common commits
+    remote: Generating pack...
+    remote: Done counting 746 objects.
+    remote: Deltifying 746 objects...
+    remote:  100% (746/746) done
+    Indexing 746 objects...
+    remote: Total 746 (delta 443), reused 723 (delta 431)
+     100% (746/746) done
+    Resolving 443 deltas...
+     100% (443/443) done
+
+    echo "blah" >> usb.mdwn
+    monty:~/git-testing% git-commit -a -m "added test"
+    Created commit d3507df: added test
+     1 files changed, 1 insertions(+), 0 deletions(-)
+
+    monty:~/git-testing% git-push ssh://si.dabase.com/home/hendry/wikiwc/.git/
+    updating 'refs/heads/master'
+      from 75a4a8e94e5fff2a4beced1574e772742d3f9847
+      to   d3507dfe19b469e61a728d1b0a833a5f480f5802
+    Generating pack...
+    Done counting 5 objects.
+    Result has 3 objects.
+    Deltifying 3 objects...
+     100% (3/3) done
+    Writing 3 objects...
+     100% (3/3) done
+    Total 3 (delta 2), reused 0 (delta 0)
+    refs/heads/master: 75a4a8e94e5fff2a4beced1574e772742d3f9847 -> d3507dfe19b469e61a728d1b0a833a5f480f5802
+
+
+# on si
+
