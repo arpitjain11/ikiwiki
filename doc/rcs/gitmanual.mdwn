@@ -6,7 +6,7 @@ Main use case I am trying to accomplish: Edit wiki pages offline.
 
 # Workflow
 
-## on webconverger.org hosted on si.dabase.com (hendry)
+## on webconverger.org/si.dabase.com/hendry
 
 Wiki page created with [ikiwiki](http://ikiwiki.info). Example usb.mdwn [usb](http://webconverger.org/usb/)
 
@@ -49,5 +49,20 @@ I wonder why a "pull" doesn't just init a repo like a "svn co" does?
     refs/heads/master: 75a4a8e94e5fff2a4beced1574e772742d3f9847 -> d3507dfe19b469e61a728d1b0a833a5f480f5802
 
 
-## on si
+## on webconverger.org/si.dabase.com/hendry
 
+    hendry:239$ git-status 
+    # On branch master
+    # Changes to be committed:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #
+    #       modified:   usb.mdwn
+    #
+    # Untracked files:
+    #   (use "git add <file>..." to include in what will be committed)
+    #
+    #       .ikiwiki/
+
+Great, we see the usb.mdwn file has been modified. Now we need to check it out to update the local work tree (and the wiki?)
+
+    hendry:242$ git-checkout master usb.mdwn
