@@ -1,0 +1,9 @@
+In the example ikiwiki.setup:
+
+    diffurl => "http://localhost:8000/?fd=[[changeset]];file=[[file]]",
+    
+should be:
+
+    diffurl => "http://localhost:8000/?fd=[[r2]];file=[[file]]",
+
+(changeset doesn't get expanded; r2 does, to what appears to be The Right Thing)
