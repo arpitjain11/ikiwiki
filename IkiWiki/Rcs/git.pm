@@ -256,8 +256,7 @@ sub git_commit_info ($;$) { #{{{
 	$num ||= 1;
 
 	my @raw_lines =
-	    run_or_die(qq{git-rev-list --max-count=$num $sha1 |
-		          git-diff-tree --stdin --pretty=raw --always -M -m -r});
+	    run_or_die('git-log', "--max-count=$num", '--pretty=raw', '--raw', '--abbrev=40', '--always', '-M', '-m', '-r', $sha1);
 
 	my @ci;
 	while (my $parsed = _parse_diff_tree(\@raw_lines)) {
