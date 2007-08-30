@@ -66,3 +66,9 @@ I wonder why a "pull" doesn't just init a repo like a "svn co" does?
 Great, we see the usb.mdwn file has been modified. Now we need to check it out to update the local work tree (and the wiki?)
 
     hendry:242$ git-checkout master usb.mdwn
+
+
+# Stuff I am confused about
+
+* this master/origin stuff
+* why do I have to explicitly say the filename "usb.mdwn" for it to be updated?
