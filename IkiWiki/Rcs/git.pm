@@ -144,11 +144,11 @@ sub _merge_past ($$$) { #{{{
 	return $conflict;
 } #}}}
 
-sub _parse_diff_tree (@) { #{{{
+sub _parse_diff_tree ($@) { #{{{
 	# Parse the raw diff tree chunk and return the info hash.
 	# See git-diff-tree(1) for the syntax.
 
-	my ($dt_ref) = @_;
+	my ($prefix, $dt_ref) = @_;
 
 	# End of stream?
 	return if !defined @{ $dt_ref } ||
@@ -230,6 +230,7 @@ sub _parse_diff_tree (@) { #{{{
 			if ($file =~ m/^"(.*)"$/) {
 				($file=$1) =~ s/\\([0-7]{1,3})/chr(oct($1))/eg;
 			}
+			$file =~ s/^\Q$prefix\E//;
 			if (length $file) {
 				push @{ $ci{'details'} }, {
 					'file'      => decode_utf8($file),
@@ -256,10 +257,11 @@ sub git_commit_info ($;$) { #{{{
 	$num ||= 1;
 
 	my @raw_lines =
-	    run_or_die('git-log', "--max-count=$num", '--pretty=raw', '--raw', '--abbrev=40', '--always', '-m', '-r', $sha1);
+	    run_or_die('git-log', "--max-count=$num", '--pretty=raw', '--raw', '--abbrev=40', '--always', '-m', '-r', $sha1, '--', '.');
+	my ($prefix) = run_or_die('git-rev-parse', '--show-prefix');
 
 	my @ci;
-	while (my $parsed = _parse_diff_tree(\@raw_lines)) {
+	while (my $parsed = _parse_diff_tree(($prefix or ""), \@raw_lines)) {
 		push @ci, $parsed;
 	}
 
