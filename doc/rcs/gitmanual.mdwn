@@ -1,10 +1,16 @@
-# on webconverger.org hosted on si.dabase.com (hendry)
+Main use case I am trying to accomplish: Edit wiki pages offline.
 
-Wiki page created with [ikiwiki](http://ikiwiki.info). Example usb.mdwn [[usb]]
+1. Imagine you're the administrator of the site and you want to checkout the wiki sources to give them some love while on a train journey.
+2. Or you are writing a complex document and you want to simply use your favourite $EDITOR
+3. Learn a little more about [git](http://git.or.cz/)
 
-Use case I am trying to accomplish: Edit wiki pages offline.
+# Workflow
 
-# on monty (my laptop)
+## on webconverger.org hosted on si.dabase.com (hendry)
+
+Wiki page created with [ikiwiki](http://ikiwiki.info). Example usb.mdwn [usb](http://webconverger.org/usb/)
+
+## on monty (my laptop)
 
 I wonder why a "pull" doesn't just init a repo like a "svn co" does?
 
@@ -43,5 +49,5 @@ I wonder why a "pull" doesn't just init a repo like a "svn co" does?
     refs/heads/master: 75a4a8e94e5fff2a4beced1574e772742d3f9847 -> d3507dfe19b469e61a728d1b0a833a5f480f5802
 
 
-# on si
+## on si
 
