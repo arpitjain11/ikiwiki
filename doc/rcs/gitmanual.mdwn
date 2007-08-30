@@ -17,6 +17,8 @@ I wonder why a "pull" doesn't just init a repo like a "svn co" does?
     monty:~/git-testing% git-init
     Initialized empty Git repository in .git/
 
+You might want to set some config variables like your email as this [tutorial](http://www.kernel.org/pub/software/scm/git/docs/tutorial.html) describes.
+
     monty:~/git-testing% git-pull ssh://si.dabase.com/home/hendry/wikiwc/.git/
     warning: no common commits
     remote: Generating pack...
