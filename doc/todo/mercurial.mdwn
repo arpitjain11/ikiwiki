@@ -18,7 +18,7 @@ Posthook: in $srcdir/.hg/hrc, I have the following
 
     [hooks]
     incoming.update = hg up
-    postupdate.ikiwiki = ikiwiki --setup /path/to/ikiwiki.setup --refresh
+    update.ikiwiki = ikiwiki --setup /path/to/ikiwiki.setup --refresh
 
 This should update the working directory and run ikiwiki every time a change is recorded (someone who knows mercurial better than I do may be able to suggest a better way, but this works for me.)
 
