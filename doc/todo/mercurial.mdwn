@@ -21,3 +21,9 @@ Posthook: in $srcdir/.hg/hrc, I have the following
     postupdate.ikiwiki = ikiwiki --setup /path/to/ikiwiki.setup --refresh
 
 This should update the working directory and run ikiwiki every time a change is recorded (someone who knows mercurial better than I do may be able to suggest a better way, but this works for me.)
+
+> Try running it with --post-commit instead of --refresh. That should
+> work better, handling both the case where the edit was made via the web
+> and then committed, and the case where a commit was made directly.
+> It can deadlock if the post-commit hook runs with --refresh in the
+> former case. --[[Joey]]
