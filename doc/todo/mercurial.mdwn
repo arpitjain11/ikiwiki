@@ -1,8 +1,11 @@
 * Need to get post commit hook working (or an example of how to use it.)
+  * See below. --[[bma]]
 * rcs_notify is not implemented
 * Is the code sufficiently robust? It just warns when mercurial fails.
 * When rcs_commit is called with a $user that is an openid, it will be
   passed through to mercurial -u. Will mercurial choke on this?
+ * Nope. Mercurial doesn't expect any particular format for the username, 
+   though "Name <address@domain>" is standard. --[[bma]]
 * The rcs_commit implementation seems not to notice if the file has been
   changed since a web edit started. Unlike all the other frontends, which
   use the rcstoken to detect if the web commit started editing an earlier
@@ -10,3 +13,11 @@
   It seems that with the current mercurial commit code, it will always
   blindly overwrite the current file with the web edited version, losing
   any other changes.
+
+Posthook: in $srcdir/.hg/hrc, I have the following
+
+    [hooks]
+    incoming.update = hg up
+    postupdate.ikiwiki = ikiwiki --setup /path/to/ikiwiki.setup --refresh
+
+This should update the working directory and run ikiwiki every time a change is recorded (someone who knows mercurial better than I do may be able to suggest a better way, but this works for me.)
