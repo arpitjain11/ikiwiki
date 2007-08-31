@@ -28,4 +28,15 @@ Even when running an `ikiwiki --setup [...] --rebuild` I get this:
     estcmd gather -cm -bc -cl -sd -cl /home/wiki/wiki/.ikiwiki/hyperestraier - exited nonzero: 256
     done
 
+Now I did a `rm -rf ~wiki/wiki/.ikiwiki/hyperestraier` and re-ran
+`ikiwiki --setup [...] --rebuild`:
+
+    [...]
+    rendering templates/note.mdwn
+    rendering templates/popup.mdwn
+    updating hyperestraier search index
+    estcmd: ERROR: /home/wiki/wiki/.ikiwiki/hyperestraier: database problem
+    $ echo $?
+    141
+
 --[[tschwinge]]
