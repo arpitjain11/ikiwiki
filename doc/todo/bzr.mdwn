@@ -1,0 +1,167 @@
+This is mostly based on the Mercurial plugin (in fact, apart from the commands
+being run, only the name of the rcs was changed in rcs_recentchanges, and
+rcs_commit was only changed to work around bzr's lack of a switch to set the
+username). bzr_log could probably be written better by someone better at perl,
+and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
+
+    #!/usr/bin/perl
+    
+    use warnings;
+    use strict;
+    use IkiWiki;
+    use Encode;
+    use open qw{:utf8 :std};
+    
+    package IkiWiki;
+    
+    sub bzr_log($) {
+            my $out = shift;
+    
+            my @lines = <$out>;
+    
+            my @entries = split(/\n-+\s/,join("", @lines));
+    
+            my @ret = ();
+    
+            foreach my $entry (@entries) {
+    
+                    my ($initial,$i) = split(/message:/,$entry,2);
+                    my ($message, $j, $files) = split(/(added|modified|removed):/,$i,3);
+                    $message =~ s/\n/\\n/g;
+                    $files =~ s/\n//g;
+                    $entry = $initial . "\ndescription: " . $message . "\nfiles: " . $files;
+    
+                    my @lines = split(/\n/,$entry);
+                    shift(@lines);
+    
+                    my %entry;
+                    foreach (@lines) {
+                            my ($key,$value) = split(/: /);
+                            $entry{$key} = $value;
+                    }
+                    $entry{description}=~s/\\n/\n/g;
+                    $entry{files}=~s/\s\s+/\ /g;
+                    $entry{files}=~s/^\s+//g;
+    
+                    $ret[@ret] = {
+                            "description" =>  $entry{description},
+                            "user" => $entry{committer},
+                            "files" => $entry{files},
+                            "date" => $entry{timestamp},
+                    }
+            }
+    
+            return @ret;
+    }
+    
+    sub rcs_update () { #{{{
+            # Not needed.
+    } #}}}
+    
+    sub rcs_prepedit ($) { #{{{
+            return "";
+    } #}}}
+    
+    sub rcs_commit ($$$;$$) { #{{{
+            my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
+    
+            if (defined $user) {
+                    $user = possibly_foolish_untaint($user);
+            }
+            elsif (defined $ipaddr) {
+                    $user = "Anonymous from ".possibly_foolish_untaint($ipaddr);
+            }
+            else {
+                    $user = "Anonymous";
+            }
+    
+            $message = possibly_foolish_untaint($message);
+            if (! length $message) {
+                    $message = "no message given";
+            }
+    
+            my $olduser = `bzr whoami`;
+            chomp $olduser;
+            system("bzr","whoami",$user); # This will set the branch username; there doesn't seem to be a way to do it on a per-commit basis.
+                                          # Save the old one and restore after the commit.
+            my @cmdline = ("bzr", "commit", "-m", $message, $config{srcdir}."/".$file);
+            if (system(@cmdline) != 0) {
+                    warn "'@cmdline' failed: $!";
+            }
+    
+            $olduser=possibly_foolish_untaint($olduser);
+            system("bzr","whoami",$olduser);
+    
+            return undef; # success
+    } #}}}
+    
+    sub rcs_add ($) { # {{{
+            my ($file) = @_;
+    
+            my @cmdline = ("bzr", "add", "--quiet", "$config{srcdir}/$file");
+            if (system(@cmdline) != 0) {
+                    warn "'@cmdline' failed: $!";
+            }
+    } #}}}
+    
+    sub rcs_recentchanges ($) { #{{{
+            my ($num) = @_;
+    
+            eval q{use CGI 'escapeHTML'};
+            error($@) if $@;
+    
+            my @cmdline = ("bzr", "log", "--long", "--verbose", "--limit", $num,$config{srcdir});
+            open (my $out, "@cmdline |");
+    
+            eval q{use Date::Parse};
+            error($@) if $@;
+    
+            my @ret;
+            foreach my $info (bzr_log($out)) {
+                    my @pages = ();
+                    my @message = ();
+    
+                    foreach my $msgline (split(/\n/, $info->{description})) {
+                            push @message, { line => $msgline };
+                    }
+    
+                    foreach my $file (split / /,$info->{files}) {
+                            my $diffurl = $config{'diffurl'};
+                            $diffurl =~ s/\[\[file\]\]/$file/go;
+                            $diffurl =~ s/\[\[r2\]\]/$info->{changeset}/go;
+    
+                            push @pages, {
+                                    page => pagename($file),
+                                    diffurl => $diffurl,
+                            };
+                    }
+    
+                    my $user = $info->{"user"};
+                    $user =~ s/\s*<.*>\s*$//;
+                    $user =~ s/^\s*//;
+    
+                    push @ret, {
+                            rev        => $info->{"changeset"},
+                            user       => $user,
+                            committype => "bzr",
+                            when       => time - str2time($info->{"date"}),
+                            message    => [@message],
+                            pages      => [@pages],
+                    };
+            }
+    
+            return @ret;
+    } #}}}
+    
+    sub rcs_notify () { #{{{
+            # TODO
+    } #}}}
+    
+    sub rcs_getctime ($) { #{{{
+            # TODO
+    } #}}}
+    
+    1
+
+
+[[patch]]
