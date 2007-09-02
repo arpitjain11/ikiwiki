@@ -165,3 +165,14 @@ and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
 
 
 [[patch]]
+
+
+> Thanks for doing this.
+> bzr 0.90 has support for --author to commit to set the author for one commit at a time,
+> you might like to use that instead of changing the global username (which is racy).
+>
+> Wouter van Heyst and I were also working on a plugin for bzr, but we were waiting for
+> the smart server to grow the ability to run server side hooks, so that you can edit locally
+> and then push to rebuild the wiki, but there is no need to stop this going in in the mean
+> time.
+> Thanks again --[[JamesWestby]]
