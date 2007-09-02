@@ -9,20 +9,20 @@ The best place to download a tarball of the latest release is from
 ## packages
 
 If using Debian (since 4.0), or Ubuntu (since 6.10):
-
-        apt-get install ikiwiki
-
+[[[template id=note text="""
 Note that Debian 4.0 and especially Ubuntu 6.10 contain older versions of
 ikiwiki, there have been lots of enhancements and bug fixes since those
 versions.
+"""]]
+
+        apt-get install ikiwiki
 
 Or download the deb from <http://packages.debian.org/unstable/web/ikiwiki>.
 
-While this deb has been developed on Debian unstable, it should also work
-on stable, although to get the CGI stuff working on stable, you will need
-to upgrade to a newer version of libcgi-formbuilder-perl, `3.05`.
+There is a backport of a recent version of ikiwiki for Debian 4.0 at
+<http://packages.debian.org/etch-backports/ikiwiki>.
 
-There is also an unofficial backport of ikiwiki for Debian 'sarge', provided by
+There is also an unofficial backport of ikiwiki for Debian 3.1, provided by
 Paweł Tęcza, at <http://gpa.net.icm.edu.pl/debian/>.
 
 Also. FreeBSD has ikiwiki in its
