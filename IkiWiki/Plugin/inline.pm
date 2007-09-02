@@ -315,7 +315,7 @@ sub date_3339 ($) { #{{{
 
 	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
 	POSIX::setlocale(&POSIX::LC_TIME, "C");
-	my $ret=POSIX::strftime("%Y-%m-%dT%H:%M:%SZ", localtime($time));
+	my $ret=POSIX::strftime("%Y-%m-%dT%H:%M:%SZ", gmtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
 	return $ret;
 } #}}}
