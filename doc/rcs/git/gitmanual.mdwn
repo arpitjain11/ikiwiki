@@ -6,81 +6,32 @@ Main use case I am trying to accomplish: Edit wiki pages offline.
 
 # Workflow
 
-## on webconverger.org/si.dabase.com/hendry
+## on webconverger.org aka si.dabase.com aka hendry machine
 
 Wiki page created with [ikiwiki](http://ikiwiki.info). Example usb.mdwn [usb](http://webconverger.org/usb/)
 
 ## on monty (my laptop)
 
-I wonder why a "pull" doesn't just init a repo like a "svn co" does?
-Ah, I should have used `git-clone ssh://si.dabase.com/home/hendry/wikiwc/.git/`
-
-    monty:~/git-testing% git-init
-    Initialized empty Git repository in .git/
+    git-clone ssh://si.dabase.com/home/hendry/wikiwc/.git/
 
 You might want to set some config variables like your email as this [tutorial](http://www.kernel.org/pub/software/scm/git/docs/tutorial.html) describes.
 
-    monty:~/git-testing% git-pull ssh://si.dabase.com/home/hendry/wikiwc/.git/
-    warning: no common commits
-    remote: Generating pack...
-    remote: Done counting 746 objects.
-    remote: Deltifying 746 objects...
-    remote:  100% (746/746) done
-    Indexing 746 objects...
-    remote: Total 746 (delta 443), reused 723 (delta 431)
-     100% (746/746) done
-    Resolving 443 deltas...
-     100% (443/443) done
-
     echo "blah" >> usb.mdwn
-    monty:~/git-testing% git-commit -a -m "added test"
-    Created commit d3507df: added test
-     1 files changed, 1 insertions(+), 0 deletions(-)
 
-I should have used `git push origin` here...
+Then to commit:
 
-    monty:~/git-testing% git-push ssh://si.dabase.com/home/hendry/wikiwc/.git/
-    updating 'refs/heads/master'
-      from 75a4a8e94e5fff2a4beced1574e772742d3f9847
-      to   d3507dfe19b469e61a728d1b0a833a5f480f5802
-    Generating pack...
-    Done counting 5 objects.
-    Result has 3 objects.
-    Deltifying 3 objects...
-     100% (3/3) done
-    Writing 3 objects...
-     100% (3/3) done
-    Total 3 (delta 2), reused 0 (delta 0)
-    refs/heads/master: 75a4a8e94e5fff2a4beced1574e772742d3f9847 -> d3507dfe19b469e61a728d1b0a833a5f480f5802
+    git-commit -a -m "added test"
 
+Send back:
 
-## on webconverger.org/si.dabase.com/hendry
+    git push origin
 
-    hendry:239$ git-status 
-    # On branch master
-    # Changes to be committed:
-    #   (use "git reset HEAD <file>..." to unstage)
-    #
-    #       modified:   usb.mdwn
-    #
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    #       .ikiwiki/
+## on webconverger.org aka si.dabase.com aka hendry machine
 
-Great, we see the usb.mdwn file has been modified. Now we need to check it out to update the local work tree (and the wiki?)
+You should setup the "The git post-update wrapper" in the **ikiwiki.setup** file.
 
-    hendry:242$ git-checkout master usb.mdwn
-
-I find this a little odd... Is this a required step for ikiwiki?
-
-# Stuff I am confused about
-
-* this master/origin stuff
-* why do I have to explicitly say the filename "usb.mdwn" for it to be updated?
-* how ikiwiki interfaces with git. does it have its own working copy? or is it the files simply in ~/wikiwc?
-* I know git-push seems unpopular (git-pull seems to have the emphasis), though I think it is really convenient
+Then the wiki should be up-to-date! :)
 
 # Ack
 
-Thanks to gitte on #git on Freenode
+Thanks to gitte on #git on Freenode and of course joeyh. Have a look at [[rcs/details]].
