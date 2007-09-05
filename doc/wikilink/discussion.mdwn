@@ -20,3 +20,10 @@ BTW, ikiwiki doesn't displays the #foo anchor in the example
 > definitely looks like a bug.  --[[JoshTriplett]]
 
 >> Fixed that --[[Joey]]
+
+---
+
+Considering a hierarchy like `foo/bar/bar`, I had the need to link from the
+`foo/bar/bar` page to the `foo/bar` one.  It would have been convenient to
+simply write [[wikilink]]s like `\[[../bar]]` (or even just `\[[..]]`?), but
+this doesn't work, so I had to resort to using `\[[foo/bar]]` instead.
