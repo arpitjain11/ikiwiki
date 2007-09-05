@@ -34,7 +34,7 @@ my @changes;
 
 is($#changes, 0); # counts for dummy commit during repo creation
 is($changes[0]{message}[0]{"line"}, "Initial");
-is($changes[0]{pages}[0]{"page"}, undef); # no diff for first commit
+is($changes[0]{pages}[0]{"page"}, "dummy");
 
 # Web commit
 my $test1 = readfile("t/test1.mdwn");
