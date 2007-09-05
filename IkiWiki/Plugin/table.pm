@@ -3,6 +3,7 @@ package IkiWiki::Plugin::table;
 
 use warnings;
 use strict;
+use Encode;
 use IkiWiki 2.00;
 
 sub import { #{{{
@@ -104,7 +105,7 @@ sub split_csv ($$) { #{{{
 	foreach my $line (@text_lines) {
 		$l++;
 		if ($csv->parse($line)) {
-			push(@data, [ $csv->fields() ]);
+			push(@data, [ map { decode_utf8 $_ } $csv->fields() ]);
 		}
 		else {
 			debug(sprintf(gettext('parse fail at line %d: %s'), 

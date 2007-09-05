@@ -903,7 +903,7 @@ sub template_params (@) { #{{{
 	my @ret=(
 		filter => sub {
 			my $text_ref = shift;
-			${$text_ref} = Encode::decode_utf8(${$text_ref});
+			${$text_ref} = decode_utf8(${$text_ref});
 		},
 		filename => $filename,
 		loop_context_vars => 1,
