@@ -41,6 +41,11 @@ I was thinking of making a list of desired documents from the html directory to 
 
 --JeremyReed
 
+> You don't need any of them, unless you want to read ikiwiki's docs locally.
+> 
+> I don't understand why you're installing the basewiki files manually;
+> ikiwiki has a Makefile that will do this for you. --[[Joey]]
+
 ----
 
 # Upgrade steps
@@ -181,6 +186,8 @@ And ikiwiki CGI started working for me.
 
 The Ikiwiki docs about this requirement got removed in Revision 4367. There should be a page that lists the requirements.
 (I guess I could have used the debian/control file.)
+
+> There is a page, [[install]] documents that 3.05 is needed.
 
 I am now using ikiwiki 2.6.1 on my testing system.
 
