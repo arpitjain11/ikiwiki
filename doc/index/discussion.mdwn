@@ -150,6 +150,26 @@ Now ikiwiki is working for me again (but using 1.40). I shouldn't have tested on
 
 --JeremyReed
 
+I am back. On a different system, I installed ikiwiki 2.6.1. Same problem -- blank CGI webpage.
+
+So I manually ran with:
+
+    REQUEST_METHOD=GET QUERY_STRING='do=create&page=jcr' kiwiki.cgi
+
+And clearly saw the error:
+
+    [IkiWiki::main] Fatal: Bad template engine CGI::FormBuilder::Template::div: Can't locate CGI/FormBuilder/Template/div.pm
+
+So I found my version was too old and 3.05 is the first to provide "Div" support. I upgraded my p5-CGI-FormBuilder to 3.0501.
+And ikiwiki CGI started working for me.
+
+The Ikiwiki docs about this requirement got removed in Revision 4367. There should be a page that lists the requirements.
+(I guess I could have used the debian/control file.)
+
+I am now using ikiwiki 2.6.1 on my testing system.
+
+--JeremyReed
+
 ----
 # Excellent - how do I translate a TWiki site?
 
