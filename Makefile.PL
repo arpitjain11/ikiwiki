@@ -39,12 +39,13 @@ extra_build: ikiwiki.out
 		--plugin=haiku --plugin=polygen --plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
+	./mdwn2man ikiwiki-update-wikilist 1 doc/ikiwiki-update-wikilist.mdwn > ikiwiki-update-wikilist.man
 	$(MAKE) -C po
 	if [ "$$PROFILE" = 1 ]; then dprofpp; fi
 
 extra_clean:
 	rm -rf html doc/.ikiwiki
-	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki.out
+	rm -f ikiwiki.man ikiwiki-mass-rebuild.man ikiwiki-update-wikilist.man ikiwiki.out
 	$(MAKE) -C po clean
 
 extra_install:
@@ -69,6 +70,7 @@ extra_install:
 
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1
 	install -m 644 ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
+	install -m 644 ikiwiki-update-wikilist.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki-update-wikilist.1
 	
 	install -d $(DESTDIR)$(PREFIX)/share/man/man8
 	install -m 644 ikiwiki-mass-rebuild.man $(DESTDIR)$(PREFIX)/share/man/man8/ikiwiki-mass-rebuild.8
