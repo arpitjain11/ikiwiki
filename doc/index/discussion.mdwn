@@ -27,6 +27,22 @@ of via syslog?
 
 ----
 
+# Installation of selected docs (html)
+
+The latest release has around 560 files (over 2MB) in html.
+
+Any suggestions or ideas on limiting what html is installed?
+
+For example, I don't see value in every ikiwiki install out there to also install personal "users" ikiwiki pages.
+
+For now I copy ikiwiki.setup. And then use pax with -L switch to copy the targets of the symlinks of the basewiki.
+
+I was thinking of making a list of desired documents from the html directory to install.
+
+--JeremyReed
+
+----
+
 # Upgrade steps
 
 I upgrades from 1.40  to 2.6.1. I ran "ikiwiki --setup" using my existing ikiwiki.setup configuration.
