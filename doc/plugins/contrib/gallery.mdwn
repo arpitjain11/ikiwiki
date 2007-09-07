@@ -1,0 +1,36 @@
+This plugin would create a nice looking gallery of the images. It has been build over the img plugin in Ikiwiki
+
+SVN repository of plugin is located at <http://ned.snow-crash.org:8080/svn/ikiwiki-gallery>
+
+
+USAGE : 
+\[[gallery imagedir="images" option="value"]]
+
+Available options : <br>
+    * imagedir(required) => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.<br>
+    * thumbnailsize(optional,Default=200x200) => Size of the thumbnail that you want to generate for the gallery.<br>
+    * resize(optional, Default=>800x600) => Width and Height to resize image to.<br>
+    * alt(optional) => If image can not be displayed, it will display the text contained in alt argument.<br>
+    * cols(optional,Default=3) => Number of columns of thumbnails that you want to generate.<br>
+    * rows(optional, Default=>3) => Number of Rows on a gallery page.<br>
+    * title(optional) => Title of the gallery.<br>
+    * sort(optional) => "asc" or "desc" . You can sort in ascending or descending order of names of images. <br>
+    * vcs(optional,Default=1) => This value decides whether to put the images out of IkiWiki's tree. If you set vcs=0, then you can specify a directory outside IkiWiki tree also to lookup. In that case you can also give absolute link of the image directory.<br>
+    * exif(optional, Default=>0) => Specify whether to Display exif information or not.<br>
+
+Additionaly, you can put Comment file filename.comm in image directory where filename is name of the image. Comments would then be displayed in the gallery.
+
+Features of the Gallery Plugin:<br>
+* You can go the next image by clicking on the right side of the image or by pressing 'n'.<br>
+* Similary, you can go the previous image by clicking on the left side of the image or by pressing 'p'.<br>
+* Press esc to close the gallery.<br>
+* While on image, nearby images are preloaded in the background, so as to make the browsing fast.<br>
+
+It uses templated named [Lightbox](http://www.hudddletogether.com).
+For any feedback or query, feel free to mail me at arpitjain11 [AT] gmail.com 
+
+Additional details are available [here](http://myweb.unomaha.edu/~ajain/ikiwikigallery.html).
+
+-- [[arpitjain]]
+
+[[tag plugin]] [[tag patch]] [[tag soc]] [[tag wishlist]]
