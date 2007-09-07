@@ -46,6 +46,15 @@ I was thinking of making a list of desired documents from the html directory to 
 > I don't understand why you're installing the basewiki files manually;
 > ikiwiki has a Makefile that will do this for you. --[[Joey]]
 
+>> The Makefile's install doesn't do what I want so I use different installer for it.
+>> It assumes wrong location for man pages for me. (And it should consider using INSTALLVENDORMAN1DIR and
+>> MAN1EXT but I don't know about section 8 since I don't know of perl value for that.)
+>> I don't want w3m cgi installed; it is optional for my package.
+>> I will just patch for that instead of using my own installer.
+>> Note: I am working on the pkgsrc package build specification for this. This is for creating
+>> packages for NetBSD, DragonFly and other systems that use pkgsrc package system.
+>> --JeremyReed
+
 ----
 
 # Upgrade steps
