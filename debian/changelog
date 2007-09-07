@@ -40,8 +40,10 @@ ikiwiki (2.7) UNRELEASED; urgency=low
   * Change git test suite to reflect change in log for initial repo creation
     commit.
   * Add the ikiwiki-update-wikilist command.
+  * Exclude external plugin from syntax check since it uses a module that is
+    not in the build depends. Closes: #441171
 
- -- Joey Hess <joeyh@debian.org>  Wed, 05 Sep 2007 20:07:24 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 07 Sep 2007 13:04:03 -0400
 
 ikiwiki (2.6.1) unstable; urgency=low
 
