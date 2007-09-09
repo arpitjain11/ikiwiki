@@ -9,10 +9,10 @@ ikiwiki-mass-rebuild
 # DESCRIPTION
 
 `ikiwiki-mass-rebuild` can be used to force a rebuild of all the wikis
-on a system. You will need to list the wikis it should build in the file
-`/etc/ikiwiki/wikilist`, which has the format:
+on a system. You will need to list the setup files for the wikis it should
+build in the file `/etc/ikiwiki/wikilist`, which has the format:
 
-user /path/to/wiki
+user /path/to/ikiwiki.setup
 
 It's also possible to let a user list setup files in `~user/.ikiwiki/wikilist`
 in their home directory. To do so, list only the user's name, without a
