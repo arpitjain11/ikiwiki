@@ -1,0 +1,45 @@
+**Note: This plugin is currently pending upload. It is also most assuredly beta.**
+
+Most of this plugin's functionality is configured in the IkiWiki setup file (`ìkiwiki.setup`, by default), in an `attach` block. A minimum configuration looks something like this:
+
+    attach => {
+	enabled => 1, #If false, no new attachments are allowed via the web interface
+	every_page => 1, #Toggles whether attachments are allowed on every page of the IkiWiki
+	},
+
+This configuration allows any user of the IkiWiki to attach any file to any page of the IkiWiki. By default, each file must be no bigger than 1MB. 
+
+## Configuration Options
+
+Each option is specified in the same format as above: the name is a hash key inside of an attach block, and the value is the hash key.
+
+* **ban_ips** - A space separated list of regular expressions corresponding to IP addresses which are prohibited from attaching files. IP address filtering is described in further detail below.
+* **enabled** -Toggles whether attachments are allowed. If false, the attachment form will not appear on any pages, nor will the CGI accept any new uploads. Details of existing attachments will continue to be displayed on the appropriate pages, however. 
+* **max\_kbs** - The maximum size in kilobytes an attachment can be. If an upload's size exceeds this value, it will be prohibited. By default, this value is _1024_. If set to _0_, attachments of any size are permitted. 
+* **dir** - The name of the temporary directory, relative to the source directory, in which attachments are stored pending validation. The value is prefixed with a period so that it is hidden on \*nix systems. The default value is _attachments_, and there shouldn't be any need to change this.
+* **mime\_strategy** - The method of filtering attachments on their MIME type. Permissible values are _allow,deny_ and _deny,allow_. MIME filtering is described in further detail below.
+* **mime\_allow** - A space-separated list of MIME types, used in conjunction with _mime\_strategy_ and _mime\_deny_. MIME filtering is described in further detail below.
+* **mime\_deny** - A space-separated list of MIME types, used in conjunction with _mime\_strategy_ and _mime\_allow_. MIME filtering is described in further detail below.
+
+## MIME Filtering
+Attachments may be filtered on the basis of their MIME type. For instance, an administrator may wish to prohibit video files from being uploaded to his IkiWiki. This is achieved by a "MIME strategy", a list of MIME types to allow, and a list of MIME types to deny.
+
+With an _allow,deny_ strategy: "First, all Allow directives are evaluated; at least one must match, or the [attachment] is rejected. Next, all Deny directives are evaluated. If any matches, the [attachment] is rejected. Last, any requests which do not match an Allow or a Deny directive are denied by default." (Excerpt from [Apache Module: mod_access](http://httpd.apache.org/docs/2.0/mod/mod_access.html)  on which this feature is based).
+
+With a _deny,allow_ strategy: "First, all Deny  directives are evaluated; if any match, the request is denied unless it also matches an Allow directive. Any requests which do not match any Allow or Deny directives are permitted." (Excerpt from [Apache Module: mod_access](http://httpd.apache.org/docs/2.0/mod/mod_access.html) on which this feature is based).
+
+## IP Address Filtering
+
+Attachments added via the web can be denied on the basis of their uploader's IP address matching a blacklist.
+
+The blacklist is defined as a space-separated list of regular expressions as a value of the _ban\_ips_ setting. For example, a value of '3 127\. ^2[45]' blocks all addresses containing the number 3, containing the octet 127, and starting with a 2 followed by a 4 or 5.
+
+## Allowing Attachments Only on Specific Pages
+
+An administrator may wish to only allow users to attach files to pages which he has chosen. To do so, he must set the _every\_page_ option to _0_, then an _attach_ preprocessor directive ("\[\[attach \]\] to the pages on which attachments should be allowed.
+
+## Attaching Files from the Command Line
+
+An attachment is simply a non-source file located in the source directory of the IkiWiki. The directory in which the file is located determines which page it is attached to. For example, to attach _song.ogg_ to the _music_ page, an administrator would simply create a _music_ sub-directory of the source directory, if it doesn't already exist, and move _song.ogg_ inside of it.
+
+Files attached in this manner are not subject to any of the validation procedures. They can be of arbitrary size and type.
