@@ -1,0 +1,39 @@
+The source file `foo/bar.mdwn` or `foo/bar.html` generates the
+page `foo/bar/index.html`, but the links to the page appear
+as "`foo/bar/`".  This is fine (and recommended) for pages
+served by an http server, but it doesn't work when browsing
+the pages directly using `file:` URL.  The latter might be
+desirable when testing pages before upload, or if you want to
+read pages when off-line without access to a web server.
+
+Here is a JavaScript "`onload`" script which fixes the URLs
+if the `local.protocol` isn't `http` or `https`:
+
+	function fixLinks() {
+	  var scheme = location.protocol;
+ 	 if (scheme=="http:" || scheme=="https:") return;
+ 	 var links = document.getElementsByTagName("a");
+	  for (var i = links.length; --i >= 0; ) {
+ 	   var link = links[i];
+	    var href = link.href;
+	    var hlen = href.length;
+ 	   if (hlen > 0 && link.protocol==scheme && href.charAt(hlen-1) == "/")
+ 	     links[i].href = href + "index.html";
+	  }
+	}
+
+This can be placed in `page.tmpl`:
+
+	<html>
+	<head>
+	<script language="JavaScript">
+	function fixLinks() {
+	...
+	}
+	</script>
+	</head>
+	<body onload="javascript:fixLinks();">
+	...
+	</html>
+
+This script has not been extensively tested.
