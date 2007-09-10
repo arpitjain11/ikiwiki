@@ -14,6 +14,13 @@ installed, and also uses the following perl modules if available:
 [[cpan XML::Feed]], [[cpan File::MimeInfo]], [[cpan Locale::gettext]]
 (version 1.04 or newer).
 
+While Fedora 7 doesn't have an ikiwiki package, you can install needed
+perl modules using this command:
+
+	yum install perl-Text-Markdown perl-Mail-Sendmail perl-HTML-Scrubber \
+	  perl-XML-Simple perl-TimeDate perl-HTML-Template perl-CGI-FormBuilder \
+	  perl-CGI-Session perl-File-MimeInfo perl-gettext
+
 Various [[plugins]] use other libraries and utlities; see their individual
 documentation for details.
 
