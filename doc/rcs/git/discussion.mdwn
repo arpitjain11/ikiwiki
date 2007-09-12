@@ -3,3 +3,26 @@
 I'd like to migrate from svn to git, because git is better in general but also has some nice properties that go well together with my use of ikiwiki.. I only change it myself. I want a single git repo so that my website directory is self-contained so that I don't need to drag around a separate svn repository on my computer. Is it possible to use ikiwiki so that it only uses a git repository in the same dir as all files are stored and edited?
 
 Otherwise, I hope migrating is just importing the svn repo to git and then setting up ikiwiki to use git. I don't plan to go back to svn after that so git-svn should only do the import.
+
+### Solution ###
+**Basis:** I only use ikiwiki as a wiki compiler. No cgi or anything.
+
+I imported my svn repo into git with git-svnimport. I reconfigured ikiwiki to _not use any rcs_. In `ikiwiki.setup`, I have the git repository as srcdir, and a suitable dstdir. 
+
+Then, in my git repository, I added this `post-commit` hook to refresh the wiki:
+
+	#!/bin/sh
+
+	# to refresh when changes happen
+
+	#!/bin/sh
+
+	# to refresh when changes happen
+
+	BASE="/path/to/base/dir"
+	SETUPFILE="$BASE/ikiwiki.setup"
+	UNDERLAYDIR="$BASE/underlay"
+
+	ikiwiki --refresh --setup "$SETUPFILE" --underlaydir="$UNDERLAYDIR" --verbose	
+
+UlrikSverdrup
