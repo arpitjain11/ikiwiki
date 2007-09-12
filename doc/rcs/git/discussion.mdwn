@@ -15,10 +15,6 @@ Then, in my git repository, I added this `post-commit` hook to refresh the wiki:
 
 	# to refresh when changes happen
 
-	#!/bin/sh
-
-	# to refresh when changes happen
-
 	BASE="/path/to/base/dir"
 	SETUPFILE="$BASE/ikiwiki.setup"
 	UNDERLAYDIR="$BASE/underlay"
