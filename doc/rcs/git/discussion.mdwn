@@ -21,4 +21,10 @@ Then, in my git repository, I added this `post-commit` hook to refresh the wiki:
 
 	ikiwiki --refresh --setup "$SETUPFILE" --underlaydir="$UNDERLAYDIR" --verbose	
 
-UlrikSverdrup
+Positives:
+
+* Containment: I only have the above `$BASE` directory to backup: it contains the srcdir and setup files. No external svn repository. This means that suddenly `git` and `ikiwiki` pair into a stand-alone self-contained wiki compiler kit.
+
+UlrikSverdrup (This is now crossposted to the above mentioned [website][ulrikweb])
+
+[ulrikweb]: http://www.student.lu.se/~cif04usv/wiki/stuff/git.html
