@@ -93,6 +93,7 @@ sub preprocess_inline (@) { #{{{
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
 	$feeds=0 if $params{preview};
+	my $feedonly=yesno($params{feedonly});
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}
@@ -180,66 +181,68 @@ sub preprocess_inline (@) { #{{{
 		$ret.=$linktemplate->output;
 	}
 	
-	require HTML::Template;
-	my @params=IkiWiki::template_params($params{template}.".tmpl", blind_cache => 1);
-	if (! @params) {
-		return sprintf(gettext("nonexistant template %s"), $params{template});
-	}
-	my $template=HTML::Template->new(@params) unless $raw;
+	if (! $feedonly) {
+		require HTML::Template;
+		my @params=IkiWiki::template_params($params{template}.".tmpl", blind_cache => 1);
+		if (! @params) {
+			return sprintf(gettext("nonexistant template %s"), $params{template});
+		}
+		my $template=HTML::Template->new(@params) unless $raw;
 	
-	foreach my $page (@list) {
-		my $file = $pagesources{$page};
-		my $type = pagetype($file);
-		if (! $raw || ($raw && ! defined $type)) {
-			unless ($archive && $quick) {
-				# Get the content before populating the
-				# template, since getting the content uses
-				# the same template if inlines are nested.
-				my $content=get_inline_content($page, $params{destpage});
-				$template->param(content => $content);
-			}
-			$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
-			$template->param(title => pagetitle(basename($page)));
-			$template->param(ctime => displaytime($pagectime{$page}));
-
-			if ($actions) {
-				my $file = $pagesources{$page};
-				my $type = pagetype($file);
-				if ($config{discussion}) {
-					my $discussionlink=gettext("discussion");
-					if ($page !~ /.*\/\Q$discussionlink\E$/ &&
-					    (length $config{cgiurl} ||
-					     exists $links{$page."/".$discussionlink})) {
+		foreach my $page (@list) {
+			my $file = $pagesources{$page};
+			my $type = pagetype($file);
+			if (! $raw || ($raw && ! defined $type)) {
+				unless ($archive && $quick) {
+					# Get the content before populating the
+					# template, since getting the content uses
+					# the same template if inlines are nested.
+					my $content=get_inline_content($page, $params{destpage});
+					$template->param(content => $content);
+				}
+				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
+				$template->param(title => pagetitle(basename($page)));
+				$template->param(ctime => displaytime($pagectime{$page}));
+	
+				if ($actions) {
+					my $file = $pagesources{$page};
+					my $type = pagetype($file);
+					if ($config{discussion}) {
+						my $discussionlink=gettext("discussion");
+						if ($page !~ /.*\/\Q$discussionlink\E$/ &&
+						    (length $config{cgiurl} ||
+						     exists $links{$page."/".$discussionlink})) {
+							$template->param(have_actions => 1);
+							$template->param(discussionlink =>
+								htmllink($page,
+									$params{page},
+									gettext("Discussion"),
+									noimageinline => 1,
+									forcesubpage => 1));
+						}
+					}
+					if (length $config{cgiurl} && defined $type) {
 						$template->param(have_actions => 1);
-						$template->param(discussionlink =>
-							htmllink($page,
-								$params{page},
-								gettext("Discussion"),
-								noimageinline => 1,
-								forcesubpage => 1));
+						$template->param(editurl => cgiurl(do => "edit", page => pagetitle($page, 1)));
 					}
 				}
-				if (length $config{cgiurl} && defined $type) {
-					$template->param(have_actions => 1);
-					$template->param(editurl => cgiurl(do => "edit", page => pagetitle($page, 1)));
-				}
+	
+				run_hooks(pagetemplate => sub {
+					shift->(page => $page, destpage => $params{page},
+						template => $template,);
+				});
+	
+				$ret.=$template->output;
+				$template->clear_params;
 			}
-
-			run_hooks(pagetemplate => sub {
-				shift->(page => $page, destpage => $params{page},
-					template => $template,);
-			});
-
-			$ret.=$template->output;
-			$template->clear_params;
-		}
-		else {
-			if (defined $type) {
-				$ret.="\n".
-				      linkify($page, $params{page},
-				      preprocess($page, $params{page},
-				      filter($page, $params{page},
-				      readfile(srcfile($file)))));
+			else {
+				if (defined $type) {
+					$ret.="\n".
+					      linkify($page, $params{page},
+					      preprocess($page, $params{page},
+					      filter($page, $params{page},
+					      readfile(srcfile($file)))));
+				}
 			}
 		}
 	}
