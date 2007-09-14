@@ -128,6 +128,7 @@ sub preprocess (@) { #{{{
 sub pagetemplate (@) { #{{{
 	my %params=@_;
         my $page=$params{page};
+        my $destpage=$params{destpage};
         my $template=$params{template};
 
 	$template->param(meta => $meta{$page})
@@ -142,11 +143,17 @@ sub pagetemplate (@) { #{{{
 		if exists $author{$page} && $template->query(name => "author");
 	$template->param(authorurl => $authorurl{$page})
 		if exists $authorurl{$page} && $template->query(name => "authorurl");
-	$template->param(license => $license{$page})
-		if exists $license{$page} && $template->query(name => "license");
-	$template->param(copyright => $copyright{$page})
-		if exists $copyright{$page} && $template->query(name => "copyright");
-	
+
+	if (exists $license{$page} && $template->query(name => "license") &&
+	    ($page ne $destpage || ! exists $license{$destpage} ||
+	      $license{$page} ne $license{$destpage})) {
+		$template->param(license => $license{$page})
+	}
+	if (exists $copyright{$page} && $template->query(name => "copyright") &&
+	    ($page ne $destpage || ! exists $copyright{$destpage} ||
+	      $copyright{$page} ne $copyright{$destpage})) {
+		$template->param(copyright => $copyright{$page})
+	}
 } # }}}
 
 1
