@@ -11,6 +11,8 @@ my %title;
 my %permalink;
 my %author;
 my %authorurl;
+my %license;
+my %copyright;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
@@ -45,6 +47,7 @@ sub preprocess (@) { #{{{
 	delete $params{$key};
 	my $page=$params{page};
 	delete $params{page};
+	my $destpage=$params{destpage};
 	delete $params{destpage};
 	delete $params{preview};
 
@@ -100,6 +103,14 @@ sub preprocess (@) { #{{{
 		$meta{$page}.='<link href="'.encode_entities($value).
 			"\" rel=\"openid.delegate\" />\n";
 	}
+	elsif ($key eq 'license') {
+		$meta{$page}.="<link rel=\"license\" href=\"#page_license\" />\n";
+		$license{$page}=IkiWiki::linkify($page, $destpage, $value);
+	}
+	elsif ($key eq 'copyright') {
+		$meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";
+		$copyright{$page}=IkiWiki::linkify($page, $destpage, $value);
+	}
 	else {
 		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
 			"\" content=\"".encode_entities($value)."\" />\n");
@@ -131,6 +142,10 @@ sub pagetemplate (@) { #{{{
 		if exists $author{$page} && $template->query(name => "author");
 	$template->param(authorurl => $authorurl{$page})
 		if exists $authorurl{$page} && $template->query(name => "authorurl");
+	$template->param(license => $license{$page})
+		if exists $license{$page} && $template->query(name => "license");
+	$template->param(copyright => $copyright{$page})
+		if exists $copyright{$page} && $template->query(name => "copyright");
 	
 } # }}}
 
