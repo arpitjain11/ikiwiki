@@ -47,7 +47,6 @@ sub preprocess (@) { #{{{
 	delete $params{$key};
 	my $page=$params{page};
 	delete $params{page};
-	my $destpage=$params{destpage};
 	delete $params{destpage};
 	delete $params{preview};
 
@@ -105,11 +104,11 @@ sub preprocess (@) { #{{{
 	}
 	elsif ($key eq 'license') {
 		$meta{$page}.="<link rel=\"license\" href=\"#page_license\" />\n";
-		$license{$page}=IkiWiki::linkify($page, $destpage, $value);
+		$license{$page}=$value;
 	}
 	elsif ($key eq 'copyright') {
 		$meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";
-		$copyright{$page}=IkiWiki::linkify($page, $destpage, $value);
+		$copyright{$page}=$value;
 	}
 	else {
 		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
@@ -143,16 +142,25 @@ sub pagetemplate (@) { #{{{
 		if exists $author{$page} && $template->query(name => "author");
 	$template->param(authorurl => $authorurl{$page})
 		if exists $authorurl{$page} && $template->query(name => "authorurl");
+		
+	if ($page ne $destpage &&
+	    ((exists $license{$page}   && ! exists $license{$destpage}) ||
+	     (exists $copyright{$page} && ! exists $copyright{$destpage}))) {
+		# Force a scan of the destpage to get its copyright/license
+		# info. If the info is declared after an inline, it will
+		# otherwise not be available at this point.
+		IkiWiki::scan($pagesources{$destpage});
+	}
 
 	if (exists $license{$page} && $template->query(name => "license") &&
-	    ($page ne $destpage || ! exists $license{$destpage} ||
-	      $license{$page} ne $license{$destpage})) {
-		$template->param(license => $license{$page})
+	    ($page eq $destpage || ! exists $license{$destpage} ||
+	     $license{$page} ne $license{$destpage})) {
+		$template->param(license => IkiWiki::linkify($page, $destpage, $license{$page}));
 	}
 	if (exists $copyright{$page} && $template->query(name => "copyright") &&
-	    ($page ne $destpage || ! exists $copyright{$destpage} ||
-	      $copyright{$page} ne $copyright{$destpage})) {
-		$template->param(copyright => $copyright{$page})
+	    ($page eq $destpage || ! exists $copyright{$destpage} ||
+	     $copyright{$page} ne $copyright{$destpage})) {
+		$template->param(copyright => IkiWiki::linkify($page, $destpage, $copyright{$page}));
 	}
 } # }}}
 
