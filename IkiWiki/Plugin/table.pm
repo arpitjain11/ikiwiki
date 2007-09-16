@@ -23,10 +23,6 @@ sub preprocess (@) { #{{{
 		}
 		$params{data} = readfile(srcfile($params{file}));
 	}
-	else {
-		$params{data} = IkiWiki::linkify($params{page},
-			$params{destpage}, $params{data});
-	}
 
 	if (lc $params{format} eq 'auto') {
 		# first try the more simple format
@@ -42,8 +38,24 @@ sub preprocess (@) { #{{{
 	if (lc $params{format} eq 'csv') {
 		@data=split_csv($params{data},
 			defined $params{delimiter} ? $params{delimiter} : ",",);
+		# linkify after parsing since html link quoting can
+		# confuse CSV parsing
+		if (! exists $params{file}) {
+			@data=map {
+				[ map {
+					IkiWiki::linkify($params{page},
+						$params{destpage}, $_);
+				} @$_ ]
+			} @data;
+		}
 	}
 	elsif (lc $params{format} eq 'dsv') {
+		# linkify before parsing since wikilinks can contain the
+		# delimiter
+		if (! exists $params{file}) {
+			$params{data} = IkiWiki::linkify($params{page},
+				$params{destpage}, $params{data});
+		}
 		@data=split_dsv($params{data},
 			defined $params{delimiter} ? $params{delimiter} : "|",);
 	}
