@@ -33,6 +33,13 @@ would then not be picked up until the ikiwiki is recompiled.
 >> reprepro doesn't seem to have one, :( though of course creating a
 >> script to do both would work (but it's not optimal). --Cameron
 
+>>> reprepro has two kind of hooks that could be used. One is called
+>>> whenever a Packages file is changed (normaly used to generate
+>>> Packages.diff files, but it does not need to add new files).
+>>> The other (though only available since 2.1) is called whenever
+>>> a package is added or removed (there is an example in the docs
+>>> for extracting changelogs using this). 
+
 > For ikiwiki to notice that the Packages file outside its tree has
 > changed and things need to be updated, a `needsbuild` hook could be
 > used. This seems very doable.
