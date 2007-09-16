@@ -40,10 +40,12 @@ sub preprocess (@) { #{{{
 
 	my @data;
 	if (lc $params{format} eq 'csv') {
-		@data=split_csv($params{data}, $params{delimiter});
+		@data=split_csv($params{data},
+			defined $params{delimiter} ? $params{delimiter} : ",",);
 	}
 	elsif (lc $params{format} eq 'dsv') {
-		@data=split_dsv($params{data}, $params{delimiter});
+		@data=split_dsv($params{data},
+			defined $params{delimiter} ? $params{delimiter} : "|",);
 	}
 	else {
 		return "[[table ".gettext("unknown data format")."]]";
@@ -95,7 +97,7 @@ sub split_csv ($$) { #{{{
 	eval q{use Text::CSV};
 	error($@) if $@;
 	my $csv = Text::CSV->new({ 
-		sep_char	=> defined $delimiter ? $delimiter : ",",
+		sep_char	=> $delimiter,
 		binary		=> 1,
 		allow_loose_quotes => 1,
 	}) || error("could not create a Text::CSV object");
