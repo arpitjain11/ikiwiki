@@ -1,0 +1,3 @@
+On <http://phd.martin-krafft.net/wiki/tag/factors/ideology/>, another symptom of this problem can be seen: the page collects pages linking to `tag/factors/ideology`, and `/factors/language` is one of those. However, the link points to `tag/factors/language`, which does *not* link to `tag/factors/ideology`.
+
+I think this is an artefact of the intersection of ikiwiki [[SubPage/LinkingRules]] with the use of a page's basename when its path relative to the wikiroot should be used.
