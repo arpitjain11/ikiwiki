@@ -1,0 +1,10 @@
+Using ikiwiki 2.6.1 package with git 1.5.3.1 backend in Debian.
+
+The teximg plugin creates .png and .log files in $basedir/teximg/ even in Preview mode. This causes "File foo independently created, not overwriting with version from page bar"-errors from the will_render()-function, when repeatedly clicking "Preview" or trying to save the page after a preview.
+
+In my opinion there are two ways to fix this cleanly:
+
+1. change the plugin: do not create any files when rendering a preview. Instead, inline the images as base64-encoded like the graphviz-plugin. Disadvantage is a very slow preview if it contains a lot of latex.
+
+2. provide a clean way for plugins to create additional files even for previews. This files can be removed when the "Save Page" button is clicked or on the next page view, for example. On this instance one might also reconsider putting all tex-images into one folder and naming them after their md5-cksum. The hashspace may be large, but not infinite. The technically ingenuous user might not be able to handle cross-page Hash-collisions.
+
