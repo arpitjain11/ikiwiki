@@ -4,4 +4,6 @@ With a statement such as
 
 in `apache`'s configuration, I think that it would be possible to let the user surf to non-existent pages and be prompted to create an entry, as it is with other popular wiki engines.
 
-From the [apache documentation](http://httpd.apache.org/docs/2.2/custom-error.html), it seems that the environment variable `REDIRECT_URL` will carry the name of the page the user has accessed.
+From the [apache documentation](http://httpd.apache.org/docs/2.2/custom-error.html), it seems that the environment variable `REDIRECT_URL` will carry the name of the page the user has accessed. Also see [ErrorDocument](http://httpd.apache.org/docs/2.2/mod/core.html#errordocument)'s documentation.
+
+[[wishlist]]
