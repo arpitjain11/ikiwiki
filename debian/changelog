@@ -1,10 +1,12 @@
 ikiwiki (2.9) UNRELEASED; urgency=low
 
   * Fix copyright and licence styling.
-  * Add taglink preprocessor directive, supporting visible tag links.
+  * tag: Add taglink preprocessor directive, supporting visible tag links.
     Closes: #443344
+  * map: Fully specify paths to links to avoid issues when the bestlink
+    didn't point to the correct page.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 20 Sep 2007 14:57:52 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 20 Sep 2007 15:21:29 -0400
 
 ikiwiki (2.8) unstable; urgency=low
 

@@ -23,7 +23,7 @@ sub preprocess (@) { #{{{
 	my @mapitems = ();
 	foreach my $page (keys %pagesources) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
-			push @mapitems, $page;
+			push @mapitems, "/".$page;
 		}
 	}
 
