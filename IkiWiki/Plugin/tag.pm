@@ -10,7 +10,8 @@ my %tags;
 
 sub import { #{{{
 	hook(type => "getopt", id => "tag", call => \&getopt);
-	hook(type => "preprocess", id => "tag", call => \&preprocess, scan => 1);
+	hook(type => "preprocess", id => "tag", call => \&preprocess_tag, scan => 1);
+	hook(type => "preprocess", id => "taglink", call => \&preprocess_taglink, scan => 1);
 	hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
 } # }}}
 
@@ -32,7 +33,7 @@ sub tagpage ($) { #{{{
 	return $tag;
 } #}}}
 
-sub preprocess (@) { #{{{
+sub preprocess_tag (@) { #{{{
 	if (! @_) {
 		return "";
 	}
@@ -50,6 +51,18 @@ sub preprocess (@) { #{{{
 	}
 		
 	return "";
+} # }}}
+
+sub preprocess_taglink (@) { #{{{
+	if (! @_) {
+		return "";
+	}
+	preprocess_tag(@_);
+	my %params=@_;
+	delete $params{page};
+	delete $params{destpage};
+	delete $params{preview};
+	return join(" ", map { "[[$_]]" } keys %params);
 } # }}}
 
 sub pagetemplate (@) { #{{{
