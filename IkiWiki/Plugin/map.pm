@@ -35,12 +35,18 @@ sub preprocess (@) { #{{{
 	add_depends($params{page}, join(" or ", @mapitems));
 
 	# Create the map.
+	my $parent="";
 	my $indent=0;
 	my $openli=0;
 	my $map = "<div class='map'>\n";
-	$map .= "<ul>\n";
 	foreach my $item (sort @mapitems) {
 		my $depth = ($item =~ tr/\//\//);
+		my $baseitem=IkiWiki::dirname($item);
+		while (length $parent && length $baseitem && $baseitem !~ /^\Q$parent\E/) {
+			$parent=IkiWiki::dirname($parent);
+			$indent--;
+			$map.="</li></ul>\n";
+		}
 		while ($depth < $indent) {
 			$indent--;
 			$map.="</li></ul>\n";
@@ -48,19 +54,25 @@ sub preprocess (@) { #{{{
 		while ($depth > $indent) {
 			$indent++;
 			$map.="<ul>\n";
-			$openli=0;
+			if ($depth > $indent) {
+				$map .= "<li>\n";
+				$openli=1;
+			}
+			else {
+				$openli=0;
+			}
 		}
 		$map .= "</li>\n" if $openli;
 		$map .= "<li>"
 			.htmllink($params{page}, $params{destpage}, $item)
 			."\n";
 		$openli=1;
+		$parent=$item;
 	}
 	while ($indent > 0) {
 		$indent--;
 		$map.="</li></ul>\n";
 	}
-	$map .= "</li></ul>\n";
 	$map .= "</div>\n";
 	return $map;
 } # }}}

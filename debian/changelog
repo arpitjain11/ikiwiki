@@ -5,8 +5,11 @@ ikiwiki (2.9) UNRELEASED; urgency=low
     Closes: #443344
   * map: Fully specify paths to links to avoid issues when the bestlink
     didn't point to the correct page.
+  * map: Render empty nodes on the way to subpages whose parent pages
+    are not included in the map.
+  * map: Fix valid html issue.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 20 Sep 2007 15:21:29 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 21 Sep 2007 13:28:32 -0400
 
 ikiwiki (2.8) unstable; urgency=low
 
