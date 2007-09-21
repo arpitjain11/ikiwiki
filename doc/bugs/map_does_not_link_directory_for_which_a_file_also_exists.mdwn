@@ -2,4 +2,6 @@
 
 On <http://phd.martin-krafft.net/wiki/tag/factors/>, the top-level `factors` entry is not linked to the corresponding page. Looking at <http://phd.martin-krafft.net/wiki/tag/factors/language/>, this must be because the page name is the same as the entry name, and ikiwiki probably doesn't take the complete path of subpages into account.
 
-[[fixed|done]] --[[Joey]]
+[[notfixed|notdone]] --[[Joey]]
+
+I can confirm that most if the issues are fixed, but if you look at the "tagged pages" map at <http://phd.martin-krafft.net/wiki/tag/factors/> again, you'll notice that map still includes and links to pages that do not match the pagespec. The list includes entries like `tag/factors/contribute`, but that page does *not* link/is not tagged with any `factors*` tag. --[[madduck]]
