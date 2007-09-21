@@ -27,4 +27,21 @@ and this works, except that for *whatever* reason, it actually sorts the three
                       ■ developers
                       ■ users
 
+And this is actually in the HTML code:
+
+    <li><a href="active/">active</a>
+    <ul>
+    <li><a href="affects/contributors/">contributors</a>
+    </li>
+    <li><a href="affects/developers/">developers</a>
+    </li>
+    <li><a href="affects/users/">users</a>
+    </li></ul>
+    </li>
+    <li><a href="approach/">approach</a>
+    </li>
+
+So it's not that the `<ul>` has an empty parent `<li>`, the three tags are
+*really* children of `active`.
+
 This really blows my mind. :)
