@@ -1,0 +1,30 @@
+ikiwiki's map directive is full of surprises. I have put a snapshot of the
+site as it was when I saw the following problem at
+<http://scratch.madduck.net/web__phd.martin-krafft.net__map-bug-2.tgz> and can
+revert there any time, but I need to move on.
+
+I have a few tags starting with `a` (abridged list):
+
+> $ ls wiki/factors/tag/a*
+> [...]
+> wiki/factors/tag/active/:
+> index.html
+>
+> wiki/factors/tag/affects/:
+> contributors/  developers/  users/
+> [...]
+
+In `wiki-wc/factors/tag.mdwn`, I have a map for these tags:
+
+> [[map pages="factors/tag/*"]]
+
+and this works, except that for *whatever* reason, it actually sorts the three
+`affects/*` tags under `active`:
+
+> $ w3m -dump wiki/factors/tag/index.html | grep active -A3
+>               ○ active
+>                   ■ contributors
+>                   ■ developers
+>                   ■ users
+
+This really blows my mind. :)
