@@ -1,0 +1,1 @@
+Given a page `/foo` and a subpage `/foo/bar`, if I add a link to `baz` to `/foo` and click on the link to create the page, the suggested location should be `/foo/baz` instead of `/baz`. The rationale is that presence of a sibling folder, or sibling pages (with `usefolders=0`) is a strong hint that we're at the root of a (sub-)hierarchy.
