@@ -449,6 +449,10 @@ destination directory), register that the page will result in that file
 being rendered. It's important to call this before writing to any file in
 the destination directory.
 
+Ikiwiki uses this information to automatically clean up rendered files when
+the page that rendered them goes away or is changes to no longer render
+them. will_render also does a few important security checks.
+
 #### `pagetype($)`
 
 Given the name of a source file, returns the type of page it is, if it's
