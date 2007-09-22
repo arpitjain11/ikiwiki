@@ -588,6 +588,9 @@ sub htmllink ($$$;@) { #{{{
 	if (defined $opts{rel}) {
 		push @attrs, ' rel="'.$opts{rel}.'"';
 	}
+	if (defined $opts{class}) {
+		push @attrs, ' class="'.$opts{class}.'"';
+	}
 
 	return "<a href=\"$bestlink\"@attrs>$linktext</a>";
 } #}}}

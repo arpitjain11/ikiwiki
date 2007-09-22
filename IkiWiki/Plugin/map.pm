@@ -19,12 +19,34 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 	$params{pages}="*" unless defined $params{pages};
 	
+	my $common_prefix;
+
 	# Get all the items to map.
-	my @mapitems = ();
+	my %mapitems;
 	foreach my $page (keys %pagesources) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
-			push @mapitems, "/".$page;
+			$mapitems{$page}=1;
+
+			# Check for a common prefix.
+			if (! defined $common_prefix) {
+				$common_prefix=$page;
+			}
+			elsif (length $common_prefix &&
+			       $page !~ /^\Q$common_prefix\E(\/|$)/) {
+				my @a=split(/\//, $page);
+				my @b=split(/\//, $common_prefix);
+				$common_prefix="";
+				while (@a && @b && $a[0] eq $b[0]) {
+					$common_prefix.=shift(@a);
+					shift @b;
+				}
+			}
 		}
+	}
+	
+	# Common prefix should not be a page in the map.
+	while (length $common_prefix && exists $mapitems{$common_prefix}) {
+		$common_prefix=IkiWiki::dirname($common_prefix);
 	}
 
 	# Needs to update whenever a page is added or removed, so
@@ -32,30 +54,45 @@ sub preprocess (@) { #{{{
 	add_depends($params{page}, $params{pages});
 	# Explicitly add all currently shown pages, to detect when pages
 	# are removed.
-	add_depends($params{page}, join(" or ", @mapitems));
+	add_depends($params{page}, join(" or ", keys %mapitems));
 
 	# Create the map.
 	my $parent="";
 	my $indent=0;
 	my $openli=0;
-	my $map = "<div class='map'>\n";
-	foreach my $item (sort @mapitems) {
-		my $depth = ($item =~ tr/\//\//);
+	my $map = "<div class='map'>\n<ul>\n";
+	foreach my $item (sort keys %mapitems) {
+		$item=~s/^\Q$common_prefix\E\/// if length $common_prefix;
+		my $depth = ($item =~ tr/\//\//) + 1;
 		my $baseitem=IkiWiki::dirname($item);
-		while (length $parent && length $baseitem && $baseitem !~ /^\Q$parent\E/) {
+		while (length $parent && length $baseitem && $baseitem !~ /^\Q$parent\E(\/|$)/) {
 			$parent=IkiWiki::dirname($parent);
 			$indent--;
-			$map.="</li></ul>\n";
+			$map .= "</li>\n";
+			if ($indent > 0) {
+				$map .= "</ul>\n";
+			}
 		}
 		while ($depth < $indent) {
 			$indent--;
-			$map.="</li></ul>\n";
+			$map .= "</li>\n";
+			if ($indent > 0) {
+				$map .= "</ul>\n";
+			}
 		}
+		my @bits=split("/", $item);
+		my $p="";
+		$p.="/".shift(@bits) for 1..$indent;
 		while ($depth > $indent) {
 			$indent++;
-			$map.="<ul>\n";
+			if ($indent > 1) {
+				$map .= "<ul>\n";
+			}
 			if ($depth > $indent) {
-				$map .= "<li>\n";
+				$p.="/".shift(@bits);
+				$map .= "<li>"
+					.htmllink($params{page}, $params{destpage}, $p, class => "mapparent")
+					."</span>\n";
 				$openli=1;
 			}
 			else {
@@ -64,14 +101,15 @@ sub preprocess (@) { #{{{
 		}
 		$map .= "</li>\n" if $openli;
 		$map .= "<li>"
-			.htmllink($params{page}, $params{destpage}, $item)
-			."\n";
+			.htmllink($params{page}, $params{destpage}, 
+				"/".$common_prefix."/".$item, class => "mapitem")
+			."</span>\n";
 		$openli=1;
 		$parent=$item;
 	}
 	while ($indent > 0) {
 		$indent--;
-		$map.="</li></ul>\n";
+		$map .= "</li>\n</ul>\n";
 	}
 	$map .= "</div>\n";
 	return $map;
