@@ -57,12 +57,25 @@ sub preprocess_taglink (@) { #{{{
 	if (! @_) {
 		return "";
 	}
-	preprocess_tag(@_);
 	my %params=@_;
-	delete $params{page};
-	delete $params{destpage};
-	delete $params{preview};
-	return join(" ", map { "[[$_]]" } keys %params);
+	return join(" ", map {
+		if (/(.*)\|(.*)/) {
+			my $tag=IkiWiki::linkpage($2);
+			$tags{$params{page}}{$tag}=1;
+			return htmllink($params{page}, $params{destpage},
+				tagpage($tag),
+				linktext => IkiWiki::pagetitle($1));
+		}
+		else {
+			my $tag=IkiWiki::linkpage($_);
+			$tags{$params{page}}{$tag}=1;
+			return htmllink($params{page}, $params{destpage},
+				tagpage($tag));
+		}
+	}
+	grep {
+		$_ ne 'page' && $_ ne 'destpage' && $_ ne 'preview'
+	} keys %params);
 } # }}}
 
 sub pagetemplate (@) { #{{{
