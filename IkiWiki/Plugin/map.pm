@@ -45,7 +45,8 @@ sub preprocess (@) { #{{{
 	}
 	
 	# Common prefix should not be a page in the map.
-	while (length $common_prefix && exists $mapitems{$common_prefix}) {
+	while (defined $common_prefix && length $common_prefix &&
+	       exists $mapitems{$common_prefix}) {
 		$common_prefix=IkiWiki::dirname($common_prefix);
 	}
 
@@ -62,7 +63,8 @@ sub preprocess (@) { #{{{
 	my $openli=0;
 	my $map = "<div class='map'>\n<ul>\n";
 	foreach my $item (sort keys %mapitems) {
-		$item=~s/^\Q$common_prefix\E\/// if length $common_prefix;
+		$item=~s/^\Q$common_prefix\E\///
+			if defined $common_prefix && length $common_prefix;
 		my $depth = ($item =~ tr/\//\//) + 1;
 		my $baseitem=IkiWiki::dirname($item);
 		while (length $parent && length $baseitem && $baseitem !~ /^\Q$parent\E(\/|$)/) {
