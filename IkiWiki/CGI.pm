@@ -506,6 +506,7 @@ sub cgi_editpage ($$) { #{{{
 		}
 		
 		showform($form, \@buttons, $session, $q);
+		saveindex();
 	}
 	else {
 		# save page

@@ -8,3 +8,5 @@ In my opinion there are two ways to fix this cleanly:
 
 2. provide a clean way for plugins to create additional files even for previews. This files can be removed when the "Save Page" button is clicked or on the next page view, for example. On this instance one might also reconsider putting all tex-images into one folder and naming them after their md5-cksum. The hashspace may be large, but not infinite. The technically ingenuous user might not be able to handle cross-page Hash-collisions.
 
+Preview issue [[fixed|done]] (but see
+[[teximg_fails_if_same_tex_is_used_on_multiple_pages]]) --[[Joey]]

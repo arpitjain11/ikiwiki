@@ -12,8 +12,12 @@ ikiwiki (2.9) UNRELEASED; urgency=low
   * img: Allow link=somepage to cause the image to link to a given page.
     Slight overriding of link, as link=no is still used to disable the linking
     entirely. Unless you have a page named "no"..
+  * Save index after previewing page edit, since even previewing can create
+    files in some situations, and this is appropriate in some cases, such as
+    the teximg plugin's error log file.
+    Such files will be automatically cleaned up at an appopriate later time.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 22 Sep 2007 12:36:37 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 22 Sep 2007 14:19:58 -0400
 
 ikiwiki (2.8) unstable; urgency=low
 
