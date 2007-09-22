@@ -1223,7 +1223,7 @@ sub match_link ($$;@) { #{{{
 				if $bestlink eq IkiWiki::bestlink($page, $p);
 		}
 		else {
-			return IkiWiki::SuccessReason->new("$page links to page matching $link")
+			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
 				if match_glob($p, $link, %params);
 		}
 	}
