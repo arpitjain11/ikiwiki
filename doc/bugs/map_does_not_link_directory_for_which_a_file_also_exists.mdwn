@@ -7,3 +7,20 @@ On <http://phd.martin-krafft.net/wiki/tag/factors/>, the top-level `factors` ent
 I can confirm that most if the issues are fixed, but map still includes and links to pages that do not match the pagespec. The list includes entries like `tag/factors/contribute`, but that page does *not* link/is not tagged with any `factors*` tag. I have put a snapshot of the site as it was when I saw this bug at <http://scratch.madduck.net/web__phd.martin-krafft.net__map-bug-1.tgz> and can return to the state at any time, but I needed to move on now...
 
 --[[madduck]]
+
+That's a different issue. :-)
+
+This is really subtle and tricky. It's doing this because it
+thinks that tag/factors/contribute _does_ link to a page
+matching "tag/factors/*". That page? tag/factors/contribute/discussion!
+
+Now, tag/factors/contribute/discussion doesn't exist yet in your wiki,
+but there is a "?Discussion" pseudo-link, and that's good enough for
+ikiwiki.
+
+So, you could work around this annoying behavior with
+!link(tag/factors/*/Discussion)
+
+BTW, the testpagespec plugin is useful in debugging these kind of things.
+
+--[[Joey]]
