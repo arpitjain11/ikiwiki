@@ -1,3 +1,24 @@
-Given a page `/foo` and a subpage `/foo/bar`, if I add a link to `baz` to `/foo` and click on the link to create the page, the suggested location should be `/foo/baz` instead of `/baz`. The rationale is that presence of a sibling folder, or sibling pages (with `usefolders=0`) is a strong hint that we're at the root of a (sub-)hierarchy.
+Given a page `/foo` and a subpage `/foo/bar`, if I add a link to `baz` to
+`/foo` and click on the link to create the page, the suggested location
+should be `/foo/baz` instead of `/baz`. The rationale is that presence of a
+sibling folder, or sibling pages (with `usefolders=0`) is a strong hint
+that we're at the root of a (sub-)hierarchy.
+
+> I think there's something to be said for consistency, even if it doesn't
+> make the best guess every time. It makes it more easy to learn when 
+> you do need to change the location, and learn when default works.
+> 
+> In your example, to get the foo/bar page created, you'd need to remember
+> to change the default when creating that subpage. But only for the first
+> subpage, after that it would get the default right. But who can remember if
+> a particular page has a subpage already? You end up having to check every
+> time anyway. Plus, you'd have to check every time you wanted to create "bar"
+> from "foo" that it didn't guess you meant "foo/bar".
+> 
+> With the current simple default, you at least
+> know you don't need to check in that fairly common case, which seems like
+> a win over your suggestion.
+> 
+> IMHO, what you really want is [[Moving_pages]]. :-) --[[Joey]]
 
 [[tag wishlist]]
