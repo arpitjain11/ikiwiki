@@ -92,7 +92,7 @@ sub preprocess (@) { #{{{
 				$p.="/".shift(@bits);
 				$map .= "<li>"
 					.htmllink($params{page}, $params{destpage}, $p, class => "mapparent")
-					."</span>\n";
+					."\n";
 				$openli=1;
 			}
 			else {
@@ -103,7 +103,7 @@ sub preprocess (@) { #{{{
 		$map .= "<li>"
 			.htmllink($params{page}, $params{destpage}, 
 				"/".$common_prefix."/".$item, class => "mapitem")
-			."</span>\n";
+			."\n";
 		$openli=1;
 		$parent=$item;
 	}
