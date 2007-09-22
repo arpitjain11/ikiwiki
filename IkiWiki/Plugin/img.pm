@@ -106,6 +106,10 @@ sub preprocess (@) { #{{{
 	if (! defined $params{link} || lc($params{link}) eq 'yes') {
 		return  '<a href="'.$fileurl.'">'.$imgtag.'</a>';
 	}
+	elsif (length bestlink($params{page}, $params{link})) {
+		return htmllink($params{page}, $params{destpage},
+			$params{link}, linktext => $imgtag);
+	}
 	else {
 		return $imgtag;
 	}
