@@ -18,10 +18,12 @@ links at the start of a sentence, and so on.
 It's also possible to write a WikiLink that uses something other than the page
 name as the link text. For example `\[[foo_bar|SandBox]]` links to the SandBox
 page, but the link will appear like this: [[foo_bar|SandBox]]. The reason you
-**have to use underscores in place of spaces in WikiLinks** is so that `ikiwiki`
-can distinguish your WikiLink from a PreprocessorDirective.
-(Note: you *can* actually use spaces if you specify the target link following the
-pipe symbil (`|`), as in the above.
+**have to use underscores in place of spaces in WikiLinks** is so that
+`ikiwiki` can distinguish your WikiLink from a PreProcessorDirective.
+
+(Note: previously, you could actually use spaces if you specify the target
+link following the pipe symbol (`|`), as in the above, but this has been
+disabled shortly after version 2.8).
 
 To link to an anchor inside a page, you can use something like
 `\[[WikiLink#foo]]`
