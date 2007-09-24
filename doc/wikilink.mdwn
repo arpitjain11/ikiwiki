@@ -15,9 +15,11 @@ WikiLinks are matched with page names in a case-insensitive manner, so you
 don't need to worry about getting the case the same, and can capitalise
 links at the start of a sentence, and so on.
 
-It's also possible to write a WikiLink that uses something other than the
-page name as the link text. For example `\[[foo_bar|SandBox]]` links to the
-SandBox page, but the link will appear like this: [[foo_bar|SandBox]]
+It's also possible to write a WikiLink that uses something other than the page
+name as the link text. For example `\[[foo_bar|SandBox]]` links to the SandBox
+page, but the link will appear like this: [[foo_bar|SandBox]]. The reason you
+have to (well, *should*) use underscores in place of spaces is so that
+`ikiwiki` can distinguish your WikiLink from a PreprocessorDirective.
 
 To link to an anchor inside a page, you can use something like
 `\[[WikiLink#foo]]`
