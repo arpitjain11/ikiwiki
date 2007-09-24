@@ -16,8 +16,11 @@ ikiwiki (2.9) UNRELEASED; urgency=low
     files in some situations, and this is appropriate in some cases, such as
     the teximg plugin's error log file.
     Such files will be automatically cleaned up at an appopriate later time.
+  * Don't allow whitespace in link text in a wikilink. This was still
+    allowed by the regexp in one case though not documented to work, and
+    was ambiguous with preprocessor directives.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 22 Sep 2007 14:19:58 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 24 Sep 2007 12:48:35 -0400
 
 ikiwiki (2.8) unstable; urgency=low
 

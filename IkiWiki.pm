@@ -39,7 +39,7 @@ sub defaultconfig () { #{{{
 	wiki_link_regexp => qr{
 		\[\[                    # beginning of link
 		(?:
-			([^\]\|\n]+)    # 1: link text
+			([^\]\|\n\s]+)  # 1: link text
 			\|              # followed by '|'
 		)?                      # optional
 		
