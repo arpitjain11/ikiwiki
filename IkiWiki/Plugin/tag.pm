@@ -62,6 +62,7 @@ sub preprocess_taglink (@) { #{{{
 		if (/(.*)\|(.*)/) {
 			my $tag=IkiWiki::linkpage($2);
 			$tags{$params{page}}{$tag}=1;
+			push @{$links{$params{page}}}, tagpage($tag);
 			return htmllink($params{page}, $params{destpage},
 				tagpage($tag),
 				linktext => IkiWiki::pagetitle($1));
@@ -69,6 +70,7 @@ sub preprocess_taglink (@) { #{{{
 		else {
 			my $tag=IkiWiki::linkpage($_);
 			$tags{$params{page}}{$tag}=1;
+			push @{$links{$params{page}}}, tagpage($tag);
 			return htmllink($params{page}, $params{destpage},
 				tagpage($tag));
 		}
