@@ -88,6 +88,14 @@ which aren't used as real extensions but provide useful intermediate types.
 > will be processed as a chunk of raw html.
 > --[[Joey]]
 
+### Updated patch
+
+I've created an updated [patch](http://www.idletheme.org/code/patches/ikiwiki-format-escapes-rlk-2007-09-24.diff) against the current revision.  No real functionality changes, except for a small test script, one minor bugfix (put a "join" around a scalar-context "map" in convert_link), and some wrangling to get it merged properly; I thought it might be helpful for anyone else who wants to work on the code.
+
+(With that out of the way, I think I'm going to take a stab at Jeremie's plan to use marks which would be replaced post-htmlization.  I've also got an eye towards [[todo/multiple_output_formats]].)
+
+--Ryan Koppenhaver
+
 ## Original patch
 [[tag patch]]
 
