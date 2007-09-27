@@ -10,3 +10,9 @@ and it is not ...
     but if bullets are not above this, it works
 
 Is this markdown limitation? I know that 8 spaces are required to make codeblock appear under bullet, but I don't want it to be under bullet. I want it outside of bullet as normally shown (as code block).
+
+> Yes, this is an ambiguity and limitation in markdown. I'm
+> not sure if it can be fixed, but I've filed a
+> [bug](http://bugs.debian.org/444309) in the Debian BTS
+> about it. I'm going to [[close|done]] this bug in the ikiwiki BTS, since
+> it's not a bug in ikiwiki's own code. --[[Joey]]
