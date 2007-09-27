@@ -1,6 +1,9 @@
 How to put '|' character in a field ? I tried escaping it but it does not work.
 Seems tables are disabled here ?
 
+> Explicitly specify format=csv, then you can use pipes as values and even
+> use quotes to unambiguously include commas in values. --[[Joey]]
+
 See this example:
 
 [[table class=table1 data="""
