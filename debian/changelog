@@ -19,8 +19,10 @@ ikiwiki (2.9) UNRELEASED; urgency=low
   * Don't allow whitespace in link text in a wikilink. This was still
     allowed by the regexp in one case though not documented to work, and
     was ambiguous with preprocessor directives.
+  * camelcase: Tighten regexp to avoid false positives. WikiWords are only
+    linkified now if they are preceeded by whitespace.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 24 Sep 2007 12:48:35 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 28 Sep 2007 16:45:29 -0400
 
 ikiwiki (2.8) unstable; urgency=low
 

@@ -3,7 +3,15 @@ When having a link to e.g. http://www.chumba.com/media/Chumbawamba-EnoughIsEnoug
 You can see an example of the breakage on <http://wiki.debian-community.org/planets/de/> - scroll down to the Chumbawamba entry.
 
 >> There's a great workaround for this bug: Disable the
->> [[plugins/camelcase]] plugin. :-)
+>> [[plugins/camelcase]] plugin. :-) I really don't recommend using that
+>> plugin. _Especially_ not when aggregating third-party content as you do
+>> in the example.
 >> 
->> The fix involves modifying its regexp to look for surrounding brackets.
+>> Fixing this at the html parsing level would involve making ikiwiki 2
+>> times slower, not even counting the html parsing overhead, since it
+>> would have to fully render pages in the "scan" pass.
+>>
+>> All I can do is improve the regexp it uses to try to avoid false
+>> positives. Which I've now [[done]].
+>> 
 >> --[[Joey]]

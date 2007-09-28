@@ -16,10 +16,11 @@ sub filter (@) { #{{{
 	# Make CamelCase links work by promoting them to fullfledged
 	# WikiLinks. This regexp is based on the one in Text::WikiFormat.
 	$params{content}=~s{
-		(?<![[|"/>=])	# try to avoid expanding non-links
-				# with a zero width negative lookbehind for
-				# characters that suggest it's not a link
-		\b		# word boundry
+		(?<![^A-Za-z0-9\s])	# try to avoid expanding non-links
+					# with a zero width negative
+					# lookbehind for characters that
+					# suggest it's not a link
+		\b			# word boundry
 		(
 			(?:
 				[A-Z]		# Uppercase start
