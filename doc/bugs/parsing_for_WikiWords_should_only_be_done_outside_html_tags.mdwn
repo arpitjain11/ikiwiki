@@ -1,3 +1,9 @@
 When having a link to e.g. http://www.chumba.com/media/Chumbawamba-EnoughIsEnough.mp3 inside an anquor tag ikiwiki seems to parse EnoughIsEnough as WikiWord and breaks the link with that.  As a general rule I would suggest that inside tags there should never be any WikiWord parsing, this is just asking for problems.
 
 You can see an example of the breakage on <http://wiki.debian-community.org/planets/de/> - scroll down to the Chumbawamba entry.
+
+>> There's a great workaround for this bug: Disable the
+>> [[plugins/camelcase]] plugin. :-)
+>> 
+>> The fix involves modifying its regexp to look for surrounding brackets.
+>> --[[Joey]]
