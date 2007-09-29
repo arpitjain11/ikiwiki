@@ -121,14 +121,14 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    [[toggleable id=git text="""
 	For Git, you need two repositories, of which one should be bare
 	(meaning that it does not have a working tree checked out). We call
-	the bare repository the "repo" and the other the "srcdir" ($srcdir).
+	the bare repository the "repo" and the other the "srcdir".
 	There are [other
 	ways](http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories)
 	to do the following, but this might be easiest:
 
 			REPO=./wiki.git
 			# SRCDIR is where ikiwiki compiles from. You thus need
-			# to set $srcdir in ikiwiki.setup appropriately. The
+			# to set `srcdir` in ikiwiki.setup appropriately. The
 			# -wc in the name suggests "working clone" because
 			# $SRCDIR holds a Git repository with a working tree.
 			SRCDIR=./wiki-wc
@@ -194,7 +194,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    """]]
 
    [[toggle id=monotone text="Monotone"]]
-   [[toggleable id=montone text="""
+   [[toggleable id=monotone text="""
 			# These instructions are standard instructions to import a directory into monotone
 			# and set it up so that you don't need any passwords to use it
 			REPOSITORY=~/.ikiwiki/mtn.db
