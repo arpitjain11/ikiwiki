@@ -126,34 +126,34 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 	ways](http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories)
 	to do the following, but this might be easiest:
 
-			REPO=~/wiki.git
+			REPOSITORY=~/wiki.git
 			cd $SRCDIR
 			git init
 			echo .ikiwiki > .gitignore
 			git add .
 			git commit -m'Initial commit'
-			# if you expect $REPO to receive pushs from multiple
+			# if you expect $REPOSITORY to receive pushs from multiple
 			# clones, then it is advisable to stop git performing
 			# fast forwards -- this is to avoid overwriting the
 			# remote ref and losing commits from there.
 			git config receive.denyNonFastForwards true
 			git config core.bare true
-			mv .git $REPO
+			mv .git $REPOSITORY
 			mv .ikiwiki ..
 			cd ..
 			rm -r $SRCDIR
-			git clone -l -s $REPO $SRCDIR
+			git clone -l -s $REPOSITORY $SRCDIR
 			mv .ikiwiki $SRCDIR
 
 	It is **paramount** that you **never** push to the Git repository in
 	`$SRCDIR` ([this FAQ entry explains
 	why](http://git.or.cz/gitwiki/GitFaq#head-b6a3d85f677763313159eb39f7dbf4579d4ee28b)).
 	Instead, if you want to work on the wiki from a remote machine, clone
-	`$REPO`, using either the `git` transport (if available), or
+	`$REPOSITORY`, using either the `git` transport (if available), or
 	`ssh`.
 
 	If at any point you commit changes in `$SRCDIR`, make sure to `git
-	push` them to the `$REPO`.
+	push` them to the `$REPOSITORY`.
    """]]
 
    [[toggle id=tla text="TLA"]]
