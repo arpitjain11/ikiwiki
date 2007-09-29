@@ -126,7 +126,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 	ways](http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories)
 	to do the following, but this might be easiest:
 
-			REPOSITORY=./wiki.git
+			REPO=./wiki.git
 			# SRCDIR is where ikiwiki compiles from. You thus need
 			# to set $srcdir in ikiwiki.setup appropriately. The
 			# -wc in the name suggests "working clone" because
@@ -140,31 +140,31 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 			git commit -m'Initial commit'
 			git config receive.denyNonFastForwards true
 			git config core.bare true
-			mv .git $REPOSITORY
+			mv .git $REPO
 			test -d .ikiwiki && mv .ikiwiki ..
 			cd ..
 			rm -r $SRCDIR
-			git clone -l -s $REPOSITORY $SRCDIR
+			git clone -l -s $REPO $SRCDIR
 			test -d .ikiwiki && mv .ikiwiki $SRCDIR
 
 	It is **paramount** that you **never** push to the Git repository in
 	`$SRCDIR` ([this FAQ entry explains
 	why](http://git.or.cz/gitwiki/GitFaq#head-b6a3d85f677763313159eb39f7dbf4579d4ee28b)).
 	Instead, if you want to work on the wiki from a remote machine, clone
-	`$REPOSITORY`, using either the `git` transport (if available), or
+	`$REPO`, using either the `git` transport (if available), or
 	`ssh`.
 
 	To automatically update the wiki when you push changes to
-	`$REPOSITORY`, `ikiwiki` can install a `post-update` hook. You need to
+	`$REPO`, `ikiwiki` can install a `post-update` hook. You need to
 	enable this hook in `ikiwiki.setup` and the path to use should be
-	`$REPOSITORY/hooks/post-update`.
+	`$REPO/hooks/post-update`.
 
 	Finally, then, setup `ikiwiki`:
 
 			ikiwiki --setup ikiwiki.setup
 
 	If you commit changes in `$SRCDIR`, make sure to `git push` them to
-	the `$REPOSITORY`.
+	the `$REPO`.
    """]]
 
    [[toggle id=tla text="TLA"]]
