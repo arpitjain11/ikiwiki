@@ -138,6 +138,9 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 			echo .ikiwiki > .gitignore
 			git add index.mdwn .gitignore
 			git commit -m'Initial commit'
+			# Stop git performing fast forwards -- this is to avoid
+			# overwriting the remote ref and losing other peoples'
+			# commits from there.
 			git config receive.denyNonFastForwards true
 			git config core.bare true
 			mv .git $REPO
