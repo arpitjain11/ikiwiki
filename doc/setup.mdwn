@@ -119,36 +119,30 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    
    [[toggle id=git text="Git"]]
    [[toggleable id=git text="""
-	For Git, you need two repositories, of which one should be bare
-	(meaning that it does not have a working tree checked out). We call
-	the bare repository the "repo" and the other the "srcdir".
-	There are [other
+	When using Git, you probably want to set up two repositories, of which
+	one should be bare (meaning that it does not have a working tree
+	checked out). We call the bare repository the "repo" and the other the
+	"srcdir". There are [other
 	ways](http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories)
 	to do the following, but this might be easiest:
 
-			REPO=./wiki.git
-			# SRCDIR is where ikiwiki compiles from. You thus need
-			# to set `srcdir` in ikiwiki.setup appropriately. The
-			# -wc in the name suggests "working clone" because
-			# $SRCDIR holds a Git repository with a working tree.
-			SRCDIR=./wiki-wc
+			REPO=~/wiki.git
 			cd $SRCDIR
+			mv .ikiwiki ..
 			git init
-			echo "Initial index page" > index.mdwn
 			echo .ikiwiki > .gitignore
-			git add index.mdwn .gitignore
+			git add .
 			git commit -m'Initial commit'
-			# Stop git performing fast forwards -- this is to avoid
+			# stop git performing fast forwards -- this is to avoid
 			# overwriting the remote ref and losing other peoples'
 			# commits from there.
 			git config receive.denyNonFastForwards true
 			git config core.bare true
 			mv .git $REPO
-			test -d .ikiwiki && mv .ikiwiki ..
 			cd ..
 			rm -r $SRCDIR
 			git clone -l -s $REPO $SRCDIR
-			test -d .ikiwiki && mv .ikiwiki $SRCDIR
+			mv .ikiwiki $SRCDIR
 
 	It is **paramount** that you **never** push to the Git repository in
 	`$SRCDIR` ([this FAQ entry explains
@@ -157,17 +151,8 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 	`$REPO`, using either the `git` transport (if available), or
 	`ssh`.
 
-	To automatically update the wiki when you push changes to
-	`$REPO`, `ikiwiki` can install a `post-update` hook. You need to
-	enable this hook in `ikiwiki.setup` and the path to use should be
-	`$REPO/hooks/post-update`.
-
-	Finally, then, setup `ikiwiki`:
-
-			ikiwiki --setup ikiwiki.setup
-
-	If you commit changes in `$SRCDIR`, make sure to `git push` them to
-	the `$REPO`.
+	If at any point you commit changes in `$SRCDIR`, make sure to `git
+	push` them to the `$REPO`.
    """]]
 
    [[toggle id=tla text="TLA"]]
@@ -227,8 +212,8 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    you chose to use. Be sure to set `svnrepo` to $REPOSITORY, if using
    subversion. Uncomment the block for the wrapper for your revision
    control system, and configure the wrapper path in that block
-   appropriately. 
-   
+   appropriately (for Git, it should be `$REPO/hooks/post-update`).
+
    Once it's all set up, run `ikiwiki --setup ikiwiki.setup` once more.
    Now you should be able to edit files in $SRCDIR, and use your revision
    control system to commit them, and the wiki will automatically update.
