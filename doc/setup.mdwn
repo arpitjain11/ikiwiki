@@ -121,8 +121,9 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    [[toggleable id=git text="""
 	When using Git, you probably want to set up two repositories, of which
 	one should be bare (meaning that it does not have a working tree
-	checked out). We call the bare repository the "repo" and the other the
-	"srcdir". There are [other
+	checked out). We call the bare repository the "repository" and the
+	other will be the "srcdir" (which `ikiwiki` uses to compile the wiki).
+	There are [other
 	ways](http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories)
 	to do the following, but this might be easiest:
 
