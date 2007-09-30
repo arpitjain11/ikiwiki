@@ -78,10 +78,10 @@ ok(links_to("bar", linkify("foo", "foo", "link to [[baz]] and [[bar]] ok", ["foo
 ok(links_to("baz", linkify("foo", "foo", "link to [[baz]] and [[bar]] ok", ["foo", "baz", "bar"])), "dual links");
 ok(links_to("bar", linkify("foo", "foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link");
 ok(links_text("some page", linkify("foo", "foo", "link to [[some_page|bar]] ok", ["foo", "bar"])), "named link text");
-ok(links_to("bar", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link, with whitespace");
-ok(links_text("some page", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link text, with whitespace");
+ok(not_links_to("bar", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link, with whitespace");
+ok(not_links_to("bar", linkify("foo", "foo", "link to [[some page|bar]] ok", ["foo", "bar"])), "named link text, with whitespace");
 ok(links_text("0", linkify("foo", "foo", "link to [[0|bar]] ok", ["foo", "bar"])), "named link to 0");
-ok(links_text("Some long, & complex page name.", linkify("foo", "foo", "link to [[Some long, & complex page name.|bar]] ok, and this is not a link]] here", ["foo", "bar"])), "complex named link text");
+ok(links_text("Some long, & complex page name.", linkify("foo", "foo", "link to [[Some_long,_&_complex_page_name.|bar]] ok, and this is not a link]] here", ["foo", "bar"])), "complex named link text");
 ok(links_to("foo/bar", linkify("foo/item", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "inline page link");
 ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "same except not inline");
 ok(links_to("bar#baz", linkify("foo", "foo", "link to [[bar#baz]] ok", ["foo", "bar"])), "anchor link");
