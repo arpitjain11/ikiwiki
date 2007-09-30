@@ -130,7 +130,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 			REPOSITORY=~/wiki.git
 			cd $SRCDIR
 			git init
-			echo .ikiwiki > .gitignore
+			echo /.ikiwiki > .gitignore
 			git add .
 			git commit -m'Initial commit'
 			# if you expect $REPOSITORY to receive pushs from multiple
