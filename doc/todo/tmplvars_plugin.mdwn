@@ -1,0 +1,50 @@
+A simple plugin to allow per-page customization of a template by passing paramaters to HTML::Template. For those times when a whole pagetemplate is too much work. --Ethan
+
+    #!/usr/bin/perl
+    package IkiWiki::Plugin::tmplvars;
+
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+
+    my %tmplvars;
+
+    sub import { #{{{
+	    hook(type => "preprocess", id => "tmplvars", call => \&preprocess);
+	    hook(type => "pagetemplate", id => "tmplvars", call => \&pagetemplate);
+    } # }}}
+
+    sub preprocess (@) { #{{{
+	    my %params=@_;
+
+	    if ($params{page} eq $params{destpage}) {
+		    my $page = $params{page};
+		    if (undef $tmplvars{$page}){
+			    $tmplvars{$page} = {};
+		    }
+		    # XXX: The only way to get at just the user-specified params is
+		    # to try to remove all the Ikiwiki-supplied ones.
+		    delete $params{page};
+		    delete $params{destpage};
+		    delete $params{preview};
+		    foreach my $arg (keys %params){
+			    $tmplvars{$page}->{$arg} = $params{$arg};
+		    }
+	    }
+    
+    } # }}}
+    
+    sub pagetemplate (@) { #{{{
+            my %params=@_;
+            my $template = $params{template};
+
+            if (exists $tmplvars{$params{page}}) {
+                    foreach my $arg (keys %{$tmplvars{$params{page}}}){
+                            $template->param($arg => $tmplvars{$params{page}}->{$arg});
+                    }
+            }
+
+            return undef;
+    } # }}}
+
+    1
