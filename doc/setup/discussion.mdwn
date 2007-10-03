@@ -57,12 +57,9 @@ simpler? --[[Joey]]
 	mkdir $REPOSITORY
 	cd $REPOSITORY
 	git --bare init --shared
-	mv $SRCDIR $SRCDIR.old
 	cd $SRCDIR
 	git init
 	echo /.ikiwiki > .gitignore
-	mv $SRCDIR.old/* $SRCDIR.old/.* .
-	rmdir $SRCDIR.old
 	git add .
 	git commit -m "initial commit"
 	git remote add origin $REPOSITORY
