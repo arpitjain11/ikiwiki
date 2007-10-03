@@ -32,36 +32,3 @@ directory back into the wiki's working copy directory, isn't it? --[[tschwinge]]
 Curious as to why support for CVS is not built in. --[[Luther]]
 
 > See [[todo/CVS_backend|todo/CVS_backend]], but you might consider switching to a better version control system. --[[JoshTriplett]]
-
-----
-
-On the git setup instuctions, I wonder if this wouldn't work as well and be
-simpler? --[[Joey]]
-
-	REPOSITORY=~/wiki.git
-	mkdir $REPOSITORY
-	cd $REPOSITORY
-	git --bare init --shared
-	mv $SRCDIR $SRCDIR.old
-	git clone $REPOSITORY $SRCDIR
-	cd $SRCDIR
-	echo /.ikiwiki > .gitignore
-	mv $SRCDIR.old/* $SRCDIR.old/.* .
-	rmdir $SRCDIR.old
-	git add .
-	git commit -m "initial commit"
-	git push $REPOSITORY master
-
-[[madduck]]: I'd say this instead:
-
-	mkdir $REPOSITORY
-	cd $REPOSITORY
-	git --bare init --shared
-	cd $SRCDIR
-	git init
-	echo /.ikiwiki > .gitignore
-	git add .
-	git commit -m "initial commit"
-	git remote add origin $REPOSITORY
-	git config branch.master.merge refs/heads/master
-	git push --all
