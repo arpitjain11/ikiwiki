@@ -36,7 +36,7 @@ Curious as to why support for CVS is not built in. --[[Luther]]
 ----
 
 On the git setup instuctions, I wonder if this wouldn't work as well and be
-simplete? --[[Joey]]
+simpler? --[[Joey]]
 
 	mkdir $REPOSITORY
 	cd $REPOSITORY
@@ -49,3 +49,4 @@ simplete? --[[Joey]]
 	rmdir $SRDDIR.old
 	git add .
 	git commit -m "initial commit"
+	git push $REPOSITORY master
