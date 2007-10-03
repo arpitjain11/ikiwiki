@@ -128,9 +128,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 	to do the following, but this might be easiest:
 
 			REPOSITORY=~/wiki.git
-			mkdir $REPOSITORY
-			cd $REPOSITORY
-			git --bare init --shared
+			GIT_DIR=$REPOSITORY git --bare init --shared
 			cd $SRCDIR
 			git init
 			echo /.ikiwiki > .gitignore
