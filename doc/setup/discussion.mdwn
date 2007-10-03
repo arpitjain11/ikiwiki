@@ -47,7 +47,24 @@ simpler? --[[Joey]]
 	cd $SRCDIR
 	echo /.ikiwiki > .gitignore
 	mv $SRCDIR.old/* $SRCDIR.old/.* .
-	rmdir $SRDDIR.old
+	rmdir $SRCDIR.old
 	git add .
 	git commit -m "initial commit"
-	git push
+	git push $REPOSITORY master
+
+[[madduck]]: I'd say this instead:
+
+	mkdir $REPOSITORY
+	cd $REPOSITORY
+	git --bare init --shared
+	mv $SRCDIR $SRCDIR.old
+	cd $SRCDIR
+	git init
+	echo /.ikiwiki > .gitignore
+	mv $SRCDIR.old/* $SRCDIR.old/.* .
+	rmdir $SRCDIR.old
+	git add .
+	git commit -m "initial commit"
+	git remote add origin $REPOSITORY
+	git config branch.master.merge refs/heads/master
+	git push --all
