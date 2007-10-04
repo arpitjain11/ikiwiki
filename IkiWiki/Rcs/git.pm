@@ -467,7 +467,7 @@ sub rcs_getctime ($) { #{{{
 	my $sha1  = git_sha1($file);
 	my $ci    = git_commit_info($sha1);
 	my $ctime = $ci->{'author_epoch'};
-	debug("ctime for '$file': ". localtime($ctime) . "\n");
+	debug("ctime for '$file': ". localtime($ctime));
 
 	return $ctime;
 } #}}}
