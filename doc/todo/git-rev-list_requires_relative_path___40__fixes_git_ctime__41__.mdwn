@@ -12,3 +12,5 @@
  	 	# Ignore error since a non-existing file might be given.
  	 	my ($sha1) = run_or_non('git-rev-list', '--max-count=1', 'HEAD', $file);
  	 	if ($sha1) {
+
+[[tag patch]]
