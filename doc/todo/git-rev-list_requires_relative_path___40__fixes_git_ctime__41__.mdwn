@@ -13,4 +13,12 @@
  	 	my ($sha1) = run_or_non('git-rev-list', '--max-count=1', 'HEAD', $file);
  	 	if ($sha1) {
 
+I actually see a bug in this patch. :-) If srcdir = "foo" and the wiki
+contains a "foo/bar" and a "bar", this will make it, in the non-ctime case,
+get the sha1 of the wrong file, "bar", when "foo/bar" is asked for.
+
+Better to strip the path out in getctime, I guess.
+
+--[[Joey]]
+
 [[tag patch]]
