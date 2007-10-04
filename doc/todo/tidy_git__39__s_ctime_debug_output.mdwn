@@ -1,0 +1,15 @@
+ 	Index: IkiWiki/Rcs/git.pm
+ 	===================================================================
+ 	--- IkiWiki/Rcs/git.pm	(revision 4532)
+ 	+++ IkiWiki/Rcs/git.pm	(working copy)
+ 	@@ -467,7 +467,7 @@
+ 	 	my $sha1  = git_sha1($file);
+ 	 	my $ci    = git_commit_info($sha1);
+ 	 	my $ctime = $ci->{'author_epoch'};
+ 	-	debug("ctime for '$file': ". localtime($ctime) . "\n");
+ 	+	debug("ctime for '$file': ". localtime($ctime));
+ 	 
+ 	 	return $ctime;
+ 	 } #}}}
+
+[[tag patch]]
