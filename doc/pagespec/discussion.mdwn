@@ -1,0 +1,36 @@
+I am using ikiwiki 2.6.1.
+
+I can't figure out the locked pages.
+
+As an admin in preferences, I put in my Locked Pages:
+
+index and downloads
+
+I don't want anyone to be able to edit the front page or my downloads page.
+
+That didn't work. I am using a different web browser as a different non-ikiwiki-admin user.
+
+So I changed it to
+
+/index and /downloads
+
+That stopped me from editing the front page. It didn't say it was locked just repeatedly gave me the ikiwiki login. (How can I get it to tell me it is locked instead?)
+
+I also tried
+
+/index and /downloads/index
+
+But I could still edit my downloads page.
+
+Can someone share some hints on how to lock these two pages?
+
+My source pages for the lock are:
+
+source/downloads.mdwn
+source/index.mdwn
+
+My webpages to lock are:
+
+public_html/downloads/index.html
+public_html/index.html
+
