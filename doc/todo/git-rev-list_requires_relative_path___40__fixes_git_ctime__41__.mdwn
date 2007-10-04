@@ -1,0 +1,14 @@
+ 	Index: IkiWiki/Rcs/git.pm
+ 	===================================================================
+ 	--- IkiWiki/Rcs/git.pm	(revision 4532)
+ 	+++ IkiWiki/Rcs/git.pm	(working copy)
+ 	@@ -275,6 +275,9 @@
+ 	 
+ 	 	my $file = shift || q{--};
+ 	 
+ 	+	# Remove srcdir prefix to appease git-rev-list
+ 	+	$file =~ s/^$config{srcdir}\/?//;
+ 	+
+ 	 	# Ignore error since a non-existing file might be given.
+ 	 	my ($sha1) = run_or_non('git-rev-list', '--max-count=1', 'HEAD', $file);
+ 	 	if ($sha1) {
