@@ -1,0 +1,5 @@
+Use case: You want to move away from Wordpress to Ikiwiki as your blogging/website platform, but you want to retain your old posts.
+
+[This](http://git.chris-lamb.co.uk/?p=ikiwiki-wordpress-import.git) is a simple tool that generates [git-fast-import](http://www.kernel.org/pub/software/scm/git/docs/git-fast-import.html)-compatible data from a WordPress export XML file. It retains creation time of each post, so you can use Ikiwiki's <tt>--getctime</tt> to get the preserve creation times on checkout. 
+
+WordPress categories are mapped onto Ikiwiki tags. The ability to import comments is planned.
