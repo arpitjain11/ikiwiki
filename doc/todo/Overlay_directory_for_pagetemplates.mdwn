@@ -1,0 +1,5 @@
+I am aware of the [[pagetemplate|/plugins/pagetemplate]] plugin, but I'd like to style my pages completely differently. Modifications in `/usr/share/ikiwiki` are not an option, and I'd rather not snapshot that directory and make my changes to the detached copy.
+
+Instead, I wonder whether it would be possible to create an overlay directory such that ikiwiki first looks for page templates there, and only goes to `/usr/share/ikiwiki` if the overlay does not satisfy the request.
+
+[[tag wishlist]]
