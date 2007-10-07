@@ -2,4 +2,8 @@ I am aware of the [[pagetemplate|/plugins/pagetemplate]] plugin, but I'd like to
 
 Instead, I wonder whether it would be possible to create an overlay directory such that ikiwiki first looks for page templates there, and only goes to `/usr/share/ikiwiki` if the overlay does not satisfy the request.
 
-[[tag wishlist]]
+-----
+
+[[madduck]]: Update: I did try setting `templates` in `ikiwiki.setup` but could not get it to work. Then I found in the code that ikiwiki already checks that dir before the `/usr/share/ikiwiki` one, and tried it again, and now it works... sorry.
+
+Thus [[taglink done]].
