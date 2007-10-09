@@ -17,3 +17,14 @@ to usedirs, or edit your setup file and turn usedirs back off.
 * Now all the URLs to pages in your wiki have changed. See
   [[redirections_for_usedirs]] for instructions on setting up redirections
   to keep the old URLs working.
+
+Why usedirs?
+------------
+There are several advantages to `usedirs`, including simpler URLs, URLs that
+aren't dependent on the underlying implementation (`.html`), and being able to
+use URLs as tags as described in the [rel-tag
+microformat](http://microformats.org/wiki/rel-tag).
+
+The main disadvantage is that it is harder to browse using `file://` URIs,
+since `file:///dir/` doesn't automatically translate to `dir/index.html`. This
+is something one could fix in the browser though.
