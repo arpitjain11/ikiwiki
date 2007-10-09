@@ -147,6 +147,8 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 
 	If at any point you commit changes in `$SRCDIR`, make sure to `git
 	push` them to the `$REPOSITORY`.
+
+	Finally, see [[Git_pitfalls]] if you experience problems.
    """]]
 
    [[toggle id=tla text="TLA"]]
@@ -206,7 +208,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
    you chose to use. Be sure to set `svnrepo` to $REPOSITORY, if using
    subversion. Uncomment the block for the wrapper for your revision
    control system, and configure the wrapper path in that block
-   appropriately (for Git, it should be `$REPO/hooks/post-update`).
+   appropriately (for Git, it should be `$REPOSITORY/hooks/post-update`).
 
    Once it's all set up, run `ikiwiki --setup ikiwiki.setup` once more.
    Now you should be able to edit files in $SRCDIR, and use your revision
