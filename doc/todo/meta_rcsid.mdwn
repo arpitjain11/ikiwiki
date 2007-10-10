@@ -1,6 +1,20 @@
 The following patch adds an 'rcsid' parameter to the Meta plugin, to allow inclusion 
 of CVS/SVN-style keywords (like '$Id$', etc.) from the source file in the page template.
 
+> So the idea is you'd write something like:
+> 
+>	\[[meta rcsid="$Id$"]]
+> 
+> And this would be put at the bottom of the page or somewhere like that by
+> the template?
+> 
+> I wonder if it wouldn't be just as clear to say:
+> 
+> 	<span class="rcsid">$Id$</span>
+> 
+> And then use a stylesheet to display it as desired.
+> --[[Joey]]
+
     --- meta.pm.orig    2007-10-10 19:57:04.000000000 +0100
     +++ meta.pm 2007-10-10 20:07:37.000000000 +0100
     @@ -13,6 +13,7 @@
