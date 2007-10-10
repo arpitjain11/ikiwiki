@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-22 16:49-0400\n"
-"PO-Revision-Date: 2007-08-05 23:38+0200\n"
+"PO-Revision-Date: 2007-08-28 21:05+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,7 +144,7 @@ msgstr "Échec du lancement de « fortune »"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:22
 msgid "failed to find url in html"
-msgstr "Échec dans la recherche de l'URL dans le code HTML"
+msgstr "Échec dans la recherche d'une URL dans le Code HTML"
 
 #: ../IkiWiki/Plugin/graphviz.pm:58
 msgid "failed to run graphviz"
@@ -152,7 +152,7 @@ msgstr "Échec du lancement de graphviz"
 
 #: ../IkiWiki/Plugin/graphviz.pm:85
 msgid "prog not a valid graphviz program"
-msgstr "Le programme n'est pas un programme graphviz valable"
+msgstr "Ce programme n'est pas un programme graphviz valable"
 
 #: ../IkiWiki/Plugin/img.pm:48
 #, perl-format
@@ -173,7 +173,7 @@ msgstr "Échec du redimensionnement : %s"
 #: ../IkiWiki/Plugin/img.pm:96
 #, perl-format
 msgid "failed to determine size of image %s"
-msgstr "Échec du redimensionnement : %s"
+msgstr "Échec de la détermination de la taille de l'image : %s" 
 
 #: ../IkiWiki/Plugin/inline.pm:39
 msgid "Must specify url to wiki with --url when using --rss or --atom"
@@ -188,7 +188,7 @@ msgstr "Type de tri %s inconnu"
 
 #: ../IkiWiki/Plugin/inline.pm:170
 msgid "Add a new post titled:"
-msgstr "Ajouter un nouveau article dont le titre est :"
+msgstr "Ajouter un nouvel article dont le titre est :"
 
 #: ../IkiWiki/Plugin/inline.pm:185
 #, perl-format
@@ -249,7 +249,7 @@ msgstr "Toutes les pages sont liées à d'autres pages."
 
 #: ../IkiWiki/Plugin/pagetemplate.pm:21
 msgid "bad or missing template"
-msgstr ""
+msgstr "Modèle incorrect ou manquant"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:162
 msgid "Account creation successful. Now you can Login."
@@ -422,7 +422,7 @@ msgstr "Fichier introuvable"
 
 #: ../IkiWiki/Plugin/table.pm:44
 msgid "unknown data format"
-msgstr "Format des données inconnu"
+msgstr "Format de données inconnu"
 
 #: ../IkiWiki/Plugin/table.pm:52
 msgid "empty data"
@@ -451,39 +451,34 @@ msgid "failed to process:"
 msgstr "Échec du traitement :"
 
 #: ../IkiWiki/Plugin/tex.pm:30
-#, fuzzy
 msgid "missing tex code"
-msgstr "Il manque des valeurs"
+msgstr "Il manque le code TeX"
 
 #: ../IkiWiki/Plugin/tex.pm:37
 msgid "code includes disallowed latex commands"
-msgstr ""
+msgstr "Le code comporte des commandes LaTeX non permises"
 
 #: ../IkiWiki/Plugin/tex.pm:95
-#, fuzzy
 msgid "failed to generate image from code"
-msgstr "Échec du redimensionnement : %s"
+msgstr "Échec de la création de l'image à partir du code"
 
 #: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
 msgstr "getctime n'est pas implémenté"
 
 #: ../IkiWiki/Rcs/monotone.pm:465
-#, fuzzy
 msgid ""
 "REV is not set, not running from mtn post-commit hook, cannot send "
 "notifications"
 msgstr ""
-"REV n'est pas défini, pas de lancement depuis le système de rapport par mail "
-"après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
+"REV n'est pas défini; impossible de lancer le post-commit de mtn et"
+"d'envoyer les "
 "notifications"
 
 #: ../IkiWiki/Rcs/monotone.pm:468
-#, fuzzy
 msgid "REV is not a valid revision identifier, cannot send notifications"
 msgstr ""
-"REV n'est pas défini, pas de lancement depuis le système de rapport par mail "
-"après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
+"REV n'est pas un identifiant de révision valable, impossible d'envoyer les "
 "notifications"
 
 #: ../IkiWiki/Rcs/svn.pm:218
@@ -498,7 +493,7 @@ msgstr ""
 #: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:283
 #, perl-format
 msgid "skipping bad filename %s"
-msgstr "Saut du fichier incorrect %s"
+msgstr "Omission du fichier au nom incorrect %s"
 
 #: ../IkiWiki/Render.pm:323
 #, perl-format
@@ -513,32 +508,32 @@ msgstr "Parcours de %s"
 #: ../IkiWiki/Render.pm:361
 #, perl-format
 msgid "rendering %s"
-msgstr "Rendu de %s"
+msgstr "Affichage de %s"
 
 #: ../IkiWiki/Render.pm:373
 #, perl-format
 msgid "rendering %s, which links to %s"
-msgstr "Rendu de %s, qui est lié à %s"
+msgstr "Affichage de %s, qui est lié à %s"
 
 #: ../IkiWiki/Render.pm:390
 #, perl-format
 msgid "rendering %s, which depends on %s"
-msgstr "Rendu de %s, qui dépend de %s"
+msgstr "Affichage de %s, qui dépend de %s"
 
 #: ../IkiWiki/Render.pm:428
 #, perl-format
 msgid "rendering %s, to update its backlinks"
-msgstr "Rendu de %s, afin de mettre à jour ses rétroliens"
+msgstr "Affichage de %s, afin de mettre à jour ses rétroliens"
 
 #: ../IkiWiki/Render.pm:440
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
-msgstr "Suppression de %s, qui n'est plus rendu par %s"
+msgstr "Suppression de %s, qui n'est plus affiché par %s"
 
 #: ../IkiWiki/Render.pm:466
 #, perl-format
 msgid "ikiwiki: cannot render %s"
-msgstr "ikiwiki : impossible d'effectuer le rendu de %s"
+msgstr "ikiwiki : impossible d'afficher %s"
 
 #. translators: The first parameter is a filename, and the second
 #. translators: is a (probably not translated) error message.
@@ -611,7 +606,7 @@ msgstr "Syntaxe : ikiwiki [options] source destination"
 
 #: ../ikiwiki.in:81
 msgid "usage: --set var=value"
-msgstr ""
+msgstr "Syntaxe : -- set var=valeur"
 
 #: ../IkiWiki.pm:126
 msgid "Must specify url to wiki with --url when using --cgi"
@@ -631,7 +626,7 @@ msgstr "Erreur"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
-"%s une boucle a été détectée dans le prétraitement de %s, à la profondeur de "
+"%s une boucle a été détectée dans le prétraitement de %s, à la profondeur "
 "%i"
 
 #~ msgid "%s not found"
@@ -642,3 +637,4 @@ msgstr ""
 
 #~ msgid "(use FirstnameLastName)"
 #~ msgstr "(utiliser NomPrénom)"
+
