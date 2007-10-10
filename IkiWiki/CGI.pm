@@ -596,6 +596,10 @@ sub cgi_editpage ($$) { #{{{
 		# may have been committed while the post-commit hook was
 		# disabled.
 		require IkiWiki::Render;
+		# Reload index, since the first time it's loaded is before
+		# the wiki is locked, and things may have changed in the
+		# meantime.
+		loadindex();
 		refresh();
 		saveindex();
 

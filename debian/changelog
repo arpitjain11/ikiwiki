@@ -3,8 +3,16 @@ ikiwiki (2.10) UNRELEASED; urgency=low
   * Tidy ctime debug output for git.
   * French translation update. Closes: #445923
   * Fix --get-ctime with git, needed to remove srcdir from filename.
+  * In the cgi edit path, reload the index file before rendering. A bug
+    showed up where a web edit that added a page caused a near-concurrent
+    web edit to fail in will_render. While it would be hard to reproduce this,
+    my analysis is that the failing cgi started first, loaded the index file
+    (prior to locking) then the other cgi created the new page and rendered
+    it, and then the failing cgi choked on the new file when _it_ tried to
+    render it. Ensuring that the index file is loaded after taking the lock
+    will avoid this bug.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 10 Oct 2007 14:14:18 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 10 Oct 2007 14:36:38 -0400
 
 ikiwiki (2.9) unstable; urgency=low
 
