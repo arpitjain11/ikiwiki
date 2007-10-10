@@ -1,0 +1,32 @@
+The following patch adds an 'rcsid' parameter to the Meta plugin, to allow inclusion 
+of CVS/SVN-style keywords (like '$Id$', etc.) from the source file in the page template.
+
+    --- meta.pm.orig    2007-10-10 19:57:04.000000000 +0100
+    +++ meta.pm 2007-10-10 20:07:37.000000000 +0100
+    @@ -13,6 +13,7 @@
+     my %authorurl;
+     my %license;
+     my %copyright;
+    +my %rcsid;
+ 
+     sub import { #{{{
+        hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
+    @@ -110,6 +111,9 @@
+            $meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";
+            $copyright{$page}=$value;
+        }
+    +    elsif ($key eq 'rcsid') {
+    +        $rcsid{$page}=$value;
+    +    }
+        else {
+            $meta{$page}.=scrub("<meta name=\"".encode_entities($key).
+                "\" content=\"".encode_entities($value)."\" />\n");
+    @@ -142,6 +146,8 @@
+            if exists $author{$page} && $template->query(name => "author");
+        $template->param(authorurl => $authorurl{$page})
+            if exists $authorurl{$page} && $template->query(name => "authorurl");
+    +    $template->param(rcsid => $rcsid{$page})
+    +        if exists $rcsid{$page} && $template->query(name => "rcsid");
+        
+        if ($page ne $destpage &&
+            ((exists $license{$page}   && ! exists $license{$destpage}) ||
