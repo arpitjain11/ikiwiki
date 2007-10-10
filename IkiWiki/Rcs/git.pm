@@ -23,8 +23,6 @@ sub _safe_git (&@) { #{{{
 
 	if (!$pid) {
 		# In child.
-		open STDERR, ">&STDOUT"
-		    or error("Cannot dup STDOUT: $!");
 		# Git commands want to be in wc.
 		chdir $config{srcdir}
 		    or error("Cannot chdir to $config{srcdir}: $!");
@@ -40,7 +38,7 @@ sub _safe_git (&@) { #{{{
 
 	close $OUT;
 
-	($error_handler || sub { })->("'@cmdline' failed: $!") if $?;
+	$error_handler->("'@cmdline' failed: $!") if $? && $error_handler;
 
 	return wantarray ? @lines : ($? == 0);
 }

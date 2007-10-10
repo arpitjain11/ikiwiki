@@ -11,8 +11,11 @@ ikiwiki (2.10) UNRELEASED; urgency=low
     it, and then the failing cgi choked on the new file when _it_ tried to
     render it. Ensuring that the index file is loaded after taking the lock
     will avoid this bug.
+  * Fix strange stderr-hiding code in the git module, allow error messages
+    to be passed on to stderr. Also fixes a potential bug, since git error
+    meesages were treated as if they came from git stdout.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 10 Oct 2007 14:36:38 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 10 Oct 2007 19:23:40 -0400
 
 ikiwiki (2.9) unstable; urgency=low
 
