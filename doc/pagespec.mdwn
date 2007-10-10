@@ -41,6 +41,12 @@ and were written in 2005:
 
 	blog/* and link(music) and creation_year(2005)
 
+Note the use of "and" in the above example, that means that only pages that
+match each of the three expressions match the whole. Use "and" when you
+want to combine expression like that; "or" when it's enough for a page to
+match one expression. Note that it doesn't make sense to say "index and
+SandBox", since no page can match both expressions.
+
 More complex expressions can also be created, by using parentheses for
 grouping. For example, to match pages in a blog that are tagged with either
 of two tags, use:
