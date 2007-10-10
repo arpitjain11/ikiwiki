@@ -460,9 +460,9 @@ sub rcs_notify () { #{{{
 } #}}}
 
 sub rcs_getctime ($) { #{{{
-	# Get the ctime of file.
-
-	my ($file) = @_;
+	my $file=shift;
+	# Remove srcdir prefix
+	$file =~ s/^\Q$config{srcdir}\E\/?//;
 
 	my $sha1  = git_sha1($file);
 	my $ci    = git_commit_info($sha1);
