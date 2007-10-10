@@ -30,3 +30,5 @@ of CVS/SVN-style keywords (like '$Id$', etc.) from the source file in the page t
         
         if ($page ne $destpage &&
             ((exists $license{$page}   && ! exists $license{$destpage}) ||
+
+[[patch]]
