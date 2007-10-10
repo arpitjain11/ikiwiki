@@ -826,6 +826,11 @@ sub enable_commit_hook () { #{{{
 } #}}}
 
 sub loadindex () { #{{{
+	%oldrenderedfiles=%pagectime=();
+	if (! $config{rebuild}) {
+		%pagesources=%pagemtime=%oldlinks=%links=%depends=
+			%destsources=%renderedfiles=%pagecase=();
+	}
 	open (my $in, "<", "$config{wikistatedir}/index") || return;
 	while (<$in>) {
 		$_=possibly_foolish_untaint($_);
