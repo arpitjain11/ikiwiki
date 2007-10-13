@@ -14,8 +14,11 @@ ikiwiki (2.10) UNRELEASED; urgency=low
   * Fix strange stderr-hiding code in the git module, allow error messages
     to be passed on to stderr. Also fixes a potential bug, since git error
     meesages were treated as if they came from git stdout.
+  * Add a "createlink" class attribute to the span for wikilinks pointing
+    to not-yet-existing pages. I don't have a useful style defined for that
+    though.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 10 Oct 2007 19:23:40 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 13 Oct 2007 19:05:42 -0400
 
 ikiwiki (2.9) unstable; urgency=low
 

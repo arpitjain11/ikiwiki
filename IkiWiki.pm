@@ -563,7 +563,7 @@ sub htmllink ($$$;@) { #{{{
 
 		if (! $destsources{$bestlink}) {
 			return $linktext unless length $config{cgiurl};
-			return "<span><a href=\"".
+			return "<span class=\"createlink\"><a href=\"".
 				cgiurl(
 					do => "create",
 					page => pagetitle(lc($link), 1),

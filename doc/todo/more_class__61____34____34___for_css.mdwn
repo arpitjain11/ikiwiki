@@ -60,6 +60,12 @@ added after an inlined page (namely: the post date, the tags, and the actions):
 >>> see this [thread](http://six.pairlist.net/pipermail/markdown-discuss/2006-August/000152.html)
 >>> --[[Roktas]]
 
+>>>> 1.0.2b7 is slower, but ok, and parses much better. I'm waiting for it
+>>>> to at least get into debian testing before I make ikiwiki depend on it
+>>>> though. --[[Joey]]
+
 I'd like a class attribute on the `<span>` tag surrounding wikilinks
 that refer to non-existent pages, in Ikiwiki.pm:htmllink, so that such
 broken links can be styled more dramatically with CSS. --Jamey
+
+> added --[[Joey]]
