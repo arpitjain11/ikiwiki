@@ -20,7 +20,8 @@ sub import { #{{{
 	return unless defined $plugin;
 
 	my ($plugin_read, $plugin_write);
-	my $pid = open2($plugin_read, $plugin_write, $plugin);
+	my $pid = open2($plugin_read, $plugin_write,
+		IkiWiki::possibly_foolish_untaint($plugin));
 
 	# open2 doesn't respect "use open ':utf8'"
 	binmode($plugin_read, ':utf8');
