@@ -23,9 +23,10 @@ sub rpc_read {
 	while (<>) {
 		$accum.=$_;
 
-		# Kinda hackish approch to parse a single XML RPC out of the
-		# accumulated input. Relies on calls always ending with a
-		# newline, which ikiwiki's protocol requires be true.
+		# Kinda hackish approach to parse a single XML RPC out of the
+		# accumulated input. Perl's RPC::XML library doesn't
+		# provide a better way to do it. Relies on calls always ending
+		# with a newline, which ikiwiki's protocol requires be true.
 		if ($accum =~ /^\s*(<\?xml\s.*?<\/(?:methodCall|methodResponse)>)\n(.*)/s) {
 			$accum=$2; # the rest
 	
