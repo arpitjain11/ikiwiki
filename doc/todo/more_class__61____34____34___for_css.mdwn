@@ -59,3 +59,7 @@ added after an inlined page (namely: the post date, the tags, and the actions):
 >>> especially noticable with big files.  This was also confirmed by someone else, for example,
 >>> see this [thread](http://six.pairlist.net/pipermail/markdown-discuss/2006-August/000152.html)
 >>> --[[Roktas]]
+
+I'd like a class attribute on the `<span>` tag surrounding wikilinks
+that refer to non-existent pages, in Ikiwiki.pm:htmllink, so that such
+broken links can be styled more dramatically with CSS. --Jamey
