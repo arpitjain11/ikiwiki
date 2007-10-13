@@ -1,0 +1,7 @@
+I have set
+
+     templatedir => "/srv/apache2/madduck.net/templates",
+
+in ikiwiki.setup and put a custom ``page.tmpl`` in there, then called ``ikiwiki --setup`` and verified that it works. It even works when I push to the Git repo and let the receive-hook update the wiki.
+
+However, when I make a change via the CGI (which has been created by the last setup run), it applies the default ``page.tmpl`` file to all pages it updates.
