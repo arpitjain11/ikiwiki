@@ -8,6 +8,10 @@ written in perl, but is intended to be an example of how to write an
 external plugin in your favorite programming language. Wow us at how much
 easier you can do the same thing in your favorite language. ;-)
 
+There's now a second external plugin, the [[rst]] plugin, written in
+python. (Could someone convert it into a python library that can be used by
+other plugins?)
+
 [[toc ]]
 
 ## How external plugins use XML RPC
@@ -87,7 +91,7 @@ to 1.
 
 Since XML RPC can't pass around references to objects, it can't be used
 with functions that take or return such references. That means you can't
-use XML RPC for `cgi` or `formbuilder` hooks (which are passed CGI and
+100% use XML RPC for `cgi` or `formbuilder` hooks (which are passed CGI and
 FormBuilder perl objects), or use it to call `template()` (which returns a
 perl HTML::Template object).
 
