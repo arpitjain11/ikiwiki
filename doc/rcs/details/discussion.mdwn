@@ -7,3 +7,9 @@ such thoughts?  --[[tschwinge]]
 
 > Okay, I got this working.  I'll test and experiment some
 > more and then document it in here.  --[[tschwinge]]
+
+> I think the method documented in [[setup]] will work fine for this. Just
+> have the other machine clone from the bare repository on the server. When
+> it pushes changes to the server, the post-update hook fires, and updates the
+> wiki. Of course, you actually have *three* repos in this setup, two on
+> the server, and one on the other machine. --[[Joey]]
