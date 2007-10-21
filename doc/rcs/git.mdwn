@@ -1,17 +1,17 @@
 [[meta title="Git"]]
 
-[Git][git] is a distributed revison control system originally developed for the Linux kernel. Ikiwiki supports storing a wiki in git.
+[Git][git] is a distributed revison control system originally developed for
+the Linux kernel. Ikiwiki supports storing a wiki in git.
 
 [git]: http://git.or.cz/
 
 Ikiwiki can run as a post-update hook to update a wiki whenever commits
 come in. When running as a [[cgi]] with Git, ikiwiki automatically
-commits edited pages, and uses the Git history to generate the [[RecentChanges]] page.
+commits edited pages, and uses the Git history to generate the
+[[RecentChanges]] page.
 
-Links:
+[[Setup]] documents current best practice for using git with ikiwiki. This
+involves setting up a pair of git repositories. This method isn't the most
+obvious, but it works the best.
 
-* [[Editing_wiki_pages_manually_with_git|GitManual]]
-* [HOWTO: ikiwiki + git][howto]
-* Common [[Git_pitfalls|/setup/git_pitfalls]] when using Git with Ikiwiki
-
-[howto]: http://fob.po8.org/node/346
+See also: [[common_git_pitfalls|/setup/git_pitfalls]]
