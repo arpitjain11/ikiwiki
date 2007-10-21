@@ -13,3 +13,11 @@ I want to collect common problems and their solutions when using Ikiwiki with Gi
 > does a git pull, and manually triggers ikiwiki. Which seems very messy.
 >
 > Am I doing something wrong? --[[Joey]]
+> 
+> Hmm, perhaps I installed the wrapper to the wrong place? I had thought
+> it would go in $SRCDIR/.git/hooks/post-commit, but on second read, I see
+> that [[setup]] says it should be $REPOSITORY/hooks/post-update
+> 
+> That seems to have sorted it. Based on [[this|rcs/git/discussion]] and 
+> [[this|rcs/git/gitmanual]], I'm not the only one to trip over how to do
+> this. --[[Joey]]
