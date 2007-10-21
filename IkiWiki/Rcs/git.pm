@@ -180,7 +180,7 @@ sub _parse_diff_tree ($@) { #{{{
 			$ci{ "${who}_epoch" } = $epoch;
 			$ci{ "${who}_tz"    } = $tz;
 
-			if ($name =~ m/^([^<]+) <([^@]+)/) {
+			if ($name =~ m/^([^<]+) <([^@>]+)/) {
 				my ($fullname, $username) = ($1, $2);
 				$ci{"${who}_fullname"}    = $fullname;
 				$ci{"${who}_username"}    = $username;
