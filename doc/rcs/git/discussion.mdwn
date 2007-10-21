@@ -28,3 +28,6 @@ Positives:
 UlrikSverdrup (This is now crossposted to the above mentioned [website][ulrikweb])
 
 [ulrikweb]: http://www.student.lu.se/~cif04usv/wiki/stuff/git.html
+
+> Note that while the post-commit hook above may work in some situations, it *will* fail (or at least be suboptimal) for web commits. If you're setting up ikiwiki and git for a wiki that allows web commits, you should use
+> the repository and hook setups in documented in [[setup]] instead. With that method, you do end up with two separate git repos; but it's fine to only back one of them up. :-) --[[Joey]]
