@@ -187,14 +187,17 @@ sub rcs_recentchanges ($) { #{{{
 			$committype="svn";
 		}
 
-		foreach (keys %{$logentry->{paths}}) {
-			next unless ! length $config{svnpath} || 
-			            /^\/\Q$config{svnpath}\E\/([^ ]+)(?:$|\s)/;
-			my $file=$1;
+		foreach my $file (keys %{$logentry->{paths}}) {
+			if (length $config{svnpath}) {
+				next unless $file=~/^\/\Q$config{svnpath}\E\/([^ ]+)(?:$|\s)/;
+				$file=$1;
+			}
+
 			my $diffurl=$config{diffurl};
 			$diffurl=~s/\[\[file\]\]/$file/g;
 			$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
 			$diffurl=~s/\[\[r2\]\]/$rev/g;
+
 			push @pages, {
 				page => pagename($file),
 				diffurl => $diffurl,
@@ -231,9 +234,13 @@ sub rcs_notify () { #{{{
 	my @changed_pages;
 	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
 		chomp $change;
-		if (! length $config{svnpath} || 
-		    $change =~ /^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
-			push @changed_pages, $1;
+		if (length $config{svnpath}) {
+			if ($change =~ /^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
+				push @changed_pages, $1;
+			}
+		}
+		else {
+			push @changed_pages, $change;
 		}
 	}
 	
