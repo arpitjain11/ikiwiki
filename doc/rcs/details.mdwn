@@ -125,12 +125,17 @@ I have been testing it for the past few days and it seems satisfactory.  I
 haven't observed any race condition regarding the concurrent blog commits
 and it handles merge conflicts gracefully as far as I can see.
 
+(After about a year, git support is nearly as solid as subversion support --[[Joey]])
+
 As you may notice from the patch size, GIT support is not so trivial to
-implement (for me, at least).  Being a fairly fresh code base it has some
-bugs.  It also has some drawbacks (especially wrt merge which was the hard
-part).  GIT doesn't have a similar functionality like 'svn merge -rOLD:NEW
-FILE' (please see the relevant comment in mergepast for more details), so I
-had to invent an ugly hack just for the purpose.
+implement (for me, at least). It has some drawbacks (especially wrt merge
+which was the hard part).  GIT doesn't have a similar functionality like
+'svn merge -rOLD:NEW FILE' (please see the relevant comment in `_merge_past`
+for more details), so I had to invent an ugly hack just for the purpose.
+
+> I was looking at this, and WRT the problem of uncommitted local changes,
+> it seems to me you could just git-stash them now that git-stash exists.
+> I think it didn't when you first added the git support.. --[[Joey]]
 
 By design, Git backend uses a "master-clone" repository pair approach in contrast
 to the single repository approach (here, _clone_ may be considered as the working
