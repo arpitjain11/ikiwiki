@@ -254,8 +254,9 @@ sub git_commit_info ($;$) { #{{{
 
 	$num ||= 1;
 
-	my @raw_lines =
-	    run_or_die('git-log', "--max-count=$num", '--pretty=raw', '--raw', '--abbrev=40', '--always', '-m', '-r', $sha1, '--', '.');
+	my @raw_lines = run_or_die('git-log', "--max-count=$num", 
+		'--pretty=raw', '--raw', '--abbrev=40', '--always', '-m',
+		'-r', $sha1, '--', '.');
 	my ($prefix) = run_or_die('git-rev-parse', '--show-prefix');
 
 	my @ci;
@@ -370,9 +371,9 @@ sub rcs_recentchanges ($) { #{{{
 
 		my (@pages, @messages);
 		foreach my $detail (@{ $ci->{'details'} }) {
-			my $diffurl = $config{'diffurl'};
-			my $file    = $detail->{'file'};
+			my $file = $detail->{'file'};
 
+			my $diffurl = $config{'diffurl'};
 			$diffurl =~ s/\[\[file\]\]/$file/go;
 			$diffurl =~ s/\[\[sha1_parent\]\]/$ci->{'parent'}/go;
 			$diffurl =~ s/\[\[sha1_from\]\]/$detail->{'sha1_from'}/go;
