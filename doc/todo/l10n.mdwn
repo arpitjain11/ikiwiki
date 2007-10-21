@@ -62,7 +62,10 @@ and there is a po/ikiwiki.pot in the source that can be translated.
 
 ----
 
-Danish l10n of templates and basewiki is available at http://source.jones.dk/
-(using GIT - do `git clone <url> && cd <dir> && git checkout master_danish`
-for each of the ikiwiki_* repositories)
+Danish l10n of templates and basewiki is available with the following commands:
+
+    git clone http://source.jones.dk/ikiwiki.git newsite
+    cd newsite
+    make all
+
 --[[JonasSmedegaard]]
