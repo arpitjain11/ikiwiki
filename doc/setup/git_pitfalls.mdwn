@@ -1,1 +1,15 @@
 I want to collect common problems and their solutions when using Ikiwiki with Git here. Nothing here yet though, so feel free to add...
+
+> Well, I have a question. :-)
+> 
+> If I follow the instructions, I get a bare $REPOSITORY and a $SRCDIR that
+> is cloned off of it. Web edits change the SRCDIR and ikiwiki automatically
+> pushes to origin, which updates REPOSITORY. But the instructions say not
+> to clone from SRCDIR; so I clone from REPOSITORY. Now if I manually edit
+> a file and push the commit, it goes to REPOSITORY. The wiki isn't
+> updated.
+> 
+> Seems like REPOSITORY needs a post-receive hook that cd's to SRCDIR and
+> does a git pull, and manually triggers ikiwiki. Which seems very messy.
+>
+> Am I doing something wrong? --[[Joey]]
