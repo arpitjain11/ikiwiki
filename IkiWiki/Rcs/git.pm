@@ -285,7 +285,9 @@ sub git_sha1 (;$) { #{{{
 sub rcs_update () { #{{{
 	# Update working directory.
 
-	run_or_cry('git-pull', $config{gitorigin_branch});
+	if (length $config{gitorigin_branch}) {
+		run_or_cry('git-pull', $config{gitorigin_branch});
+	}
 } #}}}
 
 sub rcs_prepedit ($) { #{{{
@@ -335,7 +337,9 @@ sub rcs_commit ($$$;$$) { #{{{
 	$message = possibly_foolish_untaint($message);
 	if (run_or_non('git-commit', '-m', $message, '-i', $file)) {
 		unlockwiki();
-		run_or_cry('git-push', $config{gitorigin_branch});
+		if (length $config{gitorigin_branch}) {
+			run_or_cry('git-push', $config{gitorigin_branch});
+		}
 	}
 
 	return undef; # success
