@@ -1,0 +1,48 @@
+Using ikiwiki with the [[git]] backend, some interesting things can be done
+with creating mirrors (or, really, branches) of a wiki. In this tip, I'll
+assume your wiki is located on a server, and you want to take a copy with
+you on your laptop.
+
+With the configuration described here, you can commit local changes to the
+version on the laptop, perhaps while offline. You can browse and edit the
+wiki using a local web server. When you're ready, you can manually push the
+changes to the main wiki on the server.
+
+First, set up the wiki on the server, if it isn't already. Nothing special
+needs to be done here, just follow the regular instructions in [[setup]]
+for setting up ikiwiki with git.
+
+Next, git clone the source from the server to the laptop.
+
+Now, set up a web server on your laptop, if it doesn't already have one.
+
+Now you need to write a setup file for ikiwiki on the laptop. Mostly this
+is standard, but a few special settings are needed:
+
+* Configure a cgi wrapper as usual, but configure the git wrapper to
+  be written to the `post-commit` hook of the git clone.
+
+* By default, ikiwiki pulls and pushes from `origin`. This shouldn't be 
+  done on the laptop, because the origin may not be accessible (when the
+  laptop is offline). Also, commits made on the laptop should stay there,
+  until manually pushed, so that the laptop can serve as a staging area.
+
+  Make sure you have ikiwiki 2.11 or better installed, and set:
+  
+  	gitorigin_branch => "",
+
+* You can optionally enable to the [[plugins/mirrorlist]] plugin,
+  and configure it so that each page links to the corresponding page on the
+  server.
+
+Now just run `ikiwiki -setup wiki.setup -getctime` and you should be
+good to go. (You only need the slow `-getctime` option the first time you
+run setup.)
+
+Use standard git commands to handle pulling from and pushing to the server.
+
+Note: Currently, after pulling changes, you will need to manually update
+the wiki, with a command such as `ikiwiki -setup wiki.setup -refresh`. This
+is because git 1.5.4 doesn't have a hook that is run locally after pulling
+changes. Newer versions of git will have a `post-merge` hook that should
+work for this purpose.
