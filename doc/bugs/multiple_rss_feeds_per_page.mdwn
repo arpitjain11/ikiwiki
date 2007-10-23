@@ -1,0 +1,3 @@
+Pages with multiple inline macros try to use the same URL for the RSS feed for each inline. As a result, the last inline "wins" and overwrites the other feeds on the same page.
+
+Josh Triplett suggests that the inline macro should take a parameter for the feed basename, and refuse to generate feeds after the first one if that parameter is not specified. That sounds like a good solution to me.
