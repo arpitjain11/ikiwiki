@@ -1,0 +1,35 @@
+[[tag patch]]
+
+When a page containing tags and using the [[syntax_(3rd_party)_plugin|plugins/contrib/syntax]] (though pages using other preprocessors may also be affected) is rendered as an inline page, some extra `<p>` elements are added.
+
+Example output:
+
+    <p><span class="tags">
+    Tags:</p>
+    
+    <p><span class="selflink">XML</span></p>
+    
+    <p></span></p>
+
+Expected output:
+
+    <p><span class="tags">
+    Tags:
+    
+    <span class="selflink">XML</span>
+    </span></p>
+
+A fix is to change inlinepage.tmpl to remove new lines around tag links, as follows:
+
+    --- templates/inlinepage.tmpl   (revision 4626)
+    +++ templates/inlinepage.tmpl   (working copy)
+    @@ -24,9 +24,7 @@
+     <TMPL_IF NAME="TAGS">
+     <span class="tags">
+     Tags:
+    -<TMPL_LOOP NAME="TAGS">
+    -<TMPL_VAR NAME=LINK>
+    -</TMPL_LOOP>
+    +<TMPL_LOOP NAME="TAGS"> <TMPL_VAR NAME=LINK></TMPL_LOOP>
+     </span>
+     </TMPL_IF>
