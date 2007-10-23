@@ -32,7 +32,7 @@ sub import { #{{{
 	hook(type => "preprocess", id => "calendar", call => \&preprocess);
 } #}}}
 
-sub is_leap_year (@) { #{{
+sub is_leap_year (@) { #{{{
 	my %params=@_;
 	return ($params{year} % 4 == 0 && (($params{year} % 100 != 0) || $params{year} % 400 == 0));
 } #}}}
@@ -197,9 +197,9 @@ EOF
         add_depends($params{page}, join(" or ", @list));
 
 	return $calendar;
-}
+} #}}}
 
-sub format_year (@) {
+sub format_year (@) { #{{{
 	my %params=@_;
 
 	my $pagespec = $params{pages};
@@ -300,9 +300,9 @@ EOF
 EOF
 
 	return $calendar;
-}
+} #}}}
 
-sub preprocess (@) {
+sub preprocess (@) { #{{{
 	my %params=@_;
 	$params{pages} = "*"            unless defined $params{pages};
 	$params{type}  = "month"        unless defined $params{type};
@@ -364,6 +364,6 @@ sub preprocess (@) {
 	}
 
 	return "\n<div class=\"calendar\">$calendar</div><!-- calendar -->\n";
-}
+} #}}
 
 1
