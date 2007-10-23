@@ -58,3 +58,11 @@ If I do this, I might as well also:
 * Change the link= link= stuff to just links=link+link etc.
 * Change the delimiter from space to comma; commas are rare in index files,
   so less ugly escaped delimiters to deal with.
+
+--- 
+
+The [[plugins/calendar]] plugin could use plugin data storage to record
+which pages have a calendar for the current time. Then ensure they are
+rebuilt at least once a day. Currently, it needs a cron job to rebuild
+the *whole* wiki every day; with this enhancement, the cron job would only
+rebuild the few pages that really need it.

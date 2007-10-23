@@ -3,8 +3,15 @@ ikiwiki (2.11) UNRELEASED; urgency=low
   * Correct a pair of logic errors that triggered if svnpath was empty.
   * If gitorigin_branch is set to the empty string, don't push or pull.
     Useful for laptop clones of remote wikis.
+  * Add a calendar plugin, contributed by Manoj Srivastava.
+  * Reformat calendar plugin to ikiwiki conventions.
+  * The calendar plugin made *every* page depend on every other page,
+    which seemed a wee tiny little bit overkill. Fixed the dependency
+    calculations (I hope.)
+  * Removed manual ctime statting code, and just have the calendar plugin use
+    %pagectime.
 
- -- Joey Hess <joeyh@debian.org>  Sun, 21 Oct 2007 20:28:16 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 22 Oct 2007 18:24:00 -0400
 
 ikiwiki (2.10) unstable; urgency=low
 
