@@ -27,3 +27,16 @@ URL rewriting, authorisation, etc.
 > 
 > Perhaps this should be something that is configurable via the setup file
 > instead. --[[Joey]]
+
+> See 
+
+---
+
+Hi, I would like to have my htaccess files in svn repository so ikiwiki would export that file to my webspace with every commit.
+
+That way I have revision control on that file too. That may be a security concern, but I trust everybody that has svn commit
+access and such .htaccess files should not be accessible through wiki cgi. Of course, it could default to 'off'.
+
+> See [[debbug 447267]] for a patch for this.
+
+[[tag patch]]
