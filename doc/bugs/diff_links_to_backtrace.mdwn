@@ -3,3 +3,7 @@ question is when the page was added. Is this a viewvc bug, or a behavior
 ikiwiki needs to work around?
   - As a special case, there should certianly be no history link for
     pages generated from the underlaydir as it can never work for them.
+
+Hmm, gitweb deals with this ok, and can even handle the case where a page
+was renamed from some other filename. So I don't think it's appropriate
+for ikiwiki to worry about this. [[done]] --[[Joey]]
