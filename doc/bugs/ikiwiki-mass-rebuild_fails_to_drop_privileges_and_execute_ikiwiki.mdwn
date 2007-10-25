@@ -2,6 +2,8 @@ The ikiwiki-mass-rebuild utility fails to drop privileges and fails to execute i
 
 The solution is to set the effective UID after setting the real UID, and to set $PATH in the environment before calling exec().
 
+> Why does the PATH need to be reset? --[[Joey]]
+
 Proposed patch:
 
     --- ikiwiki-mass-rebuild.orig	2007-08-15 22:21:59.000000000 +0200
