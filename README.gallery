@@ -1,0 +1,30 @@
+Project IkiWiki::gallery.pm 
+===========================
+Version 0.9
+
+This plugin creates a nice looking gallery of the images.
+
+SVN Repository of plugin is at http://ned.snow-crash.org:8080/svn/ikiwiki-gallery 
+
+USAGE: 
+======
+
+Plugin can be used as 
+[[gallery imagedir="images" option="value"]]
+
+Available options :
+- imagedir(required) => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.
+- thumbnailsize(optional,Default=200x200) => Size of the thumbnail that you want to generate for the gallery.
+- resize(optional, Default=>800x600) => Width and Height to resize image to.
+- alt(optional) => If image can not be displayed, it will display the text contained in alt argument.
+- cols(optional,Default=3) => Number of columns of thumbnails that you want to generate.
+- rows(optional, Default=>3) => Number of Rows on a gallery page.
+- title(optional) => Title of the gallery.
+- sort(optional) => "asc" or "desc" . You can sort in ascending or descending order of names of images. 
+- vcs(optional,Default=1) => This value decides whether to put the images out of IkiWiki's tree. If you set vcs=0, then you can specify a directory outside IkiWiki tree also to lookup. In that case you can also give absolute link of the image directory.
+- exif(optional, Default=>0) => Specify whether to Display exif information or not.
+
+Additionaly, you can put Comment file filename.comm in image directory where filename is name of the image. Comments would then be displayed in the gallery.
+
+--Arpit Jain (arpitjain11 AT gmail.com)
+
