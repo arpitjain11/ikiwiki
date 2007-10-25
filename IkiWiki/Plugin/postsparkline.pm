@@ -58,7 +58,7 @@ sub preprocess (@) { #{{{
 
 	if (! @data) {
 		# generate an empty graph
-		push @data, 0 foreach 1..$params{max};
+		push @data, 0 foreach 1..($params{max} / 2);
 	}
 
 	my $color=exists $params{color} ? "($params{color})" : "";
