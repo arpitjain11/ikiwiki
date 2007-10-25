@@ -4,6 +4,8 @@ The solution is to set the effective UID after setting the real UID, and to set 
 
 > Why does the PATH need to be reset? --[[Joey]]
 
+> > It doesn't - it needs to be set. The line with `%ENV=();` clears the environment, thus no `$PATH` is set. --[[HenrikBrixAndersen]]
+
 Proposed patch:
 
     --- ikiwiki-mass-rebuild.orig	2007-08-15 22:21:59.000000000 +0200
