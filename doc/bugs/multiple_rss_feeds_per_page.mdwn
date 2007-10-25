@@ -8,3 +8,12 @@ Josh Triplett suggests that the inline macro should take a parameter for the fee
 > I've known about this bug since well, the day I wrote rss support, but
 > I haven't seen a use case that really motivated me to take the time to
 > fix it. Fixes or good motivation both accepted. :-) --[[Joey]]
+
+> A good reason to support autoincrementing might be that it's possible
+> to have a blog feed that inlines another blog feed. On purpose, or
+> semi-on-accident, it happened to me:
+> 
+> <http://kitenet.net/~joey/code/whatsnew/>
+> 
+> The result was that my whatsnew feed actually contains my Words2Nums
+> feed, or something. --[[joey]]
