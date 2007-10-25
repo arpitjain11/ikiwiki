@@ -56,6 +56,11 @@ sub preprocess (@) { #{{{
 		return "[[postsparkline error $@]]";
 	}
 
+	if (! @data) {
+		# generate an empty graph
+		push @data, 0 foreach 1..$params{max};
+	}
+
 	my $color=exists $params{color} ? "($params{color})" : "";
 
 	delete $params{pages};

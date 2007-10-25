@@ -11,8 +11,10 @@ ikiwiki (2.11) UNRELEASED; urgency=low
   * Removed manual ctime statting code, and just have the calendar plugin use
     %pagectime.
   * Ikiwiki has moved into a git repository.
+  * postsparkline: Avoid a confusing error message if no pages match
+    and instead show an empty graph.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 24 Oct 2007 22:19:31 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 24 Oct 2007 22:58:51 -0400
 
 ikiwiki (2.10) unstable; urgency=low
 
