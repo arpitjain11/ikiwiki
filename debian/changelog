@@ -13,8 +13,11 @@ ikiwiki (2.11) UNRELEASED; urgency=low
   * Ikiwiki has moved into a git repository.
   * postsparkline: Avoid a confusing error message if no pages match
     and instead show an empty graph.
+  * Add handling of feeds for nested inlines, as well as support for a
+    single page containing two different feeds.
+  * Also fixed some places in inline that failed to use destpage correctly.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 24 Oct 2007 22:58:51 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 25 Oct 2007 05:14:58 -0400
 
 ikiwiki (2.10) unstable; urgency=low
 

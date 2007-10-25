@@ -8,6 +8,9 @@ use Encode;
 use IkiWiki 2.00;
 use URI;
 
+my %knownfeeds;
+my %page_numfeeds;
+
 sub import { #{{{
 	hook(type => "getopt", id => "inline", call => \&getopt);
 	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
@@ -149,9 +152,25 @@ sub preprocess_inline (@) { #{{{
 	# that if they are removed or otherwise changed, the inline will be
 	# sure to be updated.
 	add_depends($params{page}, join(" or ", @list));
+	
+	my $feednum="";
 
-	my $rssurl=basename(rsspage($params{page}));
-	my $atomurl=basename(atompage($params{page}));
+	my $feedid=join(",", map { "$_=$params{$_}" } sort keys %params);
+	if (exists $knownfeeds{$feedid}) {
+		$feednum=$knownfeeds{$feedid};
+	}
+	else {
+		if (exists $page_numfeeds{$params{destpage}}) {
+			$feednum=$knownfeeds{$feedid}=++$page_numfeeds{$params{destpage}};
+		}
+		else {
+			$feednum=$knownfeeds{$feedid}="";
+			$page_numfeeds{$params{destpage}}=1;
+		}
+	}
+
+	my $rssurl=basename(rsspage($params{destpage}).$feednum);
+	my $atomurl=basename(atompage($params{destpage}).$feednum);
 	my $ret="";
 
 	if ($config{cgiurl} && (exists $params{rootpage} ||
@@ -215,7 +234,7 @@ sub preprocess_inline (@) { #{{{
 							$template->param(have_actions => 1);
 							$template->param(discussionlink =>
 								htmllink($page,
-									$params{page},
+									$params{destpage},
 									gettext("Discussion"),
 									noimageinline => 1,
 									forcesubpage => 1));
@@ -228,7 +247,7 @@ sub preprocess_inline (@) { #{{{
 				}
 	
 				run_hooks(pagetemplate => sub {
-					shift->(page => $page, destpage => $params{page},
+					shift->(page => $page, destpage => $params{destpage},
 						template => $template,);
 				});
 	
@@ -238,9 +257,9 @@ sub preprocess_inline (@) { #{{{
 			else {
 				if (defined $type) {
 					$ret.="\n".
-					      linkify($page, $params{page},
-					      preprocess($page, $params{page},
-					      filter($page, $params{page},
+					      linkify($page, $params{destpage},
+					      preprocess($page, $params{destpage},
+					      filter($page, $params{destpage},
 					      readfile(srcfile($file)))));
 				}
 			}
@@ -256,19 +275,19 @@ sub preprocess_inline (@) { #{{{
 		}
 	
 		if ($rss) {
-			my $rssp=rsspage($params{page});
-			will_render($params{page}, $rssp);
+			my $rssp=rsspage($params{destpage}).$feednum;
+			will_render($params{destpage}, $rssp);
 			writefile($rssp, $config{destdir},
-				genfeed("rss", $rssurl, $desc, $params{page}, @list));
-			$toping{$params{page}}=1 unless $config{rebuild};
+				genfeed("rss", $rssurl, $desc, $params{destpage}, @list));
+			$toping{$params{destpage}}=1 unless $config{rebuild};
 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 		}
 		if ($atom) {
-			my $atomp=atompage($params{page});
-			will_render($params{page}, $atomp);
+			my $atomp=atompage($params{destpage}).$feednum;
+			will_render($params{destpage}, $atomp);
 			writefile($atomp, $config{destdir},
-				genfeed("atom", $atomurl, $desc, $params{page}, @list));
-			$toping{$params{page}}=1 unless $config{rebuild};
+				genfeed("atom", $atomurl, $desc, $params{destpage}, @list));
+			$toping{$params{destpage}}=1 unless $config{rebuild};
 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
 		}
 	}
