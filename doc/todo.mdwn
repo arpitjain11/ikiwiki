@@ -2,6 +2,7 @@ Feel free to post your ideas for todo and [[wishlist]] items here, as well
 as any [[patches|patch]]. If it seems more like a bug in the existing code,
 post it to [[bugs]] instead. Link items to [[todo/done]] when done.
 
+<!-- currently commented out because I lost all my mtimes :-)
 [[if test="enabled(postsparkline)"
 then="""
 How long will it take your todo item to be fixed? Well...  
@@ -12,6 +13,7 @@ this many are being added per month
 max=12 ymin=10 formula=permonth time=mtime style=bar barwidth=2 barspacing=1 height=13]]
 while this many are being fixed.
 """]]
+-->
 
 [[inline pages="todo/* and !todo/done and !link(todo/done) and
 !link(patch) and !link(wishlist) and !todo/*/*"
