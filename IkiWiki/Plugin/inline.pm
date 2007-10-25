@@ -155,7 +155,7 @@ sub preprocess_inline (@) { #{{{
 	
 	my $feednum="";
 
-	my $feedid=join(",", map { "$_=$params{$_}" } sort keys %params);
+	my $feedid=join("\0", map { $_."\0".$params{$_} } sort keys %params);
 	if (exists $knownfeeds{$feedid}) {
 		$feednum=$knownfeeds{$feedid};
 	}
