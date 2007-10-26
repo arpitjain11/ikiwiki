@@ -335,7 +335,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	# git-commit(1) returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
 	$message = possibly_foolish_untaint($message);
-	if (run_or_non('git-commit', '-m', $message, '-i', $file)) {
+	if (run_or_non('git-commit', '-q', '-m', $message, '-i', $file)) {
 		unlockwiki();
 		if (length $config{gitorigin_branch}) {
 			run_or_cry('git-push', $config{gitorigin_branch});

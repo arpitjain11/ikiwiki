@@ -19,6 +19,8 @@ ikiwiki (2.11) UNRELEASED; urgency=low
   * ikiwiki-mass-rebuild: Patch from HenrikBrixAndersen to fix order
     of permissions dropping code to work on FreeBSD.
   * ikiwiki-mass-rebuild: Don't clear PATH from the environment.
+  * Run git-commit -q (though it doesn't do much good due to its stderr
+    abuse).
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Oct 2007 23:11:13 -0400
 
