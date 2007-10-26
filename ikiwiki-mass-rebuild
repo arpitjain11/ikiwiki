@@ -27,8 +27,10 @@ sub processline {
 		if ($< != $uuid || $> != $uuid || $( != $ugid || $) ne "$ugid $ugid") {
 			die "failed to drop permissions to $user";
 		}
-		%ENV=();
-		$ENV{HOME}=(getpwnam($user))[7];
+		%ENV=(
+			PATH => $ENV{PATH},
+			HOME => (getpwnam($user))[7],
+		);
 		exec("ikiwiki", "-setup", $setup, @ARGV);
 		die "failed to run ikiwiki: $!";
 	}
