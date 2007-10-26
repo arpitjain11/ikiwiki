@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-20 20:28-0400\n"
+"POT-Creation-Date: 2007-10-26 03:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:211 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
@@ -173,29 +173,29 @@ msgstr ""
 msgid "failed to determine size of image %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:39
+#: ../IkiWiki/Plugin/inline.pm:42
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:132
+#: ../IkiWiki/Plugin/inline.pm:135
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:172
+#: ../IkiWiki/Plugin/inline.pm:191
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:188
+#: ../IkiWiki/Plugin/inline.pm:207
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:219 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:103
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:433
+#: ../IkiWiki/Plugin/inline.pm:452
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -470,7 +470,7 @@ msgstr ""
 msgid "REV is not a valid revision identifier, cannot send notifications"
 msgstr ""
 
-#: ../IkiWiki/Rcs/svn.pm:218
+#: ../IkiWiki/Rcs/svn.pm:221
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
