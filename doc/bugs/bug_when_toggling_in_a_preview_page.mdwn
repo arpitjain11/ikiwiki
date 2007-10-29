@@ -1,3 +1,29 @@
 When toggling an item while being in a web-editing session in the *Preview* frame,
 you'll lose the context of the editing session and will be directed to the wiki's
 main page instead.  --[[tschwinge]]
+
+Making toggles actually work in preview is hard: The toggle plugin uses
+a format hook to add javascript to the page, after htmlscrubber runs. Page
+preview does not currently run the format hook.
+
+I think that is not done because the format hook is supposed to get the
+entire html file contents, including the html head and body elements, and
+in the case of page preview, such a full page is not being generated,
+instead it's just inlining the previewed page into the edit form.
+
+If the format hook were called on this partial data, hooks that looked for
+body tags etc would break. OTOH, if in preview mode it were run on the
+whole edit form page, ones like toc that parse the page would have
+unexpected results, since they would also parse the edit form.
+
+(Also, if format were run in preview mode then plugins like linkmap, which
+generate object files in their format hook, would need to be changed to not
+do this during preview (to avoid preview mode writing files to the wiki).
+So the format hook would need to be passed a flag indicating preview mode.)
+
+So I don't see a good way to call the format hook in preview mode.
+Failing that, the best I can do is make the toggle plugin detect preview
+mode, and generate nonfunctional toggles that warn they're not toggleable
+in preview mode. I've [[done]] that, which also fixes the incidental issue of
+the toggle link pointing to the wrong place, which was due to the use of the
+&lt;base&gt; tag in the preview page template. --[[Joey]]

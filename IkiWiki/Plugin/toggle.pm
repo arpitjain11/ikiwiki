@@ -80,7 +80,13 @@ sub preprocess_toggle (@) { #{{{
 	my %params=(id => "default", text => "more", @_);
 
 	my $id=genid($params{page}, $params{id});
-	return "<a class=\"toggle\" href=\"#$id\">$params{text}</a>";
+	if (! $params{preview}) {
+		return "<a class=\"toggle\" href=\"#$id\">$params{text}</a>";
+	}
+	else {
+		return "$params{text} ".
+			gettext("(not toggleable in preview mode)");
+	}
 } # }}}
 
 sub preprocess_toggleable (@) { #{{{
