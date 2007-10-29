@@ -1,0 +1,26 @@
+One useful item would be support for multiple RCS systems simultaneously.
+
+Example:
+
+* root refs: git://.... branch wiki
+* master refs: git://..... branch master
+* dev refs: git://.... branch dev
+
+I'm not sure how the mechanics would work out for choosing between what to refs and managing branch self-references (though doesn't ikiwiki do something like this:
+
+* 1
+  * a
+     * j
+  * b
+     * Page : refs a/j
+* 2
+  * a
+     * j
+  * b
+* a
+  * j
+
+Ikiwiki checks: 1/b/a/j, then 1/a/j and succeeds...
+
+
+The new git subprojects might work, but I've had trouble making them work sanely in the past...
