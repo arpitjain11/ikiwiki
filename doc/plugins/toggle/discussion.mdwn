@@ -18,17 +18,19 @@ but no success. How can I do it?
 
 Ikiwiki fails to render the line break between *foo* and *bar* when the following is toggled on:
 
-[[toggle text="show"]]
-[[toggleable text="""
+[[toggle id="test" text="show"]]
+[[toggleable id="test" text="""
     foo
 """]]
 
 
 ## bar
 
+--[[tschwinge]]
+
 
 # Bug when toggling in a preview page
 
 When toggling an item while being in a web-editing session in the *Preview* frame,
 you'll lose the context of the editing session and will be directed to the wiki's
-main page instead.
+main page instead.  --[[tschwinge]]
