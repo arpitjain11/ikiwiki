@@ -12,3 +12,16 @@ but no success. How can I do it?
 
 >> Thanks a lot for the fast reply, Joey! It's good to know it.
 >> --PTecza
+
+
+# Bug when followed by a heading
+
+Ikiwiki fails to render the line break between *foo* and *bar* when the following is toggled on:
+
+[[toggle text="show"]]
+[[toggleable text="""
+    foo
+"""]]
+
+
+## bar
