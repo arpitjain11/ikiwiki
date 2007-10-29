@@ -14,27 +14,4 @@ but no success. How can I do it?
 >> --PTecza
 
 
-# Bug when followed by a heading
-
-Ikiwiki fails to render the line break between *foo* and *bar* when the following is toggled on:
-
-[[toggle id="test" text="show"]]
-[[toggleable id="test" text="""
-    foo
-"""]]
-
-
-## bar
-
---[[tschwinge]]
-
-For some reason, this problem is not visible here.  You can see the problem on
-<http://www.bddebian.com/~wiki/microkernel/mach/gnumach/hardwarecompatibilitylist/>.
-Scroll down to *Storage* and use the *SATA drives ...* toggle.  --[[tschwinge]]
-
-> This seems to be a bug in your wiki's style sheet. Download the page and
-> view it without a stylesheet and the web browser renders it fine. --[[Joey]]
-
-# Bug when toggling in a preview page
-
-Moved to [[bug_when_toggling_in_a_preview_page]] --[[Joey]]
+# [[bugs/Bug_when_toggling_in_a_preview_page]]
