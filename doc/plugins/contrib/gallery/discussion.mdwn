@@ -1,0 +1,19 @@
+I tried using this plugin, but to no success so far.  I used *gallery* git branch,
+rebased it onto the *origin/master*, built a Debian package and installed that one.
+
+However, I can't even get simply things like this to work:
+
+    $ cat web/index.mdwn
+    [[gallery imagedir="b" vcs="0"]]
+    $ ls web/b/
+    1.jpg  2.jpg  3.jpg  4.jpg
+    $ ikiwiki [...] --plugin gallery web web.rendered
+    [...]
+    $ grep gallery web.rendered/index.html 
+    <p>[[gallery Failed to Read Directory b.]]</p>
+
+When using `vcs="1"` it's no better:
+
+    $ ikiwiki [...] --plugin gallery web web.rendered
+    scanning index.mdwn
+    internal error: b/800x600-1.jpg cannot be found in web or underlay
