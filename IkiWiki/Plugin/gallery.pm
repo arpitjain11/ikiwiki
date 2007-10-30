@@ -143,7 +143,12 @@ sub makeGallery (@) {#{{{
 	my $vcs = $params{vcs} ;  
 	my $sort = $params{sort}; 
 	my $exif = $params{exif} || 1;  
-	my $resize = $params{resize} || '800x600' ;  
+	my $resize = $params{resize} || '800x600' ; 
+  my $to_resize =1; 
+  if (defined $params{resize} and $params{resize} == "0" ) { 
+    $to_resize=0; 
+  } 
+
 	$vcs = 1 if not defined $vcs;
 
 	my $dir = bestdir($params{page}, $imagedir,$vcs) || return "[[gallery ".sprintf(gettext("Directory %s not found"), $imagedir)."]]"; 
@@ -186,7 +191,9 @@ sub makeGallery (@) {#{{{
 		$imageoutlink = "$config{destdir}/$dir/${iw}x${ih}-$imagefile"; #Every image may not have this.
 		
 		will_render($params{page}, $thumblink); 
-		will_render($params{page}, $resizedimagelink); 
+    if($to_resize == 1 ) { 
+  		will_render($params{page}, $resizedimagelink); 
+    }  
 		
 		if (-e $thumboutlink && -e $imageoutlink && (-M sourcefile($imagelink,$vcs) >= -M $thumboutlink) && (-M sourcefile($imagelink,$vcs) >= -M $imageoutlink)) {
 			$r = $im->Read($thumboutlink);
@@ -200,6 +207,7 @@ sub makeGallery (@) {#{{{
 
 			my($imwidth,$imheight) = $im->Get('columns','rows');
 			my @blob;
+      if($to_resize == 1 ) {
 			if($imwidth > $iw || $imheight > $ih) {		
 				my $temp1 = $imagelink ; 
 				$imagelink = "$dir/${iw}x${ih}-$imagefile"; 
@@ -213,6 +221,7 @@ sub makeGallery (@) {#{{{
 						$imagelink= $temp1;
 				}
 			}
+      }
 
 			$r = $im->Resize(geometry => "${w}x${h}"); #Create Thumbnail
 			return "[[gallery ".sprintf(gettext("Failed to resize: %s"), $r)."]]" if $r;

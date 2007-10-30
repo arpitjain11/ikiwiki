@@ -15,7 +15,7 @@ Plugin can be used as
 Available options :
 - imagedir(required) => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.
 - thumbnailsize(optional,Default=200x200) => Size of the thumbnail that you want to generate for the gallery.
-- resize(optional, Default=>800x600) => Width and Height to resize image to.
+- resize(optional, Default=>800x600) => Width and Height to resize image to or resize="0" for no resize
 - alt(optional) => If image can not be displayed, it will display the text contained in alt argument.
 - cols(optional,Default=3) => Number of columns of thumbnails that you want to generate.
 - rows(optional, Default=>3) => Number of Rows on a gallery page.
