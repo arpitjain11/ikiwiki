@@ -9,7 +9,7 @@ USAGE :
 Available options : <br>
     * imagedir(required) => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.<br>
     * thumbnailsize(optional,Default=200x200) => Size of the thumbnail that you want to generate for the gallery.<br>
-    * resize(optional, Default=>800x600) => Width and Height to resize image to.<br>
+    * resize(optional, Default=>800x600) => Width and Height to resize image to. resize="0" for turning resizing off.<br>
     * alt(optional) => If image can not be displayed, it will display the text contained in alt argument.<br>
     * cols(optional,Default=3) => Number of columns of thumbnails that you want to generate.<br>
     * rows(optional, Default=>3) => Number of Rows on a gallery page.<br>
