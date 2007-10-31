@@ -165,10 +165,7 @@ sub _parse_diff_tree ($@) { #{{{
 	# Identification lines for the commit.
 	while (my $line = shift @{ $dt_ref }) {
 		# Regexps are semi-stolen from gitweb.cgi.
-		if ($line =~ m/^commit ([0-9a-fA-F]{40})$/) {
-			$ci{'commit'} = $1;
-		}
-		elsif ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
+		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
 			$ci{'tree'} = $1;
 		}
 		elsif ($line =~ m/^parent ([0-9a-fA-F]{40})$/) {
@@ -451,7 +448,7 @@ sub rcs_notify () { #{{{
 		$message = join "\n", @{ $ci->{'comment'} };
 	}
 
-	my $sha1 = $ci->{'commit'};
+	my $sha1 = $ci->{'sha1'};
 
 	require IkiWiki::UserInfo;
 	send_commit_mails(
