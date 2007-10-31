@@ -7,8 +7,10 @@ ikiwiki (2.12) UNRELEASED; urgency=low
     name as a currently existing page, and thus expired too many pages.
   * Avoid a race in the git rcs_commit function, by not assuming HEAD will
     stay the same for the duration of the function.
+  * Avoid using commands like git-diff and instead use "git diff".
+    In some configurations, only the main git command is in the path.
 
- -- Joey Hess <joeyh@debian.org>  Wed, 31 Oct 2007 17:11:12 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 31 Oct 2007 17:34:59 -0400
 
 ikiwiki (2.11) unstable; urgency=low
 

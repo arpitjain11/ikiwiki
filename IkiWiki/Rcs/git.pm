@@ -51,7 +51,7 @@ sub run_or_non ($@) { _safe_git(undef,            @_) }
 sub _merge_past ($$$) { #{{{
 	# Unlike with Subversion, Git cannot make a 'svn merge -rN:M file'.
 	# Git merge commands work with the committed changes, except in the
-	# implicit case of '-m' of git-checkout(1).  So we should invent a
+	# implicit case of '-m' of git checkout(1).  So we should invent a
 	# kludge here.  In principle, we need to create a throw-away branch
 	# in preparing for the merge itself.  Since branches are cheap (and
 	# branching is fast), this shouldn't cost high.
@@ -60,7 +60,7 @@ sub _merge_past ($$$) { #{{{
 	# possible approach to get rid of this situation could be that we first
 	# make a temporary commit in the master branch and later restore the
 	# initial state (this is possible since Git has the ability to undo a
-	# commit, i.e. 'git-reset --soft HEAD^').  The method can be summarized
+	# commit, i.e. 'git reset --soft HEAD^').  The method can be summarized
 	# as follows:
 	#
 	# 	- create a diff of HEAD:current-sha1
@@ -103,30 +103,30 @@ sub _merge_past ($$$) { #{{{
 		my $branch = "throw_away_${sha1}"; # supposed to be unique
 
 		# Create a throw-away branch and rewind backward.
-		push @undo, sub { run_or_cry('git-branch', '-D', $branch) };
-		run_or_die('git-branch', $branch, $sha1);
+		push @undo, sub { run_or_cry('git', 'branch', '-D', $branch) };
+		run_or_die('git', 'branch', $branch, $sha1);
 
 		# Switch to throw-away branch for the merge operation.
 		push @undo, sub {
-			if (!run_or_cry('git-checkout', $config{gitmaster_branch})) {
-				run_or_cry('git-checkout','-f',$config{gitmaster_branch});
+			if (!run_or_cry('git', 'checkout', $config{gitmaster_branch})) {
+				run_or_cry('git', 'checkout','-f',$config{gitmaster_branch});
 			}
 		};
-		run_or_die('git-checkout', $branch);
+		run_or_die('git', 'checkout', $branch);
 
 		# Put the modified file in _this_ branch.
 		rename($hidden, $target)
 		    or error("rename '$hidden' to '$target' failed: $!");
 
 		# _Silently_ commit all modifications in the current branch.
-		run_or_non('git-commit', '-m', $message, '-a');
+		run_or_non('git', 'commit', '-m', $message, '-a');
 		# ... and re-switch to master.
-		run_or_die('git-checkout', $config{gitmaster_branch});
+		run_or_die('git', 'checkout', $config{gitmaster_branch});
 
 		# Attempt to merge without complaining.
-		if (!run_or_non('git-pull', '--no-commit', '.', $branch)) {
+		if (!run_or_non('git', 'pull', '--no-commit', '.', $branch)) {
 			$conflict = readfile($target);
-			run_or_die('git-reset', '--hard');
+			run_or_die('git', 'reset', '--hard');
 		}
 	};
 	my $failure = $@;
@@ -257,10 +257,10 @@ sub git_commit_info ($;$) { #{{{
 
 	$num ||= 1;
 
-	my @raw_lines = run_or_die('git-log', "--max-count=$num", 
+	my @raw_lines = run_or_die('git', 'log', "--max-count=$num", 
 		'--pretty=raw', '--raw', '--abbrev=40', '--always', '-m',
 		'-r', $sha1, '--', '.');
-	my ($prefix) = run_or_die('git-rev-parse', '--show-prefix');
+	my ($prefix) = run_or_die('git', 'rev-parse', '--show-prefix');
 
 	my @ci;
 	while (my $parsed = _parse_diff_tree(($prefix or ""), \@raw_lines)) {
@@ -278,7 +278,7 @@ sub git_sha1 (;$) { #{{{
 	my $file = shift || q{--};
 
 	# Ignore error since a non-existing file might be given.
-	my ($sha1) = run_or_non('git-rev-list', '--max-count=1', 'HEAD', $file);
+	my ($sha1) = run_or_non('git', 'rev-list', '--max-count=1', 'HEAD', $file);
 	if ($sha1) {
 		($sha1) = $sha1 =~ m/($sha1_pattern)/; # sha1 is untainted now
 	} else { debug("Empty sha1sum for '$file'.") }
@@ -289,7 +289,7 @@ sub rcs_update () { #{{{
 	# Update working directory.
 
 	if (length $config{gitorigin_branch}) {
-		run_or_cry('git-pull', $config{gitorigin_branch});
+		run_or_cry('git', 'pull', $config{gitorigin_branch});
 	}
 } #}}}
 
@@ -322,7 +322,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	# action.  But it takes time for a Git process to finish its job
 	# (especially if a merge required), so we must re-lock to prevent
 	# race conditions.  Only when the time of the real commit action
-	# (i.e. git-push(1)) comes, we'll unlock the directory.
+	# (i.e. git push) comes, we'll unlock the directory.
 	lockwiki();
 
 	# Check to see if the page has been changed by someone else since
@@ -335,13 +335,13 @@ sub rcs_commit ($$$;$$) { #{{{
 		return $conflict if defined $conflict;
 	}
 
-	# git-commit(1) returns non-zero if file has not been really changed.
+	# git commit returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
 	$message = possibly_foolish_untaint($message);
-	if (run_or_non('git-commit', '-q', '-m', $message, '-i', $file)) {
+	if (run_or_non('git', 'commit', '-q', '-m', $message, '-i', $file)) {
 		unlockwiki();
 		if (length $config{gitorigin_branch}) {
-			run_or_cry('git-push', $config{gitorigin_branch});
+			run_or_cry('git', 'push', $config{gitorigin_branch});
 		}
 	}
 
@@ -353,7 +353,7 @@ sub rcs_add ($) { # {{{
 
 	my ($file) = @_;
 
-	run_or_cry('git-add', $file);
+	run_or_cry('git', 'add', $file);
 } #}}}
 
 sub rcs_recentchanges ($) { #{{{
@@ -459,7 +459,7 @@ sub rcs_notify () { #{{{
 			$message;
 		},
 		sub {
-			join "\n", run_or_die('git-diff', "${sha1}^", $sha1);
+			join "\n", run_or_die('git', 'diff', "${sha1}^", $sha1);
 		}, $user, @changed_pages
 	);
 } #}}}
