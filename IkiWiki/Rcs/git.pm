@@ -258,7 +258,7 @@ sub git_commit_info ($;$) { #{{{
 	$num ||= 1;
 
 	my @raw_lines = run_or_die('git', 'log', "--max-count=$num", 
-		'--pretty=raw', '--raw', '--abbrev=40', '--always', '-m',
+		'--pretty=raw', '--raw', '--abbrev=40', '--always', '-c',
 		'-r', $sha1, '--', '.');
 	my ($prefix) = run_or_die('git', 'rev-parse', '--show-prefix');
 
@@ -412,7 +412,7 @@ sub rcs_recentchanges ($) { #{{{
 			when       => $when,
 			message    => [@messages],
 			pages      => [@pages],
-		};
+		} if @pages;
 
 		last if @rets >= $num;
 	}

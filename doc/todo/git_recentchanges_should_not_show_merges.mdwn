@@ -7,3 +7,14 @@ A merge in general is a commit with two parents, right? But such a merge
 might be what gitweb calls a "simple merge", that is I think, just a 
 fast-forward. Or it could be a merge that includes manual conflict resolution,
 and should be shown in recentchanges.
+
+Seems that the problem is that it's calling git-log with the -m option,
+which makes merges be listed with the diff from the perspective of each
+parent. I think it would be better to not use that (or possibly to use the
+-c option instead?). The -m makes it show the merge from the POV of
+each of the parents. If the -m is left off, none of the changes in the
+merge are shown, even if it includes changes not in any of the parents
+(manual conflict resolution). With -c, it seems to show only the unique
+changes introduced by the merge.
+
+[[done]], using -c, hope that was the right choice --[[Joey]]
