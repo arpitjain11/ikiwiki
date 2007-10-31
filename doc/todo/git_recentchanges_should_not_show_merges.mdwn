@@ -1,0 +1,9 @@
+The recentchanges page can currently display merge commits, such as "Merge
+branch 'master' of ssh://git.kitenet.net/srv/git/ikiwiki.info".
+
+It should filter these out somehow, but I'm not sure how to do that.
+
+A merge in general is a commit with two parents, right? But such a merge
+might be what gitweb calls a "simple merge", that is I think, just a 
+fast-forward. Or it could be a merge that includes manual conflict resolution,
+and should be shown in recentchanges.
