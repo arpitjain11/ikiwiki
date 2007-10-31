@@ -1,0 +1,40 @@
+I was suprised to receive two mails from ikiwiki about one web edit:
+
+ 1   F Oct 30 To joey+ikiwiki update of ikiwiki's plugins/contrib/gallery.mdwn by http://arpitjain11.myopenid.com/
+ 1   F Oct 30 To joey+ikiwiki update of ikiwiki's plugins/contrib/gallery.mdwn by http://arpitjain11.myopenid.com/
+
+The first of these had the correct diff for the changes made by the web
+ edit (00259020061577316895370ee04cf00b634db98a).
+
+But the second had a diff for modifications I made to ikiwiki code
+around the same time (2a6e353c205a6c2c8b8e2eaf85fe9c585c1af0cd).
+
+I'm now fairly sure a race is involved. Note that the name of the modified
+page is correct, while the diff was not. The git rcs_commit code first
+gets the list of modified page(s) and then gets the diff, and apparently my
+other commit happened in the meantime, so HEAD changed.
+
+Seems that the rcs_notify for git assumes that HEAD is the commit
+that triggered the ikiwiki run, and that it won't change while the function is
+running. Both assumptions are bad. Git does no locking and another commit
+can come in at any time.
+
+Notice that the equivilant code for subversion is careful to look at $REV.
+git's post-update hook doesn't have an equivilant of $REV. Its post-receive hook
+does, but I'm not sure if that's an appropriate hook for ikiwiki to be using
+for this. Switching existing wikis to use a different hook would be tricky..
+
+I've avoided part of the race; now the code does:
+
+1. Get commit info for HEAD commit.
+2. Extract file list from that.
+3. Extract sha1 of commit from it too.
+4. git diff sha1^ sha1
+
+Still seems like there can be a race if another commit comes in before step #1.
+In this case, two post-receive hooks could run at the same time, and both
+see the same sha1 as HEAD, so two diffs might be sent for second commit and no
+diff for the first commit.
+
+Ikiwiki's own locking prevents this from happenning if both commits are web
+edits. At least one of the two commits has to be a non-web commit.

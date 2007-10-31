@@ -165,7 +165,10 @@ sub _parse_diff_tree ($@) { #{{{
 	# Identification lines for the commit.
 	while (my $line = shift @{ $dt_ref }) {
 		# Regexps are semi-stolen from gitweb.cgi.
-		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
+		if ($line =~ m/^commit ([0-9a-fA-F]{40})$/) {
+			$ci{'commit'} = $1;
+		}
+		elsif ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
 			$ci{'tree'} = $1;
 		}
 		elsif ($line =~ m/^parent ([0-9a-fA-F]{40})$/) {
@@ -431,12 +434,9 @@ sub rcs_notify () { #{{{
 	#
 	# Here, we rely on a simple fact: we can extract all parts of the
 	# notification content by parsing the "HEAD" commit (which also
-	# triggers a refresh of IkiWiki pages) and we can obtain the diff
-	# by comparing HEAD and HEAD^ (the previous commit).
+	# triggers a refresh of IkiWiki pages).
 
-	my $sha1 = 'HEAD'; # the commit which triggers this action
-
-	my $ci = git_commit_info($sha1);
+	my $ci = git_commit_info('HEAD');
 	return if !defined $ci;
 
 	my @changed_pages = map { $_->{'file'} } @{ $ci->{'details'} };
@@ -450,6 +450,8 @@ sub rcs_notify () { #{{{
 		$user    = $ci->{'author_username'};
 		$message = join "\n", @{ $ci->{'comment'} };
 	}
+
+	my $sha1 = $ci->{'commit'};
 
 	require IkiWiki::UserInfo;
 	send_commit_mails(

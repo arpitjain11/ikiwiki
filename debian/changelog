@@ -5,8 +5,10 @@ ikiwiki (2.12) UNRELEASED; urgency=low
     page name to be expired and reused for several distinct guids. When this
     happened, the expiry code counted each past guid that had used that page
     name as a currently existing page, and thus expired too many pages.
+  * Avoid a race in the git rcs_commit function, by not assuming HEAD will
+    stay the same for the duration of the function.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 30 Oct 2007 22:47:36 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 31 Oct 2007 17:11:12 -0400
 
 ikiwiki (2.11) unstable; urgency=low
 
