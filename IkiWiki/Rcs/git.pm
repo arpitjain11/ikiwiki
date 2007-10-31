@@ -366,7 +366,7 @@ sub rcs_recentchanges ($) { #{{{
 
 	my @rets;
 	foreach my $ci (git_commit_info('HEAD', $num)) {
-		my $title = @{ $ci->{'comment'} }[0];
+		my $title = join("\n", @{$ci->{'comment'}});
 
 		# Skip redundant commits.
 		next if ($title eq $dummy_commit_msg);
