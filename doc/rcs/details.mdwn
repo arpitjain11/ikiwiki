@@ -137,6 +137,117 @@ for more details), so I had to invent an ugly hack just for the purpose.
 > it seems to me you could just git-stash them now that git-stash exists.
 > I think it didn't when you first added the git support.. --[[Joey]]
 
+
+>> Yes,  git-stash had not existed before.  What about sth like below?  It
+>> seems to work (I haven't given much thought on the specific implementation
+details).  --[[roktas]]
+
+>>	    # create test files
+>>	    cd /tmp
+>>	    seq 6 >page
+>>	    cat page
+>>	    1
+>>	    2
+>>	    3
+>>	    4
+>>	    5
+>>	    6
+>>	    sed -e 's/2/2ME/' page >page.me # my changes
+>>	    cat page
+>>	    1
+>>	    2ME
+>>	    3
+>>	    4
+>>	    5
+>>	    6
+>>	    sed -e 's/5/5SOMEONE/' page >page.someone # someone's changes
+>>	    cat page
+>>	    1
+>>	    2
+>>	    3
+>>	    4
+>>	    5SOMEONE
+>>	    6
+>>
+>>	    # create a test repository
+>>	    mkdir t
+>>	    cd t
+>>	    cp ../page .
+>>	    git init
+>>	    git add .
+>>	    git commit -m init
+>>
+>>	    # save the current HEAD
+>>	    ME=$(git rev-list HEAD -- page)
+>>	    $EDITOR page # assume that I'm starting to edit page via web
+>>
+>>	    # simulates someone's concurrent commit
+>>	    cp ../page.someone page
+>>	    git commit -m someone -- page
+>>
+>>	    # My editing session ended, the resulting content is in page.me
+>>	    cp ../page.me page
+>>	    cat page
+>>	    1
+>>	    2ME
+>>	    3
+>>	    4
+>>	    5
+>>	    6
+>>
+>>	    # let's start to save my uncommitted changes
+>>	    git stash clear
+>>	    git stash save "changes by me"
+>>	    # we've reached a clean state
+>>	    cat page
+>>	    1
+>>	    2
+>>	    3
+>>	    4
+>>	    5SOMEONE
+>>	    6
+>>
+>>	    # roll-back to the $ME state
+>>	    git reset --soft $ME
+>>	    # now, the file is marked as modified
+>>	    git stash save "changes by someone"
+>>
+>>	    # now, we're at the $ME state
+>>	    cat page
+>>	    1
+>>	    2
+>>	    3
+>>	    4
+>>	    5
+>>	    6
+>>	    git stash list
+>>	    stash@{0}: On master: changes by someone
+>>	    stash@{1}: On master: changes by me
+>>
+>>	    # first apply my changes
+>>	    git stash apply stash@{1}
+>>	    cat page
+>>	    1
+>>	    2ME
+>>	    3
+>>	    4
+>>	    5
+>>	    6
+>>	    # ... and commit
+>>	    git commit -m me -- page
+>>
+>>	    # apply someone's changes
+>>	    git stash apply stash@{0}
+>>	    cat page
+>>	    1
+>>	    2ME
+>>	    3
+>>	    4
+>>	    5SOMEONE
+>>	    6
+>>	    # ... and commit
+>>	    git commit -m me+someone -- page
+
 By design, Git backend uses a "master-clone" repository pair approach in contrast
 to the single repository approach (here, _clone_ may be considered as the working
 copy of a fictious web user).  Even though a single repository implementation is
