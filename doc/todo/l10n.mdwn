@@ -66,9 +66,21 @@ Danish l10n of templates and basewiki is available with the following commands:
 
     git clone http://source.jones.dk/ikiwiki.git newsite
     cd newsite
-    make all
+    make
+
+Updates are retrieved with this single command:
+
+    make
+
+Right now the l10n is maintained by manually comparing against each new upstream release, and
+updating both the master mirror and the l10n as needed.
+
+Work is in progress to semi-automate this to still check manually for updates, but maintain the
+l10n as PO files - to allow more translations to more than the few languages I know about myself.
+
+As upstream ikiwiki is now maintained in GIT too, keeping the master mirror in sync with upstream
+could probably be automated even more - but an obstacle seems to be that content is not maintained
+separately but as an integral part of upstream source (GIT seems to not support subscribing to
+only parts of a repository).
 
 --[[JonasSmedegaard]]
-
-> How do you plan to keep these translations up-to-date as changes are made
-> to ikiwiki? --[[Joey]]
