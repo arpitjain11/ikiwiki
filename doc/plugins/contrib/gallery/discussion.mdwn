@@ -1,3 +1,5 @@
+# Adaptation to Newer Versions of ikiwiki
+
 I tried using this plugin, but to no success so far.  I used *gallery* git branch,
 rebased it onto the *origin/master*, built a Debian package and installed that one.
 
@@ -29,3 +31,9 @@ New version updated at SVN REPO : http://ned.snow-crash.org:8080/svn/ikiwiki-gal
 
 --[[arpitjain]]
 
+
+# Bug With Referring to *js* and *css* Files
+
+In the generated files `gallery/index/index.html` and `gallery/index/*/gallery_*`
+it should not be referred to `/js` but to `../../js` and `../../../js`, respectively.
+Likewise for `/css`.
