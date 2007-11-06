@@ -13,3 +13,13 @@ It seems like gettext only searches for locale information in /usr/share/locale,
 
 [[tag patch]]
 -- [[ThomasBleher]]
+
+> According to my testing, this patch makes ikiwiki's localisation fail for
+> LANG=fr_FR when everything is installed to the default locations, 
+> though LANG=es_ES works. I don't understand this behavior, especially
+> since strace shows it successfully opening the file
+> `/usr/share/locale/fr/LC_MESSAGES/ikiwiki.mo`.
+> 
+> (Also, it should check that $installdir is set before using it.)
+> 
+> --[[Joey]]
