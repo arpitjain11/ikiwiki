@@ -10,5 +10,13 @@ This could be fixed by making the teximg directory be a subdirectory
 of the page containing the image. I seem to remember suggesting this to
 winnie, and I forget why it wasn't done.. maybe because the same teximg
 on multiple pages was expected to work, and as an optimisation for that case?
-
 --[[Joey]]
+
+----
+At first the plugin doesn't use the writefile etc. functions of ikiwiki, but uses own ones (so the created img wasn't owned by any page).
+Then this setup of course works. 
+
+After switching to the ikiwiki functions it seems so that I doesn't test this again... sorry a error of mine. I'll work out a fix for this.
+I think this will be a own dir for images for every page.
+
+--[[PatrickWinnertz]]
