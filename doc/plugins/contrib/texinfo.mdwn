@@ -1,6 +1,27 @@
-[[I|tschwinge]] started writing a plugin to render [Texinfo](http://www.gnu.org/software/texinfo)
+[[I|tschwinge]] started writing a plugin to render [Texinfo](http://www.gnu.org/software/texinfo/)
 inside the ikiwiki environment.
 
 The plugin is available at <http://www.schwinge.homeip.net/~thomas/tmp/texinfo.pm>.
 
 It's very basic at the moment, but will be improved over time.
+
+
+# Issues
+
+Conventional ikiwiki [[*htmlize*ing|plugins/write#index6h3]]
+have a one-to-one mapping of input file and output file.
+This can also be achieved for Texinfo files, but is somewhat
+unusual there, when rendering them to HTML.  In general, there
+is a N-to-M mapping:
+
+* N Texinfo input files (a main `.texi` file,
+  several helper files (`fdl.texi`, `version.texi`, ...), and
+  additional text files which are included from the main `.texi`
+  file, e.g. `history.texi`, `libfoo.texi`, `libbar.texi`.
+* M Texinfo output files: the main `.texi` file (which `include`s
+  the other input files) is usually rendered into a (flat) hierarchy
+  of HTML files, one file per node, see the table on
+  <http://www.gnu.org/software/texinfo/manual/texinfo/html_node/#Top>
+  for an example.
+
+How to teach this to ikiwiki?
