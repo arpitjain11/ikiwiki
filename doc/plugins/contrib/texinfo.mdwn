@@ -8,8 +8,9 @@ It's very basic at the moment, but will be improved over time.
 
 # Issues
 
-Conventional ikiwiki [[*htmlize*ing|plugins/write#index6h3]]
-have a one-to-one mapping of input file and output file.
+Conventional ikiwiki [[*htmlize*ing|plugins/write#index6h3]] plugins
+have a one-to-one mapping of input file and output file:
+`some/where/page.mdwn` is rendered to `some/where/page.html`.
 This can also be achieved for Texinfo files, but is somewhat
 unusual there, when rendering them to HTML.  In general, there
 is a N-to-M mapping:
