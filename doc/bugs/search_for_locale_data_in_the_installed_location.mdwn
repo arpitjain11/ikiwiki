@@ -1,0 +1,15 @@
+It seems like gettext only searches for locale information in /usr/share/locale, by default. I installed ikiwiki into /usr/local, therefore the locale information wasn't found. This patch fixes the issue:
+
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -1057,6 +1057,7 @@ sub gettext { #{{{
+                                    $gettext_obj=undef;
+                                    return shift;
+                            }
+    +                       $gettext_obj->dir("$installdir/share/locale/");
+                    }
+                    return $gettext_obj->get(shift);
+            }
+
+[[tag patch]]
+-- [[ThomasBleher]]
