@@ -34,3 +34,9 @@ How to teach this to ikiwiki?
 
 ikiwiki (obviously) doesn't understand (parse) the copyright and licensing
 statements which are included in `.texi` files.
+
+
+## `makeinfo` Output
+
+`makeinfo --html` is being used for rendering.  It creates stand-alone
+HTML files, while ikiwiki only needs the files' `<body>`s.
