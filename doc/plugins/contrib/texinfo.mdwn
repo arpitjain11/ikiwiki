@@ -8,6 +8,8 @@ It's very basic at the moment, but will be improved over time.
 
 # Issues
 
+## N-to-M Mapping of Input and Output Files
+
 Conventional ikiwiki [[*htmlize*ing|plugins/write#index6h3]] plugins
 have a one-to-one mapping of input file and output file:
 `some/where/page.mdwn` is rendered to `some/where/page.html`.
@@ -26,3 +28,9 @@ is a N-to-M mapping:
   for an example.
 
 How to teach this to ikiwiki?
+
+
+## Copyright and Licensing Snippets
+
+ikiwiki (obviously) doesn't understand (parse) the copyright and licensing
+statements which are included in `.texi` files.
