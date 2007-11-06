@@ -36,8 +36,8 @@ sub sanitize (@) { #{{{
 	close IN;
 	waitpid $pid, 0;
 
-	return $params{content} if $sigpipe;
 	$SIG{PIPE}="DEFAULT";
+	return $params{content} if $sigpipe;
 
 	return $ret;
 } # }}}
