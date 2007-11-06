@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-22 16:49-0400\n"
+"POT-Creation-Date: 2007-11-03 19:55-0400\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -37,34 +37,34 @@ msgstr ""
 msgid "Preferences saved."
 msgstr "Preferencje zapisane."
 
-#: ../IkiWiki/CGI.pm:353
+#: ../IkiWiki/CGI.pm:354
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "Strona %s nie może być edytowana"
 
-#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:208 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "dyskusja"
 
-#: ../IkiWiki/CGI.pm:478
+#: ../IkiWiki/CGI.pm:487
 #, perl-format
 msgid "creating %s"
 msgstr "tworzenie %s"
 
-#: ../IkiWiki/CGI.pm:496 ../IkiWiki/CGI.pm:514 ../IkiWiki/CGI.pm:524
-#: ../IkiWiki/CGI.pm:550 ../IkiWiki/CGI.pm:594
+#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
+#: ../IkiWiki/CGI.pm:567 ../IkiWiki/CGI.pm:615
 #, perl-format
 msgid "editing %s"
 msgstr "edycja %s"
 
-#: ../IkiWiki/CGI.pm:688
+#: ../IkiWiki/CGI.pm:709
 msgid "You are banned."
 msgstr "Twój dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:708
+#: ../IkiWiki/CGI.pm:729
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Nieudane logowanie. Proszę sprawdzić czy w przeglądarce włączone są "
@@ -87,46 +87,46 @@ msgstr "wpisy"
 msgid "new"
 msgstr "nowy wpis"
 
-#: ../IkiWiki/Plugin/aggregate.pm:229
+#: ../IkiWiki/Plugin/aggregate.pm:230
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "wygasający wpis %s (ma już %s dni)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:236
+#: ../IkiWiki/Plugin/aggregate.pm:237
 #, perl-format
 msgid "expiring %s"
 msgstr "wygasający wpis %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:259
+#: ../IkiWiki/Plugin/aggregate.pm:263
 #, perl-format
 msgid "processed ok at %s"
 msgstr "kanał RSS przetworzony w dniu %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:268
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "sprawdzanie kanału RSS %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:273
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nie znaleziono kanału RSS pod adresem %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:284
+#: ../IkiWiki/Plugin/aggregate.pm:288
 #, fuzzy
 msgid "feed not found"
 msgstr "nieznaleziony kanał RSS"
 
-#: ../IkiWiki/Plugin/aggregate.pm:295
+#: ../IkiWiki/Plugin/aggregate.pm:299
 #, fuzzy, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "Nieprawidłowe kodowanie UTF-8 usunięte z kanału RSS"
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:304
 msgid "feed crashed XML::Feed!"
 msgstr "awaria kanału RSS w module XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:373
+#: ../IkiWiki/Plugin/aggregate.pm:377
 #, perl-format
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
@@ -179,31 +179,31 @@ msgstr "awaria w trakcie zmiany rozmiaru: %s"
 msgid "failed to determine size of image %s"
 msgstr "awaria w trakcie zmiany rozmiaru: %s"
 
-#: ../IkiWiki/Plugin/inline.pm:39
+#: ../IkiWiki/Plugin/inline.pm:42
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 "Użycie parametru --rss lub --atom wymaga podania adresu URL do wiki za "
 "pomocą parametru --url"
 
-#: ../IkiWiki/Plugin/inline.pm:130
+#: ../IkiWiki/Plugin/inline.pm:135
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "nieznany sposób sortowania %s"
 
-#: ../IkiWiki/Plugin/inline.pm:170
+#: ../IkiWiki/Plugin/inline.pm:191
 msgid "Add a new post titled:"
 msgstr "Tytuł nowego wpisu"
 
-#: ../IkiWiki/Plugin/inline.pm:185
+#: ../IkiWiki/Plugin/inline.pm:207
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "brakujący szablon %s"
 
-#: ../IkiWiki/Plugin/inline.pm:216 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:103
 msgid "Discussion"
 msgstr "Dyskusja"
 
-#: ../IkiWiki/Plugin/inline.pm:429
+#: ../IkiWiki/Plugin/inline.pm:452
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Nieznaleziony moduł RPC::XML::Client, brak możliwości pingowania"
 
@@ -226,7 +226,7 @@ msgstr ""
 "Awaria w trakcie ładowania perlowego modułu Markdown.pm (%s) lub "
 "uruchamiania programu /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:88
+#: ../IkiWiki/Plugin/meta.pm:90
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "nieznaleziony szablon ze stylami CSS"
@@ -390,7 +390,7 @@ msgstr "brakujący parametr name lub url"
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "skrót %s wskazuje na adres <i>%s</i>"
 
-#: ../IkiWiki/Plugin/smiley.pm:22
+#: ../IkiWiki/Plugin/smiley.pm:23
 #, fuzzy
 msgid "failed to parse any smileys"
 msgstr "awaria w trakcie przetwarzania emitoikonki"
@@ -432,23 +432,23 @@ msgstr "nieprawidłowa szerokość"
 msgid "failed to run php"
 msgstr "awaria w trakcie uruchamiania php"
 
-#: ../IkiWiki/Plugin/table.pm:21
+#: ../IkiWiki/Plugin/table.pm:22
 msgid "cannot find file"
 msgstr "nie można znaleźć pliku"
 
-#: ../IkiWiki/Plugin/table.pm:44
+#: ../IkiWiki/Plugin/table.pm:63
 msgid "unknown data format"
 msgstr "nieznany format danych"
 
-#: ../IkiWiki/Plugin/table.pm:52
+#: ../IkiWiki/Plugin/table.pm:71
 msgid "empty data"
 msgstr "brak danych"
 
-#: ../IkiWiki/Plugin/table.pm:72
+#: ../IkiWiki/Plugin/table.pm:91
 msgid "Direct data download"
 msgstr "Bezpośrednie pobieranie danych"
 
-#: ../IkiWiki/Plugin/table.pm:105
+#: ../IkiWiki/Plugin/table.pm:125
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "awaria w trakcie przetwarzania linii %d: %s"
@@ -468,25 +468,29 @@ msgstr "nieznaleziony szablon %s"
 msgid "failed to process:"
 msgstr "awaria w trakcie przetwarzania:"
 
-#: ../IkiWiki/Plugin/tex.pm:30
+#: ../IkiWiki/Plugin/teximg.pm:30
 #, fuzzy
 msgid "missing tex code"
 msgstr "brakujące wartości"
 
-#: ../IkiWiki/Plugin/tex.pm:37
+#: ../IkiWiki/Plugin/teximg.pm:37
 msgid "code includes disallowed latex commands"
 msgstr ""
 
-#: ../IkiWiki/Plugin/tex.pm:95
+#: ../IkiWiki/Plugin/teximg.pm:97
 #, fuzzy
 msgid "failed to generate image from code"
 msgstr "awaria w trakcie zmiany rozmiaru: %s"
+
+#: ../IkiWiki/Plugin/toggle.pm:88
+msgid "(not toggleable in preview mode)"
+msgstr ""
 
 #: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
 msgstr "niedostępna funkcja getctime"
 
-#: ../IkiWiki/Rcs/monotone.pm:465
+#: ../IkiWiki/Rcs/monotone.pm:459
 #, fuzzy
 msgid ""
 "REV is not set, not running from mtn post-commit hook, cannot send "
@@ -495,14 +499,14 @@ msgstr ""
 "Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" post-"
 "commit z powodu nieustawionego parametru REV"
 
-#: ../IkiWiki/Rcs/monotone.pm:468
+#: ../IkiWiki/Rcs/monotone.pm:462
 #, fuzzy
 msgid "REV is not a valid revision identifier, cannot send notifications"
 msgstr ""
 "Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" post-"
 "commit z powodu nieustawionego parametru REV"
 
-#: ../IkiWiki/Rcs/svn.pm:218
+#: ../IkiWiki/Rcs/svn.pm:221
 msgid ""
 "REV is not set, not running from svn post-commit hook, cannot send "
 "notifications"
@@ -510,47 +514,47 @@ msgstr ""
 "Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" post-"
 "commit z powodu nieustawionego parametru REV"
 
-#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:283
+#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:284
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "pomijanie nieprawidłowej nazwy pliku %s"
 
-#: ../IkiWiki/Render.pm:323
+#: ../IkiWiki/Render.pm:326
 #, perl-format
 msgid "removing old page %s"
 msgstr "usuwanie starej strony %s"
 
-#: ../IkiWiki/Render.pm:356
+#: ../IkiWiki/Render.pm:359
 #, perl-format
 msgid "scanning %s"
 msgstr "skanowanie %s"
 
-#: ../IkiWiki/Render.pm:361
+#: ../IkiWiki/Render.pm:364
 #, perl-format
 msgid "rendering %s"
 msgstr "renderowanie %s"
 
-#: ../IkiWiki/Render.pm:373
+#: ../IkiWiki/Render.pm:376
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "renderowanie %s z odnośnikiem do %s"
 
-#: ../IkiWiki/Render.pm:390
+#: ../IkiWiki/Render.pm:393
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "renderowanie %s zależącego od %s"
 
-#: ../IkiWiki/Render.pm:428
+#: ../IkiWiki/Render.pm:431
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "renderowanie %s w celu aktualizacji powrotnych odnośników"
 
-#: ../IkiWiki/Render.pm:440
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "usuwanie %s nie tworzonego już przez %s"
 
-#: ../IkiWiki/Render.pm:466
+#: ../IkiWiki/Render.pm:469
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: awaria w trakcie tworzenia %s"
@@ -623,17 +627,17 @@ msgstr "pomyślnie utworzono %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "użycie: ikiwiki [parametry] źródło cel"
 
-#: ../ikiwiki.in:81
+#: ../ikiwiki.in:83
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:126
+#: ../IkiWiki.pm:128
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
 "--url"
 
-#: ../IkiWiki.pm:191 ../IkiWiki.pm:192
+#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
 msgid "Error"
 msgstr "Błąd"
 
@@ -641,7 +645,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:688
+#: ../IkiWiki.pm:708
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"

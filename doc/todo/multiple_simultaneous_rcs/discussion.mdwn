@@ -4,4 +4,12 @@ This would probably be the ideal backend for 'multi repo' I suppose.
 
 ~[[harningt]] 2007-11-06
 
+> mr's interface to revision control systems is much shallower than
+> ikiwiki's. mr only needs to know how to run a "pull" or a "commit"
+> command, it doesn't matter if these commands behave very differently
+> for different systems. Ikiwiki needs to be able to commit a change,
+> handling conflicts, in a way tuned to the revision control system being
+> used, amoung other things. So mr isn't a very good fit for use by ikiwiki.
+> --[[Joey]]
+
 ----
