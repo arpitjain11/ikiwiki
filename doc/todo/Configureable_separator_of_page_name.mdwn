@@ -3,3 +3,7 @@ I'd rather prefer en dash character there. Is it a chance to configure separator
 character in ikiwiki?
 
 --[[Paweł|ptecza]]
+
+> To do this a plugin could overwride the builtin IkiWiki::pagetitle,
+> IkiWiki::titlepage, and IkiWiki::linkpage functions. All the mangling of
+> page names should be cantralised to those functions. --[[Joey]]
