@@ -14,8 +14,10 @@ ikiwiki (2.12) UNRELEASED; urgency=low
     pages.
   * Don't truncate git commit messages to the first line in RecentChanges,
     show the full message.
+  * map: Recent changes caused unnecessary ul's to be inserted for items
+    that were all at the same level, fix. Closes: #449285
 
- -- Joey Hess <joeyh@debian.org>  Wed, 31 Oct 2007 18:34:51 -0400
+ -- Joey Hess <joeyh@debian.org>  Wed, 07 Nov 2007 16:09:13 -0500
 
 ikiwiki (2.11) unstable; urgency=low
 

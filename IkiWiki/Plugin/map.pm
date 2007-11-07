@@ -61,6 +61,7 @@ sub preprocess (@) { #{{{
 	my $parent="";
 	my $indent=0;
 	my $openli=0;
+	my $dummy=0;
 	my $map = "<div class='map'>\n<ul>\n";
 	foreach my $item (sort keys %mapitems) {
 		$item=~s/^\Q$common_prefix\E\///
@@ -69,12 +70,14 @@ sub preprocess (@) { #{{{
 		my $baseitem=IkiWiki::dirname($item);
 		while (length $parent && length $baseitem && $baseitem !~ /^\Q$parent\E(\/|$)/) {
 			$parent=IkiWiki::dirname($parent);
+			last if !$dummy && length $parent && $baseitem =~ /^\Q$parent\E(\/|$)/;
 			$indent--;
 			$map .= "</li>\n";
 			if ($indent > 0) {
 				$map .= "</ul>\n";
 			}
 		}
+		$dummy=0;
 		while ($depth < $indent) {
 			$indent--;
 			$map .= "</li>\n";
@@ -91,6 +94,7 @@ sub preprocess (@) { #{{{
 				$map .= "<ul>\n";
 			}
 			if ($depth > $indent) {
+				$dummy=1;
 				$p.="/".shift(@bits);
 				$map .= "<li>"
 					.htmllink($params{page}, $params{destpage}, $p, class => "mapparent")
