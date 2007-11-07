@@ -27,14 +27,22 @@ is a N-to-M mapping:
   <http://www.gnu.org/software/texinfo/manual/texinfo/html_node/#Top>
   for an example.
 
-How to teach this to ikiwiki?
+How to teach this to ikiwiki?  --[[tschwinge]]
 
 > As far as multiple input files, you'd need to use add_depends()
 > to let ikiwiki know that a change to any of those files should cause a
-> rebuild of the "main" file. I guess you'd also have to somehow deal with
+> rebuild of the "main" file. --[[Joey]]
+
+>> I'll see about a frob to get `makeinfo` provide me with a list of files
+>> it used for rendering a given `.texi` file. --[[tschwinge]]
+
+> I guess you'd also have to somehow deal with
 > it wanting to render pages for each of the helper files. Not quite sure
-> what the best way would be to avoid that.
-> 
+> what the best way would be to avoid that. --[[Joey]]
+
+>> Might it be an option to simply not render the pages that are already
+>> being used as an `include` file for another `.texi` file?  --[[tschwinge]]
+
 > Ikiwiki is perfectly happy with a page creating other files (see eg, the
 > img and teximg plugins, as well as the inline plugin's rss generation).
 > The will_render() function supports that.
@@ -47,13 +55,14 @@ How to teach this to ikiwiki?
 > appear in a site map, be linked to, etc). Not sure how to do that,
 > and perhaps you could get away without doing it actually. --[[Joey]]
 
+
 ## Copyright and Licensing Snippets
 
 ikiwiki (obviously) doesn't understand (parse) the copyright and licensing
-statements which are included in `.texi` files.
+statements which are included in `.texi` files.  --[[tschwinge]]
 
 
 ## `makeinfo` Output
 
 `makeinfo --html` is being used for rendering.  It creates stand-alone
-HTML files, while ikiwiki only needs the files' `<body>`s.
+HTML files, while ikiwiki only needs the files' `<body>`s.  --[[tschwinge]]
