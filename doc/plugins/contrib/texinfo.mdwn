@@ -59,6 +59,21 @@ is a N-to-M mapping:
 > appear in a site map, be linked to, etc). Not sure how to do that,
 > and perhaps you could get away without doing it actually. --[[Joey]]
 
+>> Currently I use `makeinfo --no-split` and render to stdout, so that I can
+>> easily capture the output and stuff it into the appropriate ikiwiki data structure.
+>> If we want to have multiple output files (which we'll eventually want to have,
+>> to avoid having such large single-file outputs), we won't be able to
+>> do this anymore.
+>> (?) Then we'll need a way to find the main output file, which
+>> will be the one to be copied into what ikiwiki expects to be the main output
+>> of the rendered `.texi` file.
+>> Perhaps (again) parse the `.texi` file for a `@setfilename` statement?
+>> The other generated files will also have to
+>> copied somewhere (preferably into a subdirectory named alike the main file
+>> to avoid name space collisions; but need to take care of links between the files then)
+>> and need to be registed within the ikiwiki system.
+>> --[[tschwinge]]
+
 
 ## `makeinfo` Output
 
