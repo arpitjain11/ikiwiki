@@ -7,3 +7,13 @@ current behavior, perhaps brokenlinks could have an option to group by link
 target.
 
 --[[JoshTriplett]]
+
+> The only downside I see to doing that is that currently it create a
+> "?Link" that will create the missing page, with a default location that's
+> the same as clicking on the "?Link" in the page with the broken link. But
+> if multiple pages are listed on one line, there's only one link and so it
+> can only be from=somepage. This would probably not be a problem in most
+> cases though. It's likely that if a missing page is linked to from 2+ pages,
+> that the user both won't take much care which link is clicked on
+> to create it, and that both pages really meant to link to the same page
+> anyway. --[[Joey]]
