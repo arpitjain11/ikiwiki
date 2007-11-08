@@ -78,7 +78,7 @@ sub preprocess (@) { #{{{
 	push @lines, "\t<thead>",
 		genrow($params{page}, $params{destpage}, "th", @$header),
 	        "\t</thead>" if defined $header;
-	push @lines, "\t<tbody>";
+	push @lines, "\t<tbody>" if defined $header;
 	push @lines, genrow($params{page}, $params{destpage}, "td", @$_)
 		foreach @data;
 	push @lines, "\t</tbody>" if defined $header;
