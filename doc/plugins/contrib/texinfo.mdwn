@@ -74,6 +74,13 @@ is a N-to-M mapping:
 >> and need to be registed within the ikiwiki system.
 >> --[[tschwinge]]
 
+There needs to be some logic to establish a mapping between the *N* input files
+and the *M* output files.
+(At least for web-editing via CGI this is needed.)
+Easiest would be either to leave *M = 1* or to have
+*M = N* and have a one-to-one mapping between *input file n* and *output file m*.
+--[[tschwinge]]
+
 
 ## `makeinfo` Output
 
