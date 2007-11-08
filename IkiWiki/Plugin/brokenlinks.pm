@@ -26,10 +26,9 @@ sub preprocess (@) { #{{{
 				next if $link =~ /.*\/\Q$discussion\E/i && $config{discussion};
 				my $bestlink=bestlink($page, $link);
 				next if length $bestlink;
-				push @broken,
-					htmllink($page, $params{destpage}, $link, noimageinline => 1).
-					" from ".
-					htmllink($params{page}, $params{destpage}, $page, noimageinline => 1);
+				push @broken, sprintf(gettext("%s from %s"),
+					htmllink($page, $params{destpage}, $link, noimageinline => 1),
+					htmllink($params{page}, $params{destpage}, $page, noimageinline => 1));
 			}
 		}
 	}
