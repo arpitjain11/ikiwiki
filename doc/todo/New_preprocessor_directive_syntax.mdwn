@@ -1,0 +1,19 @@
+As discussed on IRC, preprocessor directives should transition to a
+new syntax distinct from wikilinks.  Possible syntaxes:
+
+* `[[!preprocessor directive]]`
+* `{{preprocessor directive}}`
+
+The transition would involve adding the new syntax, adding an option
+to turn off the old syntax with the default allowing it, giving people
+time to convert their wikis and turn the option on, and releasing a
+new ikiwiki (version 3 for instance) that turns off the old syntax by
+default.
+
+Making this transition would fix two major warts:
+
+* The inability to use spaces in wikilinks or link text
+* The requirement to use a trailing space on a preprocessor directive
+  with no arguments, such as `[[toc ]]`
+
+--[[JoshTriplett]]
