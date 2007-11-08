@@ -38,7 +38,7 @@ How to teach this to ikiwiki?  --[[tschwinge]]
 > to let ikiwiki know that a change to any of those files should cause a
 > rebuild of the "main" file. --[[Joey]]
 
->> I'll see about a frob to get `makeinfo` provide me with a list of files
+>> (?) I'll see about a frob to get `makeinfo` provide me with a list of additional files
 >> it used for rendering a given `.texi` file. --[[tschwinge]]
 
 > I guess you'd also have to somehow deal with
@@ -64,4 +64,7 @@ How to teach this to ikiwiki?  --[[tschwinge]]
 ## `makeinfo` Output
 
 `makeinfo --html` is being used for rendering.  It creates stand-alone
-HTML files, while ikiwiki only needs the files' `<body>`s.  --[[tschwinge]]
+HTML files, while ikiwiki only needs the files' `<body>`s.
+
+(?) One possibility (which is what I'm doing at the moment) is to simply cut away
+everythin until `<body>` is seen and after `</body>` has been seen.  --[[tschwinge]]
