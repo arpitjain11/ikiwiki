@@ -1,5 +1,6 @@
 ikiwiki (2.12) UNRELEASED; urgency=low
 
+  [ Joey Hess ]
   * Fix some issues with toggles in preview mode.
   * Fix an aggregate plugin expiry bug. Over time, it's possible for the same
     page name to be expired and reused for several distinct guids. When this
@@ -17,7 +18,10 @@ ikiwiki (2.12) UNRELEASED; urgency=low
   * map: Recent changes caused unnecessary ul's to be inserted for items
     that were all at the same level, fix. Closes: #449285
 
- -- Joey Hess <joeyh@debian.org>  Wed, 07 Nov 2007 16:09:13 -0500
+  [ Josh Triplett ]
+  * Fix table plugin to not generate an unbalanced tbody tag with header=no
+
+ -- Josh Triplett <josh@freedesktop.org>  Thu, 08 Nov 2007 11:41:27 -0800
 
 ikiwiki (2.11) unstable; urgency=low
 
