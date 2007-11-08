@@ -20,8 +20,10 @@ ikiwiki (2.12) UNRELEASED; urgency=low
 
   [ Josh Triplett ]
   * Fix table plugin to not generate an unbalanced tbody tag with header=no
+  * Add xmlns attribute on html element in templates; pages can now
+    validate.
 
- -- Josh Triplett <josh@freedesktop.org>  Thu, 08 Nov 2007 11:41:27 -0800
+ -- Josh Triplett <josh@freedesktop.org>  Thu, 08 Nov 2007 12:58:28 -0800
 
 ikiwiki (2.11) unstable; urgency=low
 
