@@ -98,3 +98,16 @@ HTML files, while ikiwiki only needs the files' `<body>`s.
 
 (?) One possibility (which is what I'm doing at the moment) is to simply cut away
 everythin until `<body>` is seen and after `</body>` has been seen.  --[[tschwinge]]
+
+
+# Bugs
+
+## Non-functional Texinfo Commands
+
+Those commands are know to not work currently:
+
+* `@printindex`
+* `@shortcontents`
+* `@contents`
+
+This is due to `makeinfo` not providing this functionality if rendering to stdout.
