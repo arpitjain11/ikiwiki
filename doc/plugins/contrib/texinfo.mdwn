@@ -81,7 +81,8 @@ is a N-to-M mapping:
 
 There needs to be some logic to establish a mapping between the *N* input files
 and the *M* output files.
-(At least for web-editing via CGI this is needed.)
+(At least for web-editing via CGI this is needed: ikiwiki (currently) needs to be able
+to deduce *one* input file from a given output file)
 Easiest would be either to have *N = 1*
 (plus perhaps some input files that are not meant to be editable, like `gpl.texi`)
 or to have
