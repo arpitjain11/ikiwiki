@@ -39,7 +39,12 @@ is a N-to-M mapping:
 > what the best way would be to avoid that. --[[Joey]]
 
 >> Might it be an option to simply not render the pages that are already
->> being used as an `include` file for another `.texi` file?  --[[tschwinge]]
+>> being used as an `include` file for another `.texi` file?
+>> But how to assemble that list before actually having rendered all `.texi` files?
+>> One possibility might be to already render them at ikiwiki's *scanning* stage and
+>> store the rendered HTML files into temporary directories, and then at ikiwiki's
+>> *rendering* stage simply install the desired ones into the main tree and discard
+>> the others.  --[[tschwinge]]
 
 * M Texinfo output files: the main `.texi` file (which `include`s
   the other input files) is usually rendered into a (flat) hierarchy
