@@ -77,8 +77,11 @@ is a N-to-M mapping:
 There needs to be some logic to establish a mapping between the *N* input files
 and the *M* output files.
 (At least for web-editing via CGI this is needed.)
-Easiest would be either to leave *M = 1* or to have
-*M = N* and have a one-to-one mapping between *input file n* and *output file m*.
+Easiest would be either to have *N = 1*
+(plus perhaps some input files that are not meant to be editable, like `gpl.texi`)
+or to have
+*M = N* and have a (?) one-to-one mapping between *input file n* and *output file m*
+(which is not possible in Texinfo's `makeinfo` at the moment).
 --[[tschwinge]]
 
 
