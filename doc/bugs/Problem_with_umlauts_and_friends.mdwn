@@ -1,0 +1,11 @@
+I can't tell yet if this is a problem with ikiwiki, or rather with the web server,
+or `w3m`, or whatever.
+
+To reproduce:
+
+    $ LC_ALL=C w3m http://ikiwiki.info/sandbox/
+
+Select *Edit*, log in, have `w3m` spawn an editor for editing the page and notice
+that all umlauts and friends have disappeared.  /!\ If the user now saves the page,
+the mangled page will be entered into the RCS, so don't do this on the ikiwiki
+sandbox page.
