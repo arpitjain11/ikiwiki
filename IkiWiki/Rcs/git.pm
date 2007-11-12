@@ -196,10 +196,14 @@ sub _parse_diff_tree ($@) { #{{{
 		}
 	}
 
-	debug("No 'tree' or 'parents' seen in diff-tree output")
-	    if !defined $ci{'tree'} || !defined $ci{'parents'};
+	debug("No 'tree' seen in diff-tree output") if !defined $ci{'tree'};
 
-	$ci{'parent'} = @{ $ci{'parents'} }[0] if defined $ci{'parents'};
+	if (defined $ci{'parents'}) {
+		$ci{'parent'} = @{ $ci{'parents'} }[0];
+	}
+	else {
+		$ci{'parent'} = 0 x 40;
+	}
 
 	# Commit message.
 	while (my $line = shift @{ $dt_ref }) {

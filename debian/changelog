@@ -28,8 +28,11 @@ ikiwiki (2.12) UNRELEASED; urgency=low
     It needs to be setgid if the master repo is a shared repository, so
     that pushes into the working copy repository happen as the same group,
     avoiding permissions problems.
+  * The first git commit legitimately has no parents. Avoid recentchanges
+    spewing uninitialised value warnings and debug messages about it.
+    Dummying up a parent of 0000000 allows gitweb to work too.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 12 Nov 2007 12:26:45 -0500
+ -- Joey Hess <joeyh@debian.org>  Mon, 12 Nov 2007 12:48:55 -0500
 
 ikiwiki (2.11) unstable; urgency=low
 
