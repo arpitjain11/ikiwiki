@@ -6,3 +6,9 @@ In our team internal wiki, we wish to impose a policy that all edits must have a
 > Good idea! I also hate empty commit comments, but I know that it's also a matter
 > of human mentality. Of course, you can forbid users to commit empty comments,
 > but then they can commit so worthless comments like "\*" or "\* blah". --[[Paweł|ptecza]]
+
+> I don't feel this belongs in ikiwiki core, but would accept a plugin that
+> does it. I think that can be done using a formbuilder_setup hook.
+> BTW, it wmuld probably be better to validate against a comment_regexp,
+> so that when the evil admins notice that /.+/ is absurdly easy for users
+> to get around (by using " "), they can tighten it down. --[[Joey]]
