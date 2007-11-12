@@ -24,3 +24,12 @@ I can also submit a Git patch, if desired.
 
 
 --[[tschwinge]]
+
+> The html scrubber cannot scrub meta headers. So if you emit one
+> containing user-supplied data, it's up to you to scrub it to avoid all
+> possible XSS attacks. Two attacks I'd worry about are cyclic meta refresh
+> loops, which some, but not all web browsers detect and break, and any way
+> to insert javascript via the user-supplied parameters. (Ie, putting
+> something in the delay value that closes the tag can probably insert
+> javascript ATM; and are there ways to embed javascript in the url?)
+> --[[Joey]]
