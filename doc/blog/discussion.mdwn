@@ -1,4 +1,4 @@
-How do you provide the per post discussion links in your own blog?
+## How do you provide the per post discussion links in your own blog?
 
 > That's configured by the "actions" parameter to the inline directive. See
 > docs in [[plugins/inline]]. --[[Joey]]
@@ -13,3 +13,23 @@ take it as far as implementing "replies" to other comments.
 
 > See [[todo/discussion_page_as_blog]] for some of my own thoughts on this
 > --[[Joey]]
+
+---
+
+## More dynamic `rootpage` parameter?
+
+I prefer to use a current year, month and day to archive my blog posts, for example
+`post/2007/11/12/foo-bar-baz` path is better for me then `post/foo-bar-baz`.
+Unfortunately it seems that `rootpage` parameter is very static. Is it a chance
+to make it more dynamic? Now I have to use `svn mkdir` command to create
+appropriate subdirectories by hand.
+
+I think that you could add builtin functions or variables, for example `current_year()`
+or `$CURRENT_YEAR` to usage inside `rootpage` parameter. Something like for Manoj's
+calendar plugin. Then my `rootpage` parameter could be like
+`rootpage="post/current_year()/current_month()/current_day()"`. Another good hints
+are welcomed ;)
+
+What's your opinion, Joey? I hope it's also useful for another ikiwiki lovers :)
+
+--[[Paweł|ptecza]]
