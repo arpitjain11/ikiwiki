@@ -1,0 +1,26 @@
+Here is a patch [[tag patch]] to add a *forward*ing functionality
+to the [[`meta`_plugin|plugins/meta]].
+
+Find the most recent version at
+<http://www.schwinge.homeip.net/~thomas/tmp/meta_forward.patch>.
+
+I can't use `scrub(...)`, as that will strip out the forwarding HTML command.
+How to deal with that?
+
+I can also submit a Git patch, if desired.
+
+
+*Syntax:*
+
+**URL** = http://some.nice/place/ (*etc.*)
+
+**WHITHER** = \[\[**[[wikilink]]**]] | **URL**
+
+**D** = natural number (*meaning seconds*)
+
+**OPT_DELAY** = delay=**D** | empty (*immediatelly*)
+
+\[[meta forward="*WHITHER*" *OPT_DELAY*]]
+
+
+--[[tschwinge]]
