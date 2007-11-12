@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-03 19:55-0400\n"
+"POT-Creation-Date: 2007-11-12 14:36-0500\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -126,7 +126,12 @@ msgstr "zdroj shodil XML::Feed!"
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#, perl-format
+msgid "%s from %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 

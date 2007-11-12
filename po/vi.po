@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-03 19:55-0400\n"
+"POT-Creation-Date: 2007-11-12 14:36-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -129,7 +129,12 @@ msgstr "nguồn tin đã gây ra XML::Feed sụp đổ."
 msgid "creating new page %s"
 msgstr "đang tạo trang mới %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#, perl-format
+msgid "%s from %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
 msgid "There are no broken links!"
 msgstr "Không có liên kết bị ngắt nào."
 

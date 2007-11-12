@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-03 19:55-0400\n"
+"POT-Creation-Date: 2007-11-12 14:36-0500\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -131,7 +131,12 @@ msgstr "awaria kanału RSS w module XML::Feed!"
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#, perl-format
+msgid "%s from %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:36
 msgid "There are no broken links!"
 msgstr "Wszystkie odnośniki są aktualne!"
 
