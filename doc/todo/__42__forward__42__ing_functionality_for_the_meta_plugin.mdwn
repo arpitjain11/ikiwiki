@@ -20,7 +20,7 @@ I can also submit a Git patch, if desired.
 
 **OPT_DELAY** = delay=**D** | empty (*immediatelly*)
 
-\[[meta forward="*WHITHER*" *OPT_DELAY*]]
+\[[meta forward="**WHITHER**" **OPT_DELAY**]]
 
 
 --[[tschwinge]]
@@ -33,3 +33,10 @@ I can also submit a Git patch, if desired.
 > something in the delay value that closes the tag can probably insert
 > javascript ATM; and are there ways to embed javascript in the url?)
 > --[[Joey]]
+
+>> OK.  I can add code to make sure that `$delay` **D** indeed is a natural number
+>> and that the passed target address **WHITHER** is nothing but a valid target address.
+>> (How to qualify a valid target address?)
+>> What is a *cyclic meta refresh loop*?  Two pages in turn forwarding to each other?
+>> I think it would be possible to implement such a guard when only in-wiki links
+>> ([[wikilink]]s) are being used, but how to do so for external links?  --[[tschwinge]]
