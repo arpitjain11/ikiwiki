@@ -6,6 +6,10 @@
   passed through to mercurial -u. Will mercurial choke on this?
  * Nope. Mercurial doesn't expect any particular format for the username, 
    though "Name <address@domain>" is standard. --[[bma]]
+* The way `-u $user` is passed to `hg commit`, there's no way to tell
+  if a given commit came in over the web or was done directly. So
+  rcs_recentchanges hardcodes 'committype => "mercurial"'. See the monotone
+  backend for an example of one that does this right.
 * The rcs_commit implementation seems not to notice if the file has been
   changed since a web edit started. Unlike all the other frontends, which
   use the rcstoken to detect if the web commit started editing an earlier
