@@ -221,7 +221,7 @@ sub preprocess_inline (@) { #{{{
 				}
 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
 				$template->param(title => pagetitle(basename($page)));
-				$template->param(ctime => displaytime($pagectime{$page}));
+				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
 	
 				if ($actions) {
 					my $file = $pagesources{$page};

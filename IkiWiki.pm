@@ -498,13 +498,16 @@ sub abs2rel ($$) { #{{{
 	return $ret;
 } #}}}
 
-sub displaytime ($) { #{{{
+sub displaytime ($;$) { #{{{
 	my $time=shift;
+	my $format=shift;
+	if (! defined $format) {
+		$format=$config{timeformat};
+	}
 
 	# strftime doesn't know about encodings, so make sure
 	# its output is properly treated as utf8
-	return decode_utf8(POSIX::strftime(
-			$config{timeformat}, localtime($time)));
+	return decode_utf8(POSIX::strftime($format, localtime($time)));
 } #}}}
 
 sub beautify_url ($) { #{{{

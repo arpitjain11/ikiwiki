@@ -3,8 +3,10 @@ ikiwiki (2.13) UNRELEASED; urgency=low
   * Add liblwpx-paranoidagent-perl to recommends of Debian package,
     this is needed to do OpenID really securely.
   * ikiwiki.setup is licensed same as the basewiki, not GPLed.
+  * inline: Add timeformat parameter to control how the ctime of
+    inlined pages is displayed. Closes: #451019
 
- -- Joey Hess <joeyh@debian.org>  Tue, 13 Nov 2007 16:03:46 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 13 Nov 2007 16:11:54 -0500
 
 ikiwiki (2.12) unstable; urgency=low
 

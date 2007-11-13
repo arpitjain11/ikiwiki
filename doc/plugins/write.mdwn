@@ -477,9 +477,12 @@ search for files.
 If the directory name is not absolute, ikiwiki will assume it is in
 the parent directory of the configured underlaydir.
 
-#### `displaytime($)`
+#### `displaytime($;$)`
 
 Given a time, formats it for display.
+
+The optional second parameter is a strftime format to use to format the
+time.
 
 #### `gettext`
 

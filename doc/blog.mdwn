@@ -93,3 +93,5 @@ directive:
   the rss/atom feeds. The default is the same as the `show` value above.
 * `feedonly` - Only generate the feed, do not display the pages inline on
   the page.
+* `timeformat` - Use this to specify how to display the time or date for pages
+  in the blog. The format string is passed to the strftime(3) function.
