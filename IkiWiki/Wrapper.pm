@@ -102,14 +102,26 @@ $envsave
 }
 EOF
 	close OUT;
-	if (system("gcc", "$wrapper.c", "-o", $wrapper) != 0) {
+	if (system("gcc", "$wrapper.c", "-o", "$wrapper.new") != 0) {
 		#translators: The parameter is a C filename.
 		error(sprintf(gettext("failed to compile %s"), "$wrapper.c"));
 	}
 	unlink("$wrapper.c");
+	if (defined $config{wrappergroup}) {
+		my $gid=(getgrnam($config{wrappergroup}))[2];
+		if (! defined $gid) {
+			error(sprintf("bad wrappergroup"));
+		}
+		if (! chown(-1, $gid, "$wrapper.new")) {
+			error("chown $wrapper.new: $!");
+		}
+	}
 	if (defined $config{wrappermode} &&
-	    ! chmod(oct($config{wrappermode}), $wrapper)) {
-		error("chmod $wrapper: $!");
+	    ! chmod(oct($config{wrappermode}), "$wrapper.new")) {
+		error("chmod $wrapper.new: $!");
+	}
+	if (! rename("$wrapper.new", $wrapper)) {
+		error("rename $wrapper.new $wrapper: $!");
 	}
 	#translators: The parameter is a filename.
 	printf(gettext("successfully generated %s"), $wrapper);

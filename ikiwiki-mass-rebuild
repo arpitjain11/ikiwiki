@@ -2,6 +2,19 @@
 use warnings;
 use strict;
 
+sub supplemental_groups {
+	my $user=shift;
+
+	my @list;
+	while (my @fields=getgrent()) {
+		if (grep { $_ eq $user } split(' ', $fields[3])) {
+			push @list, $fields[2];
+		}
+	}
+
+	return @list;
+}
+
 sub processline {
 	my $user=shift;
 	my $setup=shift;
@@ -20,11 +33,15 @@ sub processline {
 	defined(my $pid = fork) or die "Can’t fork: $!";
 	if (! $pid) {
 		my ($uuid, $ugid) = (getpwnam($user))[2, 3];
-		$)="$ugid $ugid";
+		my $grouplist=join(" ", $ugid, $ugid, supplemental_groups($user));
+		$)=$grouplist;
+		if ($!) {
+			die "failed to set egid $grouplist";
+		}
 		$(=$ugid;
 		$<=$uuid;
 		$>=$uuid;
-		if ($< != $uuid || $> != $uuid || $( != $ugid || $) ne "$ugid $ugid") {
+		if ($< != $uuid || $> != $uuid || $( != $ugid) {
 			die "failed to drop permissions to $user";
 		}
 		%ENV=(

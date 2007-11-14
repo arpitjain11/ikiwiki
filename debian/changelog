@@ -5,8 +5,13 @@ ikiwiki (2.13) UNRELEASED; urgency=low
   * ikiwiki.setup is licensed same as the basewiki, not GPLed.
   * inline: Add timeformat parameter to control how the ctime of
     inlined pages is displayed. Closes: #451019
+  * Add wrappergroup config option, which can be used to cause wrappers
+    to be created owned by some group other than the default. Useful
+    then there's a shared repository with access controlled by a group,
+    to let ikiwiki run setgid to that group.
+  * ikiwiki-mass-rebuild: Run build with the user in all their groups.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 13 Nov 2007 16:11:54 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed, 14 Nov 2007 08:37:03 -0500
 
 ikiwiki (2.12) unstable; urgency=low
 

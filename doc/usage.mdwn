@@ -125,6 +125,14 @@ configuration options of their own.
 
   Specify a mode to chmod the wrapper to after creating it.
 
+* --wrappergroup group
+
+  Specify what unix group the wrapper should be owned by. This can be
+  useful if the wrapper needs to be owned by a group other than the default.
+  For example, if a project has a repository with multiple committers with
+  access controlled by a group, it makes sense for the ikiwiki wrappers
+  to run setgid to that group.
+
 * --notify, --no-notify
 
   Enable email notification of commits. This should be used when running
