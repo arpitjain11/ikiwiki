@@ -16,7 +16,7 @@ sub checkconfig () { #{{{
 	}
 } #}}}
 
-sub IkiWiki::displaytime ($) { #{{{
+sub IkiWiki::displaytime ($;$) { #{{{
 	my $time=shift;
 	eval q{
 		use DateTime;
