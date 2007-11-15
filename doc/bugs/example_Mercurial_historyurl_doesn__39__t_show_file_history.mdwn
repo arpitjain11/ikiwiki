@@ -1,0 +1,11 @@
+The Mercurial historyurl in the example ikiwiki.setup file creates a link to the repo's summary page.  It should take you to the history page for the file, like the example Git historyurl does.
+
+The current historyurl is:
+
+    #historyurl => "http://localhost:8000/", # hg serve'd local repository
+
+A link to the history page for the file would be:
+
+    #historyurl => "http://localhost:8000/log/tip/\[[file]]", # hg serve'd local repository
+
+This creates links to the hgweb page which is equivalent to the Git file history page.  (Markdown code contains escape.)
