@@ -1,5 +1,7 @@
 ikiwiki (2.13) UNRELEASED; urgency=low
 
+  The ikiwiki zombie army release.
+
   * Add liblwpx-paranoidagent-perl to recommends of Debian package,
     this is needed to do OpenID really securely.
   * ikiwiki.setup is licensed same as the basewiki, not GPLed.
@@ -10,8 +12,9 @@ ikiwiki (2.13) UNRELEASED; urgency=low
     then there's a shared repository with access controlled by a group,
     to let ikiwiki run setgid to that group.
   * ikiwiki-mass-rebuild: Run build with the user in all their groups.
+  * Correct markdown in example index page in setup. Closes: #451469
 
- -- Joey Hess <joeyh@debian.org>  Wed, 14 Nov 2007 08:37:03 -0500
+ -- Joey Hess <joeyh@debian.org>  Fri, 16 Nov 2007 12:52:40 -0500
 
 ikiwiki (2.12) unstable; urgency=low
 
