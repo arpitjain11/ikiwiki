@@ -541,6 +541,7 @@ sub htmllink ($$$;@) { #{{{
 	my $page=shift; # the page that will contain the link (different for inline)
 	my $link=shift;
 	my %opts=@_;
+	$link=~s/\/$//;
 
 	my $bestlink;
 	if (! $opts{forcesubpage}) {
