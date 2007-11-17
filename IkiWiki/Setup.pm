@@ -22,7 +22,7 @@ sub setup () { # {{{
 	close IN;
 
 	eval $code;
-	error($@) if $@;
+	error("$setup: ".$@) if $@;
 
 	exit;
 } #}}}
