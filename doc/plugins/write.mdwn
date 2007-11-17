@@ -164,7 +164,7 @@ a new custom parameter to the template.
 
 	hook(type => "templatefile", id => "foo", call => \&templatefile);
 
-This hook allows plugins to change the [[template|wikitemplate]] that is
+This hook allows plugins to change the [[template|wikitemplates]] that is
 used for a page in the wiki. The hook is passed a "page" parameter, and
 should return the name of the template file to use, or undef if it doesn't
 want to change the default ("page.tmpl"). Template files are looked for in
