@@ -407,6 +407,7 @@ sub bestlink ($$) { #{{{
 		# absolute links
 		$cwd="";
 	}
+	$link=~s/\/$//;
 
 	do {
 		my $l=$cwd;
@@ -541,6 +542,7 @@ sub htmllink ($$$;@) { #{{{
 	my $page=shift; # the page that will contain the link (different for inline)
 	my $link=shift;
 	my %opts=@_;
+
 	$link=~s/\/$//;
 
 	my $bestlink;
