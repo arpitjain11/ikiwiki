@@ -18,7 +18,7 @@ sub preprocess (@) { #{{{
 	# register a dependency.
 	add_depends($params{page}, $params{pages});
 	
-	my @broken;
+	my %broken;
 	foreach my $page (keys %links) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			my $discussion=gettext("discussion");
@@ -26,16 +26,29 @@ sub preprocess (@) { #{{{
 				next if $link =~ /.*\/\Q$discussion\E/i && $config{discussion};
 				my $bestlink=bestlink($page, $link);
 				next if length $bestlink;
-				push @broken, sprintf(gettext("%s from %s"),
-					htmllink($page, $params{destpage}, $link, noimageinline => 1),
-					htmllink($params{page}, $params{destpage}, $page, noimageinline => 1));
+				push @{$broken{$link}}, $page;
 			}
 		}
 	}
+
+	my @broken;
+	foreach my $link (keys %broken) {
+		my $page=$broken{$link}->[0];
+		push @broken, sprintf(gettext("%s from %s"),
+			htmllink($page, $params{destpage}, $link, noimageinline => 1),
+			join(", ", map {
+				htmllink($params{page}, $params{destpage}, $_, 	noimageinline => 1)
+			} @{$broken{$link}}));
+	}
 	
-	return gettext("There are no broken links!") unless @broken;
-	my %seen;
-	return "<ul>\n".join("\n", map { "<li>$_</li>" } grep { ! $seen{$_}++ } sort @broken)."</ul>\n";
+	return gettext("There are no broken links!") unless %broken;
+	return "<ul>\n"
+		.join("\n",
+			map {
+				"<li>$_</li>"
+			}
+			sort @broken)
+		."</ul>\n";
 } # }}}
 
 1
