@@ -6,8 +6,12 @@ The current historyurl is:
 
 A link to the history page for the file would be:
 
-    #historyurl => "http://localhost:8000/log/tip/[\[file]]", # hg serve'd local repository
+    #historyurl => "http://localhost:8000/log/tip/\[[file]]", # hg serve'd local repository
 
 *The backslash in the code should be removed.*
+
+> To escape a link, use `\\[[link]]`. Example: \[[link]] --[[Joey]]
+
+> ([[done]], BTW)
 
 This creates links to the hgweb page which is equivalent to the Git file history page.
