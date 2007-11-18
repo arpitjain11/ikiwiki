@@ -514,7 +514,9 @@ sub displaytime ($;$) { #{{{
 sub beautify_url ($) { #{{{
 	my $url=shift;
 
-	$url =~ s!/index.$config{htmlext}$!/!;
+	if ($config{usedirs}) {
+		$url =~ s!/index.$config{htmlext}$!/!;
+	}
 	$url =~ s!^$!./!; # Browsers don't like empty links...
 
 	return $url;
@@ -562,7 +564,8 @@ sub htmllink ($$$;@) { #{{{
 	}
 	
 	return "<span class=\"selflink\">$linktext</span>"
-		if length $bestlink && $page eq $bestlink;
+		if length $bestlink && $page eq $bestlink &&
+		   ! defined $opts{anchor};
 	
 	if (! $destsources{$bestlink}) {
 		$bestlink=htmlpage($bestlink);
