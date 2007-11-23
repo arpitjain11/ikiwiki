@@ -86,17 +86,25 @@ sub format (@) { #{{{
 				}
 				$liststarted=0;
 			}
+				
+			$index.=&$indent."</li>\n" unless $liststarted;
+			$liststarted=0;
+			$index.=&$indent."<li class=\"L$curlevel\">".
+				"<a href=\"#$anchor\">";
 	
 			$p->handler(text => sub {
 				$page.=join("", @_);
-				$index.=&$indent."</li>\n" unless $liststarted;
-				$liststarted=0;
-				$index.=&$indent."<li class=\"L$curlevel\">".
-					"<a href=\"#$anchor\">".
-					join("", @_).
-					"</a>\n";
-				$p->handler(text => undef);
+				$index.=join("", @_);
 			}, "dtext");
+			$p->handler(end => sub {
+				my $tagname=shift;
+				if ($tagname =~ /^h(\d+)$/i) {
+					$p->handler(text => undef);
+					$p->handler(end => undef);
+					$index.="</a>\n";
+				}
+				$page.=join("", @_);
+			}, "tagname, text");
 		}
 		else {
 			$page.=$text;
