@@ -18,7 +18,7 @@
   blindly overwrite the current file with the web edited version, losing
   any other changes.
 
-Posthook: in $srcdir/.hg/hrc, I have the following
+Posthook: in `$srcdir/.hg/hgrc`, I have the following
 
     [hooks]
     incoming.update = hg up
