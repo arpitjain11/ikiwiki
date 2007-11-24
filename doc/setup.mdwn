@@ -2,9 +2,9 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 
 [[toc ]]
 
-### 1. [[Download]] and [[install]] ikiwiki.
+## [[Download]] and [[install]] ikiwiki.
 
-### 2. Decide where your wiki's files will go.
+## Decide where your wiki's files will go.
 
 As a wiki compiler, ikiwiki builds a wiki from files in a source directory,
 and outputs the files to a destination directory.  If you keep your wiki in
@@ -20,7 +20,7 @@ for these locations, and use those variables in the commands that follow.
 Note that ikiwiki owns the working copy directory; do not perform your own
 edits in ikiwiki's working copy.
 
-### 3. Create the beginnings of your wiki.
+## Create the beginnings of your wiki.
 
 This will create a simple main page for the wiki.
 
@@ -47,17 +47,16 @@ Note that several [[standard_wiki_pages|basewiki]] will be added to your
 wiki, from files in `/usr/share/ikiwiki/basewiki/`, so your wiki will
 automatically get a [[SandBox]], and some other useful pages.
 
-### 4. Build your wiki for the first time.
+## Build your wiki for the first time.
 
 	ikiwiki --verbose $SRCDIR $DESTDIR --url=http://example.org/~you/wiki/
 
 Replace the url with the real url to your wiki. You should now
 be able to visit the url and see your wiki.
 
-### 5. Add content to your wiki.
+## Add content to your wiki.
 
-Repeat steps 3 and 4 as desired, editing or adding pages and rebuilding the
-wiki.
+Continue editing or adding pages and rebuilding the wiki.
    
 To quickly get started on a common task like blogging with ikiwiki, you
 can copy in files from the [[examples]]. The examples are located in
@@ -67,7 +66,7 @@ You can experiment with other ikiwiki parameters such as `--wikiname`
 and `--rebuild` too. Get comfortable with its command line (see
 [[usage]]).
 
-### 6. Add a setup file.
+## Add a setup file.
 
 By now you should be getting tired of typing in all the command line
 options each time you change something in your wiki's setup. Time to
@@ -87,7 +86,7 @@ read through and configure the rest of the file to your liking.
 When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
 will set everything up.
 
-### 7. Turn on additional features.
+## Turn on additional features.
 
 Now you have a basic wiki with a configuration file. Time to experiment
 with ikiwiki's many features. 
@@ -102,7 +101,7 @@ can uncomment, configure, and enable by re-running
 `ikiwiki --setup ikiwiki.setup`. Be sure to browse through all the
 [[plugins]]..
 
-### 8. Put your wiki in revision control.
+## Put your wiki in revision control.
 
 At this point you might want to check your wiki in to a revision control
 system so you can keep track of changes and revert edits. Depending
@@ -209,7 +208,7 @@ Finally, see [[Git_pitfalls]] if you experience problems.
 	rm -r $SRCDIR-old
 """]]
 
-### 9. Configure ikiwiki to use revision control.
+## Configure ikiwiki to use revision control.
 
 Once your wiki is checked in to the revision control system,
 you should configure ikiwiki to use revision control. Edit your
@@ -225,7 +224,7 @@ control system to commit them, and the wiki will automatically update.
 And in the web interface, RecentChanges should work, and files changed
 by web users will also be committed using revision control.
 
-### 10. Enjoy your new wiki!
+## Enjoy your new wiki!
 
 Add yourself to [[IkiWikiUsers]]. And check out
 the [[tips]] to find out how to get more out of ikiwiki.
