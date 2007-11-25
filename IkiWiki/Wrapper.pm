@@ -102,7 +102,9 @@ $envsave
 }
 EOF
 	close OUT;
-	if (system("gcc", "$wrapper.c", "-o", "$wrapper.new") != 0) {
+
+	my $cc=exists $ENV{CC} ? possibly_foolish_untaint($ENV{CC}) : 'cc';
+	if (system($cc, "$wrapper.c", "-o", "$wrapper.new") != 0) {
 		#translators: The parameter is a C filename.
 		error(sprintf(gettext("failed to compile %s"), "$wrapper.c"));
 	}

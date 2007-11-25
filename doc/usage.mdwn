@@ -300,6 +300,12 @@ configuration options of their own.
   using command-line switches, you will rarely need to use this, but it can be
   useful for the odd option that lacks a command-line switch.
 
+# ENVIRONMENT
+
+* CC
+
+  This controls what C compiler is used to build wrappers. Default is 'cc'.
+
 # SEE ALSO
 
 * [[ikiwiki-mass-rebuild]](8)
