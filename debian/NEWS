@@ -1,3 +1,13 @@
+ikiwiki (2.14) unstable; urgency=low
+
+  This version of ikiwiki is more picky about symlinks in the path leading
+  to the srcdir, and will refuse to use a srcdir specified by such a path.
+  This  was necessary to avoid some potential exploits, but could potentially
+  break (semi-)working wikis. If your wiki has a srcdir path containing a
+  symlink, you should change it to use a path that does not.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 26 Nov 2007 14:57:57 -0500
+
 ikiwiki (2.9) unstable; urgency=low
 
   Since ikiwiki 2.0 was released, some limitiations have been added to what

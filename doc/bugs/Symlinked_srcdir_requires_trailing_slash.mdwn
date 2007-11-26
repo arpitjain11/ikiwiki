@@ -64,3 +64,18 @@ My output:
     rendering index.mdwn
 
 Note that index.mdwn was only rendered when srcdir had a trailing slash.
+
+> There are potential [[security]] issues with ikiwiki following a symlink,
+> even if it's just a symlink at the top level of the srcdir.
+> Consider ikiwiki.info's own setup, where the srcdir is ikiwiki/doc,
+> checked out of revision control. A malicious committer could convert
+> ikiwiki/doc into a symlink to /etc, then ikiwiki would happily publish
+> all of /etc to the web.
+> 
+> This kind of attack is why ikiwiki does not let File::Find follow
+> symlinks when scanning the srcdir. By appending the slash, you're
+> actually bypassing that check. Ikiwiki should not let you set
+> up a potentially insecure configuration like that. More discussion of
+> this hole [[here|security#index29h2]], and I've had to release
+> a version of ikiwiki that explicitly checks for that, and fails to work.
+> Sorry, but security trumps convenience. [[done]] --[[Joey]]

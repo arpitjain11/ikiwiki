@@ -245,6 +245,17 @@ sub prune ($) { #{{{
 } #}}}
 
 sub refresh () { #{{{
+	# security check, avoid following symlinks in the srcdir path
+	my $test=$config{srcdir};
+	while (length $test) {
+		if (-l $test) {
+			error("symlink found in srcdir path ($test)");
+		}
+		unless ($test=~s/\/+$//) {
+			$test=dirname($test);
+		}
+	}
+
 	# find existing pages
 	my %exists;
 	my @files;
