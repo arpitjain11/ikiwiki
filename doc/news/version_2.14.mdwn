@@ -1,3 +1,5 @@
+This is a security fix release, upgrade is recommended.
+
 News for ikiwiki 2.14:
 
    This version of ikiwiki is more picky about symlinks in the path leading
@@ -14,4 +16,4 @@ ikiwiki 2.14 released with [[toggle text="these changes"]]
      to the top of the srcdir. In certian unusual configurations, an attacker
      who could commit to one of the parent directories of the srcdir could
      use a symlink attack to cause ikiwiki to publish files elsewhere in the
-     filesystem. More details at &lt;http://ikiwiki.info/security/#index29h2&gt;"""]]
+     filesystem. More details [[here|security#index29h2]]
