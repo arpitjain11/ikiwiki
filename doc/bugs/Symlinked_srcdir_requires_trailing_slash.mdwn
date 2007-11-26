@@ -1,0 +1,66 @@
+If the srcdir is a symlink, Ikiwiki will not render the pages unless the srcdir has a trailing slash.
+
+For example:
+
+    #!/bin/sh
+    set -x
+
+    REALSRCDIR=~/tmp/ikiwiki/wikiwc2
+    SRCDIR=~/tmp/ikiwiki/wikiwc
+    DESTDIR=~/tmp/ikiwiki/public_html/wiki/
+
+    echo "*** Testing without trailing slash."
+
+    rm -rf $REALSRCDIR $SRCDIR $DESTDIR
+
+    # Create the real srcdir and link the srcdir to it
+    mkdir -p $REALSRCDIR
+    ln -s $REALSRCDIR $SRCDIR
+
+    mkdir -p $DESTDIR
+
+    echo Test > $SRCDIR/index.mdwn
+
+    # No trailing slash after $SRCDIR
+    ikiwiki --verbose $SRCDIR $DESTDIR --url=http://example.org/~you/wiki/ --underlaydir /dev/null
+
+    echo "*** Testing with trailing slash."
+
+    rm -rf $REALSRCDIR $SRCDIR $DESTDIR
+
+    # Create the real srcdir and link the srcdir to it
+    mkdir -p $REALSRCDIR
+    ln -s $REALSRCDIR $SRCDIR
+
+    mkdir -p $DESTDIR
+
+    echo Test > $SRCDIR/index.mdwn
+
+    # Trailing slash after $SRCDIR
+    ikiwiki --verbose $SRCDIR/ $DESTDIR --url=http://example.org/~you/wiki/ --underlaydir /dev/null
+
+My output:
+
+    + REALSRCDIR=/home/svend/tmp/ikiwiki/wikiwc2
+    + SRCDIR=/home/svend/tmp/ikiwiki/wikiwc
+    + DESTDIR=/home/svend/tmp/ikiwiki/public_html/wiki/
+    + echo '*** Testing without trailing slash.'
+    *** Testing without trailing slash.
+    + rm -rf /home/svend/tmp/ikiwiki/wikiwc2 /home/svend/tmp/ikiwiki/wikiwc /home/svend/tmp/ikiwiki/public_html/wiki/
+    + mkdir -p /home/svend/tmp/ikiwiki/wikiwc2
+    + ln -s /home/svend/tmp/ikiwiki/wikiwc2 /home/svend/tmp/ikiwiki/wikiwc
+    + mkdir -p /home/svend/tmp/ikiwiki/public_html/wiki/
+    + echo Test
+    + ikiwiki --verbose /home/svend/tmp/ikiwiki/wikiwc /home/svend/tmp/ikiwiki/public_html/wiki/ --url=http://example.org/~you/wiki/ --underlaydir /dev/null
+    + echo '*** Testing with trailing slash.'
+    *** Testing with trailing slash.
+    + rm -rf /home/svend/tmp/ikiwiki/wikiwc2 /home/svend/tmp/ikiwiki/wikiwc /home/svend/tmp/ikiwiki/public_html/wiki/
+    + mkdir -p /home/svend/tmp/ikiwiki/wikiwc2
+    + ln -s /home/svend/tmp/ikiwiki/wikiwc2 /home/svend/tmp/ikiwiki/wikiwc
+    + mkdir -p /home/svend/tmp/ikiwiki/public_html/wiki/
+    + echo Test
+    + ikiwiki --verbose /home/svend/tmp/ikiwiki/wikiwc/ /home/svend/tmp/ikiwiki/public_html/wiki/ --url=http://example.org/~you/wiki/ --underlaydir /dev/null
+    scanning index.mdwn
+    rendering index.mdwn
+
+Note that index.mdwn was only rendered when srcdir had a trailing slash.
