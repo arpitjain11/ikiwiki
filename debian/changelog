@@ -5,6 +5,11 @@ ikiwiki (2.15) UNRELEASED; urgency=low
     the setup process much simpler.
   * Reorganised git documentation.
   * Actually install the ikiwiki-update-wikilist program.
+  * Improve workaround for perl bug #376329. Rather than double-encoding,
+    which has been reported to cause encoding problems (though I haven't
+    reproduced them), just catch a failure of markdown, and retry.
+    (The crazy perl bug magically disappears on the retry.)
+    Closes: #449379
 
  -- Joey Hess <joeyh@debian.org>  Tue, 27 Nov 2007 00:16:40 -0500
 
