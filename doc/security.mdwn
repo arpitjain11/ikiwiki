@@ -41,8 +41,8 @@ who's viewing the wiki, that can be a security problem.
 
 Of course nobody else seems to worry about this in other wikis, so should we?
 
-Currently only people with direct svn commit access can upload such files
-(and if you wanted to you could block that with a svn pre-commit hook).
+Currently only people with direct commit access can upload such files
+(and if you wanted to you could block that with a pre-commit hook).
 Users with only web commit access are limited to editing pages as ikiwiki
 doesn't support file uploads from browsers (yet), so they can't exploit
 this.
@@ -61,12 +61,12 @@ Setup files are not safe to keep in subversion with the rest of the wiki.
 Just don't do it. [[ikiwiki.setup]] is *not* used as the setup file for
 this wiki, BTW.
 
-## page locking can be bypassed via direct svn commits
+## page locking can be bypassed via direct commits
 
-A locked page can only be edited on the web by an admin, but
-anyone who is allowed to commit direct to svn can bypass this. This is by
-design, although a subversion pre-commit hook could be used to prevent
-editing of locked pages when using subversion, if you really need to.
+A locked page can only be edited on the web by an admin, but anyone who is
+allowed to commit directly to the repository can bypass this. This is by
+design, although a pre-commit hook could be used to prevent editing of
+locked pages when using subversion, if you really need to.
 
 ## web server attacks
 
@@ -122,8 +122,8 @@ page to edit. It has to make sure to sanitise this page, to prevent eg,
 editing of ../../../foo, or editing of files that are not part of the wiki,
 such as subversion dotfiles. This is done by sanitising the filename
 removing unallowed characters, then making sure it doesn't start with "/"
-or contain ".." or "/.svn/". Annoyingly ad-hoc, this kind of code is where
-security holes breed. It needs a test suite at the very least.
+or contain ".." or "/.svn/", etc. Annoyingly ad-hoc, this kind of code is
+where security holes breed. It needs a test suite at the very least.
 
 ## CGI::Session security
 
@@ -204,13 +204,13 @@ wouldn't see.
 
 To avoid this, ikiwiki will skip over symlinks when scanning for pages, and
 uses locking to prevent more than one instance running at a time. The lock
-prevents one ikiwiki from running a svn up at the wrong time to race
-another ikiwiki. So only attackers who can write to the working copy on
-their own can race it.
+prevents one ikiwiki from running a svn up/git pull/etc at the wrong time
+to race another ikiwiki. So only attackers who can write to the working
+copy on their own can race it.
 
 ## symlink + cgi attacks
 
-Similarly, a svn commit of a symlink could be made, ikiwiki ignores it
+Similarly, a commit of a symlink could be made, ikiwiki ignores it
 because of the above, but the symlink is still there, and then you edit the
 page from the web, which follows the symlink when reading the page
 (exposing the content), and again when saving the changed page (changing
