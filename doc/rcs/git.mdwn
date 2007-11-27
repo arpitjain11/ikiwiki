@@ -28,3 +28,22 @@ the bare repository, using either the `git` transport (if available), or
 `ssh`.
 
 The ikiwiki `post-commit` hook should be put in the bare repository.
+
+## git repository with multiple committers
+
+It can be tricky to get the permissions right to allow multiple people to
+commit to an ikiwiki git repository. As the [[security]] page mentions,
+for a secure ikiwiki installation, only one person should be able to write
+to ikiwiki's srcdir. When other committers make commits, their commits
+should go to the bare repository, which has a `post-update` hook that uses
+ikiwiki to pull the changes to the srcdir.
+
+One setup that will work is to put all committers in a group (say,
+ikiwiki), and use permissions to allow that group to commit to the bare git
+repository. Make both the post-update hook and ikiwiki.cgi be setgid
+to the group, as well as suid to the user who admins the wiki. The
+`wrappergroup` [[setup_file_option|usage]] can be used to make the wrappers
+be setgid to the right group. Then the srcdir, including its git
+repository, should only be writable by the wiki's admin, and *not* by the
+group. Take care that ikiwiki uses a umask that does not cause files in
+the srcdir to become group writable. (umask 022 will work.)
