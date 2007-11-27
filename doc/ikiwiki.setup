@@ -118,6 +118,8 @@ use IkiWiki::Setup::Standard {
 	#usedirs => 0,
 	# Simple spam prevention: require an account-creation password.
 	#account_creation_password => "example",
+	# Uncomment to force ikiwiki to run with a particular umask.
+	#umask => 022
 
 	# To add plugins, list them here.
 	#add_plugins => [qw{goodstuff search wikitext camelcase

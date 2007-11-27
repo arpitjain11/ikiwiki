@@ -141,6 +141,10 @@ sub checkconfig () { #{{{
 		require IkiWiki::Rcs::Stub;
 	}
 
+	if (exists $config{umask}) {
+		umask(possibly_foolish_untaint($config{umask}));
+	}
+
 	run_hooks(checkconfig => sub { shift->() });
 
 	return 1;
