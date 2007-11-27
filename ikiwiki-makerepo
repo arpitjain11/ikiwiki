@@ -1,0 +1,76 @@
+#!/bin/sh
+set -e
+
+rcs="$1"
+srcdir="$2"
+repository="$3"
+	
+usage () {
+	echo "usage: ikiwiki-makerepo svn|git srcdir repository" >&2
+	echo "       ikiwiki-makerepo mercurial srcdir" >&2
+	exit 1
+}
+
+if [ -z "$rcs" ] || [ -z "$srcdir" ]; then
+	usage
+fi
+
+if [ ! -d "$srcdir" ]; then
+	echo "srcdir $srcdir not found" >&2 
+	exit 1
+fi
+
+if [ "$rcs" != mercurial ]; then
+	if [ -e "$repository" ]; then
+		echo "repository $repository already exists, aborting" >&2 
+		exit 1
+	fi
+	repository="$(perl -e 'use Cwd q{abs_path}; print abs_path(shift)' $repository)"
+	if [ -z "$repository" ]; then
+		echo "internal error finding repository abs_path" >&2
+		exit 1
+	fi
+fi
+
+echo "Importing $srcdir into $rcs"
+
+case "$rcs" in
+svn)
+	if [ -e "$srcdir/.svn" ]; then
+		echo "$srcdir already seems to be a svn working copy" >&2
+		exit 1
+	fi
+	svnadmin create "$repository"
+	svn mkdir "file://$repository/trunk" -m "create trunk directory"
+	cd "$srcdir"
+	svn co "file://$repository/trunk" .
+	svn propset svn:ignore ".ikiwiki" .
+	svn add *
+	svn commit -m "initial import"
+	echo "Directory $srcdir is now a checkout of $rcs repository $repository"
+;;
+git)
+	GIT_DIR="$repository" git --bare init --shared
+	cd "$srcdir"
+	git init
+	echo /.ikiwiki > .gitignore
+	git add .
+	git commit -m "initial commit"
+	git remote add origin "$repository"
+	git config branch.master.merge refs/heads/master
+	git push --all
+	echo "Directory $srcdir is now a clone of $rcs repository $repository"
+;;
+mercurial)
+	hg init "$srcdir"
+	cd "$srcdir"
+	echo .ikiwiki > .hgignore
+	hg add * .hgignore
+	hg commit -m "initial import"
+	echo "Directory $srcdir is now set up as a mercurial repository"
+;;
+*)
+	echo "Unsupported revision control system $rcs" >&2
+	usage
+;;
+esac

@@ -1,0 +1,23 @@
+# NAME
+
+ikiwiki-makerepo - check an ikiwiki srcdir into revision control
+
+# SYNOPSIS
+
+ikiwiki-makerepo svn|git srcdir repository
+ikiwiki-makerepo mercurial srcdir
+
+# DESCRIPTION
+
+`ikiwiki-makerepo` injects a `srcdir` directory, containing an ikiwiki wiki,
+into a `repository` that it creates. The repository can be a svn, git, or
+mercurial repository.
+
+Note that for mercurial, the srcdir is converted into a mercurial
+repository. There is no need to have a separate repository with mercurial.
+
+# AUTHOR
+
+Joey Hess <joey@ikiwiki.info>
+
+Warning: this page is automatically made into ikiwiki-makerepo's man page, edit with care

@@ -1,3 +1,13 @@
+ikiwiki (2.15) UNRELEASED; urgency=low
+
+  * Add a new ikiwiki-makerepo program, that automates setting up a repo
+    and importing existing content for svn, git, and mercurial. This makes
+    the setup process much simpler.
+  * Reorganised git documentation.
+  * Actually install the ikiwiki-update-wikilist program.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 27 Nov 2007 00:16:40 -0500
+
 ikiwiki (2.14) unstable; urgency=high
 
   * Let CC be used to control what compiler is used to build wrappers.

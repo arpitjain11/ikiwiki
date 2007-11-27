@@ -5,13 +5,26 @@ the Linux kernel. Ikiwiki supports storing a wiki in git.
 
 [git]: http://git.or.cz/
 
-Ikiwiki can run as a post-update hook to update a wiki whenever commits
+Ikiwiki can run as a `post-update` hook to update a wiki whenever commits
 come in. When running as a [[cgi]] with Git, ikiwiki automatically
 commits edited pages, and uses the Git history to generate the
 [[RecentChanges]] page.
 
-[[Setup]] documents current best practice for using git with ikiwiki. This
-involves setting up a pair of git repositories. This method isn't the most
-obvious, but it works the best.
+## git repository setup
 
-See also: [[common_git_pitfalls|/setup/git_pitfalls]]
+When using Git, you probably want to set up two repositories, of which
+one should be bare (meaning that it does not have a working tree
+checked out), and the other one with a working tree will be used as
+ikiwiki's srcdir for compiling the wiki. [[ikiwiki-makerepo]] can automate
+setting this up. Using a pair of repositories isn't the most obvious set up,
+but it works the best for typical ikiwiki use.
+[[tips/Laptop_wiki_with_git]] describes a different way to set up ikiwiki
+and git.
+
+It is **paramount** that you **never** push to the non-bare repository
+([this FAQ entry explains why](http://git.or.cz/gitwiki/GitFaq#head-b6a3d85f677763313159eb39f7dbf4579d4ee28b)).
+Instead, if you want to work on the wiki from a remote machine, clone
+the bare repository, using either the `git` transport (if available), or
+`ssh`.
+
+The ikiwiki `post-commit` hook should be put in the bare repository.

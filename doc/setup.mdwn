@@ -107,56 +107,32 @@ At this point you might want to check your wiki in to a revision control
 system so you can keep track of changes and revert edits. Depending
 on the revision control system you choose, the way this is done varies.
 
-There's little that's ikiwiki specific about these instructions; this is
-just how you put a directory under revision control using the various
-systems that ikiwiki supports. Note that the .ikiwiki subdirectory is
-where ikiwiki keeps its state, and should be preserved, but not checked
-into revision control.
+Note that the .ikiwiki subdirectory is where ikiwiki keeps its state, and
+should be preserved, but not checked into revision control.
+
+The new [[ikiwiki-makerepo]] command automates setting up a wiki in
+revision control.
 
 [[toggle id=subversion text="Subversion"]]
 [[toggleable id=subversion text="""
 	REPOSITORY=~/wikirepo
-	svnadmin create $REPOSITORY
-	svn mkdir file://$REPOSITORY/trunk -m "create trunk"
-	cd $SRCDIR
-	svn co file://$REPOSITORY/trunk .
-	svn add *
-	svn commit -m "initial import"
+	ikiwiki-makerepo svn $SRCDIR $REPOSITORY
 """]]
 
 [[toggle id=git text="Git"]]
 [[toggleable id=git text="""
-When using Git, you probably want to set up two repositories, of which
-one should be bare (meaning that it does not have a working tree
-checked out). We call the bare repository the "repository" and the
-other will be the "srcdir" (which `ikiwiki` uses to compile the wiki).
-There are [other
-ways](http://blog.madduck.net/vcs/2007.07.11_publishing-git-repositories)
-to do the following, but this might be easiest:
-
 	REPOSITORY=~/wiki.git
-	GIT_DIR=$REPOSITORY git --bare init --shared
-	cd $SRCDIR
-	git init
-	echo /.ikiwiki > .gitignore
-	git add .
-	git commit -m "initial commit"
-	git remote add origin $REPOSITORY
-	git config branch.master.merge refs/heads/master
-	git push --all
+	ikiwiki-makerepo git $SRCDIR $REPOSITORY
 
-It is **paramount** that you **never** push to the Git repository in
-`$SRCDIR` ([this FAQ entry explains
-why](http://git.or.cz/gitwiki/GitFaq#head-b6a3d85f677763313159eb39f7dbf4579d4ee28b)).
-Instead, if you want to work on the wiki from a remote machine, clone
-`$REPOSITORY`, using either the `git` transport (if available), or
-`ssh`.
+	Please see [[rcs/git]] for detailed documentation about how
+	ikiwiki uses git repositories, and some important caveats
+	about using the git repositories.
+"""]]
 
-If at any point you commit changes in `$SRCDIR`, make sure to `git
-push` them to the `$REPOSITORY`. ikiwiki will do this automatically
-for any changes made via the web.
-
-Finally, see [[Git_pitfalls]] if you experience problems.
+[[toggle id=mercurial text="Mercurial"]]
+[[toggleable id=mercurial text="""
+	REPOSITORY=$SRCDIR
+	ikiwiki-makerepo mercurial $SRCDIR
 """]]
 
 [[toggle id=tla text="TLA"]]
@@ -171,15 +147,6 @@ Finally, see [[Git_pitfalls]] if you experience problems.
 	# line to add the .ikiwiki directory to the regexp.
 	tla add *
 	tla import
-"""]]
-
-[[toggle id=mercurial text="Mercurial"]]
-[[toggleable id=mercurial text="""
-	REPOSITORY=$SRCDIR
-	hg init $REPOSITORY
-	cd $REPOSITORY
-	hg add *
-	hg commit -m "initial import"
 """]]
 
 [[toggle id=monotone text="Monotone"]]
