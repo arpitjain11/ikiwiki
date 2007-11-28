@@ -12,3 +12,9 @@ In our team internal wiki, we wish to impose a policy that all edits must have a
 > BTW, it wuld probably be better to validate against a `comment_regexp`,
 > so that when the evil admins notice that /.+/ is absurdly easy for users
 > to get around (by using " "), they can tighten it down. --[[Joey]]
+
+> Sorry for being dense, but I don't see a way to modify the template from within
+> a plugin, without providing a whole new template for editform, which obviously
+> isn't a workable solution. If the template was modified to allow overriding the
+> portion of the message in question, then I agree that a plugin couuld do the rest.
+> Thoughts appreciated :) --[[Dom]]
