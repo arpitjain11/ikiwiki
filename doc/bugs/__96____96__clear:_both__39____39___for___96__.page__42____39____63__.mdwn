@@ -1,0 +1,10 @@
+Please have a look at
+<http://www.bddebian.com/~wiki/hurd/running/debian/faq/>.
+There is (on a sufficiently small display) a large free spacing between the
+*vmstat* line and the first *Posted* line.
+Even without any `local.css`.
+This is because of `clear: both` in ikiwiki's `style.css`, line 109,
+for `.pagedate, .pagelicense, .pagecopyright`.
+
+I can override this in `local.css`, but what was the original reason for
+adding this `clear: both`?
