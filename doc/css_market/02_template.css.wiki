@@ -1,0 +1,297 @@
+/* ikiwiki local style sheet */
+
+/* Add local styling here, instead of modifying style.css. */
+
+/* This stylesheet is based on the 1024px template by Andreas Viklund:
+
+   1024px - An open source xhtml/css website template by Andreas Viklund -
+   http://andreasviklund.com . Free to use in any way and for any purpose as
+   long as the proper cr
+   edits are given to the original designer.
+
+   Version: 1.0, March 29, 2006 
+
+   modifications for ikiwiki by Martin Wuertele <web@wuertele.net>
+*/
+
+/******** General tags ********/
+
+body{
+        padding:0;
+        margin:0;
+        border:none;
+        font-family:georgia, arial;
+        font-size:12px;
+        background:url(images/bg.png) repeat-x top #4B546B;
+        /*background:#4B546B;*/
+        color:#000000;
+}
+
+#pagestyle{
+        width:80%;
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left:5px;
+        padding-right:5px;
+        margin:0 auto;
+        border:none;
+        background-color:#FFFFFF;
+
+}
+
+#pagehead{
+        background:url(images/header.png) no-repeat center #808080;
+        height:203px;
+}
+
+a{
+        margin:0;
+        padding:0;
+        border-bottom:1px #8994AF dotted;
+        border-top:none;
+        border-left:none;
+        border-right:none;
+        background-color:transparent;
+        color:#000000;
+        display:inline;
+        color:#8994AF;
+        text-decoration:none;
+}
+
+a:hover{
+        margin:0;
+        padding:0;
+        border-bottom:1px #4B556A dotted;
+        border-top:none;
+        border-left:none;
+        border-right:none;
+        background-color:transparent;
+        color:#000000;
+        display:inline;
+        color:#4B556A;
+        text-decoration:none;
+}
+
+a img{
+        border:0;
+}
+
+p{
+        margin:0 0 18px 10px;
+}
+
+pre{
+        margin:0 0 18px 10px;
+}
+
+ul,ol,dl{
+}
+
+ul ul,ol ol{
+        margin:4px 0 4px 35px;
+}
+
+h1{
+        font-family:georgia, arial;
+        font-size:16px;
+        color:#4A5368;
+        text-transform:uppercase;
+        font-weight:bold;
+        padding:0;
+        margin-top:0;
+        margin-bottom:5px;
+        margin-left:auto;
+        margin-right:auto;
+}
+
+h2{
+        font-family:georgia, arial;
+        font-size:14px;
+        color:#4A5368;
+        text-transform:uppercase;
+        font-weight:bold;
+        padding:0;
+        margin-top:0;
+        margin-bottom:5px;
+        margin-left:auto;
+        margin-right:auto;
+}
+
+h3{
+        font-family:georgia, arial;
+        font-size:12px;
+        color:#4A5368;
+        text-transform:uppercase;
+        font-weight:bold;
+        padding:0;
+        margin-top:0;
+        margin-bottom:5px;
+        margin-left:auto;
+        margin-right:auto;
+}
+
+blockquote{
+}
+
+#pageheader{
+}
+
+#afront {
+}
+
+.header{
+        width:auto;
+        border:none;
+        padding-top:1px;
+        padding-bottom:10px;
+        padding-left:5px;
+        padding-right:5px;
+        text-align:left;
+        margin:0;
+        height:20px;
+        line-height:20px;
+        font-family:georgia, arial;
+        font-size:12px;
+        color:#808080;
+}
+
+.actions {
+        border-bottom: none;
+}
+
+#backlinks{
+        width:auto;
+        border:none;
+        padding-top:0;
+        padding-bottom:1px;
+        padding-left:5px;
+        padding-right:5px;
+        text-align:right;
+        margin:0;
+        height:20px;
+        line-height:20px;
+        font-family:georgia, arial;
+        font-size:12px;
+        color:#808080;
+}
+
+div.tags {
+        border: none;
+}
+
+#content{
+}
+
+#contentalt{
+}
+
+#pageinfo {
+        border: none;
+}
+
+.inlinepage {
+        border:none;
+        padding:5px 10px;
+        margin:0
+}
+
+.inlinepage .header {
+        font-family:georgia, arial;
+        font-size:16px;
+        color:#4A5368;
+        text-transform:uppercase;
+        font-weight:bold;
+        padding:0;
+        margin-top:0;
+        margin-bottom:5px;
+        margin-left:auto;
+        margin-right:auto;
+}
+
+#tags {
+        border: none;
+} 
+
+/******** Content variations ********/
+
+.feedbutton {
+        color:#ffffff;
+        font-size:0.9em;
+        background-color:#4088b8;
+        border:1px solid #c8c8c8;
+        line-height:1.3em;
+        padding: 0px 0.5em 0px 0.5em;
+}
+
+/*.feedbutton:hover {
+        color: #4088b8 !important;
+        background: #ffffff;
+}*/
+
+
+/******** sidebar ********/
+
+#sidebar{
+        float:right;
+        width:175px;
+        background-color:#FFFFFF;
+        border:1px #808080 solid;
+        padding:5px 10px;
+        margin:0;
+        height:100%
+}
+
+#sidebar ul{
+        list-style:none;
+}
+
+#sidebar li{
+        list-style:none;
+}
+
+#sidebar li a{
+}
+
+#sidebar ul ul{
+}
+
+#sidebar ul ul li a{
+}
+
+#sidebar h1{
+        font-family:georgia, arial;
+        font-size:16px;
+        color:#4A5368;
+        text-transform:uppercase;
+        font-weight:bold;
+        padding:0;
+        margin-top:0;
+        margin-bottom:5px;
+        margin-left:auto;
+        margin-right:auto;
+}
+
+#sidebar h2{
+        margin:3px 0px 8px 0px;
+}
+
+
+/******** Footer ********/
+#footer{
+        clear:both;
+        text-align:right;
+        color:#808080;
+        border-top:1px #808080 solid;
+        margin:0 auto;
+        padding:8px 0;
+}
+
+.pagedate{
+        text-size:small;
+        text-align:right;
+        margin:0;
+        font-family:georgia, arial;
+        font-size:10px;
+        color:#808080;
+        padding:8px 0;
+}
