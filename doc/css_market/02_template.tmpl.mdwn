@@ -1,0 +1,20 @@
+--- /usr/share/ikiwiki/templates/page.tmpl      2007-12-03 20:09:46.000000000 +0100
++++ templates/page.tmpl 2007-12-05 21:15:38.000000000 +0100
+@@ -14,6 +14,9 @@
+ </head>
+ <body>
+ 
++<div id="pagestyle">
++<div id="pagehead">
++</div>
+ <div class="header">
+ <span>
+ <TMPL_LOOP NAME="PARENTLINKS">
+@@ -111,5 +100,7 @@
+ <!-- from <TMPL_VAR NAME=WIKINAME> -->
+ </div>
+ 
++</div>
++
+ </body>
+ </html>
