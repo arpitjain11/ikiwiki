@@ -165,7 +165,9 @@ sub preprocess_inline (@) { #{{{
 		}
 		else {
 			$feednum=$knownfeeds{$feedid}="";
-			$page_numfeeds{$params{destpage}}=1;
+			if ($feeds) {
+				$page_numfeeds{$params{destpage}}=1;
+			}
 		}
 	}
 
