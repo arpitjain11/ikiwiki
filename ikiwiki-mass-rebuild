@@ -36,7 +36,7 @@ sub processline {
 		my $grouplist=join(" ", $ugid, $ugid, supplemental_groups($user));
 		$)=$grouplist;
 		if ($!) {
-			die "failed to set egid $grouplist";
+			die "failed to set egid $grouplist: $!";
 		}
 		$(=$ugid;
 		$<=$uuid;
