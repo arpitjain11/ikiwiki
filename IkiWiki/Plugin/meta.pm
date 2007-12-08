@@ -13,7 +13,6 @@ my %author;
 my %authorurl;
 my %license;
 my %copyright;
-my %redirected;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
@@ -71,17 +70,11 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'redir') {
-		$redirected{$page}=1;
 		my $safe=0;
 		if ($value =~ /^$config{wiki_link_regexp}$/) {
 			my $link=bestlink($page, $value);
 			if (! length $link) {
 				return "[[meta ".gettext("redir page not found")."]]";
-			}
-			if ($redirected{$link}) {
-				# TODO this is a cheap way of avoiding
-				# redir cycles, but it is really too strict.
-				return "[[meta ".gettext("redir to page that itself redirs is not allowed")."]]";
 			}
 			$value=urlto($link, $destpage);
 			$safe=1;
