@@ -1,2 +1,9 @@
 How does the lack of a post-commit hook for mercurial affect my ikiwiki installation? 
 I want to use ikiwiki with one of the distributed scm systems and mercurial appears have the best balance of mature ikiwiki support and windows support. 
+
+> Without a post-commit hook, changes committed to the wiki (either via
+> mercurial or via the web) will not automatically cause ikiwiki to run to
+> rebuild the changed pages. The parent page has an example of how to
+> configure mercurial to run ikiwiki as a post-commit hook. Someone just
+> needs to test this (including my suggested change) and then we could
+> document it in the setup page. --[[Joey]]
