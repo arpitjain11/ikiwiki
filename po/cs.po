@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-12 14:36-0500\n"
+"POT-Creation-Date: 2007-12-08 15:22-0500\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -126,12 +126,12 @@ msgstr "zdroj shodil XML::Feed!"
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:44
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
@@ -218,7 +218,12 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "selhalo nahrání perlového modulu Markdown.pm (%s) nebo /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:90
+#: ../IkiWiki/Plugin/meta.pm:77
+#, fuzzy
+msgid "redir page not found"
+msgstr "zdroj nebyl nalezen"
+
+#: ../IkiWiki/Plugin/meta.pm:113
 msgid "stylesheet not found"
 msgstr "styl nebyl nalezen"
 
@@ -492,47 +497,47 @@ msgid ""
 msgstr ""
 "REV není nastavena, není spuštěna ze svn post-commit, nemohu zaslat oznámení"
 
-#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:284
+#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "přeskakuji chybné jméno souboru %s"
 
-#: ../IkiWiki/Render.pm:326
+#: ../IkiWiki/Render.pm:337
 #, perl-format
 msgid "removing old page %s"
 msgstr "odstraňuji starou stránku %s"
 
-#: ../IkiWiki/Render.pm:359
+#: ../IkiWiki/Render.pm:370
 #, perl-format
 msgid "scanning %s"
 msgstr "prohledávám %s"
 
-#: ../IkiWiki/Render.pm:364
+#: ../IkiWiki/Render.pm:375
 #, perl-format
 msgid "rendering %s"
 msgstr "zpracovávám %s"
 
-#: ../IkiWiki/Render.pm:376
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "zpracovávám %s, která odkazuje na %s"
 
-#: ../IkiWiki/Render.pm:393
+#: ../IkiWiki/Render.pm:404
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "zpracovávám %s, která závisí na %s"
 
-#: ../IkiWiki/Render.pm:431
+#: ../IkiWiki/Render.pm:442
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "zpracovávám %s, aby se aktualizovaly zpětné odkazy"
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:454
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "odstraňuji %s, již není zpracovávána %s"
 
-#: ../IkiWiki/Render.pm:469
+#: ../IkiWiki/Render.pm:480
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: nelze zpracovat %s"
@@ -590,13 +595,13 @@ msgid "failed to write %s: %s"
 msgstr "nelze zapsat %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:107
+#: ../IkiWiki/Wrapper.pm:109
 #, perl-format
 msgid "failed to compile %s"
 msgstr "nelze zkompilovat %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:115
+#: ../IkiWiki/Wrapper.pm:129
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s byl úspěšně vytvořen"
@@ -613,7 +618,7 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
+#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
 msgid "Error"
 msgstr "Chyba"
 
@@ -621,7 +626,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:708
+#: ../IkiWiki.pm:721
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"

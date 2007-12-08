@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-12 14:36-0500\n"
+"POT-Creation-Date: 2007-12-08 15:22-0500\n"
 "PO-Revision-Date: 2007-08-28 21:05+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -129,12 +129,12 @@ msgstr "Plantage du flux XML::Feed !"
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:44
 msgid "There are no broken links!"
 msgstr "Il n'y a pas de lien cassé !"
 
@@ -224,7 +224,12 @@ msgstr ""
 "Échec du chargement du module Perl Markdown.pm (%s) ou de /usr/bin/markdown "
 "(%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:90
+#: ../IkiWiki/Plugin/meta.pm:77
+#, fuzzy
+msgid "redir page not found"
+msgstr "Flux introuvable "
+
+#: ../IkiWiki/Plugin/meta.pm:113
 msgid "stylesheet not found"
 msgstr "Feuille de style introuvable "
 
@@ -498,47 +503,47 @@ msgstr ""
 "après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
 "notifications"
 
-#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:284
+#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "Omission du fichier au nom incorrect %s"
 
-#: ../IkiWiki/Render.pm:326
+#: ../IkiWiki/Render.pm:337
 #, perl-format
 msgid "removing old page %s"
 msgstr "Suppression de l'ancienne page %s"
 
-#: ../IkiWiki/Render.pm:359
+#: ../IkiWiki/Render.pm:370
 #, perl-format
 msgid "scanning %s"
 msgstr "Parcours de %s"
 
-#: ../IkiWiki/Render.pm:364
+#: ../IkiWiki/Render.pm:375
 #, perl-format
 msgid "rendering %s"
 msgstr "Affichage de %s"
 
-#: ../IkiWiki/Render.pm:376
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "Affichage de %s, qui est lié à %s"
 
-#: ../IkiWiki/Render.pm:393
+#: ../IkiWiki/Render.pm:404
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "Affichage de %s, qui dépend de %s"
 
-#: ../IkiWiki/Render.pm:431
+#: ../IkiWiki/Render.pm:442
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "Affichage de %s, afin de mettre à jour ses rétroliens"
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:454
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "Suppression de %s, qui n'est plus affiché par %s"
 
-#: ../IkiWiki/Render.pm:469
+#: ../IkiWiki/Render.pm:480
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki : impossible d'afficher %s"
@@ -597,13 +602,13 @@ msgid "failed to write %s: %s"
 msgstr "Échec de l'écriture de %s : %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:107
+#: ../IkiWiki/Wrapper.pm:109
 #, perl-format
 msgid "failed to compile %s"
 msgstr "Échec de la compilation de %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:115
+#: ../IkiWiki/Wrapper.pm:129
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s a été créé avec succès"
@@ -622,7 +627,7 @@ msgstr ""
 "Vous devez indiquer une URL vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
+#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
 msgid "Error"
 msgstr "Erreur"
 
@@ -630,7 +635,7 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:708
+#: ../IkiWiki.pm:721
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

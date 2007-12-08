@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-12 14:36-0500\n"
+"POT-Creation-Date: 2007-12-08 15:22-0500\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -127,12 +127,12 @@ msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed!"
 msgid "creating new page %s"
 msgstr "creando nueva página %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:44
 msgid "There are no broken links!"
 msgstr "¡ No hay enlaces rotos !"
 
@@ -223,7 +223,12 @@ msgstr ""
 "no he podido cargar el módulo Perl Markdown.pm (%s) ó no he podido ejecutar "
 "el programa /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:90
+#: ../IkiWiki/Plugin/meta.pm:77
+#, fuzzy
+msgid "redir page not found"
+msgstr "fuente de datos no encontrada"
+
+#: ../IkiWiki/Plugin/meta.pm:113
 msgid "stylesheet not found"
 msgstr "hoja de estilo no encontrada "
 
@@ -496,49 +501,49 @@ msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
 "svn post-commit; no puedo enviar ninguna notificación"
 
-#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:284
+#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ignorando el archivo %s porque su nombre no es correcto"
 
-#: ../IkiWiki/Render.pm:326
+#: ../IkiWiki/Render.pm:337
 #, perl-format
 msgid "removing old page %s"
 msgstr "eliminando la antigua página %s"
 
-#: ../IkiWiki/Render.pm:359
+#: ../IkiWiki/Render.pm:370
 #, perl-format
 msgid "scanning %s"
 msgstr "explorando %s"
 
-#: ../IkiWiki/Render.pm:364
+#: ../IkiWiki/Render.pm:375
 #, perl-format
 msgid "rendering %s"
 msgstr "convirtiendo %s"
 
-#: ../IkiWiki/Render.pm:376
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "convirtiendo la página %s, la cual referencia a %s"
 
-#: ../IkiWiki/Render.pm:393
+#: ../IkiWiki/Render.pm:404
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "convirtiendo la página %s, la cual depende de %s"
 
-#: ../IkiWiki/Render.pm:431
+#: ../IkiWiki/Render.pm:442
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 "convirtiendo la página %s para actualizar la lista de páginas que hacen "
 "referencia a ella."
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:454
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 
-#: ../IkiWiki/Render.pm:469
+#: ../IkiWiki/Render.pm:480
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"
@@ -597,13 +602,13 @@ msgid "failed to write %s: %s"
 msgstr "no puedo escribir en %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:107
+#: ../IkiWiki/Wrapper.pm:109
 #, perl-format
 msgid "failed to compile %s"
 msgstr "ha fallado la compilación del programa %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:115
+#: ../IkiWiki/Wrapper.pm:129
 #, perl-format
 msgid "successfully generated %s"
 msgstr "creado con éxito el programa envoltorio %s"
@@ -622,7 +627,7 @@ msgstr ""
 "Es obligatorio especificar un url al wiki con el parámetro --url si se "
 "utiliza el parámetro --cgi"
 
-#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
+#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
 msgid "Error"
 msgstr "Error"
 
@@ -630,7 +635,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:708
+#: ../IkiWiki.pm:721
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

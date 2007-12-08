@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-12 14:36-0500\n"
+"POT-Creation-Date: 2007-12-08 15:22-0500\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -131,12 +131,12 @@ msgstr "awaria kanału RSS w module XML::Feed!"
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:29
+#: ../IkiWiki/Plugin/brokenlinks.pm:37
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:36
+#: ../IkiWiki/Plugin/brokenlinks.pm:44
 msgid "There are no broken links!"
 msgstr "Wszystkie odnośniki są aktualne!"
 
@@ -231,7 +231,12 @@ msgstr ""
 "Awaria w trakcie ładowania perlowego modułu Markdown.pm (%s) lub "
 "uruchamiania programu /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:90
+#: ../IkiWiki/Plugin/meta.pm:77
+#, fuzzy
+msgid "redir page not found"
+msgstr "nieznaleziony kanał RSS"
+
+#: ../IkiWiki/Plugin/meta.pm:113
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "nieznaleziony szablon ze stylami CSS"
@@ -519,47 +524,47 @@ msgstr ""
 "Brak możliwości wysłania powiadomień od Subversion przez \"haczyk\" post-"
 "commit z powodu nieustawionego parametru REV"
 
-#: ../IkiWiki/Render.pm:263 ../IkiWiki/Render.pm:284
+#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "pomijanie nieprawidłowej nazwy pliku %s"
 
-#: ../IkiWiki/Render.pm:326
+#: ../IkiWiki/Render.pm:337
 #, perl-format
 msgid "removing old page %s"
 msgstr "usuwanie starej strony %s"
 
-#: ../IkiWiki/Render.pm:359
+#: ../IkiWiki/Render.pm:370
 #, perl-format
 msgid "scanning %s"
 msgstr "skanowanie %s"
 
-#: ../IkiWiki/Render.pm:364
+#: ../IkiWiki/Render.pm:375
 #, perl-format
 msgid "rendering %s"
 msgstr "renderowanie %s"
 
-#: ../IkiWiki/Render.pm:376
+#: ../IkiWiki/Render.pm:387
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "renderowanie %s z odnośnikiem do %s"
 
-#: ../IkiWiki/Render.pm:393
+#: ../IkiWiki/Render.pm:404
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "renderowanie %s zależącego od %s"
 
-#: ../IkiWiki/Render.pm:431
+#: ../IkiWiki/Render.pm:442
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "renderowanie %s w celu aktualizacji powrotnych odnośników"
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:454
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "usuwanie %s nie tworzonego już przez %s"
 
-#: ../IkiWiki/Render.pm:469
+#: ../IkiWiki/Render.pm:480
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: awaria w trakcie tworzenia %s"
@@ -617,13 +622,13 @@ msgid "failed to write %s: %s"
 msgstr "awaria w trakcie zapisu %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:107
+#: ../IkiWiki/Wrapper.pm:109
 #, perl-format
 msgid "failed to compile %s"
 msgstr "awaria w trakcie kompilowania %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:115
+#: ../IkiWiki/Wrapper.pm:129
 #, perl-format
 msgid "successfully generated %s"
 msgstr "pomyślnie utworzono %s"
@@ -642,7 +647,7 @@ msgstr ""
 "Użycie parametru --cgi wymaga podania adresu URL do wiki za pomocą parametru "
 "--url"
 
-#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
+#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
 msgid "Error"
 msgstr "Błąd"
 
@@ -650,7 +655,7 @@ msgstr "Błąd"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:708
+#: ../IkiWiki.pm:721
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
