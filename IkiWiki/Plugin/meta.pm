@@ -13,6 +13,7 @@ my %author;
 my %authorurl;
 my %license;
 my %copyright;
+my %redirected;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
@@ -59,13 +60,41 @@ sub preprocess (@) { #{{{
 	if ($key eq 'link') {
 		if (%params) {
 			$meta{$page}.=scrub("<link href=\"".encode_entities($value)."\" ".
-				join(" ", map { encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\"" } keys %params).
+				join(" ", map {
+					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
+				} keys %params).
 				" />\n");
 		}
 		else {
 			# hidden WikiLink
 			push @{$links{$page}}, $value;
 		}
+	}
+	elsif ($key eq 'redir') {
+		$redirected{$page}=1;
+		my $safe=0;
+		if ($value =~ /^$config{wiki_link_regexp}$/) {
+			my $link=bestlink($page, $value);
+			if (! length $link) {
+				return "[[meta ".gettext("redir page not found")."]]";
+			}
+			if ($redirected{$link}) {
+				# TODO this is a cheap way of avoiding
+				# redir cycles, but it is really too strict.
+				return "[[meta ".gettext("redir to page that itself redirs is not allowed")."]]";
+			}
+			$value=urlto($link, $destpage);
+			$safe=1;
+		}
+		else {
+			$value=encode_entities($value);
+		}
+		my $delay=int(exists $params{delay} ? $params{delay} : 0);
+		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\">";
+		if (! $safe) {
+			$redir=scrub($redir);
+		}
+		$meta{$page}.=$redir;
 	}
 	elsif ($key eq 'title') {
 		$title{$page}=HTML::Entities::encode_numeric($value);
@@ -110,25 +139,6 @@ sub preprocess (@) { #{{{
 	elsif ($key eq 'copyright') {
 		$meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";
 		$copyright{$page}=$value;
-	}
-	elsif ($key eq 'forward') {
-		my $delay=0;
-		my $dest_url;
-		my $text;
-		if (exists $params{delay}) {
-			$delay=$params{delay};
-		}
-		# Is this a wikilink?
-		if ($value =~ /^\[\[(.*)\]\]$/) {
-			$text=htmllink($page, $destpage, $1);
-			$dest_url=urlto(bestlink($page, $1), $destpage);
-		} else {
-			$text="<a href=\"$dest_url\">$dest_url</a>";
-			$dest_url=$value;
-		}
-# TODO.		$meta{$page}.=scrub("<meta http-equiv=\"refresh\" content=\"$delay; URL=$dest_url\">");
-		$meta{$page}.="<meta http-equiv=\"refresh\" content=\"$delay; URL=$dest_url\">";
-		return "You are being forwarded to $text.";
 	}
 	else {
 		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).

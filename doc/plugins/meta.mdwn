@@ -30,6 +30,22 @@ You can use any field names you like, but here are some predefined ones:
   However, this latter syntax won't be allowed if the [[htmlscrubber]] is
   enabled, since it can be used to insert unsafe content.
 
+* redir
+
+  Causes the page to redirect to another page in the wiki.
+
+  	\[[meta redir=otherpage]]
+
+  Optionally, a delay (in seconds) can be specified. The default is to
+  redirect without delay.
+
+  It can also be used to redirect to an external url. For example:
+
+  	\[[meta redir="http://example.com/"]]
+
+  However, this latter syntax won't be allowed if the [[htmlscrubber]] is
+  enabled, since it can be used to insert unsafe content.
+
 * title
 
   Overrides the title of the page, which is generally the same as the
