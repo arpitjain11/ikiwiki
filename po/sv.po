@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 15:22-0500\n"
+"POT-Creation-Date: 2007-12-08 17:15-0500\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -41,29 +41,29 @@ msgstr "Inställningar sparades."
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:489
 #, perl-format
 msgid "creating %s"
 msgstr "skapar %s"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:567 ../IkiWiki/CGI.pm:615
+#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
 msgstr "redigerar %s"
 
-#: ../IkiWiki/CGI.pm:709
+#: ../IkiWiki/CGI.pm:711
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:729
+#: ../IkiWiki/CGI.pm:731
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -229,7 +229,11 @@ msgstr ""
 msgid "redir page not found"
 msgstr "mallen %s hittades inte"
 
-#: ../IkiWiki/Plugin/meta.pm:113
+#: ../IkiWiki/Plugin/meta.pm:82
+msgid "redir not allowed to point to a page that contains a redir"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:118
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "mallen %s hittades inte"
@@ -632,11 +636,11 @@ msgstr "användning: ikiwiki [flaggor] källa mål"
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:128
+#: ../IkiWiki.pm:129
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Måste ange url till wiki med --url när --cgi används"
 
-#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
+#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
 msgid "Error"
 msgstr "Fel"
 
@@ -644,7 +648,7 @@ msgstr "Fel"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:721
+#: ../IkiWiki.pm:722
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"

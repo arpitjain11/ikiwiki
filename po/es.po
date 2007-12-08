@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 15:22-0500\n"
+"POT-Creation-Date: 2007-12-08 17:15-0500\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -40,29 +40,29 @@ msgstr "Las preferencias se han guardado."
 msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:489
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:567 ../IkiWiki/CGI.pm:615
+#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
 
-#: ../IkiWiki/CGI.pm:709
+#: ../IkiWiki/CGI.pm:711
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:729
+#: ../IkiWiki/CGI.pm:731
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
@@ -228,7 +228,11 @@ msgstr ""
 msgid "redir page not found"
 msgstr "fuente de datos no encontrada"
 
-#: ../IkiWiki/Plugin/meta.pm:113
+#: ../IkiWiki/Plugin/meta.pm:82
+msgid "redir not allowed to point to a page that contains a redir"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:118
 msgid "stylesheet not found"
 msgstr "hoja de estilo no encontrada "
 
@@ -621,13 +625,13 @@ msgstr "uso: ikiwiki [opciones] origen destino"
 msgid "usage: --set var=value"
 msgstr "uso: --set variable=valor"
 
-#: ../IkiWiki.pm:128
+#: ../IkiWiki.pm:129
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Es obligatorio especificar un url al wiki con el parámetro --url si se "
 "utiliza el parámetro --cgi"
 
-#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
+#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
 msgid "Error"
 msgstr "Error"
 
@@ -635,7 +639,7 @@ msgstr "Error"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:721
+#: ../IkiWiki.pm:722
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

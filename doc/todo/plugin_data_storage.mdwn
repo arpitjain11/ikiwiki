@@ -66,3 +66,29 @@ which pages have a calendar for the current time. Then ensure they are
 rebuilt at least once a day. Currently, it needs a cron job to rebuild
 the *whole* wiki every day; with this enhancement, the cron job would only
 rebuild the few pages that really need it.
+
+
+--- 
+
+New design:
+
+`%Ikiwiki::state` is an exported hash that stores per-page state.
+Set with `$state{$page}{id}{key}=$value`. The `id` is the same `id` passed
+to `hook()`.
+
+This is stored in the index like:
+
+src=foo.mdwn dest=bar.mdwn id_key=value [...]
+
+The underscore ensures that there's no conflict with ikiwiki's own
+state variables. (Note that `id` and `key` need to be encoded here.)
+
+Plugins are reponsible for deleting old state info, though ikiwiki will
+handle deleting it if a page is removed.
+
+Ikiwiki needs to know when it can drop state for plugins that are no longer
+enabled. This is done via `hook()` -- if a plugin registers a hook
+ikiwiki knows it's still active, and preserves the state for the hook id.
+If not, that state will be dropped.
+
+[[done]]!! Now to use it..

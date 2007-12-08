@@ -313,6 +313,20 @@ A plugin can access the wiki's configuration via the `%config`
 hash. The best way to understand the contents of the hash is to look at
 [[ikiwiki.setup]], which sets the hash content to configure the wiki.
 
+### %pagestate
+
+The `%pagestate` hash can be used by plugins to save state that they will need
+next time ikiwiki is run. The hash holds per-page state, so to set a value,
+use `%pagestate{$page}{$id}{$key}=$value`, and to retrieve the value,
+use `%pagestate{$page}{$id}{$key}`.
+
+`$key` can be any string you like, but `$id` must be the same as the "id"
+parameter passed to `hook()` when registering the plugin. This is so
+ikiwiki can know when to delete pagestate for plugins that are no longer
+used.
+
+When pages are deleted, ikiwiki automatically deletes their pagestate too.
+
 ### Other variables
 
 If your plugin needs to access data about other pages in the wiki. It can

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 15:22-0500\n"
+"POT-Creation-Date: 2007-12-08 17:15-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -42,29 +42,29 @@ msgstr "Tùy thích đã được lưu."
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:489
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:567 ../IkiWiki/CGI.pm:615
+#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:709
+#: ../IkiWiki/CGI.pm:711
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:729
+#: ../IkiWiki/CGI.pm:731
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
@@ -230,7 +230,11 @@ msgstr "lỗi nạp mô-đun perl Markdown.pm (%s) hay « /usr/bin/markdown » (
 msgid "redir page not found"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/meta.pm:113
+#: ../IkiWiki/Plugin/meta.pm:82
+msgid "redir not allowed to point to a page that contains a redir"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:118
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "không tìm thấy mẫu %s"
@@ -630,12 +634,12 @@ msgstr "cách sử dụng: ikiwiki [tùy chọn] nguồn đích"
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:128
+#: ../IkiWiki.pm:129
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
+#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
 msgid "Error"
 msgstr "Lỗi"
 
@@ -643,7 +647,7 @@ msgstr "Lỗi"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:721
+#: ../IkiWiki.pm:722
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"

@@ -132,6 +132,24 @@ sub setvar ($$$;@) { #{{{
 	return $ret;
 } #}}}
 
+sub getstate ($$$$) { #{{{
+	my $plugin=shift;
+	my $page=shift;
+	my $id=shift;
+	my $key=shift;
+
+	return $IkiWiki::pagestate{$page}{$id}{$key};
+} #}}}
+
+sub setstate ($$$$;@) { #{{{
+	my $plugin=shift;
+	my $page=shift;
+	my $id=shift;
+	my $key=shift;
+
+	return $IkiWiki::pagestate{$page}{$id}{$key}=@_;
+} #}}}
+
 sub inject ($@) { #{{{
 	# Bind a given perl function name to a particular RPC request.
 	my $plugin=shift;

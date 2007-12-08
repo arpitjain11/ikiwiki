@@ -10,15 +10,16 @@ use POSIX;
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
-            %renderedfiles %oldrenderedfiles %pagesources %destsources
-            %depends %hooks %forcerebuild $gettext_obj};
+	    %pagestate %renderedfiles %oldrenderedfiles %pagesources
+	    %destsources %depends %hooks %forcerebuild $gettext_obj};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
 		 add_underlay
-                 %config %links %renderedfiles %pagesources %destsources);
+                 %config %links %pagestate %renderedfiles
+                 %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
@@ -868,6 +869,10 @@ sub loadindex () { #{{{
 			$destsources{$_}=$page foreach @{$items{dest}};
 			$renderedfiles{$page}=[@{$items{dest}}];
 			$pagecase{lc $page}=$page;
+			foreach my $k (grep /_/, keys %items) {
+				my ($id, $key)=split(/_/, $k, 2);
+				$pagestate{$page}{decode_entities($id)}{decode_entities($key)}=$items{$k};
+			}
 		}
 		$oldrenderedfiles{$page}=[@{$items{dest}}];
 		$pagectime{$page}=$items{ctime}[0];
@@ -877,6 +882,12 @@ sub loadindex () { #{{{
 
 sub saveindex () { #{{{
 	run_hooks(savestate => sub { shift->() });
+
+	my %hookids;
+	foreach my $type (keys %hooks) {
+		$hookids{encode_entities($_)}=1 foreach keys %{$hooks{$type}};
+	}
+	my @hookids=sort keys %hookids;
 
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
@@ -894,6 +905,13 @@ sub saveindex () { #{{{
 		$line.=" link=$_" foreach grep { ++$count{$_} == 1 } @{$links{$page}};
 		if (exists $depends{$page}) {
 			$line.=" depends=".encode_entities($depends{$page}, " \t\n");
+		}
+		if (exists $pagestate{$page}) {
+			foreach my $id (@hookids) {
+				foreach my $key (keys %{$pagestate{$page}{$id}}) {
+					$line.=' '.$id.'_'.encode_entities($key)."=".encode_entities($pagestate{$page}{$id}{$key});
+				}
+			}
 		}
 		print $out $line."\n" || error("failed writing to $newfile: $!", $cleanup);
 	}

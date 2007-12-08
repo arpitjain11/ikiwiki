@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 16:00-0500\n"
+"POT-Creation-Date: 2007-12-08 17:38-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -218,11 +218,15 @@ msgstr ""
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:77
+#: ../IkiWiki/Plugin/meta.pm:79
 msgid "redir page not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:113
+#: ../IkiWiki/Plugin/meta.pm:84
+msgid "redir not allowed to point to a page that contains a redir"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:120
 msgid "stylesheet not found"
 msgstr ""
 
@@ -606,11 +610,11 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:128
+#: ../IkiWiki.pm:129
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
+#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
 msgid "Error"
 msgstr ""
 
@@ -618,7 +622,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:721
+#: ../IkiWiki.pm:722
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

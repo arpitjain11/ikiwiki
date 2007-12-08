@@ -49,6 +49,11 @@ to access any such global hash. To get the "url" configuration value,
 call `getvar("config", "url")`. To set it, call 
 `setvar("config", "url", "http://example.com/)`.
 
+The `%pagestate` is a special hash with a more complex format. To access
+it, external plugins can use the `getstate` and `setstate` RPCs. To access
+stored state, call `getstate("page", "id", "key")`, and to store state,
+call `setstate("page", "id", "key", "value")`.
+
 ## Notes on function parameters
 
 The [[plugin_interface_documentation|write]] talks about functions that take

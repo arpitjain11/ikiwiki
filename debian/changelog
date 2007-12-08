@@ -6,6 +6,9 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Redirs added for moved basewiki pages. These will be removed in a future
     release.
   * Remove .otl file from sandbox to avoid build ugliness. Closes: #454181
+  * Finally implemented a simple per-page data storage mechanism for plugins,
+    via the %pagestate hash.
+  * Use pagestate in meta to detect potential redir loops.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 

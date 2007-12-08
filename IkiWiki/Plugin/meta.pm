@@ -24,6 +24,7 @@ sub filter (@) { #{{{
 	my %params=@_;
 	
 	$meta{$params{page}}='';
+	delete $pagestate{$params{page}}{meta}{redir};
 
 	return $params{content};
 } # }}}
@@ -72,9 +73,15 @@ sub preprocess (@) { #{{{
 	elsif ($key eq 'redir') {
 		my $safe=0;
 		if ($value !~ /^\w+:\/\//) {
+			add_depends($page, $value);
 			my $link=bestlink($page, $value);
 			if (! length $link) {
 				return "[[meta ".gettext("redir page not found")."]]";
+			}
+			$pagestate{$page}{meta}{redir}=$link;
+			if ($pagestate{$link}{meta}{redir}) {
+				# TODO: real cycle detection
+				return "[[meta ".gettext("redir not allowed to point to a page that contains a redir")."]]";
 			}
 			$value=urlto($link, $destpage);
 			$safe=1;

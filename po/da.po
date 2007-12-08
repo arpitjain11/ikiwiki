@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 15:22-0500\n"
+"POT-Creation-Date: 2007-12-08 17:15-0500\n"
 "PO-Revision-Date: 2007-10-16 23:07+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -43,29 +43,29 @@ msgstr "Indstillinger gemt"
 msgid "%s is not an editable page"
 msgstr "%s er ikke en redigérbar side"
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
 #: ../IkiWiki/Render.pm:179
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:489
 #, perl-format
 msgid "creating %s"
 msgstr "opretter %s"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:567 ../IkiWiki/CGI.pm:615
+#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
 msgstr "redigerer %s"
 
-#: ../IkiWiki/CGI.pm:709
+#: ../IkiWiki/CGI.pm:711
 msgid "You are banned."
 msgstr "Du er banlyst."
 
-#: ../IkiWiki/CGI.pm:729
+#: ../IkiWiki/CGI.pm:731
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "Pålogning fejlede, måske skal du tillade infokager (cookies)?"
 
@@ -227,7 +227,11 @@ msgstr ""
 msgid "redir page not found"
 msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/meta.pm:113
+#: ../IkiWiki/Plugin/meta.pm:82
+msgid "redir not allowed to point to a page that contains a redir"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:118
 msgid "stylesheet not found"
 msgstr "stilsnit (stylesheet) ikke fundet"
 
@@ -616,11 +620,11 @@ msgstr "brug: ikiwiki [valg] kilde mål"
 msgid "usage: --set var=value"
 msgstr "brug: --set var=værdi"
 
-#: ../IkiWiki.pm:128
+#: ../IkiWiki.pm:129
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Skal angive url til wiki med --url når der bruges --cgi"
 
-#: ../IkiWiki.pm:197 ../IkiWiki.pm:198
+#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
 msgid "Error"
 msgstr "Fejl"
 
@@ -628,7 +632,7 @@ msgstr "Fejl"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:721
+#: ../IkiWiki.pm:722
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s forudberegningssløkke fundet på %s ved dybde %i"
