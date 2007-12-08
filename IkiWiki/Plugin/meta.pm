@@ -71,7 +71,7 @@ sub preprocess (@) { #{{{
 	}
 	elsif ($key eq 'redir') {
 		my $safe=0;
-		if ($value =~ /^$config{wiki_link_regexp}$/) {
+		if ($value !~ /^\w+:\/\//) {
 			my $link=bestlink($page, $value);
 			if (! length $link) {
 				return "[[meta ".gettext("redir page not found")."]]";
