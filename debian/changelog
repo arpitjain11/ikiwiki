@@ -9,6 +9,8 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Finally implemented a simple per-page data storage mechanism for plugins,
     via the %pagestate hash.
   * Use pagestate in meta to detect potential redir loops.
+  * Added a version plugin that saves state about what's using it, to force
+    pages to rebuild when ikiwiki's version changes.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 

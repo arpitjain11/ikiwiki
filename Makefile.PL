@@ -31,11 +31,11 @@ ikiwiki.out: ikiwiki.in
 	chmod +x ikiwiki.out
 
 extra_build: ikiwiki.out
-	LANG= perl -I. $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
+	LANG= perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
 		--underlaydir=underlays/basewiki --nousedirs\
 		--wikiname="ikiwiki" --verbose \
 		--exclude=/discussion --no-discussion --userdir=users \
-		--plugin=goodstuff \
+		--plugin=goodstuff --plugin=version \
 		--plugin=haiku --plugin=polygen --plugin=fortune
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
