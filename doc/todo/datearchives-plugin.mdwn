@@ -42,7 +42,9 @@ Index: IkiWiki/Plugin/datearchives.pm
 +1
 </pre>
 
-This works (although accessing `%IkiWiki::pagectime` is not too clever), but it would be far more useful if the date pages were automatically created and populated with the relevant posts. A [[Pagespec]] works perfectly for displaying the relevant content, but we're still left with the issue of actually creating the page. What's the Right Way to do this? We could create them in the RCS working copy and check them in, or create them directly in the output directory... (I'd also like to create an option for the tags plugin to auto-create its targets in the same way). Any opinions? :-)
+This works (although accessing `%IkiWiki::pagectime` is not too clever),
+but it would be far more useful if the date pages were automatically
+created and populated with the relevant posts. A [[ikiwiki/Pagespec]] works perfectly for displaying the relevant content, but we're still left with the issue of actually creating the page. What's the Right Way to do this? We could create them in the RCS working copy and check them in, or create them directly in the output directory... (I'd also like to create an option for the tags plugin to auto-create its targets in the same way). Any opinions? :-)
 
 > Ok, first, I don't understand what your plugin does. Maybe I need to get
 > some sleep, but a better explanation might help. :-) It seems to make

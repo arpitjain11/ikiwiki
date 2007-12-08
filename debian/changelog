@@ -1,7 +1,11 @@
 ikiwiki (2.16) UNRELEASED; urgency=low
 
-  * Remove .otl file from sandbox to avoid build ugliness. Closes: #454181
+  * Major basewiki reorganisation. Most pages moved into ikiwiki/ subdirectory
+    to avoid polluting the main namespace, and some were further renamed.
   * meta: Add redir support, based on a patch by Thomas Schwinge.
+  * Redirs added for moved basewiki pages. These will be removed in a future
+    release.
+  * Remove .otl file from sandbox to avoid build ugliness. Closes: #454181
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 

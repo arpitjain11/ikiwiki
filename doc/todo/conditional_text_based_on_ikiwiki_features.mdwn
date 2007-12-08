@@ -1,6 +1,6 @@
 I'd like to see some way to conditionally include wiki text based on
 whether the wiki enables or disables certain features.  For example,
-[[helponformatting]], could use `\[[if (enabled smiley) """Also, because
+[[ikiwiki/formatting]], could use `\[[if (enabled smiley) """Also, because
 this wiki has the smiley plugin enabled, you can insert \[[smileys]] and
 some other useful symbols."""]]`, and a standard template for [[plugins]]
 pages could check for the given plugin name to print "enabled" or
@@ -10,9 +10,9 @@ Some potentially useful conditionals:
 
 * `enabled pluginname`
 * `disabled pluginname`
-* `any pagespec`: true if any of the pages in the [[PageSpec]] exist
-* `all pagespec`: true if all of the pages in the [[PageSpec]] exist
-* `no pagespec` or `none pagespec`: true if none of the pages in the [[PageSpec]] exist
+* `any pagespec`: true if any of the pages in the [[ikiwiki/PageSpec]] exist
+* `all pagespec`: true if all of the pages in the [[ikiwiki/PageSpec]] exist
+* `no pagespec` or `none pagespec`: true if none of the pages in the [[ikiwiki/PageSpec]] exist
 * `thispage pagespec`: true if pagespec includes the page getting rendered (possibly one including the page with this content on it).
 * `sourcepage pagespec`: true if pagespec includes the page corresponding to the file actually containing this content, rather than a page including it.
 * `included`: true if included on another page, via [[plugins/inline]], [[plugins/sidebar]], [[plugins/contrib/navbar]], etc.
@@ -24,8 +24,8 @@ keep the aliases for simplicity anyway).  You also may or may not want to
 include an `else` clause; if so, you could label the text used if true as
 `then`.
 
-Syntax could vary greatly here, both for the [[PreprocessorDirective]] and
-for the condition itself.
+Syntax could vary greatly here, both for the
+[[ikiwiki/PreprocessorDirective]] and for the condition itself.
 
 > I think this is a good thing to consider, although conditionals tend to
 > make everything a lot more complicated, so I also want to KISS, and not
@@ -56,10 +56,10 @@ for the condition itself.
 > 
 > --[[Joey]]
 
->> [[PageSpec]] syntax seems perfect, and your proposed syntax for the `if`
->> [[PreprocessorDirective]] looks fine to me.
+>> [[ikiwiki/PageSpec]] syntax seems perfect, and your proposed syntax for the `if`
+>> [[ikiwiki/PreprocessorDirective]] looks fine to me.
 >>
->> [[PageSpec]]s don't give you `none` for free, since `!foo/*` as a boolean
+>> [[ikiwiki/PageSpec]]s don't give you `none` for free, since `!foo/*` as a boolean
 >> would mean "does any page not matching `foo/*` exist", not "does `foo/*`
 >> match nothing"; however, I don't really care much about `none`, since I
 >> just threw it in while brainstorming, and I don't know any compelling use
@@ -75,7 +75,7 @@ for the condition itself.
 >>   pages."""]].  The help text would then only appear on the sidebar page
 >>   itself, not the sidebar included on all pages.
 >>
->> * On [[blog]] entries, you could use `included` to implement a cut.
+>> * On [[ikiwiki/blog]] entries, you could use `included` to implement a cut.
 >>   (Please don't take that as an argument against. :) ) For instance, you
 >>   could use included rather than [[plugins/toggle]] for the detailed
 >>   changelogs of ikiwiki, or to embed an image as a link in the feed rather

@@ -249,7 +249,7 @@ sub cgi_prefs ($$) { #{{{
 	$form->field(name => "email", size => 50, fieldset => "preferences");
 	$form->field(name => "subscriptions", size => 50,
 		fieldset => "preferences",
-		comment => "(".htmllink("", "", "PageSpec", noimageinline => 1).")");
+		comment => "(".htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).")");
 	$form->field(name => "banned_users", size => 50,
 		fieldset => "admin");
 	
@@ -386,7 +386,9 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
-		htmllink("", "", "HelpOnFormatting", noimageinline => 1));
+		htmllink("", "", "ikiwiki/formatting",
+			noimageinline => 1,
+			linktext => "FormattingHelp"));
 	$form->tmpl_param("baseurl", baseurl());
 	
 	if ($form->submitted eq "Cancel") {

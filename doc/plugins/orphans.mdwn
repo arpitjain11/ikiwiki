@@ -4,8 +4,8 @@
 This plugin generates a list of possibly orphaned pages -- pages that no
 other page links to.
 
-The optional parameter "pages" can be a [[PageSpec]] specifying the pages
-to check for orphans, default is search them all.
+The optional parameter "pages" can be a [[ikiwiki/PageSpec]] specifying the
+pages to check for orphans, default is search them all.
 
 Note that it takes [[BackLinks]] into account, but does not count inlining a
 page as linking to it, so will generally count many blog-type pages as

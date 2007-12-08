@@ -27,12 +27,12 @@ new pages and links that can indirectly cause a page to need a rebuild)
 
 ## Supports many markup languages
 
-By default, pages in the wiki are written using the [[MarkDown]] format.
+By default, pages in the wiki are written using the [[ikiwiki/MarkDown]] format.
 Any page with a filename ending in ".mdwn" is converted from markdown to html
 by ikiwiki. Markdown understands text formatted as it would be in an email,
 and is quite smart about converting it to html. The only additional markup
-provided by ikiwiki on top of regular markdown is the [[WikiLink]] and 
-[[PreprocessorDirective]].
+provided by ikiwiki on top of regular markdown is the [[ikiwiki/WikiLink]] and 
+[[ikiwiki/PreprocessorDirective]].
 
 If you prefer to use some other markup language, ikiwiki allows others to
 easily be added by [[plugins]]. For example it also supports traditional
@@ -47,8 +47,8 @@ program, or other special file and link to it from your wiki pages.
 
 ## Blogging
 
-You can turn any page in the wiki into a [[blog]]. Pages matching a
-specified [[PageSpec]] will be displayed as a weblog within the blog
+You can turn any page in the wiki into a [[ikiwiki/blog]]. Pages matching a
+specified [[ikiwiki/PageSpec]] will be displayed as a weblog within the blog
 page. And RSS or Atom feeds can be generated to follow the blog.
 
 Ikiwiki's own [[TODO]], [[news]], and [[plugins]] pages are good examples
@@ -74,7 +74,7 @@ can change the look and layout of all pages in any way you would like.
 
 Plugins can be used to add additional features to ikiwiki. The interface
 is quite flexible, allowing plugins to implement additional markup
-languages, register [[PreProcessorDirective]]s, hook into [[CGI]] mode,
+languages, register [[ikiwiki/PreProcessorDirective]]s, hook into [[CGI]] mode,
 and more. Most of ikiwiki's features are actually provided by plugins.
 Ikiwiki's backend RCS support is also pluggable, so support for new
 revision control systems can be added to ikiwiki.
@@ -100,10 +100,10 @@ You can tag pages and use these tags in various ways. Tags will show
 up in the ways you'd expect, like at the bottom of pages, in blogs, and
 in RSS and Atom feeds.
 
-### [[SubPages|SubPage]]
+### [[SubPages|ikiwiki/SubPage]]
 
 Arbitrarily deep hierarchies of pages with fairly simple and useful
-[[SubPage/LinkingRules]]
+[[ikiwiki/SubPage/LinkingRules]]
 
 ### [[BackLinks]]
 

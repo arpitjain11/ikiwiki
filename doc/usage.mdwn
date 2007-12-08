@@ -11,7 +11,7 @@ ikiwiki --setup configfile
 # DESCRIPTION
 
 `ikiwiki` is a wiki compiler. It builds static HTML pages for a wiki, from
-`source` in the [[Markdown]] language (or others), and writes it out to
+`source` in the [[ikiwiki/Markdown]] language (or others), and writes it out to
 `destination`.
 
 Note that most options can be shortened to single letters, and boolean
@@ -166,12 +166,12 @@ configuration options of their own.
 * --rss, --norss
 
   If rss is set, ikiwiki will generate RSS feeds for pages that inline
-  a [[blog]].
+  a [[ikiwiki/blog]].
 
 * --atom, --noatom
 
   If atom is set, ikiwiki will generate Atom feeds for pages that inline
-  a [[blog]].
+  a [[ikiwiki/blog]].
 
 * --pingurl URL
 

@@ -1,6 +1,6 @@
 While ikiwiki supports hierarchically categorising pages by creating
-[[SubPage]]s, that's often not flexible enough, and it can also be useful
-to tag pages in various non-hierarchical ways.
+[[SubPages|ikiwiki/SubPage]], that's often not flexible enough, and it can also be
+useful to tag pages in various non-hierarchical ways.
 
 Since this is a wiki, tagging is just a form of linking. The general rule
 is that all tags are links, but not all links are tags. So a tag is a
@@ -17,7 +17,7 @@ You can also tag a page with a visible link:
 
 This tag will be displayed just like a regular [[WikiLink]].
 
-One way to use these tags is to create a [[blog]] of pages that have a
+One way to use these tags is to create a [[ikiwiki/blog]] of pages that have a
 particular set of tags. Or just look at the [[BackLinks]] to a tag page to
 see all the pages that are tagged with it. [[Plugins]] can be written to do
 anything else with tags that you might desire.

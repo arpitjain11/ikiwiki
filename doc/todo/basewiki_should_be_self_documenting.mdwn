@@ -1,5 +1,5 @@
 The pages in the basewiki should be fully self-documenting as far as what
-users need to know to edit pages in the wiki. [[HelpOnFormatting]]
+users need to know to edit pages in the wiki. [[ikiwiki/Formatting]]
 documents the basics, but doesn't include every preprocessor directive.
 
 Note that there's a disctinction between being self-documenting for users,
@@ -27,34 +27,5 @@ basewiki:
 	table.mdwn:## usage
 
 Meta is another one.
-
-The holdup on documenting these in full in the basewiki is that I'm not sure
-where to put the docs. [[HelpOnFormatting]] should stay as simple as possible
-and just give examples, not full lists of availavle parameters, etc. And
-it's bad enough that [[blog]] uses that toplevel namespace, without adding
-lots more toplevel pages to the basewiki. ([[blog]] really needs to be moved..
-I have several wikis that override it with their actual blog content).
-
-Maybe the thing to do would be to make a meta/ or usage/ or wiki/ or something
-directory in the basewiki, and put new pages documenting how to use preprocesor
-directives in there.
-
-Actually, if we look at the basewiki contents:
-
-	blog.mdwn@              pagespec.mdwn@               subpage@
-	favicon.ico@            preprocessordirective.mdwn@  subpage.mdwn@
-	helponformatting.mdwn@  sandbox.mdwn@                templates/
-	index.mdwn@             shortcuts.mdwn@              templates.mdwn@
-	local.css@              smileys@                     wikiicons@
-	markdown.mdwn@          smileys.mdwn@                wikilink.mdwn@
-	openid.mdwn@            style.css@
-
-Most of this is meta stuff. Only index.mdwn, local.css, favicon.ico,
-smileys, wikiicons, shortcuts, and templates are really content/configs that
-are used as the base of a wiki. The rest is documentation.
-
-Moving a lot of these pages could be hard though.. Lots of wikis probably
-link to them. Maybe the directory they're moved to could be in the search
-path, like the userdir is, so that simple links keep working.
 
 See also: [[Conditional_Underlay_Files]]

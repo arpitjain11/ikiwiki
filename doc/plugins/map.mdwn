@@ -9,7 +9,7 @@ If the pages to include are not specified, all pages (and other files) in
 the wiki are mapped.
 
 Hint: To limit the map to displaying pages less than a certain level deep,
-use a [[PageSpec]] like this: `pages="* and !*/*/*"`
+use a [[ikiwiki/PageSpec]] like this: `pages="* and !*/*/*"`
 
 [[if test="enabled(map)" then="""
 Here's an example map, for the plugins section of this wiki:

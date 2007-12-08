@@ -42,7 +42,7 @@ sub formbuilder_setup (@) { #{{{
 
  		$form->field(
 			name => "openid_url",
-			label => gettext("Log in with")." ".htmllink("", "", "OpenID", noimageinline => 1),
+			label => gettext("Log in with")." ".htmllink("", "", "ikiwiki/OpenID", noimageinline => 1),
 			fieldset => "OpenID",
 			size => 30,
 			comment => ($config{openidsignup} ? " | <a href=\"$config{openidsignup}\">".gettext("Get an OpenID")."</a>" : "")

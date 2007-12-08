@@ -101,8 +101,8 @@ make arbitrary changes. The function is passed named parameters "page",
 
 ### preprocess
 
-Adding a [[PreProcessorDirective]] is probably the most common use of a
-plugin.
+Adding a [[ikiwiki/PreProcessorDirective]] is probably the most common use
+of a plugin.
 
         hook(type => "preprocess", id => "foo", call => \&preprocess);
 
@@ -126,11 +126,11 @@ the hook modifies data in `%links`. Note that doing so will make the hook
 be run twice per page build, so avoid doing it for expensive hooks.
 
 Note that if the [[htmlscrubber]] is enabled, html in
-[[PreProcessorDirective]] output is sanitised, which may limit what your
-plugin can do. Also, the rest of the page content is not in html format at
-preprocessor time. Text output by a preprocessor directive will be
-linkified and passed through markdown (or whatever engine is used to htmlize
-the page) along with the rest of the page.
+[[ikiwiki/PreProcessorDirective]] output is sanitised, which may limit what
+your plugin can do. Also, the rest of the page content is not in html
+format at preprocessor time. Text output by a preprocessor directive will
+be linkified and passed through markdown (or whatever engine is used to
+htmlize the page) along with the rest of the page.
 
 ### htmlize
 
@@ -351,9 +351,10 @@ cleanup.
 
 Note that while any plugin can use this for a fatal error, plugins should
 try to avoid dying on bad input, as that will halt the entire wiki build
-and make the wiki unusable. So for example, if a [[PreProcessorDirective]]
-is passed bad parameters, it's better to return an error message, which can
-appear on the wiki page, rather than calling error().
+and make the wiki unusable. So for example, if a
+[[ikiwiki/PreProcessorDirective]] is passed bad parameters, it's better to
+return an error message, which can appear on the wiki page, rather than
+calling error().
 
 #### `template($;@)`
 
@@ -368,12 +369,12 @@ page created from it. (Ie, it appends ".html".)
 
 #### `add_depends($$)`
 
-Makes the specified page depend on the specified [[PageSpec]].
+Makes the specified page depend on the specified [[ikiwiki/PageSpec]].
 
 #### `pagespec_match($$;@)`
 
-Passed a page name, and [[PageSpec]], returns true if the [[PageSpec]]
-matches the page.
+Passed a page name, and [[ikiwiki/PageSpec]], returns true if the
+[[ikiwiki/PageSpec]] matches the page.
 
 Additional named parameters can be passed, to further limit the match.
 The most often used is "location", which specifies the location the
@@ -386,7 +387,7 @@ Given a page and the text of a link on the page, determine which
 existing page that link best points to. Prefers pages under a
 subdirectory with the same name as the source page, failing that
 goes down the directory tree to the base looking for matching
-pages, as described in [[SubPage/LinkingRules]].
+pages, as described in [[ikiwiki/SubPage/LinkingRules]].
 
 #### `htmllink($$$;@)`
 
@@ -514,9 +515,9 @@ See [[RCS_details|rcs/details]] for some more info.
 ## PageSpec plugins
 
 It's also possible to write plugins that add new functions to
-[[PageSpecs|PageSpec]]. Such a plugin should add a function to the
+[[PageSpecs|ikiwiki/PageSpec]]. Such a plugin should add a function to the
 IkiWiki::PageSpec package, that is named `match_foo`, where "foo()" is
-how it will be accessed in a [[PageSpec]]. The function will be passed
+how it will be accessed in a [[ikiwiki/PageSpec]]. The function will be passed
 two parameters: The name of the page being matched, and the thing to match
 against. It may also be passed additional, named parameters. It should return
 a IkiWiki::SuccessReason object if the match succeeds, or an
