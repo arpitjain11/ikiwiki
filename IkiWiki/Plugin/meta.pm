@@ -47,6 +47,7 @@ sub preprocess (@) { #{{{
 	delete $params{$key};
 	my $page=$params{page};
 	delete $params{page};
+	my $destpage=$params{destpage};
 	delete $params{destpage};
 	delete $params{preview};
 
@@ -109,6 +110,25 @@ sub preprocess (@) { #{{{
 	elsif ($key eq 'copyright') {
 		$meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";
 		$copyright{$page}=$value;
+	}
+	elsif ($key eq 'forward') {
+		my $delay=0;
+		my $dest_url;
+		my $text;
+		if (exists $params{delay}) {
+			$delay=$params{delay};
+		}
+		# Is this a wikilink?
+		if ($value =~ /^\[\[(.*)\]\]$/) {
+			$text=htmllink($page, $destpage, $1);
+			$dest_url=urlto(bestlink($page, $1), $destpage);
+		} else {
+			$text="<a href=\"$dest_url\">$dest_url</a>";
+			$dest_url=$value;
+		}
+# TODO.		$meta{$page}.=scrub("<meta http-equiv=\"refresh\" content=\"$delay; URL=$dest_url\">");
+		$meta{$page}.="<meta http-equiv=\"refresh\" content=\"$delay; URL=$dest_url\">";
+		return "You are being forwarded to $text.";
 	}
 	else {
 		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
