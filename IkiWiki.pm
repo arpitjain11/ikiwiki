@@ -871,7 +871,7 @@ sub loadindex () { #{{{
 			$pagecase{lc $page}=$page;
 			foreach my $k (grep /_/, keys %items) {
 				my ($id, $key)=split(/_/, $k, 2);
-				$pagestate{$page}{decode_entities($id)}{decode_entities($key)}=$items{$k};
+				$pagestate{$page}{decode_entities($id)}{decode_entities($key)}=$items{$k}[0];
 			}
 		}
 		$oldrenderedfiles{$page}=[@{$items{dest}}];
