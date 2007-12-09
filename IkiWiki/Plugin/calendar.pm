@@ -38,7 +38,7 @@ sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{calendar}{nextchange}) {
-			if ($pagestate{$page}{calendar}{nextchange} >= $time) {
+			if ($pagestate{$page}{calendar}{nextchange} <= $time) {
 				# force a rebuild so the calendar shows
 				# the current day
 				push @$needsbuild, $pagesources{$page};
