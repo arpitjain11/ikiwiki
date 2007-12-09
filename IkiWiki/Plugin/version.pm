@@ -14,9 +14,16 @@ sub import { #{{{
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
-		if (exists $pagestate{$page}{version}{shown} &&
-		    $pagestate{$page}{version}{shown} ne $IkiWiki::version) {
-			push @$needsbuild, $pagesources{$page};
+		if (exists $pagestate{$page}{version}{shown}) {
+			if ($pagestate{$page}{version}{shown} ne $IkiWiki::version) {
+				push @$needsbuild, $pagesources{$page};
+			}
+			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+				# remove state, will be re-added if
+				# the version is still shown during the
+				# rebuild
+				delete $pagestate{$page}{version}{shown};
+			}
 		}
 	}
 } # }}}
