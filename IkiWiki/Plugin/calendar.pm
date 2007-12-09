@@ -34,25 +34,6 @@ sub import { #{{{
 	hook(type => "preprocess", id => "calendar", call => \&preprocess);
 } #}}}
 
-sub needsbuild (@) { #{{{
-	my $needsbuild=shift;
-	foreach my $page (keys %pagestate) {
-		if (exists $pagestate{$page}{calendar}{nextchange}) {
-			if ($pagestate{$page}{calendar}{nextchange} <= $time) {
-				# force a rebuild so the calendar shows
-				# the current day
-				push @$needsbuild, $pagesources{$page};
-			}
-			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
-				# remove state, will be re-added if
-				# the calendar is still there during the
-				# rebuild
-				delete $pagestate{$page}{calendar};
-			}
-		}
-	}
-} # }}}
-
 sub is_leap_year (@) { #{{{
 	my %params=@_;
 	return ($params{year} % 4 == 0 && (($params{year} % 100 != 0) || $params{year} % 400 == 0));
@@ -399,5 +380,24 @@ sub preprocess (@) { #{{{
 
 	return "\n<div><div class=\"calendar\">$calendar</div></div>\n";
 } #}}
+
+sub needsbuild (@) { #{{{
+	my $needsbuild=shift;
+	foreach my $page (keys %pagestate) {
+		if (exists $pagestate{$page}{calendar}{nextchange}) {
+			if ($pagestate{$page}{calendar}{nextchange} <= $time) {
+				# force a rebuild so the calendar shows
+				# the current day
+				push @$needsbuild, $pagesources{$page};
+			}
+			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+				# remove state, will be re-added if
+				# the calendar is still there during the
+				# rebuild
+				delete $pagestate{$page}{calendar};
+			}
+		}
+	}
+} # }}}
 
 1
