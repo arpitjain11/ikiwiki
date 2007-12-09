@@ -2,9 +2,9 @@
 [[tag type/chrome]]
 
 This is an image handling plugin. While ikiwiki supports inlining full-size
-images by making a [[WikiLink]] that points to the image, using this plugin
-you can easily scale down an image for inclusion onto a page, providing a
-link to a full-size version.
+images by making a [[ikiwiki/WikiLink]] that points to the image, using
+this plugin you can easily scale down an image for inclusion onto a page,
+providing a link to a full-size version.
 
 This plugin uses the [ImageMagick](http://www.imagemagick.org/) tools via
 [PerlMagick](http://www.imagemagick.org/www/perl-magick.html).
@@ -17,7 +17,7 @@ Note that this is a stripped down version of Christian Mock's
 	\[[img image1.jpg size="200x200" alt="clouds"]]
 
 The image file will be searched for using the same rules as used to find
-the file pointed to by a [[WikiLink]].
+the file pointed to by a [[ikiwiki/WikiLink]].
 
 The `size` parameter is optional, defaulting to full size. Note that the
 original image's aspect ratio is always preserved, even if this means
