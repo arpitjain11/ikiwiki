@@ -71,6 +71,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'redir') {
+		return "" if $destpage ne $page;
 		my $safe=0;
 		if ($value !~ /^\w+:\/\//) {
 			add_depends($page, $value);
@@ -78,13 +79,21 @@ sub preprocess (@) { #{{{
 			if (! length $link) {
 				return "[[meta ".gettext("redir page not found")."]]";
 			}
-			$pagestate{$page}{meta}{redir}=$link;
-			if ($pagestate{$link}{meta}{redir}) {
-				# TODO: real cycle detection
-				return "[[meta ".gettext("redir not allowed to point to a page that contains a redir")."]]";
-			}
-			$value=urlto($link, $destpage);
+
+			$value=urlto($link, $page);
 			$safe=1;
+
+			# redir cycle detection
+			$pagestate{$page}{meta}{redir}=$link;
+			my $at=$page;
+			my %seen;
+			while (exists $pagestate{$at}{meta}{redir}) {
+				if ($seen{$at}) {
+					return "[[meta ".gettext("redir cycle is not allowed")."]]";
+				}
+				$seen{$at}=1;
+				$at=$pagestate{$at}{meta}{redir};
+			}
 		}
 		else {
 			$value=encode_entities($value);

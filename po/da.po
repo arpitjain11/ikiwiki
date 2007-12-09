@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 17:15-0500\n"
+"POT-Creation-Date: 2007-12-08 19:18-0500\n"
 "PO-Revision-Date: 2007-10-16 23:07+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -222,16 +222,17 @@ msgstr ""
 "Indlæsning af perl-modulet Markdown.pm (%s) eller /usr/bin/markdown (%s) "
 "mislykkedes"
 
-#: ../IkiWiki/Plugin/meta.pm:77
+#: ../IkiWiki/Plugin/meta.pm:80
 #, fuzzy
 msgid "redir page not found"
 msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/meta.pm:82
-msgid "redir not allowed to point to a page that contains a redir"
-msgstr ""
+#: ../IkiWiki/Plugin/meta.pm:92
+#, fuzzy
+msgid "redir cycle is not allowed"
+msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/meta.pm:118
+#: ../IkiWiki/Plugin/meta.pm:129
 msgid "stylesheet not found"
 msgstr "stilsnit (stylesheet) ikke fundet"
 
