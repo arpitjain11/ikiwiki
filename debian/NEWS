@@ -5,6 +5,11 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   Redirection pages have been left behind for these moved pages temporarily,
   and will be removed later.
 
+  If you use the calendar plugin, ikiwiki is now smarter and your nightly
+  cron job to update the wiki doesn't need to rebuild everything. Just pass
+  --refresh to ikiwiki in the cron job and it will update only pages that
+  contain out of date calendars.
+
  -- Joey Hess <joeyh@debian.org>  Sat, 08 Dec 2007 16:04:43 -0500
 
 ikiwiki (2.14) unstable; urgency=low

@@ -26,11 +26,32 @@ use POSIX;
 
 my %cache;
 my %linkcache;
-my @now=localtime();
+my $time=time;
+my @now=localtime($time);
 
 sub import { #{{{
+	hook(type => "needsbuild", id => "version", call => \&needsbuild);
 	hook(type => "preprocess", id => "calendar", call => \&preprocess);
 } #}}}
+
+sub needsbuild (@) { #{{{
+	my $needsbuild=shift;
+	foreach my $page (keys %pagestate) {
+		if (exists $pagestate{$page}{calendar}{nextchange}) {
+			if ($pagestate{$page}{calendar}{nextchange} >= $time) {
+				# force a rebuild so the calendar shows
+				# the current day
+				push @$needsbuild, $pagesources{$page};
+			}
+			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+				# remove state, will be re-added if
+				# the calendar is still there during the
+				# rebuild
+				delete $pagestate{$page}{calendar};
+			}
+		}
+	}
+} # }}}
 
 sub is_leap_year (@) { #{{{
 	my %params=@_;
@@ -306,11 +327,24 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 	$params{pages} = "*"            unless defined $params{pages};
 	$params{type}  = "month"        unless defined $params{type};
-	$params{year}  = 1900 + $now[5] unless defined $params{year};
 	$params{month} = sprintf("%02d", $params{month}) if defined  $params{month};
-	$params{month} = 1    + $now[4] unless defined $params{month};
 	$params{week_start_day} = 0     unless defined $params{week_start_day};
 	$params{months_per_row} = 3     unless defined $params{months_per_row};
+
+	if (! defined $params{year} || ! defined $params{month}) {
+		# Record that the calendar next changes at midnight.
+		$pagestate{$params{destpage}}{calendar}{nextchange}=($time
+			+ (60 - $now[0])		# seconds
+			+ (59 - $now[1]) * 60		# minutes
+			+ (23 - $now[2]) * 60 * 60	# hours
+		);
+		
+		$params{year}  = 1900 + $now[5] unless defined $params{year};
+		$params{month} = 1    + $now[4] unless defined $params{month};
+	}
+	else {
+		delete $pagestate{$params{destpage}}{calendar};
+	}
 
 	# Calculate month names for next month, and previous months
 	my $pmonth = $params{month} - 1;
@@ -363,7 +397,7 @@ sub preprocess (@) { #{{{
 		$calendar=format_year(%params);
 	}
 
-	return "\n<div class=\"calendar\">$calendar</div><!-- calendar -->\n";
+	return "\n<div><div class=\"calendar\">$calendar</div></div>\n";
 } #}}
 
 1

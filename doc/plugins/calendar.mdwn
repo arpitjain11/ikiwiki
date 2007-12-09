@@ -1,6 +1,8 @@
 [[template id=plugin name=calendar author="[[ManojSrivastava]]"]]
 [[tag type/chrome]]
 
+[[calendar ]]
+
 This plugin displays a calendar, similar to the typical calendars shown on
 some blogs.
 
@@ -17,10 +19,11 @@ derives no code from it. This plugin is essentially a fancy front end
 to archives of previous pages, usually used for blogs. It can produce
 a calendar for a given month, or a list of months for a given year.
 
-The tricky part of this is that while calendar defaults to showing the
-current day and month, ikiwiki is a wiki compiler, which only rebuilds
-pages if they have changed. So to keep the calendar up-to-date, wikis that
-include it need to be periodically rebuilt, typically by cron at midnight.
+Since ikiwiki is a wiki compiler, to keep the calendar up-to-date,
+wikis that include it need to be preiodically refreshes, typically by cron
+at midnight. Example crontab:
+
+	0 0 * * * ikiwiki -setup ~/ikiwiki.setup -refresh
 
 The month format calendar simply links to any page posted on each
 day of the month. The year format calendar links to archive pages, with

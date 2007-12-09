@@ -11,6 +11,12 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Use pagestate in meta to detect potential redir loops.
   * Added a version plugin that saves state about what's using it, to force
     pages to rebuild when ikiwiki's version changes.
+  * The calendar plugin stores state about when it needs to be updated,
+    and forces rebuilds of the pages that contain calendars. So
+    running ikiwiki --refresh at midnight is now enough, no need for a full
+    wiki rebuild each midnight.
+  * calendar: Work around block html parsing bug in markdown 1.0.1 by
+    enclosing the calendar in an extra div.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
