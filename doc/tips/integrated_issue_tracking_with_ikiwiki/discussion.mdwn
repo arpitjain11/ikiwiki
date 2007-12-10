@@ -1,0 +1,16 @@
+From IRC messages.. may later format into a nicer display (time is limited):
+
+Just wondering, who's using ikiwiki as their bug-tracking system?  I'm trying to root out bug-tracking systems that work with GIT and so far like ikiwiki for docs, but haven't yet figured out the best way to make it work for bug-tracking.
+
+I suppose having a separate branch for public web stuff w/ the following workflow makes sense:
+
+* Separate master-web and master branches
+* master-web is public
+* cherry-pick changes from master-web into master when they are sane
+* regularly merge master -> master-web
+
+Bug origination point: ... anybody have ideas for this?  Create branch at bug origination point and merge into current upstream branches?  (I guess this would be where cherry-picking would work best, since the web UI can't do this)
+
+Bug naming: any conventions/ideas on how to standardize?  Any suggestions on methods of linking commits to bugs without having to modify the bug in each commit?
+
+-- [[harningt]]
