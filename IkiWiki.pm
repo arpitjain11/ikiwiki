@@ -1067,10 +1067,10 @@ sub file_pruned ($$) { #{{{
 	require File::Spec;
 	my $file=File::Spec->canonpath(shift);
 	my $base=File::Spec->canonpath(shift);
-	$file =~ s#^\Q$base\E/*##;
+	$file =~ s#^\Q$base\E/+##;
 
 	my $regexp='('.join('|', @{$config{wiki_file_prune_regexps}}).')';
-	return $file =~ m/$regexp/;
+	return $file =~ m/$regexp/ && $file ne $base;
 } #}}}
 
 sub gettext { #{{{

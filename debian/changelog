@@ -17,6 +17,7 @@ ikiwiki (2.16) UNRELEASED; urgency=low
     wiki rebuild each midnight.
   * calendar: Work around block html parsing bug in markdown 1.0.1 by
     enclosing the calendar in an extra div.
+  * Fix file pruning code to work if ikiwiki is run with "." as the srcdir.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
