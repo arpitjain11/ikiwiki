@@ -4,6 +4,8 @@ package IkiWiki::Plugin::edittemplate;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use HTML::Template;
+use Encode;
 
 sub import { #{{{
 	hook(type => "needsbuild", id => "edittemplate",
@@ -47,15 +49,79 @@ sub preprocess (@) { #{{{
 		$params{template}, $params{match});
 } # }}}
 
-sub formbuilder_setup { #{{{
+sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
-	my $page=$form->field("page");
-
+	
 	return if $form->title ne "editpage"
 	          || $form->field("do") ne "create";
+	
+	my $page=$form->field("page");
+	my $from=$form->field("from");
+	
+	# The tricky bit here is that $page is probably just the base
+	# page name, without any subdir, but the pagespec for a template
+	# probably does include the subdir (ie, "bugs/*"). We don't know
+	# what subdir the user will pick to put the page in. So, generate
+	# an ordered list and the first template to match will be used.
+	#
+	# This code corresponds to the code in editpage() that generates
+	# the list of possible page names, unfortunatly, that code runs
+	# later, so that list can't be simply reused.
+	my @page_locs=$page;
+	if (defined $from) {
+		push @page_locs, "$from/$page";
+		my $dir=$from.="/";
+		while (length $dir) {
+			$dir=~s![^/]+/+$!!;
+			push @page_locs, $dir.$page;
+		}
+	}
 
-	$form->field(name => "editcontent", value => "hi mom!");
+	foreach my $p (@page_locs) {
+		foreach my $registering_page (keys %pagestate) {
+			if (exists $pagestate{$registering_page}{edittemplate}) {
+				foreach my $pagespec (sort keys %{$pagestate{$registering_page}{edittemplate}}) {
+					if (pagespec_match($p, $pagespec, location => $registering_page)) {
+						$form->field(name => "editcontent",
+							 value => filltemplate($pagestate{$registering_page}{edittemplate}{$pagespec}, $page));
+						return;
+					}
+				}
+			}
+		}
+	}
+} #}}}
+
+sub filltemplate ($$) { #{{{
+	my $template_page=shift;
+	my $page=shift;
+
+	my $template_file=$pagesources{$template_page};
+	if (! defined $template_file) {
+		return;
+	}
+
+	my $template;
+	eval {
+		$template=HTML::Template->new(
+			filter => sub {
+				my $text_ref = shift;
+				$$text_ref=&Encode::decode_utf8($$text_ref);
+				chomp $$text_ref;
+			},
+			filename => srcfile($template_file),
+			die_on_bad_params => 0,
+			no_includes => 1,
+		);
+	};
+	if ($@) {
+		return "[[pagetemplate ".gettext("failed to process")." $@]]";
+	}
+
+	$template->param(name => $page);
+
+	return $template->output;
 } #}}}
 
 1
