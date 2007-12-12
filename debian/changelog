@@ -29,6 +29,11 @@ ikiwiki (2.16) UNRELEASED; urgency=low
     cached value.
   * Preserve input file modification times in output files.
   * Allow dashes in preprocessor directive commands, and shortcuts.
+  * Htmlize parameters passed to the template preprocessor directive before
+    inserting them into the html template. This ensures that markdown
+    acts on them, even if the value is expanded inside a block-level html
+    element in the html template. Closes: #454058
+  * Use a div in the note template rather than a span.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
