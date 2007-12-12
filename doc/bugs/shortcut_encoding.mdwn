@@ -1,0 +1,26 @@
+* The URL is rewritten to
+    <http://cvs.savannah.gnu.org/viewvc/gnumach/ddb%2Fdb%5Fexpr%2Eh?view=log&root=hurd&pathrev=gnumach-1-branch>,
+    which the remove server doesn't like.  Mind the esacping of [^A-Za-z0-9].
+    Might this be a problem of the web server?
+
+Also, I'd like to put the shortcut usages into backticks
+-- `[[iki shortcuts]]` --
+to have them displayed in the usual backtick-formatting.
+That also doesn't work, but this is an already-reported issue, as far as I know.
+
+--[[tschwinge]]
+
+> The encoding of the shortcut text is done so that a shortcut can have
+> spaces in it etc and they're converted into a valid url. As in the
+> example of a shortcut to the wikipedia page for "War of 1812" (although
+> the example puts underscores in, it should also work without them).
+> 
+> I suspect that if I dropped the endoding of characters other than space
+> and maybe plus, it would break some shortcuts though. Consider a shortcut
+> used to do a google search for "foo&bar". You want to encode the "&"
+> in that search, otherwise google will search for just foo!
+>  
+> It does seem to be partly a web server problem, since savannah's viewvc
+> doesn't decode the escaped characters in the path string.
+> 
+> I could add a %S that is not escaped, and leave %s escaped.. --[[Joey]]
