@@ -552,6 +552,7 @@ sub cgi_editpage ($$) { #{{{
 		});
 		$content=~s/\r\n/\n/g;
 		$content=~s/\r/\n/g;
+		$content.="\n" if $content !~ /\n$/;
 
 		$config{cgi}=0; # avoid cgi error message
 		eval { writefile($file, $config{srcdir}, $content) };
