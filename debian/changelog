@@ -35,6 +35,7 @@ ikiwiki (2.16) UNRELEASED; urgency=low
     element in the html template. Closes: #454058
   * Use a div in the note template rather than a span.
   * shortcut: Expand %S to the raw input text, not url-encoded.
+  * Don't increment feed numbers when an inline has no feeds. (Nis Martensen)
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
