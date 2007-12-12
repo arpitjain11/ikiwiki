@@ -18,20 +18,4 @@ take it as far as implementing "replies" to other comments.
 
 ## More dynamic `rootpage` parameter of inline plugin?
 
-I prefer to use a current year, month and day to archive my blog posts, for example
-`post/2007/11/12/foo-bar-baz` path is better for me then `post/foo-bar-baz`.
-Unfortunately it seems that `rootpage` parameter of inline plugin is very static.
-Is it a chance to make it more dynamic? Now I have to use `svn mkdir` command
-to create appropriate subdirectories by hand.
-
-I think that you could add builtin functions or variables, for example `current_year()`
-or `$CURRENT_YEAR` to usage inside `rootpage` parameter. Something like for Manoj's
-calendar plugin. Then my `rootpage` parameter could be like
-`rootpage="post/current_year()/current_month()/current_day()"`. Another good hints
-are welcomed ;)
-
-What's your opinion, Joey? I hope it's also useful for another ikiwiki lovers :)
-
---[[Paweł|ptecza]]
-
->> Hello Joey! Is it a taboo subject? ;) --[[Paweł|ptecza]]
+(Moved to [[todo/dynamic_rootpage]])
