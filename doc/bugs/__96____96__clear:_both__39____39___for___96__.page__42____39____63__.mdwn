@@ -8,3 +8,10 @@ for `.pagedate, .pagelicense, .pagecopyright`.
 
 I can override this in `local.css`, but what was the original reason for
 adding this `clear: both`?
+
+> Without investigating in detail, I think it was probably because any
+> of the items can be enabled or disabled. So any of them might be the
+> first item after the horizontal rule, and any might be the last item
+> before the modification date. So all of them have to clear both above and
+> below. I'm sure there are better ways for the CSS to handle that.
+> --[[Joey]] 
