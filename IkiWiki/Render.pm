@@ -64,10 +64,9 @@ sub parentlinks ($) { #{{{
 	return @ret;
 } #}}}
 
-sub genpage ($$$) { #{{{
+sub genpage ($$) { #{{{
 	my $page=shift;
 	my $content=shift;
-	my $mtime=shift;
 
 	my $templatefile;
 	run_hooks(templatefile => sub {
@@ -129,7 +128,7 @@ sub genpage ($$$) { #{{{
 		content => $content,
 		backlinks => $backlinks,
 		more_backlinks => $more_backlinks,
-		mtime => displaytime($mtime),
+		mtime => displaytime($pagemtime{$page}),
 		baseurl => baseurl($page),
 	);
 
@@ -204,8 +203,9 @@ sub render ($) { #{{{
 			filter($page, $page,
 			readfile($srcfile)))));
 		
-		writefile(htmlpage($page), $config{destdir},
-			genpage($page, $content, mtime($srcfile)));
+		my $output=htmlpage($page);
+		writefile($output, $config{destdir}, genpage($page, $content));
+		utime($pagemtime{$page}, $pagemtime{$page}, $config{destdir}."/".$output);
 	}
 	else {
 		my $srcfd=readfile($srcfile, 1, 1);
@@ -231,6 +231,7 @@ sub render ($) { #{{{
 				}
 			}
 		});
+		utime($pagemtime{$file}, $pagemtime{$file}, $config{destdir}."/".$file);
 	}
 } #}}}
 
@@ -485,8 +486,9 @@ sub commandline_render () { #{{{
 	$content=preprocess($page, $page, $content);
 	$content=linkify($page, $page, $content);
 	$content=htmlize($page, $type, $content);
+	$pagemtime{$page}=mtime($srcfile);
 
-	print genpage($page, $content, mtime($srcfile));
+	print genpage($page, $content);
 	exit 0;
 } #}}}
 

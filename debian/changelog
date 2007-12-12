@@ -25,6 +25,9 @@ ikiwiki (2.16) UNRELEASED; urgency=low
     I believe this is a safe change, since only passwordauth uses this hook.
     (If some other plugin already used it, it would have broken passwordauth!)
   * Ensure that web edited pages always end in a newline.
+  * Avoid unnecessary stat calls to get mtime when rendering pages, use
+    cached value.
+  * Preserve input file modification times in output files.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
