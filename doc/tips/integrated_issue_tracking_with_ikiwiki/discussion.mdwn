@@ -2,6 +2,10 @@ From IRC messages.. may later format into a nicer display (time is limited):
 
 Just wondering, who's using ikiwiki as their bug-tracking system?  I'm trying to root out bug-tracking systems that work with GIT and so far like ikiwiki for docs, but haven't yet figured out the best way to make it work for bug-tracking.
 
+> I know of only a few:
+> * This wiki.
+> * The "awesome" window manager.
+
 I suppose having a separate branch for public web stuff w/ the following workflow makes sense:
 
 * Separate master-web and master branches
@@ -9,8 +13,18 @@ I suppose having a separate branch for public web stuff w/ the following workflo
 * cherry-pick changes from master-web into master when they are sane
 * regularly merge master -> master-web
 
+> That's definitely one way to do it. For this wiki, I allow commits
+> directly to master via the web, and sanity check after the fact. Awesome
+> doesn't allow web commits at all.
+
 Bug origination point: ... anybody have ideas for this?  Create branch at bug origination point and merge into current upstream branches?  (I guess this would be where cherry-picking would work best, since the web UI can't do this)
 
+> Not sure what you mean.
+
 Bug naming: any conventions/ideas on how to standardize?  Any suggestions on methods of linking commits to bugs without having to modify the bug in each commit?
+
+> I don't worry about naming, but then I don't refer to the bug urls
+> anywhere, so any names are ok. When I make a commit to fix a bug, I mark
+> the bug done in the same commit, which links things.
 
 -- [[harningt]]
