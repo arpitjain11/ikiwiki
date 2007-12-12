@@ -680,7 +680,7 @@ sub preprocess ($$$;$$) { #{{{
 			# consider it significant.
 			my @params;
 			while ($params =~ m{
-				(?:(\w+)=)?		# 1: named parameter key?
+				(?:([-\w]+)=)?		# 1: named parameter key?
 				(?:
 					"""(.*?)"""	# 2: triple-quoted value
 				|
@@ -740,11 +740,11 @@ sub preprocess ($$$;$$) { #{{{
 	$content =~ s{
 		(\\?)		# 1: escape?
 		\[\[		# directive open
-		(\w+)		# 2: command
+		([-\w]+)	# 2: command
 		\s+
 		(		# 3: the parameters..
 			(?:
-				(?:\w+=)?		# named parameter key?
+				(?:[-\w]+=)?		# named parameter key?
 				(?:
 					""".*?"""	# triple-quoted value
 					|

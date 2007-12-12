@@ -28,6 +28,7 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Avoid unnecessary stat calls to get mtime when rendering pages, use
     cached value.
   * Preserve input file modification times in output files.
+  * Allow dashes in preprocessor directive commands, and shortcuts.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
