@@ -43,11 +43,10 @@ To create a template, simply add a template directive to a page, and page will
 provide a link that can be used to create the template. The template is a
 regular wiki page, located in the `templates/` directory.
 
-The template uses the syntax used by the
-[cpan HTML::Template](http://search.cpan.org/search?mode=dist&query=HTML::Template)
-perl module, which allows for some fairly complex things to be done.
-Consult its documentation for the full syntax, but all you really need to know
-are a few things:
+The template uses the syntax used by the [[cpan HTML::Template]] perl
+module, which allows for some fairly complex things to be done. Consult its
+documentation for the full syntax, but all you really need to know are a
+few things:
 
 * To insert the value of a variable, use `<TMPL_VAR variable>`.
 * To make a block of text conditional on a variable being set use
