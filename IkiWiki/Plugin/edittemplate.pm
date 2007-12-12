@@ -12,8 +12,8 @@ sub import { #{{{
 		call => \&needsbuild);
 	hook(type => "preprocess", id => "edittemplate",
 		call => \&preprocess);
-	hook(type => "formbuilder_setup", id => "edittemplate",
-		call => \&formbuilder_setup);
+	hook(type => "formbuilder", id => "edittemplate",
+		call => \&formbuilder);
 } #}}}
 
 sub needsbuild (@) { #{{{
@@ -49,7 +49,7 @@ sub preprocess (@) { #{{{
 		$params{template}, $params{match});
 } # }}}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 	

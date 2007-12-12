@@ -33,10 +33,9 @@ sub showform ($$$$) { #{{{
 				buttons => $buttons);
 		});
 	}
-	else {
-		printheader($session);
-		print misctemplate($form->title, $form->render(submit => $buttons));
-	}
+
+	printheader($session);
+	print misctemplate($form->title, $form->render(submit => $buttons));
 }
 
 sub redirect ($$) { #{{{

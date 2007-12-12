@@ -20,6 +20,10 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Fix file pruning code to work if ikiwiki is run with "." as the srcdir.
   * Add an edittemplate plugin, allowing registering template pages, that
     provide default content for new pages created using the web frontend.
+  * Change formbuilder hook to not be responsible for displaying a form,
+    so that more than one plugin can use this hook.
+    I believe this is a safe change, since only passwordauth uses this hook.
+    (If some other plugin already used it, it would have broken passwordauth!)
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 

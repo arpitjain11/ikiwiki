@@ -211,9 +211,6 @@ sub formbuilder (@) { #{{{
 	                }
 		}
 	}
-	
-	IkiWiki::printheader($session);
-	print IkiWiki::misctemplate($form->title, $form->render(submit => $buttons));
 } #}}}
 
 1
