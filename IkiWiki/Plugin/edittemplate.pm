@@ -52,29 +52,20 @@ sub preprocess (@) { #{{{
 sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
-	
-	return if $form->title ne "editpage"
-	          || $form->field("do") ne "create";
-	
+
+	return if $form->field("do") ne "create";
 	my $page=$form->field("page");
-	my $from=$form->field("from");
 	
 	# The tricky bit here is that $page is probably just the base
 	# page name, without any subdir, but the pagespec for a template
 	# probably does include the subdir (ie, "bugs/*"). We don't know
-	# what subdir the user will pick to put the page in. So, generate
-	# an ordered list and the first template to match will be used.
-	#
-	# This code corresponds to the code in editpage() that generates
-	# the list of possible page names, unfortunatly, that code runs
-	# later, so that list can't be simply reused.
+	# what subdir the user will pick to put the page in. So, try them
+	# all, starting with the one that was made default.
 	my @page_locs=$page;
-	if (defined $from) {
-		push @page_locs, "$from/$page";
-		my $dir=$from.="/";
-		while (length $dir) {
-			$dir=~s![^/]+/+$!!;
-			push @page_locs, $dir.$page;
+	foreach my $field ($form->field) {
+		if ($field eq 'page') {
+			@page_locs=$field->def_value;
+			push @page_locs, $field->options;
 		}
 	}
 
