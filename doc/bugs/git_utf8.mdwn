@@ -1,0 +1,8 @@
+Just saw a bug with the git backend and utf8. I was committing to ikiwiki and
+the post-commit hook emitted a warning message about some text from git
+not being encoded as proper utf-8. I've lost the message, but it was from
+line 36 of git.pm. After a couple other commits, the message stopped
+appearing.
+
+Probably git's output needs to be force encoded to utf-8.
+--[[Joey]]
