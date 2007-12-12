@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 19:18-0500\n"
+"POT-Creation-Date: 2007-12-12 16:47-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -16,45 +16,45 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:171
 msgid "You need to log in first."
 msgstr "Trước tiên bạn cần phải đăng nhập."
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 #, fuzzy
 msgid "Preferences"
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:236
+#: ../IkiWiki/CGI.pm:235
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:294
+#: ../IkiWiki/CGI.pm:293
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:354
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:442 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
-#: ../IkiWiki/Render.pm:179
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:489
+#: ../IkiWiki/CGI.pm:488
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:525 ../IkiWiki/CGI.pm:535
 #: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
@@ -143,6 +143,26 @@ msgstr "Không có liên kết bị ngắt nào."
 msgid "%s parameter is required"
 msgstr ""
 
+#: ../IkiWiki/Plugin/edittemplate.pm:40
+#, fuzzy
+msgid "template not specified"
+msgstr "không tìm thấy mẫu %s"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:43
+#, fuzzy
+msgid "match not specified"
+msgstr "chưa xác định tên tập tin bộ bao bọc"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:48
+#, perl-format
+msgid "edittemplate %s registered for %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/edittemplate.pm:110
+#, fuzzy
+msgid "failed to process"
+msgstr "mẫu không xử lý được:"
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "fortune bị lỗi"
@@ -202,7 +222,7 @@ msgstr ""
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Thảo luận"
 
@@ -518,47 +538,47 @@ msgid ""
 msgstr ""
 "Chưa đặt REV, không chạy từ móc sau gài vào nên không thể gửi thông báo"
 
-#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
+#: ../IkiWiki/Render.pm:275 ../IkiWiki/Render.pm:296
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "đang bỏ qua tên tập tin sai %s"
 
-#: ../IkiWiki/Render.pm:337
+#: ../IkiWiki/Render.pm:338
 #, perl-format
 msgid "removing old page %s"
 msgstr "đang gỡ bỏ trang cũ %s"
 
-#: ../IkiWiki/Render.pm:370
+#: ../IkiWiki/Render.pm:371
 #, perl-format
 msgid "scanning %s"
 msgstr "đang quét %s"
 
-#: ../IkiWiki/Render.pm:375
+#: ../IkiWiki/Render.pm:376
 #, perl-format
 msgid "rendering %s"
 msgstr "đang vẽ %s"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:388
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "đang vẽ %s mà liên kết tới %s"
 
-#: ../IkiWiki/Render.pm:404
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "đang vẽ %s mà phụ thuộc vào %s"
 
-#: ../IkiWiki/Render.pm:442
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "đang vẽ %s để cập nhật các liên kết ngược của nó"
 
-#: ../IkiWiki/Render.pm:454
+#: ../IkiWiki/Render.pm:455
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "đang gỡ bỏ %s, không còn được vẽ lại bởi %s"
 
-#: ../IkiWiki/Render.pm:480
+#: ../IkiWiki/Render.pm:481
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: không thể vẽ %s"

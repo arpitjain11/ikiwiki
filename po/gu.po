@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 19:18-0500\n"
+"POT-Creation-Date: 2007-12-12 16:47-0500\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -15,45 +15,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:171
 msgid "You need to log in first."
 msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશે."
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 #, fuzzy
 msgid "Preferences"
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:236
+#: ../IkiWiki/CGI.pm:235
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:294
+#: ../IkiWiki/CGI.pm:293
 msgid "Preferences saved."
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:354
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:442 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
-#: ../IkiWiki/Render.pm:179
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/CGI.pm:489
+#: ../IkiWiki/CGI.pm:488
 #, perl-format
 msgid "creating %s"
 msgstr "%s બનાવે છે"
 
-#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:525 ../IkiWiki/CGI.pm:535
 #: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
@@ -141,6 +141,26 @@ msgstr "અહીં કોઇ તૂટેલ કડી નથી!"
 msgid "%s parameter is required"
 msgstr "\"test\" અને \"then\" વિકલ્પો જરૂરી છે"
 
+#: ../IkiWiki/Plugin/edittemplate.pm:40
+#, fuzzy
+msgid "template not specified"
+msgstr "ટેમ્પલેટ %s મળ્યું નહી"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:43
+#, fuzzy
+msgid "match not specified"
+msgstr "આવરણ ફાઇલનામ સ્પષ્ટ કરેલ નથી"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:48
+#, perl-format
+msgid "edittemplate %s registered for %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/edittemplate.pm:110
+#, fuzzy
+msgid "failed to process"
+msgstr "ક્રિયા કરવામાં નિષ્ફળ:"
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "ભવિષ્ય નિષ્ફળ"
@@ -196,7 +216,7 @@ msgstr "આ શિર્ષકથી નવું પોસ્ટ ઉમેર�
 msgid "nonexistant template %s"
 msgstr "અસ્તિત્વમાં ન હોય તેવું ટેમ્પલેટ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "ચર્ચા"
 
@@ -500,47 +520,47 @@ msgid ""
 "notifications"
 msgstr "REV ગોઠવેલ નથી, svn post-commit hook માંથી ચાલતું નથી, નોંધ મોકલી શકાશે નહી"
 
-#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
+#: ../IkiWiki/Render.pm:275 ../IkiWiki/Render.pm:296
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ખરાબ ફાઇલ નામ છોડી દે છે %s"
 
-#: ../IkiWiki/Render.pm:337
+#: ../IkiWiki/Render.pm:338
 #, perl-format
 msgid "removing old page %s"
 msgstr "જુનાં પાનાં દૂર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:370
+#: ../IkiWiki/Render.pm:371
 #, perl-format
 msgid "scanning %s"
 msgstr "%s શોધે છે"
 
-#: ../IkiWiki/Render.pm:375
+#: ../IkiWiki/Render.pm:376
 #, perl-format
 msgid "rendering %s"
 msgstr "રેન્ડર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:388
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "રેન્ડર કરે છે %s, જે %s સાથે જોડાણ ધરાવે છે"
 
-#: ../IkiWiki/Render.pm:404
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "રેન્ડર કરે છે %s, જે %s પર આધારિત છે"
 
-#: ../IkiWiki/Render.pm:442
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "રેન્ડર કરે છે %s, તેનાં પાછળનાં જોડાણો સુધારવા માટે"
 
-#: ../IkiWiki/Render.pm:454
+#: ../IkiWiki/Render.pm:455
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "દૂર કરે છે %s, હવે %s વડે રેન્ડર કરાતું નથી"
 
-#: ../IkiWiki/Render.pm:480
+#: ../IkiWiki/Render.pm:481
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: %s રેન્ડર કરી શકાતું નથી"

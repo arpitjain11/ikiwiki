@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 19:18-0500\n"
+"POT-Creation-Date: 2007-12-12 16:47-0500\n"
 "PO-Revision-Date: 2007-08-28 21:05+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -17,44 +17,44 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:171
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Login"
 msgstr "S’identifier"
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../IkiWiki/CGI.pm:236
+#: ../IkiWiki/CGI.pm:235
 msgid "Admin"
 msgstr "Administrateur"
 
-#: ../IkiWiki/CGI.pm:294
+#: ../IkiWiki/CGI.pm:293
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:354
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:442 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
-#: ../IkiWiki/Render.pm:179
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:489
+#: ../IkiWiki/CGI.pm:488
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:525 ../IkiWiki/CGI.pm:535
 #: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
@@ -143,6 +143,26 @@ msgstr "Il n'y a pas de lien cassé !"
 msgid "%s parameter is required"
 msgstr "le paramètre %s est obligatoire"
 
+#: ../IkiWiki/Plugin/edittemplate.pm:40
+#, fuzzy
+msgid "template not specified"
+msgstr "Modèle (« template ») %s introuvable "
+
+#: ../IkiWiki/Plugin/edittemplate.pm:43
+#, fuzzy
+msgid "match not specified"
+msgstr "Le nom de fichier de l'enrobage n'a pas été indiqué"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:48
+#, perl-format
+msgid "edittemplate %s registered for %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/edittemplate.pm:110
+#, fuzzy
+msgid "failed to process"
+msgstr "Échec du traitement :"
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "Échec du lancement de « fortune »"
@@ -200,7 +220,7 @@ msgstr "Ajouter un nouvel article dont le titre est :"
 msgid "nonexistant template %s"
 msgstr "Le modèle (« template ») %s n'existe pas"
 
-#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Discussion"
 
@@ -508,47 +528,47 @@ msgstr ""
 "après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
 "notifications"
 
-#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
+#: ../IkiWiki/Render.pm:275 ../IkiWiki/Render.pm:296
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "Omission du fichier au nom incorrect %s"
 
-#: ../IkiWiki/Render.pm:337
+#: ../IkiWiki/Render.pm:338
 #, perl-format
 msgid "removing old page %s"
 msgstr "Suppression de l'ancienne page %s"
 
-#: ../IkiWiki/Render.pm:370
+#: ../IkiWiki/Render.pm:371
 #, perl-format
 msgid "scanning %s"
 msgstr "Parcours de %s"
 
-#: ../IkiWiki/Render.pm:375
+#: ../IkiWiki/Render.pm:376
 #, perl-format
 msgid "rendering %s"
 msgstr "Affichage de %s"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:388
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "Affichage de %s, qui est lié à %s"
 
-#: ../IkiWiki/Render.pm:404
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "Affichage de %s, qui dépend de %s"
 
-#: ../IkiWiki/Render.pm:442
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "Affichage de %s, afin de mettre à jour ses rétroliens"
 
-#: ../IkiWiki/Render.pm:454
+#: ../IkiWiki/Render.pm:455
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "Suppression de %s, qui n'est plus affiché par %s"
 
-#: ../IkiWiki/Render.pm:480
+#: ../IkiWiki/Render.pm:481
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki : impossible d'afficher %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 19:18-0500\n"
+"POT-Creation-Date: 2007-12-12 16:47-0500\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -15,44 +15,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:171
 msgid "You need to log in first."
 msgstr "Antes es necesario identificarse."
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Login"
 msgstr "Identificación"
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: ../IkiWiki/CGI.pm:236
+#: ../IkiWiki/CGI.pm:235
 msgid "Admin"
 msgstr "Administración"
 
-#: ../IkiWiki/CGI.pm:294
+#: ../IkiWiki/CGI.pm:293
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:354
+#: ../IkiWiki/CGI.pm:353
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
-#: ../IkiWiki/CGI.pm:443 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:442 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:99
-#: ../IkiWiki/Render.pm:179
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
+#: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "comentarios"
 
-#: ../IkiWiki/CGI.pm:489
+#: ../IkiWiki/CGI.pm:488
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/CGI.pm:507 ../IkiWiki/CGI.pm:526 ../IkiWiki/CGI.pm:536
+#: ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:525 ../IkiWiki/CGI.pm:535
 #: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
 #, perl-format
 msgid "editing %s"
@@ -141,6 +141,26 @@ msgstr "¡ No hay enlaces rotos !"
 msgid "%s parameter is required"
 msgstr "el parámetro %s es obligatorio"
 
+#: ../IkiWiki/Plugin/edittemplate.pm:40
+#, fuzzy
+msgid "template not specified"
+msgstr "no he encontrado la plantilla %s"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:43
+#, fuzzy
+msgid "match not specified"
+msgstr "el programa envoltorio no ha sido especificado"
+
+#: ../IkiWiki/Plugin/edittemplate.pm:48
+#, perl-format
+msgid "edittemplate %s registered for %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/edittemplate.pm:110
+#, fuzzy
+msgid "failed to process"
+msgstr "se ha producido un error fatal mientras procesaba la plantilla:"
+
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
 msgstr "el programa fortune ha fallado"
@@ -199,7 +219,7 @@ msgstr "Añadir una entrada nueva titulada:"
 msgid "nonexistant template %s"
 msgstr "la plantilla %s no existe "
 
-#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:103
+#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Comentarios"
 
@@ -506,49 +526,49 @@ msgstr ""
 "La variable de entorno REV no está definida, por lo que no puede funcionar "
 "svn post-commit; no puedo enviar ninguna notificación"
 
-#: ../IkiWiki/Render.pm:274 ../IkiWiki/Render.pm:295
+#: ../IkiWiki/Render.pm:275 ../IkiWiki/Render.pm:296
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ignorando el archivo %s porque su nombre no es correcto"
 
-#: ../IkiWiki/Render.pm:337
+#: ../IkiWiki/Render.pm:338
 #, perl-format
 msgid "removing old page %s"
 msgstr "eliminando la antigua página %s"
 
-#: ../IkiWiki/Render.pm:370
+#: ../IkiWiki/Render.pm:371
 #, perl-format
 msgid "scanning %s"
 msgstr "explorando %s"
 
-#: ../IkiWiki/Render.pm:375
+#: ../IkiWiki/Render.pm:376
 #, perl-format
 msgid "rendering %s"
 msgstr "convirtiendo %s"
 
-#: ../IkiWiki/Render.pm:387
+#: ../IkiWiki/Render.pm:388
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "convirtiendo la página %s, la cual referencia a %s"
 
-#: ../IkiWiki/Render.pm:404
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "convirtiendo la página %s, la cual depende de %s"
 
-#: ../IkiWiki/Render.pm:442
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 "convirtiendo la página %s para actualizar la lista de páginas que hacen "
 "referencia a ella."
 
-#: ../IkiWiki/Render.pm:454
+#: ../IkiWiki/Render.pm:455
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 
-#: ../IkiWiki/Render.pm:480
+#: ../IkiWiki/Render.pm:481
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"

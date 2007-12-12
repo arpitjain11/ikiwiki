@@ -53,6 +53,10 @@ sub shortcut_expand ($$@) { #{{{
 	my $text=join(" ", @params);
 	my $encoded_text=$text;
 	$encoded_text=~s/([^A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg;
+	
+	$url=~s{\%([sS])}{
+		$1 eq 's' ? $encoded_text : $text
+	}eg;
 
 	$text=~s/_/ /g;
 	if (defined $desc) {
@@ -62,7 +66,6 @@ sub shortcut_expand ($$@) { #{{{
 		$desc=$text;
 	}
 
-	$url=~s/\%s/$encoded_text/g;
 	return "<a href=\"$url\">$desc</a>";
 } #}}}
 
