@@ -310,9 +310,6 @@ sub cgi_editpage ($$) { #{{{
 		fields => \@fields,
 		charset => "utf-8",
 		method => 'POST',
-		validate => {
-			editcontent => '/.+/',
-		},
 		required => [qw{editcontent}],
 		javascript => 0,
 		params => $q,
@@ -356,6 +353,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "rcsinfo",
 				value => rcs_prepedit($file), force => 1);
 		}
+		$form->field(name => "editcontent", validate => '/.*/');
 	}
 	else {
 		$type=$form->param('type');
@@ -371,6 +369,7 @@ sub cgi_editpage ($$) { #{{{
 		if (! $form->submitted) {
 			$form->field(name => "rcsinfo", value => "", force => 1);
 		}
+		$form->field(name => "editcontent", validate => '/.+/');
 	}
 
 	$form->field(name => "do", type => 'hidden');
