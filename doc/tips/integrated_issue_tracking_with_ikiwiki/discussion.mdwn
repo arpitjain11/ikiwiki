@@ -20,6 +20,8 @@ I suppose having a separate branch for public web stuff w/ the following workflo
 Bug origination point: ... anybody have ideas for this?  Create branch at bug origination point and merge into current upstream branches?  (I guess this would be where cherry-picking would work best, since the web UI can't do this)
 
 > Not sure what you mean.
+>> Documentation as to where the bug came from for related branches...
+>> Ex: The bug got located in r30, but really came about r10.  Desire is to propagate the bug to all everything after r10.
 
 Bug naming: any conventions/ideas on how to standardize?  Any suggestions on methods of linking commits to bugs without having to modify the bug in each commit?
 
