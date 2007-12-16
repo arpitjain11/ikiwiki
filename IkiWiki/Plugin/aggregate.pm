@@ -17,7 +17,7 @@ my %guids;
 sub import { #{{{
 	hook(type => "getopt", id => "aggregate", call => \&getopt);
 	hook(type => "checkconfig", id => "aggregate", call => \&checkconfig);
-	hook(type => "filter", id => "aggregate", call => \&filter);
+	hook(type => "needsbuild", id => "aggregate", call => \&needsbuild);
 	hook(type => "preprocess", id => "aggregate", call => \&preprocess);
         hook(type => "delete", id => "aggregate", call => \&delete);
 	hook(type => "savestate", id => "aggregate", call => \&savestate);
@@ -49,16 +49,17 @@ sub checkconfig () { #{{{
 	}
 } #}}}
 
-sub filter (@) { #{{{
-	my %params=@_;
-	my $page=$params{page};
+sub needsbuild (@) { #{{{
+	my $needsbuild=shift;
 
-	loadstate(); # if not already loaded
-	# Mark all feeds originating on this page as removable;
-	# preprocess will unmark those that still exist.
-	remove_feeds($page);
-
-	return $params{content};
+	foreach my $page (keys %pagestate) {
+		if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+			loadstate(); # if not already loaded
+			# Mark all feeds originating on this page as removable;
+			# preprocess will unmark those that still exist.
+			remove_feeds($page);
+		}
+	}
 } # }}}
 
 sub preprocess (@) { #{{{

@@ -15,19 +15,24 @@ my %license;
 my %copyright;
 
 sub import { #{{{
-	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
-	hook(type => "filter", id => "meta", call => \&filter);
+	hook(type => "needsbuild", id => "meta", call => \&needsbuild);
+	hook(type => "preprocess", id => "meta", call => \&preprocess);
 	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
 } # }}}
 
-sub filter (@) { #{{{
-	my %params=@_;
-	
-	$meta{$params{page}}='';
-	delete $pagestate{$params{page}}{meta}{redir};
-
-	return $params{content};
-} # }}}
+sub needsbuild (@) { #{{{
+	my $needsbuild=shift;
+	foreach my $page (keys %pagestate) {
+		if (exists $pagestate{$page}{meta}) {
+			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+				# remove state, it will be re-added
+				# if the preprocessor directive is still
+				# there during the rebuild
+				delete $pagestate{$page}{meta};
+			}
+		}
+	}
+}
 
 sub scrub ($) { #{{{
 	if (IkiWiki::Plugin::htmlscrubber->can("sanitize")) {
@@ -39,9 +44,7 @@ sub scrub ($) { #{{{
 } #}}}
 
 sub preprocess (@) { #{{{
-	if (! @_) {
-		return "";
-	}
+	return "" unless @_;
 	my %params=@_;
 	my $key=shift;
 	my $value=$params{$key};
@@ -53,25 +56,56 @@ sub preprocess (@) { #{{{
 	delete $params{preview};
 
 	eval q{use HTML::Entities};
-	# Always dencode, even if encoding later, since it might not be
+	# Always decode, even if encoding later, since it might not be
 	# fully encoded.
 	$value=decode_entities($value);
 
-	if ($key eq 'link') {
-		if (%params) {
-			$meta{$page}.=scrub("<link href=\"".encode_entities($value)."\" ".
-				join(" ", map {
-					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
-				} keys %params).
-				" />\n");
-		}
-		else {
-			# hidden WikiLink
-			push @{$links{$page}}, $value;
+	if ($key eq 'title') {
+		$title{$page}=HTML::Entities::encode_numeric($value);
+	}
+	elsif ($key eq 'permalink') {
+		$permalink{$page}=$value;
+		push @{$meta{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
+	}
+	elsif ($key eq 'date') {
+		eval q{use Date::Parse};
+		if (! $@) {
+			my $time = str2time($value);
+			$IkiWiki::pagectime{$page}=$time if defined $time;
 		}
 	}
+	elsif ($key eq 'stylesheet') {
+		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
+		my $title=exists $params{title} ? $params{title} : $value;
+		# adding .css to the value prevents using any old web
+		# editable page as a stylesheet
+		my $stylesheet=bestlink($page, $value.".css");
+		if (! length $stylesheet) {
+			return "[[meta ".gettext("stylesheet not found")."]]";
+		}
+		push @{$meta{$page}}, '<link href="'.urlto($stylesheet, $page).
+			'" rel="'.encode_entities($rel).
+			'" title="'.encode_entities($title).
+			"\" type=\"text/css\" />";
+	}
+	elsif ($key eq 'openid') {
+		if (exists $params{server}) {
+			push @{$meta{$page}}, '<link href="'.encode_entities($params{server}).
+				'" rel="openid.server" />';
+		}
+		push @{$meta{$page}}, '<link href="'.encode_entities($value).
+			'" rel="openid.delegate" />';
+	}
+	elsif ($key eq 'license') {
+		push @{$meta{$page}}, '<link rel="license" href="#page_license" />';
+		$license{$page}=$value;
+	}
+	elsif ($key eq 'copyright') {
+		push @{$meta{$page}}, '<link rel="copyright" href="#page_copyright" />';
+		$copyright{$page}=$value;
+	}
 	elsif ($key eq 'redir') {
-		return "" if $destpage ne $page;
+		return "" if $page ne $destpage;
 		my $safe=0;
 		if ($value !~ /^\w+:\/\//) {
 			add_depends($page, $value);
@@ -103,55 +137,14 @@ sub preprocess (@) { #{{{
 		if (! $safe) {
 			$redir=scrub($redir);
 		}
-		$meta{$page}.=$redir;
+		push @{$meta{$page}}, $redir;
 	}
-	elsif ($key eq 'title') {
-		$title{$page}=HTML::Entities::encode_numeric($value);
-	}
-	elsif ($key eq 'permalink') {
-		$permalink{$page}=$value;
-		$meta{$page}.=scrub("<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n");
-	}
-	elsif ($key eq 'date') {
-		eval q{use Date::Parse};
-		if (! $@) {
-			my $time = str2time($value);
-			$IkiWiki::pagectime{$page}=$time if defined $time;
-		}
-	}
-	elsif ($key eq 'stylesheet') {
-		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
-		my $title=exists $params{title} ? $params{title} : $value;
-		# adding .css to the value prevents using any old web
-		# editable page as a stylesheet
-		my $stylesheet=bestlink($page, $value.".css");
-		if (! length $stylesheet) {
-			return "[[meta ".gettext("stylesheet not found")."]]";
-		}
-		$meta{$page}.='<link href="'.urlto($stylesheet, $page).
-			'" rel="'.encode_entities($rel).
-			'" title="'.encode_entities($title).
-			"\" type=\"text/css\" />\n";
-	}
-	elsif ($key eq 'openid') {
-		if (exists $params{server}) {
-			$meta{$page}.='<link href="'.encode_entities($params{server}).
-				"\" rel=\"openid.server\" />\n";
-		}
-		$meta{$page}.='<link href="'.encode_entities($value).
-			"\" rel=\"openid.delegate\" />\n";
-	}
-	elsif ($key eq 'license') {
-		$meta{$page}.="<link rel=\"license\" href=\"#page_license\" />\n";
-		$license{$page}=$value;
-	}
-	elsif ($key eq 'copyright') {
-		$meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";
-		$copyright{$page}=$value;
+	elsif ($key eq 'link') {
+		return "[[meta ".gettext("link is no longer supported")."]]";
 	}
 	else {
-		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
-			"\" content=\"".encode_entities($value)."\" />\n");
+		push @{$meta{$page}}, scrub('<meta name="'.encode_entities($key).
+			'" content="'.encode_entities($value).'" />');
 		if ($key eq 'author') {
 			$author{$page}=$value;
 		}
@@ -169,8 +162,11 @@ sub pagetemplate (@) { #{{{
         my $destpage=$params{destpage};
         my $template=$params{template};
 
-	$template->param(meta => $meta{$page})
-		if exists $meta{$page} && $template->query(name => "meta");
+	if (exists $meta{$page} && $template->query(name => "meta")) {
+		# avoid duplicate meta lines
+		my %seen;
+		$template->param(meta => join("\n", grep { (! $seen{$_}) && ($seen{$_}=1) } @{$meta{$page}}));
+	}
 	if (exists $title{$page} && $template->query(name => "title")) {
 		$template->param(title => $title{$page});
 		$template->param(title_overridden => 1);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-12 16:47-0500\n"
+"POT-Creation-Date: 2007-12-16 15:48-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,93 +36,93 @@ msgstr ""
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:353
+#: ../IkiWiki/CGI.pm:350
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:442 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:230 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:232 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:488
+#: ../IkiWiki/CGI.pm:487
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:525 ../IkiWiki/CGI.pm:535
-#: ../IkiWiki/CGI.pm:569 ../IkiWiki/CGI.pm:617
+#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
+#: ../IkiWiki/CGI.pm:568 ../IkiWiki/CGI.pm:616
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:711
+#: ../IkiWiki/CGI.pm:710
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:731
+#: ../IkiWiki/CGI.pm:730
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:69
+#: ../IkiWiki/Plugin/aggregate.pm:70
 #, perl-format
 msgid "missing %s parameter"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:97
+#: ../IkiWiki/Plugin/aggregate.pm:98
 msgid "new feed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:111
+#: ../IkiWiki/Plugin/aggregate.pm:112
 msgid "posts"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:113
+#: ../IkiWiki/Plugin/aggregate.pm:114
 msgid "new"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:230
+#: ../IkiWiki/Plugin/aggregate.pm:231
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:237
+#: ../IkiWiki/Plugin/aggregate.pm:238
 #, perl-format
 msgid "expiring %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:263
+#: ../IkiWiki/Plugin/aggregate.pm:264
 #, perl-format
 msgid "processed ok at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:268
+#: ../IkiWiki/Plugin/aggregate.pm:269
 #, perl-format
 msgid "checking feed %s ..."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:273
+#: ../IkiWiki/Plugin/aggregate.pm:274
 #, perl-format
 msgid "could not find feed at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:288
+#: ../IkiWiki/Plugin/aggregate.pm:289
 msgid "feed not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:299
+#: ../IkiWiki/Plugin/aggregate.pm:300
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:304
+#: ../IkiWiki/Plugin/aggregate.pm:305
 msgid "feed crashed XML::Feed!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:377
+#: ../IkiWiki/Plugin/aggregate.pm:378
 #, perl-format
 msgid "creating new page %s"
 msgstr ""
@@ -204,20 +204,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:191
+#: ../IkiWiki/Plugin/inline.pm:193
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:207
+#: ../IkiWiki/Plugin/inline.pm:209
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:238 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:240 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:452
+#: ../IkiWiki/Plugin/inline.pm:454
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -235,16 +235,20 @@ msgstr ""
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:80
+#: ../IkiWiki/Plugin/meta.pm:84
+msgid "stylesheet not found"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:114
 msgid "redir page not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:92
+#: ../IkiWiki/Plugin/meta.pm:126
 msgid "redir cycle is not allowed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:129
-msgid "stylesheet not found"
+#: ../IkiWiki/Plugin/meta.pm:143
+msgid "link is no longer supported"
 msgstr ""
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23

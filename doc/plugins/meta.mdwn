@@ -13,38 +13,7 @@ also specifies some additional sub-parameters.
 The field values are treated as HTML entity-escaped text, so you can include
 a quote in the text by writing `&quot;` and so on.
 
-You can use any field names you like, but here are some predefined ones:
-
-* link
-
-  Specifies a link to another page. This can be used as a way to make the
-  wiki treat one page as linking to another without displaying a user-visible
-  [[ikiwiki/WikiLink]]:
-
-	\[[meta link=otherpage]]
-
-  It can also be used to insert a html &lt;link&gt; tag. For example:
-
-  	\[[meta link="http://joeyh.myopenid.com/" rel="openid.delegate"]]
-
-  However, this latter syntax won't be allowed if the [[htmlscrubber]] is
-  enabled, since it can be used to insert unsafe content.
-
-* redir
-
-  Causes the page to redirect to another page in the wiki.
-
-  	\[[meta redir=otherpage]]
-
-  Optionally, a delay (in seconds) can be specified. The default is to
-  redirect without delay.
-
-  It can also be used to redirect to an external url. For example:
-
-  	\[[meta redir="http://example.com/"]]
-
-  However, this latter syntax won't be allowed if the [[htmlscrubber]] is
-  enabled, since it can be used to insert unsafe content.
+Supported fields:
 
 * title
 
@@ -99,6 +68,22 @@ You can use any field names you like, but here are some predefined ones:
 
   	\\[[meta openid="http://joeyh.myopenid.com/"
 	server="http://www.myopenid.com/server"]]
+
+* redir
+
+  Causes the page to redirect to another page in the wiki.
+
+  	\[[meta redir=otherpage]]
+
+  Optionally, a delay (in seconds) can be specified. The default is to
+  redirect without delay.
+
+  It can also be used to redirect to an external url. For example:
+
+  	\[[meta redir="http://example.com/"]]
+
+  However, this latter syntax won't be allowed if the [[htmlscrubber]] is
+  enabled, since it can be used to insert unsafe content.
 
 If the field is not one of the above predefined fields, the metadata will be
 written to the generated html page as a &lt;meta&gt; header. However, this

@@ -38,6 +38,20 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Don't increment feed numbers when an inline has no feeds. (Nis Martensen)
   * Allow editing a page and deleting all content, while still disallowing
     creating a new page that's entirely empty.
+  * meta: Drop support for "meta link", since supporting this for internal 
+    links required meta to be run during scan, which complicated its data
+    storage, since it had to clear data stored during the scan pass to avoid
+    duplicating it during the normal preprocessing pass.
+  * If you used "meta link", you should switch to either "meta openid" (for
+    openid delegations), or tags (for internal, invisible links). I assume
+    that nobody really used "meta link" for external, non-openid links, since
+    the htmlscrubber ate those. (Tell me differently and I'll consider bringing
+    back that support.)
+  * meta: Improved data storage.
+  * meta: Drop the hackish filter hook that was used to clear
+    stored data before preprocessing, this hack was ugly, and broken (cf:
+    liw's disappearing openids).
+  * aggregate: Convert filter hook to a needsbuild hook.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 03 Dec 2007 14:47:36 -0500
 
