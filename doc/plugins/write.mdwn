@@ -325,6 +325,9 @@ used.
 
 When pages are deleted, ikiwiki automatically deletes their pagestate too.
 
+Note that page state does not persist across wiki rebuilds, only across
+wiki updates.
+
 ### Other variables
 
 If your plugin needs to access data about other pages in the wiki. It can
