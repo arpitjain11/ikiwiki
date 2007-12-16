@@ -22,7 +22,10 @@ sub preprocess (@) { #{{{
 	foreach my $page (keys %links) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			my $discussion=gettext("discussion");
+			my %seen;
 			foreach my $link (@{$links{$page}}) {
+				next if $seen{$link};
+				$seen{$link}=1;
 				next if $link =~ /.*\/\Q$discussion\E/i && $config{discussion};
 				my $bestlink=bestlink($page, $link);
 				next if length $bestlink;
