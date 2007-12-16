@@ -367,10 +367,8 @@ sub rcs_recentchanges ($) { #{{{
 
 	my @rets;
 	foreach my $ci (git_commit_info('HEAD', $num)) {
-		my $title = join("\n", @{$ci->{'comment'}});
-
 		# Skip redundant commits.
-		next if ($title eq $dummy_commit_msg);
+		next if (@{$ci->{'comment'}}[0] eq $dummy_commit_msg);
 
 		my ($sha1, $when) = (
 			$ci->{'sha1'},
@@ -392,7 +390,7 @@ sub rcs_recentchanges ($) { #{{{
 				diffurl => $diffurl,
 			};
 		}
-		push @messages, { line => $title };
+		push @messages, { line => $_ } foreach @{$ci->{'comment'}};
 
 		my ($user, $type) = (q{}, "web");
 
