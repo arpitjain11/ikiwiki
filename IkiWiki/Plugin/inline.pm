@@ -173,10 +173,8 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 
-	if ($feeds) {
-		my $rssurl=basename(rsspage($params{destpage}).$feednum);
-		my $atomurl=basename(atompage($params{destpage}).$feednum);
-	}
+	my $rssurl=basename(rsspage($params{destpage}).$feednum) if $feeds && $rss;
+	my $atomurl=basename(atompage($params{destpage}).$feednum) if $feeds && $atom;
 	my $ret="";
 
 	if ($config{cgiurl} && (exists $params{rootpage} ||
