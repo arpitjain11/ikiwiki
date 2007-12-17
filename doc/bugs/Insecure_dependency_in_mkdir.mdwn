@@ -2,6 +2,8 @@ Joey, please see RecentChanges and note that this is my second bug report,
 because the first was unsuccessfully (bad characters in post title?).
 Could you please tidy it up?
 
+> I've fixed that and the bug that caused the dup.
+
 I've just upgraded my ikiwiki from version 2.11 to the latest version 2.15.
 I use my own rebuilt ikiwiki package for Ubuntu Gutsy box. Now I can't rebuild
 all my ikiwiki pages, because of the following bug:
@@ -25,3 +27,14 @@ I can't see any related entries. Any ideas?
 > **Update**: I've came back to ikiwiki 2.11 and... the bug still exists!
 > Probably the reason is that I've removed all content of `/var/www/blog/`
 > before mass rebuilding. --[[Paweł|ptecza]]
+
+> I can't reproduce this bug with a setup file that tells ikiwiki to
+> write to /var/www/blog, which doesn't exist. I get a "Permission denied"
+> since I can't write to /var/www. If I make the permissions allow me to
+> write to /var/www, it happily creates the blog subdirectory. If the blog
+> subdirectory is already there and I can write to it, that of course also
+> works.
+> 
+> I'll need enough information to reproduce the problem before I can fix
+> it. Probably a copy of your setup file, wiki source, and information
+> about how your /var/www is set up. --[[Joey]]
