@@ -1,4 +1,4 @@
-ikiwiki (2.16) unstable; urgency=low
+ikiwiki (2.16) UNRELEASED; urgency=low
 
   * Major basewiki reorganisation. Most pages moved into ikiwiki/ subdirectory
     to avoid polluting the main namespace, and some were further renamed.
@@ -58,6 +58,7 @@ ikiwiki (2.16) unstable; urgency=low
   * git: Correct display of multiline commit messages in recentchanges.
   * Re-organise dependencies and recommends now that recommends are installed
     by default.
+  * Don't refuse to render files with ".." in their name. (Anchor the regexp.)
 
  -- Joey Hess <joeyh@debian.org>  Sun, 16 Dec 2007 16:55:23 -0500
 

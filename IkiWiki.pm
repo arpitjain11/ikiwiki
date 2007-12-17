@@ -32,7 +32,7 @@ memoize("file_pruned");
 
 sub defaultconfig () { #{{{
 	return
-	wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
+	wiki_file_prune_regexps => [qr/^\.\.$/, qr/^\./, qr/\/\./,
 		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
 		qr/(^|\/)_MTN\//,
