@@ -13,8 +13,11 @@ sub import { #{{{
 sub checkconfig () { #{{{
 	# Preprocess the shortcuts page to get all the available shortcuts
 	# defined before other pages are rendered.
-	IkiWiki::preprocess("shortcuts", "shortcuts",
-		readfile(srcfile("shortcuts.mdwn")));
+	my $srcfile=eval {srcfile("shortcuts.mdwn")};
+	if (! defined $srcfile) {
+		error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
+	}
+	IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
 } # }}}
 
 sub preprocess_shortcut (@) { #{{{
