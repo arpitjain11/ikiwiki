@@ -1,0 +1,22 @@
+Please note that this is my second bug report, because the first was
+unsuccessfully (bad characters in post title?).
+
+I've just upgraded my ikiwiki from version 2.11 to the latest version 2.15.
+I use my own rebuilt ikiwiki package for Ubuntu Gutsy box. Now I can't rebuild
+all my ikiwiki pages, because of the following bug:
+
+    ptecza@anahaim:~/blog$ ikiwiki --setup ikiwiki.setup --getctime --verbose
+    [...]
+    scanning post/2007/12/09/pink-freud-w-cafe-kulturalna.mdwn
+    ikiwiki.setup: Insecure dependency in mkdir while running with -T switch at /usr/share/perl5/IkiWiki.pm line 355.
+    BEGIN failed--compilation aborted at (eval 5) line 151.
+
+I have a write permission to the ikiwiki destination directory:
+
+    ptecza@anahaim:~/blog$ ls -ld /var/www/blog/
+    drwxr-xr-x 2 ptecza ptecza 4096 2007-12-17 10:48 /var/www/blog/
+
+I've read ikiwiki changelog for the previous releases and unfortunately
+I can't see any related entries. Any ideas?
+
+--[[Paweł|ptecza]]
