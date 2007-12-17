@@ -4,6 +4,8 @@ Could you please tidy it up?
 
 > I've fixed that and the bug that caused the dup.
 
+>> Thanks a lot! :)
+
 I've just upgraded my ikiwiki from version 2.11 to the latest version 2.15.
 I use my own rebuilt ikiwiki package for Ubuntu Gutsy box. Now I can't rebuild
 all my ikiwiki pages, because of the following bug:
@@ -38,3 +40,17 @@ I can't see any related entries. Any ideas?
 > I'll need enough information to reproduce the problem before I can fix
 > it. Probably a copy of your setup file, wiki source, and information
 > about how your /var/www is set up. --[[Joey]]
+
+>> Thanks for your efforts, Joey! I sent my `ikiwiki.setup` file to you.
+>> What source do you need? Entire my ikiwiki or only some pages?
+>>
+>> There are settings of `/var/www/` directory on my Ubuntu Gutsy box:
+>>
+>>        ptecza@anahaim:~$ ls -al /var/www/
+>>        total 16
+>>        drwxr-xr-x  4 root   root   4096 2007-11-06 16:25 .
+>>        drwxr-xr-x 14 root   root   4096 2007-11-06 16:13 ..
+>>        drwxr-xr-x  2 root   root   4096 2007-11-06 16:13 apache2-default
+>>        drwxr-xr-x  5 ptecza ptecza 4096 2007-12-17 16:54 blog
+>>
+>> --[[Paweł|ptecza]]
