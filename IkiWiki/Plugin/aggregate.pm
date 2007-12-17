@@ -51,10 +51,11 @@ sub checkconfig () { #{{{
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
+	
+	loadstate(); # if not already loaded
 
 	foreach my $page (keys %pagestate) {
 		if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
-			loadstate(); # if not already loaded
 			# Mark all feeds originating on this page as removable;
 			# preprocess will unmark those that still exist.
 			remove_feeds($page);
