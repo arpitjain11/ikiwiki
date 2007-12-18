@@ -59,6 +59,9 @@ ikiwiki (2.16) UNRELEASED; urgency=low
   * Re-organise dependencies and recommends now that recommends are installed
     by default.
   * Don't refuse to render files with ".." in their name. (Anchor the regexp.)
+  * Work around perl taint checking bug #411786, where perl sometimes randomly
+    sets the taint flag on untainted variables, by disabling taint checking
+    in the deb. This sucks.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 16 Dec 2007 16:55:23 -0500
 

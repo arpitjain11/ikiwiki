@@ -4,7 +4,8 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 	perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
-	$(MAKE)
+	# taint checking disabled due to perl bug #411786
+	$(MAKE) NOTAINT=1
 	$(MAKE) test
 	touch build-stamp
 
