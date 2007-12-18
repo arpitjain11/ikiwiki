@@ -58,6 +58,27 @@ I can't see any related entries. Any ideas?
 >> I need a set of files that you know I can use to reproduce the bug.
 >> --[[Joey]]
 
+>>> OK, I've just sent you the URL where you can find all files you need :)
+>>>
+>>> Probably I know how to reproduce the bug. You have to erase all files from
+>>> `/var/www/blog` before mass rebuilding. This is my `mass-rebuild.sh` script:
+>>>
+>>>        #!/bin/bash
+>>>        
+>>>        rm -rf /var/www/blog/*
+>>>        ikiwiki --setup ikiwiki.setup --getctime --verbose
+>>>
+>>> I noticed that the bug was "resolved" when I added to my blog new entry
+>>> and commited the changes. Before I created all directories and touched
+>>> empty `*.html` files in `/var/www/blog` directory. Probably it's not
+>>> necessary, because without a new blog revision the bug still existed
+>>> and `ikiwiki` still failed.
+>>>
+>>> --[[Paweł|ptecza]]
+
 >> I'd forgotten about [this perl bug](http://bugs.debian.org/411786).
 >> All I can do is work around it by disabling the taint checking. :-(
 >> (Which I've [[done]].) --[[Joey]]
+
+>>> Ubuntu Gutsy also has Perl 5.8.8-7, so probably it has the bug too.
+>>> --[[Paweł|ptecza]]
