@@ -55,8 +55,8 @@ sub parentlinks ($) { #{{{
 	my $path="";
 	my $title=$config{wikiname};
 	
-	return if $page eq 'index'; # toplevel
 	foreach my $dir (split("/", $page)) {
+		next if $dir eq 'index';
 		push @ret, { url => urlto($path, $page), page => $title };
 		$path.="/".$dir;
 		$title=pagetitle($dir);

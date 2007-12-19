@@ -2,6 +2,11 @@ Some inconsistences around the toplevel [[index]] page:
 
 * [[ikiwiki]] is a separate page; links to [[ikiwiki]] should better go to
   the [[index]] though.
+
+  > At least for this wiki, I turned out to have a use for [[ikiwiki]]
+  > pointing to a different page, though the general point might still
+  > stand.
+
 * The toplevel [[ikiwiki/Discussion]] page has some weird parentlinks
   behavior. This could be special cased around with the following patch.
   However, I'm unsure if I like the idea of more special cases around this.
@@ -20,6 +25,8 @@ Here is a patch:
 	        foreach my $dir (reverse split("/", $page)) {
 	                if (! $skip) {
 	                        $path.="../";
+
+   > Came up with a better patch for this, [[done]] --[[Joey]]
 
 ---
 
