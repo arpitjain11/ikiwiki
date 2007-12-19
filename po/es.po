@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-16 15:48-0500\n"
+"POT-Creation-Date: 2007-12-18 16:38-0500\n"
 "PO-Revision-Date: 2007-04-28 22:01+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -41,7 +41,7 @@ msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
 #: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:232 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
@@ -67,72 +67,72 @@ msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
 
-#: ../IkiWiki/Plugin/aggregate.pm:70
+#: ../IkiWiki/Plugin/aggregate.pm:71
 #, perl-format
 msgid "missing %s parameter"
 msgstr "falta el parámetro %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:98
+#: ../IkiWiki/Plugin/aggregate.pm:99
 msgid "new feed"
 msgstr "nueva entrada"
 
-#: ../IkiWiki/Plugin/aggregate.pm:112
+#: ../IkiWiki/Plugin/aggregate.pm:113
 msgid "posts"
 msgstr "entradas"
 
-#: ../IkiWiki/Plugin/aggregate.pm:114
+#: ../IkiWiki/Plugin/aggregate.pm:115
 msgid "new"
 msgstr "nuevo"
 
-#: ../IkiWiki/Plugin/aggregate.pm:231
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "%s caducada (%s días de antigüedad)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:238
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "%s caducada"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "proceso completado con éxito a %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "comprobando fuente de datos %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "no puedo encontrar la fuente de datos en %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:289
+#: ../IkiWiki/Plugin/aggregate.pm:290
 msgid "feed not found"
 msgstr "fuente de datos no encontrada"
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(una secuencia UTF-8 inválida ha sido eliminada de la fuente de datos)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:305
+#: ../IkiWiki/Plugin/aggregate.pm:306
 msgid "feed crashed XML::Feed!"
 msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:378
+#: ../IkiWiki/Plugin/aggregate.pm:379
 #, perl-format
 msgid "creating new page %s"
 msgstr "creando nueva página %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:44
+#: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
 msgstr "¡ No hay enlaces rotos !"
 
@@ -210,20 +210,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "no conozco este tipo de ordenación %s"
 
-#: ../IkiWiki/Plugin/inline.pm:193
+#: ../IkiWiki/Plugin/inline.pm:195
 msgid "Add a new post titled:"
 msgstr "Añadir una entrada nueva titulada:"
 
-#: ../IkiWiki/Plugin/inline.pm:209
+#: ../IkiWiki/Plugin/inline.pm:211
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "la plantilla %s no existe "
 
-#: ../IkiWiki/Plugin/inline.pm:240 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:454
+#: ../IkiWiki/Plugin/inline.pm:456
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
@@ -406,14 +406,18 @@ msgstr "limpiando el índice de búsquedas de hyperestraier"
 msgid "updating hyperestraier search index"
 msgstr "actualizando el índice de búsquedas de hyperstraier"
 
-#: ../IkiWiki/Plugin/shortcut.pm:24
+#: ../IkiWiki/Plugin/shortcut.pm:18
+msgid "shortcut plugin will not work without a shortcuts.mdwn"
+msgstr ""
+
+#: ../IkiWiki/Plugin/shortcut.pm:27
 msgid "missing name or url parameter"
 msgstr "shortcut necesita el parámetro 'name' ó el parámetro 'url'"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:33
+#: ../IkiWiki/Plugin/shortcut.pm:36
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "El atajo %s apunta a <i>%s</i>"

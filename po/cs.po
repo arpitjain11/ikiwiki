@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-16 15:48-0500\n"
+"POT-Creation-Date: 2007-12-18 16:38-0500\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -41,7 +41,7 @@ msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
 #: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:232 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
@@ -66,72 +66,72 @@ msgstr "Jste vyhoštěni."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
-#: ../IkiWiki/Plugin/aggregate.pm:70
+#: ../IkiWiki/Plugin/aggregate.pm:71
 #, perl-format
 msgid "missing %s parameter"
 msgstr "chybí parametr %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:98
+#: ../IkiWiki/Plugin/aggregate.pm:99
 msgid "new feed"
 msgstr "nový zdroj"
 
-#: ../IkiWiki/Plugin/aggregate.pm:112
+#: ../IkiWiki/Plugin/aggregate.pm:113
 msgid "posts"
 msgstr "příspěvky"
 
-#: ../IkiWiki/Plugin/aggregate.pm:114
+#: ../IkiWiki/Plugin/aggregate.pm:115
 msgid "new"
 msgstr "nový"
 
-#: ../IkiWiki/Plugin/aggregate.pm:231
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "expiruji %s (stará %s dnů)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:238
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "expiruji %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "zpracováno ok %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "kontroluji zdroj %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nemohu najít zdroj na %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:289
+#: ../IkiWiki/Plugin/aggregate.pm:290
 msgid "feed not found"
 msgstr "zdroj nebyl nalezen"
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(neplatné UTF-8 bylo ze zdroje odstraněno)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:305
+#: ../IkiWiki/Plugin/aggregate.pm:306
 msgid "feed crashed XML::Feed!"
 msgstr "zdroj shodil XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:378
+#: ../IkiWiki/Plugin/aggregate.pm:379
 #, perl-format
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:44
+#: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
@@ -206,20 +206,20 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:193
+#: ../IkiWiki/Plugin/inline.pm:195
 msgid "Add a new post titled:"
 msgstr "Přidat nový příspěvek nazvaný:"
 
-#: ../IkiWiki/Plugin/inline.pm:209
+#: ../IkiWiki/Plugin/inline.pm:211
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "neexistující šablona %s"
 
-#: ../IkiWiki/Plugin/inline.pm:240 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:454
+#: ../IkiWiki/Plugin/inline.pm:456
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -401,14 +401,18 @@ msgstr "čistím vyhledávací index hyperestraieru"
 msgid "updating hyperestraier search index"
 msgstr "aktualizuji vyhledávací index hyperestraieru"
 
-#: ../IkiWiki/Plugin/shortcut.pm:24
+#: ../IkiWiki/Plugin/shortcut.pm:18
+msgid "shortcut plugin will not work without a shortcuts.mdwn"
+msgstr ""
+
+#: ../IkiWiki/Plugin/shortcut.pm:27
 msgid "missing name or url parameter"
 msgstr "chybí parametr jméno nebo url"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:33
+#: ../IkiWiki/Plugin/shortcut.pm:36
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "zkratka %s odkazuje na <i>%s</i>"

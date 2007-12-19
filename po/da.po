@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-16 15:48-0500\n"
+"POT-Creation-Date: 2007-12-18 16:38-0500\n"
 "PO-Revision-Date: 2007-10-16 23:07+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -44,7 +44,7 @@ msgid "%s is not an editable page"
 msgstr "%s er ikke en redigérbar side"
 
 #: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:232 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
@@ -69,72 +69,72 @@ msgstr "Du er banlyst."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "Pålogning fejlede, måske skal du tillade infokager (cookies)?"
 
-#: ../IkiWiki/Plugin/aggregate.pm:70
+#: ../IkiWiki/Plugin/aggregate.pm:71
 #, perl-format
 msgid "missing %s parameter"
 msgstr "mangler parametren %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:98
+#: ../IkiWiki/Plugin/aggregate.pm:99
 msgid "new feed"
 msgstr "ny fødning"
 
-#: ../IkiWiki/Plugin/aggregate.pm:112
+#: ../IkiWiki/Plugin/aggregate.pm:113
 msgid "posts"
 msgstr "indlæg"
 
-#: ../IkiWiki/Plugin/aggregate.pm:114
+#: ../IkiWiki/Plugin/aggregate.pm:115
 msgid "new"
 msgstr "nyt"
 
-#: ../IkiWiki/Plugin/aggregate.pm:231
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "udløber %s (%s dage gammel)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:238
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "udløber %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "korrekt dannet ved %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "undersøger fødning %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "kunne ikke finde fødning ved %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:289
+#: ../IkiWiki/Plugin/aggregate.pm:290
 msgid "feed not found"
 msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(defekt UTF-8 fjernet fra fødning)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:305
+#: ../IkiWiki/Plugin/aggregate.pm:306
 msgid "feed crashed XML::Feed!"
 msgstr "fødning fik XML::Feed til at bryde sammen!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:378
+#: ../IkiWiki/Plugin/aggregate.pm:379
 #, perl-format
 msgid "creating new page %s"
 msgstr "opretter ny side %s"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:44
+#: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
 msgstr "Ingen henvisninger der ikker fungerer!"
 
@@ -209,20 +209,20 @@ msgstr "Skal angive url til wiki med --url når --rss eller --atom anvendes"
 msgid "unknown sort type %s"
 msgstr "ukendt sorteringsform %s"
 
-#: ../IkiWiki/Plugin/inline.pm:193
+#: ../IkiWiki/Plugin/inline.pm:195
 msgid "Add a new post titled:"
 msgstr "Tilføj nyt indlæg med følgende titel:"
 
-#: ../IkiWiki/Plugin/inline.pm:209
+#: ../IkiWiki/Plugin/inline.pm:211
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "ikke-eksisterende skabelon: %s"
 
-#: ../IkiWiki/Plugin/inline.pm:240 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Diskussion"
 
-#: ../IkiWiki/Plugin/inline.pm:454
+#: ../IkiWiki/Plugin/inline.pm:456
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client ikke fundet, pinger ikke"
 
@@ -405,14 +405,18 @@ msgstr "renser hyperestraier søgeindeks"
 msgid "updating hyperestraier search index"
 msgstr "opdaterer hyperestraier søgeindeks"
 
-#: ../IkiWiki/Plugin/shortcut.pm:24
+#: ../IkiWiki/Plugin/shortcut.pm:18
+msgid "shortcut plugin will not work without a shortcuts.mdwn"
+msgstr ""
+
+#: ../IkiWiki/Plugin/shortcut.pm:27
 msgid "missing name or url parameter"
 msgstr "manglende navn eller url parameter"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:33
+#: ../IkiWiki/Plugin/shortcut.pm:36
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "genvej %s viser til <i>%s</i>"

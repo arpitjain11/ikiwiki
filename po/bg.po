@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-16 15:48-0500\n"
+"POT-Creation-Date: 2007-12-18 16:38-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -43,7 +43,7 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:232 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
@@ -68,73 +68,73 @@ msgstr "Достъпът ви е забранен."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:70
+#: ../IkiWiki/Plugin/aggregate.pm:71
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "липсващ параметър „id” на шаблона"
 
-#: ../IkiWiki/Plugin/aggregate.pm:98
+#: ../IkiWiki/Plugin/aggregate.pm:99
 msgid "new feed"
 msgstr "нов източник"
 
-#: ../IkiWiki/Plugin/aggregate.pm:112
+#: ../IkiWiki/Plugin/aggregate.pm:113
 msgid "posts"
 msgstr "съобщения"
 
-#: ../IkiWiki/Plugin/aggregate.pm:114
+#: ../IkiWiki/Plugin/aggregate.pm:115
 msgid "new"
 msgstr "ново"
 
-#: ../IkiWiki/Plugin/aggregate.pm:231
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "премахване на „%s” (на %s дни)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:238
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "премахване на „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "е обработен нормално от %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "проверка на източника „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "не е намерен източник на адрес „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:289
+#: ../IkiWiki/Plugin/aggregate.pm:290
 #, fuzzy
 msgid "feed not found"
 msgstr "шаблонът „%s” не е намерен"
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:305
+#: ../IkiWiki/Plugin/aggregate.pm:306
 msgid "feed crashed XML::Feed!"
 msgstr "данните от източника предизвикаха грешка в модула XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:378
+#: ../IkiWiki/Plugin/aggregate.pm:379
 #, perl-format
 msgid "creating new page %s"
 msgstr "създаване на нова страницa „%s”"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:37
+#: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:44
+#: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
 msgstr "Няма „счупени” връзки!"
 
@@ -213,20 +213,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "непознат вид сортиране „%s”"
 
-#: ../IkiWiki/Plugin/inline.pm:193
+#: ../IkiWiki/Plugin/inline.pm:195
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:209
+#: ../IkiWiki/Plugin/inline.pm:211
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:240 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Дискусия"
 
-#: ../IkiWiki/Plugin/inline.pm:454
+#: ../IkiWiki/Plugin/inline.pm:456
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 
@@ -412,7 +412,11 @@ msgstr "изчистване на индекса за търсене на hypere
 msgid "updating hyperestraier search index"
 msgstr "обновяване на индекса за търсене на hyperestraier"
 
-#: ../IkiWiki/Plugin/shortcut.pm:24
+#: ../IkiWiki/Plugin/shortcut.pm:18
+msgid "shortcut plugin will not work without a shortcuts.mdwn"
+msgstr ""
+
+#: ../IkiWiki/Plugin/shortcut.pm:27
 #, fuzzy
 msgid "missing name or url parameter"
 msgstr "препратката няма указани параметрите „name” или „url”"
@@ -420,7 +424,7 @@ msgstr "препратката няма указани параметрите �
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:33
+#: ../IkiWiki/Plugin/shortcut.pm:36
 #, fuzzy, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "препратката „%s” сочи към „%s”"
