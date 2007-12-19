@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+# Configuration file for ikiwiki to build its documentation wiki.
+
+use IkiWiki::Setup::Standard {
+	wikiname => "ikiwiki",
+	srcdir => "doc",
+	destdir => "html",
+	templatedir => "templates",
+	underlaydir => "underlays/basewiki",
+	wrappers => [],
+	discussion => 0,
+	exclude => qr/\/discussion/,
+	locale => '',
+	verbose => 1,
+	syslog => 0,
+	userdir => "users",
+	usedirs => 0,
+	add_plugins => [qw{goodstuff version haiku polygen fortune}],
+}

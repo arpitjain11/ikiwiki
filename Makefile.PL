@@ -31,12 +31,7 @@ ikiwiki.out: ikiwiki.in
 	chmod +x ikiwiki.out
 
 extra_build: ikiwiki.out
-	LANG= perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out doc html --templatedir=templates \
-		--underlaydir=underlays/basewiki --nousedirs\
-		--wikiname="ikiwiki" --verbose \
-		--exclude=/discussion --no-discussion --userdir=users \
-		--plugin=goodstuff --plugin=version \
-		--plugin=haiku --plugin=polygen --plugin=fortune
+	perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -setup docwiki.setup
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 	./mdwn2man ikiwiki-makerepo 1 doc/ikiwiki-makerepo.mdwn > ikiwiki-makerepo.man
