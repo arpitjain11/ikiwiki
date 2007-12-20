@@ -1,0 +1,8 @@
+Hello. My ikiwiki is at an unreliable and unprofessional host, that still has many advantages. It's my university. One thing making sure I tolerate this is that it is free and I have ssh access. Now I have two location onto which I would like to put my website, both are of the form of http://users.university.top/user/wiki/, where "user" is different for each host. This is a problem for some of my wiki pages:
+
+I have some pages in the wiki (content) and some files in a directory parallel to the wiki directory called publicfiles/, and some images in images/. Now I want to link to files in publicfiles/ and images/ from the wiki, and I can't use absolute paths, since the "user" part is different in each URL (and will be different for each host I choose). I could use relative paths, that has worked before, so I type ../../publicfiles/file.tar.gz; but I've run into a problem again: inline pages. For inline pages where you include pages from a different level, it doesn't work.
+
+I've tried a middle ground with pages relative to the wiki top, that is the link index/../publicfiles/file.tar.gz. I think ikiwiki doesn't allow this, doing index/../ doesn't take you out of the wiki root.
+
+I found one solution, and that was to put a symlink called publicfiles into the wiki/ directory. This has to be put in place on the server I think, I don't know how this will do with ikiwiki or my remote sync.
+--ulrik Thu, 20 Dec 2007 22:07:05 +0100
