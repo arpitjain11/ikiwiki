@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-18 16:38-0500\n"
-"PO-Revision-Date: 2007-04-28 22:01+0200\n"
+"PO-Revision-Date: 2007-12-20 11:25+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr "creando nueva página %s"
 #: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s desde la página %s"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
@@ -142,24 +142,21 @@ msgid "%s parameter is required"
 msgstr "el parámetro %s es obligatorio"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:40
-#, fuzzy
 msgid "template not specified"
-msgstr "no he encontrado la plantilla %s"
+msgstr "falta indicar la plantilla (template)"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:43
-#, fuzzy
 msgid "match not specified"
-msgstr "el programa envoltorio no ha sido especificado"
+msgstr "falta indicar la coincidencia de páginas (match)"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:48
 #, perl-format
 msgid "edittemplate %s registered for %s"
-msgstr ""
+msgstr "plantilla de edición %s registrada para %s"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:110
-#, fuzzy
 msgid "failed to process"
-msgstr "se ha producido un error fatal mientras procesaba la plantilla:"
+msgstr "fallo en el proceso"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
@@ -248,18 +245,16 @@ msgid "stylesheet not found"
 msgstr "hoja de estilo no encontrada "
 
 #: ../IkiWiki/Plugin/meta.pm:114
-#, fuzzy
 msgid "redir page not found"
-msgstr "fuente de datos no encontrada"
+msgstr "falta la página a donde redirigir"
 
 #: ../IkiWiki/Plugin/meta.pm:126
-#, fuzzy
 msgid "redir cycle is not allowed"
-msgstr "fuente de datos no encontrada"
+msgstr "ciclo de redirección no permitido"
 
 #: ../IkiWiki/Plugin/meta.pm:143
 msgid "link is no longer supported"
-msgstr ""
+msgstr "el metadato link ya no puede usarse"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -408,7 +403,7 @@ msgstr "actualizando el índice de búsquedas de hyperstraier"
 
 #: ../IkiWiki/Plugin/shortcut.pm:18
 msgid "shortcut plugin will not work without a shortcuts.mdwn"
-msgstr ""
+msgstr "el complemento shortcut no funciona sin una página shortcuts.mdwn"
 
 #: ../IkiWiki/Plugin/shortcut.pm:27
 msgid "missing name or url parameter"
@@ -506,7 +501,7 @@ msgstr "no he podido crear la imagen desde el código"
 
 #: ../IkiWiki/Plugin/toggle.pm:88
 msgid "(not toggleable in preview mode)"
-msgstr ""
+msgstr "(no se puede cambiar en el modo de previsualización)"
 
 #: ../IkiWiki/Rcs/Stub.pm:68
 msgid "getctime not implemented"
