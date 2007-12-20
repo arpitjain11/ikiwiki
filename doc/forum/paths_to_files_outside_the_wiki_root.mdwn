@@ -6,3 +6,7 @@ I've tried a middle ground with pages relative to the wiki top, that is the link
 
 I found one solution, and that was to put a symlink called publicfiles into the wiki/ directory. This has to be put in place on the server I think, I don't know how this will do with ikiwiki or my remote sync.
 --ulrik Thu, 20 Dec 2007 22:07:05 +0100
+
+But not even the symlink solution works, since I have only two choices, specify relative to the ikiwiki page, or relative to the absolute webdomain root. I need to specify from wiki root :( for example the link publicfiles/ will not as I thought link always to wikiroot/publicfiles , but rather link to publicfiles in the level of the wiki you are at right now.
+
+--ulrik
