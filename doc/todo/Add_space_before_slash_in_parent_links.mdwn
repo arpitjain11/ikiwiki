@@ -11,40 +11,40 @@ After:
 Patch:
 
     diff --git a/templates/misc.tmpl b/templates/misc.tmpl
-    index 80e6d0b..184920e 100644
+    index 184920e..80e6d0b 100644
     --- a/templates/misc.tmpl
     +++ b/templates/misc.tmpl
     @@ -15,7 +15,7 @@
 
      <div class="header">
      <span>
-    -<TMPL_VAR INDEXLINK> / <TMPL_VAR TITLE>
-    +<TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
+    -<TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
+    +<TMPL_VAR INDEXLINK> / <TMPL_VAR TITLE>
      </span>
      </div>
 
     diff --git a/templates/page.tmpl b/templates/page.tmpl
-    index 1978e93..3a1ac9e 100644
+    index 3a1ac9e..1978e93 100644
     --- a/templates/page.tmpl
     +++ b/templates/page.tmpl
     @@ -17,7 +17,7 @@
      <div class="header">
      <span>
      <TMPL_LOOP NAME="PARENTLINKS">
-    -<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a> /
-    +<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/
+    -<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/
+    +<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a> /
      </TMPL_LOOP>
      <TMPL_VAR TITLE>
      </span>
     diff --git a/templates/recentchanges.tmpl b/templates/recentchanges.tmpl
-    index 4877395..e03482f 100644
+    index e03482f..4877395 100644
     --- a/templates/recentchanges.tmpl
     +++ b/templates/recentchanges.tmpl
     @@ -15,7 +15,7 @@
 
      <div class="header">
      <span>
-    -<TMPL_VAR INDEXLINK> / <TMPL_VAR TITLE>
-    +<TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
+    -<TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
+    +<TMPL_VAR INDEXLINK> / <TMPL_VAR TITLE>
      </span>
      </div>
