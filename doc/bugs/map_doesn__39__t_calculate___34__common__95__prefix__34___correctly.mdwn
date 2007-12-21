@@ -1,0 +1,68 @@
+Problem with [[plugins/map]]:
+
+# Observed behavior:
+
+## given map:
+
+\[[map pages="blog/tags/*"]]
+
+## received map:
+
+<div class="map">
+<ul>
+<li><a href="../" class="mapparent">blog</a>
+<ul>
+<li><a href="../tags/" class="mapparent">tags</a>
+<ul>
+<li>life
+</li>
+</ul>
+<ul>
+<li>tech
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+Note that you get "blog" and "tags", and they're both links, but "life" and "tech" are not links.
+
+# desired output:
+
+<div class="map">
+<ul>
+<li><a href="../tags/life/" class="mapitem">life</a>
+</li>
+<li><a href="../tags/tech/" class="mapitem">tech</a>
+</li>
+</ul>
+</div>
+
+Note that you you don't get "blog" or "tags", and "life" and "tech" are links now.
+
+# patch which appears to achieve this:
+
+<pre>
+--- map.pm.orig 2007-11-23 16:04:02.000000000 -0500
++++ map.pm      2007-12-21 00:12:15.000000000 -0500
+@@ -37,6 +37,9 @@
+                                my @b=split(/\//, $common_prefix);
+                                $common_prefix="";
+                                while (@a && @b && $a[0] eq $b[0]) {
++                                       if ($common_prefix) {
++                                         $common_prefix .= "/";
++                                       }
+                                        $common_prefix.=shift(@a);
+                                        shift @b;
+                                }
+</pre>
+
+# Discussion
+
+(Disclaimer: I don't know ikiwiki internals.)
+
+Map tries to calculate a "common prefix" between the pagespec and the page being rendered, and then later does some substitutions using the prefix.  But the path has /'s in it and the common prefix doesn't, so it never matches correctly.  So, add the /'s.
+
+-- Larry Clapp, <larry@theclapp.org>
