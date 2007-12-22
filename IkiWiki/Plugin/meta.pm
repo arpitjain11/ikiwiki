@@ -108,13 +108,16 @@ sub preprocess (@) { #{{{
 		return "" if $page ne $destpage;
 		my $safe=0;
 		if ($value !~ /^\w+:\/\//) {
-			add_depends($page, $value);
-			my $link=bestlink($page, $value);
+			my ($redir_page, $redir_anchor) = split /\#/, $value;
+
+			add_depends($page, $redir_page);
+			my $link=bestlink($page, $redir_page);
 			if (! length $link) {
 				return "[[meta ".gettext("redir page not found")."]]";
 			}
 
 			$value=urlto($link, $page);
+			$value.='#'.$redir_anchor if defined $redir_anchor;
 			$safe=1;
 
 			# redir cycle detection

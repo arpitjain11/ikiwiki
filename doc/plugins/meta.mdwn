@@ -85,6 +85,9 @@ Supported fields:
   However, this latter syntax won't be allowed if the [[htmlscrubber]] is
   enabled, since it can be used to insert unsafe content.
 
+  For both cases, an anchor to jump to inside the destination page may also be
+  specified using the common `PAGE#ANCHOR` syntax.
+
 If the field is not one of the above predefined fields, the metadata will be
 written to the generated html page as a &lt;meta&gt; header. However, this
 won't be allowed if the [[htmlscrubber]] is enabled, since it can be used to
