@@ -1,0 +1,5 @@
+After installing IkiWiki 2.16 on Mac OS X 10.4 server I attempted to use "/Library/Application\ Support/IkiWiki/Working\ Copies" as the parent of my $SRCPATH and get "skipping bad filename" errors for any .mdwn file in that directory:
+
+    skipping bad filename /Library/Application Support/IkiWiki/Working Copies/ikiwikinewt/index.mdwn
+
+Tthe .ikiwiki directory is correctly created in that directory. I switched to using a path with no spaces and it works correctly.
