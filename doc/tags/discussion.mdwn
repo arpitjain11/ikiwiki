@@ -1,3 +1,20 @@
-In another blog, I could tag a post with arbitrary words and not have to do anything else for the software to recognize it as a tag.  In Ikiwiki if you want to tag something \[[tag foo]] you also have to go to tags/ and create foo.mkdn (even if it's zero-length), because "tags are links", and links don't actually *link* if they have no destination.  This allows for customization of how you present different tag feeds, but this (to me) is too much work and more like a category than a tag.  It'd be nice if you could tell the tag plugin "if the tag target doesn't exist in tags/*, pretend it does exist and is zero-length". -- [[users/Larry_Clapp]]
+In another blog, I could tag a post with arbitrary words and not have to do
+anything else for the software to recognize it as a tag.  In Ikiwiki if you
+want to tag something \[[tag foo]] you also have to go to tags/ and create
+foo.mkdn (even if it's zero-length), because "tags are links", and links
+don't actually *link* if they have no destination.  This allows for
+customization of how you present different tag feeds, but this (to me) is
+too much work and more like a category than a tag.  It'd be nice if you
+could tell the tag plugin "if the tag target doesn't exist in tags/*,
+pretend it does exist and is zero-length". -- [[users/Larry_Clapp]]
 
-Never mind, I think I found the answer (or at least a pointer) [[here|plugins/tag/discussion/]].  Feel free to delete both these comments  :). -- [[users/Larry_Clapp]]
+Never mind, I think I found the answer (or at least a pointer)
+[[here|plugins/tag/discussion/]].  Feel free to delete both these comments
+:). -- [[users/Larry_Clapp]]
+
+> Why do you have to go create the tag? A tag (or link) pointing at a page that
+> doesn't exist _does_ still exist. ikiwiki allows you to:
+> 
+> * Create a pagespec to match pages linking to the "nonexistant" tag.
+> * Click on the tag to create the tag page, like any other incomplete link.
+> --[[Joey]]
