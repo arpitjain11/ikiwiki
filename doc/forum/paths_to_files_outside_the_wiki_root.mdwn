@@ -10,3 +10,9 @@ I found one solution, and that was to put a symlink called publicfiles into the 
 But not even the symlink solution works, since I have only two choices, specify relative to the ikiwiki page, or relative to the absolute webdomain root. I need to specify from wiki root :( for example the link publicfiles/ will not as I thought link always to wikiroot/publicfiles , but rather link to publicfiles in the level of the wiki you are at right now.
 
 --ulrik
+
+> If you put the publicfiles/ into the srcdir that ikiwiki builds the wiki
+> from, then it'll know about them and wikilinks to the files will work
+> same as wikilinks to any other files ikiwiki knows about. Perhaps
+> there's a reason you can't do that, such as the files being too large, or
+> not being available on the host you build on, I don't know. --[[Joey]]
