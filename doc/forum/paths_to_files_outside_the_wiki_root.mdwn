@@ -16,3 +16,5 @@ But not even the symlink solution works, since I have only two choices, specify 
 > same as wikilinks to any other files ikiwiki knows about. Perhaps
 > there's a reason you can't do that, such as the files being too large, or
 > not being available on the host you build on, I don't know. --[[Joey]]
+
+Yes, that would solve it. A part of me wanted though that it should be possible to put a symlink called publicfiles that basically points to wikiroot/../publicfiles, and have the ability to link to files with wikisyntax anyway. But it doesn't work since symlinks are dangerous, and.. how would ikiwiki know how to interpret a relative link, relative to source dir or dest dir (etc..)? I'll have to put all my images and publicfiles into the wiki; it is principally wrong since publicfiles are tar.gz (and a few .deb files) for software, but it is practically ok since the individual files are not more than 150K and I don't have anything against archiving them. --ulrik
