@@ -108,7 +108,8 @@ sub preprocess (@) { #{{{
 	}
 	elsif (length bestlink($params{page}, $params{link})) {
 		return htmllink($params{page}, $params{destpage},
-			$params{link}, linktext => $imgtag);
+			$params{link}, linktext => $imgtag,
+			noimageinline => 1);
 	}
 	else {
 		return $imgtag;
