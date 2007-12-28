@@ -24,10 +24,10 @@ $config{rcs} = "git";
 $config{srcdir} = "$dir/src";
 IkiWiki::checkconfig();
 
-system "cd $gitrepo && git init-db 2>/dev/null";
-system "cd $gitrepo && echo dummy >dummy; git add . 2>/dev/null";
-system "cd $gitrepo && git commit -m Initial 2>/dev/null";
-system "git clone -l -s $gitrepo $config{srcdir} 2>/dev/null";
+system "cd $gitrepo && git init >/dev/null 2>&1";
+system "cd $gitrepo && echo dummy > dummy; git add . >/dev/null 2>&1";
+system "cd $gitrepo && git commit -m Initial >/dev/null 2>&1";
+system "git clone -l -s $gitrepo $config{srcdir} >/dev/null 2>&1";
 
 my @changes;
 @changes = IkiWiki::rcs_recentchanges(3);
@@ -53,9 +53,9 @@ my $message = "Added the second page";
 
 my $test2 = readfile("t/test2.mdwn");
 writefile('test2.mdwn', $config{srcdir}, $test2);
-system "cd $config{srcdir}; git add test2.mdwn 2>/dev/null";
-system "cd $config{srcdir}; git commit -m \"$message\" test2.mdwn 2>/dev/null";
-system "cd $config{srcdir}; git push origin 2>/dev/null";
+system "cd $config{srcdir}; git add test2.mdwn >/dev/null 2>&1";
+system "cd $config{srcdir}; git commit -m \"$message\" test2.mdwn >/dev/null 2>&1";
+system "cd $config{srcdir}; git push origin >/dev/null 2>&1";
 
 @changes = IkiWiki::rcs_recentchanges(3);
 
