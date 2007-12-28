@@ -31,7 +31,7 @@ ikiwiki.out: ikiwiki.in
 	chmod +x ikiwiki.out
 
 extra_build: ikiwiki.out
-	perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -setup docwiki.setup
+	perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -setup docwiki.setup -refresh
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 	./mdwn2man ikiwiki-makerepo 1 doc/ikiwiki-makerepo.mdwn > ikiwiki-makerepo.man
