@@ -4,6 +4,9 @@ ikiwiki (2.17) UNRELEASED; urgency=low
   * redir: Support for specifying anchors.
   * img: Avoid nesting images when linking to another image. Closes: #457780
   * img: Allow the link parameter to point to an exterior url.
+  * conditional: Improve regexp testing for simple uses of pagespecs
+    that match only the page using the directive, adding 'included()'
+    and supporting negated pagespecs and added whitespace.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 19 Dec 2007 16:39:07 -0500
 

@@ -24,7 +24,7 @@ sub preprocess_if (@) { #{{{
 		# An optimisation to avoid needless looping over every page
 		# and adding of dependencies for simple uses of some of the
 		# tests.
-		$params{test} =~ /^(enabled|sourcepage|destpage)\((.*)\)$/) {
+		$params{test} =~ /^\s*\!?\s*(enabled|sourcepage|destpage|included)\((.*)\)\s*$/) {
 		add_depends($params{page}, "$params{test} and $params{page}");
 		$result=pagespec_match($params{page}, $params{test},
 				location => $params{page},
