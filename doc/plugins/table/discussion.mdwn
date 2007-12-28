@@ -5,3 +5,22 @@ Interesting that you chose to use CSV format. Seems there are advantages
 (standardisation) and disadvantages (limited to simple tables).
 
 --[[Joey]]
+
+# Patch for new header options
+
+I have written a small patch for this plugin to enable the first column as a header instead of just the first row or no header.
+
+In my version, there is three options for the header field :
+
++ **no**: no header;
++ **col**: the first column as header;
++ **row**: the first row as header (for compatibility reason, **yes** is an alternate value for this option). 
+
+Here is the links to the patch and to a patched version of the plugin :
+
++ [table.pm.patch](http://lohrun.free.fr/ikiwiki/table.pm.patch)
++ [table.pm](http://lohrun.free.fr/ikiwiki/table.pm)
+
+I hope this might be intresting for some ikiwiki user's.
+
+--[[AlexandreDupas]]
