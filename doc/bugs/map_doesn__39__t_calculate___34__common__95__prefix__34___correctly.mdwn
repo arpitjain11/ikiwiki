@@ -66,3 +66,5 @@ Note that you you don't get "blog" or "tags", and "life" and "tech" are links no
 Map tries to calculate a "common prefix" between the pagespec and the page being rendered, and then later does some substitutions using the prefix.  But the path has /'s in it and the common prefix doesn't, so it never matches correctly.  So, add the /'s.
 
 -- [[users/Larry_Clapp]]
+
+> Excellent problem description and analysis. Patch [[applied|done]] --[[Joey]]

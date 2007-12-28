@@ -37,6 +37,9 @@ sub preprocess (@) { #{{{
 				my @b=split(/\//, $common_prefix);
 				$common_prefix="";
 				while (@a && @b && $a[0] eq $b[0]) {
+					if (length $common_prefix) {
+						$common_prefix.="/";
+					}
 					$common_prefix.=shift(@a);
 					shift @b;
 				}

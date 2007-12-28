@@ -7,6 +7,8 @@ ikiwiki (2.17) UNRELEASED; urgency=low
   * conditional: Improve regexp testing for simple uses of pagespecs
     that match only the page using the directive, adding 'included()'
     and supporting negated pagespecs and added whitespace.
+  * map: Fix handling of common prefix to handle the case where it's
+    in a subdirectory. Patch by Larry Clapp.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 19 Dec 2007 16:39:07 -0500
 
