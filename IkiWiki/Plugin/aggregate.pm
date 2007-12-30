@@ -168,8 +168,6 @@ sub savestate () { #{{{
 	eval q{use HTML::Entities};
 	error($@) if $@;
 	my $newfile="$config{wikistatedir}/aggregate.new";
-	# TODO: This cleanup function could use improvement. Any newly
-	# aggregated files are left behind unrecorded, and should be deleted.
 	my $cleanup = sub { unlink($newfile) };
 	open (OUT, ">$newfile") || error("open $newfile: $!", $cleanup);
 	foreach my $data (values %feeds, values %guids) {
