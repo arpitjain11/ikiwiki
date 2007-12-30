@@ -9,6 +9,11 @@ ikiwiki (2.17) UNRELEASED; urgency=low
     and supporting negated pagespecs and added whitespace.
   * map: Fix handling of common prefix to handle the case where it's
     in a subdirectory. Patch by Larry Clapp.
+  * aggregate: Fix stupid mistake introduced when converting it to use
+    the needsbuild hook. This resulted in feeds not being removed when pages
+    were updated, and probably other bugs.
+  * aggregate: Avoid uninitialised value warning when removing a feed that
+    has an expired guid.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 19 Dec 2007 16:39:07 -0500
 

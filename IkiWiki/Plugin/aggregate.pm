@@ -54,11 +54,11 @@ sub needsbuild (@) { #{{{
 	
 	loadstate(); # if not already loaded
 
-	foreach my $page (keys %pagestate) {
-		if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+	foreach my $feed (values %feeds) {
+		if (grep { $_ eq $pagesources{$feed->{sourcepage}} } @$needsbuild) {
 			# Mark all feeds originating on this page as removable;
 			# preprocess will unmark those that still exist.
-			remove_feeds($page);
+			remove_feeds($feed->{sourcepage});
 		}
 	}
 } # }}}
@@ -182,7 +182,8 @@ sub savestate () { #{{{
 				}
 			}
 			else {
-				unlink pagefile($data->{page});
+				unlink pagefile($data->{page})
+					if exists $data->{page};
 			}
 			next;
 		}
