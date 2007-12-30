@@ -1,0 +1,16 @@
+ikiwiki 2.17 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Improved parentlinks special case for index pages.
+   * redir: Support for specifying anchors.
+   * img: Avoid nesting images when linking to another image. Closes: #[457780](http://bugs.debian.org/457780)
+   * img: Allow the link parameter to point to an exterior url.
+   * conditional: Improve regexp testing for simple uses of pagespecs
+     that match only the page using the directive, adding 'included()'
+     and supporting negated pagespecs and added whitespace.
+   * map: Fix handling of common prefix to handle the case where it's
+     in a subdirectory. Patch by Larry Clapp.
+   * aggregate: Fix stupid mistake introduced when converting it to use
+     the needsbuild hook. This resulted in feeds not being removed when pages
+     were updated, and feeds sometimes being forgotten about.
+   * aggregate: Avoid uninitialised value warning when removing a feed that
+     has an expired guid."""]]
