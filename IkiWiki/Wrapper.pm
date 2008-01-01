@@ -91,8 +91,14 @@ $envsave
 	newenviron[i]=NULL;
 	environ=newenviron;
 
-	if (setregid(getegid(), -1) != 0 || setreuid(geteuid(), -1) != 0) {
-		perror("failed to drop real uid/gid");
+	if (setregid(getegid(), -1) != 0 &&
+	    setregid(getegid(), -1) != 0) {
+		perror("failed to drop real gid");
+		exit(1);
+	}
+	if (setreuid(geteuid(), -1) != 0 &&
+	    setreuid(geteuid(), -1) != 0) {
+		perror("failed to drop real uid");
 		exit(1);
 	}
 

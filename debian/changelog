@@ -1,3 +1,11 @@
+ikiwiki (2.18) UNRELEASED; urgency=low
+
+  * Split error messages for failures to drop real uid and gid.
+  * Retry dropping uid and gid, possibly this will help with the "Resource
+    temporarily unavailable" failures I've experienced under xen.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 01 Jan 2008 18:46:59 -0500
+
 ikiwiki (2.17) unstable; urgency=low
 
   * Improved parentlinks special case for index pages.
