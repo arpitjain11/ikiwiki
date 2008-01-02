@@ -1,3 +1,13 @@
 Web-edit the [[Sandbox]], select *Preview* and watch all UTF-8 character
 getting garbled (would also get committed like this).  Or is it a problem
 with my pretty standard Ubuntu gutsy Firefox installation?  --[[tschwinge]]
+
+> Fixed, but I wish I knew what changed to break this. My guess is it might
+> have changed in the new upstream release of FormBuilder. All forms using
+> formbuilder were affected, none of them were utf-8 clean, and I know that
+> ikiwiki used to be fully utf-8 clean. The symptom of the problem is that
+> in `decode_form_utf8`, `Encode::is_utf8` says that the form field value
+> is already valid utf-8, when in fact it's not yet been decoded. So I
+> removed that line to fix it. --[[Joey]]
+
+[[tag done]]
