@@ -2,4 +2,22 @@ I would *love* to see a plugin that lets you create one or more BibTeX-formatted
 
 --[[JoshTriplett]]
 
+I work on a plugin to htmlize '.bib' files.
+
+A sample result is shown on my webpage : <http://alexandre.dupas.free.fr/code/pub/>.
+
+It features the htmlization of the bibtex with 4 types of entry supported (InProceedings, Article, MastersThesis and PhdThesis). I will add the book entry support soon. It creates for each '.bib' file an html version, and for each entry a specific page with abstract as well as an individual bib file. It lack some features like the possibility to have a pdf or ps version of the article attached.
+
+This plugin uses two templates to render the html version of each file.
+
+I have a problem to create a new page that render like any other page in the wiki. I have used the Ikiwiki's internal **genpage($$)** routine but I suppose that there is another way to do this. My method lack the backlink support for the individual entry files as well as the modification date of these file.
+
+Is it possible to create several wiki page from only one source file?
+
+The source of this plugin could be found on this page : <http://alexandre.dupas.free.fr/code/ikiwiki/> .
+
+Feel free to propose any modifications to enhance this plugin.
+
+--[[AlexandreDupas]]
+
 [[tag soc]] [[tag wishlist]]
