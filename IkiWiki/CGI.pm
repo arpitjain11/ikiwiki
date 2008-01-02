@@ -71,14 +71,10 @@ sub check_canedit ($$$;$) { #{{{
 	return $canedit;
 } #}}}
 
-sub decode_form_utf8 ($) { #{{{
-	my $form = shift;
-	foreach my $f ($form->field) {
-		next if Encode::is_utf8(scalar $form->field($f));
-		$form->field(name  => $f,
-			     value => decode_utf8($form->field($f)),
-			     force => 1,
-			    );
+sub decode_cgi_utf8 ($) { #{{{
+	my $cgi = shift;
+	foreach my $f ($cgi->param) {
+		$cgi->param($f, map { decode_utf8 $_ } $cgi->param($f));
 	}
 } #}}}
 
@@ -150,6 +146,7 @@ sub cgi_signin ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
+	decode_cgi_utf8($q);
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -172,8 +169,6 @@ sub cgi_signin ($$) { #{{{
 	}
 	$form->field(name => "do", type => "hidden", value => "signin",
 		force => 1);
-	
-	decode_form_utf8($form);
 	
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
@@ -212,6 +207,7 @@ sub cgi_prefs ($$) { #{{{
 
 	needsignin($q, $session);
 
+	decode_cgi_utf8($q);
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -236,8 +232,6 @@ sub cgi_prefs ($$) { #{{{
 		],
 	);
 	my $buttons=["Save Preferences", "Logout", "Cancel"];
-
-	decode_form_utf8($form);
 
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
@@ -303,6 +297,7 @@ sub cgi_editpage ($$) { #{{{
 	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	
+	decode_cgi_utf8($q);
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -319,8 +314,6 @@ sub cgi_editpage ($$) { #{{{
 		template => scalar template_params("editpage.tmpl"),
 		wikiname => $config{wikiname},
 	);
-	
-	decode_form_utf8($form);
 	
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,

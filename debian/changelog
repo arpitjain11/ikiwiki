@@ -3,6 +3,14 @@ ikiwiki (2.18) UNRELEASED; urgency=low
   * Split error messages for failures to drop real uid and gid.
   * Retry dropping uid and gid, possibly this will help with the "Resource
     temporarily unavailable" failures I've experienced under xen.
+  * Stop testing Encode::is_utf8 in decode_form_utf8: That doesn't work.
+  * decode_form_utf8 only fixed the utf-8 encoding for fields that were
+    registered at the time it was called, which was before the
+    formbuilder_setup hook. Fields added by the hook didn't get decoded.
+    But it can't be put after the hook either, since plugins using the hook
+    need to be able to use form values. To fix this dilemma, it's been changed
+    to a decode_cgi_utf8, which is called on the cgi query object, before the
+    form is set up, and decodes *all* cgi parameters.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 01 Jan 2008 18:46:59 -0500
 
