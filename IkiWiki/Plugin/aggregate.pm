@@ -229,7 +229,7 @@ sub expire () { #{{{
 				my $days_old = (time - $IkiWiki::pagectime{$item->{page}}) / 60 / 60 / 24;
 				if ($days_old > $feed->{expireage}) {
 					debug(sprintf(gettext("expiring %s (%s days old)"),
-						$item->{page}, $days_old));
+						$item->{page}, int($days_old)));
 					$item->{expired}=1;
 				}
 			}
