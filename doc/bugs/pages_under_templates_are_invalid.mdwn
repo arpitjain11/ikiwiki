@@ -1,0 +1,5 @@
+ages under templates/ are invalid (in fact, not only invalid, but also not well-formed) xhtml pages.
+
+This problem is especially serious when you change extension from .html to .xhtml in ikiwiki.setup and use Firefox. Since Firefox will display a error message only for not well-formed application/xhtml+xml pages.
+
+It seems that HTML::Template also support <!--Variable--> syntax instead of <Variable>.  Chaning to this syntax will solve this problem, I guess.
