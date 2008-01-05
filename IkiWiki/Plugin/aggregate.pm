@@ -165,6 +165,7 @@ sub loadstate () { #{{{
 } #}}}
 
 sub savestate () { #{{{
+	return unless $state_loaded;
 	eval q{use HTML::Entities};
 	error($@) if $@;
 	my $newfile="$config{wikistatedir}/aggregate.new";
