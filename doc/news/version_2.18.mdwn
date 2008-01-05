@@ -1,0 +1,17 @@
+ikiwiki 2.18 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Split error messages for failures to drop real uid and gid.
+   * Retry dropping uid and gid, possibly this will help with the "Resource
+     temporarily unavailable" failures I've experienced under xen.
+   * Stop testing Encode::is\_utf8 in decode\_form\_utf8: That doesn't work.
+   * decode\_form\_utf8 only fixed the utf-8 encoding for fields that were
+     registered at the time it was called, which was before the
+     formbuilder\_setup hook. Fields added by the hook didn't get decoded.
+     But it can't be put after the hook either, since plugins using the hook
+     need to be able to use form values. To fix this dilemma, it's been changed
+     to a decode\_cgi\_utf8, which is called on the cgi query object, before the
+     form is set up, and decodes *all* cgi parameters.
+   * aggregate: Only save state if it was already loaded. This didn't used to
+     matter, but after recent changes, state is not always loaded, and saving
+     would kill it.
+   * table: Fix dependency tracking for external data files. Closes: #[458387](http://bugs.debian.org/458387)"""]]
