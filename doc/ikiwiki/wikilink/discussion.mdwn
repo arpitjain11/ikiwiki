@@ -20,6 +20,9 @@ BTW, ikiwiki doesn't displays the #foo anchor in the example
 >> [[tag wishlist]]
 >> I'd like to implement such a thing.  Joey, what is this supposed to look like?
 >> `\[[anchor WHATEVER]]`?  --[[tschwinge]]
+>>> Why would you want to use a preprocessor directive for something that can
+>>> be more shortly and clearly done with plain HTML? Markdown is *designed*
+>>> to be intermixed with HTML. --[[Joey]]
 
 
 > The lack of the `#foo` anchor in the anchor example on [[wikilink]]
