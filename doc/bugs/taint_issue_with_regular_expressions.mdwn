@@ -1,0 +1,9 @@
+Built from 2.1.17 source, works fine on commandline, but not working from CGI wrapper.  Traced problem to regular expressions failing to match, specifically in contexts like the following in Render.pm:
+
+    my ($f)=/$config{wiki_file_regexp}/; # untaint
+
+It works if I replace it with:
+
+    my ($f)=/(^[-[:alnum:]_.:\/+]+$)/; # untaint
+
+which is exactly the same regular expression drawn out as a constant.  It appears that %config gets some tainted data and is itself being marked entirely tainted, which may prevent using regular expressions contained in it for untainting other data.  I'm using Perl 5.8.8.
