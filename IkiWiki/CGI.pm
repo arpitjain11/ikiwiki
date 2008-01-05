@@ -353,7 +353,7 @@ sub cgi_editpage ($$) { #{{{
 		if (defined $type && length $type && $hooks{htmlize}{$type}) {
 			$type=possibly_foolish_untaint($type);
 		}
-		elsif (defined $from) {
+		elsif (defined $from && exists $pagesources{$from}) {
 			# favor the type of linking page
 			$type=pagetype($pagesources{$from});
 		}
