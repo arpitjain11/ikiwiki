@@ -22,6 +22,7 @@ sub preprocess (@) { #{{{
 			return "[[table ".gettext("cannot find file")."]]";
 		}
 		$params{data} = readfile(srcfile($params{file}));
+		add_depends($params{page}, $params{file});
 	}
 
 	if (lc $params{format} eq 'auto') {
