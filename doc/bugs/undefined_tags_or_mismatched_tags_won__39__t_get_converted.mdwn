@@ -1,0 +1,34 @@
+If you put in something such as undefined tags or mismatched tags in .mdwn file, ikiwiki will put &lt;p>&lt;/p> around them. But ikiwiki will NOT convert < and > to &amp;lt; and &amp;gt;! 
+
+     <section>
+
+     some text
+
+     </section>
+
+
+the output html
+
+    <p><section></p> <p>some text</p> <p></section></p> 
+
+And another example of mismatched tags:
+
+
+
+     <div>
+
+     some text
+
+     </div>
+     </div>
+
+
+The out put is:
+
+    <div>
+
+    some text
+
+    </div>
+
+    <p></div></p>

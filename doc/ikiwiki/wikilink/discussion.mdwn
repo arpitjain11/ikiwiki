@@ -15,7 +15,13 @@ BTW, ikiwiki doesn't displays the #foo anchor in the example
 
 > No such syntax exists in markdown.  ikiwiki could certainly have a
 > [[preprocessor_directive|preprocessordirective]] for it, though.
->
+> --[[JoshTriplett]]
+
+>> [[tag wishlist]]
+>> I'd like to implement such a thing.  Joey, what is this supposed to look like?
+>> `\[[anchor WHATEVER]]`?  --[[tschwinge]]
+
+
 > The lack of the `#foo` anchor in the anchor example on [[wikilink]]
 > definitely looks like a bug.  --[[JoshTriplett]]
 
@@ -27,3 +33,4 @@ Considering a hierarchy like `foo/bar/bar`, I had the need to link from the
 `foo/bar/bar` page to the `foo/bar` one.  It would have been convenient to
 simply write [[wikilink]]s like `\[[../bar]]` (or even just `\[[..]]`?), but
 this doesn't work, so I had to resort to using `\[[foo/bar]]` instead.
+--[[tschwinge]]
