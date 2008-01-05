@@ -32,3 +32,15 @@ The out put is:
     </div>
 
     <p></div></p>
+
+> This is a bug in markdown. Actually, not converting `<` and `>` in tags is a
+> markdown feature -- markdown allows inserting arbirary html, even if it's
+> made-up tags. And putting paragraph tags around your `<section>` tag is
+> understandable, since markdown can't know if `<section>` is intended to
+> be a block-level tag or not. The bug is that it puts the `<p>` around the
+> trailing `<div>` -- it does know what a div is, and it should know that's
+> illegal and not do it. I've filed a [bug report](http://bugs.debian.org/459269) about that issue
+> alone. If you feel the other things you brought up are bugs, please talk
+> to the markdown maintainer. --[[Joey]]
+
+[[tag done]]
