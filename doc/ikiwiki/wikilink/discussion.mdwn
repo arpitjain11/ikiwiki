@@ -20,10 +20,22 @@ BTW, ikiwiki doesn't displays the #foo anchor in the example
 >> [[tag wishlist]]
 >> I'd like to implement such a thing.  Joey, what is this supposed to look like?
 >> `\[[anchor WHATEVER]]`?  --[[tschwinge]]
+
 >>> Why would you want to use a preprocessor directive for something that can
 >>> be more shortly and clearly done with plain HTML? Markdown is *designed*
 >>> to be intermixed with HTML. --[[Joey]]
 
+>>>> I tend to disagree.
+>>>> It just doesn't feel right for me to put HTML code straight into Markdown files.
+>>>>
+>>>> Quoting <http://daringfireball.net/projects/markdown/>:
+>>>>
+>>>>> The idea is that a Markdown-formatted document should be publishable as-is, as plain text, *without looking like it’s been marked up with tags or formatting instructions*.
+>>>>
+>>>> Also, in theorie at least, Markdown might also support other output formats than HTML.
+>>>> Those wouldn't know about how to deal with the intermingled HTML code.
+>>>>
+>>>> --[[tschwinge]]
 
 > The lack of the `#foo` anchor in the anchor example on [[wikilink]]
 > definitely looks like a bug.  --[[JoshTriplett]]
