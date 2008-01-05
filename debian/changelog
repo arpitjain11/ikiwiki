@@ -11,7 +11,9 @@ ikiwiki (2.18) UNRELEASED; urgency=low
     need to be able to use form values. To fix this dilemma, it's been changed
     to a decode_cgi_utf8, which is called on the cgi query object, before the
     form is set up, and decodes *all* cgi parameters.
-  * aggregate: Only save state if it was already loaded.
+  * aggregate: Only save state if it was already loaded. This didn't used to 
+    matter, but after recent changes, state is not always loaded, and saving
+    would kill it.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 01 Jan 2008 18:46:59 -0500
 
