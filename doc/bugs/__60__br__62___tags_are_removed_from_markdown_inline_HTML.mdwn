@@ -8,3 +8,15 @@ I am trying to add a post address to a document:
 As you can see, the `<br/>` is being removed. I disabled [[htmlscrubber]], but that was not it. The [markdown Dingus](http://daringfireball.net/projects/markdown/dingus) on its homepage processes the inline HTML just fine.
 
 I tried searching the web and wiki but could not find any information on why <br/> would be removed.
+
+> It does work if you use `<br />`:
+>
+> First line<br />
+> Second line
+>
+> Or, as we've just been told in #ikiwiki: put two spaces at the end of the first line.
+>
+> First line  
+> Second line
+>
+> --[[tschwinge]]
