@@ -15,7 +15,7 @@ sub canedit ($$) { #{{{
 	my $session=shift;
 
 	my $discussion=gettext("discussion");
-	return "" if $page=~/\/\Q$discussion\E$/;
+	return "" if $page=~/(\/|^)\Q$discussion\E$/;
 	return undef;
 } #}}}
 
