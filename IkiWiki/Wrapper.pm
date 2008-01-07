@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Cwd q{abs_path};
-use Data::Dumper;
+use Data::Dumper ;
 use IkiWiki;
 
 package IkiWiki;

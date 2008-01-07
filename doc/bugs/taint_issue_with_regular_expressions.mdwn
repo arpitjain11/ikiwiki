@@ -29,3 +29,7 @@ without any payload of the actual regexp, and that would also certainly also hav
     'wiki_file_regexp' => qr/(?-xism:(^[-[:alnum:]_.:\/+]+$))/
 
 This would call for at most an installation prerequisite of Data::Dumper >= 1.121.  A look at the module's changelog shows that no intervening versions were actually released, so 1.121 would be the minimal good one.
+
+> You must have a very old version of perl there. This seems to be a bug in
+> data dumper before 2.11, which didn't properly dump q// objects. Prereq
+> added, [[done]] --[[Joey]]
