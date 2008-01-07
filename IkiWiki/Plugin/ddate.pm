@@ -6,7 +6,7 @@ use IkiWiki 2.00;
 no warnings;
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "skeleton", call => \&checkconfig);
+	hook(type => "checkconfig", id => "ddate", call => \&checkconfig);
 } # }}}
 
 sub checkconfig () { #{{{

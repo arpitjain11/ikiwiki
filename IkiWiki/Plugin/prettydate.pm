@@ -40,7 +40,7 @@ sub default_timetable {
 }
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "skeleton", call => \&checkconfig);
+	hook(type => "checkconfig", id => "prettydate", call => \&checkconfig);
 } # }}}
 
 sub checkconfig () { #{{{

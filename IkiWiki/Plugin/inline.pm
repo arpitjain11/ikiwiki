@@ -14,7 +14,7 @@ my %page_numfeeds;
 sub import { #{{{
 	hook(type => "getopt", id => "inline", call => \&getopt);
 	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
-	hook(type => "sessioncgi", id => "skeleton", call => \&sessioncgi);
+	hook(type => "sessioncgi", id => "inline", call => \&sessioncgi);
 	hook(type => "preprocess", id => "inline", 
 		call => \&IkiWiki::preprocess_inline);
 	hook(type => "pagetemplate", id => "inline",
