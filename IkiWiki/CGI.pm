@@ -718,7 +718,7 @@ sub cgi (;$$) { #{{{
 	elsif ($do eq 'create' || $do eq 'edit') {
 		cgi_editpage($q, $session);
 	}
-	elsif (defined $session->param("postsignin")) {
+	elsif (defined $session->param("postsignin") || $do eq 'postsignin') {
 		cgi_postsignin($q, $session);
 	}
 	else {
