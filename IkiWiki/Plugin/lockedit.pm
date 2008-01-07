@@ -22,7 +22,7 @@ sub canedit ($$) { #{{{
 	foreach my $admin (@{$config{adminuser}}) {
 		if (pagespec_match($page, IkiWiki::userinfo_get($admin, "locked_pages"))) {
 			if (! defined $user ||
-			    ! userinfo_get($session->param("name"), "regdate")) {
+			    ! IkiWiki::userinfo_get($session->param("name"), "regdate")) {
 				return sub { IkiWiki::needsignin($cgi, $session) };
 			}
 			else {

@@ -19,7 +19,7 @@ sub canedit ($$$) { #{{{
 	# hook runs last, so that any hooks that don't need the user to
 	# signin can override this.
         if (! defined $session->param("name") ||
-            ! userinfo_get($session->param("name"), "regdate")) {
+            ! IkiWiki::userinfo_get($session->param("name"), "regdate")) {
 		return sub { IkiWiki::needsignin($cgi, $session) };
 	}
 	else {
