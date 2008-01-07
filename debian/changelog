@@ -9,6 +9,8 @@ ikiwiki (2.19) UNRELEASED; urgency=low
   * opendiscussion: allow editing of the toplevel discussion page,
     and, indirectly, allow creating new discussion pages.
   * Add a prereq on Data::Dumper 2.11 or better, needed to dump q// objects.
+  * htmlscrubber: Further work around #365971 by adding tags for 'br/', 'hr/'
+    and 'p/'.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 07 Jan 2008 15:35:16 -0500
 

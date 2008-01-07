@@ -24,11 +24,11 @@ sub scrubber { #{{{
 	# With html 5 video and audio tags added.
 	$_scrubber = HTML::Scrubber->new(
 		allow => [qw{
-			a abbr acronym address area b big blockquote br
+			a abbr acronym address area b big blockquote br br/
 			button caption center cite code col colgroup dd del
 			dfn dir div dl dt em fieldset font form h1 h2 h3 h4
-			h5 h6 hr i img input ins kbd label legend li map
-			menu ol optgroup option p pre q s samp select small
+			h5 h6 hr hr/ i img input ins kbd label legend li map
+			menu ol optgroup option p p/ pre q s samp select small
 			span strike strong sub sup table tbody td textarea
 			tfoot th thead tr tt u ul var
 			video audio
