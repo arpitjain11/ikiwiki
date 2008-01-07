@@ -57,7 +57,6 @@ sub check_canedit ($$$;$) { #{{{
 	my $nonfatal=shift;
 	
 	my $canedit;
-	my $callback;
 	run_hooks(canedit => sub {
 		return if defined $canedit;
 		my $ret=shift->($page, $q, $session);
@@ -66,12 +65,12 @@ sub check_canedit ($$$;$) { #{{{
 				$canedit=1;
 			}
 			elsif (ref $ret eq 'CODE') {
+				$ret->() unless $nonfatal;
 				$canedit=0;
-				$callback->() unless $nonfatal;
 			}
 			elsif (defined $ret) {
-				$canedit=0;
 				error($ret) unless $nonfatal;
+				$canedit=0;
 			}
 		}
 	});
