@@ -1,3 +1,11 @@
+ikiwiki (2.19) UNRELEASED; urgency=low
+
+  * Only try postsignin if no other action matched. Fixes a bug where the
+    user goes back from the signin screen and does something else.
+  * Improve behavior when trying to sign in with no cookies.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 07 Jan 2008 15:35:16 -0500
+
 ikiwiki (2.18) unstable; urgency=low
 
   * Split error messages for failures to drop real uid and gid.

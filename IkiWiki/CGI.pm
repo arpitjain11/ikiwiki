@@ -133,9 +133,7 @@ sub needsignin ($$) { #{{{
 
 	if (! defined $session->param("name") ||
 	    ! userinfo_get($session->param("name"), "regdate")) {
-	    	if (! defined $session->param("postsignin")) {
-			$session->param(postsignin => $ENV{QUERY_STRING});
-		}
+		$session->param(postsignin => $ENV{QUERY_STRING});
 		cgi_signin($q, $session);
 		cgi_savesession($session);
 		exit;
@@ -195,9 +193,7 @@ sub cgi_postsignin ($$) { #{{{
 		exit;
 	}
 	else {
-		# This can occur, for example, if a user went to the signin
-		# url via a bookmark.
-		redirect($q, $config{url});
+		error(gettext("login failed, perhaps you need to turn on cookies?"));
 	}
 } #}}}
 
@@ -710,17 +706,14 @@ sub cgi (;$$) { #{{{
 		cgi_signin($q, $session);
 		cgi_savesession($session);
 	}
-	elsif (defined $session->param("postsignin")) {
-		cgi_postsignin($q, $session);
-	}
 	elsif ($do eq 'prefs') {
 		cgi_prefs($q, $session);
 	}
 	elsif ($do eq 'create' || $do eq 'edit') {
 		cgi_editpage($q, $session);
 	}
-	elsif ($do eq 'postsignin') {
-		error(gettext("login failed, perhaps you need to turn on cookies?"));
+	elsif (defined $session->param("postsignin")) {
+		cgi_postsignin($q, $session);
 	}
 	else {
 		error("unknown do parameter");
