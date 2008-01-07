@@ -1,0 +1,51 @@
+[[tag wishlist]]
+
+HTML::Template is an okay templating kit, but it lacks a lot of powerful
+features and thus makes it rather hard to give an ikiwiki site a consistent
+look. If you browse the templates provided in the tarball, you'll notice that
+more than one of them contain the `<html>` tag, which is unnecessary.
+
+Maybe it's just me, I also find HTML::Template cumbersome to use, due in part
+to its use of capital letters.
+
+Finally, the software seems unmaintained: the mailing list and searchable
+archives linked from
+<http://html-template.sourceforge.net/html_template.html#frequently%20asked%20questions>
+are broken and the author has not replied to my query in months.
+
+I would love to see ikiwiki use the [Template
+Toolkit](http://template-toolkit.org/) as templating engine.
+
+One major reason for TT is its use of slots, a concept I first encountered
+with Zope Page Templates and never wanted to miss it again. Let me quickly
+illustrate, using the HTML::Template syntax for simplicity. Traditionally,
+templating is done with includes:
+
+    Page A                              Page B
+    <TMPL_INCLUDE header>               <TMPL_INCLUDE header>
+    this is page A                      this is page B
+    <TMPL_INCLUDE footer>               <TMPL_INCLUDE footer>
+
+This involves four pages, and if you mistype "footer" on page B,
+it'll be broken in potentially subtle ways.
+
+Now look at the approach with slots:
+
+    MainTemplate
+    This is the header
+    <TMPL_SLOT content>
+    This is the footer
+
+    Page A                              Page B
+    <TMPL_USE MainTemplate>             <TMPL_USE MainTemplate>
+      <TMPL_FILL content>                 <TMPL_FILL content>  
+        This is page A                       This is page B  
+      </TMPL_FILL>                        </TMPL_FILL>     
+    </TMPL_USE>                         </TMPL_USE>
+
+As soon as you think about more structure pages with various slots
+to fill, I am sure you can see the appeal of that approach. If not,
+here is some more documentation: <http://wiki.zope.org/ZPT/METALSpecification11>
+
+I would be glad to volunteer time to make this switch happen, such as rewrite
+the templates. I'd prefer not having to touch Perl though...
