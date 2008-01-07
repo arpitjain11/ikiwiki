@@ -3,7 +3,11 @@ ikiwiki (2.19) UNRELEASED; urgency=low
   * Only try postsignin if no other action matched. Fixes a bug where the
     user goes back from the signin screen and does something else.
   * Improve behavior when trying to sign in with no cookies.
-  * opendiscussion: allow editing of the toplevel discussion page
+  * Improved the canedit hook interface, allowing a callback function to be
+    returned (and not run in some cases) rather than the plugins directly
+    forcing a user to log in.
+  * opendiscussion: allow editing of the toplevel discussion page,
+    and, indirectly, allow creating new discussion pages.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 07 Jan 2008 15:35:16 -0500
 

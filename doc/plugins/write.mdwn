@@ -246,10 +246,16 @@ a page can be edited using the web interface (commits from revision control
 bypass it). When a page is edited, each registered canedit hook is called
 in turn, and passed the page name, a CGI object, and a session object.
 
-If edit can proceed, the hook should return "". If the edit is not allowed
-by this hook, the hook should return an error message for the user to see.
 If the hook has no opinion about whether the edit can proceed, return
-`undef`, and the next plugin will be asked to decide.
+`undef`, and the next plugin will be asked to decide. If edit can proceed,
+the hook should return "". If the edit is not allowed by this hook, the
+hook should return an error message for the user to see, or a function 
+that can be run to log the user in or perform other action necessary for
+them to be able to edit the page.
+
+This hook should avoid directly redirecting the user to a signin page,
+since it's sometimes used to test to see which pages in a set of pages a
+user can edit.
 
 ### editcontent
 

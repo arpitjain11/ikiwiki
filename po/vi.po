@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-18 16:38-0500\n"
+"POT-Creation-Date: 2008-01-07 16:30-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -16,57 +16,57 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
 
-#: ../IkiWiki/CGI.pm:171
+#: ../IkiWiki/CGI.pm:173
 msgid "You need to log in first."
 msgstr "Trước tiên bạn cần phải đăng nhập."
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:203
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:232
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 #, fuzzy
 msgid "Preferences"
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:293
+#: ../IkiWiki/CGI.pm:290
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:350
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "thảo luận"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:483
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:568 ../IkiWiki/CGI.pm:616
+#: ../IkiWiki/CGI.pm:501 ../IkiWiki/CGI.pm:520 ../IkiWiki/CGI.pm:530
+#: ../IkiWiki/CGI.pm:564 ../IkiWiki/CGI.pm:612
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
 
-#: ../IkiWiki/CGI.pm:710
+#: ../IkiWiki/CGI.pm:706
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
-
-#: ../IkiWiki/CGI.pm:730
-msgid "login failed, perhaps you need to turn on cookies?"
-msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:71
 #, fuzzy, perl-format
@@ -235,7 +235,7 @@ msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 msgid "failed to run dot"
 msgstr "linkmap không chạy dot được"
 
-#: ../IkiWiki/Plugin/lockedit.pm:25
+#: ../IkiWiki/Plugin/lockedit.pm:29
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "%s bị %s khoá nên không thể sửa được"
@@ -250,17 +250,17 @@ msgstr "lỗi nạp mô-đun perl Markdown.pm (%s) hay « /usr/bin/markdown » (
 msgid "stylesheet not found"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/meta.pm:114
+#: ../IkiWiki/Plugin/meta.pm:116
 #, fuzzy
 msgid "redir page not found"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/meta.pm:126
+#: ../IkiWiki/Plugin/meta.pm:129
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/meta.pm:143
+#: ../IkiWiki/Plugin/meta.pm:146
 msgid "link is no longer supported"
 msgstr ""
 
@@ -472,19 +472,19 @@ msgstr "linkmap không chạy dot được"
 msgid "cannot find file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:63
+#: ../IkiWiki/Plugin/table.pm:64
 msgid "unknown data format"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:71
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "empty data"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:91
+#: ../IkiWiki/Plugin/table.pm:92
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:125
+#: ../IkiWiki/Plugin/table.pm:126
 #, fuzzy, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "lỗi ghi %s: %s"
@@ -644,13 +644,13 @@ msgid "failed to write %s: %s"
 msgstr "lỗi ghi %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:109
+#: ../IkiWiki/Wrapper.pm:115
 #, perl-format
 msgid "failed to compile %s"
 msgstr "lỗi biên dịch %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:129
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s đã được tạo ra"

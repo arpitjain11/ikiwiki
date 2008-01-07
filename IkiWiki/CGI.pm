@@ -20,7 +20,7 @@ sub printheader ($) { #{{{
 	}
 
 } #}}}
-	
+
 sub showform ($$$$) { #{{{
 	my $form=shift;
 	my $buttons=shift;
@@ -57,15 +57,22 @@ sub check_canedit ($$$;$) { #{{{
 	my $nonfatal=shift;
 	
 	my $canedit;
+	my $callback;
 	run_hooks(canedit => sub {
 		return if defined $canedit;
 		my $ret=shift->($page, $q, $session);
-		if (defined $ret && $ret eq "") {
-			$canedit=1;
-		}
-		elsif (defined $ret) {
-			$canedit=0;
-			error($ret) unless $nonfatal;
+		if (defined $ret) {
+			if ($ret eq "") {
+				$canedit=1;
+			}
+			elsif (ref $ret eq 'CODE') {
+				$canedit=0;
+				$callback->() unless $nonfatal;
+			}
+			elsif (defined $ret) {
+				$canedit=0;
+				error($ret) unless $nonfatal;
+			}
 		}
 	});
 	return $canedit;

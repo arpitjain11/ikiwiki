@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-18 16:38-0500\n"
+"POT-Creation-Date: 2008-01-07 16:30-0500\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -15,57 +15,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:171
+#: ../IkiWiki/CGI.pm:173
 msgid "You need to log in first."
 msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશે."
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:203
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr "પ્રવેશ નિષ્ફળ, કદાચ તમારી કુકીઓ સક્રિય બનાવવી પડશે?"
+
+#: ../IkiWiki/CGI.pm:232
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 #, fuzzy
 msgid "Preferences"
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:293
+#: ../IkiWiki/CGI.pm:290
 msgid "Preferences saved."
 msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 
-#: ../IkiWiki/CGI.pm:350
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:483
 #, perl-format
 msgid "creating %s"
 msgstr "%s બનાવે છે"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:568 ../IkiWiki/CGI.pm:616
+#: ../IkiWiki/CGI.pm:501 ../IkiWiki/CGI.pm:520 ../IkiWiki/CGI.pm:530
+#: ../IkiWiki/CGI.pm:564 ../IkiWiki/CGI.pm:612
 #, perl-format
 msgid "editing %s"
 msgstr "%s સુધારે છે"
 
-#: ../IkiWiki/CGI.pm:710
+#: ../IkiWiki/CGI.pm:706
 msgid "You are banned."
 msgstr "તમારા પર પ્રતિબંધ છે."
-
-#: ../IkiWiki/CGI.pm:730
-msgid "login failed, perhaps you need to turn on cookies?"
-msgstr "પ્રવેશ નિષ્ફળ, કદાચ તમારી કુકીઓ સક્રિય બનાવવી પડશે?"
 
 #: ../IkiWiki/Plugin/aggregate.pm:71
 #, perl-format
@@ -228,7 +228,7 @@ msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવા
 msgid "failed to run dot"
 msgstr "ડોટ ચલાવવામાં નિષ્ફળ"
 
-#: ../IkiWiki/Plugin/lockedit.pm:25
+#: ../IkiWiki/Plugin/lockedit.pm:29
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "%s એ %s દ્વારા તાળું મરાયેલ છે અને તેમાં સુધારો કરી શકાશે નહી"
@@ -242,17 +242,17 @@ msgstr "Markdown.pm પર્લ મોડ્યુલ (%s) અથવા /usr/bi
 msgid "stylesheet not found"
 msgstr "સ્ટાઇલશીટ મળ્યું નહી"
 
-#: ../IkiWiki/Plugin/meta.pm:114
+#: ../IkiWiki/Plugin/meta.pm:116
 #, fuzzy
 msgid "redir page not found"
 msgstr "ફીડ મળ્યું નહી"
 
-#: ../IkiWiki/Plugin/meta.pm:126
+#: ../IkiWiki/Plugin/meta.pm:129
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "ફીડ મળ્યું નહી"
 
-#: ../IkiWiki/Plugin/meta.pm:143
+#: ../IkiWiki/Plugin/meta.pm:146
 msgid "link is no longer supported"
 msgstr ""
 
@@ -458,19 +458,19 @@ msgstr "php ચલાવવામાં નિષ્ફળ"
 msgid "cannot find file"
 msgstr "ફાઇલ મળી શકી નહી"
 
-#: ../IkiWiki/Plugin/table.pm:63
+#: ../IkiWiki/Plugin/table.pm:64
 msgid "unknown data format"
 msgstr "અજાણ્યો માહિતી પ્રકાર"
 
-#: ../IkiWiki/Plugin/table.pm:71
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "empty data"
 msgstr "ખાલી માહિતી"
 
-#: ../IkiWiki/Plugin/table.pm:91
+#: ../IkiWiki/Plugin/table.pm:92
 msgid "Direct data download"
 msgstr "સીધી માહિતી ડાઉનલોડ"
 
-#: ../IkiWiki/Plugin/table.pm:125
+#: ../IkiWiki/Plugin/table.pm:126
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "ઉકેલવાનું લીટી %d પર નિષ્ફળ: %s"
@@ -626,13 +626,13 @@ msgid "failed to write %s: %s"
 msgstr "%s લખવામાં નિષ્ફળ: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:109
+#: ../IkiWiki/Wrapper.pm:115
 #, perl-format
 msgid "failed to compile %s"
 msgstr "%s કમ્પાઇલ કરવામાં નિષ્ફળ"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:129
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "successfully generated %s"
 msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-18 16:38-0500\n"
+"POT-Creation-Date: 2008-01-07 16:30-0500\n"
 "PO-Revision-Date: 2007-08-28 21:05+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -17,57 +17,57 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../IkiWiki/CGI.pm:171
+#: ../IkiWiki/CGI.pm:173
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:203
+msgid "login failed, perhaps you need to turn on cookies?"
+msgstr ""
+"Échec de l'identification, vous devriez peut-être autoriser les cookies."
+
+#: ../IkiWiki/CGI.pm:232
 msgid "Login"
 msgstr "S’identifier"
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:234
 msgid "Admin"
 msgstr "Administrateur"
 
-#: ../IkiWiki/CGI.pm:293
+#: ../IkiWiki/CGI.pm:290
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:350
+#: ../IkiWiki/CGI.pm:346
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:441 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:487
+#: ../IkiWiki/CGI.pm:483
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:505 ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:534
-#: ../IkiWiki/CGI.pm:568 ../IkiWiki/CGI.pm:616
+#: ../IkiWiki/CGI.pm:501 ../IkiWiki/CGI.pm:520 ../IkiWiki/CGI.pm:530
+#: ../IkiWiki/CGI.pm:564 ../IkiWiki/CGI.pm:612
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:710
+#: ../IkiWiki/CGI.pm:706
 msgid "You are banned."
 msgstr "Vous avez été banni."
-
-#: ../IkiWiki/CGI.pm:730
-msgid "login failed, perhaps you need to turn on cookies?"
-msgstr ""
-"Échec de l'identification, vous devriez peut-être autoriser les cookies."
 
 #: ../IkiWiki/Plugin/aggregate.pm:71
 #, perl-format
@@ -232,7 +232,7 @@ msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 msgid "failed to run dot"
 msgstr "Échec du lancement de dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:25
+#: ../IkiWiki/Plugin/lockedit.pm:29
 #, perl-format
 msgid "%s is locked by %s and cannot be edited"
 msgstr "%s est verrouillé par %s et ne peut être édité"
@@ -248,17 +248,17 @@ msgstr ""
 msgid "stylesheet not found"
 msgstr "Feuille de style introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:114
+#: ../IkiWiki/Plugin/meta.pm:116
 #, fuzzy
 msgid "redir page not found"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:126
+#: ../IkiWiki/Plugin/meta.pm:129
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:143
+#: ../IkiWiki/Plugin/meta.pm:146
 msgid "link is no longer supported"
 msgstr ""
 
@@ -463,19 +463,19 @@ msgstr "Échec du lancement de php"
 msgid "cannot find file"
 msgstr "Fichier introuvable"
 
-#: ../IkiWiki/Plugin/table.pm:63
+#: ../IkiWiki/Plugin/table.pm:64
 msgid "unknown data format"
 msgstr "Format de données inconnu"
 
-#: ../IkiWiki/Plugin/table.pm:71
+#: ../IkiWiki/Plugin/table.pm:72
 msgid "empty data"
 msgstr "Données vides"
 
-#: ../IkiWiki/Plugin/table.pm:91
+#: ../IkiWiki/Plugin/table.pm:92
 msgid "Direct data download"
 msgstr "Téléchargement direct des données"
 
-#: ../IkiWiki/Plugin/table.pm:125
+#: ../IkiWiki/Plugin/table.pm:126
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "Erreur d'analyse à la ligne %d : %s"
@@ -635,13 +635,13 @@ msgid "failed to write %s: %s"
 msgstr "Échec de l'écriture de %s : %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:109
+#: ../IkiWiki/Wrapper.pm:115
 #, perl-format
 msgid "failed to compile %s"
 msgstr "Échec de la compilation de %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:129
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s a été créé avec succès"
