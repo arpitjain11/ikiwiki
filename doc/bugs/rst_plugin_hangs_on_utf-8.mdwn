@@ -1,0 +1,14 @@
+When rendering an rst page with utf-8 characters in (specifically "£"), ikiwiki seems to hang.
+
+Killing with Control-C gives the following traceback:
+
+    Traceback (most recent call last):
+      File "/usr/lib/ikiwiki/plugins/rst", line 97, in ?
+        handler.handle_request()
+      File "/usr/lib/ikiwiki/plugins/rst", line 74, in handle_request
+        ret = rpc_read(processor)
+      File "/usr/lib/ikiwiki/plugins/rst", line 42, in rpc_read
+        line = sys.stdin.readline()
+    KeyboardInterrupt
+
+rst2html on the same file has no problem rendering the file as expected.
