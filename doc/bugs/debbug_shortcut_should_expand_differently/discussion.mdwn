@@ -1,0 +1,14 @@
+You could change this on your wiki by modifying the shortcut definition :
+
+Currently this is:
+
+    
+    [shortcut name=debbug url="http://bugs.debian.org/%s" desc="bug #%s"]
+    
+
+You just have to use:
+
+    
+    [shortcut name=debbug url="http://bugs.debian.org/%s" desc="#%s"]
+    
+(do use double bracket here, I do not understand why the shortcuts [[ikiwiki/PreprocessorDirective]] are parsed inside the code block).
