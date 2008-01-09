@@ -613,6 +613,8 @@ sub htmlize ($$$) { #{{{
 	my $page=shift;
 	my $type=shift;
 	my $content=shift;
+	
+	my $oneline = $content !~ /\n/;
 
 	if (exists $hooks{htmlize}{$type}) {
 		$content=$hooks{htmlize}{$type}{call}->(
@@ -623,8 +625,6 @@ sub htmlize ($$$) { #{{{
 	else {
 		error("htmlization of $type not supported");
 	}
-
-	my $oneline = $content !~ /\n/;
 
 	run_hooks(sanitize => sub {
 		$content=shift->(
