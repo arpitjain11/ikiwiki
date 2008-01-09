@@ -32,6 +32,11 @@ sub preprocess (@) { #{{{
 	}
 
 	push @{$links{$params{page}}}, $image;
+	# optimisation: detect scan mode, and avoid generating the image
+	if (! defined wantarray) {
+		return;
+	}
+
 	my $file = bestlink($params{page}, $image);
 
 	my $dir = $params{page};
