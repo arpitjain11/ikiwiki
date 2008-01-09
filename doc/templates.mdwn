@@ -26,9 +26,9 @@ Using a template works like this:
 This fills out the [[note]] template, filling in the `text` field with
 the specified value, and inserts the result into the page.
 
-A value can include any markup that would be allowed in the wiki page
-outside the template. Triple-quoting the value even allows quotes to be
-included in it. Combined with multi-line quoted values, this allows for
+Generally, a value can include any markup that would be allowed in the wiki
+page outside the template. Triple-quoting the value even allows quotes to
+be included in it. Combined with multi-line quoted values, this allows for
 large chunks of marked up text to be embedded into a template:
 
         \[[template id=foo name="Sally" color="green" age=8 notes="""
@@ -48,7 +48,10 @@ module, which allows for some fairly complex things to be done. Consult its
 documentation for the full syntax, but all you really need to know are a
 few things:
 
-* To insert the value of a variable, use `<TMPL_VAR variable>`.
+* To insert the value of a variable, use `<TMPL_VAR variable>`. Wiki markup
+  in the value will first be converted to html.
+* To insert the raw value of a variable, with wiki markup not yet converted
+  to html, use `<TMPL_VAR raw_variable>`.
 * To make a block of text conditional on a variable being set use
   `<TMPL_IF NAME="variable">text</TMPL_IF>`.
 * To use one block of text if a variable is set and a second if it's not,
@@ -57,7 +60,7 @@ few things:
 Here's a sample template:
 
         <span class="infobox">
-        Name: <TMPL_VAR name><br />
+        Name: [[<TMPL_VAR raw_name>]]<br />
         Age: <TMPL_VAR age><br />
         <TMPL_IF NAME="color">
         Favorite color: <TMPL_VAR color><br />
@@ -74,3 +77,7 @@ The filled out template will be formatted the same as the rest of the page
 that contains it, so you can include WikiLinks and all other forms of wiki
 markup in the template. Note though that such WikiLinks will not show up as
 backlinks to the page that uses the template.
+
+Note the use of "raw_name" inside the [[WikiLink]] generator. This ensures
+that if the name contains something that might be mistaken for wiki markup,
+it's not converted to html before being processed as a [[WikiLink]].

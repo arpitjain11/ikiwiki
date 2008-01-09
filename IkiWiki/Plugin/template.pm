@@ -46,13 +46,20 @@ sub preprocess (@) { #{{{
 	}
 
 	foreach my $param (keys %params) {
-		$template->param($param => $params{$param});
+		if ($template->query(name => $param)) {
+			$template->param($param =>
+				IkiWiki::htmlize($params{page},
+					pagetype($pagesources{$params{page}}),
+					$params{$param}));
+		}
+		if ($template->query(name => "raw_$param")) {
+			$template->param("raw_$param" => $params{$param});
+		}
 	}
 
-	return IkiWiki::htmlize($params{page}, pagetype($pagesources{$params{page}}),
-		IkiWiki::preprocess($params{page}, $params{destpage},
+	return IkiWiki::preprocess($params{page}, $params{destpage},
 		IkiWiki::filter($params{page}, $params{destpage},
-		$template->output)));
+		$template->output));
 } # }}}
 
 1

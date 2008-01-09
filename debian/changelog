@@ -14,6 +14,9 @@ ikiwiki (2.20) UNRELEASED; urgency=low
     meta link.
   * Fix support for the case where metadata appears after an inline directive
     that needs to use it. This was broken in version 2.16.
+  * template: Remove bogus htmlize pass added in 2.16.
+  * template: Htmlize template variables, but also provide a raw version
+    via `<TMPL_VAR raw_variable>`.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 09 Jan 2008 00:34:46 -0500
 
