@@ -17,10 +17,10 @@ ikiwiki (2.20) UNRELEASED; urgency=low
   * template: Remove bogus htmlize pass added in 2.16.
   * template: Htmlize template variables, but also provide a raw version
     via `<TMPL_VAR raw_variable>`.
-  * mdwn: When htmlizing text, if it's a single line with no newline,
-    remove the enclosing paragraph and newline markdown wraps it in.
-    This allows removing several hacks around this markdown behavior from
-    other plugins that htmlize fragements of pages.
+  * When htmlizing text, if the input is a single line with no newline,
+    and the htmlizer (such as markdown and textile) generates a html
+    paragraph, remove it. This allows removing several hacks around this
+    markdown behavior from other plugins that htmlize fragements of pages.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 09 Jan 2008 00:34:46 -0500
 

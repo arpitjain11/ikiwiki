@@ -624,12 +624,22 @@ sub htmlize ($$$) { #{{{
 		error("htmlization of $type not supported");
 	}
 
+	my $oneline = $content !~ /\n/;
+
 	run_hooks(sanitize => sub {
 		$content=shift->(
 			page => $page,
 			content => $content,
 		);
 	});
+	
+	if ($oneline) {
+		# hack to get rid of enclosing junk added by markdown
+		# and other htmlizers
+		$content=~s/^<p>//i;
+		$content=~s/<\/p>$//i;
+		chomp $content;
+	}
 
 	return $content;
 } #}}}

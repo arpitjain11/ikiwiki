@@ -41,8 +41,6 @@ sub htmlize (@) { #{{{
 		require Encode;
 	}
 	
-	my $oneline = $content !~ /\n/;
-
 	# Workaround for perl bug (#376329)
 	$content=Encode::encode_utf8($content);
 	eval {$content=&$markdown_sub($content)};
@@ -51,13 +49,6 @@ sub htmlize (@) { #{{{
 		print STDERR $@ if $@;
 	}
 	$content=Encode::decode_utf8($content);
-
-	if ($oneline) {
-		# hack to get rid of enclosing junk added by markdown
-		$content=~s!^<p>!!;
-		$content=~s!</p>$!!;
-		chomp $content;
-	}
 
 	return $content;
 } # }}}
