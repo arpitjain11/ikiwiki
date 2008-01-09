@@ -43,6 +43,23 @@ sub scrub ($) { #{{{
 	}
 } #}}}
 
+sub htmlize ($$$) { #{{{
+	my $page = shift;
+	my $destpage = shift;
+	my $text = shift;
+
+	$text=IkiWiki::htmlize($page, pagetype($pagesources{$page}),
+		IkiWiki::linkify($page, $destpage,
+		IkiWiki::preprocess($page, $destpage, $text)));
+
+	# hack to get rid of enclosing junk added by markdown
+	$text=~s!^<p>!!;
+	$text=~s!</p>$!!;
+	chomp $text;
+
+	return $text;
+}
+
 sub preprocess (@) { #{{{
 	return "" unless @_;
 	my %params=@_;
@@ -193,12 +210,12 @@ sub pagetemplate (@) { #{{{
 	if (exists $license{$page} && $template->query(name => "license") &&
 	    ($page eq $destpage || ! exists $license{$destpage} ||
 	     $license{$page} ne $license{$destpage})) {
-		$template->param(license => IkiWiki::linkify($page, $destpage, $license{$page}));
+		$template->param(license => htmlize($page, $destpage, $license{$page}));
 	}
 	if (exists $copyright{$page} && $template->query(name => "copyright") &&
 	    ($page eq $destpage || ! exists $copyright{$destpage} ||
 	     $copyright{$page} ne $copyright{$destpage})) {
-		$template->param(copyright => IkiWiki::linkify($page, $destpage, $copyright{$page}));
+		$template->param(copyright => htmlize($page, $destpage, $copyright{$page}));
 	}
 } # }}}
 

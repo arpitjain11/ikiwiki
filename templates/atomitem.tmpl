@@ -1,25 +1,44 @@
 <entry>
 	<title><TMPL_VAR TITLE></title>
-	<TMPL_IF NAME="AUTHOR">
-	<author><TMPL_VAR AUTHOR ESCAPE=HTML></author>
-	<TMPL_ELSE>
-	</TMPL_IF>
 	<id><TMPL_VAR URL></id>
 	<link href="<TMPL_VAR PERMALINK>"/>
+	<TMPL_IF NAME="AUTHOR">
+	 <author><name><TMPL_VAR AUTHOR ESCAPE=HTML></name></author>
+	</TMPL_IF>
+	<TMPL_IF NAME="COPYRIGHT">
+	 <rights type="xhtml" xml:lang="en">
+	  <div xmlns="http://www.w3.org/1999/xhtml">
+	   <TMPL_IF NAME="LICENSE">
+	    <TMPL_VAR LICENSE>
+	    <TMPL_VAR COPYRIGHT>
+	   <TMPL_ELSE>
+	    <TMPL_VAR COPYRIGHT>
+	   </TMPL_IF>
+	  </div>
+	 </rights>
+	<TMPL_ELSE>
+	 <TMPL_IF NAME="LICENSE">
+	  <rights type="xhtml" xml:lang="en">
+	   <div xmlns="http://www.w3.org/1999/xhtml">
+	    <TMPL_VAR LICENSE>
+	   </div>
+	  </rights>
+	 </TMPL_IF>
+	</TMPL_IF>
 	<TMPL_IF NAME="CATEGORIES">
-	<TMPL_LOOP NAME="CATEGORIES">
-	<category term="<TMPL_VAR CATEGORY>" />
-	</TMPL_LOOP>
+	 <TMPL_LOOP NAME="CATEGORIES">
+	  <category term="<TMPL_VAR CATEGORY>" />
+	 </TMPL_LOOP>
 	</TMPL_IF>
 	<updated><TMPL_VAR MDATE_3339></updated>
 	<published><TMPL_VAR CDATE_3339></published>
 	<TMPL_IF NAME="ENCLOSURE">
-	<link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
+	 <link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
 	<TMPL_ELSE>
-	<content type="xhtml" xml:lang="en">
-	 <div xmlns="http://www.w3.org/1999/xhtml">
-	 <TMPL_VAR CONTENT>
-	 </div>
-	</content>
+	 <content type="xhtml" xml:lang="en">
+	  <div xmlns="http://www.w3.org/1999/xhtml">
+	  <TMPL_VAR CONTENT>
+	  </div>
+	 </content>
 	</TMPL_IF>
 </entry>
