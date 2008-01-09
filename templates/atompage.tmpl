@@ -5,8 +5,32 @@
 <link href="<TMPL_VAR PAGEURL>"/>
 <link href="<TMPL_VAR FEEDURL>" rel="self"/>
 <author>
-<name><TMPL_VAR WIKINAME></name>
+<TMPL_IF NAME="AUTHOR">
+ <name><TMPL_VAR AUTHOR></name>
+<TMPL_ELSE>
+ <name><TMPL_VAR WIKINAME></name>
+</TMPL_IF>
 </author>
+<TMPL_IF NAME="COPYRIGHT">
+ <rights type="xhtml" xml:lang="en">
+  <div xmlns="http://www.w3.org/1999/xhtml">
+   <TMPL_IF NAME="LICENSE">
+    <TMPL_VAR LICENSE>
+    <TMPL_VAR COPYRIGHT>
+   <TMPL_ELSE>
+    <TMPL_VAR COPYRIGHT>
+   </TMPL_IF>
+  </div>
+ </rights>
+<TMPL_ELSE>
+ <TMPL_IF NAME="LICENSE">
+  <rights type="xhtml" xml:lang="en">
+   <div xmlns="http://www.w3.org/1999/xhtml">
+    <TMPL_VAR LICENSE>
+   </div>
+  </rights>
+ </TMPL_IF>
+</TMPL_IF>
 <id><TMPL_VAR PAGEURL></id>
 <subtitle type="html"><TMPL_VAR FEEDDESC ESCAPE=HTML></subtitle>
 <generator uri="http://ikiwiki.info/" version="<TMPL_VAR VERSION>">ikiwiki</generator>
