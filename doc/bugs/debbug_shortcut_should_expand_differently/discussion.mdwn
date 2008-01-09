@@ -1,0 +1,11 @@
+You could change this on your wiki by modifying the shortcut definition :
+
+Currently this is:
+
+    [shortcut name=debbug url="http://bugs.debian.org/%s" desc="bug #%s"]
+
+You just have to use:
+
+    [shortcut name=debbug url="http://bugs.debian.org/%s" desc="#%s"]
+
+(I use single bracket here beacause of [[bugs/wiki_links_still_processed_inside_code_blocks]])
