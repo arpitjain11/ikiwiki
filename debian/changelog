@@ -2,7 +2,18 @@ ikiwiki (2.20) UNRELEASED; urgency=low
 
   * inline: Add copyright/license info on a per-post basis to atom
     feeds if available. (rss doesn't allow such info on a per-post basis)
+  * Also include overall copyright/license and author info in atom feeds if
+    available.
   * meta: Allow copyright/license metadata to contain arbitrary markup.
+  * Call preprocessor hooks in void context during the scan pass. This allows
+    the hook to determine if it's just scanning, and avoid expensive
+    operations.
+  * img: Detect scan mode and avoid generating and writing the image file
+    during it, for a 2x speedup.
+  * meta: Run in scan mode again (more intelligently) and re-add support for
+    meta link.
+  * Fix support for the case where metadata appears after an inline directive.
+    This was broken in version 2.16.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 09 Jan 2008 00:34:46 -0500
 

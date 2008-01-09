@@ -5,10 +5,6 @@ ikiwiki (2.16) unstable; urgency=low
   Redirection pages have been left behind for these moved pages temporarily,
   and will be removed later.
 
-  The meta plugin no longer supports setting internal or external links
-  with "meta link". Instead, use "meta openid" for openid links, and use tags
-  for in-wiki invisible links between pages.
-
   If you use the calendar plugin, ikiwiki is now smarter and your nightly
   cron job to update the wiki doesn't need to rebuild everything. Just pass
   --refresh to ikiwiki in the cron job and it will update only pages that

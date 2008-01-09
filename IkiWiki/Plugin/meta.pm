@@ -16,7 +16,7 @@ my %copyright;
 
 sub import { #{{{
 	hook(type => "needsbuild", id => "meta", call => \&needsbuild);
-	hook(type => "preprocess", id => "meta", call => \&preprocess);
+	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
 	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
 } # }}}
 
@@ -77,12 +77,9 @@ sub preprocess (@) { #{{{
 	# fully encoded.
 	$value=decode_entities($value);
 
+	# Metadata collection that needs to happen during the scan pass.
 	if ($key eq 'title') {
 		$title{$page}=HTML::Entities::encode_numeric($value);
-	}
-	elsif ($key eq 'permalink') {
-		$permalink{$page}=$value;
-		push @{$meta{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
 	}
 	elsif ($key eq 'date') {
 		eval q{use Date::Parse};
@@ -90,6 +87,40 @@ sub preprocess (@) { #{{{
 			my $time = str2time($value);
 			$IkiWiki::pagectime{$page}=$time if defined $time;
 		}
+	}
+	elsif ($key eq 'license') {
+		push @{$meta{$page}}, '<link rel="license" href="#page_license" />';
+		$license{$page}=$value;
+		return "";
+	}
+	elsif ($key eq 'copyright') {
+		push @{$meta{$page}}, '<link rel="copyright" href="#page_copyright" />';
+		$copyright{$page}=$value;
+		return "";
+	}
+	elsif ($key eq 'link' && ! %params) {
+		# hidden WikiLink
+		push @{$links{$page}}, $value;
+		return "";
+	}
+	elsif ($key eq 'author') {
+		$author{$page}=$value;
+		# fallthorough
+	}
+	elsif ($key eq 'authorurl') {
+		$authorurl{$page}=$value;
+		# fallthrough
+	}
+
+	if (! defined wantarray) {
+		# avoid collecting duplicate data during scan pass
+		return;
+	}
+
+	# Metadata collection that happens only during preprocessing pass.
+	if ($key eq 'permalink') {
+		$permalink{$page}=$value;
+		push @{$meta{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
 	}
 	elsif ($key eq 'stylesheet') {
 		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
@@ -112,14 +143,6 @@ sub preprocess (@) { #{{{
 		}
 		push @{$meta{$page}}, '<link href="'.encode_entities($value).
 			'" rel="openid.delegate" />';
-	}
-	elsif ($key eq 'license') {
-		push @{$meta{$page}}, '<link rel="license" href="#page_license" />';
-		$license{$page}=$value;
-	}
-	elsif ($key eq 'copyright') {
-		push @{$meta{$page}}, '<link rel="copyright" href="#page_copyright" />';
-		$copyright{$page}=$value;
 	}
 	elsif ($key eq 'redir') {
 		return "" if $page ne $destpage;
@@ -160,17 +183,17 @@ sub preprocess (@) { #{{{
 		push @{$meta{$page}}, $redir;
 	}
 	elsif ($key eq 'link') {
-		return "[[meta ".gettext("link is no longer supported")."]]";
+		if (%params) {
+			$meta{$page}.=scrub("<link href=\"".encode_entities($value)."\" ".
+				join(" ", map {
+					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
+				} keys %params).
+				" />\n");
+		}
 	}
 	else {
 		push @{$meta{$page}}, scrub('<meta name="'.encode_entities($key).
 			'" content="'.encode_entities($value).'" />');
-		if ($key eq 'author') {
-			$author{$page}=$value;
-		}
-		elsif ($key eq 'authorurl') {
-			$authorurl{$page}=$value;
-		}
 	}
 
 	return "";
@@ -197,15 +220,6 @@ sub pagetemplate (@) { #{{{
 		if exists $author{$page} && $template->query(name => "author");
 	$template->param(authorurl => $authorurl{$page})
 		if exists $authorurl{$page} && $template->query(name => "authorurl");
-		
-	if ($page ne $destpage &&
-	    ((exists $license{$page}   && ! exists $license{$destpage}) ||
-	     (exists $copyright{$page} && ! exists $copyright{$destpage}))) {
-		# Force a scan of the destpage to get its copyright/license
-		# info. If the info is declared after an inline, it will
-		# otherwise not be available at this point.
-		IkiWiki::scan($pagesources{$destpage});
-	}
 
 	if (exists $license{$page} && $template->query(name => "license") &&
 	    ($page eq $destpage || ! exists $license{$destpage} ||

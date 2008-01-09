@@ -152,7 +152,12 @@ sub preprocess_inline (@) { #{{{
 	# that if they are removed or otherwise changed, the inline will be
 	# sure to be updated.
 	add_depends($params{page}, join(" or ", @list));
-	
+	# Force a scan of this page so any metadata that appears after this
+	# inline directive is available when inlining. The page normally 
+	# wouldn't be scanned if it's only being rebuilt because of a
+	# depedency.
+	IkiWiki::scan($pagesources{$params{page}});
+
 	my $feednum="";
 
 	my $feedid=join("\0", map { $_."\0".$params{$_} } sort keys %params);

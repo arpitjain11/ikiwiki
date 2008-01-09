@@ -69,6 +69,21 @@ Supported fields:
   	\\[[meta openid="http://joeyh.myopenid.com/"
 	server="http://www.myopenid.com/server"]]
 
+* link
+
+  Specifies a link to another page. This can be used as a way to make the
+  wiki treat one page as linking to another without displaying a user-visible
+  [[ikiwiki/WikiLink]]:
+
+       \[[meta link=otherpage]]
+
+  It can also be used to insert a html &lt;link&gt; tag. For example:
+
+       \[[meta link="http://joeyh.myopenid.com/" rel="openid.delegate"]]
+
+  However, this latter syntax won't be allowed if the [[htmlscrubber]] is
+  enabled, since it can be used to insert unsafe content.
+
 * redir
 
   Causes the page to redirect to another page in the wiki.

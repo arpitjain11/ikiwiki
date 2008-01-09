@@ -123,7 +123,9 @@ An optional "scan" parameter, if set to a true value, makes the hook be
 called during the preliminary scan that ikiwiki makes of updated pages,
 before begining to render pages. This parameter should be set to true if
 the hook modifies data in `%links`. Note that doing so will make the hook
-be run twice per page build, so avoid doing it for expensive hooks.
+be run twice per page build, so avoid doing it for expensive hooks. (As an
+optimisation, if your preprocessor hook is called in a void contets, you
+can assume it's being run in scan mode.)
 
 Note that if the [[htmlscrubber]] is enabled, html in
 [[ikiwiki/PreProcessorDirective]] output is sanitised, which may limit what
