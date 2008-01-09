@@ -275,7 +275,7 @@ sub cgi_prefs ($$) { #{{{
 	}
 	elsif ($form->submitted eq 'Save Preferences' && $form->validate) {
 		foreach my $field (qw(email subscriptions)) {
-			if (defined $form->field($field) && length $form->field($field)) {
+			if (defined $form->field($field)) {
 				userinfo_set($user_name, $field, $form->field($field)) ||
 					error("failed to set $field");
 			}
