@@ -129,6 +129,7 @@ sub delete (@) { #{{{
 my $state_loaded=0;
 sub loadstate () { #{{{
 	return if $state_loaded;
+	$state_loaded=1;
 	if (-e "$config{wikistatedir}/aggregate") {
 		open(IN, "$config{wikistatedir}/aggregate") ||
 			die "$config{wikistatedir}/aggregate: $!";
@@ -159,8 +160,6 @@ sub loadstate () { #{{{
 		}
 
 		close IN;
-		
-		$state_loaded=1;
 	}
 } #}}}
 
@@ -303,6 +302,13 @@ sub aggregate () { #{{{
 			$f=eval{XML::Feed->parse(\$content)};
 		}
 		if ($@) {
+			# Another possibility is badly escaped entities.
+			$feed->{message}.=" ".sprintf(gettext("(feed entities escaped)"));
+			$content=~s/\&(?!amp)(\w+);/&amp;$1;/g;
+			$content=Encode::decode_utf8($content);
+			$f=eval{XML::Feed->parse(\$content)};
+		}
+		if ($@) {
 			$feed->{message}=gettext("feed crashed XML::Feed!")." ($@)";
 			$feed->{error}=1;
 			debug($feed->{message});
@@ -318,6 +324,7 @@ sub aggregate () { #{{{
 		foreach my $entry ($f->entries) {
 			add_page(
 				feed => $feed,
+				copyright => $f->copyright,
 				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 				link => $entry->link,
 				content => defined $entry->content->body ? $entry->content->body : "",
@@ -397,6 +404,8 @@ sub add_page (@) { #{{{
 	$template->param(content => htmlescape(htmlabs($params{content}, $feed->{feedurl})));
 	$template->param(name => $feed->{name});
 	$template->param(url => $feed->{url});
+	$template->param(copyright => $params{copyright})
+		if defined $params{copyright} && length $params{copyright};
 	$template->param(permalink => urlabs($params{link}, $feed->{feedurl}))
 		if defined $params{link};
 	if (ref $feed->{tags}) {
