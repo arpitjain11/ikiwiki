@@ -81,13 +81,6 @@ sub preprocess (@) { #{{{
 	if ($key eq 'title') {
 		$title{$page}=HTML::Entities::encode_numeric($value);
 	}
-	elsif ($key eq 'date') {
-		eval q{use Date::Parse};
-		if (! $@) {
-			my $time = str2time($value);
-			$IkiWiki::pagectime{$page}=$time if defined $time;
-		}
-	}
 	elsif ($key eq 'license') {
 		push @{$meta{$page}}, '<link rel="license" href="#page_license" />';
 		$license{$page}=$value;
@@ -118,7 +111,14 @@ sub preprocess (@) { #{{{
 	}
 
 	# Metadata collection that happens only during preprocessing pass.
-	if ($key eq 'permalink') {
+	if ($key eq 'date') {
+		eval q{use Date::Parse};
+		if (! $@) {
+			my $time = str2time($value);
+			$IkiWiki::pagectime{$page}=$time if defined $time;
+		}
+	}
+	elsif ($key eq 'permalink') {
 		$permalink{$page}=$value;
 		push @{$meta{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
 	}
