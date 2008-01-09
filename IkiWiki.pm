@@ -723,12 +723,25 @@ sub preprocess ($$$;$$) { #{{{
 					$command, $page, $preprocessing{$page}).
 				"]]";
 			}
-			my $ret=$hooks{preprocess}{$command}{call}->(
-				@params,
-				page => $page,
-				destpage => $destpage,
-				preview => $preprocess_preview,
-			);
+			my $ret;
+			if (! $scan) {
+				$ret=$hooks{preprocess}{$command}{call}->(
+					@params,
+					page => $page,
+					destpage => $destpage,
+					preview => $preprocess_preview,
+				);
+			}
+			else {
+				# use void context during scan pass
+				$hooks{preprocess}{$command}{call}->(
+					@params,
+					page => $page,
+					destpage => $destpage,
+					preview => $preprocess_preview,
+				);
+				$ret="";
+			}
 			$preprocessing{$page}--;
 			return $ret;
 		}
