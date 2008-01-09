@@ -46,18 +46,10 @@ sub scrub ($) { #{{{
 sub htmlize ($$$) { #{{{
 	my $page = shift;
 	my $destpage = shift;
-	my $text = shift;
 
-	$text=IkiWiki::htmlize($page, pagetype($pagesources{$page}),
+	return IkiWiki::htmlize($page, pagetype($pagesources{$page}),
 		IkiWiki::linkify($page, $destpage,
-		IkiWiki::preprocess($page, $destpage, $text)));
-
-	# hack to get rid of enclosing junk added by markdown
-	$text=~s!^<p>!!;
-	$text=~s!</p>$!!;
-	chomp $text;
-
-	return $text;
+		IkiWiki::preprocess($page, $destpage, shift)));
 }
 
 sub preprocess (@) { #{{{
@@ -184,7 +176,7 @@ sub preprocess (@) { #{{{
 	}
 	elsif ($key eq 'link') {
 		if (%params) {
-			$meta{$page}.=scrub("<link href=\"".encode_entities($value)."\" ".
+			push @{$meta{$page}}, scrub("<link href=\"".encode_entities($value)."\" ".
 				join(" ", map {
 					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
 				} keys %params).

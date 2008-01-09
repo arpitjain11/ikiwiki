@@ -174,17 +174,9 @@ sub genrow ($$$@) { #{{{
 sub htmlize ($$$) { #{{{
 	my $page = shift;
 	my $destpage = shift;
-	my $text = shift;
 
-	$text=IkiWiki::htmlize($page, pagetype($pagesources{$page}),
-		IkiWiki::preprocess($page, $destpage, $text));
-
-	# hack to get rid of enclosing junk added by markdown
-	$text=~s!^<p>!!;
-	$text=~s!</p>$!!;
-	chomp $text;
-
-	return $text;
+	return IkiWiki::htmlize($page, pagetype($pagesources{$page}),
+		IkiWiki::preprocess($page, $destpage, shift));
 }
 
 1
