@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-07 16:30-0500\n"
+"POT-Creation-Date: 2008-01-09 02:42-0500\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -15,54 +15,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:173
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr "Nejprve se musíte přihlásit."
 
-#: ../IkiWiki/CGI.pm:203
+#: ../IkiWiki/CGI.pm:202
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "přihlášení selhalo; možná si musíte povolit cookies?"
 
-#: ../IkiWiki/CGI.pm:232
+#: ../IkiWiki/CGI.pm:231
 msgid "Login"
 msgstr "Přihlášení"
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:232
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Admin"
 msgstr "Správce"
 
-#: ../IkiWiki/CGI.pm:290
+#: ../IkiWiki/CGI.pm:289
 msgid "Preferences saved."
 msgstr "Nastavení uloženo."
 
-#: ../IkiWiki/CGI.pm:346
+#: ../IkiWiki/CGI.pm:345
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s není editovatelná stránka"
 
-#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:436 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:239 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "diskuse"
 
-#: ../IkiWiki/CGI.pm:483
+#: ../IkiWiki/CGI.pm:482
 #, perl-format
 msgid "creating %s"
 msgstr "vytvářím %s"
 
-#: ../IkiWiki/CGI.pm:501 ../IkiWiki/CGI.pm:520 ../IkiWiki/CGI.pm:530
-#: ../IkiWiki/CGI.pm:564 ../IkiWiki/CGI.pm:612
+#: ../IkiWiki/CGI.pm:500 ../IkiWiki/CGI.pm:519 ../IkiWiki/CGI.pm:529
+#: ../IkiWiki/CGI.pm:563 ../IkiWiki/CGI.pm:611
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:705
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
@@ -83,45 +83,50 @@ msgstr "příspěvky"
 msgid "new"
 msgstr "nový"
 
-#: ../IkiWiki/Plugin/aggregate.pm:232
+#: ../IkiWiki/Plugin/aggregate.pm:231
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "expiruji %s (stará %s dnů)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:239
+#: ../IkiWiki/Plugin/aggregate.pm:238
 #, perl-format
 msgid "expiring %s"
 msgstr "expiruji %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:265
+#: ../IkiWiki/Plugin/aggregate.pm:264
 #, perl-format
 msgid "processed ok at %s"
 msgstr "zpracováno ok %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:270
+#: ../IkiWiki/Plugin/aggregate.pm:269
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "kontroluji zdroj %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:275
+#: ../IkiWiki/Plugin/aggregate.pm:274
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nemohu najít zdroj na %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:290
+#: ../IkiWiki/Plugin/aggregate.pm:289
 msgid "feed not found"
 msgstr "zdroj nebyl nalezen"
 
-#: ../IkiWiki/Plugin/aggregate.pm:301
+#: ../IkiWiki/Plugin/aggregate.pm:300
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(neplatné UTF-8 bylo ze zdroje odstraněno)"
 
 #: ../IkiWiki/Plugin/aggregate.pm:306
+#, perl-format
+msgid "(feed entities escaped)"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:312
 msgid "feed crashed XML::Feed!"
 msgstr "zdroj shodil XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:379
+#: ../IkiWiki/Plugin/aggregate.pm:386
 #, perl-format
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
@@ -176,23 +181,23 @@ msgstr "nepodařilo se spustit graphviz"
 msgid "prog not a valid graphviz program"
 msgstr "program není platným programem graphviz"
 
-#: ../IkiWiki/Plugin/img.pm:48
+#: ../IkiWiki/Plugin/img.pm:53
 #, perl-format
 msgid "bad size \"%s\""
 msgstr "chybná velikost \"%s\""
 
-#: ../IkiWiki/Plugin/img.pm:58 ../IkiWiki/Plugin/img.pm:62
-#: ../IkiWiki/Plugin/img.pm:79
+#: ../IkiWiki/Plugin/img.pm:63 ../IkiWiki/Plugin/img.pm:67
+#: ../IkiWiki/Plugin/img.pm:84
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr "nelze číst %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:65
+#: ../IkiWiki/Plugin/img.pm:70
 #, perl-format
 msgid "failed to resize: %s"
 msgstr "nelze změnit velikost: %s"
 
-#: ../IkiWiki/Plugin/img.pm:96
+#: ../IkiWiki/Plugin/img.pm:101
 #, fuzzy, perl-format
 msgid "failed to determine size of image %s"
 msgstr "nelze změnit velikost: %s"
@@ -206,20 +211,20 @@ msgstr "Při používání --rss nebo --atom musíte pomocí --url zadat url k w
 msgid "unknown sort type %s"
 msgstr "neznámý typ řazení %s"
 
-#: ../IkiWiki/Plugin/inline.pm:195
+#: ../IkiWiki/Plugin/inline.pm:200
 msgid "Add a new post titled:"
 msgstr "Přidat nový příspěvek nazvaný:"
 
-#: ../IkiWiki/Plugin/inline.pm:211
+#: ../IkiWiki/Plugin/inline.pm:216
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "neexistující šablona %s"
 
-#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:247 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Diskuse"
 
-#: ../IkiWiki/Plugin/inline.pm:456
+#: ../IkiWiki/Plugin/inline.pm:461
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nebyl nalezen, nepinkám"
 
@@ -238,23 +243,19 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "selhalo nahrání perlového modulu Markdown.pm (%s) nebo /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:84
+#: ../IkiWiki/Plugin/meta.pm:132
 msgid "stylesheet not found"
 msgstr "styl nebyl nalezen"
 
-#: ../IkiWiki/Plugin/meta.pm:116
+#: ../IkiWiki/Plugin/meta.pm:156
 #, fuzzy
 msgid "redir page not found"
 msgstr "zdroj nebyl nalezen"
 
-#: ../IkiWiki/Plugin/meta.pm:129
+#: ../IkiWiki/Plugin/meta.pm:169
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "zdroj nebyl nalezen"
-
-#: ../IkiWiki/Plugin/meta.pm:146
-msgid "link is no longer supported"
-msgstr ""
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"

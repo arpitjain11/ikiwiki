@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-07 16:30-0500\n"
+"POT-Creation-Date: 2008-01-09 02:42-0500\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -16,55 +16,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../IkiWiki/CGI.pm:173
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr "Първо трябва да влезете."
 
-#: ../IkiWiki/CGI.pm:203
+#: ../IkiWiki/CGI.pm:202
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:232
+#: ../IkiWiki/CGI.pm:231
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:232
 #, fuzzy
 msgid "Preferences"
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:290
+#: ../IkiWiki/CGI.pm:289
 msgid "Preferences saved."
 msgstr "Предпочитанията са запазени."
 
-#: ../IkiWiki/CGI.pm:346
+#: ../IkiWiki/CGI.pm:345
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:436 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:239 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "дискусия"
 
-#: ../IkiWiki/CGI.pm:483
+#: ../IkiWiki/CGI.pm:482
 #, perl-format
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/CGI.pm:501 ../IkiWiki/CGI.pm:520 ../IkiWiki/CGI.pm:530
-#: ../IkiWiki/CGI.pm:564 ../IkiWiki/CGI.pm:612
+#: ../IkiWiki/CGI.pm:500 ../IkiWiki/CGI.pm:519 ../IkiWiki/CGI.pm:529
+#: ../IkiWiki/CGI.pm:563 ../IkiWiki/CGI.pm:611
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:705
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
@@ -85,46 +85,51 @@ msgstr "съобщения"
 msgid "new"
 msgstr "ново"
 
-#: ../IkiWiki/Plugin/aggregate.pm:232
+#: ../IkiWiki/Plugin/aggregate.pm:231
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "премахване на „%s” (на %s дни)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:239
+#: ../IkiWiki/Plugin/aggregate.pm:238
 #, perl-format
 msgid "expiring %s"
 msgstr "премахване на „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:265
+#: ../IkiWiki/Plugin/aggregate.pm:264
 #, perl-format
 msgid "processed ok at %s"
 msgstr "е обработен нормално от %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:270
+#: ../IkiWiki/Plugin/aggregate.pm:269
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "проверка на източника „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:275
+#: ../IkiWiki/Plugin/aggregate.pm:274
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "не е намерен източник на адрес „%s”"
 
-#: ../IkiWiki/Plugin/aggregate.pm:290
+#: ../IkiWiki/Plugin/aggregate.pm:289
 #, fuzzy
 msgid "feed not found"
 msgstr "шаблонът „%s” не е намерен"
 
-#: ../IkiWiki/Plugin/aggregate.pm:301
+#: ../IkiWiki/Plugin/aggregate.pm:300
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:306
+#, perl-format
+msgid "(feed entities escaped)"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:312
 msgid "feed crashed XML::Feed!"
 msgstr "данните от източника предизвикаха грешка в модула XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:379
+#: ../IkiWiki/Plugin/aggregate.pm:386
 #, perl-format
 msgid "creating new page %s"
 msgstr "създаване на нова страницa „%s”"
@@ -181,23 +186,23 @@ msgstr "приставката „linkmap”: грешка при изпълне
 msgid "prog not a valid graphviz program"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:48
+#: ../IkiWiki/Plugin/img.pm:53
 #, perl-format
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:58 ../IkiWiki/Plugin/img.pm:62
-#: ../IkiWiki/Plugin/img.pm:79
+#: ../IkiWiki/Plugin/img.pm:63 ../IkiWiki/Plugin/img.pm:67
+#: ../IkiWiki/Plugin/img.pm:84
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
 msgstr "грешка при запис на файла „%s”: %s"
 
-#: ../IkiWiki/Plugin/img.pm:65
+#: ../IkiWiki/Plugin/img.pm:70
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
 msgstr "грешка при запис на файла „%s”: %s"
 
-#: ../IkiWiki/Plugin/img.pm:96
+#: ../IkiWiki/Plugin/img.pm:101
 #, fuzzy, perl-format
 msgid "failed to determine size of image %s"
 msgstr "грешка при запис на файла „%s”: %s"
@@ -213,20 +218,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "непознат вид сортиране „%s”"
 
-#: ../IkiWiki/Plugin/inline.pm:195
+#: ../IkiWiki/Plugin/inline.pm:200
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:211
+#: ../IkiWiki/Plugin/inline.pm:216
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:247 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Дискусия"
 
-#: ../IkiWiki/Plugin/inline.pm:456
+#: ../IkiWiki/Plugin/inline.pm:461
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 
@@ -248,24 +253,20 @@ msgstr ""
 "грешка при зареждането на perl-модула „Markdown.pm” (%s) или „/usr/bin/"
 "markdown” (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:84
+#: ../IkiWiki/Plugin/meta.pm:132
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "шаблонът „%s” не е намерен"
 
-#: ../IkiWiki/Plugin/meta.pm:116
+#: ../IkiWiki/Plugin/meta.pm:156
 #, fuzzy
 msgid "redir page not found"
 msgstr "шаблонът „%s” не е намерен"
 
-#: ../IkiWiki/Plugin/meta.pm:129
+#: ../IkiWiki/Plugin/meta.pm:169
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "шаблонът „%s” не е намерен"
-
-#: ../IkiWiki/Plugin/meta.pm:146
-msgid "link is no longer supported"
-msgstr ""
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"

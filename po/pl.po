@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-07 16:30-0500\n"
+"POT-Creation-Date: 2008-01-09 02:42-0500\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -16,57 +16,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:173
+#: ../IkiWiki/CGI.pm:172
 msgid "You need to log in first."
 msgstr "Proszę najpierw zalogować się."
 
-#: ../IkiWiki/CGI.pm:203
+#: ../IkiWiki/CGI.pm:202
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Nieudane logowanie. Proszę sprawdzić czy w przeglądarce włączone są "
 "ciasteczka (ang. cookies)"
 
-#: ../IkiWiki/CGI.pm:232
+#: ../IkiWiki/CGI.pm:231
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:232
 #, fuzzy
 msgid "Preferences"
 msgstr "Preferencje zapisane."
 
-#: ../IkiWiki/CGI.pm:234
+#: ../IkiWiki/CGI.pm:233
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:290
+#: ../IkiWiki/CGI.pm:289
 msgid "Preferences saved."
 msgstr "Preferencje zapisane."
 
-#: ../IkiWiki/CGI.pm:346
+#: ../IkiWiki/CGI.pm:345
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "Strona %s nie może być edytowana"
 
-#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:234 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:436 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:239 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
 #: ../IkiWiki/Render.pm:178
 msgid "discussion"
 msgstr "dyskusja"
 
-#: ../IkiWiki/CGI.pm:483
+#: ../IkiWiki/CGI.pm:482
 #, perl-format
 msgid "creating %s"
 msgstr "tworzenie %s"
 
-#: ../IkiWiki/CGI.pm:501 ../IkiWiki/CGI.pm:520 ../IkiWiki/CGI.pm:530
-#: ../IkiWiki/CGI.pm:564 ../IkiWiki/CGI.pm:612
+#: ../IkiWiki/CGI.pm:500 ../IkiWiki/CGI.pm:519 ../IkiWiki/CGI.pm:529
+#: ../IkiWiki/CGI.pm:563 ../IkiWiki/CGI.pm:611
 #, perl-format
 msgid "editing %s"
 msgstr "edycja %s"
 
-#: ../IkiWiki/CGI.pm:706
+#: ../IkiWiki/CGI.pm:705
 msgid "You are banned."
 msgstr "Twój dostęp został zabroniony przez administratora."
 
@@ -87,46 +87,51 @@ msgstr "wpisy"
 msgid "new"
 msgstr "nowy wpis"
 
-#: ../IkiWiki/Plugin/aggregate.pm:232
+#: ../IkiWiki/Plugin/aggregate.pm:231
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "wygasający wpis %s (ma już %s dni)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:239
+#: ../IkiWiki/Plugin/aggregate.pm:238
 #, perl-format
 msgid "expiring %s"
 msgstr "wygasający wpis %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:265
+#: ../IkiWiki/Plugin/aggregate.pm:264
 #, perl-format
 msgid "processed ok at %s"
 msgstr "kanał RSS przetworzony w dniu %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:270
+#: ../IkiWiki/Plugin/aggregate.pm:269
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "sprawdzanie kanału RSS %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:275
+#: ../IkiWiki/Plugin/aggregate.pm:274
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nie znaleziono kanału RSS pod adresem %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:290
+#: ../IkiWiki/Plugin/aggregate.pm:289
 #, fuzzy
 msgid "feed not found"
 msgstr "nieznaleziony kanał RSS"
 
-#: ../IkiWiki/Plugin/aggregate.pm:301
+#: ../IkiWiki/Plugin/aggregate.pm:300
 #, fuzzy, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "Nieprawidłowe kodowanie UTF-8 usunięte z kanału RSS"
 
 #: ../IkiWiki/Plugin/aggregate.pm:306
+#, perl-format
+msgid "(feed entities escaped)"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:312
 msgid "feed crashed XML::Feed!"
 msgstr "awaria kanału RSS w module XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:379
+#: ../IkiWiki/Plugin/aggregate.pm:386
 #, perl-format
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
@@ -183,23 +188,23 @@ msgstr "awaria w trakcie uruchamiania wtyczki graphviz"
 msgid "prog not a valid graphviz program"
 msgstr "prog nie jest poprawnym programem graphviz"
 
-#: ../IkiWiki/Plugin/img.pm:48
+#: ../IkiWiki/Plugin/img.pm:53
 #, perl-format
 msgid "bad size \"%s\""
 msgstr "nieprawidłowy rozmiar \"%s\""
 
-#: ../IkiWiki/Plugin/img.pm:58 ../IkiWiki/Plugin/img.pm:62
-#: ../IkiWiki/Plugin/img.pm:79
+#: ../IkiWiki/Plugin/img.pm:63 ../IkiWiki/Plugin/img.pm:67
+#: ../IkiWiki/Plugin/img.pm:84
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
 msgstr "awaria w trakcie odczytu %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:65
+#: ../IkiWiki/Plugin/img.pm:70
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
 msgstr "awaria w trakcie zmiany rozmiaru: %s"
 
-#: ../IkiWiki/Plugin/img.pm:96
+#: ../IkiWiki/Plugin/img.pm:101
 #, fuzzy, perl-format
 msgid "failed to determine size of image %s"
 msgstr "awaria w trakcie zmiany rozmiaru: %s"
@@ -215,20 +220,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr "nieznany sposób sortowania %s"
 
-#: ../IkiWiki/Plugin/inline.pm:195
+#: ../IkiWiki/Plugin/inline.pm:200
 msgid "Add a new post titled:"
 msgstr "Tytuł nowego wpisu"
 
-#: ../IkiWiki/Plugin/inline.pm:211
+#: ../IkiWiki/Plugin/inline.pm:216
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "brakujący szablon %s"
 
-#: ../IkiWiki/Plugin/inline.pm:242 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:247 ../IkiWiki/Render.pm:102
 msgid "Discussion"
 msgstr "Dyskusja"
 
-#: ../IkiWiki/Plugin/inline.pm:456
+#: ../IkiWiki/Plugin/inline.pm:461
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Nieznaleziony moduł RPC::XML::Client, brak możliwości pingowania"
 
@@ -251,24 +256,20 @@ msgstr ""
 "Awaria w trakcie ładowania perlowego modułu Markdown.pm (%s) lub "
 "uruchamiania programu /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:84
+#: ../IkiWiki/Plugin/meta.pm:132
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "nieznaleziony szablon ze stylami CSS"
 
-#: ../IkiWiki/Plugin/meta.pm:116
+#: ../IkiWiki/Plugin/meta.pm:156
 #, fuzzy
 msgid "redir page not found"
 msgstr "nieznaleziony kanał RSS"
 
-#: ../IkiWiki/Plugin/meta.pm:129
+#: ../IkiWiki/Plugin/meta.pm:169
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "nieznaleziony kanał RSS"
-
-#: ../IkiWiki/Plugin/meta.pm:146
-msgid "link is no longer supported"
-msgstr ""
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
