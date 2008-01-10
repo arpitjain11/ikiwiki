@@ -1,4 +1,11 @@
-Can the instructions for using `ikiwiki-makerepo` be clarified. This command wants to create folders in the directory it is run in. Which directory should that be - `$SRCDIR?` --Andy
+Can the instructions for using `ikiwiki-makerepo` be clarified. This
+command wants to create folders in the directory it is run in. Which
+directory should that be - `$SRCDIR?` --Andy
+
+> No, `ikiwiki-makerepo` does not create directories in the current
+> directory. You specify the directory you want it to create and it creates
+> the directory and makes it into a repository. The setup instuctions have
+> examples of doing this. I don't see anything unclear. --[[Joey]]
 
 ----
 
