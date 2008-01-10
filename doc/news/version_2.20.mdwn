@@ -1,0 +1,31 @@
+News for ikiwiki 2.20:
+
+   The template plugin has begin to htmlize the variables passed to templates.
+   This is normally what you want, but to get the old behavior and get at the
+   raw value, you can use `&lt;TMPL\_VAR raw\_variable&gt;` in a template.
+
+ikiwiki 2.20 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * inline: Add copyright/license info on a per-post basis to atom
+     feeds if available. (rss doesn't allow such info on a per-post basis)
+   * Also include overall copyright/license and author info in atom feeds if
+     available.
+   * meta: Allow copyright/license metadata to contain arbitrary markup.
+   * Call preprocessor hooks in void context during the scan pass. This allows
+     the hook to determine if it's just scanning, and avoid expensive
+     operations.
+   * img: Detect scan mode and avoid generating and writing the image file
+     during it, for a 2x speedup.
+   * meta: Run in scan mode again (more intelligently) and re-add support for
+     meta link.
+   * Fix support for the case where metadata appears after an inline directive
+     that needs to use it. This was broken in version 2.16.
+   * template: Remove bogus htmlize pass added in 2.16.
+   * template: Htmlize template variables, but also provide a raw version
+     via `&lt;TMPL\_VAR raw\_variable&gt;`.
+   * When htmlizing text, if the input is a single line with no newline,
+     and the htmlizer (such as markdown and textile) generates a html
+     paragraph, remove it. This allows removing several hacks from other
+     plugins that htmlize fragements of pages.
+   * In preferences, allow the subscriptions and email fields to be cleared.
+   * teximg: Fix to support the same formula on multiple pages."""]]
