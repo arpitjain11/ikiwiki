@@ -70,9 +70,8 @@ sub create ($$$) { #{{{
 
 	my $digest = md5_hex($code, $height);
 
-	my $teximgdir = "/teximg";
-	my $imglink = "$teximgdir/$digest.png";
-	my $imglog = "$teximgdir/$digest.log";
+	my $imglink= $params->{page} . "/$digest.png";
+	my $imglog =  $params->{page} .  "/$digest.log";
 	will_render($params->{destpage}, $imglink);
 	will_render($params->{destpage}, $imglog);
 
@@ -83,12 +82,12 @@ sub create ($$$) { #{{{
 		$logurl = urlto($imglog, $params->{destpage});
 	}
 	else {
-		$imgurl="$config{url}/$teximgdir/$digest.png";
-		$logurl="$config{url}/$teximgdir/$digest.log";
+		$imgurl="$params->{page}/$digest.png";
+		$logurl="$params->{page}/$digest.log";
 	}
 	
 	if (-e "$config{destdir}/$imglink" ||
-	    gen_image($code, $height, $digest, $teximgdir)) {
+	    gen_image($code, $height, $digest, $params->{page})) {
 		return qq{<img src="$imgurl" alt="}
 			.(exists $params->{alt} ? $params->{alt} : encode_entities($code))
 			.qq{" class="teximg" />};
