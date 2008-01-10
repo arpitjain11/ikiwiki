@@ -2,7 +2,7 @@ News for ikiwiki 2.20:
 
    The template plugin has begin to htmlize the variables passed to templates.
    This is normally what you want, but to get the old behavior and get at the
-   raw value, you can use `&lt;TMPL\_VAR raw\_variable&gt;` in a template.
+   raw value, you can use `<TMPL_VAR raw_variable>` in a template.
 
 ikiwiki 2.20 released with [[toggle text="these changes"]]
 [[toggleable text="""
@@ -22,7 +22,7 @@ ikiwiki 2.20 released with [[toggle text="these changes"]]
      that needs to use it. This was broken in version 2.16.
    * template: Remove bogus htmlize pass added in 2.16.
    * template: Htmlize template variables, but also provide a raw version
-     via `&lt;TMPL\_VAR raw\_variable&gt;`.
+     via `<TMPL_VAR raw_variable>`.
    * When htmlizing text, if the input is a single line with no newline,
      and the htmlizer (such as markdown and textile) generates a html
      paragraph, remove it. This allows removing several hacks from other
