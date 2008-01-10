@@ -1,3 +1,6 @@
+Can the instructions for using ikiwiki-makerepo be clarified. This command wants to create folders in the directory it is run in. Which directory should that be - $SRCDIR? --Andy
+----
+
 It isn't intended that .ikiwiki be versioned, is it? Do you have a svn:ignore set? 
 Is there some magic way you can make the svn commands (and presumably commands for 
 the other VCSs here) ignore the .ikiwiki directory during step 8, when they import it?
