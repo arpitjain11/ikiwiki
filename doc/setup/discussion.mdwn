@@ -7,13 +7,17 @@ directory should that be - `$SRCDIR?` --Andy
 > the directory and makes it into a repository. The setup instuctions have
 > examples of doing this. I don't see anything unclear. --[[Joey]]
 
-Sorry, was not precise enough. It does if you are using the git option. I believe this is partially explained on the rcs/git/ page. However I'm still not totally clear where I should run the command when using git. If I should be in $SRCDIR then updating the instructions to something like
+Sorry, was not precise enough. It does if you are using the git option. I
+believe this is partially explained on the rcs/git/ page. However I'm still
+not totally clear where I should run the command when using git. If I
+should be in $SRCDIR then updating the instructions to something like
 
     REPOSITORY=~/wiki.git
     cd $SRCDIR
     ikiwiki-makerepo git $SRCDIR $REPOSITORY
 
-might clear things up a little. Apologies if I'm being a bit dim, learning ikiwiki and git at same time :) 
+might clear things up a little. Apologies if I'm being a bit dim, learning
+ikiwiki and git at same time :) 
 
 Have tried 3 options
 
@@ -27,6 +31,38 @@ Git version is 1.5.2.5
 n.b. svn version of command worked fine :)
 
 --Andy
+
+> Please show me a transcript of it not working. Here is a transcript of it
+> working just as the tutorial describes it to work:
+> 	
+> 	joey@kodama:~/tmp/work>ls
+> 	repo/  src/
+> 	joey@kodama:~/tmp/work>rm -rf repo src
+> 	joey@kodama:~/tmp/work>mkdir src
+> 	joey@kodama:~/tmp/work>echo hi > src/index.html
+> 	joey@kodama:~/tmp/work>ikiwiki-makerepo git src repo
+> 	Importing src into git
+> 	Initialized empty shared Git repository in /home/joey/tmp/work/repo/
+> 	Initialized empty Git repository in .git/
+> 	Created initial commit 2254e46: initial commit
+> 	 2 files changed, 2 insertions(+), 0 deletions(-)
+> 	 create mode 100644 .gitignore
+> 	 create mode 100644 index.html
+> 	updating 'refs/heads/master'
+> 	  from 0000000000000000000000000000000000000000
+> 	  to   2254e462e31429e755bae56939c4319be8bb912b
+> 	 Also local refs/remotes/origin/master
+> 	Generating pack...
+> 	Done counting 4 objects.
+> 	Deltifying 4 objects...
+> 	 100% (4/4) done
+> 	Writing 4 objects...
+> 	Unpacking 4 objects...
+> 	 100% (4/4) done
+> 	refs/heads/master: 0000000000000000000000000000000000000000 -> 2254e462e31429e755bae56939c4319be8bb912b
+> 	
+> 	Total 4 (delta 0), reused 0 (delta 0)
+> 	Directory src is now a clone of git repository /home/joey/tmp/work/repo
 
 ----
 
