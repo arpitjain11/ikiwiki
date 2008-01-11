@@ -14,7 +14,7 @@ should be in $SRCDIR then updating the instructions to something like
 
     REPOSITORY=~/wiki.git
     cd $SRCDIR
-    ikiwiki-makerepo git $SRCDIR $REPOSITORY
+    ikiwiki-makerepo git $SCDIR $REPOSITORY
 
 might clear things up a little. Apologies if I'm being a bit dim, learning
 ikiwiki and git at same time :) 
@@ -63,6 +63,39 @@ n.b. svn version of command worked fine :)
 > 	
 > 	Total 4 (delta 0), reused 0 (delta 0)
 > 	Directory src is now a clone of git repository /home/joey/tmp/work/repo
+
+
+OK here goes - I'm afraid its to color codes in it, so its a bit bigger and less readable than yours - apologies.
+
+<pre>
+Script started on Fri 11 Jan 2008 19:29:44 GMT
+^[]0;deploy@little-un: ~/tmp^G^M^M
+^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ ls^M
+^[[00m^[[00;32msrc^[[00m  ^[[00mtypescript^[[00m^M
+^[[m^[]0;deploy@little-un: ~/tmp^G^M^M
+^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ echo hi src/index.mdwn^M
+hi src/index.mdwn^M
+^[]0;deploy@little-un: ~/tmp^G^M^M
+^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ echo hi src/index.mdwn^H^H^H^H^H^H^H^H^H^H^H^H^H^H^H^H^H^[[4h>^[[4l^[[4h ^[[4l^M
+^[]0;deploy@little-un: ~/tmp^G^M^M
+^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ ikiwiki-makerepo src ^H^[[K^H^[[K^H^[[K^H^[[Kgit src repo^M
+Importing src into git^M
+Initialized empty shared Git repository in /home/deploy/tmp/^M
+Initialized empty Git repository in .git/^M
+Created initial commit 9f55e11: initial commit^M
+ 1 files changed, 1 insertions(+), 0 deletions(-)^M
+ create mode 100644 .gitignore^M
+fatal: '/home/deploy/tmp/repo': unable to chdir or not a git archive^M
+fatal: The remote end hung up unexpectedly^M
+error: failed to push to '/home/deploy/tmp/repo'^M
+^[]0;deploy@little-un: ~/tmp^G^M^M
+^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ ls^M
+^[[00m^[[00;32mbranches^[[00m  ^[[00mconfig^[[00m  ^[[00mdescription^[[00m  ^[[00mHEAD^[[00m  ^[[00mhi^[[00m  ^[[00;32mhooks^[[00m  ^[[00;32minfo^[[00m  ^[[00;32mobjects^[[00m  ^[[00;32mrefs^[[00m  ^[[00;32msrc^[[00m  ^[[00mtypescript^[[00m^M
+^[[m^[]0;deploy@little-un: ~/tmp^G^M^M
+^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ exit^M
+
+Script done on Fri 11 Jan 2008 19:32:21 GMT
+</pre>
 
 ----
 
