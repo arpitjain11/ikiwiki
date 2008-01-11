@@ -13,7 +13,20 @@ Sorry, was not precise enough. It does if you are using the git option. I believ
     cd $SRCDIR
     ikiwiki-makerepo git $SRCDIR $REPOSITORY
 
-might clear things up a little. Apologies if I'm being a bit dim, learning ikiwiki and git at same time :) --Andy
+might clear things up a little. Apologies if I'm being a bit dim, learning ikiwiki and git at same time :) 
+
+Have tried 3 options
+
+1. mkdir $REP cd $REP run command (says $REP already exists so won't run)
+2. rm -rf $REP cd $SRC run command (creates a repository in $SRC, does not create $REP ends with "remote origin already exists"
+3. mkdir $TMP cd $TMP run command (creates a repository in $SRC/.git creates a repository in $TMP, does nothing to $REP, ends with "remote origin already exists".
+
+Version of ikiwiki installed is package from Ubuntu/Hardy 2.19
+Git version is 1.5.2.5
+
+n.b. svn version of command worked fine :)
+
+--Andy
 
 ----
 
