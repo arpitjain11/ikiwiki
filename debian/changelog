@@ -1,3 +1,11 @@
+ikiwiki (2.21) UNRELEASED; urgency=low
+
+  * Old versions of git-init don't support --git-dir or GIT_DIR with
+    --bare. Change ikiwiki-makerepo to use a method that should work with
+    those older versions too.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
+
 ikiwiki (2.20) unstable; urgency=low
 
   * inline: Add copyright/license info on a per-post basis to atom

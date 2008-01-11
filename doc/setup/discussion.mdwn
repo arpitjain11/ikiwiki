@@ -32,70 +32,14 @@ n.b. svn version of command worked fine :)
 
 --Andy
 
-> Please show me a transcript of it not working. Here is a transcript of it
-> working just as the tutorial describes it to work:
-> 	
-> 	joey@kodama:~/tmp/work>ls
-> 	repo/  src/
-> 	joey@kodama:~/tmp/work>rm -rf repo src
-> 	joey@kodama:~/tmp/work>mkdir src
-> 	joey@kodama:~/tmp/work>echo hi > src/index.html
-> 	joey@kodama:~/tmp/work>ikiwiki-makerepo git src repo
-> 	Importing src into git
-> 	Initialized empty shared Git repository in /home/joey/tmp/work/repo/
-> 	Initialized empty Git repository in .git/
-> 	Created initial commit 2254e46: initial commit
-> 	 2 files changed, 2 insertions(+), 0 deletions(-)
-> 	 create mode 100644 .gitignore
-> 	 create mode 100644 index.html
-> 	updating 'refs/heads/master'
-> 	  from 0000000000000000000000000000000000000000
-> 	  to   2254e462e31429e755bae56939c4319be8bb912b
-> 	 Also local refs/remotes/origin/master
-> 	Generating pack...
-> 	Done counting 4 objects.
-> 	Deltifying 4 objects...
-> 	 100% (4/4) done
-> 	Writing 4 objects...
-> 	Unpacking 4 objects...
-> 	 100% (4/4) done
-> 	refs/heads/master: 0000000000000000000000000000000000000000 -> 2254e462e31429e755bae56939c4319be8bb912b
-> 	
-> 	Total 4 (delta 0), reused 0 (delta 0)
-> 	Directory src is now a clone of git repository /home/joey/tmp/work/repo
+>	Initialized empty shared Git repository in /home/deploy/tmp/
+>	Initialized empty Git repository in .git/
+>	fatal: '/home/deploy/tmp/repo': unable to chdir or not a git archive
 
-
-OK here goes - I'm afraid its to color codes in it, so its a bit bigger and less readable than yours - apologies.
-
-<pre>
-Script started on Fri 11 Jan 2008 19:29:44 GMT
-^[]0;deploy@little-un: ~/tmp^G^M^M
-^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ ls^M
-^[[00m^[[00;32msrc^[[00m  ^[[00mtypescript^[[00m^M
-^[[m^[]0;deploy@little-un: ~/tmp^G^M^M
-^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ echo hi src/index.mdwn^M
-hi src/index.mdwn^M
-^[]0;deploy@little-un: ~/tmp^G^M^M
-^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ echo hi src/index.mdwn^H^H^H^H^H^H^H^H^H^H^H^H^H^H^H^H^H^[[4h>^[[4l^[[4h ^[[4l^M
-^[]0;deploy@little-un: ~/tmp^G^M^M
-^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ ikiwiki-makerepo src ^H^[[K^H^[[K^H^[[K^H^[[Kgit src repo^M
-Importing src into git^M
-Initialized empty shared Git repository in /home/deploy/tmp/^M
-Initialized empty Git repository in .git/^M
-Created initial commit 9f55e11: initial commit^M
- 1 files changed, 1 insertions(+), 0 deletions(-)^M
- create mode 100644 .gitignore^M
-fatal: '/home/deploy/tmp/repo': unable to chdir or not a git archive^M
-fatal: The remote end hung up unexpectedly^M
-error: failed to push to '/home/deploy/tmp/repo'^M
-^[]0;deploy@little-un: ~/tmp^G^M^M
-^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ ls^M
-^[[00m^[[00;32mbranches^[[00m  ^[[00mconfig^[[00m  ^[[00mdescription^[[00m  ^[[00mHEAD^[[00m  ^[[00mhi^[[00m  ^[[00;32mhooks^[[00m  ^[[00;32minfo^[[00m  ^[[00;32mobjects^[[00m  ^[[00;32mrefs^[[00m  ^[[00;32msrc^[[00m  ^[[00mtypescript^[[00m^M
-^[[m^[]0;deploy@little-un: ~/tmp^G^M^M
-^[[44;01;33mdeploy@little-un^[[40;0;37m:^[[01;34m~/tmp^[[00m$ exit^M
-
-Script done on Fri 11 Jan 2008 19:32:21 GMT
-</pre>
+Looks like your git does not support GIT_DIR being used with git-init. I
+see some mentions of changes in git's changelog for 1.5.3 that look
+relevant. I've changed ikiwiki-makerepo to use a method more portable to
+older versions of git. --[[Joey]]
 
 ----
 

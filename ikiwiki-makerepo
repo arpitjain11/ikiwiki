@@ -50,7 +50,11 @@ svn)
 	echo "Directory $srcdir is now a checkout of $rcs repository $repository"
 ;;
 git)
-	GIT_DIR="$repository" git --bare init --shared
+	# There are better ways to do this, but this works with older
+	# versions of git.)
+	mkdir -p "$repository"
+	(cd "$repository" && git --bare init --shared)
+
 	cd "$srcdir"
 	git init
 	echo /.ikiwiki > .gitignore
