@@ -7,6 +7,13 @@ directory should that be - `$SRCDIR?` --Andy
 > the directory and makes it into a repository. The setup instuctions have
 > examples of doing this. I don't see anything unclear. --[[Joey]]
 
+Sorry, was not precise enough. It does if you are using the git option. I believe this is partially explained on the rcs/git/ page. However I'm still not totally clear where I should run the command when using git. If I should be in $SRCDIR then updating the instructions to something like
+
+    REPOSITORY=~/wiki.git
+    cd $SRCDIR
+    ikiwiki-makerepo git $SRCDIR $REPOSITORY
+
+might clear things up a little. Apologies if I'm being a bit dim, learning ikiwiki and git at same time :) --Andy
 ----
 
 It isn't intended that .ikiwiki be versioned, is it? Do you have a svn:ignore set? 
