@@ -1,0 +1,31 @@
+    diff -up fortune.pm.ORIG fortune.pm.MODIFIED
+    --- fortune.pm.ORIG     2008-01-11 19:07:48.000000000 +0100
+    +++ fortune.pm.MODIFIED 2008-01-12 07:58:44.000000000 +0100
+    @@ -1,5 +1,11 @@
+     #!/usr/bin/perl
+    -# Include a fortune in a page
+    +# Include a fortune in a page.
+    +# If the environment variable IKIWIKI_FORTUNE_COMMAND is defined, use it.
+    +# This allows to run e.g.:
+    +# $IKIWIKI_FORTUNE_COMMAND='fortune ~/.fortune/myfortunes' \
+    +# ikiwiki -setup ~/.ikiwiki/ikiwiki.setup
+    +# Combining this with cron could make regenerated wiki content.
+    +# This may or may not be a good thing wrt. version control.
+     package IkiWiki::Plugin::fortune;
+
+     use warnings;
+    @@ -12,7 +18,13 @@ sub import { #{{{
+
+     sub preprocess (@) { #{{{
+            $ENV{PATH}="$ENV{PATH}:/usr/games:/usr/local/games";
+    -       my $f = `fortune 2>/dev/null`;
+    +       my $f;
+    +       if (exists ($ENV{'IKIWIKI_FORTUNE_COMMAND'})) {
+    +           $f = `$ENV{'IKIWIKI_FORTUNE_COMMAND'} 2>/dev/null`
+    +       }
+    +       else {
+    +           $f = `fortune 2>/dev/null`;
+    +       }
+
+        if ($?) {
+                return "[[".gettext("fortune failed")."]]";
