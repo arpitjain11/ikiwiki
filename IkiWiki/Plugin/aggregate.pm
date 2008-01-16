@@ -416,7 +416,8 @@ sub add_page (@) { #{{{
 
 	# Set the mtime, this lets the build process get the right creation
 	# time on record for the new page.
-	utime $mtime, $mtime, pagefile($guid->{page}) if defined $mtime;
+	utime $mtime, $mtime, pagefile($guid->{page})
+		if defined $mtime && $mtime <= time;
 } #}}}
 
 sub htmlescape ($) { #{{{
