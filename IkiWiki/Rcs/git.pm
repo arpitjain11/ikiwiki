@@ -217,17 +217,19 @@ sub _parse_diff_tree ($@) { #{{{
 
 	# Modified files.
 	while (my $line = shift @{ $dt_ref }) {
-		if ($line =~ m{^:
-			([0-7]{6})[ ]      # from mode
-			([0-7]{6})[ ]      # to mode
-			($sha1_pattern)[ ] # from sha1
-			($sha1_pattern)[ ] # to sha1
-			(.)                # status
-			([0-9]{0,3})\t     # similarity
-			(.*)               # file
+		if ($line =~ m{^
+			(:+)       # number of parents
+			([^\t]+)\t # modes, sha1, status
+			(.*)       # file names
 		$}xo) {
-			my ($sha1_from, $sha1_to, $file) =
-			   ($3,         $4,       $7   );
+			my $num_parents = length $1;
+			my @tmp = split(" ", $2);
+			my ($file, $file_to) = split("\t", $3);
+			my @mode_from = splice(@tmp, 0, $num_parents);
+			my $mode_to = shift(@tmp);
+			my @sha1_from = splice(@tmp, 0, $num_parents);
+			my $sha1_to = shift(@tmp);
+			my $status = shift(@tmp);
 
 			if ($file =~ m/^"(.*)"$/) {
 				($file=$1) =~ s/\\([0-7]{1,3})/chr(oct($1))/eg;
@@ -236,7 +238,7 @@ sub _parse_diff_tree ($@) { #{{{
 			if (length $file) {
 				push @{ $ci{'details'} }, {
 					'file'      => decode_utf8($file),
-					'sha1_from' => $sha1_from,
+					'sha1_from' => $sha1_from[0],
 					'sha1_to'   => $sha1_to,
 				};
 			}
