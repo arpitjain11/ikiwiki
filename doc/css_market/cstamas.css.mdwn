@@ -1,0 +1,69 @@
+/* This template is based on:
+ * "Embedded Moose local.css for use with ikiwiki
+ * Written by Josh Triplett <josh@freedesktop.org>
+ * Some ideas from the Debian lighttpd index.html page."
+ * 
+ * The improoved version is made by
+ * Csillag Tamas <cstamas@digitus.itk.ppke.hu>
+ * 2008-01-??
+ * */
+
+body { 
+           background: #474747;
+}
+
+#content {
+           background: #333333;
+           margin: 10px 0px;
+	   border: 1px dotted #c0c0c0;
+	   padding: 10px;
+	   font-family: sans-serif;
+	   color: #acacac
+}
+
+h1 {
+           font-size: 150%;
+           color: #e6deee;
+}
+
+h2 {
+           font-size: 130%;
+           color: #e6deee;
+}
+
+a {
+	   color: #efefef;
+	   border-bottom: 1px dashed;
+	   text-decoration: none;
+}
+
+a:hover { background: #300000; }
+
+pre {
+           color: #d0d0d0;
+	   border: 1px dotted #c0c0c0;
+           background: black;
+           padding: 2px;
+           font-size: 110%;
+}
+
+.feedbutton { background: #ff0000; }
+
+.header {
+           background: #800000;
+	   border: 2px solid #500000;
+	   padding: 10px;
+	   color: #efefef;
+	   font-family: sans-serif;
+}
+
+.header a { margin-right: 1ex; color: #efefef; font-family: sans-serif;}
+.pagedate, .tags, #backlinks { background: #640000; border: 2px solid #500000; padding: 4px; color: #efefef; font-family: sans-serif;}
+.tags { color: yellow }
+.selflink { background: yellow; color: black }
+
+.actions ul { background: #640000; border: none; padding-bottom: 0px; font-family: sans-serif;}
+.actions a  { margin-right: 1ex; color: #dfdfdf; font-family: sans-serif;}
+#footer { border: none; font-family: sans-serif;}
+
+
