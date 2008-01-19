@@ -416,6 +416,8 @@ I'm playing around with various ways that I can use subversion with ikiwiki.
 
 ----
 
+# Regex for Valid Characters in Filenames
+
 I'm sure that this is documented somewhere but I've ransacked the wiki and I can't find it.  :-(  What are the allowed characters in an ikiwiki page name?  I'm writing a simple script to make updating my blog easier and need to filter invalid characters (so far I've found that # and , aren't allowed ;-)).  Thanks for any pointers.  -- [[AdamShand]]
 
 > The default `wiki_file_regexp` matches filenames containing only
@@ -424,3 +426,12 @@ I'm sure that this is documented somewhere but I've ransacked the wiki and I can
 > The IkiWiki::titlepage() function will convert freeform text to a valid
 > page name. See [[todo/should_use_a_standard_encoding_for_utf_chars_in_filenames]]
 > for an example. --[[Joey]]
+
+>> Perfect, thanks! 
+>>
+>> In the end I decided that I didn't need any special characters in filenames and replaced everything but alphanumeric characters with underscores.  In addition to replacing bad characters I also collapse multiple underscores into a single one, and strip off trailing and leading underscores to make tidy filenames.  If it's useful to anybody else here's a sed example:
+>>
+>>     # echo "++ Bad: ~@#$%^&*()_=}{[];,? Iki: +_-:./ Num: 65.5 ++" | sed -e 's/[^A-Za-z0-9_]/_/g' -e 's/__*/_/g' -e 's/^_//g' -e 's/_$//g'
+>>     Bad_Iki_Num_65_5
+>>
+>>--[[AdamShand]]
