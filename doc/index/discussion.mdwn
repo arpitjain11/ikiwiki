@@ -417,3 +417,10 @@ I'm playing around with various ways that I can use subversion with ikiwiki.
 ----
 
 I'm sure that this is documented somewhere but I've ransacked the wiki and I can't find it.  :-(  What are the allowed characters in an ikiwiki page name?  I'm writing a simple script to make updating my blog easier and need to filter invalid characters (so far I've found that # and , aren't allowed ;-)).  Thanks for any pointers.  -- [[AdamShand]]
+
+> The default `wiki_file_regexp` matches filenames containing only
+> `[-[:alnum:]_.:/+]`
+> 
+> The IkiWiki::titlepage() function will convert freeform text to a valid
+> page name. See [[todo/should_use_a_standard_encoding_for_utf_chars_in_filenames]]
+> for an example. --[[Joey]]
