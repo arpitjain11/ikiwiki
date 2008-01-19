@@ -215,9 +215,10 @@ configuration options of their own.
 
 * --adminuser name
 
-  Specifies a username of a user who has the powers of a wiki admin.
-  Currently allows locking of any page; other powers may be added later.
-  May be specified multiple times for multiple admins.
+  Specifies a username of a user (or, if openid is enabled, an openid) 
+  who has the powers of a wiki admin. Currently allows locking of any page,
+  and banning of users; other powers may be added later. May be specified
+  multiple times for multiple admins.
 
 * --plugin name
 
