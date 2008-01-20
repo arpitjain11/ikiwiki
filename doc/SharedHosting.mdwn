@@ -178,3 +178,7 @@ DreamHost has a pretty installation and management GUI for SVN, but it means you
 IANA Perl Expert.  This is just what I found.
 
 http://schwern.org/~schwern/talks/PREFIX/slides/slide001.html
+
+Part of the problem appears to be where modules decide to install themselves.  Markdown, for example, installs itself to .../lib/perl5, which somehow never makes it's way into any of the INC paths used in the code.  Not sure why, really.  The rest of the modules seem to work well with the PREFIX option, but Markdown doesn't install to the path used from the PREFIX (hence the manual modification of Makefile.PL).
+
+Basically, some stuff obeys the (apparently defunct and never really functional) PREFIX option, while the newer modules that use Module::Build, use the *install-base* option.  It would be nice if Ikiwiki could handle being installed in a non-root situation, but I have no real suggestions on how to make that happen.
