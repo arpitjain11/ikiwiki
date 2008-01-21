@@ -182,3 +182,5 @@ IANA Perl Expert.  This is just what I found.
 Part of the problem appears to be where modules decide to install themselves.  Markdown, for example, installs itself to .../lib/perl5, which somehow never makes it's way into any of the INC paths used in the Perl.  Not sure why, really.  The rest of the modules seem to work well with the PREFIX option, but Markdown doesn't install to the path used from the PREFIX (hence the manual modification of Makefile.PL).
 
 Basically, some stuff obeys the (apparently defunct and never really functional) PREFIX option, while the newer modules that use Module::Build, use the *install-base* option.  It would be nice if Ikiwiki could handle being installed in a non-root situation, but I have no real suggestions on how to make that happen.
+
+I'm willing to setup an account for committers wanting to try installing this on a DH server.  I know who Joey is, so if he can vouch for you, I'll set up the account ASAP.  You can reach me at mreynolds+dhwikiproblem@loopysoft.com .
