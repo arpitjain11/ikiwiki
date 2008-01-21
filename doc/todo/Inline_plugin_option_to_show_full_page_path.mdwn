@@ -1,0 +1,12 @@
+I recently created a page which shows only discussion pages which have recently been updated (sort of a discussion blog), eg.
+
+<http://adam.shand.net/iki/comments/>
+
+My thought was that this would be a good way to keep track of recent comments other then using the recent changes functionality.  It works well except that the title of the discussion pages all show up as "discussion" so it's not visibly obvious which page they are discussing.
+
+One solution would be to change the inline plugin to support an argument which caused the full path of the page to be listed as the title.  So rather then the title of discussion page being listed as "discussion" it would show up as "2007/OpenDNS/discussion/".
+
+The only other way I can think of making this work would be to set the title of the discussion pages using the meta plugin ... but I don't like my chances of getting visitors to do that consistantly. :-(
+
+Cheers,
+[[AdamShand]]
