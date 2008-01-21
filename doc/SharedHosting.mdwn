@@ -169,7 +169,7 @@ DreamHost has a pretty installation and management GUI for SVN, but it means you
 
         cd your/ikiwiki/source/dir/here
         svn mkdir "file:///home/user/svn/yoursvnrepositoryhere/whereyouwanttoinstallto" -m "create trunk directory"
-        svn co "file://$repository/trunk" . # Note the dot, it's important
+        svn co "file:///home/user/svn/yoursvnrepositoryhere/whereyouwanttoinstallto" . # Note the dot, it's important
         svn propset svn:ignore ".ikiwiki" . # Note the dot, it's important
         svn add *
         svn commit -m "initial import"
