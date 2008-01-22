@@ -174,6 +174,21 @@ DreamHost has a pretty installation and management GUI for SVN, but it means you
         svn add *
         svn commit -m "initial import"
 
+# Make installing OpenID not suck
+If you try to install the Net::OpenID::Consumer module, it takes forever (and for me, fails 90% of the time).  Following the [tip found here](http://www.windley.com/archives/2007/04/speeding_up_cryptdh.shtml), installing the GMP (big math) plugin greatly speeds up the process and makes it, well, work for me.  However, getting this to be used by Perl requires a few more steps.  First, follow the directions [to install GMP](http://gmplib.org/) (grab the package and read the INSTALL doc), but the quick steps are :
+
+    ./configure --prefix=YOUR_INSTALL_PATH_HERE # use something like ${HOME}/usr/local/
+    make
+    make check
+    make install
+
+Then you'll have to add a few variables to your path [referenced by your compiled](http://www.psc.edu/general/software/packages/gcc/manual/gcc_36.html), namely :
+
+    export C_INCLUDE_PATH=/home/flophouse/perl/include/
+    export LIBRARY_PATH=/home/flophouse/perl/lib/
+
+Then you should be able to install the module, and it'll be faster.
+
 # Why do I have to do all of this?
 IANA Perl Expert.  This is just what I found.
 
