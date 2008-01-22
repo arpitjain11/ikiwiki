@@ -184,8 +184,8 @@ If you try to install the Net::OpenID::Consumer module, it takes forever (and fo
 
 Then you'll have to add a few variables to your path [referenced by your compiled](http://www.psc.edu/general/software/packages/gcc/manual/gcc_36.html), namely :
 
-    export C_INCLUDE_PATH=/home/flophouse/perl/include/
-    export LIBRARY_PATH=/home/flophouse/perl/lib/
+    export C_INCLUDE_PATH=YOUR_INSTALL_PATH_HERE/include/
+    export LIBRARY_PATH=YOUR_INSTALL_PATH_HERE/lib/
 
 Then you should be able to install the module, and it'll be faster.
 
