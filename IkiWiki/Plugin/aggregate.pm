@@ -37,14 +37,25 @@ sub checkconfig () { #{{{
 			debug("wiki is locked by another process, not aggregating");
 			exit 1;
 		}
-	
-		loadstate();
-		IkiWiki::loadindex();
-		aggregate();
-		expire();
-		savestate();
-		clearstate();
-
+		
+		# Fork a child process to handle the aggregation.
+		# The parent process will then handle building the result.
+		# This avoids messy code to clear state accumulated while
+		# aggregating.
+		defined(my $pid = fork) or error("Can’t fork: $!");
+		if (! $pid) {
+			loadstate();
+			IkiWiki::loadindex();
+			aggregate();
+			expire();
+			savestate();
+			exit 0;
+		}
+		waitpid($pid,0);
+		if ($?) {
+			error "aggregation failed with code $?";
+		}
+		
 		IkiWiki::unlockwiki();
 	}
 } #}}}
@@ -209,12 +220,6 @@ sub savestate () { #{{{
 	close OUT || error("save $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/aggregate") ||
 		error("rename $newfile: $!", $cleanup);
-} #}}}
-
-sub clearstate () { #{{{
-	%feeds=();
-	%guids=();
-	$state_loaded=0;
 } #}}}
 
 sub expire () { #{{{
