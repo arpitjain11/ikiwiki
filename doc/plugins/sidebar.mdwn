@@ -15,7 +15,7 @@ a sidebar, you can create a sidebar page that is completely empty. This
 will turn off the sidebar altogether.
 
 Warning: Any change to the sidebar will cause a rebuild of the whole wiki,
-since every page includes a copy that has to be updates. This can
+since every page includes a copy that has to be updated. This can
 especially be a problem if the sidebar includes [[inline]] or [[map]]
 directives, since any changes to pages inlined or mapped onto the sidebar
 will change the sidebar and cause a full wiki rebuild.
