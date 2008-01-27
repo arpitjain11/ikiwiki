@@ -42,7 +42,7 @@ sub checkconfig () { #{{{
 		# The parent process will then handle building the result.
 		# This avoids messy code to clear state accumulated while
 		# aggregating.
-		defined(my $pid = fork) or error("Can’t fork: $!");
+		defined(my $pid = fork) or error("Can't fork: $!");
 		if (! $pid) {
 			loadstate();
 			IkiWiki::loadindex();
