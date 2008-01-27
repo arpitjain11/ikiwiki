@@ -7,7 +7,7 @@ ikiwiki (2.21) UNRELEASED; urgency=low
   * aggregate: Don't let feeds set creation times for pages in the future.
   * Add full parser for git diff-tree output (Brian Downing)
   * aggregate: Fork a child process to handle the aggregation. This simplifies
-    the code, since that process can change internal state as needed, and 
+    the code, since that process can change internal state as needed, and
     it will automatically be cleaned up for the parent process, which proceeds
     to render the changes.
 
