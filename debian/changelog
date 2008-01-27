@@ -1,5 +1,6 @@
 ikiwiki (2.21) UNRELEASED; urgency=low
 
+  [ Joey Hess ]
   * Old versions of git-init don't support --git-dir or GIT_DIR with
     --bare. Change ikiwiki-makerepo to use a method that should work with
     those older versions too.
@@ -9,6 +10,10 @@ ikiwiki (2.21) UNRELEASED; urgency=low
     the code, since that process can change internal state as needed, and 
     it will automatically be cleaned up for the parent process, which proceeds
     to render the changes.
+
+  [ Josh Triplett ]
+  * Add trailing comma to commented-out umask in sample ikiwiki.setup, so
+    that uncommenting it does not break the setup file.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
 
