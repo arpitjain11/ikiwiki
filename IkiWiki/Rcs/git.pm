@@ -424,14 +424,15 @@ sub rcs_recentchanges ($) { #{{{
 sub rcs_notify () { #{{{
 	# Send notification mail to subscribed users.
 	#
+	# This is typically run as the post-update hook, though some setups
+	# may run it from the post-commit hook too.
+	#
 	# In usual Git usage, hooks/update script is presumed to send
 	# notification mails (see git-receive-pack(1)).  But we prefer
 	# hooks/post-update to support IkiWiki commits coming from a
 	# cloned repository (through command line) because post-update
 	# is called _after_ each ref in repository is updated (update
-	# hook is called _before_ the repository is updated).  Since
-	# post-update hook does not accept command line arguments, we
-	# don't have an $ENV variable in this function.
+	# hook is called _before_ the repository is updated).
 	#
 	# Here, we rely on a simple fact: we can extract all parts of the
 	# notification content by parsing the "HEAD" commit (which also
