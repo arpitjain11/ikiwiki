@@ -432,8 +432,7 @@ sub rcs_notify () { #{{{
 	# hook is called _before_ the repository is updated).
 	#
 	# Here, we rely on a simple fact: we can extract all parts of the
-	# notification content by parsing the "HEAD" commit (which also
-	# triggers a refresh of IkiWiki pages).
+	# notification content by parsing the "HEAD" commit.
 
 	my $ci = git_commit_info('HEAD');
 	return if !defined $ci;
