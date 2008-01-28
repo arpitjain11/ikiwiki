@@ -424,9 +424,6 @@ sub rcs_recentchanges ($) { #{{{
 sub rcs_notify () { #{{{
 	# Send notification mail to subscribed users.
 	#
-	# This is typically run as the post-update hook, though some setups
-	# may run it from the post-commit hook too.
-	#
 	# In usual Git usage, hooks/update script is presumed to send
 	# notification mails (see git-receive-pack(1)).  But we prefer
 	# hooks/post-update to support IkiWiki commits coming from a
