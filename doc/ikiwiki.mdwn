@@ -1,6 +1,6 @@
 This wiki is powered by [ikiwiki](http://ikiwiki.info/).
-[[if test="enabled(version)"
-     then="(Currently running version [[version ]].)"
+[[!if test="enabled(version)"
+     then="(Currently running version [[!version ]].)"
 ]]
 
 Some documentation on using ikiwiki:

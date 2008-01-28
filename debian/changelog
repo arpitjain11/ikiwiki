@@ -14,6 +14,12 @@ ikiwiki (2.21) UNRELEASED; urgency=low
   [ Josh Triplett ]
   * Add trailing comma to commented-out umask in sample ikiwiki.setup, so
     that uncommenting it does not break the setup file.
+  * Add new preprocessor directive syntax¸ using a '!' prefix.  Add a
+    prefix_directives option to the setup file to turn this syntax on;
+    currently defaults to false, for backward compatibility.  Support
+    optional '!' prefix even with prefix_directives off, and use that in
+    the underlay to support either setting of prefix_directives.  Add NEWS
+    entry with migration information.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
 

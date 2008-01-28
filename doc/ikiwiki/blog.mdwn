@@ -1,14 +1,14 @@
-[[if test="enabled(inline)"
+[[!if test="enabled(inline)"
      then="This wiki has the inline plugin **enabled**."
      else="This wiki has the inline plugin **disabled**."]]
 
-[[if test="enabled(inline)"
+[[!if test="enabled(inline)"
      then="You can"
      else="If this wiki had the inline plugin enabled, you could"]]
 turn any page on this wiki into a weblog by using the `inline`
 [[PreProcessorDirective]]. For example:
 
-	\[[inline pages="blog/* and !*/Discussion" show="10" rootpage="blog"]]
+	\[[!inline pages="blog/* and !*/Discussion" show="10" rootpage="blog"]]
 
 Any pages that match the specified [[PageSpec]] (in the example, any
 [[SubPage]] of "blog") will be part of the blog, and the newest 10
@@ -23,23 +23,23 @@ top of the blog that can be used to add new items.
 If you want your blog to have an archive page listing every post ever made
 to it, you can accomplish that like this:
 
-	\[[inline pages="blog/* and !*/Discussion" archive="yes"]]
+	\[[!inline pages="blog/* and !*/Discussion" archive="yes"]]
 
 You can even create an automatically generated list of all the pages on the
 wiki, with the most recently added at the top, like this:
 
-	\[[inline pages="* and !*/Discussion" archive="yes"]]
+	\[[!inline pages="* and !*/Discussion" archive="yes"]]
 
 If you want to be able to add pages to a given blog feed by tagging them,
 you can do that too. To tag a page, just make it link to a page or pages 
 that represent its tags. Then use the special `link()` [[PageSpec]] to match
 all pages that have a given tag:
 
-	\[[inline pages="link(life)"]]
+	\[[!inline pages="link(life)"]]
 
 Or include some tags and exclude others:
 
-	\[[inline pages="link(debian) and !link(social)"]]
+	\[[!inline pages="link(debian) and !link(social)"]]
 
 ## usage
 

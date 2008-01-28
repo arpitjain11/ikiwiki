@@ -1,4 +1,4 @@
-[[meta title="Formatting wiki pages"]]
+[[!meta title="Formatting wiki pages"]]
 
 Text on this wiki is, by default, written in a form very close to how you
 might write text for an email message. This style of text formatting is
@@ -59,36 +59,36 @@ you use the following additional features:
 * To link to another page on the wiki, place the page's name inside double
   square brackets. So you would use `\[[WikiLink]]` to link to [[WikiLink]].
 
-[[if test="enabled(smiley) and smileys" then="""
+[[!if test="enabled(smiley) and smileys" then="""
 * Insert [[smileys]] and some other useful symbols. :-)
 """]]
 
-[[if test="enabled(shortcut) and shortcuts" then="""
+[[!if test="enabled(shortcut) and shortcuts" then="""
 * Use [[shortcuts]] to link to common resources.
 
-	\[[wikipedia War\_of\_1812]]
+	\[[!wikipedia War\_of\_1812]]
 """]]
 
-[[if test="enabled(toc)" then="""
+[[!if test="enabled(toc)" then="""
 * Add a table of contents to a page:
 
-	\[[toc ]]
+	\[[!toc ]]
 """]]
 
 
-[[if test="enabled(meta)" then="""
+[[!if test="enabled(meta)" then="""
 * Change the title of a page:
 
-	\[[meta title="full page title"]]
+	\[[!meta title="full page title"]]
 """]]
 
-[[if test="enabled(inline) and blog" then="""
+[[!if test="enabled(inline) and blog" then="""
 * Create a [[blog]] by inlining a set of pages:
 
-	\[[inline pages="blog/*"]]
+	\[[!inline pages="blog/*"]]
 """]]
 
-[[if test="enabled(template) and templates" then="""
+[[!if test="enabled(template) and templates" then="""
 * Create and fill out [[templates]] for repeated chunks of
   parameterized wiki text.
 """]]

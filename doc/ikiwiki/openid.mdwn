@@ -1,6 +1,6 @@
-[[meta title="OpenID"]]
+[[!meta title="OpenID"]]
 
-[[if test="enabled(openid)"
+[[!if test="enabled(openid)"
      then="This wiki has OpenID **enabled**."
      else="This wiki has OpenID **disabled**."]]
 
@@ -17,7 +17,7 @@ To sign up for an OpenID, visit one of the following identity providers:
 * or any of the [many others out there](http://openiddirectory.com/index.php?dir=1)..
 
 Your OpenID is the URL that you are given when you sign up.
-[[if test="enabled(openid)" then="""
+[[!if test="enabled(openid)" then="""
 To sign in to this wiki using OpenID, just enter it in the OpenID field in the
 signin form. You do not need to give this wiki a password or go through any
 registration process when using OpenID.
@@ -28,5 +28,5 @@ registration process when using OpenID.
 It's also possible to make a page in the wiki usable as an OpenID url,
 by delegating it to an openid server. Here's an example of how to do that:
 
-	\[[meta openid="http://yourid.myopenid.com/"
+	\[[!meta openid="http://yourid.myopenid.com/"
 	       server="http://www.myopenid.com/server"]]

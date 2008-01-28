@@ -1,0 +1,44 @@
+#!/usr/bin/perl -i
+undef $/; # process whole files at once
+
+my $regex = qr{
+	(\\?)		# 1: escape?
+	\[\[(!?)	# directive open; 2: optional prefix
+	([-\w]+)	# 3: command
+	(		# 4: the parameters (including initial whitespace)
+	\s+
+		(?:
+			(?:[-\w]+=)?		# named parameter key?
+			(?:
+				""".*?"""	# triple-quoted value
+				|
+				"[^"]+"		# single-quoted value
+				|
+				[^\s\]]+	# unquoted value
+			)
+			\s*			# whitespace or end
+						# of directive
+		)
+	*)		# 0 or more parameters
+	\]\]		# directive closed
+}sx;
+
+sub handle_directive($$$$) {
+	my $escape = shift;
+	my $prefix = shift;
+	my $directive = shift;
+	my $args = shift;
+
+	if (length $escape) {
+		return "${escape}[[${prefix}${directive}${args}]]"
+	}
+	if ($directive =~ m/^(if|more|table|template|toggleable)$/) {
+		$args =~ s{$regex}{handle_directive($1, $2, $3, $4)}eg;
+	}
+	return "[[!${directive}${args}]]"
+}
+
+while (<>) {
+	s{$regex}{handle_directive($1, $2, $3, $4)}eg;
+	print;
+}

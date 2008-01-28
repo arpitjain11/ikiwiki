@@ -35,6 +35,7 @@ extra_build: ikiwiki.out
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
 	./mdwn2man ikiwiki-makerepo 1 doc/ikiwiki-makerepo.mdwn > ikiwiki-makerepo.man
+	./mdwn2man ikiwiki-prefix-directives 1 doc/ikiwiki-prefix-directives.mdwn > ikiwiki-prefix-directives.man
 	./mdwn2man ikiwiki-update-wikilist 1 doc/ikiwiki-update-wikilist.mdwn > ikiwiki-update-wikilist.man
 	$(MAKE) -C po
 	if [ "$$PROFILE" = 1 ]; then dprofpp; fi
@@ -67,6 +68,7 @@ extra_install:
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1
 	install -m 644 ikiwiki.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki.1
 	install -m 644 ikiwiki-makerepo.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki-makerepo.1
+	install -m 644 ikiwiki-prefix-directives.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki-prefix-directives.1
 	install -m 644 ikiwiki-update-wikilist.man $(DESTDIR)$(PREFIX)/share/man/man1/ikiwiki-update-wikilist.1
 	
 	install -d $(DESTDIR)$(PREFIX)/share/man/man8
@@ -80,7 +82,7 @@ extra_install:
 
 	install -d $(DESTDIR)$(PREFIX)/bin
 	install ikiwiki.out $(DESTDIR)$(PREFIX)/bin/ikiwiki
-	install ikiwiki-makerepo ikiwiki-update-wikilist $(DESTDIR)$(PREFIX)/bin/
+	install ikiwiki-makerepo ikiwiki-prefix-directives ikiwiki-update-wikilist $(DESTDIR)$(PREFIX)/bin/
 
 	$(MAKE) -C po install DESTDIR=$(DESTDIR) PREFIX=$(PREFIX)
 }

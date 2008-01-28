@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 17;
+use Test::More tests => 19;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -23,6 +23,8 @@ $IkiWiki::hooks{preprocess}{foo}{call}=sub {
 
 is(IkiWiki::preprocess("foo", "foo", "[[foo]]", 0, 0), "[[foo]]", "not wikilink");
 is(IkiWiki::preprocess("foo", "foo", "[[foo ]]", 0, 0), "foo()", "simple");
+is(IkiWiki::preprocess("foo", "foo", "[[!foo ]]", 0, 0), "foo()", "prefixed");
+is(IkiWiki::preprocess("foo", "foo", "[[!foo]]", 0, 0), "[[!foo]]", "prefixed, no space");
 is(IkiWiki::preprocess("foo", "foo", "[[foo a=1]]", 0, 0), "foo(a => 1)");
 is(IkiWiki::preprocess("foo", "foo", "[[foo a=\"1 2 3 4\"]]", 0, 0), "foo(a => 1 2 3 4)");
 is(IkiWiki::preprocess("foo", "foo", "[[foo ]] then [[foo a=2]]", 0, 0),

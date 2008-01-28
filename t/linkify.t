@@ -24,8 +24,16 @@ sub linkify ($$$$) {
 	}
 	%config=IkiWiki::defaultconfig();
 	$config{cgiurl}="http://somehost/ikiwiki.cgi";
+	$config{srcdir}=$config{destdir}="/dev/null"; # placate checkconfig
 	# currently coded for non usedirs mode (TODO: check both)
 	$config{usedirs}=0;
+
+	# currently coded for prefix_directives=0 (TODO: check both)
+	# Not setting $config{prefix_directives}=0 explicitly; instead, let the
+	# tests break if the default changes, as a reminder to update the
+	# tests.
+
+	IkiWiki::checkconfig();
 
 	return IkiWiki::linkify($lpage, $page, $content);
 }

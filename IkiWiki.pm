@@ -38,9 +38,9 @@ sub defaultconfig () { #{{{
 		qr/(^|\/)_MTN\//,
 		qr/\.dpkg-tmp$/],
 	wiki_link_regexp => qr{
-		\[\[                    # beginning of link
+		\[\[(?=[^!])            # beginning of link
 		(?:
-			([^\]\|\n\s]+)  # 1: link text
+			([^\]\|]+)      # 1: link text
 			\|              # followed by '|'
 		)?                      # optional
 		
@@ -100,6 +100,7 @@ sub defaultconfig () { #{{{
 	usedirs => 1,
 	numbacklinks => 10,
 	account_creation_password => "",
+	prefix_directives => 0,
 } #}}}
 
 sub checkconfig () { #{{{
@@ -144,6 +145,24 @@ sub checkconfig () { #{{{
 
 	if (exists $config{umask}) {
 		umask(possibly_foolish_untaint($config{umask}));
+	}
+
+	if (!$config{prefix_directives}) {
+		$config{wiki_link_regexp} = qr{
+			\[\[                    # beginning of link
+			(?:
+				([^\]\|\n\s]+)  # 1: link text
+				\|              # followed by '|'
+			)?                      # optional
+
+			([^\s\]#]+)             # 2: page to link to
+			(?:
+				\#              # '#', beginning of anchor
+				([^\s\]]+)      # 3: anchor text
+			)?                      # optional
+
+			\]\]                    # end of link
+		}x,
 	}
 
 	run_hooks(checkconfig => sub { shift->() });
@@ -679,10 +698,11 @@ sub preprocess ($$$;$$) { #{{{
 
 	my $handle=sub {
 		my $escape=shift;
+		my $prefix=shift;
 		my $command=shift;
 		my $params=shift;
 		if (length $escape) {
-			return "[[$command $params]]";
+			return "[[$prefix$command $params]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
 			return "" if $scan && ! $hooks{preprocess}{$command}{scan};
@@ -756,31 +776,58 @@ sub preprocess ($$$;$$) { #{{{
 			return $ret;
 		}
 		else {
-			return "[[$command $params]]";
+			return "[[$prefix$command $params]]";
 		}
 	};
 	
-	$content =~ s{
-		(\\?)		# 1: escape?
-		\[\[		# directive open
-		([-\w]+)	# 2: command
-		\s+
-		(		# 3: the parameters..
-			(?:
-				(?:[-\w]+=)?		# named parameter key?
+	my $regex;
+	if ($config{prefix_directives}) {
+		$regex = qr{
+			(\\?)		# 1: escape?
+			\[\[(!)		# directive open; 2: prefix
+			([-\w]+)	# 3: command
+			(		# 4: the parameters..
+				\s+	# Must have space if parameters present
 				(?:
-					""".*?"""	# triple-quoted value
-					|
-					"[^"]+"		# single-quoted value
-					|
-					[^\s\]]+	# unquoted value
+					(?:[-\w]+=)?		# named parameter key?
+					(?:
+						""".*?"""	# triple-quoted value
+						|
+						"[^"]+"		# single-quoted value
+						|
+						[^\s\]]+	# unquoted value
+					)
+					\s*			# whitespace or end
+								# of directive
 				)
-				\s*			# whitespace or end
-							# of directive
-			)
-		*)		# 0 or more parameters
-		\]\]		# directive closed
-	}{$handle->($1, $2, $3)}sexg;
+			*)?		# 0 or more parameters
+			\]\]		# directive closed
+		}sx;
+	} else {
+		$regex = qr{
+			(\\?)		# 1: escape?
+			\[\[(!?)	# directive open; 2: optional prefix
+			([-\w]+)	# 3: command
+			\s+
+			(		# 4: the parameters..
+				(?:
+					(?:[-\w]+=)?		# named parameter key?
+					(?:
+						""".*?"""	# triple-quoted value
+						|
+						"[^"]+"		# single-quoted value
+						|
+						[^\s\]]+	# unquoted value
+					)
+					\s*			# whitespace or end
+								# of directive
+				)
+			*)		# 0 or more parameters
+			\]\]		# directive closed
+		}sx;
+	}
+
+	$content =~ s{$regex}{$handle->($1, $2, $3, $4)}eg;
 	return $content;
 } #}}}
 

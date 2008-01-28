@@ -1,4 +1,4 @@
-[[if test="enabled(template)"
+[[!if test="enabled(template)"
 then="This wiki has templates **enabled**."
 else="This wiki has templates **disabled**."
 ]]
@@ -6,14 +6,14 @@ else="This wiki has templates **disabled**."
 Templates are files that can be filled out and inserted into pages in the
 wiki.
 
-[[if test="enabled(template) and enabled(inline)" then="""
+[[!if test="enabled(template) and enabled(inline)" then="""
 
 ## Available templates
 
 These templates are available for inclusion onto other pages in this
 wiki:
 
-[[inline pages="templates/* and !*/discussion" feeds=no archive=yes
+[[!inline pages="templates/* and !*/discussion" feeds=no archive=yes
 sort=title template=titlepage]]
 """]]
 
@@ -21,7 +21,7 @@ sort=title template=titlepage]]
 
 Using a template works like this:
 
-	\[[template id=note text="""Here is the text to insert into my note."""]]
+	\[[!template id=note text="""Here is the text to insert into my note."""]]
 
 This fills out the [[note]] template, filling in the `text` field with
 the specified value, and inserts the result into the page.
@@ -31,7 +31,7 @@ page outside the template. Triple-quoting the value even allows quotes to
 be included in it. Combined with multi-line quoted values, this allows for
 large chunks of marked up text to be embedded into a template:
 
-        \[[template id=foo name="Sally" color="green" age=8 notes="""
+        \[[!template id=foo name="Sally" color="green" age=8 notes="""
         * \[[Charley]]'s sister.
         * "I want to be an astronaut when I grow up."
         * Really 8 and a half.
@@ -43,7 +43,7 @@ To create a template, simply add a template directive to a page, and page will
 provide a link that can be used to create the template. The template is a
 regular wiki page, located in the `templates/` directory.
 
-The template uses the syntax used by the [[cpan HTML::Template]] perl
+The template uses the syntax used by the [[!cpan HTML::Template]] perl
 module, which allows for some fairly complex things to be done. Consult its
 documentation for the full syntax, but all you really need to know are a
 few things:

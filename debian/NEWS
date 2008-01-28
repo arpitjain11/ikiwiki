@@ -1,3 +1,36 @@
+ikiwiki (2.21) unstable; urgency=low
+
+  ikiwiki now has an new syntax for preprocessor directives, using the
+  prefix '!':
+
+  [[!directive ...]]
+
+  This new syntax no longer relies on spaces to distinguish between
+  wikilinks and preprocessor directives.  Thus, wikilinks can use spaces
+  in their link text, and preprocessor directives without arguments (such
+  as "toc") need not use a trailing space.
+
+  To enable the new syntax, set prefix_directives to true in your ikiwiki
+  config.  For backward compatibility with existing wikis,
+  prefix_directives currently defaults to false.  In ikiwiki 3.0,
+  prefix_directives will default to true, and wikis which have not yet
+  converted to the new syntax will need to set prefix_directives to false
+  in their setup files.
+
+  To convert your wiki to the new syntax, ikiwiki provides a new script
+  ikiwiki-prefix-directives.  It will convert preprocessor directives in
+  all files given on the command line.  To convert an entire wiki:
+
+  find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-prefix-directives
+
+  Even with prefix_directives disabled, ikiwiki now allows an optional '!'
+  prefix on preprocessor directives (but still requires a space).  Thus, a
+  directive which uses a '!' prefix and contains a space will work with
+  ikiwiki 2.21 and newer, regardless of the value of prefix_directives.
+  This allows the underlay to work with all ikiwikis.
+
+ -- Josh Triplett <josh@freedesktop.org>  Sat, 26 Jan 2008 16:26:47 -0800
+
 ikiwiki (2.20) unstable; urgency=low
 
   The template plugin has begin to htmlize the variables passed to templates.
