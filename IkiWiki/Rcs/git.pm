@@ -441,7 +441,7 @@ sub rcs_notify () { #{{{
 
 	my ($user, $message);
 	if (@{ $ci->{'comment'} }[0] =~ m/$config{web_commit_regexp}/) {
-		$user    = defined $2 ? "$2" : "$3";
+		$user    = defined $2 ? $2 : $3;
 		$message = $4;
 	}
 	else {
