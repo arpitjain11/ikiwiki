@@ -1,4 +1,7 @@
 #!/usr/bin/perl -i
+use warnings;
+use strict;
+
 undef $/; # process whole files at once
 
 my $regex = qr{
@@ -23,7 +26,7 @@ my $regex = qr{
 	\]\]		# directive closed
 }sx;
 
-sub handle_directive($$$$) {
+sub handle_directive {
 	my $escape = shift;
 	my $prefix = shift;
 	my $directive = shift;
