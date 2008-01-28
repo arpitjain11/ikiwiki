@@ -44,3 +44,12 @@ edits. At least one of the two commits has to be a non-web commit.
 A related problem is that if two commits are made separately but then
 pushed in together, the commit code only looks at the HEAD commit, which
 is the second one. No notification is sent for the first.
+
+----
+
+Based on all of these problems with using the post-update hook, ikiwiki
+should be changed to use the post-receive hook, which provides enough
+information to avoid the assumuptions that led to these problems.
+Transitioning existing wikis to using a new hook will be interesting. Also,
+this hook is only present in git >= 1.5.0.7.
+--[[Joey]]
