@@ -44,8 +44,8 @@ my $message = "Added the second page";
 
 my $test2 = readfile("t/test2.mdwn");
 writefile('test2.mdwn', $config{srcdir}, $test2);
-system "bzr add -R $config{srcdir} $config{srcdir}/test2.mdwn";
-system "bzr commit -R $config{srcdir} -u \"$user\" -m \"$message\" -d \"0 0\"";
+system "bzr add $config{srcdir}/test2.mdwn";
+system "bzr commit --author \"$user\" -m \"$message\" $config{srcdir}";
 	
 @changes = IkiWiki::rcs_recentchanges(3);
 
@@ -57,6 +57,6 @@ is($changes[0]{pages}[0]{"page"}, "test2.mdwn");
 is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
 
 my $ctime = IkiWiki::rcs_getctime("test2.mdwn");
-is($ctime, 0);
+ok($ctime >= time() - 20);
 
 system "rm -rf $dir";

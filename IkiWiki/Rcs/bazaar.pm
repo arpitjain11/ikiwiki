@@ -10,44 +10,28 @@ package IkiWiki;
 
 sub bazaar_log($) {
 	my $out = shift;
-	my @infos;
+	my @infos = ();
+	my $key = undef;
 
 	while (<$out>) {
 		my $line = $_;
-		my ($key, $value);
-
-		if (/^description:/) {
-			$key = "description";
-			$value = "";
-
-			# slurp everything as the description text 
-			# until the next changeset
-			while (<$out>) {
-				if (/^changeset: /) {
-					$line = $_;
-					last;
-				}
-
-				$value .= $_;
-			}
-
-			local $/ = "";
-			chomp $value;
+		my ($value);
+		if ($line =~ /^message:/) {
+			$key = "message";
+			$infos[$#infos]{$key} = "";
+		} elsif ($line =~ /^(modified|added|renamed|renamed and modified|removed):/) {
+			$key = "files";
+			unless (defined($infos[$#infos]{$key})) { $infos[$#infos]{$key} = ""; }
+		} elsif (defined($key) and $line =~ /^  (.*)/) {
+			$infos[$#infos]{$key} .= $1;
+		} elsif ($line eq "------------------------------------------------------------\n") {
+			$key = undef;
+			push (@infos, {});
+		} else {
+			chomp $line;
+				($key, $value) = split /: +/, $line, 2;
 			$infos[$#infos]{$key} = $value;
-		}
-
-		chomp $line;
-	        ($key, $value) = split /: +/, $line, 2;
-
-		if ($key eq "changeset") {
-			push @infos, {};
-
-			# remove the revision index, which is strictly 
-			# local to the repository
-			$value =~ s/^\d+://;
-		}
-
-		$infos[$#infos]{$key} = $value;
+		} 
 	}
 	close $out;
 
@@ -118,14 +102,14 @@ sub rcs_recentchanges ($) { #{{{
 		my @pages = ();
 		my @message = ();
         
-		foreach my $msgline (split(/\n/, $info->{description})) {
+		foreach my $msgline (split(/\n/, $info->{message})) {
 			push @message, { line => $msgline };
 		}
 
-		foreach my $file (split / /,$info->{files}) {
+		foreach my $file (split(/\n/, $info->{files})) {
 			my $diffurl = $config{'diffurl'};
 			$diffurl =~ s/\[\[file\]\]/$file/go;
-			$diffurl =~ s/\[\[r2\]\]/$info->{changeset}/go;
+			$diffurl =~ s/\[\[r2\]\]/$info->{revno}/go;
 
 			push @pages, {
 				page => pagename($file),
@@ -133,15 +117,16 @@ sub rcs_recentchanges ($) { #{{{
 			};
 		}
 
-		my $user = $info->{"user"};
+		my $user = $info->{"committer"};
+		if (defined($info->{"author"})) { $user = $info->{"author"}; }
 		$user =~ s/\s*<.*>\s*$//;
 		$user =~ s/^\s*//;
 
 		push @ret, {
-			rev        => $info->{"changeset"},
+			rev        => $info->{"revno"},
 			user       => $user,
 			committype => "bazaar",
-			when       => time - str2time($info->{"date"}),
+			when       => time - str2time($info->{"timestamp"}),
 			message    => [@message],
 			pages      => [@pages],
 		};
@@ -159,7 +144,7 @@ sub rcs_getctime ($) { #{{{
 
 	# XXX filename passes through the shell here, should try to avoid
 	# that just in case
-	my @cmdline = ("bzr", "log", "-v", "--limit", '1', "$config{srcdir}/$file");
+	my @cmdline = ("bzr", "log", "--limit", '1', "$config{srcdir}/$file");
 	open (my $out, "@cmdline |");
 
 	my @log = bazaar_log($out);
@@ -171,7 +156,7 @@ sub rcs_getctime ($) { #{{{
 	eval q{use Date::Parse};
 	error($@) if $@;
 	
-	my $ctime = str2time($log[0]->{"date"});
+	my $ctime = str2time($log[0]->{"timestamp"});
 	return $ctime;
 } #}}}
 
