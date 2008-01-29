@@ -1,0 +1,15 @@
+[[meta title="""
+<TMPL_LOOP NAME="MESSAGE"><TMPL_IF NAME="LINE"><TMPL_VAR NAME="LINE" ESCAPE="HTML"><br /></TMPL_IF></TMPL_LOOP>
+"""]]
+[[meta author="<TMPL_VAR NAME="USER">"]]
+<TMPL_LOOP NAME="PAGES">
+	<TMPL_IF NAME="DIFFURL">
+	<TMPL_IF NAME="BASEURL">
+	<a href="<TMPL_VAR NAME="DIFFURL">">
+	<img alt="diff" src="<TMPL_VAR BASEURL>wikiicons/diff.png" />
+	</a>
+	</TMPL_IF>
+	</TMPL_IF>
+	<TMPL_VAR NAME="LINK">
+</TMPL_LOOP>
+<TMPL_VAR NAME="COMMITTYPE">
