@@ -19,6 +19,8 @@ ikiwiki (2.21) UNRELEASED; urgency=low
   * inline: The template can check for FIRST and LAST, which will be
     set for the first and last inlined page. Useful for templates that build
     tables and the like.
+  * prettydate,ddate: Don't ignore time formats passed to displaytime
+    function.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
 

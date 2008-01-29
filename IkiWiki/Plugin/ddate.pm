@@ -18,6 +18,10 @@ sub checkconfig () { #{{{
 
 sub IkiWiki::displaytime ($;$) { #{{{
 	my $time=shift;
+	my $format=shift;
+	if (! defined $format) {
+		$format=$config{timeformat};
+	}
 	eval q{
 		use DateTime;
 		use DateTime::Calendar::Discordian;
@@ -27,7 +31,7 @@ sub IkiWiki::displaytime ($;$) { #{{{
 	}
 	my $dt = DateTime->from_epoch(epoch => $time);
 	my $dd = DateTime::Calendar::Discordian->from_object(object => $dt);
-	return $dd->strftime($IkiWiki::config{timeformat});
+	return $dd->strftime($format);
 } #}}}
 
 5

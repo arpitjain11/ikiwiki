@@ -63,6 +63,10 @@ sub checkconfig () { #{{{
 
 sub IkiWiki::displaytime ($;$) { #{{{
 	my $time=shift;
+	my $format=shift;
+	if (! defined $format) {
+		$format=$config{prettydateformat};
+	}
 	
 	eval q{use Date::Format};
 	error($@) if $@;
@@ -93,7 +97,6 @@ sub IkiWiki::displaytime ($;$) { #{{{
 
 	$t=~s{\%A-}{my @yest=@t; $yest[6]--; strftime("%A", \@yest)}eg;
 
-	my $format=$config{prettydateformat};
 	$format=~s/\%X/$t/g;
 	return strftime($format, \@t);
 } #}}}
