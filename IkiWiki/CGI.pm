@@ -100,7 +100,7 @@ sub cgi_recentchanges ($) { #{{{
 
 	my $changelog=[rcs_recentchanges(100)];
 	foreach my $change (@$changelog) {
-		$change->{when} = concise(ago($change->{when}));
+		$change->{when} = concise(ago(time - $change->{when}));
 
 		$change->{user} = userlink($change->{user});
 

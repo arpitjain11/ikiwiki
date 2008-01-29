@@ -372,7 +372,7 @@ sub rcs_recentchanges ($) { #{{{
 
 		my ($sha1, $when) = (
 			$ci->{'sha1'},
-			time - $ci->{'author_epoch'}
+			$ci->{'author_epoch'}
 		);
 
 		my (@pages, @messages);

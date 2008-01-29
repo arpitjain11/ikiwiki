@@ -120,7 +120,7 @@ sub rcs_recentchanges ($) {
 			split(/ /, "$newfiles $modfiles .arch-ids/fake.id");
 
 		my $sdate = $head->get("Standard-date");
-		my $when = time - str2time($sdate, 'UTC');
+		my $when = str2time($sdate, 'UTC');
 
 		my $committype = "web";
 		if (defined $summ && $summ =~ /$config{web_commit_regexp}/) {

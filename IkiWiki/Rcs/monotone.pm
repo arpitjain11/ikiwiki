@@ -416,7 +416,7 @@ sub rcs_recentchanges ($) { #{{{
 						$committype = "monotone";
 					}
 				} elsif ($cert->{name} eq "date") {
-					$when = time - str2time($cert->{value}, 'UTC');
+					$when = str2time($cert->{value}, 'UTC');
 				} elsif ($cert->{name} eq "changelog") {
 					my $messageText = $cert->{value};
 					# split the changelog into multiple

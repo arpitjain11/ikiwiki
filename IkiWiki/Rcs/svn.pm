@@ -171,7 +171,7 @@ sub rcs_recentchanges ($) { #{{{
 		my $rev = $logentry->{revision};
 		my $user = $logentry->{author};
 
-		my $when=time - str2time($logentry->{date}, 'UTC');
+		my $when=str2time($logentry->{date}, 'UTC');
 
 		foreach my $msgline (split(/\n/, $logentry->{msg})) {
 			push @message, { line => $msgline };
