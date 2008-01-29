@@ -115,6 +115,9 @@ use IkiWiki::Setup::Standard {
 	#account_creation_password => "example",
 	# Uncomment to force ikiwiki to run with a particular umask.
 	#umask => 022,
+	# Default settings for the recentchanges page.
+	#recentchangespage => "recentchanges",
+	#recentchangesnum => 100,
 
 	# To add plugins, list them here.
 	#add_plugins => [qw{goodstuff search wikitext camelcase

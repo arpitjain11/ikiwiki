@@ -33,8 +33,7 @@ These options control the mode that ikiwiki operates in.
 * --cgi
 
   Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and
-  supports editing pages, signing in, registration, and displaying
-  [[RecentChanges]].
+  supports editing pages, signing in, and registration.
 
   To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
   to generate a wrapper. The wrapper will generally need to run suid 6755 to
@@ -141,8 +140,7 @@ configuration options of their own.
   whatever the revision control system you select uses.
 
   In [[CGI]] mode, with a revision control system enabled, pages edited via
-  the web will be committed. Also, the [[RecentChanges]] link will be placed
-  on pages.
+  the web will be committed.
 
   No revision control is enabled by default.
 

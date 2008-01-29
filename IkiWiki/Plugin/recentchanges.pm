@@ -6,25 +6,30 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "refresh", id => "recentchanges",
-		call => \&refresh);
-	hook(type => "preprocess", id => "recentchanges",
-		call => \&preprocess);
-	hook(type => "htmlize", id => "_change",
-		call => \&htmlize);
+	hook(type => "checkconfig", id => "recentchanges", call => \&checkconfig);
+	hook(type => "refresh", id => "recentchanges", call => \&refresh);
+	hook(type => "htmlize", id => "_change", call => \&htmlize);
+} #}}}
+
+sub checkconfig () { #{{{
+	$config{recentchangespage}='recentchanges' unless defined $config{recentchangespage};
+	$config{recentchangesnum}=100 unless defined $config{recentchangesnum};
 } #}}}
 
 sub refresh ($) { #{{{
-	my @changes=IkiWiki::rcs_recentchanges(100);
-	updatechanges("*", "recentchanges", \@changes);
-} #}}}
+	my %seen;
 
-sub preprocess (@) { #{{{
-	my %params=@_;
-
-	# TODO
-
-	return "";
+	# add new changes
+	foreach my $change (IkiWiki::rcs_recentchanges($config{recentchangesnum})) {
+		$seen{store($change, $config{recentchangespage})}=1;
+	}
+	
+	# delete old and excess changes
+	foreach my $page (keys %pagesources) {
+		if ($page=~/^\Q$config{recentchangespage}\E\/change_/ && ! $seen{$page}) {
+			unlink($config{srcdir}.'/'.$pagesources{$page});
+		}
+	}
 } #}}}
 
 # Pages with extension _change have plain html markup, pass through.
@@ -33,11 +38,10 @@ sub htmlize (@) { #{{{
 	return $params{content};
 } #}}}
 
-sub store ($$) { #{{{
+sub store ($$$) { #{{{
 	my $change=shift;
-	my $subdir=shift;
-	
-	my $page="$subdir/change_".IkiWiki::titlepage($change->{rev});
+
+	my $page="$config{recentchangespage}/change_".IkiWiki::titlepage($change->{rev});
 
 	# Optimisation to avoid re-writing pages. Assumes commits never
 	# change (or that any changes are not important).
@@ -102,23 +106,9 @@ sub store ($$) { #{{{
 } #}}}
 
 sub updatechanges ($$) { #{{{
-	my $pagespec=shift;
 	my $subdir=shift;
 	my @changes=@{shift()};
 	
-	my %seen;
-
-	# add new changes
-	foreach my $change (@changes) {
-		$seen{store($change, $subdir)}=1;
-	}
-	
-	# delete old and excess changes
-	foreach my $page (keys %pagesources) {
-		if ($page=~/^\Q$subdir\E\/change_/ && ! $seen{$page}) {
-			unlink($config{srcdir}.'/'.$pagesources{$page});
-		}
-	}
 } #}}}
 
 1

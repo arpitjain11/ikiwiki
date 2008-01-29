@@ -85,8 +85,8 @@ sub genpage ($$) { #{{{
 		$actions++;
 	}
 		
-	if ($config{rcs}) {
-		$template->param(recentchangesurl => urlto("recentchanges", $page));
+	if ($config{rcs} && exists $config{recentchangespage}) {
+		$template->param(recentchangesurl => urlto($config{recentchangespage}, $page));
 		$actions++;
 	}
 
