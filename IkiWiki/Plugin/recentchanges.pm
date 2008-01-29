@@ -60,6 +60,8 @@ sub store ($$$) { #{{{
 			else {
 				$_->{link} = IkiWiki::pagetitle($_->{page});
 			}
+			$_->{baseurl}="$config{url}/" if length $config{url};
+
 			$_;
 		} @{$change->{pages}}
 	];
@@ -94,7 +96,6 @@ sub store ($$$) { #{{{
 		commitdate => displaytime($change->{when}, "%X %x"),
 		wikiname => $config{wikiname},
 	);
-	$template->param(baseurl => "$config{url}/") if length $config{url};
 	IkiWiki::run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page, template => $template);
 	});
