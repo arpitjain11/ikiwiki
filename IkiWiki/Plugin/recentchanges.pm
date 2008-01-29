@@ -88,7 +88,7 @@ sub store ($$) { #{{{
 	my $template=template("change.tmpl", blind_cache => 1);
 	$template->param(
 		%$change,
-		commitdate => displaytime($change->{when}, "%x %x"),
+		commitdate => displaytime($change->{when}, "%X %x"),
 		wikiname => $config{wikiname},
 	);
 	$template->param(baseurl => "$config{url}/") if length $config{url};
