@@ -151,10 +151,6 @@ sub rcs_recentchanges ($) { #{{{
 	return @ret;
 } #}}}
 
-sub rcs_notify () { #{{{
-	# TODO
-} #}}}
-
 sub rcs_getctime ($) { #{{{
 	my ($file) = @_;
 

@@ -4,6 +4,8 @@ rcs_commit was only changed to work around bzr's lack of a switch to set the
 username). bzr_log could probably be written better by someone better at perl,
 and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
 
+(rcs_notify is not needed in this branch --[[Joey]])
+
     #!/usr/bin/perl
     
     use warnings;

@@ -36,22 +36,6 @@ sub gen_wrapper () { #{{{
 		addenv("$var", s);
 EOF
 	}
-	if ($config{rcs} eq "svn" && $config{notify}) {
-		# Support running directly as hooks/post-commit by passing
-		# $2 in REV in the environment.
-		$envsave.=<<"EOF"
-	if (argc == 3)
-		addenv("REV", argv[2]);
-	else if ((s=getenv("REV")))
-		addenv("REV", s);
-EOF
-	}
-	if ($config{rcs} eq "tla" && $config{notify}) {
-		$envsave.=<<"EOF"
-	if ((s=getenv("ARCH_VERSION")))
-		addenv("ARCH_VERSION", s);
-EOF
-	}
 	
 	$Data::Dumper::Indent=0; # no newlines
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);

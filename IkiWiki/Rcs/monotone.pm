@@ -452,54 +452,6 @@ sub rcs_recentchanges ($) { #{{{
 	return @ret;
 } #}}}
 
-sub rcs_notify () { #{{{
-	debug("The monotone rcs_notify function is currently untested. Use at own risk!");
-	
-	if (! exists $ENV{REV}) {
-		error(gettext("REV is not set, not running from mtn post-commit hook, cannot send notifications"));
-	}
-	if ($ENV{REV} !~ m/($sha1_pattern)/) { # sha1 is untainted now
-		error(gettext("REV is not a valid revision identifier, cannot send notifications"));
-	}
-	my $rev = $1;
-	
-	check_config();
-
-	my $automator = Monotone->new();
-	$automator->open(undef, $config{mtnrootdir});
-
-	my $certs = [read_certs($automator, $rev)];
-	my $user;
-	my $message;
-	my $when;
-
-	foreach my $cert (@$certs) {
-		if ($cert->{signature} eq "ok" && $cert->{trust} eq "trusted") {
-			if ($cert->{name} eq "author") {
-				$user = $cert->{value};
-			} elsif ($cert->{name} eq "date") {
-				$when = $cert->{value};
-			} elsif ($cert->{name} eq "changelog") {
-				$message = $cert->{value};
-			}
-		}
-	}
-		
-	my @changed_pages = get_changed_files($automator, $rev);
-	
-	$automator->close();
-	
-	require IkiWiki::UserInfo;
-	send_commit_mails(
-		sub {
-			return $message;
-		},
-		sub {
-			`mtn --root=$config{mtnrootdir} au content_diff -r $rev`;
-		},
-		$user, @changed_pages);
-} #}}}
-
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 

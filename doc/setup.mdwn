@@ -180,8 +180,7 @@ about using the git repositories.
 Once your wiki is checked in to the revision control system,
 you should configure ikiwiki to use revision control. Edit your
 ikiwiki.setup, and uncomment the lines for the revision control system
-you chose to use. Be sure to set `svnrepo` to $REPOSITORY, if using
-subversion. Uncomment the block for the wrapper for your revision
+you chose to use. Uncomment the block for the wrapper for your revision
 control system, and configure the wrapper path in that block
 appropriately (for Git, it should be `$REPOSITORY/hooks/post-update`).
 

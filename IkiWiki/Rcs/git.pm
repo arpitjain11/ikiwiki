@@ -419,47 +419,6 @@ sub rcs_recentchanges ($) { #{{{
 	return @rets;
 } #}}}
 
-sub rcs_notify () { #{{{
-	# Send notification mail to subscribed users.
-	#
-	# In usual Git usage, hooks/update script is presumed to send
-	# notification mails (see git-receive-pack(1)).  But we prefer
-	# hooks/post-update to support IkiWiki commits coming from a
-	# cloned repository (through command line) because post-update
-	# is called _after_ each ref in repository is updated (update
-	# hook is called _before_ the repository is updated).
-	#
-	# Here, we rely on a simple fact: we can extract all parts of the
-	# notification content by parsing the "HEAD" commit.
-
-	my $ci = git_commit_info('HEAD');
-	return if !defined $ci;
-
-	my @changed_pages = map { $_->{'file'} } @{ $ci->{'details'} };
-
-	my ($user, $message);
-	if (@{ $ci->{'comment'} }[0] =~ m/$config{web_commit_regexp}/) {
-		$user    = defined $2 ? $2 : $3;
-		$message = $4;
-	}
-	else {
-		$user    = $ci->{'author_username'};
-		$message = join "\n", @{ $ci->{'comment'} };
-	}
-
-	my $sha1 = $ci->{'sha1'};
-
-	require IkiWiki::UserInfo;
-	send_commit_mails(
-		sub {
-			$message;
-		},
-		sub {
-			join "\n", run_or_die('git', 'diff', "${sha1}^", $sha1);
-		}, $user, @changed_pages
-	);
-} #}}}
-
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 	# Remove srcdir prefix

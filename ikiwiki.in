@@ -36,12 +36,10 @@ sub getconfig () { #{{{
 			"cgi!" => \$config{cgi},
 			"discussion!" => \$config{discussion},
 			"w3mmode!" => \$config{w3mmode},
-			"notify!" => \$config{notify},
 			"url=s" => \$config{url},
 			"cgiurl=s" => \$config{cgiurl},
 			"historyurl=s" => \$config{historyurl},
 			"diffurl=s" => \$config{diffurl},
-			"svnrepo" => \$config{svnrepo},
 			"svnpath" => \$config{svnpath},
 			"adminemail=s" => \$config{adminemail},
 			"timeformat=s" => \$config{timeformat},
@@ -132,10 +130,7 @@ sub main () { #{{{
 		commandline_render();
 	}
 	elsif ($config{post_commit} && ! commit_hook_enabled()) {
-		if ($config{notify}) {
-			loadindex();
-			rcs_notify();
-		}
+		# do nothing
 	}
 	else {
 		lockwiki();
@@ -143,7 +138,6 @@ sub main () { #{{{
 		require IkiWiki::Render;
 		rcs_update();
 		refresh();
-		rcs_notify() if $config{notify};
 		saveindex();
 	}
 } #}}}

@@ -10,7 +10,6 @@ The module is available from the monotone source repository at:
 Monotone support works, but there are still a few minor missing bits (listed here so they are not forgotten):
 
 * At the moment there are no links to display diffs between revisions.  It shouldn't be hard to add links to a [ViewMTN](http://grahame.angrygoats.net/moinmoin/ViewMTN) instance, but it hasn't been done yet.
-* The [[post-commit]] hook support, so that Ikiwiki sends change notifications when people commit using Monotone rather than the web interface, is partially implemented and untested.
 * Documentation (this page) could be improved.
 
 There is also a mismatch between the way Ikiwiki handles conflicts and the way Monotone handles conflicts.  At present, if there is a conflict, then Ikiwiki will commit a revision with conflict markers before presenting it to the user.  This is ugly, but there is no clean way to fix it at present.

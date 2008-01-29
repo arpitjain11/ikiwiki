@@ -217,44 +217,6 @@ sub rcs_recentchanges ($) { #{{{
 	return @ret;
 } #}}}
 
-sub rcs_notify () { #{{{
-	if (! exists $ENV{REV}) {
-		error(gettext("REV is not set, not running from svn post-commit hook, cannot send notifications"));
-	}
-	my $rev=int(possibly_foolish_untaint($ENV{REV}));
-	
-	my $user=`svnlook author $config{svnrepo} -r $rev`;
-	chomp $user;
-	
-	my $message=`svnlook log $config{svnrepo} -r $rev`;
-	if ($message=~/$config{web_commit_regexp}/) {
-		$user=defined $2 ? "$2" : "$3";
-		$message=$4;
-	}
-
-	my @changed_pages;
-	foreach my $change (`svnlook changed $config{svnrepo} -r $rev`) {
-		chomp $change;
-		if (length $config{svnpath}) {
-			if ($change =~ /^[A-Z]+\s+\Q$config{svnpath}\E\/(.*)/) {
-				push @changed_pages, $1;
-			}
-		}
-		else {
-			push @changed_pages, $change;
-		}
-	}
-	
-	require IkiWiki::UserInfo;
-	send_commit_mails(
-		sub {
-			return $message;
-		},
-		sub {
-			`svnlook diff $config{svnrepo} -r $rev --no-diff-deleted`;
-		}, $user, @changed_pages);
-} #}}}
-
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 

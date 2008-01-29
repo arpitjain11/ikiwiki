@@ -242,9 +242,6 @@ sub cgi_prefs ($$) { #{{{
 	
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "email", size => 50, fieldset => "preferences");
-	$form->field(name => "subscriptions", size => 50,
-		fieldset => "preferences",
-		comment => "(".htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).")");
 	$form->field(name => "banned_users", size => 50,
 		fieldset => "admin");
 	
@@ -256,8 +253,6 @@ sub cgi_prefs ($$) { #{{{
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
 			value => userinfo_get($user_name, "email"));
-		$form->field(name => "subscriptions", force => 1,
-			value => userinfo_get($user_name, "subscriptions"));
 		if (is_admin($user_name)) {
 			$form->field(name => "banned_users", force => 1,
 				value => join(" ", get_banned_users()));
@@ -274,11 +269,9 @@ sub cgi_prefs ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq 'Save Preferences' && $form->validate) {
-		foreach my $field (qw(email subscriptions)) {
-			if (defined $form->field($field)) {
-				userinfo_set($user_name, $field, $form->field($field)) ||
-					error("failed to set $field");
-			}
+		if (defined $form->field('email')) {
+			userinfo_set($user_name, 'email', $form->field('email')) ||
+				error("failed to set email");
 		}
 		if (is_admin($user_name)) {
 			set_banned_users(grep { ! is_admin($_) }

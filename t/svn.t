@@ -21,13 +21,14 @@ BEGIN { use_ok("IkiWiki"); }
 %config=IkiWiki::defaultconfig();
 $config{rcs} = "svn";
 $config{srcdir} = "$dir/src";
-$config{svnrepo} = "$dir/repo";
 $config{svnpath} = "trunk";
 IkiWiki::checkconfig();
 
-system "svnadmin create $config{svnrepo} >/dev/null";
-system "svn mkdir file://$config{svnrepo}/trunk -m add >/dev/null";
-system "svn co file://$config{svnrepo}/trunk $config{srcdir} >/dev/null";
+my $svnrepo = "$dir/repo";
+
+system "svnadmin create $svnrepo >/dev/null";
+system "svn mkdir file://$svnrepo/trunk -m add >/dev/null";
+system "svn co file://$svnrepo/trunk $config{srcdir} >/dev/null";
 
 # Web commit
 my $test1 = readfile("t/test1.mdwn");

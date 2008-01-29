@@ -15,5 +15,10 @@ use IkiWiki::Setup::Standard {
 	syslog => 0,
 	userdir => "users",
 	usedirs => 0,
-	add_plugins => [qw{goodstuff version haiku polygen fortune}],
+	rcs => 'git',
+	rss => 1,
+	cgiurl => "http://ikiwiki.info/ikiwiki.cgi",
+	url => "http://ikiwiki.info",
+	add_plugins => [qw{goodstuff version haiku polygen fortune
+		recentchanges }],
 }

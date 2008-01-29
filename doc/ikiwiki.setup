@@ -23,7 +23,6 @@ use IkiWiki::Setup::Standard {
 	#rcs => "svn",
 	#historyurl => "http://svn.example.org/trunk/[[file]]",
 	#diffurl => "http://svn.example.org/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
-	#svnrepo => "/svn/wiki",
 	#svnpath => "trunk",
 
 	# Git stuff.
@@ -72,8 +71,6 @@ use IkiWiki::Setup::Standard {
 		#	# what you want.
 		#	wrapper => "/svn/wikirepo/hooks/post-commit",
 		#	wrappermode => "04755",
-		#	# Enable mail notifications of commits.
-		#	notify => 1,
 		#	# Log to syslog since svn post-commit hooks
 		#	# hide output and errors.
 		#	syslog => 1,

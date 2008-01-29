@@ -57,13 +57,6 @@ sub rcs_recentchanges ($) {
 	# }
 }
 
-sub rcs_notify () {
-	# This function is called when a change is committed to the wiki,
-	# and ikiwiki is running as a post-commit hook from the RCS.
-	# It should examine the repository to somehow determine what pages
-	# changed, and then send emails to users subscribed to those pages.
-}
-
 sub rcs_getctime ($) {
 	# Optional, used to get the page creation time from the RCS.
 	error gettext("getctime not implemented");

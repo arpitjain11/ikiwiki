@@ -133,11 +133,6 @@ configuration options of their own.
   access controlled by a group, it makes sense for the ikiwiki wrappers
   to run setgid to that group.
 
-* --notify, --no-notify
-
-  Enable email notification of commits. This should be used when running
-  ikiwiki as a [[post-commit]] hook.
-
 * --rcs=svn|git|.., --no-rcs
 
   Enable or disable use of a [[revision_control_system|rcs]].
@@ -150,11 +145,6 @@ configuration options of their own.
   on pages.
 
   No revision control is enabled by default.
-
-* --svnrepo /svn/wiki
-
-  Specify the location of the svn repository for the wiki. This is required
-  for using --notify with [[Subversion|rcs/svn]].
 
 * --svnpath trunk
 
