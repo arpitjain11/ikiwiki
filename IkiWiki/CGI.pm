@@ -726,32 +726,4 @@ sub cgi (;$$) { #{{{
 	}
 } #}}}
 
-sub userlink ($) { #{{{
-	my $user=shift;
-
-	eval q{use CGI 'escapeHTML'};
-	error($@) if $@;
-	if ($user =~ m!^https?://! &&
-	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
-		# Munge user-urls, as used by eg, OpenID.
-		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
-		my $display=$oid->display;
-		# Convert "user.somehost.com" to "user [somehost.com]".
-		if ($display !~ /\[/) {
-			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
-		}
-		# Convert "http://somehost.com/user" to "user [somehost.com]".
-		if ($display !~ /\[/) {
-			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
-		}
-		$display=~s!^https?://!!; # make sure this is removed
-		return "<a href=\"$user\">".escapeHTML($display)."</a>";
-	}
-	else {
-		return htmllink("", "", escapeHTML(
-			length $config{userdir} ? $config{userdir}."/".$user : $user
-		), noimageinline => 1);
-	}
-} #}}}
-
 1
