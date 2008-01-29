@@ -14,9 +14,10 @@ sub import { #{{{
 		call => \&htmlize);
 } #}}}
 
-sub needsbuild () { #{{{
+sub needsbuild ($) { #{{{
+	my $needsbuild=shift;
 	my @changes=IkiWiki::rcs_recentchanges(100);
-	updatechanges("*", "recentchanges", \@changes);
+	push @$needsbuild, updatechanges("*", "recentchanges", \@changes);
 } #}}}
 
 sub preprocess (@) { #{{{
@@ -61,11 +62,6 @@ sub store ($$) { #{{{
 	];
 	push @{$change->{pages}}, { link => '...' } if $is_excess;
 
-	# Take the first line of the commit message as a summary.
-	#my $m=shift @{$change->{message}};
-	#$change->{summary}=$m->{line};
-	#delete $change->{message} unless @{$change->{message}};
-
 	# See if the committer is an openid.
 	my $oiduser=IkiWiki::openiduser($change->{user});
 	if (defined $oiduser) {
@@ -76,6 +72,15 @@ sub store ($$) { #{{{
 		$change->{authorurl}="$config{url}/".
 			(length $config{userdir} ? "$config{userdir}/" : "").
 			$change->{user};
+	}
+
+	# escape  wikilinks and preprocessor stuff in commit messages
+	if (ref $change->{message}) {
+		foreach my $field (@{$change->{message}}) {
+			if (exists $field->{line}) {
+				$field->{line} =~ s/(?<!\\)\[\[/\\\[\[/g;
+			}
+		}
 	}
 
 	# Fill out a template with the change info.
@@ -90,21 +95,24 @@ sub store ($$) { #{{{
 		shift->(page => $page, destpage => $page, template => $template);
 	});
 
-	my $html=$template->output;
-	# escape  wikilinks and preprocessor stuff
-	$html=~s/(?<!\\)\[\[/\\\[\[/g;
-	writefile($page."._change", $config{srcdir}, $html);
-	utime $change->{when}, $change->{when}, "$config{srcdir}/$page._change";
+	my $file=$page."._change";
+	writefile($file, $config{srcdir}, $template->output);
+	utime $change->{when}, $change->{when}, "$config{srcdir}/$file";
+	return $file;
 } #}}}
 
 sub updatechanges ($$) { #{{{
 	my $pagespec=shift;
 	my $subdir=shift;
 	my @changes=@{shift()};
+	my @ret;
 	foreach my $change (@changes) {
-		store($change, $subdir);
+		my $file=store($change, $subdir);
+		push @ret, $file if defined $file;
 	}
 	# TODO: delete old
+	
+	return @ret;
 } #}}}
 
 1
