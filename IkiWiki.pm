@@ -90,7 +90,7 @@ sub defaultconfig () { #{{{
 	adminuser => undef,
 	adminemail => undef,
 	plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
-	              lockedit conditional}],
+	              lockedit conditional recentchanges}],
 	libdir => undef,
 	timeformat => '%c',
 	locale => undef,
@@ -631,9 +631,7 @@ sub userlink ($) { #{{{
 		return "<a href=\"$user\">".escapeHTML($display)."</a>";
 	}
 	else {
-		return htmllink("", "", escapeHTML(
-			length $config{userdir} ? $config{userdir}."/".$user : $user
-		), noimageinline => 1);
+		return $user;
 	}
 } #}}}
 
