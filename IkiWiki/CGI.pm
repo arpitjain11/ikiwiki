@@ -84,53 +84,6 @@ sub decode_cgi_utf8 ($) { #{{{
 	}
 } #}}}
 
-sub cgi_recentchanges ($) { #{{{
-	my $q=shift;
-	
-	# Optimisation: building recentchanges means calculating lots of
-	# links. Memoizing htmllink speeds it up a lot (can't be memoized
-	# during page builds as the return values may change, but they
-	# won't here.)
-	eval q{use Memoize};
-	error($@) if $@;
-	memoize("htmllink");
-
-	eval q{use Time::Duration};
-	error($@) if $@;
-
-	my $changelog=[rcs_recentchanges(100)];
-	foreach my $change (@$changelog) {
-		$change->{when} = concise(ago(time - $change->{when}));
-
-		$change->{user} = userlink($change->{user});
-
-		my $is_excess = exists $change->{pages}[10]; # limit pages to first 10
-		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
-		$change->{pages} = [
-			map {
-				$_->{link} = htmllink("", "", $_->{page},
-					noimageinline => 1,
-					linktext => pagetitle($_->{page}));
-				$_;
-			} @{$change->{pages}}
-		];
-		push @{$change->{pages}}, { link => '...' } if $is_excess;
-	}
-
-	my $template=template("recentchanges.tmpl"); 
-	$template->param(
-		title => "RecentChanges",
-		indexlink => indexlink(),
-		wikiname => $config{wikiname},
-		changelog => $changelog,
-		baseurl => baseurl(),
-	);
-	run_hooks(pagetemplate => sub {
-		shift->(page => "", destpage => "", template => $template);
-	});
-	print $q->header(-charset => 'utf-8'), $template->output;
-} #}}}
-
 # Check if the user is signed in. If not, redirect to the signin form and
 # save their place to return to later.
 sub needsignin ($$) { #{{{
@@ -661,12 +614,6 @@ sub cgi (;$$) { #{{{
 		}
 	}
 	
-	# Things that do not need a session.
-	if ($do eq 'recentchanges') {
-		cgi_recentchanges($q);
-		return;
-	}
-
 	# Need to lock the wiki before getting a session.
 	lockwiki();
 	

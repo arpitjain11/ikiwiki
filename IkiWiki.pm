@@ -607,14 +607,11 @@ sub htmllink ($$$;@) { #{{{
 	return "<a href=\"$bestlink\"@attrs>$linktext</a>";
 } #}}}
 
-sub userlink ($) { #{{{
+sub openiduser ($) { #{{{
 	my $user=shift;
 
-	eval q{use CGI 'escapeHTML'};
-	error($@) if $@;
 	if ($user =~ m!^https?://! &&
 	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
-		# Munge user-urls, as used by eg, OpenID.
 		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
 		my $display=$oid->display;
 		# Convert "user.somehost.com" to "user [somehost.com]".
@@ -626,10 +623,24 @@ sub userlink ($) { #{{{
 			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
 		}
 		$display=~s!^https?://!!; # make sure this is removed
-		return "<a href=\"$user\">".escapeHTML($display)."</a>";
+		eval q{use CGI 'escapeHTML'};
+		error($@) if $@;
+		return escapeHTML($display);
+	}
+	return;
+}
+
+sub userlink ($) { #{{{
+	my $user=shift;
+
+	my $oiduser=openiduser($user);
+	if (defined $oiduser) {
+		return "<a href=\"$user\">$oiduser</a>";
 	}
 	else {
-		return $user;
+		return htmllink("", "", escapeHTML(
+			length $config{userdir} ? $config{userdir}."/".$user : $user
+		), noimageinline => 1);
 	}
 } #}}}
 

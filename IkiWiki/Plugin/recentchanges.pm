@@ -67,14 +67,25 @@ sub store ($$) { #{{{
 	];
 	push @{$change->{pages}}, { link => '...' } if $is_excess;
 
+	# Take the first line of the commit message as a summary.
+	my $m=shift @{$change->{message}};
+	$change->{summary}=$m->{line};
+
+	# See if the committer is an openid.
+	my $oiduser=IkiWiki::openiduser($change->{user});
+	if (defined $oiduser) {
+		$change->{authorurl}=$change->{user};
+		$change->{user}=$oiduser;
+	}
+	elsif (length $config{url}) {
+		$change->{authorurl}="$config{url}/".
+			(length $config{userdir} ? "$config{userdir}/" : "").
+			$change->{user};
+	}
+
 	# Fill out a template with the change info.
 	my $template=template("change.tmpl", blind_cache => 1);
-	$template->param(
-		user => IkiWiki::userlink($change->{user}),
-		when => IkiWiki::displaytime($change->{when}, "%X %x"),
-		pages => $change->{pages},
-		message => $change->{message},
-	);
+	$template->param(%$change);
 	$template->param(baseurl => "$config{url}/") if length $config{url};
 	IkiWiki::run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page, template => $template);
