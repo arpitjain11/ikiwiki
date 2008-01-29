@@ -195,10 +195,10 @@ sub render ($) { #{{{
 	my $type=pagetype($file);
 	my $srcfile=srcfile($file);
 	if (defined $type) {
-		return if $type=~/^_/;
 		my $page=pagename($file);
 		delete $depends{$page};
 		will_render($page, htmlpage($page), 1);
+		return if $type=~/^_/;
 		
 		my $content=htmlize($page, $type,
 			linkify($page, $page,
