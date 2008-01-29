@@ -1,0 +1,14 @@
+[[template id=plugin name=recentchanges core=1 author="[[Joey]]"]]
+
+This plugin examines the [[revision_control_system|rcs]] history and
+generates a page describing each recent change made to the wiki. These
+pages can be joined together with [[inline]] to generate the
+[[RecentChanges]] page.
+
+Typically only the RecentChanges page will use the plugin, but you can
+use it elsewhere too if you like. It's used like this:
+
+	\[[recentchanges pages="*" num=100 template=change]]
+
+The pages describing recent changes will be created as [[subpages|subpage]]
+of the page where the `recentchanges` directive is placed.

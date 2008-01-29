@@ -107,11 +107,8 @@ Here's a full design for redoing recentchanges, based on Ethan's ideas:
   aggregator, or they can set up their own page that uses the recentchanges
   directive for only the pages they want.
 * The `rcs_notify` functions will be removed.
-* `rcs_getchange` is passed a change id (as returned from rcs_recentchanges)
-  and a partially filled out HTML::Template and fills out the remainer of the
-  template. So if a template is used that includes diffs, it will need to run
-  some expensive diffing operation, wikis with less resources can use a
-  template that doesn't include diffs and avoid that overhead.
+* To add diffs, another plugin can add a pagetemplate hook that calls
+  a `rcs_diff`. (optional)
 * So to update the changes files, just call `rcs_recentchanges`, create
   files for each new id, and delete files for each id that is no longer
   included.

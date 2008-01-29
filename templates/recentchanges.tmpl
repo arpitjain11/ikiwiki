@@ -1,26 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<base href="<TMPL_VAR BASEURL>" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><TMPL_VAR TITLE></title>
-<link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
-<link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
-<TMPL_IF NAME="FAVICON">
-<link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/x-icon" />
-</TMPL_IF>
-</head>
-<body>
-
-<div class="header">
-<span>
-<TMPL_VAR INDEXLINK>/ <TMPL_VAR TITLE>
-</span>
-</div>
-
-<div id="content">
-<br />
+<TMPL_IF FIRST>
 <table border="1" frame="border" rules="groups">
 <thead>
 	<tr class="changeheader">
@@ -30,42 +8,9 @@
 	</tr>
 </thead>
 <tbody>
-<TMPL_LOOP NAME="CHANGELOG">
-	<!-- <TMPL_VAR NAME="REV"> -->
-	<tr class="changeinfo">
-		<td class="changeinfo"><TMPL_VAR NAME="USER"></td>
-		<td class="changetime"><TMPL_VAR NAME="WHEN"></td>
-		<td class="changeinfo">
-		<TMPL_LOOP NAME="PAGES">
-			<TMPL_IF NAME="DIFFURL">
-				<a href="<TMPL_VAR NAME="DIFFURL">">
-				<img alt="diff" src="wikiicons/diff.png" />
-				</a>
-				<TMPL_VAR NAME="LINK">
-			<TMPL_ELSE>
-				<TMPL_VAR NAME="LINK">
-			</TMPL_IF>
-		</TMPL_LOOP>
-		</td>
-		<td class="changeinfo"><TMPL_VAR NAME="COMMITTYPE"></td>
-	</tr>
-	<tr>
-		<td class="changelog" colspan="4">
-			<TMPL_LOOP NAME="MESSAGE">
-				<TMPL_IF NAME="LINE">
-					<TMPL_VAR NAME="LINE" ESCAPE="HTML"><br />
-				</TMPL_IF>
-			</TMPL_LOOP>
-		</td>
-	</tr>
-</TMPL_LOOP>
+</TMPL_IF>
+<TMPL_VAR CONTENT>
+<TMPL_IF LAST>
 </tbody>
 </table>
-</div>
-
-<div id="footer">
-<!-- from <TMPL_VAR NAME=WIKINAME> -->
-</div>
-
-</body>
-</html>
+</TMPL_IF>
