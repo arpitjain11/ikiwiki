@@ -259,6 +259,8 @@ sub refresh () { #{{{
 			$test=dirname($test);
 		}
 	}
+	
+	run_hooks(refresh => sub { shift->() });
 
 	# find existing pages
 	my %exists;
