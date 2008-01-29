@@ -540,9 +540,11 @@ together to form the RecentChanges page, for example.
 To make an internal use page, register a filename extension that starts
 with "_". Internal use pages cannot be edited with the web interface, are
 not scanned for wikilinks (though wikilinks and preprocessor directives can
-still appear on them, this is rarely a good idea), and are not matched by
-regular PageSpecs glob patterns, but instead only by a special `internal()`
-[[ikiwiki/PageSpec]].
+appear on them, this is rarely a good idea and should be done with caution),
+and are not matched by regular PageSpecs glob patterns, but instead only by a
+special `internal()` [[ikiwiki/PageSpec]].
+
+Ikiwiki is optimised to handle lots of internal use pages, very quickly.
 
 ## RCS plugins
 
