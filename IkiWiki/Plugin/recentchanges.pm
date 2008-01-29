@@ -6,8 +6,6 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "recentchanges",
-		call => \&checkconfig);
 	hook(type => "needsbuild", id => "recentchanges",
 		call => \&needsbuild);
 	hook(type => "preprocess", id => "recentchanges",
@@ -16,13 +14,9 @@ sub import { #{{{
 		call => \&htmlize);
 } #}}}
 
-sub checkconfig () { #{{{
+sub needsbuild () { #{{{
 	my @changes=IkiWiki::rcs_recentchanges(100);
 	updatechanges("*", "recentchanges", \@changes);
-} #}}}
-
-sub needsbuild () { #{{{
-	# TODO
 } #}}}
 
 sub preprocess (@) { #{{{
@@ -96,7 +90,10 @@ sub store ($$) { #{{{
 		shift->(page => $page, destpage => $page, template => $template);
 	});
 
-	writefile($page."._change", $config{srcdir}, $template->output);
+	my $html=$template->output;
+	# escape  wikilinks and preprocessor stuff
+	$html=~s/(?<!\\)\[\[/\\\[\[/g;
+	writefile($page."._change", $config{srcdir}, $html);
 	utime $change->{when}, $change->{when}, "$config{srcdir}/$page._change";
 } #}}}
 
