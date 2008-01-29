@@ -390,7 +390,8 @@ sub needsbuild (@) { #{{{
 				# the current day
 				push @$needsbuild, $pagesources{$page};
 			}
-			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+			if (exists $pagesources{$page} && 
+			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
 				# remove state, will be re-added if
 				# the calendar is still there during the
 				# rebuild

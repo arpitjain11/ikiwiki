@@ -18,7 +18,8 @@ sub needsbuild (@) { #{{{
 			if ($pagestate{$page}{version}{shown} ne $IkiWiki::version) {
 				push @$needsbuild, $pagesources{$page};
 			}
-			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+			if (exists $pagesources{$page} &&
+			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
 				# remove state, will be re-added if
 				# the version is still shown during the
 				# rebuild

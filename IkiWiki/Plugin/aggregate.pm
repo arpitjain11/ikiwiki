@@ -66,7 +66,8 @@ sub needsbuild (@) { #{{{
 	loadstate(); # if not already loaded
 
 	foreach my $feed (values %feeds) {
-		if (grep { $_ eq $pagesources{$feed->{sourcepage}} } @$needsbuild) {
+		if (exists $pagesources{$page} && 
+		    grep { $_ eq $pagesources{$feed->{sourcepage}} } @$needsbuild) {
 			# Mark all feeds originating on this page as removable;
 			# preprocess will unmark those that still exist.
 			remove_feeds($feed->{sourcepage});
