@@ -17,7 +17,8 @@ sub import { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	updatechanges();
+	my @changes=IkiWiki::rcs_recentchanges(100);
+	updatechanges("*", "recentchanges", \@changes);
 } #}}}
 
 sub needsbuild () { #{{{
@@ -45,7 +46,7 @@ sub store ($$) { #{{{
 	my $page="$subdir/change_".IkiWiki::titlepage($change->{rev});
 
 	# Optimisation to avoid re-writing pages. Assumes commits never
-	# change, or that any changes are not important.
+	# change (or that any changes are not important).
 	return if exists $pagesources{$page} && ! $config{rebuild};
 
 	# Limit pages to first 10, and add links to the changed pages.
@@ -67,24 +68,28 @@ sub store ($$) { #{{{
 	push @{$change->{pages}}, { link => '...' } if $is_excess;
 
 	# Fill out a template with the change info.
-	$change->{user} = IkiWiki::userlink($change->{user});
-	my $ctime=$change->{when};
-	$change->{when} = IkiWiki::displaytime($change->{when}, "%X %x");
 	my $template=template("change.tmpl", blind_cache => 1);
-	$template->param(%$change);
+	$template->param(
+		user => IkiWiki::userlink($change->{user}),
+		when => IkiWiki::displaytime($change->{when}, "%X %x"),
+		pages => $change->{pages},
+		message => $change->{message},
+	);
 	$template->param(baseurl => "$config{url}/") if length $config{url};
 	IkiWiki::run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page, template => $template);
 	});
 
 	writefile($page."._change", $config{srcdir}, $template->output);
-	utime $ctime, $ctime, "$config{srcdir}/$page._change";
+	utime $change->{when}, $change->{when}, "$config{srcdir}/$page._change";
 } #}}}
 
-sub updatechanges () { #{{{
-	my @changelog=IkiWiki::rcs_recentchanges(100);
-	foreach my $change (@changelog) {
-		store($change, "recentchanges");
+sub updatechanges ($$) { #{{{
+	my $pagespec=shift;
+	my $subdir=shift;
+	my @changes=@{shift()};
+	foreach my $change (@changes) {
+		store($change, $subdir);
 	}
 	# TODO: delete old
 } #}}}
