@@ -143,6 +143,11 @@ specifies the filename extension that a file must have to be htmlized using
 this plugin. This is how you can add support for new and exciting markup
 languages to ikiwiki.
 
+Note that if you choose a filename extension that starts with "_",
+ikiwiki will not render the page, or allow the page to be edited with the
+web interface. This is useful for certian types of internal-use pages, but
+should generally be avoided.
+
 The function is passed named parameters: "page" and "content" and should
 return the htmlized content.
 

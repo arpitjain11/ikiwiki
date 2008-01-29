@@ -21,6 +21,8 @@ ikiwiki (2.21) UNRELEASED; urgency=low
     tables and the like.
   * prettydate,ddate: Don't ignore time formats passed to displaytime
     function.
+  * Pages with extensions starting with "_" are internal-use, and will
+    not be rendered or web-edited.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
 
