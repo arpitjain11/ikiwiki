@@ -41,7 +41,7 @@ sub store ($$) { #{{{
 
 	# Optimisation to avoid re-writing pages. Assumes commits never
 	# change (or that any changes are not important).
-	return if exists $pagesources{$page} && ! $config{rebuild};
+	return $page if exists $pagesources{$page} && ! $config{rebuild};
 
 	# Limit pages to first 10, and add links to the changed pages.
 	my $is_excess = exists $change->{pages}[10];
@@ -97,18 +97,28 @@ sub store ($$) { #{{{
 	my $file=$page."._change";
 	writefile($file, $config{srcdir}, $template->output);
 	utime $change->{when}, $change->{when}, "$config{srcdir}/$file";
+
+	return $page;
 } #}}}
 
 sub updatechanges ($$) { #{{{
 	my $pagespec=shift;
 	my $subdir=shift;
 	my @changes=@{shift()};
+	
+	my %seen;
 
+	# add new changes
 	foreach my $change (@changes) {
-		store($change, $subdir);
+		$seen{store($change, $subdir)}=1;
 	}
 	
-	# TODO: delete old
+	# delete old and excess changes
+	foreach my $page (keys %pagesources) {
+		if ($page=~/^\Q$subdir\E\/change_/ && ! $seen{$page}) {
+			unlink($config{srcdir}.'/'.$pagesources{$page});
+		}
+	}
 } #}}}
 
 1

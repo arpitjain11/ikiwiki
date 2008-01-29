@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-29 04:45-0500\n"
+"POT-Creation-Date: 2008-01-29 15:21-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,8 +47,8 @@ msgstr ""
 
 #: ../IkiWiki/CGI.pm:382 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:241 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
-#: ../IkiWiki/Render.pm:178
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:100
+#: ../IkiWiki/Render.pm:180
 msgid "discussion"
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:249 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:249 ../IkiWiki/Render.pm:104
 msgid "Discussion"
 msgstr ""
 
@@ -503,47 +503,47 @@ msgstr ""
 msgid "getctime not implemented"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:276 ../IkiWiki/Render.pm:297
+#: ../IkiWiki/Render.pm:280 ../IkiWiki/Render.pm:301
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:339
+#: ../IkiWiki/Render.pm:350
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:372
+#: ../IkiWiki/Render.pm:389
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:377
+#: ../IkiWiki/Render.pm:394
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:389
+#: ../IkiWiki/Render.pm:415
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:436
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:444
+#: ../IkiWiki/Render.pm:475
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:456
+#: ../IkiWiki/Render.pm:487
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:482
+#: ../IkiWiki/Render.pm:513
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -623,7 +623,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:767
+#: ../IkiWiki.pm:773
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
