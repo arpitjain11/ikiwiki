@@ -6,20 +6,6 @@ Suggestions of ideas for plugins:
 > web-server-specific code to list all users, and openid can't feasibly do so
 > at all. --[[JoshTriplett]]
 
-* Support [[RecentChanges]] as a regular page containing a plugin that
-  updates each time there is a change, and statically builds the recent
-  changes list. (Would this be too expensive/inflexible? There might be
-  other ways to do it as a plugin, like making all links to RecentChanges
-  link to the cgi and have the cgi render it on demand.) 
-
-  Or using an iframe
-  to inline the cgi, although firefox seems to render that nastily with
-  nested scroll bars. :-(
-> Or just link to the equivalent in the version control system, if available;
-> gitweb's shortlog or summary view would work nicely as a
-> RecentChanges. --[[JoshTriplett]]
->>Why not fork the process?  We wouldn't have to wait around for a response since we would assume the recent changes page was being generated correctly.
-
 * It would be nice to be able to have a button to show "Differences" (or 
   "Show Diff") when editing a page. Is that an option that can be enabled?
   Using a plugin?
