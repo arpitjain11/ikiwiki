@@ -973,7 +973,7 @@ sub saveindex () { #{{{
 		if (exists $pagestate{$page}) {
 			foreach my $id (@hookids) {
 				foreach my $key (keys %{$pagestate{$page}{$id}}) {
-					$line.=' '.$id.'_'.encode_entities($key)."=".encode_entities($pagestate{$page}{$id}{$key});
+					$line.=' '.$id.'_'.encode_entities($key)."=".encode_entities($pagestate{$page}{$id}{$key}, " \t\n");
 				}
 			}
 		}

@@ -533,18 +533,16 @@ rendered to.
 
 ## Internal use pages
 
-Sometimes it's useful to put pages in the wiki without having them be
-rendered to individual html files. Such internal use pages are collected
-together to form the RecentChanges page, for example.
+Sometimes it's useful to put pages in the wiki without the overhead of
+having them be rendered to individual html files. Such internal use pages
+are collected together to form the RecentChanges page, for example.
 
 To make an internal use page, register a filename extension that starts
-with "_". Internal use pages cannot be edited with the web interface, are
-not scanned for wikilinks (though wikilinks and preprocessor directives can
-appear on them, this is rarely a good idea and should be done with caution),
-and are not matched by regular PageSpecs glob patterns, but instead only by a
-special `internal()` [[ikiwiki/PageSpec]].
-
-Ikiwiki is optimised to handle lots of internal use pages, very quickly.
+with "_". Internal use pages cannot be edited with the web interface,
+generally shouldn't contain wikilinks or preprocessor directives (use
+either on them with extreme caution), and are not matched by regular
+PageSpecs glob patterns, but instead only by a special `internal()`
+[[ikiwiki/PageSpec]].
 
 ## RCS plugins
 

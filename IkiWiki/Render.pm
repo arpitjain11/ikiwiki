@@ -377,6 +377,7 @@ sub refresh () { #{{{
 			$pagemtime{$page}=$mtime;
 			if (isinternal($page)) {
 				push @internal, $file;
+				scan($file);
 			}
 			else {
 				push @needsbuild, $file;

@@ -31,6 +31,11 @@ ikiwiki (2.21) UNRELEASED; urgency=low
     the svnrepo and notify settings, though both will be ignored if left in
     setup files. Also gone with it is the "user()" pagespec.
   * Add refresh hook.
+  * meta: Add pagespec functions to match against title, author, authorurl,
+    license, and copyright. This can be used to create custom RecentChanges.
+  * meta: To support the pagespec functions, metadata about pages has to be
+    retained as pagestate.
+  * Fix encoding bug when pagestate values contained spaces.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
 
