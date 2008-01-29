@@ -6,18 +6,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "needsbuild", id => "recentchanges",
-		call => \&needsbuild);
+	hook(type => "refresh", id => "recentchanges",
+		call => \&refresh);
 	hook(type => "preprocess", id => "recentchanges",
 		call => \&preprocess);
 	hook(type => "htmlize", id => "_change",
 		call => \&htmlize);
 } #}}}
 
-sub needsbuild ($) { #{{{
-	my $needsbuild=shift;
+sub refresh ($) { #{{{
 	my @changes=IkiWiki::rcs_recentchanges(100);
-	push @$needsbuild, updatechanges("*", "recentchanges", \@changes);
+	updatechanges("*", "recentchanges", \@changes);
 } #}}}
 
 sub preprocess (@) { #{{{
@@ -98,21 +97,18 @@ sub store ($$) { #{{{
 	my $file=$page."._change";
 	writefile($file, $config{srcdir}, $template->output);
 	utime $change->{when}, $change->{when}, "$config{srcdir}/$file";
-	return $file;
 } #}}}
 
 sub updatechanges ($$) { #{{{
 	my $pagespec=shift;
 	my $subdir=shift;
 	my @changes=@{shift()};
-	my @ret;
+
 	foreach my $change (@changes) {
-		my $file=store($change, $subdir);
-		push @ret, $file if defined $file;
+		store($change, $subdir);
 	}
-	# TODO: delete old
 	
-	return @ret;
+	# TODO: delete old
 } #}}}
 
 1
