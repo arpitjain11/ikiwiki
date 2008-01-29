@@ -247,8 +247,6 @@ sub _parse_diff_tree ($@) { #{{{
 		last;
 	}
 
-	debug("No detail in diff-tree output") if !defined $ci{'details'};
-
 	return \%ci;
 } #}}}
 
