@@ -203,7 +203,8 @@ sub rcs_recentchanges ($) { #{{{
 				diffurl => $diffurl,
 			} if length $file;
 		}
-		push @ret, { rev => $rev,
+		push @ret, {
+			id => $rev,
 			user => $user,
 			committype => $committype,
 			when => $when,

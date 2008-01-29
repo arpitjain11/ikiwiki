@@ -407,7 +407,7 @@ sub rcs_recentchanges ($) { #{{{
 		}
 
 		push @rets, {
-			rev        => $sha1,
+			id         => $sha1,
 			user       => $user,
 			committype => $type,
 			when       => $when,
