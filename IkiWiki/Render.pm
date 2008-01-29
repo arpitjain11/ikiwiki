@@ -319,15 +319,19 @@ sub refresh () { #{{{
 		}, $dir);
 	};
 
-	my %rendered;
+	my (%rendered, @add, @del, @internal);
 
 	# check for added or removed pages
-	my @add;
 	foreach my $file (@files) {
 		my $page=pagename($file);
 		$pagesources{$page}=$file;
 		if (! $pagemtime{$page}) {
-			push @add, $file;
+			if (isinternal($page)) {
+				push @internal, $file;
+			}
+			else {
+				push @add, $file;
+			}
 			$pagecase{lc $page}=$page;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
 				$pagectime{$page}=rcs_getctime("$config{srcdir}/$file");
@@ -337,11 +341,15 @@ sub refresh () { #{{{
 			}
 		}
 	}
-	my @del;
 	foreach my $page (keys %pagemtime) {
 		if (! $exists{$page}) {
-			debug(sprintf(gettext("removing old page %s"), $page));
-			push @del, $pagesources{$page};
+			if (isinternal($page)) {
+				push @internal, $pagesources{$page};
+			}
+			else {
+				debug(sprintf(gettext("removing old page %s"), $page));
+				push @del, $pagesources{$page};
+			}
 			$links{$page}=[];
 			$renderedfiles{$page}=[];
 			$pagemtime{$page}=0;
@@ -366,7 +374,12 @@ sub refresh () { #{{{
 		    $mtime > $pagemtime{$page} ||
 	    	    $forcerebuild{$page}) {
 			$pagemtime{$page}=$mtime;
-			push @needsbuild, $file;
+			if (isinternal($page)) {
+				push @internal, $file;
+			}
+			else {
+				push @needsbuild, $file;
+			}
 		}
 	}
 	run_hooks(needsbuild => sub { shift->(\@needsbuild) });
@@ -381,6 +394,15 @@ sub refresh () { #{{{
 		debug(sprintf(gettext("rendering %s"), $file));
 		render($file);
 		$rendered{$file}=1;
+	}
+	foreach my $file (@internal) {
+		# internal pages are not rendered
+		my $page=pagename($file);
+		delete $depends{$page};
+		foreach my $old (@{$renderedfiles{$page}}) {
+			delete $destsources{$old};
+		}
+		$renderedfiles{$page}=[];
 	}
 	
 	# rebuild pages that link to added or removed pages
@@ -397,13 +419,17 @@ sub refresh () { #{{{
 		}
 	}
 
-	if (%rendered || @del) {
+	if (%rendered || @del || @internal) {
+		my @changed=(keys %rendered, @del);
+
 		# rebuild dependant pages
 		foreach my $f (@files) {
 			next if $rendered{$f};
 			my $p=pagename($f);
 			if (exists $depends{$p}) {
-				foreach my $file (keys %rendered, @del) {
+				# only consider internal files
+				# if the page explicitly depends on such files
+				foreach my $file (@changed, $depends{$p}=~/internal\(/ ? @internal : ()) {
 					next if $f eq $file;
 					my $page=pagename($file);
 					if (pagespec_match($page, $depends{$p}, location => $p)) {
@@ -419,7 +445,7 @@ sub refresh () { #{{{
 		# handle backlinks; if a page has added/removed links,
 		# update the pages it links to
 		my %linkchanged;
-		foreach my $file (keys %rendered, @del) {
+		foreach my $file (@changed) {
 			my $page=pagename($file);
 			
 			if (exists $links{$page}) {
@@ -441,6 +467,7 @@ sub refresh () { #{{{
 				}
 			}
 		}
+
 		foreach my $link (keys %linkchanged) {
 		    	my $linkfile=$pagesources{$link};
 			if (defined $linkfile) {

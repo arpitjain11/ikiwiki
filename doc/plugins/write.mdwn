@@ -151,11 +151,6 @@ specifies the filename extension that a file must have to be htmlized using
 this plugin. This is how you can add support for new and exciting markup
 languages to ikiwiki.
 
-Note that if you choose a filename extension that starts with "_",
-ikiwiki will not render the page, or allow the page to be edited with the
-web interface. This is useful for certian types of internal-use pages, but
-should generally be avoided.
-
 The function is passed named parameters: "page" and "content" and should
 return the htmlized content.
 
@@ -535,6 +530,19 @@ destination file, as registered by `will_render`.
 
 Passed a page and an extension, returns the filename that page will be
 rendered to.
+
+## Internal use pages
+
+Sometimes it's useful to put pages in the wiki without having them be
+rendered to individual html files. Such internal use pages are collected
+together to form the RecentChanges page, for example.
+
+To make an internal use page, register a filename extension that starts
+with "_". Internal use pages cannot be edited with the web interface, are
+not scanned for wikilinks (though wikilinks and preprocessor directives can
+still appear on them, this is rarely a good idea), and are not matched by
+regular PageSpecs glob patterns, but instead only by a special `internal()`
+[[ikiwiki/PageSpec]].
 
 ## RCS plugins
 

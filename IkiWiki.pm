@@ -260,6 +260,12 @@ sub pagetype ($) { #{{{
 	return;
 } #}}}
 
+sub isinternal ($) { #{{{
+	my $page=shift;
+	return exists $pagesources{$page} &&
+		$pagesources{$page} =~ /\._([^.]+)$/;
+} #}}}
+
 sub pagename ($) { #{{{
 	my $file=shift;
 
@@ -1287,11 +1293,20 @@ sub match_glob ($$;@) { #{{{
 	$glob=~s/\\\?/./g;
 
 	if ($page=~/^$glob$/i) {
-		return IkiWiki::SuccessReason->new("$glob matches $page");
+		if (! IkiWiki::isinternal($page) || $params{internal}) {
+			return IkiWiki::SuccessReason->new("$glob matches $page");
+		}
+		else {
+			return IkiWiki::FailReason->new("$glob matches $page, but the page is an internal page");
+		}
 	}
 	else {
 		return IkiWiki::FailReason->new("$glob does not match $page");
 	}
+} #}}}
+
+sub match_internal ($$;@) { #{{{
+	return match_glob($_[0], $_[1], @_, internal => 1)
 } #}}}
 
 sub match_link ($$;@) { #{{{
@@ -1386,21 +1401,6 @@ sub match_creation_year ($$;@) { #{{{
 	}
 	else {
 		return IkiWiki::FailReason->new('creation_year did not match');
-	}
-} #}}}
-
-sub match_user ($$;@) { #{{{
-	shift;
-	my $user=shift;
-	my %params=@_;
-
-	return IkiWiki::FailReason->new('cannot match user')
-		unless exists $params{user};
-	if ($user eq $params{user}) {
-		return IkiWiki::SuccessReason->new("user is $user")
-	}
-	else {
-		return IkiWiki::FailReason->new("user is not $user");
 	}
 } #}}}
 
