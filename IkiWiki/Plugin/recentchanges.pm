@@ -68,8 +68,9 @@ sub store ($$) { #{{{
 	push @{$change->{pages}}, { link => '...' } if $is_excess;
 
 	# Take the first line of the commit message as a summary.
-	my $m=shift @{$change->{message}};
-	$change->{summary}=$m->{line};
+	#my $m=shift @{$change->{message}};
+	#$change->{summary}=$m->{line};
+	#delete $change->{message} unless @{$change->{message}};
 
 	# See if the committer is an openid.
 	my $oiduser=IkiWiki::openiduser($change->{user});
@@ -85,7 +86,11 @@ sub store ($$) { #{{{
 
 	# Fill out a template with the change info.
 	my $template=template("change.tmpl", blind_cache => 1);
-	$template->param(%$change);
+	$template->param(
+		%$change,
+		commitdate => displaytime($change->{when}, "%x %x"),
+		wikiname => $config{wikiname},
+	);
 	$template->param(baseurl => "$config{url}/") if length $config{url};
 	IkiWiki::run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page, template => $template);

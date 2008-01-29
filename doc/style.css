@@ -70,27 +70,49 @@ img {
 	border-style: none;
 }
 
-/* Stuff for the RecentChanges table. */
-tr.changeheader {
+div.recentchanges {
+	border-style: solid;
+	border-width: 1px;
+	overflow: auto;
+	width: 100%;
 	background: #eee;
 	color: black !important;
 }
-tr.changeinfo {
-	background: #eee;
-	color: black !important;
+.recentchanges .metadata {
+	padding: 0px 0.5em;
 }
-th.changeheader {
-	padding: 1px .3em;
-}
-td.changeinfo {
-	padding: 1px .3em;
-}
-td.changetime {
-	white-space: nowrap;
-	padding: 1px .3em;
-}
-td.changelog {
+.recentchanges .changelog {
 	font-style: italic;
+	clear: both;
+	display: block;
+	padding: 1px 2px;
+	background: white !important;
+	color: black !important;
+}
+.recentchanges .desc {
+	display: none;
+}
+.recentchanges .committer {
+	float: left;
+	margin: 0;
+	width: 40%;
+}
+.recentchanges .committype {
+	float: left;
+	margin: 0;
+	width: 5%;
+	font-size: small;
+}
+.recentchanges .changedate {
+	float: left;
+	margin: 0;
+	width: 35%;
+	font-size: small;
+}
+.recentchanges .pagelinks {
+	float: right;
+	margin: 0;
+	width: 60%;
 }
 
 /* Used for adding a blog page. */
