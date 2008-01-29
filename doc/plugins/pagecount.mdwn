@@ -10,5 +10,5 @@ pages to count, default is to count them all.
 This plugin is included in ikiwiki, but is not enabled by default.
 
 If it is turned on it can tell us that this wiki includes
-[[pagecount ]] pages, of which [[pagecount pages="*/Discussion"]] are
-discussion pages.
+[[pagecount pages="* and !recentchanges/change_* and !recentchanges"]]
+pages, of which [[pagecount pages="*/Discussion"]] are discussion pages.
