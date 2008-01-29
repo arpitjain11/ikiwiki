@@ -341,7 +341,7 @@ sub cgi_editpage ($$) { #{{{
 	if (exists $pagesources{$page} && $form->field("do") ne "create") {
 		$file=$pagesources{$page};
 		$type=pagetype($file);
-		if (! defined $type) {
+		if (! defined $type || $type=~/^_/) {
 			error(sprintf(gettext("%s is not an editable page"), $page));
 		}
 		if (! $form->submitted) {
@@ -470,7 +470,8 @@ sub cgi_editpage ($$) { #{{{
 			
 			my @page_types;
 			if (exists $hooks{htmlize}) {
-				@page_types=keys %{$hooks{htmlize}};
+				@page_types=grep { !/^_/ }
+					keys %{$hooks{htmlize}};
 			}
 			
 			$form->tmpl_param("page_select", 1);
