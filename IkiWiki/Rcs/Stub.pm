@@ -37,7 +37,7 @@ sub rcs_recentchanges ($) {
 	# Examine the RCS history and generate a list of recent changes.
 	# The data structure returned for each change is:
 	# {
-	# 	id => # the RCSs id for this commit
+	# 	rev => # the RCSs id for this commit
 	# 	user => # name of user who made the change,
 	# 	committype => # either "web" or the name of the rcs,
 	# 	when => # time when the change was made,

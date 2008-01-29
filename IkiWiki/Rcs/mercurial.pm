@@ -139,7 +139,7 @@ sub rcs_recentchanges ($) { #{{{
 		$user =~ s/^\s*//;
 
 		push @ret, {
-			id         => $info->{"changeset"},
+			rev        => $info->{"changeset"},
 			user       => $user,
 			committype => "mercurial",
 			when       => time - str2time($info->{"date"}),
