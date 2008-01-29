@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 54;
+use Test::More tests => 52;
 
 BEGIN { use_ok("IkiWiki"); }
 
