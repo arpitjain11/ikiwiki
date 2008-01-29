@@ -3,13 +3,6 @@
 [[meta authorurl="""<TMPL_VAR AUTHORURL>"""]]
 </TMPL_IF>
 [[meta title="""update of <TMPL_VAR WIKINAME>'s <TMPL_LOOP NAME="PAGES"> <TMPL_VAR PAGE></TMPL_LOOP>"""]]
-<div class=changelog>
-<TMPL_LOOP NAME="MESSAGE">
-	<TMPL_IF NAME="LINE">
-		<TMPL_VAR NAME="LINE" ESCAPE="HTML"><br />
-	</TMPL_IF>
-</TMPL_LOOP>
-</div>
 <div class="metadata">
 <span class="desc"><br />Changed pages:</span>
 <span class="pagelinks">
@@ -34,5 +27,12 @@
 <span class="committype"><TMPL_VAR COMMITTYPE></span>
 <span class="desc"><br />Date:</span>
 <span class="changedate"><TMPL_VAR COMMITDATE></span>
+</div>
+<div class=changelog>
+<TMPL_LOOP NAME="MESSAGE">
+	<TMPL_IF NAME="LINE">
+		<TMPL_VAR NAME="LINE" ESCAPE="HTML"><br />
+	</TMPL_IF>
+</TMPL_LOOP>
 </div>
 <!-- <TMPL_VAR NAME="REV"> -->
