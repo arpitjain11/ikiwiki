@@ -377,7 +377,9 @@ sub refresh () { #{{{
 			$pagemtime{$page}=$mtime;
 			if (isinternal($page)) {
 				push @internal, $file;
-				scan($file);
+				# Preprocess internal page in scan-only mode.
+				my $content=readfile(srcfile($file));
+				preprocess($page, $page, $content, 1);
 			}
 			else {
 				push @needsbuild, $file;
