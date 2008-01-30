@@ -10,3 +10,19 @@ The only other way I can think of making this work would be to set the title of 
 
 Cheers,
 [[AdamShand]]
+
+> One way to approach it would be to add a field to the template
+> that contains the full page name. Then you just use a modified
+> `inlinepage.tmpl`, that uses that instead of the title. --[[Joey]]
+
+diff --git a/IkiWiki/Plugin/inline.pm b/IkiWiki/Plugin/inline.pm
+index 59eabb6..82913ba 100644
+--- a/IkiWiki/Plugin/inline.pm
++++ b/IkiWiki/Plugin/inline.pm
+@@ -229,6 +229,7 @@ sub preprocess_inline (@) { #{{{
+ 					$template->param(content => $content);
+ 				}
+ 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
++				$template->param(page => $page);
+ 				$template->param(title => pagetitle(basename($page)));
+ 				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
