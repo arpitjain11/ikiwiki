@@ -85,12 +85,6 @@ sub genpage ($$) { #{{{
 		$actions++;
 	}
 		
-	if ($config{rcs} && exists $config{recentchangespage} &&
-	    $page ne $config{recentchangespage}) {
-		$template->param(recentchangesurl => urlto($config{recentchangespage}, $page));
-		$actions++;
-	}
-
 	if (length $config{historyurl}) {
 		my $u=$config{historyurl};
 		$u=~s/\[\[file\]\]/$pagesources{$page}/g;

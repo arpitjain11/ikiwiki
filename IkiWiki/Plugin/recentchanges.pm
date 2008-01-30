@@ -9,6 +9,7 @@ sub import { #{{{
 	hook(type => "checkconfig", id => "recentchanges", call => \&checkconfig);
 	hook(type => "refresh", id => "recentchanges", call => \&refresh);
 	hook(type => "htmlize", id => "_change", call => \&htmlize);
+	hook(type => "pagetemplate", id => "recentchanges", call => \&pagetemplate);
 } #}}}
 
 sub checkconfig () { #{{{
@@ -29,6 +30,18 @@ sub refresh ($) { #{{{
 		if ($page=~/^\Q$config{recentchangespage}\E\/change_/ && ! $seen{$page}) {
 			unlink($config{srcdir}.'/'.$pagesources{$page});
 		}
+	}
+} #}}}
+
+# Enable the recentchanges link on wiki pages.
+sub pagetemplate (@) { #{{{
+	my %params=@_;
+	my $template=$params{template};
+	my $page=$params{page};
+	if ($config{rcs} && $page ne $config{recentchangespage} &&
+	    $template->query(name => "recentchangesurl")) {
+		$template->param(recentchangesurl => urlto($config{recentchangespage}, $page));
+		$template->param(have_actions => 1);
 	}
 } #}}}
 
