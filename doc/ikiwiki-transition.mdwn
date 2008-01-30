@@ -1,0 +1,29 @@
+# NAME
+
+ikiwiki-transition - transition ikiwiki pages to new syntaxes
+
+# SYNOPSIS
+
+ikiwiki-transition prefix_directives page.mdwn...
+
+# DESCRIPTION
+
+`ikiwiki-transition` aids in converting ikiwiki pages when
+there's a major change in ikiwiki syntax.
+
+Currently only one such transition is handled, the `prefix_directives` mode
+converts an ikiwiki page from the old preprocessor directive syntax,
+requiring a space, to the new syntax, prefixed by '!'.
+
+Preprocessor directives which already use the new syntax will remain
+unchanged.
+
+Note that if the page contains wiki links with spaces, which some
+older versions of ikiwiki accepted, ikiwiki-prefix-directives will
+treat these as preprocessor directives and convert them.
+
+# AUTHOR
+
+Josh Triplett <josh@freedesktop.org>
+
+Warning: this page is automatically made into ikiwiki-transition's man page, edit with care

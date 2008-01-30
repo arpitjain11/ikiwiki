@@ -18,10 +18,10 @@ ikiwiki (2.21) unstable; urgency=low
   in their setup files.
 
   To convert your wiki to the new syntax, ikiwiki provides a new script
-  ikiwiki-prefix-directives.  It will convert preprocessor directives in
+  ikiwiki-transition.  It will convert preprocessor directives in
   all files given on the command line.  To convert an entire wiki:
 
-  find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-prefix-directives
+  find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-transition prefix_directives
 
   Even with prefix_directives disabled, ikiwiki now allows an optional '!'
   prefix on preprocessor directives (but still requires a space).  Thus, a

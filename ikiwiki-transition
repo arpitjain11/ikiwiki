@@ -2,8 +2,6 @@
 use warnings;
 use strict;
 
-undef $/; # process whole files at once
-
 my $regex = qr{
 	(\\?)		# 1: escape?
 	\[\[(!?)	# directive open; 2: optional prefix
@@ -41,7 +39,28 @@ sub handle_directive {
 	return "[[!${directive}${args}]]"
 }
 
-while (<>) {
-	s{$regex}{handle_directive($1, $2, $3, $4)}eg;
-	print;
+sub prefix_directives {
+	$/=undef; # process whole files at once
+	
+	while (<>) {
+		s{$regex}{handle_directive($1, $2, $3, $4)}eg;
+		print;
+	}
+}
+
+sub usage {
+	print STDERR "Usage: ikiwiki-transition type file ...\n";
+	print STDERR "Currently supported transition types:\n";
+	print STDERR "	prefix_directives\n";
+	exit 1;
+}
+
+usage() unless @ARGV;
+
+my $mode=shift;
+if ($mode eq 'prefix_directives') {
+	prefix_directives(@ARGV);
+}
+else {
+	usage();
 }
