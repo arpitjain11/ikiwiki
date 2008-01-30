@@ -8,7 +8,7 @@ use open qw{:utf8 :std};
 
 package IkiWiki;
 
-sub bazaar_log ($) { #{{{
+sub bzr_log ($) { #{{{
 	my $out = shift;
 	my @infos = ();
 	my $key = undef;
@@ -102,7 +102,7 @@ sub rcs_recentchanges ($) { #{{{
 	error($@) if $@;
 
 	my @ret;
-	foreach my $info (bazaar_log($out)) {
+	foreach my $info (bzr_log($out)) {
 		my @pages = ();
 		my @message = ();
         
@@ -129,7 +129,7 @@ sub rcs_recentchanges ($) { #{{{
 		push @ret, {
 			rev        => $info->{"revno"},
 			user       => $user,
-			committype => "bazaar",
+			committype => "bzr",
 			when       => time - str2time($info->{"timestamp"}),
 			message    => [@message],
 			pages      => [@pages],
@@ -147,7 +147,7 @@ sub rcs_getctime ($) { #{{{
 	my @cmdline = ("bzr", "log", "--limit", '1', "$config{srcdir}/$file");
 	open (my $out, "@cmdline |");
 
-	my @log = bazaar_log($out);
+	my @log = bzr_log($out);
 
 	if (length @log < 1) {
 		return 0;
