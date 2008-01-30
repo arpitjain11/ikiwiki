@@ -82,7 +82,7 @@ sub store ($$$) { #{{{
 
 	# See if the committer is an openid.
 	$change->{author}=$change->{user};
-	my $oiduser=IkiWiki::openiduser($change->{user});
+	my $oiduser=eval { IkiWiki::openiduser($change->{user}) };
 	if (defined $oiduser) {
 		$change->{authorurl}=$change->{user};
 		$change->{user}=$oiduser;

@@ -613,33 +613,10 @@ sub htmllink ($$$;@) { #{{{
 	return "<a href=\"$bestlink\"@attrs>$linktext</a>";
 } #}}}
 
-sub openiduser ($) { #{{{
-	my $user=shift;
-
-	if ($user =~ m!^https?://! &&
-	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
-		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
-		my $display=$oid->display;
-		# Convert "user.somehost.com" to "user [somehost.com]".
-		if ($display !~ /\[/) {
-			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
-		}
-		# Convert "http://somehost.com/user" to "user [somehost.com]".
-		if ($display !~ /\[/) {
-			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
-		}
-		$display=~s!^https?://!!; # make sure this is removed
-		eval q{use CGI 'escapeHTML'};
-		error($@) if $@;
-		return escapeHTML($display);
-	}
-	return;
-}
-
 sub userlink ($) { #{{{
 	my $user=shift;
 
-	my $oiduser=openiduser($user);
+	my $oiduser=eval { openiduser($user) };
 	if (defined $oiduser) {
 		return "<a href=\"$user\">$oiduser</a>";
 	}
