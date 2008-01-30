@@ -29,3 +29,6 @@
 
         if ($?) {
                 return "[[".gettext("fortune failed")."]]";
+	
+> An environment variable is not the right approach. Ikiwiki has a setup
+> file, and plugins can use configuration from there. --[[Joey]]
