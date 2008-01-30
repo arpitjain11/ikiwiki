@@ -42,6 +42,11 @@ use IkiWiki::Setup::Standard {
 	#historyurl => "http://localhost:8000/log/tip/[[file]]", # hg serve'd local repository
 	#diffurl => "http://localhost:8000/?fd=[[r2]];file=[[file]]",
 
+	# Bazaar stuff.
+	#rcs => "bzr",
+	#historyurl => ??,
+	#diffurl => ??,
+
 	# Monotone stuff
 	#rcs => "monotone",
 	#mtnkey => "web\@machine.company.com",

@@ -135,6 +135,13 @@ about using the git repositories.
 	ikiwiki-makerepo mercurial $SRCDIR
 """]]
 
+[[toggle id=mercurial text="Bazaar"]]
+[[toggleable id=bazaar text="""
+	REPOSITORY=$SRCDIR
+	# FIXME: doesn't work yet with bzr
+	ikiwiki-makerepo bzr $SRCDIR
+"""]]
+
 [[toggle id=tla text="TLA"]]
 [[toggleable id=tla text="""
 	REPOSITORY=~/wikirepo

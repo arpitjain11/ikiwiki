@@ -1,0 +1,8 @@
+[Bazaar](http://bazaar-vcs.org/) is a distributed revison control
+system developed by Canonical Ltd. Ikiwiki supports storing a wiki in a
+bzr repository.
+
+Ikiwiki can run as a post-update hook to update a wiki whenever commits
+come in. When running as a [[cgi]] with bzr, ikiwiki automatically
+commits edited pages, and uses the bzr history to generate the
+[[RecentChanges]] page.
