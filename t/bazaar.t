@@ -17,7 +17,7 @@ use Test::More tests => 11;
 BEGIN { use_ok("IkiWiki"); }
 
 %config=IkiWiki::defaultconfig();
-$config{rcs} = "bazaar";
+$config{rcs} = "bzr";
 $config{srcdir} = "$dir/repo";
 IkiWiki::checkconfig();
 

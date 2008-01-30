@@ -95,7 +95,8 @@ sub rcs_recentchanges ($) { #{{{
 	eval q{use CGI 'escapeHTML'};
 	error($@) if $@;
 
-	my @cmdline = ("bzr", "log", "-v", "--limit", $num, $config{srcdir});
+	my @cmdline = ("bzr", "log", "-v", "--show-ids", "--limit", $num, 
+		           $config{srcdir});
 	open (my $out, "@cmdline |");
 
 	eval q{use Date::Parse};
@@ -111,12 +112,14 @@ sub rcs_recentchanges ($) { #{{{
 		}
 
 		foreach my $file (split(/\n/, $info->{files})) {
+			my ($filename, $fileid) = split(/[ \t]+/, $file);
 			my $diffurl = $config{'diffurl'};
-			$diffurl =~ s/\[\[file\]\]/$file/go;
+			$diffurl =~ s/\[\[file\]\]/$filename/go;
+			$diffurl =~ s/\[\[file-id\]\]/$fileid/go;
 			$diffurl =~ s/\[\[r2\]\]/$info->{revno}/go;
 
 			push @pages, {
-				page => pagename($file),
+				page => pagename($filename),
 				diffurl => $diffurl,
 			};
 		}
