@@ -71,8 +71,8 @@ sub rcs_commit ($$$;$$) { #{{{
 		$message = "no message given";
 	}
 
-	my @cmdline = ("bzr", "commit", 
-	               "-m", $message, "--author", $user, $config{srcdir});
+	my @cmdline = ("bzr", "commit", "-m", $message, "--author", $user,
+	               $config{srcdir}."/".$file);
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
