@@ -8,7 +8,7 @@ use open qw{:utf8 :std};
 
 package IkiWiki;
 
-sub bazaar_log($) {
+sub bazaar_log ($) { #{{{
 	my $out = shift;
 	my @infos = ();
 	my $key = undef;
@@ -19,15 +19,19 @@ sub bazaar_log($) {
 		if ($line =~ /^message:/) {
 			$key = "message";
 			$infos[$#infos]{$key} = "";
-		} elsif ($line =~ /^(modified|added|renamed|renamed and modified|removed):/) {
+		}
+		elsif ($line =~ /^(modified|added|renamed|renamed and modified|removed):/) {
 			$key = "files";
 			unless (defined($infos[$#infos]{$key})) { $infos[$#infos]{$key} = ""; }
-		} elsif (defined($key) and $line =~ /^  (.*)/) {
+		}
+		elsif (defined($key) and $line =~ /^  (.*)/) {
 			$infos[$#infos]{$key} .= $1;
-		} elsif ($line eq "------------------------------------------------------------\n") {
+		}
+		elsif ($line eq "------------------------------------------------------------\n") {
 			$key = undef;
 			push (@infos, {});
-		} else {
+		}
+		else {
 			chomp $line;
 				($key, $value) = split /: +/, $line, 2;
 			$infos[$#infos]{$key} = $value;
@@ -36,10 +40,10 @@ sub bazaar_log($) {
 	close $out;
 
 	return @infos;
-}
+} #}}}
 
 sub rcs_update () { #{{{
-	my @cmdline = ("bzr", "$config{srcdir}", "update");
+	my @cmdline = ("bzr", $config{srcdir}, "update");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
@@ -133,10 +137,6 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @ret;
-} #}}}
-
-sub rcs_notify () { #{{{
-	# TODO
 } #}}}
 
 sub rcs_getctime ($) { #{{{
