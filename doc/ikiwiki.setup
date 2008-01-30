@@ -44,8 +44,8 @@ use IkiWiki::Setup::Standard {
 
 	# Bazaar stuff.
 	#rcs => "bzr",
-	#historyurl => ??,
-	#diffurl => ??,
+	#historyurl => "", 
+	#diffurl => "http://example.com/revision?start_revid=[[r2]]#[[file]]-s", # using loggerhead
 
 	# Monotone stuff
 	#rcs => "monotone",
