@@ -1,0 +1,33 @@
+Copied from an email I sent --[[Joey]]
+
+> Apart from restricting escape characters and characters with special
+> meanings to the filesystem (such as '/') or the version control system
+> (which may not cope with \n), why limit filenames at all?
+
+Suppose that git-add and git-commit a shell scripts:
+
+	#!/bin/sh
+	/opt/git/git commit $1
+
+	#!/bin/sh
+	/opt/git/git add $1
+
+Ok, that's crappy code, but git add and commit are only run by a trusted 
+user at the command line, so it's hardly a security hole. (And frankly, 
+I'm not all too impressed with the real shell code I've seen in git-* 
+..) 
+
+But there's no security problem until ikiwiki calls it on a filename 
+that a web user made up. Now, suppose that ikiwiki decided to allow
+spaces in filenames. Nothing else new, just spaces. Of course, the above 
+bad code will fail to add and commit such files.
+
+But it won't just fail, it can even expose private data. Suppose that $1
+is "foo.mdwn .ikiwiki/userdb foo.mdwn". Then the userdb, with its
+passwords and emails is committed, along with foo.mdwn.
+
+Moral: ikiwiki interfaces with code that was not necessarily written for the
+security context that ikiwiki runs in. Even the most innocuous filenames can do
+very unexpected things if you let the shell get ahold of them. Ikiwiki needs to
+sanitize the hell out of user inputted data before letting it anywhere near the
+shell.
