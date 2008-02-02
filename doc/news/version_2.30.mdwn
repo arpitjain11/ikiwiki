@@ -5,6 +5,7 @@ News for ikiwiki 2.30:
    now a static page, not a CGI. Users can subscribe to its rss/atom feeds.
    Custom RecentChanges pages can be easily set up that display only changes
    to a subset of pages, or only changes by a subset of users.
+   
    All wikis need to be rebuilt on upgrade to this version. If you listed your
    wiki in /etc/ikiwiki/wikilist this will be done automatically when the
    Debian package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
@@ -13,6 +14,7 @@ News for ikiwiki 2.30:
    various VCSes), and so ikiwiki's support for sending commit mails is REMOVED
    from this version. If you were subscribed to commit mails, you should be
    able to accomplish the same thing by subscribing to a RecentChanges feed.
+
    The "svnrepo" and "notify" fields in setup files are no longer used, and
    silently ignored. You may want to remove them from your setup file.
 
