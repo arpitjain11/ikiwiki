@@ -1,0 +1,57 @@
+News for ikiwiki 2.30:
+
+   Ever feel that ikiwiki's handling of RecentChanges wasn't truely in the
+   spirit of a wiki compiler? Well, that's changed. The RecentChanges page is
+   now a static page, not a CGI. Users can subscribe to its rss/atom feeds.
+   Custom RecentChanges pages can be easily set up that display only changes
+   to a subset of pages, or only changes by a subset of users.
+   All wikis need to be rebuilt on upgrade to this version. If you listed your
+   wiki in /etc/ikiwiki/wikilist this will be done automatically when the
+   Debian package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
+   With this excellent new RecentChanges support, the mail notification system
+   is showing its age (and known to be variously buggy and underimplemented for
+   various VCSes), and so ikiwiki's support for sending commit mails is REMOVED
+   from this version. If you were subscribed to commit mails, you should be
+   able to accomplish the same thing by subscribing to a RecentChanges feed.
+   The "svnrepo" and "notify" fields in setup files are no longer used, and
+   silently ignored. You may want to remove them from your setup file.
+
+ikiwiki 2.30 released with [[toggle text="these changes"]]
+[[toggleable text="""
+ * [ Joey Hess ]
+   * Old versions of git-init don't support --git-dir or GIT\_DIR with
+     --bare. Change ikiwiki-makerepo to use a method that should work with
+     those older versions too.
+   * aggregate: Don't let feeds set creation times for pages in the future.
+   * Add full parser for git diff-tree output (Brian Downing)
+   * aggregate: Fork a child process to handle the aggregation. This simplifies
+     the code, since that process can change internal state as needed, and
+     it will automatically be cleaned up for the parent process, which proceeds
+     to render the changes.
+ * [ Josh Triplett ]
+   * Add trailing comma to commented-out umask in sample ikiwiki.setup, so
+     that uncommenting it does not break the setup file.
+ * [ Joey Hess ]
+   * inline: The template can check for FIRST and LAST, which will be
+     set for the first and last inlined page. Useful for templates that build
+     tables and the like.
+   * prettydate,ddate: Don't ignore time formats passed to displaytime
+     function.
+   * Pages with extensions starting with "\_" are internal-use, and will
+     not be rendered or web-edited, or matched by normal pagespecs.
+   * Add "internal()" pagespec that matches internal-use pages.
+   * RecentChanges is now a static html page, that's updated whenever a commit
+     is made to the wiki. It's built as a blog using inline, so it can have
+     an rss feed that users can subscribe to.
+   * Removed support for sending commit notification mails. Along with it went
+     the svnrepo and notify settings, though both will be ignored if left in
+     setup files. Also gone with it is the "user()" pagespec.
+   * Add refresh hook.
+   * meta: Add pagespec functions to match against title, author, authorurl,
+     license, and copyright. This can be used to create custom RecentChanges.
+   * meta: To support the pagespec functions, metadata about pages has to be
+     retained as pagestate.
+   * Fix encoding bug when pagestate values contained spaces.
+   * Add support for bzr, written by Jelmer Vernooij. Thanks also to bma for
+     his independent work on bzr support.
+   * Copyright file updates."""]]
