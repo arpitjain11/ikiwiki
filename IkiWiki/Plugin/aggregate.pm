@@ -37,30 +37,14 @@ sub checkconfig () { #{{{
 			debug("wiki is locked by another process, not aggregating");
 			exit 1;
 		}
-
+	
 		loadstate();
-		my @feeds=needsaggregate();
-		return unless @feeds;
+		IkiWiki::loadindex();
+		aggregate();
+		expire();
+		savestate();
+		clearstate();
 
-		# Fork a child process to handle the aggregation.
-		# The parent process will then handle building the
-		# result. This avoids messy code to clear state
-		# accumulated while aggregating.
-		defined(my $pid = fork) or error("Can't fork: $!");
-		if (! $pid) {
-			IkiWiki::loadindex();
-			aggregate(@feeds);
-			expire();
-			savestate();
-			exit 0;
-		}
-		waitpid($pid,0);
-		if ($?) {
-			error "aggregation failed with code $?";
-		}
-		$IkiWiki::forcerebuild{$_->{sourcepage}}=1
-			foreach @feeds;
-		
 		IkiWiki::unlockwiki();
 	}
 } #}}}
@@ -148,7 +132,7 @@ sub loadstate () { #{{{
 	return if $state_loaded;
 	$state_loaded=1;
 	if (-e "$config{wikistatedir}/aggregate") {
-		open(IN, "$config{wikistatedir}/aggregate") ||
+		open(IN, "<", "$config{wikistatedir}/aggregate") ||
 			die "$config{wikistatedir}/aggregate: $!";
 		while (<IN>) {
 			$_=IkiWiki::possibly_foolish_untaint($_);
@@ -186,7 +170,7 @@ sub savestate () { #{{{
 	error($@) if $@;
 	my $newfile="$config{wikistatedir}/aggregate.new";
 	my $cleanup = sub { unlink($newfile) };
-	open (OUT, ">$newfile") || error("open $newfile: $!", $cleanup);
+	open (OUT, ">", $newfile) || error("open $newfile: $!", $cleanup);
 	foreach my $data (values %feeds, values %guids) {
 		if ($data->{remove}) {
 			if ($data->{name}) {
@@ -228,6 +212,12 @@ sub savestate () { #{{{
 		error("rename $newfile: $!", $cleanup);
 } #}}}
 
+sub clearstate () { #{{{
+	%feeds=();
+	%guids=();
+	$state_loaded=0;
+} #}}}
+
 sub expire () { #{{{
 	foreach my $feed (values %feeds) {
 		next unless $feed->{expireage} || $feed->{expirecount};
@@ -259,12 +249,7 @@ sub expire () { #{{{
 	}
 } #}}}
 
-sub needsaggregate () { #{{{
-	return values %feeds if $config{rebuild};
-	return grep { time - $_->{lastupdate} >= $_->{updateinterval} } values %feeds;
-} #}}}
-
-sub aggregate (@) { #{{{
+sub aggregate () { #{{{
 	eval q{use XML::Feed};
 	error($@) if $@;
 	eval q{use URI::Fetch};
@@ -272,12 +257,15 @@ sub aggregate (@) { #{{{
 	eval q{use HTML::Entities};
 	error($@) if $@;
 
-	foreach my $feed (@_) {
+	foreach my $feed (values %feeds) {
+		next unless $config{rebuild} || 
+			time - $feed->{lastupdate} >= $feed->{updateinterval};
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
 		$feed->{message}=sprintf(gettext("processed ok at %s"),
 			displaytime($feed->{lastupdate}));
 		$feed->{error}=0;
+		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
 
 		debug(sprintf(gettext("checking feed %s ..."), $feed->{name}));
 
