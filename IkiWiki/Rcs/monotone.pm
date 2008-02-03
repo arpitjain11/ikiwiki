@@ -574,4 +574,3 @@ __DATA__
 	           return true
 	      end
 	}
-EOF
