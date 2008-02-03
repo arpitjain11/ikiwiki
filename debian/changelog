@@ -14,6 +14,9 @@ ikiwiki (2.31) UNRELEASED; urgency=low
     much better.
   * aggregate: Revert use of forking to not save state, that was not the right
     approach.
+  * recentchanges: Improve handling of links on the very static changes pages
+    by thunking to the CGI, which can redirect to the page, or allow it to be
+    created if it doesn't exist.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 

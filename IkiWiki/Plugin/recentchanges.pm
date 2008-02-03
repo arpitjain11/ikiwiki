@@ -8,8 +8,9 @@ use IkiWiki 2.00;
 sub import { #{{{
 	hook(type => "checkconfig", id => "recentchanges", call => \&checkconfig);
 	hook(type => "refresh", id => "recentchanges", call => \&refresh);
-	hook(type => "htmlize", id => "_change", call => \&htmlize);
 	hook(type => "pagetemplate", id => "recentchanges", call => \&pagetemplate);
+	hook(type => "htmlize", id => "_change", call => \&htmlize);
+	hook(type => "cgi", id => "recentchanges", call => \&cgi);
 } #}}}
 
 sub checkconfig () { #{{{
@@ -51,6 +52,39 @@ sub htmlize (@) { #{{{
 	return $params{content};
 } #}}}
 
+sub cgi ($) { #{{{
+	my $cgi=shift;
+	if (defined $cgi->param('do') && $cgi->param('do') eq "recentchanges_link") {
+		# This is a link from a change page to some
+		# other page. Since the change pages are only generated
+		# once, statically, links on them won't be updated if the
+		# page they link to is deleted, or newly created, or
+		# changes for whatever reason. So this CGI handles that
+		# dynamic linking stuff.
+		my $page=$cgi->param("page");
+		if (!defined $page) {
+			error("missing page parameter");
+		}
+
+		IkiWiki::loadindex();
+
+		my $link=bestlink("", $page);
+		if (! length $link) {
+			print "Content-type: text/html\n\n";
+			print IkiWiki::misctemplate(gettext(gettext("missing page")),
+				"<p>".
+				sprintf(gettext("The page %s does not exist."),
+					htmllink("", "", $page)).
+				"</p>");
+		}
+		else {
+			IkiWiki::redirect($cgi, $config{url}."/".htmlpage($link));
+		}
+
+		exit;
+	}
+}
+
 sub store ($$$) { #{{{
 	my $change=shift;
 
@@ -65,10 +99,15 @@ sub store ($$$) { #{{{
 	delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
 	$change->{pages} = [
 		map {
-			if (length $config{url}) {
-				$_->{link} = "<a href=\"$config{url}/".
-					urlto($_->{page},"")."\">".
-					IkiWiki::pagetitle($_->{page})."</a>";
+			if (length $config{cgiurl}) {
+				$_->{link} = "<a href=\"".
+					IkiWiki::cgiurl(
+						do => "recentchanges_link",
+						page => $_->{page}
+					).
+					"\">".
+					IkiWiki::pagetitle($_->{page}).
+					"</a>"
 			}
 			else {
 				$_->{link} = IkiWiki::pagetitle($_->{page});
@@ -87,10 +126,11 @@ sub store ($$$) { #{{{
 		$change->{authorurl}=$change->{user};
 		$change->{user}=$oiduser;
 	}
-	elsif (length $config{url}) {
-		$change->{authorurl}="$config{url}/".
-			(length $config{userdir} ? "$config{userdir}/" : "").
-			$change->{user};
+	elsif (length $config{cgiurl}) {
+		$change->{authorurl} = IkiWiki::cgiurl(
+			do => "recentchanges_link",
+			page => (length $config{userdir} ? "$config{userdir}/" : "").$change->{author},
+		);
 	}
 
 	# escape  wikilinks and preprocessor stuff in commit messages
