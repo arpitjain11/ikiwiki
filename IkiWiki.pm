@@ -884,7 +884,7 @@ sub loadindex () { #{{{
 	%oldrenderedfiles=%pagectime=();
 	if (! $config{rebuild}) {
 		%pagesources=%pagemtime=%oldlinks=%links=%depends=
-			%destsources=%renderedfiles=%pagecase=();
+			%destsources=%renderedfiles=%pagecase=%pagestate=();
 	}
 	open (my $in, "<", "$config{wikistatedir}/index") || return;
 	while (<$in>) {
