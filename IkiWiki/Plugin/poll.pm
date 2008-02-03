@@ -74,7 +74,7 @@ sub preprocess (@) { #{{{
 	return "<div class=poll>$ret</div>";
 } # }}}
 
-sub sessioncgi ($) { #{{{
+sub sessioncgi ($$) { #{{{
 	my $cgi=shift;
 	my $session=shift;
 	if (defined $cgi->param('do') && $cgi->param('do') eq "poll") {
