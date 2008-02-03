@@ -7,7 +7,7 @@ use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "poll", call => \&preprocess);
-	hook(type => "cgi", id => "poll", call => \&cgi);
+	hook(type => "sessioncgi", id => "poll", call => \&sessioncgi);
 } # }}}
 
 sub yesno ($) { #{{{
@@ -74,8 +74,9 @@ sub preprocess (@) { #{{{
 	return "<div class=poll>$ret</div>";
 } # }}}
 
-sub cgi ($) { #{{{
+sub sessioncgi ($) { #{{{
 	my $cgi=shift;
+	my $session=shift;
 	if (defined $cgi->param('do') && $cgi->param('do') eq "poll") {
 		my $choice=$cgi->param('choice');
 		if (! defined $choice) {
@@ -92,7 +93,6 @@ sub cgi ($) { #{{{
 
 		# Did they vote before? If so, let them change their vote,
 		# and check for dups.
-		my $session=IkiWiki::cgi_getsession();
 		my $choice_param="poll_choice_${page}_$num";
 		my $oldchoice=$session->param($choice_param);
 		if (defined $oldchoice && $oldchoice eq $choice) {
