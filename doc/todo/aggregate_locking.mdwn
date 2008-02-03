@@ -1,0 +1,66 @@
+The [[plugin/aggregate]] plugin's locking is a suboptimal.
+
+There should be no need to lock the wiki while aggregating -- it's annoying
+that long aggregate runs can block edits from happening. However, not
+locking would present problems. One is, if an aggregate run is happening,
+and the feed is removed, it could continue adding pages for that feed.
+Those pages would then become orphaned, and stick around, since the feed
+that had created them is gone, and thus there's no indication that they
+should be removed.
+
+To fix that, garbage collect any pages that were created by
+aggregation once their feed is gone.
+
+Are there other things that could happen while it's aggregating that it
+should check for?
+
+Well, things like the feed url etc could change, and it
+would have to merge in such changes before saving the aggregation state.
+New feeds could also be added, feeds could be moved from one source page to
+another.
+
+Merging that feed info seems doable, just re-load the aggregation state
+from disk, and set the `message`, `lastupdate`, `numposts`, and `error`
+fields to their new values if the feed still exists.
+
+----
+
+Another part of the mess is that it needs to avoid stacking multiple
+aggregate processes up if aggregation is very slow. Currently this is done
+by taking the lock in nonblocking mode, and not aggregating if it's locked.
+This has various problems, for example a page edit at the right time can
+prevent aggregation from happening.
+
+Adding another lock just for aggregation could solve this. Check that lock
+(in checkconfig) and exit if another aggregator holds it.
+
+----
+
+The other part of the mess is that it currently does aggregation in
+checkconfig, locking the wiki for that, and loading state, and then
+dropping the lock, unloading state, and letting the render happen. Which
+reloads state. That state reloading is tricky to do just right.
+
+A simple fix: Move the aggregation to the new 'render' hook. Then state
+would be loaded, and there would be no reason to worry about aggregating.
+
+Or aggregation could be kept in checkconfig, like so:
+
+* lock wiki
+* load aggregation state
+* unlock wiki
+* get list of feeds needing aggregation
+* exit if none
+* attempt to take aggregation lock, exit if another aggregation is happening
+* fork a child process to do the aggregation
+  * lock wiki
+  * load wiki state (needed for aggregation to run)
+  * unlock wiki
+  * aggregate
+  * lock wiki
+  * reload aggregation state
+  * merge in aggregation state changes
+  * unlock wiki
+* drop aggregation lock
+* force rebuild of sourcepages of feeds that were aggregated
+* exit checkconfig and continue with usual refresh process
