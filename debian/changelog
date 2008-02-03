@@ -6,19 +6,22 @@ ikiwiki (2.31) UNRELEASED; urgency=low
     that contributes to a page's content and using the youngest of them all,
     as well as special cases for things like the version plugin, and it's just
     too complex to do.
+  * aggregate: Forking a child broke the one state that mattered: Forcing
+    the aggregating page to be rebuilt. Fix this.
   * cgi hooks are now run before ikiwiki state is loaded.
   * This allows locking the wiki before loading state, which avoids some
     tricky locking code when saving a web edit.
   * poll: This plugin turns out to have edited pages w/o doing any locking.
     Oops. Convert it from a cgi to a sessioncgi hook, which will work
     much better.
-  * aggregate: Revert use of forking to not save state, that was not the right
-    approach.
   * recentchanges: Improve handling of links on the very static changes pages
     by thunking to the CGI, which can redirect to the page, or allow it to be
     created if it doesn't exist.
   * recentchanges: Exipre all *._change pages, even if the directory
     they're in has changed.
+  * aggregate: Lots of changes; aggregation can now run without locking the
+    wiki, and there is a separate aggregatelock to prevent multiple concurrent
+    aggregation runs.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 

@@ -46,16 +46,12 @@ would be loaded, and there would be no reason to worry about aggregating.
 
 Or aggregation could be kept in checkconfig, like so:
 
-* lock wiki
 * load aggregation state
-* unlock wiki
 * get list of feeds needing aggregation
 * exit if none
 * attempt to take aggregation lock, exit if another aggregation is happening
 * fork a child process to do the aggregation
-  * lock wiki
   * load wiki state (needed for aggregation to run)
-  * unlock wiki
   * aggregate
   * lock wiki
   * reload aggregation state
@@ -64,3 +60,5 @@ Or aggregation could be kept in checkconfig, like so:
 * drop aggregation lock
 * force rebuild of sourcepages of feeds that were aggregated
 * exit checkconfig and continue with usual refresh process
+
+[[done]]
