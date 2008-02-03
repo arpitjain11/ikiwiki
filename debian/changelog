@@ -17,6 +17,8 @@ ikiwiki (2.31) UNRELEASED; urgency=low
   * recentchanges: Improve handling of links on the very static changes pages
     by thunking to the CGI, which can redirect to the page, or allow it to be
     created if it doesn't exist.
+  * recentchanges: Exipre all *._change pages, even if the directory
+    they're in has changed.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 

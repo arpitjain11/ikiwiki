@@ -12,3 +12,6 @@ that the pages from the old hierarchy will not be removed from the disk.  But th
 this should be a rather uncommon thing.
 
 --[[tschwinge]]
+
+> And fixed this, by making it look at all *._change pages, not just
+> those in a specific directory, when deciding which to expire. --[[Joey]]
