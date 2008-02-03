@@ -121,7 +121,6 @@ sub main () { #{{{
 		gen_wrapper();
 	}
 	elsif ($config{cgi}) {
-		loadindex();
 		require IkiWiki::CGI;
 		cgi();
 	}

@@ -8,6 +8,9 @@ ikiwiki (2.31) UNRELEASED; urgency=low
     too complex to do.
   * aggregate: Forking a child broke the one state that mattered: Forcing
     the aggregating page to be rebuilt. Fix this.
+  * cgi hooks are now run before ikiwiki state is loaded.
+  * This allows locking the wiki before loading state, which avoids some
+    tricky locking code when saving a web edit.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 
