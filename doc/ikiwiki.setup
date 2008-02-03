@@ -50,6 +50,8 @@ use IkiWiki::Setup::Standard {
 	# Monotone stuff
 	#rcs => "monotone",
 	#mtnkey => "web\@machine.company.com",
+	#historyurl => "http://viewmtn.example.com/",
+	#diffurl => "http://viewmtn.example.com/revision/diff/[[r1]]/with/[[r2]]/[[file]]",
 	# Set if you want the wiki to sync on update and commit.
 	#mtnsync => 0,
 	# The path to your workspace (defaults to the srcdir itself)

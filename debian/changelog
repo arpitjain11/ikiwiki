@@ -22,6 +22,11 @@ ikiwiki (2.31) UNRELEASED; urgency=low
   * aggregate: Lots of changes; aggregation can now run without locking the
     wiki, and there is a separate aggregatelock to prevent multiple concurrent
     aggregation runs.
+  * monotone changes by Brian May:
+    - On commits, replace "mtn sync" bidirectional with "mtn push" single
+      direction. No need to pull changes when doing a commit. mtn sync
+      is still called in rcs_update.
+    - Support for viewing differences via patches using viewmtn.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 

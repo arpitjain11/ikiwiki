@@ -342,10 +342,10 @@ sub rcs_commit ($$$;$$) { #{{{
 		return $conflict;
 	}
 	if (defined($config{mtnsync}) && $config{mtnsync}) {
-		if (system("mtn", "--root=$config{mtnrootdir}", "sync",
+		if (system("mtn", "--root=$config{mtnrootdir}", "push",
 		           "--quiet", "--ticker=none", "--key",
 		           $config{mtnkey}) != 0) {
-			debug("monotone sync failed");
+			debug("monotone push failed");
 		}
 	}
 
@@ -431,10 +431,28 @@ sub rcs_recentchanges ($) { #{{{
 		my @changed_files = get_changed_files($automator, $rev);
 		my $file;
 		
+		my ($out, $err) = $automator->call("parents", $rev);
+		my @parents = ($out =~ m/^($sha1_pattern)$/);
+		my $parent = $parents[0];
+
 		foreach $file (@changed_files) {
-			push @pages, {
-				page => pagename($file),
-			} if length $file;
+			next unless length $file;
+			
+			if (defined $config{diffurl} and (@parents == 1)) {
+				my $diffurl=$config{diffurl};
+				$diffurl=~s/\[\[r1\]\]/$parent/g;
+				$diffurl=~s/\[\[r2\]\]/$rev/g;
+				$diffurl=~s/\[\[file\]\]/$file/g;
+				push @pages, {
+					page => pagename($file),
+					diffurl => $diffurl,
+				};
+			}
+			else {
+				push @pages, {
+					page => pagename($file),
+				}
+			}
 		}
 		
 		push @ret, {

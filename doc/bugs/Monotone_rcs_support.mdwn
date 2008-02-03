@@ -1,78 +1,56 @@
-#Ikiwiki plugin for the Monotone revision control system.
+The Monotone module still lacks support for setting up a post-commit hook,
+so commits made via monotone will not automatically update the wiki.
 
-I've just made a patch to the ikiwiki code that allows it to use the [[rcs/Monotone]] revision control system.  It is available at:
+Here for future reference is the most recent version of support for 
+that I've been sent. It's not yet working; there are path issues. --[[Joey]]
 
-<http://www.cse.unsw.edu.au/~willu/monotone-ikiwiki.diff>
-
-At the moment it is basically complete.  At present rcs_notify() is implemeted but untested, the rest is implemented and tested.
-
-The current version of the patch handles conflicts through the web interface.  It is still not perfect as it will break if there is a rename that conflicts with a web change (but so will the other Rcs plugins I think).  It also commits a revision with conflict markers if there is a conflict requiring such markers... ick.
-
-Note: This patch requires a rather recent Monotone perl module (18 August 2007 or later).  It is available from the monotone repository here: <http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone>.
-
-> The setup instructions to add 40 lines of code to monotonerc is pretty frightning stuff.
-> Is there some way this can be automated? --[[Joey]]
-
->> I've committed a bunch of this to monotone so that in future it could be removed.
->> I've also just fixed this so it is in a separate, automagically generated, rc file.
-
->>> Fair enough. Didn't realize you were a monotone committer. :-)
-
->>>> I am, but still a little newish.  Feedback is good.  In particular, this is my first major bit of PERL.
-
-> Having rcs_commit return a warning message when there's an unresolved conflict
-> isn't right; that message will populate the page edit box. You might want
-> to use the error() function here?
-
->> It should never reach that case, so I have changed that to error.
-
-> There'an incomplete comment ending with "note, this relies on the fact that"
-
->> erg... sorry, fixed.
-
-[[tag patch]]
-
->> I've [[accepted|done]] this patch, thank you! 
-
->>> Thanks for committing it.  I hate keeping my own diffs. :)
-
->> I did make a few changes. Please review, and make sure it still works
->> (a test case like we have for some of the other RCSes would be nice..)
-
->>> Tested.  It still works at least as well as it did.  I'll try to get to a test case soon.
->>> In checking the source I noticed a few bogus comments I left in when editing,
->>> and a bug in page adding.
->>> Here is a small patch for them:
-
->>>> applied
-
-Here is another patch.  It fixes a FIXME you added.  I was using $file within backticks because
-I was getting an error trying to do it right.  I've figured out the error, and now do it right.  This
-should also speed things up (very slightly)
-
-> applied
-
->> BTW, will all the monotone output parsing work if LANG != C?
-
->>> It should (he says crossing fingers).
->>> In the places where I do any complex parsing I'm using a special
->>> version of the mtn commands designed for scripting.  They have a
->>> stable, easy to parse, output that doesn't get translated (I think).
-
->> Do monotone post-commit hooks actually use REV?
-
->>> Monotone post-commit hooks are written in Lua and can do
->>> what they please.  Setting the REV environment var before
->>> calling Ikiwiki seems reasonable, but I've not written the
->>> Lua hook.
-
->>>> So the rcs_notify support is not just untested, but can't work
->>>> at all w/o further development.
-
-I've just done this further development...  The following patch adds support for diffurls.
-I've also partially tested the commit message support.  I was unable to get Ikiwiki to send
-change emails at all (cgi or otherwise), so I tested by adding warn() calls.  There were a
-few things that needed to be fixed.  Support is much closer now (including a simple default
-monotone lua hook).
-
-> We handled this patchset by mail, I applied the still-relevant parts. --[[Joey]]
+<pre>
+diff --git a/IkiWiki/Rcs/monotone.pm b/IkiWiki/Rcs/monotone.pm
+index cde6029..34f8f96 100644
+--- a/IkiWiki/Rcs/monotone.pm
++++ b/IkiWiki/Rcs/monotone.pm
+@@ -186,8 +186,9 @@ sub rcs_update () { #{{{
+ 	check_config();
+ 
+ 	if (defined($config{mtnsync}) && $config{mtnsync}) {
++		check_mergerc();
+ 		if (system("mtn", "--root=$config{mtnrootdir}", "sync",
+-		           "--quiet", "--ticker=none", 
++		           "--quiet", "--ticker=none", "--rcfile", $config{mtnmergerc},
+ 		           "--key", $config{mtnkey}) != 0) {
+ 			debug("monotone sync failed before update");
+ 		}
+@@ -604,4 +605,9 @@ __DATA__
+ 	           return true
+ 	      end
+ 	}
++	function note_netsync_revision_received(new_id, revision, certs, session_id)
++	    if (program_exists_in_path("ikiwiki-netsync-hook")) then
++	        execute("ikiwiki-netsync-hook", new_id)
++	    end
++	end
+ EOF
+diff --git a/IkiWiki/Wrapper.pm b/IkiWiki/Wrapper.pm
+index 2103ea5..cff718c 100644
+diff --git a/doc/ikiwiki.setup b/doc/ikiwiki.setup
+index 1377315..0cbe27e 100644
+--- a/doc/ikiwiki.setup
++++ b/doc/ikiwiki.setup
+@@ -88,6 +88,16 @@ use IkiWiki::Setup::Standard {
+ 		#	# Enable mail notifications of commits.
+ 		#	notify => 1,
+ 		#},
++		#{
++		#	# The monotone netsync revision received wrapper.
++		#	# Note that you also need to install a lua
++		#	# hook into monotone to make this work
++		#	# see: http://ikiwiki.info/rcs/monotone/
++		#	wrapper => "/usr/local/bin/ikiwiki-netsync-hook",
++		#	wrappermode => "04755",
++		#	# Enable mail notifications of commits.
++		#	notify => 1,
++		#},
+ 	],
+ 
+ 	# Generate rss feeds for blogs?
+</pre>
