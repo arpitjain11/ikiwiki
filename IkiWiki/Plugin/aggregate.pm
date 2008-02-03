@@ -495,4 +495,26 @@ sub htmlfn ($) { #{{{
 	return shift().".".$config{htmlext};
 } #}}}
 
+my $aggregatelock;
+
+sub lockaggregate () { #{{{
+	# Take an exclusive lock to prevent multiple concurrent aggregators.
+	# Returns true if the lock was aquired.
+	if (! -d $config{wikistatedir}) {
+		mkdir($config{wikistatedir});
+	}
+	open($aggregatelock, '>', "$config{wikistatedir}/aggregatelock") ||
+		error ("cannot open to $config{wikistatedir}/aggregatelock: $!");
+	if (! flock($aggregatelock, 2 | 4)) { # LOCK_EX | LOCK_NB
+		close($aggregatelock) || error("failed closing aggregatelock: $!");
+		return 0;
+	}
+	return 1;
+} #}}}
+
+sub unlockaggregate () { #{{{
+	return close($aggregatelock) if $aggregatelock;
+	return;
+} #}}}
+
 1
