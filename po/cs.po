@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-29 04:45-0500\n"
+"POT-Creation-Date: 2008-02-03 14:52-0500\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -46,8 +46,8 @@ msgstr "%s není editovatelná stránka"
 
 #: ../IkiWiki/CGI.pm:382 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:241 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
-#: ../IkiWiki/Render.pm:178
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Render.pm:175
 msgid "discussion"
 msgstr "diskuse"
 
@@ -57,76 +57,76 @@ msgid "creating %s"
 msgstr "vytvářím %s"
 
 #: ../IkiWiki/CGI.pm:447 ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:476
-#: ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:558
+#: ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:554
 #, perl-format
 msgid "editing %s"
 msgstr "upravuji %s"
 
-#: ../IkiWiki/CGI.pm:646
+#: ../IkiWiki/CGI.pm:643
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/Plugin/aggregate.pm:82
+#: ../IkiWiki/Plugin/aggregate.pm:72
 #, perl-format
 msgid "missing %s parameter"
 msgstr "chybí parametr %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:110
+#: ../IkiWiki/Plugin/aggregate.pm:100
 msgid "new feed"
 msgstr "nový zdroj"
 
-#: ../IkiWiki/Plugin/aggregate.pm:124
+#: ../IkiWiki/Plugin/aggregate.pm:114
 msgid "posts"
 msgstr "příspěvky"
 
-#: ../IkiWiki/Plugin/aggregate.pm:126
+#: ../IkiWiki/Plugin/aggregate.pm:116
 msgid "new"
 msgstr "nový"
 
-#: ../IkiWiki/Plugin/aggregate.pm:236
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "expiruji %s (stará %s dnů)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:243
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "expiruji %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "zpracováno ok %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "kontroluji zdroj %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:279
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nemohu najít zdroj na %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:294
+#: ../IkiWiki/Plugin/aggregate.pm:290
 msgid "feed not found"
 msgstr "zdroj nebyl nalezen"
 
-#: ../IkiWiki/Plugin/aggregate.pm:305
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(neplatné UTF-8 bylo ze zdroje odstraněno)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:311
+#: ../IkiWiki/Plugin/aggregate.pm:307
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:317
+#: ../IkiWiki/Plugin/aggregate.pm:313
 msgid "feed crashed XML::Feed!"
 msgstr "zdroj shodil XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:391
+#: ../IkiWiki/Plugin/aggregate.pm:387
 #, perl-format
 msgid "creating new page %s"
 msgstr "vytvářím novou stránku %s"
@@ -145,22 +145,22 @@ msgstr "Žádné porušené odkazy!"
 msgid "%s parameter is required"
 msgstr "parametr %s je vyžadován"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:40
+#: ../IkiWiki/Plugin/edittemplate.pm:41
 #, fuzzy
 msgid "template not specified"
 msgstr "šablona %s nebyla nalezena"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:43
+#: ../IkiWiki/Plugin/edittemplate.pm:44
 #, fuzzy
 msgid "match not specified"
 msgstr "jméno souboru s obalem nebylo zadáno"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:48
+#: ../IkiWiki/Plugin/edittemplate.pm:49
 #, perl-format
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:110
+#: ../IkiWiki/Plugin/edittemplate.pm:111
 #, fuzzy
 msgid "failed to process"
 msgstr "nepodařilo se zpracovat:"
@@ -220,7 +220,7 @@ msgstr "Přidat nový příspěvek nazvaný:"
 msgid "nonexistant template %s"
 msgstr "neexistující šablona %s"
 
-#: ../IkiWiki/Plugin/inline.pm:249 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:249 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Diskuse"
 
@@ -243,16 +243,16 @@ msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 "selhalo nahrání perlového modulu Markdown.pm (%s) nebo /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:124
+#: ../IkiWiki/Plugin/meta.pm:119
 msgid "stylesheet not found"
 msgstr "styl nebyl nalezen"
 
-#: ../IkiWiki/Plugin/meta.pm:148
+#: ../IkiWiki/Plugin/meta.pm:143
 #, fuzzy
 msgid "redir page not found"
 msgstr "zdroj nebyl nalezen"
 
-#: ../IkiWiki/Plugin/meta.pm:161
+#: ../IkiWiki/Plugin/meta.pm:156
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "zdroj nebyl nalezen"
@@ -389,6 +389,16 @@ msgstr "o půlnoci"
 msgid "at noon on %A"
 msgstr "%A o poledni"
 
+#: ../IkiWiki/Plugin/recentchanges.pm:74
+#, fuzzy
+msgid "missing page"
+msgstr "chybí hodnoty"
+
+#: ../IkiWiki/Plugin/recentchanges.pm:76
+#, perl-format
+msgid "The page %s does not exist."
+msgstr ""
+
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
 msgid "Must specify %s when using the search plugin"
@@ -510,47 +520,47 @@ msgstr ""
 msgid "getctime not implemented"
 msgstr "getctime není implementováno"
 
-#: ../IkiWiki/Render.pm:276 ../IkiWiki/Render.pm:297
+#: ../IkiWiki/Render.pm:273 ../IkiWiki/Render.pm:294
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "přeskakuji chybné jméno souboru %s"
 
-#: ../IkiWiki/Render.pm:339
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "removing old page %s"
 msgstr "odstraňuji starou stránku %s"
 
-#: ../IkiWiki/Render.pm:372
+#: ../IkiWiki/Render.pm:384
 #, perl-format
 msgid "scanning %s"
 msgstr "prohledávám %s"
 
-#: ../IkiWiki/Render.pm:377
+#: ../IkiWiki/Render.pm:389
 #, perl-format
 msgid "rendering %s"
 msgstr "zpracovávám %s"
 
-#: ../IkiWiki/Render.pm:389
+#: ../IkiWiki/Render.pm:410
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "zpracovávám %s, která odkazuje na %s"
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:431
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "zpracovávám %s, která závisí na %s"
 
-#: ../IkiWiki/Render.pm:444
+#: ../IkiWiki/Render.pm:470
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "zpracovávám %s, aby se aktualizovaly zpětné odkazy"
 
-#: ../IkiWiki/Render.pm:456
+#: ../IkiWiki/Render.pm:482
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "odstraňuji %s, již není zpracovávána %s"
 
-#: ../IkiWiki/Render.pm:482
+#: ../IkiWiki/Render.pm:508
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: nelze zpracovat %s"
@@ -630,7 +640,7 @@ msgstr "Chyba"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:767
+#: ../IkiWiki.pm:750
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
