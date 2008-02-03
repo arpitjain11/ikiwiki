@@ -203,7 +203,6 @@ sub render ($) { #{{{
 		
 		my $output=htmlpage($page);
 		writefile($output, $config{destdir}, genpage($page, $content));
-		utime($pagemtime{$page}, $pagemtime{$page}, $config{destdir}."/".$output);
 	}
 	else {
 		my $srcfd=readfile($srcfile, 1, 1);
@@ -229,7 +228,6 @@ sub render ($) { #{{{
 				}
 			}
 		});
-		utime($pagemtime{$file}, $pagemtime{$file}, $config{destdir}."/".$file);
 	}
 } #}}}
 

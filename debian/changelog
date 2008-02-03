@@ -1,3 +1,14 @@
+ikiwiki (2.31) UNRELEASED; urgency=low
+
+  * Revert preservation of input file modification times in output files,
+    since this leads to too many problems with web caching, especially with
+    inlined pages. Properly solving this would involve tracking every page
+    that contributes to a page's content and using the youngest of them all,
+    as well as special cases for things like the version plugin, and it's just
+    too complex to do.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
+
 ikiwiki (2.30) unstable; urgency=low
 
   [ Joey Hess ]
