@@ -13,7 +13,7 @@ Vcs-Browser: http://git.ikiwiki.info/?p=ikiwiki
 Package: ikiwiki
 Architecture: all
 Depends: ${perl:Depends}, markdown, libhtml-template-perl, libhtml-parser-perl, liburi-perl
-Recommends: gcc | c-compiler, libc6-dev | libc-dev, subversion | git-core | tla | bzr (>= 0.91) | mercurial, libxml-simple-perl, libnet-openid-consumer-perl, liblwpx-paranoidagent-perl, libtimedate-perl, libhtml-scrubber-perl, libcgi-formbuilder-perl (>= 3.05), libtime-duration-perl, libcgi-session-perl (>= 4.14-1), libmail-sendmail-perl
+Recommends: gcc | c-compiler, libc6-dev | libc-dev, subversion | git-core | tla | bzr (>= 0.91) | mercurial | monotone, libxml-simple-perl, libnet-openid-consumer-perl, liblwpx-paranoidagent-perl, libtimedate-perl, libhtml-scrubber-perl, libcgi-formbuilder-perl (>= 3.05), libtime-duration-perl, libcgi-session-perl (>= 4.14-1), libmail-sendmail-perl
 Suggests: viewvc | gitweb | viewcvs, hyperestraier, librpc-xml-perl, libtext-wikiformat-perl, python, python-docutils, polygen, tidy, libxml-feed-perl, libmailtools-perl, perlmagick, libfile-mimeinfo-perl, libcrypt-ssleay-perl, liblocale-gettext-perl (>= 1.05-1), libtext-typography-perl, libtext-csv-perl, libdigest-sha1-perl, graphviz
 Conflicts: ikiwiki-plugin-table
 Replaces: ikiwiki-plugin-table
