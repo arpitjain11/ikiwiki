@@ -6,6 +6,8 @@ ikiwiki (2.31) UNRELEASED; urgency=low
     that contributes to a page's content and using the youngest of them all,
     as well as special cases for things like the version plugin, and it's just
     too complex to do.
+  * aggregate: Forking a child broke the one state that mattered: Forcing
+    the aggregating page to be rebuilt. Fix this.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 
