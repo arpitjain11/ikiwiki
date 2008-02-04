@@ -27,6 +27,12 @@ ikiwiki (2.31) UNRELEASED; urgency=low
       direction. No need to pull changes when doing a commit. mtn sync
       is still called in rcs_update.
     - Support for viewing differences via patches using viewmtn.
+  * inline: When previewing, still call will_render on rss/atom files,
+    just avoid actually writing the files. This is necessary because ikiwiki
+    saves state after a preview (in case it actually *did* write files),
+    and if will_render isn't called its security checks will get upset
+    when the page is saved. Thanks to Edward Betts for his help tracking this
+    tricky bug down.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 

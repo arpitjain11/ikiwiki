@@ -95,7 +95,6 @@ sub preprocess_inline (@) { #{{{
 	my $atom=($config{atom} && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
-	$feeds=0 if $params{preview};
 	my $feedonly=yesno($params{feedonly});
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
@@ -285,7 +284,7 @@ sub preprocess_inline (@) { #{{{
 			@list=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @list;
 		}
 	
-		if ($rss) {
+		if ($rss && ! $params{preview}) {
 			my $rssp=rsspage($params{destpage}).$feednum;
 			will_render($params{destpage}, $rssp);
 			writefile($rssp, $config{destdir},
@@ -293,7 +292,7 @@ sub preprocess_inline (@) { #{{{
 			$toping{$params{destpage}}=1 unless $config{rebuild};
 			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 		}
-		if ($atom) {
+		if ($atom && ! $params{preview}) {
 			my $atomp=atompage($params{destpage}).$feednum;
 			will_render($params{destpage}, $atomp);
 			writefile($atomp, $config{destdir},
