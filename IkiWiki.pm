@@ -68,6 +68,8 @@ sub defaultconfig () { #{{{
 	diffurl => '',
 	rss => 0,
 	atom => 0,
+	allowrss => 0,
+	allowatom => 0,
 	discussion => 1,
 	rebuild => 0,
 	refresh => 0,

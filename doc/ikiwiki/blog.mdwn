@@ -52,10 +52,12 @@ directive:
   Set to 0 to show all matching pages.
 * `skip` - Specify a number of pages to skip displaying. Can be useful
   to produce a feed that only shows archived pages.
-* `rss` - controls generation of an rss feed. On by default if the wiki is
-  configured to use rss feeds, set to "no" to disable.
-* `atom` - controls generation of an atom feed. On by default if the wiki is
-  configured to use atom feeds, set to "no" to disable.
+* `rss` - controls generation of an rss feed. If the wiki is configured to
+  generate tss feeds by default, set to "no" to disable. If the wiki is
+  configured to `allowrss`, set to "yes" to enable.
+* `atom` - controls generation of an atom feed. If the wiki is configured to
+  generate atom feeds by default, set to "no" to disable. If the wiki is
+  configured to `allowatom`, set to "yes" to enable.
 * `feeds` - controls generation of all types of feeds. Set to "no" to
   disable generating any feeds.
 * `postform` - Set to "yes" to enables a form to post new pages to a [[blog]].

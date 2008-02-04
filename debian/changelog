@@ -33,6 +33,9 @@ ikiwiki (2.31) UNRELEASED; urgency=low
     and if will_render isn't called its security checks will get upset
     when the page is saved. Thanks to Edward Betts for his help tracking this
     tricky bug down.
+  * inline: Add new `allowrss` and `allowatom` config options. These can be
+    used if you want a wiki that doesn't default to generating rss or atom
+    feeds, but that does allow them to be turned on for specific blogs.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 

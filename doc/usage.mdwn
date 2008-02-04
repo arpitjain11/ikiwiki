@@ -153,13 +153,25 @@ configuration options of their own.
 
 * --rss, --norss
 
-  If rss is set, ikiwiki will generate RSS feeds for pages that inline
-  a [[ikiwiki/blog]].
+  If rss is set, ikiwiki will default to generating RSS feeds for pages
+  that inline a [[ikiwiki/blog]].
+
+* --allowrss
+
+  If allowrss is set, and rss is not set, ikiwiki will not default to
+  generating RSS feeds, but setting `rss=yes` in the blog can override
+  this default and generate a feed.
 
 * --atom, --noatom
 
-  If atom is set, ikiwiki will generate Atom feeds for pages that inline
-  a [[ikiwiki/blog]].
+  If atom is set, ikiwiki will default to generating Atom feeds for pages
+  that inline a [[ikiwiki/blog]].
+
+* --allowatom
+
+  If allowatom is set, and rss is not set, ikiwiki will not default to
+  generating Atom feeds, but setting `atom=yes` in the blog can override
+  this default and generate a feed.
 
 * --pingurl URL
 

@@ -34,6 +34,8 @@ sub getopt () { #{{{
 	GetOptions(
 		"rss!" => \$config{rss},
 		"atom!" => \$config{atom},
+		"allowrss!" => \$config{allowrss},
+		"allowatom!" => \$config{allowatom},
 	);
 }
 
@@ -91,8 +93,8 @@ sub preprocess_inline (@) { #{{{
 	}
 	my $raw=yesno($params{raw});
 	my $archive=yesno($params{archive});
-	my $rss=($config{rss} && exists $params{rss}) ? yesno($params{rss}) : $config{rss};
-	my $atom=($config{atom} && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
+	my $rss=(($config{rss} || $config{allowrss}) && exists $params{rss}) ? yesno($params{rss}) : $config{rss};
+	my $atom=(($config{atom} || $config{allowatom}) && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
 	my $feedonly=yesno($params{feedonly});
