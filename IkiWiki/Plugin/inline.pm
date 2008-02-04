@@ -286,21 +286,25 @@ sub preprocess_inline (@) { #{{{
 			@list=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @list;
 		}
 	
-		if ($rss && ! $params{preview}) {
+		if ($rss) {
 			my $rssp=rsspage($params{destpage}).$feednum;
 			will_render($params{destpage}, $rssp);
-			writefile($rssp, $config{destdir},
-				genfeed("rss", $rssurl, $desc, $params{destpage}, @list));
-			$toping{$params{destpage}}=1 unless $config{rebuild};
-			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+			if (! $params{preview}) {
+				writefile($rssp, $config{destdir},
+					genfeed("rss", $rssurl, $desc, $params{destpage}, @list));
+				$toping{$params{destpage}}=1 unless $config{rebuild};
+				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+			}
 		}
-		if ($atom && ! $params{preview}) {
+		if ($atom) {
 			my $atomp=atompage($params{destpage}).$feednum;
 			will_render($params{destpage}, $atomp);
-			writefile($atomp, $config{destdir},
-				genfeed("atom", $atomurl, $desc, $params{destpage}, @list));
-			$toping{$params{destpage}}=1 unless $config{rebuild};
-			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+			if (! $params{preview}) {
+				writefile($atomp, $config{destdir},
+					genfeed("atom", $atomurl, $desc, $params{destpage}, @list));
+				$toping{$params{destpage}}=1 unless $config{rebuild};
+				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+			}
 		}
 	}
 	
