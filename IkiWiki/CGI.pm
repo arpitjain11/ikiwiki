@@ -357,6 +357,8 @@ sub cgi_editpage ($$) { #{{{
 			linkify($page, "",
 			preprocess($page, $page,
 			filter($page, $page, $content), 0, 1))));
+		# previewing may have created files on disk
+		saveindex();
 	}
 	elsif ($form->submitted eq "Save Page") {
 		$form->tmpl_param("page_preview", "");
@@ -448,7 +450,6 @@ sub cgi_editpage ($$) { #{{{
 		}
 		
 		showform($form, \@buttons, $session, $q);
-		saveindex();
 	}
 	else {
 		# save page
