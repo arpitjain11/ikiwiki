@@ -481,8 +481,13 @@ If the destination directory doesn't exist, it will first be created.
 
 Given a page name and a destination file name (not including the base
 destination directory), register that the page will result in that file
-being rendered. It's important to call this before writing to any file in
-the destination directory.
+being rendered. 
+
+It's important to call this before writing to any file in the destination
+directory, and it's important to call it consistently every time, even if
+the file isn't really written this time -- unless you delete any old
+version of the file. In particular, in preview mode, this should still be
+called even if the file isn't going to be written to during the preview.
 
 Ikiwiki uses this information to automatically clean up rendered files when
 the page that rendered them goes away or is changes to no longer render
