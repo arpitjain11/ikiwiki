@@ -526,7 +526,7 @@ sub cgi_editpage ($$) { #{{{
 
 			# Prevent deadlock with post-commit hook by
 			# signaling to it that it should not try to
-			# do anything (except send commit mails).
+			# do anything.
 			disable_commit_hook();
 			$conflict=rcs_commit($file, $message,
 				$form->field("rcsinfo"),
