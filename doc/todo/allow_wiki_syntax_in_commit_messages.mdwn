@@ -10,3 +10,12 @@ available markups, ie the default markdown. --[[Joey]]
 
 To go along with this, the preview should show the formatted commit message.
 --[[JoshTriplett]]
+
+This is really easy to do now, but it would have to be limited to applying
+markdown formatting (or whatever formatter is default I suppose) to the
+content, and *not* to expanding any WikiLinks or preprocessor directives.
+Especially with the new static RecentChanges, expanding even wikilinks
+would be pretty tricky to do. Applying markdown formatting seems like a
+reasonable thing; it would make commit messages that have the form of a
+bulletted list be marked up nicely, and would also handle _emphasised_
+words etc, and even http links. --[[Joey]]
