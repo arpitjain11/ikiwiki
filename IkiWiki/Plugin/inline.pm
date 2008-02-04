@@ -183,7 +183,7 @@ sub preprocess_inline (@) { #{{{
 	my $atomurl=basename(atompage($params{destpage}).$feednum) if $feeds && $atom;
 	my $ret="";
 
-	if ($config{cgiurl} && (exists $params{rootpage} ||
+	if ($config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
 			(exists $params{postform} && yesno($params{postform})))) {
 		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
@@ -202,7 +202,7 @@ sub preprocess_inline (@) { #{{{
 		}
 		$ret.=$formtemplate->output;
 	}
-	elsif ($feeds) {
+	elsif ($feeds && !$params{preview}) {
 		# Add feed buttons.
 		my $linktemplate=template("feedlink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => $rssurl) if $rss;
