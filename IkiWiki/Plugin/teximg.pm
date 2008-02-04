@@ -82,8 +82,8 @@ sub create ($$$) { #{{{
 		$logurl = urlto($imglog, $params->{destpage});
 	}
 	else {
-		$imgurl="$params->{page}/$digest.png";
-		$logurl="$params->{page}/$digest.log";
+		$imgurl=$params->{page}."/$digest.png";
+		$logurl=$params->{page}."/$digest.log";
 	}
 	
 	if (-e "$config{destdir}/$imglink" ||
