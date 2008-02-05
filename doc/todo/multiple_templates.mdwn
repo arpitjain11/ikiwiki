@@ -1,11 +1,11 @@
-> Another useful feature might be to be able to choose a different template
-> file for some pages; blog pages would use a template different from the
+> Another useful feature might be to be able to choose a different [[template|wikitemplates]]
+> file for some pages; [[blog|ikiwiki/blog]] pages would use a template different from the
 > home page, even if both are managed in the same repository, etc.
 
-Well, that would probably be fairly easy to add if it used pagespecs to
+Well, that would probably be fairly easy to add if it used [[pagespec]]s to
 specify which pages use the non-default template.
 
-Hmm, I think the pagetemplate hook should allow one to get close enough to
+Hmm, I think the [[pagetemplate|plugins/pagetemplate]] hook should allow one to get close enough to
 this in a plugin now.
 
 See also: [[Allow_per-page_template_selection]] -- same thing, really.
