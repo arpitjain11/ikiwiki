@@ -1,15 +1,15 @@
 <TMPL_VAR CONTENT>
 <TMPL_LOOP NAME="TAGS">
-[[tag <TMPL_VAR TAG>]]
+[[!tag <TMPL_VAR TAG>]]
 </TMPL_LOOP>
 <TMPL_IF NAME="TITLE">
-[[meta title="<TMPL_VAR NAME="TITLE" ESCAPE=HTML>"]]
+[[!meta title="<TMPL_VAR NAME="TITLE" ESCAPE=HTML>"]]
 </TMPL_IF>
 <TMPL_IF NAME="PERMALINK">
-[[meta permalink="<TMPL_VAR NAME="PERMALINK" ESCAPE=HTML>"]]
+[[!meta permalink="<TMPL_VAR NAME="PERMALINK" ESCAPE=HTML>"]]
 </TMPL_IF>
 <TMPL_IF NAME="COPYRIGHT">
-[[meta copyright="<TMPL_VAR NAME="COPYRIGHT" ESCAPE=HTML>"]]
+[[!meta copyright="<TMPL_VAR NAME="COPYRIGHT" ESCAPE=HTML>"]]
 </TMPL_IF>
-[[meta author="<TMPL_VAR NAME="NAME" ESCAPE=HTML>"]]
-[[meta authorurl="<TMPL_VAR NAME="URL" ESCAPE=HTML>"]]
+[[!meta author="<TMPL_VAR NAME="NAME" ESCAPE=HTML>"]]
+[[!meta authorurl="<TMPL_VAR NAME="URL" ESCAPE=HTML>"]]
