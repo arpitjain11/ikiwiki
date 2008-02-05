@@ -1,16 +1,20 @@
-[monotone](http://monotone.ca/) is a distributed revision control system.
-Ikiwiki supports storing a wiki in Monotone and editing it using the [[cgi]] interface.
-It will use the Monotone logs to generate the [[RecentChanges]] page.
+[Monotone](http://monotone.ca/) is a distributed revision control system.
+Ikiwiki supports storing a wiki in a Monotone repository and editing it
+using the [[cgi]] interface. It will use the Monotone logs to generate the
+[[RecentChanges]] page.
 
-The monotone support requires the Monotone perl module (from the contrib/ directory
-in the monotone source) to be installed. In particular, it needs version 0.03 or higher of that module.
+The monotone support in ikiwiki requires the Monotone perl module to be
+installed. (It's available from the contrib/ directory in the monotone
+source.) In particular, it needs version 0.03 or higher of that module.
 The module is available from the monotone source repository at:
 <http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone>
 
 Monotone support works, but there are still a few minor missing bits (listed here so they are not forgotten):
 
-* At the moment there are no links to display diffs between revisions.  It shouldn't be hard to add links to a [ViewMTN](http://grahame.angrygoats.net/moinmoin/ViewMTN) instance, but it hasn't been done yet.
-* The [[post-commit]] hook support, so that Ikiwiki sends change notifications when people commit using Monotone rather than the web interface, is partially implemented and untested.
+* The [[post-commit]] hook support is not yet completly implemented.
 * Documentation (this page) could be improved.
 
-There is also a mismatch between the way Ikiwiki handles conflicts and the way Monotone handles conflicts.  At present, if there is a conflict, then Ikiwiki will commit a revision with conflict markers before presenting it to the user.  This is ugly, but there is no clean way to fix it at present.
+There is also a mismatch between the way Ikiwiki handles conflicts and the
+way Monotone handles conflicts.  At present, if there is a conflict, then
+Ikiwiki will commit a revision with conflict markers before presenting it
+to the user.  This is ugly, but there is no clean way to fix it at present.

@@ -1,10 +1,12 @@
+[[done]] (in this branch); fixed removing email notification support!
+
 I was suprised to receive two mails from ikiwiki about one web edit:
 
 	 1   F Oct 30 To joey+ikiwiki update of ikiwiki's plugins/contrib/gallery.mdwn by http://arpitjain11.myopenid.com/
 	 1   F Oct 30 To joey+ikiwiki update of ikiwiki's plugins/contrib/gallery.mdwn by http://arpitjain11.myopenid.com/
 
 The first of these had the correct diff for the changes made by the web
- edit (00259020061577316895370ee04cf00b634db98a).
+edit (00259020061577316895370ee04cf00b634db98a).
 
 But the second had a diff for modifications I made to ikiwiki code
 around the same time (2a6e353c205a6c2c8b8e2eaf85fe9c585c1af0cd).
@@ -38,3 +40,18 @@ diff for the first commit.
 
 Ikiwiki's own locking prevents this from happenning if both commits are web
 edits. At least one of the two commits has to be a non-web commit.
+
+----
+
+A related problem is that if two commits are made separately but then
+pushed in together, the commit code only looks at the HEAD commit, which
+is the second one. No notification is sent for the first.
+
+----
+
+Based on all of these problems with using the post-update hook, ikiwiki
+should be changed to use the post-receive hook, which provides enough
+information to avoid the assumuptions that led to these problems.
+Transitioning existing wikis to using a new hook will be interesting. Also,
+this hook is only present in git >= 1.5.0.7.
+--[[Joey]]

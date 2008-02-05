@@ -1,0 +1,14 @@
+It'd be nice if the mtime of the files ikiwiki renders matched the mtime of
+the source files.
+
+However, this turns out to be more complex than just calling utime() a few
+times. If a page inlines other, younger pages, then having an older mtime
+means that an old version of it will be kept in web caches, forcing
+annoying shift-reloads to see the changed content (for example).
+
+And it's not just inline. The template plugin means that a change to a
+template can result in changes to how a page gets rendered. The version
+plugin changes page content without any younger page being involved. And
+editing one of the html templates and rebuilding the wiki can change every
+page. All of these need to be reflected in the file mtime to avoid caching
+problems.

@@ -6,13 +6,7 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-my %meta;
-my %title;
-my %permalink;
-my %author;
-my %authorurl;
-my %license;
-my %copyright;
+my %metaheaders;
 
 sub import { #{{{
 	hook(type => "needsbuild", id => "meta", call => \&needsbuild);
@@ -24,7 +18,8 @@ sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{meta}) {
-			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+			if (exists $pagesources{$page} &&
+			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
 				# remove state, it will be re-added
 				# if the preprocessor directive is still
 				# there during the rebuild
@@ -71,16 +66,16 @@ sub preprocess (@) { #{{{
 
 	# Metadata collection that needs to happen during the scan pass.
 	if ($key eq 'title') {
-		$title{$page}=HTML::Entities::encode_numeric($value);
+		$pagestate{$page}{meta}{title}=HTML::Entities::encode_numeric($value);
 	}
 	elsif ($key eq 'license') {
-		push @{$meta{$page}}, '<link rel="license" href="#page_license" />';
-		$license{$page}=$value;
+		push @{$metaheaders{$page}}, '<link rel="license" href="#page_license" />';
+		$pagestate{$page}{meta}{license}=$value;
 		return "";
 	}
 	elsif ($key eq 'copyright') {
-		push @{$meta{$page}}, '<link rel="copyright" href="#page_copyright" />';
-		$copyright{$page}=$value;
+		push @{$metaheaders{$page}}, '<link rel="copyright" href="#page_copyright" />';
+		$pagestate{$page}{meta}{copyright}=$value;
 		return "";
 	}
 	elsif ($key eq 'link' && ! %params) {
@@ -89,11 +84,11 @@ sub preprocess (@) { #{{{
 		return "";
 	}
 	elsif ($key eq 'author') {
-		$author{$page}=$value;
+		$pagestate{$page}{meta}{author}=$value;
 		# fallthorough
 	}
 	elsif ($key eq 'authorurl') {
-		$authorurl{$page}=$value;
+		$pagestate{$page}{meta}{authorurl}=$value;
 		# fallthrough
 	}
 
@@ -111,8 +106,8 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'permalink') {
-		$permalink{$page}=$value;
-		push @{$meta{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
+		$pagestate{$page}{meta}{permalink}=$value;
+		push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
 	}
 	elsif ($key eq 'stylesheet') {
 		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
@@ -123,17 +118,17 @@ sub preprocess (@) { #{{{
 		if (! length $stylesheet) {
 			return "[[meta ".gettext("stylesheet not found")."]]";
 		}
-		push @{$meta{$page}}, '<link href="'.urlto($stylesheet, $page).
+		push @{$metaheaders{$page}}, '<link href="'.urlto($stylesheet, $page).
 			'" rel="'.encode_entities($rel).
 			'" title="'.encode_entities($title).
 			"\" type=\"text/css\" />";
 	}
 	elsif ($key eq 'openid') {
 		if (exists $params{server}) {
-			push @{$meta{$page}}, '<link href="'.encode_entities($params{server}).
+			push @{$metaheaders{$page}}, '<link href="'.encode_entities($params{server}).
 				'" rel="openid.server" />';
 		}
-		push @{$meta{$page}}, '<link href="'.encode_entities($value).
+		push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
 			'" rel="openid.delegate" />';
 	}
 	elsif ($key eq 'redir') {
@@ -172,11 +167,11 @@ sub preprocess (@) { #{{{
 		if (! $safe) {
 			$redir=scrub($redir);
 		}
-		push @{$meta{$page}}, $redir;
+		push @{$metaheaders{$page}}, $redir;
 	}
 	elsif ($key eq 'link') {
 		if (%params) {
-			push @{$meta{$page}}, scrub("<link href=\"".encode_entities($value)."\" ".
+			push @{$metaheaders{$page}}, scrub("<link href=\"".encode_entities($value)."\" ".
 				join(" ", map {
 					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
 				} keys %params).
@@ -184,7 +179,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	else {
-		push @{$meta{$page}}, scrub('<meta name="'.encode_entities($key).
+		push @{$metaheaders{$page}}, scrub('<meta name="'.encode_entities($key).
 			'" content="'.encode_entities($value).'" />');
 	}
 
@@ -197,32 +192,80 @@ sub pagetemplate (@) { #{{{
         my $destpage=$params{destpage};
         my $template=$params{template};
 
-	if (exists $meta{$page} && $template->query(name => "meta")) {
+	if (exists $metaheaders{$page} && $template->query(name => "meta")) {
 		# avoid duplicate meta lines
 		my %seen;
-		$template->param(meta => join("\n", grep { (! $seen{$_}) && ($seen{$_}=1) } @{$meta{$page}}));
+		$template->param(meta => join("\n", grep { (! $seen{$_}) && ($seen{$_}=1) } @{$metaheaders{$page}}));
 	}
-	if (exists $title{$page} && $template->query(name => "title")) {
-		$template->param(title => $title{$page});
+	if (exists $pagestate{$page}{meta}{title} && $template->query(name => "title")) {
+		$template->param(title => $pagestate{$page}{meta}{title});
 		$template->param(title_overridden => 1);
 	}
-	$template->param(permalink => $permalink{$page})
-		if exists $permalink{$page} && $template->query(name => "permalink");
-	$template->param(author => $author{$page})
-		if exists $author{$page} && $template->query(name => "author");
-	$template->param(authorurl => $authorurl{$page})
-		if exists $authorurl{$page} && $template->query(name => "authorurl");
 
-	if (exists $license{$page} && $template->query(name => "license") &&
-	    ($page eq $destpage || ! exists $license{$destpage} ||
-	     $license{$page} ne $license{$destpage})) {
-		$template->param(license => htmlize($page, $destpage, $license{$page}));
+	foreach my $field (qw{author authorurl permalink}) {
+		$template->param($field => $pagestate{$page}{meta}{$field})
+			if exists $pagestate{$page}{meta}{$field} && $template->query(name => $field);
 	}
-	if (exists $copyright{$page} && $template->query(name => "copyright") &&
-	    ($page eq $destpage || ! exists $copyright{$destpage} ||
-	     $copyright{$page} ne $copyright{$destpage})) {
-		$template->param(copyright => htmlize($page, $destpage, $copyright{$page}));
+
+	foreach my $field (qw{license copyright}) {
+		if (exists $pagestate{$page}{meta}{$field} && $template->query(name => $field) &&
+		    ($page eq $destpage || ! exists $pagestate{$destpage}{meta}{$field} ||
+		     $pagestate{$page}{meta}{$field} ne $pagestate{$destpage}{meta}{$field})) {
+			$template->param($field => htmlize($page, $destpage, $pagestate{$page}{meta}{$field}));
+		}
 	}
 } # }}}
+
+sub match { #{{{
+	my $field=shift;
+	my $page=shift;
+	
+	# turn glob into a safe regexp
+	my $re=quotemeta(shift);
+	$re=~s/\\\*/.*/g;
+	$re=~s/\\\?/./g;
+
+	my $val;
+	if (exists $pagestate{$page}{meta}{$field}) {
+		$val=$pagestate{$page}{meta}{$field};
+	}
+	elsif ($field eq 'title') {
+		$val=pagetitle($page);
+	}
+
+	if (defined $val) {
+		if ($val=~/^$re$/i) {
+			return IkiWiki::SuccessReason->new("$re matches $field of $page");
+		}
+		else {
+			return IkiWiki::FailReason->new("$re does not match $field of $page");
+		}
+	}
+	else {
+		return IkiWiki::FailReason->new("$page does not have a $field");
+	}
+} #}}}
+
+package IkiWiki::PageSpec;
+
+sub match_title ($$;@) { #{{{
+	IkiWiki::Plugin::meta::match("title", @_);	
+} #}}}
+
+sub match_author ($$;@) { #{{{
+	IkiWiki::Plugin::meta::match("author", @_);
+} #}}}
+
+sub match_authorurl ($$;@) { #{{{
+	IkiWiki::Plugin::meta::match("authorurl", @_);
+} #}}}
+
+sub match_license ($$;@) { #{{{
+	IkiWiki::Plugin::meta::match("license", @_);
+} #}}}
+
+sub match_copyright ($$;@) { #{{{
+	IkiWiki::Plugin::meta::match("copyright", @_);
+} #}}}
 
 1

@@ -1,0 +1,7 @@
+[[tag wishlist]]
+
+Given that ikiwiki has a suggested use as a tool for developers, I was thinking it might be cool if ikiwiki had [Doxygen](http://www.doxygen.org/) support.  I'm not exactly sure how the integration would work.  Something along the lines of a plugin to support .dox files would be my first thought.  I'd leave generating the documentation from any source files for a separate run of Doxygen - it'd be easier and you probably don't want the source being edited over the web.
+
+#### Background ####
+
+I have been involved with one project that uses Doxygen to generate their web pages and user docs, as well as their 'in code' documentation: <http://orca-robotics.sourceforge.net/orca/index.html>.  This makes the whole system somewhat like ikiwiki, but without the cgi for public editing.  I was thinking of trying to convince that project to move to ikiwiki, but they're not going to want to re-write all their documentation.

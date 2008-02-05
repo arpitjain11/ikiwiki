@@ -1,0 +1,17 @@
+Thanks for that one, again, it's great!
+
+One minor thing I noticed, seen on <http://www.bddebian.com/~wiki/recent_changes/>:
+The links to user pages of e.g. *MichaelBanck* or *GianlucaGuida* don't work, as they're
+being linked to <http://www.bddebian.com/~wiki/user/MichaelBanck>, whereas it should be
+<http://www.bddebian.com/~wiki/user/michaelbanck>.
+
+> I've fixed this.. --[[Joey]]
+
+Another one.  If you change the *recentchangespage* configuration option, (it seems to me)
+that the pages from the old hierarchy will not be removed from the disk.  But then, changing
+this should be a rather uncommon thing.
+
+--[[tschwinge]]
+
+> And fixed this, by making it look at all *._change pages, not just
+> those in a specific directory, when deciding which to expire. --[[Joey]]

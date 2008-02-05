@@ -1,15 +1,15 @@
 Quick poll: Do you feel that ikiwiki is fast enough on this server, or
-should I move it to my much beefier auxillary server?
+should I move it to my much beefier auxiliary server?
 
-[[poll 38 "It's fast enough" 4 "It's too slow!" 4 "No opinion"]]
+[[poll 40 "It's fast enough" 5 "It's too slow!" 4 "No opinion"]]
 
 If you have specifics on performance issues, you might mention them on the
 [[discussion]] page.
 
 The current server is a single processor 2.8 ghz Sepron machine shared
-amoung 4 other xen instances, and often 
+among 4 other xen instances, and often 
 [heavily loaded](http://bluebird.kitenet.net/munin/kitenet.net/wren.kitenet.net-load.html)
-by extraneous stuff like spamassassin and compiles. The auxillary server is
+by extraneous stuff like spamassassin and compiles. The auxiliary server is
 a dual processor, dual core 2 ghz Opteron shared with other xen instances
 (exact number not available from provider), but with
 [little other load](http://bluebird.kitenet.net/munin/kitenet.net/bluebird.kitenet.net-load.html).

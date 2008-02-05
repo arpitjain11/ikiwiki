@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-09 02:42-0500\n"
+"POT-Creation-Date: 2008-02-03 14:52-0500\n"
 "PO-Revision-Date: 2007-08-28 21:05+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -17,119 +17,119 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:125
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:202
+#: ../IkiWiki/CGI.pm:155
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
 
-#: ../IkiWiki/CGI.pm:231
+#: ../IkiWiki/CGI.pm:184
 msgid "Login"
 msgstr "S’identifier"
 
-#: ../IkiWiki/CGI.pm:232
+#: ../IkiWiki/CGI.pm:185
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:186
 msgid "Admin"
 msgstr "Administrateur"
 
-#: ../IkiWiki/CGI.pm:289
+#: ../IkiWiki/CGI.pm:235
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:345
+#: ../IkiWiki/CGI.pm:291
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/CGI.pm:436 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:239 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
-#: ../IkiWiki/Render.pm:178
+#: ../IkiWiki/CGI.pm:382 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:241 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Render.pm:175
 msgid "discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/CGI.pm:482
+#: ../IkiWiki/CGI.pm:429
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/CGI.pm:500 ../IkiWiki/CGI.pm:519 ../IkiWiki/CGI.pm:529
-#: ../IkiWiki/CGI.pm:563 ../IkiWiki/CGI.pm:611
+#: ../IkiWiki/CGI.pm:447 ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:476
+#: ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:554
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
 
-#: ../IkiWiki/CGI.pm:705
+#: ../IkiWiki/CGI.pm:643
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/Plugin/aggregate.pm:71
+#: ../IkiWiki/Plugin/aggregate.pm:72
 #, perl-format
 msgid "missing %s parameter"
 msgstr "Paramètre %s manquant"
 
-#: ../IkiWiki/Plugin/aggregate.pm:99
+#: ../IkiWiki/Plugin/aggregate.pm:100
 msgid "new feed"
 msgstr "Nouveau flux"
 
-#: ../IkiWiki/Plugin/aggregate.pm:113
+#: ../IkiWiki/Plugin/aggregate.pm:114
 msgid "posts"
 msgstr "Articles"
 
-#: ../IkiWiki/Plugin/aggregate.pm:115
+#: ../IkiWiki/Plugin/aggregate.pm:116
 msgid "new"
 msgstr "Nouveau"
 
-#: ../IkiWiki/Plugin/aggregate.pm:231
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "Fin de validité de %s (date de %s jours)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:238
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "Fin de validité de %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "A été correctement traité à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "Vérification du flux %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "Impossible de trouver de flux à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:289
+#: ../IkiWiki/Plugin/aggregate.pm:290
 msgid "feed not found"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(chaîne UTF-8 non valable supprimée du flux)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:306
+#: ../IkiWiki/Plugin/aggregate.pm:307
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:312
+#: ../IkiWiki/Plugin/aggregate.pm:313
 msgid "feed crashed XML::Feed!"
 msgstr "Plantage du flux XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:386
+#: ../IkiWiki/Plugin/aggregate.pm:387
 #, perl-format
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
@@ -148,22 +148,22 @@ msgstr "Il n'y a pas de lien cassé !"
 msgid "%s parameter is required"
 msgstr "le paramètre %s est obligatoire"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:40
+#: ../IkiWiki/Plugin/edittemplate.pm:41
 #, fuzzy
 msgid "template not specified"
 msgstr "Modèle (« template ») %s introuvable "
 
-#: ../IkiWiki/Plugin/edittemplate.pm:43
+#: ../IkiWiki/Plugin/edittemplate.pm:44
 #, fuzzy
 msgid "match not specified"
 msgstr "Le nom de fichier de l'enrobage n'a pas été indiqué"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:48
+#: ../IkiWiki/Plugin/edittemplate.pm:49
 #, perl-format
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:110
+#: ../IkiWiki/Plugin/edittemplate.pm:111
 #, fuzzy
 msgid "failed to process"
 msgstr "Échec du traitement :"
@@ -225,11 +225,11 @@ msgstr "Ajouter un nouvel article dont le titre est :"
 msgid "nonexistant template %s"
 msgstr "Le modèle (« template ») %s n'existe pas"
 
-#: ../IkiWiki/Plugin/inline.pm:247 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:249 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:461
+#: ../IkiWiki/Plugin/inline.pm:463
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -249,16 +249,16 @@ msgstr ""
 "Échec du chargement du module Perl Markdown.pm (%s) ou de /usr/bin/markdown "
 "(%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:132
+#: ../IkiWiki/Plugin/meta.pm:119
 msgid "stylesheet not found"
 msgstr "Feuille de style introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:156
+#: ../IkiWiki/Plugin/meta.pm:143
 #, fuzzy
 msgid "redir page not found"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:169
+#: ../IkiWiki/Plugin/meta.pm:156
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "Flux introuvable "
@@ -383,17 +383,27 @@ msgstr "tard %A soir"
 msgid "%A night"
 msgstr "%A, durant la nuit"
 
-#: ../IkiWiki/Plugin/prettydate.pm:74
+#: ../IkiWiki/Plugin/prettydate.pm:78
 msgid "at teatime on %A"
 msgstr "%A, à l'heure du thé"
 
-#: ../IkiWiki/Plugin/prettydate.pm:78
+#: ../IkiWiki/Plugin/prettydate.pm:82
 msgid "at midnight"
 msgstr "à minuit"
 
-#: ../IkiWiki/Plugin/prettydate.pm:81
+#: ../IkiWiki/Plugin/prettydate.pm:85
 msgid "at noon on %A"
 msgstr "%A, à midi"
+
+#: ../IkiWiki/Plugin/recentchanges.pm:74
+#, fuzzy
+msgid "missing page"
+msgstr "Il manque des valeurs"
+
+#: ../IkiWiki/Plugin/recentchanges.pm:76
+#, perl-format
+msgid "The page %s does not exist."
+msgstr ""
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
@@ -502,7 +512,7 @@ msgstr "Il manque le code TeX"
 msgid "code includes disallowed latex commands"
 msgstr "Le code comporte des commandes LaTeX non permises"
 
-#: ../IkiWiki/Plugin/teximg.pm:97
+#: ../IkiWiki/Plugin/teximg.pm:96
 msgid "failed to generate image from code"
 msgstr "Échec de la création de l'image à partir du code"
 
@@ -510,74 +520,51 @@ msgstr "Échec de la création de l'image à partir du code"
 msgid "(not toggleable in preview mode)"
 msgstr ""
 
-#: ../IkiWiki/Rcs/Stub.pm:68
+#: ../IkiWiki/Rcs/Stub.pm:62
 msgid "getctime not implemented"
 msgstr "getctime n'est pas implémenté"
 
-#: ../IkiWiki/Rcs/monotone.pm:459
-msgid ""
-"REV is not set, not running from mtn post-commit hook, cannot send "
-"notifications"
-msgstr ""
-"REV n'est pas défini; impossible de lancer le post-commit de mtn etd'envoyer "
-"les notifications"
-
-#: ../IkiWiki/Rcs/monotone.pm:462
-msgid "REV is not a valid revision identifier, cannot send notifications"
-msgstr ""
-"REV n'est pas un identifiant de révision valable, impossible d'envoyer les "
-"notifications"
-
-#: ../IkiWiki/Rcs/svn.pm:221
-msgid ""
-"REV is not set, not running from svn post-commit hook, cannot send "
-"notifications"
-msgstr ""
-"REV n'est pas défini, pas de lancement depuis le système de rapport par mail "
-"après un commit sur le SVN (« hook post-commit »), impossible d'envoyer des "
-"notifications"
-
-#: ../IkiWiki/Render.pm:275 ../IkiWiki/Render.pm:296
+#: ../IkiWiki/Render.pm:273 ../IkiWiki/Render.pm:294
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "Omission du fichier au nom incorrect %s"
 
-#: ../IkiWiki/Render.pm:338
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "removing old page %s"
 msgstr "Suppression de l'ancienne page %s"
 
-#: ../IkiWiki/Render.pm:371
+#: ../IkiWiki/Render.pm:384
 #, perl-format
 msgid "scanning %s"
 msgstr "Parcours de %s"
 
-#: ../IkiWiki/Render.pm:376
+#: ../IkiWiki/Render.pm:389
 #, perl-format
 msgid "rendering %s"
 msgstr "Affichage de %s"
 
-#: ../IkiWiki/Render.pm:388
+#: ../IkiWiki/Render.pm:410
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "Affichage de %s, qui est lié à %s"
 
-#: ../IkiWiki/Render.pm:405
+#: ../IkiWiki/Render.pm:431
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "Affichage de %s, qui dépend de %s"
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:470
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "Affichage de %s, afin de mettre à jour ses rétroliens"
 
-#: ../IkiWiki/Render.pm:455
+#: ../IkiWiki/Render.pm:482
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "Suppression de %s, qui n'est plus affiché par %s"
 
-#: ../IkiWiki/Render.pm:481
+#: ../IkiWiki/Render.pm:508
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki : impossible d'afficher %s"
@@ -605,15 +592,6 @@ msgstr "Rafraîchissement du wiki..."
 msgid "done"
 msgstr "Terminé"
 
-#. translators: The three variables are the name of the wiki,
-#. translators: A list of one or more pages that were changed,
-#. translators: And the name of the user making the change.
-#. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:145
-#, perl-format
-msgid "update of %s's %s by %s"
-msgstr "Wiki %s, les pages %s ont été mises à jour par %s"
-
 #: ../IkiWiki/Wrapper.pm:16
 #, perl-format
 msgid "%s doesn't seem to be executable"
@@ -630,19 +608,19 @@ msgstr "Le nom de fichier de l'enrobage n'a pas été indiqué"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:64
+#: ../IkiWiki/Wrapper.pm:48
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "Échec de l'écriture de %s : %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:115
+#: ../IkiWiki/Wrapper.pm:99
 #, perl-format
 msgid "failed to compile %s"
 msgstr "Échec de la compilation de %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:135
+#: ../IkiWiki/Wrapper.pm:119
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s a été créé avec succès"
@@ -651,17 +629,17 @@ msgstr "%s a été créé avec succès"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
-#: ../ikiwiki.in:83
+#: ../ikiwiki.in:81
 msgid "usage: --set var=value"
 msgstr "Syntaxe : -- set var=valeur"
 
-#: ../IkiWiki.pm:129
+#: ../IkiWiki.pm:127
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une URL vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
+#: ../IkiWiki.pm:196 ../IkiWiki.pm:197
 msgid "Error"
 msgstr "Erreur"
 
@@ -669,11 +647,34 @@ msgstr "Erreur"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:722
+#: ../IkiWiki.pm:750
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
 "%s une boucle a été détectée dans le prétraitement de %s, à la profondeur %i"
+
+#~ msgid ""
+#~ "REV is not set, not running from mtn post-commit hook, cannot send "
+#~ "notifications"
+#~ msgstr ""
+#~ "REV n'est pas défini; impossible de lancer le post-commit de mtn "
+#~ "etd'envoyer les notifications"
+
+#~ msgid "REV is not a valid revision identifier, cannot send notifications"
+#~ msgstr ""
+#~ "REV n'est pas un identifiant de révision valable, impossible d'envoyer "
+#~ "les notifications"
+
+#~ msgid ""
+#~ "REV is not set, not running from svn post-commit hook, cannot send "
+#~ "notifications"
+#~ msgstr ""
+#~ "REV n'est pas défini, pas de lancement depuis le système de rapport par "
+#~ "mail après un commit sur le SVN (« hook post-commit »), impossible "
+#~ "d'envoyer des notifications"
+
+#~ msgid "update of %s's %s by %s"
+#~ msgstr "Wiki %s, les pages %s ont été mises à jour par %s"
 
 #~ msgid "%s not found"
 #~ msgstr "%s introuvable "

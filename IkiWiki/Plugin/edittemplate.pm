@@ -21,7 +21,8 @@ sub needsbuild (@) { #{{{
 
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{edittemplate}) {
-			if (grep { $_ eq $pagesources{$page} } @$needsbuild) {
+			if (exists $pagesources{$page} && 
+			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
 				# remove state, it will be re-added
 				# if the preprocessor directive is still
 				# there during the rebuild

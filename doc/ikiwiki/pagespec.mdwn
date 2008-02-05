@@ -33,8 +33,13 @@ functions:
   was created
 * "`created_before(page)`" - match only pages created before the given page
   was created
-* "`user(name)`" - only available in page subscription preferences, match
-  only changes made by this user
+* "`glob(someglob)`" - match pages that match the given glob. Just writing
+  the glob by itself is actually a shorthand for this function.
+* "`internal(glob)`" - like `glob()`, but matches even internal-use 
+  pages that globs do not usually match.
+* "`title(glob)`", "`author(glob)`", "`authorurl(glob)`",
+  "`license(glob)`", "`copyright(glob)`" - match pages that have the given
+  metadata, matching the specified glob.
 
 For example, to match all pages in a blog that link to the page about music
 and were written in 2005:

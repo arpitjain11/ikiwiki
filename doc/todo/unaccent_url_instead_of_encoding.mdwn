@@ -1,0 +1,9 @@
+If one puts localized chars in wikilinks ikiwiki will escape it.
+This works right from a technical point of view, but the URLs will become ugly.
+
+So I made a patch which unaccent chars: <http://users.itk.ppke.hu/~cstamas/code/ikiwiki/unaccentpagetitlenames/>
+This is a one liner change, but requires a bit of reordering in the code.
+
+[[cstamas]]
+
+[[tag wishlist patch]]

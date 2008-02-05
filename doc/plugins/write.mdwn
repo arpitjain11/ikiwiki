@@ -82,11 +82,19 @@ configuration. It's called early in the startup process. The
 function is passed no values. It's ok for the function to call
 `error()` if something isn't configured right.
 
+### refresh
+
+	hook(type => "refresh", id => "foo", call => \&refresh);
+
+This hook is called just before ikiwiki scans the wiki for changed files.
+It's useful for plugins that need to create or modify a source page. The
+function is passed no values.
+
 ### needsbuild
 
 	hook(type => "needsbuild", id => "foo", call => \&needsbuild);
 
-This allows a plugin the manipulate the list of files that need to be
+This allows a plugin to manipulate the list of files that need to be
 built when the wiki is refreshed. The function is passed a reference to an
 array of pages that will be rebuilt, and can modify the array, either
 adding or removing files from it.
@@ -214,8 +222,11 @@ source files that were rendered.
 
 Use this to hook into ikiwiki's cgi script. Each registered cgi hook is
 called in turn, and passed a CGI object. The hook should examine the
-parameters, and if it will handle this CGI request, output a page (including the http headers) and
-terminate the program.
+parameters, and if it will handle this CGI request, output a page
+(including the http headers) and terminate the program.
+
+Note that cgi hooks are called as early as possible, before any ikiwiki
+state is loaded, and with no session information.
 
 ### auth
 
@@ -470,8 +481,13 @@ If the destination directory doesn't exist, it will first be created.
 
 Given a page name and a destination file name (not including the base
 destination directory), register that the page will result in that file
-being rendered. It's important to call this before writing to any file in
-the destination directory.
+being rendered. 
+
+It's important to call this before writing to any file in the destination
+directory, and it's important to call it consistently every time, even if
+the file isn't really written this time -- unless you delete any old
+version of the file. In particular, in preview mode, this should still be
+called even if the file isn't going to be written to during the preview.
 
 Ikiwiki uses this information to automatically clean up rendered files when
 the page that rendered them goes away or is changes to no longer render
@@ -522,6 +538,19 @@ destination file, as registered by `will_render`.
 
 Passed a page and an extension, returns the filename that page will be
 rendered to.
+
+## Internal use pages
+
+Sometimes it's useful to put pages in the wiki without the overhead of
+having them be rendered to individual html files. Such internal use pages
+are collected together to form the RecentChanges page, for example.
+
+To make an internal use page, register a filename extension that starts
+with "_". Internal use pages cannot be edited with the web interface,
+generally shouldn't contain wikilinks or preprocessor directives (use
+either on them with extreme caution), and are not matched by regular
+PageSpecs glob patterns, but instead only by a special `internal()`
+[[ikiwiki/PageSpec]].
 
 ## RCS plugins
 

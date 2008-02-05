@@ -34,6 +34,8 @@ sub getopt () { #{{{
 	GetOptions(
 		"rss!" => \$config{rss},
 		"atom!" => \$config{atom},
+		"allowrss!" => \$config{allowrss},
+		"allowatom!" => \$config{allowatom},
 	);
 }
 
@@ -91,11 +93,10 @@ sub preprocess_inline (@) { #{{{
 	}
 	my $raw=yesno($params{raw});
 	my $archive=yesno($params{archive});
-	my $rss=($config{rss} && exists $params{rss}) ? yesno($params{rss}) : $config{rss};
-	my $atom=($config{atom} && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
+	my $rss=(($config{rss} || $config{allowrss}) && exists $params{rss}) ? yesno($params{rss}) : $config{rss};
+	my $atom=(($config{atom} || $config{allowatom}) && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
-	$feeds=0 if $params{preview};
 	my $feedonly=yesno($params{feedonly});
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
@@ -182,7 +183,7 @@ sub preprocess_inline (@) { #{{{
 	my $atomurl=basename(atompage($params{destpage}).$feednum) if $feeds && $atom;
 	my $ret="";
 
-	if ($config{cgiurl} && (exists $params{rootpage} ||
+	if ($config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
 			(exists $params{postform} && yesno($params{postform})))) {
 		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
@@ -201,7 +202,7 @@ sub preprocess_inline (@) { #{{{
 		}
 		$ret.=$formtemplate->output;
 	}
-	elsif ($feeds) {
+	elsif ($feeds && !$params{preview}) {
 		# Add feed buttons.
 		my $linktemplate=template("feedlink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => $rssurl) if $rss;
@@ -231,6 +232,8 @@ sub preprocess_inline (@) { #{{{
 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
 				$template->param(title => pagetitle(basename($page)));
 				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
+				$template->param(first => 1) if $page eq $list[0];
+				$template->param(last => 1) if $page eq $list[$#list];
 	
 				if ($actions) {
 					my $file = $pagesources{$page};
@@ -286,18 +289,22 @@ sub preprocess_inline (@) { #{{{
 		if ($rss) {
 			my $rssp=rsspage($params{destpage}).$feednum;
 			will_render($params{destpage}, $rssp);
-			writefile($rssp, $config{destdir},
-				genfeed("rss", $rssurl, $desc, $params{destpage}, @list));
-			$toping{$params{destpage}}=1 unless $config{rebuild};
-			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+			if (! $params{preview}) {
+				writefile($rssp, $config{destdir},
+					genfeed("rss", $rssurl, $desc, $params{destpage}, @list));
+				$toping{$params{destpage}}=1 unless $config{rebuild};
+				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+			}
 		}
 		if ($atom) {
 			my $atomp=atompage($params{destpage}).$feednum;
 			will_render($params{destpage}, $atomp);
-			writefile($atomp, $config{destdir},
-				genfeed("atom", $atomurl, $desc, $params{destpage}, @list));
-			$toping{$params{destpage}}=1 unless $config{rebuild};
-			$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+			if (! $params{preview}) {
+				writefile($atomp, $config{destdir},
+					genfeed("atom", $atomurl, $desc, $params{destpage}, @list));
+				$toping{$params{destpage}}=1 unless $config{rebuild};
+				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+			}
 		}
 	}
 	

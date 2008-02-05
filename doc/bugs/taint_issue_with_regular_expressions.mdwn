@@ -12,7 +12,7 @@ which is exactly the same regular expression drawn out as a constant.  It appear
 > hole. It seems more likely that perl containes to have taint flag bugs
 > even in 5.8. See also: [[prune_causing_taint_mode_failures]],
 > [[Insecure_dependency_in_mkdir]],
-> [[Insecure_dependency_in_eval_while_running_with_-T_switch.mdwn]],
+> [[Insecure_dependency_in_eval_while_running_with_-T_switch]],
 > and especially [[debbug 411786]]
 >
 > The last of those was the last straw for me, and I disabled taint

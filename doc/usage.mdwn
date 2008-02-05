@@ -33,8 +33,7 @@ These options control the mode that ikiwiki operates in.
 * --cgi
 
   Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and
-  supports editing pages, signing in, registration, and displaying
-  [[RecentChanges]].
+  supports editing pages, signing in, and registration.
 
   To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
   to generate a wrapper. The wrapper will generally need to run suid 6755 to
@@ -133,11 +132,6 @@ configuration options of their own.
   access controlled by a group, it makes sense for the ikiwiki wrappers
   to run setgid to that group.
 
-* --notify, --no-notify
-
-  Enable email notification of commits. This should be used when running
-  ikiwiki as a [[post-commit]] hook.
-
 * --rcs=svn|git|.., --no-rcs
 
   Enable or disable use of a [[revision_control_system|rcs]].
@@ -146,15 +140,9 @@ configuration options of their own.
   whatever the revision control system you select uses.
 
   In [[CGI]] mode, with a revision control system enabled, pages edited via
-  the web will be committed. Also, the [[RecentChanges]] link will be placed
-  on pages.
+  the web will be committed.
 
   No revision control is enabled by default.
-
-* --svnrepo /svn/wiki
-
-  Specify the location of the svn repository for the wiki. This is required
-  for using --notify with [[Subversion|rcs/svn]].
 
 * --svnpath trunk
 
@@ -165,13 +153,25 @@ configuration options of their own.
 
 * --rss, --norss
 
-  If rss is set, ikiwiki will generate RSS feeds for pages that inline
-  a [[ikiwiki/blog]].
+  If rss is set, ikiwiki will default to generating RSS feeds for pages
+  that inline a [[ikiwiki/blog]].
+
+* --allowrss
+
+  If allowrss is set, and rss is not set, ikiwiki will not default to
+  generating RSS feeds, but setting `rss=yes` in the blog can override
+  this default and generate a feed.
 
 * --atom, --noatom
 
-  If atom is set, ikiwiki will generate Atom feeds for pages that inline
-  a [[ikiwiki/blog]].
+  If atom is set, ikiwiki will default to generating Atom feeds for pages
+  that inline a [[ikiwiki/blog]].
+
+* --allowatom
+
+  If allowatom is set, and rss is not set, ikiwiki will not default to
+  generating Atom feeds, but setting `atom=yes` in the blog can override
+  this default and generate a feed.
 
 * --pingurl URL
 

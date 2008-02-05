@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 54;
+use Test::More tests => 52;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -66,9 +66,6 @@ ok(pagespec_match("foo", "creation_day(2)"), "day");
 ok(! pagespec_match("foo", "creation_day(3)"), "other day");
 
 ok(! pagespec_match("foo", "no_such_function(foo)"), "foo");
-
-ok(pagespec_match("foo", "foo and user(bar)", user => "bar"), "user");
-ok(! pagespec_match("foo", "foo and user(bar)", user => "baz"), "user fail");
 
 my $ret=pagespec_match("foo", "(invalid");
 ok(! $ret, "syntax error");

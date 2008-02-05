@@ -1,4 +1,45 @@
-ikiwiki (2.21) UNRELEASED; urgency=low
+ikiwiki (2.31) UNRELEASED; urgency=low
+
+  * Revert preservation of input file modification times in output files,
+    since this leads to too many problems with web caching, especially with
+    inlined pages. Properly solving this would involve tracking every page
+    that contributes to a page's content and using the youngest of them all,
+    as well as special cases for things like the version plugin, and it's just
+    too complex to do.
+  * aggregate: Forking a child broke the one state that mattered: Forcing
+    the aggregating page to be rebuilt. Fix this.
+  * cgi hooks are now run before ikiwiki state is loaded.
+  * This allows locking the wiki before loading state, which avoids some
+    tricky locking code when saving a web edit.
+  * poll: This plugin turns out to have edited pages w/o doing any locking.
+    Oops. Convert it from a cgi to a sessioncgi hook, which will work
+    much better.
+  * recentchanges: Improve handling of links on the very static changes pages
+    by thunking to the CGI, which can redirect to the page, or allow it to be
+    created if it doesn't exist.
+  * recentchanges: Exipre all *._change pages, even if the directory
+    they're in has changed.
+  * aggregate: Lots of changes; aggregation can now run without locking the
+    wiki, and there is a separate aggregatelock to prevent multiple concurrent
+    aggregation runs.
+  * monotone changes by Brian May:
+    - On commits, replace "mtn sync" bidirectional with "mtn push" single
+      direction. No need to pull changes when doing a commit. mtn sync
+      is still called in rcs_update.
+    - Support for viewing differences via patches using viewmtn.
+  * inline: When previewing, still call will_render on rss/atom files,
+    just avoid actually writing the files. This is necessary because ikiwiki
+    saves state after a preview (in case it actually *did* write files),
+    and if will_render isn't called its security checks will get upset
+    when the page is saved. Thanks to Edward Betts for his help tracking this
+    tricky bug down.
+  * inline: Add new `allowrss` and `allowatom` config options. These can be
+    used if you want a wiki that doesn't default to generating rss or atom
+    feeds, but that does allow them to be turned on for specific blogs.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
+
+ikiwiki (2.30) unstable; urgency=low
 
   [ Joey Hess ]
   * Old versions of git-init don't support --git-dir or GIT_DIR with
@@ -21,7 +62,32 @@ ikiwiki (2.21) UNRELEASED; urgency=low
     the underlay to support either setting of prefix_directives.  Add NEWS
     entry with migration information.
 
- -- Joey Hess <joeyh@debian.org>  Fri, 11 Jan 2008 15:09:37 -0500
+  [ Joey Hess ]
+  * inline: The template can check for FIRST and LAST, which will be
+    set for the first and last inlined page. Useful for templates that build
+    tables and the like.
+  * prettydate,ddate: Don't ignore time formats passed to displaytime
+    function.
+  * Pages with extensions starting with "_" are internal-use, and will
+    not be rendered or web-edited, or matched by normal pagespecs.
+  * Add "internal()" pagespec that matches internal-use pages.
+  * RecentChanges is now a static html page, that's updated whenever a commit
+    is made to the wiki. It's built as a blog using inline, so it can have
+    an rss feed that users can subscribe to.
+  * Removed support for sending commit notification mails. Along with it went
+    the svnrepo and notify settings, though both will be ignored if left in
+    setup files. Also gone with it is the "user()" pagespec.
+  * Add refresh hook.
+  * meta: Add pagespec functions to match against title, author, authorurl,
+    license, and copyright. This can be used to create custom RecentChanges.
+  * meta: To support the pagespec functions, metadata about pages has to be
+    retained as pagestate.
+  * Fix encoding bug when pagestate values contained spaces.
+  * Add support for bzr, written by Jelmer Vernooij. Thanks also to bma for
+    his independent work on bzr support.
+  * Copyright file updates.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 17:41:57 -0500
 
 ikiwiki (2.20) unstable; urgency=low
 

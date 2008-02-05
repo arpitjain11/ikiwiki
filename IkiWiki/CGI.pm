@@ -84,53 +84,6 @@ sub decode_cgi_utf8 ($) { #{{{
 	}
 } #}}}
 
-sub cgi_recentchanges ($) { #{{{
-	my $q=shift;
-	
-	# Optimisation: building recentchanges means calculating lots of
-	# links. Memoizing htmllink speeds it up a lot (can't be memoized
-	# during page builds as the return values may change, but they
-	# won't here.)
-	eval q{use Memoize};
-	error($@) if $@;
-	memoize("htmllink");
-
-	eval q{use Time::Duration};
-	error($@) if $@;
-
-	my $changelog=[rcs_recentchanges(100)];
-	foreach my $change (@$changelog) {
-		$change->{when} = concise(ago($change->{when}));
-
-		$change->{user} = userlink($change->{user});
-
-		my $is_excess = exists $change->{pages}[10]; # limit pages to first 10
-		delete @{$change->{pages}}[10 .. @{$change->{pages}}] if $is_excess;
-		$change->{pages} = [
-			map {
-				$_->{link} = htmllink("", "", $_->{page},
-					noimageinline => 1,
-					linktext => pagetitle($_->{page}));
-				$_;
-			} @{$change->{pages}}
-		];
-		push @{$change->{pages}}, { link => '...' } if $is_excess;
-	}
-
-	my $template=template("recentchanges.tmpl"); 
-	$template->param(
-		title => "RecentChanges",
-		indexlink => indexlink(),
-		wikiname => $config{wikiname},
-		changelog => $changelog,
-		baseurl => baseurl(),
-	);
-	run_hooks(pagetemplate => sub {
-		shift->(page => "", destpage => "", template => $template);
-	});
-	print $q->header(-charset => 'utf-8'), $template->output;
-} #}}}
-
 # Check if the user is signed in. If not, redirect to the signin form and
 # save their place to return to later.
 sub needsignin ($$) { #{{{
@@ -242,9 +195,6 @@ sub cgi_prefs ($$) { #{{{
 	
 	$form->field(name => "do", type => "hidden");
 	$form->field(name => "email", size => 50, fieldset => "preferences");
-	$form->field(name => "subscriptions", size => 50,
-		fieldset => "preferences",
-		comment => "(".htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).")");
 	$form->field(name => "banned_users", size => 50,
 		fieldset => "admin");
 	
@@ -256,8 +206,6 @@ sub cgi_prefs ($$) { #{{{
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
 			value => userinfo_get($user_name, "email"));
-		$form->field(name => "subscriptions", force => 1,
-			value => userinfo_get($user_name, "subscriptions"));
 		if (is_admin($user_name)) {
 			$form->field(name => "banned_users", force => 1,
 				value => join(" ", get_banned_users()));
@@ -274,11 +222,9 @@ sub cgi_prefs ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq 'Save Preferences' && $form->validate) {
-		foreach my $field (qw(email subscriptions)) {
-			if (defined $form->field($field)) {
-				userinfo_set($user_name, $field, $form->field($field)) ||
-					error("failed to set $field");
-			}
+		if (defined $form->field('email')) {
+			userinfo_set($user_name, 'email', $form->field('email')) ||
+				error("failed to set email");
 		}
 		if (is_admin($user_name)) {
 			set_banned_users(grep { ! is_admin($_) }
@@ -341,7 +287,7 @@ sub cgi_editpage ($$) { #{{{
 	if (exists $pagesources{$page} && $form->field("do") ne "create") {
 		$file=$pagesources{$page};
 		$type=pagetype($file);
-		if (! defined $type) {
+		if (! defined $type || $type=~/^_/) {
 			error(sprintf(gettext("%s is not an editable page"), $page));
 		}
 		if (! $form->submitted) {
@@ -411,6 +357,8 @@ sub cgi_editpage ($$) { #{{{
 			linkify($page, "",
 			preprocess($page, $page,
 			filter($page, $page, $content), 0, 1))));
+		# previewing may have created files on disk
+		saveindex();
 	}
 	elsif ($form->submitted eq "Save Page") {
 		$form->tmpl_param("page_preview", "");
@@ -470,7 +418,8 @@ sub cgi_editpage ($$) { #{{{
 			
 			my @page_types;
 			if (exists $hooks{htmlize}) {
-				@page_types=keys %{$hooks{htmlize}};
+				@page_types=grep { !/^_/ }
+					keys %{$hooks{htmlize}};
 			}
 			
 			$form->tmpl_param("page_select", 1);
@@ -501,7 +450,6 @@ sub cgi_editpage ($$) { #{{{
 		}
 		
 		showform($form, \@buttons, $session, $q);
-		saveindex();
 	}
 	else {
 		# save page
@@ -579,7 +527,7 @@ sub cgi_editpage ($$) { #{{{
 
 			# Prevent deadlock with post-commit hook by
 			# signaling to it that it should not try to
-			# do anything (except send commit mails).
+			# do anything.
 			disable_commit_hook();
 			$conflict=rcs_commit($file, $message,
 				$form->field("rcsinfo"),
@@ -592,10 +540,6 @@ sub cgi_editpage ($$) { #{{{
 		# may have been committed while the post-commit hook was
 		# disabled.
 		require IkiWiki::Render;
-		# Reload index, since the first time it's loaded is before
-		# the wiki is locked, and things may have changed in the
-		# meantime.
-		loadindex();
 		refresh();
 		saveindex();
 
@@ -667,14 +611,9 @@ sub cgi (;$$) { #{{{
 		}
 	}
 	
-	# Things that do not need a session.
-	if ($do eq 'recentchanges') {
-		cgi_recentchanges($q);
-		return;
-	}
-
 	# Need to lock the wiki before getting a session.
 	lockwiki();
+	loadindex();
 	
 	if (! $session) {
 		$session=cgi_getsession($q);
@@ -723,34 +662,6 @@ sub cgi (;$$) { #{{{
 	}
 	else {
 		error("unknown do parameter");
-	}
-} #}}}
-
-sub userlink ($) { #{{{
-	my $user=shift;
-
-	eval q{use CGI 'escapeHTML'};
-	error($@) if $@;
-	if ($user =~ m!^https?://! &&
-	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
-		# Munge user-urls, as used by eg, OpenID.
-		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
-		my $display=$oid->display;
-		# Convert "user.somehost.com" to "user [somehost.com]".
-		if ($display !~ /\[/) {
-			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
-		}
-		# Convert "http://somehost.com/user" to "user [somehost.com]".
-		if ($display !~ /\[/) {
-			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
-		}
-		$display=~s!^https?://!!; # make sure this is removed
-		return "<a href=\"$user\">".escapeHTML($display)."</a>";
-	}
-	else {
-		return htmllink("", "", escapeHTML(
-			length $config{userdir} ? $config{userdir}."/".$user : $user
-		), noimageinline => 1);
 	}
 } #}}}
 

@@ -120,7 +120,7 @@ sub rcs_recentchanges ($) {
 			split(/ /, "$newfiles $modfiles .arch-ids/fake.id");
 
 		my $sdate = $head->get("Standard-date");
-		my $when = time - str2time($sdate, 'UTC');
+		my $when = str2time($sdate, 'UTC');
 
 		my $committype = "web";
 		if (defined $summ && $summ =~ /$config{web_commit_regexp}/) {
@@ -145,7 +145,8 @@ sub rcs_recentchanges ($) {
 				diffurl => $diffurl,
 			} if length $file;
 		}
-		push @ret, { rev => $change,
+		push @ret, {
+			rev => $change,
 			user => $user,
 			committype => $committype,
 			when => $when,
@@ -158,51 +159,6 @@ sub rcs_recentchanges ($) {
 
 	return @ret;
 }
-
-sub rcs_notify () { #{{{
-	# FIXME: Not set
-	if (! exists $ENV{ARCH_VERSION}) {
-		error("ARCH_VERSION is not set, not running from tla post-commit hook, cannot send notifications");
-	}
-	my $rev=int(possibly_foolish_untaint($ENV{REV}));
-
-	eval q{use Mail::Header};
-	error($@) if $@;
-	open(LOG, $ENV{"ARCH_LOG"});
-	my $head = Mail::Header->new(\*LOG);
-	close(LOG);
-
-	my $user = $head->get("Creator");
-
-	my $newfiles = $head->get("New-files");
-	my $modfiles = $head->get("Modified-files");
-	my $remfiles = $head->get("Removed-files");
-
-	my @changed_pages = grep { !/(^.*\/)?\.arch-ids\/.*\.id$/ }
-		split(/ /, "$newfiles $modfiles $remfiles .arch-ids/fake.id");
-
-	require IkiWiki::UserInfo;
-	send_commit_mails(
-		sub {
-			my $message = $head->get("Summary");
-			if ($message =~ /$config{web_commit_regexp}/) {
-				$user=defined $2 ? "$2" : "$3";
-				$message=$4;
-			}
-		},
-		sub {
-			my $logs = `tla logs -d $config{srcdir}`;
-			my @changesets = reverse split(/\n/, $logs);
-			my $i;
-
-			for($i=0;$i<$#changesets;$i++) {
-				last if $changesets[$i] eq $rev;
-			}
-	
-			my $revminusone = $changesets[$i+1];
-			`tla diff -d $ENV{ARCH_TREE_ROOT} $revminusone`;
-		}, $user, @changed_pages);
-} #}}}
 
 sub rcs_getctime ($) { #{{{
 	my $file=shift;

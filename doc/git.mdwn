@@ -1,0 +1,33 @@
+Ikiwiki is developed in a git repository and can be checked out 
+like this:
+
+	git clone git://git.ikiwiki.info/
+
+Or like this if your firewall only passes http traffic (slow):
+
+	git clone http://git.ikiwiki.info/ikiwiki.git/
+
+The gitweb is [here](http://git.ikiwiki.info/?p=ikiwiki).
+
+Commits to this git repository are fed into [CIA](http://cia.vc), and can
+be browsed, subscribed to etc on its
+[project page](http://cia.vc/stats/project/ikiwiki).
+
+## branches
+
+You are of course free to set up your own ikiwiki git repository with your
+own [[patches|patch]].
+
+Some of the branches included in the main repository include:
+
+* `gallery` contains the [[todo/Gallery]] plugin. It's not yet merged
+  die to license issues.
+* `html` is an unfinished attempt at making ikiwiki output HTML 4.01
+  instead of xhtml.
+* `prefix-directives` changes the preprocessor directive syntax. It
+  is approximately one failing test case away from merging.
+* `wikiwyg` adds [[todo/wikiwyg]] support. It is unmerged pending some
+  changes.
+* `pristine-tar` contains deltas that
+  [pristine-tar](http://kitenet.net/~joey/code/pristine-tar)
+  can use to recreate released tarballs of ikiwiki

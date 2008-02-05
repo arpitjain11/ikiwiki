@@ -4,6 +4,8 @@ rcs_commit was only changed to work around bzr's lack of a switch to set the
 username). bzr_log could probably be written better by someone better at perl,
 and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
 
+(rcs_notify is not needed in this branch --[[Joey]])
+
     #!/usr/bin/perl
     
     use warnings;
@@ -184,3 +186,9 @@ and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
 >>> It's new (in fact I'm not even sure that it made it in to 0.90, it might be in 0.91 due
 >>> in a couple of weeks.
 >>> I was just noting it for a future enhancement. --[[JamesWestby]]
+
+> I've just posted another patch with support for bzr, including support for 
+> --author and a testsuite to git://git.samba.org/jelmer/ikiwiki.git. I hadn't 
+> seen this page earlier.  --[[jelmer]]
+
+> I used jelmer's patch --[[done]]! --[[Joey]]

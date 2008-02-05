@@ -33,43 +33,62 @@ sub getopt () { #{{{
 sub checkconfig () { #{{{
 	if ($config{aggregate} && ! ($config{post_commit} && 
 	                             IkiWiki::commit_hook_enabled())) {
-		if (! IkiWiki::lockwiki(0)) {
-			debug("wiki is locked by another process, not aggregating");
-			exit 1;
+		# See if any feeds need aggregation.
+		loadstate();
+		my @feeds=needsaggregate();
+		return unless @feeds;
+		if (! lockaggregate()) {
+			debug("an aggregation process is already running");
+			return;
 		}
-		
+		# force a later rebuild of source pages
+		$IkiWiki::forcerebuild{$_->{sourcepage}}=1
+			foreach @feeds;
+
 		# Fork a child process to handle the aggregation.
-		# The parent process will then handle building the result.
-		# This avoids messy code to clear state accumulated while
-		# aggregating.
+		# The parent process will then handle building the
+		# result. This avoids messy code to clear state
+		# accumulated while aggregating.
 		defined(my $pid = fork) or error("Can't fork: $!");
 		if (! $pid) {
-			loadstate();
 			IkiWiki::loadindex();
-			aggregate();
+
+			# Aggregation happens without the main wiki lock
+			# being held. This allows editing pages etc while
+			# aggregation is running.
+			aggregate(@feeds);
+
+			IkiWiki::lockwiki;
+			# Merge changes, since aggregation state may have
+			# changed on disk while the aggregation was happening.
+			mergestate();
 			expire();
 			savestate();
+			IkiWiki::unlockwiki;
 			exit 0;
 		}
 		waitpid($pid,0);
 		if ($?) {
 			error "aggregation failed with code $?";
 		}
-		
-		IkiWiki::unlockwiki();
+
+		clearstate();
+		unlockaggregate();
 	}
 } #}}}
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 	
-	loadstate(); # if not already loaded
+	loadstate();
 
 	foreach my $feed (values %feeds) {
-		if (grep { $_ eq $pagesources{$feed->{sourcepage}} } @$needsbuild) {
-			# Mark all feeds originating on this page as removable;
-			# preprocess will unmark those that still exist.
-			remove_feeds($feed->{sourcepage});
+		if (exists $pagesources{$feed->{sourcepage}} && 
+		    grep { $_ eq $pagesources{$feed->{sourcepage}} } @$needsbuild) {
+			# Mark all feeds originating on this page as 
+			# not yet seen; preprocess will unmark those that
+			# still exist.
+			markunseen($feed->{sourcepage});
 		}
 	}
 } # }}}
@@ -102,8 +121,7 @@ sub preprocess (@) { #{{{
 	$feed->{updateinterval}=defined $params{updateinterval} ? $params{updateinterval} * 60 : 15 * 60;
 	$feed->{expireage}=defined $params{expireage} ? $params{expireage} : 0;
 	$feed->{expirecount}=defined $params{expirecount} ? $params{expirecount} : 0;
-	delete $feed->{remove};
-	delete $feed->{expired};
+	delete $feed->{unseen};
 	$feed->{lastupdate}=0 unless defined $feed->{lastupdate};
 	$feed->{numposts}=0 unless defined $feed->{numposts};
 	$feed->{newposts}=0 unless defined $feed->{newposts};
@@ -133,11 +151,22 @@ sub delete (@) { #{{{
 	# Remove feed data for removed pages.
 	foreach my $file (@files) {
 		my $page=pagename($file);
-		remove_feeds($page);
+		markunseen($page);
+	}
+} #}}}
+
+sub markunseen ($) { #{{{
+	my $page=shift;
+
+	foreach my $id (keys %feeds) {
+		if ($feeds{$id}->{sourcepage} eq $page) {
+			$feeds{$id}->{unseen}=1;
+		}
 	}
 } #}}}
 
 my $state_loaded=0;
+
 sub loadstate () { #{{{
 	return if $state_loaded;
 	$state_loaded=1;
@@ -176,32 +205,13 @@ sub loadstate () { #{{{
 
 sub savestate () { #{{{
 	return unless $state_loaded;
+	garbage_collect();
 	eval q{use HTML::Entities};
 	error($@) if $@;
 	my $newfile="$config{wikistatedir}/aggregate.new";
 	my $cleanup = sub { unlink($newfile) };
 	open (OUT, ">$newfile") || error("open $newfile: $!", $cleanup);
 	foreach my $data (values %feeds, values %guids) {
-		if ($data->{remove}) {
-			if ($data->{name}) {
-				foreach my $guid (values %guids) {
-					if ($guid->{feed} eq $data->{name}) {
-						$guid->{remove}=1;
-					}
-				}
-			}
-			else {
-				unlink pagefile($data->{page})
-					if exists $data->{page};
-			}
-			next;
-		}
-		elsif ($data->{expired} && exists $data->{page}) {
-			unlink pagefile($data->{page});
-			delete $data->{page};
-			delete $data->{md5};
-		}
-
 		my @line;
 		foreach my $field (keys %$data) {
 			if ($field eq "name" || $field eq "feed" ||
@@ -220,6 +230,69 @@ sub savestate () { #{{{
 	close OUT || error("save $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/aggregate") ||
 		error("rename $newfile: $!", $cleanup);
+} #}}}
+
+sub garbage_collect () { #{{{
+	foreach my $name (keys %feeds) {
+		# remove any feeds that were not seen while building the pages
+		# that used to contain them
+		if ($feeds{$name}->{unseen}) {
+			delete $feeds{$name};
+		}
+	}
+
+	foreach my $guid (values %guids) {
+		# any guid whose feed is gone should be removed
+		if (! exists $feeds{$guid->{feed}}) {
+			unlink pagefile($guid->{page})
+				if exists $guid->{page};
+			delete $guids{$guid->{guid}};
+		}
+		# handle expired guids
+		elsif ($guid->{expired} && exists $guid->{page}) {
+			unlink pagefile($guid->{page});
+			delete $guid->{page};
+			delete $guid->{md5};
+		}
+	}
+} #}}}
+
+sub mergestate () { #{{{
+	# Load the current state in from disk, and merge into it
+	# values from the state in memory that might have changed
+	# during aggregation.
+	my %myfeeds=%feeds;
+	my %myguids=%guids;
+	clearstate();
+	loadstate();
+
+	# All that can change in feed state during aggregation is a few
+	# fields.
+	foreach my $name (keys %myfeeds) {
+		if (exists $feeds{$name}) {
+			foreach my $field (qw{message lastupdate numposts
+			                      newposts error}) {
+				$feeds{$name}->{$field}=$myfeeds{$name}->{$field};
+			}
+		}
+	}
+
+	# New guids can be created during aggregation.
+	# It's also possible that guids were removed from the on-disk state
+	# while the aggregation was in process. That would only happen if
+	# their feed was also removed, so any removed guids added back here
+	# will be garbage collected later.
+	foreach my $guid (keys %myguids) {
+		if (! exists $guids{$guid}) {
+			$guids{$guid}=$myguids{$guid};
+		}
+	}
+} #}}}
+
+sub clearstate () { #{{{
+	%feeds=();
+	%guids=();
+	$state_loaded=0;
 } #}}}
 
 sub expire () { #{{{
@@ -253,7 +326,12 @@ sub expire () { #{{{
 	}
 } #}}}
 
-sub aggregate () { #{{{
+sub needsaggregate () { #{{{
+	return values %feeds if $config{rebuild};
+	return grep { time - $_->{lastupdate} >= $_->{updateinterval} } values %feeds;
+} #}}}
+
+sub aggregate (@) { #{{{
 	eval q{use XML::Feed};
 	error($@) if $@;
 	eval q{use URI::Fetch};
@@ -261,15 +339,12 @@ sub aggregate () { #{{{
 	eval q{use HTML::Entities};
 	error($@) if $@;
 
-	foreach my $feed (values %feeds) {
-		next unless $config{rebuild} || 
-			time - $feed->{lastupdate} >= $feed->{updateinterval};
+	foreach my $feed (@_) {
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
 		$feed->{message}=sprintf(gettext("processed ok at %s"),
 			displaytime($feed->{lastupdate}));
 		$feed->{error}=0;
-		$IkiWiki::forcerebuild{$feed->{sourcepage}}=1;
 
 		debug(sprintf(gettext("checking feed %s ..."), $feed->{name}));
 
@@ -477,18 +552,6 @@ sub htmlabs ($$) { #{{{
 	return $ret;
 } #}}}
 
-sub remove_feeds () { #{{{
-	my $page=shift;
-
-	my %removed;
-	foreach my $id (keys %feeds) {
-		if ($feeds{$id}->{sourcepage} eq $page) {
-			$feeds{$id}->{remove}=1;
-			$removed{$id}=1;
-		}
-	}
-} #}}}
-
 sub pagefile ($) { #{{{
 	my $page=shift;
 
@@ -497,6 +560,28 @@ sub pagefile ($) { #{{{
 
 sub htmlfn ($) { #{{{
 	return shift().".".$config{htmlext};
+} #}}}
+
+my $aggregatelock;
+
+sub lockaggregate () { #{{{
+	# Take an exclusive lock to prevent multiple concurrent aggregators.
+	# Returns true if the lock was aquired.
+	if (! -d $config{wikistatedir}) {
+		mkdir($config{wikistatedir});
+	}
+	open($aggregatelock, '>', "$config{wikistatedir}/aggregatelock") ||
+		error ("cannot open to $config{wikistatedir}/aggregatelock: $!");
+	if (! flock($aggregatelock, 2 | 4)) { # LOCK_EX | LOCK_NB
+		close($aggregatelock) || error("failed closing aggregatelock: $!");
+		return 0;
+	}
+	return 1;
+} #}}}
+
+sub unlockaggregate () { #{{{
+	return close($aggregatelock) if $aggregatelock;
+	return;
 } #}}}
 
 1

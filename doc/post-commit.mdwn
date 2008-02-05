@@ -1,7 +1,8 @@
 If your wiki is kept in [[revision_control|rcs]], a post-commit hook is run
 every time you commit a change to your repository.
 
-ikiwiki generates the "post-commit hook" once you've uncommented the relevant section (under wrappers) in the ikiwiki.setup.
+ikiwiki generates the "post-commit hook" once you've uncommented the relevant
+section (under wrappers) in the ikiwiki.setup.
 
 The generated wrapper is a C program that is designed to safely be made
 suid if necessary. It's hardcoded to run ikiwiki with the settings
@@ -14,4 +15,5 @@ your wiki checkout and html directory. If so, you can safely make
 the wrapper suid to a user who can write there (*not* to root!). You might
 want to read [[Security]] first.
 
-[[Setup]] explains setting this up from the start and see [[rcs/details]] to know more.
+[[Setup]] explains setting this up from the start and see [[rcs/details]] to
+know more.

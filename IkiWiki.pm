@@ -62,13 +62,14 @@ sub defaultconfig () { #{{{
 	cgi => 0,
 	post_commit => 0,
 	rcs => '',
-	notify => 0,
 	url => '',
 	cgiurl => '',
 	historyurl => '',
 	diffurl => '',
 	rss => 0,
 	atom => 0,
+	allowrss => 0,
+	allowatom => 0,
 	discussion => 1,
 	rebuild => 0,
 	refresh => 0,
@@ -76,7 +77,6 @@ sub defaultconfig () { #{{{
 	w3mmode => 0,
 	wrapper => undef,
 	wrappermode => undef,
-	svnrepo => undef,
 	svnpath => "trunk",
 	gitorigin_branch => "origin",
 	gitmaster_branch => "master",
@@ -90,7 +90,7 @@ sub defaultconfig () { #{{{
 	adminuser => undef,
 	adminemail => undef,
 	plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
-	              lockedit conditional}],
+	              lockedit conditional recentchanges}],
 	libdir => undef,
 	timeformat => '%c',
 	locale => undef,
@@ -279,6 +279,12 @@ sub pagetype ($) { #{{{
 		return $1 if exists $hooks{htmlize}{$1};
 	}
 	return;
+} #}}}
+
+sub isinternal ($) { #{{{
+	my $page=shift;
+	return exists $pagesources{$page} &&
+		$pagesources{$page} =~ /\._([^.]+)$/;
 } #}}}
 
 sub pagename ($) { #{{{
@@ -628,6 +634,20 @@ sub htmllink ($$$;@) { #{{{
 	return "<a href=\"$bestlink\"@attrs>$linktext</a>";
 } #}}}
 
+sub userlink ($) { #{{{
+	my $user=shift;
+
+	my $oiduser=eval { openiduser($user) };
+	if (defined $oiduser) {
+		return "<a href=\"$user\">$oiduser</a>";
+	}
+	else {
+		return htmllink("", "", escapeHTML(
+			length $config{userdir} ? $config{userdir}."/".$user : $user
+		), noimageinline => 1);
+	}
+} #}}}
+
 sub htmlize ($$$) { #{{{
 	my $page=shift;
 	my $type=shift;
@@ -913,7 +933,7 @@ sub loadindex () { #{{{
 	%oldrenderedfiles=%pagectime=();
 	if (! $config{rebuild}) {
 		%pagesources=%pagemtime=%oldlinks=%links=%depends=
-			%destsources=%renderedfiles=%pagecase=();
+			%destsources=%renderedfiles=%pagecase=%pagestate=();
 	}
 	open (my $in, "<", "$config{wikistatedir}/index") || return;
 	while (<$in>) {
@@ -979,7 +999,7 @@ sub saveindex () { #{{{
 		if (exists $pagestate{$page}) {
 			foreach my $id (@hookids) {
 				foreach my $key (keys %{$pagestate{$page}{$id}}) {
-					$line.=' '.$id.'_'.encode_entities($key)."=".encode_entities($pagestate{$page}{$id}{$key});
+					$line.=' '.$id.'_'.encode_entities($key)."=".encode_entities($pagestate{$page}{$id}{$key}, " \t\n");
 				}
 			}
 		}
@@ -1299,11 +1319,20 @@ sub match_glob ($$;@) { #{{{
 	$glob=~s/\\\?/./g;
 
 	if ($page=~/^$glob$/i) {
-		return IkiWiki::SuccessReason->new("$glob matches $page");
+		if (! IkiWiki::isinternal($page) || $params{internal}) {
+			return IkiWiki::SuccessReason->new("$glob matches $page");
+		}
+		else {
+			return IkiWiki::FailReason->new("$glob matches $page, but the page is an internal page");
+		}
 	}
 	else {
 		return IkiWiki::FailReason->new("$glob does not match $page");
 	}
+} #}}}
+
+sub match_internal ($$;@) { #{{{
+	return match_glob($_[0], $_[1], @_, internal => 1)
 } #}}}
 
 sub match_link ($$;@) { #{{{
@@ -1398,21 +1427,6 @@ sub match_creation_year ($$;@) { #{{{
 	}
 	else {
 		return IkiWiki::FailReason->new('creation_year did not match');
-	}
-} #}}}
-
-sub match_user ($$;@) { #{{{
-	shift;
-	my $user=shift;
-	my %params=@_;
-
-	return IkiWiki::FailReason->new('cannot match user')
-		unless exists $params{user};
-	if ($user eq $params{user}) {
-		return IkiWiki::SuccessReason->new("user is $user")
-	}
-	else {
-		return IkiWiki::FailReason->new("user is not $user");
 	}
 } #}}}
 

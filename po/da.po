@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-09 02:42-0500\n"
+"POT-Creation-Date: 2008-02-03 14:52-0500\n"
 "PO-Revision-Date: 2007-10-16 23:07+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -18,118 +18,118 @@ msgstr ""
 "X-Poedit-Country: DENMARK\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:125
 msgid "You need to log in first."
 msgstr "Du skal først logge på."
 
-#: ../IkiWiki/CGI.pm:202
+#: ../IkiWiki/CGI.pm:155
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "Pålogning fejlede, måske skal du tillade infokager (cookies)?"
 
-#: ../IkiWiki/CGI.pm:231
+#: ../IkiWiki/CGI.pm:184
 msgid "Login"
 msgstr "Pålogning"
 
-#: ../IkiWiki/CGI.pm:232
+#: ../IkiWiki/CGI.pm:185
 msgid "Preferences"
 msgstr "Indstillinger"
 
-#: ../IkiWiki/CGI.pm:233
+#: ../IkiWiki/CGI.pm:186
 msgid "Admin"
 msgstr "Admin"
 
-#: ../IkiWiki/CGI.pm:289
+#: ../IkiWiki/CGI.pm:235
 msgid "Preferences saved."
 msgstr "Indstillinger gemt"
 
-#: ../IkiWiki/CGI.pm:345
+#: ../IkiWiki/CGI.pm:291
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s er ikke en redigérbar side"
 
-#: ../IkiWiki/CGI.pm:436 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:239 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:98
-#: ../IkiWiki/Render.pm:178
+#: ../IkiWiki/CGI.pm:382 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:241 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
+#: ../IkiWiki/Render.pm:175
 msgid "discussion"
 msgstr "diskussion"
 
-#: ../IkiWiki/CGI.pm:482
+#: ../IkiWiki/CGI.pm:429
 #, perl-format
 msgid "creating %s"
 msgstr "opretter %s"
 
-#: ../IkiWiki/CGI.pm:500 ../IkiWiki/CGI.pm:519 ../IkiWiki/CGI.pm:529
-#: ../IkiWiki/CGI.pm:563 ../IkiWiki/CGI.pm:611
+#: ../IkiWiki/CGI.pm:447 ../IkiWiki/CGI.pm:466 ../IkiWiki/CGI.pm:476
+#: ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:554
 #, perl-format
 msgid "editing %s"
 msgstr "redigerer %s"
 
-#: ../IkiWiki/CGI.pm:705
+#: ../IkiWiki/CGI.pm:643
 msgid "You are banned."
 msgstr "Du er banlyst."
 
-#: ../IkiWiki/Plugin/aggregate.pm:71
+#: ../IkiWiki/Plugin/aggregate.pm:72
 #, perl-format
 msgid "missing %s parameter"
 msgstr "mangler parametren %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:99
+#: ../IkiWiki/Plugin/aggregate.pm:100
 msgid "new feed"
 msgstr "ny fødning"
 
-#: ../IkiWiki/Plugin/aggregate.pm:113
+#: ../IkiWiki/Plugin/aggregate.pm:114
 msgid "posts"
 msgstr "indlæg"
 
-#: ../IkiWiki/Plugin/aggregate.pm:115
+#: ../IkiWiki/Plugin/aggregate.pm:116
 msgid "new"
 msgstr "nyt"
 
-#: ../IkiWiki/Plugin/aggregate.pm:231
+#: ../IkiWiki/Plugin/aggregate.pm:232
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "udløber %s (%s dage gammel)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:238
+#: ../IkiWiki/Plugin/aggregate.pm:239
 #, perl-format
 msgid "expiring %s"
 msgstr "udløber %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 #, perl-format
 msgid "processed ok at %s"
 msgstr "korrekt dannet ved %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:269
+#: ../IkiWiki/Plugin/aggregate.pm:270
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "undersøger fødning %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:274
+#: ../IkiWiki/Plugin/aggregate.pm:275
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "kunne ikke finde fødning ved %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:289
+#: ../IkiWiki/Plugin/aggregate.pm:290
 msgid "feed not found"
 msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/aggregate.pm:300
+#: ../IkiWiki/Plugin/aggregate.pm:301
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(defekt UTF-8 fjernet fra fødning)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:306
+#: ../IkiWiki/Plugin/aggregate.pm:307
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:312
+#: ../IkiWiki/Plugin/aggregate.pm:313
 msgid "feed crashed XML::Feed!"
 msgstr "fødning fik XML::Feed til at bryde sammen!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:386
+#: ../IkiWiki/Plugin/aggregate.pm:387
 #, perl-format
 msgid "creating new page %s"
 msgstr "opretter ny side %s"
@@ -148,22 +148,22 @@ msgstr "Ingen henvisninger der ikker fungerer!"
 msgid "%s parameter is required"
 msgstr "parametren %s er krævet"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:40
+#: ../IkiWiki/Plugin/edittemplate.pm:41
 #, fuzzy
 msgid "template not specified"
 msgstr "skabelon %s ikke fundet"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:43
+#: ../IkiWiki/Plugin/edittemplate.pm:44
 #, fuzzy
 msgid "match not specified"
 msgstr "wrapper-navn ikke angivet"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:48
+#: ../IkiWiki/Plugin/edittemplate.pm:49
 #, perl-format
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:110
+#: ../IkiWiki/Plugin/edittemplate.pm:111
 #, fuzzy
 msgid "failed to process"
 msgstr "dannelsen mislykkedes:"
@@ -223,11 +223,11 @@ msgstr "Tilføj nyt indlæg med følgende titel:"
 msgid "nonexistant template %s"
 msgstr "ikke-eksisterende skabelon: %s"
 
-#: ../IkiWiki/Plugin/inline.pm:247 ../IkiWiki/Render.pm:102
+#: ../IkiWiki/Plugin/inline.pm:249 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr "Diskussion"
 
-#: ../IkiWiki/Plugin/inline.pm:461
+#: ../IkiWiki/Plugin/inline.pm:463
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client ikke fundet, pinger ikke"
 
@@ -247,16 +247,16 @@ msgstr ""
 "Indlæsning af perl-modulet Markdown.pm (%s) eller /usr/bin/markdown (%s) "
 "mislykkedes"
 
-#: ../IkiWiki/Plugin/meta.pm:132
+#: ../IkiWiki/Plugin/meta.pm:119
 msgid "stylesheet not found"
 msgstr "stilsnit (stylesheet) ikke fundet"
 
-#: ../IkiWiki/Plugin/meta.pm:156
+#: ../IkiWiki/Plugin/meta.pm:143
 #, fuzzy
 msgid "redir page not found"
 msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/meta.pm:169
+#: ../IkiWiki/Plugin/meta.pm:156
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "fødning ikke fundet"
@@ -381,17 +381,27 @@ msgstr "sent %A aften"
 msgid "%A night"
 msgstr "%A nat"
 
-#: ../IkiWiki/Plugin/prettydate.pm:74
+#: ../IkiWiki/Plugin/prettydate.pm:78
 msgid "at teatime on %A"
 msgstr "ved tetid %A"
 
-#: ../IkiWiki/Plugin/prettydate.pm:78
+#: ../IkiWiki/Plugin/prettydate.pm:82
 msgid "at midnight"
 msgstr "ved midnat"
 
-#: ../IkiWiki/Plugin/prettydate.pm:81
+#: ../IkiWiki/Plugin/prettydate.pm:85
 msgid "at noon on %A"
 msgstr "midt på dagen %A"
+
+#: ../IkiWiki/Plugin/recentchanges.pm:74
+#, fuzzy
+msgid "missing page"
+msgstr "manglende værdier"
+
+#: ../IkiWiki/Plugin/recentchanges.pm:76
+#, perl-format
+msgid "The page %s does not exist."
+msgstr ""
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
@@ -500,7 +510,7 @@ msgstr "manglende tex-kode"
 msgid "code includes disallowed latex commands"
 msgstr "kode indeholder ikke-tilladte latec-kommandoer"
 
-#: ../IkiWiki/Plugin/teximg.pm:97
+#: ../IkiWiki/Plugin/teximg.pm:96
 msgid "failed to generate image from code"
 msgstr "billedopbygning fra kode mislykkedes"
 
@@ -508,72 +518,51 @@ msgstr "billedopbygning fra kode mislykkedes"
 msgid "(not toggleable in preview mode)"
 msgstr ""
 
-#: ../IkiWiki/Rcs/Stub.pm:68
+#: ../IkiWiki/Rcs/Stub.pm:62
 msgid "getctime not implemented"
 msgstr "getctime ikke implementeret"
 
-#: ../IkiWiki/Rcs/monotone.pm:459
-msgid ""
-"REV is not set, not running from mtn post-commit hook, cannot send "
-"notifications"
-msgstr ""
-"REV ikke angivet, afvikles ikke fra mtn post-commit hook, kan ikke sende "
-"orienteringer"
-
-#: ../IkiWiki/Rcs/monotone.pm:462
-msgid "REV is not a valid revision identifier, cannot send notifications"
-msgstr ""
-"REV er ikke en gyldig revisionsidentifikation, kan ikke sende orienteringer"
-
-#: ../IkiWiki/Rcs/svn.pm:221
-msgid ""
-"REV is not set, not running from svn post-commit hook, cannot send "
-"notifications"
-msgstr ""
-"REV ikke angivet, afvikles ikke fra svn post-commit hook, kan ikke sende "
-"orienteringer"
-
-#: ../IkiWiki/Render.pm:275 ../IkiWiki/Render.pm:296
+#: ../IkiWiki/Render.pm:273 ../IkiWiki/Render.pm:294
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "udelader forkert filnavn %s"
 
-#: ../IkiWiki/Render.pm:338
+#: ../IkiWiki/Render.pm:343
 #, perl-format
 msgid "removing old page %s"
 msgstr "fjerner gammel side %s"
 
-#: ../IkiWiki/Render.pm:371
+#: ../IkiWiki/Render.pm:384
 #, perl-format
 msgid "scanning %s"
 msgstr "gennemlæser %s"
 
-#: ../IkiWiki/Render.pm:376
+#: ../IkiWiki/Render.pm:389
 #, perl-format
 msgid "rendering %s"
 msgstr "danner %s"
 
-#: ../IkiWiki/Render.pm:388
+#: ../IkiWiki/Render.pm:410
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "danner %s, som henviser til %s"
 
-#: ../IkiWiki/Render.pm:405
+#: ../IkiWiki/Render.pm:431
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "danner %s, som afhænger af %s"
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:470
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "danner %s, for at opdatere dens krydshenvisninger (backlinks)"
 
-#: ../IkiWiki/Render.pm:455
+#: ../IkiWiki/Render.pm:482
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "fjerner %s, ikke længere dannet af %s"
 
-#: ../IkiWiki/Render.pm:481
+#: ../IkiWiki/Render.pm:508
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: kan ikke danne %s"
@@ -601,15 +590,6 @@ msgstr "genopfrisker wiki..."
 msgid "done"
 msgstr "færdig"
 
-#. translators: The three variables are the name of the wiki,
-#. translators: A list of one or more pages that were changed,
-#. translators: And the name of the user making the change.
-#. translators: This is used as the subject of a commit email.
-#: ../IkiWiki/UserInfo.pm:145
-#, perl-format
-msgid "update of %s's %s by %s"
-msgstr "opdatering på %s på %s af %s"
-
 #: ../IkiWiki/Wrapper.pm:16
 #, perl-format
 msgid "%s doesn't seem to be executable"
@@ -625,19 +605,19 @@ msgstr "wrapper-navn ikke angivet"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:64
+#: ../IkiWiki/Wrapper.pm:48
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "skrivning ad %s mislykkedes: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:115
+#: ../IkiWiki/Wrapper.pm:99
 #, perl-format
 msgid "failed to compile %s"
 msgstr "kompilering af %s mislykkedes"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:135
+#: ../IkiWiki/Wrapper.pm:119
 #, perl-format
 msgid "successfully generated %s"
 msgstr "Korrekt bygget %s"
@@ -646,15 +626,15 @@ msgstr "Korrekt bygget %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "brug: ikiwiki [valg] kilde mål"
 
-#: ../ikiwiki.in:83
+#: ../ikiwiki.in:81
 msgid "usage: --set var=value"
 msgstr "brug: --set var=værdi"
 
-#: ../IkiWiki.pm:129
+#: ../IkiWiki.pm:127
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Skal angive url til wiki med --url når der bruges --cgi"
 
-#: ../IkiWiki.pm:198 ../IkiWiki.pm:199
+#: ../IkiWiki.pm:196 ../IkiWiki.pm:197
 msgid "Error"
 msgstr "Fejl"
 
@@ -662,7 +642,29 @@ msgstr "Fejl"
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:722
+#: ../IkiWiki.pm:750
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s forudberegningssløkke fundet på %s ved dybde %i"
+
+#~ msgid ""
+#~ "REV is not set, not running from mtn post-commit hook, cannot send "
+#~ "notifications"
+#~ msgstr ""
+#~ "REV ikke angivet, afvikles ikke fra mtn post-commit hook, kan ikke sende "
+#~ "orienteringer"
+
+#~ msgid "REV is not a valid revision identifier, cannot send notifications"
+#~ msgstr ""
+#~ "REV er ikke en gyldig revisionsidentifikation, kan ikke sende "
+#~ "orienteringer"
+
+#~ msgid ""
+#~ "REV is not set, not running from svn post-commit hook, cannot send "
+#~ "notifications"
+#~ msgstr ""
+#~ "REV ikke angivet, afvikles ikke fra svn post-commit hook, kan ikke sende "
+#~ "orienteringer"
+
+#~ msgid "update of %s's %s by %s"
+#~ msgstr "opdatering på %s på %s af %s"

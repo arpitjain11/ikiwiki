@@ -86,3 +86,59 @@ your pages. --Ethan
 > backend.
 >
 > -- CharlesMauch
+
+---- 
+
+Here's a full design for redoing recentchanges, based on Ethan's ideas:
+
+* Add a recentchanges plugin that has a preprocessor directive:
+	\[[recentchanges num=100 pages=* template=recentchanges.tmpl]]
+  If put on the [[recentchanges]] page, this would result in up to 100
+  recentchanges/change_$id.mdwn files being created.
+* Which means the plugin has to store state and use a checkconfig hook
+  or the like to create the requested pages (and delete old ones) when
+  the wiki is rebuilt and when the post_commit hook is run.
+* Then it's a simple matter of using inline on the recentchanges page
+  to display the changes. (With a special template to display nicely.)
+* Rss/atom comes for free..
+* So drop mail notifications.
+* If someone wants to subscribe to notifications for only a subset
+  of pages, they can either filter the recentchanges in their rss
+  aggregator, or they can set up their own page that uses the recentchanges
+  directive for only the pages they want.
+* The `rcs_notify` functions will be removed.
+* To add diffs, another plugin can add a pagetemplate hook that calls
+  a `rcs_diff`. (optional)
+* So to update the changes files, just call `rcs_recentchanges`, create
+  files for each new id, and delete files for each id that is no longer
+  included.
+* The cgi support for recentchanges can be dropped, or moved to a different
+  plugin.
+
+I'm unsure how fast this will all be, but by using regular pages, there's
+cacheing, at least. The main slowdown might turn out to be the inlining and
+not the generation of the changes pages. The current cgi recentchanges
+code saves a tenth of a second or so by memoizing htmllink, an optimisation
+that won't be available when using the more general inlining code.
+
+An obvious optimisation, and one implied by this design, is that each change
+file is only written once. This assumes that the data in them doesn't ever
+change, which actually isn't true (svn commit messages can be changed), but
+is probably close enough to true for our purposes.
+
+Another optimisation would be to htmlize the change files when they're
+written out -- avoids re-rendering a given file each time a new change is
+made (thus doing 1/100th the work). 
+
+Links in the change files to the changed pages will need special handling.
+These links should not generate backlinks. They probably shouldn't be
+implemented as wikiliks at all. Instead, they should be raw, absolute 
+html links to the pages that were changed.
+
+Only problem with this approach is that the links break if the changed
+page later gets deleted. I think that's acceptable. It could link to
+`ikiwiki.cgi?do=redir&page=foo`, but that's probably overkill.
+
+--[[Joey]]
+
+[[done]] !! (in this branch at least :-)

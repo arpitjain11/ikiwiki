@@ -37,6 +37,7 @@ sub rcs_recentchanges ($) {
 	# Examine the RCS history and generate a list of recent changes.
 	# The data structure returned for each change is:
 	# {
+	# 	rev => # the RCSs id for this commit
 	# 	user => # name of user who made the change,
 	# 	committype => # either "web" or the name of the rcs,
 	# 	when => # time when the change was made,
@@ -54,13 +55,6 @@ sub rcs_recentchanges ($) {
 	# 		# repeat for each page changed in this commit,
 	# 	],
 	# }
-}
-
-sub rcs_notify () {
-	# This function is called when a change is committed to the wiki,
-	# and ikiwiki is running as a post-commit hook from the RCS.
-	# It should examine the repository to somehow determine what pages
-	# changed, and then send emails to users subscribed to those pages.
 }
 
 sub rcs_getctime ($) {

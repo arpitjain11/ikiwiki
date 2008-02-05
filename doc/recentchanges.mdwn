@@ -1,3 +1,5 @@
-ikiwiki generates the list of recent changes by examining the history of
-the [[revision_control_system|rcs]] that the wiki is configured to use. You
-have to have [[CGI]] set up for this feature to be enabled.
+[[meta title="RecentChanges"]]
+Recent changes to this wiki:
+
+[[inline pages="internal(recentchanges/change_*) and !*/Discussion" 
+template=recentchanges show=0]]
