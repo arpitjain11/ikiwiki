@@ -37,6 +37,14 @@ ikiwiki (2.31) UNRELEASED; urgency=low
     used if you want a wiki that doesn't default to generating rss or atom
     feeds, but that does allow them to be turned on for specific blogs.
 
+  [ Josh Triplett ]
+  * Add new preprocessor directive syntax¸ using a '!' prefix.  Add a
+    prefix_directives option to the setup file to turn this syntax on;
+    currently defaults to false, for backward compatibility.  Support
+    optional '!' prefix even with prefix_directives off, and use that in
+    the underlay to support either setting of prefix_directives.  Add NEWS
+    entry with migration information.
+
  -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
 
 ikiwiki (2.30) unstable; urgency=low
@@ -55,12 +63,6 @@ ikiwiki (2.30) unstable; urgency=low
   [ Josh Triplett ]
   * Add trailing comma to commented-out umask in sample ikiwiki.setup, so
     that uncommenting it does not break the setup file.
-  * Add new preprocessor directive syntax¸ using a '!' prefix.  Add a
-    prefix_directives option to the setup file to turn this syntax on;
-    currently defaults to false, for backward compatibility.  Support
-    optional '!' prefix even with prefix_directives off, and use that in
-    the underlay to support either setting of prefix_directives.  Add NEWS
-    entry with migration information.
 
   [ Joey Hess ]
   * inline: The template can check for FIRST and LAST, which will be
