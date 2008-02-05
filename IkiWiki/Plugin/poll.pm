@@ -101,6 +101,8 @@ sub sessioncgi ($$) { #{{{
 			exit;
 		}
 
+		my $prefix=$config{prefix_directives} ? "!poll" : "poll";
+
 		my $content=readfile(srcfile($pagesources{$page}));
 		# Now parse the content, find the right poll,
 		# and find the choice within it, and increment its number.
@@ -108,16 +110,16 @@ sub sessioncgi ($$) { #{{{
 		my $edit=sub {
 			my $escape=shift;
 			my $params=shift;
-			return "\\[[poll $params]]" if $escape;
+			return "\\[[$prefix $params]]" if $escape;
 			if (--$num == 0) {
 				$params=~s/(^|\s+)(\d+)\s+"?\Q$choice\E"?(\s+|$)/$1.($2+1)." \"$choice\"".$3/se;
 				if (defined $oldchoice) {
 					$params=~s/(^|\s+)(\d+)\s+"?\Q$oldchoice\E"?(\s+|$)/$1.($2-1 >=0 ? $2-1 : 0)." \"$oldchoice\"".$3/se;
 				}
 			}
-			return "[[poll $params]]";
+			return "[[$prefix $params]]";
 		};
-		$content =~ s{(\\?)\[\[poll\s+([^]]+)\s*\]\]}{$edit->($1, $2)}seg;
+		$content =~ s{(\\?)\[\[\Q$prefix\E\s+([^]]+)\s*\]\]}{$edit->($1, $2)}seg;
 
 		# Store their vote, update the page, and redirect to it.
 		writefile($pagesources{$page}, $config{srcdir}, $content);
