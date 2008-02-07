@@ -128,6 +128,8 @@ use IkiWiki::Setup::Standard {
 	# Default settings for the recentchanges page.
 	#recentchangespage => "recentchanges",
 	#recentchangesnum => 100,
+	# Use new '!'-prefixed directive syntax
+	#prefix_directives => 0,
 
 	# To add plugins, list them here.
 	#add_plugins => [qw{goodstuff search wikitext camelcase
