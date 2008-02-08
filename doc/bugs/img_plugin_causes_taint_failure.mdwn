@@ -8,3 +8,8 @@ The img plugin causes a taint failure if one tries to link a scaled image, e.g.
 If one omits the size argument it works. And if it worked once the taint failure will not happen again unless one rm -r's the destdir.
 
 Seen with ikiwiki 2.30
+
+> And what version of perl? See [[Insecure_dependency_in_mkdir]] et al.
+> Also, the debian build of ikiwiki has taint checking disabled to avoid
+> this perl bug. Did you build your own? Set NOTAINT=1 when building..
+> --[[Joey]]
