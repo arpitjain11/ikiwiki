@@ -1,4 +1,4 @@
-ikiwiki (2.31) UNRELEASED; urgency=low
+ikiwiki (2.31) unstable; urgency=low
 
   * Revert preservation of input file modification times in output files,
     since this leads to too many problems with web caching, especially with
@@ -36,8 +36,11 @@ ikiwiki (2.31) UNRELEASED; urgency=low
   * inline: Add new `allowrss` and `allowatom` config options. These can be
     used if you want a wiki that doesn't default to generating rss or atom
     feeds, but that does allow them to be turned on for specific blogs.
+  * Don't die if running with --getctime and rcs_getctime throws an error.
+    There are several cases (recentchanges files, aggregated files)
+    where some source files are not in revision control.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 02 Feb 2008 23:36:31 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed, 06 Feb 2008 15:10:20 -0500
 
 ikiwiki (2.30) unstable; urgency=low
 
