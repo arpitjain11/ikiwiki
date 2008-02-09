@@ -9,5 +9,10 @@ will run ikiwiki-mass-rebuild if necessary when upgraded. The file
 as the user who owns the wiki. Edit this file and add any wikis you 
 set up.
 
+You can also allow users to maintain their own list of wikis to rebuild,
+by listing their usernames in /etc/ikiwiki/wikilist without corresponding
+setup files.  ikiwiki will then read their lists of wikis from
+.ikiwiki/wikilist in their home directories.
+
 
 The examples directory contains the source to some example wiki setups.

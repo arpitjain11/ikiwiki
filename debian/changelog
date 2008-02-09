@@ -1,5 +1,6 @@
 ikiwiki (2.31) unstable; urgency=low
 
+  [ Joey Hess ]
   * Revert preservation of input file modification times in output files,
     since this leads to too many problems with web caching, especially with
     inlined pages. Properly solving this would involve tracking every page
@@ -39,6 +40,9 @@ ikiwiki (2.31) unstable; urgency=low
   * Don't die if running with --getctime and rcs_getctime throws an error.
     There are several cases (recentchanges files, aggregated files)
     where some source files are not in revision control.
+
+  [ Josh Triplett ]
+  * README.Debian: Mention user wikilists.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 06 Feb 2008 15:10:20 -0500
 
