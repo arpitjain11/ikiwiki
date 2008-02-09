@@ -29,6 +29,7 @@ sub getconfig () { #{{{
 			"render=s" => \$config{render},
 			"wrappers!" => \$config{wrappers},
 			"usedirs!" => \$config{usedirs},
+			"prefix-directives!" => \$config{prefix_directives},
 			"getctime" => \$config{getctime},
 			"numbacklinks=i" => \$config{numbacklinks},
 			"rcs=s" => \$config{rcs},

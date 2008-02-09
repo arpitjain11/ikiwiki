@@ -277,6 +277,11 @@ configuration options of their own.
 
   Toggle creating output files named page/index.html (default) instead of page.html.
 
+* --prefix-directives, --no-prefix-directives
+
+  Toggle new '!'-prefixed syntax for preprocessor directives.  ikiwiki currently
+  defaults to --no-prefix-directives.
+
 * --w3mmode, --no-w3mmode
 
   Enable [[w3mmode]], which allows w3m to use ikiwiki as a local CGI script,
