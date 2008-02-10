@@ -21,11 +21,14 @@ own [[patches|patch]].
 Some of the branches included in the main repository include:
 
 * `gallery` contains the [[todo/Gallery]] plugin. It's not yet merged
-  die to license issues.
+  due to license issues.  Also some bits need to be tweaked to make it
+  work with the current *master* branch again.
 * `html` is an unfinished attempt at making ikiwiki output HTML 4.01
   instead of xhtml.
-* `prefix-directives` changes the preprocessor directive syntax. It
-  is approximately one failing test case away from merging.
+
+* `prefix-directives` changes the preprocessor directive syntax.
+  Passes all test cases; pending merge.
+
 * `wikiwyg` adds [[todo/wikiwyg]] support. It is unmerged pending some
   changes.
 * `pristine-tar` contains deltas that

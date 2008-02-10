@@ -126,6 +126,7 @@ sub genpage ($$) { #{{{
 		backlinks => $backlinks,
 		more_backlinks => $more_backlinks,
 		mtime => displaytime($pagemtime{$page}),
+		ctime => displaytime($pagectime{$page}),
 		baseurl => baseurl($page),
 	);
 
@@ -327,9 +328,15 @@ sub refresh () { #{{{
 			}
 			$pagecase{lc $page}=$page;
 			if ($config{getctime} && -e "$config{srcdir}/$file") {
-				$pagectime{$page}=rcs_getctime("$config{srcdir}/$file");
+				eval {
+					my $time=rcs_getctime("$config{srcdir}/$file");
+					$pagectime{$page}=$time;
+				};
+				if ($@) {
+					print STDERR $@;
+				}
 			}
-			elsif (! exists $pagectime{$page}) {
+			if (! exists $pagectime{$page}) {
 				$pagectime{$page}=mtime(srcfile($file));
 			}
 		}
