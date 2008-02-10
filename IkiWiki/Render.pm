@@ -126,6 +126,7 @@ sub genpage ($$) { #{{{
 		backlinks => $backlinks,
 		more_backlinks => $more_backlinks,
 		mtime => displaytime($pagemtime{$page}),
+		ctime => displaytime($pagectime{$page}),
 		baseurl => baseurl($page),
 	);
 

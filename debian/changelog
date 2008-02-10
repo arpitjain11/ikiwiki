@@ -1,4 +1,4 @@
-ikiwiki (2.31) unstable; urgency=low
+ikiwiki (2.31) UNRELEASED; urgency=low
 
   [ Joey Hess ]
   * Revert preservation of input file modification times in output files,
@@ -40,6 +40,7 @@ ikiwiki (2.31) unstable; urgency=low
   * Don't die if running with --getctime and rcs_getctime throws an error.
     There are several cases (recentchanges files, aggregated files)
     where some source files are not in revision control.
+  * Page templates can now use CTIME to show when the page was created.
 
   [ Josh Triplett ]
   * README.Debian: Mention user wikilists.
