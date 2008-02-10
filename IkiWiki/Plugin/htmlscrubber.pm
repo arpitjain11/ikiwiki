@@ -27,7 +27,7 @@ sub import { #{{{
 		"aim", "callto", "cvs", "ed2k", "feed", "fish", "gg",
 		"irc", "ircs", "lastfm", "ldaps", "magnet", "mms",
 		"msnim", "notes", "rsync", "secondlife", "skype", "ssh",
-		"sftp", "sms", "webcal", "ymsgr",
+		"sftp", "sms", "snews", "webcal", "ymsgr",
 	);
 	# data is a special case. Allow data:image/*, but
 	# disallow data:text/javascript and everything else.
