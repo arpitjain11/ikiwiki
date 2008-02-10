@@ -15,8 +15,10 @@ ikiwiki (2.31.3) unstable; urgency=high
     URIs like a limited version of data: URIs.  In particular, some
     versions of Internet Explorer interpret arbitrary HTML content in
     about: URIs.
+  * Also filter the attributes cite, longdesc, and usemap, which can contain
+    URIs.
 
- -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:59:00 -0800
 
 ikiwiki (2.31.2) unstable; urgency=high
 
