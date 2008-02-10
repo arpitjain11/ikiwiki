@@ -35,6 +35,17 @@ sub scrub ($) { #{{{
 	}
 } #}}}
 
+sub safeurl ($) { #{{{
+	my $url=shift;
+	if (exists $IkiWiki::Plugin::htmlscrubber::{safe_url_regexp} &&
+	    defined $IkiWiki::Plugin::htmlscrubber::safe_url_regexp) {
+		return $url=~/$IkiWiki::Plugin::htmlscrubber::safe_url_regexp/;
+	}
+	else {
+		return 1;
+	}
+} #}}}
+
 sub preprocess (@) { #{{{
 	if (! @_) {
 		return "";
@@ -67,8 +78,10 @@ sub preprocess (@) { #{{{
 		$title{$page}=encode_entities($value);
 	}
 	elsif ($key eq 'permalink') {
-		$permalink{$page}=$value;
-		$meta{$page}.=scrub("<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n");
+		if (safeurl($value)) {
+			$permalink{$page}=$value;
+			$meta{$page}.=scrub("<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n");
+		}
 	}
 	elsif ($key eq 'stylesheet') {
 		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
@@ -85,12 +98,14 @@ sub preprocess (@) { #{{{
 			"\" style=\"text/css\" />\n";
 	}
 	elsif ($key eq 'openid') {
-		if (exists $params{server}) {
+		if (exists $params{server} && safeurl($params{server})) {
 			$meta{$page}.='<link href="'.encode_entities($params{server}).
 				"\" rel=\"openid.server\" />\n";
 		}
-		$meta{$page}.='<link href="'.encode_entities($value).
-			"\" rel=\"openid.delegate\" />\n";
+		if (safeurl($value)) {
+			$meta{$page}.='<link href="'.encode_entities($value).
+				"\" rel=\"openid.delegate\" />\n";
+		}
 	}
 	else {
 		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
@@ -98,7 +113,7 @@ sub preprocess (@) { #{{{
 		if ($key eq 'author') {
 			$author{$page}=$value;
 		}
-		elsif ($key eq 'authorurl') {
+		elsif ($key eq 'authorurl' && safeurl($value)) {
 			$authorurl{$page}=$value;
 		}
 	}
