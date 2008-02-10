@@ -18,6 +18,28 @@ my $_scrubber;
 sub scrubber { #{{{
 	return $_scrubber if defined $_scrubber;
 	
+	# Only known uri schemes are allowed to avoid all the ways of
+	# embedding javascrpt.
+	# List at http://en.wikipedia.org/wiki/URI_scheme
+	my $uri_schemes=join("|",
+		# IANA registered schemes
+		"http", "https", "ftp", "mailto", "file", "telnet", "gopher",
+		"aaa", "aaas", "acap", 	"cap", "cid", "crid", 
+		"dav", "dict", "dns", "fax", "go", "h323", "im", "imap",
+		"ldap", "mid", "news", "nfs", "nntp", "pop", "pres",
+		"sip", "sips", "snmp", "tel", "urn", "wais", "xmpp",
+		"z39.50r", "z39.50s",
+		# data is a special case. Allow data:text/<image>, but
+		# disallow data:text/javascript and everything else.
+		qr/data:text\/(?:png|gif|jpeg)/,
+		# Selected unofficial schemes
+		"about", "aim", "callto", "cvs", "ed2k", "feed", "fish", "gg",
+		"irc", "ircs", "lastfm", "ldaps", "magnet", "mms",
+		"msnim", "notes", "rsync", "secondlife", "skype", "ssh",
+		"sftp", "sms", "steam", "webcal", "ymsgr",
+	);
+	my $link=qr/^(?:$uri_schemes:|[^:]+$)/i;
+
 	eval q{use HTML::Scrubber};
 	error($@) if $@;
 	# Lists based on http://feedparser.org/docs/html-sanitization.html
@@ -32,19 +54,22 @@ sub scrubber { #{{{
 			tfoot th thead tr tt u ul var
 		}],
 		default => [undef, { map { $_ => 1 } qw{
-			abbr accept accept-charset accesskey action
+			abbr accept accept-charset accesskey
 			align alt axis border cellpadding cellspacing
 			char charoff charset checked cite class
 			clear cols colspan color compact coords
 			datetime dir disabled enctype for frame
-			headers height href hreflang hspace id ismap
+			headers height hreflang hspace id ismap
 			label lang longdesc maxlength media method
 			multiple name nohref noshade nowrap prompt
 			readonly rel rev rows rowspan rules scope
-			selected shape size span src start summary
+			selected shape size span start summary
 			tabindex target title type usemap valign
 			value vspace width
 		}, "/" => 1, # emit proper <hr /> XHTML
+		href => $link,
+		src => $link,
+		action => $link,
 		}],
 	);
 	return $_scrubber;

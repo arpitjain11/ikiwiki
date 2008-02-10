@@ -1,3 +1,10 @@
+ikiwiki (1.33.4) testing-proposed-updates; urgency=medium
+
+  * htmlscrubber security fix: Block javascript in uris.
+  * Add htmlscrubber test suite.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 10 Feb 2008 13:34:28 -0500
+
 ikiwiki (1.33.3) testing-proposed-updates; urgency=medium
 
   * Fix a security hole that allowed insertion of unsafe content via the meta
