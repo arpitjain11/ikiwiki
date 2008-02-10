@@ -5,19 +5,13 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
+# This regexp matches urls that are in a known safe scheme.
+# Feel free to use it from other plugins.
+our $safe_url_regexp;
+
 sub import { #{{{
 	hook(type => "sanitize", id => "htmlscrubber", call => \&sanitize);
-} # }}}
 
-sub sanitize (@) { #{{{
-	my %params=@_;
-	return scrubber()->scrub($params{content});
-} # }}}
-
-my $_scrubber;
-sub scrubber { #{{{
-	return $_scrubber if defined $_scrubber;
-	
 	# Only known uri schemes are allowed to avoid all the ways of
 	# embedding javascrpt.
 	# List at http://en.wikipedia.org/wiki/URI_scheme
@@ -37,7 +31,17 @@ sub scrubber { #{{{
 	);
 	# data is a special case. Allow data:image/*, but
 	# disallow data:text/javascript and everything else.
-	my $link=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+$)/i;
+	$safe_url_regexp=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+$)/i;
+} # }}}
+
+sub sanitize (@) { #{{{
+	my %params=@_;
+	return scrubber()->scrub($params{content});
+} # }}}
+
+my $_scrubber;
+sub scrubber { #{{{
+	return $_scrubber if defined $_scrubber;
 
 	eval q{use HTML::Scrubber};
 	error($@) if $@;
@@ -72,13 +76,13 @@ sub scrubber { #{{{
 				playcount controls 
 			} ),
 			"/" => 1, # emit proper <hr /> XHTML
-			href => $link,
-			src => $link,
-			action => $link,
-			cite => $link,
-			longdesc => $link,
-			poster => $link,
-			usemap => $link,
+			href => $safe_url_regexp,
+			src => $safe_url_regexp,
+			action => $safe_url_regexp,
+			cite => $safe_url_regexp,
+			longdesc => $safe_url_regexp,
+			poster => $safe_url_regexp,
+			usemap => $safe_url_regexp,
 		}],
 	);
 	return $_scrubber;
