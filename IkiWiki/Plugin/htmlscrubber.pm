@@ -37,7 +37,7 @@ sub scrubber { #{{{
 	);
 	# data is a special case. Allow data:image/*, but
 	# disallow data:text/javascript and everything else.
-	my $link=qr/^(?:$uri_schemes:|data:image\/|[^:]+$)/i;
+	my $link=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+$)/i;
 
 	eval q{use HTML::Scrubber};
 	error($@) if $@;
