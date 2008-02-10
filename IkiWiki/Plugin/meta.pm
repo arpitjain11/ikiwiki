@@ -38,6 +38,17 @@ sub scrub ($) { #{{{
 	}
 } #}}}
 
+sub safeurl ($) { #{{{
+	my $url=shift;
+	if (exists $IkiWiki::Plugin::htmlscrubber::{safe_url_regexp} &&
+	    defined $IkiWiki::Plugin::htmlscrubber::safe_url_regexp) {
+		return $url=~/$IkiWiki::Plugin::htmlscrubber::safe_url_regexp/;
+	}
+	else {
+		return 1;
+	}
+} #}}}
+
 sub htmlize ($$$) { #{{{
 	my $page = shift;
 	my $destpage = shift;
@@ -88,7 +99,7 @@ sub preprocess (@) { #{{{
 		# fallthorough
 	}
 	elsif ($key eq 'authorurl') {
-		$pagestate{$page}{meta}{authorurl}=$value;
+		$pagestate{$page}{meta}{authorurl}=$value if safeurl($value);
 		# fallthrough
 	}
 
@@ -106,8 +117,10 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'permalink') {
-		$pagestate{$page}{meta}{permalink}=$value;
-		push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
+		if (safeurl($value)) {
+			$pagestate{$page}{meta}{permalink}=$value;
+			push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
+		}
 	}
 	elsif ($key eq 'stylesheet') {
 		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
@@ -124,12 +137,14 @@ sub preprocess (@) { #{{{
 			"\" type=\"text/css\" />";
 	}
 	elsif ($key eq 'openid') {
-		if (exists $params{server}) {
+		if (exists $params{server} && safeurl($params{server})) {
 			push @{$metaheaders{$page}}, '<link href="'.encode_entities($params{server}).
 				'" rel="openid.server" />';
 		}
-		push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
-			'" rel="openid.delegate" />';
+		if (safeurl($value)) {
+			push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
+				'" rel="openid.delegate" />';
+		}
 	}
 	elsif ($key eq 'redir') {
 		return "" if $page ne $destpage;
