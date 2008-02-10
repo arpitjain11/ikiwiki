@@ -44,7 +44,7 @@ sub defaultconfig () { #{{{
 			\|              # followed by '|'
 		)?                      # optional
 		
-		([^\]#]+)               # 2: page to link to
+		([^\n\r\]#]+)           # 2: page to link to
 		(?:
 			\#              # '#', beginning of anchor
 			([^\s\]]+)      # 3: anchor text
