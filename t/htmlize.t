@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 16;
+use Test::More tests => 26;
 use Encode;
 
 BEGIN { use_ok("IkiWiki"); }
@@ -20,7 +20,6 @@ is(IkiWiki::htmlize("foo", "mdwn", readfile("t/test1.mdwn")),
 ok(IkiWiki::htmlize("foo", "mdwn", readfile("t/test2.mdwn")),
 	"this file crashes markdown if it's fed in as decoded utf-8");
 
-# embedded javascript sanitisation tests
 sub gotcha {
 	my $html=IkiWiki::htmlize("foo", "mdwn", shift);
 	return $html =~ /GOTCHA/;
@@ -41,10 +40,31 @@ ok(!gotcha(q{<span style="&#97;&#110;&#121;&#58;&#32;&#101;&#120;&#112;&#114;&#1
 	"another entity-encoded CSS script test");
 ok(!gotcha(q{<script>GOTCHA</script>}),
 	"script tag");
+ok(!gotcha(q{<form action="javascript:alert('GOTCHA')">foo</form>}),
+	"form action with javascript");
+ok(!gotcha(q{<video poster="javascript:alert('GOTCHA')" href="foo.avi">foo</video>}),
+	"video poster with javascript");
 ok(!gotcha(q{<span style="background: url(javascript:window.location=GOTCHA)">a</span>}),
 	"CSS script test");
+ok(! gotcha(q{<img src="data:text/javascript:GOTCHA">}),
+	"data:text/javascript (jeez!)");
+ok(gotcha(q{<img src="data:text/png:GOTCHA">}), "data:text/png");
+ok(gotcha(q{<img src="data:text/gif:GOTCHA">}), "data:text/gif");
+ok(gotcha(q{<img src="data:text/jpeg:GOTCHA">}), "data:text/jpeg");
 ok(gotcha(q{<p>javascript:alert('GOTCHA')</p>}),
 	"not javascript AFAIK (but perhaps some web browser would like to
 	be perverse and assume it is?)");
 ok(gotcha(q{<img src="javascript.png?GOTCHA">}), "not javascript");
 ok(gotcha(q{<a href="javascript.png?GOTCHA">foo</a>}), "not javascript");
+is(IkiWiki::htmlize("foo", "mdwn",
+	q{<img alt="foo" src="foo.gif">}),
+	q{<img alt="foo" src="foo.gif">}, "img with alt tag allowed");
+is(IkiWiki::htmlize("foo", "mdwn",
+	q{<a href="http://google.com/">}),
+	q{<a href="http://google.com/">}, "absolute url allowed");
+is(IkiWiki::htmlize("foo", "mdwn",
+	q{<a href="foo.html">}),
+	q{<a href="foo.html">}, "relative url allowed");
+is(IkiWiki::htmlize("foo", "mdwn",
+	q{<span class="foo">bar</span>}),
+	q{<span class="foo">bar</span>}, "class attribute allowed");

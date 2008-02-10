@@ -8,6 +8,10 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     the underlay to support either setting of prefix_directives.  Add NEWS
     entry with migration information.
 
+  [ Joey Hess ]
+  * htmlscrubber security fix: Block javascript in uris.
+  * Add htmlscrubber test suite.
+
  -- Josh Triplett <josh@freedesktop.org>  Sat, 09 Feb 2008 23:01:19 -0800
 
 ikiwiki (2.31) unstable; urgency=low
