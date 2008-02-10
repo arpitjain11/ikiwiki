@@ -30,10 +30,9 @@ of text with triple-quotes:
 ikiwiki also has an older syntax for preprocessor directives, which requires a
 space in directives to distinguish them from [[wikilinks|wikilink]].  This
 syntax has several disadvantages: it requires a space after directives with no
-parameters (such as `\[[!pagecount ]]`), and it prohibits spaces in
+parameters (such as `\[[pagecount ]]`), and it prohibits spaces in
 [[wikilinks|wikilink]].  ikiwiki now provides the `!`-prefixed syntax shown
 above as the preferred alternative.  However, ikiwiki still supports wikis
-using the older syntax, if their setup files disable the `prefix_directives`
-option.  For backward compatibility with existing wikis, this option currently
-defaults to off, so ikiwiki uses the old directive syntax; however, future
-versions of ikiwiki will turn this on by default.
+using the older syntax, if the `prefix_directives` option is not enabled.
+For backward compatibility with existing wikis, this option currently
+defaults to off, so ikiwiki supports the old syntax.
