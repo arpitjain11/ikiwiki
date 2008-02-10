@@ -29,16 +29,15 @@ sub scrubber { #{{{
 		"ldap", "mid", "news", "nfs", "nntp", "pop", "pres",
 		"sip", "sips", "snmp", "tel", "urn", "wais", "xmpp",
 		"z39.50r", "z39.50s",
-		# data is a special case. Allow data:text/<image>, but
-		# disallow data:text/javascript and everything else.
-		qr/data:text\/(?:png|gif|jpeg)/,
 		# Selected unofficial schemes
 		"about", "aim", "callto", "cvs", "ed2k", "feed", "fish", "gg",
 		"irc", "ircs", "lastfm", "ldaps", "magnet", "mms",
 		"msnim", "notes", "rsync", "secondlife", "skype", "ssh",
 		"sftp", "sms", "steam", "webcal", "ymsgr",
 	);
-	my $link=qr/^(?:$uri_schemes:|[^:]+$)/i;
+	# data is a special case. Allow data:image/*, but
+	# disallow data:text/javascript and everything else.
+	my $link=qr/^(?:$uri_schemes:|data:image\/|[^:]+$)/i;
 
 	eval q{use HTML::Scrubber};
 	error($@) if $@;
