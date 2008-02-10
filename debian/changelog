@@ -6,6 +6,11 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     optional '!' prefix even with prefix_directives off, and use that in
     the underlay to support either setting of prefix_directives.  Add NEWS
     entry with migration information.
+
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
+
+ikiwiki (2.31.3) unstable; urgency=high
+
   * Do not allow the about: URI scheme; some browsers interpret about:
     URIs like a limited version of data: URIs.  In particular, some
     versions of Internet Explorer interpret arbitrary HTML content in
