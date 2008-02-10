@@ -1,6 +1,5 @@
 ikiwiki (2.40) UNRELEASED; urgency=low
 
-  [ Josh Triplett ]
   * Add new preprocessor directive syntax¸ using a '!' prefix.  Add a
     prefix_directives option to the setup file to turn this syntax on;
     currently defaults to false, for backward compatibility.  Support
@@ -8,11 +7,14 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     the underlay to support either setting of prefix_directives.  Add NEWS
     entry with migration information.
 
-  [ Joey Hess ]
+ -- Josh Triplett <josh@freedesktop.org>  Sat, 09 Feb 2008 23:01:19 -0800
+
+ikiwiki (2.31.1) unstable; urgency=low
+
   * htmlscrubber security fix: Block javascript in uris.
   * Add htmlscrubber test suite.
 
- -- Josh Triplett <josh@freedesktop.org>  Sat, 09 Feb 2008 23:01:19 -0800
+ -- Joey Hess <joeyh@debian.org>  Sun, 10 Feb 2008 13:22:59 -0500
 
 ikiwiki (2.31) unstable; urgency=low
 
