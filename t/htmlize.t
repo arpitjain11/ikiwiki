@@ -46,11 +46,11 @@ ok(!gotcha(q{<video poster="javascript:alert('GOTCHA')" href="foo.avi">foo</vide
 	"video poster with javascript");
 ok(!gotcha(q{<span style="background: url(javascript:window.location=GOTCHA)">a</span>}),
 	"CSS script test");
-ok(! gotcha(q{<img src="data:text/javascript:GOTCHA">}),
+ok(! gotcha(q{<img src="data:text/javascript;GOTCHA">}),
 	"data:text/javascript (jeez!)");
-ok(gotcha(q{<img src="data:text/png:GOTCHA">}), "data:text/png");
-ok(gotcha(q{<img src="data:text/gif:GOTCHA">}), "data:text/gif");
-ok(gotcha(q{<img src="data:text/jpeg:GOTCHA">}), "data:text/jpeg");
+ok(gotcha(q{<img src="data:image/png;base64,GOTCHA">}), "data:image/png");
+ok(gotcha(q{<img src="data:image/gif;base64,GOTCHA">}), "data:image/gif");
+ok(gotcha(q{<img src="data:image/jpeg;base64,GOTCHA">}), "data:image/jpeg");
 ok(gotcha(q{<p>javascript:alert('GOTCHA')</p>}),
 	"not javascript AFAIK (but perhaps some web browser would like to
 	be perverse and assume it is?)");
