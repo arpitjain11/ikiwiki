@@ -1,3 +1,13 @@
+ikiwiki (1.32.3) unstable; urgency=low
+
+  Due to a security fix, wikis that have the htmlscrubber enabled can no
+  longer use the meta plugin to insert html link and meta tags.
+
+  Some special case methods have been added for safely including stylesheets,
+  and for doing openid delegation. See the meta plugin docs for details.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 14:56:30 -0400
+
 ikiwiki (1.32) unstable; urgency=low
 
   There is a change to the plugin interface in this version. Any plugins that

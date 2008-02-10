@@ -26,6 +26,15 @@ sub filter (@) { #{{{
 	return $params{content};
 } # }}}
 
+sub scrub ($) { #{{{
+	if (IkiWiki::Plugin::htmlscrubber->can("sanitize")) {
+		return IkiWiki::Plugin::htmlscrubber::sanitize(content => shift);
+	}
+	else {
+		return shift;
+	}
+} #}}}
+
 sub preprocess (@) { #{{{
 	if (! @_) {
 		return "";
@@ -45,9 +54,9 @@ sub preprocess (@) { #{{{
 
 	if ($key eq 'link') {
 		if (%params) {
-			$meta{$page}.="<link href=\"".encode_entities($value)."\" ".
+			$meta{$page}.=scrub("<link href=\"".encode_entities($value)."\" ".
 				join(" ", map { encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\"" } keys %params).
-				" />\n";
+				" />\n");
 		}
 		else {
 			# hidden WikiLink
@@ -55,15 +64,37 @@ sub preprocess (@) { #{{{
 		}
 	}
 	elsif ($key eq 'title') {
-		$title{$page}=$value;
+		$title{$page}=encode_entities($value);
 	}
 	elsif ($key eq 'permalink') {
 		$permalink{$page}=$value;
-		$meta{$page}.="<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n";
+		$meta{$page}.=scrub("<link rel=\"bookmark\" href=\"".encode_entities($value)."\" />\n");
+	}
+	elsif ($key eq 'stylesheet') {
+		my $rel=exists $params{rel} ? $params{rel} : "alternate stylesheet";
+		my $title=exists $params{title} ? $params{title} : $value;
+		# adding .css to the value prevents using any old web
+		# editable page as a stylesheet
+		my $stylesheet=bestlink($page, $value.".css");
+		if (! length $stylesheet) {
+			return "[[meta ".gettext("stylesheet not found")."]]";
+		}
+		$meta{$page}.='<link href="'.$stylesheet.
+			'" rel="'.encode_entities($rel).
+			'" title="'.encode_entities($title).
+			"\" style=\"text/css\" />\n";
+	}
+	elsif ($key eq 'openid') {
+		if (exists $params{server}) {
+			$meta{$page}.='<link href="'.encode_entities($params{server}).
+				"\" rel=\"openid.server\" />\n";
+		}
+		$meta{$page}.='<link href="'.encode_entities($value).
+			"\" rel=\"openid.delegate\" />\n";
 	}
 	else {
-		$meta{$page}.="<meta name=\"".encode_entities($key).
-			"\" content=\"".encode_entities($value)."\" />\n";
+		$meta{$page}.=scrub("<meta name=\"".encode_entities($key).
+			"\" content=\"".encode_entities($value)."\" />\n");
 		if ($key eq 'author') {
 			$author{$page}=$value;
 		}

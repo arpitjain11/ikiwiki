@@ -1,3 +1,34 @@
+ikiwiki (1.33.3) testing-proposed-updates; urgency=medium
+
+  * Fix a security hole that allowed insertion of unsafe content via the meta
+    plugins's support for inserting html link and meta tags. Now such content
+    is passed through the htmlscrubber like everything else.
+  * Unfortunatly, that means that some valid uses of those tags are no longer
+    usable, and special case methods needed to be added for including
+    stylesheets, and for doing openid delegation. If you use either of these
+    in your wiki, it will need to be modified. See the meta plugin docs
+    for details.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 14:56:48 -0400
+
+ikiwiki (1.33.2) testing-proposed-updates; urgency=medium
+
+  * Backport fix for a security hole that allowed a web user to insert
+    arbitrary html in the title of a page due to missing escaping of
+    titles in the meta plugin.
+  * Fix examples directory location.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 21 Mar 2007 01:55:02 -0400
+
+ikiwiki (1.33.1) testing-proposed-updates; urgency=medium
+
+  * Backport fix for a security hole that allowed a web user to edit images
+    and other non-page format files in the wiki. To exploit this, the file
+    already had to exist in the wiki, and the web user would need to somehow
+    use the web based editor to replace it with malicious content.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 10 Feb 2007 15:30:12 -0500
+
 ikiwiki (1.33) unstable; urgency=low
 
   * Fix issue with aggregate plugin updating expired pages.
