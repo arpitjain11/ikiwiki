@@ -1,3 +1,12 @@
+ikiwiki (2.32.3) UNRELEASED; urgency=low
+
+  * Do not allow the about: URI scheme; some browsers interpret about:
+    URIs like a limited version of data: URIs.  In particular, some
+    versions of Internet Explorer interpret arbitrary HTML content in
+    about: URIs.
+
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
+
 ikiwiki (2.31.2) unstable; urgency=high
 
   * The security fix in the last release had buggy handling of data:image,
