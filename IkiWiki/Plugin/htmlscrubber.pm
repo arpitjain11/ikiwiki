@@ -58,15 +58,15 @@ sub scrubber { #{{{
 			map { $_ => 1 } qw{
 				abbr accept accept-charset accesskey
 				align alt axis border cellpadding cellspacing
-				char charoff charset checked cite class
+				char charoff charset checked class
 				clear cols colspan color compact coords
 				datetime dir disabled enctype for frame
 				headers height hreflang hspace id ismap
-				label lang longdesc maxlength media method
+				label lang maxlength media method
 				multiple name nohref noshade nowrap prompt
 				readonly rel rev rows rowspan rules scope
 				selected shape size span start summary
-				tabindex target title type usemap valign
+				tabindex target title type valign
 				value vspace width
 				autoplay loopstart loopend end
 				playcount controls 
@@ -75,7 +75,10 @@ sub scrubber { #{{{
 			href => $link,
 			src => $link,
 			action => $link,
+			cite => $link,
+			longdesc => $link,
 			poster => $link,
+			usemap => $link,
 		}],
 	);
 	return $_scrubber;
