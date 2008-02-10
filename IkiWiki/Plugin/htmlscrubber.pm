@@ -53,7 +53,7 @@ sub scrubber { #{{{
 			span strike strong sub sup table tbody td textarea
 			tfoot th thead tr tt u ul var
 		}],
-		default => [undef, { map { $_ => 1 } qw{
+		default => [undef, { ( map { $_ => 1 } qw{
 			abbr accept accept-charset accesskey
 			align alt axis border cellpadding cellspacing
 			char charoff charset checked cite class
@@ -66,7 +66,8 @@ sub scrubber { #{{{
 			selected shape size span start summary
 			tabindex target title type usemap valign
 			value vspace width
-		}, "/" => 1, # emit proper <hr /> XHTML
+		} ),
+		"/" => 1, # emit proper <hr /> XHTML
 		href => $link,
 		src => $link,
 		action => $link,

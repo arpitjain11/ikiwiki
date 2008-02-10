@@ -58,13 +58,17 @@ ok(gotcha(q{<img src="javascript.png?GOTCHA">}), "not javascript");
 ok(gotcha(q{<a href="javascript.png?GOTCHA">foo</a>}), "not javascript");
 is(IkiWiki::htmlize("foo", "mdwn",
 	q{<img alt="foo" src="foo.gif">}),
-	q{<img alt="foo" src="foo.gif">}, "img with alt tag allowed");
+	q{<p><img alt="foo" src="foo.gif"></p>
+}, "img with alt tag allowed");
 is(IkiWiki::htmlize("foo", "mdwn",
 	q{<a href="http://google.com/">}),
-	q{<a href="http://google.com/">}, "absolute url allowed");
+	q{<p><a href="http://google.com/"></p>
+}, "absolute url allowed");
 is(IkiWiki::htmlize("foo", "mdwn",
 	q{<a href="foo.html">}),
-	q{<a href="foo.html">}, "relative url allowed");
+	q{<p><a href="foo.html"></p>
+}, "relative url allowed");
 is(IkiWiki::htmlize("foo", "mdwn",
 	q{<span class="foo">bar</span>}),
-	q{<span class="foo">bar</span>}, "class attribute allowed");
+	q{<p><span class="foo">bar</span></p>
+}, "class attribute allowed");
