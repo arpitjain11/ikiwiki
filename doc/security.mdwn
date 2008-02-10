@@ -47,6 +47,13 @@ Users with only web commit access are limited to editing pages as ikiwiki
 doesn't support file uploads from browsers (yet), so they can't exploit
 this.
 
+It is possible to embed an image in a page edited over the web, by using
+`img src="data:image/png;"`. Ikiwiki's htmlscrubber only allows `data:`
+urls to be used for `image/*` mime types. It's possible that some broken
+browser might ignore the mime type and if the data provided is not an
+image, instead run it as javascript, or something evil like that. Hopefully
+not many browsers are that broken.
+
 ## multiple accessors of wiki directory
 
 If multiple people can directly write to the source directory ikiwiki is
