@@ -345,3 +345,13 @@ day with the release of ikiwiki 2.14. I recommend upgrading to this version
 if your wiki can be committed to by third parties. Alternatively, don't use
 a trailing slash in the srcdir, and avoid the (unusual) configurations that
 allow the security hole to be exploited.
+
+## javascript insertion via uris
+
+The htmlscrubber did not block javascript in uris. This was fixed by adding
+a whitelist of valid uri types, which does not include javascript.
+
+This hole was discovered on 10 February 2008 and fixed the same day
+with the release of ikiwiki 2.31.1. A fix was also backported to Debian etch,
+as version 1.33.4. I recommend upgrading to one of these versions if your
+wiki can be edited by third parties.
