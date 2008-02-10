@@ -23,7 +23,11 @@ ikiwiki (2.31.3) unstable; urgency=high
   * meta: Check that the urls provided for authorurl, permalink, and openid
     are safe and can't contain javascript.
 
- -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:59:00 -0800
+  [ Josh Triplett ]
+  * Match literal '.' in URI schemas containing '.', rather than matching any
+    character.
+
+ -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 14:48:48 -0800
 
 ikiwiki (2.31.2) unstable; urgency=high
 
