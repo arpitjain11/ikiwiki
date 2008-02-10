@@ -22,12 +22,12 @@ sub import { #{{{
 		"dav", "dict", "dns", "fax", "go", "h323", "im", "imap",
 		"ldap", "mid", "news", "nfs", "nntp", "pop", "pres",
 		"sip", "sips", "snmp", "tel", "urn", "wais", "xmpp",
-		"z39.50r", "z39.50s",
+		"z39\.50r", "z39\.50s",
 		# Selected unofficial schemes
 		"aim", "callto", "cvs", "ed2k", "feed", "fish", "gg",
 		"irc", "ircs", "lastfm", "ldaps", "magnet", "mms",
 		"msnim", "notes", "rsync", "secondlife", "skype", "ssh",
-		"sftp", "sms", "steam", "webcal", "ymsgr",
+		"sftp", "sms", "webcal", "ymsgr",
 	);
 	# data is a special case. Allow data:image/*, but
 	# disallow data:text/javascript and everything else.
