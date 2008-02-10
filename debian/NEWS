@@ -1,4 +1,4 @@
-ikiwiki (2.31) unstable; urgency=low
+ikiwiki (2.40) unstable; urgency=low
 
   ikiwiki now has an new syntax for preprocessor directives, using the
   prefix '!':
@@ -26,7 +26,7 @@ ikiwiki (2.31) unstable; urgency=low
   Even with prefix_directives disabled, ikiwiki now allows an optional '!'
   prefix on preprocessor directives (but still requires a space).  Thus, a
   directive which uses a '!' prefix and contains a space will work with
-  ikiwiki 2.21 and newer, regardless of the value of prefix_directives.
+  ikiwiki 2.40 and newer, regardless of the value of prefix_directives.
   This allows the underlay to work with all ikiwikis.
 
  -- Josh Triplett <josh@freedesktop.org>  Sat, 26 Jan 2008 16:26:47 -0800
