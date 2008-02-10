@@ -9,6 +9,10 @@ whitelisted using the same lists as used by Mark Pilgrim's Universal Feed
 Parser, documented at <http://feedparser.org/docs/html-sanitization.html>.
 Notably it strips `style` and `link` tags, and the `style` attribute.
 
+All attributes that can be used to specify an url are checked to make sure
+that the url is in a known, safe scheme, and to block embedded javascript
+in such urls.
+
 It uses the [[cpan HTML::Scrubber]] perl module to perform its html
 sanitisation, and this perl module also deals with various entity encoding
 tricks.
@@ -23,9 +27,9 @@ The web's security model is *fundamentally broken*; ikiwiki's html
 sanitisation is only a patch on the underlying gaping hole that is your web
 browser.
 
-Note that enabling or disabling the htmlscrubber plugin also affects some other
-HTML-related functionality, such as whether [[meta]] allows potentially unsafe
-HTML tags.
+Note that enabling or disabling the htmlscrubber plugin also affects some
+other HTML-related functionality, such as whether [[meta]] allows
+potentially unsafe HTML tags.
 
 ----
 
