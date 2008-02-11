@@ -1,11 +1,15 @@
 ikiwiki (2.40) UNRELEASED; urgency=low
 
+  [ Josh Triplett ]
   * Add new preprocessor directive syntax¸ using a '!' prefix.  Add a
     prefix_directives option to the setup file to turn this syntax on;
     currently defaults to false, for backward compatibility.  Support
     optional '!' prefix even with prefix_directives off, and use that in
     the underlay to support either setting of prefix_directives.  Add NEWS
     entry with migration information.
+
+  [ Joey Hess ]
+  * Danish translation update from Jonas Smedegaard. Closes: #465152
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 

@@ -1,3 +1,4 @@
+
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -8,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-03 14:52-0500\n"
-"PO-Revision-Date: 2007-10-16 23:07+0100\n"
+"PO-Revision-Date: 2008-02-11 00:12+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +124,7 @@ msgstr "(defekt UTF-8 fjernet fra fødning)"
 #: ../IkiWiki/Plugin/aggregate.pm:307
 #, perl-format
 msgid "(feed entities escaped)"
-msgstr ""
+msgstr "(fødningselementer omgået (escaped))"
 
 #: ../IkiWiki/Plugin/aggregate.pm:313
 msgid "feed crashed XML::Feed!"
@@ -137,7 +138,7 @@ msgstr "opretter ny side %s"
 #: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s fra %s"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
@@ -149,24 +150,21 @@ msgid "%s parameter is required"
 msgstr "parametren %s er krævet"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:41
-#, fuzzy
 msgid "template not specified"
-msgstr "skabelon %s ikke fundet"
+msgstr "skabelon %s ikke angivet"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:44
-#, fuzzy
 msgid "match not specified"
-msgstr "wrapper-navn ikke angivet"
+msgstr "sammenligning ikke angivet"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:49
 #, perl-format
 msgid "edittemplate %s registered for %s"
-msgstr ""
+msgstr "redigeringsskabelon %s registreret for %s"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:111
-#, fuzzy
 msgid "failed to process"
-msgstr "dannelsen mislykkedes:"
+msgstr "dannelsen mislykkedes"
 
 #: ../IkiWiki/Plugin/fortune.pm:18
 msgid "fortune failed"
@@ -252,14 +250,12 @@ msgid "stylesheet not found"
 msgstr "stilsnit (stylesheet) ikke fundet"
 
 #: ../IkiWiki/Plugin/meta.pm:143
-#, fuzzy
 msgid "redir page not found"
-msgstr "fødning ikke fundet"
+msgstr "henvisningsside ikke fundet"
 
 #: ../IkiWiki/Plugin/meta.pm:156
-#, fuzzy
 msgid "redir cycle is not allowed"
-msgstr "fødning ikke fundet"
+msgstr "ring af henvisninger er ikke tilladt"
 
 #: ../IkiWiki/Plugin/mirrorlist.pm:23
 msgid "Mirrors"
@@ -394,14 +390,13 @@ msgid "at noon on %A"
 msgstr "midt på dagen %A"
 
 #: ../IkiWiki/Plugin/recentchanges.pm:74
-#, fuzzy
 msgid "missing page"
-msgstr "manglende værdier"
+msgstr "manglende side"
 
 #: ../IkiWiki/Plugin/recentchanges.pm:76
 #, perl-format
 msgid "The page %s does not exist."
-msgstr ""
+msgstr "Siden %s eksisterer ikke."
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
@@ -418,7 +413,7 @@ msgstr "opdaterer hyperestraier søgeindeks"
 
 #: ../IkiWiki/Plugin/shortcut.pm:18
 msgid "shortcut plugin will not work without a shortcuts.mdwn"
-msgstr ""
+msgstr "genvejsudvidelsen vil ikke fungere uden en shortcuts.mdwn"
 
 #: ../IkiWiki/Plugin/shortcut.pm:27
 msgid "missing name or url parameter"
@@ -516,7 +511,7 @@ msgstr "billedopbygning fra kode mislykkedes"
 
 #: ../IkiWiki/Plugin/toggle.pm:88
 msgid "(not toggleable in preview mode)"
-msgstr ""
+msgstr "(kan ikke omskiftes i et smugkig)"
 
 #: ../IkiWiki/Rcs/Stub.pm:62
 msgid "getctime not implemented"
@@ -646,25 +641,3 @@ msgstr "Fejl"
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr "%s forudberegningssløkke fundet på %s ved dybde %i"
-
-#~ msgid ""
-#~ "REV is not set, not running from mtn post-commit hook, cannot send "
-#~ "notifications"
-#~ msgstr ""
-#~ "REV ikke angivet, afvikles ikke fra mtn post-commit hook, kan ikke sende "
-#~ "orienteringer"
-
-#~ msgid "REV is not a valid revision identifier, cannot send notifications"
-#~ msgstr ""
-#~ "REV er ikke en gyldig revisionsidentifikation, kan ikke sende "
-#~ "orienteringer"
-
-#~ msgid ""
-#~ "REV is not set, not running from svn post-commit hook, cannot send "
-#~ "notifications"
-#~ msgstr ""
-#~ "REV ikke angivet, afvikles ikke fra svn post-commit hook, kan ikke sende "
-#~ "orienteringer"
-
-#~ msgid "update of %s's %s by %s"
-#~ msgstr "opdatering på %s på %s af %s"
