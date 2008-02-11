@@ -10,7 +10,7 @@ ikiwiki (2.40) UNRELEASED; urgency=low
 
   [ Joey Hess ]
   * Danish translation update from Jonas Smedegaard. Closes: #465152
-  * Generate XML RPC messages with the encoding set to utf-8 instead 
+  * Generate XML RPC messages with the encoding set to utf-8 instead
     of XML::RPC's default of us-ascii. Allows interoperation with
     python's xmlrpc library, which threw invalid encoding exceptions and
     caused the rst plugin to hang.
