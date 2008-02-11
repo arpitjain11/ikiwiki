@@ -15,14 +15,14 @@ sub import { #{{{
 	# Only known uri schemes are allowed to avoid all the ways of
 	# embedding javascrpt.
 	# List at http://en.wikipedia.org/wiki/URI_scheme
-	my $uri_schemes=join("|",
+	my $uri_schemes=join("|", map quotemeta,
 		# IANA registered schemes
 		"http", "https", "ftp", "mailto", "file", "telnet", "gopher",
 		"aaa", "aaas", "acap", 	"cap", "cid", "crid", 
 		"dav", "dict", "dns", "fax", "go", "h323", "im", "imap",
 		"ldap", "mid", "news", "nfs", "nntp", "pop", "pres",
 		"sip", "sips", "snmp", "tel", "urn", "wais", "xmpp",
-		"z39\.50r", "z39\.50s",
+		"z39.50r", "z39.50s",
 		# Selected unofficial schemes
 		"aim", "callto", "cvs", "ed2k", "feed", "fish", "gg",
 		"irc", "ircs", "lastfm", "ldaps", "magnet", "mms",
