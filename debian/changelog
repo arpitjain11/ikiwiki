@@ -16,7 +16,7 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     caused the rst plugin to hang.
   * Add the linkify and scan hooks. These hooks can be used to implement
     custom, first-class types of wikilinks.
-  * Move standard wikilink implementation to a new wikilink plugin, which
+  * Move standard wikilink implementation to a new link plugin, which
     will of course be enabled by default.
   * camelcase: Convert to use new linkify and scan hooks rather than the old
     hack.
