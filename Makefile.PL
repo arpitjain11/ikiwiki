@@ -23,7 +23,7 @@ PROBABLE_INST_LIB=$(shell \\
 	fi \\
 )
 
-tflag=$(shell if [ "$$NOTAINT" != 0 ]; then printf -- "-T"; fi)
+tflag=$(shell if [ "$$NOTAINT" != 1 ]; then printf -- "-T"; fi)
 extramodules=$(shell if [ "$$PROFILE" = 1 ]; then printf -- "-MDevel::Profiler"; fi)
 
 ikiwiki.out: ikiwiki.in

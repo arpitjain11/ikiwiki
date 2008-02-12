@@ -20,6 +20,7 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     will of course be enabled by default.
   * camelcase: Convert to use new linkify and scan hooks rather than the old
     hack.
+  * Setting NOTAINT=1 had no effect when building ikiwiki itself, fix this.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 
