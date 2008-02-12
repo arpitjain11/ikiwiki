@@ -18,6 +18,8 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     custom, first-class types of wikilinks.
   * Move standard wikilink implementation to a new wikilink plugin, which
     will of course be enabled by default.
+  * camelcase: Convert to use new linkify and scan hooks rather than the old
+    hack.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 

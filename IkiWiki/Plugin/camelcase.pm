@@ -6,32 +6,47 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
+# This regexp is based on the one in Text::WikiFormat.
+my $link_regexp=qr{
+	(?<![^A-Za-z0-9\s])	# try to avoid expanding non-links with a
+				# zero width negative lookbehind for
+				# characters that suggest it's not a link
+	\b			# word boundry
+	(
+		(?:
+			[A-Z]		# Uppercase start
+			[a-z0-9]	# followed by lowercase
+			\w*		# and rest of word
+		)
+		{2,}			# repeated twice
+	)
+}x;
+
 sub import { #{{{
-	hook(type => "filter", id => "camelcase", call => \&filter);
+	hook(type => "linkify", id => "camelcase", call => \&linkify);
+	hook(type => "scan", id => "camelcase", call => \&scan);
 } # }}}
 
-sub filter (@) { #{{{
+sub linkify (@) { #{{{
 	my %params=@_;
+	my $page=$params{page};
+	my $destpage=$params{destpage};
 
-	# Make CamelCase links work by promoting them to fullfledged
-	# WikiLinks. This regexp is based on the one in Text::WikiFormat.
-	$params{content}=~s{
-		(?<![^A-Za-z0-9\s])	# try to avoid expanding non-links
-					# with a zero width negative
-					# lookbehind for characters that
-					# suggest it's not a link
-		\b			# word boundry
-		(
-			(?:
-				[A-Z]		# Uppercase start
-				[a-z0-9]	# followed by lowercase
-				\w*		# and rest of word
-			)
-			{2,}			# repeated twice
-		)
-	}{[[$1]]}gx;
+	$params{content}=~s{$link_regexp}{
+		htmllink($page, $destpage, IkiWiki::linkpage($1))
+	}eg;
 
 	return $params{content};
 } #}}}
+
+sub scan (@) { #{{{
+        my %params=@_;
+        my $page=$params{page};
+        my $content=$params{content};
+
+	while ($content =~ /$link_regexp/g) {
+		push @{$links{$page}}, IkiWiki::linkpage($1);
+	}
+}
 
 1
