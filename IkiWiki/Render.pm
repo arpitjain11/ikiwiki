@@ -165,18 +165,23 @@ sub scan ($) { #{{{
 		# Always needs to be done, since filters might add links
 		# to the content.
 		$content=filter($page, $page, $content);
-
-		my @links;
-		while ($content =~ /(?<!\\)$config{wiki_link_regexp}/g) {
-			push @links, linkpage($2);
-		}
+	
 		if ($config{discussion}) {
 			# Discussion links are a special case since they're
 			# not in the text of the page, but on its template.
-			push @links, $page."/".gettext("discussion");
+			$links{$page}=[ $page."/".gettext("discussion") ];
 		}
-		$links{$page}=\@links;
-		
+		else {
+			$links{$page}=[];
+		}
+
+		run_hooks(scan => sub {
+			shift->(
+				page => $page,
+				content => $content,
+			);
+		});
+
 		# Preprocess in scan-only mode.
 		preprocess($page, $page, $content, 1);
 	}

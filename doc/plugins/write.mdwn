@@ -142,6 +142,28 @@ format at preprocessor time. Text output by a preprocessor directive will
 be linkified and passed through markdown (or whatever engine is used to
 htmlize the page) along with the rest of the page.
 
+### linkify
+
+	hook(type => "linkify", id => "foo", call => \&linkify);
+
+This hook is called to convert [[WikiLinks|WikiLink]] on the page into html
+links. The function is passed named parameters "page", "destpage", and
+"content". It should return the linkified content.
+
+Plugins that implement linkify must also implement a scan hook, that scans
+for the links on the page and adds them to `%links`.
+
+### scan
+
+	hook(type => "scan", id => "foo", call => \&scan);
+
+This hook is called early in the process of building the wiki, and is used
+as a first pass scan of the page, to collect metadata about the page. It's
+mostly used to scan the page for WikiLinks, and add them to `%links`.
+
+The function is passed named parameters "page" and "content". Its return
+value is ignored.
+
 ### htmlize
 
 	hook(type => "htmlize", id => "ext", call => \&htmlize);

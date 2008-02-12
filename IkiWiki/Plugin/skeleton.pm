@@ -14,6 +14,8 @@ sub import { #{{{
 	hook(type => "needsbuild", id => "skeleton", call => \&needsbuild);
 	hook(type => "preprocess", id => "skeleton", call => \&preprocess);
 	hook(type => "filter", id => "skeleton", call => \&filter);
+	hook(type => "linkify", id => "skeleton", call => \&linkify);
+	hook(type => "scan", id => "skeleton", call => \&scan);
 	hook(type => "htmlize", id => "skeleton", call => \&htmlize);
 	hook(type => "sanitize", id => "skeleton", call => \&sanitize);
 	hook(type => "format", id => "skeleton", call => \&format);
@@ -55,6 +57,20 @@ sub filter (@) { #{{{
 	debug("skeleton plugin running as filter");
 
 	return $params{content};
+} # }}}
+
+sub linkify (@) { #{{{
+	my %params=@_;
+	
+	debug("skeleton plugin running as linkify");
+
+	return $params{content};
+} # }}}
+
+sub scan (@) { #{{{a
+	my %params=@_;
+
+	debug("skeleton plugin running as scan");
 } # }}}
 
 sub htmlize (@) { #{{{

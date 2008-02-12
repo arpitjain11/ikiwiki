@@ -37,21 +37,6 @@ sub defaultconfig () { #{{{
 		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
 		qr/(^|\/)_MTN\//,
 		qr/\.dpkg-tmp$/],
-	wiki_link_regexp => qr{
-		\[\[(?=[^!])            # beginning of link
-		(?:
-			([^\]\|]+)      # 1: link text
-			\|              # followed by '|'
-		)?                      # optional
-		
-		([^\n\r\]#]+)           # 2: page to link to
-		(?:
-			\#              # '#', beginning of anchor
-			([^\s\]]+)      # 3: anchor text
-		)?                      # optional
-		
-		\]\]                    # end of link
-	}x,
 	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
 	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
 	verbose => 0,
@@ -89,8 +74,8 @@ sub defaultconfig () { #{{{
 	setup => undef,
 	adminuser => undef,
 	adminemail => undef,
-	plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
-	              lockedit conditional recentchanges}],
+	plugin => [qw{mdwn link inline htmlscrubber passwordauth openid
+			signinedit lockedit conditional recentchanges}],
 	libdir => undef,
 	timeformat => '%c',
 	locale => undef,
@@ -145,24 +130,6 @@ sub checkconfig () { #{{{
 
 	if (exists $config{umask}) {
 		umask(possibly_foolish_untaint($config{umask}));
-	}
-
-	if (!$config{prefix_directives}) {
-		$config{wiki_link_regexp} = qr{
-			\[\[                    # beginning of link
-			(?:
-				([^\]\|\n\s]+)  # 1: link text
-				\|              # followed by '|'
-			)?                      # optional
-
-			([^\s\]#]+)             # 2: page to link to
-			(?:
-				\#              # '#', beginning of anchor
-				([^\s\]]+)      # 3: anchor text
-			)?                      # optional
-
-			\]\]                    # end of link
-		}x,
 	}
 
 	run_hooks(checkconfig => sub { shift->() });
@@ -684,21 +651,17 @@ sub htmlize ($$$) { #{{{
 } #}}}
 
 sub linkify ($$$) { #{{{
-	my $lpage=shift; # the page containing the links
-	my $page=shift; # the page the link will end up on (different for inline)
+	my $page=shift;
+	my $destpage=shift;
 	my $content=shift;
 
-	$content =~ s{(\\?)$config{wiki_link_regexp}}{
-		defined $2
-			? ( $1 
-				? "[[$2|$3".($4 ? "#$4" : "")."]]" 
-				: htmllink($lpage, $page, linkpage($3),
-					anchor => $4, linktext => pagetitle($2)))
-			: ( $1 
-				? "[[$3".($4 ? "#$4" : "")."]]"
-				: htmllink($lpage, $page, linkpage($3),
-					anchor => $4))
-	}eg;
+	run_hooks(linkify => sub {
+		$content=shift->(
+			page => $page,
+			destpage => $page,
+			content => $content,
+		);
+	});
 	
 	return $content;
 } #}}}

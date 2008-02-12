@@ -14,6 +14,10 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     of XML::RPC's default of us-ascii. Allows interoperation with
     python's xmlrpc library, which threw invalid encoding exceptions and
     caused the rst plugin to hang.
+  * Add the linkify and scan hooks. These hooks can be used to implement
+    custom, first-class types of wikilinks.
+  * Move standard wikilink implementation to a new wikilink plugin, which
+    will of course be enabled by default.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 
