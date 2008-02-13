@@ -6,15 +6,14 @@ Ikiwiki is a perl program, and needs a recent version of perl such as
 5.8.8. (5.8.0 has been reported not to work).
 
 Ikiwiki requires the [[cpan Text::Markdown]], [[cpan URI]],
-[[cpan HTML::Parser]], and [[cpan HTML::Template]] perl modules be
-installed.
+[[cpan HTML::Parser]], [[cpan HTML::Template]], and [[cpan HTML::Scrubber]]
+perl modules be installed.
 
 It also uses the following perl modules if available: [[cpan
 CGI::Session]], [[cpan CGI::FormBuilder]] (version 3.05 or newer), [[cpan
 Mail::Sendmail]], [[cpan Time::Duration]], [[cpan TimeDate]], [[cpan
-HTML::Scrubber]], [[cpan RPC::XML]], [[cpan XML::Simple]], [[cpan
-XML::Feed]], [[cpan File::MimeInfo]], [[cpan Locale::gettext]] (version
-1.04 or newer).
+RPC::XML]], [[cpan XML::Simple]], [[cpan XML::Feed]], [[cpan
+File::MimeInfo]], [[cpan Locale::gettext]] (version 1.04 or newer).
 
 It's recommended you have a C compiler, as ikiwiki uses one to build
 wrappers.
