@@ -96,7 +96,7 @@ sub estcfg () { #{{{
 	open(TEMPLATE, ">:utf8", $newfile) || error("open $newfile: $!", $cleanup);
 	print TEMPLATE IkiWiki::misctemplate("search", 
 		"<!--ESTFORM-->\n\n<!--ESTRESULT-->\n\n<!--ESTINFO-->\n\n",
-		baseurl => IkiWiki::dirname($config{cgiurl})."/") ||
+		forcebaseurl => IkiWiki::dirname($config{cgiurl})."/") ||
 			error("write $newfile: $!", $cleanup);
 	close TEMPLATE || error("save $newfile: $!", $cleanup);
 	rename($newfile, "$estdir/$cgi.tmpl") ||

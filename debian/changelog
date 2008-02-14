@@ -23,6 +23,10 @@ ikiwiki (2.40) UNRELEASED; urgency=low
   * Setting NOTAINT=1 had no effect when building ikiwiki itself, fix this.
   * Depend on HTML::Scrubber, since the scrubber is enabled by default and
     dies if its can't be loaded.
+  * The search plugin needs to override <base> to point to the directory
+    containing ikiwiki.cgi, but this should not change the urls to the style
+    sheets etc. Add a new forcebareurl parameter to misctemplate to allow
+    it to do that.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 

@@ -2,7 +2,11 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<TMPL_IF NAME="FORCEBASEURL">
+<base href="<TMPL_VAR FORCEBASEURL>" />
+<TMPL_ELSE>
 <base href="<TMPL_VAR BASEURL>" />
+</TMPL_IF>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><TMPL_VAR TITLE></title>
 <link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
