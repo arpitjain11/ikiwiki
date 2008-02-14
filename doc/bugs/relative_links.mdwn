@@ -1,0 +1,8 @@
+It looks like all links in websites are absolute paths, this has some limitations:
+
+* If connecting to website via https://... all links will take you back to http://
+* Makes it harder to mirror website via HTML version, as all links have to be updated.
+
+It would be good if relative paths could be used instead, so the transport method isn't changed unless specifically requested.
+
+Brian May
