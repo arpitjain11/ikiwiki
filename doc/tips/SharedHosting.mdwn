@@ -113,33 +113,17 @@ Install the modules required for Ikiwiki.  I install all of the ones required *a
     install RPC::XML XML::Simple XML::Feed File::MimeInfo Locale::gettext
 
 # Changes to Ikiwiki's build/install process
-An explanation of why each of these changes were made will follow these instructions.
-
-Modify Makefile.PL, find the line that looks like :
-
-    perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -setup docwiki.setup -refresh
-
-add : 
-    
-    -I/home/user/site/perl/lib/perl5 
-
-You should be left with something that looks like :
-
-    perl -Iblib/lib -I/home/user/site/perl/lib/perl5 $(extramodules) $(tflag) ikiwiki.out -setup docwiki.setup -refresh
+An explanation of why each of these changes were made will follow these instructions.  To tell the default install where your libraries are, well modify docwiki.setup (just another ikiwiki setup file) to add the "libdir" configuration, using ${HOME}/site/perl/lib/perl5 as the value (you'll see this again in your final ikiwiki config).
 
 Next, you'll need to pass the directory where you installed your perl modules (*~/site/perl/ in this example*) into the MakeMaker build script (verbose isn't required, but gives you more feedback since you're following along at home):
 
-    user@server:~/ikiwiki$ perl Makefile.PL PREFIX=~/site/perl/ verbose
-      MAN1PODS => {  }
-      NAME => q[IkiWiki]
-      PM_FILTER => q[./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB)]
-      PREFIX => q[/home/flophouse/perl/]
-      PREREQ_PM => { URI=>q[0], HTML::Scrubber=>q[0], Time::Duration=>q[0], Data::Dumper=>q[2.11], HTML::Template=>q[0], XML::Simple=>q[0], 
-        Date::Parse=>q[0], CGI::FormBuilder=>q[], CGI::Session=>q[0], Mail::Sendmail=>q[0], HTML::Parser=>q[0], Text::Markdown=>q[0] }
+    user@server:~/ikiwiki$ perl Makefile.PL PREFIX=${HOME}/site/perl/ NOTAINT=1
     Using PERL=/usr/bin/perl
     Writing Makefile for IkiWiki
 
-Next, we'll need to [patch the bug described here](http://ikiwiki.info/bugs/Insecure_dependency_in_eval_while_running_with_-T_switch/index.html) (incidentally, this bug isn't on the bugs/ or bugs/done/ page, for some reason.  It's only findable via search).  Edit the Ikiwiki.pm file to look like below (line numbers prefix each line) :
+The README suggests the NOTAINT for buggy Perl impls, of which mine is one.  So, add NOTAINT=1 after your calls to 'make'.  The NOTAINT=1 doesn't seem to remove the problem below.
+
+Next, we'll need to [patch the bug described here](http://ikiwiki.info/bugs/Insecure_dependency_in_eval_while_running_with_-T_switch/) (incidentally, this bug isn't on the bugs/ or bugs/done/ page, for some reason.  It's only findable via search).  Edit the Ikiwiki.pm file to look like below (line numbers prefix each line) :
 
     1202         #my $ret=eval pagespec_translate($spec);
     1203         my $ret=eval possibly_foolish_untaint(pagespec_translate($spec));
