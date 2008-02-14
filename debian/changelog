@@ -33,6 +33,8 @@ ikiwiki (2.40) UNRELEASED; urgency=low
   * Fix a bug where user A created a page concurrently with user B, and
     when B previewed it would redirect B to A's new page, losing B's work.
     Instead, don't redirect and let conflict handling resolve it.
+  * monotone: Add code to default mergerc file to run
+    _MTN/ikiwiki-netsync-hook when a commit is merged in from the net.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 

@@ -90,6 +90,11 @@ use IkiWiki::Setup::Standard {
 		#	wrapper => "/git/wiki.git/hooks/post-update",
 		#	wrappermode => "06755",
 		#},
+		#{
+		#	# The monotone netsync hook.
+		#	wrapper => "path/to/root/of/workspace/_MTN/ikiwiki-netsync-hook",
+		#	wrappermode => "06755",
+		#},
 	],
 
 	# Default to generating rss feeds for blogs?

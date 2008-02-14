@@ -136,6 +136,11 @@ sub check_mergerc () { #{{{
 		debug("$mergerc doesn't exist. Creating file with default mergers.");
 		open (my $out, ">", $mergerc) or error("can't open $mergerc: $!");
 		print $out <DATA>;
+		print $out <<"EOF";
+	function note_netsync_revision_received(new_id, revision, certs, session_id)
+		execute("$config{mtnrootdir}/_MTN/ikiwiki-netsync-hook", new_id)
+	end
+EOF
 		close $out;
 	}
 } #}}}
