@@ -1,0 +1,15 @@
+If I try to authenticate using openid to my site, it tries to create a http or https connection to the openid server. This doesn't work, because the direct connection is blocked by the firewall.
+
+It would be good if ikiwiki supported setting up a proxy server to solve this.
+
+I have found if I add:
+
+    newenviron[i++]="HTTPS_PROXY=http://host.domain.com:3128";
+
+to IkiWiki/Wrapper.pm it solves the problem for https requests, however it obviously would be preferred if the proxy name is not configured.
+
+Also, the ability to set HTTPS\_CA\_FILE and HTTPS\_CA\_DIR might benefit some people.
+
+Unfortunately, HTTP\_PROXY doesn't work for http requests, it looks like that library is different.
+
+Brian May
