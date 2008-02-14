@@ -5,3 +5,7 @@ basepath to the misc template. And so the path to the css
 files ends up to be "$config{cgiurl}/local.css". But this is
 wrong if $config{cgiurl} is not the same as $config{url}.
 
+Maybe misctemplate() and misc.tmpl should use an additional
+variable which points always to the base of the wiki.
+
+e.g. use "wikibase" for css and favicon and "baseurl" for the &lt;base&gt; tag.
