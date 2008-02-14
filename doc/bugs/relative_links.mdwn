@@ -6,3 +6,8 @@ It looks like all links in websites are absolute paths, this has some limitation
 It would be good if relative paths could be used instead, so the transport method isn't changed unless specifically requested.
 
 Brian May
+
+> Er, which absolute links are you talking about? If you view the source
+> to this page, you'll find links such as "../favicon.ico", "../style.css",
+> "../../", and "../". The only absolute links are to CGIs and the w3c DTD.
+> --[[Joey]]
