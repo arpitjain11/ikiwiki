@@ -27,6 +27,12 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     containing ikiwiki.cgi, but this should not change the urls to the style
     sheets etc. Add a new forcebareurl parameter to misctemplate to allow
     it to do that.
+  * Preview limits the page dropdown to what's selected previously
+    (as preserving the full list across preview would be tricky). Userdirs
+    were still being offered as an option there, remove them.
+  * Fix a bug where user A created a page concurrently with user B, and
+    when B previewed it would redirect B to A's new page, losing B's work.
+    Instead, don't redirect and let conflict handling resolve it.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 

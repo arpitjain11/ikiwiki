@@ -394,9 +394,10 @@ sub cgi_editpage ($$) { #{{{
 					$dir=~s![^/]+/+$!!;
 					push @page_locs, $dir.$page;
 				}
+			
+				push @page_locs, "$config{userdir}/$page"
+					if length $config{userdir};
 			}
-			push @page_locs, "$config{userdir}/$page"
-				if length $config{userdir};
 
 			@page_locs = grep {
 				! exists $pagecase{lc $_}
@@ -404,8 +405,16 @@ sub cgi_editpage ($$) { #{{{
 			if (! @page_locs) {
 				# hmm, someone else made the page in the
 				# meantime?
-				redirect($q, "$config{url}/".htmlpage($page));
-				return;
+				if ($form->submitted eq "Preview") {
+					# let them go ahead with the edit
+					# and resolve the conflict at save
+					# time
+					@page_locs=$page;
+				}
+				else {
+					redirect($q, "$config{url}/".htmlpage($page));
+					return;
+				}
 			}
 
 			my @editable_locs = grep {

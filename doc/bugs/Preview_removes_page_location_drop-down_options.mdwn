@@ -3,3 +3,8 @@ If there is more than one option in the Page Location drop down box when create 
 The problem exists on Ikiwiki's wiki, but manifests itself differently, in that subpages are still displayed, so maybe that's the actual bug :)
 
 Anyway, to reproduce, edit any page, view the page location options, preview, and some will disappear.
+
+> Yeah, this is a dark corner. :-) It'd be nice if preview did preserve the
+> lise, but it's complex to do so. So for now the bug is that it added
+> userdirs to the list, which I've fixed, so calling this [[done]]
+> --[[Joey]]
