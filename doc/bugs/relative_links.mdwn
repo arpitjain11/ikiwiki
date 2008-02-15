@@ -5,9 +5,17 @@ It looks like all links in websites are absolute paths, this has some limitation
 
 It would be good if relative paths could be used instead, so the transport method isn't changed unless specifically requested.
 
-Brian May
+-- Brian May
 
 > Er, which absolute links are you talking about? If you view the source
 > to this page, you'll find links such as "../favicon.ico", "../style.css",
 > "../../", and "../". The only absolute links are to CGIs and the w3c DTD.
 > --[[Joey]]
+
+>> Something weird going on here, most of the links *are* relative. Maybe I was just too rushed. However there are still problems:
+
+>> Links at the top of the edit page; they are absolute (understandably). e.g. at the top of this page there is the header "ikiwiki/ editing bugs/relative links" where ikiwiki is an absolute link to the top of the page.
+
+>> If I push cancel on the edit page, I end up at http://..., although I am not sure how this occurs.
+
+>> -- Brian May
