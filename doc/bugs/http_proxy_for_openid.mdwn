@@ -8,7 +8,7 @@ I have found if I add:
 
 to IkiWiki/Wrapper.pm it solves the problem for https requests, however it obviously would be preferred if the proxy name is not configured.
 
-Also, the ability to set HTTPS\_CA\_FILE and HTTPS\_CA\_DIR might benefit some people. Then again, it I can't see any evidence that the SSL certificate of the server is being checked.
+Also, the ability to set HTTPS\_CA\_FILE and HTTPS\_CA\_DIR might benefit some people. Then again, it I can't see any evidence that the SSL certificate of the server is being checked. See the [[bug_report|ssl_certificates_not_checked_with_openid]] I filed on this separate issue.
 
 Unfortunately, HTTP\_PROXY doesn't work for http requests, it looks like that library is different.
 
