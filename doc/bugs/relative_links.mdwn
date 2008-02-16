@@ -12,10 +12,5 @@ It would be good if relative paths could be used instead, so the transport metho
 > "../../", and "../". The only absolute links are to CGIs and the w3c DTD.
 > --[[Joey]]
 
->> Something weird going on here, most of the links *are* relative. Maybe I was just too rushed. However there are still problems:
-
->> Links at the top of the edit page; they are absolute (understandably). e.g. at the top of this page there is the header "ikiwiki/ editing bugs/relative links" where ikiwiki is an absolute link to the top of the page.
-
->> If I push cancel on the edit page, I end up at http://..., although I am not sure how this occurs.
-
->> -- Brian May
+>> The problem is within the CGI script. The links within the HTML page are all absolute, including links to the css file.
+>> Having a http links within a HTML page retrieved using https upset most browsers (I think). Also if I push cancel on the edit page in https, I end up at at http page. -- Brian May
