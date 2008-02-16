@@ -2,8 +2,8 @@ As far as I can tell, ikiwiki is not checking the SSL certificate of the remote 
 
 Test #1: Enter URL as openid server that cannot be verified (either because the certificate is self signed or signed by an unknown CA). I get no SSL errors.
 
-Test #2: Download net_ssl_test from dodgy source (it uses the same SSL perl library, and test again. It seems to complain (on same site ikiwiki worked with) when it can't verify the signature. Although there is other breakage with the version I managed to download (eg. argument parsing is broken; also if I try to connect to a proxy server, it instructs the proxy server to connect to itself for some weird reason).
+Test #2: Download net\_ssl\_test from dodgy source (it uses the same SSL perl library, and test again. It seems to complain (on same site ikiwiki worked with) when it can't verify the signature. Although there is other breakage with the version I managed to download (eg. argument parsing is broken; also if I try to connect to a proxy server, it instructs the proxy server to connect to itself for some weird reason).
 
-For now, I want to try and resolve the issues with net_ssl_test, and run more tests. However, in the meantime, I thought I would document the issue here.
+For now, I want to try and resolve the issues with net\_ssl\_test, and run more tests. However, in the meantime, I thought I would document the issue here.
 
 -- Brian May
