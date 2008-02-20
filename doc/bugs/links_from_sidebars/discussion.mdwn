@@ -1,0 +1,5 @@
+In the meantime I have configured nginx to redirect any requests for .../sidebar/ up to the parent page.
+
+    rewrite ^(.*/)sidebar/$ $1 redirect;
+
+This appears to work well.
