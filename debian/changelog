@@ -35,6 +35,9 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     Instead, don't redirect and let conflict handling resolve it.
   * monotone: Add code to default mergerc file to run
     _MTN/ikiwiki-netsync-hook when a commit is merged in from the net.
+  * tla: Remove call to escapeHTML when constructing recentchanges message;
+    the html is escaped at a different level. Closes: #466495
+  * bzr, mercurial: Remove unused import of escapeHTML.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 

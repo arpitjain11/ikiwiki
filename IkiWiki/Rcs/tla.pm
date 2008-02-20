@@ -132,7 +132,7 @@ sub rcs_recentchanges ($) {
 		}
 
 		my @message;
-		push @message, { line => escapeHTML($summ) };
+		push @message, { line => $summ };
 
 		my @pages;
 

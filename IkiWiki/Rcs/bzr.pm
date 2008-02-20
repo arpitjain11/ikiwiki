@@ -92,9 +92,6 @@ sub rcs_add ($) { # {{{
 sub rcs_recentchanges ($) { #{{{
 	my ($num) = @_;
 
-	eval q{use CGI 'escapeHTML'};
-	error($@) if $@;
-
 	my @cmdline = ("bzr", "log", "-v", "--show-ids", "--limit", $num, 
 		           $config{srcdir});
 	open (my $out, "@cmdline |");
