@@ -31,3 +31,20 @@ This should update the working directory and run ikiwiki every time a change is 
 > and then committed, and the case where a commit was made directly.
 > It can deadlock if the post-commit hook runs with --refresh in the
 > former case. --[[Joey]]
+
+***
+
+I have a few notes on mercurial usage after trying it out for a while:
+
+1. I have been using ikiwiki's `--post-commit` option without apparent problems. I'm the only current user of my wiki, though.
+
+1. The `ikiwiki.setup` file included in ikiwiki works with mercurial's `hgserve`, which is not the preferred solution. Mercurial's `hgwebdir.cgi` is more flexible and doesn't require running a server. I have this in my .setup file:
+
+        # Mercurial stuff.
+        rcs => "mercurial",
+        historyurl => "http://localhost/cgi-bin/hgwebdir.cgi/ikiwiki/log/tip/\[[file]]",
+        diffurl => "http://localhost/cgi-bin/hgwebdir.cgi/ikiwiki/diff/tip/\[[file]]",
+
+1. I have noticed that running `ikiwiki` after a change to the wiki adds files to a directory called `recentchanges` under `$srcdir`. I don't understand why such files are needed; worse, they are not added to mercurial's list of tracked files, so they polute the output of `hg log`. Is this a bug? Should mercurial's commit hook be modified to add these files before the commit?
+
+--buo
