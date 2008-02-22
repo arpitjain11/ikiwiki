@@ -29,6 +29,15 @@ I think what I've committed now will work in all cases. Well, unless there
 are even more forks of markdown out there (the CPAN module is a fork
 apparently...) 
 
-[[bugs/done]] --[[Joey]]
+ --[[Joey]]
 
 > It now compiles here, thanks. --JamesWestby
+
+> It's back open in the latest incarnation of Text::Markdown ... the fix is to use the
+> lowercase function name (Text::Markdown::markdown) however w/ this setup 
+> it causes a segfault on my system.... down while compiling
+
+    todo/calendar_--_archive_browsing_via_a_calendar_frontend.mdwn
+    *** glibc detected *** double free or corruption (!prev): 0x08bced80 ***
+
+ -- [[harningt]]
