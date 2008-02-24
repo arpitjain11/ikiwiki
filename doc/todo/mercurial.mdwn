@@ -48,3 +48,5 @@ I have a few notes on mercurial usage after trying it out for a while:
 1. I have noticed that running `ikiwiki` after a change to the wiki adds files to a directory called `recentchanges` under `$srcdir`. I don't understand why such files are needed; worse, they are not added to mercurial's list of tracked files, so they polute the output of `hg log`. Is this a bug? Should mercurial's commit hook be modified to add these files before the commit?
 
 --buo
+
+> No, those files should not be added to revision control. --[[Joey]]
