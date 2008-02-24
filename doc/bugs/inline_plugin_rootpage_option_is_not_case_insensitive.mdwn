@@ -1,3 +1,9 @@
 If rootpage is "foo/Bar" and a directory "foo/bar" exists already, the new pages go into the "foo/Bar" directory instead of the existing "foo/bar".
 
 But maybe this is intended behavior? --rdennis
+
+> It is. Ikiwiki does not try to subvert the case sensativity of the
+> filesystem. It just avoids you having to get the case right when
+> referring to existing files, by wikilinks or pagespecs --[[Joey]] 
+
+[[tag done]]
