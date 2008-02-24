@@ -1,1 +1,6 @@
 I upgraded from 2.18 to 2.32.3 and my \[[img]] links became `<img>` tags without `src` attributes. Reverting to 2.18 fixes the problem again. I assume this is 2.20, which is the only revision between 2.19 and 2.32.3 to mention img in the changelog.
+
+> I can't reproduce this. For example, page using the img plugin with a
+> current version of ikiwiki: <http://kitenet.net/~joey/pics/debconf/7/>
+> Feel free to mail me a recipe to reproduce it.
+> --[[Joey]]
