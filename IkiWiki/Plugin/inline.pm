@@ -362,8 +362,8 @@ sub absolute_urls ($$) { #{{{
 	$url=~s/[^\/]+$//;
 	
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(#[^"]+)"/$1 href="$baseurl$2"/mig;
-	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:\/\/)([^"]+)"/$1 href="$url$2"/mig;
-	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:\/\/)([^"]+)"/$1 src="$url$2"/mig;
+	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:)([^"]+)"/$1 href="$url$2"/mig;
+	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)([^"]+)"/$1 src="$url$2"/mig;
 	return $content;
 } #}}}
 
