@@ -354,9 +354,9 @@ sub cgi_editpage ($$) { #{{{
 		});
 		$form->tmpl_param("page_preview",
 			htmlize($page, $type,
-			linkify($page, "",
-			preprocess($page, $page,
-			filter($page, $page, $content), 0, 1))));
+			linkify($page, "/",
+			preprocess($page, "/",
+			filter($page, "/", $content), 0, 1))));
 		# previewing may have created files on disk
 		saveindex();
 	}
