@@ -22,11 +22,11 @@ sub linkify ($$$$) {
 	# This could change, if so, update it..
 	%IkiWiki::pagecase=();
 	%links=();
-	foreach my $page (@existing_pages) {
-		$IkiWiki::pagecase{lc $page}=$page;
-		$links{$page}=[];
-		$renderedfiles{"$page.mdwn"}=[$page];
-		$destsources{$page}="$page.mdwn";
+	foreach my $p (@existing_pages) {
+		$IkiWiki::pagecase{lc $p}=$p;
+		$links{$p}=[];
+		$renderedfiles{"$p.mdwn"}=[$p];
+		$destsources{$p}="$p.mdwn";
 	}
 
 	%config=IkiWiki::defaultconfig();
@@ -93,8 +93,8 @@ foreach $prefix_directives (0,1) {
 	ok(links_text("0", linkify("foo", "foo", "link to [[0|bar]] ok", ["foo", "bar"])), "named link to 0");
 	ok(links_text("Some long, & complex page name.", linkify("foo", "foo", "link to [[Some_long,_&_complex_page_name.|bar]] ok, and this is not a link]] here", ["foo", "bar"])), "complex named link text");
 	ok(links_to("foo/bar", linkify("foo/item", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "inline page link");
-	ok(links_to("bar", linkify("foo", "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "same except not inline");
-	ok(links_to("bar#baz", linkify("foo", "foo", "link to [[bar#baz]] ok", ["foo", "bar"])), "anchor link");
+	ok(links_to("bar",     linkify("foo",      "foo", "link to [[bar]] ok", ["foo", "foo/item", "foo/bar"])), "same except not inline");
+	ok(links_to("bar#baz", linkify("foo",      "foo", "link to [[bar#baz]] ok", ["foo", "bar"])), "anchor link");
 }
 
 $prefix_directives=0;
