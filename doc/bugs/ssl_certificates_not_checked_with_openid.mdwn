@@ -7,3 +7,19 @@ Test #2: Download net\_ssl\_test from dodgy source (it uses the same SSL perl li
 For now, I want to try and resolve the issues with net\_ssl\_test, and run more tests. However, in the meantime, I thought I would document the issue here.
 
 -- Brian May
+
+> Openid's security model does not rely on the openid consumer (ie,
+> ikiwiki) performing any sanity checking of the openid server. All the
+> security authentication goes on between your web browser and the openid
+> server. This may involve ssl, or not.
+> 
+> For example, my openid is "http://joey.kitenet.net/". If I log in with
+> this openid, ikiwiki connects to that http url to determine what openid
+> server it uses, and then redirects my browser to the server
+> (https://www.myopenid.com/server), which validates the user and redirects
+> the browser back to ikiwiki with a flag set indicating that the openid
+> was validated. At no point does ikiwiki need to verify that the https url
+> is good.
+> --[[Joey]]
+
+[[tag done]]
