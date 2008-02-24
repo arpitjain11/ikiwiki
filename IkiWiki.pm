@@ -658,7 +658,7 @@ sub linkify ($$$) { #{{{
 	run_hooks(linkify => sub {
 		$content=shift->(
 			page => $page,
-			destpage => $page,
+			destpage => $destpage,
 			content => $content,
 		);
 	});
