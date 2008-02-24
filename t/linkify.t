@@ -5,6 +5,10 @@ use Test::More tests => 32;
 
 BEGIN { use_ok("IkiWiki"); }
 
+# Initialize link plugin
+%config=IkiWiki::defaultconfig();
+IkiWiki::loadplugins();
+
 my $prefix_directives;
 
 sub linkify ($$$$) {
