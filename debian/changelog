@@ -38,6 +38,12 @@ ikiwiki (2.40) UNRELEASED; urgency=low
   * tla: Remove call to escapeHTML when constructing recentchanges message;
     the html is escaped at a different level. Closes: #466495
   * bzr, mercurial: Remove unused import of escapeHTML.
+  * Fix another preview will_render bug. This one involved inline,
+    which forced a scan of the page to make available metadata that
+    appeared after the inline directive. Problem is that scan made it forget
+    about any other files rendered due to the page. The scan also turns out
+    to be unnecessary now, since meta persistently stores state and it's
+    always available. So it was just removed.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 
