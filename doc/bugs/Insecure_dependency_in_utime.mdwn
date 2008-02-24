@@ -6,3 +6,9 @@ This was in ikiwiki\_2.32.3.
 I worked-around this by doing:
 
         utime IkiWiki::possibly_foolish_untaint($change->{when}), IkiWiki::possibly_foolish_untaint($change->{when}), "$config{srcdir}/$file
+
+> Don't build ikiwiki with taint checking. It's known to be broken in
+> apparently all versions of perl, apparently leaking taint flags at random.
+> See [[Insecure_dependency_in_mkdir]] --[[Joey]]
+
+[[tag done]]

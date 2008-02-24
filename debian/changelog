@@ -44,6 +44,8 @@ ikiwiki (2.40) UNRELEASED; urgency=low
     about any other files rendered due to the page. The scan also turns out
     to be unnecessary now, since meta persistently stores state and it's
     always available. So it was just removed.
+  * Disable taint checking for all builds as people keep complaining about it,
+    and since all versions of perl seem to be hopelessly broken.
 
  -- Josh Triplett <josh@freedesktop.org>  Sun, 10 Feb 2008 13:18:58 -0800
 
