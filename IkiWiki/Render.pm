@@ -330,17 +330,17 @@ sub refresh () { #{{{
 			}
 			else {
 				push @add, $file;
-			}
-			$pagecase{lc $page}=$page;
-			if ($config{getctime} && -e "$config{srcdir}/$file") {
-				eval {
-					my $time=rcs_getctime("$config{srcdir}/$file");
-					$pagectime{$page}=$time;
-				};
-				if ($@) {
-					print STDERR $@;
+				if ($config{getctime} && -e "$config{srcdir}/$file") {
+					eval {
+						my $time=rcs_getctime("$config{srcdir}/$file");
+						$pagectime{$page}=$time;
+					};
+					if ($@) {
+						print STDERR $@;
+					}
 				}
 			}
+			$pagecase{lc $page}=$page;
 			if (! exists $pagectime{$page}) {
 				$pagectime{$page}=mtime(srcfile($file));
 			}
