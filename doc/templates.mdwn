@@ -39,9 +39,11 @@ large chunks of marked up text to be embedded into a template:
 
 ## Creating a template
 
-To create a template, simply add a template directive to a page, and page will
-provide a link that can be used to create the template. The template is a
-regular wiki (.mdwn) page, **located in the `templates/` directory** under source control. Nothing to do with **templatedir** from your ikiwiki configuration.
+To create a template, simply add a template directive to a page, and the 
+page will provide a link that can be used to create the template. The template
+is a regular wiki page, located in the `templates/` subdirectory inside
+the source directory of the wiki. (Not to be confused with the
+[[wikitemplates]] which are stored in a different location.)
 
 The template uses the syntax used by the [[!cpan HTML::Template]] perl
 module, which allows for some fairly complex things to be done. Consult its
