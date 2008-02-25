@@ -5,4 +5,28 @@ I upgraded from 2.18 to 2.32.3 and my \[[img]] links became `<img>` tags without
 > Feel free to mail me a recipe to reproduce it.
 > --[[Joey]]
 
->> I can reproduce it, reliably. Maybe I should give you access and let you have a look?
+I've done some research and found that `$imgtag` seems properly created in `img.pm`:`preprocess`. Thus, something must be changing it later. Disabling all plugins and leaving only `img` enabled does not fix the problem.
+
+I added `print STDERR "$imgtag\n";` to `img.pm` after the `my $imgtag='<img src="'.$imgurl.`... statement. This is what happens:
+
+    seamus:~/web/madduck.net/wc> ikiwiki --setup ../ikiwiki.setup --render blog/2008.02.17:the-penny-martin-adventure-phase-2.mdwn | grep img
+    <img src="../img/2008.02.17:chairs_on_the_beach.jpg" alt="Chilling
+      at the beach with chairs" width="301" height="200" class="center" />
+    <img src="../img/2008.02.17:gates_of_haast.jpg" alt="The Gates of Haast" width="487" height="150" class="center" />
+    <img src="../img/2008.02.17:camping_in_cascade_valley.jpg" alt="Camping in Cascade Valley" width="526" height="140" class="center" />
+    <img src="../img/2008.02.17:monteith_keg_urinal.jpg" alt="Keg
+      urinals at Monteith's brewery in Greymouth" width="87" height="150" class="float-right" />
+    <img src="../img/2008.02.17:pancake_rocks_and_nikau_loving.jpg" alt="Pancake rocks
+      at Punakaiki, and Penny loving a Nikau tree" width="582" height="150" class="center" />
+    <img src="../img/2008.02.17:phoenix_foundation_in_concert.jpg" alt="The Phoenix
+      Foundation in concert in Wellington" width="565" height="150" class="center" />
+    <p><a><img alt="Chilling
+    <p><a><img alt="The Gates of Haast" width="487" height="150" class="center" /></a></p>
+    <p><a><img alt="Camping in Cascade Valley" width="526" height="140" class="center" /></a></p>
+    <p><a><img alt="Keg
+    <p><a><img alt="Pancake rocks
+    <p><a><img alt="The Phoenix
+
+Something is eating the src= attribute.
+
+I have been unable to reproduce this outside of the `madduck.net` website...
