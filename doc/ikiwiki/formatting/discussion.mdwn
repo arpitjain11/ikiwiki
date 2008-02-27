@@ -1,0 +1,9 @@
+The markdown syntax states that emails are written with html entities, but in ikiwiki only one part is encoded as it.  For reference see <http://daringfireball.net/projects/markdown/syntax#misc>.
+
+In the HTML page I get this:
+
+    <a href="mailto:XXXXXXXXXX@gmail.com">&#x6D;&#x6D;&#x61;&#x73;&#x73;&#111;n&#110;&#101;&#x74;&#64;&#103;&#109;&#97;i&#108;&#46;&#x63;&#111;&#109;</a>
+
+while it the href="" attribute should also be encoded.
+
+--mike
