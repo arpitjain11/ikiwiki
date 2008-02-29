@@ -30,3 +30,5 @@ I added `print STDERR "$imgtag\n";` to `img.pm` after the `my $imgtag='<img src=
 Something is eating the src= attribute.
 
 I have been unable to reproduce this outside of the `madduck.net` website...
+
+**Update**: this is the same bug as [[the_colon-in-links_bug|No_link_for_blog_items_when_filename_contains_a_colon]]
