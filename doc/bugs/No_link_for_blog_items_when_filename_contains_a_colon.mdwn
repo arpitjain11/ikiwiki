@@ -14,10 +14,7 @@ filenames:
 > mistaken for a scheme name.  Such a segment must be preceded by
 > a dot-segment (e.g., "./this:that") to make a relative- path reference.
 
-on the other hand, with `usedirs`, any link to another page will be prepended
-by `../` anyway, so that makes them okay again.
-
-The solution still seems not to use colons.
+The solution seems not to use colons.
 
 In any case, `htmlscrubber` should get a new regexp, courtesy of dato:
 `[^:]+($|\/)`. I have tested and verified this.
