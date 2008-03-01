@@ -31,7 +31,7 @@ sub import { #{{{
 	);
 	# data is a special case. Allow data:image/*, but
 	# disallow data:text/javascript and everything else.
-	$safe_url_regexp=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+$)/i;
+	$safe_url_regexp=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+(?:$|\/))/i;
 } # }}}
 
 sub sanitize (@) { #{{{
