@@ -2,21 +2,27 @@ News for ikiwiki 2.40:
 
    ikiwiki now has an new syntax for preprocessor directives, using the
    prefix '!':
- * [[!directive ...]]
+
+	\[[!directive ...]]
+
    This new syntax no longer relies on spaces to distinguish between
    wikilinks and preprocessor directives.  Thus, wikilinks can use spaces
    in their link text, and preprocessor directives without arguments (such
    as "toc") need not use a trailing space.
+
    To enable the new syntax, set prefix\_directives to true in your ikiwiki
    config.  For backward compatibility with existing wikis,
    prefix\_directives currently defaults to false.  In ikiwiki 3.0,
    prefix\_directives will default to true, and wikis which have not yet
    converted to the new syntax will need to set prefix\_directives to false
    in their setup files.
+
    To convert your wiki to the new syntax, ikiwiki provides a new script
    ikiwiki-transition.  It will convert preprocessor directives in
    all files given on the command line.  To convert an entire wiki:
-   find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-transition prefix\_directives
+
+	find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-transition prefix\_directives
+
    Even with prefix\_directives disabled, ikiwiki now allows an optional '!'
    prefix on preprocessor directives (but still requires a space).  Thus, a
    directive which uses a '!' prefix and contains a space will work with
