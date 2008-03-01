@@ -55,6 +55,10 @@ I have a few notes on mercurial usage after trying it out for a while:
 
 >> 1. If I clone my wiki, I won't get an exact copy of it: I will lose the recentchanges history. This could be an acceptable limitation but IMO this should be documented.
 
+>>> The history is stored in mercurial. How will it be lost?
+
 >> 2. The output of `hg status` is polluted. This could be solved trivially by adding a line containing `recentchanges` to `.hgignore`. Another alternative would be to store the `recentchanges` directory inside `$srdcir/.ikiwiki`.
 
 >> I think the ideal solution would be to build `$destdir/recentchanges/*` directly from the output of `hg log`. --[[buo]]
+
+>>>> That would be 100 times as slow, so I chose not to do that. --[[Joey]]
