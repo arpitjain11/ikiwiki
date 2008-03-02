@@ -7,6 +7,7 @@ Some examples of using shortcuts include:
 	\[[!google foo]]
 	\[[!wikipedia War_of_1812]]
 	\[[!debbug 12345]]
+	Check the \[[!cia ikiwiki desc="CIA page for %s"]].
 
 This page controls what shortcut links the wiki supports.
 
@@ -62,7 +63,8 @@ controls the description of the link.
 
 Remember that the `name` you give the shortcut will become a new
 [[ikiwiki/PreprocessorDirective]].  Avoid using a `name` that conflicts
-with an existing directive.
+with an existing directive.  These directives also accept a `desc`
+parameter that will override the one provided at definition time.
 
 If you come up with a shortcut that you think others might find useful,
 consider contributing it to the [shortcuts page on the ikiwiki

@@ -62,6 +62,9 @@ sub shortcut_expand ($$@) { #{{{
 	}eg;
 
 	$text=~s/_/ /g;
+	if (defined $params{desc}) {
+		$desc=$params{desc};
+	}
 	if (defined $desc) {
 		$desc=~s/\%s/$text/g;
 	}

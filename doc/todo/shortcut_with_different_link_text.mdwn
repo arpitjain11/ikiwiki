@@ -57,5 +57,11 @@ So that the 'l' plugin inserts the location the page there, and markdown does th
 
 For external links, that is no concern, however. So you could define for each shortcut an alternative directive, that inserts the URL. Perhaps `\[[url shortcutname params]]` or `\[[@shortcutname params]]` (if the preprocessor supported the @), and this could be extended to local links in an obvious manner: `\[[url page]]` or `\[[@page]]`. Now, if you could just get rid off the parantheses for markdown, for the short inline links --[[tuomov]] (who'd really rather not have two separate linking mechanisms: ikiwiki's heavy syntax and markdown's lighter one).
 
+---
 
+I've added code to make the \[[foo 123]] syntax accept a _desc_
+parameter. I've named it like this to signal that it overrides the
+_desc_ provided at description time. `%s` is expanded here as well.
+
+[[todo/done]] -- Adeodato Simó
   
