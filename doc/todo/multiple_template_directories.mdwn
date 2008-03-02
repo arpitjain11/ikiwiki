@@ -1,0 +1,8 @@
+It would be nice to be able to override a single template without keeping a 
+private copy of the entire template directory. 
+
+a setup option like
+
+   templatedirs => [ "my/dir", "/usr/share/ikiwiki/templates" ] 
+
+ought to do the trick.
