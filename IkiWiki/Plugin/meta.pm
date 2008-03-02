@@ -193,6 +193,10 @@ sub preprocess (@) { #{{{
 				" />\n");
 		}
 	}
+	elsif ($key eq 'robots') {
+		push @{$metaheaders{$page}}, '<meta name="robots"'.
+			' value="'.encode_entities($value).'" />';
+	}
 	else {
 		push @{$metaheaders{$page}}, scrub('<meta name="'.encode_entities($key).
 			'" content="'.encode_entities($value).'" />');

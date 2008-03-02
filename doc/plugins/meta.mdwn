@@ -103,6 +103,21 @@ Supported fields:
   For both cases, an anchor to jump to inside the destination page may also be
   specified using the common `PAGE#ANCHOR` syntax.
 
+* robots
+
+  Causes the robots meta tag to be written:
+
+        \[[meta robots="index, nofollow"]]
+
+  Valid values for the attribute are: "index", "noindex", "follow", and
+  "nofollow". Multiple comma-separated values are allowed, but obviously only
+  some combinations make sense. If there is no robots meta tag, "index,
+  follow" is used as the default.
+
+  The plugin escapes the value, but otherwise does not care about its
+  contents. In particular, it does not check the values against the set of
+  valid values but serves whatever you pass it.
+
 If the field is not one of the above predefined fields, the metadata will be
 written to the generated html page as a &lt;meta&gt; header. However, this
 won't be allowed if the [[htmlscrubber]] is enabled, since it can be used to
