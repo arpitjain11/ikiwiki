@@ -1,0 +1,43 @@
+[[!meta title="Laptop Ikiwiki extended"]]
+
+I have (at least) three different hosts, `laptop`, `gitserver`, and `webserver`.
+
+1. I started by following [[/tips/laptop_wiki_with_git]] to create 
+a bare repo on `gitserver`, and clone that to a workingdir on  gitserver.
+
+  On the laptop clone gitserver:repo /working/dir 
+
+  Next create a setup file for the laptop with 
+
+        gitorigin_branch=> "",
+        wrapper => "/working/dir/.git/hooks/post-commit",
+    
+  At this point, assuming you followed page above, and not my hasty summary, 
+
+        git commit -a 
+
+  should rebuild the output of your wiki.
+   
+2. Now create a setup file for the server (I call it server.setup).
+
+        gitorigin_branch=> "origin",
+        wrapper => "/repo/wiki.git/hooks/post-update.ikiwiki"
+       
+  Note the non-standard and bizzare name of the hook.   
+
+  edit /repo/wiki.git/hooks/post-update so that it looks something like
+
+        /repo/wiki.git/hooks/post-update.ikiwiki
+        rsync -cavz /home/me/public_html/* webserver:/destdir
+
+  Run 
+
+        ikiwiki --setup server.setup
+
+Now in principle when you run git push on the laptop, the git server will 
+first do its "regular" thing and update ~/public_html (in my case) and 
+then rsync it onto the webserver.  For this to work, you need passwordless 
+ssh or something like it.
+
+[[DavidBremner]]
+
