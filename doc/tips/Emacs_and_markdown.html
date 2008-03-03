@@ -1,0 +1,16 @@
+I added the following to my <code>.emacs</code>.
+
+The hook is to convert tabs to spaces to avoid unpleasant 
+surprises with code blocks. For source to ska-untabify see the
+<a href="http://www.emacswiki.org/cgi-bin/wiki/UntabifyUponSave">EmacsWiki</a>
+<pre>
+(autoload 'markdown-mode "markdown-mode")
+(add-to-list 'auto-mode-alist '("\\.mdwn" . markdown-mode))
+
+(add-hook 'markdown-mode-hook  
+           '(lambda () 
+               (make-local-hook 'write-contents-hooks) 
+                (add-hook 'write-contents-hooks 'ska-untabify nil t)))
+</pre>
+
+;; [[DavidBremner]]
