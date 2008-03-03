@@ -7,3 +7,14 @@ In the HTML page I get this:
 while it the href="" attribute should also be encoded.
 
 --mike
+
+> The htmlscrubber removes entity encoding obfuscation from tag attributes
+> This has to be done because such entity encoding can be used to hide
+> javascript and other nonsense in html tag attributes. As a consequence,
+> markdown's mail obfuscation is reverted.
+> 
+> I don't really see this as a serious issue, because if I were working for
+> a spammer, I would include entity decoding in my web spider that searched
+> for emails. And I could do it easily, as evidenced by the code in the
+> htmlscrubber that doe it. So I assume this technique is not very effective
+> at blocking spam. --[[Joey]]
