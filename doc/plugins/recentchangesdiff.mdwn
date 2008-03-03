@@ -1,0 +1,6 @@
+[[template id=plugin name=recentchangesdiff core=0 author="[[Joey]]"]]
+
+This plugin extends the [[recentchanges]] plugin, adding a diff for each
+change. The diffs are by default hidden from display on the recentchanges
+page, but will display in its feeds. The [[rcs]] must have implemented
+support for the `rcs_diff()` function for any diffs to be generated.

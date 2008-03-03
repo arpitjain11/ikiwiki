@@ -475,6 +475,10 @@ sub rcs_recentchanges ($) { #{{{
 	return @ret;
 } #}}}
 
+sub rcs_diff ($) { #{{{
+	# TODO
+} #}}}
+
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 

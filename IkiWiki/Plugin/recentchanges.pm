@@ -133,7 +133,7 @@ sub store ($$$) { #{{{
 		);
 	}
 
-	# escape  wikilinks and preprocessor stuff in commit messages
+	# escape wikilinks and preprocessor stuff in commit messages
 	if (ref $change->{message}) {
 		foreach my $field (@{$change->{message}}) {
 			if (exists $field->{line}) {
@@ -150,7 +150,8 @@ sub store ($$$) { #{{{
 		wikiname => $config{wikiname},
 	);
 	IkiWiki::run_hooks(pagetemplate => sub {
-		shift->(page => $page, destpage => $page, template => $template);
+		shift->(page => $page, destpage => $page,
+			template => $template, rev => $change->{rev});
 	});
 
 	my $file=$page."._change";

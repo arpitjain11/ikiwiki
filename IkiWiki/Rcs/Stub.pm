@@ -57,6 +57,12 @@ sub rcs_recentchanges ($) {
 	# }
 }
 
+sub rcs_diff ($) {
+	# Optional, used to get diffs for recentchanges.
+	# The parameter is the rev from rcs_recentchanges.
+	return "";
+}
+
 sub rcs_getctime ($) {
 	# Optional, used to get the page creation time from the RCS.
 	error gettext("getctime not implemented");

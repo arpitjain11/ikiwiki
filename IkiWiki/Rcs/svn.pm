@@ -217,6 +217,11 @@ sub rcs_recentchanges ($) { #{{{
 	return @ret;
 } #}}}
 
+sub rcs_diff ($) { #{{{
+	my $rev=possibly_foolish_untaint(int(shift));
+	return scalar `svnlook diff $config{svnrepo} -r$rev --no-diff-deleted`;
+} #}}}
+
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 

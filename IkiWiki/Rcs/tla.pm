@@ -160,6 +160,20 @@ sub rcs_recentchanges ($) {
 	return @ret;
 }
 
+sub rcs_diff ($) { #{{{
+	my $rev=shift;
+	my $logs = `tla logs -d $config{srcdir}`;
+	my @changesets = reverse split(/\n/, $logs);
+	my $i;
+
+	for($i=0;$i<$#changesets;$i++) {
+		last if $changesets[$i] eq $rev;
+	}
+
+	my $revminusone = $changesets[$i+1];
+	return scalar `tla diff -d $config{srcdir} $revminusone`;
+} #}}}
+
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 	eval q{use Date::Parse};

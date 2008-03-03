@@ -419,6 +419,12 @@ sub rcs_recentchanges ($) { #{{{
 	return @rets;
 } #}}}
 
+sub rcs_diff ($) { #{{{
+	my $rev=shift;
+	my ($sha1) = $rev =~ /^($sha1_pattern)$/; # untaint
+	return join("\n", run_or_non("git", "diff", "$sha1^", $sha1));
+} #}}}
+
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 	# Remove srcdir prefix
