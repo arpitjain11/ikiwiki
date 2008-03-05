@@ -60,7 +60,7 @@ The ikiwiki `post-commit` hook should be put in the bare repository.
 4. `git clone /path/to/repository`
 5. `echo /.ikiwiki > .gitignore`
 6. `git add .gitignore`
-7. Now, populate your wiki. You could us `cp` to copy over files, use you favourite editor to create files and `git add` them, or you could import a wiki repository from another VCS using `git-svnimport`, `git-archimport`, or `git-cvsimport`. Use `git add` to add these files to the index.
+7. Now, populate your wiki. You could us `cp` to copy over files, use you favourite editor to create files and `git add` them, or you could import a wiki repository from another VCS using `git-svnimport`, `git-archimport`, or `git-cvsimport`. Make sure the permissions are correct in order for [[cgi]] to commit here (consider actually cloning another reposotory for yourself, on this or on another machine). Use `git add` to add these files to the index.
 8. `git push`
 9. Profit.
 
