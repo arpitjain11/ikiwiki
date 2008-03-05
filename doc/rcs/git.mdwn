@@ -47,10 +47,15 @@ repositories:
   repositories will push to/pull from.  It is a bare repository, since
   there are problems pushing to a repository that has a working
   directory. This is called _repository_ in [[ikiwiki-makerepo]]'s
-  manual page. Nominally, this bare repository has a `post-commit`
-  hook that would change directory to the ikiwiki leaf node repository
-  below (the working directory for ikiwiki), do a _git pull_, and
-  refresh ikiwiki to regenerate the wiki with any new content.
+  manual page. 
+
+  Nominally, this bare repository has a `post-commit` hook that either
+  is or calls ikiwiki's git wrapper, which changes to the working
+  directory for ikiwiki, does a _git pull_, and refreshes ikiwiki to
+  regenerate the wiki with any new content.
+
+  The configuration sections below show how to let the post-commit
+  hook be replaced by the ikiwiki git wrapper.
 * The second repository is a clone of the bare root repository, and
   has a working tree which is used as ikiwiki's srcdir for compiling
   the wiki. **Never** push to this repository. When running as a
@@ -107,8 +112,8 @@ the srcdir to become group writable. (umask 022 will work.)
 ### Ikiwiki working directory
 
 * Configure a cgi wrapper as usual, but configure the git wrapper to
-  be written to the post-commit hook of the git clone being used by
-  the ikiwiki (clone 0 in the image). Set in the configuration:
+  be written to the post-commit hook of the bare root repository. Set
+  in the configuration:
 
         gitorigin_branch=> "origin",
         ## git post-commit wrapper
@@ -118,16 +123,39 @@ the srcdir to become group writable. (umask 022 will work.)
 
 ### Working clones (Clone 1 .. N in the image)
 
+These are repositories usually setup to avoid permission problems with
+the working directory used by ikiwiki itself. They also represent the
+most convenient way to add content to the wiki on a different machine
+(that is, not the machine the wiki is published on) which is more
+convenient.
+
+The use case for these clones is this: If you want to edit your wiki
+on your development box, or on your laptop, you usually set up a clone
+as above. But very often, you also want to test what the changes look
+like, locally, before pushing it to the root repository and publishing
+the wiki for the world to see.
+
+In order to do this, you should another setup file and setup a private
+ikiwiki on the local machine (your laptop, for instance) where you do
+most of your editing.  You will also need to set up a webserver, and
+install ikiwiki on this machine. Only when you are happy with any
+changes do you push them to the root repository.
+
+Here are some things to be aware of when configuring ikiwiki on the
+local machine:
+
 * By default, ikiwiki pulls and pushes from `origin`. This is not
-  ideal for the working clones, since the user might go through
-  several iterations of a posting before pushing to the bare root of
-  the repository tree. In the configuration, set:
+  ideal for the working clones on the local machine, since you might
+  go through several iterations of a page before pushing to the bare
+  root of the repository tree and publishing it on your public
+  wiki. In the configuration, set:
 
         gitorigin_branch => "",
         ## git post-commit wrapper
         wrapper => "/working/dir/.git/hooks/post-commit",
 
-  Then just committing should refresh the ikiwiki on the local host.
+  Then just committing should refresh the private ikiwiki on the local
+  host.
 
 * You can optionally enable to the [[plugins/mirrorlist]] plugin,
   and configure it so that each page links to the corresponding page on the
