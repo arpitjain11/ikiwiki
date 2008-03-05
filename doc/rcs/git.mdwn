@@ -52,17 +52,18 @@ Instead, clone the bare repository as mentioned above, and push **only** to the 
 
 The ikiwiki `post-commit` hook should be put in the bare repository.
 
-### Nine steps to get rich using git as your ikiwiki SCM  
+### Ten steps to get rich using git as your ikiwiki SCM  
 
 1. `mkdir -p /path/to/repository && cd /path/to/repository`
 2. `git --bare init --shared`
 3. `mkdir -p /path/to/clone0 && cd  /path/to/clone0`
 4. `git clone /path/to/repository`
 5. `echo /.ikiwiki > .gitignore`
-6. `git add .gitignore`
-7. Now, populate your wiki. You could us `cp` to copy over files, use you favourite editor to create files and `git add` them, or you could import a wiki repository from another VCS using `git-svnimport`, `git-archimport`, or `git-cvsimport`. Make sure the permissions are correct in order for [[cgi]] to commit here (consider actually cloning another reposotory for yourself, on this or on another machine). Use `git add` to add these files to the index.
-8. `git push`
-9. Profit.
+6. `echo recentchanges >> .gitignore`
+7. `git add .gitignore`
+8. Now, populate your wiki. You could us `cp` to copy over files, use you favourite editor to create files and `git add` them, or you could import a wiki repository from another VCS using `git-svnimport`, `git-archimport`, or `git-cvsimport`. Make sure the permissions are correct in order for [[cgi]] to commit here (consider actually cloning another reposotory for yourself, on this or on another machine). Use `git add` to add these files to the index.
+9. `git push`
+10. Profit.
 
 [[ikiwiki-makerepo]] can automate setting this up for the common case
 where there is no pre-existing wiki.
