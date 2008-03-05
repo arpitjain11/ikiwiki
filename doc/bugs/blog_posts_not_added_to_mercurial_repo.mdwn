@@ -2,7 +2,7 @@ I am using mercurial as RCS backend and ikiwiki 2.40.
 
 It seems that, when adding a blog post, it is not immediately commited to the mercurial repo. I have a page with this directive:
 
-    [[!inline pages="journal/blog2008/* and !*/Discussion" show="0" feeds="no" actions="yes" rootpage="journal/blog2008"]]
+    \[[!inline pages="journal/blog2008/* and !*/Discussion" show="0" feeds="no" actions="yes" rootpage="journal/blog2008"]]
 
 When I add a blog post, I see it on the wiki but it doesn't appear on `History` or `RecentChanges`. If I run `hg status` on the wiki source dir, I see the new file has been marked as `A` (ie, a new file that has not been commited).
 
