@@ -107,27 +107,13 @@ repository, should only be writable by the wiki's admin, and *not* by the
 group. Take care that ikiwiki uses a umask that does not cause files in
 the srcdir to become group writable. (umask 022 will work.)
 
-## Configuration
+## Configuration of working clone repositories
 
-### Ikiwiki working directory
-
-* Configure a cgi wrapper as usual, but configure the git wrapper to
-  be written to the post-commit hook of the bare root repository. Set
-  in the configuration:
-
-        gitorigin_branch=> "origin",
-        ## git post-commit wrapper
-        wrapper => "/path/to/bare/repo/.git/hooks/post-commit",
-
-
-
-### Working clones (Clone 1 .. N in the image)
-
-These are repositories usually setup to avoid permission problems with
-the working directory used by ikiwiki itself. They also represent the
-most convenient way to add content to the wiki on a different machine
-(that is, not the machine the wiki is published on) which is more
-convenient.
+These are repositories (Clone 1 .. N in the image) usually setup to
+avoid permission problems with the working directory used by ikiwiki
+itself. They also represent the most convenient way to add content to
+the wiki on a different machine (that is, not the machine the wiki is
+published on) which is more convenient.
 
 The use case for these clones is this: If you want to edit your wiki
 on your development box, or on your laptop, you usually set up a clone
