@@ -30,7 +30,7 @@ sub htmlize (@) { #{{{
 		else {
 			eval q{use Text::Markdown};
 			if (! $@) {
-				$markdown_sub=\&Text::Markdown::Markdown;
+				$markdown_sub=\&Text::Markdown::markdown;
 			}
 			else {
 				do "/usr/bin/markdown" ||

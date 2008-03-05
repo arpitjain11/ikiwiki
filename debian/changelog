@@ -14,6 +14,9 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * rcs_diff is a new function that rcs modules should implement.
   * Implemented rcs_diff for git, svn, and tla (tla version untested).
     Mercurial and monotone still todo.
+  * Use Text::Markdown::markdown, since version 1.0.16 of Text::Markdown
+    no longer supports Text::Markdown::Markdown. All old versions of
+    Text::Markdown also support the lower-case version.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 
