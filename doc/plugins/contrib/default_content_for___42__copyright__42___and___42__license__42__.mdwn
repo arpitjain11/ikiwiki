@@ -26,3 +26,7 @@ template variables in general, rather than having to add a new plugin for every
 template variable somebody wants to use.
 
 --[[bma]]
+
+Copyright and license values are not "template values", they are values
+tracked by the meta plugin, and that various code compares and uses to fill
+out the templates. Something like varioki cannot do that. --[[Joey]]
