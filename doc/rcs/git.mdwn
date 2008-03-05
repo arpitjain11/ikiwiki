@@ -19,6 +19,8 @@ working clones (with working directories) as leaf nodes.  The root
 (bare) repository is meant to be pushed to and pulled from the various
 working clones. 
 
+![Git repository relationships](http://people.debian.org/~srivasta/ikiwiki_git.png)
+
 One of the leaf node clone repositories is special; it has working
 directory which is used to compile the wiki from, and is also used by the
 [[cgi]] to commit changes made via the web interface. It is special
