@@ -46,7 +46,12 @@ Suggestions of ideas for plugins:
 
   > Not sure what you mean, the [[plugins/contrib]] page lists contributed plugins, and each of their pages tells where to download the plugin from.. --[[Joey]]
 
-* I'm thinking about starting a simple LaTeX plugin.  This would be mainly  to convert my old tex4ht based website. Would anyone else find this useful, 
-or should I just hack some offline converter together?  I should clarify that I mean converting the latex text to HTML (maybe via something else).  I found pandoc, which almost works to convert to .rst. Perhaps the most useful thing would be an offline filter to convert latex to markdown+embedded teximg --[[DavidBremner]]
+* I was thinking about a tex plugin, to handle tex4ht files. I have since discovered that pandoc on the output from tex4ht seems to be good enough. --[[DavidBremner]]
 
-* Setting default values for the meta plugin in the setup file, particularly author, license, and copyright, would be useful -- [[DavidBremner]]
+* Setting default values for the meta plugin in the setup file, particularly author, license, and copyright, would be useful 
+There is work in progress at 
+[[plugins/contrib/default_content_for___42__copyright__42___and___42__license__42__]]
+-- [[DavidBremner]]
+
+* What about a translator plugin using source-highlight or some alternative to view a collection of source code. I have a collection 
+of e.g. java for students to look at. I'd like to e.g. update the tags in the java file, then rebuild the wiki.   
