@@ -44,13 +44,28 @@ repositories:
 * The second repository is a clone of the bare root repository, and has a working tree which is used as ikiwiki's srcdir for compiling the wiki. **Never** push to this repository. When running as a [[cgi]], the changes are committed to this repository, and pushed to the master repository above. This is called _srcdir_ in [[ikiwiki-makerepo]]'s manual page.
 * The other (third, fourth, fifth, sixth -- however many pleases you) repositories are also clones of the bare root repository above -- and these have a working directory for you to work on. Use either the `git` transport (if available), or `ssh`. These repositories may be on remote machines, your laptop, whereever you find convenient to hack on your wiki. Any new content should be pushed to the bare master repository when you are ready to publish it, and then the post-commit hook of the bare repository will ensure that the ikiwiki's source directory is updated, and the ikiwiki refreshed with the new content.
 
-[[ikiwiki-makerepo]] can automate setting this up. Using three or more of repositories isn't the most obvious set up, but it works the best for typical ikiwiki use.  [[tips/Laptop_wiki_with_git]] describes a different way to set up ikiwiki and git.
+Using three or more of repositories isn't the most obvious set up, but it works the best for typical ikiwiki use.  [[tips/Laptop_wiki_with_git]] describes a different way to set up ikiwiki and git.
 
 It is **paramount** that you **never** push to the non-bare repository
 ([this FAQ entry explains why](http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73)).
 Instead, clone the bare repository as mentioned above, and push **only** to the bare repository.
 
 The ikiwiki `post-commit` hook should be put in the bare repository.
+
+### Nine steps to get rich using git as your ikiwiki SCM  
+
+1. `mkdir -p /path/to/repository && cd /path/to/repository`
+2. `git --bare init --shared`
+3. `mkdir -p /path/to/clone0 && cd  /path/to/clone0`
+4. `git clone /path/to/repository`
+5. `echo /.ikiwiki > .gitignore`
+6. `git add .gitignore`
+7. Now, populate your wiki. You could us `cp` to copy over files, use you favourite editor to create files and `git add` them, or you could import a wiki repository from another VCS using `git-svnimport`, `git-archimport`, or `git-cvsimport`. Use `git add` to add these files to the index.
+8. `git push`
+9. Profit.
+
+[[ikiwiki-makerepo]] can automate setting this up for the common case
+where there is no pre-existing wiki.
 
 ## git repository with multiple committers
 
