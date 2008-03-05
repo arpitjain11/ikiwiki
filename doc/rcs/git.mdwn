@@ -12,11 +12,35 @@ commits edited pages, and uses the Git history to generate the
 
 ## git repository setup
 
-When using Git, you probably want to set up three repositories:
+The suggested setup for git is a set of repositories setup like a
+shallow, single level tree, with a bare repository (meaning that it
+does not have a working tree checked out) at the root, and various
+working clones (with working directories) as leaf nodes.  The root
+(bare) repository is meant to be pushed to and pulled from the various
+working clones. 
 
-* One of these repositories should be a bare repository (meaning that it does not have a working tree checked out), which the other two repositories will push to/pull from.  It is a bare repository, since there are problems pushing to a repository that has a working directory. This is called _repository_ in [[ikiwiki-makerepo]]'s manual page. Nominally, this bare repository has a`post-commit` hook that would change directory to the second repository (the working directory for ikiwiki), do a _git pull_, and refresh ikiwiki to regenerate the wiki with any new content.
-* The second repository has a working tree which is used as ikiwiki's srcdir for compiling the wiki. **Never** push to this repository. When running as a [[cgi]], the changes are committed to this repository, and pushed to the master repository above. This is called _srcdir_ in [[ikiwiki-makerepo]]'smanual page.
-* The third (and fourth, fifth, sixth -- however many pleases you) repository is a clone of the bare master repository above -- and this has a working directory for you to work on. Use either the `git` transport (if available), or `ssh`. These repositories may be on remote machines, your laptop, whereever you find convenient to hack on your wiki. Any new content should be pushed to the bare master repository when you are ready to publish it, and then the post-commit hook of the bare repository will ensure that the ikiwiki's source directory is updated, and the ikiwiki refreshed with the new content.
+One of the leaf node clone repositories is special; it has working
+directory which is used to compile the wiki from, and is also used by the
+[[cgi]] to commit changes made via the web interface. It is special
+since the `post-commit` hook for the bare root repository is used to
+trigger an update of this repository, and then an ikiwiki refresh
+updates the published  wiki itself.
+
+The other (optional) leaf node repositories are meant for you to work
+on, and commit to, changes should then be pushed to the bare root
+repository.  In theory, you could work on the same leaf node repository
+that ikiwiki uses to compile the wiki from, and the [[cgi]] commits
+to, as long as you ensure that permissions and ownership don't hinder
+the working of the [[cgi]]. This can be done, for example, by using
+ACL's, in practice, it is easier to just setup separate clones for
+yourself.
+
+So, to reiterate, when using Git, you probably want to set up three
+repositories:
+
+* The root repository. This should be a bare repository (meaning that it does not have a working tree checked out), which the other repositories will push to/pull from.  It is a bare repository, since there are problems pushing to a repository that has a working directory. This is called _repository_ in [[ikiwiki-makerepo]]'s  manual page. Nominally, this bare repository has a `post-commit` hook that would change directory to the ikiwiki leaf node repository below (the working directory for ikiwiki), do a _git pull_, and refresh ikiwiki to regenerate the wiki with any new content.
+* The second repository is a clone of the bare root repository, and has a working tree which is used as ikiwiki's srcdir for compiling the wiki. **Never** push to this repository. When running as a [[cgi]], the changes are committed to this repository, and pushed to the master repository above. This is called _srcdir_ in [[ikiwiki-makerepo]]'s manual page.
+* The other (third, fourth, fifth, sixth -- however many pleases you) repositories are also clones of the bare root repository above -- and these have a working directory for you to work on. Use either the `git` transport (if available), or `ssh`. These repositories may be on remote machines, your laptop, whereever you find convenient to hack on your wiki. Any new content should be pushed to the bare master repository when you are ready to publish it, and then the post-commit hook of the bare repository will ensure that the ikiwiki's source directory is updated, and the ikiwiki refreshed with the new content.
 
 [[ikiwiki-makerepo]] can automate setting this up. Using three or more of repositories isn't the most obvious set up, but it works the best for typical ikiwiki use.  [[tips/Laptop_wiki_with_git]] describes a different way to set up ikiwiki and git.
 
