@@ -110,7 +110,7 @@ use IkiWiki::Setup::Standard {
 	discussion => 1,
 	# To exclude files matching a regexp from processing. This adds to
 	# the default exclude list.
-	#exclude => qr/*\.wav/,
+	#exclude => qr/\.wav$/,
 	# To change the extension used for generated html files.
 	#htmlext => 'htm',
 	# Time format (for strftime)
