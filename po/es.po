@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-03 14:52-0500\n"
-"PO-Revision-Date: 2007-12-20 11:25+0100\n"
+"PO-Revision-Date: 2008-03-06 11:07+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -121,11 +121,11 @@ msgstr "(una secuencia UTF-8 inválida ha sido eliminada de la fuente de datos)"
 #: ../IkiWiki/Plugin/aggregate.pm:307
 #, perl-format
 msgid "(feed entities escaped)"
-msgstr ""
+msgstr "(los caracteres especiales de la fuente de datos están exceptuados)"
 
 #: ../IkiWiki/Plugin/aggregate.pm:313
 msgid "feed crashed XML::Feed!"
-msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed!"
+msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed !"
 
 #: ../IkiWiki/Plugin/aggregate.pm:387
 #, perl-format
@@ -390,14 +390,13 @@ msgid "at noon on %A"
 msgstr "el %A a media tarde"
 
 #: ../IkiWiki/Plugin/recentchanges.pm:74
-#, fuzzy
 msgid "missing page"
-msgstr "faltan valores"
+msgstr "página no encontrada"
 
 #: ../IkiWiki/Plugin/recentchanges.pm:76
 #, perl-format
 msgid "The page %s does not exist."
-msgstr ""
+msgstr "No existe la página %s."
 
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
