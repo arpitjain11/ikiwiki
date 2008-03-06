@@ -4,10 +4,13 @@ I have copied otl.pm and am wrapping source-highlight (why this instead of vim h
 version on 
 [my wiki](http://www.cs.unb.ca/~bremner/wiki/software/sourcehighlight.pm)
 
-In the tradition of publish early and often, this just supports java 
-at the moment. I will add more languages soon.
-You can add more languages by cutting and pasting the hook line; I want to add a configuration option to allow the user to specify.
+you must specify a highlight_lang=>"foo,bar" in your setup file.
+where foo and bar are the (source-supported) languages you want to
+highlight
+# Issues
 
-One outstanding problem is that I would like to have a link to the raw source; I'm not quite sure how to manage this at them moment.
+- I would like to have a link to the raw source; I'm not quite sure how to manage this at them moment.  
 
+- the common case of foo.c and foo.h breaks
+because they both generate page working/dir/foo. Is there some way to change the default output name?
 
