@@ -1,0 +1,21 @@
+I noticed several places in the wiki talking about similar ideas, so I decided to put a page here to point to what I am working on.
+
+I have copied otl.pm and am wrapping source-highlight (why this instead of vim highlight, I dunno, I must be a real emacs guy).  You can find more or less the latest 
+version on 
+[my wiki](http://www.cs.unb.ca/~bremner/wiki/software/sourcehighlight.pm)
+
+you must specify a highlight_lang=>"foo,bar" in your setup file.
+where foo and bar are the (source-supported) languages you want to
+highlight
+# Issues
+
+- I would like to have a link to the raw source; using will_render() and then copying the file 
+may work. 
+The discussion in [[plugins/contrib/texinfo]] seems relevant.
+
+- the common case of foo.c and foo.h breaks
+because they both generate page working/dir/foo. 
+It looks to me like ikiwiki is hardcoded to strip the extension in `pagename()` (IkiWiki.pm).
+This problem with sourcehighlight needs to be fixed before it is very useful.
+
+[[DavidBremner]]
