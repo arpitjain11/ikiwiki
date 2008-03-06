@@ -12,5 +12,5 @@ highlight
 - I would like to have a link to the raw source; I'm not quite sure how to manage this at them moment.  
 
 - the common case of foo.c and foo.h breaks
-because they both generate page working/dir/foo. Is there some way to change the default output name?
-
+because they both generate page working/dir/foo. 
+It looks to me like ikiwiki is hardcoded to strip the extension in `pagename()` (IkiWiki.pm).
