@@ -9,8 +9,13 @@ where foo and bar are the (source-supported) languages you want to
 highlight
 # Issues
 
-- I would like to have a link to the raw source; I'm not quite sure how to manage this at them moment.  
+- I would like to have a link to the raw source; using will_render() and then copying the file 
+may work. 
+The discussion in [[plugins/contrib/texinfo]] seems relevant.
 
 - the common case of foo.c and foo.h breaks
 because they both generate page working/dir/foo. 
 It looks to me like ikiwiki is hardcoded to strip the extension in `pagename()` (IkiWiki.pm).
+This problem with sourcehighlight needs to be fixed before it is very useful.
+
+[[DavidBremner]]
