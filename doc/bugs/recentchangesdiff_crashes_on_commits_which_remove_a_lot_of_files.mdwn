@@ -4,6 +4,7 @@
     rendering recentchanges.mdwn
     [1]    5541 segmentation fault  ikiwiki --verbose --setup ikiwiki.setup --refresh
 
+If I disable the plugin, the segfault does not happen, but I have to remove `wc/recentchanges/*` or else it will crash just as well.
+
 This is reproducible, but I cannot provide the source code.
 
-If I disable the plugin, the segfault does not happen.
