@@ -319,13 +319,6 @@ sub rcs_commit ($$$;$$) { #{{{
 		    (length $message ? ": $message" : "");
 	}
 
-	# XXX: Wiki directory is in the unlocked state when starting this
-	# action.  But it takes time for a Git process to finish its job
-	# (especially if a merge required), so we must re-lock to prevent
-	# race conditions.  Only when the time of the real commit action
-	# (i.e. git push) comes, we'll unlock the directory.
-	lockwiki();
-
 	# Check to see if the page has been changed by someone else since
 	# rcs_prepedit was called.
 	my $cur    = git_sha1($file);
@@ -340,7 +333,6 @@ sub rcs_commit ($$$;$$) { #{{{
 	# so we should ignore its exit status (hence run_or_non).
 	$message = possibly_foolish_untaint($message);
 	if (run_or_non('git', 'commit', '-q', '-m', $message, '-i', $file)) {
-		unlockwiki();
 		if (length $config{gitorigin_branch}) {
 			run_or_cry('git', 'push', $config{gitorigin_branch});
 		}

@@ -18,6 +18,10 @@ ikiwiki (2.41) UNRELEASED; urgency=low
     version 1.0.16 of Text::Markdown.
   * Updated Spanish translation from Victor Moral.
   * Fix example exclude regexp. Closes: #469691
+  * Remove locking code in git rcs_commit. I'm not sure if this was ever
+    correct, and it's certianly not correct now, since the wiki is locked
+    before rcs_commit is ever called, and should not be unlocked by
+    rcs_commit either.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 
