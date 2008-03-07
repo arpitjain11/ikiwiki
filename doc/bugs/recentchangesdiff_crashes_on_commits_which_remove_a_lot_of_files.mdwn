@@ -1,0 +1,9 @@
+[[plugin/recentchangesdiff]] causes rendering to segfault if a commit removes a lot of contents. I removed close to 400 files, total size of about 950Kb in a single commit and now `ikiwiki` segfaults on refresh and rebuild:
+
+    [...]
+    rendering recentchanges.mdwn
+    [1]    5541 segmentation fault  ikiwiki --verbose --setup ikiwiki.setup --refresh
+
+This is reproducible, but I cannot provide the source code.
+
+If I disable the plugin, the segfault does not happen.
