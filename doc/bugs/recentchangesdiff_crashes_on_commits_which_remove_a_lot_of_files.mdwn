@@ -12,3 +12,14 @@ This is reproducible, but I cannot provide the source code.
 > ikiwiki on some files that are just large, and cannot reproduce any
 > problems, so it must be something in the specific file. (A perl bug is
 > also clearly involved here.) --[[Joey]]
+
+The tarball is at http://scratch.madduck.net/__tmp__recentchanges-segfault.tgz - unpack it in `/tmp` and `chdir()` to /tmp/cdt.taF18912, then run
+
+    ikiwiki --setup ikiwiki.setup
+    # segfaults
+    git checkout HEAD^
+    ikiwiki --setup ikiwiki.setup
+    # segfaults
+    rm -rf wc/recentchanges
+    ikiwiki --setup ikiwiki.setup
+    # works
