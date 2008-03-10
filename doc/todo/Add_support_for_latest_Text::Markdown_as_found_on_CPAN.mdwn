@@ -4,6 +4,12 @@ It seems that the Text::Markdown module as found on CPAN is now identical to Tex
 
 This patch allows IkiWiki to work with either of the two:
 
+> I already wrote such a patch a few days ago and applied it to git. Might
+> be a good idea to check out current git master before spending time on
+> patches in the future. Thanks for the work anyway.. --[[Joey]]
+
+[[tag done]]
+
     --- IkiWiki/Plugin/mdwn.pm.orig	2008-03-08 11:33:50.000000000 +0100
     +++ IkiWiki/Plugin/mdwn.pm	2008-03-08 13:37:21.000000000 +0100
     @@ -28,14 +28,20 @@ sub htmlize (@) { #{{{
