@@ -145,6 +145,10 @@ sub preprocess (@) { #{{{
 			push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
 				'" rel="openid.delegate" />';
 		}
+		if (exists $params{xrds-location} && safeurl($params{xrds-location})) {
+			push @{$metaheaders{$page}}, '<meta http-equiv="X-XRDS-Location"'.
+				'content="'.encode_entities($params{xrds-location}).'" />';
+		}
 	}
 	elsif ($key eq 'redir') {
 		return "" if $page ne $destpage;
