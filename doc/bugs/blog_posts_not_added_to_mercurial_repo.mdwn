@@ -12,3 +12,10 @@ If I then edit the blog post, **then** the file gets commited and I can see the 
 > For mercurial, these run respectively `hg add` and `hg commit`. If the
 > add or commit fails, it will print a warning to stderr, you might check
 > apache's error.log to see if there's anything there. --[[Joey]]
+
+>>The problem was using accented characters (é, í) on the change comments. I didn't have
+>>an UTF-8 locale enabled in my setup file. By coincidence this happened for the first time
+>>in a couple of consecutive blog posts, so I was mistaken about the root of the problem. I don't know if
+>>you will consider this behavior a bug, since it's strictly speaking a misconfiguration but it
+>>still causes ikiwiki's mercurial backend to fail. A quick note in the docs might be a good idea. For my part, please
+>>close this bug, and thanks for the help.  --[[buo]]

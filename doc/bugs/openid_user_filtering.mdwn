@@ -1,0 +1,9 @@
+As mentioned on IRC, I think a cheap form of [[todo/ACL]] can be maintained using [OpenID in ikiwiki](http://packages.qa.debian.org/libn/libnet-openid-consumer-perl.html).
+
+Say I want to limit edits to [wiki.webvm.net](http://wiki.webvm.net/) to users of that machine. For the user 'hendry' I create a http://hendry.webvm.net/ OpenID (which actually delegates to http://hendry.myopenid.com/). And likewise for other users.
+
+So I suggest an ikiwiki configuration like:
+
+     users => ["*.webvm.net"],
+
+Would only allow edits from openIDs of that form.

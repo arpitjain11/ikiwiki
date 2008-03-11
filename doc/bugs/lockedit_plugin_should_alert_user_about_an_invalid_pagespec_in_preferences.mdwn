@@ -1,0 +1,3 @@
+[[plugins/lockedit]] adds the form fields for a [[pagespec]] to preferences. This pagespec should be supplied "raw"; i.e., without quotes around it. Inexperienced users (such as [[myself|jondowland]]) may provide an invalid pagespec, such as one with quotes on it. This will be merrily accepted by the form, but will cause no locking to take place.
+
+Perhaps some validation should be performed on the pagespec and the form-submission return include "warning: this pagespec is invalid" or "warning: this pagespec does not match any existing pages" or similar.

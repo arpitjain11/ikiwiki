@@ -1,0 +1,9 @@
+[[!template id=plugin name=tex4ht core=0 author="[[DavidBremner]]"]]
+
+I have written a simple wrapper around tex4ht to convert tex files to html. This is slow, and currently noisy. I do not recommend it for running from cgi.  But for interactive conversion of 
+my old tex4ht based home page, it seems to work OK. 
+
+The current version is available from 
+[git](http://pivot.cs.unb.ca/git?p=ikiperl.git;a=blob_plain;f=IkiWiki/Plugin/tex4ht.pm;hb=HEAD)
+
+[[!tag type/slow]]
