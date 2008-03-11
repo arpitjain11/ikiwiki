@@ -8,6 +8,11 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   [ martin f. krafft ]
   * The meta plugin now allows for the robots tag to be specified without the
     risk of it being scrubbed.
+  * Let meta.openid set X-XRDS-Location header
+  * Make makerepo set the Git merge remote.
+    branch.master.remote previously used to default to origin, which has
+    recently been changed; it now needs to be set explicitly, which this
+    patch does. Closes: #470517
 
   [ Joey Hess ]
   * Add recentchangesdiff plugin that adds diffs to the recentchanges feeds.
