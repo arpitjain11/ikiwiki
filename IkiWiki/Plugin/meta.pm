@@ -140,10 +140,14 @@ sub preprocess (@) { #{{{
 		if (exists $params{server} && safeurl($params{server})) {
 			push @{$metaheaders{$page}}, '<link href="'.encode_entities($params{server}).
 				'" rel="openid.server" />';
+			push @{$metaheaders{$page}}, '<link href="'.encode_entities($params{server}).
+				'" rel="openid2.provider" />';
 		}
 		if (safeurl($value)) {
 			push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
 				'" rel="openid.delegate" />';
+			push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
+				'" rel="openid2.local_id" />';
 		}
 		if (exists $params{xrds-location} && safeurl($params{xrds-location})) {
 			push @{$metaheaders{$page}}, '<meta http-equiv="X-XRDS-Location"'.
