@@ -62,6 +62,7 @@ git)
 	git commit -m "initial commit"
 	git remote add origin "$repository"
 	git config branch.master.merge refs/heads/master
+	git config branch.master.remote origin
 	git push --all
 	echo "Directory $srcdir is now a clone of $rcs repository $repository"
 ;;
