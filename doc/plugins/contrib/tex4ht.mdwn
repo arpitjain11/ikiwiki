@@ -6,4 +6,10 @@ my old tex4ht based home page, it seems to work OK.
 The current version is available from 
 [git](http://pivot.cs.unb.ca/git?p=ikiperl.git;a=blob_plain;f=IkiWiki/Plugin/tex4ht.pm;hb=HEAD)
 
+### Other related ideas/plugins:
+
+- [[todo/latex]] There is work in progress at converting snippets of latex.  No idea how the hybrid approach of tex4ht (part fonts, part bitmaps) compares to the [[todo/latex]] approach.
+
+- pandoc can also convert latex to html or markdown. It is much faster than tex4ht; on the other hand, the rendering quality is not quite as good, and pandoc does not understand user defined TeX macros.
+
 [[!tag type/slow]]
