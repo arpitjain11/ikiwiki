@@ -414,7 +414,16 @@ sub rcs_recentchanges ($) { #{{{
 sub rcs_diff ($) { #{{{
 	my $rev=shift;
 	my ($sha1) = $rev =~ /^($sha1_pattern)$/; # untaint
-	return join("\n", run_or_non("git", "diff", "$sha1^", $sha1));
+	my $ret;
+	foreach my $line (run_or_non("git", "show", $sha1)) {
+		if (defined $ret) {
+			$ret.=$line."\n";
+		}
+		elsif ($line=~/^diff --git/) {
+			$ret=$line."\n";
+		}
+	}
+	return $ret;
 } #}}}
 
 sub rcs_getctime ($) { #{{{
