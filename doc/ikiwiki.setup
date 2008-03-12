@@ -57,12 +57,6 @@ use IkiWiki::Setup::Standard {
 	# The path to your workspace (defaults to the srcdir itself)
 	# e.g. use if your srcdir is a subdirectory of the workspace.
 	#mtnrootdir => "path/to/root/of/workspace",
-	# This is a monotone lua hook file used by ikiwiki for
-	# inserting conflict markers. By default it will use
-	# mtnrootdir/_MTN/mergerc. This hook will be populated with
-	# default code the first time you use ikiwiki.  You can
-	# change it to alter how conflict markers are inserted.
-	#mtnmergerc => "path/to/mergerc",
 
 	wrappers => [
 		#{

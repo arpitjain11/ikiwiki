@@ -28,6 +28,8 @@ ikiwiki (2.41) UNRELEASED; urgency=low
     correct, and it's certianly not correct now, since the wiki is locked
     before rcs_commit is ever called, and should not be unlocked by
     rcs_commit either.
+  * monotone: Require version 0.38 or greater, and stop using the mtnmergerc
+    option. (Brian May)
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

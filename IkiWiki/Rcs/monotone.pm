@@ -18,12 +18,30 @@ sub check_config() { #{{{
 		error("Ikiwiki srcdir does not seem to be a Monotone workspace (or set the mtnrootdir)!");
 	}
 	
-	if (!defined($config{mtnmergerc})) {
-		$config{mtnmergerc} = "$config{mtnrootdir}/_MTN/mergerc";
-	}
-	
 	chdir $config{srcdir}
 	    or error("Cannot chdir to $config{srcdir}: $!");
+
+	my $child = open(MTN, "-|");
+	if (! $child) {
+		open STDERR, ">/dev/null";
+		exec("mtn", "version") || error("mtn version failed to run");
+	}
+
+	my $version=undef;
+	while (<MTN>) {
+		if (/^monotone (\d+\.\d+) /) {
+			$version=$1;
+		}
+	}
+
+	close MTN || debug("mtn version exited $?");
+
+	if (!defined($version)) {
+		error("Cannot determine monotone version");
+	}
+	if ($version < 0.38) {
+		error("Monotone version too old, is $version but required 0.38");
+	}
 } #}}}
 
 sub get_rev () { #{{{
@@ -59,13 +77,11 @@ sub mtn_merge ($$$$) { #{{{
     
 	my $mergeRev;
 
-	my $mergerc = $config{mtnmergerc};
-    
 	my $child = open(MTNMERGE, "-|");
 	if (! $child) {
 		open STDERR, ">&STDOUT";
-		exec("mtn", "--root=$config{mtnrootdir}", "--rcfile",
-		     $mergerc, "explicit_merge", $leftRev, $rightRev,
+		exec("mtn", "--root=$config{mtnrootdir}",
+		     "explicit_merge", $leftRev, $rightRev,
 		     $branch, "--author", $author, "--key", 
 		     $config{mtnkey}) || error("mtn merge failed to run");
 	}
@@ -128,21 +144,6 @@ sub commit_file_to_new_rev($$$$$$$$) { #{{{
 	
 	debug("Added certs for rev: $newRevID");
 	return $newRevID;
-} #}}}
-
-sub check_mergerc () { #{{{
-	my $mergerc = $config{mtnmergerc};
-	if (! -r $mergerc ) {
-		debug("$mergerc doesn't exist. Creating file with default mergers.");
-		open (my $out, ">", $mergerc) or error("can't open $mergerc: $!");
-		print $out <DATA>;
-		print $out <<"EOF";
-	function note_netsync_revision_received(new_id, revision, certs, session_id)
-		execute("$config{mtnrootdir}/_MTN/ikiwiki-netsync-hook", new_id)
-	end
-EOF
-		close $out;
-	}
 } #}}}
 
 sub read_certs ($$) { #{{{
@@ -280,8 +281,6 @@ sub rcs_commit ($$$;$$) { #{{{
 			}
 			debug("Divergence created! Attempting auto-merge.");
 
-			check_mergerc();
-
 			# see if it will merge cleanly
 			$ENV{MTN_MERGE}="fail";
 			my $mergeResult = mtn_merge($newRevID, $rev, $branch, $author);
@@ -304,9 +303,11 @@ sub rcs_commit ($$$;$$) { #{{{
 			else {
 				debug("Auto-merge failed.  Using diff-merge to add conflict markers.");
 				
-				$ENV{MTN_MERGE}="diffutils_force";
+				$ENV{MTN_MERGE}="diffutils";
+				$ENV{MTN_MERGE_DIFFUTILS}="partial=true";
 				$mergeResult = mtn_merge($newRevID, $rev, $branch, $author);
 				$ENV{MTN_MERGE}="";
+				$ENV{MTN_MERGE_DIFFUTILS}="";
 				
 				if (!defined($mergeResult)) {
 					debug("Unable to insert conflict markers!");
@@ -531,55 +532,3 @@ sub rcs_getctime ($) { #{{{
 } #}}}
 
 1
-
-# default mergerc content
-__DATA__
-	function local_execute_redirected(stdin, stdout, stderr, path, ...)
-	   local pid
-	   local ret = -1
-	   io.flush();
-	   pid = spawn_redirected(stdin, stdout, stderr, path, unpack(arg))
-	   if (pid ~= -1) then ret, pid = wait(pid) end
-	   return ret
-	end
-	if (not execute_redirected) then -- use standard function if available
-	   execute_redirected = local_execute_redirected
-	end
-	if (not mergers.fail) then -- use standard merger if available
-	   mergers.fail = {
-	      cmd = function (tbl) return false end,
-	      available = function () return true end,
-	      wanted = function () return true end
-	   }
-	end
-	mergers.diffutils_force = {
-	   cmd = function (tbl)
-	      local ret = execute_redirected(
-	          "",
-	          tbl.outfile,
-	          "",
-	          "diff3",
-	          "--merge",
-	          "--show-overlap",
-	          "--label", string.format("[Yours]",     tbl.left_path ),
-	          "--label", string.format("[Original]",  tbl.anc_path  ),
-	          "--label", string.format("[Theirs]",    tbl.right_path),
-	          tbl.lfile,
-	          tbl.afile,
-	          tbl.rfile
-	      )
-	      if (ret > 1) then
-	         io.write(gettext("Error running GNU diffutils 3-way difference tool 'diff3'"))
-	         return false
-	      end
-	      return tbl.outfile
-	   end,
-	   available =
-	      function ()
-	          return program_exists_in_path("diff3");
-	      end,
-	   wanted =
-	      function ()
-	           return true
-	      end
-	}
