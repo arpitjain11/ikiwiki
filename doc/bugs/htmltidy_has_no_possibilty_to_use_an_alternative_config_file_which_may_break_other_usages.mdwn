@@ -9,3 +9,7 @@ I see two possibilities how to fix this:
 -show-warnings no --tidy-mark no --write-back yes');" -- This is the fastest fix, but not very elegant, since it doesn't solve the general problem.
 
 2) Make it configurable via ikiwiki.setup as e.g.with the tags plugin. Haven't looked into this code yet.
+
+> I don't understand why you're talking about setting --write-back. The
+> htmltidy plugin communicates with tidy using stdio. No files are used, so
+> write-back settings should be irrelevant. --[[Joey]]
