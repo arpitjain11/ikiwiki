@@ -62,6 +62,7 @@ def rpc_call(cmd, **kwargs):
 class SimpleStdinOutXMLRPCHandler(SimpleXMLRPCDispatcher):
 
     def __init__(self, allow_none=False, encoding=None):
+        # see http://bugs.debian.org/470645
         if SimpleXMLRPCDispatcher.__init__.func_code.co_argcount == 1:
             # python2.4 and before only took one argument
             SimpleXMLRPCDispatcher.__init__(self)
