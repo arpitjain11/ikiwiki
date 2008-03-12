@@ -1,0 +1,9 @@
+ikiwiki uses the `post-update` Git hook, which traditionally is being used to
+call `git-update-server-info`. This is only needed for HTTP-served
+repositories.
+
+It would be nice if there were a configuration option with which I could
+instruct the hook to call `git-update-server-info` as well, in the
+wrappers['git'] configuration hash (?).
+
+--[[madduck]]
