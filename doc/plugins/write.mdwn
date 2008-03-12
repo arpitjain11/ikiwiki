@@ -512,7 +512,7 @@ version of the file. In particular, in preview mode, this should still be
 called even if the file isn't going to be written to during the preview.
 
 Ikiwiki uses this information to automatically clean up rendered files when
-the page that rendered them goes away or is changes to no longer render
+the page that rendered them goes away or is changed to no longer render
 them. will_render also does a few important security checks.
 
 #### `pagetype($)`
