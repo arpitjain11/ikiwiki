@@ -19,3 +19,6 @@ If I then edit the blog post, **then** the file gets commited and I can see the 
 >>you will consider this behavior a bug, since it's strictly speaking a misconfiguration but it
 >>still causes ikiwiki's mercurial backend to fail. A quick note in the docs might be a good idea. For my part, please
 >>close this bug, and thanks for the help.  --[[buo]]
+
+>>> So, in a non-utf8 locale, mercurial fails to commit if the commit
+>>> message contains utf8? --[[Joey]]
