@@ -61,8 +61,12 @@ def rpc_call(cmd, **kwargs):
 
 class SimpleStdinOutXMLRPCHandler(SimpleXMLRPCDispatcher):
 
-    def __init__(self):
-        SimpleXMLRPCDispatcher.__init__(self)
+    def __init__(self, allow_none=False, encoding=None):
+        if SimpleXMLRPCDispatcher.__init__.func_code.co_argcount == 1:
+            # python2.4 and before only took one argument
+            SimpleXMLRPCDispatcher.__init__(self)
+        else:
+            SimpleXMLRPCDispatcher.__init__(self, allow_none, encoding)
 
     def process_request(self, req):
         write(self._marshaled_dispatch(req))
