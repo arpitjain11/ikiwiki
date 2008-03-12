@@ -149,9 +149,9 @@ sub preprocess (@) { #{{{
 			push @{$metaheaders{$page}}, '<link href="'.encode_entities($value).
 				'" rel="openid2.local_id" />';
 		}
-		if (exists $params{xrds-location} && safeurl($params{xrds-location})) {
+		if (exists $params{"xrds-location"} && safeurl($params{"xrds-location"})) {
 			push @{$metaheaders{$page}}, '<meta http-equiv="X-XRDS-Location"'.
-				'content="'.encode_entities($params{xrds-location}).'" />';
+				'content="'.encode_entities($params{"xrds-location"}).'" />';
 		}
 	}
 	elsif ($key eq 'redir') {
