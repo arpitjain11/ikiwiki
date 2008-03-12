@@ -21,7 +21,7 @@ sub printheader ($) { #{{{
 
 } #}}}
 
-sub showform ($$$$) { #{{{
+sub showform ($$$$;@) { #{{{
 	my $form=shift;
 	my $buttons=shift;
 	my $session=shift;
@@ -35,7 +35,7 @@ sub showform ($$$$) { #{{{
 	}
 
 	printheader($session);
-	print misctemplate($form->title, $form->render(submit => $buttons));
+	print misctemplate($form->title, $form->render(submit => $buttons), @_);
 }
 
 sub redirect ($$) { #{{{
@@ -276,6 +276,8 @@ sub cgi_editpage ($$) { #{{{
 	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
 		error("bad page name");
 	}
+
+	my $baseurl=$config{url}."/".htmlpage($page);
 	
 	my $from;
 	if (defined $form->field('from')) {
@@ -325,10 +327,9 @@ sub cgi_editpage ($$) { #{{{
 	$form->tmpl_param("can_commit", $config{rcs});
 	$form->tmpl_param("indexlink", indexlink());
 	$form->tmpl_param("helponformattinglink",
-		htmllink("", "", "ikiwiki/formatting",
+		htmllink($page, $page, "ikiwiki/formatting",
 			noimageinline => 1,
 			linktext => "FormattingHelp"));
-	$form->tmpl_param("baseurl", baseurl());
 	
 	if ($form->submitted eq "Cancel") {
 		if ($form->field("do") eq "create" && defined $from) {
@@ -354,9 +355,9 @@ sub cgi_editpage ($$) { #{{{
 		});
 		$form->tmpl_param("page_preview",
 			htmlize($page, $type,
-			linkify($page, "/",
-			preprocess($page, "/",
-			filter($page, "/", $content), 0, 1))));
+			linkify($page, $page,
+			preprocess($page, $page,
+			filter($page, $page, $content), 0, 1))));
 		# previewing may have created files on disk
 		saveindex();
 	}
@@ -458,7 +459,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->title(sprintf(gettext("editing %s"), pagetitle($page)));
 		}
 		
-		showform($form, \@buttons, $session, $q);
+		showform($form, \@buttons, $session, $q, forcebaseurl => $baseurl);
 	}
 	else {
 		# save page
@@ -474,7 +475,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			showform($form, \@buttons, $session, $q);
+			showform($form, \@buttons, $session, $q, forcebaseurl => $baseurl);
 			return;
 		}
 		elsif ($form->field("do") eq "create" && $exists) {
@@ -488,7 +489,7 @@ sub cgi_editpage ($$) { #{{{
 				value => readfile("$config{srcdir}/$file").
 				         "\n\n\n".$form->field("editcontent"),
 				force => 1);
-			showform($form, \@buttons, $session, $q);
+			showform($form, \@buttons, $session, $q, forcebaseurl => $baseurl);
 			return;
 		}
 		
@@ -518,7 +519,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			showform($form, \@buttons, $session, $q);
+			showform($form, \@buttons, $session, $q,
+				forcebaseurl => $baseurl);
 			return;
 		}
 		
@@ -562,7 +564,8 @@ sub cgi_editpage ($$) { #{{{
 			$form->field(name => "page", type => 'hidden');
 			$form->field(name => "type", type => 'hidden');
 			$form->title(sprintf(gettext("editing %s"), $page));
-			showform($form, \@buttons, $session, $q);
+			showform($form, \@buttons, $session, $q,
+				forcebaseurl => $baseurl);
 			return;
 		}
 		else {

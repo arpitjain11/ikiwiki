@@ -31,6 +31,10 @@ ikiwiki (2.41) UNRELEASED; urgency=low
     rcs_commit either.
   * monotone: Require version 0.38 or greater, and stop using the mtnmergerc
     option. (Brian May)
+  * Use forcebaseurl to make page previews be displayed with the html base
+    set to the destination page. This avoids need for hacks to munge the urls
+    in preview mode, which fixes several bugs.
+  * Several destpage fixes in plugins.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

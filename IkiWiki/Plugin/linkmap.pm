@@ -53,11 +53,11 @@ sub genmap ($) { #{{{
 		}
 	}
 
-	my $dest=$params{page}."/linkmap.png";
+	my $dest=$params{destpage}."/linkmap.png";
 
 	# Use ikiwiki's function to create the file, this makes sure needed
 	# subdirs are there and does some sanity checking.
-	will_render($params{page}, $dest);
+	will_render($params{destpage}, $dest);
 	writefile($dest, $config{destdir}, "");
 
 	# Run dot to create the graphic and get the map data.

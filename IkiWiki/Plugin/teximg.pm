@@ -70,21 +70,13 @@ sub create ($$$) { #{{{
 
 	my $digest = md5_hex($code, $height);
 
-	my $imglink= $params->{page} . "/$digest.png";
-	my $imglog =  $params->{page} .  "/$digest.log";
+	my $imglink= $params->{destpage} . "/$digest.png";
+	my $imglog =  $params->{destpage} .  "/$digest.log";
 	will_render($params->{destpage}, $imglink);
 	will_render($params->{destpage}, $imglog);
 
-	my $imgurl;
-	my $logurl;
-	if (! $params->{preview}) {
-		$imgurl = urlto($imglink, $params->{destpage});
-		$logurl = urlto($imglog, $params->{destpage});
-	}
-	else {
-		$imgurl=$params->{page}."/$digest.png";
-		$logurl=$params->{page}."/$digest.log";
-	}
+	my $imgurl=urlto($imglink, $params->{destpage});
+	my $logurl=urlto($imglink, $params->{destpage});
 	
 	if (-e "$config{destdir}/$imglink" ||
 	    gen_image($code, $height, $digest, $params->{page})) {

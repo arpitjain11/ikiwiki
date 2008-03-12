@@ -114,10 +114,10 @@ sub preprocess (@) { #{{{
 	# the base for its filename.
 	eval q{use Digest::SHA1};
         error($@) if $@;
-	my $fn=$params{page}."/sparkline-".
+	my $fn=$params{destpage}."/sparkline-".
 		IkiWiki::possibly_foolish_untaint(Digest::SHA1::sha1_hex($php)).
 		".png";
-	will_render($params{page}, $fn);
+	will_render($params{destpage}, $fn);
 
 	if (! -e "$config{destdir}/$fn") {
 		my $pid;
