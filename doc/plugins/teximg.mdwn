@@ -3,6 +3,10 @@
 
 This plugin renders LaTeX formulas into images.
 
+Of course you will need LaTeX installed for this to work. The plugin
+also uses mhchem.sty, which in Debian is in the texlive-science package and
+may not be part of a regular texlive installation.
+
 ## examples
 
 	\[[teximg code="\ce{[Cu(NH3)3]^{2+}}"]]
