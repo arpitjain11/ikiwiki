@@ -1,0 +1,11 @@
+After adding rst to plugins, ikiwiki --setup fails:
+
+    Traceback (most recent call last):
+      File "/usr/lib/ikiwiki/plugins/rst", line 93, in <module>
+        handler = SimpleStdinOutXMLRPCHandler()
+      File "/usr/lib/ikiwiki/plugins/rst", line 65, in __init__
+        SimpleXMLRPCDispatcher.__init__(self)
+    TypeError: __init__() takes exactly 3 arguments (1 given)
+
+This is ikiwiki version 2.40 and
+[SimpleXMLRPCServer.py](http://svn.python.org/view/python/tags/r25/Lib/SimpleXMLRPCServer.py?rev=51918&view=markup) from python-2.5
