@@ -286,7 +286,8 @@ sub preprocess_inline (@) { #{{{
 			will_render($params{destpage}, $rssp);
 			if (! $params{preview}) {
 				writefile($rssp, $config{destdir},
-					genfeed("rss", $rssurl, $desc, $params{destpage}, @list));
+					genfeed("rss",
+						$config{url}."/".rsspage($params{destpage}).$feednum, $desc, $params{destpage}, @list));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
 				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 			}
@@ -296,7 +297,7 @@ sub preprocess_inline (@) { #{{{
 			will_render($params{destpage}, $atomp);
 			if (! $params{preview}) {
 				writefile($atomp, $config{destdir},
-					genfeed("atom", $atomurl, $desc, $params{destpage}, @list));
+					genfeed("atom", $config{url}."/".atompage($params{destpage}).$feednum, $desc, $params{destpage}, @list));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
 				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
 			}
