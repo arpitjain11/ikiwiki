@@ -60,7 +60,8 @@ sub rcs_recentchanges ($) {
 sub rcs_diff ($) {
 	# Optional, used to get diffs for recentchanges.
 	# The parameter is the rev from rcs_recentchanges.
-	return "";
+	# Should return a list of lines of the diff (including \n) in list
+	# context, and the whole diff in scalar context.
 }
 
 sub rcs_getctime ($) {

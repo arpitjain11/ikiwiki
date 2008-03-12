@@ -23,3 +23,24 @@ The tarball is at http://scratch.madduck.net/__tmp__recentchanges-segfault.tgz -
     rm -rf wc/recentchanges
     ikiwiki --setup ikiwiki.setup
     # works
+
+> I can reproduce it fine with that, thanks, and it's really looking like a
+> pure perl bug, that is triggered by markdown. Here's a simpler test case:
+
+	joey@kodama:/tmp>markdown < f
+	zsh: segmentation fault  markdown < f
+
+> Where f is a 6.3 mb file that I
+> extracted from ikiwiki's rendering pipeline.
+
+> It seems to be crashing at markdown line 345, which is a big nasty
+> `s///` statement.
+
+> The good news: markdown version 1.0.2~b8-2 does not trigger this perl bug.
+> I only see it with 1.0.1. (Bad news: Newer versions of markdown are
+> slooooooow, especially on such large files.)
+
+> I'm calling this [[done]] since I've filed [[debbug 470676]] on perl, and
+> also have modified recentchangesdiff to only show the first 200 lines of
+> diff, which should be enough without bloating the recentchanges into
+> perl-crashing territory. --[[Joey]]

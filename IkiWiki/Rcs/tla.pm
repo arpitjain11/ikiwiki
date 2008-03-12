@@ -171,7 +171,7 @@ sub rcs_diff ($) { #{{{
 	}
 
 	my $revminusone = $changesets[$i+1];
-	return scalar `tla diff -d $config{srcdir} $revminusone`;
+	return `tla diff -d $config{srcdir} $revminusone`;
 } #}}}
 
 sub rcs_getctime ($) { #{{{
