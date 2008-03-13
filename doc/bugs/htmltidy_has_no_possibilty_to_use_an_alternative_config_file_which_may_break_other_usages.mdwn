@@ -13,3 +13,5 @@ I see two possibilities how to fix this:
 > I don't understand why you're talking about setting --write-back. The
 > htmltidy plugin communicates with tidy using stdio. No files are used, so
 > write-back settings should be irrelevant. --[[Joey]]
+
+>> Hmmm, ok. Well, it didn't work. Empty pages, Perl Warnings. I moved my $HOME/.tidyrc away and it worked again. Had a short look into it and the only obvious non-default setting I found was write-back. I'll check what exactly caused the breakage and let you know. --[[XTaran]]
