@@ -7,6 +7,7 @@ use strict;
 use IkiWiki 2.00;
 use HTML::Parser;
 use HTML::Tagset;
+use HTML::Entities;
 use URI;
 use open qw{:utf8 :std};
 
@@ -205,8 +206,6 @@ sub loadstate () { #{{{
 sub savestate () { #{{{
 	return unless $state_loaded;
 	garbage_collect();
-	eval q{use HTML::Entities};
-	error($@) if $@;
 	my $newfile="$config{wikistatedir}/aggregate.new";
 	my $cleanup = sub { unlink($newfile) };
 	open (OUT, ">$newfile") || error("open $newfile: $!", $cleanup);
@@ -334,8 +333,6 @@ sub aggregate (@) { #{{{
 	eval q{use XML::Feed};
 	error($@) if $@;
 	eval q{use URI::Fetch};
-	error($@) if $@;
-	eval q{use HTML::Entities};
 	error($@) if $@;
 
 	foreach my $feed (@_) {
