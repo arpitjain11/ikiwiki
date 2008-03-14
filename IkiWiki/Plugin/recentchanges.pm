@@ -28,7 +28,7 @@ sub refresh ($) { #{{{
 	
 	# delete old and excess changes
 	foreach my $page (keys %pagesources) {
-		if ($page =~ /\._change$/ && ! $seen{$page}) {
+		if ($pagesources{$page} =~ /\._change$/ && ! $seen{$page}) {
 			unlink($config{srcdir}.'/'.$pagesources{$page});
 		}
 	}
@@ -159,12 +159,6 @@ sub store ($$$) { #{{{
 	utime $change->{when}, $change->{when}, "$config{srcdir}/$file";
 
 	return $page;
-} #}}}
-
-sub updatechanges ($$) { #{{{
-	my $subdir=shift;
-	my @changes=@{shift()};
-	
 } #}}}
 
 1
