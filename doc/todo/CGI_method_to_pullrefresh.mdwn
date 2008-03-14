@@ -1,0 +1,5 @@
+[[!meta title="CGI method to pull/refresh"]]
+
+In some situations, it makes sense to have the repository in use by ikiwiki reside on a different machine. In that case, one could juggle SSH keys for the `post-update` hook. A better way may be to provide a different `do` parameter handler for the CGI, which would pull new commits to the working clone and refresh the wiki. Then, the remote `post-update` hook could just `wget` that URL. To prevent simple DoS attacks, one might assign a simple password.
+
+[[tag wishlist]]

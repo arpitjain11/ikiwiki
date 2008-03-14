@@ -1,15 +1,19 @@
 The htmltidy plugin as in the Backports.org version 2.32.3~bpo40+1 of ikiwiki does not play well with other usages of HTML Tidy since it has no possibility to use an alternative config file.
 
-E.g. since I usually use HTML Tidy manually only to check and not to fix HTML, I have "write-back: no" in my $HOME/.tidyrc which throws an awful lot of Perl warnings and renders all ikiwiki pages empty as soon as I enable htmltidy.
+E.g. since I usually use HTML Tidy manually only to check and not to fix HTML, I have "markup: no" in my $HOME/.tidyrc which throws an awful lot of Perl warnings and renders all ikiwiki pages empty as soon as I enable htmltidy.
 
 I see two possibilities how to fix this:
 
 1) Replace "$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes -
 -show-warnings no --tidy-mark no');" by "$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes -
--show-warnings no --tidy-mark no --write-back yes');" -- This is the fastest fix, but not very elegant, since it doesn't solve the general problem.
+-show-warnings no --tidy-mark no --markup yes');" -- This is the fastest fix, but not very elegant, since it doesn't solve the general problem.
 
 2) Make it configurable via ikiwiki.setup as e.g.with the tags plugin. Haven't looked into this code yet.
 
 > I don't understand why you're talking about setting --write-back. The
 > htmltidy plugin communicates with tidy using stdio. No files are used, so
 > write-back settings should be irrelevant. --[[Joey]]
+
+>> Hmmm, ok. Well, it didn't work. Empty pages, Perl Warnings. I moved my $HOME/.tidyrc away and it worked again. Had a short look into it and the only obvious non-default setting I found was write-back. I'll check what exactly caused the breakage and let you know. --[[XTaran]]
+
+>>> Ok, found it. It indeed wasn't `write-back`, but `markup: no`. (I usually only want to see warnings and errors, not the fixed markup.) I now've corrected this in the bug report above. --[[XTaran]]
