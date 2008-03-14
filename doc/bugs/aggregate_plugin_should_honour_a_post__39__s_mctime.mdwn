@@ -6,3 +6,5 @@ It would be nice if the [[aggregate_plugin|plugin/aggregate]] would try to extra
 	# time on record for the new page.
 	utime $mtime, $mtime, pagefile($guid->{page})
 		if defined $mtime && $mtime <= time;
+
+>> I'll have to debug this, it's not working here... and this is an ikiwiki aggregator scraping another ikiwiki site.
