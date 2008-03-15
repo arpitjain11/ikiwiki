@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# rstproc — xml-rpc-based ikiwiki plugin to process RST files
+# rst — xml-rpc-based ikiwiki plugin to process RST files
 #
 # TODO: the top of this file should be converted to a python library for
 # ikiwiki plugins
@@ -10,93 +10,32 @@
 #
 # Copyright © martin f. krafft <madduck@madduck.net>
 # Released under the terms of the GNU GPL version 2
-
-__name__ = 'rstproc'
+#
+__name__ = 'rst'
 __description__ = 'xml-rpc-based ikiwiki plugin to process RST files'
 __version__ = '0.2'
 __author__ = 'martin f. krafft <madduck@madduck.net>'
 __copyright__ = 'Copyright © ' + __author__
 __licence__ = 'GPLv2'
 
-from docutils.core import publish_string;
-import posix
-import select
-import sys
-import xmlrpclib
-import xml.parsers.expat
-from SimpleXMLRPCServer import SimpleXMLRPCDispatcher
-
-def write(s):
-    # no comment
-    sys.stdout.write(s)
-    sys.stdout.flush()
-
-def debug(s):
-    print >>sys.stderr, __name__ + ':DEBUG:' + s
-    sys.stderr.flush()
-
-def rpc_read(processor):
-    acc = ''
-    ret = None
-    while True:
-        line = sys.stdin.readline()
-        if line is None: continue
-        if len(line) == 0: sys.exit(posix.EX_OK)
-#        debug('read line: ' + line)
-        acc += line
-        try:
-            ret = processor(acc)
-#            debug('processed: ' + acc)
-#            debug('got back: ' + ret.__class__.__name__)
-            return ret
-        except xml.parsers.expat.ExpatError:
-#            debug('request invalid or incomplete: ' + acc)
-            pass
-    return None
-
-def rpc_call(cmd, **kwargs):
-    call = xmlrpclib.dumps(sum(kwargs.items(), ()), cmd)
-    write(call + '\n')
-    resp = rpc_read(lambda resp: resp)
-
-class SimpleStdinOutXMLRPCHandler(SimpleXMLRPCDispatcher):
-
-    def __init__(self, allow_none=False, encoding=None):
-        # see http://bugs.debian.org/470645
-        if SimpleXMLRPCDispatcher.__init__.func_code.co_argcount == 1:
-            # python2.4 and before only took one argument
-            SimpleXMLRPCDispatcher.__init__(self)
-        else:
-            SimpleXMLRPCDispatcher.__init__(self, allow_none, encoding)
-
-    def process_request(self, req):
-        write(self._marshaled_dispatch(req))
-
-    def handle_request(self):
-        def processor(req):
-            self.process_request(req)
-        while True:
-            ret = rpc_read(processor)
-            if ret is not None: return ret
+from docutils.core import publish_parts;
+from proxy import IkiWikiProcedureProxy
 
 def rst2html(*kwargs):
     # FIXME arguments should be treated as a hash, the order could change
     # at any time and break this.
-    html = publish_string(kwargs[3], writer_name='html',
-            settings_overrides = { 'halt_level': 6
-                                 , 'file_insertion_enabled': 0
-                                 , 'raw_enabled': 1
-                                 })
-    content = html.split('<div class="document">', 1)[1]
-    content = content.split('</div>\n</body>')[:-1][0].strip()
-#    debug('content = ' + content)
-    return content
+    parts = publish_parts(kwargs[3], writer_name='html',
+                          settings_overrides = { 'halt_level': 6
+                                               , 'file_insertion_enabled': 0
+                                               , 'raw_enabled': 1
+                                               })
+    return '\n'.join(parts['html_body'].splitlines()[1:-1])
 
-def importme():
-    rpc_call('hook', type='htmlize', id='rst', call='rst2html')
+import sys
+def debug(s):
+    sys.stderr.write(__name__ + ':DEBUG:%s' % s)
+    sys.stderr.flush()
 
-handler = SimpleStdinOutXMLRPCHandler()
-handler.register_function(importme, name='import')
-handler.register_function(rst2html)
-while True:
-    handler.handle_request()
+proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
+proxy.register_hook('htmlize', rst2html)
+proxy.run()
