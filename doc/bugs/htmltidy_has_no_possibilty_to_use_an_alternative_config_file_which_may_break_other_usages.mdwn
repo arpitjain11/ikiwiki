@@ -17,3 +17,10 @@ I see two possibilities how to fix this:
 >> Hmmm, ok. Well, it didn't work. Empty pages, Perl Warnings. I moved my $HOME/.tidyrc away and it worked again. Had a short look into it and the only obvious non-default setting I found was write-back. I'll check what exactly caused the breakage and let you know. --[[XTaran]]
 
 >>> Ok, found it. It indeed wasn't `write-back`, but `markup: no`. (I usually only want to see warnings and errors, not the fixed markup.) I now've corrected this in the bug report above. --[[XTaran]]
+
+> Ok, so should I pass --markup yes, or should I force it not to use
+> ~/.tidyrc? I can do that (by setting HOME to /dev/null), but there seems
+> to be no way to override it reading /etc/tidy.conf, so options there can
+> still screw things up. I guess I'll pass --markup yes and deal with
+> overriding other problem settings from config files if they're found
+> later. --[[Joey]] [[tag done]]

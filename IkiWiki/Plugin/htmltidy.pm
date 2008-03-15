@@ -22,7 +22,7 @@ sub sanitize (@) { #{{{
 	my $pid;
 	my $sigpipe=0;
 	$SIG{PIPE}=sub { $sigpipe=1 };
-	$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no');
+	$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no --markup yes');
 	
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8');
