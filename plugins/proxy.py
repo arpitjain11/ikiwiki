@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# xmlrpc — helper for Python-based external (xml-rpc) ikiwiki plugins
+# proxy.py — helper for Python-based external (xml-rpc) ikiwiki plugins
 #
 # Copyright © martin f. krafft <madduck@madduck.net>
 # Released under the terms of the GNU GPL version 2
 #
-__name__ = 'xmlrpc'
-__description__ = 'xml-rpc-based ikiwiki plugin to process RST files'
+__name__ = 'proxy.py'
+__description__ = 'helper for Python-based external (xml-rpc) ikiwiki plugins'
 __version__ = '0.1'
 __author__ = 'martin f. krafft <madduck@madduck.net>'
 __copyright__ = 'Copyright © ' + __author__
