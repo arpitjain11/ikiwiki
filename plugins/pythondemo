@@ -1,0 +1,354 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# pythondemo — demo Python ikiwiki plugin
+#
+# Copyright © martin f. krafft <madduck@madduck.net>
+# Released under the terms of the GNU GPL version 2
+#
+__name__ = 'pythondemo'
+__description__ = 'demo Python ikiwiki plugin'
+__version__ = '0.1'
+__author__ = 'martin f. krafft <madduck@madduck.net>'
+__copyright__ = 'Copyright © ' + __author__
+__licence__ = 'GPLv2'
+
+from proxy import IkiWikiProcedureProxy
+
+import sys
+def debug(s):
+    sys.stderr.write(__name__ + ':DEBUG:%s\n' % s)
+    sys.stderr.flush()
+
+proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
+
+def _arglist_to_dict(args):
+    if len(args) % 2 != 0:
+        raise ValueError, 'odd number of arguments, cannot convert to dict'
+    return dict([args[i:i+2] for i in xrange(0, len(args), 2)])
+
+def getopt_demo(*args):
+    # This allows for plugins to perform their own processing of command-line
+    # options and so add options to the ikiwiki command line. It's called
+    # during command line processing, with @ARGV full of any options that
+    # ikiwiki was not able to process on its own. The function should process
+    # any options it can, removing them from @ARGV, and probably recording the
+    # configuration settings in %config. It should take care not to abort if
+    # it sees an option it cannot process, and should just skip over those
+    # options and leave them in @ARGV.
+    #
+    # TODO: See
+    # http://ikiwiki.info/bugs/external_plugins_cannot_access_ARGV_needed_for_getopt
+    debug("hook `getopt' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('getopt', getopt_demo)
+
+def checkconfig_demo(*args):
+    # This is useful if the plugin needs to check for or modify ikiwiki's
+    # configuration. It's called early in the startup process. The function is
+    # passed no values. It's ok for the function to call error() if something
+    # isn't configured right.
+    # TODO: how do we tell ikiwiki about errors?
+    debug("hook `checkconfig' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('checkconfig', checkconfig_demo)
+
+def refresh_demo(*args):
+    # This hook is called just before ikiwiki scans the wiki for changed
+    # files. It's useful for plugins that need to create or modify a source
+    # page. The function is passed no values.
+    debug("hook `refresh' called with arguments %s" % str(args))
+proxy.hook('refresh', refresh_demo)
+
+def needsbuild_demo(*args):
+    # This allows a plugin to manipulate the list of files that need to be
+    # built when the wiki is refreshed. The function is passed a reference to
+    # an array of pages that will be rebuilt, and can modify the array, either
+    # adding or removing files from it.
+    # TODO: how do we modify the array?
+    debug("hook `needsbuild' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('needsbuild', needsbuild_demo)
+
+def filter_demo(*args):
+    # Runs on the raw source of a page, before anything else touches it, and
+    # can make arbitrary changes. The function is passed named parameters
+    # "page", "destpage", and "content". It should return the filtered
+    # content.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `filter' called with arguments %s" % kwargs);
+    return kwargs['content']
+proxy.hook('filter', filter_demo)
+
+def preprocess_demo(*args):
+    # Each time the directive is processed, the referenced function
+    # (preprocess in the example above) is called, and is passed named
+    # parameters. A "page" parameter gives the name of the page that embedded
+    # the preprocessor directive, while a "destpage" parameter gives the name
+    # of the page the content is going to (different for inlined pages), and
+    # a "preview" parameter is set to a true value if the page is being
+    # previewed. All parameters included in the directive are included as
+    # named parameters as well. Whatever the function returns goes onto the
+    # page in place of the directive.
+    #
+    # An optional "scan" parameter, if set to a true value, makes the hook be
+    # called during the preliminary scan that ikiwiki makes of updated pages,
+    # before begining to render pages. This parameter should be set to true if
+    # the hook modifies data in %links. Note that doing so will make the hook
+    # be run twice per page build, so avoid doing it for expensive hooks. (As
+    # an optimisation, if your preprocessor hook is called in a void contets,
+    # you can assume it's being run in scan mode.)
+    #
+    # Note that if the htmlscrubber is enabled, html in PreProcessorDirective
+    # output is sanitised, which may limit what your plugin can do. Also, the
+    # rest of the page content is not in html format at preprocessor time.
+    # Text output by a preprocessor directive will be linkified and passed
+    # through markdown (or whatever engine is used to htmlize the page) along
+    # with the rest of the page.
+    #
+    # TODO: needs to be handled differently, the ID cannot be the plugin name.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `preprocess' called with arguments %s" % kwargs)
+    raise NotImplementedError
+    return kwargs['content']
+#proxy.hook('preprocess', preprocess_demo)
+
+def linkify_demo(*args):
+    # This hook is called to convert WikiLinks on the page into html links.
+    # The function is passed named parameters "page", "destpage", and
+    # "content". It should return the linkified content.
+    #
+    # Plugins that implement linkify must also implement a scan hook, that
+    # scans for the links on the page and adds them to %links.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `linkify' called with arguments %s" % kwargs)
+    return kwargs['content']
+proxy.hook('linkify', linkify_demo)
+
+def scan_demo(*args):
+    # This hook is called early in the process of building the wiki, and is
+    # used as a first pass scan of the page, to collect metadata about the
+    # page. It's mostly used to scan the page for WikiLinks, and add them to
+    # %links.
+    #
+    # The function is passed named parameters "page" and "content". Its return
+    # value is ignored.
+    #
+    # TODO: how do we add to %links?
+    kwargs = _arglist_to_dict(args)
+    debug("hook `scan' called with arguments %s" % kwargs)
+    raise NotImplementedError
+#proxy.hook('scan', scan_demo)
+
+def htmlize_demo(*args):
+    # Runs on the raw source of a page and turns it into html. The id
+    # parameter specifies the filename extension that a file must have to be
+    # htmlized using this plugin. This is how you can add support for new and
+    # exciting markup languages to ikiwiki.
+    #
+    # The function is passed named parameters: "page" and "content" and should
+    # return the htmlized content.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `htmlize' called with arguments %s" % kwargs)
+    return kwargs['content']
+proxy.hook('htmlize', htmlize_demo)
+
+def pagetemplate_demo(*args):
+    # Templates are filled out for many different things in ikiwiki, like
+    # generating a page, or part of a blog page, or an rss feed, or a cgi.
+    # This hook allows modifying the variables available on those templates.
+    # The function is passed named parameters. The "page" and "destpage"
+    # parameters are the same as for a preprocess hook. The "template"
+    # parameter is a HTML::Template object that is the template that will be
+    # used to generate the page. The function can manipulate that template
+    # object.
+    #
+    # The most common thing to do is probably to call $template->param() to
+    # add a new custom parameter to the template.
+    # TODO: how do we call $template->param()
+    kwargs = _arglist_to_dict(args)
+    debug("hook `pagetemplate' called with arguments %s" % kwargs)
+    raise NotImplementedError
+#proxy.hook('pagetemplate', pagetemplate_demo)
+
+def templatefile_demo(*args):
+    # This hook allows plugins to change the template that is used for a page
+    # in the wiki. The hook is passed a "page" parameter, and should return
+    # the name of the template file to use, or undef if it doesn't want to
+    # change the default ("page.tmpl"). Template files are looked for in
+    # /usr/share/ikiwiki/templates by default.
+    #
+    # TODO: we cannot really pass undef/None via xml-rpc, so what to do?
+    kwargs = _arglist_to_dict(args)
+    debug("hook `templatefile' called with arguments %s" % kwargs)
+    raise NotImplementedError
+    return None
+#proxy.hook('templatefile', templatefile_demo)
+
+def sanitize_demo(*args):
+    # Use this to implement html sanitization or anything else that needs to
+    # modify the body of a page after it has been fully converted to html.
+    #
+    # The function is passed named parameters: "page" and "content", and
+    # should return the sanitized content.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `sanitize' called with arguments %s" % kwargs)
+    return kwargs['content']
+proxy.hook('sanitize', sanitize_demo)
+
+def format_demo(*args):
+    # The difference between format and sanitize is that sanitize only acts on
+    # the page body, while format can modify the entire html page including
+    # the header and footer inserted by ikiwiki, the html document type, etc.
+    #
+    # The function is passed named parameters: "page" and "content", and
+    # should return the formatted content.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `format' called with arguments %s" % kwargs)
+    return kwargs['content']
+proxy.hook('format', format_demo)
+
+def delete_demo(*args):
+    # Each time a page or pages is removed from the wiki, the referenced
+    # function is called, and passed the names of the source files that were
+    # removed.
+    debug("hook `delete' called with arguments %s" % str(args))
+proxy.hook('delete', delete_demo)
+
+def change_demo(*args):
+    # Each time ikiwiki renders a change or addition (but not deletion) to the
+    # wiki, the referenced function is called, and passed the names of the
+    # source files that were rendered.
+    debug("hook `change' called with arguments %s" % str(args))
+proxy.hook('change', change_demo)
+
+def cgi_demo(*args):
+    # Use this to hook into ikiwiki's cgi script. Each registered cgi hook is
+    # called in turn, and passed a CGI object. The hook should examine the
+    # parameters, and if it will handle this CGI request, output a page
+    # (including the http headers) and terminate the program.
+    #
+    # Note that cgi hooks are called as early as possible, before any ikiwiki
+    # state is loaded, and with no session information.
+    debug("hook `cgi' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('cgi', cgi_demo)
+
+def auth_demo(*args):
+    # This hook can be used to implement a different authentication method
+    # than the standard web form. When a user needs to be authenticated, each
+    # registered auth hook is called in turn, and passed a CGI object and
+    # a session object.
+    #
+    # If the hook is able to authenticate the user, it should set the session
+    # object's "name" parameter to the authenticated user's name. Note that if
+    # the name is set to the name of a user who is not registered, a basic
+    # registration of the user will be automatically performed.
+    #
+    # TODO: how do we set the session parameter?
+    debug("hook `auth' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('auth', auth_demo)
+
+def sessioncgi_demo(*args):
+    # Unlike the cgi hook, which is run as soon as possible, the sessioncgi
+    # hook is only run once a session object is available. It is passed both
+    # a CGI object and a session object. To check if the user is in fact
+    # signed in, you can check if the session object has a "name" parameter
+    # set.
+    debug("hook `sessioncgi' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('sessioncgi', sessioncgi_demo)
+
+def canedit_demo(*args):
+    # This hook can be used to implement arbitrary access methods to control
+    # when a page can be edited using the web interface (commits from revision
+    # control bypass it). When a page is edited, each registered canedit hook
+    # is called in turn, and passed the page name, a CGI object, and a session
+    # object.
+    #
+    # If the hook has no opinion about whether the edit can proceed, return
+    # undef, and the next plugin will be asked to decide. If edit can proceed,
+    # the hook should return "". If the edit is not allowed by this hook, the
+    # hook should return an error message for the user to see, or a function
+    # that can be run to log the user in or perform other action necessary for
+    # them to be able to edit the page.
+    #
+    # This hook should avoid directly redirecting the user to a signin page,
+    # since it's sometimes used to test to see which pages in a set of pages
+    # a user can edit.
+    #
+    # TODO: we cannot return undef/None, see above.
+    # TODO: how do we return a function?
+    debug("hook `canedit' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('canedit', canedit_demo)
+
+def editcontent_demo(*args):
+    # This hook is called when a page is saved (or previewed) using the web
+    # interface. It is passed named parameters: content, page, cgi, and
+    # session. These are, respectively, the new page content as entered by the
+    # user, the page name, a CGI object, and the user's CGI::Session.
+    #
+    # It can modify the content as desired, and should return the content.
+    kwargs = _arglist_to_dict(args)
+    debug("hook `editcontent' called with arguments %s" % kwargs)
+    return kwargs['content']
+proxy.hook('editcontent', editcontent_demo)
+
+def formbuilder_setup_demo(*args):
+    # These hooks allow tapping into the parts of ikiwiki that use
+    # CGI::FormBuilder to generate web forms. These hooks are passed named
+    # parameters: cgi, session, form, and buttons. These are, respectively,
+    # the CGI object, the user's CGI::Session, a CGI::FormBuilder, and
+    # a reference to an array of names of buttons to go on the form.
+    #
+    # Each time a form is set up, the formbuilder_setup hook is called.
+    # Typically the formbuilder_setup hook will check the form's title, and if
+    # it's a form that it needs to modify, will call various methods to
+    # add/remove/change fields, tweak the validation code for the fields, etc.
+    # It will not validate or display the form.
+    #
+    # Just before a form is displayed to the user, the formbuilder hook is
+    # called. It can be used to validate the form, but should not display it.
+    #
+    # TODO: how do we modify the form?
+    kwargs = _arglist_to_dict(args)
+    debug("hook `formbuilder_setup' called with arguments %s" % kwargs)
+    raise NotImplementedError
+    return kwargs['content']
+#proxy.hook('formbuilder_setup', formbuilder_setup_demo)
+
+def formbuilder_demo(*args):
+    # These hooks allow tapping into the parts of ikiwiki that use
+    # CGI::FormBuilder to generate web forms. These hooks are passed named
+    # parameters: cgi, session, form, and buttons. These are, respectively,
+    # the CGI object, the user's CGI::Session, a CGI::FormBuilder, and
+    # a reference to an array of names of buttons to go on the form.
+    #
+    # Each time a form is set up, the formbuilder_setup hook is called.
+    # Typically the formbuilder_setup hook will check the form's title, and if
+    # it's a form that it needs to modify, will call various methods to
+    # add/remove/change fields, tweak the validation code for the fields, etc.
+    # It will not validate or display the form.
+    #
+    # Just before a form is displayed to the user, the formbuilder hook is
+    # called. It can be used to validate the form, but should not display it.
+    # TODO: how do we modify the form?
+    kwargs = _arglist_to_dict(args)
+    debug("hook `formbuilder' called with arguments %s" % kwargs)
+    raise NotImplementedError
+    return kwargs['content']
+#proxy.hook('formbuilder', formbuilder_demo)
+
+def savestate_demo(*args):
+    # This hook is called wheneven ikiwiki normally saves its state, just
+    # before the state is saved. The function can save other state, modify
+    # values before they're saved, etc.
+    #
+    # TODO: how?
+    debug("hook `savestate' called with arguments %s" % str(args))
+    raise NotImplementedError
+#proxy.hook('savestate', savestate_demo)
+
+proxy.run()
