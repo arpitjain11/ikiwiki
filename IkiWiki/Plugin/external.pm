@@ -153,6 +153,18 @@ sub setstate ($$$$;@) { #{{{
 	return $IkiWiki::pagestate{$page}{$id}{$key}=@_;
 } #}}}
 
+sub getargv ($) { #{{{
+	my $plugin=shift;
+
+	return @ARGV;
+} #}}}
+
+sub setargv ($@) { #{{{
+	my $plugin=shift;
+
+	@ARGV=@_;
+} #}}}
+
 sub inject ($@) { #{{{
 	# Bind a given perl function name to a particular RPC request.
 	my $plugin=shift;

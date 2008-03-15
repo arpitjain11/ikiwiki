@@ -42,6 +42,8 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * French translation update. Closes: #471010
   * external: Fix support of XML::RPC::fault.
   * htmltidy: Pass --markup yes, in case tidy's config file disabled it.
+  * external: Add getargv and setargv methods to allow access to ikiwiki's
+    @ARGV.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

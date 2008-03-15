@@ -1,1 +1,14 @@
 The `getopt` hook expects plugins to modify `@ARGV`. This is not exported via xml-rpc and thus external plugins cannot do anything. --[[madduck]]
+
+> I can think of two interfaces to handle this.
+> 
+> 1. Pass @ARGV to the hook, and remove any values the hook returns from @ARGV.
+> 2. Provide an XML-RPC interface for setting and getting ikiwiki's @ARGV.
+> 
+> The first is simpler, but requires keeping track of which options to
+> remove, which could be a pain, and probably precludes using regular
+> getopt libraries to process options. It also could theoretically cause
+> problems for existing perl getopt hooks.
+> 
+> The second should allow using regular getopt libraries, but does bloat
+> the RPC interface. Oh well, guess that's ok. [[done]] --[[Joey]]

@@ -53,6 +53,9 @@ it, external plugins can use the `getstate` and `setstate` RPCs. To access
 stored state, call `getstate("page", "id", "key")`, and to store state,
 call `setstate("page", "id", "key", "value")`.
 
+To access ikiwiki's ARGV, call `getargv()`. To change its ARGV, call
+`setargv(value)`.
+
 ## Notes on function parameters
 
 The [[plugin_interface_documentation|write]] talks about functions that take
@@ -98,9 +101,6 @@ with functions that take or return such references. That means you can't
 100% use XML RPC for `cgi` or `formbuilder` hooks (which are passed CGI and
 FormBuilder perl objects), or use it to call `template()` (which returns a
 perl HTML::Template object).
-
-Also. the `getopt` hook doesn't work, as ARGV is not available to the external
-plugin.
 
 ## Performance issues
 
