@@ -34,5 +34,5 @@ def debug(s):
     sys.stderr.flush()
 
 proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
-proxy.register_hook('htmlize', rst2html)
+proxy.hook('htmlize', rst2html)
 proxy.run()

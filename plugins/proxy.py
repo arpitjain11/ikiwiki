@@ -151,7 +151,7 @@ class IkiWikiProcedureProxy(object):
         self._xmlrpc_handler = _IkiWikiExtPluginXMLRPCHandler(self._debug_fn)
         self._xmlrpc_handler.register_function(self._importme, name='import')
 
-    def register_hook(self, type, function):
+    def hook(self, type, function):
         self._hooks.append((type, function.__name__))
         self._xmlrpc_handler.register_function(function)
 
