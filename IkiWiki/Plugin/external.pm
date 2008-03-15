@@ -59,14 +59,16 @@ sub rpc_call ($$;@) { #{{{
 			error("XML RPC parser failure: $r") unless ref $r;
 			if ($r->isa('RPC::XML::response')) {
 				my $value=$r->value;
-				if ($value->isa('RPC::XML::array')) {
+				if ($r->is_fault($value)) {
+					# throw the error as best we can
+					print STDERR $value->string."\n";
+					return "";
+				}
+				elsif ($value->isa('RPC::XML::array')) {
 					return @{$value->value};
 				}
 				elsif ($value->isa('RPC::XML::struct')) {
 					return %{$value->value};
-				}
-				elsif ($value->isa('RPC::XML::fault')) {
-					die $value->string;
 				}
 				else {
 					return $value->value;
@@ -177,7 +179,8 @@ sub hook ($@) { #{{{
 	delete $params{call};
 
 	IkiWiki::hook(%params, call => sub {
-		IkiWiki::Plugin::external::rpc_call($plugin, $callback, @_)
+		my $ret=IkiWiki::Plugin::external::rpc_call($plugin, $callback, @_);
+		return $ret;
 	});
 } #}}}
 

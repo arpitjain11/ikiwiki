@@ -7,3 +7,6 @@ If the rst2html procedure of the rst external plugin returns None (e.g. when it 
 In addition to the broken plugin, this seems like a bug in ikiwiki, which should probably output an informational message about the plugin returning an invalid value.
 
 --[[madduck]]
+
+> [[done]], I made it print the thrown error message to stderr, and return
+> "", which seems better than dying of the thrown error entirely. --[[Joey]]
