@@ -108,7 +108,7 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
 
     def send_rpc(self, cmd, in_fd, out_fd, **kwargs):
         xml = xmlrpclib.dumps(sum(kwargs.iteritems(), ()), cmd)
-        self._debug_fn('sending xml to ikiwiki to call procedure %s: [%s]' % (cmd, xml))
+        self._debug_fn("calling ikiwiki procedure `%s': [%s]" % (cmd, xml))
         _IkiWikiExtPluginXMLRPCHandler._write(out_fd, xml)
 
         self._debug_fn('reading response from ikiwiki...')
