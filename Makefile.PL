@@ -43,6 +43,7 @@ extra_build: ikiwiki.out
 extra_clean:
 	rm -rf html doc/.ikiwiki
 	rm -f *.man ikiwiki.out
+	rm -f plugins/*.pyc
 	$(MAKE) -C po clean
 
 extra_install:
