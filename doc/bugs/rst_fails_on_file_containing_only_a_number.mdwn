@@ -1,0 +1,7 @@
+If you create a foo.rst containing only a number, such as "11", rendering
+results in the following error being thrown. (Now that I've fixed the error
+throwing code..):
+
+	exceptions.TypeError:coercing to Unicode: need string or buffer, int found
+
+--[[Joey]]
