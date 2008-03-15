@@ -30,7 +30,7 @@ def rst2html(*kwargs):
 
 import sys
 def debug(s):
-    sys.stderr.write(__name__ + ':DEBUG:%s' % s)
+    sys.stderr.write(__name__ + ':DEBUG:%s\n' % s)
     sys.stderr.flush()
 
 proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
