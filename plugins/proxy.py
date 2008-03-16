@@ -88,7 +88,7 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
 
     @staticmethod
     def _write(out_fd, data):
-        out_fd.write(data)
+        out_fd.write(str(data))
         out_fd.flush()
 
     @staticmethod
