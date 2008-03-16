@@ -171,5 +171,8 @@ class IkiWikiProcedureProxy(object):
                     return
                 time.sleep(LOOP_DELAY)
         except Exception, e:
-            self._debug_fn('uncaught exception: %s' % e)
+            print >>sys.stderr, 'uncaught exception: %s' % e
+            import traceback
+            print >>sys.stderr, traceback.format_exc(sys.exc_info()[2])
+            import posix
             sys.exit(posix.EX_SOFTWARE)
