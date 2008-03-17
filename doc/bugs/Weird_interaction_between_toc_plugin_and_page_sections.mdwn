@@ -24,3 +24,10 @@
 I have no idea what's eating the first two headers. But as you can see from the current page, it's not just headers by any markdown...
 
 --[[madduck]]
+
+> This is a markdown bug. It occurs with 1.0.1, but not with the 1.0.2
+> beta. Apparently markdown is getting confused by the div inserted for the
+> toc, not realizing that it has ended, and so not marking up the text as
+> markdown. 1.0.2 fixes many such div-related markdown bugs. I have to call
+> this [[done]] since it's not an ikiwiki bug, recommend upgrading markdown
+> if the slower speed of 1.0.2 doesn't hurt too badly. --[[Joey]]
