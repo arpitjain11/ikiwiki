@@ -1,3 +1,7 @@
 When using the search plugin, results are linked to `foo/bar/index.html`,
 whether or not use_dirs is enabled; when use_dirs is enabled, the link should
 point to `foo/bar/` instead.
+
+> Similarly, after editing a page `foo/bar/`, the user is redirected to
+> `foo/bar/index.html?updated` instead of `foo/bar/?updated`.
+> --[Jason Blevins](http://jblevins.org/)
