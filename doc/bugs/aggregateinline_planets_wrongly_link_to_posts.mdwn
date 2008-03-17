@@ -1,0 +1,4 @@
+Please see 
+<http://vcs-pkg.org/planet/>. The headers of posts link to the HTML pages, which ikiwiki scraped. Also, the `\[[meta]]` titles and author directives aren't processed, but included inline. I believe that the headers should link to the posts directly, not the "cached" copies ikiwiki keeps around.
+
+What's also not ideal is that the cached copies can be edited. Any edits there will never make it to the VCS and thus won't show up in recentchanges.
