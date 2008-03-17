@@ -1,0 +1,3 @@
+The `IkiWiki::pagetitle` function does not respect title changes via `meta.title`. It really should, so that links rendered with `htmllink` get the proper title in the link text.
+
+--[[madduck]]
