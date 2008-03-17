@@ -13,3 +13,15 @@ See the [validator output][validate] for more details.
 
  [tmpl]: http://git.ikiwiki.info/?p=ikiwiki;a=blob_plain;f=templates/recentchanges.tmpl;hb=HEAD
  [validate]: http://validator.w3.org/check?uri=http://ikiwiki.info/recentchanges/
+
+- - -
+
+I'll add this here since it's related.  I also noticed that the meta tags for
+redirected pages need to be closed in order to be valid XHTML:
+
+    <meta http-equiv="refresh" content="10; URL=../ikiwiki/pagespec/">
+
+I'm noticing these problems because I'm serving ikiwiki-generated
+content as `application/xhtml+xml` (as opposed to `text/html`) in order
+to include inline MathML.  Any invalid XHTML causes Firefox to halt all
+processing and throw an error. &mdash;[Jason Blevins](http://jblevins.org/)
