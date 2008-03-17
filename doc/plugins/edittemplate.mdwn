@@ -5,7 +5,7 @@ This plugin allows registering template pages, that provide default
 content for new pages created using the web frontend. To register a
 template, insert a [[PreprocessorDirective]] on some other page.
 
-	\[[edittemplate template="bugtemplate" match="bugs/*"]]
+	\[[!edittemplate template="bugtemplate" match="bugs/*"]]
 
 In the above example, the page named "bugtemplate" is registered as a
 template to be used when any page named "bugs/*" is created.
