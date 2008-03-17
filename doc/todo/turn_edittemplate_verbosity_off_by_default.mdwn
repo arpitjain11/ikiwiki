@@ -1,0 +1,30 @@
+`edittemplate` replaces its directive with a note like "edittemplate person
+registered for people/*". It would be nice if this were dependent on
+a `verbose` parameter and default to off. I don't see the value in it, and by
+disabling the output, I can keep template registration as close as possible to
+the action as needed.
+
+I think this (untested) patch might just do the trick:
+
+    --- a/IkiWiki/Plugin/edittemplate.pm
+    +++ b/IkiWiki/Plugin/edittemplate.pm
+    @@ -46,8 +46,13 @@ sub preprocess (@) { #{{{
+
+      $pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
+
+    -       return sprintf(gettext("edittemplate %s registered for %s"),
+    -               $params{template}, $params{match});
+    +       if (yesno($params{verbose})) {
+    +               return sprintf(gettext("edittemplate %s registered for %s"),
+    +                       $params{template}, $params{match});
+    +       }
+    +       else {
+    +               return '';
+    +       }
+    } # }}}
+
+    sub formbuilder (@) { #{{{
+
+--[[madduck]]
+
+[[tags wishlist patch]]
