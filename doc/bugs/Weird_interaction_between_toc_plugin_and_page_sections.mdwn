@@ -33,3 +33,8 @@ I have no idea what's eating the first two headers. But as you can see from the 
 > if the slower speed of 1.0.2 doesn't hurt too badly. --[[Joey]]
 
 >> Note how it works on <http://madduck.net/docs/mailfilter/> but adding a rule like in that doc to the people page didn't fix it.
+
+>>> Yes, it's probably confused by the two divs so close to each other, and
+>>> doesn't realize that the text in between is not part of either and is
+>>> markdown. Problem is that the old markdown doesn't have a real html
+>>> parser, it just fakes it --[[Joey]]
