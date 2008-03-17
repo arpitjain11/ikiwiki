@@ -45,6 +45,8 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * external: Add getargv and setargv methods to allow access to ikiwiki's
     @ARGV.
   * Correct bug in encoding of %pagestate keys, fixes edittemplate.
+  * Detect invalid pagespecs and do not merge them in add_depends,
+    as that can result in a broken merged pagespec that matches nothing.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

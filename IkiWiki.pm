@@ -1106,6 +1106,8 @@ sub add_depends ($$) { #{{{
 	my $page=shift;
 	my $pagespec=shift;
 	
+	return unless pagespec_valid($pagespec);
+
 	if (! exists $depends{$page}) {
 		$depends{$page}=$pagespec;
 	}
@@ -1232,6 +1234,17 @@ sub pagespec_match ($$;@) { #{{{
 	my $ret=eval pagespec_translate($spec);
 	return IkiWiki::FailReason->new('syntax error') if $@;
 	return $ret;
+} #}}}
+
+sub pagespec_valid ($) { #{{{
+	my $spec=shift;
+
+	# used by generated code
+	my $page="";
+	my @params;
+
+	eval pagespec_translate($spec);
+	return ! $@;
 } #}}}
 
 package IkiWiki::FailReason;
