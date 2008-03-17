@@ -1,0 +1,24 @@
+<http://vcs-pkg.org/people/> goes really weird when I enable the `toc` plugin. It renders the page sections fine without it, but as soon as I turn it on, the following output is generated:
+
+    [[!meta  title="My Name"]]
+
+      1. Fedora
+      2. Ubuntu
+      3. People grouped by version control system
+      4. GNU Arch (tla/baz)
+      5. Bazaar-NG
+      6. Git users
+      7. Mercurial
+      8. Subversion
+      9. Everyone, sorted by first name
+
+    People grouped by distro ======================== Debian ––
+
+        * jelmer
+        * madduck
+
+    Fedora
+
+I have no idea what's eating the first two headers.
+
+--[[madduck]]
