@@ -1,3 +1,5 @@
+[[!meta title="aggregate/inline planets wrongly link to posts"]]
+
 Please see 
 <http://vcs-pkg.org/planet/>. The headers of posts link to the HTML pages, which ikiwiki scraped. Also, the `\[[meta]]` titles and author directives aren't processed, but included inline. I believe that the headers should link to the posts directly, not the "cached" copies ikiwiki keeps around.
 
