@@ -7,25 +7,29 @@ properties.
 So imagine four pages A, B, A/C, and A/D, and these pages would include the
 following directives, respectively
 
-    \[[navbar id=main priority=3]]
-    \[[navbar id=main priority=5]]
-    \[[navbar id=main title="Something else"]]
-    \[[navbar id=main]]
+    \[[!navbaritem navbar=main priority=3]]
+    \[[!navbaritem navbar=main priority=5]]
+    \[[!navbaritem navbar=main title="Something else"]]
+    \[[!navbaritem navbar=main]]
 
-then the computed navigation bar would be
+then one could insert `\[[!navbar id=main maxlevels=0]]` somewhere and it
+would get replaced with (this being in the context of viewing page C):
 
-    B
-    A
-      Something else
-      D
+    <ol class="navbar" id="navbar_main">
+      <li><a href="../B">B</a></li>
+      <li><a href="../A">A</a>
+        <ol>
+          <li class="current">Something else</li>
+          <li><a href="D">D</a></li>
+        </ol>
+      </li>
+    </ol>
 
 B would sort before A because it has a higher priority, but C would sort
 before D because their priorities are equal. The overridden title is not used
 for sorting.
 
 Also, the code automatically deduces that C and D are second-level under A.
-
-Obviously, while on e.g. A/C, the `<li>` element enclosing C would get a special CSS class (or even ID), and no `<a>` tag inside.
 
 I don't think this is hard to code up and it's what I've been using with
 [rest2web](http://www.voidspace.org.uk/python/rest2web/) and it's served me
