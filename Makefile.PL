@@ -62,7 +62,7 @@ extra_install:
 	done
 	
 	install -d $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins
-	for file in `find plugins -maxdepth 1 -type f`; do \
+	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\*`; do \
 		install -m 755 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
 	done; \
 
