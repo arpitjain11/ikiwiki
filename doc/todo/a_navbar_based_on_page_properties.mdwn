@@ -25,6 +25,8 @@ for sorting.
 
 Also, the code automatically deduces that C and D are second-level under A.
 
+Obviously, while on e.g. A/C, the `<li>` element enclosing C would get a special CSS class (or even ID), and no `<a>` tag inside.
+
 I don't think this is hard to code up and it's what I've been using with
 [rest2web](http://www.voidspace.org.uk/python/rest2web/) and it's served me
 well.
