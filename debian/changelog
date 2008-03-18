@@ -47,6 +47,9 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * Correct bug in encoding of %pagestate keys, fixes edittemplate.
   * Detect invalid pagespecs and do not merge them in add_depends,
     as that can result in a broken merged pagespec that matches nothing.
+  * Record new pages in %pagesources temporarily when previewing so that
+    things that need to know the page source or type can query it from there.
+    Fixes previewing of tables when creating a new page.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

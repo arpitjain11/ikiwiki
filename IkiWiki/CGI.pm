@@ -344,6 +344,12 @@ sub cgi_editpage ($$) { #{{{
 		return;
 	}
 	elsif ($form->submitted eq "Preview") {
+		my $new=not exists $pagesources{$page};
+		if ($new) {
+			# temporarily record its type
+			$pagesources{$page}=$page.".".$type;
+		}
+
 		my $content=$form->field('editcontent');
 		run_hooks(editcontent => sub {
 			$content=shift->(
@@ -358,6 +364,10 @@ sub cgi_editpage ($$) { #{{{
 			linkify($page, $page,
 			preprocess($page, $page,
 			filter($page, $page, $content), 0, 1))));
+		
+		if ($new) {
+			delete $pagesources{$page};
+		}
 		# previewing may have created files on disk
 		saveindex();
 	}
