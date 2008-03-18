@@ -1,0 +1,39 @@
+One thing I don't like about Tobi's `navbar.pm` is that the navigation bar is
+hardcoded instead of computed from what's available. Obviously, this allows
+for a very customised `navbar` (i.e. not making all pages show up, like
+a `map` would). However, I think this could also be achieved through page
+properties.
+
+So imagine four pages A, B, A/C, and A/D, and these pages would include the
+following directives, respectively
+
+    \[[!navbaritem navbar=main priority=3]]
+    \[[!navbaritem navbar=main priority=5]]
+    \[[!navbaritem navbar=main title="Something else"]]
+    \[[!navbaritem navbar=main]]
+
+then one could insert `\[[!navbar id=main maxlevels=0]]` somewhere and it
+would get replaced with (this being in the context of viewing page C):
+
+    <ol class="navbar" id="navbar_main">
+      <li><a href="../B">B</a></li>
+      <li><a href="../A">A</a>
+        <ol>
+          <li class="current">Something else</li>
+          <li><a href="D">D</a></li>
+        </ol>
+      </li>
+    </ol>
+
+B would sort before A because it has a higher priority, but C would sort
+before D because their priorities are equal. The overridden title is not used
+for sorting.
+
+Also, the code automatically deduces that C and D are second-level under A.
+
+I don't think this is hard to code up and it's what I've been using with
+[rest2web](http://www.voidspace.org.uk/python/rest2web/) and it's served me
+well.
+
+--[[madduck]]
+[[!tag wishlist]]
