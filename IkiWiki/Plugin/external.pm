@@ -150,8 +150,9 @@ sub setstate ($$$$;@) { #{{{
 	my $page=shift;
 	my $id=shift;
 	my $key=shift;
+	my $value=shift;
 
-	return $IkiWiki::pagestate{$page}{$id}{$key}=@_;
+	return $IkiWiki::pagestate{$page}{$id}{$key}=$value;
 } #}}}
 
 sub getargv ($) { #{{{
