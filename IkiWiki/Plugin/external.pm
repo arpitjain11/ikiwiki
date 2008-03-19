@@ -156,7 +156,7 @@ sub setstate ($$$$;@) { #{{{
 sub getargv ($) { #{{{
 	my $plugin=shift;
 
-	return @ARGV;
+	return \@ARGV;
 } #}}}
 
 sub setargv ($@) { #{{{

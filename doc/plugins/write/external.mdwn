@@ -53,7 +53,7 @@ it, external plugins can use the `getstate` and `setstate` RPCs. To access
 stored state, call `getstate("page", "id", "key")`, and to store state,
 call `setstate("page", "id", "key", "value")`.
 
-To access ikiwiki's ARGV, call `getargv()`. To change its ARGV, call
+To access ikiwiki's ARGV array, call `getargv()`. To change its ARGV, call
 `setargv(value)`.
 
 ## Notes on function parameters
