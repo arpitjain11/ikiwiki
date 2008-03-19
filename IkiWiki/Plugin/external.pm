@@ -128,9 +128,10 @@ sub setvar ($$$;@) { #{{{
 	my $plugin=shift;
 	my $varname="IkiWiki::".shift;
 	my $key=shift;
+	my $value=shift;
 
 	no strict 'refs';
-	my $ret=$varname->{$key}=@_;
+	my $ret=$varname->{$key}=$value;
 	use strict 'refs';
 	return $ret;
 } #}}}
