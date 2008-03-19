@@ -162,8 +162,9 @@ sub getargv ($) { #{{{
 
 sub setargv ($@) { #{{{
 	my $plugin=shift;
+	my $array=shift;
 
-	@ARGV=@_;
+	@ARGV=@$array;
 } #}}}
 
 sub inject ($@) { #{{{
