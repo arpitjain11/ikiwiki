@@ -25,3 +25,28 @@ I'm noticing these problems because I'm serving ikiwiki-generated
 content as `application/xhtml+xml` (as opposed to `text/html`) in order
 to include inline MathML.  Any invalid XHTML causes Firefox to halt all
 processing and throw an error. &mdash;[Jason Blevins](http://jblevins.org/)
+
+- - -
+
+Here is a simple patch for the refresh problem.  I haven't figured out
+what's causing the recentchanges bug yet.
+
+
+    diff --git a/IkiWiki/Plugin/meta.pm b/IkiWiki/Plugin/meta.pm
+    index 8a9a538..0afe1c3 100644
+    --- a/IkiWiki/Plugin/meta.pm
+    +++ b/IkiWiki/Plugin/meta.pm
+    @@ -186,7 +186,7 @@ sub preprocess (@) { #{{{
+     			$value=encode_entities($value);
+     		}
+     		my $delay=int(exists $params{delay} ? $params{delay} : 0);
+    -		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\">";
+    +		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\" />";
+     		if (! $safe) {
+     			$redir=scrub($redir);
+     		}
+
+
+--[[JasonBlevins]]
+
+[[tag patch]]
