@@ -49,4 +49,14 @@ what's causing the recentchanges bug yet.
 
 --[[JasonBlevins]]
 
+- - -
+
+It turns out that the invalid XHTML on the recent changes page is due to
+a bug in Markdown.  I was using the packaged version of markdown in
+Ubuntu (Gutsy and markdown 1.0.1-6).  Everything is fine
+after installing the most recent version of Text::Markdown from CPAN.
+
+Note that the above patch for the redirect tag is still applicable and
+the smiley issue remains open. --[[JasonBlevins]]
+
 [[tag patch]]
