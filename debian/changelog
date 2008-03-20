@@ -52,6 +52,8 @@ ikiwiki (2.41) UNRELEASED; urgency=low
     Fixes previewing of tables when creating a new page.
   * German translation update. Closes: #471540
   * Time::Duration is no longer used, remove from docs and recommends.
+  * Store userinfo in network byte order for easy portability.
+    (Old files will be automatically converted.)
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 
