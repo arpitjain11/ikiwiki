@@ -1,1 +1,6 @@
 If you are using the sidebar plugin and have a header in the sidebar it shows up in the table of contents.  I can see why this happens but it surprised me and wasn't the desired effect in my specific situation. -- [[AdamShand]]
+
+A related side effect: If you use any sort of headers in the page
+template (such as placing the page title in an `<h1>`), the toc plugin
+picks it up.  I suppose it parses the entire page rather than just the
+rendered content. --[[JasonBlevins]]
