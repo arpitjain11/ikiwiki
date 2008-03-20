@@ -1,0 +1,11 @@
+It would be useful to have 
+
+    libdir=>[ qw{libdir1 libdir2 libdir3} ]
+
+as a setup option.  I have a couple of different directories that e.g. come from different git repos, so merging them is a bit messy.
+
+I think the change is a one-liner, but I put this here for discussion before attempting a patch. If some more confident person wants to have a go, feel free.
+
+[[DavidBremner]]
+
+[[!taglink wishlist]]
