@@ -17,7 +17,7 @@ sub userinfo_store ($) { #{{{
 	
 	my $newfile="$config{wikistatedir}/userdb.new";
 	my $oldmask=umask(077);
-	my $ret=Storable::lock_store($userinfo, $newfile);
+	my $ret=Storable::lock_nstore($userinfo, $newfile);
 	umask($oldmask);
 	if (defined $ret && $ret) {
 		if (! rename($newfile, "$config{wikistatedir}/userdb")) {
