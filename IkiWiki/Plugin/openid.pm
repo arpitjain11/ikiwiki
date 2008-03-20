@@ -27,15 +27,15 @@ sub formbuilder_setup (@) { #{{{
 	my $session=$params{session};
 	my $cgi=$params{cgi};
 	
-	# Give up if module is unavailable to avoid needing to depend on
-	# it.
-	eval q{use Net::OpenID::Consumer};
-	if ($@) {
-		debug("unable to load Net::OpenID::Consumer, not enabling OpenID login");
-		return;
-	}
-
 	if ($form->title eq "signin") {
+		# Give up if module is unavailable to avoid
+		# needing to depend on it.
+		eval q{use Net::OpenID::Consumer};
+		if ($@) {
+			debug("unable to load Net::OpenID::Consumer, not enabling OpenID login");
+			return;
+		}
+
 		# This avoids it displaying a redundant label for the
 		# OpenID fieldset.
 		$form->fieldsets("OpenID");
