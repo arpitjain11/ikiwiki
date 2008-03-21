@@ -160,10 +160,10 @@ class IkiWikiProcedureProxy(object):
         self._xmlrpc_handler = _IkiWikiExtPluginXMLRPCHandler(self._debug_fn)
         self._xmlrpc_handler.register_function(self._importme, name='import')
 
-    def hook(self, type, function, name=None):
+    def hook(self, type, function, name=None, last=False):
         if name is None:
             name = function.__name__
-        self._hooks.append((type, name))
+        self._hooks.append((type, name, last))
 
         def hook_proxy(*args):
 #            curpage = args[0]
@@ -182,10 +182,11 @@ class IkiWikiProcedureProxy(object):
 
     def _importme(self):
         self._debug_fn('importing...')
-        for type, function in self._hooks:
+        for type, function, last in self._hooks:
             self._debug_fn('hooking %s into %s chain...' % (function, type))
             self._xmlrpc_handler.send_rpc('hook', self._in_fd, self._out_fd,
-                                          id=self._id, type=type, call=function)
+                                          id=self._id, type=type, call=function,
+                                          last=last)
         return IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL
 
     def run(self):
