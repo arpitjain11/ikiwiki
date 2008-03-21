@@ -32,7 +32,7 @@ class _IkiWikiExtPluginXMLRPCDispatcher(SimpleXMLRPCDispatcher):
     def dispatch(self, method, params):
         return self._dispatch(method, params)
 
-class _XMLStreamParser(object):
+class XMLStreamParser(object):
 
     def __init__(self):
         self._parser = xml.parsers.expat.ParserCreate()
@@ -95,7 +95,7 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
     @staticmethod
     def _read(in_fd):
         ret = None
-        parser = _XMLStreamParser()
+        parser = XMLStreamParser()
         while True:
             line = in_fd.readline()
             if len(line) == 0:
