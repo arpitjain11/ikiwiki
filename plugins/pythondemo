@@ -20,7 +20,7 @@ def debug(s):
     sys.stderr.write(__name__ + ':DEBUG:%s\n' % s)
     sys.stderr.flush()
 
-proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
+proxy = IkiWikiProcedureProxy(__name__, debug_fn=debug)
 
 def _arglist_to_dict(args):
     if len(args) % 2 != 0:
@@ -37,10 +37,11 @@ def getopt_demo(proxy, *args):
     # it sees an option it cannot process, and should just skip over those
     # options and leave them in @ARGV.
     #
-    # TODO: See
-    # http://ikiwiki.info/bugs/external_plugins_cannot_access_ARGV_needed_for_getopt
     debug("hook `getopt' called with arguments %s" % str(args))
-    debug('getargv: %s' % str(proxy.rpc('getargv')))
+    args = proxy.getargv()
+    if '--demo' in args:
+        args = [i for i in args if i != '--demo']
+    proxy.setargv(args)
 proxy.hook('getopt', getopt_demo)
 
 def checkconfig_demo(proxy, *args):
@@ -48,10 +49,12 @@ def checkconfig_demo(proxy, *args):
     # configuration. It's called early in the startup process. The function is
     # passed no values. It's ok for the function to call error() if something
     # isn't configured right.
-    # TODO: how do we tell ikiwiki about errors?
     debug("hook `checkconfig' called with arguments %s" % str(args))
-    raise NotImplementedError
-#proxy.hook('checkconfig', checkconfig_demo)
+    # check that --url has been set
+    url = proxy.getvar('config', 'url')
+    if url is None or len(url) == 0:
+        proxy.error('--url has not been set')
+proxy.hook('checkconfig', checkconfig_demo)
 
 def refresh_demo(proxy, *args):
     # This hook is called just before ikiwiki scans the wiki for changed
@@ -65,7 +68,8 @@ def needsbuild_demo(proxy, *args):
     # built when the wiki is refreshed. The function is passed a reference to
     # an array of pages that will be rebuilt, and can modify the array, either
     # adding or removing files from it.
-    # TODO: how do we modify the array?
+    # TODO: how do we modify the array? Joey sees no solution...
+    # we could just return the array and expect ikiwiki to use that...
     debug("hook `needsbuild' called with arguments %s" % str(args))
     raise NotImplementedError
 #proxy.hook('needsbuild', needsbuild_demo)
@@ -106,12 +110,17 @@ def preprocess_demo(proxy, *args):
     # through markdown (or whatever engine is used to htmlize the page) along
     # with the rest of the page.
     #
-    # TODO: needs to be handled differently, the ID cannot be the plugin name.
     kwargs = _arglist_to_dict(args)
     debug("hook `preprocess' called with arguments %s" % kwargs)
-    raise NotImplementedError
-    return kwargs['content']
-#proxy.hook('preprocess', preprocess_demo)
+    del kwargs['preview']
+    del kwargs['page']
+    del kwargs['destpage']
+    ret = 'foobar preprocessor called with arguments:'
+    for i in kwargs.iteritems():
+        ret += ' %s=%s' % i
+    return ret
+# put [[!foobar ...]] somewhere to try this
+proxy.hook('preprocess', preprocess_demo, id='foobar')
 
 def linkify_demo(proxy, *args):
     # This hook is called to convert WikiLinks on the page into html links.
@@ -134,11 +143,16 @@ def scan_demo(proxy, *args):
     # The function is passed named parameters "page" and "content". Its return
     # value is ignored.
     #
-    # TODO: how do we add to %links?
     kwargs = _arglist_to_dict(args)
     debug("hook `scan' called with arguments %s" % kwargs)
+    links = proxy.getvar('links', kwargs['page'])
+    debug("links for page `%s' are: %s" % (kwargs['page'], links))
+    proxy.setvar('links', kwargs['page'], links)
+    # TODO: this yields "Can't use string ("1") as an ARRAY ref while "strict
+    # refs" in use at /home/madduck/code/ikiwiki/IkiWiki/Render.pm line 17,
+    # <GEN1> line 476."
     raise NotImplementedError
-#proxy.hook('scan', scan_demo)
+proxy.hook('scan', scan_demo)
 
 def htmlize_demo(proxy, *args):
     # Runs on the raw source of a page and turns it into html. The id
@@ -151,7 +165,7 @@ def htmlize_demo(proxy, *args):
     kwargs = _arglist_to_dict(args)
     debug("hook `htmlize' called with arguments %s" % kwargs)
     return kwargs['content']
-#proxy.hook('htmlize', htmlize_demo)
+proxy.hook('htmlize', htmlize_demo)
 
 def pagetemplate_demo(proxy, *args):
     # Templates are filled out for many different things in ikiwiki, like
@@ -165,7 +179,7 @@ def pagetemplate_demo(proxy, *args):
     #
     # The most common thing to do is probably to call $template->param() to
     # add a new custom parameter to the template.
-    # TODO: how do we call $template->param()
+    # TODO: how do we call $template->param()?
     kwargs = _arglist_to_dict(args)
     debug("hook `pagetemplate' called with arguments %s" % kwargs)
     raise NotImplementedError
@@ -180,7 +194,7 @@ def templatefile_demo(proxy, *args):
     #
     kwargs = _arglist_to_dict(args)
     debug("hook `templatefile' called with arguments %s" % kwargs)
-    return None
+    return None #leave the default
 proxy.hook('templatefile', templatefile_demo)
 
 def sanitize_demo(proxy, *args):
@@ -276,7 +290,6 @@ def canedit_demo(proxy, *args):
     # since it's sometimes used to test to see which pages in a set of pages
     # a user can edit.
     #
-    # TODO: we cannot return undef/None, see above.
     # TODO: how do we return a function?
     debug("hook `canedit' called with arguments %s" % str(args))
     raise NotImplementedError
