@@ -6,6 +6,8 @@ We should support SVG.  In particular:
 
 --[[JoshTriplett]]
 
+[[wishlist]]
+
 I'm allowing for inline SVG on my own installation.  I've patched my
 copy of htmlscrubber.pm to allow safe MathML and SVG elements (as
 implemented in html5lib).  <del datetime="2008-03-20T23:04-05:00">Here's a patch
@@ -33,4 +35,13 @@ I'd like to hear what people think about the following:
 [diff]: http://xbeta.org/gitweb/?p=xbeta/ikiwiki.git;a=blobdiff;f=IkiWiki/Plugin/htmlscrubber.pm;h=35c546620f8f58eb50c72783f11d422b06de93ca;hp=3bdaccea119ec0e1b289a0da2f6d90e2219b8d66;hb=fa9045c07efce434f24edb05b542c88815452873;hpb=be0b4f603f918444b906e42825908ddac78b7073
 [sanitizer]: http://code.google.com/p/html5lib/source/browse/trunk/ruby/lib/html5/sanitizer.rb
 
-[[wishlist]]
+* * * 
+
+Another problem is that [HTML::Scrubber][] converts all tags to lowercase.
+Some SVG elements, such as viewBox, are mixed case.  It seems that
+properly handling SVG might require moving to a different sanitizer.
+It seems that [HTML::Sanitizer][] has functions for sanitizing XHTML.
+Any thoughts? --[[JasonBlevins]], March 21, 2008 13:54 EDT
+
+[HTML::Scrubber]: http://search.cpan.org/~podmaster/HTML-Scrubber-0.08/Scrubber.pm
+[HTML::Sanitizer]: http://search.cpan.org/~nesting/HTML-Sanitizer-0.04/Sanitizer.pm
