@@ -18,7 +18,7 @@ __licence__ = 'GPLv2'
 from docutils.core import publish_parts;
 from proxy import IkiWikiProcedureProxy
 
-def rst2html(*kwargs):
+def rst2html(proxy, *kwargs):
     # FIXME arguments should be treated as a hash, the order could change
     # at any time and break this.
     parts = publish_parts(kwargs[3], writer_name='html',

@@ -168,7 +168,7 @@ class IkiWikiProcedureProxy(object):
         def hook_proxy(*args):
 #            curpage = args[0]
 #            kwargs = dict([args[i:i+2] for i in xrange(1, len(args), 2)])
-            ret = function(*args)
+            ret = function(self, *args)
             self._debug_fn("%s hook `%s' returned: [%s]" % (type, name, ret))
             if ret == IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL:
                 raise IkiWikiProcedureProxy.InvalidReturnValue, \
