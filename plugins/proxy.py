@@ -118,7 +118,8 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
         self._debug_fn('read response to procedure %s from ikiwiki: [%s]' % (cmd, xml))
         if xml is None:
             # ikiwiki is going down
-            return None
+            self._debug_fn('ikiwiki is going down, and so are we...')
+            raise _IkiWikiExtPluginXMLRPCHandler._GoingDown
 
         data = xmlrpclib.loads(xml)[0][0]
         self._debug_fn('parsed data from response to procedure %s: [%s]' % (cmd, data))
@@ -130,7 +131,7 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
         if xml is None:
             # ikiwiki is going down
             self._debug_fn('ikiwiki is going down, and so are we...')
-            return
+            raise _IkiWikiExtPluginXMLRPCHandler._GoingDown
 
         self._debug_fn('received procedure call from ikiwiki: [%s]' % xml)
         params, method = xmlrpclib.loads(xml)
@@ -139,6 +140,9 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
         self._debug_fn('sending procedure response to ikiwiki: [%s]' % xml)
         _IkiWikiExtPluginXMLRPCHandler._write(out_fd, xml)
         return ret
+
+    class _GoingDown:
+        pass
 
 class IkiWikiProcedureProxy(object):
 
@@ -241,7 +245,6 @@ class IkiWikiProcedureProxy(object):
         except IOError, e:
             if e.errno != 32:
                 raise
-
         import posix
         sys.exit(posix.EX_SOFTWARE)
 
@@ -249,15 +252,15 @@ class IkiWikiProcedureProxy(object):
         try:
             while True:
                 ret = self._xmlrpc_handler.handle_rpc(self._in_fd, self._out_fd)
-                if ret is None:
-                    return
                 time.sleep(IkiWikiProcedureProxy._LOOP_DELAY)
+        except _IkiWikiExtPluginXMLRPCHandler._GoingDown:
+            return
+
         except Exception, e:
             import traceback
             self.error('uncaught exception: %s\n%s' \
                        % (e, traceback.format_exc(sys.exc_info()[2])))
-            import posix
-            sys.exit(posix.EX_SOFTWARE)
+            return
 
     def _importme(self):
         self._debug_fn('importing...')
