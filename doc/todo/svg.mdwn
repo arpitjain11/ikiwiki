@@ -6,4 +6,12 @@ We should support SVG.  In particular:
 
 --[[JoshTriplett]]
 
+I'm allowing for inline SVG on my own installation.  I've patched my
+copy of htmlscrubber.pm to allow safe MathML and SVG elements (as
+implemented in html5lib).  Here's a [patch][]
+if anyone else is interested. --[[JasonBlevins]]
+
+[patch]: http://xbeta.org/gitweb/?p=xbeta/ikiwiki.git;a=blobdiff;f=IkiWiki/Plugin/htmlscrubber.pm;h=e4234e3b31f54fd5ca929fe7bece88d176dab03a;hp=3bdaccea119ec0e1b289a0da2f6d90e2219b8d66;hb=db56b62ce99cdb7ffe41a8decaca34ade7964aa4;hpb=be0b4f603f918444b906e42825908ddac78b7073
+
 [[wishlist]]
+[[tag patch]]
