@@ -37,7 +37,7 @@ extra_build: ikiwiki.out
 	./mdwn2man ikiwiki-makerepo 1 doc/ikiwiki-makerepo.mdwn > ikiwiki-makerepo.man
 	./mdwn2man ikiwiki-transition 1 doc/ikiwiki-transition.mdwn > ikiwiki-transition.man
 	./mdwn2man ikiwiki-update-wikilist 1 doc/ikiwiki-update-wikilist.mdwn > ikiwiki-update-wikilist.man
-	$(MAKE) -C po
+	$(MAKE) -C po mo
 
 extra_clean:
 	rm -rf html doc/.ikiwiki

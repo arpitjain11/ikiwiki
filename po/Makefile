@@ -5,7 +5,9 @@ POTFILES=$(sort $(shell find ../IkiWiki -type f -name \*.pm)) \
 POFILES=$(wildcard *.po)
 MOFILES=$(POFILES:.po=.mo)
 
-all: ikiwiki.pot $(MOFILES)
+all: ikiwiki.pot mo
+
+mo: $(MOFILES)
 
 install: all
 	for file in $(MOFILES); do \
@@ -26,7 +28,7 @@ clean:
 %.mo: %.po
 	msgfmt -o $@ $<
 
-%.po: ikiwiki.pot
+%.po:
 	@echo -n "Merging ikiwiki.pot and $@"
 	@msgmerge $@ ikiwiki.pot -o $@.new 2>&1
 # Typically all that changes was a date or line number. I'd prefer not to
