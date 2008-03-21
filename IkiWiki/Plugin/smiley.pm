@@ -10,13 +10,22 @@ my $smiley_regexp;
 
 sub import { #{{{
 	add_underlay("smiley");
-	hook(type => "filter", id => "smiley", call => \&filter);
+	hook(type => "sanitize", id => "smiley", call => \&sanitize);
 } # }}}
 
 sub build_regexp () { #{{{
 	my $list=readfile(srcfile("smileys.mdwn"));
 	while ($list =~ m/^\s*\*\s+\\([^\s]+)\s+\[\[([^]]+)\]\]/mg) {
-		$smileys{$1}=$2;
+		my $smiley=$1;
+		my $file=$2;
+
+		$smileys{$smiley}=$file;
+
+		# Add a version with < and > escaped, since they probably
+		# will be (by markdown) by the time the sanitize hook runs.
+		$smiley=~s/</&lt;/g;
+		$smiley=~s/>/&gt;/g;
+		$smileys{$smiley}=$file;
 	}
 	
 	if (! %smileys) {
@@ -32,7 +41,7 @@ sub build_regexp () { #{{{
 	#debug($smiley_regexp);
 } #}}}
 
-sub filter (@) { #{{{
+sub sanitize (@) { #{{{
 	my %params=@_;
 
 	build_regexp() unless defined $smiley_regexp;
@@ -40,18 +49,18 @@ sub filter (@) { #{{{
 	$_=$params{content};
 	return $_ unless length $smiley_regexp;
 	
-MATCH:	while (m{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}g) {
+MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 		my $escape=$1;
 		my $smiley=$2;
 		my $epos=$-[1];
 		my $spos=$-[2];
-
+		
 		# Smilies are not allowed inside <pre> or <code>.
 		# For each tag in turn, match forward to find the next <tag>
 		# or </tag> after the smiley.
 		my $pos=pos;
 		foreach my $tag ("pre", "code") {
-			if (m/.*?<(\/)?\s*$tag\s*>/isg && defined $1) {
+			if (m/<(\/)?\s*$tag\s*>/isg && defined $1) {
 				# </tag> found first, so the smiley is
 				# inside the tag, so do not expand it.
 				next MATCH;
@@ -67,7 +76,7 @@ MATCH:	while (m{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}g) {
 		else {
 			# Replace the smiley with its expanded value.
 			substr($_, $spos, length($smiley))=
-				htmllink($params{page}, $params{destpage},
+				htmllink($params{page}, $params{page},
 				         $smileys{$smiley}, linktext => $smiley);
 		}
 	}
