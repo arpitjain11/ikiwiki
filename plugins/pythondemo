@@ -20,7 +20,7 @@ def debug(s):
     sys.stderr.write(__name__ + ':DEBUG:%s\n' % s)
     sys.stderr.flush()
 
-proxy = IkiWikiProcedureProxy(__name__, debug_fn=debug)
+proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
 
 def _arglist_to_dict(args):
     if len(args) % 2 != 0:
