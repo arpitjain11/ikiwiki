@@ -38,10 +38,10 @@ sub preprocess (@) { #{{{
 	return "" if $params{page} ne $params{destpage};
 
 	if (! exists $params{template} || ! length($params{template})) {
-		return return "[[meta ".gettext("template not specified")."]]";
+		return "[[meta ".gettext("template not specified")."]]";
 	}
 	if (! exists $params{match} || ! length($params{match})) {
-		return return "[[meta ".gettext("match not specified")."]]";
+		return "[[meta ".gettext("match not specified")."]]";
 	}
 
 	$pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
