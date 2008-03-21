@@ -59,6 +59,8 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * inline: Crazy optimisation to work around slow markdown.
   * Precompile pagespecs, about 10% overall speedup.
   * Changed to a binary index file, written using Storable, for speed.
+  * external: Work around XML RPC's lack of support for null by passing
+    a special sentinal value.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

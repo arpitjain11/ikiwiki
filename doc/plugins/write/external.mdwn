@@ -79,6 +79,19 @@ Other languages might not find it so easy. If not, it might be a good idea
 to convert these named parameters into something more natural for the
 language as part of their XML RPC interface.
 
+## undef
+
+XML RPC has a limitation that it does not have a way to pass
+undef/NULL/None. There is an extension to the protocol that supports this,
+but it is not yet available in the [[cpan XML::RPC]] library used by
+ikiwiki.
+
+Until the extension is available, ikiwiki allows undef to be communicated
+over XML RPC by passing a sentinal value, a hash with a single key "null"
+with a value of an empty string. External plugins that need to communicate
+null values to or from ikiwiki will have to translate between undef and
+the sentinal.
+
 ## Function injection
 
 Some parts of ikiwiki are extensible by adding functions. For example, the
