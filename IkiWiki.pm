@@ -1169,7 +1169,7 @@ sub pagespec_merge ($$) { #{{{
 } #}}}
 
 sub pagespec_translate ($) { #{{{
-	# This assumes that $page is in scope in the function
+	# This assumes that $page and @params are in scope in the function
 	# that evalulates the translated pagespec code.
 	my $spec=shift;
 
