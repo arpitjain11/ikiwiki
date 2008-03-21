@@ -59,7 +59,7 @@ sub format (@) { #{{{
 	# Fill in the inline content generated earlier. This is actually an
 	# optimisation.
 	$params{content}=~s{<div class="inline" id="([^"]+)"></div>}{
-		delete @inline[$1]
+		delete @inline[$1,]
 	}eg;
 	return $params{content};
 } #}}}
