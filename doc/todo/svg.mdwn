@@ -13,4 +13,20 @@ if anyone else is interested.</del>
 <ins datetime="2008-03-20T23:05-05:00">Actually, that patch wasn't quite
 right.  I'll post a new one when it's working properly.</ins> --[[JasonBlevins]]
 
+I'd like to hear what people think about the following:
+
+1. Including whitelists of elements and attributes for SVG and MathML in
+   htmlscrubber.  See my  [htmlscrubber.pm][] and the [diff][]
+   from the current trunk.
+
+2. Creating a whitelist of safe SVG (and maybe even HTML) style
+   attributes such as `fill`, `stroke-width`, etc.
+
+   This is how the [sanitizer][] in html5lib works.  It shouldn't be too
+   hard to translate the relevant parts to Perl.
+
+[htmlscrubber.pm]: http://xbeta.org/gitweb/?p=xbeta/ikiwiki.git;a=blob;f=IkiWiki/Plugin/htmlscrubber.pm;hb=db56b62ce99cdb7ffe41a8decaca34ade7964aa4
+[diff]: http://xbeta.org/gitweb/?p=xbeta/ikiwiki.git;a=blobdiff;f=IkiWiki/Plugin/htmlscrubber.pm;h=e4234e3b31f54fd5ca929fe7bece88d176dab03a;hp=3bdaccea119ec0e1b289a0da2f6d90e2219b8d66;hb=db56b62ce99cdb7ffe41a8decaca34ade7964aa4;hpb=be0b4f603f918444b906e42825908ddac78b7073
+[sanitizer]: http://code.google.com/p/html5lib/source/browse/trunk/ruby/lib/html5/sanitizer.rb
+
 [[wishlist]]
