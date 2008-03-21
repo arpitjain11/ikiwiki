@@ -914,12 +914,13 @@ sub loadindex () { #{{{
 		return 0;
 	}
 	my %index=%$ret;
-	foreach my $page (keys %index) {
-		my %d=%{$index{$page}};
+	foreach my $src (keys %index) {
+		my %d=%{$index{$src}};
+		my $page=pagename($src);
 		$pagectime{$page}=$d{ctime};
 		if (! $config{rebuild}) {
+			$pagesources{$page}=$src;
 			$pagemtime{$page}=$d{mtime};
-			$pagesources{$page}=$d{src};
 			$renderedfiles{$page}=$d{dest};
 			if (exists $d{links} && ref $d{links}) {
 				$links{$page}=$d{links};
@@ -961,23 +962,23 @@ sub saveindex () { #{{{
 	my %index;
 	foreach my $page (keys %pagemtime) {
 		next unless $pagemtime{$page};
+		my $src=$pagesources{$page};
 
-		$index{$page}={
+		$index{$src}={
 			ctime => $pagectime{$page},
 			mtime => $pagemtime{$page},
-			src => $pagesources{$page},
 			dest => $renderedfiles{$page},
 			links => $links{$page},
 		};
 
 		if (exists $depends{$page}) {
-			$index{$page}{depends} = $depends{$page};
+			$index{$src}{depends} = $depends{$page};
 		}
 
 		if (exists $pagestate{$page}) {
 			foreach my $id (@hookids) {
 				foreach my $key (keys %{$pagestate{$page}{$id}}) {
-					$index{$page}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
+					$index{$src}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
 				}
 			}
 		}
