@@ -24,7 +24,7 @@ PROBABLE_INST_LIB=$(shell \\
 )
 
 tflag=$(shell if [ -n "$$NOTAINT" ] && [ "$$NOTAINT" != 1 ]; then printf -- "-T"; fi)
-extramodules=$(shell if [ "$$PROFILE" = 1 ]; then printf -- "-MDevel::Profiler"; fi)
+extramodules=$(shell if [ "$$PROFILE" = 1 ]; then printf -- "-d:Profile"; fi)
 
 ikiwiki.out: ikiwiki.in
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
@@ -38,7 +38,6 @@ extra_build: ikiwiki.out
 	./mdwn2man ikiwiki-transition 1 doc/ikiwiki-transition.mdwn > ikiwiki-transition.man
 	./mdwn2man ikiwiki-update-wikilist 1 doc/ikiwiki-update-wikilist.mdwn > ikiwiki-update-wikilist.man
 	$(MAKE) -C po
-	if [ "$$PROFILE" = 1 ]; then dprofpp; fi
 
 extra_clean:
 	rm -rf html doc/.ikiwiki
