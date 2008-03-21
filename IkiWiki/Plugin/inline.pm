@@ -10,6 +10,7 @@ use URI;
 
 my %knownfeeds;
 my %page_numfeeds;
+my @inline;
 
 sub import { #{{{
 	hook(type => "getopt", id => "inline", call => \&getopt);
@@ -19,6 +20,7 @@ sub import { #{{{
 		call => \&IkiWiki::preprocess_inline);
 	hook(type => "pagetemplate", id => "inline",
 		call => \&IkiWiki::pagetemplate_inline);
+	hook(type => "format", id => "inline", call => \&format);
 	# Hook to change to do pinging since it's called late.
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.
@@ -49,6 +51,15 @@ sub checkconfig () { #{{{
 	if ($config{atom}) {
 		push @{$config{wiki_file_prune_regexps}}, qr/\.atom$/;
 	}
+} #}}}
+
+sub format (@) { #{{{
+        my %params=@_;
+
+	# Fill in the inline content generated earlier. This is actually an
+	# optimisation.
+	$params{content}=~s!<div class="inline" id="([^"]+)"></div>!$inline[$1]!g;
+	return $params{content};
 } #}}}
 
 sub sessioncgi () { #{{{
@@ -304,7 +315,9 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	return $ret;
+	return $ret if $raw;
+	push @inline, $ret;
+	return "<div class=\"inline\" id=\"$#inline\"></div>\n\n";
 } #}}}
 
 sub pagetemplate_inline (@) { #{{{
