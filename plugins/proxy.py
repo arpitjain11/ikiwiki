@@ -178,12 +178,15 @@ class IkiWikiProcedureProxy(object):
             ret = None
         return ret
 
-    def hook(self, type, function, name=None, last=False):
+    def hook(self, type, function, name=None, id=None, last=False):
         if self._imported:
             raise IkiWikiProcedureProxy.AlreadyImported
 
         if name is None:
             name = function.__name__
+
+        if id is None:
+            id = self._id
 
         def hook_proxy(*args):
 #            curpage = args[0]
@@ -198,7 +201,7 @@ class IkiWikiProcedureProxy(object):
                 ret = IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL
             return ret
 
-        self._hooks.append((type, name, last))
+        self._hooks.append((id, type, name, last))
         self._xmlrpc_handler.register_function(hook_proxy, name=name)
 
     def inject(self, rname, function, name=None, memoize=True):
@@ -258,9 +261,9 @@ class IkiWikiProcedureProxy(object):
 
     def _importme(self):
         self._debug_fn('importing...')
-        for type, function, last in self._hooks:
-            self._debug_fn('hooking %s into %s chain...' % (function, type))
-            self.rpc('hook', id=self._id, type=type, call=function, last=last)
+        for id, type, function, last in self._hooks:
+            self._debug_fn('hooking %s/%s into %s chain...' % (id, function, type))
+            self.rpc('hook', id=id, type=type, call=function, last=last)
         for rname, function, memoize in self._functions:
             self._debug_fn('injecting %s as %s...' % (function, rname))
             self.rpc('inject', name=rname, call=function, memoize=memoize)
