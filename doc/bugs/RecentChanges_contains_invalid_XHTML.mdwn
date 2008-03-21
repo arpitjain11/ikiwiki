@@ -13,7 +13,7 @@ plugin which end up wrapped in a `<pre>` tag in the inline diff output.
 `<img>` tags is not allowed within a `<pre>` block.  Maybe the smiley
 plugin should be disabled on [[RecentChanges]]?
 
-> See [[Smileys_in_the_block_code]] --[[Joey]]
+> See [[Smileys_in_the_block_code]], which is now fixed. --[[Joey]]
 
 See the [validator output][validate] for more details.
 
@@ -50,5 +50,7 @@ after installing the most recent version of Text::Markdown from CPAN.
 
 Note that the above patch for the redirect tag is still applicable and
 the smiley issue remains open. --[[JasonBlevins]]
+
+> This bug is [[done]], all issues are fixed. --[[Joey]]
 
 [[tag patch]]

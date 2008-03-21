@@ -29,3 +29,6 @@ BTW, maybe converting smileys in the block code should be disabled at all?
 > Looks similar to [[wiki_links_still_processed_inside_code_blocks]]; in both
 > cases, substitution happens in a code block, which it shouldn't.
 > --[[JoshTriplett]]
+
+> [[fixed|done]], via some super duper regexp fun to notice if the smiley
+> is inside a pre or code tag. --[[Joey]]

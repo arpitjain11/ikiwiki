@@ -55,6 +55,7 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * Store userinfo in network byte order for easy portability.
     (Old files will be automatically converted.)
   * Close meta tag for redir properly.
+  * smiley: Detect smileys inside pre and tags, and do not expand.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 
