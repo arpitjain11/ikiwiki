@@ -186,7 +186,7 @@ sub preprocess (@) { #{{{
 			$value=encode_entities($value);
 		}
 		my $delay=int(exists $params{delay} ? $params{delay} : 0);
-		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\">";
+		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\" />";
 		if (! $safe) {
 			$redir=scrub($redir);
 		}
