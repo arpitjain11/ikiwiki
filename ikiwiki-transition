@@ -94,6 +94,7 @@ else {
 
 package IkiWiki;
 
+# A slightly modified version of the old loadindex function.
 sub oldloadindex {
 	%oldrenderedfiles=%pagectime=();
 	if (! $config{rebuild}) {
@@ -131,5 +132,16 @@ sub oldloadindex {
 		$oldrenderedfiles{$page}=[@{$items{dest}}];
 		$pagectime{$page}=$items{ctime}[0];
 	}
+
+	# saveindex relies on %hooks being populated, else it won't save
+	# the page state owned by a given hook. But no plugins are loaded
+	# by this program, so populate %hooks with all hook ids that
+	# currently have page state.
+	foreach my $page (keys %pagemtime) {
+		foreach my $id (keys %{$pagestate{$page}}) {
+			$hooks{_dummy}{$id}=1;
+		}
+	}
+	
 	return close($in);
 }
