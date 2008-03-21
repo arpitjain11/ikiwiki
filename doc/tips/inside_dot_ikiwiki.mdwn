@@ -1,0 +1,65 @@
+[[meta title="inside .ikiwiki"]]
+
+The `.ikiwiki` directory contains ikiwiki's internal state. Normally,
+you don't need to look in it, but here's some tips for how to do so if
+you need/want to.
+
+## the index
+
+`.ikiwiki/indexdb` contains a cache of information about pages, as well
+as all persisitant state about pages. It used to be a (semi) human-readable
+text file, but is not anymore.
+
+To dump the contents of the file, enter a perl command like this.
+
+	joey@kodama:~/src/joeywiki/.ikiwiki> perl -le 'use Storable; my $index=Storable::retrieve("indexdb"); use Data::Dumper; print Dumper $index' | head
+	$VAR1 = {
+          'index' => {
+                     'ctime' => 1199739528,
+                     'dest' => [
+                                 'index.html'
+                               ],
+                     'mtime' => 1199739528,
+                     'src' => 'index.mdwn',
+                     'links' => [
+                                  'index/discussion',
+
+## the user database
+
+`.ikiwiki/userdb` is the user database, which records preferences of all
+web users.
+
+To list all users in the database, enter a perl command like this.
+Note that the output can include both registered users, and known
+openids.
+
+	joey@kodama:~/src/joeywiki/.ikiwiki> perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); print $_ foreach keys %$userinfo'         
+	http://joey.kitenet.net/
+	foo
+
+To list each user's email address:
+
+	joey@kodama:~/src/joeywiki/.ikiwiki> perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); print $userinfo->{$_}->{email} foreach keys %$userinfo'
+	
+	joey@kitenet.net
+
+To dump the entire database contents:
+
+	joey@kodama:~/src/joeywiki/.ikiwiki> perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); use Data::Dumper; print Dumper $userinfo'
+	$VAR1 = {
+	          'http://joey.kitenet.net/' => {
+	                                          'email' => 'joey@kitenet.net',
+	[...]
+
+Editing values is simply a matter of changing values and calling Storable::nstore().
+So to change a user's password:
+
+	joey@kodama:~/src/joeywiki/.ikiwiki> perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); $userinfo->{"foo"}->{email}=q{foo@bar}; Storable::lock_nstore($userinfo, "underdb")'
+
+To remove that user:
+	
+	joey@kodama:~/src/joeywiki/.ikiwiki> perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); delete $userinfo->{"foo"}; Storable::lock_nstore($userinfo, "underdb")'
+
+I've not written actual utilities to do this yet because I've only needed
+to do it rarely, and the data I've wanted has been different each time.
+--[[Joey]]
