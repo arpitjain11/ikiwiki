@@ -7,6 +7,7 @@ use Encode;
 use HTML::Entities;
 use URI::Escape q{uri_escape_utf8};
 use POSIX;
+use Storable;
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
@@ -896,39 +897,39 @@ sub loadindex () { #{{{
 	%oldrenderedfiles=%pagectime=();
 	if (! $config{rebuild}) {
 		%pagesources=%pagemtime=%oldlinks=%links=%depends=
-			%destsources=%renderedfiles=%pagecase=%pagestate=();
+		%destsources=%renderedfiles=%pagecase=%pagestate=();
 	}
 	open (my $in, "<", "$config{wikistatedir}/index") || return;
-	while (<$in>) {
-		$_=possibly_foolish_untaint($_);
-		chomp;
-		my %items;
-		$items{link}=[];
-		$items{dest}=[];
-		foreach my $i (split(/ /, $_)) {
-			my ($item, $val)=split(/=/, $i, 2);
-			push @{$items{$item}}, decode_entities($val);
-		}
-
-		next unless exists $items{src}; # skip bad lines for now
-
-		my $page=pagename($items{src}[0]);
+	my $ret=Storable::fd_retrieve($in);
+	if (! defined $ret) {
+		return 0;
+	}
+	my %index=%$ret;
+	foreach my $page (keys %index) {
+		my %d=%{$index{$page}};
+		$pagectime{$page}=$d{ctime};
 		if (! $config{rebuild}) {
-			$pagesources{$page}=$items{src}[0];
-			$pagemtime{$page}=$items{mtime}[0];
-			$oldlinks{$page}=[@{$items{link}}];
-			$links{$page}=[@{$items{link}}];
-			$depends{$page}=$items{depends}[0] if exists $items{depends};
-			$destsources{$_}=$page foreach @{$items{dest}};
-			$renderedfiles{$page}=[@{$items{dest}}];
-			$pagecase{lc $page}=$page;
-			foreach my $k (grep /_/, keys %items) {
-				my ($id, $key)=split(/_/, $k, 2);
-				$pagestate{$page}{decode_entities($id)}{decode_entities($key)}=$items{$k}[0];
+			$pagemtime{$page}=$d{mtime};
+			$pagesources{$page}=$d{src};
+			$renderedfiles{$page}=$d{dest};
+			if (exists $d{links} && ref $d{links}) {
+				$links{$page}=$d{links};
+				$oldlinks{$page}=[@{$d{links}}];
+			}
+			if (exists $d{depends}) {
+				$depends{$page}=$d{depends};
+			}
+			if (exists $d{state}) {
+				$pagestate{$page}=$d{state};
 			}
 		}
-		$oldrenderedfiles{$page}=[@{$items{dest}}];
-		$pagectime{$page}=$items{ctime}[0];
+		$oldrenderedfiles{$page}=[@{$d{dest}}];
+	}
+	foreach my $page (keys %pagesources) {
+		$pagecase{lc $page}=$page;
+	}
+	foreach my $page (keys %renderedfiles) {
+		$destsources{$_}=$page foreach @{$renderedfiles{$page}};
 	}
 	return close($in);
 } #}}}
@@ -938,9 +939,9 @@ sub saveindex () { #{{{
 
 	my %hookids;
 	foreach my $type (keys %hooks) {
-		$hookids{encode_entities($_)}=1 foreach keys %{$hooks{$type}};
+		$hookids{$_}=1 foreach keys %{$hooks{$type}};
 	}
-	my @hookids=sort keys %hookids;
+	my @hookids=keys %hookids;
 
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
@@ -948,26 +949,32 @@ sub saveindex () { #{{{
 	my $newfile="$config{wikistatedir}/index.new";
 	my $cleanup = sub { unlink($newfile) };
 	open (my $out, '>', $newfile) || error("cannot write to $newfile: $!", $cleanup);
+	my %index;
 	foreach my $page (keys %pagemtime) {
 		next unless $pagemtime{$page};
-		my $line="mtime=$pagemtime{$page} ".
-			"ctime=$pagectime{$page} ".
-			"src=$pagesources{$page}";
-		$line.=" dest=$_" foreach @{$renderedfiles{$page}};
-		my %count;
-		$line.=" link=$_" foreach grep { ++$count{$_} == 1 } @{$links{$page}};
+
+		$index{$page}={
+			ctime => $pagectime{$page},
+			mtime => $pagemtime{$page},
+			src => $pagesources{$page},
+			dest => $renderedfiles{$page},
+			links => $links{$page},
+		};
+
 		if (exists $depends{$page}) {
-			$line.=" depends=".encode_entities($depends{$page}, " \t\n");
+			$index{$page}{depends} = $depends{$page};
 		}
+
 		if (exists $pagestate{$page}) {
 			foreach my $id (@hookids) {
 				foreach my $key (keys %{$pagestate{$page}{$id}}) {
-					$line.=' '.$id.'_'.encode_entities($key, " \t\n")."=".encode_entities($pagestate{$page}{$id}{$key}, " \t\n");
+					$index{$page}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
 				}
 			}
 		}
-		print $out $line."\n" || error("failed writing to $newfile: $!", $cleanup);
 	}
+	my $ret=Storable::nstore_fd(\%index, $out);
+	return if ! defined $ret || ! $ret;
 	close $out || error("failed saving to $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/index") ||
 		error("failed renaming $newfile to $config{wikistatedir}/index", $cleanup);
