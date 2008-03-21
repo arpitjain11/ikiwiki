@@ -68,7 +68,22 @@ sub rpc_call ($$;@) { #{{{
 					return @{$value->value};
 				}
 				elsif ($value->isa('RPC::XML::struct')) {
-					return %{$value->value};
+					my %hash=%{$value->value};
+
+					# XML-RPC v1 does not allow for
+					# nil/null/None/undef values to be
+					# transmitted, so until
+					# XML::RPC::Parser honours v2
+					# (<nil/>), external plugins send
+					# a hash with one key "null" pointing
+					# to an empty string.
+					if (exists $hash{null} &&
+					    $hash{null} eq "" &&
+					    int(keys(%hash)) == 1) {
+						return undef;
+					}
+
+					return %hash;
 				}
 				else {
 					return $value->value;
@@ -90,6 +105,14 @@ sub rpc_call ($$;@) { #{{{
 			}
 			else {
 				error("XML RPC call error, unknown function: $name");
+			}
+
+			# XML-RPC v1 does not allow for nil/null/None/undef
+			# values to be transmitted, so until XML::RPC::Parser
+			# honours v2 (<nil/>), send a hash with one key "null"
+			# pointing to an empty string.
+			if (! defined $ret) {
+				$ret={"null" => ""};
 			}
 
 			my $string=eval { RPC::XML::response->new($ret)->as_string };

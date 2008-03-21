@@ -151,7 +151,7 @@ def htmlize_demo(*args):
     kwargs = _arglist_to_dict(args)
     debug("hook `htmlize' called with arguments %s" % kwargs)
     return kwargs['content']
-proxy.hook('htmlize', htmlize_demo)
+#proxy.hook('htmlize', htmlize_demo)
 
 def pagetemplate_demo(*args):
     # Templates are filled out for many different things in ikiwiki, like
@@ -178,12 +178,10 @@ def templatefile_demo(*args):
     # change the default ("page.tmpl"). Template files are looked for in
     # /usr/share/ikiwiki/templates by default.
     #
-    # TODO: we cannot really pass undef/None via xml-rpc, so what to do?
     kwargs = _arglist_to_dict(args)
     debug("hook `templatefile' called with arguments %s" % kwargs)
-    raise NotImplementedError
     return None
-#proxy.hook('templatefile', templatefile_demo)
+proxy.hook('templatefile', templatefile_demo)
 
 def sanitize_demo(*args):
     # Use this to implement html sanitization or anything else that needs to

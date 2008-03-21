@@ -13,8 +13,6 @@ __author__ = 'martin f. krafft <madduck@madduck.net>'
 __copyright__ = 'Copyright © ' + __author__
 __licence__ = 'GPLv2'
 
-LOOP_DELAY = 0.1
-
 import sys
 import time
 import xmlrpclib
@@ -30,6 +28,9 @@ class _IkiWikiExtPluginXMLRPCDispatcher(SimpleXMLRPCDispatcher):
             # see http://bugs.debian.org/470645
             # python2.4 and before only took one argument
             SimpleXMLRPCDispatcher.__init__(self)
+
+    def dispatch(self, method, params):
+        return self._dispatch(method, params)
 
 class _XMLStreamParser(object):
 
@@ -77,8 +78,8 @@ class _XMLStreamParser(object):
 
 class _IkiWikiExtPluginXMLRPCHandler(object):
 
-    def __init__(self, debug_fn, allow_none=False, encoding=None):
-        self._dispatcher = _IkiWikiExtPluginXMLRPCDispatcher(allow_none, encoding)
+    def __init__(self, debug_fn):
+        self._dispatcher = _IkiWikiExtPluginXMLRPCDispatcher()
         self.register_function = self._dispatcher.register_function
         self._debug_fn = debug_fn
 
@@ -125,19 +126,27 @@ class _IkiWikiExtPluginXMLRPCHandler(object):
 
     def handle_rpc(self, in_fd, out_fd):
         self._debug_fn('waiting for procedure calls from ikiwiki...')
-        ret = _IkiWikiExtPluginXMLRPCHandler._read(in_fd)
-        if ret is None:
+        xml = _IkiWikiExtPluginXMLRPCHandler._read(in_fd)
+        if xml is None:
             # ikiwiki is going down
             self._debug_fn('ikiwiki is going down, and so are we...')
             return
 
-        self._debug_fn('received procedure call from ikiwiki: [%s]' % ret)
-        ret = self._dispatcher._marshaled_dispatch(ret)
-        self._debug_fn('sending procedure response to ikiwiki: [%s]' % ret)
-        _IkiWikiExtPluginXMLRPCHandler._write(out_fd, ret)
+        self._debug_fn('received procedure call from ikiwiki: [%s]' % xml)
+        params, method = xmlrpclib.loads(xml)
+        ret = self._dispatcher.dispatch(method, params)
+        xml = xmlrpclib.dumps((ret,), methodresponse=True)
+        self._debug_fn('sending procedure response to ikiwiki: [%s]' % xml)
+        _IkiWikiExtPluginXMLRPCHandler._write(out_fd, xml)
         return ret
 
 class IkiWikiProcedureProxy(object):
+
+    # how to communicate None to ikiwiki
+    _IKIWIKI_NIL_SENTINEL = {'null':''}
+
+    # sleep during each iteration
+    _LOOP_DELAY = 0.1
 
     def __init__(self, id, in_fd=sys.stdin, out_fd=sys.stdout, debug_fn=None):
         self._id = id
@@ -151,9 +160,25 @@ class IkiWikiProcedureProxy(object):
         self._xmlrpc_handler = _IkiWikiExtPluginXMLRPCHandler(self._debug_fn)
         self._xmlrpc_handler.register_function(self._importme, name='import')
 
-    def hook(self, type, function):
-        self._hooks.append((type, function.__name__))
-        self._xmlrpc_handler.register_function(function)
+    def hook(self, type, function, name=None):
+        if name is None:
+            name = function.__name__
+        self._hooks.append((type, name))
+
+        def hook_proxy(*args):
+#            curpage = args[0]
+#            kwargs = dict([args[i:i+2] for i in xrange(1, len(args), 2)])
+            ret = function(*args)
+            self._debug_fn("%s hook `%s' returned: [%s]" % (type, name, ret))
+            if ret == IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL:
+                raise IkiWikiProcedureProxy.InvalidReturnValue, \
+                        'hook functions are not allowed to return %s' \
+                        % IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL
+            if ret is None:
+                ret = IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL
+            return ret
+
+        self._xmlrpc_handler.register_function(hook_proxy, name=name)
 
     def _importme(self):
         self._debug_fn('importing...')
@@ -161,7 +186,7 @@ class IkiWikiProcedureProxy(object):
             self._debug_fn('hooking %s into %s chain...' % (function, type))
             self._xmlrpc_handler.send_rpc('hook', self._in_fd, self._out_fd,
                                           id=self._id, type=type, call=function)
-        return 0
+        return IkiWikiProcedureProxy._IKIWIKI_NIL_SENTINEL
 
     def run(self):
         try:
@@ -169,10 +194,13 @@ class IkiWikiProcedureProxy(object):
                 ret = self._xmlrpc_handler.handle_rpc(self._in_fd, self._out_fd)
                 if ret is None:
                     return
-                time.sleep(LOOP_DELAY)
+                time.sleep(IkiWikiProcedureProxy._LOOP_DELAY)
         except Exception, e:
             print >>sys.stderr, 'uncaught exception: %s' % e
             import traceback
             print >>sys.stderr, traceback.format_exc(sys.exc_info()[2])
             import posix
             sys.exit(posix.EX_SOFTWARE)
+
+    class InvalidReturnValue(Exception):
+        pass
