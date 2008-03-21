@@ -902,7 +902,7 @@ sub loadindex () { #{{{
 	my $in;
 	if (! open ($in, "<", "$config{wikistatedir}/indexdb")) {
 		if (-e "$config{wikistatedir}/index") {
-			system("ikiwiki-transition", "indexdb", $config{wikistatedir});
+			system("ikiwiki-transition", "indexdb", $config{srcdir});
 			open ($in, "<", "$config{wikistatedir}/indexdb") || return;
 		}
 		else {
