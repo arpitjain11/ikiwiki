@@ -1,0 +1,26 @@
+Access keys (i.e., keyboard shortcuts) can be defined for common
+features.  Something like the following:
+
+* 1 - Homepage
+* 2 - Search box
+* E - Edit
+* R - RecentChanges
+* H - History
+* P - Preferences
+* D - Discussion
+* S - Save the current page (when editing)
+* C - Cancel the current edit
+* V - Preview the current page
+
+Then, for example, in Firefox one could press Alt+Shift+E to edit the
+page.
+
+For links, this is implemented as:
+
+    <a href="recentchanges/" accesskey="r">RecentChanges</a>
+
+and for forms buttons:
+
+    <input type="submit" value="Submit" accesskey="s"/>
+
+--[[JasonBlevins]], March 21, 2008 18:05 EDT
