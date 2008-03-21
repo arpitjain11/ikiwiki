@@ -1,6 +1,8 @@
 #!/usr/bin/perl -i
 use warnings;
 use strict;
+use IkiWiki;
+use HTML::Entities;
 
 my $regex = qr{
 	(\\?)		# 1: escape?
@@ -48,10 +50,32 @@ sub prefix_directives {
 	}
 }
 
+sub indexdb {
+	$config{wikistatedir}=shift()."/.ikiwiki";
+
+	if (! defined $config{wikistatedir}) {
+		usage();		
+	}
+
+	if (! IkiWiki::oldloadindex()) {
+		die "failed to load index\n";
+	}
+	if (! IkiWiki::saveindex()) {
+		die "failed to save indexdb\n"
+	}
+	if (! IkiWiki::loadindex()) {
+		die "transition failed, cannot load new indexdb\n";
+	}
+	if (! unlink("$config{wikistatedir}/index")) {
+		die "unlink failed: $!\n";
+	}
+}
+
 sub usage {
-	print STDERR "Usage: ikiwiki-transition type file ...\n";
-	print STDERR "Currently supported transition types:\n";
-	print STDERR "	prefix_directives\n";
+	print STDERR "Usage: ikiwiki-transition type ...\n";
+	print STDERR "Currently supported transition subcommands:\n";
+	print STDERR "	prefix_directives file\n";
+	print STDERR "	indexdb srcdir\n";
 	exit 1;
 }
 
@@ -61,6 +85,51 @@ my $mode=shift;
 if ($mode eq 'prefix_directives') {
 	prefix_directives(@ARGV);
 }
+elsif ($mode eq 'indexdb') {
+	indexdb(@ARGV);
+}
 else {
 	usage();
+}
+
+package IkiWiki;
+
+sub oldloadindex {
+	%oldrenderedfiles=%pagectime=();
+	if (! $config{rebuild}) {
+		%pagesources=%pagemtime=%oldlinks=%links=%depends=
+			%destsources=%renderedfiles=%pagecase=%pagestate=();
+	}
+	open (my $in, "<", "$config{wikistatedir}/index") || return;
+	while (<$in>) {
+		chomp;
+		my %items;
+		$items{link}=[];
+		$items{dest}=[];
+		foreach my $i (split(/ /, $_)) {
+			my ($item, $val)=split(/=/, $i, 2);
+			push @{$items{$item}}, decode_entities($val);
+		}
+
+		next unless exists $items{src}; # skip bad lines for now
+
+		my $page=pagename($items{src}[0]);
+		if (! $config{rebuild}) {
+			$pagesources{$page}=$items{src}[0];
+			$pagemtime{$page}=$items{mtime}[0];
+			$oldlinks{$page}=[@{$items{link}}];
+			$links{$page}=[@{$items{link}}];
+			$depends{$page}=$items{depends}[0] if exists $items{depends};
+			$destsources{$_}=$page foreach @{$items{dest}};
+			$renderedfiles{$page}=[@{$items{dest}}];
+			$pagecase{lc $page}=$page;
+			foreach my $k (grep /_/, keys %items) {
+				my ($id, $key)=split(/_/, $k, 2);
+				$pagestate{$page}{decode_entities($id)}{decode_entities($key)}=$items{$k}[0];
+			}
+		}
+		$oldrenderedfiles{$page}=[@{$items{dest}}];
+		$pagectime{$page}=$items{ctime}[0];
+	}
+	return close($in);
 }

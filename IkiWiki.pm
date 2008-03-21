@@ -899,7 +899,16 @@ sub loadindex () { #{{{
 		%pagesources=%pagemtime=%oldlinks=%links=%depends=
 		%destsources=%renderedfiles=%pagecase=%pagestate=();
 	}
-	open (my $in, "<", "$config{wikistatedir}/index") || return;
+	my $in;
+	if (! open ($in, "<", "$config{wikistatedir}/indexdb")) {
+		if (-e "$config{wikistatedir}/index") {
+			system("ikiwiki-transition", "indexdb", $config{wikistatedir});
+			open ($in, "<", "$config{wikistatedir}/indexdb") || return;
+		}
+		else {
+			return;
+		}
+	}
 	my $ret=Storable::fd_retrieve($in);
 	if (! defined $ret) {
 		return 0;
@@ -946,7 +955,7 @@ sub saveindex () { #{{{
 	if (! -d $config{wikistatedir}) {
 		mkdir($config{wikistatedir});
 	}
-	my $newfile="$config{wikistatedir}/index.new";
+	my $newfile="$config{wikistatedir}/indexdb.new";
 	my $cleanup = sub { unlink($newfile) };
 	open (my $out, '>', $newfile) || error("cannot write to $newfile: $!", $cleanup);
 	my %index;
@@ -976,8 +985,8 @@ sub saveindex () { #{{{
 	my $ret=Storable::nstore_fd(\%index, $out);
 	return if ! defined $ret || ! $ret;
 	close $out || error("failed saving to $newfile: $!", $cleanup);
-	rename($newfile, "$config{wikistatedir}/index") ||
-		error("failed renaming $newfile to $config{wikistatedir}/index", $cleanup);
+	rename($newfile, "$config{wikistatedir}/indexdb") ||
+		error("failed renaming $newfile to $config{wikistatedir}/indexdb", $cleanup);
 	
 	return 1;
 } #}}}
