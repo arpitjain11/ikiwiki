@@ -43,6 +43,8 @@ sub filter (@) { #{{{
 MATCH:	while (m{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}g) {
 		my $escape=$1;
 		my $smiley=$2;
+		my $epos=$-[1];
+		my $spos=$-[2];
 
 		# Smilies are not allowed inside <pre> or <code>.
 		# For each tag in turn, match forward to find the next <tag>
@@ -60,11 +62,11 @@ MATCH:	while (m{(?:^|(?<=\s))(\\?)$smiley_regexp(?:(?=\s)|$)}g) {
 
 		if ($escape) {
 			# Remove escape.
-			substr($_, $-[1], 1)="";
+			substr($_, $epos, 1)="";
 		}
 		else {
 			# Replace the smiley with its expanded value.
-			substr($_, $-[2], length($smiley))=
+			substr($_, $spos, length($smiley))=
 				htmllink($params{page}, $params{destpage},
 				         $smileys{$smiley}, linktext => $smiley);
 		}
