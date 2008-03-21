@@ -35,4 +35,16 @@ The patch below adds a label for the field to improve usability:
      <input type="hidden" name="do" value="hyperestraier" />
      </div>
 
+> That's both nasty javascript and fails if javascript is disabled. :-)
+> What I'd really like is a proper search label that appears above the
+> input box. There is free whitespace there, except for pages with very
+> long titles. Would someone like to figure out the CSS to make that
+> happen?
+> 
+> The tricky thing is that the actual html for the form needs to
+> still come after the page title, not before it. Because the first thing
+> a non-css browser should show is the page title. But the only way I know
+> to get it to appear higher up is to put it first, or to use Evil absolute
+> positioning. (CSS sucks.) --[[Joey]]
+
 [[wishlist]]
