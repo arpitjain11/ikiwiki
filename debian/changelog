@@ -57,6 +57,7 @@ ikiwiki (2.41) UNRELEASED; urgency=low
   * Close meta tag for redir properly.
   * smiley: Detect smileys inside pre and code tags, and do not expand.
   * inline: Crazy optimisation to work around slow markdown.
+  * Precompile pagespecs, about 10% overall speedup.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

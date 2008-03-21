@@ -1169,8 +1169,6 @@ sub pagespec_merge ($$) { #{{{
 } #}}}
 
 sub pagespec_translate ($) { #{{{
-	# This assumes that $page and @params are in scope in the function
-	# that evalulates the translated pagespec code.
 	my $spec=shift;
 
 	# Support for old-style GlobLists.
@@ -1207,18 +1205,18 @@ sub pagespec_translate ($) { #{{{
 		}
 		elsif ($word =~ /^(\w+)\((.*)\)$/) {
 			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
-				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@params)";
+				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@_)";
 			}
 			else {
 				$code.=' 0';
 			}
 		}
 		else {
-			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \@params)";
+			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \@_)";
 		}
 	}
 
-	return $code;
+	return eval 'sub { my $page=shift; '.$code.' }';
 } #}}}
 
 sub pagespec_match ($$;@) { #{{{
@@ -1231,19 +1229,15 @@ sub pagespec_match ($$;@) { #{{{
 		unshift @params, 'location';
 	}
 
-	my $ret=eval pagespec_translate($spec);
+	my $sub=pagespec_translate($spec);
 	return IkiWiki::FailReason->new('syntax error') if $@;
-	return $ret;
+	return $sub->($page, @params);
 } #}}}
 
 sub pagespec_valid ($) { #{{{
 	my $spec=shift;
 
-	# used by generated code
-	my $page="";
-	my @params;
-
-	eval pagespec_translate($spec);
+	my $sub=pagespec_translate($spec);
 	return ! $@;
 } #}}}
 
