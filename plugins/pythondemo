@@ -148,10 +148,6 @@ def scan_demo(proxy, *args):
     links = proxy.getvar('links', kwargs['page'])
     debug("links for page `%s' are: %s" % (kwargs['page'], links))
     proxy.setvar('links', kwargs['page'], links)
-    # TODO: this yields "Can't use string ("1") as an ARRAY ref while "strict
-    # refs" in use at /home/madduck/code/ikiwiki/IkiWiki/Render.pm line 17,
-    # <GEN1> line 476."
-    raise NotImplementedError
 proxy.hook('scan', scan_demo)
 
 def htmlize_demo(proxy, *args):
