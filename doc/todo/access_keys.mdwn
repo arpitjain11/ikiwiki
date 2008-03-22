@@ -24,3 +24,27 @@ and for forms buttons:
     <input type="submit" value="Submit" accesskey="s"/>
 
 --[[JasonBlevins]], March 21, 2008 18:05 EDT
+
+- - - 
+
+There are also a few thoughts about access keys on the
+[[main_discussion_page|index/discussion]].  The main criticism there it
+seems is that some browsers implement access keys in a way (via the Alt
+key) that allows them to override built-in keyboard shortcuts.  I
+believe this is not a problem any longer in Firefox (which uses the
+Shift+Alt prefix) but I suppose it could still be a problem in other
+browsers.
+
+Another criticism is that most browsers do not display the access keys
+that are defined.  The [article][] cited on the main discussion page
+suggests underlining the relevant mnemonic.  I think it would be
+sufficient to just list them in the basewiki documentation somewhere.
+
+  [article]: http://www.cs.tut.fi/~jkorpela/forms/accesskey.html
+
+It's an unfortunate situation&mdash;I'd like an alternative to the
+rodent but there are quite a few downsides to using access keys.
+Tabbing isn't quite the same as a nice shortcut key.  There's always
+Conkeror...
+
+--[[JasonBlevins]], March 22, 2008 10:35 EDT
