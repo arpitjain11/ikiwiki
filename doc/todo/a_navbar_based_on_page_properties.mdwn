@@ -35,5 +35,7 @@ I don't think this is hard to code up and it's what I've been using with
 [rest2web](http://www.voidspace.org.uk/python/rest2web/) and it's served me
 well.
 
+There is a problem though if this navbar were included in a sidebar (the logical place): if a page is updated, the navbar needs to be rebuilt which causes the sidebar to be rebuilt, which causes the whole site to be rebuilt. Unless we can subscribe only to title changes, this will be pretty bad...
+
 --[[madduck]]
 [[!tag wishlist]]
