@@ -114,10 +114,14 @@ sub preprocess_inline (@) { #{{{
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
 	}
+	if (! exists $params{feedshow} && exists $params{show}) {
+		$params{feedshow}=$params{show};
+	}
 	my $desc;
 	if (exists $params{description}) {
 		$desc = $params{description} 
-	} else {
+	}
+	else {
 		$desc = $config{wikiname};
 	}
 	my $actions=yesno($params{actions});
@@ -157,6 +161,17 @@ sub preprocess_inline (@) { #{{{
 		@list=@list[$params{skip} .. scalar @list - 1];
 	}
 	
+	my @feedlist;
+	if ($feeds) {
+		if (exists $params{feedshow} &&
+		    $params{feedshow} && @list > $params{feedshow}) {
+			@feedlist=@list[0..$params{feedshow} - 1];
+		}
+		else {
+			@feedlist=@list;
+		}
+	}
+	
 	if ($params{show} && @list > $params{show}) {
 		@list=@list[0..$params{show} - 1];
 	}
@@ -165,7 +180,7 @@ sub preprocess_inline (@) { #{{{
 	# Explicitly add all currently displayed pages as dependencies, so
 	# that if they are removed or otherwise changed, the inline will be
 	# sure to be updated.
-	add_depends($params{page}, join(" or ", @list));
+	add_depends($params{page}, join(" or ", $#list >= $#feedlist ? @list : @feedlist));
 
 	my $feednum="";
 
@@ -287,11 +302,8 @@ sub preprocess_inline (@) { #{{{
 	}
 	
 	if ($feeds) {
-		if (exists $params{feedshow} && @list > $params{feedshow}) {
-			@list=@list[0..$params{feedshow} - 1];
-		}
 		if (exists $params{feedpages}) {
-			@list=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @list;
+			@feedlist=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @feedlist;
 		}
 	
 		if ($rss) {
@@ -300,7 +312,7 @@ sub preprocess_inline (@) { #{{{
 			if (! $params{preview}) {
 				writefile($rssp, $config{destdir},
 					genfeed("rss",
-						$config{url}."/".rsspage($params{destpage}).$feednum, $desc, $params{destpage}, @list));
+						$config{url}."/".rsspage($params{destpage}).$feednum, $desc, $params{destpage}, @feedlist));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
 				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 			}
@@ -310,7 +322,7 @@ sub preprocess_inline (@) { #{{{
 			will_render($params{destpage}, $atomp);
 			if (! $params{preview}) {
 				writefile($atomp, $config{destdir},
-					genfeed("atom", $config{url}."/".atompage($params{destpage}).$feednum, $desc, $params{destpage}, @list));
+					genfeed("atom", $config{url}."/".atompage($params{destpage}).$feednum, $desc, $params{destpage}, @feedlist));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
 				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
 			}
