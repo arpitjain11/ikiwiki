@@ -28,4 +28,45 @@ I also try to build a wiki-wide preprocessing of the source file to find referen
 
 > The scan hook is run on new page content before building --[[Joey]]
 
+What notation did you have in mind for citations?  A preprocessor
+directive?  Something LaTeX-inspired might be
+
+    \[[!cite key="foo"]]
+
+which would output "(Foo, 2008)".  With the appropriate options, this
+could allow for several variations like "Foo (2008)" and "(Foo, 2008,
+p. 28)".  A `nocite` option could cause the reference to be printed in
+the bibliography but produce no output.
+
+What about the references section?  There are several ways to
+go about it, for example:
+
+1. It could be included at the bottom of the page automatically for
+   pages with references, with a configurable title and heading level
+   (e.g., `<h2>References</h2>`) followed by a list of references.
+
+2. Use another preprocessor directive like
+
+        ## References ##
+
+        \[[!bibliography ]]
+
+   or
+
+        \[[!bibliography title="References" headerlevel="2"]]
+
+   with configurable default values.  Would it be tedious to do this on
+   every page?
+
+3. Use HTML::Template and allow users to add a bibliography section to
+   `page.tmpl` to include the bibliography if references are present and
+   loop over the references to emit a list.  The downside here is having
+   to ask people to modify their templates (unless the plugin is
+   eventually included in the distribution).
+
+Any thoughts on the best way to proceed?
+
+--[[JasonBlevins]], March 23, 2008 21:41 EDT
+
+
 [[tag soc]] [[tag wishlist]]
