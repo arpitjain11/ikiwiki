@@ -70,10 +70,10 @@ sub create ($$$) { #{{{
 
 	my $digest = md5_hex($code, $height);
 
-	my $imglink= $params->{destpage} . "/$digest.png";
-	my $imglog =  $params->{destpage} .  "/$digest.log";
-	will_render($params->{destpage}, $imglink);
-	will_render($params->{destpage}, $imglog);
+	my $imglink= $params->{page} . "/$digest.png";
+	my $imglog =  $params->{page} .  "/$digest.log";
+	will_render($params->{page}, $imglink);
+	will_render($params->{page}, $imglog);
 
 	my $imgurl=urlto($imglink, $params->{destpage});
 	my $logurl=urlto($imglink, $params->{destpage});

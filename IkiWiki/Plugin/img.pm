@@ -39,7 +39,7 @@ sub preprocess (@) { #{{{
 
 	my $file = bestlink($params{page}, $image);
 
-	my $dir = $params{destpage};
+	my $dir = $params{page};
 	my $base = IkiWiki::basename($file);
 
 	eval q{use Image::Magick};
@@ -56,7 +56,7 @@ sub preprocess (@) { #{{{
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
 		$imglink = "$dir/${w}x${h}-$base";
 		
-		will_render($params{destpage}, $imglink);
+		will_render($params{page}, $imglink);
 
 		if (-e $outfile && (-M srcfile($file) >= -M $outfile)) {
 			$r = $im->Read($outfile);
