@@ -1,0 +1,108 @@
+/*
+ * local.css: stylesheet for subvert.org.uk.
+ * Copyright © 2008 Benjamin M. A'Lee <bma@subvert.org.uk>
+ * 
+ * This work is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 3,  as
+ * published by the Free Software Foundation.
+ * 
+ * This work is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this work.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* Positioning first. Colours at the end. */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#content {
+    margin: 1em 15em 0 1em;
+    padding: 2em 3em 4em 1.5em;
+    border: 1px solid;
+}
+
+#sidebar {
+    width: 10em;
+    min-height: 50%;
+
+    font-family: sans-serif;
+    text-align: left;
+    margin: 1em 1em 2em 1em;
+    line-height: 1em;
+    border: 1px solid;
+    
+    position: absolute;
+    right: 0;
+    top: 5; 
+}
+
+#sidebar h2 {
+    font-size: 1em;
+}
+
+
+.header {
+    padding: 1ex;
+    border-bottom: solid 1px;
+    margin: 0; 
+    font-size: 1.5em;
+}
+
+#footer {
+    border: 1px solid;
+    padding: .5em;
+    padding-left: 1em;
+    margin: 1em 15em 1em 1em;
+}
+
+.pagedate, .pagelicense, .pagecopyright {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#pageinfo {
+    border: none;
+}
+
+.inlinepage {
+    border: none;
+}
+
+.pagelicense p, .pagecopyright p {
+    display: inline;
+}
+
+pre {
+    overflow:   auto;
+    border:     solid;
+    border-width:   thin;
+    padding: 5px  10px;
+}
+
+/* Set colours here. */
+
+body {
+    background: royalblue;
+}
+
+#content, #footer, .header {
+    background-color: silver; 
+    border-color: black;
+}
+
+#sidebar {
+    background-color: silver;
+    border-color: black;
+}
+
+pre, code {
+    background-color: #EEEEEE;
+}
