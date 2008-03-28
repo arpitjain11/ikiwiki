@@ -92,6 +92,8 @@ function is passed no values.
 
 ### needsbuild
 
+
+
 	hook(type => "needsbuild", id => "foo", call => \&needsbuild);
 
 This allows a plugin to manipulate the list of files that need to be
@@ -148,7 +150,8 @@ htmlize the page) along with the rest of the page.
 
 This hook is called to convert [[WikiLinks|WikiLink]] on the page into html
 links. The function is passed named parameters "page", "destpage", and
-"content". It should return the linkified content.
+"content". It should return the linkified content.  Present in IkiWiki 2.40
+and later.
 
 Plugins that implement linkify must also implement a scan hook, that scans
 for the links on the page and adds them to `%links`.
@@ -160,6 +163,7 @@ for the links on the page and adds them to `%links`.
 This hook is called early in the process of building the wiki, and is used
 as a first pass scan of the page, to collect metadata about the page. It's
 mostly used to scan the page for WikiLinks, and add them to `%links`.
+Present in IkiWiki 2.40 and later.
 
 The function is passed named parameters "page" and "content". Its return
 value is ignored.
