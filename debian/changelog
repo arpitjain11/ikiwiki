@@ -63,6 +63,9 @@ ikiwiki (2.41) UNRELEASED; urgency=low
     a special sentinal value.
   * inline: Allow the "feedshow" parameter to take values greater than the
     value for "show".
+  * Added a hardlink option in the setup file, useful if the source and
+    dest are on the same filesystem and the wiki includes large media files,
+    which would normally be copied, wasting time and space.
 
  -- martin f. krafft <madduck@debian.org>  Sun, 02 Mar 2008 17:46:38 +0100
 

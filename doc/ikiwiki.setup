@@ -129,6 +129,9 @@ use IkiWiki::Setup::Standard {
 	#recentchangesnum => 100,
 	# Use new '!'-prefixed preprocessor directive syntax
 	#prefix_directives => 0,
+	# Attempt to make hardlinks to source files instead of copying them.
+	# Useful if the wiki contains large media files.
+	#hardlink => 1,
 
 	# To add plugins, list them here.
 	#add_plugins => [qw{goodstuff search wikitext camelcase

@@ -87,6 +87,7 @@ sub defaultconfig () { #{{{
 	numbacklinks => 10,
 	account_creation_password => "",
 	prefix_directives => 0,
+	hardlink => 0,
 } #}}}
 
 sub checkconfig () { #{{{
@@ -323,12 +324,9 @@ sub readfile ($;$$) { #{{{
 	return $ret;
 } #}}}
 
-sub writefile ($$$;$$) { #{{{
-	my $file=shift; # can include subdirs
-	my $destdir=shift; # directory to put file in
-	my $content=shift;
-	my $binary=shift;
-	my $writer=shift;
+sub prep_writefile ($$) {
+	my $file=shift;
+	my $destdir=shift;
 	
 	my $test=$file;
 	while (length $test) {
@@ -337,12 +335,8 @@ sub writefile ($$$;$$) { #{{{
 		}
 		$test=dirname($test);
 	}
-	my $newfile="$destdir/$file.ikiwiki-new";
-	if (-l $newfile) {
-		error("cannot write to a symlink ($newfile)");
-	}
 
-	my $dir=dirname($newfile);
+	my $dir=dirname("$destdir/$file");
 	if (! -d $dir) {
 		my $d="";
 		foreach my $s (split(m!/+!, $dir)) {
@@ -353,6 +347,23 @@ sub writefile ($$$;$$) { #{{{
 		}
 	}
 
+	return 1;
+}
+
+sub writefile ($$$;$$) { #{{{
+	my $file=shift; # can include subdirs
+	my $destdir=shift; # directory to put file in
+	my $content=shift;
+	my $binary=shift;
+	my $writer=shift;
+	
+	prep_writefile($file, $destdir);
+	
+	my $newfile="$destdir/$file.ikiwiki-new";
+	if (-l $newfile) {
+		error("cannot write to a symlink ($newfile)");
+	}
+	
 	my $cleanup = sub { unlink($newfile) };
 	open (my $out, '>', $newfile) || error("failed to write $newfile: $!", $cleanup);
 	binmode($out) if ($binary);

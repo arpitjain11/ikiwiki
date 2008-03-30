@@ -211,9 +211,19 @@ sub render ($) { #{{{
 		writefile($output, $config{destdir}, genpage($page, $content));
 	}
 	else {
-		my $srcfd=readfile($srcfile, 1, 1);
 		delete $depends{$file};
 		will_render($file, $file, 1);
+		
+		if ($config{hardlink}) {
+			prep_writefile($file, $config{destdir});
+			unlink($config{destdir}."/".$file);
+			if (link($srcfile, $config{destdir}."/".$file)) {
+				return;
+			}
+			# if hardlink fails, fall back top copying
+		}
+		
+		my $srcfd=readfile($srcfile, 1, 1);
 		writefile($file, $config{destdir}, undef, 1, sub {
 			my $destfd=shift;
 			my $cleanup=shift;

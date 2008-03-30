@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-12 15:42-0400\n"
+"POT-Creation-Date: 2008-03-29 21:01-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,25 +45,25 @@ msgstr ""
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:237 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/CGI.pm:395 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:265 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:172
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:441
+#: ../IkiWiki/CGI.pm:451
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:459 ../IkiWiki/CGI.pm:477 ../IkiWiki/CGI.pm:487
-#: ../IkiWiki/CGI.pm:521 ../IkiWiki/CGI.pm:566
+#: ../IkiWiki/CGI.pm:469 ../IkiWiki/CGI.pm:487 ../IkiWiki/CGI.pm:497
+#: ../IkiWiki/CGI.pm:531 ../IkiWiki/CGI.pm:576
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:656
+#: ../IkiWiki/CGI.pm:666
 msgid "You are banned."
 msgstr ""
 
@@ -84,50 +84,50 @@ msgstr ""
 msgid "new"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:309
+#: ../IkiWiki/Plugin/aggregate.pm:307
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:316
+#: ../IkiWiki/Plugin/aggregate.pm:314
 #, perl-format
 msgid "expiring %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:345
+#: ../IkiWiki/Plugin/aggregate.pm:341
 #, perl-format
 msgid "processed ok at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:349
+#: ../IkiWiki/Plugin/aggregate.pm:345
 #, perl-format
 msgid "checking feed %s ..."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:354
+#: ../IkiWiki/Plugin/aggregate.pm:350
 #, perl-format
 msgid "could not find feed at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:369
+#: ../IkiWiki/Plugin/aggregate.pm:365
 msgid "feed not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:380
+#: ../IkiWiki/Plugin/aggregate.pm:376
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:386
+#: ../IkiWiki/Plugin/aggregate.pm:382
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:392
+#: ../IkiWiki/Plugin/aggregate.pm:388
 msgid "feed crashed XML::Feed!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:466
+#: ../IkiWiki/Plugin/aggregate.pm:462
 #, perl-format
 msgid "creating new page %s"
 msgstr ""
@@ -200,29 +200,29 @@ msgstr ""
 msgid "failed to determine size of image %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:44
+#: ../IkiWiki/Plugin/inline.pm:46
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:136
+#: ../IkiWiki/Plugin/inline.pm:153
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:196
+#: ../IkiWiki/Plugin/inline.pm:224
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:212
+#: ../IkiWiki/Plugin/inline.pm:240
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:245 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:273 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:463
+#: ../IkiWiki/Plugin/inline.pm:491
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -393,6 +393,10 @@ msgstr ""
 msgid "The page %s does not exist."
 msgstr ""
 
+#: ../IkiWiki/Plugin/recentchangesdiff.pm:26
+msgid "(Diff truncated)"
+msgstr ""
+
 #: ../IkiWiki/Plugin/search.pm:34
 #, perl-format
 msgid "Must specify %s when using the search plugin"
@@ -422,7 +426,7 @@ msgstr ""
 msgid "shortcut %s points to <i>%s</i>"
 msgstr ""
 
-#: ../IkiWiki/Plugin/smiley.pm:23
+#: ../IkiWiki/Plugin/smiley.pm:32
 msgid "failed to parse any smileys"
 msgstr ""
 
@@ -512,47 +516,47 @@ msgstr ""
 msgid "getctime not implemented"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:279 ../IkiWiki/Render.pm:300
+#: ../IkiWiki/Render.pm:289 ../IkiWiki/Render.pm:310
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:355
+#: ../IkiWiki/Render.pm:365
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:396
+#: ../IkiWiki/Render.pm:406
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:401
+#: ../IkiWiki/Render.pm:411
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:422
+#: ../IkiWiki/Render.pm:432
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:453
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:482
+#: ../IkiWiki/Render.pm:492
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:494
+#: ../IkiWiki/Render.pm:504
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:520
+#: ../IkiWiki/Render.pm:530
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -620,11 +624,11 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:115
+#: ../IkiWiki.pm:117
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:184 ../IkiWiki.pm:185
+#: ../IkiWiki.pm:186 ../IkiWiki.pm:187
 msgid "Error"
 msgstr ""
 
@@ -632,7 +636,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:735
+#: ../IkiWiki.pm:747
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
