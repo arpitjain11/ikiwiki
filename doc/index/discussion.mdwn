@@ -38,6 +38,13 @@ I'm kind of at a loss how to track this down or work around it.  Any suggestions
 > such bugs, not contain them. :-) Sorry I can't be of more help.
 > --[[Joey]]
 
+> I had a similar problem after upgrading to the latest version of
+> Text::Markdown from CPAN.  You might try either looking for a Markdown
+> package for CentOS or using the latest version of John Gruber's
+> Markdown.pl:
+> <http://daringfireball.net/projects/downloads/Markdown_1.0.2b8.tbz>
+> --[[JasonBlevins]], April 1, 2008 18:22 EDT
+
 ----
 
 # Installation of selected docs (html)
@@ -360,7 +367,7 @@ aren't allowed in WikiLinks now?
 
 My best regards,
 
---[[Paweł|ptecza]]
+--[[PaweB|ptecza]]
 
 > See [[bugs/Spaces_in_link_text_for_ikiwiki_links]]
 
