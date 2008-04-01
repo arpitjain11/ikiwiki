@@ -33,6 +33,11 @@ I'm trying to install from scratch on a CentOS 4.6 system.  I installed perl 5.8
 
 I'm kind of at a loss how to track this down or work around it.  Any suggestions? --Monty
 
+> All I can tell you is that it looks like a problem with your C library or
+> perl. Little perl programs like ikiwiki should only be able to trigger
+> such bugs, not contain them. :-) Sorry I can't be of more help.
+> --[[Joey]]
+
 ----
 
 # Installation of selected docs (html)
