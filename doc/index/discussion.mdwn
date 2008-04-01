@@ -25,6 +25,14 @@ of via syslog?
 > > The reason is that I'm not logged in on the web server regularly to
 > > check the log files. I'll see whether I can install a logwatch instance.
 
+I'm trying to install from scratch on a CentOS 4.6 system.  I installed perl 5.8.8 from source and then added all the required modules via CPAN.  When I build ikiwiki from the tarball, I get this message:
+
+    rendering todo/calendar_--_archive_browsing_via_a_calendar_frontend.mdwn
+    *** glibc detected *** double free or corruption (!prev): 0x0922e478 ***
+    make: *** [extra_build] Aborted
+
+I'm kind of at a loss how to track this down or work around it.  Any suggestions? --Monty
+
 ----
 
 # Installation of selected docs (html)
