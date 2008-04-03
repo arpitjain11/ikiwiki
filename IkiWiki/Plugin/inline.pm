@@ -389,18 +389,18 @@ sub absolute_urls ($$) { #{{{
 	my $url=$baseurl;
 	$url=~s/[^\/]+$//;
 
-        # what is the non path part of the url? (need it for relative url's starting with /
+        # what is the non path part of the url?
         my $top_uri = URI->new($url);
-        $top_uri->path_query("/"); # reset the path
+        $top_uri->path_query(""); # reset the path
         my $urltop = $top_uri->as_string;
-        $urltop=~s/\/*$//;
 
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(#[^"]+)"/$1 href="$baseurl$2"/mig;
-        # Relative URL
+        # relative to another wiki page
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:)([^\/][^"]*)"/$1 href="$url$2"/mig;
+	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)([^\/][^"]*)"/$1 src="$url$2"/mig;
         # relative to the top of the site
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:)(\/[^"]*)"/$1 href="$urltop$2"/mig;
-	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)([^"]+)"/$1 src="$url$2"/mig;
+	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)(\/[^"]*)"/$1 src="$urltop$2"/mig;
 	return $content;
 } #}}}
 
