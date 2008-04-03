@@ -404,7 +404,7 @@ sub aggregate (@) { #{{{
 				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 				link => $entry->link,
 				content => defined $entry->content->body ? $entry->content->body : "",
-				guid => defined $entry->id ? $entry->id : time."_".$feed->name,
+				guid => defined $entry->id ? $entry->id : time."_".$feed->{name},
 				ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
 			);
 		}
