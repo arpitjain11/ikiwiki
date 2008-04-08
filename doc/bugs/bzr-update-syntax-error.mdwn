@@ -1,0 +1,9 @@
+On [Line #46 of the `bzr` plugin](http://git.ikiwiki.info/?p=ikiwiki;a=blob;f=IkiWiki/Rcs/bzr.pm;h=526036bf36e0ce5ec6fab47cb8a46991d2ebe0b2;hb=HEAD#l46) there's a mistalke. Instead of:
+
+    my @cmdline = ("bzr", $config{srcdir}, "update");
+
+It should be:
+
+    my @cmdline = ("bzr", "update", $config{srcdir});
+
+The former produces errors such as "_bzr: ERROR: unknown command "/home/user/ikiwiki/posts_", "_'bzr /home/user/ikiwiki/posts update' failed: Inappropriate ioctl for device at /usr/share/perl5/IkiWiki/Rcs/bzr.pm line 48._".
