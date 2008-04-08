@@ -1,0 +1,21 @@
+Trying to upgrade to IkiWiki 2.41, whenever I try to edit a page I get:
+
+    [Mon Apr 07 16:53:33 2008] [error] [client 68.122.117.135] Undefined subroutine &IkiWiki::escapeHTML called at /root/ikiwiki/install/share/perl/5.8.8/IkiWiki.pm line 610.
+    [Mon Apr 07 16:53:33 2008] [error] [client 68.122.117.135] Premature end of script headers: wrapper.cgi
+
+This patch appears to fix it for me:
+
+    --- IkiWiki.pm	2008-04-07 17:05:04.000000000 -0400
+    +++ /usr/share/perl5/IkiWiki.pm	2008-04-07 18:03:55.000000000 -0400
+    @@ -621,6 +619,9 @@
+     		return "<a href=\"$user\">$oiduser</a>";
+     	}
+     	else {
+    +		eval q{use CGI 'escapeHTML'};
+    +		error($@) if $@;
+    +
+     		return htmllink("", "", escapeHTML(
+     			length $config{userdir} ? $config{userdir}."/".$user : $user
+     		), noimageinline => 1);
+
+That's dirty and wrong though... Can you suggest a better fix?
