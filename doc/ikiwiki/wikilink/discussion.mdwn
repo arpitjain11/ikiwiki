@@ -36,6 +36,7 @@ BTW, ikiwiki doesn't displays the #foo anchor in the example
 >>>> Those wouldn't know about how to deal with the intermingled HTML code.
 >>>>
 >>>> --[[tschwinge]]
+>>>>>Not sure \[[anchor WHATEVER]] looks any better than &lt;a name="WHATEVER"&gt;...?  --[[sabr]]
 
 > The lack of the `#foo` anchor in the anchor example on [[wikilink]]
 > definitely looks like a bug.  --[[JoshTriplett]]
@@ -49,3 +50,7 @@ Considering a hierarchy like `foo/bar/bar`, I had the need to link from the
 simply write [[wikilink]]s like `\[[../bar]]` (or even just `\[[..]]`?), but
 this doesn't work, so I had to resort to using `\[[foo/bar]]` instead.
 --[[tschwinge]]
+
+----
+
+How do I make images clickable?  The obvious guess, \[[foo.png|/index]], doesn't work.  --[[sabr]]
