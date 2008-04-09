@@ -43,3 +43,9 @@ only Apache/iptables rules for this? Maybe it's related to
 > Error: /srv/web/ikiwiki.info/todo/Configurable_minimum_length_of_log_message_for_web_edits/index.html independently created, not overwriting with version from todo/Configurable_minimum_length_of_log_message_for_web_edits
 
 [[jondowland]]
+
+----
+
+If I've logged in by OpenID, how do I log out?  I don't see any logout button anywhere on IkiWIki.  (is it because I hit "forever" for my OpenID authorization duration?)
+
+Even if IkiWiki does let me log out, how do I *stay* logged out?  Let's say I'm using a kiosk.  What's to prevent someone else from hitting my OpenID service right after I've walked away?  My OpenID service will just auth the login again, won't it?
