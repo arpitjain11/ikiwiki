@@ -23,3 +23,5 @@ Errr... That is not a solution, that is a work around. ikiwiki does not hard cod
 
 I noticed the links to the images on <http://ikiwiki.info/recentchanges/> are also absolute, that is <http://ikiwiki.info/wikiicons/diff.png>; this seems surprising, as the change.tmpl file uses &lt;TMPL_VAR BASEURL&gt;
 which seems to do the right thing in page.tmpl, but not for change.tmpl. Where is BASEURL set? -- Brian May
+
+> The use of an absolute baseurl in change.tmpl is a special case. --[[Joey]]
