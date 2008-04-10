@@ -43,7 +43,7 @@ sub bzr_log ($) { #{{{
 } #}}}
 
 sub rcs_update () { #{{{
-	my @cmdline = ("bzr", $config{srcdir}, "update");
+	my @cmdline = ("bzr", "update", $config{srcdir});
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
