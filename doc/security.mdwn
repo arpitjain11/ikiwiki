@@ -149,7 +149,7 @@ option.
 
 ## XSS holes in CGI output
 
-ikiwiki has not yet been audited to ensure that all cgi script input/output
+ikiwiki has been audited to ensure that all cgi script input/output
 is sanitised to prevent XSS attacks. For example, a user can't register
 with a username containing html code (anymore).
 
