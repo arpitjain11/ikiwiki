@@ -1,0 +1,20 @@
+The _bzr_ plug echoes "added: somefile.mdwn" when it adds somefile.mdwn to the repository. As a result, the redirect performed after a new article is created fails because the _bzr_ output comes before the HTTP headers.
+
+The fix is simply to call `bzr` with the _--quiet_ switch. Something like this applied to _bzr.pm_ works for me:
+
+    46c46
+    < 	my @cmdline = ("bzr", $config{srcdir}, "update");
+    ---
+    > 	my @cmdline = ("bzr", "update", "--quiet", $config{srcdir});
+    74c74
+    < 	my @cmdline = ("bzr", "commit", "-m", $message, "--author", $user,
+    ---
+    > 	my @cmdline = ("bzr", "commit", "--quiet", "-m", $message, "--author", $user, 
+    86c86
+    < 	my @cmdline = ("bzr", "add", "$config{srcdir}/$file");
+    ---
+    > 	my @cmdline = ("bzr", "add", "--quiet", "$config{srcdir}/$file");
+    94a95,97
+    > 	eval q{use CGI 'escapeHTML'};
+    > 	error($@) if $@;
+    > 
