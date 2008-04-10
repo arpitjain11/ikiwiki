@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-29 21:01-0400\n"
+"POT-Creation-Date: 2008-04-10 16:18-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,46 +24,50 @@ msgstr ""
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:184
+#: ../IkiWiki/CGI.pm:173 ../IkiWiki/CGI.pm:499
+msgid "Your login session has expired."
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:194
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:185
+#: ../IkiWiki/CGI.pm:195
 msgid "Preferences"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:186
+#: ../IkiWiki/CGI.pm:196
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:235
+#: ../IkiWiki/CGI.pm:248
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:293
+#: ../IkiWiki/CGI.pm:306
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:395 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:410 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:265 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:172
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:451
+#: ../IkiWiki/CGI.pm:466
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:469 ../IkiWiki/CGI.pm:487 ../IkiWiki/CGI.pm:497
-#: ../IkiWiki/CGI.pm:531 ../IkiWiki/CGI.pm:576
+#: ../IkiWiki/CGI.pm:484 ../IkiWiki/CGI.pm:512 ../IkiWiki/CGI.pm:522
+#: ../IkiWiki/CGI.pm:556 ../IkiWiki/CGI.pm:601
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:666
+#: ../IkiWiki/CGI.pm:691
 msgid "You are banned."
 msgstr ""
 
@@ -222,7 +226,7 @@ msgstr ""
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:491
+#: ../IkiWiki/Plugin/inline.pm:500
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 

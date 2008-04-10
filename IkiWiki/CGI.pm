@@ -161,8 +161,18 @@ sub cgi_prefs ($$) { #{{{
 	my $session=shift;
 
 	needsignin($q, $session);
-
 	decode_cgi_utf8($q);
+	
+	# The session id is stored on the form and checked to
+	# guard against CSRF.
+	my $sid=$q->param('sid');
+	if (! defined $sid) {
+		$q->delete_all;
+	}
+	elsif ($sid ne $session->id) {
+		error(gettext("Your login session has expired."));
+	}
+
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -193,7 +203,10 @@ sub cgi_prefs ($$) { #{{{
 		        buttons => $buttons);
 	});
 	
-	$form->field(name => "do", type => "hidden");
+	$form->field(name => "do", type => "hidden", value => "prefs",
+		force => 1);
+	$form->field(name => "sid", type => "hidden", value => $session->id,
+		force => 1);
 	$form->field(name => "email", size => 50, fieldset => "preferences");
 	$form->field(name => "banned_users", size => 50,
 		fieldset => "admin");
@@ -241,11 +254,11 @@ sub cgi_prefs ($$) { #{{{
 sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
-
-	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
-	my @buttons=("Save Page", "Preview", "Cancel");
 	
 	decode_cgi_utf8($q);
+	
+	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
+	my @buttons=("Save Page", "Preview", "Cancel");
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -316,6 +329,8 @@ sub cgi_editpage ($$) { #{{{
 	}
 
 	$form->field(name => "do", type => 'hidden');
+	$form->field(name => "sid", type => "hidden", value => $session->id,
+		force => 1);
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
 	$form->field(name => "subpage", type => 'hidden');
@@ -474,6 +489,16 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
+	
+		# The session id is stored on the form and checked to
+		# guard against CSRF. But only if the user is logged in,
+		# as anonok can allow anonymous edits.
+		if (defined $session->param("name")) {
+			my $sid=$q->param('sid');
+			if (! defined $sid || $sid ne $session->id) {
+				error(gettext("Your login session has expired."));
+			}
+		}
 
 		my $exists=-e "$config{srcdir}/$file";
 
