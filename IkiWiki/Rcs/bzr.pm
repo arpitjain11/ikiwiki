@@ -43,7 +43,7 @@ sub bzr_log ($) { #{{{
 } #}}}
 
 sub rcs_update () { #{{{
-	my @cmdline = ("bzr", "update", $config{srcdir});
+	my @cmdline = ("bzr", "update", "--quiet", $config{srcdir});
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
@@ -71,7 +71,7 @@ sub rcs_commit ($$$;$$) { #{{{
 		$message = "no message given";
 	}
 
-	my @cmdline = ("bzr", "commit", "-m", $message, "--author", $user,
+	my @cmdline = ("bzr", "commit", "--quiet", "-m", $message, "--author", $user,
 	               $config{srcdir}."/".$file);
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
@@ -83,7 +83,7 @@ sub rcs_commit ($$$;$$) { #{{{
 sub rcs_add ($) { # {{{
 	my ($file) = @_;
 
-	my @cmdline = ("bzr", "add", "$config{srcdir}/$file");
+	my @cmdline = ("bzr", "add", "--quiet", "$config{srcdir}/$file");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}

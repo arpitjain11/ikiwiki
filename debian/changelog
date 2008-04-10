@@ -2,6 +2,8 @@ ikiwiki (2.43) UNRELEASED; urgency=low
 
   * Fix missing import of escapeHTML in userlink. (Scott Bronson)
   * Fix broken rcs_update for bzr. (Scott Bronson)
+  * Use bzr --quiet to avoid it outputting stuff and messing up http headers.
+    (Scott Bronson)
 
  -- Joey Hess <joeyh@debian.org>  Thu, 10 Apr 2008 17:36:53 -0400
 
