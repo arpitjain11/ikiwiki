@@ -279,3 +279,94 @@ Various directives that cause one page to be included into another could
 be exploited to DOS the wiki, by causing a loop. Ikiwiki has always guarded
 against this one way or another; the current solution should detect all
 types of loops involving preprocessor directives.
+
+## Online editing of existing css and images
+
+A bug in ikiwiki allowed the web-based editor to edit any file that was in
+the wiki, not just files that are page sources. So an attacker (or a
+genuinely helpful user, which is how the hole came to light) could edit
+files like style.css. It is also theoretically possible that an attacker
+could have used this hole to edit images or other files in the wiki, with
+some difficulty, since all editing would happen in a textarea.
+
+This hole was discovered on 10 Feb 2007 and fixed the same day with the
+release of ikiwiki 1.42. A fix was also backported to Debian etch, as
+version 1.33.1. I recommend upgrading to one of these versions if your wiki
+allows web editing.
+
+## html insertion via title
+
+Missing html escaping of the title contents allowed a web-based editor to
+insert arbitrary html inside the title tag of a page. Since that part of
+the page is not processed by the htmlscrubber, evil html could be injected.
+
+This hole was discovered on 21 March 2007 and fixed the same day (er, hour) 
+with the release of ikiwiki 1.46. A fix was also backported to Debian etch,
+as version 1.33.2. I recommend upgrading to one of these versions if your
+wiki allows web editing or aggregates feeds.
+
+## javascript insertion via meta tags
+
+It was possible to use the meta plugin's meta tags to insert arbitrary
+url contents, which could be used to insert stylesheet information
+containing javascript. This was fixed by sanitising meta tags.
+
+This hole was discovered on 21 March 2007 and fixed the same day
+with the release of ikiwiki 1.47. A fix was also backported to Debian etch,
+as version 1.33.3. I recommend upgrading to one of these versions if your
+wiki can be edited by third parties.
+
+## insufficient checking for symlinks in srcdir path
+
+Ikiwiki did not check if path to the srcdir to contained a symlink. If an
+attacker had commit access to the directories in the path, they could
+change it to a symlink, causing ikiwiki to read and publish files that were
+not intended to be published. (But not write to them due to other checks.)
+
+In most configurations, this is not exploitable, because the srcdir is
+checked out of revision control, but the directories leading up to it are
+not. Or, the srcdir is a single subdirectory of a project in revision
+control (ie, `ikiwiki/doc`), and if the subdirectory were a symlink,
+ikiwiki would still typically not follow it.
+
+There are at least two configurations where this is exploitable:
+
+* If the srcdir is a deeper subdirectory of a project. For example if it is
+  `project/foo/doc`, an an attacker can replace `foo` with a symlink to a
+  directory containing a `doc` directory (not a symlink), then ikiwiki
+  would follow the symlink.
+* If the path to the srcdir in ikiwiki's configuration ended in "/", 
+  and the srcdir is a single subdirectory of a project, (ie,
+  `ikiwiki/doc/`), the srcdir could be a symlink and ikiwiki would not
+  notice.
+
+This security hole was discovered on 26 November 2007 and fixed the same
+day with the release of ikiwiki 2.14. I recommend upgrading to this version
+if your wiki can be committed to by third parties. Alternatively, don't use
+a trailing slash in the srcdir, and avoid the (unusual) configurations that
+allow the security hole to be exploited.
+
+## javascript insertion via uris
+
+The htmlscrubber did not block javascript in uris. This was fixed by adding
+a whitelist of valid uri types, which does not include javascript. 
+([[cve CVE-2008-0809]]) Some urls specifyable by the meta plugin could also
+theoretically have been used to inject javascript; this was also blocked
+([[cve CVE-2008-0808]]).
+
+This hole was discovered on 10 February 2008 and fixed the same day
+with the release of ikiwiki 2.31.1. (And a few subsequent versions..)
+A fix was also backported to Debian etch, as version 1.33.4. I recommend
+upgrading to one of these versions if your wiki can be edited by third
+parties.
+
+## Cross Site Request Forging
+
+Cross Site Request Forging could be used to constuct a link that would
+change a logged-in user's password or other preferences if they clicked on
+the link. It could also be used to construct a link that would cause a wiki
+page to be modified by a logged-in user.
+
+These holes were discovered on 10 April 2008 and fixed the same day with
+the release of ikiwiki 2.42. A fix was also backported to Debian etch, as
+version 1.33.4. I recommend upgrading to one of these versions.

@@ -298,6 +298,16 @@ sub cgi_prefs ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
+	# The session id is stored on the form and checked to
+	# guard against CSRF.
+	my $sid=$q->param('sid');
+	if (! defined $sid) {
+		$q->delete_all;
+	}
+	elsif ($sid ne $session->id) {
+		error(gettext("Your login session has expired."));
+	}
+
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -324,7 +334,10 @@ sub cgi_prefs ($$) { #{{{
 	my @buttons=("Save Preferences", "Logout", "Cancel");
 	
 	my $user_name=$session->param("name");
-	$form->field(name => "do", type => "hidden");
+	$form->field(name => "do", type => "hidden", value => "prefs",
+		force => 1);
+	$form->field(name => "sid", type => "hidden", value => $session->id,
+		force => 1);
 	$form->field(name => "name", disabled => 1,
 		value => $user_name, force => 1);
 	$form->field(name => "password", type => "password");
@@ -462,6 +475,8 @@ sub cgi_editpage ($$) { #{{{
 	}
 
 	$form->field(name => "do", type => 'hidden');
+	$form->field(name => "sid", type => "hidden", value => $session->id,
+		force => 1);
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
 	$form->field(name => "subpage", type => 'hidden');
@@ -591,6 +606,16 @@ sub cgi_editpage ($$) { #{{{
 		# save page
 		page_locked($page, $session);
 		
+		# The session id is stored on the form and checked to
+		# guard against CSRF. But only if the user is logged in,
+		# as anonok can allow anonymous edits.
+		if (defined $session->param("name")) {
+			my $sid=$q->param('sid');
+			if (! defined $sid || $sid ne $session->id) {
+				error(gettext("Your login session has expired."));
+			}
+		}
+
 		my $content=$form->field('editcontent');
 
 		$content=~s/\r\n/\n/g;

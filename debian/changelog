@@ -1,3 +1,11 @@
+ikiwiki (1.33.5) stable-security; urgency=high
+
+  * Fix CSRF attacks against the preferences and edit forms. The fix involved
+    embedding the session id in the forms, and not allowing the forms to be
+    submitted if the embedded id does not match the session id. Closes: #47544
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 10 Apr 2008 16:49:24 -0400
+
 ikiwiki (1.33.4) stable-security; urgency=high
 
   * htmlscrubber security fix: Block javascript in uris. Closes: #465110
