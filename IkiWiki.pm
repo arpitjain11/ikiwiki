@@ -621,6 +621,9 @@ sub userlink ($) { #{{{
 		return "<a href=\"$user\">$oiduser</a>";
 	}
 	else {
+		eval q{use CGI 'escapeHTML'};
+		error($@) if $@;
+
 		return htmllink("", "", escapeHTML(
 			length $config{userdir} ? $config{userdir}."/".$user : $user
 		), noimageinline => 1);
