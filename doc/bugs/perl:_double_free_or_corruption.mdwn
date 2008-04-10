@@ -1,101 +1,14 @@
+If your perl is dumping core, that's a perl bug (or a libc bug or the like) by
+definition, not an ikiwiki bug. Ikiwiki is pure perl code; pure perl code
+can't cause perl to dump core unless it tickles a perl bug.
+
+Calling this [[done]] since this is not the right forum. You'll need to
+figure out what's wrong with your perl, I'm afraid. --[[Joey]]
+
 <pre>
 rendering todo/more_class__61____34____34___for_css.mdwn
 rendering todo/Support_subdirectory_of_a_git_repo.mdwn
 rendering todo/link_map.mdwn
 rendering todo/calendar_--_archive_browsing_via_a_calendar_frontend.mdwn
 *** glibc detected *** perl: double free or corruption (!prev): 0x00000000018a7bd0 ***
-======= Backtrace: =========
-/lib/libc.so.6[0x2b2ebbe69b0a]
-/lib/libc.so.6(cfree+0x8c)[0x2b2ebbe6d6fc]
-/usr/lib/libperl.so.5.8(Perl_pregfree+0x69)[0x2b2ebb4886c9]
-/usr/lib/libperl.so.5.8(Perl_pp_regcomp+0xed)[0x2b2ebb4e3b8d]
-/usr/lib/libperl.so.5.8(Perl_runops_standard+0xe)[0x2b2ebb4a91ee]
-/usr/lib/libperl.so.5.8(Perl_call_sv+0x650)[0x2b2ebb4535b0]
-/usr/lib/libperl.so.5.8(Perl_call_list+0x229)[0x2b2ebb453929]
-/usr/lib/libperl.so.5.8(Perl_newATTRSUB+0xe54)[0x2b2ebb484fd4]
-/usr/lib/libperl.so.5.8(Perl_utilize+0x254)[0x2b2ebb483654]
-/usr/lib/libperl.so.5.8(Perl_yyparse+0x17a9)[0x2b2ebb475bf9]
-/usr/lib/libperl.so.5.8[0x2b2ebb4da416]
-/usr/lib/libperl.so.5.8(Perl_pp_entereval+0x4cc)[0x2b2ebb4dadec]
-/usr/lib/libperl.so.5.8(Perl_runops_standard+0xe)[0x2b2ebb4a91ee]
-/usr/lib/libperl.so.5.8(perl_run+0x30a)[0x2b2ebb453f4a]
-perl(main+0xfc)[0x4018dc]
-/lib/libc.so.6(__libc_start_main+0xf4)[0x2b2ebbe15b44]
-perl[0x401749]
-======= Memory map: ========
-00400000-00403000 r-xp 00000000 09:02 1273874                            /usr/bin/perl
-00602000-00603000 rw-p 00002000 09:02 1273874                            /usr/bin/perl
-00603000-019a7000 rw-p 00603000 00:00 0                                  [heap]
-2b2ebb1fd000-2b2ebb21a000 r-xp 00000000 09:02 1043912                    /lib/ld-2.6.1.so
-2b2ebb21a000-2b2ebb21d000 rw-p 2b2ebb21a000 00:00 0 
-2b2ebb21d000-2b2ebb21e000 r--p 00000000 09:02 1304528                    /usr/lib/locale/en_US.utf8/LC_IDENTIFICATION
-2b2ebb21e000-2b2ebb225000 r--s 00000000 09:02 1271442                    /usr/lib/gconv/gconv-modules.cache
-2b2ebb225000-2b2ebb226000 r--p 00000000 09:02 1304527                    /usr/lib/locale/en_US.utf8/LC_MEASUREMENT
-2b2ebb226000-2b2ebb227000 r--p 00000000 09:02 1304526                    /usr/lib/locale/en_US.utf8/LC_TELEPHONE
-2b2ebb227000-2b2ebb228000 r--p 00000000 09:02 1304525                    /usr/lib/locale/en_US.utf8/LC_ADDRESS
-2b2ebb228000-2b2ebb229000 r--p 00000000 09:02 1304524                    /usr/lib/locale/en_US.utf8/LC_NAME
-2b2ebb229000-2b2ebb22a000 r--p 00000000 09:02 1304523                    /usr/lib/locale/en_US.utf8/LC_PAPER
-2b2ebb22a000-2b2ebb22b000 r--p 00000000 09:02 1304522                    /usr/lib/locale/en_US.utf8/LC_MESSAGES/SYS_LC_MESSAGES
-2b2ebb22b000-2b2ebb22c000 r--p 00000000 09:02 1304520                    /usr/lib/locale/en_US.utf8/LC_MONETARY
-2b2ebb22c000-2b2ebb30c000 r--p 00000000 09:02 1304519                    /usr/lib/locale/en_US.utf8/LC_COLLATE
-2b2ebb30c000-2b2ebb30d000 r--p 00000000 09:02 1304518                    /usr/lib/locale/en_US.utf8/LC_TIME
-2b2ebb30d000-2b2ebb30e000 r--p 00000000 09:02 1304517                    /usr/lib/locale/en_US.utf8/LC_NUMERIC
-2b2ebb30e000-2b2ebb34d000 r--p 00000000 09:02 1304516                    /usr/lib/locale/en_US.utf8/LC_CTYPE
-2b2ebb34d000-2b2ebb36e000 rw-p 2b2ebb34d000 00:00 0 
-2b2ebb419000-2b2ebb41b000 rw-p 0001c000 09:02 1043912                    /lib/ld-2.6.1.so
-2b2ebb41b000-2b2ebb54d000 r-xp 00000000 09:02 1273924                    /usr/lib/libperl.so.5.8.8
-2b2ebb54d000-2b2ebb74c000 ---p 00132000 09:02 1273924                    /usr/lib/libperl.so.5.8.8
-2b2ebb74c000-2b2ebb755000 rw-p 00131000 09:02 1273924                    /usr/lib/libperl.so.5.8.8
-2b2ebb755000-2b2ebb757000 rw-p 2b2ebb755000 00:00 0 
-2b2ebb757000-2b2ebb759000 r-xp 00000000 09:02 1043918                    /lib/libdl-2.6.1.so
-2b2ebb759000-2b2ebb959000 ---p 00002000 09:02 1043918                    /lib/libdl-2.6.1.so
-2b2ebb959000-2b2ebb95b000 rw-p 00002000 09:02 1043918                    /lib/libdl-2.6.1.so
-2b2ebb95b000-2b2ebb9db000 r-xp 00000000 09:02 1043919                    /lib/libm-2.6.1.so
-2b2ebb9db000-2b2ebbbda000 ---p 00080000 09:02 1043919                    /lib/libm-2.6.1.so
-2b2ebbbda000-2b2ebbbdc000 rw-p 0007f000 09:02 1043919                    /lib/libm-2.6.1.so
-2b2ebbbdc000-2b2ebbbf2000 r-xp 00000000 09:02 1043929                    /lib/libpthread-2.6.1.so
-2b2ebbbf2000-2b2ebbdf1000 ---p 00016000 09:02 1043929                    /lib/libpthread-2.6.1.so
-2b2ebbdf1000-2b2ebbdf3000 rw-p 00015000 09:02 1043929                    /lib/libpthread-2.6.1.so
-2b2ebbdf3000-2b2ebbdf8000 rw-p 2b2ebbdf3000 00:00 0 
-2b2ebbdf8000-2b2ebbf4a000 r-xp 00000000 09:02 1043915                    /lib/libc-2.6.1.so
-2b2ebbf4a000-2b2ebc149000 ---p 00152000 09:02 1043915                    /lib/libc-2.6.1.so
-2b2ebc149000-2b2ebc14c000 r--p 00151000 09:02 1043915                    /lib/libc-2.6.1.so
-2b2ebc14c000-2b2ebc14e000 rw-p 00154000 09:02 1043915                    /lib/libc-2.6.1.so
-2b2ebc14e000-2b2ebc153000 rw-p 2b2ebc14e000 00:00 0 
-2b2ebc153000-2b2ebc158000 r-xp 00000000 09:02 1043917                    /lib/libcrypt-2.6.1.so
-2b2ebc158000-2b2ebc357000 ---p 00005000 09:02 1043917                    /lib/libcrypt-2.6.1.so
-2b2ebc357000-2b2ebc359000 rw-p 00004000 09:02 1043917                    /lib/libcrypt-2.6.1.so
-2b2ebc359000-2b2ebc389000 rw-p 2b2ebc359000 00:00 0 
-2b2ebc389000-2b2ebc392000 r-xp 00000000 09:02 1288562                    /usr/lib/perl/5.8.8/auto/Encode/Encode.so
-2b2ebc392000-2b2ebc592000 ---p 00009000 09:02 1288562                    /usr/lib/perl/5.8.8/auto/Encode/Encode.so
-2b2ebc592000-2b2ebc593000 rw-p 00009000 09:02 1288562                    /usr/lib/perl/5.8.8/auto/Encode/Encode.so
-2b2ebc593000-2b2ebc59e000 r-xp 00000000 09:02 1353260                    /usr/lib/perl5/auto/HTML/Parser/Parser.so
-2b2ebc59e000-2b2ebc79d000 ---p 0000b000 09:02 1353260                    /usr/lib/perl5/auto/HTML/Parser/Parser.so
-2b2ebc79d000-2b2ebc79e000 rw-p 0000a000 09:02 1353260                    /usr/lib/perl5/auto/HTML/Parser/Parser.so
-2b2ebc79e000-2b2ebc7bb000 r-xp 00000000 09:02 1273917                    /usr/lib/perl/5.8.8/auto/POSIX/POSIX.so
-2b2ebc7bb000-2b2ebc9ba000 ---p 0001d000 09:02 1273917                    /usr/lib/perl/5.8.8/auto/POSIX/POSIX.so
-2b2ebc9ba000-2b2ebc9bb000 rw-p 0001c000 09:02 1273917                    /usr/lib/perl/5.8.8/auto/POSIX/POSIX.so
-2b2ebc9bb000-2b2ebc9bd000 r-xp 00000000 09:02 1273900                    /usr/lib/perl/5.8.8/auto/Cwd/Cwd.so
-2b2ebc9bd000-2b2ebcbbd000 ---p 00002000 09:02 1273900                    /usr/lib/perl/5.8.8/auto/Cwd/Cwd.so
-2b2ebcbbd000-2b2ebcbbe000 rw-p 00002000 09:02 1273900                    /usr/lib/perl/5.8.8/auto/Cwd/Cwd.so
-2b2ebcbbe000-2b2ebcbc5000 r-xp 00000000 09:02 1288552                    /usr/lib/perl/5.8.8/auto/Data/Dumper/Dumper.so
-2b2ebcbc5000-2b2ebcdc5000 ---p 00007000 09:02 1288552                    /usr/lib/perl/5.8.8/auto/Data/Dumper/Dumper.so
-2b2ebcdc5000-2b2ebcdc6000 rw-p 00007000 09:02 1288552                    /usr/lib/perl/5.8.8/auto/Data/Dumper/Dumper.so
-2b2ebcdc6000-2b2ebcdca000 r-xp 00000000 09:02 1271309                    /usr/lib/perl5/auto/Locale/gettext/gettext.so
-2b2ebcdca000-2b2ebcfca000 ---p 00004000 09:02 1271309                    /usr/lib/perl5/auto/Locale/gettext/gettext.so
-2b2ebcfca000-2b2ebcfcb000 rw-p 00004000 09:02 1271309                    /usr/lib/perl5/auto/Locale/gettext/gettext.so
-2b2ebcfcb000-2b2ebcfcf000 r-xp 00000000 09:02 1288560                    /usr/lib/perl/5.8.8/auto/Digest/MD5/MD5.so
-2b2ebcfcf000-2b2ebd1ce000 ---p 00004000 09:02 1288560                    /usr/lib/perl/5.8.8/auto/Digest/MD5/MD5.so
-2b2ebd1ce000-2b2ebd1cf000 rw-p 00003000 09:02 1288560                    /usr/lib/perl/5.8.8/auto/Digest/MD5/MD5.so
-2b2ebd1cf000-2b2ebd1d8000 r-xp 00000000 09:02 1273914                    /usr/lib/perl/5.8.8/auto/List/Util/Util.so
-2b2ebd1d8000-2b2ebd3d7000 ---p 00009000 09:02 1273914                    /usr/lib/perl/5.8.8/auto/List/Util/Util.so
-2b2ebd3d7000-2b2ebd3d8000 rw-p 00008000 09:02 1273914                    /usr/lib/perl/5.8.8/auto/List/Util/Util.so
-2b2ebd3ec000-2b2ebd3f9000 r-xp 00000000 09:02 1042446                    /lib/libgcc_s.so.1
-2b2ebd3f9000-2b2ebd5f9000 ---p 0000d000 09:02 1042446                    /lib/libgcc_s.so.1
-2b2ebd5f9000-2b2ebd5fa000 rw-p 0000d000 09:02 1042446                    /lib/libgcc_s.so.1
-2b2ec0000000-2b2ec0021000 rw-p 2b2ec0000000 00:00 0 
-2b2ec0021000-2b2ec4000000 ---p 2b2ec0021000 00:00 0 
-7fffef824000-7fffef8ad000 rw-p 7fffef824000 00:00 0                      [stack]
-ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vdso]
-make: *** [extra_build] Aborted (core dumped)
 </pre>
