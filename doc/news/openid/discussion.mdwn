@@ -51,4 +51,14 @@ only Apache/iptables rules for this? Maybe it's related to
 If I've logged in by OpenID, how do I log out?  I don't see any logout button anywhere on IkiWIki.  (is it because I hit "forever" for my OpenID authorization duration?)
 > No, it's because it's on the preferences page!  That's somewhat non-obvious...
 
+>> This is a problem with having a static wiki. If I just put "Logout" as
+>> an action on every page, that will look weird if you're not logged in.
+>> --[[Joey]]
+
 Even if IkiWiki does let me log out, how do I *stay* logged out?  Let's say I'm using a kiosk.  What's to prevent someone else from hitting my OpenID service right after I've walked away?  My OpenID service will just auth the login again, won't it? --[[sabr]]   (behavior seems to vary...  does it depend on the OpenID service?  guess I have some docs to read.)
+
+> If you're at a kiosk, you'll need to log out of your openid provider too.
+> Or use a provider that doesn't use cookies to keep you logged in. (Or
+> don't check the box that makes your provider set a cookie when you log in.)
+> 
+> AFAIK openid doesn't have single signoff capabilities yet. --[[Joey]]
