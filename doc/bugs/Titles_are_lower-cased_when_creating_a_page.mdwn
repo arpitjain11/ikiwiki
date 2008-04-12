@@ -1,3 +1,31 @@
 When you click on a broken link to create a new page, Ikiwiki lower-cases the new page's filename.  I wish it wouldn't.
 
 If I click on "Czars in Russia", I'd like Ikiwiki to create "Czars\_in\_Russia.mdwn", not "czars\_in\_russia.mdwn".  Is this possible?  --[[sabr]]
+
+> There's a simple patch that can do this:
+
+> --- a/IkiWiki.pm
+> +++ b/IkiWiki.pm
+> @@ -584,7 +584,7 @@ sub htmllink ($$$;@) { #{{{
+>  			return "<span class=\"createlink\"><a href=\"".
+>  				cgiurl(
+>  					do => "create",
+> -					page => pagetitle(lc($link), 1),
+> +					page => pagetitle($link, 1),
+>  					from => $lpage
+>  				).
+>  				"\">?</a>$linktext</span>"
+
+> This is fine if you don't mind mixed or randomly cased filenames getting
+> created. Otoh, if the link happened to start a sentence and so had its
+> first letter upper-cased, that might not be desired.
+> 
+> Of course ikiwiki's case insensative, and there are other ways
+> of creating pages that don't lower case them, including using the create
+> a page form on a blog (as was done for this page..).
+> 
+> I'm undecided about making the above change by default though, or about making
+> it a config option. Maybe it would be better to include both capitalisations
+> in the select list that is used to pick the name for the newly created page.
+> Then, which one is the default wouldn't much matter. (The non-lower cased
+> one would probably be the best choice.) --[[Joey]]
