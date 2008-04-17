@@ -50,3 +50,16 @@ public\_html/index.html
 >> I can't reproduce "/index and /downloads" causing the login webpage to
 >> be shown repeatedly. Sure you weren't having some independent issue with
 >> logging in? --[[Joey]]
+
+----
+
+I have a page for a tag.  On that page I want to list every page on my wiki that has been so tagged.  Easy enough, right?
+
+> \[[!inline pages="link(Categories/Ikiwiki_Plugins)" feeds=no archive=yes sort=title template=titlepage]]
+
+> (I'm using tagbase => "Categories" because I'm converting from Mediawiki) 
+
+This works beautifully in my sandbox: <http://iki.u32.net/sandbox>  But it is totally blank on the page where I actually do want output!  <http://iki.u32.net/Categories/Ikiwiki_Plugins>
+
+How can I fix this?  --[[sabr]]
+
