@@ -21,6 +21,7 @@ BEGIN { use_ok("IkiWiki"); }
 %config=IkiWiki::defaultconfig();
 $config{rcs} = "svn";
 $config{srcdir} = "$dir/src";
+$config{svnrepo} = "$dir/repo";
 $config{svnpath} = "trunk";
 IkiWiki::checkconfig();
 
