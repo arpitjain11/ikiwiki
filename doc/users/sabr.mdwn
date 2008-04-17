@@ -25,4 +25,6 @@ feedonly=yes rss=no atom=yes]]
 * Can I create this page?  [[/root_page_test]]
   * no, it's a bug: [[/bugs/Can__39__t_create_root_page]]
 * This page has a [[plugins/toc]].  Why doesn't it appear in the edit preview? [[plugins/toc/discussion]]
-* Add two subpages: [[sub1]] and [[sub2]] to try to produce a directory listing as discussed in [[todo/pagespec_expansions]]. 
+* Add two subpages: [[sub1]] and [[sub2]] to try to produce a directory listing as discussed in [[todo/pagespec_expansions]].  Will it list?
+
+[[!inline pages="./* and !./*/*" template="titlepage" archive="yes"]]
