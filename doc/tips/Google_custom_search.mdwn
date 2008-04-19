@@ -1,0 +1,7 @@
+Instead of the [[plugins/search]] plugin you could embed [Google Custom Search](http://www.google.com/cse) for site search functionality.
+
+**Unfortunately** you need [[plugins/rawhtml]] enabled.
+
+Once you've created your "custom search engine", just drop in the search box html like I've done in my [Debian tips and tricks](http://dabase.com/tips/) [source](http://git.webconverger.org/?p=faq.git;a=blob;f=tips.mdwn).
+
+If you have odd "save failed" error messages in Google's CSE's control panel, try `/usr/lib/WebKit/GtkLauncher` from [webkit](http://packages.qa.debian.org/w/webkit.html).
