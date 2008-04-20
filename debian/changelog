@@ -24,6 +24,7 @@ ikiwiki (2.42) unstable; urgency=high
   * Fix CSRF attacks against the preferences and edit forms. The fix involved
     embedding the session id in the forms, and not allowing the forms to be
     submitted if the embedded id does not match the session id. Closes: #475445
+    (CVE-2008-0165)
 
  -- Joey Hess <joeyh@debian.org>  Thu, 03 Apr 2008 02:35:39 -0400
 

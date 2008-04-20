@@ -372,7 +372,7 @@ parties.
 Cross Site Request Forging could be used to constuct a link that would
 change a logged-in user's password or other preferences if they clicked on
 the link. It could also be used to construct a link that would cause a wiki
-page to be modified by a logged-in user.
+page to be modified by a logged-in user. ([[cve CVE-2008-0165]])
 
 These holes were discovered on 10 April 2008 and fixed the same day with
 the release of ikiwiki 2.42. A fix was also backported to Debian etch, as
