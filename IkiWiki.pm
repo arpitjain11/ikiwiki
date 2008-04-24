@@ -1247,6 +1247,10 @@ sub pagespec_translate ($) { #{{{
 		}
 	}
 
+	if (! length $code) {
+		$code=0;
+	}
+
 	return eval 'sub { my $page=shift; '.$code.' }';
 } #}}}
 

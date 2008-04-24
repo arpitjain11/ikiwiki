@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 52;
+use Test::More tests => 54;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -51,6 +51,8 @@ ok(pagespec_match("examples/softwaresite/bugs/fails_to_frobnicate",
 ok(! pagespec_match("foo", "link(./bar)", location => "foo/bar"), "link relative fail");
 ok(pagespec_match("bar", "backlink(foo)"), "backlink");
 ok(! pagespec_match("quux", "backlink(foo)"), "failed backlink");
+ok(! pagespec_match("bar", ""), "empty pagespec should match nothing");
+ok(! pagespec_match("bar", "    	"), "blank pagespec should match nothing");
 
 $IkiWiki::pagectime{foo}=1154532692; # Wed Aug  2 11:26 EDT 2006
 $IkiWiki::pagectime{bar}=1154532695; # after

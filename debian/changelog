@@ -1,9 +1,13 @@
-ikiwiki (2.44) UNRELEASED; urgency=low
+ikiwiki (2.44) unstable; urgency=medium
 
   * Bring back the svnrepo setup file option. This is needed for
     recentchangediff to work with svn repos.
   * Allow libtext-markdown-perl to satisfy dependencies, as a
     an alternative to the markdown package.
+  * Correct a bug in pagespec matching, where a empty pagespec matched all
+    pages. This manifested as wikis with no locked pages treating them all as
+    locked. The bug was introduced in version 2.41.
+  * Medium urgency upload due to above fix.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 17 Apr 2008 14:33:54 -0400
 
