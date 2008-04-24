@@ -5,3 +5,42 @@ I might even have a try at this patch, though I'd have to hack the user preferen
 As to the question of whether the committer was the 'script' or the wiki editor... I'm not sure.  Marking it as the script somehow (`ikiwiki-cgi <ikiwiki@sitename>`)? seems to make sense and would make it easier to manage.
 
 [[harningt]]
+
+I've been thinking a bit about the GIT attribution in ikiwiki...
+
+If no email set, I think "$USERNAME" is reasonable... no point in the
+'<>' causing clutter.
+
+If no username set... then something like '@[IPADDR]' makes sense...
+(not in email brackets).
+
+In the case of OpenID login.. I think that's a special case...  I don't
+think attempting to munge something meaningful out of the OpenID makes
+sense... but I think some massaging might need to be done.
+
+Ex:  I've noticed in the current mode where logging in w/
+harningt.eharning.us/ shows up in the logs w/o HTTP and if I login w/
+http://harningt.eharning.us/ is shows up w/ the http... causing some
+inconsistency.  I think it oughtta make sure that it has the properly
+discovered, canonicalized form (ex:  if there's a redirect to another
+site  (harningt.eharning.us -> www.eharning.us) then technically the
+target site is the 'real' openid (at least according to how most OpenID
+RPs take it).
+
+...
+
+For OpenID edits, I think there should be a way to tell it what
+username to show in the preferences dialog (so you can have a 'normal'
+$USER <$EMAIL> setup.)  This could by default be filled in w/ sreg
+nickname value (as well as email for that matter)...
+
+To convey the openid used to make the edit, I think it would be
+important that some sort of footer line along the lines of the
+Signed-off: $USER <$EMAIL> conventions I've seen.
+
+Perhaps an OpenID: $OPENID_URL would make sense.  This could help w/
+making sure that no one irrefutably spoofs a post by someone (since w/
+the setup where email and effective username are configurable, there's
+no determination of uniqueness)
+
+[[harningt]]
