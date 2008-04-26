@@ -1,3 +1,11 @@
+ikiwiki (2.45) UNRELEASED; urgency=low
+
+  * toc: Add the table of contents at sanitize time, rather than at format
+    time. This allows the toc to be displayed when previewing an edit. It also
+    avoids headers in the page template from showing up in the toc.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 26 Apr 2008 15:09:36 -0400
+
 ikiwiki (2.44) unstable; urgency=medium
 
   * Bring back the svnrepo setup file option. This is needed for

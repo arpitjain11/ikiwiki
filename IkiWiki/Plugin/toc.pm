@@ -9,7 +9,7 @@ use HTML::Parser;
 
 sub import { #{{{
 	hook(type => "preprocess", id => "toc", call => \&preprocess);
-	hook(type => "format", id => "toc", call => \&format);
+	hook(type => "sanitize", id => "toc", call => \&sanitize);
 } # }}}
 
 my %tocpages;
@@ -33,7 +33,7 @@ sub preprocess (@) { #{{{
 	}
 } # }}}
 
-sub format (@) { #{{{
+sub sanitize (@) { #{{{
 	my %params=@_;
 	my $content=$params{content};
 	
