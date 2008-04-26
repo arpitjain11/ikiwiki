@@ -46,3 +46,12 @@ no determination of uniqueness)
 [[harningt]]
 
 [[madduck]]: git requires `Name <Email@address>` format, as far as I know.
+
+> Yes, it does:
+> 
+> 	joey@kodama:~/tmp/foo/bar>git commit --author "foo"
+> 	fatal: malformed --author parameter
+> 
+> It seems to be happy with anything of the form "foo <foo>" -- doesn't seem to
+> do any kind of strict checking. Even "http://joey.kitenet.net <>" will be
+> accepted. --[[Joey]]
