@@ -1,0 +1,5 @@
+By default, tflag is not defined. But ikiwiki.in has -T causing build failure:
+
+perl -Iblib/lib   ikiwiki.out -libdir . -setup docwiki.setup -refresh
+"-T" is on the #! line, it must also be used on the command line at ikiwiki.out
+line 1.
