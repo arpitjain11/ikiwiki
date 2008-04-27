@@ -3,3 +3,6 @@ By default, tflag is not defined. But ikiwiki.in has -T causing build failure:
 perl -Iblib/lib   ikiwiki.out -libdir . -setup docwiki.setup -refresh
 "-T" is on the #! line, it must also be used on the command line at ikiwiki.out
 line 1.
+
+> pm_filter removes the -T from ikiwiki.in when generating ikiwiki.out
+> unless NOTAINT=0 is set. I cannot reproduce your problem. --[[Joey]]
