@@ -10,6 +10,7 @@ I've been thinking a bit about the GIT attribution in ikiwiki...
 
 If no email set, I think "$USERNAME" is reasonable... no point in the
 '<>' causing clutter.
+>> **adjustement wrt comments**: leave the '<>' in due to requirements in git
 
 If no username set... then something like '@[IPADDR]' makes sense...
 (not in email brackets).
@@ -42,6 +43,7 @@ Perhaps an OpenID: $OPENID_URL would make sense.  This could help w/
 making sure that no one irrefutably spoofs a post by someone (since w/
 the setup where email and effective username are configurable, there's
 no determination of uniqueness)
+>> **adj re git req**: "$OPENID_URL <>"
 
 [[harningt]]
 
@@ -55,3 +57,7 @@ no determination of uniqueness)
 > It seems to be happy with anything of the form "foo <foo>" -- doesn't seem to
 > do any kind of strict checking. Even "http://joey.kitenet.net <>" will be
 > accepted. --[[Joey]]
+>>
+>>Sounds good to me, 
+>>
+>> --[[harningt]]
