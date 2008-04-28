@@ -103,3 +103,15 @@ in Perl) and documented them in [[tips/SharedHosting]].  I'd like to get feedbac
 
 > No, TimeDate and DateTime are two different CPAN modules. Ikiwiki uses
 > TimeDate. --[[Joey]]
+
+ah, i still don't fully get it, though (the following is slightly shortened):
+
+    $ perl -MCPAN -e shell
+    cpan> install DateTime
+    DateTime is up to date.
+    cpan> install TimeDate
+    Warning: Cannot install TimeDate, don't know what it is.
+    Try the command
+        i /TimeDate/
+    to find objects with matching identifiers.
+
