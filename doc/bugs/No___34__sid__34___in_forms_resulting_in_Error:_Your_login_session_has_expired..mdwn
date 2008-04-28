@@ -29,8 +29,8 @@ View source of editing page or preview+edit page shows no "sid" input value. (I 
 >>>> modifications (I can fix that if not done.)
 
 > Perhaps what I should do is put in a template version check. --[[Joey]]
-> 
->	<TMPL_UNLESS IKIWIKI_TEMPLATE_REVISION_20080428>
->	<p><b>This template is not up-to-date with the installed version of
->	ikiwiki, and may not behave correctly until updated.</b></p>
->	</TMPL_IF>
+
+	<TMPL_UNLESS IKIWIKI_TEMPLATE_REVISION_20080428>
+	<p><b>This template is not up-to-date with the installed version of
+	ikiwiki, and may not behave correctly until updated.</b></p>
+	</TMPL_IF>
