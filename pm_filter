@@ -20,7 +20,7 @@ elsif (/^use lib/) {
 		$_="use lib '$libdir';\n";
 	}
 }
-elsif ($. == 1 && ($ENV{NOTAINT} || ! exists $ENV{NOTAINT}) && m{^(#!/usr/bin/perl) -T$}) {
+elsif ($. == 1 && ($ENV{NOTAINT} || ! exists $ENV{NOTAINT}) && m{^(#!.*perl.*?) -T$}) {
 	$_=qq{$1\n};
 }
 if (/^\$ENV{PATH}="(.*)";/) {
