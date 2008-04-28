@@ -1,0 +1,9 @@
+Logged in and edited in textbox. Clicked preview and then clicked Save Page and it errored with:
+
+Error: Your login session has expired.
+
+I also did same without preview and got same error.
+
+I added debugging to print the sid and session->id on the error. The sid was empty. The session->id was a long value (maybe base64).
+
+View source of editing page or preview+edit page shows no "sid" input value. (I do see it when editing here in your ikiwiki site, but not on mine.)
