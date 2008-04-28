@@ -124,7 +124,10 @@ I'm trying to build IkiWiki on a fresh OpenSuse 10.3 box. I start out with
 Are there other prerequisites?
 I also installed all optional Perl modules, except TimeDate.
 
-`make` exits with `make: *** [extra_build] Aborted`, `make test` complains `cannot stat 'ikiwiki.man'`
-
 > TimeDate is also, confusingly, known as Date::Parse. Perhaps CPAN would
 > do better with that name. --[[Joey]]
+
+good. Date::Parse was already there. --[[vibrog]]
+
+`make` exits with `make: *** [extra_build] Aborted`, `make test` complains `cannot stat 'ikiwiki.man'` --[[vibrog]]
+
