@@ -1,0 +1,15 @@
+Running ikiwiki had error (ignored and continued):
+
+rebuilding wiki..
+Can't exec "ikiwiki-transition": No such file or directory at /usr/pkg/lib/perl5/vendor_perl/5.8.0/IkiWiki.pm line 917.
+scanning ....
+
+ikiwiki.in and ikiwiki.out have:
+
+$ENV{PATH}="/usr/local/bin:/usr/bin:/bin";
+
+Please use full-path to installed "ikiwiki-transition" in the system() function or adjust the PATH with PREFIX/bin.
+
+Maybe pm_filter can handle this.
+
+ikiwiki installer already knows about PREFIX.
