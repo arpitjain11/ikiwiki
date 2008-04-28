@@ -16,10 +16,21 @@ View source of editing page or preview+edit page shows no "sid" input value. (I 
 >>> it's really up to you to keep it up-to-date. I did consider adding a
 >>> new item about this rather than just mentioning it in the changelog,
 >>> since I knew it would break locally modified templates -- but I've
->>> never documented template changes in the new file before, and most of
+>>> never documented template changes in the news file before, and most of
 >>> them do lead to breakage of one kind or another if a locally modified
 >>> template is not kept up-to-date. I don't think that bloating the news
 >>> file with mentions of every single change to every template file would
 >>> be a win. --[[Joey]]
 
->>>> I should have mentioned: yes, I already read the recent CHANGELOG entries. If it (like changes for 2.42) had indicated this was a template change, I would have known and wouldn't have filed the bug. Also maybe the manpage for ikiwiki can mention about local template modifications (I can fix that if not done.)
+>>>> I should have mentioned: yes, I already read the recent CHANGELOG
+>>>> entries. If it (like changes for 2.42) had indicated this was a
+>>>> template change, I would have known and wouldn't have filed the bug.
+>>>> Also maybe the manpage for ikiwiki can mention about local template
+>>>> modifications (I can fix that if not done.)
+
+> Perhaps what I should do is put in a template version check. --[[Joey]]
+> 
+>	<TMPL_UNLESS IKIWIKI_TEMPLATE_REVISION_20080428>
+>	<p><b>This template is not up-to-date with the installed version of
+>	ikiwiki, and may not behave correctly until updated.</b></p>
+>	</TMPL_IF>
