@@ -437,10 +437,22 @@ Any suggestions?
 
 I am considering moving a news site to Ikiwiki. I am hoping that Ikiwiki has a feature where anonymous posters can submit a form that moderators can review and then accept for it to be posted on a news webpage (like front page of the website).
 
+> Well, you can have one blog that contains unreviewed articles, and
+> moderators can then add a tag that makes the article show up in the main
+> news feed. There's nothing stopping someone submitting an article
+> pre-tagged though. If you absolutely need to lock that down, you could
+> have one blog with unreviewed articles in one subdirectory, and reviewers
+> then move the file over to another subdirectory when they're ready to
+> publish it. (This second subdirectory would be locked to prevent others
+> from writing to it.) --[[Joey]]
+
 Also it would be good if the news page would keep maybe just the latest 10 entries with links to an archive that make it easy to browse to old entries by date. (Could have over a thousand news articles.)
+
+> The inline plugin allows setting up things like this.
 
 Plus users be able to post feedback to news items. If anonymous, they must be approved first. I'd prefer to not use normal "wiki" editor for feedback.
 
 Any thoughts or examples on this? Any links to examples of news sites or blogs with outside feedback using ikiwiki?
 
 Thanks --[[JeremyReed]]
+
