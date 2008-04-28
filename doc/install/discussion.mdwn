@@ -115,3 +115,13 @@ ah, i still don't fully get it, though (the following is slightly shortened):
         i /TimeDate/
     to find objects with matching identifiers.
 
+I'm trying to build IkiWiki on a fresh OpenSuse 10.3 box. I start out with
+
+    $ perl -MCPAN -e 'install Text::Markdown URI HTML::Parser HTML::Template HTML::Scrubber'
+    $ git clone git://git.ikiwiki.info/ ikiwiki && cd ikiwiki
+    $ perl Makefile.PL && make
+
+Are there other prerequisites?
+I also installed all optional Perl modules, except TimeDate.
+
+`make` exits with `make: *** [extra_build] Aborted`, `make test` complains `cannot stat 'ikiwiki.man'`
