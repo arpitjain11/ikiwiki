@@ -24,3 +24,5 @@ line 1.
 
 >> I could look for "#!.*perl -T", if that would work. #!.*-T is perhaps
 >> over-broad. --[[Joey]]
+
+>>> Yes, being more precise should be fine. Note that some may have bin/perl5 or bin/perl5.8.8 for example, so please consider optional number, like ^(#!/.*/perl[0-9]*.*) -T$ or something like that.
