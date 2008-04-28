@@ -6,3 +6,18 @@ line 1.
 
 > pm_filter removes the -T from ikiwiki.in when generating ikiwiki.out
 > unless NOTAINT=0 is set. I cannot reproduce your problem. --[[Joey]]
+
+>> Thanks. Now I see. NetBSD and DragonFly and several other systems don't have /usr/bin/perl so that path is replaced in the sh-bang lines of various scripts. So it doesn't match in the pm_filter expression. Can you please consider providing a variable or not matching on that assumed path to perl.
+
+    --- pm_filter.orig      2008-04-28 07:59:58 -0700
+    +++ pm_filter   2008-04-28 08:01:21 -0700
+    @@ -20,6 +20,6 @@
+                    $_="use lib '$libdir';\n";
+            }
+     }
+    -elsif ($. == 1 && ($ENV{NOTAINT} || ! exists $ENV{NOTAINT}) && m{^(#!/usr/bin/perl) -T$}) {
+    +elsif ($. == 1 && ($ENV{NOTAINT} || ! exists $ENV{NOTAINT}) && m{^(#!.*) -T$}) {
+            $_=qq{$1\n};
+     }
+
+>> --[[JeremyReed]]
