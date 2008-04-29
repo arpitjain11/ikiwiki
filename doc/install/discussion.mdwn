@@ -127,9 +127,31 @@ I also installed all optional Perl modules, except TimeDate.
 > TimeDate is also, confusingly, known as Date::Parse. Perhaps CPAN would
 > do better with that name. --[[Joey]]
 
-good. Date::Parse was already there. --[[vibrog]]
+good. Date::Parse was already installed. --[[vibrog]]
 
 `make` exits with `make: *** [extra_build] Aborted`, `make test` complains `cannot stat 'ikiwiki.man'` --[[vibrog]]
 
 > If you show me the actual error message, and not just the last line make
 > outputs, I might be able to help. --[[Joey]]
+
+    ..
+    rendering todo/calendar_--_archive_browsing_via_a_calendar_frontend.mdwn
+    make: *** [extra_build] Segmentation fault
+
+Repeating `make` ends with this:
+
+    ..
+    scanning logo.mdwn
+    docwiki.setup: html/logo.html independently created, not overwriting with version from logo
+    BEGIN failed--compilation aborted at (eval 6) line 21.
+    make: *** [extra_build] Error 255
+
+`make test` says
+
+    t/basewiki_brokenlinks.....ok 1/0install: cannot stat `ikiwiki.man': No such file or directory
+    make[1]: *** [extra_install] Error 1
+    #   Failed test at t/basewiki_brokenlinks.t line 8.
+    t/basewiki_brokenlinks.....ok 4/0# Looks like you failed 1 test of 7.        
+    t/basewiki_brokenlinks.....dubious   
+    ..
+    Failed 1/22 test scripts, 95.45% okay. 1/483 subtests failed, 99.79% okay.
