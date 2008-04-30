@@ -140,3 +140,16 @@ good. Date::Parse was already installed. --[[vibrog]]
 
 > So, perl on your system is segfaulting when running ikiwiki. What version
 > of perl is this, and what version of what distribution? --[[Joey]]
+
+    $ perl -V
+    Summary of my perl5 (revision 5 version 8 subversion 8) configuration:
+    osname=linux, osvers=2.6.22, archname=i586-linux-thread-multi
+    uname='linux ravel 2.6.22 #1 smp 20070921 22:29:00 utc i686 i686 i386 gnulinux '
+    config_args='-ds -e -Dprefix=/usr -Dvendorprefix=/usr -Dinstallusrbinperl -Dusethreads -Di_db -Di_dbm -Di_ndbm -Di_gdbm -Duseshrplib=true -Doptimize=-O2 -march=i586 -mtune=i686 -fmessage-length=0 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -g -Wall -pipe'
+    hint=recommended, useposix=true, d_sigaction=define
+    usethreads=define use5005threads=undef useithreads=define usemultiplicity=define
+    useperlio=define d_sfio=undef uselargefiles=define usesocks=undef
+    use64bitint=undef use64bitall=undef uselongdouble=undef
+    usemymalloc=n, bincompat5005=undef
+
+Not sure how to provide proper version information for you.--[[vibrog]]
