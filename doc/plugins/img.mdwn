@@ -23,8 +23,8 @@ The `size` parameter is optional, defaulting to full size. Note that the
 original image's aspect ratio is always preserved, even if this means
 making the image smaller than the specified size.
 
-You can also pass `alt`, `class` and `id` parameters. These are passed through
-unchanged to the html img tag.
+You can also pass `alt`, `title`, `class` and `id` parameters. These are
+passed through unchanged to the html img tag.
 
 The `link` parameter is used to control whether the scaled down image links
 to the full size version. By default it does; set "link=somepage" to link

@@ -22,11 +22,13 @@ sub preprocess (@) { #{{{
 	}
 	my $size = $params{size} || $imgdefaults{$params{page}}->{size} || 'full';
 	my $alt = $params{alt} || $imgdefaults{$params{page}}->{alt} || '';
+	my $title = $params{title} || $imgdefaults{$params{page}}->{title} || '';
 
 	if ($image eq 'defaults') {
 		$imgdefaults{$params{page}} = {
 			size => $size,
 			alt => $alt,
+			title => $title,
 		};
 		return '';
 	}
@@ -104,6 +106,7 @@ sub preprocess (@) { #{{{
 	my $imgtag='<img src="'.$imgurl.
 		'" alt="'.$alt.'" width="'.$im->Get("width").
 		'" height="'.$im->Get("height").'"'.
+		(defined $title ? ' title="'.$title.'"' : '').
 		(exists $params{class} ? ' class="'.$params{class}.'"' : '').
 		(exists $params{id} ? ' id="'.$params{id}.'"' : '').
 		' />';

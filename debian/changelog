@@ -6,6 +6,8 @@ ikiwiki (2.45) UNRELEASED; urgency=low
   * Add PREFIX/bin to the hardcoded PATH within ikiwiki.
   * Deal with different paths to perl when removing -T flag.
   * Add missing de.po. Closes: #471540
+  * img: Support a title attribute, will be passed through to html.
+    Closes: #478718
 
  -- Joey Hess <joeyh@debian.org>  Sat, 26 Apr 2008 15:09:36 -0400
 
