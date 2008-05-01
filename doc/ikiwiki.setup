@@ -159,4 +159,8 @@ use IkiWiki::Setup::Standard {
 	#	mirror1 => "http://hostname1",
 	#	mirror2 => "http://hostname2/mirror",
 	#},
+	
+	# For use with the anonok plugin, a PageSpec specifying what
+	# pages anonymous users can edit
+	#anonok_pagespec => "*",
 }

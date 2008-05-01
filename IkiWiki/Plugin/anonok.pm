@@ -10,7 +10,24 @@ sub import { #{{{
 } # }}}
 
 sub canedit ($$$) { #{{{
-	return "";
+	my $page=shift;
+	my $cgi=shift;
+	my $session=shift;
+
+	my $ret;
+
+	if (length $config{anonok_pagespec}) {
+		if (pagespec_match($page, $config{anonok_pagespec},
+		                   location => $page)) {
+			return "";
+		}
+		else {
+			return undef;
+		}
+	}
+	else {
+		return "";
+	}
 } #}}}
 
 1
