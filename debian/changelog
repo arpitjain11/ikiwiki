@@ -10,6 +10,9 @@ ikiwiki (2.45) UNRELEASED; urgency=low
     Closes: #478718
   * anonk: Add anonok_pagespec configuration setting that can be used to
     allow anonymous users to edit only matching pages. Closes: #478892
+  * Fix ugly display when editing a page that has vanished.
+  * srcfile now has an optional second parameter to avoid it throwing an error
+    if the source file does not exist.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 26 Apr 2008 15:09:36 -0400
 

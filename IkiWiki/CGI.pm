@@ -503,7 +503,7 @@ sub cgi_editpage ($$) { #{{{
 		my $exists=-e "$config{srcdir}/$file";
 
 		if ($form->field("do") ne "create" && ! $exists &&
-		    ! eval { srcfile($file) }) {
+		    ! defined srcfile($file, 1)) {
 			$form->tmpl_param("page_gone", 1);
 			$form->field(name => "do", value => "create", force => 1);
 			$form->tmpl_param("page_select", 0);

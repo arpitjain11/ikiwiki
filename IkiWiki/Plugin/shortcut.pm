@@ -13,7 +13,7 @@ sub import { #{{{
 sub checkconfig () { #{{{
 	# Preprocess the shortcuts page to get all the available shortcuts
 	# defined before other pages are rendered.
-	my $srcfile=eval {srcfile("shortcuts.mdwn")};
+	my $srcfile=srcfile("shortcuts.mdwn", 1);
 	if (! defined $srcfile) {
 		error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
 	}

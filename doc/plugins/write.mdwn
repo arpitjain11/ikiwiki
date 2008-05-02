@@ -529,11 +529,15 @@ a type that ikiwiki knowns how to htmlize. Otherwise, returns undef.
 Given the name of a source file, returns the name of the wiki page
 that corresponds to that file.
 
-#### `srcfile($)`
+#### `srcfile($;$)`
 
 Given the name of a source file in the wiki, searches for the file in
 the source directory and the underlay directories (most recently added
 underlays first), and returns the full path to the first file found.
+
+Normally srcfile will fail with an error message if the source file cannot
+be found. The second parameter can be set to a true value to make it return
+undef instead.
 
 #### `add_underlay($)`
 
