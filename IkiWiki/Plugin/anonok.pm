@@ -16,7 +16,7 @@ sub canedit ($$$) { #{{{
 
 	my $ret;
 
-	if (length $config{anonok_pagespec}) {
+	if (exists $config{anonok_pagespec} && length $config{anonok_pagespec}) {
 		if (pagespec_match($page, $config{anonok_pagespec},
 		                   location => $page)) {
 			return "";
