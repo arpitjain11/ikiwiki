@@ -7,16 +7,16 @@ is write this on a wiki page:
 
 	[[fib ]]
 
-When the page is built, that'll be replaced by the next number in the
+When the page is built, the inclusion will be replaced by the next number in the
 sequence.
 
-Most of ikiwiki's plugins are written in perl, and it's currently easiest
-to write them in perl. So, open your favorite text editor, and start
+Most of ikiwiki's plugins are written in Perl, and it's currently easiest
+to write them in Perl. So, open your favorite text editor and start
 editing a file named "fib.pm".
 
 	#!/usr/bin/perl
 
-This isn't really necessary, since fib.pm will be a perl module, but it's
+This isn't really necessary, since fib.pm will be a Perl module, but it's
 nice to have. Since it's a module, the next bit is this. Notice the "fib"
 at the end, matching the "fib" in the filename.
 
@@ -31,7 +31,7 @@ important one is the IkiWiki module.
 
 Ok, boilerplate is out of the way. Now to add the one function that ikiwiki
 expects to find in any module: `import`. The import function is called when
-the module is first loaded, and what modules typically do with it is
+the module is first loaded; what modules typically do with it is
 register hooks that ikiwiki will call later.
 
 	sub import {
@@ -56,19 +56,19 @@ the PreprocessorDirective. So, time to write that function:
 	}
 
 Whatever this function returns is what will show up on the wiki page.
-Since this is the Fibonachi sequence, returning 1 will be right for the
+Since this is the Fibonacci sequence, returning 1 will be right for the
 first two calls anways, so our plugin isn't _too_ buggy. ;-) Before we fix
 the bug, let's finish up the plugin.
 
 	1
 
-Always put this as the last line in your perl modules. Perl likes it.
+Always put this as the last line in your Perl modules. Perl likes it.
 
 Ok, done! If you save the plugin, you can copy it to a place your ikiwiki
 looks for plugins (`/usr/share/perl5/IkiWiki/Plugins/` is a good bet; see
 [[install]] for the details of how to figure out where to
 install it). Then configure ikiwiki to use the plugin, and you're ready to
-insert at least the first two numbers of the Fibonachi sequence on web
+insert at least the first two numbers of the Fibonacci sequence on web
 pages. Behold, the power of ikiwiki! ...
 
 ----
@@ -76,7 +76,7 @@ pages. Behold, the power of ikiwiki! ...
 You could stop here, if you like, and go write your own plugin that does
 something more useful. Rather than leave you with a broken fib plugin
 though, this tutorial will go ahead and complete it. Let's add a simple
-Fibonachi generating function to the plugin. This is right out of a
+Fibonacci generating function to the plugin. This is right out of a
 textbook.
 
 	sub fib {
