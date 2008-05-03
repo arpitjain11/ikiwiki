@@ -7,8 +7,8 @@ is write this on a wiki page:
 
 	[[fib ]]
 
-When the page is built, the inclusion will be replaced by the next number in the
-sequence.
+When the page is built, the [[ikiwiki/PreProcessorDirective]] will be
+replaced by the next number in the sequence.
 
 Most of ikiwiki's plugins are written in Perl, and it's currently easiest
 to write them in Perl. So, open your favorite text editor and start
