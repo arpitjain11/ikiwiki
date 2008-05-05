@@ -2,7 +2,7 @@
 provider with very cheap pay as you go pricing. Here's how to install ikiwiki
 there if you don't have a dedicated server.
 
-## Register for an account and set up a site.
+## Register for an account and set up a site
 
 After you [get an account](https://www.nearlyfreespeech.net/about/start.php),
 create a site using their web interface. 
@@ -12,19 +12,19 @@ own, resulting in <http://ikiwiki-test.nfshost.com/>
 
 They gave me 2 cents free funding for signing up, which is enough to pay
 for 10 megabytes of hosting, or about a thousand typical page views at
-their current rates. $5 might be a good starting amount of money to put in
-your account.
+their current rates. Plenty to decide if this is right for you. If it is,
+$5 might be a good starting amount of money to put in your account.
 
 ## ssh in and configure the environment
 
 ssh into their server using the ssh hostname and username displayed on
-the site's information page. For me this was
+the site's information page. For me this was:
 
 	ssh joeyh_ikiwiki-test@ssh.phx.nearlyfreespeech.net
-	cd $HOME
 
 Now set up .profile to run programs from ~/bin.
 
+	cd $HOME
 	echo "PATH=$PATH:$HOME/bin" > .profile
 	. .profile
 
