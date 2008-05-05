@@ -81,9 +81,14 @@ Here is an example of how I set up a wiki:
 ## Clean up
 
 Finally, you can save a _lot_ of disk space by cleaning up the ikiwiki
-tarball and .cpan directory.
+tarball and .cpan directory and a few other peices of cruft. Since you'll be
+charged one cent per month per megabyte, this is a quick way to save several
+dollars.
 
-rm -rf ~/ikiwiki*.tar.gz ~/.cpan
+rm -rf ~/ikiwiki*.tar.gz ~/.cpan ~/ikiwiki ~/man ~/lib/perl5/5.8.8
+
+That should cut things down to less than 4 megabytes. If you want to save
+even more space, delete unused perl modules from ~/lib/perl5
 
 ## Enjoy!
 
