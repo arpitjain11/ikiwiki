@@ -2,21 +2,28 @@ The easiest way to install ikiwiki is using the Debian package, but you can
 also [[download]] the source and install it by hand. Ikiwiki should work on
 most unix-like systems.
 
+## prerequites
+
 Ikiwiki is a perl program, and needs a recent version of perl such as
 5.10. (5.8.0 has been reported not to work).
+
+It's recommended you have a C compiler, as ikiwiki uses one to build
+wrappers.
 
 Ikiwiki requires the [[cpan Text::Markdown]], [[cpan URI]],
 [[cpan HTML::Parser]], [[cpan HTML::Template]], and [[cpan HTML::Scrubber]]
 perl modules be installed. It can also use a lot of other perl modules, if
 they are available.
 
-It's recommended you have a C compiler, as ikiwiki uses one to build
-wrappers.
-
-Various [[plugins]] use other libraries and utlities; see their individual
+Various [[plugins]] use other perl modules and utilities; see their individual
 documentation for details.
 
-The Debian packages depend on and recommend an appropriate set of packages.
+## Debian
+
+The Debian packages depend on and recommend an appropriate set of packages,
+so just install ikiwiki using apt.
+
+## Fedora 7
 
 While Fedora 7 doesn't have an ikiwiki package, you can install needed
 perl modules using this command:
@@ -24,6 +31,8 @@ perl modules using this command:
 	yum install perl-Text-Markdown perl-Mail-Sendmail perl-HTML-Scrubber \
 	  perl-XML-Simple perl-TimeDate perl-HTML-Template perl-CGI-FormBuilder \
 	  perl-CGI-Session perl-File-MimeInfo perl-gettext
+
+## Installing by hand
 
 If you want to install by hand from the tarball, you should make sure that
 all the perl modules are installed. This is one way to install them, using
@@ -39,4 +48,9 @@ Then to build and install ikiwiki:
 	make test # optional
 	make install
 
-See [[download]] for where to get it.
+If you're using a shared hosting provider, of the sort where you don't have
+root, you can still install ikiwiki. There are tutorials covering this for
+a few providers:
+
+* [[tips/NearlyFreeSpeech]]
+* [[tips/DreamHost]]
