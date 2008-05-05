@@ -9,5 +9,8 @@ NOTAINT=0 turns on the taint flag in the ikiwiki program. (Not recommended
 unless your perl is less buggy than mine -- see
 http://bugs.debian.org/411786)
 
+There are also other variables supported by MakeMaker, including PREFIX,
+INSTALL_BASE, and DESTDIR. See ExtUtils::MakeMaker(3).
+
 All other documentation is in the ikiwiki documentation wiki, which is also
 available online at <http://ikiwiki.info/>
