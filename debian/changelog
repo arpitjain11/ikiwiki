@@ -1,4 +1,4 @@
-ikiwiki (2.45) UNRELEASED; urgency=low
+ikiwiki (2.45) unstable; urgency=low
 
   * toc: Add the table of contents at sanitize time, rather than at format
     time. This allows the toc to be displayed when previewing an edit. It also
@@ -15,15 +15,15 @@ ikiwiki (2.45) UNRELEASED; urgency=low
     if the source file does not exist.
   * git: Put -- before the filename when calling git rev-list to avoid
     warning message when the file doesn't exist.
-  * Add a Bundle::Ikiwiki to the source for use with CPAN to install *all*
-    the modules ikiwiki can use.
+  * Add a Bundle::Ikiwiki and Bundle::IkiWiki::Extras to the source for use
+    with CPAN to install perl modules.
   * Add a cpan directory containing a CPAN::MyConfig that can ease use of
     CPAN to install in a home directory on shared hosting providers.
   * With these changes, it's pretty easy to install onto nearlyfreespeech.net
     and probably other shared hosting providers like dreamhost. Added
-    a tip page documentng the process for nearlyfreespeech.
+    a page documenting the process for nearlyfreespeech.
 
- -- Joey Hess <joeyh@debian.org>  Sat, 26 Apr 2008 15:09:36 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 05 May 2008 15:06:05 -0400
 
 ikiwiki (2.44) unstable; urgency=medium
 
