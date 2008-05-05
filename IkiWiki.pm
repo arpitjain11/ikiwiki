@@ -1287,7 +1287,9 @@ use overload ( #{{{
 ); #}}}
 
 sub new { #{{{
-	return bless \$_[1], $_[0];
+	my $class = shift;
+	my $value = shift;
+	return bless \$value, $class;
 } #}}}
 
 package IkiWiki::SuccessReason;
@@ -1300,7 +1302,9 @@ use overload ( #{{{
 ); #}}}
 
 sub new { #{{{
-	return bless \$_[1], $_[0];
+	my $class = shift;
+	my $value = shift;
+	return bless \$value, $class;
 }; #}}}
 
 package IkiWiki::PageSpec;
