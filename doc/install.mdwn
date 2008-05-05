@@ -3,17 +3,12 @@ also [[download]] the source and install it by hand. Ikiwiki should work on
 most unix-like systems.
 
 Ikiwiki is a perl program, and needs a recent version of perl such as
-5.8.8. (5.8.0 has been reported not to work).
+5.10. (5.8.0 has been reported not to work).
 
 Ikiwiki requires the [[cpan Text::Markdown]], [[cpan URI]],
 [[cpan HTML::Parser]], [[cpan HTML::Template]], and [[cpan HTML::Scrubber]]
-perl modules be installed.
-
-It also uses the following perl modules if available: [[cpan
-CGI::Session]], [[cpan CGI::FormBuilder]] (version 3.05 or newer), [[cpan
-Mail::Sendmail]], [[cpan TimeDate]], [[cpan RPC::XML]],
-[[cpan XML::Simple]], [[cpan XML::Feed]], [[cpan File::MimeInfo]],
-[[cpan Locale::gettext]] (version 1.04 or newer).
+perl modules be installed. It can also use a lot of other perl modules, if
+they are available.
 
 It's recommended you have a C compiler, as ikiwiki uses one to build
 wrappers.
@@ -30,8 +25,14 @@ perl modules using this command:
 	  perl-XML-Simple perl-TimeDate perl-HTML-Template perl-CGI-FormBuilder \
 	  perl-CGI-Session perl-File-MimeInfo perl-gettext
 
-If you want to install from the tarball, you should make sure that the
-required perl modules are installed, then run:
+If you want to install by hand from the tarball, you should make sure that
+all the perl modules are installed. This is one way to install them, using
+CPAN:
+
+	PERL5LIB=. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
+	PERL5LIB=. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki::Extras")'
+
+Then to build and install ikiwiki:
 
 	perl Makefile.PL # PREFIX=/dir to install elsewhere
 	make
