@@ -11,32 +11,43 @@ there if you don't have a dedicated server.
   page views at their current rates.)
 * `ssh` into their server using the ssh hostname and username displayed on
   the site's information page. For me this was
-  `ssh joeyh_ikiwiki-test@ssh.phx.nearlyfreespeech.net`
+
+	ssh joeyh_ikiwiki-test@ssh.phx.nearlyfreespeech.net
+
 * Set up .profile to use your home directory.
+
 	echo "PATH=$PATH:$HOME/bin" > $HOME/.profile
 	. $HOME/.profile
+
 * You'll be in the htdocs directory by default, where public web pages are
   put, so before installing ikiwiki, `cd $HOME`
 * Use `wget` to [[download]] the ikiwiki tarball.
 * Unpack ikiwiki.
+
 	tar zxvf ikiwiki*.tar.gz
+
 * Use CPAN to install the perl modules it uses into your home directory:
-	PERL5LIB=ikiwiki:ikiwiki/cpan:. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
-	PERL5LIB=ikiwiki:ikiwiki/cpan:. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->force(install => "Bundle::IkiWiki::Extras")'
   (This will take a while. As long as the first command succeeds, ikiwiki will be
   usable. The second command adds extra modules that some plugins use, and
   installation of some of them might fail.)
+
+	PERL5LIB=ikiwiki:ikiwiki/cpan:. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
+	PERL5LIB=ikiwiki:ikiwiki/cpan:. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->force(install => "Bundle::IkiWiki::Extras")'
+
 * Now build and install ikiwiki into your home directory.
+
 	cd ikiwiki
 	export MAKE=gmake
 	perl Makefile.PL INSTALL_BASE=$HOME PREFIX=
 	$MAKE
 	$MAKE install
+
 * With ikiwiki installed, you can follow the regular [[setup]] tutorial for
   settng up your wiki. Make sure to set `destdir` to `/home/htdocs/` so that
   the wiki is published on the web site. I recommend using git for revision
   control; you can then clone your wiki's git repository as an offsite backup.
   Here is an example of how I set up a wiki:
+
 	mkdir ~/wiki
 	cd ~/wiki
 	cp ~/ikiwiki/doc/ikiwiki.setup .
@@ -52,8 +63,10 @@ there if you don't have a dedicated server.
 	# Configure the rest to your liking and save the file.
 	ikiwiki-makerepo git . ../wiki.git
 	ikiwiki -setup ikiwiki.setup
+
 * Finally, you can save a _lot_ of disk space by cleaning up the ikiwiki
   tarball and .cpan directory.
+
 	rm -rf ~/ikiwiki*.tar.gz ~/.cpan
 
 Have fun and do good things. --[[Joey]]
