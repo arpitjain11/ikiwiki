@@ -38,8 +38,8 @@ If you want to install by hand from the tarball, you should make sure that
 all the perl modules are installed. This is one way to install them, using
 CPAN:
 
-	PERL5LIB=. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
-	PERL5LIB=. PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki::Extras")'
+	PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
+	PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki::Extras")'
 
 Then to build and install ikiwiki:
 
