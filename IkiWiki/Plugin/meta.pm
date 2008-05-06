@@ -90,7 +90,7 @@ sub preprocess (@) { #{{{
 		# editable page as a stylesheet
 		my $stylesheet=bestlink($page, $value.".css");
 		if (! length $stylesheet) {
-			return "[[meta ".gettext("stylesheet not found")."]]";
+			return "[[meta "."stylesheet not found"."]]";
 		}
 		$meta{$page}.='<link href="'.$stylesheet.
 			'" rel="'.encode_entities($rel).

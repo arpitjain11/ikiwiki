@@ -1,3 +1,11 @@
+ikiwiki (1.33.6) UNRELEASED; urgency=low
+
+  * Some error messages in recent backported security fixes used gettext,
+    but this version of ikiwiki is not localised and display of those error
+    messages would fail. Remove the gettext use.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 06 May 2008 13:25:54 -0400
+
 ikiwiki (1.33.5) stable-security; urgency=high
 
   * Fix CSRF attacks against the preferences and edit forms. The fix involved

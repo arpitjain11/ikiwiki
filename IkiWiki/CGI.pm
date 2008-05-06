@@ -305,7 +305,7 @@ sub cgi_prefs ($$) { #{{{
 		$q->delete_all;
 	}
 	elsif ($sid ne $session->id) {
-		error(gettext("Your login session has expired."));
+		error("Your login session has expired.");
 	}
 
 	eval q{use CGI::FormBuilder};
@@ -612,7 +612,7 @@ sub cgi_editpage ($$) { #{{{
 		if (defined $session->param("name")) {
 			my $sid=$q->param('sid');
 			if (! defined $sid || $sid ne $session->id) {
-				error(gettext("Your login session has expired."));
+				error("Your login session has expired.");
 			}
 		}
 
