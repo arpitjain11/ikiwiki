@@ -113,6 +113,11 @@ configuration options of their own.
   build time. If the templatedir is changed, missing templates will still
   be searched for in the default location as a fallback.
 
+  Note that if you choose to copy and modify ikiwiki's templates, you will need
+  to be careful to keep them up to date when upgrading to new versions of
+  ikiwiki. Old versions of templates do not always work with new ikiwiki
+  versions.
+
 * --underlaydir
 
   Specify the directory that is used to underlay the source directory.
