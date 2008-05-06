@@ -1,0 +1,26 @@
+[[template id=plugin name=pinger author="[[Joey]]"]]
+[[tag type/special-purpose]]
+
+This plugin allows ikiwiki to be configured to hit a URL each time it
+updates the wiki. One way to use this is in conjunction with the [[pingee]]
+plugin to set up a loosely coupled mirror network, or a branched version of
+a wiki. By pinging the mirror or branch each time the main wiki changes, it
+can be kept up-to-date.
+
+        \[[!ping from="http://mywiki.com/"
+        to="http://otherwiki.com/ikiwiki.cgi?do=ping"]]
+
+The "from" parameter must be identical to the url of the wiki that is doing
+the pinging. This is used to prevent ping loops.
+
+The "to" parameter is the url to ping. The example shows how to ping
+another ikiwiki instance.
+
+The [[cpan LWP]] perl module is used for pinging. Or the [[cpan
+LWPx::ParanoidAgent]] perl module is used if available, for added security.
+Finally, the [[cpan Crypt::SSLeay]] perl module is needed to support pinging
+"https" urls.
+
+By default the pinger will try to ping a site for 15 seconds before timing
+out. This timeout can be changed by setting the `pinger_timeout`
+configuration setting in the setup file.

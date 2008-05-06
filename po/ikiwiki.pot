@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-05 20:05-0400\n"
+"POT-Creation-Date: 2008-05-06 18:15-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,67 +71,75 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:126
+#: ../IkiWiki/Plugin/aggregate.pm:53
+msgid "Aggregation triggered via web."
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:62
+msgid "Nothing to do right now, all feeds are up-to-date!"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:134
 #, perl-format
 msgid "missing %s parameter"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:153
+#: ../IkiWiki/Plugin/aggregate.pm:161
 msgid "new feed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:167
+#: ../IkiWiki/Plugin/aggregate.pm:175
 msgid "posts"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:169
+#: ../IkiWiki/Plugin/aggregate.pm:177
 msgid "new"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:332
+#: ../IkiWiki/Plugin/aggregate.pm:340
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:339
+#: ../IkiWiki/Plugin/aggregate.pm:347
 #, perl-format
 msgid "expiring %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:366
+#: ../IkiWiki/Plugin/aggregate.pm:374
 #, perl-format
 msgid "processed ok at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:370
+#: ../IkiWiki/Plugin/aggregate.pm:378
 #, perl-format
 msgid "checking feed %s ..."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:375
+#: ../IkiWiki/Plugin/aggregate.pm:383
 #, perl-format
 msgid "could not find feed at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:390
+#: ../IkiWiki/Plugin/aggregate.pm:398
 msgid "feed not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:401
+#: ../IkiWiki/Plugin/aggregate.pm:409
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:407
+#: ../IkiWiki/Plugin/aggregate.pm:415
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:413
+#: ../IkiWiki/Plugin/aggregate.pm:421
 msgid "feed crashed XML::Feed!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:487
+#: ../IkiWiki/Plugin/aggregate.pm:495
 #, perl-format
 msgid "creating new page %s"
 msgstr ""
@@ -298,6 +306,24 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/passwordauth.pm:188
 msgid "Your password has been emailed to you."
+msgstr ""
+
+#: ../IkiWiki/Plugin/pingee.pm:21
+msgid "Ping received."
+msgstr ""
+
+#: ../IkiWiki/Plugin/pinger.pm:39
+#, perl-format
+msgid "Updates will ping %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/pinger.pm:42
+#, perl-format
+msgid "Ignoring ping directive for wiki %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/pinger.pm:58
+msgid "LWP not found, not pinging"
 msgstr ""
 
 #: ../IkiWiki/Plugin/poll.pm:64

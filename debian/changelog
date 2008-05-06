@@ -3,6 +3,8 @@ ikiwiki (2.46) UNRELEASED; urgency=low
   * aggregate: Add support for web-based triggering of aggregation 
     for people stuck on shared hosting without cron. (Sheesh.) Enabled
     via the `aggregate_webtrigger` configuration optiom.
+  * Add pinger and pingee plugins, which allow setting up mirrors and branched
+    wikis that automatically ping one another to stay up to date.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 05 May 2008 19:34:51 -0400
 
