@@ -6,10 +6,10 @@ git, let's explore some possibilities for distributed wikis.
 ## a wiki mirror
 
 The simplest possibility is setting up a mirror. If a wiki exposes its git
-repository and has the [[plugin/pinger]] plugin enabled, then anyone can
+repository and has the [[plugins/pinger]] plugin enabled, then anyone can
 set up a mirror that will automatically be kept up-to-date with the origin
 wiki. Just clone the git repo, configure ikiwiki to use it, enable the
-[[plugin/pingee]] plugin in your configuration, and edit the origin wiki,
+[[plugins/pingee]] plugin in your configuration, and edit the origin wiki,
 adding a ping directive for your mirror:
 
 	\[[!ping from="http://thewiki.com/"
