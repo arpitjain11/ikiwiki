@@ -505,7 +505,7 @@ sub pingurl (@) { #{{{
 	defined(my $pid = fork) or error("Can't fork: $!");
 	return if $pid;
 	chdir '/';
-	setsid() or error("Can't start a new session: $!");
+	POSIX::setsid() or error("Can't start a new session: $!");
 	open STDIN, '/dev/null';
 	open STDOUT, '>/dev/null';
 	open STDERR, '>&STDOUT' or error("Can't dup stdout: $!");
