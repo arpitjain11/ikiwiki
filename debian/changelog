@@ -23,7 +23,7 @@ ikiwiki (2.45) unstable; urgency=low
     if the source file does not exist.
   * git: Put -- before the filename when calling git rev-list to avoid
     warning message when the file doesn't exist.
-  * Add a Bundle::Ikiwiki and Bundle::IkiWiki::Extras to the source for use
+  * Add a Bundle::IkiWiki and Bundle::IkiWiki::Extras to the source for use
     with CPAN to install perl modules.
   * Add a cpan directory containing a CPAN::MyConfig that can ease use of
     CPAN to install in a home directory on shared hosting providers.
