@@ -1,0 +1,45 @@
+[[rcs/git]] and other distributed version control systems are all about
+making it easy to create and maintain copies and branches of a project. And
+this can be used for all sorts of interesting stuff. Since ikiwiki can use
+git, let's explore some possibilities for distributed wikis.
+
+## a wiki mirror
+
+The simplest possibility is setting up a mirror. If a wiki exposes its git
+repository and has the [[plugin/pinger]] plugin enabled, then anyone can
+set up a mirror that will automatically be kept up-to-date with the origin
+wiki. Just clone the git repo, configure ikiwiki to use it, enable the
+[[plugin/pingee]] plugin in your configuration, and edit the origin wiki,
+adding a ping directive for your mirror:
+
+	\[[!ping from="http://thewiki.com/"
+	to="http://mymirror.com/ikiwiki.cgi?do=ping"]]
+
+The "from" parameter needs to be the url to the origin wiki. The "to" parameter
+is the url to ping on your mirror.
+
+Now whenever the main wiki is edited, it will ping your mirror, which will
+pull the changes from "origin" using git, and update itself. It could, in
+turn ping another mirror, etc.
+
+And if someone edits a page on your mirror, it will "git push origin",
+committing the changes back to the origin git repository, and updating the
+origin mirror. Assuming you can push to that git repository. If you can't,
+and you want a mirror, and not a branch, you should disable web edits on
+your mirror.
+
+## branching a wiki
+
+It follows that setting up a branch of a wiki is just like a mirror, except
+we don't want it to push changes back to the origin. The easy way to
+accomplish this is to clone the origin git repository using a readonly
+protocol (ie, "git://"). Then you can't push to it.
+
+If a page on your branch is modified and other modifications are made to
+the same page in the origin, a conflict might occur when that change is
+pulled in. How well will this be dealt with and how to resolve it? I think
+that the conflict markers will just appear on the page as it's rendered in
+the wiki, and if you could even resolve the conflict using the web
+interface. Not 100% sure as I've not gotten into this situation yet.
+
+--[[Joey]]
