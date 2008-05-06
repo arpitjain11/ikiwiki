@@ -163,4 +163,8 @@ use IkiWiki::Setup::Standard {
 	# For use with the anonok plugin, a PageSpec specifying what
 	# pages anonymous users can edit
 	#anonok_pagespec => "*",
+	
+	# For use with the aggregate plugin, to allow aggregation to be
+	# triggered via the web.
+	#aggregate_webtrigger => 1,
 }

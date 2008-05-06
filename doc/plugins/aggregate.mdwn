@@ -28,6 +28,14 @@ crontab entry:
 
 	*/15 * * * * ikiwiki --setup my.wiki --aggregate --refresh
 
+Alternatively, you can allow `ikiwiki.cgi` to trigger the aggregation. You
+should only need this if for some reason you cannot use cron, and instead
+want to use a service such as [WebCron](http://webcron.org). To enable
+this, enable on `aggregate_webtrigger` in your setup file. The url to
+visit is `http://whatever/ikiwiki.cgi?do=aggregate_webtrigger`. Anyone
+can visit the url to trigger an aggregation run, but it will only check
+each feed if its `updateinterval` has passed.
+
 ## usage
 
 Here are descriptions of all the supported parameters to the `aggregate`

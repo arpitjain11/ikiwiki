@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# Blog aggregation plugin.
+# Feed aggregation plugin.
 package IkiWiki::Plugin::aggregate;
 
 use warnings;
@@ -21,6 +21,9 @@ sub import { #{{{
 	hook(type => "preprocess", id => "aggregate", call => \&preprocess);
         hook(type => "delete", id => "aggregate", call => \&delete);
 	hook(type => "savestate", id => "aggregate", call => \&savestate);
+	if (exists $config{aggregate_webtrigger} && $config{aggregate_webtrigger}) {
+		hook(type => "cgi", id => "aggregate", call => \&cgi);
+	}
 } # }}}
 
 sub getopt () { #{{{
@@ -33,48 +36,78 @@ sub getopt () { #{{{
 sub checkconfig () { #{{{
 	if ($config{aggregate} && ! ($config{post_commit} && 
 	                             IkiWiki::commit_hook_enabled())) {
-		# See if any feeds need aggregation.
-		loadstate();
-		my @feeds=needsaggregate();
-		return unless @feeds;
-		if (! lockaggregate()) {
-			debug("an aggregation process is already running");
-			return;
-		}
-		# force a later rebuild of source pages
-		$IkiWiki::forcerebuild{$_->{sourcepage}}=1
-			foreach @feeds;
-
-		# Fork a child process to handle the aggregation.
-		# The parent process will then handle building the
-		# result. This avoids messy code to clear state
-		# accumulated while aggregating.
-		defined(my $pid = fork) or error("Can't fork: $!");
-		if (! $pid) {
-			IkiWiki::loadindex();
-
-			# Aggregation happens without the main wiki lock
-			# being held. This allows editing pages etc while
-			# aggregation is running.
-			aggregate(@feeds);
-
-			IkiWiki::lockwiki;
-			# Merge changes, since aggregation state may have
-			# changed on disk while the aggregation was happening.
-			mergestate();
-			expire();
-			savestate();
-			IkiWiki::unlockwiki;
-			exit 0;
-		}
-		waitpid($pid,0);
-		if ($?) {
-			error "aggregation failed with code $?";
-		}
-
-		clearstate();
-		unlockaggregate();
+		launchaggregation();
 	}
+} #}}}
+
+sub cgi ($) { #{{{
+	my $cgi=shift;
+
+	if (defined $cgi->param('do') &&
+	    $cgi->param("do") eq "aggregate_webtrigger") {
+		$|=1;
+		print "Content-Type: text/plain\n\n";
+		$config{cgi}=0;
+		$config{verbose}=1;
+		$config{syslog}=0;
+		print gettext("Aggregation triggered via web.")."\n\n";
+		if (launchaggregation()) {
+			IkiWiki::lockwiki();
+			IkiWiki::loadindex();
+			require IkiWiki::Render;
+			IkiWiki::refresh();
+			IkiWiki::saveindex();
+		}
+		else {
+			print gettext("Nothing to do right now, all feeds are up-to-date!")."\n";
+		}
+		exit 0;
+	}
+} #}}}
+
+sub launchaggregation () { #{{{
+	# See if any feeds need aggregation.
+	loadstate();
+	my @feeds=needsaggregate();
+	return unless @feeds;
+	if (! lockaggregate()) {
+		debug("an aggregation process is already running");
+		return;
+	}
+	# force a later rebuild of source pages
+	$IkiWiki::forcerebuild{$_->{sourcepage}}=1
+		foreach @feeds;
+
+	# Fork a child process to handle the aggregation.
+	# The parent process will then handle building the
+	# result. This avoids messy code to clear state
+	# accumulated while aggregating.
+	defined(my $pid = fork) or error("Can't fork: $!");
+	if (! $pid) {
+		IkiWiki::loadindex();
+		# Aggregation happens without the main wiki lock
+		# being held. This allows editing pages etc while
+		# aggregation is running.
+		aggregate(@feeds);
+
+		IkiWiki::lockwiki;
+		# Merge changes, since aggregation state may have
+		# changed on disk while the aggregation was happening.
+		mergestate();
+		expire();
+		savestate();
+		IkiWiki::unlockwiki;
+		exit 0;
+	}
+	waitpid($pid,0);
+	if ($?) {
+		error "aggregation failed with code $?";
+	}
+
+	clearstate();
+	unlockaggregate();
+
+	return 1;
 } #}}}
 
 sub needsbuild (@) { #{{{
