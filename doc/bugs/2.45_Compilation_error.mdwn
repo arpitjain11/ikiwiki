@@ -8,3 +8,10 @@ I have perl 5.10.0. Ikiwiki 2.44 compiles fine. Compiling 2.45 fails after 'make
     BEGIN failed--compilation aborted at (eval 23) line 2.
     BEGIN failed--compilation aborted at (eval 10) line 21.
     make: *** [extra_build] Error 255
+
+> I can't reproduce this. It looks like your IkiWiki.pm is out of sync with
+> your IkiWiki/Plugin/shortcut.pm. The ones distributed in 2.45 are in
+> sync. Or your perl is failing to use the right version of Ikiwiki.pm, 
+> perhaps using a previously installed version. But the -Iblib/lib
+> instructs perl to look in that directory first, and the Makefile
+> puts Ikiwiki.pm there. --[[Joey]]
