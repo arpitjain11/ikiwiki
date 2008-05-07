@@ -1,0 +1,10 @@
+I have perl 5.10.0. Ikiwiki 2.44 compiles fine. Compiling 2.45 fails after 'make':
+
+    perl -Iblib/lib   ikiwiki.out -libdir . -setup docwiki.setup -refresh
+    refreshing wiki..
+    docwiki.setup: Failed to load plugin IkiWiki::Plugin::goodstuff: Failed to load plugin IkiWiki::Plugin::shortcut: Too many arguments for IkiWiki::srcfile at IkiWiki/Plugin/shortcut.pm line 16, near "1)"
+    Compilation failed in require at (eval 31) line 2.
+    BEGIN failed--compilation aborted at (eval 31) line 2.
+    BEGIN failed--compilation aborted at (eval 23) line 2.
+    BEGIN failed--compilation aborted at (eval 10) line 21.
+    make: *** [extra_build] Error 255
