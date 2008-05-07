@@ -445,7 +445,7 @@ sub genfeed ($$$$@) { #{{{
 				$itemtemplate->param(content => $pcontent);
 			}
 			else {
-				my ($a, $b, $c, $d, $e, $f, $g, $size) = stat(srcfile($file));
+				my $size=(srcfile_stat($file))[8];
 				my $mime="unknown";
 				eval q{use File::MimeInfo};
 				if (! $@) {

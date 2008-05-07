@@ -282,16 +282,20 @@ sub htmlpage ($) { #{{{
 	return targetpage($page, $config{htmlext});
 } #}}}
 
-sub srcfile ($;$) { #{{{
+sub srcfile_stat { #{{{
 	my $file=shift;
 	my $nothrow=shift;
 
-	return "$config{srcdir}/$file" if -e "$config{srcdir}/$file";
+	return "$config{srcdir}/$file", stat(_) if -e "$config{srcdir}/$file";
 	foreach my $dir (@{$config{underlaydirs}}, $config{underlaydir}) {
-		return "$dir/$file" if -e "$dir/$file";
+		return "$dir/$file", stat(_) if -e "$dir/$file";
 	}
 	error("internal error: $file cannot be found in $config{srcdir} or underlay") unless $nothrow;
 	return;
+} #}}}
+
+sub srcfile ($;$) { #{{{
+	return (srcfile_stat(@_))[0];
 } #}}}
 
 sub add_underlay ($) { #{{{

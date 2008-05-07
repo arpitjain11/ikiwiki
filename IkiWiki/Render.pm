@@ -146,12 +146,6 @@ sub genpage ($$) { #{{{
 	return $content;
 } #}}}
 
-sub mtime ($) { #{{{
-	my $file=shift;
-	
-	return (stat($file))[9];
-} #}}}
-
 sub scan ($) { #{{{
 	my $file=shift;
 
@@ -283,7 +277,7 @@ sub refresh () { #{{{
 			if (file_pruned($_, $config{srcdir})) {
 				$File::Find::prune=1;
 			}
-			elsif (! -d $_ && ! -l $_) {
+			elsif (! -l $_ && ! -d _) {
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
 				if (! defined $f) {
 					warn(sprintf(gettext("skipping bad filename %s"), $_)."\n");
@@ -304,7 +298,7 @@ sub refresh () { #{{{
 				if (file_pruned($_, $dir)) {
 					$File::Find::prune=1;
 				}
-				elsif (! -d $_ && ! -l $_) {
+				elsif (! -l $_ && ! -d _) {
 					my ($f)=/$config{wiki_file_regexp}/; # untaint
 					if (! defined $f) {
 						warn(sprintf(gettext("skipping bad filename %s"), $_)."\n");
@@ -314,8 +308,8 @@ sub refresh () { #{{{
 						# avoid underlaydir
 						# override attacks; see
 						# security.mdwn
-						if (! -e "$config{srcdir}/$f" && 
-						    ! -l "$config{srcdir}/$f") {
+						if (! -l "$config{srcdir}/$f" && 
+						    ! -e _) {
 						    	my $page=pagename($f);
 							if (! $exists{$page}) {
 								push @files, $f;
@@ -329,7 +323,6 @@ sub refresh () { #{{{
 	};
 
 	my (%rendered, @add, @del, @internal);
-
 	# check for added or removed pages
 	foreach my $file (@files) {
 		my $page=pagename($file);
@@ -352,7 +345,7 @@ sub refresh () { #{{{
 			}
 			$pagecase{lc $page}=$page;
 			if (! exists $pagectime{$page}) {
-				$pagectime{$page}=mtime(srcfile($file));
+				$pagectime{$page}=(srcfile_stat($file))[10];
 			}
 		}
 	}
@@ -383,16 +376,15 @@ sub refresh () { #{{{
 	my @needsbuild;
 	foreach my $file (@files) {
 		my $page=pagename($file);
-		
-		my $mtime=mtime(srcfile($file));
+		my ($srcfile, @stat)=srcfile_stat($file);
 		if (! exists $pagemtime{$page} ||
-		    $mtime > $pagemtime{$page} ||
+		    $stat[9] > $pagemtime{$page} ||
 	    	    $forcerebuild{$page}) {
-			$pagemtime{$page}=$mtime;
+			$pagemtime{$page}=$stat[9];
 			if (isinternal($page)) {
 				push @internal, $file;
 				# Preprocess internal page in scan-only mode.
-				preprocess($page, $page, readfile(srcfile($file)), 1);
+				preprocess($page, $page, readfile($srcfile), 1);
 			}
 			else {
 				push @needsbuild, $file;
@@ -535,7 +527,7 @@ sub commandline_render () { #{{{
 	$content=preprocess($page, $page, $content);
 	$content=linkify($page, $page, $content);
 	$content=htmlize($page, $type, $content);
-	$pagemtime{$page}=mtime($srcfile);
+	$pagemtime{$page}=(stat($srcfile))[9];
 
 	print genpage($page, $content);
 	exit 0;
