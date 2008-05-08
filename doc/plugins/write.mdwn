@@ -92,8 +92,6 @@ function is passed no values.
 
 ### needsbuild
 
-
-
 	hook(type => "needsbuild", id => "foo", call => \&needsbuild);
 
 This allows a plugin to manipulate the list of files that need to be
