@@ -156,7 +156,6 @@ sub prune ($) { #{{{
 	# of S3 as well.
 	if ($file =~ /^\Q$config{destdir}\/\E(.*)/) {
 		my $key=$config{amazon_s3_prefix}.$1;
-		print STDERR "wrapped prune ($key)\n";
 		my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
 		my $res=$bucket->delete_key($key);
 		if ($res && $key=~/(^|\/)index.$config{htmlext}$/) {
