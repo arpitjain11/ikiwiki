@@ -152,10 +152,25 @@ sub writefile ($$$;$$) { #{{{
 sub prune ($) { #{{{
 	my $file=shift;
 
-	my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
-	print STDERR "wrapped prune\n";
+	# If a file in the destdir is being pruned, need to delete it out
+	# of S3 as well.
+	if ($file =~ /^\Q$config{destdir}\/\E(.*)/) {
+		my $key=$config{amazon_s3_prefix}.$1;
+		print STDERR "wrapped prune ($key)\n";
+		my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
+		my $res=$bucket->delete_key($key);
+		if ($res && $key=~/(^|\/)index.$config{htmlext}$/) {
+			# index.html special case: Delete other file too
+			$key=~s/index.$config{htmlext}$//;
+			$res=$bucket->delete_key($key);
+		}
+		if (! $res) {
+			error(gettext("Failed to delete file from S3: ").
+				$bucket->err.": ".$bucket->errstr."\n");
+		}
+	}
 
-	return $IkiWiki::Plugin::amazon_s3::subs{'IkiWiki::writefile'}->($file);
+	return $IkiWiki::Plugin::amazon_s3::subs{'IkiWiki::prune'}->($file);
 } #}}}
 
 1

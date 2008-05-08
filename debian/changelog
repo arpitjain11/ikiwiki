@@ -1,5 +1,7 @@
 ikiwiki (2.46) UNRELEASED; urgency=low
 
+  * amazon_s3: New plugin, which injects wiki pages into Amazon S3, allowing
+    ikiwiki to be used without a dedicated web server.
   * aggregate: Add support for web-based triggering of aggregation 
     for people stuck on shared hosting without cron. (Sheesh.) Enabled
     via the `aggregate_webtrigger` configuration optiom.
