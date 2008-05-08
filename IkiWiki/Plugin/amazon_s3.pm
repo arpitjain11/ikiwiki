@@ -17,7 +17,7 @@ BEGIN {
 };
 
 sub import { #{{{
-	hook(type => "getopt", id => "aggregate", call => \&getopt);
+	hook(type => "getopt", id => "amazon_s3", call => \&getopt);
 	hook(type => "checkconfig", id => "amazon_s3", call => \&checkconfig);
 } # }}}
 
