@@ -59,3 +59,8 @@ type uploads.
 
 Copy and rename detection is not done, so if you copy or rename a large file,
 it will be re-uploaded, rather than copied.
+
+## deleting a bucket
+
+You can use "ikiwiki -setup my.setup --delete-bucket" to delete anything
+that's in the configured bucket, and remove the bucket.

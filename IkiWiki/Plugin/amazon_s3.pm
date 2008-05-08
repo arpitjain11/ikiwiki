@@ -17,8 +17,27 @@ BEGIN {
 };
 
 sub import { #{{{
+	hook(type => "getopt", id => "aggregate", call => \&getopt);
 	hook(type => "checkconfig", id => "amazon_s3", call => \&checkconfig);
 } # }}}
+
+sub getopt () { #{{{
+        eval q{use Getopt::Long};
+        error($@) if $@;
+        Getopt::Long::Configure('pass_through');
+        GetOptions("delete-bucket" => sub {
+		my $bucket=getbucket();
+		debug(gettext("deleting bucket.."));
+		my $resp = $bucket->list_all or die $bucket->err . ": " . $bucket->errstr;
+		foreach my $key (@{$resp->{keys}}) {
+			debug("\t".$key->{key});
+			$bucket->delete_key($key->{key}) or die $bucket->err . ": " . $bucket->errstr;
+		}
+		$bucket->delete_bucket or die $bucket->err . ": " . $bucket->errstr;
+		debug(gettext("done"));
+		exit(0);
+	});
+} #}}}
 
 sub checkconfig { #{{{
 	foreach my $field (qw{amazon_s3_key_id amazon_s3_key_file
@@ -131,7 +150,6 @@ sub writefile ($$$;$$) { #{{{
 		# TODO: investigate using the new copy operation.
 		#       (It may not be robust enough.)
 		foreach my $key (@keys) {
-			debug("storing $key");
 			my $res;
 			if (! $writer) {
 				$res=$bucket->add_key($key, $content, \%opts);
@@ -169,7 +187,6 @@ sub prune ($) { #{{{
 		my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
 
 		foreach my $key (@keys) {
-			debug("deleting $key");
 			my $res=$bucket->delete_key($key);
 			if (! $res) {
 				error(gettext("Failed to delete file from S3: ").
