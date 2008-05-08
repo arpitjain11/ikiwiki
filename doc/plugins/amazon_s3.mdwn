@@ -1,0 +1,52 @@
+[[template id=plugin name=amazon_s3 author="[[Joey]]"]]
+[[tag type/special-purpose]]
+
+This plugin allows ikiwiki to publish a wiki in the [Amazon Simple Storage
+Service](http://aws.amazon.com/s3) (S3). As pages are rendered, ikiwiki
+will upload them to Amazon S3. The entire wiki contents, aside from the
+ikiwiki CGI, can then be served directly out of Amazon S3.
+
+You'll need the [[cpan Net::Amazon::S3]] and [[cpan File::MimeInfo]] perl
+modules and an Amazon S3 account to use this plugin.
+
+## configuration
+
+This plugin uses the following settings in the setup file:
+
+* `amazon_s3_key_id` - Set to your public access key id.
+* `amazon_s3_key_file` - Set to the name of a file where you have
+  stored your secret access key. The content of this file *must*
+  be kept secret.
+* `amazon_s3_bucket` - The globally unique name of the bucket to use to
+  store the wiki. This determines the URL to your wiki. For example, if you
+  set it to "foo", then the url will be
+  "http://foo.s3.amazonaws.com/wiki/".
+* `amazon_s3_prefix` - A prefix to prepend to each page name.
+  The default is "wiki/". Note that due to S3 limitations (lack of support
+  for uploading a root key), it is not possible to set the prefix to an
+  empty string.
+* `amazon_s3_location` - Optionally, this can be set to control which
+  datacenter to use. For example, set it to "EU" to for Europe.
+
+Note that you should still set `destdir` in the setup file. The files that
+are uploaded to Amazon S3 will still be written to the destdir, too.
+
+Likewise, you will probably want to set the `url` in the setup file.
+The url can use the `foo.s3.amazonaws.com` domain name, or another domain
+name that is a CNAME for it.
+
+## data transfer notes
+
+If you run 'ikiwiki -setup my.setup' to force a rebuild of your wiki, the
+entire thing will be re-uploaded to Amazon S3. This will take time, and
+cost you money, so it should be avoided as much as possible.
+
+If you run 'ikiwiki -setup my.setup -refresh', ikiwiki will only upload the
+modified pages that it refreshes. Faster and cheaper. Still, if you have
+very large pages (for example, a page that inlines hundreds of other pages
+.. or is just very large), the complete page contents will be re-uploaded
+each time it's changed. Amazon S3 does not currently support partial/rsync
+type uploads.
+
+Copy and rename detection is not done, so if you copy or rename a large file,
+it will be re-uploaded, rather than copied.
