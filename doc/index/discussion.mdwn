@@ -73,6 +73,19 @@ I had been using ikiwiki for a while without any problems. Recently, however, I'
 
 I have googled all over the place and I can't find any mention of a similar problem, which makes me think this is a configuration problem on my end and not a bug. It likely has to do with UTF8; I am at a loss about how to fix (or even diagnose) this, though, and I'd appreciate any pointers.
 
+> More information:
+
+* I downgraded to ikiwiki 2.41 and firefox 2.0.11; the problem still appears. I know
+for sure that ikiwiki 2.41 used to work here.
+* I have upgraded to ikiwiki 2.45
+* On a page where characters are mangled, firefox reports that the charset is utf-8.
+
+> I think this leaves the upgrade to perl 5.10 as the last suspect. Unfortunately, I can't
+> easily go back to 5.8. I will probably install my distro again in another partition, but
+> that will take some time.
+> I've been unable to use my wiki for more than a week now, I'd really appreciate it if
+> someone has pointers or suggestions. Should I move this to a bug?
+
 ----
 
 # Installation of selected docs (html)
