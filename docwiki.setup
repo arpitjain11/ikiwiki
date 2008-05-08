@@ -15,8 +15,5 @@ use IkiWiki::Setup::Standard {
 	syslog => 0,
 	userdir => "users",
 	usedirs => 0,
-	add_plugins => [qw{goodstuff version polygen fortune amazon_s3}],
-	amazon_s3_key_id => '08TJMT99S3510QHZEP82',
-	amazon_s3_bucket => 'ikiwiki-test',
-	amazon_s3_key_file => "/home/joey/.hide/aws_secret_access_key",
+	add_plugins => [qw{goodstuff version haiku polygen fortune}],
 }
