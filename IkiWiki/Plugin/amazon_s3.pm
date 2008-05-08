@@ -125,18 +125,20 @@ sub writefile ($$$;$$) { #{{{
 			# read back in the file that the writer emitted
 			$res=$bucket->add_key_filename($key, "$destdir/$file", \%opts);
 		}
-		if ($res && $key=~/(^|\/)index.$config{htmlext}$/) {
+		if ($res && $key=~/(^|.*\/)index.$config{htmlext}$/) {
 			# index.html files are a special case. Since S3 is
 			# not a normal web server, it won't serve up
 			# foo/index.html when foo/ is requested. So the
 			# file has to be stored twice. (This is bad news
 			# when usedirs is enabled!)
-			$key=~s/index.$config{htmlext}$//;
+			# TODO: invesitgate using the new copy operation.
+			#       (It may not be robust enough.)
+			my $base=$1;
 			if (! $writer) {
-				$res=$bucket->add_key($key, $content, \%opts);
+				$res=$bucket->add_key($base, $content, \%opts);
 			}
 			else {
-				$res=$bucket->add_key_filename($key, "$destdir/$file", \%opts);
+				$res=$bucket->add_key_filename($base, "$destdir/$file", \%opts);
 			}
 		}
 		if (! $res) {
@@ -158,10 +160,9 @@ sub prune ($) { #{{{
 		my $key=$config{amazon_s3_prefix}.$1;
 		my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
 		my $res=$bucket->delete_key($key);
-		if ($res && $key=~/(^|\/)index.$config{htmlext}$/) {
+		if ($res && $key=~/(^|.*\/)index.$config{htmlext}$/) {
 			# index.html special case: Delete other file too
-			$key=~s/index.$config{htmlext}$//;
-			$res=$bucket->delete_key($key);
+			$res=$bucket->delete_key($1);
 		}
 		if (! $res) {
 			error(gettext("Failed to delete file from S3: ").
