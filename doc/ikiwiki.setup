@@ -183,4 +183,6 @@ use IkiWiki::Setup::Standard {
 	#amazon_s3_prefix => "wiki/",
 	# Uncomment to use the S3 European datacenter.
 	#amazon_s3_location => "EU",
+	# Uncomment if you need to store each index file twice.
+	#amazon_s3_dupindex => 1,
 }

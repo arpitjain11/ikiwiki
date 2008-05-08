@@ -71,6 +71,29 @@ sub getbucket { #{{{
 } #}}}
 }
 
+# Given a file, return any S3 keys associated with it.
+sub file2keys ($) { #{{{
+	my $file=shift;
+
+	my @keys;
+	if ($file =~ /^\Q$config{destdir}\/\E(.*)/) {
+		push @keys, $config{amazon_s3_prefix}.$1;
+
+		# Munge foo/index.html to foo/
+		if ($keys[0]=~/(^|.*\/)index.$config{htmlext}$/) {
+			# A duplicate might need to be stored under the
+			# unmunged name too.
+			if (!$config{usedirs} || $config{amazon_s3_dupindex}) {
+				push @keys, $1;
+			}
+			else {
+				@keys=($1);
+			}
+		}
+	}
+	return @keys;
+} #}}}
+
 package IkiWiki;
 use File::MimeInfo;
 use Encode;
@@ -85,21 +108,11 @@ sub writefile ($$$;$$) { #{{{
 
 	# First, write the file to disk.
 	my $ret=$IkiWiki::Plugin::amazon_s3::subs{'IkiWiki::writefile'}->($file, $destdir, $content, $binary, $writer);
-
-	# Now, determine if the file was written to the destdir.
-	# writefile might be used for writing files elsewhere.
-	# Also, $destdir might be set to a subdirectory of the destdir.
-	my $key;
-	if ($destdir eq $config{destdir}) {
-		$key=$file;
-	}
-	elsif ("$destdir/$file" =~ /^\Q$config{destdir}\/\E(.*)/) {
-		$key=$1;
-	}
+		
+	my @keys=IkiWiki::Plugin::amazon_s3::file2keys("$destdir/$file");
 
 	# Store the data in S3.
-	if (defined $key) {
-		$key=$config{amazon_s3_prefix}.$key;
+	if (@keys) {
 		my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
 
 		# The http layer tries to downgrade utf-8
@@ -108,42 +121,37 @@ sub writefile ($$$;$$) { #{{{
 		# so force convert it to bytes.
 		$content=encode_utf8($content) if defined $content;
 
-		if (defined $content && ! length $content) {
-			# S3 doesn't allow storing empty files!
-			$content=" ";
-		}
-		
 		my %opts=(
 			acl_short => 'public-read',
 			content_type => mimetype("$destdir/$file"),
 		);
-		my $res;
-		if (! $writer) {
-			$res=$bucket->add_key($key, $content, \%opts);
-		}
-		else {
-			# read back in the file that the writer emitted
-			$res=$bucket->add_key_filename($key, "$destdir/$file", \%opts);
-		}
-		if ($res && $key=~/(^|.*\/)index.$config{htmlext}$/) {
-			# index.html files are a special case. Since S3 is
-			# not a normal web server, it won't serve up
-			# foo/index.html when foo/ is requested. So the
-			# file has to be stored twice. (This is bad news
-			# when usedirs is enabled!)
-			# TODO: invesitgate using the new copy operation.
-			#       (It may not be robust enough.)
-			my $base=$1;
+
+		# If there are multiple keys to write, data is sent
+		# multiple times.
+		# TODO: investigate using the new copy operation.
+		#       (It may not be robust enough.)
+		foreach my $key (@keys) {
+			debug("storing $key");
+			my $res;
 			if (! $writer) {
-				$res=$bucket->add_key($base, $content, \%opts);
+				$res=$bucket->add_key($key, $content, \%opts);
 			}
 			else {
-				$res=$bucket->add_key_filename($base, "$destdir/$file", \%opts);
+				# This test for empty files is a workaround
+				# for this bug:
+				# http://rt.cpan.org//Ticket/Display.html?id=35731
+				if (-z "$destdir/$file") {
+					$res=$bucket->add_key($key, "", \%opts);
+				}
+				else {
+					# read back in the file that the writer emitted
+					$res=$bucket->add_key_filename($key, "$destdir/$file", \%opts);
+				}
 			}
-		}
-		if (! $res) {
-			error(gettext("Failed to save file to S3: ").
-				$bucket->err.": ".$bucket->errstr."\n");
+			if (! $res) {
+				error(gettext("Failed to save file to S3: ").
+					$bucket->err.": ".$bucket->errstr."\n");
+			}
 		}
 	}
 
@@ -154,19 +162,19 @@ sub writefile ($$$;$$) { #{{{
 sub prune ($) { #{{{
 	my $file=shift;
 
-	# If a file in the destdir is being pruned, need to delete it out
-	# of S3 as well.
-	if ($file =~ /^\Q$config{destdir}\/\E(.*)/) {
-		my $key=$config{amazon_s3_prefix}.$1;
+	my @keys=IkiWiki::Plugin::amazon_s3::file2keys($file);
+
+	# Prune files out of S3 too.
+	if (@keys) {
 		my $bucket=IkiWiki::Plugin::amazon_s3::getbucket();
-		my $res=$bucket->delete_key($key);
-		if ($res && $key=~/(^|.*\/)index.$config{htmlext}$/) {
-			# index.html special case: Delete other file too
-			$res=$bucket->delete_key($1);
-		}
-		if (! $res) {
-			error(gettext("Failed to delete file from S3: ").
-				$bucket->err.": ".$bucket->errstr."\n");
+
+		foreach my $key (@keys) {
+			debug("deleting $key");
+			my $res=$bucket->delete_key($key);
+			if (! $res) {
+				error(gettext("Failed to delete file from S3: ").
+					$bucket->err.": ".$bucket->errstr."\n");
+			}
 		}
 	}
 

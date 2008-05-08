@@ -7,3 +7,7 @@ point to `foo/bar/` instead.
 > --[Jason Blevins](http://jblevins.org/)
 
 >> Even with `usedirs`, there is no reason why the `index.html` should be called directly, and it might break content negotiation. Please just direct to the directory. --[[madduck]]
+
+> This bug affects the [[plugins/amazon_s3]] plugin -- when using that
+> plugin plus the search plugin, you need to enable `amazon_s3_dupindex`.
+> So this definitly should be fixed. --[[Joey]]
