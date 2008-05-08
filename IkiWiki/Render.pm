@@ -214,7 +214,7 @@ sub render ($) { #{{{
 			if (link($srcfile, $config{destdir}."/".$file)) {
 				return;
 			}
-			# if hardlink fails, fall back top copying
+			# if hardlink fails, fall back to copying
 		}
 		
 		my $srcfd=readfile($srcfile, 1, 1);

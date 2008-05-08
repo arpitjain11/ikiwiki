@@ -171,4 +171,16 @@ use IkiWiki::Setup::Standard {
 	# For use with the pinger plugin, how many seconds to wait before
 	# timing out.
 	#pinger_timeout => 15.
+	
+	# For use with the amazon S3 plugin, your public access key id.
+	#amazon_s3_key_id => 'XXXXXXXXXXXXXXXXXXXX',
+	# And a file holding your secret key. This file *must* not be
+	# readable by others!
+	#amazon_s3_key_file => "/home/me/.hide/.s3_key
+	# The globally unique name of the bucket to use to store the wiki.
+	#amazon_s3_bucket => "mywiki",
+	# A prefix to prepend to each page name.
+	#amazon_s3_prefix => "wiki/",
+	# Uncomment to use the S3 European datacenter.
+	#amazon_s3_location => "EU",
 }

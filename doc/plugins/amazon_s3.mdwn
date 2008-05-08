@@ -11,6 +11,11 @@ modules and an Amazon S3 account to use this plugin.
 
 ## configuration
 
+Important note: You should seriously consider turning off `usedirs` before
+enabling this plugin. If `usedirs` is enabled, every page has to be stored
+in S3 *twice*, as "page/index.html" and as "page/". That will cost you
+money and bandwidth.
+
 This plugin uses the following settings in the setup file:
 
 * `amazon_s3_key_id` - Set to your public access key id.
@@ -34,6 +39,8 @@ are uploaded to Amazon S3 will still be written to the destdir, too.
 Likewise, you will probably want to set the `url` in the setup file.
 The url can use the `foo.s3.amazonaws.com` domain name, or another domain
 name that is a CNAME for it.
+
+The `hardlink` config file setting is not compatible with this plugin.
 
 ## data transfer notes
 

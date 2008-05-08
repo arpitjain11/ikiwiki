@@ -27,6 +27,7 @@ Text::Typography
 Text::Textile
 Text::WikiFormat
 XML::Feed
+Net::Amazon::S3
 
 =head1 AUTHOR
 
