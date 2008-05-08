@@ -2,6 +2,12 @@
 provider with very cheap pay as you go pricing. Here's how to install ikiwiki
 there if you don't have a dedicated server.
 
+Note that you can also follow these instructions, get your wiki set up on
+NearlyFreeSpeech, and then use the [[plugins/Amazon_S3]] plugin to inject
+the static web pages into Amazon S3. Then NearlyFreeSpeech will handle the
+CGI, and S3 will handle the web serving. This might be a more cost effective,
+scalable, or robust solution than using NearlyFreeSpeech alone.
+
 ## Register for an account and set up a site
 
 After you [get an account](https://www.nearlyfreespeech.net/about/start.php),
