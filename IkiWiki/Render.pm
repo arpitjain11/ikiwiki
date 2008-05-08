@@ -508,8 +508,6 @@ sub refresh () { #{{{
 } #}}}
 
 sub commandline_render () { #{{{
-	loadplugins();
-	checkconfig();
 	lockwiki();
 	loadindex();
 	unlockwiki();

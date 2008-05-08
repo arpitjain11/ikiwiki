@@ -63,11 +63,15 @@ sub setup_standard {
 			$config{$c}=undef;
 		}
 	}
+	
+	loadplugins();
+	checkconfig();
 
 	if ($config{render}) {
 		commandline_render();
 	}
-	elsif (! $config{refresh}) {
+
+	if (! $config{refresh}) {
 		$config{rebuild}=1;
 		debug(gettext("rebuilding wiki.."));
 	}
@@ -75,8 +79,6 @@ sub setup_standard {
 		debug(gettext("refreshing wiki.."));
 	}
 
-	loadplugins();
-	checkconfig();
 	lockwiki();
 	loadindex();
 	refresh();
