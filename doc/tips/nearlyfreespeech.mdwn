@@ -42,7 +42,12 @@ Use `wget` to [[download]] the ikiwiki tarball. Then unpack it:
 
 ## Install perl modules
 
-Use CPAN to install the perl modules it uses into your home directory:
+As an optional step, you can use CPAN to install the perl modules ikiwiki
+uses into your home directory. This should not be necessary, mostly,
+because the system has most modules installed already.
+
+So, you might want to skip this step and come back to it later if ikiwiki
+doesn't work.
 
 	PERL5LIB=`pwd`/ikiwiki:`pwd`/ikiwiki/cpan:`pwd`/lib/perl5 PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
 	
@@ -94,7 +99,7 @@ dollars.
 
 rm -rf ~/ikiwiki*.tar.gz ~/.cpan ~/ikiwiki ~/man ~/lib/perl5/5.8.8
 
-That should cut things down to less than 4 megabytes. If you want to save
+That should cut things down to less than 2 megabytes. If you want to save
 even more space, delete unused perl modules from ~/lib/perl5
 
 ## Enjoy!
