@@ -5,8 +5,8 @@ use Test::More;
 
 my @progs="ikiwiki.in";
 my @libs="IkiWiki.pm";
-# monotone and external skipped since they need a perl modules
-push @libs, map { chomp; $_ } `find IkiWiki -type f -name \\*.pm | grep -v IkiWiki/Rcs/monotone.pm | grep -v IkiWiki/Plugin/external.pm`;
+# monotone, external, amazon_s3 skipped since they need perl modules
+push @libs, map { chomp; $_ } `find IkiWiki -type f -name \\*.pm | grep -v IkiWiki/Rcs/monotone.pm | grep -v IkiWiki/Plugin/external.pm | grep -v IkiWiki/Plugin/amazon_s3.pm`;
 
 plan(tests => (@progs + @libs));
 
