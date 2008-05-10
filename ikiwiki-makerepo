@@ -58,6 +58,7 @@ git)
 	cd "$srcdir"
 	git init
 	echo /.ikiwiki > .gitignore
+	echo /recentchanges >> .gitignore
 	git add .
 	git commit -m "initial commit"
 	git remote add origin "$repository"
