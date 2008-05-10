@@ -1,0 +1,11 @@
+I understand the `IkiWiki::titlepage` function is used to generate filenames from titles. It would be nice if there were an easier way to override what it does. I suppose I could write an *external* plugin and call `inject`, but maybe this could instead be done via the configuration file?
+
+I imagine two things: a lookup hash and a template.
+
+Since `IkiWiki::titlepage` basically translates characters, it would be cool to be able to define a lookup hash in the configuration, which would be consulted before falling back to the generic `__xx__` `ord()` representation of a letter. For instance, in German, I might prefer to have 'Ã¤' become 'ae' instead of something illegible.
+
+Second, maybe a template could be honoured. The template could have a slot `%s` where the calculated title goes, and it could contain `strftime` symbols as well as variables, which get interpolated on use.
+
+-- [[madduck]]
+
+[[wishlist]]
