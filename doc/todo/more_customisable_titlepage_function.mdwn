@@ -2,9 +2,11 @@ I understand the `IkiWiki::titlepage` function is used to generate filenames fro
 
 I imagine two things: a lookup hash and a template.
 
-Since `IkiWiki::titlepage` basically translates characters, it would be cool to be able to define a lookup hash in the configuration, which would be consulted before falling back to the generic `__xx__` `ord()` representation of a letter. For instance, in German, I might prefer to have 'Ã¤' become 'ae' instead of something illegible.
+Since `IkiWiki::titlepage` basically translates characters, it would be cool to be able to define a lookup hash in the configuration, which would be consulted before falling back to the generic `__xx__` `ord()` representation of a letter. For instance, in German, I might prefer to have 'ÃÂ¤' become 'ae' instead of something illegible.
 
 Second, maybe a template could be honoured. The template could have a slot `%s` where the calculated title goes, and it could contain `strftime` symbols as well as variables, which get interpolated on use.
+
+Another option would be a function I could define in the setup file, or an external script, though that would be pretty expensive.
 
 -- [[madduck]]
 
