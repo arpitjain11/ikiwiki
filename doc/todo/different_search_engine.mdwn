@@ -67,7 +67,8 @@ built, every inlined item will get each hook run. And so a naive hook would
 index each of those items, even though none of them have necessarily
 changed. Date stamps are one possibility. Another would be to avoid having
 the hook not do any indexing when `%preprocessing` is set (Ikiwiki.pm would
-need to expose that variable.)
+need to expose that variable.) Another approach would be to use a
+needsbuild hook and only index the pages that are being built.
 
 #### cgi
 
