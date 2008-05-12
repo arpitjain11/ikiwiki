@@ -10,4 +10,22 @@ Another option would be a function I could define in the setup file, or an exter
 
 -- [[madduck]]
 
+I don't think that changing titlepage is a good idea, there are
+compatability problems.
+
+Instead, I think that in the specific case of the blogpost form, there
+should be an interface to allow plugins to do arbitrary transformatiosn of
+the page name.
+
+So, add a hidden field to blogpost.tmpl, something like blogpost=1. Then in
+`editpage`, if blogpost is set, call the blogpost hooks, which are passed
+a page name and return a transformed version.
+
+If the page name is changed by those, then the user's original title might
+need to be preserved via a meta title directive. This could just be
+inserted if any changes are made to the page name. Only problem with this
+is that having the directive appear in the edit box for a new page could
+confuse the user. The title could be passed on in a hidden field, and
+prepended to the page when it's saved..
+
 [[wishlist]]
