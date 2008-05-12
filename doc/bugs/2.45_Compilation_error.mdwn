@@ -40,4 +40,29 @@ I have perl 5.10.0. Ikiwiki 2.44 compiles fine. Compiling 2.45 fails after 'make
 
 >>>>> This is how perl finds IkiWiki.pm here. Note that I've run "make" first.
 
+OK, this is what I'm getting:
+
+    $ perl -Iblib/lib -V
+    @INC:
+    blib/lib
+    /usr/lib/perl5/site_perl/5.10.0
+    /usr/share/perl5/site_perl/5.10.0
+    /usr/lib/perl5/vendor_perl
+    /usr/share/perl5/vendor_perl
+    /usr/share/perl5/vendor_perl
+    /usr/lib/perl5/core_perl
+    /usr/share/perl5/core_perl
+    /usr/lib/perl5/current
+    /usr/lib/perl5/site_perl/current
+
+I ran the following in my current 2.45 source dir, where the `make` already succeded. If you need it, I can post the output
+in the case where `make` fails.
+
+    $ strace perl -Iblib/lib -e 'use IkiWiki' 2>&1 |grep IkiWiki.pm
+    stat64("blib/lib/IkiWiki.pmc", 0xbfa6167c) = -1 ENOENT (No such file or directory)
+    stat64("blib/lib/IkiWiki.pm", {st_mode=S_IFREG|0444, st_size=31901, ...}) = 0
+    open("blib/lib/IkiWiki.pm", O_RDONLY|O_LARGEFILE) = 3
+
+> I need to see it in the case where it's failing. --[[Joey]]
+
 [[done]]
