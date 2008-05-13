@@ -17,15 +17,19 @@ sub htmlize (@) { #{{{
 
 	if (! defined $markdown_sub) {
 		# Markdown is forked and splintered upstream and can be
-		# available in a variety of incompatible forms. Support
-		# them all.
+		# available in a variety of forms. Support them all.
 		no warnings 'once';
 		$blosxom::version="is a proper perl module too much to ask?";
 		use warnings 'all';
 
-		eval q{use Markdown};
-		if (! $@) {
-			$markdown_sub=\&Markdown::Markdown;
+		if (exists $config{multimarkdown} && $config{multimarkdown}) {
+			eval q{use Text::MultiMarkdown};
+			if ($@) {
+				error(gettext("multimarkdown is enabled, but Text::MultiMarkdown is not installed"));
+			}
+			$markdown_sub=sub {
+				Text::MultiMarkdown::markdown(shift, {use_metadata => 0});
+			}
 		}
 		else {
 			eval q{use Text::Markdown};
@@ -38,11 +42,18 @@ sub htmlize (@) { #{{{
 				}
 			}
 			else {
-				do "/usr/bin/markdown" ||
-					error(sprintf(gettext("failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"), $@, $!));
-				$markdown_sub=\&Markdown::Markdown;
+				eval q{use Markdown};
+				if (! $@) {
+					$markdown_sub=\&Markdown::Markdown;
+				}
+				else {
+					do "/usr/bin/markdown" ||
+						error(sprintf(gettext("failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"), $@, $!));
+					$markdown_sub=\&Markdown::Markdown;
+				}
 			}
 		}
+		
 		require Encode;
 	}
 	

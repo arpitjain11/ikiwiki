@@ -133,6 +133,8 @@ use IkiWiki::Setup::Standard {
 	# Attempt to make hardlinks to source files instead of copying them.
 	# Useful if the wiki contains large media files.
 	#hardlink => 1,
+	# Enable use of multimarkdown features in .mdwn files.
+	#multimarkdown => 1,
 
 	# To add plugins, list them here.
 	#add_plugins => [qw{goodstuff search wikitext camelcase

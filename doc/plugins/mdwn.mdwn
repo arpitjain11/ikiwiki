@@ -6,3 +6,15 @@ It uses the [[ikiwiki/markdown]] minimal markup language.
 
 This is the standard markup language used by ikiwiki, although some others
 are also available in other plugins.
+
+There are several implementations of markdown support that can be used by
+this plugin. The [original version of
+markdown](http://daringfireball.net/projects/markdown/) can be used, or the
+[[cpan Text::Markdown]] perl module.
+
+[[cpan Text::Markdown]] also includes a markdown varient called
+[multimarkdown](http://fletcherpenney.net/MultiMarkdown/), which supports
+tables, footnotes, and other new features. Multimarkdown is not enabled by
+default, but can be turned on via the `multimarkdown` option in the setup
+file. Note that multimarkdown's metadata and wikilinks features are
+disabled when it's used with ikiwiki.

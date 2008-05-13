@@ -15,5 +15,6 @@ use IkiWiki::Setup::Standard {
 	syslog => 0,
 	userdir => "users",
 	usedirs => 0,
+	multimarkdown => 1,
 	add_plugins => [qw{goodstuff version haiku polygen fortune}],
 }
