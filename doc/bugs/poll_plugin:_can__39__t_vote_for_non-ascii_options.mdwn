@@ -3,7 +3,5 @@ I don't seem to be able to vote for options that have non-ascii names, using the
 As an example, see http://test.liw.fi/testpoll/index.html: the "red", "green", and "blue" options work fine, but the "ehkÃ¤" one does not.
 --[liw](http://liw.fi/)
 
-> It's not just the poll plugin, editing a page with utf-8 will corrupt it
-> now! I wonder if this is a perl 5.10 change; it was working just fine as
-> recently as May 8th; I upgraded perl on the 9th and it's broken for me
-> now. --[[Joey]]
+> Ok, 4.5 hours of beating my head against a brick wall, and I've fixed this.
+> [[done]] --[[Joey]]

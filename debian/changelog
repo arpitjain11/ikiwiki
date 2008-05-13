@@ -9,6 +9,8 @@ ikiwiki (2.46) UNRELEASED; urgency=low
     wikis that automatically ping one another to stay up to date.
   * Optimised file statting code when scanning for modified pages;
     cut the number of system calls in half. (Still room for improvement.)
+  * Fixes for behavior changes in perl 5.10's CGI that broke utf-8 support
+    in several interesting ways.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 05 May 2008 19:34:51 -0400
 

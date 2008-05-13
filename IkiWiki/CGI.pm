@@ -77,10 +77,13 @@ sub check_canedit ($$$;$) { #{{{
 	return $canedit;
 } #}}}
 
-sub decode_cgi_utf8 ($) { #{{{
-	my $cgi = shift;
-	foreach my $f ($cgi->param) {
-		$cgi->param($f, map { decode_utf8 $_ } $cgi->param($f));
+sub decode_form_utf8 ($) { #{{{
+	my $form = shift;
+	foreach my $f ($form->field) {
+		$form->field(name  => $f,
+		             value => decode_utf8($form->field($f)),
+	                     force => 1,
+		);
 	}
 } #}}}
 
@@ -103,7 +106,6 @@ sub cgi_signin ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
-	decode_cgi_utf8($q);
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -127,10 +129,12 @@ sub cgi_signin ($$) { #{{{
 	$form->field(name => "do", type => "hidden", value => "signin",
 		force => 1);
 	
+	decode_form_utf8($form);
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
 		        buttons => $buttons);
 	});
+	decode_form_utf8($form);
 
 	if ($form->submitted) {
 		$form->validate;
@@ -161,7 +165,6 @@ sub cgi_prefs ($$) { #{{{
 	my $session=shift;
 
 	needsignin($q, $session);
-	decode_cgi_utf8($q);
 	
 	# The session id is stored on the form and checked to
 	# guard against CSRF.
@@ -197,11 +200,13 @@ sub cgi_prefs ($$) { #{{{
 		],
 	);
 	my $buttons=["Save Preferences", "Logout", "Cancel"];
-
+	
+	decode_form_utf8($form);
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
 		        buttons => $buttons);
 	});
+	decode_form_utf8($form);
 	
 	$form->field(name => "do", type => "hidden", value => "prefs",
 		force => 1);
@@ -255,8 +260,6 @@ sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 	
-	decode_cgi_utf8($q);
-	
 	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	eval q{use CGI::FormBuilder};
@@ -276,10 +279,12 @@ sub cgi_editpage ($$) { #{{{
 		wikiname => $config{wikiname},
 	);
 	
+	decode_form_utf8($form);
 	run_hooks(formbuilder_setup => sub {
 		shift->(form => $form, cgi => $q, session => $session,
 			buttons => \@buttons);
 	});
+	decode_form_utf8($form);
 	
 	# This untaint is safe because titlepage removes any problematic
 	# characters.
@@ -366,6 +371,7 @@ sub cgi_editpage ($$) { #{{{
 		}
 
 		my $content=$form->field('editcontent');
+
 		run_hooks(editcontent => sub {
 			$content=shift->(
 				content => $content,
@@ -379,7 +385,7 @@ sub cgi_editpage ($$) { #{{{
 			linkify($page, $page,
 			preprocess($page, $page,
 			filter($page, $page, $content), 0, 1))));
-		
+	
 		if ($new) {
 			delete $pagesources{$page};
 		}
@@ -642,7 +648,9 @@ sub cgi (;$$) { #{{{
 		eval q{use CGI};
 		error($@) if $@;
 	
+		binmode(STDIN);
 		$q=CGI->new;
+		binmode(STDIN, ":utf8");
 	
 		run_hooks(cgi => sub { shift->($q) });
 	}
