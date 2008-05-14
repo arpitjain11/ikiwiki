@@ -65,4 +65,37 @@ in the case where `make` fails.
 
 > I need to see it in the case where it's failing. --[[Joey]]
 
+I finally had some time to look into this again.
+
+I wiped ikiwiki off my system, and then installed version 2.41. I tried installing
+2.46 and get the same error as above, so I'll be using 2.46 below. (BTW, the debian
+page still lists 2.45 as current; I had to fiddle with the download link to get 2.46).
+
+After running `./Makefile.PL` I get:
+
+    $ perl -Iblib/lib -V
+    [bunch of lines snipped]
+      @INC:
+    blib/lib
+    [bunch of paths snipped]
+
+Running the strace:
+
+    $ strace perl -Iblib/lib -e 'use IkiWiki' 2>&1 |grep IkiWiki.pm
+
+I get a bunch of ENOENTs and then at the end:
+
+    stat64("./IkiWiki.pmc", 0xbfa2fe5c)     = -1 ENOENT (No such file or directory)
+    stat64("./IkiWiki.pm", {st_mode=S_IFREG|0644, st_size=31987, ...}) = 0
+    open("./IkiWiki.pm", O_RDONLY|O_LARGEFILE) = 3
+
+After running `make` (and having it fail as described above):
+
+    $ strace perl -Iblib/lib -e 'use IkiWiki' 2>&1 |grep IkiWiki.pm
+    stat64("blib/lib/IkiWiki.pmc", 0xbfd7999c) = -1 ENOENT (No such file or directory)
+    stat64("blib/lib/IkiWiki.pm", {st_mode=S_IFREG|0444, st_size=31901, ...}) = 0
+    open("blib/lib/IkiWiki.pm", O_RDONLY|O_LARGEFILE) = 3
+
+I don't know what is going on, but I'll run any more tests you need me to.
+
 [[done]]
