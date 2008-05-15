@@ -7,6 +7,8 @@ ikiwiki (2.47) UNRELEASED; urgency=low
     a cgi.
   * orphans: As a special case, the toplevel index page is never considered
     an orphaned page.
+  * inline: Display a message if the 'pages' parameter is missing, before
+    it just expanded to nothing.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 13 May 2008 12:30:18 -0400
 

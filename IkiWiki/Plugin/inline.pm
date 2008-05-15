@@ -102,7 +102,7 @@ sub preprocess_inline (@) { #{{{
 	my %params=@_;
 	
 	if (! exists $params{pages}) {
-		return "";
+		return "[[inline ".gettext("missing pages parameter")."]]";
 	}
 	my $raw=yesno($params{raw});
 	my $archive=yesno($params{archive});
