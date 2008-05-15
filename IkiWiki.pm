@@ -103,6 +103,12 @@ sub checkconfig () { #{{{
 		}
 	}
 
+	if (ref $config{ENV} eq 'HASH') {
+		foreach my $val (keys %{$config{ENV}}) {
+			$ENV{$val}=$config{ENV}{$val};
+		}
+	}
+
 	if ($config{w3mmode}) {
 		eval q{use Cwd q{abs_path}};
 		error($@) if $@;

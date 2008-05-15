@@ -11,6 +11,8 @@ ikiwiki (2.47) UNRELEASED; urgency=low
     it just expanded to nothing.
   * git: Skip over signed-off-by and similar lines in commit messages
     when generating recentchanges.
+  * ENV can be used in the setup file to override environment variable
+    setting, such as TZ or PATH.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 13 May 2008 12:30:18 -0400
 

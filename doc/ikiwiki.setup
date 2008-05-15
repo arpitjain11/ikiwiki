@@ -143,6 +143,12 @@ use IkiWiki::Setup::Standard {
 	#disable_plugins => [qw{inline htmlscrubber passwordauth openid}],
 	# To add a directory to the perl search path, use this.
 	#libdir => "/home/me/.ikiwiki/",
+	
+	# To override environment variable settings, you can list values here.
+	#ENV => {
+	#	TZ => "America/New_York",
+	#	PATH => "/home/me/bin:/usr/local/bin:/usr/bin:/bin",
+	#},
 
 	# For use with the tag plugin, make all tags be located under a
 	# base page.
