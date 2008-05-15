@@ -5,6 +5,8 @@ ikiwiki (2.47) UNRELEASED; urgency=low
     hardcode a proper 'use lib' statement anyway. This fixes a gotcha,
     since PERL5LIB won't work once ikiwiki is running via a wrapper or as
     a cgi.
+  * orphans: As a special case, the toplevel index page is never considered
+    an orphaned page.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 13 May 2008 12:30:18 -0400
 
