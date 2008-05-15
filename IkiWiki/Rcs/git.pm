@@ -383,7 +383,10 @@ sub rcs_recentchanges ($) { #{{{
 				diffurl => $diffurl,
 			};
 		}
-		push @messages, { line => $_ } foreach @{$ci->{'comment'}};
+
+		push @messages, { line => $_ } foreach grep {
+			! m/^ *(signed[ \-]off[ \-]by[ :]|acked[ \-]by[ :]|cc[ :])/i
+		}  @{$ci->{'comment'}};
 
 		my ($user, $type) = (q{}, "web");
 
