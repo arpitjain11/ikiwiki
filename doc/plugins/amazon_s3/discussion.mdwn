@@ -7,3 +7,12 @@ I'm stressed to figure out any dynamic hosting I would even use that I'd care wa
 
 Any thoughts/ideas on this?  Any example ikiwiki up on Amazon?
 -- [[harningt]]
+
+> Well, I haven't needed to use S3, so I deleted my test wikis to save
+> money (pennies..).
+> 
+> The main problem is that S3 can't serve http://hostname/. You have to use
+> http://hostname/<wiki>/. This would be a problem in many situations.
+> 
+> Once google has a link to it though, it should be able to index it fine,
+> just like any other web site. --[[Joey]
