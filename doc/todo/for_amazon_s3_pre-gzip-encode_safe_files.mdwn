@@ -1,0 +1,17 @@
+Regarding the [[Amazon_S3_Plugin|plugins/amazon_s3]]:
+
+Amazon S3 doesn't seem to support automatic GZIP encoding content (such as HTML, JavaScript, and CSS) that might be compressed by a full-capability webserver.  (I'll also note that NearlyFreeSpeech.NET doesn't support compressing out-going files on-the-fly).  However, Amazon S3 does support setting some response headers, such as Transfer-Encoding and the like.
+
+One possibility of decreasing bandwidth costs/download sizes would be to GZIP all content on the site and set the necessary header... however there are certain browser compatibility issues to be navigated.
+
+Another side item that would be useful potentially would be to have a config option to create a mapping of files that can be gzipped as an alternate name...
+
+For example:
+
+    gzipped_files => {
+        js => "js.gz"
+    }
+
+Would take all js files and gzip them w/ the altered extension.  *This* could allow for using JavaScript to customize what other JS/CSS code gets loaded in based on browser-detection JS code.
+
+--[[harningt]]
