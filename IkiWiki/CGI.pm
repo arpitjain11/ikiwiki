@@ -621,6 +621,7 @@ sub cgi_getsession ($) { #{{{
 	my $q=shift;
 
 	eval q{use CGI::Session};
+	error($@) if $@;
 	CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
 	
 	my $oldmask=umask(077);
