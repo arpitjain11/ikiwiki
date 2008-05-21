@@ -13,6 +13,9 @@ ikiwiki (2.47) UNRELEASED; urgency=low
     when generating recentchanges.
   * ENV can be used in the setup file to override environment variable
     settings, such as TZ or PATH.
+  * Perls older than 5.10 need to use the old method of decoding utf-8 in CGI
+    values. Neither method will work for all versions of perl, so check
+    version number at runtime.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 13 May 2008 12:30:18 -0400
 

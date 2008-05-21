@@ -77,13 +77,25 @@ sub check_canedit ($$$;$) { #{{{
 	return $canedit;
 } #}}}
 
+sub decode_cgi_utf8 ($) { #{{{
+	# decode_form_utf8 method is needed for 5.10
+	if ($] < 5.01) {
+		my $cgi = shift;
+		foreach my $f ($cgi->param) {
+			$cgi->param($f, map { decode_utf8 $_ } $cgi->param($f));
+		}
+	}
+} #}}}
+
 sub decode_form_utf8 ($) { #{{{
-	my $form = shift;
-	foreach my $f ($form->field) {
-		$form->field(name  => $f,
-		             value => decode_utf8($form->field($f)),
-	                     force => 1,
-		);
+	if ($] >= 5.01) {
+		my $form = shift;
+		foreach my $f ($form->field) {
+			$form->field(name  => $f,
+			             value => decode_utf8($form->field($f)),
+		                     force => 1,
+			);
+		}
 	}
 } #}}}
 
@@ -106,6 +118,7 @@ sub cgi_signin ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
+	decode_cgi_utf8($q);
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
@@ -165,6 +178,7 @@ sub cgi_prefs ($$) { #{{{
 	my $session=shift;
 
 	needsignin($q, $session);
+	decode_cgi_utf8($q);
 	
 	# The session id is stored on the form and checked to
 	# guard against CSRF.
@@ -260,6 +274,8 @@ sub cgi_editpage ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 	
+	decode_cgi_utf8($q);
+
 	my @fields=qw(do rcsinfo subpage from page type editcontent comments);
 	my @buttons=("Save Page", "Preview", "Cancel");
 	eval q{use CGI::FormBuilder};
