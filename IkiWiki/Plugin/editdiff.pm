@@ -25,7 +25,7 @@ sub diff ($$) { #{{{
 
 	print DIFFIN $content;
 	close DIFFIN;
-	my $ret;
+	my $ret='';
 	while (<DIFFOUT>) {
 		if (defined $ret) {
 			$ret.=$_;
