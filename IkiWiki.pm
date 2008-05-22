@@ -1262,6 +1262,7 @@ sub pagespec_translate ($) { #{{{
 		$code=0;
 	}
 
+	no warnings;
 	return eval 'sub { my $page=shift; '.$code.' }';
 } #}}}
 
@@ -1276,7 +1277,7 @@ sub pagespec_match ($$;@) { #{{{
 	}
 
 	my $sub=pagespec_translate($spec);
-	return IkiWiki::FailReason->new('syntax error') if $@;
+	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"") if $@;
 	return $sub->($page, @params);
 } #}}}
 

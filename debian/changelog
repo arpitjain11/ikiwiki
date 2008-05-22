@@ -16,6 +16,8 @@ ikiwiki (2.47) UNRELEASED; urgency=low
   * Perls older than 5.10 need to use the old method of decoding utf-8 in CGI
     values. Neither method will work for all versions of perl, so check
     version number at runtime.
+  * Avoid unsightly warning message when evaling broken pagespecs.
+  * Improve error message when a pagespec fails to parse.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 13 May 2008 12:30:18 -0400
 
