@@ -30,8 +30,9 @@ I'm no html guru so I put the stuff in an iframe, but that doesn't work, since t
 Ikiwiki version: 2.44
 
 plugin configuration:
-        disable_plugins => [qw{htmlscrubber}],
-        add_plugins => [qw{img map rawhtml toggle template prettydate haiku meta}],
+
+	disable_plugins => [qw{htmlscrubber}],
+	add_plugins => [qw{img map rawhtml toggle template prettydate haiku meta}],
 
 best regards  
 ulrik
