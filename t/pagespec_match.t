@@ -71,7 +71,7 @@ ok(! pagespec_match("foo", "no_such_function(foo)"), "foo");
 
 my $ret=pagespec_match("foo", "(invalid");
 ok(! $ret, "syntax error");
-ok($ret eq "syntax error", "error message");
+ok($ret =~ /syntax error/, "error message");
 
 # old style globlists
 ok(pagespec_match("foo", "foo bar"), "simple list");
