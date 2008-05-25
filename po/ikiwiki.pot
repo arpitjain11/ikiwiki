@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-12 20:44-0400\n"
+"POT-Creation-Date: 2008-05-25 14:26-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,58 +16,58 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:127
+#: ../IkiWiki/CGI.pm:140
 msgid "You need to log in first."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:159
+#: ../IkiWiki/CGI.pm:172
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:176 ../IkiWiki/CGI.pm:505
+#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:521
 msgid "Your login session has expired."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:197
+#: ../IkiWiki/CGI.pm:211
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:198
+#: ../IkiWiki/CGI.pm:212
 msgid "Preferences"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:199
+#: ../IkiWiki/CGI.pm:213
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:253
+#: ../IkiWiki/CGI.pm:267
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:311
+#: ../IkiWiki/CGI.pm:327
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:416 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:265 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:166
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:472
+#: ../IkiWiki/CGI.pm:488
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:490 ../IkiWiki/CGI.pm:518 ../IkiWiki/CGI.pm:528
-#: ../IkiWiki/CGI.pm:562 ../IkiWiki/CGI.pm:607
+#: ../IkiWiki/CGI.pm:506 ../IkiWiki/CGI.pm:534 ../IkiWiki/CGI.pm:544
+#: ../IkiWiki/CGI.pm:578 ../IkiWiki/CGI.pm:623
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:699
+#: ../IkiWiki/CGI.pm:716
 msgid "You are banned."
 msgstr ""
 
@@ -241,6 +241,10 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
+#: ../IkiWiki/Plugin/inline.pm:105
+msgid "missing pages parameter"
+msgstr ""
+
 #: ../IkiWiki/Plugin/inline.pm:153
 #, perl-format
 msgid "unknown sort type %s"
@@ -272,7 +276,11 @@ msgstr ""
 msgid "%s is locked by %s and cannot be edited"
 msgstr ""
 
-#: ../IkiWiki/Plugin/mdwn.pm:42
+#: ../IkiWiki/Plugin/mdwn.pm:28
+msgid "multimarkdown is enabled, but Text::MultiMarkdown is not installed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/mdwn.pm:51
 #, perl-format
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
@@ -679,11 +687,11 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:117
+#: ../IkiWiki.pm:123
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:186 ../IkiWiki.pm:187
+#: ../IkiWiki.pm:192 ../IkiWiki.pm:193
 msgid "Error"
 msgstr ""
 
@@ -691,7 +699,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:755
+#: ../IkiWiki.pm:761
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
