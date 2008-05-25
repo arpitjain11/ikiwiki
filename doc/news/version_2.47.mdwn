@@ -1,0 +1,20 @@
+ikiwiki 2.47 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * mdwn: Add a multimarkdown setup file option.
+   * If PERL5LIB is set to the libdir when building ikiwiki, calculate and
+     hardcode a proper 'use lib' statement anyway. This fixes a gotcha,
+     since PERL5LIB won't work once ikiwiki is running via a wrapper or as
+     a cgi.
+   * orphans: As a special case, the toplevel index page is never considered
+     an orphaned page.
+   * inline: Display a message if the 'pages' parameter is missing, before
+     it just expanded to nothing.
+   * git: Skip over signed-off-by and similar lines in commit messages
+     when generating recentchanges.
+   * ENV can be used in the setup file to override environment variable
+     settings, such as TZ or PATH.
+   * Perls older than 5.10 need to use the old method of decoding utf-8 in CGI
+     values. Neither method will work for all versions of perl, so check
+     version number at runtime.
+   * Avoid unsightly warning message when evaling broken pagespecs.
+   * Improve error message when a pagespec fails to parse."""]]

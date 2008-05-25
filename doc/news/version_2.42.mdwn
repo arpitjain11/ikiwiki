@@ -1,8 +1,0 @@
-ikiwiki 2.42 released with [[toggle text="these changes"]]
-[[toggleable text="""
-   * aggregate: Correct a mistake in the code that dummy up a guid for feeds
-     lacking one.
-   * inline: Correct handling of urls relative to baseurl in feeds.
-   * Fix CSRF attacks against the preferences and edit forms. The fix involved
-     embedding the session id in the forms, and not allowing the forms to be
-     submitted if the embedded id does not match the session id. Closes: #[475445](http://bugs.debian.org/475445)"""]]
