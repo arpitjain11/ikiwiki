@@ -4,16 +4,25 @@ namely this line:
 	system("hnb '$params{page}.hnb' 'go root' 'export_html $tmp' > /dev/null");
 
 This could potentially allow execution of artibtary shell code, if the filename
-contains a single quote. Which ikiwiki doesn't allow by default, but I prefer
-to never involve a shell where one is not needed. The otl plugin is a good
-example of how to safely fork a child process without involving the shell.
+contains a single quote.
+
+* Fixed with version 0.02 by usage of `$params{content}` -- XTaran
+
+Which ikiwiki doesn't allow by default, but I prefer to never involve a shell where one is not needed. The otl plugin is a good example of how to safely fork a child process without involving the shell.
+
+* Had a look at that one as example before writing the hnb plugin, but hnb has different input/output characteristics. I would prefer another solution, too, but as long as it works and is secure, I'm fine with the current (fixed :-) ) solution -- [[XTaran]].
 
 Other problems:
 
 * Use of shell mktemp from perl is suboptimal. File::Temp would be better.
+  * Fixed with version 0.02 -- [[XTaran]]
 * The htmlize hook should not operate on the contents of `$params{page}.hnb`.
   The content that needs to be htmlized is passed in to the hook in
   `$params{content}`.
+  * Fixed with version 0.02 -- [[XTaran]]
 
 If these problems are resolved and a copyright statement is added to the file,
+
+* Copyright Statement is in their for about a month. -- [[XTaran]]
+
 I'd be willing to include this plugin in ikiwiki. --[[Joey]]
