@@ -598,7 +598,7 @@ sub htmllink ($$$;@) { #{{{
 					page => pagetitle(lc($link), 1),
 					from => $lpage
 				).
-				"\">?</a>$linktext</span>"
+				"\" rel=\"nofollow\">?</a>$linktext</span>"
 		}
 	}
 	
