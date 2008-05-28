@@ -2,6 +2,10 @@ ikiwiki (2.48) UNRELEASED; urgency=low
 
   * Add rel=nofollow to edit links. This may prevent some spiders from
     pounding on the cgi following edit links.
+  * When calling decode_utf8 on known-problimatic content in aggregate,
+    explicitly pass 0 (FB_DEFAULT) as the second parameter. Apparently perl
+    5.8 needs this to avoid crashing on malformed utf-8, despite its docs
+    saying it is the default.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 28 May 2008 03:07:37 -0400
 
