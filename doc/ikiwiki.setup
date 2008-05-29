@@ -123,6 +123,8 @@ use IkiWiki::Setup::Standard {
 	#usedirs => 0,
 	# Simple spam prevention: require an account-creation password.
 	#account_creation_password => "example",
+	# Cost of generating a password using Authen::Passphrase::BlowfishCrypt
+	#password_cost => 8,
 	# Uncomment to force ikiwiki to run with a particular umask.
 	#umask => 022,
 	# Default settings for the recentchanges page.

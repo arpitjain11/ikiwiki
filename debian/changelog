@@ -6,6 +6,15 @@ ikiwiki (2.48) UNRELEASED; urgency=low
     explicitly pass 0 (FB_DEFAULT) as the second parameter. Apparently perl
     5.8 needs this to avoid crashing on malformed utf-8, despite its docs
     saying it is the default.
+  * passwordauth: If Authen::Passphrase is installed, use it to store
+    password hashes, crypted with Eksblowfish.
+  * Existing cleartext passwords in the userdb will be automatically hashed
+    (if Authen::Passphrase is installed) the next time a user logs in.
+    Or `ikiwiki-transition hashpassword /path/to/srcdir` can be used to force
+    a conversion.
+  * Passwords will no longer be mailed, but instead a password reset link
+    mailed.
+  * The password_cost config setting is provided as a "more security" knob.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 28 May 2008 03:07:37 -0400
 

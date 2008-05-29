@@ -1,3 +1,13 @@
+ikiwiki (2.48) unstable; urgency=low
+
+  If you allowed password based logins to your wiki, those passwords were
+  stored in cleartext in the userdb. To guard against exposing users'
+  passwords, I recommend you install the Authen::Passphrase perl module, and
+  then run `ikiwiki-transition hashpassword /path/to/srcdir` to replace all
+  existing cleartext passwords with strong (blowfish) hashes.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 29 May 2008 14:39:34 -0400
+
 ikiwiki (2.46) unstable; urgency=low
  
   There were some significant template changes in ikiwiki 2.42 (and 1.33.5).
@@ -89,7 +99,7 @@ ikiwiki (2.14) unstable; urgency=low
 
   This version of ikiwiki is more picky about symlinks in the path leading
   to the srcdir, and will refuse to use a srcdir specified by such a path.
-  This  was necessary to avoid some potential exploits, but could potentially
+  This was necessary to avoid some potential exploits, but could potentially
   break (semi-)working wikis. If your wiki has a srcdir path containing a
   symlink, you should change it to use a path that does not.
 

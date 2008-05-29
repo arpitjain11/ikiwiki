@@ -105,7 +105,7 @@ your web server will not run it.
 
 ## suid wrappers
 
-ikiwiki --wrapper is intended to generate a wrapper program that
+`ikiwiki --wrapper` is intended to generate a wrapper program that
 runs ikiwiki to update a given wiki. The wrapper can in turn be made suid,
 for example to be used in a [[post-commit]] hook by people who cannot write
 to the html pages, etc.
@@ -118,9 +118,13 @@ been no problem yet.
 ## shell exploits
 
 ikiwiki does not expose untrusted data to the shell. In fact it doesn't use
-system() at all, and the only use of backticks is on data supplied by the
-wiki admin and untainted filenames. And it runs with taint checks on of
-course..
+`system(3)` at all, and the only use of backticks is on data supplied by the
+wiki admin and untainted filenames. 
+
+Ikiwiki was developed and used for a long time with perl's taint checking
+turned on as a second layer of defense against shell and other exploits. Due
+to a strange [bug](http://bugs.debian.org/411786) in perl, taint checking
+is currently disabled for production builds of ikiwiki.
 
 ## cgi data security
 
@@ -141,11 +145,11 @@ file not be world readable.
 
 ## cgi password security
 
-Login to the wiki involves sending a password in cleartext over the net.
-Cracking the password only allows editing the wiki as that user though.
-If you care, you can use https, I suppose. If you do use https either for
-all of the wiki, or just the cgi access, then consider using the sslcookie
-option.
+Login to the wiki using [[plugins/passwordauth]] involves sending a password
+in cleartext over the net. Cracking the password only allows editing the wiki
+as that user though. If you care, you can use https, I suppose. If you do use
+https either for all of the wiki, or just the cgi access, then consider using
+the sslcookie option. Using [[plugins/openid]] is a potentially better option.
 
 ## XSS holes in CGI output
 
@@ -377,3 +381,19 @@ page to be modified by a logged-in user. ([[cve CVE-2008-0165]])
 These holes were discovered on 10 April 2008 and fixed the same day with
 the release of ikiwiki 2.42. A fix was also backported to Debian etch, as
 version 1.33.5. I recommend upgrading to one of these versions.
+
+## Cleartext passwords
+
+Until version 2.48, ikiwiki stored passwords in cleartext in the `userdb`.
+That risks exposing all users' passwords if the file is somehow exposed. To
+pre-emtively guard against that, current versions of ikiwiki store password
+hashes (using Eksblowfish).
+
+If you use the [[plugins/passwordauth]] plugin, I recommend upgrading to
+ikiwiki 2.48, installing the [[Authen::Passphrase]] perl module, and running
+`ikiwiki-transition hashpassword` to replace all existing cleartext passwords
+with strong blowfish hashes. 
+
+You might also consider changing to [[plugins/openid]], which does not 
+require ikiwiki deal with passwords at all, and does not involve users sending
+passwords in cleartext over the net to log in, either.
