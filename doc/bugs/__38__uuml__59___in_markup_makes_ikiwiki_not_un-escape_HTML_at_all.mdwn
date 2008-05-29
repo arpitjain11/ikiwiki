@@ -1,0 +1,35 @@
+I'm experimenting with using Ikiwiki as a feed aggregator.
+
+The Planet Ubuntu RSS 2.0 feed (<http://planet.ubuntu.com/rss20.xml>) as of today
+has someone whose name contains the character u-with-umlaut. In HTML 4.0, this is
+specified as the character entity uuml. Ikiwiki 2.47 running on Debian etch does
+not seem to understand that entity, and decides not to un-escape any markup in
+the feed. This makes the feed hard to read.
+
+The following is the test input:
+
+    <rss version="2.0">
+    <channel>
+            <title>testfeed</title>
+            <link>http://example.com/</link>
+            <language>en</language>
+            <description>example</description>
+    <item>
+            <title>&uuml;</title>
+            <guid>http://example.com</guid>
+            <link>http://example.com</link>
+            <description>foo</description>
+            <pubDate>Tue, 27 May 2008 22:42:42 +0000</pubDate>
+    </item>
+    </channel>
+    </rss>
+
+When I feed this to ikiwiki, it complains: 
+"processed ok at 2008-05-29 09:44:14 (invalid UTF-8 stripped from feed) (feed entities escaped"
+
+Note also that the test input contains only pure ASCII, no UTF-8 at all.
+
+If I remove the ampersand in the title, ikiwiki has no problem. However, the entity is
+valid HTML, so it would be good for ikiwiki to understand it. At the minimum, stripping
+the offending entity but un-escaping the rest seems like a reasonable thing to do,
+unless that has security implications.
