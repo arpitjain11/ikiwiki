@@ -76,7 +76,7 @@ sub create ($$$) { #{{{
 	will_render($params->{page}, $imglog);
 
 	my $imgurl=urlto($imglink, $params->{destpage});
-	my $logurl=urlto($imglink, $params->{destpage});
+	my $logurl=urlto($imglog, $params->{destpage});
 	
 	if (-e "$config{destdir}/$imglink" ||
 	    gen_image($code, $height, $digest, $params->{page})) {
