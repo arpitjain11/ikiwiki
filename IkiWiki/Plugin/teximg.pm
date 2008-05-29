@@ -119,12 +119,13 @@ sub gen_image ($$$$) { #{{{
 	}
 	else {
 		# store failure log
-		my $log;
+		my $log="";
 		{
-			open(my $f, '<', "$tmp/$digest.log");
-			local $/=undef;
-			$log = <$f>;
-			close($f);
+			if (open(my $f, '<', "$tmp/$digest.log")) {
+				local $/=undef;
+				$log = <$f>;
+				close($f);
+			}
 		}
 		writefile("$digest.log", "$config{destdir}/$imagedir", $log);
 
