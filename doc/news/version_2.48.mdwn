@@ -4,7 +4,7 @@ News for ikiwiki 2.48:
 
    If you allowed password based logins to your wiki, those passwords were
    stored in cleartext in the userdb. To guard against exposing users'
-   passwords, I recommend you install the Authen::Passphrase perl module, and
+   passwords, I recommend you install the [[cpan Authen::Passphrase]] perl module, and
    then run `ikiwiki-transition hashpassword /path/to/srcdir` to replace all
    existing cleartext passwords with strong (blowfish) hashes.
 
