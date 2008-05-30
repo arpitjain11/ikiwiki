@@ -1,14 +1,10 @@
-ikiwiki (2.48) UNRELEASED; urgency=high
+ikikiwiki (2.48) unstable; urgency=high
 
   * Fix security hole that occurred if openid and passwordauth were both
     enabled. passwordauth would allow logging in as a known openid, with an
-    empty password.
+    empty password. Closes: #
   * Add rel=nofollow to edit links. This may prevent some spiders from
     pounding on the cgi following edit links.
-  * When calling decode_utf8 on known-problimatic content in aggregate,
-    explicitly pass 0 (FB_DEFAULT) as the second parameter. Apparently perl
-    5.8 needs this to avoid crashing on malformed utf-8, despite its docs
-    saying it is the default.
   * passwordauth: If Authen::Passphrase is installed, use it to store
     password hashes, crypted with Eksblowfish.
   * `ikiwiki-transiition hashpassword /path/to/srcdir` can be used to
@@ -17,8 +13,9 @@ ikiwiki (2.48) UNRELEASED; urgency=high
   * The password_cost config setting is provided as a "more security" knob.
   * teximg: Fix logurl.
   * teximg: If the log isn't written, avoid ugly error messages.
+  * Updated French translation. Closes: #478530
 
- -- Joey Hess <joeyh@debian.org>  Wed, 28 May 2008 03:07:37 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 30 May 2008 17:36:07 -0400
 
 ikiwiki (2.47) unstable; urgency=low
 
