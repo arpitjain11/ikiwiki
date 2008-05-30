@@ -42,9 +42,9 @@ sub preprocess (@) { #{{{
 	}
 		
 	$haiku=~s/^\s+//mg;
-	$haiku=~s/\n/<br>\n/mg;
+	$haiku=~s/\n/<br \/>\n/mg;
 	
-	return "\n\n<blockquote>$haiku</blockquote>\n\n";
+	return "\n\n<blockquote><p>$haiku</p></blockquote>\n\n";
 } # }}}
 
 1
