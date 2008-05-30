@@ -45,7 +45,7 @@ sub links_to ($$) {
 	my $link=shift;
 	my $content=shift;
 	
-	if ($content =~ m!<a href="[^"]*\Q$link\E[^"]*">!) {
+	if ($content =~ m!<a href="[^"]*\Q$link\E[^"]*"\s*[^>]*>!) {
 		return 1;
 	}
 	else {
