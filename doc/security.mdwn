@@ -397,3 +397,13 @@ with strong blowfish hashes.
 You might also consider changing to [[plugins/openid]], which does not 
 require ikiwiki deal with passwords at all, and does not involve users sending
 passwords in cleartext over the net to log in, either.
+
+## Empty password security hole
+
+This hole allowed ikiwiki to accept logins using empty passwords, to openid
+accounts that didn't use a password. It was introduced in version 1.34, and
+fixed in version 2.48. The [bug](http://bugs.debian.org/483770) was
+discovered on 30 May 2008 and fixed the same day.
+
+I recommend upgrading to 2.48 immediatly if your wiki allows both password
+and openid logins.
