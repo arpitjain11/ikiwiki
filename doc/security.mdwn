@@ -390,7 +390,7 @@ pre-emtively guard against that, current versions of ikiwiki store password
 hashes (using Eksblowfish).
 
 If you use the [[plugins/passwordauth]] plugin, I recommend upgrading to
-ikiwiki 2.48, installing the [[Authen::Passphrase]] perl module, and running
+ikiwiki 2.48, installing the [[cpan Authen::Passphrase]] perl module, and running
 `ikiwiki-transition hashpassword` to replace all existing cleartext passwords
 with strong blowfish hashes. 
 
