@@ -11,7 +11,69 @@ sub import { #{{{
 		call => \&formbuilder_setup);
         hook(type => "formbuilder", id => "passwordauth",
 		call => \&formbuilder);
+	hook(type => "sessioncgi", id => "passwordauth", call => \&sessioncgi);
 } # }}}
+
+# Checks if a string matches a user's password, and returns true or false.
+sub checkpassword ($$;$) { #{{{
+	my $user=shift;
+	my $password=shift;
+	my $field=shift || "password";
+
+	# It's very important that the user not be allowed to log in with
+	# an empty password!
+	if (! length $password) {
+		return 0;
+	}
+
+	my $userinfo=IkiWiki::userinfo_retrieve();
+	if (! length $user || ! defined $userinfo ||
+	    ! exists $userinfo->{$user} || ! ref $userinfo->{$user}) {
+		return 0;
+	}
+
+	my $ret=0;
+	if (exists $userinfo->{$user}->{"crypt".$field}) {
+		eval q{use Authen::Passphrase};
+		error $@ if $@;
+		my $p = Authen::Passphrase->from_crypt($userinfo->{$user}->{"crypt".$field});
+		$ret=$p->match($password);
+	}
+	elsif (exists $userinfo->{$user}->{$field}) {
+		$ret=$password eq $userinfo->{$user}->{$field};
+	}
+
+	if ($ret &&
+	    (exists $userinfo->{$user}->{resettoken} ||
+	     exists $userinfo->{$user}->{cryptresettoken})) {
+		# Clear reset token since the user has successfully logged in.
+		delete $userinfo->{$user}->{resettoken};
+		delete $userinfo->{$user}->{cryptresettoken};
+		IkiWiki::userinfo_store($userinfo);
+	}
+
+	return $ret;
+} #}}}
+
+sub setpassword ($$;$) { #{{{
+	my $user=shift;
+	my $password=shift;
+	my $field=shift || "password";
+
+	eval q{use Authen::Passphrase::BlowfishCrypt};
+	if (! $@) {
+		my $p = Authen::Passphrase::BlowfishCrypt->new(
+			cost => $config{password_cost} || 8,
+			salt_random => 1,
+			passphrase => $password,
+		);
+		IkiWiki::userinfo_set($user, "crypt$field", $p->as_crypt);
+		IkiWiki::userinfo_set($user, $field, "");
+	}
+	else {
+		IkiWiki::userinfo_set($user, $field, $password);
+	}
+} #}}}
 
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
@@ -50,7 +112,7 @@ sub formbuilder_setup (@) { #{{{
 				"Login" => [qw(name password)],
 				"Register" => [],
 				"Create Account" => [qw(name password confirm_password email)],
-				"Mail Password" => [qw(name)],
+				"Reset Password" => [qw(name)],
 			);
 			foreach my $opt (@{$required{$submittype}}) {
 				$form->field(name => $opt, required => 1);
@@ -75,14 +137,13 @@ sub formbuilder_setup (@) { #{{{
 				$form->field(
 					name => "password",
 					validate => sub {
-						length $form->field("name") &&
-						shift eq IkiWiki::userinfo_get($form->field("name"), 'password');
+						checkpassword($form->field("name"), shift);
 					},
 				);
 			}
 			elsif ($submittype eq "Register" ||
 			       $submittype eq "Create Account" ||
-			       $submittype eq "Mail Password") {
+			       $submittype eq "Reset Password") {
 				$form->field(name => "password", validate => 'VALUE');
 			}
 			
@@ -101,7 +162,7 @@ sub formbuilder_setup (@) { #{{{
 				);
 			}
 			elsif ($submittype eq "Login" ||
-			       $submittype eq "Mail Password") {
+			       $submittype eq "Reset Password") {
 				$form->field( 
 					name => "name",
 					validate => sub {
@@ -155,8 +216,8 @@ sub formbuilder (@) { #{{{
 				my $user_name=$form->field('name');
 				if (IkiWiki::userinfo_setall($user_name, {
 				    	'email' => $form->field('email'),
-					'password' => $form->field('password'),
 					'regdate' => time})) {
+					setpassword($user_name, $form->field('password'));
 					$form->field(name => "confirm_password", type => "hidden");
 					$form->field(name => "email", type => "hidden");
 					$form->text(gettext("Account creation successful. Now you can Login."));
@@ -165,17 +226,35 @@ sub formbuilder (@) { #{{{
 					error(gettext("Error creating account."));
 				}
 			}
-			elsif ($form->submitted eq 'Mail Password') {
+			elsif ($form->submitted eq 'Reset Password') {
 				my $user_name=$form->field("name");
+				my $email=IkiWiki::userinfo_get($user_name, "email");
+				if (! length $email) {
+					error(gettext("No email address, so cannot email password reset instructions."));
+				}
+				
+				# Store a token that can be used once
+				# to log the user in. This needs to be hard
+				# to guess. Generating a cgi session id will
+				# make it as hard to guess as any cgi session.
+				eval q{use CGI::Session};
+				error($@) if $@;
+				my $token = CGI::Session->new->id;
+				setpassword($user_name, $token, "resettoken");
+				
 				my $template=template("passwordmail.tmpl");
 				$template->param(
 					user_name => $user_name,
-					user_password => IkiWiki::userinfo_get($user_name, "password"),
+					passwordurl => IkiWiki::cgiurl(
+						'do' => "reset",
+						'name' => $user_name,
+						'token' => $token,
+					),
 					wikiurl => $config{url},
 					wikiname => $config{wikiname},
 					REMOTE_ADDR => $ENV{REMOTE_ADDR},
 				);
-			
+				
 				eval q{use Mail::Sendmail};
 				error($@) if $@;
 				sendmail(
@@ -184,10 +263,10 @@ sub formbuilder (@) { #{{{
 					Subject => "$config{wikiname} information",
 					Message => $template->output,
 				) or error(gettext("Failed to send mail"));
-			
-				$form->text(gettext("Your password has been emailed to you."));
+				
+				$form->text(gettext("You have been mailed password reset instructions."));
 				$form->field(name => "name", required => 0);
-				push @$buttons, "Mail Password";
+				push @$buttons, "Reset Password";
 			}
 			elsif ($form->submitted eq "Register") {
 				@$buttons="Create Account";
@@ -197,19 +276,38 @@ sub formbuilder (@) { #{{{
 			@$buttons="Create Account";
 		}
 		else {
-			push @$buttons, "Register", "Mail Password";
+			push @$buttons, "Register", "Reset Password";
 		}
 	}
 	elsif ($form->title eq "preferences") {
 		if ($form->submitted eq "Save Preferences" && $form->validate) {
 			my $user_name=$form->field('name');
-	                foreach my $field (qw(password)) {
-        	                if (defined $form->field($field) && length $form->field($field)) {
-					IkiWiki::userinfo_set($user_name, $field, $form->field($field)) ||
-						error("failed to set $field");
-	                        }
-	                }
+			if ($form->field("password") && length $form->field("password")) {
+				setpassword($user_name, $form->field('password'));
+			}
 		}
+	}
+} #}}}
+
+sub sessioncgi ($$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	if ($q->param('do') eq 'reset') {
+		my $name=$q->param("name");
+		my $token=$q->param("token");
+
+		if (! defined $name || ! defined $token ||
+		    ! length $name  || ! length $token) {
+			error(gettext("incorrect password reset url"));
+	 	}
+		if (! checkpassword($name, $token, "resettoken")) {
+			error(gettext("password reset denied"));
+		}
+
+		$session->param("name", $name);
+		IkiWiki::cgi_prefs($q, $session);
+		exit;
 	}
 } #}}}
 

@@ -1,5 +1,8 @@
-ikiwiki (2.48) UNRELEASED; urgency=low
+ikiwiki (2.48) UNRELEASED; urgency=high
 
+  * Fix security hole that occurred if openid and passwordauth were both
+    enabled. passwordauth would allow logging in as a known openid, with an
+    empty password.
   * Add rel=nofollow to edit links. This may prevent some spiders from
     pounding on the cgi following edit links.
   * When calling decode_utf8 on known-problimatic content in aggregate,
@@ -8,12 +11,9 @@ ikiwiki (2.48) UNRELEASED; urgency=low
     saying it is the default.
   * passwordauth: If Authen::Passphrase is installed, use it to store
     password hashes, crypted with Eksblowfish.
-  * Existing cleartext passwords in the userdb will be automatically hashed
-    (if Authen::Passphrase is installed) the next time a user logs in.
-    Or `ikiwiki-transition hashpassword /path/to/srcdir` can be used to force
-    a conversion.
-  * Passwords will no longer be mailed, but instead a password reset link
-    mailed.
+  * `ikiwiki-transiition hashpassword /path/to/srcdir` can be used to
+    hash existing plaintext passwords.
+  * Passwords will no longer be mailed, but instead a password reset link.
   * The password_cost config setting is provided as a "more security" knob.
   * teximg: Fix logurl.
   * teximg: If the log isn't written, avoid ugly error messages.

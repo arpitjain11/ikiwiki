@@ -57,6 +57,8 @@ sub indexdb {
 		usage();		
 	}
 
+	# Note: No lockwiki here because ikiwiki already locks it
+	# before calling this.	
 	if (! IkiWiki::oldloadindex()) {
 		die "failed to load index\n";
 	}
@@ -71,11 +73,38 @@ sub indexdb {
 	}
 }
 
+sub hashpassword {
+	$config{wikistatedir}=shift()."/.ikiwiki";
+
+	if (! defined $config{wikistatedir}) {
+		usage();		
+	}
+	
+	eval q{use IkiWiki::UserInfo};
+	eval q{use Authen::Passphrase::BlowfishCrypt};
+	if ($@) {
+		error("ikiwiki-transition hashpassword: failed to load Authen::Passphrase, passwords not hashed");
+	}
+
+	IkiWiki::lockwiki();
+	IkiWiki::loadplugin("passwordauth");
+	my $userinfo = IkiWiki::userinfo_retrieve();
+	foreach my $user (keys %{$userinfo}) {
+		if (ref $userinfo->{$user} &&
+		    exists $userinfo->{$user}->{password} &&
+		    length $userinfo->{$user}->{password} &&
+		    ! exists $userinfo->{$user}->{cryptpassword}) {
+			IkiWiki::Plugin::passwordauth::setpassword($user, $userinfo->{$user}->{password});
+		}
+	}
+}
+
 sub usage {
 	print STDERR "Usage: ikiwiki-transition type ...\n";
 	print STDERR "Currently supported transition subcommands:\n";
 	print STDERR "	prefix_directives file\n";
 	print STDERR "	indexdb srcdir\n";
+	print STDERR "	hashpassword srcdir\n";
 	exit 1;
 }
 
@@ -84,6 +113,9 @@ usage() unless @ARGV;
 my $mode=shift;
 if ($mode eq 'prefix_directives') {
 	prefix_directives(@ARGV);
+}
+if ($mode eq 'hashpassword') {
+	hashpassword(@ARGV);
 }
 elsif ($mode eq 'indexdb') {
 	indexdb(@ARGV);
