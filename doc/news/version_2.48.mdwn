@@ -1,0 +1,24 @@
+News for ikiwiki 2.48:
+
+   If you allowed password based logins to your wiki, those passwords were
+   stored in cleartext in the userdb. To guard against exposing users'
+   passwords, I recommend you install the Authen::Passphrase perl module, and
+   then run `ikiwiki-transition hashpassword /path/to/srcdir` to replace all
+   existing cleartext passwords with strong (blowfish) hashes.
+
+ikiwiki 2.48 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * Fix security hole that occurred if openid and passwordauth were both
+     enabled. passwordauth would allow logging in as a known openid, with an
+     empty password. Closes: #[483770](http://bugs.debian.org/483770)
+   * Add rel=nofollow to edit links. This may prevent some spiders from
+     pounding on the cgi following edit links.
+   * passwordauth: If Authen::Passphrase is installed, use it to store
+     password hashes, crypted with Eksblowfish.
+   * `ikiwiki-transiition hashpassword /path/to/srcdir` can be used to
+     hash existing plaintext passwords.
+   * Passwords will no longer be mailed, but instead a password reset link.
+   * The password\_cost config setting is provided as a "more security" knob.
+   * teximg: Fix logurl.
+   * teximg: If the log isn't written, avoid ugly error messages.
+   * Updated French translation. Closes: #[478530](http://bugs.debian.org/478530)"""]]
