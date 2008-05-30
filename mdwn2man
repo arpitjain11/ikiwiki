@@ -8,6 +8,8 @@ print ".TH $prog $section\n";
 
 while (<>) {
 	s{(\\?)\[\[([^\s\|\]]+)(\|[^\s\]]+)?\]\]}{$1 ? "[[$2]]" : $2}eg;
+	s/\`//g;
+	s/^\./\\./g;
 	if (/^#\s/) {
 		s/^#\s/.SH /;
 		<>; # blank;
@@ -16,7 +18,6 @@ while (<>) {
 	s/-/\\-/g;
 	s/^Warning:.*//g;
 	s/^$/.PP\n/;
-	s/\`//g;
 	s/^\*\s+(.*)/.IP "$1"/;
 	next if $_ eq ".PP\n" && $skippara;
 	if (/^.IP /) {
