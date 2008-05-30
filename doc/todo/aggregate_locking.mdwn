@@ -1,4 +1,4 @@
-The [[plugin/aggregate]] plugin's locking is a suboptimal.
+The [[plugins/aggregate]] plugin's locking is a suboptimal.
 
 There should be no need to lock the wiki while aggregating -- it's annoying
 that long aggregate runs can block edits from happening. However, not
