@@ -2,6 +2,8 @@ ikiwiki (2.49) UNRELEASED; urgency=low
 
   * haiku: Generate valid xhtml.
   * ikiwiki-mass-rebuild: Don't trust $! when setting $)
+  * inline: The optimisation in 2.41 broke nested inlines. Detect those
+    and avoid overoptimising.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 30 May 2008 19:08:54 -0400
 

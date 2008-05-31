@@ -8,3 +8,5 @@ If an inlined page itself contains an inline directive, the nested directive wil
 When rendered, _pets_ [contains](http://www.willthompson.co.uk/tmp/ikiwiki-nested-inline/output/pets/) the content from _pets/dogs_ and _pets/cats_, but not the pages inlined into them.  However, the subpages [correctly](http://www.willthompson.co.uk/tmp/ikiwiki-nested-inline/output/pets/dogs/) [include](http://www.willthompson.co.uk/tmp/ikiwiki-nested-inline/output/pets/cats/) their own children.
 
 This used to work in at least ikiwiki 1.45.  I stepped through `preprocess_inline`, but couldn't see why this wasn't working.
+
+> Broke due to overoptimisation, fixed now. [[done]] --[[Joey]]

@@ -11,6 +11,7 @@ use URI;
 my %knownfeeds;
 my %page_numfeeds;
 my @inline;
+my $nested=0;
 
 sub import { #{{{
 	hook(type => "getopt", id => "inline", call => \&getopt);
@@ -329,7 +330,7 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	return $ret if $raw;
+	return $ret if $raw || $nested;
 	push @inline, $ret;
 	return "<div class=\"inline\" id=\"$#inline\"></div>\n\n";
 } #}}}
@@ -350,11 +351,14 @@ sub get_inline_content ($$) { #{{{
 	my $file=$pagesources{$page};
 	my $type=pagetype($file);
 	if (defined $type) {
-		return htmlize($page, $type,
+		$nested++;
+		my $ret=htmlize($page, $type,
 		       linkify($page, $destpage,
 		       preprocess($page, $destpage,
 		       filter($page, $destpage,
 		       readfile(srcfile($file))))));
+		$nested--;
+		return $ret;
 	}
 	else {
 		return "";
