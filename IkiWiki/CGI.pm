@@ -417,7 +417,7 @@ sub cgi_editpage ($$) { #{{{
 	});
 	my $form = CGI::FormBuilder->new(
 		fields => \@fields,
-		header => 1,
+		header => 0,
 		charset => "utf-8",
 		method => 'POST',
 		validate => {
@@ -600,6 +600,7 @@ sub cgi_editpage ($$) { #{{{
 			$form->title("editing ".pagetitle($page));
 		}
 		
+		printheader($session);
 		print $form->render(submit => \@buttons);
 	}
 	else {
@@ -657,6 +658,7 @@ sub cgi_editpage ($$) { #{{{
 				$form->field(name => "page", type => 'hidden');
 				$form->field(name => "type", type => 'hidden');
 				$form->title("editing $page");
+				printheader($session);
 				print $form->render(submit => \@buttons);
 				return;
 			}
