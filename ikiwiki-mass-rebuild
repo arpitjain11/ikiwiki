@@ -34,6 +34,7 @@ sub processline {
 	if (! $pid) {
 		my ($uuid, $ugid) = (getpwnam($user))[2, 3];
 		my $grouplist=join(" ", $ugid, $ugid, supplemental_groups($user));
+		undef $!;
 		$)=$grouplist;
 		if ($!) {
 			die "failed to set egid $grouplist: $!";
