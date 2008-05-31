@@ -1,7 +1,7 @@
 ikiwiki (2.49) UNRELEASED; urgency=low
 
   * haiku: Generate valid xhtml.
-  * ikiwiki-mass-rebuild: under $! before setting $) to avoid strange errno issue
+  * ikiwiki-mass-rebuild: Don't trust $! when setting $)
 
  -- Joey Hess <joeyh@debian.org>  Fri, 30 May 2008 19:08:54 -0400
 
