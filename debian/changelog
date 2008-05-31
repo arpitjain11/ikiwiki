@@ -1,4 +1,4 @@
-ikiwiki (1.33.6) UNRELEASED; urgency=low
+ikiwiki (1.33.6) stable-security; urgency=low
 
   * Some error messages in recent backported security fixes used gettext,
     but this version of ikiwiki is not localised and display of those error
@@ -6,7 +6,7 @@ ikiwiki (1.33.6) UNRELEASED; urgency=low
   * Fix a problem with cookie setting when httpauth is used. Closes: #479658
     This bug was always present, but was only exposed by the CSRF fixes.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 06 May 2008 13:25:54 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 30 May 2008 23:34:15 -0400
 
 ikiwiki (1.33.5) stable-security; urgency=high
 
