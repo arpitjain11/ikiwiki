@@ -13,6 +13,7 @@ ikiwiki 2.48 released with [[toggle text="these changes"]]
    * Fix security hole that occurred if openid and passwordauth were both
      enabled. passwordauth would allow logging in as a known openid, with an
      empty password. Closes: #[483770](http://bugs.debian.org/483770)
+     (CVE-2008-0169)
    * Add rel=nofollow to edit links. This may prevent some spiders from
      pounding on the cgi following edit links.
    * passwordauth: If Authen::Passphrase is installed, use it to store
