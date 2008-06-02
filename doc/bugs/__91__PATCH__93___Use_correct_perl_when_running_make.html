@@ -1,0 +1,15 @@
+If the Perl used to run Makefile.PL is not first on the PATH, it will not be the one used when make is run.  The patch below fixes this.
+
+<pre>
+--- Makefile.PL.orig    2008-06-02 10:33:41.000000000 -0500
++++ Makefile.PL 2008-06-02 10:34:00.000000000 -0500
+@@ -31,7 +31,7 @@
+        chmod +x ikiwiki.out
+
+ extra_build: ikiwiki.out
+-       perl -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -setup docwiki.setup -refresh
++       $(PERL) -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -setup docwiki.setup -refresh
+        ./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
+        ./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
+        ./mdwn2man ikiwiki-makerepo 1 doc/ikiwiki-makerepo.mdwn > ikiwiki-makerepo.man
+</pre>
