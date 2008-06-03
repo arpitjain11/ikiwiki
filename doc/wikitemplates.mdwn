@@ -21,15 +21,14 @@ located in /usr/share/ikiwiki/templates by default.
 * `inlinepage.tmpl` - Used for adding a page inline in a blog
   page.
 * `archivepage.tmpl` - Used for listing a page in a blog archive page.
-* `estseek.conf` - Not a html template, this is actually a template for
-  a config file for the [[HyperEstraier]] search engine. If you like you
-  can read the [[HyperEstraier]] docs and configure it using this.
 * `blogpost.tmpl` - Used for a form to add a post to a blog (and a rss/atom links)
 * `feedlink.tmpl` - Used to add rss/atom links if blogpost.tmpl is not used.
 * `aggregatepost.tmpl` - Used by the [[plugins/aggregate]] plugin to create
   a page for a post.
 * `searchform.tmpl` - Used by the [[plugins/search]] plugin to add a search
   form to wiki pages.
+* `searchquery.tmpl` - This is an omega template, used by the
+  [[plugins/search]] plugin.
 
 The [[plugins/pagetemplate]] plugin can allow individual pages to use a
 different template than `page.tmpl`.

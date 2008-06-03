@@ -1,12 +1,17 @@
 [[template id=plugin name=search author="[[Joey]]"]]
 [[tag type/useful]]
 
-This plugin is included in ikiwiki, but is not enabled by default. It adds
-full text search to ikiwiki, using the [[HyperEstraier]] engine.
+This plugin adds full text search to ikiwiki, using the
+[xapian](http://xapian.org/) engine and its
+[omega](http://xapian.org/docs/omega/overview.html) frontend.
 
-It's possible to configure HyperEstraier via one of ikiwiki's
-[[templates|wikitemplates]], but for most users, no configuration should be
-needed aside from enabling the plugin.
+Ikiwiki will handle indexing new and changed page contents, using the
+[[cpan Search::Xapian]] perl modules. Note that it indexes page contents
+before they are preprocessed and converted to html, as this tends to
+produce less noisy search results. Also, since it only indexes page
+contents, files copied by the [[rawhtml]] plugin will not be indexed, nor
+will other types of data files.
 
-This plugin has a configuration option. To change the path to estseek.cgi,
-set `--estseek=/path/to/estseek.cgi`
+There is one setting you may need to use in the config file. `omega_cgi` 
+should point to the location of the omega cgi program. The default location
+is `/usr/lib/cgi-bin/omega/omega`.

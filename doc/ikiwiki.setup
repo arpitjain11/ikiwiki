@@ -156,9 +156,9 @@ use IkiWiki::Setup::Standard {
 	# base page.
 	#tagbase => "tag",
 
-	# For use with the search plugin if your estseek.cgi is located
+	# For use with the search plugin if the omega cgi is located
 	# somewhere else.
-	#estseek => "/usr/lib/estraier/estseek.cgi",
+	#omega_cgi => "/usr/lib/cgi-bin/omega/omega",
 
 	# For use with the openid plugin, to give an url to a page users
 	# can use to signup for an OpenID.
