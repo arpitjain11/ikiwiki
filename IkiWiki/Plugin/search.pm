@@ -61,6 +61,7 @@ sub needsbuild ($) { #{{{
 	%toindex = map { pagename($_) => 1 } @{shift()};
 } #}}}
 
+my $scrubber;
 sub filter (@) { #{{{
 	my %params=@_;
 	
@@ -77,10 +78,31 @@ sub filter (@) { #{{{
 			$title=IkiWiki::pagetitle($params{page});
 		}
 
+		# Remove any html from text to be indexed.
+		# TODO: This removes html that is in eg, a markdown pre,
+		# which should not be removed.
+		if (! defined $scrubber) {
+			eval q{use HTML::Scrubber};
+			error($@) if $@;
+			$scrubber=HTML::Scrubber->new(allow => []);
+		}
+		my $toindex=$scrubber->scrub($params{content});
+
+		# Take 512 characters for a sample, then extend it out
+		# if it stopped in the middle of a word.
+		my $size=512;
+		my ($sample)=substr($toindex, 0, $size);
+		my $next=substr($toindex, $size++, 1);
+		while ($next !~ /\s/) {
+			$sample.=$next;
+			$next=substr($toindex, $size++, 1);
+		}
+		$sample=~s/\n/ /g;
+
 		# data used by omega
 		$doc->set_data(
 			"url=".urlto($params{page}, "")."\n".
-			"sample=\n". # TODO
+			"sample=$sample\n".
 			"caption=$title\n".
 			"modtime=$IkiWiki::pagemtime{$params{page}}\n".
 			"size=".length($params{content})."\n"
@@ -91,7 +113,7 @@ sub filter (@) { #{{{
 		$tg->set_document($doc);
 		$tg->index_text($params{page}, 2);
 		$tg->index_text($title, 2);
-		$tg->index_text($params{content}); # TODO html strip; preprocessor too
+		$tg->index_text($toindex);
 
 		my $pageterm=pageterm($params{page});
 		$doc->add_term($pageterm);
