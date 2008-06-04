@@ -58,7 +58,7 @@ sub pagetemplate (@) { #{{{
 
 my %toindex;
 sub needsbuild ($) { #{{{
-	%toindex = map { $_ => 1 } @{shift()};
+	%toindex = map { pagename($_) => 1 } @{shift()};
 } #}}}
 
 sub filter (@) { #{{{
