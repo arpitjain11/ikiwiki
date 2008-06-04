@@ -9,10 +9,7 @@ use IkiWiki 2.00;
 sub import { #{{{
 	hook(type => "checkconfig", id => "search", call => \&checkconfig);
 	hook(type => "pagetemplate", id => "search", call => \&pagetemplate);
-	# run last so other needsbuild hooks can modify the list
-	hook(type => "needsbuild", id => "search", call => \&needsbuild,
-		last => 1);
-	hook(type => "filter", id => "search", call => \&filter);
+	hook(type => "sanitize", id => "search", call => \&index);
 	hook(type => "delete", id => "search", call => \&delete);
 	hook(type => "cgi", id => "search", call => \&cgi);
 } # }}}
@@ -56,73 +53,65 @@ sub pagetemplate (@) { #{{{
 	}
 } #}}}
 
-my %toindex;
-sub needsbuild ($) { #{{{
-	%toindex = map { pagename($_) => 1 } @{shift()};
-} #}}}
-
 my $scrubber;
-sub filter (@) { #{{{
+sub index (@) { #{{{
 	my %params=@_;
 	
-	if ($params{page} eq $params{destpage} && $toindex{$params{page}}) {
-		# index page
-		my $db=xapiandb();
-		my $doc=Search::Xapian::Document->new();
-		my $title;
-		if (exists $pagestate{$params{page}}{meta} &&
-		    exists $pagestate{$params{page}}{meta}{title}) {
-			$title=$pagestate{$params{page}}{meta}{title};
-		}
-		else {
-			$title=IkiWiki::pagetitle($params{page});
-		}
-
-		# Remove any html from text to be indexed.
-		# TODO: This removes html that is in eg, a markdown pre,
-		# which should not be removed, really.
-		if (! defined $scrubber) {
-			eval q{use HTML::Scrubber};
-			if (! $@) {
-				$scrubber=HTML::Scrubber->new(allow => []);
-			}
-		}
-		my $toindex = defined $scrubber ? $scrubber->scrub($params{content}) : $params{content};
-		
-		# Take 512 characters for a sample, then extend it out
-		# if it stopped in the middle of a word.
-		my $size=512;
-		my ($sample)=substr($toindex, 0, $size);
-		if (length($sample) == $size) {
-			my $max=length($toindex);
-			my $next;
-			while ($size < $max &&
-			       ($next=substr($toindex, $size++, 1)) !~ /\s/) {
-				$sample.=$next;
-			}
-		}
-		$sample=~s/\n/ /g;
-		
-		# data used by omega
-		$doc->set_data(
-			"url=".urlto($params{page}, "")."\n".
-			"sample=$sample\n".
-			"caption=$title\n".
-			"modtime=$IkiWiki::pagemtime{$params{page}}\n".
-			"size=".length($params{content})."\n"
-		);
-
-		my $tg = Search::Xapian::TermGenerator->new();
-		$tg->set_stemmer(new Search::Xapian::Stem("english"));
-		$tg->set_document($doc);
-		$tg->index_text($params{page}, 2);
-		$tg->index_text($title, 2);
-		$tg->index_text($toindex);
-
-		my $pageterm=pageterm($params{page});
-		$doc->add_term($pageterm);
-		$db->replace_document_by_term($pageterm, $doc);
+	return $params{content} if %IkiWiki::preprocessing;
+	
+	my $db=xapiandb();
+	my $doc=Search::Xapian::Document->new();
+	my $title;
+	if (exists $pagestate{$params{page}}{meta} &&
+	    exists $pagestate{$params{page}}{meta}{title}) {
+		$title=$pagestate{$params{page}}{meta}{title};
 	}
+	else {
+		$title=IkiWiki::pagetitle($params{page});
+	}
+
+	# Remove any html from text to be indexed.
+	if (! defined $scrubber) {
+		eval q{use HTML::Scrubber};
+		if (! $@) {
+			$scrubber=HTML::Scrubber->new(allow => []);
+		}
+	}
+	my $toindex = defined $scrubber ? $scrubber->scrub($params{content}) : $params{content};
+	
+	# Take 512 characters for a sample, then extend it out
+	# if it stopped in the middle of a word.
+	my $size=512;
+	my ($sample)=substr($toindex, 0, $size);
+	if (length($sample) == $size) {
+		my $max=length($toindex);
+		my $next;
+		while ($size < $max &&
+		       ($next=substr($toindex, $size++, 1)) !~ /\s/) {
+			$sample.=$next;
+		}
+	}
+	$sample=~s/\n/ /g;
+	
+	# data used by omega
+	$doc->set_data(
+		"url=".urlto($params{page}, "")."\n".
+		"sample=$sample\n".
+		"caption=$title\n".
+		"modtime=$IkiWiki::pagemtime{$params{page}}\n".
+		"size=".length($params{content})."\n"
+	);
+
+	my $tg = Search::Xapian::TermGenerator->new();
+	$tg->set_stemmer(new Search::Xapian::Stem("english"));
+	$tg->set_document($doc);
+	$tg->index_text($params{page}, 2);
+	$tg->index_text($title, 2);
+	$tg->index_text($toindex);
+
+	my $pageterm=pageterm($params{page});
+	$doc->add_term($pageterm);
+	$db->replace_document_by_term($pageterm, $doc);
 
 	return $params{content};
 } #}}}

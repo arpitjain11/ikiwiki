@@ -692,7 +692,7 @@ sub linkify ($$$) { #{{{
 	return $content;
 } #}}}
 
-my %preprocessing;
+our %preprocessing;
 our $preprocess_preview=0;
 sub preprocess ($$$;$$) { #{{{
 	my $page=shift; # the page the data comes from
