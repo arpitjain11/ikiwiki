@@ -9,8 +9,11 @@ use IkiWiki 2.00;
 sub import { #{{{
 	hook(type => "checkconfig", id => "search", call => \&checkconfig);
 	hook(type => "pagetemplate", id => "search", call => \&pagetemplate);
+	# run last so other needsbuild hooks can modify the list
+	hook(type => "needsbuild", id => "search", call => \&needsbuild,
+		last => 1);
+	hook(type => "filter", id => "search", call => \&filter);
 	hook(type => "delete", id => "search", call => \&delete);
-	hook(type => "change", id => "search", call => \&change);
 	hook(type => "cgi", id => "search", call => \&cgi);
 } # }}}
 
@@ -53,12 +56,53 @@ sub pagetemplate (@) { #{{{
 	}
 } #}}}
 
-sub delete (@) { #{{{
-	debug(gettext("cleaning xapian search index"));
+my %toindex;
+sub needsbuild ($) { #{{{
+	%toindex = map { $_ => 1 } @{shift()};
 } #}}}
 
-sub change (@) { #{{{
-	debug(gettext("updating xapian search index"));
+sub filter (@) { #{{{
+	my %params=@_;
+	
+	if ($params{page} eq $params{destpage} && $toindex{$params{page}}) {
+		# index page
+		my $db=xapiandb();
+		my $doc=Search::Xapian::Document->new();
+		my $title=$params{page};
+		if (exists $pagestate{$params{page}}{meta} &&
+		    exists $pagestate{$params{page}}{meta}{title}) {
+			$title=$pagestate{$params{page}}{meta}{title};
+		}
+
+		# data used by omega
+		$doc->set_data(
+			"url=".urlto($params{page}, "")."\n".
+			"sample=\n". # TODO
+			"caption=$title\n".
+			"modtime=$IkiWiki::pagemtime{$params{page}}\n".
+			"size=".length($params{content})."\n"
+		);
+
+		my $tg = Search::Xapian::TermGenerator->new();
+		$tg->set_stemmer(new Search::Xapian::Stem("english"));
+		$tg->set_document($doc);
+		$tg->index_text($params{page}, 2);
+		$tg->index_text($title, 2);
+		$tg->index_text($params{content}); # TODO html strip; preprocessor too
+
+		my $pageterm=pageterm($params{page});
+		$doc->add_term($pageterm);
+		$db->replace_document_by_term($pageterm, $doc);
+	}
+
+	return $params{content};
+} #}}}
+
+sub delete (@) { #{{{
+	my $db=xapiandb();
+	foreach my $page (@_) {
+		$db->delete_document_by_term(pageterm($page));
+	}
 } #}}}
 
 sub cgi ($) { #{{{
@@ -71,6 +115,28 @@ sub cgi ($) { #{{{
 		$ENV{CGIURL}=$config{cgiurl},
 		exec($config{omega_cgi}) || error("$config{omega_cgi} failed: $!");
 	}
+} #}}}
+
+sub pageterm ($) { #{{{
+	my $page=shift;
+
+	# TODO: check if > 255 char page names overflow term
+	# length; use sha1 if so?
+	return "P".$page;
+} #}}}
+
+my $db;
+sub xapiandb () { #{{{
+	if (! defined $db) {
+		eval q{
+			use Search::Xapian;
+			use Search::Xapian::WritableDatabase;
+		};
+		error($@) if $@;
+		$db=Search::Xapian::WritableDatabase->new($config{wikistatedir}."/xapian/default",
+			Search::Xapian::DB_CREATE_OR_OPEN());
+	}
+	return $db;
 } #}}}
 
 1
