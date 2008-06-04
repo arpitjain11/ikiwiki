@@ -68,10 +68,13 @@ sub filter (@) { #{{{
 		# index page
 		my $db=xapiandb();
 		my $doc=Search::Xapian::Document->new();
-		my $title=$params{page};
+		my $title;
 		if (exists $pagestate{$params{page}}{meta} &&
 		    exists $pagestate{$params{page}}{meta}{title}) {
 			$title=$pagestate{$params{page}}{meta}{title};
+		}
+		else {
+			$title=IkiWiki::pagetitle($params{page});
 		}
 
 		# data used by omega
