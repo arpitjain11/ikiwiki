@@ -20,18 +20,9 @@ sub checkconfig () { #{{{
 			error(sprintf(gettext("Must specify %s when using the search plugin"), $required));
 		}
 	}
-
+	
 	if (! exists $config{omega_cgi}) {
 		$config{omega_cgi}="/usr/lib/cgi-bin/omega/omega";
-	}
-	
-	if (! -e $config{wikistatedir}."/xapian" || $config{rebuild}) {
-		writefile("omega.conf", $config{wikistatedir}."/xapian",
-			"database_dir .\n".
-			"template_dir ./templates\n");
-		writefile("query", $config{wikistatedir}."/xapian/templates",
-			IkiWiki::misctemplate(gettext("search"),
-				readfile(IkiWiki::template_file("searchquery.tmpl"))));
 	}
 } #}}}
 
@@ -59,6 +50,12 @@ sub index (@) { #{{{
 	my %params=@_;
 	
 	return $params{content} if $IkiWiki::preprocessing{$params{destpage}};
+
+	setupfiles();
+
+	# A unique pageterm is used to identify the document for a page.
+	my $pageterm=pageterm($params{page});
+	return $params{content} unless defined $pageterm;
 	
 	my $db=xapiandb();
 	my $doc=Search::Xapian::Document->new();
@@ -127,8 +124,6 @@ sub index (@) { #{{{
 		$tg->index_text(lc($link), 1, "ZLINK"); # for link:bar
 	}
 
-	# A unique pageterm is used to identify the document for a page.
-	my $pageterm=pageterm($params{page});
 	$doc->add_term($pageterm);
 	$db->replace_document_by_term($pageterm, $doc);
 
@@ -138,7 +133,8 @@ sub index (@) { #{{{
 sub delete (@) { #{{{
 	my $db=xapiandb();
 	foreach my $page (@_) {
-		$db->delete_document_by_term(pageterm(pagename($page)));
+		my $pageterm=pageterm(pagename($page));
+		$db->delete_document_by_term($pageterm) if defined $pageterm;
 	}
 } #}}}
 
@@ -150,6 +146,9 @@ sub cgi ($) { #{{{
 		chdir("$config{wikistatedir}/xapian") || error("chdir: $!");
 		$ENV{OMEGA_CONFIG_FILE}="./omega.conf";
 		$ENV{CGIURL}=$config{cgiurl},
+		IkiWiki::loadindex();
+		$ENV{HELPLINK}=htmllink("", "", "ikiwiki/searching",
+			noimageinline => 1, linktext => "Help");
 		exec($config{omega_cgi}) || error("$config{omega_cgi} failed: $!");
 	}
 } #}}}
@@ -157,9 +156,22 @@ sub cgi ($) { #{{{
 sub pageterm ($) { #{{{
 	my $page=shift;
 
-	# TODO: check if > 255 char page names overflow term
-	# length; use sha1 if so?
-	return "U:".$page;
+	# 240 is the number used by omindex to decide when to hash an
+	# overlong term. This does not use a compatible hash method though.
+	if (length $page > 240) {
+		eval q{use Digest::SHA1};
+		if ($@) {
+			debug("search: ".sprintf(gettext("need Digest::SHA1 to index %s"), $page)) if $@;
+			return undef;
+		}
+
+		# Note no colon, therefore it's guaranteed to not overlap
+		# with a page with the same name as the hash..
+		return "U".lc(Digest::SHA1::sha1_hex($page));
+	}
+	else {
+		return "U:".$page;
+	}
 } #}}}
 
 my $db;
@@ -174,6 +186,17 @@ sub xapiandb () { #{{{
 			Search::Xapian::DB_CREATE_OR_OPEN());
 	}
 	return $db;
+} #}}}
+
+sub setupfiles () { #{{{
+	if (! -e $config{wikistatedir}."/xapian" || $config{rebuild}) {
+		writefile("omega.conf", $config{wikistatedir}."/xapian",
+			"database_dir .\n".
+			"template_dir ./templates\n");
+		writefile("query", $config{wikistatedir}."/xapian/templates",
+			IkiWiki::misctemplate(gettext("search"),
+				readfile(IkiWiki::template_file("searchquery.tmpl"))));
+	}
 } #}}}
 
 1

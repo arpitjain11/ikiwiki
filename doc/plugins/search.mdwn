@@ -3,9 +3,11 @@
 
 This plugin adds full text search to ikiwiki, using the
 [xapian](http://xapian.org/) engine, its
-[omega](http://xapian.org/docs/omega/overview.html) frontend,
-and the [[cpan Search::Xapian]] perl module. (The [[cpan HTML::Scrubber]]
-perl module will also be used, if available.)
+[omega](http://xapian.org/docs/omega/overview.html) frontend, and the
+[[cpan Search::Xapian]], [[cpan Digest::SHA1]], and [[cpan HTML::Scrubber]]
+perl modules.
+
+The [[ikiwiki/searching]] page describes how to write search queries.
 
 Ikiwiki will handle indexing new and changed page contents. Note that since
 it only indexes page contents, files copied by the [[rawhtml]] plugin will
