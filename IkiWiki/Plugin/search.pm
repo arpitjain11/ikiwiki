@@ -62,7 +62,15 @@ sub index (@) { #{{{
 	
 	my $db=xapiandb();
 	my $doc=Search::Xapian::Document->new();
-	my $title=IkiWiki::pagetitle($params{page});
+	my $caption=IkiWiki::pagetitle($params{page});
+	my $title;
+	if (exists $pagestate{$params{page}}{meta} &&
+		exists $pagestate{$params{page}}{meta}{title}) {
+		$title=$pagestate{$params{page}}{meta}{title};
+	}
+	else {
+		$title=$caption;
+	}
 
 	# Remove html from text to be indexed.
 	if (! defined $scrubber) {
@@ -93,11 +101,12 @@ sub index (@) { #{{{
 	$doc->set_data(
 		"url=".urlto($params{page}, "")."\n".
 		"sample=".decode_entities($sample)."\n".
-		"caption=".decode_entities($title)."\n".
+		"caption=".decode_entities($caption)."\n".
 		"modtime=$IkiWiki::pagemtime{$params{page}}\n".
 		"size=".length($params{content})."\n"
 	);
 
+	# Index document and add terms for other metadata.
 	my $tg = Search::Xapian::TermGenerator->new();
 	if (! $stemmer) {
 		my $langcode=$ENV{LANG} || "en";
@@ -110,9 +119,15 @@ sub index (@) { #{{{
 	$tg->set_stemmer($stemmer);
 	$tg->set_document($doc);
 	$tg->index_text($params{page}, 2);
-	$tg->index_text($title, 2);
+	$tg->index_text($caption, 2);
+	$tg->index_text($title, 2) if $title ne $caption;
 	$tg->index_text($toindex);
+	$tg->index_text(lc($title), 1, "ZS"); # for title:foo
+	foreach my $link (@{$links{$params{page}}}) {
+		$tg->index_text(lc($link), 1, "ZLINK"); # for link:bar
+	}
 
+	# A unique pageterm is used to identify the document for a page.
 	my $pageterm=pageterm($params{page});
 	$doc->add_term($pageterm);
 	$db->replace_document_by_term($pageterm, $doc);
