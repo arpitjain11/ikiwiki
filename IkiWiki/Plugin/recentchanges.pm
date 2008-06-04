@@ -42,9 +42,9 @@ sub pagetemplate (@) { #{{{
 
 	# XXX this is here because I've been seeing a strange uninitialized
 	# value in this sub.
-	if (! defined $page) {
+	if (! defined $config{recentchangespage}) {
 		eval q{use Carp};
-		Carp::cluck("undefined page; please report this to Joey");
+		Carp::cluck("undefined recentchangespage; please report this to Joey");
 	}
 
 	if ($config{rcs} && $page ne $config{recentchangespage} &&
