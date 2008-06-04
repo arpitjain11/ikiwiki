@@ -64,6 +64,10 @@ sub setup_standard {
 		}
 	}
 	
+	if (! $config{refresh}) {
+		$config{rebuild}=1;
+	}
+	
 	loadplugins();
 	checkconfig();
 
@@ -72,7 +76,6 @@ sub setup_standard {
 	}
 
 	if (! $config{refresh}) {
-		$config{rebuild}=1;
 		debug(gettext("rebuilding wiki.."));
 	}
 	else {
