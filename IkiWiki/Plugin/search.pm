@@ -92,6 +92,9 @@ sub index (@) { #{{{
 		}
 	}
 	$sample=~s/\n/ /g;
+	# Decode html entities in the sample since omega encodes them.
+	eval q{use HTML::Entities};
+	$sample=decode_entities($sample);
 	
 	# data used by omega
 	$doc->set_data(
