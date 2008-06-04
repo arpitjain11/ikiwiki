@@ -119,7 +119,7 @@ sub index (@) { #{{{
 sub delete (@) { #{{{
 	my $db=xapiandb();
 	foreach my $page (@_) {
-		$db->delete_document_by_term(pageterm($page));
+		$db->delete_document_by_term(pageterm(pagename($page)));
 	}
 } #}}}
 
