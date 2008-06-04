@@ -87,20 +87,21 @@ sub filter (@) { #{{{
 			$scrubber=HTML::Scrubber->new(allow => []);
 		}
 		my $toindex=$scrubber->scrub($params{content});
-
+		
 		# Take 512 characters for a sample, then extend it out
 		# if it stopped in the middle of a word.
 		my $size=512;
 		my ($sample)=substr($toindex, 0, $size);
 		if (length($sample) == $size) {
-			my $next=substr($toindex, $size++, 1);
-			while (defined $next && $next !~ /\s/) {
+			my $max=length($toindex);
+			my $next;
+			while ($size < $max &&
+			       ($next=substr($toindex, $size++, 1)) !~ /\s/) {
 				$sample.=$next;
-				$next=substr($toindex, $size++, 1);
 			}
 		}
 		$sample=~s/\n/ /g;
-
+		
 		# data used by omega
 		$doc->set_data(
 			"url=".urlto($params{page}, "")."\n".
