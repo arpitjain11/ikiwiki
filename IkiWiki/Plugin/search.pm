@@ -92,10 +92,12 @@ sub filter (@) { #{{{
 		# if it stopped in the middle of a word.
 		my $size=512;
 		my ($sample)=substr($toindex, 0, $size);
-		my $next=substr($toindex, $size++, 1);
-		while (defined $next && $next !~ /\s/) {
-			$sample.=$next;
-			$next=substr($toindex, $size++, 1);
+		if (length($sample) == $size) {
+			my $next=substr($toindex, $size++, 1);
+			while (defined $next && $next !~ /\s/) {
+				$sample.=$next;
+				$next=substr($toindex, $size++, 1);
+			}
 		}
 		$sample=~s/\n/ /g;
 
