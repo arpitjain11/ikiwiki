@@ -54,6 +54,7 @@ sub pagetemplate (@) { #{{{
 } #}}}
 
 my $scrubber;
+my $stemmer;
 sub index (@) { #{{{
 	my %params=@_;
 	
@@ -105,7 +106,15 @@ sub index (@) { #{{{
 	);
 
 	my $tg = Search::Xapian::TermGenerator->new();
-	$tg->set_stemmer(new Search::Xapian::Stem("english"));
+	if (! $stemmer) {
+		my $langcode=$ENV{LANG} || "en";
+		$langcode=~s/_.*//;
+		eval { $stemmer=Search::Xapian::Stem->new($langcode) };
+		if ($@) {
+			$stemmer=Search::Xapian::Stem->new("english");
+		}
+	}
+	$tg->set_stemmer($stemmer);
 	$tg->set_document($doc);
 	$tg->index_text($params{page}, 2);
 	$tg->index_text($title, 2);
