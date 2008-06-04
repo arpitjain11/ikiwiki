@@ -149,7 +149,7 @@ sub pageterm ($) { #{{{
 
 	# TODO: check if > 255 char page names overflow term
 	# length; use sha1 if so?
-	return "U".$page;
+	return "U:".$page;
 } #}}}
 
 my $db;
