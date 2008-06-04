@@ -39,6 +39,14 @@ sub pagetemplate (@) { #{{{
 	my %params=@_;
 	my $template=$params{template};
 	my $page=$params{page};
+
+	# XXX this is here because I've been seeing a strange uninitialized
+	# value in this sub.
+	if (! defined $page) {
+		eval q{use Carp};
+		Carp::cluck("undefined page; please report this to Joey");
+	}
+
 	if ($config{rcs} && $page ne $config{recentchangespage} &&
 	    $template->query(name => "recentchangesurl")) {
 		$template->param(recentchangesurl => urlto($config{recentchangespage}, $page));

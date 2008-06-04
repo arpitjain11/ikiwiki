@@ -92,15 +92,14 @@ sub index (@) { #{{{
 		}
 	}
 	$sample=~s/\n/ /g;
-	# Decode html entities in the sample since omega encodes them.
-	eval q{use HTML::Entities};
-	$sample=decode_entities($sample);
 	
 	# data used by omega
+	# Decode html entities in it, since omega re-encodes them.
+	eval q{use HTML::Entities};
 	$doc->set_data(
 		"url=".urlto($params{page}, "")."\n".
-		"sample=$sample\n".
-		"caption=$title\n".
+		"sample=".decode_entities($sample)."\n".
+		"caption=".decode_entities($title)."\n".
 		"modtime=$IkiWiki::pagemtime{$params{page}}\n".
 		"size=".length($params{content})."\n"
 	);
