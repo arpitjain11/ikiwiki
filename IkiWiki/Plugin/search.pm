@@ -93,7 +93,7 @@ sub filter (@) { #{{{
 		my $size=512;
 		my ($sample)=substr($toindex, 0, $size);
 		my $next=substr($toindex, $size++, 1);
-		while ($next !~ /\s/) {
+		while (defined $next && $next !~ /\s/) {
 			$sample.=$next;
 			$next=substr($toindex, $size++, 1);
 		}
