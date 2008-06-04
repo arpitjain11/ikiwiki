@@ -33,9 +33,9 @@ sub processline {
 	defined(my $pid = fork) or die "Can’t fork: $!";
 	if (! $pid) {
 		my ($uuid, $ugid) = (getpwnam($user))[2, 3];
-		my $grouplist=join(" ", $ugid, $ugid, supplemental_groups($user));
+		my $grouplist=join(" ", $ugid, sort {$a <=> $b} $ugid, supplemental_groups($user));
 		if (($)=$grouplist) ne $grouplist) {
-			die "failed to set egid $grouplist: $!";
+			die "failed to set egid $grouplist (got back $))";
 		}
 		$(=$ugid;
 		$<=$uuid;
