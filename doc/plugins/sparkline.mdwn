@@ -20,6 +20,8 @@ to use the plugin, you will need:
 On a Debian system, this can be accomplished by installing these packages:
 `libsparkline-php` `php5-gd` `php5-cli` `libdigest-sha1-perl`
 
+This plugin also uses the [[cpan Digest::SHA1]] perl module.
+
 # examples
 
 	\[[sparkline 1 3 5 -3 10 0 width=40 height=16

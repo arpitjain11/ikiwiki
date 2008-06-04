@@ -16,6 +16,7 @@ perl -MCPAN -e 'install Bundle::IkiWiki::Extras'
 
 =head1 CONTENTS
 
+Digest::SHA1
 Authen::Passphrase
 Search::Xapian
 RPC::XML
