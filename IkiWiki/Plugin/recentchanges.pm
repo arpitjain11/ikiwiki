@@ -40,14 +40,8 @@ sub pagetemplate (@) { #{{{
 	my $template=$params{template};
 	my $page=$params{page};
 
-	# XXX this is here because I've been seeing a strange uninitialized
-	# value in this sub.
-	if (! defined $config{recentchangespage}) {
-		eval q{use Carp};
-		Carp::cluck("undefined recentchangespage; please report this to Joey");
-	}
-
-	if ($config{rcs} && $page ne $config{recentchangespage} &&
+	if (defined $config{recentchangespage} && $config{rcs} &&
+	    $page ne $config{recentchangespage} &&
 	    $template->query(name => "recentchangesurl")) {
 		$template->param(recentchangesurl => urlto($config{recentchangespage}, $page));
 		$template->param(have_actions => 1);
