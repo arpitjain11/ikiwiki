@@ -156,10 +156,6 @@ sub scan ($) { #{{{
 		my $page=pagename($file);
 		will_render($page, htmlpage($page), 1);
 
-		# Always needs to be done, since filters might add links
-		# to the content.
-		$content=filter($page, $page, $content);
-	
 		if ($config{discussion}) {
 			# Discussion links are a special case since they're
 			# not in the text of the page, but on its template.

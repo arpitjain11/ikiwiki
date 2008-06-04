@@ -5,6 +5,11 @@ ikiwiki (2.49) UNRELEASED; urgency=low
   * inline: The optimisation in 2.41 broke nested inlines. Detect those
     and avoid overoptimising.
   * search: Converted to use xapian-omega.
+  * Filter hooks are no longer called during the scan phase. This will
+    prevent wikilinks added by filters from being scanned properly. But
+    no known filter hook does that, and calling filters unncessarily during
+    scan slowed down complex filters such as the one used to update the xapian
+    index.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 30 May 2008 19:08:54 -0400
 
