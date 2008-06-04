@@ -80,13 +80,14 @@ sub filter (@) { #{{{
 
 		# Remove any html from text to be indexed.
 		# TODO: This removes html that is in eg, a markdown pre,
-		# which should not be removed.
+		# which should not be removed, really.
 		if (! defined $scrubber) {
 			eval q{use HTML::Scrubber};
-			error($@) if $@;
-			$scrubber=HTML::Scrubber->new(allow => []);
+			if (! $@) {
+				$scrubber=HTML::Scrubber->new(allow => []);
+			}
 		}
-		my $toindex=$scrubber->scrub($params{content});
+		my $toindex = defined $scrubber ? $scrubber->scrub($params{content}) : $params{content};
 		
 		# Take 512 characters for a sample, then extend it out
 		# if it stopped in the middle of a word.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-30 17:36-0400\n"
+"POT-Creation-Date: 2008-06-04 00:33-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,9 +50,9 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:432 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:265 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:266 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
-#: ../IkiWiki/Render.pm:166
+#: ../IkiWiki/Render.pm:162
 msgid "discussion"
 msgstr ""
 
@@ -237,33 +237,33 @@ msgstr ""
 msgid "failed to determine size of image %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:46
+#: ../IkiWiki/Plugin/inline.pm:47
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:105
+#: ../IkiWiki/Plugin/inline.pm:106
 msgid "missing pages parameter"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:153
+#: ../IkiWiki/Plugin/inline.pm:154
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:224
+#: ../IkiWiki/Plugin/inline.pm:225
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:240
+#: ../IkiWiki/Plugin/inline.pm:241
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:273 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:274 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:500
+#: ../IkiWiki/Plugin/inline.pm:504
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -476,17 +476,13 @@ msgstr ""
 msgid "(Diff truncated)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/search.pm:34
+#: ../IkiWiki/Plugin/search.pm:23
 #, perl-format
 msgid "Must specify %s when using the search plugin"
 msgstr ""
 
-#: ../IkiWiki/Plugin/search.pm:58
-msgid "cleaning hyperestraier search index"
-msgstr ""
-
-#: ../IkiWiki/Plugin/search.pm:64
-msgid "updating hyperestraier search index"
+#: ../IkiWiki/Plugin/search.pm:36
+msgid "search"
 msgstr ""
 
 #: ../IkiWiki/Plugin/shortcut.pm:18
@@ -595,47 +591,47 @@ msgstr ""
 msgid "getctime not implemented"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:283 ../IkiWiki/Render.pm:304
+#: ../IkiWiki/Render.pm:279 ../IkiWiki/Render.pm:300
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:358
+#: ../IkiWiki/Render.pm:354
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:398
+#: ../IkiWiki/Render.pm:394
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:403
+#: ../IkiWiki/Render.pm:399
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:424
+#: ../IkiWiki/Render.pm:420
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:445
+#: ../IkiWiki/Render.pm:441
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:484
+#: ../IkiWiki/Render.pm:480
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:496
+#: ../IkiWiki/Render.pm:492
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:520
+#: ../IkiWiki/Render.pm:516
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
