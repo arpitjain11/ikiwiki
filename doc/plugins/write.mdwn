@@ -211,8 +211,8 @@ want to change the default ("page.tmpl"). Template files are looked for in
 Use this to implement html sanitization or anything else that needs to
 modify the body of a page after it has been fully converted to html.
 
-The function is passed named parameters: "page" and "content", and 
-should return the sanitized content.
+The function is passed named parameters: "page", "destpage", and "content",
+and should return the sanitized content.
 
 ### format
 

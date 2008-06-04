@@ -191,7 +191,7 @@ sub render ($) { #{{{
 		will_render($page, htmlpage($page), 1);
 		return if $type=~/^_/;
 		
-		my $content=htmlize($page, $type,
+		my $content=htmlize($page, $page, $type,
 			linkify($page, $page,
 			preprocess($page, $page,
 			filter($page, $page,
@@ -520,7 +520,7 @@ sub commandline_render () { #{{{
 	$content=filter($page, $page, $content);
 	$content=preprocess($page, $page, $content);
 	$content=linkify($page, $page, $content);
-	$content=htmlize($page, $type, $content);
+	$content=htmlize($page, $page, $type, $content);
 	$pagemtime{$page}=(stat($srcfile))[9];
 
 	print genpage($page, $content);

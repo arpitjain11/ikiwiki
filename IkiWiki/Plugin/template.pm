@@ -48,7 +48,7 @@ sub preprocess (@) { #{{{
 	foreach my $param (keys %params) {
 		if ($template->query(name => $param)) {
 			$template->param($param =>
-				IkiWiki::htmlize($params{page},
+				IkiWiki::htmlize($params{page}, $params{destpage},
 					pagetype($pagesources{$params{page}}),
 					$params{$param}));
 		}

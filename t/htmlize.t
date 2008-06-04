@@ -12,16 +12,16 @@ $config{srcdir}=$config{destdir}="/dev/null";
 IkiWiki::loadplugins();
 IkiWiki::checkconfig();
 
-is(IkiWiki::htmlize("foo", "mdwn", "foo\n\nbar\n"), "<p>foo</p>\n\n<p>bar</p>\n",
+is(IkiWiki::htmlize("foo", "foo", "mdwn", "foo\n\nbar\n"), "<p>foo</p>\n\n<p>bar</p>\n",
 	"basic");
-is(IkiWiki::htmlize("foo", "mdwn", readfile("t/test1.mdwn")),
+is(IkiWiki::htmlize("foo", "foo", "mdwn", readfile("t/test1.mdwn")),
 	Encode::decode_utf8(qq{<p><img src="../images/o.jpg" alt="o" title="&oacute;" />\nóóóóó</p>\n}),
 	"utf8; bug #373203");
-ok(IkiWiki::htmlize("foo", "mdwn", readfile("t/test2.mdwn")),
+ok(IkiWiki::htmlize("foo", "foo", "mdwn", readfile("t/test2.mdwn")),
 	"this file crashes markdown if it's fed in as decoded utf-8");
 
 sub gotcha {
-	my $html=IkiWiki::htmlize("foo", "mdwn", shift);
+	my $html=IkiWiki::htmlize("foo", "foo", "mdwn", shift);
 	return $html =~ /GOTCHA/;
 }
 ok(!gotcha(q{<a href="javascript:alert('GOTCHA')">click me</a>}),
@@ -56,15 +56,15 @@ ok(gotcha(q{<p>javascript:alert('GOTCHA')</p>}),
 	be perverse and assume it is?)");
 ok(gotcha(q{<img src="javascript.png?GOTCHA">}), "not javascript");
 ok(gotcha(q{<a href="javascript.png?GOTCHA">foo</a>}), "not javascript");
-is(IkiWiki::htmlize("foo", "mdwn",
+is(IkiWiki::htmlize("foo", "foo", "mdwn",
 	q{<img alt="foo" src="foo.gif">}),
 	q{<img alt="foo" src="foo.gif">}, "img with alt tag allowed");
-is(IkiWiki::htmlize("foo", "mdwn",
+is(IkiWiki::htmlize("foo", "foo", "mdwn",
 	q{<a href="http://google.com/">}),
 	q{<a href="http://google.com/">}, "absolute url allowed");
-is(IkiWiki::htmlize("foo", "mdwn",
+is(IkiWiki::htmlize("foo", "foo", "mdwn",
 	q{<a href="foo.html">}),
 	q{<a href="foo.html">}, "relative url allowed");
-is(IkiWiki::htmlize("foo", "mdwn",
+is(IkiWiki::htmlize("foo", "foo", "mdwn",
 	q{<span class="foo">bar</span>}),
 	q{<span class="foo">bar</span>}, "class attribute allowed");

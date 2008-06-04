@@ -57,7 +57,7 @@ my $scrubber;
 sub index (@) { #{{{
 	my %params=@_;
 	
-	return $params{content} if %IkiWiki::preprocessing;
+	return $params{content} if $IkiWiki::preprocessing{$params{destpage}};
 	
 	my $db=xapiandb();
 	my $doc=Search::Xapian::Document->new();
@@ -70,7 +70,7 @@ sub index (@) { #{{{
 		$title=IkiWiki::pagetitle($params{page});
 	}
 
-	# Remove any html from text to be indexed.
+	# Remove html from text to be indexed.
 	if (! defined $scrubber) {
 		eval q{use HTML::Scrubber};
 		if (! $@) {

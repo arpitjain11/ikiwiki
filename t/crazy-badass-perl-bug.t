@@ -13,6 +13,6 @@ BEGIN { use_ok("IkiWiki"); }
 %config=IkiWiki::defaultconfig();
 $config{srcdir}=$config{destdir}="/dev/null";
 IkiWiki::loadplugins(); IkiWiki::checkconfig();
-ok(IkiWiki::htmlize("foo", "mdwn", readfile("t/test1.mdwn")));
-ok(IkiWiki::htmlize("foo", "mdwn", readfile("t/test3.mdwn")),
+ok(IkiWiki::htmlize("foo", "foo", "mdwn", readfile("t/test1.mdwn")));
+ok(IkiWiki::htmlize("foo", "foo", "mdwn", readfile("t/test3.mdwn")),
 	"wtf?") for 1..100;

@@ -641,8 +641,9 @@ sub userlink ($) { #{{{
 	}
 } #}}}
 
-sub htmlize ($$$) { #{{{
+sub htmlize ($$$$) { #{{{
 	my $page=shift;
+	my $destpage=shift;
 	my $type=shift;
 	my $content=shift;
 	
@@ -661,6 +662,7 @@ sub htmlize ($$$) { #{{{
 	run_hooks(sanitize => sub {
 		$content=shift->(
 			page => $page,
+			destpage => $destpage,
 			content => $content,
 		);
 	});

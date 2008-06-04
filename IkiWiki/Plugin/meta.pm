@@ -53,7 +53,7 @@ sub htmlize ($$$) { #{{{
 	my $page = shift;
 	my $destpage = shift;
 
-	return IkiWiki::htmlize($page, pagetype($pagesources{$page}),
+	return IkiWiki::htmlize($page, $destpage, pagetype($pagesources{$page}),
 		IkiWiki::linkify($page, $destpage,
 		IkiWiki::preprocess($page, $destpage, shift)));
 }

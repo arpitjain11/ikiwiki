@@ -397,7 +397,7 @@ sub cgi_editpage ($$) { #{{{
 			);
 		});
 		$form->tmpl_param("page_preview",
-			htmlize($page, $type,
+			htmlize($page, $page, $type,
 			linkify($page, $page,
 			preprocess($page, $page,
 			filter($page, $page, $content), 0, 1))));

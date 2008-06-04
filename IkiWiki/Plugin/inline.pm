@@ -352,7 +352,7 @@ sub get_inline_content ($$) { #{{{
 	my $type=pagetype($file);
 	if (defined $type) {
 		$nested++;
-		my $ret=htmlize($page, $type,
+		my $ret=htmlize($page, $destpage, $type,
 		       linkify($page, $destpage,
 		       preprocess($page, $destpage,
 		       filter($page, $destpage,
