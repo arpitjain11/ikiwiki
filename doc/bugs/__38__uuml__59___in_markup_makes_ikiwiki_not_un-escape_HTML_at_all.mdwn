@@ -33,3 +33,6 @@ If I remove the ampersand in the title, ikiwiki has no problem. However, the ent
 valid HTML, so it would be good for ikiwiki to understand it. At the minimum, stripping
 the offending entity but un-escaping the rest seems like a reasonable thing to do,
 unless that has security implications.
+
+> I tested on unstable, and ikiwiki handled that sample rss fine,
+> generating a `ü.html`. --[[Joey]]
