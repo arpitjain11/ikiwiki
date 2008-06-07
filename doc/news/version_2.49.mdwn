@@ -1,0 +1,20 @@
+News for ikiwiki 2.49:
+
+   The search plugin no longer uses hyperestrair. Instead, to use it you
+   will now need to install xapian-omega, and the Search::Xapian,
+   HTML::Scrubber, and Digest::SHA1 perl modules.
+
+ikiwiki 2.49 released with [[toggle text="these changes"]]
+[[toggleable text="""
+   * haiku: Generate valid xhtml.
+   * ikiwiki-mass-rebuild: Don't trust $! when setting $)
+   * inline: The optimisation in 2.41 broke nested inlines. Detect those
+     and avoid overoptimising.
+   * search: Converted to use xapian-omega.
+   * Filter hooks are no longer called during the scan phase. This will
+     prevent wikilinks added by filters from being scanned properly. But
+     no known filter hook does that, so let's not waste time on it.
+   * Pass a destpage parameter to the sanitize hook.
+   * The search interface now allows searching for a page by title
+     ("title:foo"), as well as for pages that contain a given link
+     ("link:bar")."""]]
