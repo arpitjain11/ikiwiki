@@ -2,7 +2,13 @@ ikiwiki (2.49) unstable; urgency=low
 
   The search plugin no longer uses hyperestrair. Instead, to use it you
   will now need to install xapian-omega, and the Search::Xapian,
-  HTML::Scrubber, and Digest::SHA1 perl modules.
+  HTML::Scrubber, and Digest::SHA1 perl modules. Ie,
+  `apt-get install xapian-omega libsearch-xapian-perl libhtml-scrubber-perl libdigest-sha1-perl`
+
+  Also, wikis that use the search plugin will need to be rebuilt,
+  since the search form has changed. This will not be done automatically,
+  but can be done by running `ikiwiki-mass-upgrade` as root, or
+  running `ikiwiki -setup` on individual setup files.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 04 Jun 2008 00:29:28 -0400
 
