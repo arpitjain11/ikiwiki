@@ -17,21 +17,20 @@ sub preprocess (@) { #{{{
 	my ($image) = $_[0] =~ /$config{wiki_file_regexp}/; # untaint
 	my %params=@_;
 
-	if (! exists $imgdefaults{$params{page}}) {
-		$imgdefaults{$params{page}} = {};
+	if (exists $imgdefaults{$params{page}}) {
+		foreach my $key (keys %{$imgdefaults{$params{page}}}) {
+			if (! exists $params{$key}) {
+				$params{$key}=$imgdefaults{$params{page}}->{$key};
+			}
+		}
 	}
-	my $size = $params{size} || $imgdefaults{$params{page}}->{size} || 'full';
-	my $alt = $params{alt} || $imgdefaults{$params{page}}->{alt} || '';
-	my $title = $params{title} || $imgdefaults{$params{page}}->{title} || '';
-	my $caption = $params{caption} || $imgdefaults{$params{page}}->{caption} || '';
+
+	if (! exists $params{size}) {
+		$params{size}='full';
+	}
 
 	if ($image eq 'defaults') {
-		$imgdefaults{$params{page}} = {
-			size => $size,
-			alt => $alt,
-			title => $title,
-			caption => $caption,
-		};
+		$imgdefaults{$params{page}} = \%params;
 		return '';
 	}
 
@@ -52,9 +51,9 @@ sub preprocess (@) { #{{{
 	my $imglink;
 	my $r;
 
-	if ($size ne 'full') {
-		my ($w, $h) = ($size =~ /^(\d+)x(\d+)$/);
-		return "[[img ".sprintf(gettext('bad size "%s"'), $size)."]]"
+	if ($params{size} ne 'full') {
+		my ($w, $h) = ($params{size} =~ /^(\d+)x(\d+)$/);
+		return "[[img ".sprintf(gettext('bad size "%s"'), $params{size})."]]"
 			unless (defined $w && defined $h);
 
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
@@ -106,9 +105,10 @@ sub preprocess (@) { #{{{
 	}
 
 	my $imgtag='<img src="'.$imgurl.
-		'" alt="'.$alt.'" width="'.$im->Get("width").
+		'" alt="'.(exists $params{alt} ? $params{alt} : '').
+		'" width="'.$im->Get("width").
 		'" height="'.$im->Get("height").'"'.
-		(defined $title ? ' title="'.$title.'"' : '').
+		(exists $params{title} ? ' title="'.$params{title}.'"' : '').
 		(exists $params{class} ? ' class="'.$params{class}.'"' : '').
 		(exists $params{id} ? ' id="'.$params{id}.'"' : '').
 		' />';
@@ -126,9 +126,9 @@ sub preprocess (@) { #{{{
 			noimageinline => 1);
 	}
 
-	if (defined $caption) {
+	if (exists $params{caption}) {
 		return '<table class="img">'.
-			'<caption>'.$caption.'</caption>'.
+			'<caption>'.$params{caption}.'</caption>'.
 			'<tr><td>'.$imgtag.'</td></tr>'.
 			'</table>';
 	}
