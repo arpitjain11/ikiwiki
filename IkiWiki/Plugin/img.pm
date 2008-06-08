@@ -23,12 +23,14 @@ sub preprocess (@) { #{{{
 	my $size = $params{size} || $imgdefaults{$params{page}}->{size} || 'full';
 	my $alt = $params{alt} || $imgdefaults{$params{page}}->{alt} || '';
 	my $title = $params{title} || $imgdefaults{$params{page}}->{title} || '';
+	my $caption = $params{caption} || $imgdefaults{$params{page}}->{caption} || '';
 
 	if ($image eq 'defaults') {
 		$imgdefaults{$params{page}} = {
 			size => $size,
 			alt => $alt,
 			title => $title,
+			caption => $caption,
 		};
 		return '';
 	}
@@ -112,16 +114,23 @@ sub preprocess (@) { #{{{
 		' />';
 
 	if (! defined $params{link} || lc($params{link}) eq 'yes') {
-		return  '<a href="'.$fileurl.'">'.$imgtag.'</a>';
+		$imgtag='<a href="'.$fileurl.'">'.$imgtag.'</a>';
 	}
 	elsif ($params{link} =~ /^\w+:\/\//) {
-		return  '<a href="'.$params{link}.'">'.$imgtag.'</a>';
+		$imgtag='<a href="'.$params{link}.'">'.$imgtag.'</a>';
 	}
 	elsif (length bestlink($params{page}, $params{link})) {
 		add_depends($params{page}, $params{link});
-		return htmllink($params{page}, $params{destpage},
+		$imgtag=htmllink($params{page}, $params{destpage},
 			$params{link}, linktext => $imgtag,
 			noimageinline => 1);
+	}
+
+	if (defined $caption) {
+		return '<table class="img">'.
+			'<caption>'.$caption.'</caption>'.
+			'<tr><td>'.$imgtag.'</td></tr>'.
+			'</table>';
 	}
 	else {
 		return $imgtag;

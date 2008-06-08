@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-04 14:36-0400\n"
+"POT-Creation-Date: 2008-06-07 23:12-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr ""
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:37 ../IkiWiki/Setup/Standard.pm:86
+#: ../IkiWiki/Plugin/amazon_s3.pm:37 ../IkiWiki/Setup/Standard.pm:89
 msgid "done"
 msgstr ""
 
@@ -216,23 +216,23 @@ msgstr ""
 msgid "prog not a valid graphviz program"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:55
+#: ../IkiWiki/Plugin/img.pm:57
 #, perl-format
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:65 ../IkiWiki/Plugin/img.pm:69
-#: ../IkiWiki/Plugin/img.pm:86
+#: ../IkiWiki/Plugin/img.pm:67 ../IkiWiki/Plugin/img.pm:71
+#: ../IkiWiki/Plugin/img.pm:88
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:72
+#: ../IkiWiki/Plugin/img.pm:74
 #, perl-format
 msgid "failed to resize: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:103
+#: ../IkiWiki/Plugin/img.pm:105
 #, perl-format
 msgid "failed to determine size of image %s"
 msgstr ""
@@ -463,11 +463,11 @@ msgstr ""
 msgid "at noon on %A"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:82
+#: ../IkiWiki/Plugin/recentchanges.pm:76
 msgid "missing page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:84
+#: ../IkiWiki/Plugin/recentchanges.pm:78
 #, perl-format
 msgid "The page %s does not exist."
 msgstr ""
@@ -481,7 +481,12 @@ msgstr ""
 msgid "Must specify %s when using the search plugin"
 msgstr ""
 
-#: ../IkiWiki/Plugin/search.pm:33
+#: ../IkiWiki/Plugin/search.pm:164
+#, perl-format
+msgid "need Digest::SHA1 to index %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/search.pm:197
 msgid "search"
 msgstr ""
 
@@ -647,11 +652,11 @@ msgstr ""
 msgid "generating wrappers.."
 msgstr ""
 
-#: ../IkiWiki/Setup/Standard.pm:76
+#: ../IkiWiki/Setup/Standard.pm:79
 msgid "rebuilding wiki.."
 msgstr ""
 
-#: ../IkiWiki/Setup/Standard.pm:79
+#: ../IkiWiki/Setup/Standard.pm:82
 msgid "refreshing wiki.."
 msgstr ""
 
