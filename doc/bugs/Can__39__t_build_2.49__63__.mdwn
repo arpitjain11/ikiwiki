@@ -1,0 +1,19 @@
+I'm using ikiwiki on a shell account/hosting site where I can build but have no root privileges. I went to build 2.49 last night, but make fails with the following error:
+
+<pre><code>/home/telemachus/bin/perl -Iblib/lib   ikiwiki.out -libdir . -setup docwiki.setup -refresh
+docwiki.setup: Failed to load plugin IkiWiki::Plugin::inline: Too many arguments for IkiWiki::htmlize at IkiWiki/Plugin/inline.pm line 359, near "))"
+Compilation failed in require at (eval 14) line 2.
+BEGIN failed--compilation aborted at (eval 14) line 2.
+
+BEGIN failed--compilation aborted at (eval 10) line 21.
+
+make: *** [extra_build] Error 255</code></pre>
+
+I looked at that patch of inline.pm, but nothing obvious jumped out at me, and I'm reluctant to tinker with it on my own. Other details that may be useful:
+
+* perl is 5.10.0 (built myself on the account, rather than the system perl)
+* The host system is Debian Etch
+* Kernel is a custom 2.6.16-xen kernel
+* Gcc 4.1.2
+
+Any thoughts or suggestions are appreciated. Thanks.
