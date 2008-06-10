@@ -102,3 +102,19 @@ I don't know what is going on, but I'll run any more tests you need me to.
 > The only further thing I can think to try is `strace -f` the entire failing
 > `make` run (or the ikiwiki command that's failing in it, if you can
 > reproduce the failure at the command line). --[[Joey]]
+
+I have 2.46 installed and I can reproduce the bug reported against 2.49. The command that fails is:
+
+    $ /usr/bin/perl -Iblib/lib   ikiwiki.out -libdir . -setup docwiki.setup -refresh
+    docwiki.setup: Failed to load plugin IkiWiki::Plugin::inline: Too many arguments for IkiWiki::htmlize at IkiWiki/Plugin/inline.pm line 359, near "))"
+    Compilation failed in require at (eval 14) line 2.
+    BEGIN failed--compilation aborted at (eval 14) line 2.
+    BEGIN failed--compilation aborted at (eval 10) line 21.
+
+strace -f produces a 112K file. I don't know enough to be comfortable analyzing it.
+However, lines like:
+
+    stat64("/usr/local/share/perl5/site_perl/5.10.0/IkiWiki.pm", {st_mode=S_IFREG|0444, st_size=31982, ...}) = 0
+
+make me think the make process is not completely independent of a previous
+installation. Joey, should I email you the strace log file?
