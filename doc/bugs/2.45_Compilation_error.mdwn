@@ -97,3 +97,8 @@ After running `make` (and having it fail as described above):
     open("blib/lib/IkiWiki.pm", O_RDONLY|O_LARGEFILE) = 3
 
 I don't know what is going on, but I'll run any more tests you need me to.
+
+> No help.  
+> The only further thing I can think to try is `strace -f` the entire failing
+> `make` run (or the ikiwiki command that's failing in it, if you can
+> reproduce the failure at the command line). --[[Joey]]
