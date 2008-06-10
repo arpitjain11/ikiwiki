@@ -17,3 +17,11 @@ I looked at that patch of inline.pm, but nothing obvious jumped out at me, and I
 * Gcc 4.1.2
 
 Any thoughts or suggestions are appreciated. Thanks.
+
+> See this report: <http://ikiwiki.info/bugs/2.45_Compilation_error/>
+
+> I don't know if this is the same problem you're seeing, but it looks similar.
+> The issue is unresolved AFAICT, but I haven't had a chance to try 2.49 yet.
+
+> The only workaround I've found is to completely remove any previous ikiwiki
+> installation that might be present on the system. --Buo
