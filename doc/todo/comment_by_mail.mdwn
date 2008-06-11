@@ -1,0 +1,14 @@
+I would like to allow comments on ikiwiki pages without CGI.
+I have in mind something like
+
+  * Use a pagetemplate hook  (based on a quick glance at tschwinge's copyright.pm)
+    in a plugin
+  * add a mailto: url to each page matching some pagespec
+  * this mailto url goes to an address identifying the page  (something like
+    user-iki-FE653b@host.fqdn.tld).  
+  * on the mail receiving end, these messages are either deleted, or ran through
+    a filter to be turned into blog posts.
+  * the same plugin can check for comments on a particular page next time the wiki 
+    is generated, and add a link.
+
+Any comments? Write them here or send them to [[DavidBremner]]
