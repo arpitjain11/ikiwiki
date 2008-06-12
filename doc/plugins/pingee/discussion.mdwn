@@ -1,3 +1,9 @@
 I see that this code performs an RCS update to collect updates.  Is there anything in this that would help propagate modifications to the other machine... or would this require a reciprocal pingee setup on the other end?
 
 -- [[harningt]]
+
+> The pingee won't push any pending updates it has back to the pinger, no.
+> But often the pinger is the origin of the rcs checkout on the pingee, and
+> if so, ikiwiki defaults to automatically pushing updates to the origin
+> when they are made. Or you can set up a reciprocal pingee/pinger setup as
+> described. --[[Joey]]
