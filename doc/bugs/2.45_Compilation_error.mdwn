@@ -152,7 +152,9 @@ installation. Joey, should I email you the strace log file?
 > look for it when `perl -Iblib/lib -e 'use IkiWiki'` is straced.
 > 
 > The only differences between the two calls to perl seem to be:
-> * One runs `perl`, and the other `/usr/bin/perl` -- are these really the same program?
+> * One runs `perl`, and the other `/usr/bin/perl` -- are these really
+>   the same program? Does `perl -lblib/lib ikiwiki.out -libdir . -setup docwiki.setup -refresh`
+>   fail the same way as the `/usr/bin/perl` variant?
 > * The `-libdir .`, which causes ikiwiki to modify `@INC`, adding "." to 
 >   the front of it.
 > 
