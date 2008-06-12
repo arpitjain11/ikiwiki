@@ -121,3 +121,41 @@ installation. Joey, should I email you the strace log file?
 
 > Email it (joey@ikiwiki.info), or post it to a website somewhere.
 > --[[Joey]]
+
+> The relevant part of the file is:
+
+	execve("/usr/bin/perl", ["/usr/bin/perl", "-Iblib/lib", "ikiwiki.out", "-libdir", ".", "-setup", "docwiki.setup", "-refresh"], [/* 55 vars */]) = 0
+	[...]
+	stat64("blib/lib/5.10.0/i686-linux-thread-multi", 0xbfa72240) = -1 ENOENT (No such file or directory)
+	stat64("blib/lib/5.10.0", 0xbfa72240)   = -1 ENOENT (No such file or directory)
+	stat64("blib/lib/i686-linux-thread-multi", 0xbfa72240) = -1 ENOENT (No such file or directory)
+	[...]
+	stat64("/usr/local/share/perl5/site_perl/5.10.0/IkiWiki.pmc", 0xbfa71e5c) = -1 ENOENT (No such file or directory)
+	stat64("/usr/local/share/perl5/site_perl/5.10.0/IkiWiki.pm", {st_mode=S_IFREG|0444, st_size=31982, ...}) = 0
+	open("/usr/local/share/perl5/site_perl/5.10.0/IkiWiki.pm", O_RDONLY|O_LARGEFILE) = 4
+
+> So it doesn't look for IkiWiki.pm in blib at all. But it clearly has been asked to look in blib, since it
+> looks for the 3 directories in it. When I run the same thing locally, I get:
+
+	execve("/usr/bin/perl", ["/usr/bin/perl", "-Iblib/lib", "ikiwiki.out", "-libdir", ".", "-setup", "docwiki.setup", "-refresh"], [/* 55 vars */]) = 0
+	[...]
+	stat64("blib/lib/5.10.0/i486-linux-gnu-thread-multi", 0xbf84f320) = -1 ENOENT (No such file or directory)
+	stat64("blib/lib/5.10.0", 0xbf84f320) = -1 ENOENT (No such file or directory)
+	stat64("blib/lib/i486-linux-gnu-thread-multi", 0xbf84f320) = -1 ENOENT (No such file or directory)
+	[...]
+	stat64("blib/lib/IkiWiki.pmc", 0xbf84ef4c) = -1 ENOENT (No such file or directory)
+	stat64("blib/lib/IkiWiki.pm", {st_mode=S_IFREG|0444, st_size=32204, ...}) = 0
+	open("blib/lib/IkiWiki.pm", O_RDONLY|O_LARGEFILE) = 6
+
+> The thing I really don't understand is why, on the system where perl fails
+> to look in blib when straced as above, we've already established it *does*
+> look for it when `perl -Iblib/lib -e 'use IkiWiki'` is straced.
+> 
+> The only differences between the two calls to perl seem to be:
+> * One runs `perl`, and the other `/usr/bin/perl` -- are these really the same program?
+> * The `-libdir .`, which causes ikiwiki to modify `@INC`, adding "." to 
+>   the front of it.
+> 
+> I'm entirely at a loss as to why I cannot reproduce this with the same
+> versions of perl and ikiwiki as the two people who reported it. There must
+> be something unusual about your systems that we have not figured out yet. --[[Joey]]
