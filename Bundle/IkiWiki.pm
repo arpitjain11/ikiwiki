@@ -20,7 +20,7 @@ XML::Simple
 Text::Markdown
 Date::Parse
 HTML::Template
-HTNL::Scrubber
+HTML::Scrubber
 CGI
 CGI::FormBuilder
 CGI::Session
