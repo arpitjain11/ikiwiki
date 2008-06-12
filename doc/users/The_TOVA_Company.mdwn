@@ -2,9 +2,13 @@ We're a small medical software and hardware company. We're based in LA, but all 
 
 We're looking for the following "standard" wiki features for some of our git-disabled users:
 
-- Attachments (including renaming/moving/deleting)
+- [[Attachments|todo/fileupload]] (including renaming/moving/deleting)
 - Page renaming/moving/deleting
+  > There is an (old) [[patch|todo/Moving_pages]] for this, still needing
+  > significant cleanups and improvements to be rcs-agnostic, etc. --[[Joey]]
 - inter-wiki links (specifically for having to-do lists for people across multiple wikis)
+  > Something more than the shortcut plugin? Maybe you should spell out 
+  > exactly what you want in a [[todo]] item. --[[Joey]]
 - Some cleanups on other plugins:
    - Add the ability to use the meta title to the map plugin.
-
+     > Patch [[exists|plugins/map/discussion]], just needs some cleanup. --[[Joey]]
