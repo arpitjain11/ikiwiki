@@ -35,4 +35,15 @@ reported in [[index/discussion#index11h1]].
 > to a bug, so I current have no plans to bring the old behavior back.
 > --[[Joey]]
 
+>> I agree that the grammar should be unambiguous. It seems to me that the
+>> problem with spaces-in-wikilinks is caused by overloading the wikilink
+>> and preprocessor syntax to use the same symbols. If they didn't (and is
+>> there much advantage in them using the same symbols? I know in some
+>> cases you have something which is a wikilink and a preprocessor directive,
+>> but how often?) there'd be no problem with spaces.
+>> 
+>> If there was ever a future, syntax-breaking major release of ikiwiki
+>> (similar to python3000) I'd like to see this fixed as part of that.
+>> --[[JonDowland]]
+
 [[done]]
