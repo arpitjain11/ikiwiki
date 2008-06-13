@@ -16,3 +16,13 @@ I've installed all needed packages for new search engine and added path
 to `omega` binary in my `ikiwiki.setup` file.
 
 Any ideas how to fix that problem? --[[Paweł|ptecza]]
+
+> Well, it's two separate problems. Xapian is crashing in the C code when
+> asked to create a stemmer for `pl`. This is a Xapain bug, but I've put 
+> in a workaround.
+> 
+> For the first problem, looks like I need a more robust grouplist comparor
+> -- fixed in git.
+>
+> [[done]]
+> --[[Joey]]

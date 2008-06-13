@@ -15,6 +15,23 @@ sub supplemental_groups {
 	return @list;
 }
 
+sub samelists {
+	my %a=map { $_ => 1 } split(' ', shift());
+	my %b=map { $_ => 1 } split(' ', shift());
+
+	foreach my $i (keys %b) {
+		if (! exists $a{$i}) {
+			return 0;
+		}
+	}
+	foreach my $i (keys %a) {
+		if (! exists $b{$i}) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
 sub processline {
 	my $user=shift;
 	my $setup=shift;
@@ -34,7 +51,7 @@ sub processline {
 	if (! $pid) {
 		my ($uuid, $ugid) = (getpwnam($user))[2, 3];
 		my $grouplist=join(" ", $ugid, sort {$a <=> $b} $ugid, supplemental_groups($user));
-		if (($)=$grouplist) ne $grouplist) {
+		if (! samelists(($)=$grouplist), $grouplist)) {
 			die "failed to set egid $grouplist (got back $))";
 		}
 		$(=$ugid;

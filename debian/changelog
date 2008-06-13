@@ -3,6 +3,9 @@ ikiwiki (2.50) UNRELEASED; urgency=low
   * img: Support captions.
   * img: Don't generate empty title attributes, etc.
   * img: Allow setting defaults for class and id too.
+  * ikiwiki-mass-rebuild: Make group list comparison more robust.
+  * search: Work around xapian bug #486138 by only stemming locales
+    in a whitelist.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 07 Jun 2008 23:04:00 -0400
 

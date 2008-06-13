@@ -108,8 +108,14 @@ sub index (@) { #{{{
 	if (! $stemmer) {
 		my $langcode=$ENV{LANG} || "en";
 		$langcode=~s/_.*//;
-		eval { $stemmer=Search::Xapian::Stem->new($langcode) };
-		if ($@) {
+
+		# This whitelist is here to work around a xapian bug (#486138)
+		my @whitelist=qw{da de en es fi fr hu it no pt ru ro sv tr};
+
+		if (grep { $_ eq $langcode } @whitelist) {
+			$stemmer=Search::Xapian::Stem->new($langcode);
+		}
+		else {
 			$stemmer=Search::Xapian::Stem->new("english");
 		}
 	}
