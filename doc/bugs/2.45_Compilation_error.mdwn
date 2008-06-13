@@ -174,8 +174,18 @@ command line, the command succeeds. In other words, if I run
 
 then it works perfectly.
 
+> Well, that's just weird, because `libdir` is handled by code in IkiWiki.pm.
+> So I don't see how setting it could affect its searching for IkiWiki.pm at all,
+> actually. It could only affect its searching for files loaded later. Anyway,
+> can I get a strace of it succeeding this way?
+> 
+> Also, can you show me the first 15 lines of your `ikiwiki.out`? It's occurred to me
+> you might have an unusual `use lib` line in it.
+
 By the way, I'm running Arch linux. The perl build script is a bit long, but I
 see they install a patch to modify @INC: <http://repos.archlinux.org/viewvc.cgi/perl/repos/core-i686/perl-5.10.0-archlinux-inc-order.patch?revision=1&view=markup>
 
 Would you suggest I try rebuilding perl without this patch? Debian has a huge perl patch (102K!);
 it's not straightforward for me to see if they do something similar to Arch.
+
+> I think Debian has a similar patch.
