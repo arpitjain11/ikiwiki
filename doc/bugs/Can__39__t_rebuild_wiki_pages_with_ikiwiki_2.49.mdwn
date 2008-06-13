@@ -34,3 +34,9 @@ Any ideas how to fix that problem? --[[Paweł|ptecza]]
 >> Also I can't see how to change number of hits per page...
 >>
 >> --[[Paweł|ptecza]]
+
+>>> Xapian indexes more quickly, and with the perl interface I was able to
+>>> make updates for changes pages quite efficient. My experience with 
+>>> Hyper Estraier has not been good, with its database often breaking, and
+>>> it sometimes crashing. Xapian also does a ranked search, and supports
+>>> searching for specific metadata like "title:foo". --[[Joey]]
