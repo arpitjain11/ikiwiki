@@ -1,0 +1,18 @@
+I've just upgraded ikiwiki from version 1.45 to 1.49, using my own Ubuntu Gutsy
+backport. Now I can't rebuild all my wiki pages. Both methods of rebuilding pages fail:
+
+    $ sudo ikiwiki-mass-rebuild 
+    Processing /home/ptecza/path/to/ikiwiki.setup as user ptecza ...
+    failed to set egid 1000 4 20 24 25 29 30 44 46 104 109 110 119 1000 (got back 1000 1000 119 110 109 104 46 44 30 29 25 24 20 4) at /usr/sbin/ikiwiki-mass-rebuild line 38, <$list> line 13.
+    Processing /home/ptecza/path/to/ikiwiki.setup as user ptecza failed with code 65280
+
+    $ ikiwiki --setup ikiwiki.setup
+    pomyślnie utworzono /var/www/path/to/ikiwiki.cgi
+    pomyślnie utworzono /home/ptecza/path/to/hooks/post-commit.ikiwiki
+    terminate called after throwing an instance of 'Xapian::InvalidArgumentError'
+    Aborted
+
+I've installed all needed packages for new search engine and added path
+to `omega` binary in my `ikiwiki.setup` file.
+
+Any ideas how to fix that problem? --[[Paweł|ptecza]]
