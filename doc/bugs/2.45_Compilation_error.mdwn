@@ -161,3 +161,21 @@ installation. Joey, should I email you the strace log file?
 > I'm entirely at a loss as to why I cannot reproduce this with the same
 > versions of perl and ikiwiki as the two people who reported it. There must
 > be something unusual about your systems that we have not figured out yet. --[[Joey]]
+
+Joey, thanks for your time and effort looking into this.
+
+I checked with `which`: `perl` is indeed `/usr/bin/perl`. The commands fail similarly when
+calling `perl` and `/usr/bin/perl`.
+
+However, you might be into something with your `libdir` idea. If I remove it from the
+command line, the command succeeds. In other words, if I run
+
+    perl -Iblib/lib   ikiwiki.out -setup docwiki.setup -refresh
+
+then it works perfectly.
+
+By the way, I'm running Arch linux. The perl build script is a bit long, but I
+see they install a patch to modify @INC: <http://repos.archlinux.org/viewvc.cgi/perl/repos/core-i686/perl-5.10.0-archlinux-inc-order.patch?revision=1&view=markup>
+
+Would you suggest I try rebuilding perl without this patch? Debian has a huge perl patch (102K!);
+it's not straightforward for me to see if they do something similar to Arch.
