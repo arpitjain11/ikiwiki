@@ -547,7 +547,7 @@ sub urlto ($$) { #{{{
 	my $from=shift;
 
 	if (! length $to) {
-		return beautify_url(baseurl($from));
+		return beautify_url(baseurl($from)."index.$config{htmlext}");
 	}
 
 	if (! $destsources{$to}) {
