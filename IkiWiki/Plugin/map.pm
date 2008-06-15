@@ -58,8 +58,9 @@ sub preprocess (@) { #{{{
 		$common_prefix=IkiWiki::dirname($common_prefix);
 	}
 
-	# Needs to update whenever a page is added or removed, so
-	# register a dependency.
+	# Needs to update whenever a page is added or removed (or in some
+	# cases, when its content changes, if show=title), so register a
+	# dependency.
 	add_depends($params{page}, $params{pages});
 	# Explicitly add all currently shown pages, to detect when pages
 	# are removed.
