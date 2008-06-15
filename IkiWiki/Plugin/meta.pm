@@ -78,6 +78,11 @@ sub preprocess (@) { #{{{
 	# Metadata collection that needs to happen during the scan pass.
 	if ($key eq 'title') {
 		$pagestate{$page}{meta}{title}=HTML::Entities::encode_numeric($value);
+		# fallthrough
+	}
+	elsif ($key eq 'description') {
+		$pagestate{$page}{meta}{description}=HTML::Entities::encode_numeric($value);
+		# fallthrough
 	}
 	elsif ($key eq 'license') {
 		push @{$metaheaders{$page}}, '<link rel="license" href="#page_license" />';
