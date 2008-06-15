@@ -1,0 +1,22 @@
+Remember gopher? Ikiwiki can be served up by this venerable protocol.
+
+It's pretty simple to get it going. Just install pygopherd or another gopher
+server, and have ikiwiki put its pages where that server expects. For
+pygopherd, it was in `/var/gopher`.
+
+When building the wiki, make sure to specify --no-usedirs (or equivilant in
+the setup file). Gopher doesn't convert "foo/" links into
+"foo/index.html", so usedirs won't work well with it; if usedirs is
+disabled, browsing through the wiki via gopher will work just fine.
+
+Since AFAIK gopher has no equivilant to CGI, you'll need to keep a
+web server around for editing pages. If you do set up a cgi, make sure to
+configure `url` to something like `gopher://hostname/h/`, so that it
+links back properly to gopherspace from the CGI.
+
+One unresolved problem: Style sheets are not loaded. The urls seem ok, but
+pygopherd seems to serve them in a form that doesn't work somehow. I have
+not invesitaged more, because a fully unstyled web page fits the retro
+gopher better anyhow.
+
+--[[Joey]]
