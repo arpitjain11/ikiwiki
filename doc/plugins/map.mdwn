@@ -8,6 +8,11 @@ This plugin generates a hierarchical page map for the wiki. Example usage:
 If the pages to include are not specified, all pages (and other files) in
 the wiki are mapped.
 
+By default, the names of pages are shown in the map. The `show` parameter
+can be used to show the titles of pages instead. For example:
+	
+	\[[map pages="* and !blog/* and !*/Discussion" show=title]]
+
 Hint: To limit the map to displaying pages less than a certain level deep,
 use a [[ikiwiki/PageSpec]] like this: `pages="* and !*/*/*"`
 

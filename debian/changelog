@@ -2,6 +2,9 @@ ikiwiki (2.51) UNRELEASED; urgency=low
 
   * Improve toplevel parentlink to link directly to index.html when usedirs is
     disabled.
+  * map: Add a "show" parameter. "show=title" can be used to display page
+    titles, rather than the default page name. Based on a patch from 
+    Jaldhar H. Vyas, Closes: #484510
 
  -- Joey Hess <joeyh@debian.org>  Sun, 15 Jun 2008 15:03:33 -0400
 

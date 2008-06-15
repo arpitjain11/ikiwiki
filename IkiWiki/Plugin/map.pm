@@ -25,8 +25,13 @@ sub preprocess (@) { #{{{
 	my %mapitems;
 	foreach my $page (keys %pagesources) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
-			$mapitems{$page}=1;
-
+			if (exists $params{show} && 
+			    exists $pagestate{$page}{meta}{$params{show}}) {
+				$mapitems{$page}=$pagestate{$page}{meta}{$params{show}};
+			}
+			else {
+				$mapitems{$page}=$page;
+			}
 			# Check for a common prefix.
 			if (! defined $common_prefix) {
 				$common_prefix=$page;
@@ -66,7 +71,7 @@ sub preprocess (@) { #{{{
 	my $openli=0;
 	my $dummy=0;
 	my $map = "<div class='map'>\n<ul>\n";
-	foreach my $item (sort keys %mapitems) {
+	foreach my $item (sort { $mapitems{$a} cmp $mapitems{$b} } keys %mapitems) {
 		$item=~s/^\Q$common_prefix\E\///
 			if defined $common_prefix && length $common_prefix;
 		my $depth = ($item =~ tr/\//\//) + 1;
@@ -114,6 +119,7 @@ sub preprocess (@) { #{{{
 		$map .= "<li>"
 			.htmllink($params{page}, $params{destpage}, 
 				"/".$common_prefix."/".$item,
+				linktext => $mapitems{$item},
 				class => "mapitem", noimageinline => 1)
 			."\n";
 		$openli=1;
