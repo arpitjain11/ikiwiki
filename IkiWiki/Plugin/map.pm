@@ -26,6 +26,7 @@ sub preprocess (@) { #{{{
 	foreach my $page (keys %pagesources) {
 		if (pagespec_match($page, $params{pages}, location => $params{page})) {
 			if (exists $params{show} && 
+			    exists $pagestate{$page} &&
 			    exists $pagestate{$page}{meta}{$params{show}}) {
 				$mapitems{$page}=$pagestate{$page}{meta}{$params{show}};
 			}
