@@ -1,0 +1,12 @@
+    20:03:56$ ikiwiki --setup *setup --rebuild
+    successfully generated /home/jon/git/ikiwiki/hooks/post-update
+    utf8 "\x92" does not map to Unicode at /usr/share/perl5/IkiWiki.pm line 320, <$in> chunk 1.
+    utf8 "\x92" does not map to Unicode at /usr/share/perl5/IkiWiki.pm line 320, <$in> chunk 1.
+    ikiwiki.setup: Malformed UTF-8 character (fatal) at /usr/share/perl5/Text/Textile.pm line 775.
+    BEGIN failed--compilation aborted at (eval 6) line 166.
+
+The first two complaints happen if textile is not loaded, the third fatal one happens if it is.
+
+0x92 is "single quote" in the evil windows default codepage. It would be nice to handle this gracefully and not abort ikiwiki at this point, or alternatively, die fatally but mention which input page caused the error.
+
+Interestingly enough, in my case, the input file has several other bad windows characters (0xFC, u-umlaut) which have not caused ikiwiki to abort. -- [[JonDowland]]
