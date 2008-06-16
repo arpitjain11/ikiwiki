@@ -31,12 +31,14 @@ Any ideas how to fix that problem? --[[Paweł|ptecza]]
 >>
 >> BTW, why have you replaced Hyper Estraier by Xapian? It seems that second
 >> search engine is faster, but I'm not sure it has the same wide syntax.
->> Also I can't see how to change number of hits per page...
->>
->> --[[Paweł|ptecza]]
+>> Also I can't see how to change number of hits per page... --[[Paweł|ptecza]]
 
 >>> Xapian indexes more quickly, and with the perl interface I was able to
 >>> make updates for changes pages quite efficient. My experience with 
 >>> Hyper Estraier has not been good, with its database often breaking, and
 >>> it sometimes crashing. Xapian also does a ranked search, and supports
 >>> searching for specific metadata like "title:foo". --[[Joey]]
+
+>>>> Thank you very much for the reply! I have never had problems with
+>>>> Hyper Estraier, but I'm not a long-time user of that searching engine.
+>>>> It's good to know about Xapian pros and Hyper Estraier cons. --[[Paweł|ptecza]]
