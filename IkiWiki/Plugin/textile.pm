@@ -7,6 +7,7 @@ package IkiWiki::Plugin::textile;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use Encode;
 
 sub import { #{{{
 	hook(type => "htmlize", id => "txtl", call => \&htmlize);
@@ -14,7 +15,7 @@ sub import { #{{{
 
 sub htmlize (@) { #{{{
 	my %params=@_;
-	my $content = $params{content};
+	my $content = decode_utf8(encode_utf8($params{content}));
 
 	eval q{use Text::Textile};
 	return $content if $@;

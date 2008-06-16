@@ -8,6 +8,10 @@ ikiwiki (2.51) UNRELEASED; urgency=low
   * hnb: New plugin, contributed by Axel Beckert.
   * meta: Store "description" in pagestate for use by other plugins.
   * map: Support show=description.
+  * textile: The Text::Textile perl module has some regexps that fail if
+    input is flagged as utf-8, but contains invalid characters such as 0x92.
+    To prevent it from crashing, re-encode the content before calling it,
+    which will ensure that it's really utf-8.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 15 Jun 2008 15:03:33 -0400
 
