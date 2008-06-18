@@ -4,8 +4,8 @@
 This plugin allows inserting arbitrary metadata into the source of a page.
 Enter the metadata as follows:
 
-	\[[meta field="value"]]
-	\[[meta field="value" param="value" param="value"]]
+	\[[!meta field="value"]]
+	\[[!meta field="value" param="value" param="value"]]
 
 The first form sets a given field to a given value, while the second form
 also specifies some additional sub-parameters.
@@ -58,7 +58,7 @@ Supported fields:
   a `.css` file in the wiki, so it cannot be used to add links to external
   stylesheets. Example:
 
-	\[[meta stylesheet=somestyle rel="alternate stylesheet"
+	\[[!meta stylesheet=somestyle rel="alternate stylesheet"
 	title="somestyle"]]
 
 * openid
@@ -70,7 +70,7 @@ Supported fields:
 
   This lets you use an ikiwiki page as your OpenID. Example:
 
-	\\[[meta openid="http://joeyh.myopenid.com/"
+	\\[[!meta openid="http://joeyh.myopenid.com/"
 	server="http://www.myopenid.com/server"
 	xrds-location="http://www.myopenid.com/xrds?username=joeyh.myopenid.com""]]
 
@@ -80,11 +80,11 @@ Supported fields:
   wiki treat one page as linking to another without displaying a user-visible
   [[ikiwiki/WikiLink]]:
 
-       \[[meta link=otherpage]]
+       \[[!meta link=otherpage]]
 
   It can also be used to insert a html &lt;link&gt; tag. For example:
 
-       \[[meta link="http://joeyh.myopenid.com/" rel="openid.delegate"]]
+       \[[!meta link="http://joeyh.myopenid.com/" rel="openid.delegate"]]
 
   However, this latter syntax won't be allowed if the [[htmlscrubber]] is
   enabled, since it can be used to insert unsafe content.
@@ -93,14 +93,14 @@ Supported fields:
 
   Causes the page to redirect to another page in the wiki.
 
-  	\[[meta redir=otherpage]]
+  	\[[!meta redir=otherpage]]
 
   Optionally, a delay (in seconds) can be specified. The default is to
   redirect without delay.
 
   It can also be used to redirect to an external url. For example:
 
-  	\[[meta redir="http://example.com/"]]
+  	\[[!meta redir="http://example.com/"]]
 
   However, this latter syntax won't be allowed if the [[htmlscrubber]] is
   enabled, since it can be used to insert unsafe content.
@@ -112,7 +112,7 @@ Supported fields:
 
   Causes the robots meta tag to be written:
 
-        \[[meta robots="index, nofollow"]]
+        \[[!meta robots="index, nofollow"]]
 
   Valid values for the attribute are: "index", "noindex", "follow", and
   "nofollow". Multiple comma-separated values are allowed, but obviously only
