@@ -17,7 +17,12 @@ sub htmlize (@) { #{{{
 
 	eval q{use Text::WikiCreole};
 	return $content if $@;
-	return Text::WikiCreole::creole_parse($content);
+
+	# don't parse WikiLinks, ikiwiki already does
+	creole_link(sub { return shift });
+	creole_customlinks();
+
+	return creole_parse($content);
 } # }}}
 
 1
