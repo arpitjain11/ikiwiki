@@ -12,6 +12,9 @@ ikiwiki (2.51) UNRELEASED; urgency=low
     input is flagged as utf-8, but contains invalid characters such as 0x92.
     To prevent it from crashing, re-encode the content before calling it,
     which will ensure that it's really utf-8.
+  * Version the suggests of xapian-omega to a version known to be new enough
+    to work with ikiwiki. Reportedly, version 0.9.9 is too old to work.
+    Closes: #486592
 
  -- Joey Hess <joeyh@debian.org>  Sun, 15 Jun 2008 15:03:33 -0400
 
