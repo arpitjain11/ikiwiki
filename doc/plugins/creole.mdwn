@@ -1,0 +1,16 @@
+[[template id=plugin name=creole author="BerndZeimetz"]]
+[[tag type/format]]
+
+This plugin allows ikiwiki to process pages written in
+[WikiCreole](http://www.wikicreole.org/) format.
+To use it, you need to have the [[cpan Text::WikiCreole]] perl
+module installed, enable the plugin, then files with the extention `.creole`
+will be processed as creole.
+
+The creole format is based on common elements across many different
+wiki markup formats, so should be fairly easy to guess at. There is also a
+[CheatSheet](http://www.wikicreole.org/wiki/CheatSheet).
+
+Links are standard [[WikiLinks|ikiwiki/WikiLink]]. Links and
+[[PreProcessorDirectives]] inside `{{{ }}}` blocks are still expanded,
+since this happens before the creole format is processed.
