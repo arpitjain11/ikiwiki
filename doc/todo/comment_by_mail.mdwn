@@ -1,14 +1,25 @@
 I would like to allow comments on ikiwiki pages without CGI.
 I have in mind something like
 
-  * Use a pagetemplate hook  (based on a quick glance at tschwinge's copyright.pm)
-    in a plugin
+  * Use a pagetemplate hook  
+    in a plugin (DONE)
   * add a mailto: url to each page matching some pagespec
+    (currently every page gets a comment footer)
   * this mailto url goes to an address identifying the page  (something like
-    user-iki-FE653b@host.fqdn.tld).  
+    user-iki-FE653b@host.fqdn.tld).  (DONE) 
   * on the mail receiving end, these messages are either deleted, or ran through
     a filter to be turned into blog posts.
+
+    - I'm thinking about how the filter should work. Within a 
+    mail client, or as a batch tool to scan a mailbox? How to    interact with version control, if at all?
+
   * the same plugin can check for comments on a particular page next time the wiki 
-    is generated, and add a link.
+    is generated, and add a link. (more or less done)
+  * work in progress can be 
+
+   - [cloned](http://pivot.cs.unb.ca/git/ikiperl.git), or 
+   - [browsed](http://pivot.cs.unb.ca/git/?p=ikipostal.git;a=summary)
+  
 
 Any comments? Write them here or send them to [[DavidBremner]]
+
