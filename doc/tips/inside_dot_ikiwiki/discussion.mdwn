@@ -10,4 +10,6 @@ No idea how this happened.  I've blown it away and recreated it but, for future 
 > BTW, I'd be interested in examining such a corrupt storable file to try
 > to see what happened to it. --[[Joey]]
 
->> --getctime only appears to set the last edited date, not the creation date.  It's not supposed to set the creation date, is it?  The only place that info is stored is in the git repo.  I seem to have lost the bad index file to periodic /tmp wiping; I'll send it to you if it happens again.  --[[sabr]]
+>> --getctime appears to only set the last edited date.  It's not supposed to set the creation date, is it?  The only place that info is stored is in the git repo.
+
+>> Alas, I seem to have lost the bad index file to periodic /tmp wiping; I'll send it to you if it happens again.  --[[sabr]]
