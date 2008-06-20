@@ -7,6 +7,12 @@ I have in mind something like
     (currently every page gets a comment footer)
   * this mailto url goes to an address identifying the page  (something like
     user-iki-FE653b@host.fqdn.tld).  (DONE) 
+    > I wonder if it would be more or less natural to put an encoded form
+    > of the page name in the email address? I'm thinking about something
+    > like `wikiname+index@host` or `wikiname+todo+comment_by_mail@host`.
+    > The basic transformation would be to call `titlepage($page)` (in the
+    > C locale), followed by replacing "/" with "+" (since "/" is not
+    > valid in mails). --[[Joey]]
   * on the mail receiving end, these messages are either deleted, or ran through
     a filter to be turned into blog posts.
 
@@ -15,6 +21,9 @@ I have in mind something like
 
   * the same plugin can check for comments on a particular page next time the wiki 
     is generated, and add a link. (more or less done)
+    > If the filter just checks in the posts into revision control, the
+    > post-commit hook would haldle updating the wiki to include those
+    > posts as they come in. --[[Joey]]
   * work in progress can be 
 
    - [cloned](http://pivot.cs.unb.ca/git/ikiperl.git), or 
