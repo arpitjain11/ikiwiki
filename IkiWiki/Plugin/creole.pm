@@ -19,8 +19,8 @@ sub htmlize (@) { #{{{
 	return $content if $@;
 
 	# don't parse WikiLinks, ikiwiki already does
-	creole_link(sub { return shift });
 	creole_customlinks();
+	creole_custombarelinks();
 
 	return creole_parse($content);
 } # }}}
