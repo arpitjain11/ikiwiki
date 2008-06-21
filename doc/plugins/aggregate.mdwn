@@ -59,6 +59,8 @@ directive:
 * `tag` - A tag to tag each post from the feed with. A good tag to use is
   the name of the feed. Can be repeated multiple times. The [[tag]] plugin
   must be enabled for this to work.
+* `template` - Template to use for creating the html pages. Defaults to
+  aggregatepost.
 
 Note that even if you are using subversion or another revision control
 system, pages created by aggregation will *not* be checked into revision

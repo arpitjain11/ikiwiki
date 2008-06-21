@@ -154,6 +154,13 @@ sub preprocess (@) { #{{{
 	$feed->{updateinterval}=defined $params{updateinterval} ? $params{updateinterval} * 60 : 15 * 60;
 	$feed->{expireage}=defined $params{expireage} ? $params{expireage} : 0;
 	$feed->{expirecount}=defined $params{expirecount} ? $params{expirecount} : 0;
+        if (exists $params{template}) {
+                $params{template}=~s/[^-_a-zA-Z0-9]+//g;
+        }
+        else {
+                $params{template} = "aggregatepost"
+        }
+	$feed->{template}=$params{template} . ".tmpl";
 	delete $feed->{unseen};
 	$feed->{lastupdate}=0 unless defined $feed->{lastupdate};
 	$feed->{numposts}=0 unless defined $feed->{numposts};
@@ -507,7 +514,7 @@ sub add_page (@) { #{{{
 	$guid->{md5}=$digest;
 
 	# Create the page.
-	my $template=template("aggregatepost.tmpl", blind_cache => 1);
+	my $template=template($feed->{template}, blind_cache => 1);
 	$template->param(title => $params{title})
 		if defined $params{title} && length($params{title});
 	$template->param(content => htmlescape(htmlabs($params{content}, $feed->{feedurl})));
