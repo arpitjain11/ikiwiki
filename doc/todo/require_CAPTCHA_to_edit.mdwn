@@ -18,15 +18,19 @@ Okie - I have a first pass of this.  There are still some issues.
 
 Currently the code verifies the CAPTCHA.  If you get it right then you're fine.
 If you get the CAPTCHA wrong then the current code tells formbuilder that
-one of the fields in invalid.  This stops the login from going through.
+one of the fields is invalid.  This stops the login from going through.
 Unfortunately, formbuilder is caching this validity somewhere, and I haven't
 found a way around that yet.  This means that if you get the CAPTCHA
 wrong, it will continue to fail.  You need to load the login page again so
 it doesn't have the error message on the screen, then it'll work again.
 
+> fixed this - updated code is attached.
+
 A second issue is that the OpenID login system resets the 'required' flags
 of all the other fields, so using OpenID will cause the CAPTCHA to be
 ignored.
+
+> This is still a todo.
 
 Instructions
 =====
@@ -121,24 +125,12 @@ EOTAGS
 			return;
 		}
 
-		debug("To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
+		die("To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
 			unless $pubkey;
-		debug("To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
+		die("To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
 			unless $privkey;
-		debug("To use reCAPTCHA you must know the remote IP address")
+		die("To use reCAPTCHA you must know the remote IP address")
 			unless $session->remote_addr();
-
-		my $extras = $form->keepextras();
-		if ($extras) {
-			push ( @$extras, qw(recaptcha_challenge_field recaptcha_response_field) );
-		} else {
-			$extras = [qw(recaptcha_challenge_field recaptcha_response_field)];
-		}
-		$form->keepextras($extras);
-
-		my $challenge = "invalid";
-		my $response = "invalid";
-		my $result = { is_valid => 0, error => 'recaptcha-not-tested' };
 
 		$form->field(
 			name => "recaptcha",
@@ -155,7 +147,11 @@ EOTAGS
 				length $form->cgi_param("recaptcha_challenge_field") &&
 				defined $form->cgi_param("recaptcha_response_field") && 
 				length $form->cgi_param("recaptcha_response_field")) {
-			
+
+			my $challenge = "invalid";
+			my $response = "invalid";
+			my $result = { is_valid => 0, error => 'recaptcha-not-tested' };
+
 			$form->field(name => "recaptcha",
 				message => "CAPTCHA verification failed",
 				required => 1,
@@ -164,18 +160,19 @@ EOTAGS
 							$response ne $form->cgi_param("recaptcha_response_field")) {
 						$challenge = $form->cgi_param("recaptcha_challenge_field");
 						$response = $form->cgi_param("recaptcha_response_field");
-						warn("Validating: ".$challenge." ".$response);
+						debug("Validating: ".$challenge." ".$response);
 						$result = check_answer($privkey,
 								$session->remote_addr(),
 								$challenge, $response);
 					} else {
-						warn("re-Validating");
+						debug("re-Validating");
 					}
+
 					if ($result->{is_valid}) {
-						warn("valid");
+						debug("valid");
 						return 1;
 					} else {
-						warn("invalid");
+						debug("invalid");
 						return 0;
 					}
 				});
@@ -183,8 +180,8 @@ EOTAGS
 	}
 } # }}}
 
-# The following function is borrowed with modifications from
-# Captcha::reCAPTCHA by Andy Armstrong and is under the PERL Artistic License
+# The following function is borrowed from
+# Captcha::reCAPTCHA by Andy Armstrong and are under the PERL Artistic License
 
 sub check_answer {
     my ( $privkey, $remoteip, $challenge, $response ) = @_;
@@ -197,7 +194,7 @@ sub check_answer {
       unless $remoteip;
 
 	if (! ($challenge && $response)) {
-		warn("Challenge or response not set!");
+		debug("Challenge or response not set!");
 		return { is_valid => 0, error => 'incorrect-captcha-sol' };
 	}
 
@@ -216,17 +213,17 @@ sub check_answer {
     if ( $resp->is_success ) {
         my ( $answer, $message ) = split( /\n/, $resp->content, 2 );
         if ( $answer =~ /true/ ) {
-            warn("CAPTCHA valid");
+            debug("CAPTCHA valid");
             return { is_valid => 1 };
         }
         else {
             chomp $message;
-            warn("CAPTCHA failed: ".$message);
+            debug("CAPTCHA failed: ".$message);
             return { is_valid => 0, error => $message };
         }
     }
     else {
-        warn("Unable to contact reCaptcha verification host!");
+        debug("Unable to contact reCaptcha verification host!");
         return { is_valid => 0, error => 'recaptcha-not-reachable' };
     }
 }
