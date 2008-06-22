@@ -30,7 +30,20 @@ A second issue is that the OpenID login system resets the 'required' flags
 of all the other fields, so using OpenID will cause the CAPTCHA to be
 ignored.
 
-> This is still a todo.
+> This is still not fixed.  I would have thought the following patch would
+> have fixed this second issue, but it doesn't.
+
+--- a/IkiWiki/Plugin/openid.pm
++++ b/IkiWiki/Plugin/openid.pm
+@@ -61,6 +61,7 @@ sub formbuilder_setup (@) { #{{{
+                        # Skip all other required fields in this case.
+                        foreach my $field ($form->field) {
+                                next if $field eq "openid_url";
++                               next if $field eq "recaptcha";
+                                $form->field(name => $field, required => 0,
+                                        validate => '/.*/');
+                        }
+
 
 Instructions
 =====
