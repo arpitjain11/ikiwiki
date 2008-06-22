@@ -13,3 +13,223 @@ I imagine a plugin that modifies the login screen to use <http://recaptcha.net/>
 >> white/black lists, were you thinking of listing the openids, or the content?
 >> Something like the moinmoin global <http://master.moinmo.in/BadContent>
 >> list?
+
+Okie - I have a first pass of this.  There are still some issues.
+
+Currently the code verifies the CAPTCHA.  If you get it right then you're fine.
+If you get the CAPTCHA wrong then the current code tells formbuilder that
+one of the fields in invalid.  This stops the login from going through.
+Unfortunately, formbuilder is caching this validity somewhere, and I haven't
+found a way around that yet.  This means that if you get the CAPTCHA
+wrong, it will continue to fail.  You need to load the login page again so
+it doesn't have the error message on the screen, then it'll work again.
+
+A second issue is that the OpenID login system resets the 'required' flags
+of all the other fields, so using OpenID will cause the CAPTCHA to be
+ignored.
+
+Instructions
+=====
+
+You need to go to <http://recaptcha.net/api/getkey> and get a key set.
+The keys are added as options.
+
+	reCaptchaPubKey => "LONGPUBLICKEYSTRING",
+	reCaptchaPrivKey => "LONGPRIVATEKEYSTRING",
+
+You can also use "signInSSL" if you're using ssl for your login screen.
+
+
+The following code is just inline.  It will probably not display correctly, and you should just grab it from the page source.
+
+----------
+
+#!/usr/bin/perl
+# Ikiwiki password authentication.
+package IkiWiki::Plugin::recaptcha;
+
+use warnings;
+use strict;
+use IkiWiki 2.00;
+
+sub import { #{{{
+	hook(type => "formbuilder_setup", id => "recaptcha", call => \&formbuilder_setup);
+} # }}}
+
+sub getopt () { #{{{
+	eval q{use Getopt::Long};
+	error($@) if $@;
+	Getopt::Long::Configure('pass_through');
+	GetOptions("reCaptchaPubKey=s" => \$config{reCaptchaPubKey});
+	GetOptions("reCaptchaPrivKey=s" => \$config{reCaptchaPrivKey});
+} #}}}
+
+sub formbuilder_setup (@) { #{{{
+	my %params=@_;
+
+	my $form=$params{form};
+	my $session=$params{session};
+	my $cgi=$params{cgi};
+	my $pubkey=$config{reCaptchaPubKey};
+	my $privkey=$config{reCaptchaPrivKey};
+	debug("Unknown Public Key.  To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
+		unless defined $config{reCaptchaPubKey};
+	debug("Unknown Private Key.  To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
+		unless defined $config{reCaptchaPrivKey};
+	my $tagtextPlain=<<EOTAG;
+		<script type="text/javascript"
+			src="http://api.recaptcha.net/challenge?k=$pubkey">
+		</script>
+
+		<noscript>
+			<iframe src="http://api.recaptcha.net/noscript?k=$pubkey"
+				height="300" width="500" frameborder="0"></iframe><br>
+			<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+			<input type="hidden" name="recaptcha_response_field" 
+				value="manual_challenge">
+		</noscript>
+EOTAG
+
+	my $tagtextSSL=<<EOTAGS;
+		<script type="text/javascript"
+			src="https://api-secure.recaptcha.net/challenge?k=$pubkey">
+		</script>
+
+		<noscript>
+			<iframe src="https://api-secure.recaptcha.net/noscript?k=$pubkey"
+				height="300" width="500" frameborder="0"></iframe><br>
+			<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+			<input type="hidden" name="recaptcha_response_field" 
+				value="manual_challenge">
+		</noscript>
+EOTAGS
+
+	my $tagtext;
+
+	if ($config{signInSSL}) {
+		$tagtext = $tagtextSSL;
+	} else {
+		$tagtext = $tagtextPlain;
+	}
+	
+	if ($form->title eq "signin") {
+		# Give up if module is unavailable to avoid
+		# needing to depend on it.
+		eval q{use LWP::UserAgent};
+		if ($@) {
+			debug("unable to load LWP::UserAgent, not enabling reCaptcha");
+			return;
+		}
+
+		debug("To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
+			unless $pubkey;
+		debug("To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey")
+			unless $privkey;
+		debug("To use reCAPTCHA you must know the remote IP address")
+			unless $session->remote_addr();
+
+		my $extras = $form->keepextras();
+		if ($extras) {
+			push ( @$extras, qw(recaptcha_challenge_field recaptcha_response_field) );
+		} else {
+			$extras = [qw(recaptcha_challenge_field recaptcha_response_field)];
+		}
+		$form->keepextras($extras);
+
+		my $challenge = "invalid";
+		my $response = "invalid";
+		my $result = { is_valid => 0, error => 'recaptcha-not-tested' };
+
+		$form->field(
+			name => "recaptcha",
+			label => "",
+			type => 'static',
+			comment => $tagtext,
+			required => 1,
+			message => "CAPTCHA verification failed",
+		);
+
+		# validate the captcha.
+		if ($form->submitted && $form->submitted eq "Login" &&
+				defined $form->cgi_param("recaptcha_challenge_field") && 
+				length $form->cgi_param("recaptcha_challenge_field") &&
+				defined $form->cgi_param("recaptcha_response_field") && 
+				length $form->cgi_param("recaptcha_response_field")) {
+			
+			$form->field(name => "recaptcha",
+				message => "CAPTCHA verification failed",
+				required => 1,
+				validate => sub {
+					if ($challenge ne $form->cgi_param("recaptcha_challenge_field") or
+							$response ne $form->cgi_param("recaptcha_response_field")) {
+						$challenge = $form->cgi_param("recaptcha_challenge_field");
+						$response = $form->cgi_param("recaptcha_response_field");
+						warn("Validating: ".$challenge." ".$response);
+						$result = check_answer($privkey,
+								$session->remote_addr(),
+								$challenge, $response);
+					} else {
+						warn("re-Validating");
+					}
+					if ($result->{is_valid}) {
+						warn("valid");
+						return 1;
+					} else {
+						warn("invalid");
+						return 0;
+					}
+				});
+		}
+	}
+} # }}}
+
+# The following function is borrowed with modifications from
+# Captcha::reCAPTCHA by Andy Armstrong and is under the PERL Artistic License
+
+sub check_answer {
+    my ( $privkey, $remoteip, $challenge, $response ) = @_;
+
+    die
+      "To use reCAPTCHA you must get an API key from http://recaptcha.net/api/getkey"
+      unless $privkey;
+
+    die "For security reasons, you must pass the remote ip to reCAPTCHA"
+      unless $remoteip;
+
+	if (! ($challenge && $response)) {
+		warn("Challenge or response not set!");
+		return { is_valid => 0, error => 'incorrect-captcha-sol' };
+	}
+
+	my $ua = LWP::UserAgent->new();
+
+    my $resp = $ua->post(
+        'http://api-verify.recaptcha.net/verify',
+        {
+            privatekey => $privkey,
+            remoteip   => $remoteip,
+            challenge  => $challenge,
+            response   => $response
+        }
+    );
+
+    if ( $resp->is_success ) {
+        my ( $answer, $message ) = split( /\n/, $resp->content, 2 );
+        if ( $answer =~ /true/ ) {
+            warn("CAPTCHA valid");
+            return { is_valid => 1 };
+        }
+        else {
+            chomp $message;
+            warn("CAPTCHA failed: ".$message);
+            return { is_valid => 0, error => $message };
+        }
+    }
+    else {
+        warn("Unable to contact reCaptcha verification host!");
+        return { is_valid => 0, error => 'recaptcha-not-reachable' };
+    }
+}
+
+1;
+
