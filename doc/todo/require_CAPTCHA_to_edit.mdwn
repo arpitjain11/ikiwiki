@@ -14,6 +14,15 @@ I imagine a plugin that modifies the login screen to use <http://recaptcha.net/>
 >> Something like the moinmoin global <http://master.moinmo.in/BadContent>
 >> list?
 
+>>> OpenID can be thought of as pushing the problem of determining if
+>>> someone is a human or a spambot back from the openid consumer to the
+>>> openid provider. So, providers that make it possible for spambots to
+>>> use their openids, or that are even set up explicitly for use in
+>>> spamming, would be the ones to block. Or, providers that are known to
+>>> use very good screening for humans would be the ones to allow.
+>>> (Openid delegation makes it a bit harder than just looking at the
+>>> openid url though.) --[[Joey]]
+
 Okie - I have a first pass of this.  There are still some issues.
 
 Currently the code verifies the CAPTCHA.  If you get it right then you're fine.
@@ -44,6 +53,19 @@ ignored.
                                         validate => '/.*/');
                         }
 
+>> What seems to be happing here is that the openid plugin defines a
+>> validate hook for openid_url that calls validate(). validate() in turn
+>> redirects the user to the openid server for validation, and exits. If
+>> the openid plugins' validate hook is called before your recaptcha
+>> validator, your code never gets a chance to run. I don't know how to
+>> control the other that FormBuilder validates fields, but the only fix I
+>> can see is to somehow influence that order. 
+>>
+>> Hmm, maybe you need to move your own validation code out of the validate
+>> hook. Instead, just validate the captcha in the formbuilder_setup hook.
+>> The problem with this approach is that if validation fails, you can't
+>> just flag it as invalid and let formbuilder handle that. Instead, you'd
+>> have to hack something in to redisplay the captcha by hand. --[[Joey]]
 
 Instructions
 =====
