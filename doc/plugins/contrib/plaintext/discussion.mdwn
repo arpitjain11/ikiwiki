@@ -10,3 +10,12 @@ some page types. It's either all or nothing. The patch in
 version of htmllink that didn't do anything, but would that be enough?
 
 --[[Joey]]
+
+[Here](http://www.gmcmanus.org/plaintext.pm) is an alternate approach.
+It encodes entities using a filter hook, before wikilinks are linkified.
+So wikilinks turn up as links.
+It also uses URI::Find to turn URIs into links.
+
+I'm not very familiar with Perl, so this code could be improved.
+
+--Gabriel
