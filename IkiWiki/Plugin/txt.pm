@@ -1,10 +1,10 @@
 #!/usr/bin/perl
-# Plaintext as a wiki page type - links WikiLinks and URIs.
+# .txt as a wiki page type - links WikiLinks and URIs.
 #
 # Copyright (C) 2008 Gabriel McManus <gmcmanus@gmail.com>
 # Licensed under the GNU General Public License, version 2 or later
 
-package IkiWiki::Plugin::plaintext;
+package IkiWiki::Plugin::txt;
 
 use warnings;
 use strict;
