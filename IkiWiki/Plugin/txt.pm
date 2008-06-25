@@ -29,7 +29,7 @@ sub filter (@) {
 	my %params = @_;
 	my $content = $params{content};
 
-	if ($pagesources{$params{page}} =~ /\.txt$/) {
+	if (defined $pagesources{$params{page}} && $pagesources{$params{page}} =~ /\.txt$/) {
 		encode_entities($content);
 		if ($findurl) {
 			my $finder = URI::Find->new(sub {
