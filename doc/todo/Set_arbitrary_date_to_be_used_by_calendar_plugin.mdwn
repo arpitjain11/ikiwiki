@@ -20,6 +20,15 @@ That date will be used instead of the post creation time when displaying the cal
 >
 > Accurate? --[[Joey]]
 
+>> Thanks for the feedback. Thinking about what you said ... I suspect my patch 
+>> doesn't belong in the calendar plugin, which does a very specific thing 
+>> (create a calendar to show when blog posts were created). I'm really angling 
+>> toward an event calendar (as mentioned on [[todo/plugin]]). I'd like to preserve 
+>> the page creation time - which is useful and important information in its own right 
+>> - and be able to generate a calendar with links to particular posts that will show 
+>> up on the calendar based on an arbitrary date. Perhaps this should be re-considered 
+>> as a separate plugin?
+
     --- calendar.pm.orig  2008-06-24 22:36:09.000000000 -0400
     +++ calendar.pm 2008-06-24 22:51:11.000000000 -0400
     @@ -23,6 +23,7 @@
