@@ -6,6 +6,20 @@ Here's a patch to the calendar plugin. If you specify an event preprocessor in a
 
 That date will be used instead of the post creation time when displaying the calendar.
 
+> Thanks for coming up with a patch.. Let me make sure I understand its
+> rationalle.
+> 
+> The meta plugin already allows modifying the page creation time,
+> which is what the calendar plugin uses.
+> 
+> So, it seems to me that the use of this patch is for recording events in
+> the future. You'd not want a page for a future event to claim it was
+> created in the future. I suppose you could also use it for events in the
+> past, if you didn't want to change the creation time for some reason.
+> (Perhaps you're doing a calendar of historical events, for example.)
+>
+> Accurate? --[[Joey]]
+
     --- calendar.pm.orig  2008-06-24 22:36:09.000000000 -0400
     +++ calendar.pm 2008-06-24 22:51:11.000000000 -0400
     @@ -23,6 +23,7 @@
