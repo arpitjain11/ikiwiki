@@ -1,0 +1,61 @@
+[[tag patch]]
+
+Here's a patch to the calendar plugin. If you specify an event preprocessor in a post, such as:
+
+    [[event time="2008-06-24"]]
+
+That date will be used instead of the post creation time when displaying the calendar.
+
+    --- calendar.pm.orig  2008-06-24 22:36:09.000000000 -0400
+    +++ calendar.pm 2008-06-24 22:51:11.000000000 -0400
+    @@ -23,6 +23,7 @@
+     use IkiWiki 2.00;
+     use Time::Local;
+     use POSIX;
+    +use Date::Parse;
+  
+     my %cache;
+     my %linkcache;
+    @@ -32,6 +33,7 @@
+     sub import { #{{{
+      hook(type => "needsbuild", id => "version", call => \&needsbuild);
+      hook(type => "preprocess", id => "calendar", call => \&preprocess);
+    + hook(type => "preprocess", id => "event", call => \&preprocess_event);
+     } #}}}
+  
+     sub is_leap_year (@) { #{{{
+    @@ -304,6 +306,19 @@
+      return $calendar;
+     } #}}}
+  
+    +sub preprocess_event (@) { #{{{
+    + my %params=@_;
+    + # if now time is given, use now
+    + $params{time} = localtime            unless defined $params{time};
+    +
+    + my $timestamp = str2time($params{time});
+    + if ( defined $timestamp) {
+    +   $pagestate{$params{page}}{event}{mtime}=$timestamp;
+    + }
+    + # remove the event block entirely
+    + return "";
+    +} #}}
+    +
+     sub preprocess (@) { #{{{
+      my %params=@_;
+      $params{pages} = "*"            unless defined $params{pages};
+    @@ -355,7 +370,13 @@
+      if (! defined $cache{$pagespec}) {
+        foreach my $p (keys %pagesources) {
+          next unless pagespec_match($p, $pagespec);
+    -     my $mtime = $IkiWiki::pagectime{$p};
+    +     my $mtime;
+    +     # use time defined by event preprocessor if it's available
+    +     if (defined $pagestate{$p}{event}{mtime}) {
+    +       $mtime = $pagestate{$p}{event}{mtime};
+    +     } else {
+    +       $mtime = $IkiWiki::pagectime{$p};
+    +     }
+          my $src   = $pagesources{$p};
+          my @date  = localtime($mtime);
+          my $mday  = $date[3];
