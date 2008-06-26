@@ -29,6 +29,11 @@ That date will be used instead of the post creation time when displaying the cal
 >> up on the calendar based on an arbitrary date. Perhaps this should be re-considered 
 >> as a separate plugin?
 
+>>> I think it makes sense to have only one calendar, if possible.
+>>> I think your event stuff is fine, the only thing we might want to add
+>>> is a config option for the calendar, to control whether it looks at the
+>>> event date, or the creation date. --[[Joey]]
+
     --- calendar.pm.orig  2008-06-24 22:36:09.000000000 -0400
     +++ calendar.pm 2008-06-24 22:51:11.000000000 -0400
     @@ -23,6 +23,7 @@
