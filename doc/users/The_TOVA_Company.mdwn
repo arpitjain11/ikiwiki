@@ -2,14 +2,23 @@ We're a small medical software and hardware company. We're based in LA, but all 
 
 We're looking for the following "standard" wiki features for some of our git-disabled users:
 
-- [[Attachments|todo/fileupload]] (including renaming/moving/deleting)
+- [[Attachments|todo/fileupload]]
+   - Must have an attachment link (of whatever kind) on each page.
+      - May have the link be disabled by some security setting.
+   - Must be able to upload a file to the same directory as the source file (e.g., the .mdwn file).
+      - Might be able to choose arbitrary location.
+      - Might scan for file information, and disallow security risks (if so, this must be configurable).
+   - Must be able to delete files.
+   - Might be able to rename them and/or move attached files.
+   - Must be able to list attachments (that is, files in the directory)
+      - Should list file names, sizes, and date uploaded in a small table.
 
 - Page renaming/moving/deleting
   > There is an (old) [[patch|todo/Moving_pages]] for this, still needing
   > significant cleanups and improvements to be rcs-agnostic, etc. --[[Joey]]
 
 - inter-wiki links (specifically for having to-do lists for people across multiple wikis)
-  > Something more than the shortcut plugin? Maybe you should spell out 
+  > Something more than the shortcut plugin? Maybe you should spell out
   > exactly what you want in a [[todo]] item. --[[Joey]]
 
 - Some cleanups on other plugins:
