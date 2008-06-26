@@ -27,12 +27,19 @@ That date will be used instead of the post creation time when displaying the cal
 >> the page creation time - which is useful and important information in its own right 
 >> - and be able to generate a calendar with links to particular posts that will show 
 >> up on the calendar based on an arbitrary date. Perhaps this should be re-considered 
->> as a separate plugin?
+>> as a separate plugin? --[[Jamie]]
 
 >>> I think it makes sense to have only one calendar, if possible.
 >>> I think your event stuff is fine, the only thing we might want to add
 >>> is a config option for the calendar, to control whether it looks at the
 >>> event date, or the creation date. --[[Joey]]
+
+>>>> Ok - I can work on that. One question - the existing calendar module has it's own 
+>>>> functions for building an html display of a calendar. HTML::CalendarMonth seems to 
+>>>> provide that functionality. My instincts are to rip out the code in the calendar plugin
+>>>> and use the existing module. On the other hand, that creates added dependencies. 
+>>>> Suggestions anyone? --[[Jamie]]
+
 
     --- calendar.pm.orig  2008-06-24 22:36:09.000000000 -0400
     +++ calendar.pm 2008-06-24 22:51:11.000000000 -0400
