@@ -80,6 +80,13 @@ ignored.
 >>> Patch is inline below.
 >>> I think this whole thing is working now.
 
+>>>> Ok, glad it's working. Not thrilled that it needs to modify the
+>>>> openid plugin, especially as I'm not sure if i I will integrate the
+>>>> captcha plugin into mainline. Also because it's not very clean to have
+>>>> the oprnid plugin aware of another plugin like that. I'd like to
+>>>> prusue my idea of not doing the captcha validation in the validate
+>>>> hook.
+
 --- a/IkiWiki/Plugin/openid.pm
 +++ b/IkiWiki/Plugin/openid.pm
 @@ -18,6 +18,7 @@ sub getopt () { #{{{
