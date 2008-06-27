@@ -1,0 +1,14 @@
+I've noticed that my browser doesn't display the smileys on a page
+where I used inline pluggin. However I can see them when I click the link
+to the inlined "subpage".
+
+I checked HTML sources and it seems that Ikiwiki always generate the same
+relative path to image file with a smile (`../../../../../smileys/smile.png`),
+regardless of the page location. Are you sure it's a right working?
+
+What about if I have main inline page, for example
+<http://www.domain.com/blog/> page with 
+<http://www.domain.com/blog/post/2008/06/25/foo/> subpage with the smile?
+
+Do you have any idea how to fix it? I dont't want to have multiple
+`smileys` directory, of course :) --[[Paweł|ptecza]]
