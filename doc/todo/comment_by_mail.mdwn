@@ -14,10 +14,10 @@ I have in mind something like
     > C locale), followed by replacing "/" with "+" (since "/" is not
     > valid in mails). --[[Joey]]
     >> I guess you are right, there is no point being more obscure 
-    >> than neccesary.  I am leaning towards   [something](http://www.cs.unb.ca/~bremner/blog/posts/encoding) not        
+    >> than necessary.  I am leaning towards   [something](http://www.cs.unb.ca/~bremner/blog/posts/encoding) not        
    >> calling titlepage but in the same spirit. --[[DavidBremner]]
 
- * on the mail receiving end, these messages are either deleted, or ran through
+  * on the mail receiving end, these messages are either deleted, or ran through
     a filter to be turned into blog posts.
 
     - I'm thinking about how the filter should work. Within a 
@@ -26,7 +26,7 @@ I have in mind something like
   * the same plugin can check for comments on a particular page next time the wiki 
     is generated, and add a link. (more or less done)
     > If the filter just checks in the posts into revision control, the
-    > post-commit hook would haldle updating the wiki to include those
+    > post-commit hook would handle updating the wiki to include those
     > posts as they come in. --[[Joey]]
   * work in progress can be 
 
