@@ -12,3 +12,9 @@ What about if I have main inline page, for example
 
 Do you have any idea how to fix it? I dont't want to have multiple
 `smileys` directory, of course :) --[[Paweł|ptecza]]
+
+> I see that I broke this in commit
+> 0b9e849aba38f0695491ad5ca27de11632627ffe, presumably because a) sanitize
+> filters didn't get destpage at the time and b) I didn't think through
+> what that meant. Luckily, in the meantime, I added destpage to santize's
+> parameters, so it was easy to fix. [[done]] --[[Joey]]

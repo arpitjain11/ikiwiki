@@ -76,7 +76,7 @@ MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 		else {
 			# Replace the smiley with its expanded value.
 			substr($_, $spos, length($smiley))=
-				htmllink($params{page}, $params{page},
+				htmllink($params{page}, $params{destpage},
 				         $smileys{$smiley}, linktext => $smiley);
 		}
 	}
