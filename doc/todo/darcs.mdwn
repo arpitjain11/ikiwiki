@@ -468,5 +468,16 @@ sub rcs_getctime ($) {
 I merged the two versions above and made some fixes; it is recording my web edits in darcs and showing a recent changes page.
 It is in a [darcs repository](http://joyful.com/darcsweb/darcsweb.cgi?r=ikiwiki-darcs), please send patches. --[[Simon_Michael]]
 
+> I'd like to see at least the following fixed before I commit this: --[[Joey]]
+> * Running `darcs record $filename` in backticks is not good (security)
+>   The thing to do is to open stdout to /dev/null before execing darcs.
+> * Get `rcs_recentchanges_xml` working, parsing xml with regexps does
+>   not seem like a maintenance win.
+> * `rcs_notify` should be removed, it's no longer used.
+> * Some form of conflict handling. Using darcs to attempt to merge
+>   the changes is I gusss optional (although every other rcs backend,
+>   including svn manages to do this), but it needs to at *least* detect
+>   conflicts and return a page with conflict markers for the user to fix
+>   the conflict.
 
 [[tag patch]]
