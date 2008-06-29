@@ -22,7 +22,7 @@ ikiwiki (2.51) UNRELEASED; urgency=low
   * txt: New plugin, contributed by Gabriel McManus.
   * smiley: Generate links relative to the destpage. (Fixes a reversion from
     2.41.)
-  * toc: Revert change in 2.45 that made it run at sanitize time. This breaks
+  * toc: Revert change in 2.45 that made it run at sanitize time. That broke
     use of toc in a sidebar.
   * Call format hooks when generating page previews, thus fixing toc display
     there, as well as fixing inlins to again display in page previews, since
