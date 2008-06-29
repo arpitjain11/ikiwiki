@@ -1,0 +1,16 @@
+Putting a [[plugin/toc]] in the sidebar used to work, but was broken by
+commit 9652cdfe2eb16150518e34af33c8858118fe0a09, which, in turn fixed a bug
+with the toc not appearing during page preview.
+
+So, if toc is a sanitize hook, it can't be used in the sidebar, because the
+sidebar is only added to the page later. If the toc is a format hook, it
+shows up in the sidebar, but not at page preview time (because format hooks
+are not called during preview). Also, calling the toc as a format hook
+makes any headers that are hardcoded into the page template show up in the
+toc, which is rarely desirable.
+
+I can't think of a way between these that works in all cases. Maybe call
+the format hooks when generating a page preview? Maybe add an option to toc
+to make it embeddable in the sidebar? 
+
+--[[Joey]]
