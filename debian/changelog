@@ -22,6 +22,15 @@ ikiwiki (2.51) UNRELEASED; urgency=low
   * txt: New plugin, contributed by Gabriel McManus.
   * smiley: Generate links relative to the destpage. (Fixes a reversion from
     2.41.)
+  * toc: Revert change in 2.45 that made it run at sanitize time. This breaks
+    use of toc in a sidebar.
+  * Call format hooks when generating page previews, thus fixing toc display
+    there, as well as fixing inlins to again display in page previews, since
+    it's started using format hooks. This also allows several other things,
+    like embed, that use format hooks, to work during page preview time.
+  * Format hooks should not rely on getting an entire html document, as they
+    will only get the body during page preview.
+  * toggle: Deal with preview mode when adding javascript.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 15 Jun 2008 15:03:33 -0400
 

@@ -13,4 +13,9 @@ I can't think of a way between these that works in all cases. Maybe call
 the format hooks when generating a page preview? Maybe add an option to toc
 to make it embeddable in the sidebar? 
 
+Hmm, I think I need to call format during preview. Another case is that
+inline uses a format hook to insert the inlined content..
+
 --[[Joey]]
+
+[[done]]

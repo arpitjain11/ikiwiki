@@ -112,7 +112,10 @@ sub format (@) { #{{{
 
 	if ($params{content}=~s!(<div class="toggleable" id="[^"]+">)</div>!$1!g) {
 		$params{content}=~s/<div class="toggleableend">//g;
-		$params{content}=~s!^<\/body>!$javascript</body>!m;
+		if (! ($params{content}=~s!^<\/body>!$javascript</body>!m)) {
+			# no </body> tag, probably in preview mode
+			$params{content}.=$javascript;
+		}
 	}
 	return $params{content};
 } # }}}

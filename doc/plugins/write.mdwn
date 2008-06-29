@@ -220,7 +220,9 @@ and should return the sanitized content.
 
 The difference between format and sanitize is that sanitize only acts on
 the page body, while format can modify the entire html page including the
-header and footer inserted by ikiwiki, the html document type, etc.
+header and footer inserted by ikiwiki, the html document type, etc. (It
+should not rely on always being passed the entire page, as it won't be
+when the page is being previewed.)
 
 The function is passed named parameters: "page" and "content", and 
 should return the formatted content.

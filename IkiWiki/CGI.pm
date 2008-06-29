@@ -396,11 +396,17 @@ sub cgi_editpage ($$) { #{{{
 				session => $session,
 			);
 		});
-		$form->tmpl_param("page_preview",
-			htmlize($page, $page, $type,
+		my $preview=htmlize($page, $page, $type,
 			linkify($page, $page,
 			preprocess($page, $page,
-			filter($page, $page, $content), 0, 1))));
+			filter($page, $page, $content), 0, 1)));
+		run_hooks(format => sub {
+			$preview=shift->(
+				page => $page,
+				content => $preview,
+			);
+		});
+		$form->tmpl_param("page_preview", $preview);
 	
 		if ($new) {
 			delete $pagesources{$page};
