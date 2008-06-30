@@ -35,3 +35,10 @@
 >>>>> I'm all for ripping code out of ikiwiki where CPAN can be used, as
 >>>>> long as the resulting code and html are good. --[[Joey]]
 
+>>>>>> Sounds good. I'll work on HTML::CalendarMonth for the next version. In the current version I
+>>>>>> did the event date vs. creation date option as a parameter to the calendar 
+>>>>>> preprocessor rather than as a config variable so you could do it differently on
+>>>>>> different calendars in the same wiki. I also opted for values of auto vs. event
+>>>>>> rather than creation time vs. event since if you want to use creation time you 
+>>>>>> can simply not include the event preprocessor directive. auto seems to give you that
+>>>>>> plus more flexibility. Feedback welcome :). --[[Jamie]]
