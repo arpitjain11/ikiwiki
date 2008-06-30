@@ -1,0 +1,37 @@
+> Thanks for coming up with a patch.. Let me make sure I understand its
+> rationalle.
+> 
+> The meta plugin already allows modifying the page creation time,
+> which is what the calendar plugin uses.
+> 
+> So, it seems to me that the use of this patch is for recording events in
+> the future. You'd not want a page for a future event to claim it was
+> created in the future. I suppose you could also use it for events in the
+> past, if you didn't want to change the creation time for some reason.
+> (Perhaps you're doing a calendar of historical events, for example.)
+>
+> Accurate? --[[Joey]]
+
+>> Thanks for the feedback. Thinking about what you said ... I suspect my patch 
+>> doesn't belong in the calendar plugin, which does a very specific thing 
+>> (create a calendar to show when blog posts were created). I'm really angling 
+>> toward an event calendar (as mentioned on [[todo/plugin]]). I'd like to preserve 
+>> the page creation time - which is useful and important information in its own right 
+>> - and be able to generate a calendar with links to particular posts that will show 
+>> up on the calendar based on an arbitrary date. Perhaps this should be re-considered 
+>> as a separate plugin? --[[Jamie]]
+
+>>> I think it makes sense to have only one calendar, if possible.
+>>> I think your event stuff is fine, the only thing we might want to add
+>>> is a config option for the calendar, to control whether it looks at the
+>>> event date, or the creation date. --[[Joey]]
+
+>>>> Ok - I can work on that. One question - the existing calendar module has it's own 
+>>>> functions for building an html display of a calendar. HTML::CalendarMonth seems to 
+>>>> provide that functionality. My instincts are to rip out the code in the calendar plugin
+>>>> and use the existing module. On the other hand, that creates added dependencies. 
+>>>> Suggestions anyone? --[[Jamie]]
+
+>>>>> I'm all for ripping code out of ikiwiki where CPAN can be used, as
+>>>>> long as the resulting code and html are good. --[[Joey]]
+
