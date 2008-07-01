@@ -152,7 +152,7 @@ sub match_minsize ($$;@) { #{{{
 sub match_ispage ($$;@) { #{{{
 	my $filename=shift;
 
-	if (IkiWiki::pagetype($filename)) {
+	if (defined IkiWiki::pagetype($filename)) {
 		return IkiWiki::SuccessReason->new("file is a wiki page");
 	}
 	else {
