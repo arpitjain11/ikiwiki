@@ -72,6 +72,9 @@ sub formbuilder (@) { #{{{
 			}
 		}
 
+		# Needed for fast_file_copy.
+		require IkiWiki::Render;
+
 		# Move the attachment into place.
 		# Try to use a fast rename; fall back to copying.
 		IkiWiki::prep_writefile($filename, $config{srcdir});

@@ -180,7 +180,7 @@ sub scan ($) { #{{{
 	}
 } #}}}
 
-sub fast_file_copy ($$$$$) { #{{{
+sub fast_file_copy (@) { #{{{
 	my $srcfile=shift;
 	my $destfile=shift;
 	my $srcfd=shift;
