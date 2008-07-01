@@ -6,6 +6,8 @@ use IkiWiki;
 use IkiWiki::UserInfo;
 use open qw{:utf8 :std};
 use Encode;
+use CGI;
+$CGI::DISABLE_UPLOADS=1;
 
 package IkiWiki;
 
@@ -665,10 +667,6 @@ sub cgi_savesession ($) { #{{{
 sub cgi (;$$) { #{{{
 	my $q=shift;
 	my $session=shift;
-
-	eval q{use CGI};
-	error($@) if $@;
-	$CGI::DISABLE_UPLOADS=1;
 
 	if (! $q) {
 		binmode(STDIN);
