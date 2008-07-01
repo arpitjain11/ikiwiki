@@ -36,3 +36,11 @@ unless that has security implications.
 
 > I tested on unstable, and ikiwiki handled that sample rss fine,
 > generating a `ü.html`. --[[Joey]]
+
+>> I confirm that it works with ikiwiki 2.50, at least partially. The HTML output is
+>> OK, but the aggregate plugin still reports this:
+>>
+>>    processed ok at 2008-07-01 21:24:29 (invalid UTF-8 stripped from feed) (feed entities escaped)
+>>
+>> I hope that's just a minor blemish. --liw
+
