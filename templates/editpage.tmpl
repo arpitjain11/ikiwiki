@@ -61,9 +61,19 @@ Optional comment about this change:<br />
 <TMPL_VAR FORM-SUBMIT>
 <TMPL_VAR HELPONFORMATTINGLINK>
 <TMPL_IF NAME="FIELD-ATTACHMENT">
-<div id=attachment><p>
-Attach a file: <TMPL_VAR FIELD-ATTACHMENT><input name="_submit" type="submit" value="Upload" />
-</p></div>
+<div id=attachments>
+<br />
+<table><caption>Attachments</caption>
+<tr><td colspan=5><TMPL_VAR FIELD-ATTACHMENT><TMPL_VAR FIELD-UPLOAD></td></tr>
+<TMPL_LOOP NAME="ATTACHMENT_LIST">
+<tr><td><TMPL_VAR FIELD-SELECT><TMPL_VAR LINK></td><td><TMPL_VAR SIZE></td><td><TMPL_VAR MTIME></td></tr>
+</TMPL_LOOP>
+<TMPL_IF NAME="ATTACHMENT_LIST">
+<tr><td colspan=2><TMPL_VAR FIELD-LINK><TMPL_VAR FIELD-DELETE><TMPL_VAR FIELD-RENAME></td></tr>
+</TMPL_IF>
+</tr>
+</table>
+</div>
 </TMPL_IF>
 <TMPL_VAR FORM-END>
 

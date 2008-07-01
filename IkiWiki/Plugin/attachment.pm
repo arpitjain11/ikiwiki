@@ -15,12 +15,50 @@ sub checkconfig () { #{{{
 	$config{cgi_disable_uploads}=0;
 } #}}}
 
+sub attachment_location ($) {
+	my $page=shift;
+	
+	# Put the attachment in a subdir of the page it's attached
+	# to, unless that page is an "index" page.
+	$page=~s/(^|\/)index//;
+	$page.="/" if length $page;
+	
+	return $page;
+}
+
+sub attachment_list ($) {
+	my $loc=attachment_location(shift);
+
+	my @ret;
+	foreach my $f (values %pagesources) {
+		print STDERR ">>$f\n" if ! defined IkiWiki::pagetype($f);
+		if (! defined IkiWiki::pagetype($f) &&
+		    $f=~m/^\Q$loc\E[^\/]+$/ &&
+		    -e "$config{srcdir}/$f") {
+			push @ret, {
+				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'">',
+				link => $f,
+				size => (stat(_))[7],
+				mtime => displaytime($IkiWiki::pagemtime{$f}),
+			};
+		}
+	}
+
+	return @ret;
+}
+
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
 	if ($form->field("do") eq "edit") {
 		$form->field(name => 'attachment', type => 'file');
+		$form->tmpl_param("attachment_list" => [attachment_list($form->field('page'))]);
+
+		# These buttons are not put in the usual place, so
+		# is not added to the normal formbuilder button list.
+		$form->tmpl_param("field-upload" => '<input name="_submit" type="submit" value="Upload Attachment" />');
+		$form->tmpl_param("field-link" => '<input name="_submit" type="submit" value="Insert Links" />');
 	}
 	elsif ($form->title eq "preferences") {
 		my $session=$params{session};
@@ -66,15 +104,10 @@ sub formbuilder (@) { #{{{
 		# of the temp file that CGI writes the upload to.
 		my $tempfile=$q->tmpFileName($filename);
 		
-		# Put the attachment in a subdir of the page it's attached
-		# to, unless that page is an "index" page.
-		my $page=$form->field('page');
-		$page=~s/(^|\/)index//;
-		$filename=(length $page ? $page."/" : "").IkiWiki::basename($filename);
-		
-		# To untaint the filename, escape any hazardous characters,
-		# and make sure it isn't pruned.
-		$filename=IkiWiki::titlepage(IkiWiki::possibly_foolish_untaint($filename));
+		$filename=IkiWiki::titlepage(
+			IkiWiki::possibly_foolish_untaint(
+				attachment_location($form->field('page')).
+				IkiWiki::basename($filename)));
 		if (IkiWiki::file_pruned($filename, $config{srcdir})) {
 			error(gettext("bad attachment filename"));
 		}
