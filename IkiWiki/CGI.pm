@@ -305,7 +305,7 @@ sub cgi_editpage ($$) { #{{{
 	
 	# This untaint is safe because titlepage removes any problematic
 	# characters.
-	my ($page)=$form->field('page');
+	my $page=$form->field('page');
 	$page=titlepage(possibly_foolish_untaint($page));
 	if (! defined $page || ! length $page ||
 	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
