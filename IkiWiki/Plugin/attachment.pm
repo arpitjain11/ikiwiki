@@ -8,7 +8,7 @@ use CGI;
 $CGI::DISABLE_UPLOADS=0;
 	
 # TODO move to admin prefs
-$config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (* and maxsize(50kb))";
+$config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))";
 
 sub import { #{{{
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
@@ -48,12 +48,12 @@ sub formbuilder (@) { #{{{
 		if (IkiWiki::file_pruned($filename, $config{srcdir})) {
 			error(gettext("bad attachment filename"));
 		}
-
+		
 		# Use a pagespec to test that the attachment is valid.
 		if (exists $config{valid_attachments} &&
 		    length $config{valid_attachments}) {
 			my $result=pagespec_match($filename, $config{valid_attachments},
-				tempfile => $tempfile);
+				file => $tempfile);
 			if (! $result) {
 				error(gettext("attachment rejected")." ($result)");
 			}
@@ -101,15 +101,15 @@ sub match_maxsize ($$;@) { #{{{
 	}
 
 	my %params=@_;
-	if (! exists $params{tempfile}) {
+	if (! exists $params{file}) {
 		return IkiWiki::FailReason->new("no tempfile specified");
 	}
 
-	if (-s $params{tempfile} > $maxsize) {
-		return IkiWiki::FailReason->new("attachment too large");
+	if (-s $params{file} > $maxsize) {
+		return IkiWiki::FailReason->new("file too large");
 	}
 	else {
-		return IkiWiki::SuccessReason->new("attachment size ok");
+		return IkiWiki::SuccessReason->new("file not too large");
 	}
 } #}}}
 
@@ -121,15 +121,26 @@ sub match_minsize ($$;@) { #{{{
 	}
 
 	my %params=@_;
-	if (! exists $params{tempfile}) {
+	if (! exists $params{file}) {
 		return IkiWiki::FailReason->new("no tempfile specified");
 	}
 
-	if (-s $params{tempfile} < $minsize) {
-		return IkiWiki::FailReason->new("attachment too small");
+	if (-s $params{file} < $minsize) {
+		return IkiWiki::FailReason->new("file too small");
 	}
 	else {
-		return IkiWiki::SuccessReason->new("attachment size ok");
+		return IkiWiki::SuccessReason->new("file not too small");
+	}
+} #}}}
+
+sub match_ispage ($$;@) { #{{{
+	my $filename=shift;
+
+	if (IkiWiki::pagetype($filename)) {
+		return IkiWiki::SuccessReason->new("file is a wiki page");
+	}
+	else {
+		return IkiWiki::FailReason->new("file is not a wiki page");
 	}
 } #}}}
 
