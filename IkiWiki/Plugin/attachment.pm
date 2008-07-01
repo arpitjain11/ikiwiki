@@ -102,7 +102,7 @@ sub match_maxsize ($$;@) { #{{{
 
 	my %params=@_;
 	if (! exists $params{file}) {
-		return IkiWiki::FailReason->new("no tempfile specified");
+		return IkiWiki::FailReason->new("no file specified");
 	}
 
 	if (-s $params{file} > $maxsize) {
@@ -122,7 +122,7 @@ sub match_minsize ($$;@) { #{{{
 
 	my %params=@_;
 	if (! exists $params{file}) {
-		return IkiWiki::FailReason->new("no tempfile specified");
+		return IkiWiki::FailReason->new("no file specified");
 	}
 
 	if (-s $params{file} < $minsize) {
