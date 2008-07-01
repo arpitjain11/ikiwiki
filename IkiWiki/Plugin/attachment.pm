@@ -227,7 +227,7 @@ sub humansize ($) { #{{{
 
 	foreach my $unit (reverse sort { $units{$a} <=> $units{$b} || $b cmp $a } keys %units) {
 		if ($size / $units{$unit} > 0.25) {
-			return (int($size / $units{$unit} * 100)/100)."$unit";
+			return (int($size / $units{$unit} * 10)/10)."$unit";
 		}
 	}
 	return $size; # near zero, or negative
