@@ -32,7 +32,7 @@ sub formbuilder (@) { #{{{
 
 	if ($form->submitted eq "Upload") {
 		my $q=$params{cgi};
-		my $filename=IkiWiki::basename($q->param('attachment'));
+		my $filename=$q->param('attachment');
 		if (! defined $filename || ! length $filename) {
 			# no file, so do nothing
 			return;
@@ -46,11 +46,11 @@ sub formbuilder (@) { #{{{
 		# to, unless that page is an "index" page.
 		my $page=$form->field('page');
 		$page=~s/(^|\/)index//;
-		$filename="$page/$filename";
+		$filename=$page."/".IkiWiki::basename($filename);
 		
 		# To untaint the filename, escape any hazardous characters,
 		# and make sure it isn't pruned.
-		$filename=IkiWiki::titlepage(IkiWiki::possibly_foolish_untaint($filename);
+		$filename=IkiWiki::titlepage(IkiWiki::possibly_foolish_untaint($filename));
 		if (IkiWiki::file_pruned($filename, $config{srcdir})) {
 			error(gettext("bad attachment filename"));
 		}
@@ -71,7 +71,7 @@ sub formbuilder (@) { #{{{
 
 		# Move the attachment into place.
 		# Try to use a fast rename; fall back to copying.
-		prep_writefile($filename, $config{srcdir});
+		IkiWiki::prep_writefile($filename, $config{srcdir});
 		unlink($config{srcdir}."/".$filename);
 		if (! rename($tempfile, $config{srcdir}."/".$filename)) {
 			my $fh=$q->upload('attachment');
