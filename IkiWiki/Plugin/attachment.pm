@@ -65,6 +65,10 @@ sub formbuilder (@) { #{{{
 			}
 		}
 
+		# Also check that the user is allowed to edit it by other
+		# policies.
+		IkiWiki::check_canedit($filename, $q, $params{session}, 1);
+
 		# Move the attachment into place.
 		# Try to use a fast rename; fall back to copying.
 		prep_writefile($filename, $config{srcdir});
