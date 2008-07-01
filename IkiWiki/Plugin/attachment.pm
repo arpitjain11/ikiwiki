@@ -15,46 +15,12 @@ sub checkconfig () { #{{{
 	$config{cgi_disable_uploads}=0;
 } #}}}
 
-sub attachment_location ($) {
-	my $page=shift;
-	
-	# Put the attachment in a subdir of the page it's attached
-	# to, unless that page is an "index" page.
-	$page=~s/(^|\/)index//;
-	$page.="/" if length $page;
-	
-	return $page;
-}
-
-sub attachment_list ($) {
-	my $page=shift;
-	my $loc=attachment_location($page);
-
-	my @ret;
-	foreach my $f (values %pagesources) {
-		if (! defined IkiWiki::pagetype($f) &&
-		    $f=~m/^\Q$loc\E[^\/]+$/ &&
-		    -e "$config{srcdir}/$f") {
-			push @ret, {
-				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'">',
-				link => htmllink($page, $page, $f, noimageinline => 1),
-				size => humansize((stat(_))[7]),
-				mtime => displaytime($IkiWiki::pagemtime{$f}),
-			};
-		}
-	}
-
-	return @ret;
-}
-
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
 	if ($form->field("do") eq "edit") {
 		$form->field(name => 'attachment', type => 'file');
-		$form->tmpl_param("attachment_list" => [attachment_list($form->field('page'))]);
-
 		# These buttons are not put in the usual place, so
 		# is not added to the normal formbuilder button list.
 		$form->tmpl_param("field-upload" => '<input name="_submit" type="submit" value="Upload Attachment" />');
@@ -91,14 +57,10 @@ sub formbuilder (@) { #{{{
 
 	return if $form->field("do") ne "edit";
 
-	if ($form->submitted eq "Upload" || $form->submitted eq "Save Page") {
+	my $filename=$q->param('attachment');
+	if (defined $filename && length $filename &&
+            ($form->submitted eq "Upload Attachment" || $form->submitted eq "Save Page")) {
 		my $session=$params{session};
-
-		my $filename=$q->param('attachment');
-		if (! defined $filename || ! length $filename) {
-			# no file, so do nothing
-			return;
-		}
 		
 		# This is an (apparently undocumented) way to get the name
 		# of the temp file that CGI writes the upload to.
@@ -139,7 +101,11 @@ sub formbuilder (@) { #{{{
 		# Try to use a fast rename; fall back to copying.
 		IkiWiki::prep_writefile($filename, $config{srcdir});
 		unlink($config{srcdir}."/".$filename);
-		if (! rename($tempfile, $config{srcdir}."/".$filename)) {
+		if (rename($tempfile, $config{srcdir}."/".$filename)) {
+			# The temp file has tight permissions; loosen up.
+			chmod(0666 & ~umask, $config{srcdir}."/".$filename);
+		}
+		else {
 			my $fh=$q->upload('attachment');
 			if (! defined $fh || ! ref $fh) {
 				error("failed to get filehandle");
@@ -172,7 +138,46 @@ sub formbuilder (@) { #{{{
 			value => $form->field('editcontent')."\n\n".$add,
 			force => 1);
 	}
+	
+	# Generate the attachment list only after having added any new
+	# attachments.
+	$form->tmpl_param("attachment_list" => [attachment_list($form->field('page'))]);
 } # }}}
+
+sub attachment_location ($) {
+	my $page=shift;
+	
+	# Put the attachment in a subdir of the page it's attached
+	# to, unless that page is an "index" page.
+	$page=~s/(^|\/)index//;
+	$page.="/" if length $page;
+	
+	return $page;
+}
+
+sub attachment_list ($) {
+	my $page=shift;
+	my $loc=attachment_location($page);
+
+	my @ret;
+	foreach my $f (values %pagesources) {
+		if (! defined IkiWiki::pagetype($f) &&
+		    $f=~m/^\Q$loc\E[^\/]+$/ &&
+		    -e "$config{srcdir}/$f") {
+			push @ret, {
+				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'">',
+				link => htmllink($page, $page, $f, noimageinline => 1),
+				size => humansize((stat(_))[7]),
+				mtime => displaytime($IkiWiki::pagemtime{$f}),
+				mtime_raw => $IkiWiki::pagemtime{$f},
+			};
+		}
+	}
+
+	# Sort newer attachments to the top of the list, so a newly-added
+	# attachment appears just before the form used to add it.
+	return sort { $b->{mtime_raw} <=> $a->{mtime_raw} || $a->{link} cmp $b->{link} } @ret;
+}
 
 my %units=(		# size in bytes
 	B		=> 1,
@@ -215,7 +220,7 @@ sub parsesize ($) { #{{{
 	my $base=$size+0; # force to number
 	use warnings;
 	foreach my $unit (sort keys %units) {
-		if ($size=~/\Q$unit\E/i) {
+		if ($size=~/\d\Q$unit\E$/i) {
 			return $base * $units{$unit};
 		}
 	}
@@ -248,7 +253,7 @@ sub match_maxsize ($$;@) { #{{{
 	}
 
 	if (-s $params{file} > $maxsize) {
-		return IkiWiki::FailReason->new("file too large");
+		return IkiWiki::FailReason->new("file too large (".(-s $params{file})." >  $maxsize)");
 	}
 	else {
 		return IkiWiki::SuccessReason->new("file not too large");
