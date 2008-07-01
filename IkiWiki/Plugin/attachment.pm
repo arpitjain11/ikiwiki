@@ -54,6 +54,8 @@ sub formbuilder (@) { #{{{
 
 	if ($form->submitted eq "Upload") {
 		my $q=$params{cgi};
+		my $session=$params{session};
+
 		my $filename=$q->param('attachment');
 		if (! defined $filename || ! length $filename) {
 			# no file, so do nothing
@@ -68,7 +70,7 @@ sub formbuilder (@) { #{{{
 		# to, unless that page is an "index" page.
 		my $page=$form->field('page');
 		$page=~s/(^|\/)index//;
-		$filename=$page."/".IkiWiki::basename($filename);
+		$filename=(length $page ? $page."/" : "").IkiWiki::basename($filename);
 		
 		# To untaint the filename, escape any hazardous characters,
 		# and make sure it isn't pruned.
@@ -79,7 +81,7 @@ sub formbuilder (@) { #{{{
 		
 		# Check that the user is allowed to edit a page with the
 		# name of the attachment.
-		IkiWiki::check_canedit($filename, $q, $params{session}, 1);
+		IkiWiki::check_canedit($filename, $q, $session, 1);
 		
 		# Use a special pagespec to test that the attachment is valid.
 		my $allowed=1;
@@ -97,7 +99,7 @@ sub formbuilder (@) { #{{{
 			error(gettext("attachment rejected")." ($allowed)");
 		}
 
-		# Needed for fast_file_copy.
+		# Needed for fast_file_copy and for rendering below.
 		require IkiWiki::Render;
 
 		# Move the attachment into place.
@@ -110,14 +112,25 @@ sub formbuilder (@) { #{{{
 				error("failed to get filehandle");
 			}
 			binmode($fh);
+			print STDERR "copying $filename\n";
 			writefile($filename, $config{srcdir}, undef, 1, sub {
 				IkiWiki::fast_file_copy($tempfile, $filename, $fh, @_);
 			});
 		}
 
-		# TODO add to vcs
-		
-		# TODO trigger a wiki build if there's no vcs
+		# Check the attachment in and trigger a wiki refresh.
+		if ($config{rcs}) {
+			IkiWiki::rcs_add($filename);
+			IkiWiki::disable_commit_hook();
+			IkiWiki::rcs_commit($filename, gettext("attachment upload"),
+				IkiWiki::rcs_prepedit($filename),
+				$session->param("name"), $ENV{REMOTE_ADDR});
+			IkiWiki::enable_commit_hook();
+			IkiWiki::rcs_update();
+		}
+		print STDERR "refreshing\n";
+		IkiWiki::refresh();
+		IkiWiki::saveindex();
 	}
 } # }}}
 
