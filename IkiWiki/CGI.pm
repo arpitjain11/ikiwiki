@@ -281,7 +281,6 @@ sub cgi_editpage ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
-		title => "editpage",
 		fields => \@fields,
 		charset => "utf-8",
 		method => 'POST',
