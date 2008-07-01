@@ -27,17 +27,17 @@ sub attachment_location ($) {
 }
 
 sub attachment_list ($) {
-	my $loc=attachment_location(shift);
+	my $page=shift;
+	my $loc=attachment_location($page);
 
 	my @ret;
 	foreach my $f (values %pagesources) {
-		print STDERR ">>$f\n" if ! defined IkiWiki::pagetype($f);
 		if (! defined IkiWiki::pagetype($f) &&
 		    $f=~m/^\Q$loc\E[^\/]+$/ &&
 		    -e "$config{srcdir}/$f") {
 			push @ret, {
 				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'">',
-				link => $f,
+				link => htmllink($page, $page, $f, noimageinline => 1),
 				size => (stat(_))[7],
 				mtime => displaytime($IkiWiki::pagemtime{$f}),
 			};
@@ -87,11 +87,11 @@ sub formbuilder_setup (@) { #{{{
 sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
+	my $q=$params{cgi};
 
 	return if $form->field("do") ne "edit";
 
 	if ($form->submitted eq "Upload" || $form->submitted eq "Save Page") {
-		my $q=$params{cgi};
 		my $session=$params{session};
 
 		my $filename=$q->param('attachment');
@@ -162,6 +162,15 @@ sub formbuilder (@) { #{{{
 		}
 		IkiWiki::refresh();
 		IkiWiki::saveindex();
+	}
+	elsif ($form->submitted eq "Insert Links") {
+		my $add="";
+		foreach my $f ($q->param("attachment_select")) {
+			$add.="[[$f]]\n";
+		}
+		$form->field(name => 'editcontent',
+			value => $form->field('editcontent')."\n\n".$add,
+			force => 1);
 	}
 } # }}}
 
