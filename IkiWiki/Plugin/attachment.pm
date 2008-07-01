@@ -6,7 +6,7 @@ use strict;
 use IkiWiki 2.00;
 use CGI;
 $CGI::DISABLE_UPLOADS=0;
-	
+
 # TODO move to admin prefs
 $config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))";
 
@@ -49,6 +49,12 @@ sub formbuilder (@) { #{{{
 			error(gettext("bad attachment filename"));
 		}
 		
+		# XXX Put the attachment in a subdir corresponding to the
+		# page being edited.
+		# The editpage code has already checked that
+		# $form->field('page') is valid.
+		$filename="XXX/$filename";
+		
 		# Use a pagespec to test that the attachment is valid.
 		if (exists $config{valid_attachments} &&
 		    length $config{valid_attachments}) {
@@ -58,15 +64,25 @@ sub formbuilder (@) { #{{{
 				error(gettext("attachment rejected")." ($result)");
 			}
 		}
+
+		# Move the attachment into place.
+		# Try to use a fast rename; fall back to copying.
+		prep_writefile($filename, $config{srcdir});
+		unlink($config{srcdir}."/".$filename);
+		if (! rename($tempfile, $config{srcdir}."/".$filename)) {
+			my $fh=$q->upload('attachment');
+			if (! defined $fh || ! ref $fh) {
+				error("failed to get filehandle");
+			}
+			binmode($fh);
+			writefile($filename, $config{srcdir}, undef, 1, sub {
+				IkiWiki::fast_file_copy($tempfile, $filename, $fh, @_);
+			});
+		}
+
+		# TODO add to vcs
 		
-		my $fh=$q->upload('attachment');
-		if (! defined $fh || ! ref $fh) {
-			error("failed to get filehandle");
-		}
-		binmode($fh);
-		while (<$fh>) {
-			print STDERR $_."\n";
-		}
+		# TODO trigger a wiki build if there's no vcs
 	}
 } # }}}
 
