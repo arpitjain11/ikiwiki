@@ -60,6 +60,11 @@ Optional comment about this change:<br />
 </TMPL_IF>
 <TMPL_VAR FORM-SUBMIT>
 <TMPL_VAR HELPONFORMATTINGLINK>
+<TMPL_IF NAME="FIELD-ATTACHMENT">
+<div id=attachment><p>
+Attach a file: <TMPL_VAR FIELD-ATTACHMENT><input name="_submit" type="submit" value="Upload" />
+</p></div>
+</TMPL_IF>
 <TMPL_VAR FORM-END>
 
 <TMPL_IF NAME="PAGE_PREVIEW">
