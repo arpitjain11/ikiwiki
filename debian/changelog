@@ -1,6 +1,9 @@
 ikiwiki (2.52) UNRELEASED; urgency=low
 
-  * Configure CGI.pm to disable file uploads by default.
+  * attachment: New plugin for uploading and managing attachments.
+    (Sponsored by The TOVA Company.)
+  * If attachments are not enabled, configure CGI.pm to disable file
+    uploads by default. (An anti-DOS measure.)
 
  -- Joey Hess <joeyh@debian.org>  Mon, 30 Jun 2008 19:56:28 -0400
 
