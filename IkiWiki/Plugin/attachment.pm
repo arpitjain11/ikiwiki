@@ -4,18 +4,21 @@ package IkiWiki::Plugin::attachment;
 use warnings;
 use strict;
 use IkiWiki 2.00;
-use CGI;
-$CGI::DISABLE_UPLOADS=0;
 
 # TODO move to admin prefs
 $config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))";
 
 sub import { #{{{
+	hook(type => "checkconfig", id => "attachment", call => \&checkconfig);
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "attachment", call => \&formbuilder);
 } # }}}
 
-sub formbuilder_setup { #{{{
+sub checkconfig () { #{{{
+	$config{cgi_disable_uploads}=0;
+} #}}}
+
+sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
