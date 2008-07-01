@@ -42,21 +42,21 @@ sub formbuilder (@) { #{{{
 		# of the temp file that CGI writes the upload to.
 		my $tempfile=$q->tmpFileName($filename);
 		
+		# Put the attachment in a subdir of the page it's attached
+		# to, unless that page is an "index" page.
+		my $page=$form->field('page');
+		$page=~s/(^|\/)index//;
+		$filename="$page/$filename";
+		
 		# To untaint the filename, escape any hazardous characters,
 		# and make sure it isn't pruned.
-		$filename=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($filename));
+		$filename=IkiWiki::titlepage(IkiWiki::possibly_foolish_untaint($filename);
 		if (IkiWiki::file_pruned($filename, $config{srcdir})) {
 			error(gettext("bad attachment filename"));
 		}
 		
-		# XXX Put the attachment in a subdir corresponding to the
-		# page being edited.
-		# The editpage code has already checked that
-		# $form->field('page') is valid.
-		$filename="XXX/$filename";
-
-		# Also check that the user is allowed to edit it by other
-		# policies.
+		# Check that the user is allowed to edit a page with the
+		# name of the attachment.
 		IkiWiki::check_canedit($filename, $q, $params{session}, 1);
 		
 		# Use a pagespec to test that the attachment is valid.
