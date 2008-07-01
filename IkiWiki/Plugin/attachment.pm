@@ -8,7 +8,7 @@ use CGI;
 $CGI::DISABLE_UPLOADS=0;
 	
 # TODO move to admin prefs
-$config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (* and maxsize(.50kb))";
+$config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (* and maxsize(50kb))";
 
 sub import { #{{{
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
@@ -49,12 +49,14 @@ sub formbuilder (@) { #{{{
 			error(gettext("bad attachment filename"));
 		}
 
-		# Check that the attachment matches the configured
-		# pagespec.
-		my $result=pagespec_match($filename, $config{valid_attachments},
-			tempfile => $tempfile);
-		if (! $result) {
-			error(gettext("attachment rejected")." ($result)");
+		# Use a pagespec to test that the attachment is valid.
+		if (exists $config{valid_attachments} &&
+		    length $config{valid_attachments}) {
+			my $result=pagespec_match($filename, $config{valid_attachments},
+				tempfile => $tempfile);
+			if (! $result) {
+				error(gettext("attachment rejected")." ($result)");
+			}
 		}
 		
 		my $fh=$q->upload('attachment');
@@ -75,20 +77,20 @@ sub parsesize { #{{{
 	no warnings;
 	my $base=$size+0; # force to number
 	use warnings;
-	my $exponent=1;
+	my $multiple=1;
 	if ($size=~/kb?$/i) {
-		$exponent=10;
+		$multiple=2**10;
 	}
 	elsif ($size=~/mb?$/i) {
-		$exponent=20;
+		$multiple=2**20;
 	}
 	elsif ($size=~/gb?$/i) {
-		$exponent=30;
+		$multiple=2**30;
 	}
 	elsif ($size=~/tb?$/i) {
-		$exponent=40;
+		$multiple=2**40;
 	}
-	return $base * 2**$exponent;
+	return $base * $multiple;
 } #}}}
 
 sub match_maxsize ($$;@) { #{{{
