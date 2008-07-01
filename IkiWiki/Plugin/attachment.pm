@@ -54,6 +54,10 @@ sub formbuilder (@) { #{{{
 		# The editpage code has already checked that
 		# $form->field('page') is valid.
 		$filename="XXX/$filename";
+
+		# Also check that the user is allowed to edit it by other
+		# policies.
+		IkiWiki::check_canedit($filename, $q, $params{session}, 1);
 		
 		# Use a pagespec to test that the attachment is valid.
 		if (exists $config{valid_attachments} &&
@@ -64,10 +68,6 @@ sub formbuilder (@) { #{{{
 				error(gettext("attachment rejected")." ($result)");
 			}
 		}
-
-		# Also check that the user is allowed to edit it by other
-		# policies.
-		IkiWiki::check_canedit($filename, $q, $params{session}, 1);
 
 		# Move the attachment into place.
 		# Try to use a fast rename; fall back to copying.
