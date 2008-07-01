@@ -667,10 +667,11 @@ sub cgi (;$$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
+	eval q{use CGI};
+	error($@) if $@;
+	$CGI::DISABLE_UPLOADS=1;
+
 	if (! $q) {
-		eval q{use CGI};
-		error($@) if $@;
-	
 		binmode(STDIN);
 		$q=CGI->new;
 		binmode(STDIN, ":utf8");
