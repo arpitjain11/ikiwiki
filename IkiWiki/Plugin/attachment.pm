@@ -38,7 +38,7 @@ sub attachment_list ($) {
 			push @ret, {
 				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'">',
 				link => htmllink($page, $page, $f, noimageinline => 1),
-				size => (stat(_))[7],
+				size => humansize((stat(_))[7]),
 				mtime => displaytime($IkiWiki::pagemtime{$f}),
 			};
 		}
@@ -174,32 +174,70 @@ sub formbuilder (@) { #{{{
 	}
 } # }}}
 
-package IkiWiki::PageSpec;
+my %units=(		# size in bytes
+	B		=> 1,
+	byte		=> 1,
+	KB		=> 2 ** 10,
+	kilobyte 	=> 2 ** 10,
+	K		=> 2 ** 10,
+	KB		=> 2 ** 10,
+	kilobyte 	=> 2 ** 10,
+	M		=> 2 ** 20,
+	MB		=> 2 ** 20,
+	megabyte	=> 2 ** 20,
+	G		=> 2 ** 30,
+	GB		=> 2 ** 30,
+	gigabyte	=> 2 ** 30,
+	T		=> 2 ** 40,
+	TB		=> 2 ** 40,
+	terabyte	=> 2 ** 40,
+	P		=> 2 ** 50,
+	PB		=> 2 ** 50,
+	petabyte	=> 2 ** 50,
+	E		=> 2 ** 60,
+	EB		=> 2 ** 60,
+	exabyte		=> 2 ** 60,
+	Z		=> 2 ** 70,
+	ZB		=> 2 ** 70,
+	zettabyte	=> 2 ** 70,
+	Y		=> 2 ** 80,
+	YB		=> 2 ** 80,
+	yottabyte	=> 2 ** 80,
+	# ikiwiki, if you find you need larger data quantities, either modify
+	# yourself to add them, or travel back in time to 2008 and kill me.
+	#   -- Joey
+);
 
 sub parsesize ($) { #{{{
 	my $size=shift;
+
 	no warnings;
 	my $base=$size+0; # force to number
 	use warnings;
-	my $multiple=1;
-	if ($size=~/kb?$/i) {
-		$multiple=2**10;
+	foreach my $unit (sort keys %units) {
+		if ($size=~/\Q$unit\E/i) {
+			return $base * $units{$unit};
+		}
 	}
-	elsif ($size=~/mb?$/i) {
-		$multiple=2**20;
-	}
-	elsif ($size=~/gb?$/i) {
-		$multiple=2**30;
-	}
-	elsif ($size=~/tb?$/i) {
-		$multiple=2**40;
-	}
-	return $base * $multiple;
+	return $base;
 } #}}}
+
+sub humansize ($) { #{{{
+	my $size=shift;
+
+	foreach my $unit (reverse sort { $units{$a} <=> $units{$b} || $b cmp $a } keys %units) {
+		if ($size / $units{$unit} > 0.25) {
+			return (int($size / $units{$unit} * 100)/100)."$unit";
+		}
+	}
+	return $size; # near zero, or negative
+} #}}}
+
+package IkiWiki::PageSpec;
 
 sub match_maxsize ($$;@) { #{{{
 	shift;
-	my $maxsize=eval{parsesize(shift)};
+	my $maxsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
 	if ($@) {
 		return IkiWiki::FailReason->new("unable to parse maxsize (or number too large)");
 	}
@@ -219,7 +257,7 @@ sub match_maxsize ($$;@) { #{{{
 
 sub match_minsize ($$;@) { #{{{
 	shift;
-	my $minsize=eval{parsesize(shift)};
+	my $minsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
 	if ($@) {
 		return IkiWiki::FailReason->new("unable to parse minsize (or number too large)");
 	}
