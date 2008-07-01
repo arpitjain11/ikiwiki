@@ -5,9 +5,6 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-# TODO move to admin prefs
-$config{valid_attachments}="(*.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))";
-
 sub import { #{{{
 	hook(type => "checkconfig", id => "attachment", call => \&checkconfig);
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
@@ -22,9 +19,31 @@ sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
-	return if $form->field("do") ne "edit";
+	if ($form->field("do") eq "edit") {
+		$form->field(name => 'attachment', type => 'file');
+	}
+	elsif ($form->title eq "preferences") {
+		my $session=$params{session};
+		my $user_name=$session->param("name");
 
-	$form->field(name => 'attachment', type => 'file');
+		$form->field(name => "allowed_attachments", size => 50,
+			fieldset => "admin",
+			comment => "(".htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).")");
+		if (! IkiWiki::is_admin($user_name)) {
+			$form->field(name => "allowed_attachments", type => "hidden");
+		}
+                if (! $form->submitted) {
+			$form->field(name => "allowed_attachments", force => 1,
+				value => IkiWiki::userinfo_get($user_name, "allowed_attachments"));
+                }
+		if ($form->submitted && $form->submitted eq 'Save Preferences') {
+			if (defined $form->field("allowed_attachments")) {
+				IkiWiki::userinfo_set($user_name, "allowed_attachments",
+				$form->field("allowed_attachments")) ||
+					error("failed to set allowed_attachments");
+			}
+		}
+	}
 } #}}}
 
 sub formbuilder (@) { #{{{
@@ -62,14 +81,20 @@ sub formbuilder (@) { #{{{
 		# name of the attachment.
 		IkiWiki::check_canedit($filename, $q, $params{session}, 1);
 		
-		# Use a pagespec to test that the attachment is valid.
-		if (exists $config{valid_attachments} &&
-		    length $config{valid_attachments}) {
-			my $result=pagespec_match($filename, $config{valid_attachments},
-				file => $tempfile);
-			if (! $result) {
-				error(gettext("attachment rejected")." ($result)");
+		# Use a special pagespec to test that the attachment is valid.
+		my $allowed=1;
+		foreach my $admin (@{$config{adminuser}}) {
+			my $allowed_attachments=IkiWiki::userinfo_get($admin, "allowed_attachments");
+			if (defined $allowed_attachments &&
+			    length $allowed_attachments) {
+				$allowed=pagespec_match($filename,
+					$allowed_attachments,
+					file => $tempfile);
+				last if $allowed;
 			}
+		}
+		if (! $allowed) {
+			error(gettext("attachment rejected")." ($allowed)");
 		}
 
 		# Needed for fast_file_copy.
@@ -98,7 +123,7 @@ sub formbuilder (@) { #{{{
 
 package IkiWiki::PageSpec;
 
-sub parsesize { #{{{
+sub parsesize ($) { #{{{
 	my $size=shift;
 	no warnings;
 	my $base=$size+0; # force to number
