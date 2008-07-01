@@ -1,0 +1,43 @@
+[[template id=plugin name=conditional core=1 author="[[Joey]]"]]
+[[tag type/useful]]
+
+This plugin allows files to be uploaded to the wiki over the web.
+
+For each page `foo`, files in the subdirectory `foo/` are treated as
+attachments of that page. Attachments can be uploaded and managed as
+part of the interface for editing a page.
+
+Warning: Do not enable this plugin on publically editable wikis, unless you
+take care to lock down the types and sizes of files that can be uploaded.
+Bear in mind that if you let anyone upload a particular kind of file
+("*.mp3" files, say), then someone can abuse your wiki in at least three ways:
+
+1. By uploading many mp3 files, wasting your disk space.
+2. By uploading mp3 files that attempt to exploit security holes
+   in web browsers or other players.
+3. By uploading files that claim to be mp3 files, but are really some 
+   other kind of file. Some web browsers may display a `foo.mp3` that
+   contains html as a web page; including running any malicious javascript
+   embedded in that page.
+
+To provide a way to combat these abuses, the wiki admin can specify a
+[[ikiwiki/PageSpec]] on their preferences page, to control what types of
+attachments can be uploaded. The regular [[ikiwiki/PageSpec]] syntax is
+expanded with additional tests.
+
+For example, to limit arbitrary files to 50 kilobtes, but allow
+larger mp3 files to be uploaded, a test like this could be used:
+  
+	(*.mp3 and maxsize(15mb)) or (* and maxsize(50kb))
+
+The following additional tests are available:
+
+* maxsize(size)
+
+  Tests whether the attachment is no larger than the specified size.
+  The size defaults to being in bytes, but "kb", "mb", "gb" etc can be
+  used to specify the units.
+  
+* minsize(size)
+
+  Tests whether the attachment is no smaller than the specified size.
