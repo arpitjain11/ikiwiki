@@ -52,7 +52,7 @@ sub formbuilder (@) { #{{{
 
 	return if $form->field("do") ne "edit";
 
-	if ($form->submitted eq "Upload") {
+	if ($form->submitted eq "Upload" || $form->submitted eq "Save Page") {
 		my $q=$params{cgi};
 		my $session=$params{session};
 
@@ -112,7 +112,6 @@ sub formbuilder (@) { #{{{
 				error("failed to get filehandle");
 			}
 			binmode($fh);
-			print STDERR "copying $filename\n";
 			writefile($filename, $config{srcdir}, undef, 1, sub {
 				IkiWiki::fast_file_copy($tempfile, $filename, $fh, @_);
 			});
@@ -128,7 +127,6 @@ sub formbuilder (@) { #{{{
 			IkiWiki::enable_commit_hook();
 			IkiWiki::rcs_update();
 		}
-		print STDERR "refreshing\n";
 		IkiWiki::refresh();
 		IkiWiki::saveindex();
 	}
