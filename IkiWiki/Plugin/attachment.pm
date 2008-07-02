@@ -18,6 +18,7 @@ sub checkconfig () { #{{{
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
+	my $q=$params{cgi};
 
 	if ($form->field("do") eq "edit") {
 		$form->field(name => 'attachment', type => 'file');
@@ -25,6 +26,20 @@ sub formbuilder_setup (@) { #{{{
 		# are not added to the normal formbuilder button list.
 		$form->tmpl_param("field-upload" => '<input name="_submit" type="submit" value="Upload Attachment" />');
 		$form->tmpl_param("field-link" => '<input name="_submit" type="submit" value="Insert Links" />');
+
+		# Add the javascript from the toggle plugin;
+		# the attachments interface uses it to toggle visibility.
+		require IkiWiki::Plugin::toggle;
+		$form->tmpl_param("javascript" => $IkiWiki::Plugin::toggle::javascript);
+		# Start with the attachments interface toggled invisible,
+		# but if it was used, keep it open.
+		if ($form->submitted ne "Upload Attachment" &&
+		    ! length $q->param("attachment_select")) {
+			$form->tmpl_param("attachments-class" => "toggleable");
+		}
+		else {
+			$form->tmpl_param("attachments-class" => "toggleable-open");
+		}
 	}
 	elsif ($form->title eq "preferences") {
 		my $session=$params{session};
@@ -136,7 +151,7 @@ sub formbuilder (@) { #{{{
 		}
 		$form->field(name => 'editcontent',
 			value => $form->field('editcontent')."\n\n".$add,
-			force => 1);
+			force => 1) if length $add;
 	}
 	
 	# Generate the attachment list only after having added any new
