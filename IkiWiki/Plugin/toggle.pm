@@ -9,7 +9,7 @@ use IkiWiki 2.00;
 # of css to hide toggleables, to avoid any flashing on page load. The css
 # is only emitted after the javascript tests that it's going to be able to
 # show the toggleables.
-my $javascript=<<'EOF';
+our $javascript=<<'EOF';
 <script type="text/javascript">
 <!--
 if (document.getElementById && document.getElementsByTagName && document.createTextNode) {
@@ -21,7 +21,8 @@ function inittoggle() {
 	var as = getElementsByClass('toggle');
 	for (var i = 0; i < as.length; i++) {
 		var id = as[i].href.match(/#(\w.+)/)[1];
-		document.getElementById(id).style.display="none";
+		if (document.getElementById(id).className == "toggleable")
+			document.getElementById(id).style.display="none";
 		as[i].onclick = function() {
 			toggle(this);
 			return false;
