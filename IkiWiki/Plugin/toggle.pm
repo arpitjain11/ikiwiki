@@ -81,17 +81,11 @@ sub preprocess_toggle (@) { #{{{
 	my %params=(id => "default", text => "more", @_);
 
 	my $id=genid($params{page}, $params{id});
-	if (! $params{preview}) {
-		return "<a class=\"toggle\" href=\"#$id\">$params{text}</a>";
-	}
-	else {
-		return "$params{text} ".
-			gettext("(not toggleable in preview mode)");
-	}
+	return "<a class=\"toggle\" href=\"#$id\">$params{text}</a>";
 } # }}}
 
 sub preprocess_toggleable (@) { #{{{
-	my %params=(id => "default", text => "", @_);
+	my %params=(id => "default", text => "", open => "no", @_);
 
 	# Preprocess the text to expand any preprocessor directives
 	# embedded inside it.
@@ -99,19 +93,20 @@ sub preprocess_toggleable (@) { #{{{
 		IkiWiki::filter($params{page}, $params{destpage}, $params{text}));
 	
 	my $id=genid($params{page}, $params{id});
+	my $class=(lc($params{open}) ne "yes") ? "toggleable" : "toggleable-open";
 
 	# Should really be a postprocessor directive, oh well. Work around
 	# markdown's dislike of markdown inside a <div> with various funky
 	# whitespace.
 	my ($indent)=$params{text}=~/( +)$/;
 	$indent="" unless defined $indent;
-	return "<div class=\"toggleable\" id=\"$id\"></div>\n\n$params{text}\n$indent<div class=\"toggleableend\"></div>";
+	return "<div class=\"$class\" id=\"$id\"></div>\n\n$params{text}\n$indent<div class=\"toggleableend\"></div>";
 } # }}}
 
 sub format (@) { #{{{
         my %params=@_;
 
-	if ($params{content}=~s!(<div class="toggleable" id="[^"]+">)</div>!$1!g) {
+	if ($params{content}=~s!(<div class="toggleable(?:-open)?" id="[^"]+">)</div>!$1!g) {
 		$params{content}=~s/<div class="toggleableend">//g;
 		if (! ($params{content}=~s!^<\/body>!$javascript</body>!m)) {
 			# no </body> tag, probably in preview mode
