@@ -180,7 +180,7 @@ sub attachment_list ($) {
 		    $f=~m/^\Q$loc\E[^\/]+$/ &&
 		    -e "$config{srcdir}/$f") {
 			push @ret, {
-				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'">',
+				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'" />',
 				link => htmllink($page, $page, $f, noimageinline => 1),
 				size => humansize((stat(_))[7]),
 				mtime => displaytime($IkiWiki::pagemtime{$f}),
