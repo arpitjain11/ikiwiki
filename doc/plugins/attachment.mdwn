@@ -20,51 +20,9 @@ Bear in mind that if you let anyone upload a particular kind of file
    contains html as a web page; including running any malicious javascript
    embedded in that page.
 
-To provide a way to combat these abuses, the wiki admin can specify a
-[[ikiwiki/PageSpec]] on their preferences page, to control what types of
-attachments can be uploaded, and by whom. The regular [[ikiwiki/PageSpec]]
-syntax is expanded with additional tests.
+If you enable this plugin, be sure to lock that down, by entering a
+[[special_PageSpec|ikiwiki/pagespec/attachment]] in the "Allowed
+Attachments" field of the wiki admin's preferences page.
 
-For example, to limit arbitrary files to 50 kilobytes, but allow
-larger mp3 files to be uploaded by joey, a test like this could be
-used:
-  
-	(user(joey) and *.mp3 and mimetype(audio/mpeg) and maxsize(15mb)) or (!ispage() and maxsize(50kb))
-
-The following additional tests are available:
-
-* maxsize(size)
-
-  Tests whether the attachment is no larger than the specified size.
-  The size defaults to being in bytes, but "kb", "mb", "gb" etc can be
-  used to specify the units.
-  
-* minsize(size)
-
-  Tests whether the attachment is no smaller than the specified size.
-
-* ispage()
-
-  Tests whether the attachment will be treated by ikiwiki as a wiki page.
-  (Ie, if it has an extension of ".mdwn", or of any other enabled page
-  format).
-
-  So, if you don't want to allow wiki pages to be uploaded as attachments,
-  use `!ispage()` ; if you only want to allow wiki pages to be uploaded
-  as attachments, use `ispage()`.
-
-* user(username)
-
-  Tests whether the attachment is being uploaded by a user with the
-  specified username. If openid is enabled, an openid can also be put here.
-
-* ip(address)
-
-  Tests whether the attacment is being uploaded from the specified IP
-  address.
-
-* mimetype(foo/bar)
-
-  If the [[cpan File::MimeInfo::Magic]] perl module is installed, this
-  allows checking the mime type of the attachment. You can include a glob
-  in the type, for example `mimetype(image/*)`.
+This plugin will use the [[cpan File::MimeInfo::Magic]] perl module, if
+available, for mimetype checking.
