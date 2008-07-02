@@ -1,12 +1,8 @@
 Stuff the [[plugins/attachment]] plugin is currently missing, that might be
 nice to add:
 
-* `user()` pagespecs, to limit what individual users can do. (See examples 
-  in [[fileupload]].
-* `mimetype()` pagespecs. (Using a mime type sniffer.)a
+* `mimetype()` pagespecs. (Using a mime type sniffer.)
 * Virus scanning.
-* Make the attachments part of the Edit page hidden unless something is
-  clicked on to display it. To avoid clutter.
 * Add a progress bar for attachment uploads (needs AJAX stuff..)
 * Maybe optimise the "Insert Links" button with javascript, so, if
   javascript is available, the link is inserted at the current cursor
