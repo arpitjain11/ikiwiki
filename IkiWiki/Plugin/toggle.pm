@@ -108,9 +108,9 @@ sub format (@) { #{{{
 
 	if ($params{content}=~s!(<div class="toggleable(?:-open)?" id="[^"]+">)</div>!$1!g) {
 		$params{content}=~s/<div class="toggleableend">//g;
-		if (! ($params{content}=~s!^<\/body>!$javascript</body>!m)) {
+		if (! ($params{content}=~s!^<body>!<body>$javascript!m)) {
 			# no </body> tag, probably in preview mode
-			$params{content}.=$javascript;
+			$params{content}=$javascript.$params{content};
 		}
 	}
 	return $params{content};
