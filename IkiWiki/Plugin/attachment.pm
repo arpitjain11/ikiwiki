@@ -298,6 +298,39 @@ sub match_minsize ($$;@) { #{{{
 	}
 } #}}}
 
+sub match_mimetype ($$;@) { #{{{
+	shift;
+	my $wanted=shift;
+
+	my %params=@_;
+	if (! exists $params{file}) {
+		return IkiWiki::FailReason->new("no file specified");
+	}
+
+	# Use ::magic to get the mime type, the idea is to only trust
+	# data obtained by examining the actual file contents.
+	eval q{use File::MimeInfo::Magic};
+	if ($@) {
+		return IkiWiki::FailReason->new("failed to load File::MimeInfo::Magic ($@); cannot check MIME type");
+	}
+	my $mimetype=File::MimeInfo::Magic::magic($params{file});
+	if (! defined $mimetype) {
+		$mimetype="unknown";
+	}
+
+	# turn glob into a safe regexp
+	my $regexp=quotemeta($wanted);
+	$regexp=~s/\\\*/.*/g;
+	$regexp=~s/\\\?/./g;
+
+	if ($mimetype!~/^$regexp$/i) {
+		return IkiWiki::FailReason->new("file MIME type is $mimetype, not $wanted");
+	}
+	else {
+		return IkiWiki::SuccessReason->new("file MIME type is $mimetype");
+	}
+} #}}}
+
 sub match_ispage ($$;@) { #{{{
 	my $filename=shift;
 

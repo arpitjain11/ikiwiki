@@ -29,7 +29,7 @@ For example, to limit arbitrary files to 50 kilobytes, but allow
 larger mp3 files to be uploaded by joey, a test like this could be
 used:
   
-	(user(joey) and *.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))
+	(user(joey) and *.mp3 and mimetype(audio/mpeg) and maxsize(15mb)) or (!ispage() and maxsize(50kb))
 
 The following additional tests are available:
 
@@ -62,3 +62,9 @@ The following additional tests are available:
 
   Tests whether the attacment is being uploaded from the specified IP
   address.
+
+* mimetype(foo/bar)
+
+  If the [[cpan File::MimeInfo::Magic]] perl module is installed, this
+  allows checking the mime type of the attachment. You can include a glob
+  in the type, for example `mimetype(image/*)`.
