@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-28 23:05-0400\n"
+"POT-Creation-Date: 2008-07-02 18:08-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:527
+#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:526
 msgid "Your login session has expired."
 msgstr ""
 
@@ -44,25 +44,25 @@ msgstr ""
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:327
+#: ../IkiWiki/CGI.pm:326
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:438 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:266 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:162
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:494
+#: ../IkiWiki/CGI.pm:493
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:512 ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:550
-#: ../IkiWiki/CGI.pm:584 ../IkiWiki/CGI.pm:629
+#: ../IkiWiki/CGI.pm:511 ../IkiWiki/CGI.pm:539 ../IkiWiki/CGI.pm:549
+#: ../IkiWiki/CGI.pm:583 ../IkiWiki/CGI.pm:628
 #, perl-format
 msgid "editing %s"
 msgstr ""
@@ -167,6 +167,18 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:192
 msgid "Failed to delete file from S3: "
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:95
+msgid "bad attachment filename"
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:118
+msgid "attachment rejected"
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:147
+msgid "attachment upload"
 msgstr ""
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:40
@@ -588,55 +600,51 @@ msgstr ""
 msgid "failed to generate image from code"
 msgstr ""
 
-#: ../IkiWiki/Plugin/toggle.pm:88
-msgid "(not toggleable in preview mode)"
-msgstr ""
-
 #: ../IkiWiki/Rcs/Stub.pm:69
 msgid "getctime not implemented"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:279 ../IkiWiki/Render.pm:300
+#: ../IkiWiki/Render.pm:286 ../IkiWiki/Render.pm:307
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:354
+#: ../IkiWiki/Render.pm:361
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:394
+#: ../IkiWiki/Render.pm:401
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:399
+#: ../IkiWiki/Render.pm:406
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:420
+#: ../IkiWiki/Render.pm:427
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:441
+#: ../IkiWiki/Render.pm:448
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:480
+#: ../IkiWiki/Render.pm:487
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:492
+#: ../IkiWiki/Render.pm:499
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:516
+#: ../IkiWiki/Render.pm:523
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -700,11 +708,11 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:123
+#: ../IkiWiki.pm:124
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:192 ../IkiWiki.pm:193
+#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
 msgid "Error"
 msgstr ""
 
@@ -712,7 +720,7 @@ msgstr ""
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:763
+#: ../IkiWiki.pm:764
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""

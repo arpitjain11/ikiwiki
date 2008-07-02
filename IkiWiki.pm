@@ -1344,7 +1344,7 @@ sub match_glob ($$;@) { #{{{
 		$glob="$from/$glob" if length $from;
 	}
 
-	my $regexp=glob2re($glob);
+	my $regexp=IkiWiki::glob2re($glob);
 	if ($page=~/^$regexp$/i) {
 		if (! IkiWiki::isinternal($page) || $params{internal}) {
 			return IkiWiki::SuccessReason->new("$glob matches $page");
