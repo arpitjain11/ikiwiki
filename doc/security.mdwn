@@ -41,11 +41,12 @@ who's viewing the wiki, that can be a security problem.
 
 Of course nobody else seems to worry about this in other wikis, so should we?
 
-Currently only people with direct commit access can upload such files
+People with direct commit access can upload such files
 (and if you wanted to you could block that with a pre-commit hook).
-Users with only web commit access are limited to editing pages as ikiwiki
-doesn't support file uploads from browsers (yet), so they can't exploit
-this.
+
+The attachments plugin is not enabled by default. If you choose to
+enable it, you should make use of its powerful abilities to filter allowed
+types of attachments, and only let trusted users upload.
 
 It is possible to embed an image in a page edited over the web, by using
 `img src="data:image/png;"`. Ikiwiki's htmlscrubber only allows `data:`
