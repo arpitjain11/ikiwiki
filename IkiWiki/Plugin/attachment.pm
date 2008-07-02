@@ -22,7 +22,7 @@ sub formbuilder_setup (@) { #{{{
 	if ($form->field("do") eq "edit") {
 		$form->field(name => 'attachment', type => 'file');
 		# These buttons are not put in the usual place, so
-		# is not added to the normal formbuilder button list.
+		# are not added to the normal formbuilder button list.
 		$form->tmpl_param("field-upload" => '<input name="_submit" type="submit" value="Upload Attachment" />');
 		$form->tmpl_param("field-link" => '<input name="_submit" type="submit" value="Insert Links" />');
 	}
@@ -220,7 +220,7 @@ sub parsesize ($) { #{{{
 	my $base=$size+0; # force to number
 	use warnings;
 	foreach my $unit (sort keys %units) {
-		if ($size=~/\d\Q$unit\E$/i) {
+		if ($size=~/[0-9\s]\Q$unit\E$/i) {
 			return $base * $units{$unit};
 		}
 	}
@@ -232,7 +232,7 @@ sub humansize ($) { #{{{
 
 	foreach my $unit (reverse sort { $units{$a} <=> $units{$b} || $b cmp $a } keys %units) {
 		if ($size / $units{$unit} > 0.25) {
-			return (int($size / $units{$unit} * 10)/10)."$unit";
+			return (int($size / $units{$unit} * 10)/10).$unit;
 		}
 	}
 	return $size; # near zero, or negative
