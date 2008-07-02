@@ -22,13 +22,14 @@ Bear in mind that if you let anyone upload a particular kind of file
 
 To provide a way to combat these abuses, the wiki admin can specify a
 [[ikiwiki/PageSpec]] on their preferences page, to control what types of
-attachments can be uploaded. The regular [[ikiwiki/PageSpec]] syntax is
-expanded with additional tests.
+attachments can be uploaded, and by whom. The regular [[ikiwiki/PageSpec]]
+syntax is expanded with additional tests.
 
-For example, to limit arbitrary files to 50 kilobtes, but allow
-larger mp3 files to be uploaded, a test like this could be used:
+For example, to limit arbitrary files to 50 kilobytes, but allow
+larger mp3 files to be uploaded by joey, a test like this could be
+used:
   
-	(*.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))
+	(user(joey) and *.mp3 and maxsize(15mb)) or (!ispage() and maxsize(50kb))
 
 The following additional tests are available:
 
@@ -51,3 +52,13 @@ The following additional tests are available:
   So, if you don't want to allow wiki pages to be uploaded as attachments,
   use `!ispage()` ; if you only want to allow wiki pages to be uploaded
   as attachments, use `ispage()`.
+
+* user(username)
+
+  Tests whether the attachment is being uploaded by a user with the
+  specified username. If openid is enabled, an openid can also be put here.
+
+* ip(address)
+
+  Tests whether the attacment is being uploaded from the specified IP
+  address.

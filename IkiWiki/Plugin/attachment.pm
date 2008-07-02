@@ -101,7 +101,10 @@ sub formbuilder (@) { #{{{
 			    length $allowed_attachments) {
 				$allowed=pagespec_match($filename,
 					$allowed_attachments,
-					file => $tempfile);
+					file => $tempfile,
+					user => $session->param("name"),
+					ip => $ENV{REMOTE_ADDR},
+				);
 				last if $allowed;
 			}
 		}
@@ -303,6 +306,40 @@ sub match_ispage ($$;@) { #{{{
 	}
 	else {
 		return IkiWiki::FailReason->new("file is not a wiki page");
+	}
+} #}}}
+
+sub match_user ($$;@) { #{{{
+	shift;
+	my $user=shift;
+	my %params=@_;
+	
+	if (! exists $params{user}) {
+		return IkiWiki::FailReason->new("no user specified");
+	}
+
+	if (defined $params{user} && lc $params{user} eq lc $user) {
+		return IkiWiki::SuccessReason->new("user is $user");
+	}
+	else {
+		return IkiWiki::FailReason->new("user is $params{user}, not $user");
+	}
+} #}}}
+
+sub match_ip ($$;@) { #{{{
+	shift;
+	my $ip=shift;
+	my %params=@_;
+	
+	if (! exists $params{ip}) {
+		return IkiWiki::FailReason->new("no IP specified");
+	}
+
+	if (defined $params{ip} && lc $params{ip} eq lc $ip) {
+		return IkiWiki::SuccessReason->new("IP is $ip");
+	}
+	else {
+		return IkiWiki::FailReason->new("IP is $params{ip}, not $ip");
 	}
 } #}}}
 
