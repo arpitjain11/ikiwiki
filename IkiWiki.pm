@@ -1290,6 +1290,13 @@ sub pagespec_valid ($) { #{{{
 	my $sub=pagespec_translate($spec);
 	return ! $@;
 } #}}}
+	
+sub glob2re ($) { #{{{
+	my $re=quotemeta(shift);
+	$re=~s/\\\*/.*/g;
+	$re=~s/\\\?/./g;
+	return $re;
+} #}}}
 
 package IkiWiki::FailReason;
 
@@ -1337,12 +1344,8 @@ sub match_glob ($$;@) { #{{{
 		$glob="$from/$glob" if length $from;
 	}
 
-	# turn glob into safe regexp
-	$glob=quotemeta($glob);
-	$glob=~s/\\\*/.*/g;
-	$glob=~s/\\\?/./g;
-
-	if ($page=~/^$glob$/i) {
+	my $regexp=glob2re($glob);
+	if ($page=~/^$regexp$/i) {
 		if (! IkiWiki::isinternal($page) || $params{internal}) {
 			return IkiWiki::SuccessReason->new("$glob matches $page");
 		}
