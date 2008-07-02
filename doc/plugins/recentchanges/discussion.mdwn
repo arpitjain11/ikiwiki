@@ -30,3 +30,10 @@ to turn on? --Chapman Flack
 
 > It's a (minor) bug that recentchanges optimises away generating the
 > change pages, but that the rss/atom feed still links to them. --[[Joey]]
+
+>> Hmm, ok, what's the intended correct behavior? To really generate the
+>> change pages, or to change the links in the feed to point somewhere else that's
+>> not missing? If you can easily point me to the right neighborhood in the code
+>> I might work on a patch for this. It may be a (minor) bug in the grand scheme
+>> of things, but it does seem pretty goofy if you've just clicked an RSS link. :)
+>> --Chap (p.s. should this be moved to bugs?)
