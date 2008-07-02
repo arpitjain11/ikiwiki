@@ -15,25 +15,3 @@ this should be a rather uncommon thing.
 
 > And fixed this, by making it look at all *._change pages, not just
 > those in a specific directory, when deciding which to expire. --[[Joey]]
-
-I've just upgraded to ikiwiki 2.50 with the `recentchanges` plugin enabled, and
-figured out that I have to turn on `rss` in `ikiwiki.setup` in order to get the
-recentchanges feed. Now the feed shows up, but the links in the feed go to the
-change pages, e.g. `recentchanges/change_1700.html`.  I can see a `recentchanges`
-directory created in the working copy, containing files like `change_1700._change`
-but for some reason they are not getting htmlized and carried over. I can see
-in `recentchanges.pm` that it explicitly registers an `htmlize` hook for the
-`_change` type, but something isn't happening. I also see `return if $type=~/^_/;` in
-`render()` in `Render.pm` so I guess the upshot is I'm not sure how this is
-supposed to work; is there a bug here or just something I overlooked that I need
-to turn on? --Chapman Flack
-
-> It's a (minor) bug that recentchanges optimises away generating the
-> change pages, but that the rss/atom feed still links to them. --[[Joey]]
-
->> Hmm, ok, what's the intended correct behavior? To really generate the
->> change pages, or to change the links in the feed to point somewhere else that's
->> not missing? If you can easily point me to the right neighborhood in the code
->> I might work on a patch for this. It may be a (minor) bug in the grand scheme
->> of things, but it does seem pretty goofy if you've just clicked an RSS link. :)
->> --Chap (p.s. should this be moved to bugs?)
