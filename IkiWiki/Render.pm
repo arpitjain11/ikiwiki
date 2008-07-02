@@ -180,6 +180,30 @@ sub scan ($) { #{{{
 	}
 } #}}}
 
+sub fast_file_copy (@) { #{{{
+	my $srcfile=shift;
+	my $destfile=shift;
+	my $srcfd=shift;
+	my $destfd=shift;
+	my $cleanup=shift;
+
+	my $blksize = 16384;
+	my ($len, $buf, $written);
+	while ($len = sysread $srcfd, $buf, $blksize) {
+		if (! defined $len) {
+			next if $! =~ /^Interrupted/;
+			error("failed to read $srcfile: $!", $cleanup);
+		}
+		my $offset = 0;
+		while ($len) {
+			defined($written = syswrite $destfd, $buf, $len, $offset)
+				or error("failed to write $destfile: $!", $cleanup);
+			$len -= $written;
+			$offset += $written;
+		}
+	}
+}
+
 sub render ($) { #{{{
 	my $file=shift;
 	
@@ -215,24 +239,7 @@ sub render ($) { #{{{
 		
 		my $srcfd=readfile($srcfile, 1, 1);
 		writefile($file, $config{destdir}, undef, 1, sub {
-			my $destfd=shift;
-			my $cleanup=shift;
-
-			my $blksize = 16384;
-			my ($len, $buf, $written);
-			while ($len = sysread $srcfd, $buf, $blksize) {
-				if (! defined $len) {
-					next if $! =~ /^Interrupted/;
-					error("failed to read $srcfile: $!", $cleanup);
-				}
-				my $offset = 0;
-				while ($len) {
-					defined($written = syswrite $destfd, $buf, $len, $offset)
-						or error("failed to write $file: $!", $cleanup);
-					$len -= $written;
-					$offset += $written;
-				}
-			}
+			fast_file_copy($srcfile, $file, $srcfd, @_);
 		});
 	}
 } #}}}

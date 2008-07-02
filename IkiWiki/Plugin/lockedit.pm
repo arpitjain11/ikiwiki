@@ -40,11 +40,11 @@ sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	
 	my $form=$params{form};
-	my $session=$params{session};
-	my $cgi=$params{cgi};
-	my $user_name=$session->param("name");
-
 	if ($form->title eq "preferences") {
+		my $session=$params{session};
+		my $cgi=$params{cgi};
+		my $user_name=$session->param("name");
+
 		$form->field(name => "locked_pages", size => 50,
 			fieldset => "admin",
 			comment => "(".htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).")");

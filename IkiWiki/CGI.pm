@@ -281,7 +281,6 @@ sub cgi_editpage ($$) { #{{{
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my $form = CGI::FormBuilder->new(
-		title => "editpage",
 		fields => \@fields,
 		charset => "utf-8",
 		method => 'POST',
@@ -304,7 +303,7 @@ sub cgi_editpage ($$) { #{{{
 	
 	# This untaint is safe because titlepage removes any problematic
 	# characters.
-	my ($page)=$form->field('page');
+	my $page=$form->field('page');
 	$page=titlepage(possibly_foolish_untaint($page));
 	if (! defined $page || ! length $page ||
 	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
@@ -667,10 +666,11 @@ sub cgi (;$$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
+	eval q{use CGI};
+	error($@) if $@;
+	$CGI::DISABLE_UPLOADS=$config{cgi_disable_uploads};
+
 	if (! $q) {
-		eval q{use CGI};
-		error($@) if $@;
-	
 		binmode(STDIN);
 		$q=CGI->new;
 		binmode(STDIN, ":utf8");

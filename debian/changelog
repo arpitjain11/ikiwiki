@@ -1,3 +1,16 @@
+ikiwiki (2.52) UNRELEASED; urgency=low
+
+  * attachment: New plugin for uploading and managing attachments.
+    (Sponsored by The TOVA Company.)
+  * If attachments are not enabled, configure CGI.pm to disable file
+    uploads by default. (An anti-DOS measure.)
+  * toggle: Add support for toggles that are open by default.
+  * toggle: Fix to work in preview mode.
+  * toggle: Add javascript to top of page, not to end. This avoids flicker
+    since closed toggles will not be displayed as the page is loading.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 30 Jun 2008 19:56:28 -0400
+
 ikiwiki (2.51) unstable; urgency=low
 
   * Improve toplevel parentlink to link directly to index.html when usedirs is

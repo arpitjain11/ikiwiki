@@ -48,8 +48,7 @@ sub formbuilder_setup { #{{{
 	my $form=$params{form};
 	my $page=$form->field("page");
 
-	return if $form->title ne "editpage"
-	          || $form->field("do") ne "edit";
+	return if $form->field("do") ne "edit";
 
 	$page = IkiWiki::titlepage(IkiWiki::possibly_foolish_untaint($page));
 	return unless exists $pagesources{$page};

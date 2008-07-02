@@ -1,0 +1,16 @@
+Stuff the [[plugins/attachment]] plugin is currently missing, that might be
+nice to add:
+
+* `mimetype()` pagespecs. (Using a mime type sniffer.)
+* Virus scanning.
+* Add a progress bar for attachment uploads (needs AJAX stuff..)
+* Maybe optimise the "Insert Links" button with javascript, so, if
+  javascript is available, the link is inserted at the current cursor
+  position in the page edit form, without actually reposting the form.
+  (Falling back to the current reposting of the form if javascript is not
+  available of course.)
+* Set `$CGI::POST_MAX` to some sane value (ie, larger than the largest
+  configured `maxsize()` in the pagespec, or if none is configured,
+  something reasonable. Just as a belt-and-suspenders DOS prevention.
+* Only allow attachments to be added to a given list of pages.
+  Maybe a pagespec like `parent(patches/*)`

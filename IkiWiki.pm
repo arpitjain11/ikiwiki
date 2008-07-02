@@ -88,6 +88,7 @@ sub defaultconfig () { #{{{
 	account_creation_password => "",
 	prefix_directives => 0,
 	hardlink => 0,
+	cgi_disable_uploads => 1,
 } #}}}
 
 sub checkconfig () { #{{{
