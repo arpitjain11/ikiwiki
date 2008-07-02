@@ -318,11 +318,7 @@ sub match_mimetype ($$;@) { #{{{
 		$mimetype="unknown";
 	}
 
-	# turn glob into a safe regexp
-	my $regexp=quotemeta($wanted);
-	$regexp=~s/\\\*/.*/g;
-	$regexp=~s/\\\?/./g;
-
+	my $regexp=IkiWiki::glob2re($wanted);
 	if ($mimetype!~/^$regexp$/i) {
 		return IkiWiki::FailReason->new("file MIME type is $mimetype, not $wanted");
 	}

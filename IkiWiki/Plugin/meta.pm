@@ -253,9 +253,7 @@ sub match { #{{{
 	my $page=shift;
 	
 	# turn glob into a safe regexp
-	my $re=quotemeta(shift);
-	$re=~s/\\\*/.*/g;
-	$re=~s/\\\?/./g;
+	my $re=IkiWiki::glob2re(shift);
 
 	my $val;
 	if (exists $pagestate{$page}{meta}{$field}) {
