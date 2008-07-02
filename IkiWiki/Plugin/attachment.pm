@@ -47,7 +47,13 @@ sub formbuilder_setup (@) { #{{{
 
 		$form->field(name => "allowed_attachments", size => 50,
 			fieldset => "admin",
-			comment => "(".htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).")");
+			comment => "(".
+				htmllink("", "", 
+					"ikiwiki/PageSpec/attachment", 
+					noimageinline => 1,
+					linktext => "Enhanced PageSpec",
+				).")"
+		);
 		if (! IkiWiki::is_admin($user_name)) {
 			$form->field(name => "allowed_attachments", type => "hidden");
 		}
