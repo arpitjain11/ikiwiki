@@ -23,3 +23,8 @@ Thanks.
 
 > It looks like it can't find git; what is $PATH set to when ikiwiki is run, and is git in one of those directories? --[[bma]]
 >> Yeah, ikiwiki and git are both installed underneath macports, which is in the path and works just fine most of the time, and I use macports stuff a lot. 
+
+>>> The PATH is set at the top of the ikiwiki program; so the system's PATH
+>>> setting, or one in the environment will be ignored. (This is done for
+>>> security since ikiwiki can be run setuid.) If you need to use
+>>> a nonstandard path, you'll need to edit that. --[[Joey]]
