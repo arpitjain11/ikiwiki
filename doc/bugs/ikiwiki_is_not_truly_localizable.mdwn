@@ -1,0 +1,38 @@
+A lot of strings in ikiwiki are hardcoded and not taken for locales resources through gettext. This is bad because ikiwiki is thus difficult to spread for non-english users.
+
+I mean that, for instance in CGI.pm, line like:
+
+`my @buttons=("Save Page", "Preview", "Cancel");`
+
+should be written as
+
+`my @buttons=(gettext("Save Page"), gettext("Preview"), gettext("Cancel"));`
+
+> Yes, these need to be fixed. But note that the localised texts come back
+> into ikiwiki and are used in various places, including plugins.
+> Including, possibly, third-party plugins. So localising the buttons would
+> seem to require converting from the translations back into the C locale
+> when the form is posted. --[[Joey]]
+
+In standards templates things seems wrongly written too. For instance in page.tmpl line like:
+
+`<li><a href="<TMPL_VAR EDITURL>" rel="nofollow">Edit</a></li>`
+
+should be written as
+
+`<li><a href="<TMPL_VAR EDITURL>" rel="nofollow"><TMPL_VAR EDITURL_TEXT</a></li>`
+
+with EDITURL_TEXT variable initialized in Render.pm through a gettext call. 
+
+Am I wrong ?
+
+> No, that's not a sane way to localise the templates. The templates can be
+> translated by making a copy and modifying it, or by using a tool to
+> generate .mo files from the templates, and generate translated templates
+> from .po files. (See [[todo/l10n]] for one attempt.) But pushing the
+> localisation of random strings in the templates through the ikiwiki
+> program defeats the purpose of having templates at all. --[[Joey]]
+
+If not I can spend some time preparing patches for such corrections if it can help.
+
+-- [[/users/bbb]]

@@ -301,10 +301,9 @@ sub cgi_editpage ($$) { #{{{
 	});
 	decode_form_utf8($form);
 	
-	# This untaint is safe because titlepage removes any problematic
-	# characters.
+	# This untaint is safe because we check file_pruned.
 	my $page=$form->field('page');
-	$page=titlepage(possibly_foolish_untaint($page));
+	$page=possibly_foolish_untaint($page);
 	if (! defined $page || ! length $page ||
 	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
 		error("bad page name");
@@ -354,7 +353,7 @@ sub cgi_editpage ($$) { #{{{
 	$form->field(name => "from", type => 'hidden');
 	$form->field(name => "rcsinfo", type => 'hidden');
 	$form->field(name => "subpage", type => 'hidden');
-	$form->field(name => "page", value => pagetitle($page, 1), force => 1);
+	$form->field(name => "page", value => $page, force => 1);
 	$form->field(name => "type", value => $type, force => 1);
 	$form->field(name => "comments", type => "text", size => 80);
 	$form->field(name => "editcontent", type => "textarea", rows => 20,
@@ -486,8 +485,8 @@ sub cgi_editpage ($$) { #{{{
 			
 			$form->tmpl_param("page_select", 1);
 			$form->field(name => "page", type => 'select',
-				options => [ map { pagetitle($_, 1) } @editable_locs ],
-				value => pagetitle($best_loc, 1));
+				options => [ map { [ $_, pagetitle($_, 1) ] } @editable_locs ],
+				value => $best_loc);
 			$form->field(name => "type", type => 'select',
 				options => \@page_types);
 			$form->title(sprintf(gettext("creating %s"), pagetitle($page)));

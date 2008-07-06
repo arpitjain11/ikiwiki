@@ -1,0 +1,18 @@
+Try clicking the Edit link for <http://ikiwiki.info/todo/Add_showdown_GUI_input__47__edit/>
+
+The link produces a query string that the edit CGI interprets to
+mean `edit.mdwn` in an `Add showdown GUI input` subpage.
+
+There's something there now, but only because I created it. When
+I first tried it, it came up blank.  I tried several different ways
+of altering the escaping of the query string to get the real page to
+come up, but I never succeeded, so I just grabbed the original text
+from git and pasted it into the new page....
+
+So somehow the generation of Edit links and the CGI for doing the
+editing need to get in agreement on just how they're going to
+escape slashes in a page title.
+
+--Chapman Flack
+
+> bleh. [[Fixed|done]] --[[joey]]

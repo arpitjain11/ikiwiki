@@ -75,7 +75,7 @@ changes.diff:
       /usr/share/ikiwiki/wikiwyg/ for the files.
 * When is the WIKIWYG variable in misc.tmpl used?
   * The WIKIWYG variable in misc.tmpl is used for the edit page. I believe that is what
-    you wanted me to do (Check [Revision 3840][]).
+    you wanted me to do (Check Revision 3840).
     * Ah, right.
 * Could you move the code that handles saving a page of the page into the
   plugin? I just added an editcontent hook, which should allow you to do
@@ -153,10 +153,6 @@ Even just some of the smaller changes would be much easier for you to
 do than for me, and it would be nice to get them sorted out before I
 merge it into ikiwiki. --[[Joey]
 
-
-[Revision 3840]: http://ikiwiki.info/cgi-bin/viewvc.cgi?view=rev&root=ikiwiki&revision=3840
-
-
 None of the links for the WYSIWYG editor work anymore.  Does anyone have an up to date link?
 Thanks, [[Greg]]
 
@@ -170,3 +166,12 @@ Thanks, [[Greg]]
 >> wikiwyg-specific stuff from git, it looks like I'd need to ask git for
 >> a diff between the wikiwyg branch and its branch point; is there a nice way to do
 >> that with gitweb, or would I need to install a full-fledged git client? --Chapman Flack
+
+>>> I think that the largest missing thing was support for using ikiwiki
+>>> to render page previews.
+>>>
+>>> Erm.. I seem to have screwed up the creation or pushing out of the
+>>> wikiwyg branch. It doesn't seem to have any of the wikiwyg changes in
+>>> it, and at this point, I don't know where to find them anymore! Damn,
+>>> damn, damn. I suspect I did that right when I was learning git, and
+>>> screwed up pushing the branch. :-( --[[Joey]]
