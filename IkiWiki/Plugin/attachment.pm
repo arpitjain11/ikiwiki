@@ -20,7 +20,7 @@ sub formbuilder_setup (@) { #{{{
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	if ($form->field("do") eq "edit") {
+	if (defined $form->field("do") && $form->field("do") eq "edit") {
 		$form->field(name => 'attachment', type => 'file');
 		# These buttons are not put in the usual place, so
 		# are not added to the normal formbuilder button list.
@@ -76,7 +76,7 @@ sub formbuilder (@) { #{{{
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	return if $form->field("do") ne "edit";
+	return if ! defined $form->field("do") || $form->field("do") ne "edit";
 
 	my $filename=$q->param('attachment');
 	if (defined $filename && length $filename &&
