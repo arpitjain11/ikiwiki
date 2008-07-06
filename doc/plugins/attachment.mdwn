@@ -26,3 +26,9 @@ Attachments" field of the wiki admin's preferences page.
 
 This plugin will use the [[cpan File::MimeInfo::Magic]] perl module, if
 available, for mimetype checking.
+
+The `virusfree` [[PageSpec|ikiwiki/pagespec/attachment]] requires that
+ikiwiki be configured with a virus scanner program via the `virus_checker`
+option in the setup file. If using `clamav`, with `clamd`, set it to
+"clamdscan -". Or to use clamav without the `clamd` daemon, you
+could set it to "clamscan -".

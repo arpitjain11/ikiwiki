@@ -195,4 +195,8 @@ use IkiWiki::Setup::Standard {
 	#amazon_s3_location => "EU",
 	# Uncomment if you need to store each index file twice.
 	#amazon_s3_dupindex => 1,
+	
+	# For use with the attachment plugin, a program that returns
+	# nonzero if its standard input contains an virus.
+	#virus_checker => "clamdscan -",
 }

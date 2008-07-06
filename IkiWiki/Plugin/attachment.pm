@@ -333,6 +333,44 @@ sub match_mimetype ($$;@) { #{{{
 	}
 } #}}}
 
+sub match_virusfree ($$;@) { #{{{
+	shift;
+	my $wanted=shift;
+
+	my %params=@_;
+	if (! exists $params{file}) {
+		return IkiWiki::FailReason->new("no file specified");
+	}
+
+	if (! exists $IkiWiki::config{virus_checker} ||
+	    ! length $IkiWiki::config{virus_checker}) {
+		return IkiWiki::FailReason->new("no virus_checker configured");
+	}
+
+	# The file needs to be fed into the virus checker on stdin,
+	# because the file is not world-readable, and if clamdscan is
+	# used, clamd would fail to read it.
+	eval q{use IPC::Open2};
+	error($@) if $@;
+	open (IN, "<", $params{file}) || return IkiWiki::FailReason->new("failed to read file");
+	binmode(IN);
+	my $sigpipe=0;
+	$SIG{PIPE} = sub { $sigpipe=1 };
+	my $pid=open2(\*CHECKER_OUT, "<&IN", $IkiWiki::config{virus_checker}); 
+	my $reason=<CHECKER_OUT>;
+	chomp $reason;
+	1 while (<CHECKER_OUT>);
+	close(CHECKER_OUT);
+	waitpid $pid, 0;
+	$SIG{PIPE}="DEFAULT";
+	if ($sigpipe || $?) {
+		return IkiWiki::FailReason->new("file seems to contain a virus ($reason)");
+	}
+	else {
+		return IkiWiki::SuccessReason->new("file seems virusfree ($reason)");
+	}
+} #}}}
+
 sub match_ispage ($$;@) { #{{{
 	my $filename=shift;
 

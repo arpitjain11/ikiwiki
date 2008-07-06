@@ -8,10 +8,10 @@ attachments will be accepted, by entering a [[ikiwiki/PageSpec]] in the
 "Allowed Attachments" field of their preferences page.
 
 For example, to limit arbitrary files to 50 kilobytes, but allow
-larger mp3 files to be uploaded by joey, a something like this could be
-used:
+larger mp3 files to be uploaded by joey, and check all attachments for
+virii, something like this could be used:
   
-	(user(joey) and *.mp3 and mimetype(audio/mpeg) and maxsize(15mb)) or (!ispage() and maxsize(50kb))
+	virusfree() and ((user(joey) and *.mp3 and mimetype(audio/mpeg) and maxsize(15mb)) or (!ispage() and maxsize(50kb)))
 
 The regular [[ikiwiki/PageSpec]] syntax is expanded with thw following
 additional tests:
@@ -50,3 +50,7 @@ additional tests:
 
   This checks the MIME type of the attachment. You can include a glob
   in the type, for example `mimetype(image/*)`.
+
+* virusfree()
+
+  Checks the attachment with an antiviral program.

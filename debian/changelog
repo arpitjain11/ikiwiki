@@ -1,6 +1,9 @@
 ikiwiki (2.52) UNRELEASED; urgency=low
 
   * attachment: New plugin for uploading and managing attachments.
+    This includes a fairly powerful PageSpec based admin pref for deciding
+    whether to accept a given upload, and an attachment management interface
+    on the edit page.
     (Sponsored by The TOVA Company.)
   * If attachments are not enabled, configure CGI.pm to disable file
     uploads by default. (An anti-DOS measure.)
