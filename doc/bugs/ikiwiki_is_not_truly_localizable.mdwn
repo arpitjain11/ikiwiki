@@ -1,0 +1,25 @@
+A lot of strings in ikiwiki are hardcoded and not taken for locales resources through gettext. This is bad because ikiwiki is thus difficult to spread for non-english users.
+
+I mean that, for instance in CGI.pm, line like:
+
+`my @buttons=("Save Page", "Preview", "Cancel");`
+
+should be written as
+
+`my @buttons=(gettext("Save Page"), gettext("Preview"), gettext("Cancel"));`
+
+In standards templates things seems wrongly written too. For instance in page.tmpl line like:
+
+`<li><a href="<TMPL_VAR EDITURL>" rel="nofollow">Edit</a></li>`
+
+should be written as
+
+`<li><a href="<TMPL_VAR EDITURL>" rel="nofollow"><TMPL_VAR EDITURL_TEXT</a></li>`
+
+with EDITURL_TEXT variable initialized in Render.pm through a gettext call. 
+
+Am I wrong ?
+
+If not I can spend some time preparing patch for such correction if it can help.
+
+--[[Bruno]]
