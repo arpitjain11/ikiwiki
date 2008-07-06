@@ -70,12 +70,12 @@ sub sessioncgi () { #{{{
 	my $session=shift;
 
 	if ($q->param('do') eq 'blog') {
-		my $page=decode_utf8($q->param('title'));
-		$page=~s/\///g; # no slashes in blog posts
+		my $page=IkiWiki::titlepage(decode_utf8($q->param('title')));
+		$page=~s/(\/)/"__".ord($1)."__"/eg; # don't create subdirs
 		# if the page already exists, munge it to be unique
 		my $from=$q->param('from');
 		my $add="";
-		while (exists $IkiWiki::pagecase{lc($from."/".IkiWiki::titlepage($page).$add)}) {
+		while (exists $IkiWiki::pagecase{lc($from."/".$page.$add)}) {
 			$add=1 unless length $add;
 			$add++;
 		}
@@ -278,7 +278,7 @@ sub preprocess_inline (@) { #{{{
 					}
 					if (length $config{cgiurl} && defined $type) {
 						$template->param(have_actions => 1);
-						$template->param(editurl => cgiurl(do => "edit", page => pagetitle($page, 1)));
+						$template->param(editurl => cgiurl(do => "edit", page => $page));
 					}
 				}
 	

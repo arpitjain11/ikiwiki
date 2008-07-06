@@ -596,7 +596,7 @@ sub htmllink ($$$;@) { #{{{
 			return "<span class=\"createlink\"><a href=\"".
 				cgiurl(
 					do => "create",
-					page => pagetitle(lc($link), 1),
+					page => lc($link),
 					from => $lpage
 				).
 				"\" rel=\"nofollow\">?</a>$linktext</span>"

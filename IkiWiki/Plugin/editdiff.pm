@@ -50,7 +50,7 @@ sub formbuilder_setup { #{{{
 
 	return if $form->field("do") ne "edit";
 
-	$page = IkiWiki::titlepage(IkiWiki::possibly_foolish_untaint($page));
+	$page = IkiWiki::possibly_foolish_untaint($page);
 	return unless exists $pagesources{$page};
 
 	push @{$params{buttons}}, "Diff";

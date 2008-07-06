@@ -1,3 +1,11 @@
+ikiwiki (2.52) unstable; urgency=low
+
+  All wikis need to be rebuilt on upgrade to this version. If you listed your
+  wiki in /etc/ikiwiki/wikilist this will be done automatically when the
+  Debian package is upgraded. Or use ikiwiki-mass-rebuild to force a rebuild.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 06 Jul 2008 15:10:05 -0400
+
 ikiwiki (2.49) unstable; urgency=low
 
   The search plugin no longer uses hyperestraier. Instead, to use it you
