@@ -194,14 +194,16 @@ sub xapiandb () { #{{{
 	return $db;
 } #}}}
 
+my $setup;
 sub setupfiles () { #{{{
-	if (! -e $config{wikistatedir}."/xapian" || $config{rebuild}) {
+	if (! defined $setup and ! -e $config{wikistatedir}."/xapian" || $config{rebuild}) {
 		writefile("omega.conf", $config{wikistatedir}."/xapian",
 			"database_dir .\n".
 			"template_dir ./templates\n");
 		writefile("query", $config{wikistatedir}."/xapian/templates",
 			IkiWiki::misctemplate(gettext("search"),
 				readfile(IkiWiki::template_file("searchquery.tmpl"))));
+		$setup=1;
 	}
 } #}}}
 
