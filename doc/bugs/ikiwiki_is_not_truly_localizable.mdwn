@@ -14,6 +14,12 @@ should be written as
 > seem to require converting from the translations back into the C locale
 > when the form is posted. --[[Joey]]
 
+>> Wouldn't it be more easy to change all calls to the corrects ones (including in plugins) ?
+>> For instance in the same file (CGI.pm): `elsif ($form->submitted eq gettext("Save Page")) {`.
+>> That way no conversion to the C locale is needed.
+>> gettext use should just be publicized in documentation (at least in [[plugins/write]]). --[[bbb]]
+
+
 In standards templates things seems wrongly written too. For instance in page.tmpl line like:
 
 `<li><a href="<TMPL_VAR EDITURL>" rel="nofollow">Edit</a></li>`
