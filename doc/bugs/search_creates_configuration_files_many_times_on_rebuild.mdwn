@@ -1,0 +1,7 @@
+Currently, if ikiwiki is rebuilding then search.pm will (wastefully)
+create its configuration files every time it indexes a file.
+
+[This patch](http://gmcmanus.org/0001-search-generate-configuration-files-once-only-when.patch)
+ensures the configuration files are created only once.
+
+--Gabriel
