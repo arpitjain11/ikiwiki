@@ -1,0 +1,10 @@
+At [[attachment|plugins/attachment]] plugin page I can see
+that it's enabled by default in Ikiwiki. Is it true?
+
+I have backported Ikiwiki 2.52 and I need to add that plugin to
+`add_plugins` variable in my `ikiwiki.setup` file (and rebuild
+my wiki, of course) to see new upload buttons when I edit a page
+and click "Attachments" link.
+
+Maybe should I enable attachment handling in different way?
+--[[Paweł|users/ptecza]]
