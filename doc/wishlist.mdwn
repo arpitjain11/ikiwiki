@@ -2,5 +2,8 @@ These [[todo]] items constitute a wishlist of all kinds of features and
 improvements people would like to see in ikiwiki. Good patches for any of
 these will likely be accepted.
 
+
 [[inline pages="todo/* and !todo/done and !link(todo/done) and
-link(wishlist) and !link(patch) and !todo/*/*" archive=yes show=0]]
+!link(patch) and link(wishlist) and !todo/*/*"
+feedpages="created_after(todo/supporting_comments_via_disussion_pages)"
+actions=yes archive=yes rootpage="wishlist" postformtext="Add a new wishlist item titled:" show=0]]
