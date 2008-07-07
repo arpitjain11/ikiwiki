@@ -194,9 +194,10 @@ sub xapiandb () { #{{{
 	return $db;
 } #}}}
 
-my $setup;
+{
+my $setup=0;
 sub setupfiles () { #{{{
-	if (! defined $setup and ! -e $config{wikistatedir}."/xapian" || $config{rebuild}) {
+	if (! $setup and (! -e $config{wikistatedir}."/xapian" || $config{rebuild})) {
 		writefile("omega.conf", $config{wikistatedir}."/xapian",
 			"database_dir .\n".
 			"template_dir ./templates\n");
@@ -206,5 +207,6 @@ sub setupfiles () { #{{{
 		$setup=1;
 	}
 } #}}}
+}
 
 1
