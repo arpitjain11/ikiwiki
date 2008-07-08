@@ -1,0 +1,12 @@
+I can't add any attachment to my wiki. When I select file using "Browse"
+button and click "Upload Attachment", then `ikiwiki.cgi` file displays
+the error message like below:
+
+    Błąd: failed to get filehandle
+
+The same message I can see in the Apache log file. There is also
+following warning:
+
+    Use of uninitialized value in length at /usr/share/perl5/IkiWiki/Plugin/attachment.pm line 36.
+
+Is it Ikiwiki bug or my attachment plugin is misconfigured? --[[Paweł|ptecza]]
