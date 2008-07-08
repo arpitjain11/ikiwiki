@@ -19,6 +19,12 @@ the error message like below:
 
 >> It's Apache2 2.2.8-1ubuntu0.3 and Perl 5.8.8-12 from Ubuntu Hardy. --[[Paweł|ptecza]]
 
+>>> Hmm, is your CGI.pm perhaps creating the attachment temp file, but
+>>> not providing an open filehandle to it via the `upload` method?
+>>> Change the debugging line to this: --[[Joey]]
+
+	error("failed to get filehandle:$fh ; file:$filename ; is ref:".ref($q->param('attachment')));
+
 The same message I can see in the Apache log file. There is also
 following warning:
 
