@@ -6,4 +6,4 @@ I have a working ikiwiki configuration with an SVN backend, running on Ubuntu 7.
 CGI seems to be working at least partly - the History and Recent Changes pages both work. However, if I attempt to edit or create a page, I get this error:
     Error: Failed to load plugin IkiWiki::Plugin::mdwn: Can't locate IkiWiki/Plugin/mdwn.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.8.8 /usr/local/share/perl/5.8.8 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl .) at (eval 6) line 2. BEGIN failed--compilation aborted at (eval 6) line 2. 
 
-Since ikiwiki builds, it has to be finding Markdown at build time, right? What am I doing wrong here? I would appreciate a point in the right direction. Thanks.
+Since ikiwiki builds, it has to be finding Markdown at build time, right? What am I doing wrong here? I would appreciate a point in the right direction. Thanks. --mrled
