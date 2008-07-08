@@ -89,9 +89,17 @@ sub formbuilder (@) { #{{{
 		# This is an (apparently undocumented) way to get the name
 		# of the temp file that CGI writes the upload to.
 		my $tempfile=$q->tmpFileName($filename);
-		
 		if (! defined $tempfile || ! length $tempfile) {
-			error("failed to determine tempfile name");
+			# perl 5.8 needs an alternative, awful method
+			if ($q =~ /HASH/ && exists $q->{'.tmpfiles'}) {
+				foreach my $key (keys(%{$q->{'.tmpfiles'}})) {
+					$tempfile=$q->tmpFileName(\$key);
+					last if defined $tempfile && length $tempfile;
+				}
+			}
+			if (! defined $tempfile || ! length $tempfile) {
+				error("CGI::tmpFileName failed to return the uploaded file name");
+			}
 		}
 
 		$filename=IkiWiki::titlepage(
@@ -145,7 +153,7 @@ sub formbuilder (@) { #{{{
 					# even that doesn't always work,
 					# fall back to opening the tempfile
 					$fh=undef;
-					open($fh, "<", $tempfile) || error("failed to open $tempfile: $!");
+					open($fh, "<", $tempfile) || error("failed to open \"$tempfile\": $!");
 				}
 			}
 			binmode($fh);
