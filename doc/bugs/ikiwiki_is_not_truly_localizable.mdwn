@@ -19,6 +19,9 @@ should be written as
 >> That way no conversion to the C locale is needed.
 >> gettext use should just be publicized in documentation (at least in [[plugins/write]]). --[[bbb]]
 
+>>> It would be easy, but it could break third-party plugins that hardcode
+>>> the english strings. It's also probably less efficient to run gettext
+>>> over and over. --[[Joey]]
 
 In standards templates things seems wrongly written too. For instance in page.tmpl line like:
 
