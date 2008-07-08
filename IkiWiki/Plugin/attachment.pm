@@ -88,8 +88,8 @@ sub formbuilder (@) { #{{{
 		# of the temp file that CGI writes the upload to.
 		my $tempfile=$q->tmpFileName($filename);
 		
-		if (! defined $tempfile) {
-			error("failed to determine temp filename");
+		if (! defined $tempfile || ! length $tempfile) {
+			error("failed to determine tempfile name");
 		}
 
 		$filename=IkiWiki::titlepage(
