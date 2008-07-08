@@ -1,0 +1,15 @@
+We just installed 2.52 on debian testing, and all edit links with symbols (including spaces) are coming up with empty text fields because the URL to the mdwn file is wrong.
+
+For example, the existing page:
+
+wiki/bugs/__39__Existing_Subject__39___vs.___39__Browse__39__/
+
+displays the bug "'Existing Subject' vs. 'Browse'".  But if we click 'Edit' on that page, we get:
+
+wiki/ikiwiki.cgi?page=bugs%2F'Existing%20Subject'%20vs.%20'Browse'&do=edit
+
+.. which of course opens with a blank edit box. Note that manually typing in the correct URL:
+
+wiki/ikiwiki.cgi?page=bugs%2F__39__Existing_Subject__39___vs.___39__Browse__39__&do=edit
+
+does work.
