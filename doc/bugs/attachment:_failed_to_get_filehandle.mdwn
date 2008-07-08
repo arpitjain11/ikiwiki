@@ -31,6 +31,16 @@ the error message like below:
 
 >>>> Is it helpful for you? --[[Paweł|ptecza]]
 
+>>>>> Yes, this suggests that CGI.pm's `upload` function is not working,
+>>>>> but that it *is* returning a filehandle pointing at the attachment
+>>>>> using the old method. Hmm, so I'll bet you have a CGI.pm version
+>>>>> older than 2.47. Can you find your system's CGI.pm and grep for
+>>>>> "VERSION" in it to determine the version? I checked debian stable.
+>>>>> and its perl 5.8.8 has version 3.15, so is not affected, I think.
+>>>>> 
+>>>>> I've just checked in a fix that should work, can you test it?
+>>>>> [diff](http://git.ikiwiki.info/?p=ikiwiki;a=commitdiff;h=71f10579c00a8ddc20ada1a1efd33aac25a3da7e) --[[Joey]]
+
 The same message I can see in the Apache log file. There is also
 following warning:
 
