@@ -13,3 +13,5 @@ Since ikiwiki builds, it has to be finding Markdown at build time, right? What a
 > Either fix the installation so ikiwiki's perl modules are installed in one of the standard locations,
 > or you could use the `libdir` setting in the setup file to point ikiwiki
 > at the directory the perl modules are installed. --[[Joey]]
+
+>> Ah hah! That helped... once I knew that it was ikiwiki's internal thing, I was able to figure out that it was a permissions issue. For the record, I didn't change permissions or the default install prefix of /usr/local (well, at least not on purpose). Thanks for your help. --mrled
