@@ -142,6 +142,7 @@ sub formbuilder (@) { #{{{
 				if (! defined $fh || ! ref $fh) {
 					# even that doesn't always work,
 					# fall back to opening the tempfile
+					$fh=undef;
 					open($fh, "<", $tempfile) || error("failed to open $tempfile: $!");
 				}
 			}
