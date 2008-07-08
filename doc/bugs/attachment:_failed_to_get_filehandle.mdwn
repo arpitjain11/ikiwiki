@@ -4,6 +4,14 @@ the error message like below:
 
     Błąd: failed to get filehandle
 
+> Can you do some debugging? If you edit attachment.pm line 136, to print
+> out what it did get, and show me what that yields, maybe I can figure
+> this out.
+
+	error("failed to get filehandle ($fh)");
+
+> Also, what web server and version of perl is this? --[[Joey]]
+
 The same message I can see in the Apache log file. There is also
 following warning:
 
