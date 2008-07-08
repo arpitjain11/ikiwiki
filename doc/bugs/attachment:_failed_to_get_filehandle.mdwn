@@ -25,6 +25,12 @@ the error message like below:
 
 	error("failed to get filehandle:$fh ; file:$filename ; is ref:".ref($q->param('attachment')));
 
+>>>> Now my Ikiwiki returns:
+
+>>>>     failed to get filehandle: ; file:sandbox/test.txt ; is ref:
+
+>>>> Is it helpful for you? --[[Paweł|ptecza]]
+
 The same message I can see in the Apache log file. There is also
 following warning:
 
