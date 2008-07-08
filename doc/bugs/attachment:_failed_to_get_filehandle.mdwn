@@ -63,6 +63,13 @@ the error message like below:
 >>>>>>> though. I've checked in a second try at dealing with things, can
 >>>>>>> you try it? --[[Joey]]
 
+>>>>>>>> Do you mean that [diff](http://git.ikiwiki.info/?p=ikiwiki;a=commitdiff;h=66f35e30dcea03c631a293e2341771277543b4ae)?
+>>>>>>>> If so, then it causes "Internal Server Error" for me:
+
+>>>>>>>>     Can't use string ("test.txt") as a symbol ref while "strict refs" in use at /usr/share/perl5/IkiWiki/Plugin/attachment.pm line 144.
+
+>>>>>>>> I can rebuild Debian stable source package with CGI for Perl. Maybe it will help me? What do you think? --[[Paweł|ptecza]]
+
 The same message I can see in the Apache log file. There is also
 following warning:
 
