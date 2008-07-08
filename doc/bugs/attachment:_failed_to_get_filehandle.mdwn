@@ -85,6 +85,11 @@ the error message like below:
 >>>>>>>>>>> I need to find out if this affects stable in general, or just
 >>>>>>>>>>> you/ubuntu. --[[Joey]]
 
+>>>>>>>>>>>> Same thing on FreeBSD using CGI.pm 3.15. Looks like $self->{'.tmpfiles'} in CGI.pm
+>>>>>>>>>>>> is not populated with the information about the uploaded file, causing tmpFileName()
+>>>>>>>>>>>> to return '' (unloadInfo(), which uses the same lookup method fails in the same manner),
+>>>>>>>>>>>> but I have yet to find out why this happens. --[[HenrikBrixAndersen]]
+
 The same message I can see in the Apache log file. There is also
 following warning:
 
@@ -100,3 +105,5 @@ Is it Ikiwiki bug or my attachment plugin is misconfigured? --[[Paweł|ptecza]]
 > This was amazingly disgusting, see commit message for the full horror of
 > the details. I think it's [[done]] -- at least it works on debian stable
 > now. --[[Joey]]
+
+>> Thank you very much for your effort, Joey! :) --[[Paweł|ptecza]]
