@@ -10,7 +10,14 @@ the error message like below:
 
 	error("failed to get filehandle ($fh)");
 
+>> Sure. I've done the change and it seems that $fh variable is undefined:
+
+>>     Use of uninitialized value in concatenation (.) or string at /usr/share/perl5/IkiWiki/Plugin/attachment.pm line 135.
+>>     failed to get filehandle ()
+
 > Also, what web server and version of perl is this? --[[Joey]]
+
+>> It's Perl 5.8.8-12 from Ubuntu Hardy. --[[Paweł|ptecza]]
 
 The same message I can see in the Apache log file. There is also
 following warning:
