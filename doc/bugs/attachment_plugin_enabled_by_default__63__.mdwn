@@ -4,12 +4,16 @@ that it's enabled by default in Ikiwiki. Is it true?
 > No, typo. I don't want to enable it by default because it requires
 > site-specific configuration to be made secure. --[[Joey]]
 
+>> Thanks for your reply! I was guessing it :) --[[Paweł|ptecza]]
+
 I have backported Ikiwiki 2.52 and I need to add that plugin to
 `add_plugins` variable in my `ikiwiki.setup` file (and rebuild
 my wiki, of course) to see new upload buttons when I edit a page
 and click "Attachments" link.
 
 > FWIW, you don't need to rebuild the whole wiki, --refresh --wrappers is enough.
+
+>> It's good to know. Thank you for the hint! 
 
 Maybe should I enable attachment handling in different way?
 --[[Paweł|users/ptecza]]
