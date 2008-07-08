@@ -5,6 +5,7 @@ ikiwiki (2.53) UNRELEASED; urgency=low
   * attachment: Fix an uninitialised value warning when editing a page
     that currently has no attachments.
   * Fix a bug with links to pages whose names contained colons.
+  * attachment: Support old versions of CGI.pm that lack an upload method.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 07 Jul 2008 01:52:48 -0400
 

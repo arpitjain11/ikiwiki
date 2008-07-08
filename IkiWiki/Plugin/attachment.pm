@@ -133,7 +133,11 @@ sub formbuilder (@) { #{{{
 		else {
 			my $fh=$q->upload('attachment');
 			if (! defined $fh || ! ref $fh) {
-				error("failed to get filehandle");
+				# needed by old CGI versions
+				$fh=$q->param('attachment');
+				if (! defined $fh || ! ref $fh) {
+					error("failed to get filehandle");
+				}
 			}
 			binmode($fh);
 			writefile($filename, $config{srcdir}, undef, 1, sub {
