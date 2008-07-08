@@ -37,9 +37,22 @@ the error message like below:
 >>>>> older than 2.47. Can you find your system's CGI.pm and grep for
 >>>>> "VERSION" in it to determine the version? I checked debian stable.
 >>>>> and its perl 5.8.8 has version 3.15, so is not affected, I think.
->>>>> 
+
+>>>>>> I have CGI.pm 3.15 too: 
+
+>>>>>>     $ grep VERSION= /usr/share/perl/5.8.8/CGI.pm
+>>>>>>     $CGI::VERSION='3.15';
+
 >>>>> I've just checked in a fix that should work, can you test it?
 >>>>> [diff](http://git.ikiwiki.info/?p=ikiwiki;a=commitdiff;h=71f10579c00a8ddc20ada1a1efd33aac25a3da7e) --[[Joey]]
+
+>>>>>> I've patched `attachment.pm` module, but the bug still occurs.
+>>>>>> However I can see a little progress. I changed invoking `error()`
+>>>>>> subroutine like you showed me before and now Ikiwiki prints
+
+>>>>>>     failed to get filehandle:test.txt ; file:sandbox/test.txt ; is ref:
+
+>>>>>> --[[Paweł|ptecza]]
 
 The same message I can see in the Apache log file. There is also
 following warning:
