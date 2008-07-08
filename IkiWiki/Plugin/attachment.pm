@@ -34,7 +34,8 @@ sub formbuilder_setup (@) { #{{{
 		# Start with the attachments interface toggled invisible,
 		# but if it was used, keep it open.
 		if ($form->submitted ne "Upload Attachment" &&
-		    ! length $q->param("attachment_select")) {
+		    (! defined $q->param("attachment_select") ||
+		    ! length $q->param("attachment_select"))) {
 			$form->tmpl_param("attachments-class" => "toggleable");
 		}
 		else {
