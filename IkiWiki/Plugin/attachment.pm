@@ -21,6 +21,8 @@ sub formbuilder_setup (@) { #{{{
 	my $q=$params{cgi};
 
 	if (defined $form->field("do") && $form->field("do") eq "edit") {
+		# Add attachment field, set type to multipart.
+		$form->enctype(&CGI::MULTIPART);
 		$form->field(name => 'attachment', type => 'file');
 		# These buttons are not put in the usual place, so
 		# are not added to the normal formbuilder button list.
