@@ -538,7 +538,12 @@ sub beautify_url ($) { #{{{
 	if ($config{usedirs}) {
 		$url =~ s!/index.$config{htmlext}$!/!;
 	}
-	$url =~ s!^$!./!; # Browsers don't like empty links...
+
+	# Ensure url is not an empty link, and
+	# if it's relative, make that explicit to avoid colon confusion.
+	if ($url !~ /\//) {
+		$url="./$url";
+	}
 
 	return $url;
 } #}}}
