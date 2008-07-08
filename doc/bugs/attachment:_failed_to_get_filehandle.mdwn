@@ -54,6 +54,15 @@ the error message like below:
 
 >>>>>> --[[Paweł|ptecza]]
 
+>>>>>>> Well then, your CGI.pm is somehow not behaving as its documentation
+>>>>>>> describes, in two ways:
+>>>>>>> 1. `upload()` is not returning a reference to the filehandle
+>>>>>>> 2. The filename returned by `param("attachment")` is not also
+>>>>>>>    a file handle.
+>>>>>>> That seems very broken. I can try to work around it some more
+>>>>>>> though. I've checked in a second try at dealing with things, can
+>>>>>>> you try it? --[[Joey]]
+
 The same message I can see in the Apache log file. There is also
 following warning:
 

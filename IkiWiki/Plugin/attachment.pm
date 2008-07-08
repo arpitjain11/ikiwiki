@@ -88,6 +88,10 @@ sub formbuilder (@) { #{{{
 		# of the temp file that CGI writes the upload to.
 		my $tempfile=$q->tmpFileName($filename);
 		
+		if (! defined $tempfile) {
+			error("failed to determine temp filename");
+		}
+
 		$filename=IkiWiki::titlepage(
 			IkiWiki::possibly_foolish_untaint(
 				attachment_location($form->field('page')).
@@ -136,7 +140,9 @@ sub formbuilder (@) { #{{{
 				# needed by old CGI versions
 				$fh=$q->param('attachment');
 				if (! defined $fh || ! ref $fh) {
-					error("failed to get filehandle");
+					# even that doesn't always work,
+					# fall back to opening the tempfile
+					open($fh, "<", $tempfile) || error("failed to open $tempfile: $!");
 				}
 			}
 			binmode($fh);
