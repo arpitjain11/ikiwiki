@@ -386,6 +386,9 @@ sub match_virusfree ($$;@) { #{{{
 	waitpid $pid, 0;
 	$SIG{PIPE}="DEFAULT";
 	if ($sigpipe || $?) {
+		if (! length $reason) {
+			$reason="virus checker $IkiWiki::config{virus_checker}; failed with no output";
+		}
 		return IkiWiki::FailReason->new("file seems to contain a virus ($reason)");
 	}
 	else {
