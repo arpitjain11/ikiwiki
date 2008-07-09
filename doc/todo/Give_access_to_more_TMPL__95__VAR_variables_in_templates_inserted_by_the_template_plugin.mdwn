@@ -1,0 +1,96 @@
+[[tag wishlist]]
+
+# Context
+
+I may have missed a simple way to achieve what I need without
+modifying ikiwiki, so here is the context.
+
+I have a first-level directory (called `bricks`) containing a bunch of
+wiki pages :
+
+    /bricks
+     |
+     |- bla.mdwn
+     |
+     |- bli.mdwn
+     |
+     `- ...
+
+I have two groups of tags called `direction` and `usage`, stored in
+two sub-directories of `$tagbase` :
+
+    /tag
+     |
+     |- direction
+     |    |- d1.mdwn
+     |    |- d2.mdwn
+     |    |- ...
+     |
+     |- usage
+     |    |- u1.mdwn
+     |    |- u2.mdwn
+     |    |- ...
+
+Any page in `/brick` can be tagged with one or more tags from any of
+these tags-groups.
+
+I need to present different views for these wiki pages, so a `/view`
+tree is dedicated to this mission :
+
+    /view
+     |
+     |- dev
+     |   |- d1.mdwn
+     |   |- d2.mdwn
+     |   |-...
+     |
+     |- howto
+         |- u1.mdwn
+         |- u2.mdwn
+         |- ...
+
+... where e.g. `/view/dev/d1` lists a subset (depending on other tags)
+of the pages tagged d1.
+
+My current plan is :
+
+- thanks to the pagetemplate plugin, `/view/dev/*` and `/view/howto/*` would be assigned two custom templates, containing respectively `\[[template id=dev_direction]]` and `\[[template id=howto_usage]]`
+- `/templates/dev_direction.mdwn` and `/templates/howto_usage.mdwn` would use `\[[!map ...]]` directives to build their views
+
+# My issue
+
+Such map directives would look something like the following (more
+complicated, actually, but let's focus on my current issue) :
+
+	\[[!map pages="bricks/* and link(tag/usage/<TMPL_VAR BASENAME>)"]]
+
+Where `BASENAME` value would be, e.g., `u1` or `d2`, depending on the
+page inserting the template. But `BASENAME` does not exist. I found
+that `<TMPL_VAR PAGE>` is replaced with the full path to the page, but
+I did not found how to get the page's basename in a template included
+with a `\[[template id=...]]` directive.
+
+Any idea ?
+
+I guess it would be possible to provide the templates inserted by the
+template plugin with more `TMPL_VAR` variables, but I don't know ikiwiki
+codebase well, so I don't know how hard it would be.
+
+I sure could write a ad-hoc plugin that would use the pagetemplate
+hook to add a custom `<TMPL_LOOP>` selector I could use in my
+templates, or another one that would use the filter hook to add the
+needed `\[[!map ...]]` where it belongs to, but since ikiwiki's
+preprocessor directives already *almost* do what I need, I'd like to
+avoid the ad-hoc plugin solution.
+
+(Adding a parameter such as `name=d1` in every `/view/dev/d*.mdwn` and
+`/view/howto/u*.mdwn` page is not an option : there may be quite
+a few, that's why I intend to use the pagetemplate plugin in the first
+place to assign them a common template.)
+
+More or less OT: I've not checked the compatibility of pagetemplate
+and template plugins yet; can a template (`*.tmpl`), assigned by
+pagetemplate, itself call a template (`*.mdwn`) managed by the
+template plugin ? The hooks call order tends to make me think it is
+not possible, which anyway would ruin my current plan.
+
