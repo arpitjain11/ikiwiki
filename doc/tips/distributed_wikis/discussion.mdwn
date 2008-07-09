@@ -1,1 +1,7 @@
 Would it work if the mirrored wiki was configured with cgiurl set to the cgiurl of the origin wiki - so that users were seamlessly redirected to the origin for edits? --[[Jamie]]
+
+> Yes, if the origin wiki is set up to ping the mirrored wiki when
+> updated, the mirror is free to use its cgi setup. (Note that the cgi will
+> leave the user on a page on the origin wiki when they save the edit.)
+> I've put a mention of this option in the page.
+> --[[Joey]]

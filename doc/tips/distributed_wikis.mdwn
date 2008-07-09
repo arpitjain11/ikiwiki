@@ -26,7 +26,8 @@ And if someone edits a page on your mirror, it will "git push origin",
 committing the changes back to the origin git repository, and updating the
 origin mirror. Assuming you can push to that git repository. If you can't,
 and you want a mirror, and not a branch, you should disable web edits on
-your mirror.
+your mirror. (You could also point the cgiurl for your mirror at the origin
+wiki.)
 
 ## branching a wiki
 
