@@ -5,6 +5,7 @@ package IkiWiki::Plugin::otl;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use open qw{:utf8 :std};
 
 sub import { #{{{
 	hook(type => "filter", id => "otl", call => \&filter);
