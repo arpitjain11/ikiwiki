@@ -46,11 +46,13 @@ being edited.
 
 Plugins should, when imported, call `hook()` to hook into ikiwiki's
 processing. The function uses named parameters, and use varies depending on
-the type of hook being registered -- see below. Note that a plugin can call
-the function more than once to register multiple hooks. All calls to
-`hook()` should be passed a "type" parameter, which gives the type of
-hook, a "id" paramter, which should be a unique string for this plugin, and
-a "call" parameter, which tells what function to call for the hook.
+the type of hook being registered -- see below. A plugin can call
+the function more than once to register multiple hooks.
+
+All calls to `hook()` should be passed a "type" parameter, which gives the
+type of hook, a "id" parameter, which should be a unique string for this
+plugin, and a "call" parameter, which tells what function to call for the
+hook.
 
 An optional "last" parameter, if set to a true value, makes the hook run
 after all other hooks of its type. Useful if the hook depends on some other
@@ -98,6 +100,18 @@ This allows a plugin to manipulate the list of files that need to be
 built when the wiki is refreshed. The function is passed a reference to an
 array of pages that will be rebuilt, and can modify the array, either
 adding or removing files from it.
+
+### scan
+
+	hook(type => "scan", id => "foo", call => \&scan);
+
+This hook is called early in the process of building the wiki, and is used
+as a first pass scan of the page, to collect metadata about the page. It's
+mostly used to scan the page for WikiLinks, and add them to `%links`.
+Present in IkiWiki 2.40 and later.
+
+The function is passed named parameters "page" and "content". Its return
+value is ignored.
 
 ### filter
 
@@ -154,23 +168,11 @@ and later.
 Plugins that implement linkify must also implement a scan hook, that scans
 for the links on the page and adds them to `%links`.
 
-### scan
-
-	hook(type => "scan", id => "foo", call => \&scan);
-
-This hook is called early in the process of building the wiki, and is used
-as a first pass scan of the page, to collect metadata about the page. It's
-mostly used to scan the page for WikiLinks, and add them to `%links`.
-Present in IkiWiki 2.40 and later.
-
-The function is passed named parameters "page" and "content". Its return
-value is ignored.
-
 ### htmlize
 
 	hook(type => "htmlize", id => "ext", call => \&htmlize);
 
-Runs on the raw source of a page and turns it into html. The id parameter
+Runs on the source of a page and turns it into html. The id parameter
 specifies the filename extension that a file must have to be htmlized using
 this plugin. This is how you can add support for new and exciting markup
 languages to ikiwiki.
@@ -258,9 +260,9 @@ state is loaded, and with no session information.
 
 	hook(type => "auth", id => "foo", call => \&auth);
 
-This hook can be used to implement a different authentication method than
-the standard web form. When a user needs to be authenticated, each registered
-auth hook is called in turn, and passed a CGI object and a session object. 
+This hook can be used to implement an authentication method. When a user
+needs to be authenticated, each registered auth hook is called in turn, and
+passed a CGI object and a session object. 
 
 If the hook is able to authenticate the user, it should set the session
 object's "name" parameter to the authenticated user's name. Note that
@@ -331,7 +333,7 @@ called. It can be used to validate the form, but should not display it.
 
 	hook(type => "savestate", id => "foo", call => \&savestate);
 
-This hook is called wheneven ikiwiki normally saves its state, just before
+This hook is called whenever ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
 
@@ -339,7 +341,7 @@ they're saved, etc.
 
 To import the ikiwiki plugin interface:
 
-	use IkiWiki '1.00';
+	use IkiWiki '2.00';
 
 This will import several variables and functions into your plugin's
 namespace. These variables and functions are the ones most plugins need,
@@ -411,8 +413,8 @@ function that is called after the error message is printed, to do any final
 cleanup.
 
 Note that while any plugin can use this for a fatal error, plugins should
-try to avoid dying on bad input, as that will halt the entire wiki build
-and make the wiki unusable. So for example, if a
+try to avoid dying on bad input when building a page, as that will halt
+the entire wiki build and make the wiki unusable. So for example, if a
 [[ikiwiki/PreProcessorDirective]] is passed bad parameters, it's better to
 return an error message, which can appear on the wiki page, rather than
 calling error().
