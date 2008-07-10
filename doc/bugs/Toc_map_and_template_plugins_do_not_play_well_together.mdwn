@@ -25,6 +25,8 @@ If no `\[[!map]]` directive is anywhere in the template, the page is rendered as
 If `\[[!map]]` is used e.g. in content4, the wiki page is rendered with
 the following elements :
 
+> Surely you mean a toc directive, not map? --[[Joey]]
+
 - an empty toc div
 - every markdown code before the first `\[[!map]]` directive is not
   interpreted and rendered as-is : `# header1 content1 # header2
