@@ -16,6 +16,9 @@ This type of page name (with leading slash) also gets created by the aggregate p
 > <current>/subdir/subpage, when a user clicks the "?" link to create
 > the missing page ; that's why I'm using absolute paths.
 >
+>> Totally agree, this had only not been addressed due to lack of time on
+>> my part. (I have about 50 ikiwiki things on my todo list.) --[[Joey]]
+>
 > Anyway, having the CGI consider invalid an otherwise valid wikilink
 > seems a bit weird to me, so I had a look to the code, and here is a
 > patch that should fix this issue ; I proceeded the only way I could
@@ -51,5 +54,9 @@ This type of page name (with leading slash) also gets created by the aggregate p
 	 			    $form->submitted eq "Preview") {
 	 				@page_locs=$best_loc=$page;
 	 			}
+
+
+> [[Applied|done]]. BTW, I also accept full git changesets, if you like
+> having your name in commit logs. :-)
 
 [[tag patch]]

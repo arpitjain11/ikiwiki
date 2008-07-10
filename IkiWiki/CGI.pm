@@ -304,8 +304,9 @@ sub cgi_editpage ($$) { #{{{
 	# This untaint is safe because we check file_pruned.
 	my $page=$form->field('page');
 	$page=possibly_foolish_untaint($page);
+	my $absolute=($page =~ s#^/+##);
 	if (! defined $page || ! length $page ||
-	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
+	    file_pruned($page, $config{srcdir})) {
 		error("bad page name");
 	}
 
@@ -424,7 +425,8 @@ sub cgi_editpage ($$) { #{{{
 			if (! defined $from || ! length $from ||
 			    $from ne $form->field('from') ||
 			    file_pruned($from, $config{srcdir}) ||
-			    $from=~/^\// ||
+			    $from=~/^\// || 
+			    $absolute ||
 			    $form->submitted eq "Preview") {
 				@page_locs=$best_loc=$page;
 			}
