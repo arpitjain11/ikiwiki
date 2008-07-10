@@ -1,4 +1,4 @@
-[[tag wishlist]]
+[[tag wishlist patch]]
 
 # Context
 
@@ -54,7 +54,7 @@ of the pages tagged d1.
 
 My current plan is :
 
-- thanks to the pagetemplate plugin, `/view/dev/*` and `/view/howto/*` would be assigned two custom templates, containing respectively `\[[template id=dev_direction]]` and `\[[template id=howto_usage]]`
+- thanks to the edittemplate plugin, `/view/dev/*` and `/view/howto/*` would contain respectively `\[[template id=dev_direction]]` and `\[[template id=howto_usage]]`
 - `/templates/dev_direction.mdwn` and `/templates/howto_usage.mdwn` would use `\[[!map ...]]` directives to build their views
 
 # My issue
@@ -84,13 +84,24 @@ preprocessor directives already *almost* do what I need, I'd like to
 avoid the ad-hoc plugin solution.
 
 (Adding a parameter such as `name=d1` in every `/view/dev/d*.mdwn` and
-`/view/howto/u*.mdwn` page is not an option : there may be quite
-a few, that's why I intend to use the pagetemplate plugin in the first
-place to assign them a common template.)
+`/view/howto/u*.mdwn` page is not an option : I want to factorize the
+most possible of these pages.
 
-More or less OT: I've not checked the compatibility of pagetemplate
-and template plugins yet; can a template (`*.tmpl`), assigned by
-pagetemplate, itself call a template (`*.mdwn`) managed by the
-template plugin ? The hooks call order tends to make me think it is
-not possible, which anyway would ruin my current plan.
+> The following patch adds a `basename` `TMPL_VAR` variable that can be
+> used in the templates inserted by [[template plugin]] :
 
+>        diff --git a/IkiWiki/Plugin/template.pm b/IkiWiki/Plugin/template.pm
+>        index a6e34fc..bb9dd8d 100644
+>        --- a/IkiWiki/Plugin/template.pm
+>        +++ b/IkiWiki/Plugin/template.pm
+>        @@ -57,6 +57,8 @@ sub preprocess (@) { #{{{
+>                       }
+>               }
+>        
+>        +       $template->param("basename" => (split("/", $params{page}))[-1]);
+>        +       
+>               return IkiWiki::preprocess($params{page}, $params{destpage},
+>                        IkiWiki::filter($params{page}, $params{destpage},
+>                        $template->output));
+>
+> -- intrigeri
