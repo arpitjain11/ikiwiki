@@ -122,7 +122,7 @@ ikiwiki (2.48) unstable; urgency=high
     pounding on the cgi following edit links.
   * passwordauth: If Authen::Passphrase is installed, use it to store
     password hashes, crypted with Eksblowfish.
-  * `ikiwiki-transiition hashpassword /path/to/srcdir` can be used to
+  * `ikiwiki-transition hashpassword /path/to/srcdir` can be used to
     hash existing plaintext passwords.
   * Passwords will no longer be mailed, but instead a password reset link.
   * The password_cost config setting is provided as a "more security" knob.
