@@ -45,6 +45,8 @@ sub preprocess (@) { #{{{
 		return "[[template ".gettext("failed to process:")." $@]]";
 	}
 
+	$params{basename}=IkiWiki::basename($params{page});
+
 	foreach my $param (keys %params) {
 		if ($template->query(name => $param)) {
 			$template->param($param =>

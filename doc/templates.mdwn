@@ -50,6 +50,9 @@ module, which allows for some fairly complex things to be done. Consult its
 documentation for the full syntax, but all you really need to know are a
 few things:
 
+* Each parameter you pass to the template directive will generate a 
+  template variable. There are also some pre-defined variables like PAGE
+  and BASENAME.
 * To insert the value of a variable, use `<TMPL_VAR variable>`. Wiki markup
   in the value will first be converted to html.
 * To insert the raw value of a variable, with wiki markup not yet converted

@@ -88,7 +88,7 @@ avoid the ad-hoc plugin solution.
 most possible of these pages.
 
 > The following patch adds a `basename` `TMPL_VAR` variable that can be
-> used in the templates inserted by [[template plugin]] :
+> used in the templates inserted by \[[template plugin]] :
 
 >        diff --git a/IkiWiki/Plugin/template.pm b/IkiWiki/Plugin/template.pm
 >        index a6e34fc..bb9dd8d 100644
@@ -105,3 +105,5 @@ most possible of these pages.
 >                        $template->output));
 >
 > -- intrigeri
+
+> Thanks for taking the trouble to develop a patch. [[done]] --[[Joey]]
