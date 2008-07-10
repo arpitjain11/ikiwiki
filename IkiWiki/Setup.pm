@@ -1,4 +1,11 @@
 #!/usr/bin/perl
+# Ikiwiki setup files are perl files that 'use IkiWiki::Setup::foo',
+# passing it some sort of configuration data.
+#
+# There can be multiple modules, with different configuration styles.
+# The setup modules each convert the data into the hashes used by ikiwiki
+# internally (if it's not already in that format), and store it in
+# IkiWiki::Setup::$raw_setup, to pass it back to this module.
 
 package IkiWiki::Setup;
 use warnings;
@@ -6,8 +13,6 @@ use strict;
 use IkiWiki;
 use open qw{:utf8 :std};
 
-# This hashref is where setup files store settings while they're being
-# loaded. It is not used otherwise.
 our $raw_setup;
 
 sub load ($) { # {{{
@@ -67,14 +72,14 @@ sub setup () { #{{{
 		next if $c eq 'syslog';
 		if (defined $setup{$c}) {
 			if (! ref $setup{$c}) {
-				$config{$c}=IkiWiki::possibly_foolish_untaint($setup{$c});
+				$config{$c}=possibly_foolish_untaint($setup{$c});
 			}
 			elsif (ref $setup{$c} eq 'ARRAY') {
-				$config{$c}=[map { IkiWiki::possibly_foolish_untaint($_) } @{$setup{$c}}]
+				$config{$c}=[map { possibly_foolish_untaint($_) } @{$setup{$c}}]
 			}
 			elsif (ref $setup{$c} eq 'HASH') {
 				foreach my $key (keys %{$setup{$c}}) {
-					$config{$c}{$key}=IkiWiki::possibly_foolish_untaint($setup{$c}{$key});
+					$config{$c}{$key}=possibly_foolish_untaint($setup{$c}{$key});
 				}
 			}
 		}
