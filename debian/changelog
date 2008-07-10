@@ -1,8 +1,8 @@
 ikiwiki (2.54) UNRELEASED; urgency=low
 
   * Make it possible to load setup files w/o running them. Code
-    needing to do so can call IkiWiki::Setup::load, and the values will
-    be loaded into %IkiWiki::Setup::setup.
+    needing to do so can call IkiWiki::Setup::load, which will return
+    a hash of values.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 09 Jul 2008 22:27:19 -0400
 
