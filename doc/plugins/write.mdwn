@@ -570,7 +570,9 @@ destination file, as registered by `will_render`.
 Passed a page and an extension, returns the filename that page will be
 rendered to.
 
-## Internal use pages
+## Miscellaneous
+
+### Internal use pages
 
 Sometimes it's useful to put pages in the wiki without the overhead of
 having them be rendered to individual html files. Such internal use pages
@@ -583,7 +585,7 @@ either on them with extreme caution), and are not matched by regular
 PageSpecs glob patterns, but instead only by a special `internal()`
 [[ikiwiki/PageSpec]].
 
-## RCS plugins
+### RCS plugins
 
 ikiwiki's support for [[revision_control_systems|rcs]] also uses pluggable
 perl modules. These are in the `IkiWiki::RCS` namespace, for example
@@ -595,7 +597,7 @@ See IkiWiki::RCS::Stub for the full list of functions. It's ok if
 
 See [[RCS_details|rcs/details]] for some more info.
 
-## PageSpec plugins
+### PageSpec plugins
 
 It's also possible to write plugins that add new functions to
 [[PageSpecs|ikiwiki/PageSpec]]. Such a plugin should add a function to the
@@ -605,3 +607,18 @@ two parameters: The name of the page being matched, and the thing to match
 against. It may also be passed additional, named parameters. It should return
 a IkiWiki::SuccessReason object if the match succeeds, or an
 IkiWiki::FailReason object if the match fails.
+
+### Setup plugins
+
+The ikiwiki setup file is loaded using a pluggable mechanism. If you
+look at the top of [[ikiwiki.setup]], it starts with 
+'use IkiWiki::Setup::Standard', and the rest of the file is passed to
+that module's import method.
+
+It's possible to write other modules in the `IkiWiki::Setup::` namespace that
+can be used to configure ikiwiki in different ways. These modules should,
+when imported, populate `$IkiWiki::Setup::raw_setup` with a reference
+to a hash containing all the config items.
+
+By the way, to parse a ikiwiki setup file, a program just needs to
+do something like `use IkiWiki::Setup; my %setup=IkiWiki::Setup::load($filename)`
