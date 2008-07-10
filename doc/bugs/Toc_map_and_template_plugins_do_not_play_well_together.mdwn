@@ -1,0 +1,49 @@
+I've got a wiki page that contains :
+
+	[[!toc ]]
+	
+	# header1
+	
+	content1
+		
+	# header2
+	
+	\[[!template id=bla]]
+
+And `templates/bla.mdwn` contains :
+
+	# header3
+	
+	content3
+	
+	# header4
+	
+	content4
+
+If no `[[!map]]` directive is anywhere in the template, the page is rendered as expected.
+
+If `[[!map]]` is used e.g. in content4, the wiki page is rendered with
+the following elements :
+
+- an empty toc div
+- every markdown code before the first `\[[!map]]` directive is not
+  interpreted and rendered as-is : `# header1 content1 # header2
+  content2 #header3 #header4 content4_before_the_map`
+- the correctly rendered map directive result
+
+If `\[[!map]]` is used in content3, the wiki page is rendered with
+the following elements :
+
+- a TOC containing only the last header (header4)
+- every markdown code before the first `\[[!map]]` directive is not
+  interpreted and rendered as-is : `# header1 content1 # header2
+  content2 #header3 content3_before_the_map`
+- content3 (starting at the map), header4 and content4 are all rendered as expected
+
+Moving the `\[[!toc]]` directive from the page to the template gives the same results.
+
+Removing the `\[[!toc]]` directive or moving it at the end of the page
+makes the whole wiki page be rendered as expected.
+
+Hint : in all cases, the non-interpreted markdown code is copied as-is
+in the HTML output, without any leading `<p>` or any HTML formatting.
