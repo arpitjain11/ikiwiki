@@ -645,8 +645,14 @@ sub cgi_getsession ($) { #{{{
 	CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
 	
 	my $oldmask=umask(077);
-	my $session = CGI::Session->new("driver:DB_File", $q,
-		{ FileName => "$config{wikistatedir}/sessions.db" });
+	my $session = eval {
+		CGI::Session->new("driver:DB_File", $q,
+			{ FileName => "$config{wikistatedir}/sessions.db" })
+	};
+	if (! $session || $@) {
+		error($@." ".CGI::Session->errstr());
+	}
+	
 	umask($oldmask);
 
 	return $session;
