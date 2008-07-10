@@ -5,3 +5,51 @@ When you click on the question mark to create the page, you get *Error: bad page
 > Is it a valid wikilink?  Should Iki prevent the page from being created? --[[sabr]], 2 months later
 
 This type of page name (with leading slash) also gets created by the aggregate plugin: /cgi-bin/ikiwiki.cgi?page=%2FCalculated_Risk&from=news%2FAll_Stories&do=create  I'm now pretty convinced that Iki should handle this without error.  I'll investigate if I can find the time.
+
+> As documented on [[ikiwiki/subpage/linkingrules]], such an absolute
+> link works perfectly when the linked page already exists.
+>
+> The CGI behaviour is thus not consistent with the general linking
+> rules, which is annoying for me : I'm using templates to generate
+> links to pages that may not exist yet, and I would like the "right"
+> path to be selected by default, instead of the usual
+> <current>/subdir/subpage, when a user clicks the "?" link to create
+> the missing page ; that's why I'm using absolute paths.
+>
+> Anyway, having the CGI consider invalid an otherwise valid wikilink
+> seems a bit weird to me, so I had a look to the code, and here is a
+> patch that should fix this issue ; I proceeded the only way I could
+> find to prevent side-effects : the only place where I use `$origpage`
+> is a match, so no function at all is fed with a `$page` with 
+> leading slash :
+>
+> -- intrigeri
+
+
+	diff --git a/IkiWiki/CGI.pm b/IkiWiki/CGI.pm
+	index 99cead6..23d9616 100644
+	--- a/IkiWiki/CGI.pm
+	+++ b/IkiWiki/CGI.pm
+	@@ -305,9 +305,11 @@ sub cgi_editpage ($$) { #{{{
+	 	my $page=$form->field('page');
+	 	$page=possibly_foolish_untaint($page);
+	 	if (! defined $page || ! length $page ||
+	-	    file_pruned($page, $config{srcdir}) || $page=~/^\//) {
+	+	    file_pruned($page, $config{srcdir})) {
+	 		error("bad page name");
+	 	}
+	+	my $origpage=$page;
+	+	$page =~ s#^/##;
+	 
+	 	my $baseurl=$config{url}."/".htmlpage($page);
+	 	
+	@@ -425,6 +427,7 @@ sub cgi_editpage ($$) { #{{{
+	 			    $from ne $form->field('from') ||
+	 			    file_pruned($from, $config{srcdir}) ||
+	 			    $from=~/^\// ||
+	+			    $origpage=~/^\// ||
+	 			    $form->submitted eq "Preview") {
+	 				@page_locs=$best_loc=$page;
+	 			}
+
+[[tag patch]]
