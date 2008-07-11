@@ -533,7 +533,7 @@ sub displaytime ($;$) { #{{{
 	return decode_utf8(POSIX::strftime($format, localtime($time)));
 } #}}}
 
-sub beautify_url ($) { #{{{
+sub beautify_urlpath ($) { #{{{
 	my $url=shift;
 
 	if ($config{usedirs}) {
@@ -554,7 +554,7 @@ sub urlto ($$) { #{{{
 	my $from=shift;
 
 	if (! length $to) {
-		return beautify_url(baseurl($from)."index.$config{htmlext}");
+		return beautify_urlpath(baseurl($from)."index.$config{htmlext}");
 	}
 
 	if (! $destsources{$to}) {
@@ -563,7 +563,7 @@ sub urlto ($$) { #{{{
 
 	my $link = abs2rel($to, dirname(htmlpage($from)));
 
-	return beautify_url($link);
+	return beautify_urlpath($link);
 } #}}}
 
 sub htmllink ($$$;@) { #{{{
@@ -610,7 +610,7 @@ sub htmllink ($$$;@) { #{{{
 	}
 	
 	$bestlink=abs2rel($bestlink, dirname(htmlpage($page)));
-	$bestlink=beautify_url($bestlink);
+	$bestlink=beautify_urlpath($bestlink);
 	
 	if (! $opts{noimageinline} && isinlinableimage($bestlink)) {
 		return "<img src=\"$bestlink\" alt=\"$linktext\" />";
