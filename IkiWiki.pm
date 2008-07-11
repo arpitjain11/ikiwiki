@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 package IkiWiki;
+
 use warnings;
 use strict;
 use Encode;
