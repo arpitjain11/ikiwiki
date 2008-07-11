@@ -442,6 +442,13 @@ sub genfeed ($$$$@) { #{{{
 			mdate_3339 => date_3339($pagemtime{$p}),
 		);
 
+		if (exists $pagestate{$p} &&
+		    exists $pagestate{$p}{meta}{uuid}) {
+			my $atom_id = $pagestate{$p}{meta}{uuid};
+
+			$itemtemplate->param(uuid => $atom_id);
+		}
+
 		if ($itemtemplate->query(name => "enclosure")) {
 			my $file=$pagesources{$p};
 			my $type=pagetype($file);
