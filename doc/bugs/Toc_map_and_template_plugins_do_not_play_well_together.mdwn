@@ -1,6 +1,6 @@
 I've got a wiki page that contains :
 
-	[[!toc ]]
+	\[[!toc ]]
 	
 	# header1
 	
@@ -26,6 +26,8 @@ If `\[[!map]]` is used e.g. in content4, the wiki page is rendered with
 the following elements :
 
 > Surely you mean a toc directive, not map? --[[Joey]]
+
+>> No, I really mean map, but I forgot to escape the toc above (in the example wiki page content), which prevented you from understanding my point. -- intrigeri
 
 - an empty toc div
 - every markdown code before the first `\[[!map]]` directive is not
