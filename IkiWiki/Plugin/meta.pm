@@ -84,6 +84,10 @@ sub preprocess (@) { #{{{
 		$pagestate{$page}{meta}{description}=HTML::Entities::encode_numeric($value);
 		# fallthrough
 	}
+	elsif ($key eq 'uuid') {
+		$pagestate{$page}{meta}{uuid}=HTML::Entities::encode_numeric($value);
+		# fallthrough
+	}
 	elsif ($key eq 'license') {
 		push @{$metaheaders{$page}}, '<link rel="license" href="#page_license" />';
 		$pagestate{$page}{meta}{license}=$value;
