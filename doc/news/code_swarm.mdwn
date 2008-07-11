@@ -1,0 +1,34 @@
+I've produced a [code_swarm](http://vis.cs.ucdavis.edu/~ogawa/codeswarm/)
+visualization of the first 2+ years of ikiwiki's commit history. 
+
+[[img screenshot.png size="320x240"]]
+
+* [50 MB ogg vorbis](http://kitenet.net/~joey/screencasts/ikiwiki_swarm.ogg)
+* high quality version not yet uploaded
+
+PS, while I'm posting links to videos, here's a 
+[video of a lightning talk about ikiwiki](http://log.hugoschotman.com/hugo/2008/07/webtuesday-2008-07-08-lightning-talk-by-axel-beckert-about-ikiwiki.html).
+
+--[[Joey]]
+
+### notes
+
+Interesting things to watch for:
+
+* Initial development of ikiwiki to the point it was getting web edits. 
+  (First 2 seconds of video!)
+* Introduction to plugin support, and later, plugin changes dominating code
+  changes.
+* Introduction of openid support and the resulting *swarm* of openid
+  commenters.
+* Switch to git, my name in the logs changes from "joey" to "Joey Hess",
+  and there are more code commits directly from others.
+
+Getting the commit log was tricky because every web commit is in there too,
+so it has to deal with things like IPs and openids. The [[code_swarm_log.pl]]
+script will munge the log to handle these, and it was configured with
+[[code_swarm.cfg]].
+
+Video editing by kino, ffmpeg, ffmpeg2theora, and too many hours of pain.
+
+Audio by the Punch Brothers.
