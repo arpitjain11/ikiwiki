@@ -8,9 +8,11 @@
 # IkiWiki::Setup::$raw_setup, to pass it back to this module.
 
 package IkiWiki::Setup;
+
 use warnings;
 use strict;
 use IkiWiki;
+use IkiWiki::Wrapper;
 use open qw{:utf8 :std};
 
 our $raw_setup;

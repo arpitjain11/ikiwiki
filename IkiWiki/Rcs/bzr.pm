@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
-
-package IkiWiki;
 
 sub bzr_log ($) { #{{{
 	my $out = shift;

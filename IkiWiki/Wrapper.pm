@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use Cwd q{abs_path};
 use Data::Dumper;
 use IkiWiki;
-
-package IkiWiki;
 
 sub gen_wrapper () { #{{{
 	$config{srcdir}=abs_path($config{srcdir});

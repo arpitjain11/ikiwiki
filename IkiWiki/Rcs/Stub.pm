@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 # Stubs for no revision control.
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use IkiWiki;
-
-package IkiWiki;
 
 sub rcs_update () {
 	# Update working directory to current version.

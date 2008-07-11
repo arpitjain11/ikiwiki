@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use IkiWiki;
-
-package IkiWiki;
 
 sub quiet_system (@) {
 	# See Debian bug #385939.

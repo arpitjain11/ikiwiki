@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
+package IkiWiki::Rcs::svn;
+
 use warnings;
 use strict;
 use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
-
-package IkiWiki::Rcs::svn;
 
 sub import { #{{{
 	if (exists $IkiWiki::config{svnpath}) {

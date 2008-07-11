@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use Storable;
 use IkiWiki;
-
-package IkiWiki;
 
 sub userinfo_retrieve () { #{{{
 	my $userinfo=eval{ Storable::lock_retrieve("$config{wikistatedir}/userdb") };

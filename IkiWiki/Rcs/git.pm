@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
-
-package IkiWiki;
 
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes

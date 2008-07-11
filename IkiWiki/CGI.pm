@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 
+package IkiWiki;
+
 use warnings;
 use strict;
 use IkiWiki;
 use IkiWiki::UserInfo;
 use open qw{:utf8 :std};
 use Encode;
-
-package IkiWiki;
 
 sub printheader ($) { #{{{
 	my $session=shift;

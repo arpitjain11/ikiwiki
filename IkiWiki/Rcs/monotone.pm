@@ -1,12 +1,13 @@
 #!/usr/bin/perl
+
+package IkiWiki;
+
 use warnings;
 use strict;
 use IkiWiki;
 use Monotone;
 use Date::Parse qw(str2time);
 use Date::Format qw(time2str);
-
-package IkiWiki;
 
 my $sha1_pattern = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
 
