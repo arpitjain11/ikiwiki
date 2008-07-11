@@ -1,6 +1,10 @@
 <entry>
 	<title><TMPL_VAR TITLE></title>
-	<id><TMPL_VAR URL></id>
+	<TMPL_IF NAME="UUID">
+	  <id><TMPL_VAR UUID></id>
+	<TMPL_ELSE>
+	  <id><TMPL_VAR URL></id>
+	</TMPL_IF>
 	<link href="<TMPL_VAR PERMALINK>"/>
 	<TMPL_IF NAME="AUTHOR">
 	 <author><name><TMPL_VAR AUTHOR ESCAPE=HTML></name></author>
