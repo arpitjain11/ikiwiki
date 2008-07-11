@@ -85,7 +85,13 @@ sub preprocess (@) { #{{{
 		# fallthrough
 	}
 	elsif ($key eq 'uuid') {
-		$pagestate{$page}{meta}{uuid}=HTML::Entities::encode_numeric($value);
+		my $abs = $value;
+
+		if ($abs =~ m/^[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}$/) {
+			$abs = lc "urn:uuid:$abs";
+		}
+
+		$pagestate{$page}{meta}{uuid}=HTML::Entities::encode_numeric($abs);
 		# fallthrough
 	}
 	elsif ($key eq 'license') {
