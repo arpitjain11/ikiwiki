@@ -1,0 +1,64 @@
+I need to display part of my pages' path in the `<title>` meta HTML
+header instead of their basename ; e.g. for /abs/path/to/basename, I'd
+like to set it to path/to/basename.
+
+Of course, one might consider it's my own problem, as I could
+workaround this in my templates, and replace, in the `<title>` meta
+HTML header, `<TMPL_VAR TITLE>` with a `TMPL_LOOP` on `PARENTLINKS`,
+but...
+
+- it's ugly (call it a semantic hijacking if you want) ; a side-effect
+  of this ugliness is :
+- it defeats any further plugin's (e.g. [[plugins/meta]])
+  attempt to override the default title with a nicer one ;
+- all parents appear : there is no way to specify how deep to go up in
+  the parents tree.
+
+So I really want to avoid this ugly workaround.
+
+Looking at `Render.pm`, the second solution I thought of was :
+
+- add a `parents_in_page_title` configuration option (default=0, i.e.
+  the current behaviour) ;
+- modify `Render.pm` to insert as much parents as possible (up to
+  `N=parents_in_page_title`), separated by '/', in the `title`
+  template parameter, before the actual page basename ; I personally
+  would use N=2.
+
+The only problems I can see with this approach are :
+
+- it requires modification of the core, which may not be desirable
+- the resulting title would be unconditionally overridden by the meta
+  plugin, and I can think of no clean solution to make this
+  configurable without hacking [[plugins/meta]], which I'd rather not
+  to ; I don't care, but once you add a ad-hoc feature to the core,
+  you can be sure someone will want a more generic version in less than
+  three months ;)
+
+I'm not too convinced writing a plugin for such a small feature isn't
+overdoing it, so I'm tempted to implement this solution in the
+simplest way : the generated title would be the default and could be
+overridden later by plugins.
+
+Joey, what do you think ?
+
+(Before starting to write any single line of code, I need to know how
+much you are on the "if you can do it as a plugin, don't ever modify
+the core" side... :)
+
+In case you're on the hardcore side, I would probably write
+a dedicated plugin, called `genealogictitle` or whatever, and :
+
+- use the pagetemplate hook to modify the `title` template parameter,
+  and maybe set `title_overridden`, as does the meta plugin
+- add a `genealogictitle_depth` configuration option to tell how many
+  parents to display
+- maybe add a `genealogictitle_overrides_meta` or whatever to decide
+  whether a title overridden by [[plugins/meta]] should be overridden
+  by genealogictitle ; but anyway, I've not found, in the plugins
+  documentation, any hint about the order in which the plugins are
+  called for a given hook, so the "choose the strongest between meta
+  and genealogictitle" thing might just be more complicated... (no,
+  I did not Read The Nice Source, yet).
+
+-- intrigeri
