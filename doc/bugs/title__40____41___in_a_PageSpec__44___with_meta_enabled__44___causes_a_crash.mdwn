@@ -1,0 +1,25 @@
+When the meta plugin is enabled, use of the title() predicate in a [[PageSpec]] fails with "Undefined subroutine &IkiWiki::Plugin::meta::pagetitle called". The [[patch]] is to replace "pagetitle" with "IkiWiki::pagetitle" in the meta plugin, as in [this git commit](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commit;h=1f26a1bf1655b1d0223b24ba1db70579a3774eb1) (git://git.debian.org/git/users/smcv/ikiwiki.git, branch=master, commit=1f26a).
+
+Applying the changes shown here to ikiwiki's docwiki, and rebuilding its docwiki, is sufficient to reproduce this bug.
+
+    diff --git a/doc/sandbox.mdwn b/doc/sandbox.mdwn
+    index 5c7368f..8aaa032 100644
+    --- a/doc/sandbox.mdwn
+    +++ b/doc/sandbox.mdwn
+    @@ -78,4 +78,4 @@ The haiku will change after every save, mind you.
+    
+     This sandbox is also a [[ikiwiki/blog]]!
+ 
+    -[[inline pages="sandbox/* and !*/Discussion" rootpage="sandbox" show="4" archive="yes"]]
+    +[[inline pages="sandbox/* and !title(*s3kr1t*) and !*/Discussion" rootpage="sandbox" show="4" archive="yes"]]
+    diff --git a/docwiki.setup b/docwiki.setup
+    index 0a6a866..65590f0 100644
+    --- a/docwiki.setup
+    +++ b/docwiki.setup
+    @@ -15,5 +15,5 @@ use IkiWiki::Setup::Standard {
+     	syslog => 0,
+     	userdir => "users",
+     	usedirs => 0,
+    -	add_plugins => [qw{goodstuff version haiku polygen fortune}],
+    +	add_plugins => [qw{goodstuff version haiku polygen fortune meta inline}],
+    }
