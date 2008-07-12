@@ -19,7 +19,7 @@ they are available.
 Various [[plugins]] use other perl modules and utilities; see their individual
 documentation for details.
 
-### installing dependencies with yum
+### Installing dependencies with yum
 
 Here's an example of how to install ikiwiki's dependencies using yum
 on Fedora 7:
@@ -28,7 +28,7 @@ on Fedora 7:
 	  perl-XML-Simple perl-TimeDate perl-HTML-Template perl-CGI-FormBuilder \
 	  perl-CGI-Session perl-File-MimeInfo perl-gettext perl-Authen-Passphrase
 
-### installing dependencies by hand
+### Installing dependencies by hand
 
 If you want to install by hand from the tarball, you should make sure that
 all the perl modules are installed. This is one way to install them, using
@@ -37,7 +37,7 @@ CPAN:
 	PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki")'
 	PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("Bundle::IkiWiki::Extras")'
 
-## installing ikiwiki by hand
+## Installing ikiwiki by hand
 
 Then to build and install ikiwiki:
 
