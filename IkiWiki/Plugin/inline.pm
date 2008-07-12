@@ -308,7 +308,7 @@ sub preprocess_inline (@) { #{{{
 			if (! $params{preview}) {
 				writefile($rssp, $config{destdir},
 					genfeed("rss",
-						$config{url}."/".rsspage($params{destpage}).$feednum, $desc, $params{atomid}, $params{destpage}, @feedlist));
+						$config{url}."/".rsspage($params{destpage}).$feednum, $desc, $params{guid}, $params{destpage}, @feedlist));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
 				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
 			}
@@ -318,7 +318,7 @@ sub preprocess_inline (@) { #{{{
 			will_render($params{destpage}, $atomp);
 			if (! $params{preview}) {
 				writefile($atomp, $config{destdir},
-					genfeed("atom", $config{url}."/".atompage($params{destpage}).$feednum, $desc, $params{atomid}, $params{destpage}, @feedlist));
+					genfeed("atom", $config{url}."/".atompage($params{destpage}).$feednum, $desc, $params{guid}, $params{destpage}, @feedlist));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
 				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
 			}
@@ -415,7 +415,7 @@ sub genfeed ($$$$$@) { #{{{
 	my $feedtype=shift;
 	my $feedurl=shift;
 	my $feeddesc=shift;
-	my $atomid=shift;
+	my $guid=shift;
 	my $page=shift;
 	my @pages=@_;
 	
@@ -485,7 +485,7 @@ sub genfeed ($$$$$@) { #{{{
 		pageurl => $url,
 		content => $content,
 		feeddesc => $feeddesc,
-		atomid => $atomid,
+		guid => $guid,
 		feeddate => date_3339($lasttime),
 		feedurl => $feedurl,
 		version => $IkiWiki::version,
