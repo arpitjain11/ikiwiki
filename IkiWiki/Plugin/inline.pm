@@ -444,9 +444,7 @@ sub genfeed ($$$$@) { #{{{
 
 		if (exists $pagestate{$p} &&
 		    exists $pagestate{$p}{meta}{uuid}) {
-			my $atom_id = $pagestate{$p}{meta}{uuid};
-
-			$itemtemplate->param(uuid => $atom_id);
+			$itemtemplate->param(uuid => $pagestate{$p}{meta}{uuid});
 		}
 
 		if ($itemtemplate->query(name => "enclosure")) {
