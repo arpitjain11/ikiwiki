@@ -1,7 +1,15 @@
 When converting an existing blog to ikiwiki it would be useful to be able to preserve any existing UUIDs on posts, in order to [avoid flooding aggregators](/tips/howto_avoid_flooding_aggregators/).
 
-Also, it should be possible to change the canonical URL of a post, i.e. the atom `<link>` (e.g. leaving a redirector behind) while keeping the same UUID (so that aggregators don't get confused).
+Also, it should be possible to change the permalink (the Atom `<link>`) of a post (e.g. moving the content and leaving a redirector behind), while keeping the same Atom `<id>` (so that aggregators don't get confused).
 
 Ideally UUIDs for [blog posts](/ikiwiki/blog/) should be chosen when the post is created, and frozen permanently by checking them in along with the content.
 
 Perhaps ikiwiki's blogging functionality could be hooked up to the [meta plugin](/meta/plugin/), with a new meta keyword (uuid? feed-uuid? atom-uuid?) to achieve this.
+
+> I've now knocked together a [[patch]], which is in the "force-uuids" branch of git://git.debian.org/git/users/smcv/ikiwiki.git (see also [gitweb](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=shortlog;h=refs/heads/force-uuids)).
+>
+> I'm not convinced that "uuid" is the best name for this functionality - the `<id>` in an Atom feed can be any URI, and one of the use-cases I have for this functionality in my own blog needs to have its `<id>` set to a URI that is not, in fact, its own address (it was a typo). "id" is a bit arrogant (forcing Atom terminology into a flat namespace!), "atom-id" is slightly misleading because it's also used for RSS... any ideas?
+>
+> While I was there, I noticed that the quality of the generated Atom/RSS feeds could be improved by making more use of the meta plugin if it's also enabled - would anyone object to me hacking on this some more?
+>
+> -[smcv](http://smcv.pseudorandom.co.uk/)
