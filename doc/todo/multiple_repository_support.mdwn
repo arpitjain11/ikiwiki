@@ -1,0 +1,15 @@
+I'd like to be able to use one git repository for my basic website, and
+another one for the big files (pictures, videos), and another one for temp
+files. This way I'd not bloat the basic repo, and I could toss temp files
+up, and throw the temp repo away periodically.
+
+For this to work really well, ikiwiki would need multiple repository
+support. Possibly it could be tied into 'mr'?
+
+Another thought is that it would be good if ikiwiki could determine the
+type of repo a subdirectory is in by itself, eliminating the need to
+manually configure it in the setup file.
+
+--[[Joey]]
+
+[[tag wishlist]]
