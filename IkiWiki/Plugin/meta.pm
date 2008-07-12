@@ -270,7 +270,7 @@ sub match { #{{{
 		$val=$pagestate{$page}{meta}{$field};
 	}
 	elsif ($field eq 'title') {
-		$val=pagetitle($page);
+		$val = IkiWiki::pagetitle($page);
 	}
 
 	if (defined $val) {
