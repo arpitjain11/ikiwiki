@@ -84,6 +84,16 @@ sub preprocess (@) { #{{{
 		$pagestate{$page}{meta}{description}=HTML::Entities::encode_numeric($value);
 		# fallthrough
 	}
+	elsif ($key eq 'uuid') {
+		my $abs = $value;
+
+		if ($abs =~ m/^[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}$/) {
+			$abs = lc "urn:uuid:$abs";
+		}
+
+		$pagestate{$page}{meta}{uuid}=HTML::Entities::encode_numeric($abs);
+		# fallthrough
+	}
 	elsif ($key eq 'license') {
 		push @{$metaheaders{$page}}, '<link rel="license" href="#page_license" />';
 		$pagestate{$page}{meta}{license}=$value;

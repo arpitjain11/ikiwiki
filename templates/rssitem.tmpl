@@ -5,7 +5,11 @@
 	<TMPL_ELSE>
 	<title><TMPL_VAR TITLE></title>
 	</TMPL_IF>
-	<guid><TMPL_VAR URL></guid>
+	<TMPL_IF NAME="UUID">
+	  <guid isPermaLink="no"><TMPL_VAR UUID></guid>
+	<TMPL_ELSE>
+	  <guid><TMPL_VAR URL></guid>
+	</TMPL_IF>
 	<link><TMPL_VAR PERMALINK></link>
 	<TMPL_IF NAME="CATEGORIES">
 	<TMPL_LOOP NAME="CATEGORIES">
