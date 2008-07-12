@@ -4,7 +4,7 @@ The new internal page feature is designed for something like
 How to transition to it though? inlines of aggregated content would need to
 change their pagespecs to use `internal()`.
 
-> [[patch]] in git://git.debian.org/git/users/smcv/ikiwiki.git, branch "aggregate"; [see also gitweb](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commit;h=01d7ae803710bb0d84fc8d172fd98fd57fb77e9d). --smcv.pseudorandom.co.uk
+> [[patch]] in git://git.debian.org/git/users/smcv/ikiwiki.git, branch "aggregate".
 > Migration is a two-step process: first change all your pagespecs to use `internal()`, then add `internalize="yes"` to all your aggregate invocations. --smcv.pseudorandom.co.uk
 
 > Thanks for working on this.
@@ -31,5 +31,20 @@ change their pagespecs to use `internal()`.
 > If internal has to be manually enabled, people will forget to. I'd rather
 > not have to worry about these bugs in the future. So, I'm thinking flag
 > day. --[[Joey]]
+
+> OK, there's a simpler approach in the same repository, branch
+> "aggregateinternal". It just adds an aggregateinternal option
+> for the whole wiki.
+>
+> On a flag day, everyone has to change their inline directives
+> to use `internal()`, after which this option can be switched on.
+> When changing the option, you'll have to clean up the mess from
+> old aggregated pages by hand, and re-aggregate.
+>
+> If this is a direction you prefer, the next step would be to
+> add support for existing wikis setting this option - for instance
+> it could look for non-internal pages that were previously
+> aggregated, and convert them to internal, the first time aggregation
+> runs. --smcv
 
 [[patch]]
