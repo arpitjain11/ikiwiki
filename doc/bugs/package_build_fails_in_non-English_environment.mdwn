@@ -1,0 +1,3 @@
+basewiki_brokenlinks.t fails when running dpkg-buildpackage in non-English environment : it greps for an (non-)error message that is i18n'd.
+
+The `LANG=` on line 9 does not seem to do what it's supposed to, go figure.
