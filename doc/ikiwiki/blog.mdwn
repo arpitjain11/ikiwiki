@@ -44,15 +44,31 @@ Or include some tags and exclude others:
 
 ## usage
 
-Here are descriptions of all the supported parameters to the `inline`
-directive:
+There are many parameters you can use with the `inline`
+directive. These are the commonly used ones:
 
 * `pages` - A [[PageSpec]] of the pages to inline.
 * `show` - Specify the maximum number of matching pages to inline.
   Default is 10, unless archiving, when the default is to show all.
   Set to 0 to show all matching pages.
+* `archive` - If set to "yes", only list page titles and some metadata, not
+  full contents.
+* `description` - Sets the description of the rss feed if one is generated.
+  Defaults to the name of the wiki.
 * `skip` - Specify a number of pages to skip displaying. Can be useful
   to produce a feed that only shows archived pages.
+* `postform` - Set to "yes" to enable a form to post new pages to a
+  [[blog]].
+* `postformtext` - Set to specify text that is displayed in a postform.
+* `rootpage` - Enable the postform, and allows controling where
+  newly posted pages should go, by specifiying the page that
+  they should be a [[SubPage]] of.
+
+Here are some less often needed parameters:
+
+* `actions` - If set to "yes" add links to the bottom of the inlined pages 
+  for editing and discussion (if they would be shown at the top of the page
+  itself).
 * `rss` - controls generation of an rss feed. If the wiki is configured to
   generate rss feeds by default, set to "no" to disable. If the wiki is
   configured to `allowrss`, set to "yes" to enable.
@@ -61,14 +77,6 @@ directive:
   configured to `allowatom`, set to "yes" to enable.
 * `feeds` - controls generation of all types of feeds. Set to "no" to
   disable generating any feeds.
-* `postform` - Set to "yes" to enables a form to post new pages to a [[blog]].
-* `postformtext` - Set to specify text that is displayed in a postform.
-* `rootpage` - Also enables a form to post new pages to a [[blog]], and
-  allows specifying of a page that is used as the parent page for new pages.
-* `archive` - If set to "yes", only list page titles and some metadata, not
-  full controls.
-* `quick` - Build archives in quick mode, without reading page contents for
-  metadata. By default, this also turns off generation of any feeds.
 * `template` - Specifies the template to fill out to display each inlined
   page. By default the `inlinepage` template is used, while
   the `archivepage` template is used for archives. Set this parameter to
@@ -79,25 +87,22 @@ directive:
   if raw is set to "yes", the page will be included raw, without additional
   markup around it, as if it were a literal part of the source of the 
   inlining page.
-* `description` - Sets the description of the rss feed if one is generated.
-  Defaults to the name of the wiki.
-* `actions` - If set to "yes" add links to the bottom of the inlined pages 
-  for editing and discussion (if they would be shown at the top of the page
-  itself).
 * `sort` - Controls how inlined pages are sorted. The default, "age" is to
   sort newest created pages first. Setting it to "title" will sort pages by
   title, and "mtime" sorts most recently modified pages first.
 * `reverse` - If set to "yes", causes the sort order to be reversed.
-* `feedpages` - A [[PageSpec]] of inlined pages to include in the rss/atom
-  feeds. The default is the same as the `pages` value above, and only pages
-  matches by that value are included, but some of those can be excluded by
-  specifying a tighter [[PageSpec]] here.
 * `feedshow` - Specify the maximum number of matching pages to include in
   the rss/atom feeds. The default is the same as the `show` value above.
 * `feedonly` - Only generate the feed, do not display the pages inline on
   the page.
+* `quick` - Build archives in quick mode, without reading page contents for
+  metadata. By default, this also turns off generation of any feeds.
 * `timeformat` - Use this to specify how to display the time or date for pages
   in the blog. The format string is passed to the strftime(3) function.
+* `feedpages` - A [[PageSpec]] of inlined pages to include in the rss/atom
+  feeds. The default is the same as the `pages` value above, and only pages
+  matches by that value are included, but some of those can be excluded by
+  specifying a tighter [[PageSpec]] here.
 * `guid` - If a URI is given here (perhaps a UUID prefixed with `urn:uuid:`),
   the Atom feed will have this as its `<id>`. The default is to use the URL
   of the page containing the `inline` directive.
