@@ -46,6 +46,14 @@ Joey, what do you think ?
 much you are on the "if you can do it as a plugin, don't ever modify
 the core" side... :)
 
+> My general philosophy is that the core should be flexible enough to allow
+> plugins to do arbitrary useful stuff. And there are some things in-core
+> that I'd like to get out (such as backlinks processing), but that cannot
+> currently be moved out efficiently. KISS is also part of my pholisophy.
+>
+> So no, I don't like adding new options to the core that few users will
+> want to use.
+
 In case you're on the hardcore side, I would probably write
 a dedicated plugin, called `genealogictitle` or whatever, and :
 
@@ -62,3 +70,5 @@ a dedicated plugin, called `genealogictitle` or whatever, and :
   I did not Read The Nice Source, yet).
 
 -- intrigeri
+
+> Plugin sounds reasonable. --[[Joey]]
