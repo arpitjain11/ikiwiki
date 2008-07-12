@@ -11,18 +11,13 @@ sub import { #{{{
 	hook(type => "sessioncgi", id => "poll", call => \&sessioncgi);
 } # }}}
 
-sub yesno ($) { #{{{
-	my $val=shift;
-	return (defined $val && lc($val) eq "yes");
-} #}}}
-
 my %pagenum;
 sub preprocess (@) { #{{{
 	my %params=(open => "yes", total => "yes", percent => "yes", @_);
 
-	my $open=yesno($params{open});
-	my $showtotal=yesno($params{total});
-	my $showpercent=yesno($params{percent});
+	my $open=IkiWIki::yesno($params{open});
+	my $showtotal=IkiWiki::yesno($params{total});
+	my $showpercent=IkiWiki::yesno($params{percent});
 	$pagenum{$params{page}}++;
 
 	my %choices;

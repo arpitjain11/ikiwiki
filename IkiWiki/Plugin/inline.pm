@@ -94,11 +94,6 @@ package IkiWiki;
 my %toping;
 my %feedlinks;
 
-sub yesno ($) { #{{{
-	my $val=shift;
-	return (defined $val && lc($val) eq "yes");
-} #}}}
-
 sub preprocess_inline (@) { #{{{
 	my %params=@_;
 	

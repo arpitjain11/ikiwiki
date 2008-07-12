@@ -337,7 +337,7 @@ sub readfile ($;$$) { #{{{
 	return $ret;
 } #}}}
 
-sub prep_writefile ($$) {
+sub prep_writefile ($$) { #{{{
 	my $file=shift;
 	my $destdir=shift;
 	
@@ -361,7 +361,7 @@ sub prep_writefile ($$) {
 	}
 
 	return 1;
-}
+} #}}}
 
 sub writefile ($$$;$$) { #{{{
 	my $file=shift; # can include subdirs
@@ -1200,6 +1200,12 @@ sub gettext { #{{{
 	else {
 		return shift;
 	}
+} #}}}
+
+sub yesno ($) { #{{{
+	my $val=shift;
+
+	return (defined $val && lc($val) eq gettext("yes"));
 } #}}}
 
 sub pagespec_merge ($$) { #{{{
