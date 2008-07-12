@@ -125,14 +125,13 @@ Supported fields:
 
 * guid
 
-  Specifies a globally unique ID for a page. This guid will be used,
-  rather than the page url, to identify the page in RSS and Atom feeds.
+  Specifies a globally unique ID for a page. This guid should be a URI
+  (in particular, it can be `urn:uuid:` followed by a UUID, as per
+  [[!rfc 4122]]), and it will be used to identify the page's entry in RSS
+  and Atom feeds. If not given, the default is to use the page's URL as its
+  guid.
 
-  The guid can either be a uuid (ie,
-  "ec248d04-f347-4eb8-92b6-671b15d36980"), or it can be an alternative URL
-  for the page.
-
-  This is mostly useful when a page's feed has moved, to keep the guids for
+  This is mostly useful when a page has moved, to keep the guids for
   pages unchanged and
   [[avoid_flooding_aggregators|howto_avoid_flooding_aggregators]].
 
