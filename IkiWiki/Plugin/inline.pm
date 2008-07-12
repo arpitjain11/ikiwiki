@@ -443,8 +443,8 @@ sub genfeed ($$$$@) { #{{{
 		);
 
 		if (exists $pagestate{$p} &&
-		    exists $pagestate{$p}{meta}{uuid}) {
-			$itemtemplate->param(uuid => $pagestate{$p}{meta}{uuid});
+		    exists $pagestate{$p}{meta}{guid}) {
+			$itemtemplate->param(guid => $pagestate{$p}{meta}{guid});
 		}
 
 		if ($itemtemplate->query(name => "enclosure")) {
