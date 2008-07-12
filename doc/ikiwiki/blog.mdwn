@@ -98,3 +98,6 @@ directive:
   the page.
 * `timeformat` - Use this to specify how to display the time or date for pages
   in the blog. The format string is passed to the strftime(3) function.
+* `guid` - If a URI is given here (perhaps a UUID prefixed with `urn:uuid:`),
+  the Atom feed will have this as its `<id>`. The default is to use the URL
+  of the page containing the `inline` directive.
