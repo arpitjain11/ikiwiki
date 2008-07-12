@@ -7,3 +7,5 @@ I've never had to understand the Unix locales, so I randomly tried to replace `L
 - `LANG=C` : fails
 - `LANGUAGE=` : fails
 - `LANGUAGE=C` : works!
+
+> For maximum precedence it should have been LC_ALL=C. [[done]], I think... --[[smcv]]
