@@ -10,6 +10,8 @@ Installation steps and requirements are listed on the [[install]] page.
 
 ## packages
 
+### apt
+
 If using Debian (since 4.0), or Ubuntu (since 6.10):
 [[template id=note text="""
 Note that Debian 4.0 and especially Ubuntu 6.10 contain older versions of
@@ -28,10 +30,15 @@ There is also an unofficial backport of ikiwiki for Ubuntu Gutsy
 and Ubuntu Hardy, provided by Paweł Tęcza,
 at [http://gpa.net.icm.edu.pl/ubuntu/](http://gpa.net.icm.edu.pl/ubuntu/index-en.html).
 
-Also, FreeBSD has ikiwiki in its
+### other
+
+FreeBSD has ikiwiki in its
 [ports collection](http://www.freshports.org/www/ikiwiki/).
 
-And Gentoo has an [ebuild](http://bugs.gentoo.org/show_bug.cgi?id=144453) in its bug database. 
+Gentoo has an [ebuild](http://bugs.gentoo.org/show_bug.cgi?id=144453) in its bug database. 
+
+IkiWiki can be installed [from macports](http://www.macports.org/ports.php?by=name&substr=ikiwiki)
+by running `sudo port install ikiwiki`.
 
 ## revision control
 
