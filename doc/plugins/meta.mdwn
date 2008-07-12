@@ -123,6 +123,19 @@ Supported fields:
   contents. In particular, it does not check the values against the set of
   valid values but serves whatever you pass it.
 
+* uuid
+
+  Specifies a globally unique ID for a page. This ID will be used,
+  rather than the page url, in RSS and Atom feeds.
+
+  The uuid can either be a literal uuid (ie,
+  "ec248d04-f347-4eb8-92b6-671b15d36980"), or it can be an alternative URl
+  for the page.
+
+  This is mostly useful when a page's feed has moved, to keep the IDs for
+  pages unchanged and
+  [[avoid_flooding_aggregators|howto_avoid_flooding_aggregators]].
+
 If the field is not one of the above predefined fields, the metadata will be
 written to the generated html page as a &lt;meta&gt; header. However, this
 won't be allowed if the [[htmlscrubber]] is enabled, since it can be used to
