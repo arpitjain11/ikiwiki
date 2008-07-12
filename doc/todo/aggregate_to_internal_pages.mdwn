@@ -4,4 +4,6 @@ The new internal page feature is designed for something like
 How to transition to it though? inlines of aggregated content would need to
 change their pagespecs to use `internal()`.
 
-> [[patch]] in git://git.debian.org/git/users/smcv/ikiwiki.git, branch "aggregate"; [see also gitweb](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commit;h=01d7ae803710bb0d84fc8d172fd98fd57fb77e9d). --smcv.pseudorandom.co.uk
+> [[patch]] in git://git.debian.org/git/users/smcv/ikiwiki.git, branch "aggregate"; [see also gitweb](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commit;h=01d7ae803710bb0d84fc8d172fd98fd57fb77e9d).
+>
+> Migration is a two-step process: first change all your pagespecs to use `internal()`, then add `internalize="yes"` to all your aggregate invocations. --smcv.pseudorandom.co.uk
