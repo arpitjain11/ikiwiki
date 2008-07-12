@@ -2,7 +2,7 @@ Source: ikiwiki
 Section: web
 Priority: optional
 Build-Depends: perl, debhelper (>= 5)
-Build-Depends-Indep: dpkg-dev (>= 1.9.0), libxml-simple-perl, markdown | libtext-markdown-perl, libtimedate-perl, libhtml-template-perl, libhtml-scrubber-perl, wdg-html-validator, libhtml-parser-perl, liburi-perl
+Build-Depends-Indep: dpkg-dev (>= 1.9.0), libxml-simple-perl, libtext-markdown-perl | markdown, libtimedate-perl, libhtml-template-perl, libhtml-scrubber-perl, wdg-html-validator, libhtml-parser-perl, liburi-perl
 Maintainer: Joey Hess <joeyh@debian.org>
 Uploaders: Joey Hess <joeyh@debian.org>, Josh Triplett <josh@freedesktop.org>
 Standards-Version: 3.8.0

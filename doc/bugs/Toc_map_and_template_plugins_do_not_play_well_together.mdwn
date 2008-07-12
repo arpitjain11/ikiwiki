@@ -16,3 +16,15 @@ makes the whole wiki page be rendered as expected.
 
 Hint : in all cases, the non-interpreted markdown code is copied as-is
 in the HTML output, without any leading `<p>` or any HTML formatting.
+
+> You're using the old version of `markdown`, that is known to have a broken block
+> html parser, that will get confused if markdown is present between two
+> separate html blocks, and not format the markdown.
+> 
+> This is fixed in [[cpan Text::MarkDown]] 1.0.19. markdown 1.0.2 also
+> fixes the problem. Install either one. I'm going to make ikiwiki's
+> dependencies list Text::Markdown before markdown, since people keep
+> stumbling over this. (The downside is that the old broken markdown is
+> faster). --[[Joey]]
+
+[[done]]
