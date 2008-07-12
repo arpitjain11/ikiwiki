@@ -31,7 +31,11 @@
   </rights>
  </TMPL_IF>
 </TMPL_IF>
-<id><TMPL_VAR PAGEURL></id>
+<TMPL_IF NAME="ATOMID">
+  <id><TMPL_VAR ATOMID></id>
+<TMPL_ELSE>
+  <id><TMPL_VAR PAGEURL></id>
+</TMPL_IF>
 <subtitle type="html"><TMPL_VAR FEEDDESC ESCAPE=HTML></subtitle>
 <generator uri="http://ikiwiki.info/" version="<TMPL_VAR VERSION>">ikiwiki</generator>
 <updated><TMPL_VAR FEEDDATE></updated>
