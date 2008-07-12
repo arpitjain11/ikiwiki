@@ -30,7 +30,10 @@ sub getopt () { #{{{
         eval q{use Getopt::Long};
 	error($@) if $@;
         Getopt::Long::Configure('pass_through');
-        GetOptions("aggregate" => \$config{aggregate});
+        GetOptions(
+		"aggregate" => \$config{aggregate},
+		"aggregateinternal!" => \$config{aggregateinternal},
+	);
 } #}}}
 
 sub checkconfig () { #{{{
@@ -595,7 +598,7 @@ sub pagefile ($) { #{{{
 } #}}}
 
 sub htmlfn ($) { #{{{
-	return shift().".".$config{htmlext};
+	return shift().".".($config{aggregateinternal} ? "_" : "").$config{htmlext};
 } #}}}
 
 my $aggregatelock;
