@@ -1,50 +1,15 @@
-I've got a wiki page that contains :
+The following renders incorrectly:
 
 	\[[!toc ]]
-	
+
 	# header1
-	
+
 	content1
-		
+
 	# header2
-	
-	\[[!template id=bla]]
 
-And `templates/bla.mdwn` contains :
+	\[[map pages="sandbox"]]
 
-	# header3
-	
-	content3
-	
-	# header4
-	
-	content4
-
-If no `\[[!map]]` directive is anywhere in the template, the page is rendered as expected.
-
-If `\[[!map]]` is used e.g. in content4, the wiki page is rendered with
-the following elements :
-
-> Surely you mean a toc directive, not map? --[[Joey]]
-
->> No, I really mean map, but I forgot to escape the toc above (in the example wiki page content), which prevented you from understanding my point. -- intrigeri
-
-- an empty toc div
-- every markdown code before the first `\[[!map]]` directive is not
-  interpreted and rendered as-is : `# header1 content1 # header2
-  content2 #header3 #header4 content4_before_the_map`
-- the correctly rendered map directive result
-
-If `\[[!map]]` is used in content3, the wiki page is rendered with
-the following elements :
-
-- a TOC containing only the last header (header4)
-- every markdown code before the first `\[[!map]]` directive is not
-  interpreted and rendered as-is : `# header1 content1 # header2
-  content2 #header3 content3_before_the_map`
-- content3 (starting at the map), header4 and content4 are all rendered as expected
-
-Moving the `\[[!toc]]` directive from the page to the template gives the same results.
 
 Removing the `\[[!toc]]` directive or moving it at the end of the page
 makes the whole wiki page be rendered as expected.
