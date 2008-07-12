@@ -175,6 +175,7 @@ sub preprocess (@) { #{{{
 			push @{$feed->{tags}}, $value;
 		}
 	}
+	$feed->{internalize} = (exists $params{internalize}) ? IkiWiki::yesno($params{internalize}) : 0;
 
 	return "<a href=\"".$feed->{url}."\">".$feed->{name}."</a>: ".
 	       ($feed->{error} ? "<em>" : "").$feed->{message}.
@@ -271,10 +272,13 @@ sub savestate () { #{{{
 } #}}}
 
 sub garbage_collect () { #{{{
+	my %was_internal;
+
 	foreach my $name (keys %feeds) {
 		# remove any feeds that were not seen while building the pages
 		# that used to contain them
 		if ($feeds{$name}->{unseen}) {
+			$was_internal{$name} = $feeds{$name}->{internalize};
 			delete $feeds{$name};
 		}
 	}
@@ -282,13 +286,13 @@ sub garbage_collect () { #{{{
 	foreach my $guid (values %guids) {
 		# any guid whose feed is gone should be removed
 		if (! exists $feeds{$guid->{feed}}) {
-			unlink pagefile($guid->{page})
+			unlink pagefile($guid->{page}, $was_internal{$guid->{feed}})
 				if exists $guid->{page};
 			delete $guids{$guid->{guid}};
 		}
 		# handle expired guids
 		elsif ($guid->{expired} && exists $guid->{page}) {
-			unlink pagefile($guid->{page});
+			unlink pagefile($guid->{page}, $feeds{$guid->{feed}}->{internalize});
 			delete $guid->{page};
 			delete $guid->{md5};
 		}
@@ -482,18 +486,18 @@ sub add_page (@) { #{{{
 		}
 		my $c="";
 		while (exists $IkiWiki::pagecase{lc $page.$c} ||
-		       -e pagefile($page.$c)) {
+		       -e pagefile($page.$c, $feed->{internalize})) {
 			$c++
 		}
 
 		# Make sure that the file name isn't too long. 
 		# NB: This doesn't check for path length limits.
 		my $max=POSIX::pathconf($config{srcdir}, &POSIX::_PC_NAME_MAX);
-		if (defined $max && length(htmlfn($page)) >= $max) {
+		if (defined $max && length(htmlfn($page, $feed->{internalize})) >= $max) {
 			$c="";
 			$page=$feed->{dir}."/item";
 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
-			       -e pagefile($page.$c)) {
+			       -e pagefile($page.$c, $feed->{internalize})) {
 				$c++
 			}
 		}
@@ -527,12 +531,12 @@ sub add_page (@) { #{{{
 	if (ref $feed->{tags}) {
 		$template->param(tags => [map { tag => $_ }, @{$feed->{tags}}]);
 	}
-	writefile(htmlfn($guid->{page}), $config{srcdir},
+	writefile(htmlfn($guid->{page}, $feed->{internalize}), $config{srcdir},
 		$template->output);
 
 	# Set the mtime, this lets the build process get the right creation
 	# time on record for the new page.
-	utime $mtime, $mtime, pagefile($guid->{page})
+	utime $mtime, $mtime, pagefile($guid->{page}, $feed->{internalize})
 		if defined $mtime && $mtime <= time;
 } #}}}
 
@@ -588,14 +592,15 @@ sub htmlabs ($$) { #{{{
 	return $ret;
 } #}}}
 
-sub pagefile ($) { #{{{
+sub pagefile ($$) { #{{{
 	my $page=shift;
+	my $internal=shift;
 
-	return "$config{srcdir}/".htmlfn($page);
+	return "$config{srcdir}/".htmlfn($page, $internal);
 } #}}}
 
-sub htmlfn ($) { #{{{
-	return shift().".".$config{htmlext};
+sub htmlfn ($$) { #{{{
+	return shift().".".(shift() ? "_" : "").$config{htmlext};
 } #}}}
 
 my $aggregatelock;
