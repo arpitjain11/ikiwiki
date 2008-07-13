@@ -17,10 +17,10 @@ sub pedigree ($) { #{{{
 	my @ret;
 	my $path="";
 	my $title=$config{wikiname};
-	my $i;
+	my $i=0;
 
 	my @pagepath=(split("/", $page));
-	my $pageloc=@pagepath - 1;
+	my $pagedepth=@pagepath;
 	foreach my $dir (@pagepath) {
 		next if $dir eq 'index';
 		push @ret, {
@@ -28,12 +28,12 @@ sub pedigree ($) { #{{{
 			    page => $title,
 			    level => $i,
 			    is_root => ($i eq 0),
-			    is_first_child => ($i eq 1),
-			    is_mother => ($i eq ($pageloc - 1)),
-			    is_grand_mother => ($i eq ($pageloc - 2))
+			    is_second_ancestor => ($i eq 1),
+			    is_grand_mother => ($i eq ($pagedepth - 2)),
+			    is_mother => ($i eq ($pagedepth - 1)),
 			   };
 		$path.="/".$dir;
-		$title=pagetitle($dir);
+		$title=IkiWiki::pagetitle($dir);
 		$i++;
 	}
 	return @ret;
