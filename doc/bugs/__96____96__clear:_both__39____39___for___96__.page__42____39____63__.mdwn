@@ -29,4 +29,8 @@ adding this `clear: both`?
 >> we could wrap the "pseudo-footer" in `<div class="inlinefooter">` too?
 >> Then sites could choose whether to set clear:both on the inlinefooter
 >> or not, and this would be separate from the same styling on whole pages.
->> I'll do some patches to add extra CSS hooks in the templates. --[[smcv]]
+>>
+>> Implemented in [my repository](http://git.debian.org/?p=users/smcv/ikiwiki.git);
+>> see the "css" branch. --[[smcv]]
+
+[[patch]]
