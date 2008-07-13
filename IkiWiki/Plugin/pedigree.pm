@@ -26,7 +26,7 @@ sub pedigree ($) { #{{{
 		push @ret, {
 			    url => urlto($path, $page),
 			    page => $title,
-			    level => $i,
+			    absdepth => $i,
 			    is_root => ($i eq 0),
 			    is_second_ancestor => ($i eq 1),
 			    is_grand_mother => ($i eq ($pagedepth - 2)),
@@ -39,14 +39,45 @@ sub pedigree ($) { #{{{
 	return @ret;
 } #}}}
 
+sub forget_oldest ($@) { #{{{
+	my $offset=shift;
+	my @pedigree=@_;
+	my @ret;
+	my $parent;
+	unless ($offset ge scalar(@pedigree)) {
+		for (my $i=0; $i < $offset; $i++) {
+			shift @pedigree;
+		}
+		while (@pedigree) {
+			# Doing so does not modify the original @pedigree, we've
+			# got our own copy of its "content" (i.e. a pile of
+			# references to hashes)...
+			$parent=shift @pedigree;
+			# ... but we have no copy of the referenced hashes, so we
+			# actually are modifying them in-place, but we don't care
+			# here since reldepth has to be computed everytime anyway.
+			$parent->{reldepth}=($parent->{absdepth} - $offset);
+			push @ret, $parent;
+		}
+	}
+	return @ret;
+} #}}}
+
 sub pagetemplate (@) { #{{{
 	my %params=@_;
         my $page=$params{page};
         my $template=$params{template};
 
-	if ($template->query(name => "pedigree")) {
-		$template->param(pedigree => [pedigree($page)]);
-	}
+	if ($template->query(name => "pedigree")
+	    or $template->query(name => "pedigree_but_root")
+	    or $template->query(name => "pedigree_but_two_oldest")
+	   )
+	  {
+		  my @pedigree=pedigree($page);
+		  $template->param(pedigree => \@pedigree);
+		  $template->param(pedigree_but_root => [forget_oldest(1, @pedigree)]);
+		  $template->param(pedigree_but_two_oldest => [forget_oldest(2, @pedigree)]);
+	  }
 
 } # }}}
 
