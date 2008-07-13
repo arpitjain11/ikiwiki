@@ -9,7 +9,7 @@ use IkiWiki::Setup::Standard {
 	underlaydir => "underlays/basewiki",
 	wrappers => [],
 	discussion => 0,
-	exclude => qr/\/discussion/,
+	exclude => qr/\/discussion|bugs\/*|todo\/*/,
 	locale => '',
 	verbose => 1,
 	syslog => 0,

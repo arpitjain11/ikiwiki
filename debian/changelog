@@ -23,6 +23,8 @@ ikiwiki (2.54) UNRELEASED; urgency=low
   * Error handling improvement for preprocess hooks. It's now safe to call
     error() from such hooks; it will cause a nicely formatted error message
     to be inserted into the page.
+  * Cut the size of the binary package in half by excluding pages for bugs
+    and todo items from the html shipped in it.
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 
