@@ -34,7 +34,7 @@ sub needsbuild (@) { #{{{
 sub preprocess (@) { #{{{
 	my %params=@_;
 	if (! exists $params{from} || ! exists $params{to}) {
-		return "[[ping ".gettext("requires 'from' and 'to' parameters")."]]";
+		error gettext("requires 'from' and 'to' parameters");
 	}
 	if ($params{from} eq $config{url}) {
 		$pagestate{$params{destpage}}{pinger}{$params{to}}=1;

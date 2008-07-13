@@ -19,7 +19,7 @@ sub preprocess (@) { #{{{
 
 	if (exists $params{file}) {
 		if (! $pagesources{$params{file}}) {
-			return "[[table ".gettext("cannot find file")."]]";
+			error gettext("cannot find file");
 		}
 		$params{data} = readfile(srcfile($params{file}));
 		add_depends($params{page}, $params{file});
@@ -61,7 +61,7 @@ sub preprocess (@) { #{{{
 			defined $params{delimiter} ? $params{delimiter} : "|",);
 	}
 	else {
-		return "[[table ".gettext("unknown data format")."]]";
+		error gettext("unknown data format");
 	}
 
 	my $header;
@@ -69,7 +69,7 @@ sub preprocess (@) { #{{{
 		$header=shift @data;
 	}
 	if (! @data) {
-		return "[[table ".gettext("empty data")."]]";
+		error gettext("empty data");
 	}
 
 	my @lines;

@@ -55,7 +55,7 @@ sub render_graph (\%) { #{{{
 
 		waitpid $pid, 0;
 		$SIG{PIPE}="DEFAULT";
-		return  "[[graph ".gettext("failed to run graphviz")."]]" if ($sigpipe);
+		error gettext("failed to run graphviz") if $sigpipe;
 
 		if (! $params{preview}) {
 			writefile($dest, $config{destdir}, $png, 1);
@@ -82,7 +82,7 @@ sub graph (@) { #{{{
 	$params{src} = "" unless defined $params{src};
 	$params{type} = "digraph" unless defined $params{type};
 	$params{prog} = "dot" unless defined $params{prog};
-	return "[[graph ".gettext("prog not a valid graphviz program")."]]" unless $graphviz_programs{$params{prog}};
+	error gettext("prog not a valid graphviz program") unless $graphviz_programs{$params{prog}};
 
 	return render_graph(%params);
 } # }}}

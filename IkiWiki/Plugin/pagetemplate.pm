@@ -18,7 +18,7 @@ sub preprocess (@) { #{{{
 	if (! exists $params{template} ||
 	    $params{template} !~ /^[-A-Za-z0-9._+]+$/ ||
 	    ! defined IkiWiki::template_file($params{template})) {
-		 return "[[pagetemplate ".gettext("bad or missing template")."]]";
+		 error gettext("bad or missing template")
 	}
 
 	if ($params{page} eq $params{destpage}) {
