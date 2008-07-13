@@ -100,7 +100,7 @@ sub getconfig () { #{{{
 	else {
 		# wrapper passes a full config structure in the environment
 		# variable
-		eval {possibly_foolish_untaint($ENV{WRAPPED_OPTIONS})};
+		eval possibly_foolish_untaint($ENV{WRAPPED_OPTIONS});
 		if ($@) {
 			error("WRAPPED_OPTIONS: $@");
 		}
