@@ -9,3 +9,6 @@ Trying to build current Git master in a (two weeks old - no DSL here) sid chroot
         make: *** [build-stamp] Error 2
 
 Adding perlmagick to the build-deps fixes it. I read somewhere in debian/changelog that this build-deb was not needed, but...
+
+> It's not needed by the test suite, but once I added a img to the source
+> wiki, it became needed. [[done]] --[[Joey]]

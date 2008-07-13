@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-11 06:04-0400\n"
+"POT-Creation-Date: 2008-07-12 23:07-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgid "%s is not an editable page"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:438 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:266 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/inline.pm:261 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
 #: ../IkiWiki/Render.pm:162
 msgid "discussion"
@@ -69,6 +69,10 @@ msgstr ""
 
 #: ../IkiWiki/CGI.pm:729
 msgid "You are banned."
+msgstr ""
+
+#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759
+msgid "Error"
 msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:53
@@ -148,7 +152,7 @@ msgstr ""
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:37 ../IkiWiki/Setup.pm:115
+#: ../IkiWiki/Plugin/amazon_s3.pm:37 ../IkiWiki/Setup.pm:117
 msgid "done"
 msgstr ""
 
@@ -228,6 +232,10 @@ msgstr ""
 msgid "prog not a valid graphviz program"
 msgstr ""
 
+#: ../IkiWiki/Plugin/img.pm:49
+msgid "Image::Magick not installed"
+msgstr ""
+
 #: ../IkiWiki/Plugin/img.pm:56
 #, perl-format
 msgid "bad size \"%s\""
@@ -253,29 +261,29 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:106
+#: ../IkiWiki/Plugin/inline.pm:101
 msgid "missing pages parameter"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:154
+#: ../IkiWiki/Plugin/inline.pm:149
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:225
+#: ../IkiWiki/Plugin/inline.pm:220
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:241
+#: ../IkiWiki/Plugin/inline.pm:236
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:274 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:269 ../IkiWiki/Render.pm:99
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:504
+#: ../IkiWiki/Plugin/inline.pm:506
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -297,15 +305,15 @@ msgstr ""
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:137
+#: ../IkiWiki/Plugin/meta.pm:141
 msgid "stylesheet not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:171
+#: ../IkiWiki/Plugin/meta.pm:175
 msgid "redir page not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:184
+#: ../IkiWiki/Plugin/meta.pm:188
 msgid "redir cycle is not allowed"
 msgstr ""
 
@@ -387,11 +395,11 @@ msgstr ""
 msgid "LWP not found, not pinging"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:65
+#: ../IkiWiki/Plugin/poll.pm:60
 msgid "vote"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:73
+#: ../IkiWiki/Plugin/poll.pm:68
 msgid "Total votes:"
 msgstr ""
 
@@ -660,11 +668,11 @@ msgstr ""
 msgid "generating wrappers.."
 msgstr ""
 
-#: ../IkiWiki/Setup.pm:105
+#: ../IkiWiki/Setup.pm:107
 msgid "rebuilding wiki.."
 msgstr ""
 
-#: ../IkiWiki/Setup.pm:108
+#: ../IkiWiki/Setup.pm:110
 msgid "refreshing wiki.."
 msgstr ""
 
@@ -712,15 +720,15 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:194 ../IkiWiki.pm:195
-msgid "Error"
-msgstr ""
-
 #. translators: The first parameter is a
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:770
+#: ../IkiWiki.pm:765
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
+msgstr ""
+
+#: ../IkiWiki.pm:1203
+msgid "yes"
 msgstr ""

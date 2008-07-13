@@ -480,4 +480,8 @@ It is in a [darcs repository](http://joyful.com/darcsweb/darcsweb.cgi?r=ikiwiki-
 >   conflicts and return a page with conflict markers for the user to fix
 >   the conflict.
 
+I have addressed the recentchanges bit, you can find my hacked up darcs.pm at <http://web.mornfall.net/stuff/web-root/IkiWiki/Rcs/darcs.pm>.
+
+It's got couple of FIXMEs, and a very site-specific filter for recentchanges. Not sure how to do that better though. I will eventually add web commits, probably of my own (and mention it here).
+
 [[tag patch]]

@@ -17,6 +17,7 @@
 </head>
 <body>
 
+<div class="pageheader">
 <div class="header">
 <span>
 <TMPL_LOOP NAME="PARENTLINKS">
@@ -50,6 +51,7 @@
 </ul>
 </div>
 </TMPL_IF>
+</div> <!-- .pageheader -->
 
 <TMPL_IF SIDEBAR>
 <div id="sidebar">
@@ -61,7 +63,7 @@
 <TMPL_VAR CONTENT>
 </div>
 
-<div id="footer">
+<div id="footer" class="pagefooter">
 <div id="pageinfo">
 
 <TMPL_IF NAME="TAGS">
@@ -88,7 +90,7 @@ Links:
 </span>
 </span>
 </TMPL_IF>
-</div>
+</div><!-- #backlinks -->
 </TMPL_IF>
 
 <TMPL_IF COPYRIGHT>
@@ -110,10 +112,10 @@ Last edited <TMPL_VAR NAME=MTIME>
 <!-- Created <TMPL_VAR NAME=CTIME> -->
 </div>
 
-</div>
+</div><!-- #pageinfo -->
 <TMPL_IF EXTRAFOOTER><TMPL_VAR EXTRAFOOTER></TMPL_IF>
 <!-- from <TMPL_VAR NAME=WIKINAME> -->
-</div>
+</div><!-- .pagefooter #footer -->
 
 </body>
 </html>

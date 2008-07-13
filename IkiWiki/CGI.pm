@@ -750,4 +750,14 @@ sub cgi (;$$) { #{{{
 	}
 } #}}}
 
+# Does not need tobe called directly; all errors will go through here.
+sub cgierror ($) { #{{{
+	my $message=shift;
+
+	print "Content-type: text/html\n\n";
+	print misctemplate(gettext("Error"),
+		"<p class=\"error\">".gettext("Error").": $message</p>");
+	die $@;
+} #}}}
+
 1

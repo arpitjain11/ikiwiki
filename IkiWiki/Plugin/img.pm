@@ -46,7 +46,7 @@ sub preprocess (@) { #{{{
 	my $base = IkiWiki::basename($file);
 
 	eval q{use Image::Magick};
-	error($@) if $@;
+	return "[[img ".gettext("Image::Magick not installed")."]]" if $@;
 	my $im = Image::Magick->new;
 	my $imglink;
 	my $r;

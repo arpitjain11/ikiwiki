@@ -35,12 +35,14 @@
 	padding: .2em .4em;
 }
 
-.tags {
+.pagefooter {
 	clear: both;
 }
 
+.tags {
+}
+
 #pageinfo {
-	clear: both;
 	margin: 1em 0;
 	border-top: 1px solid #000;
 }
@@ -140,10 +142,13 @@ div.recentchanges {
 .pagedate,
 .pagelicense,
 .pagecopyright {
-	clear: both;
 	font-style: italic;
 	display: block;
 	margin-top: 1em;
+}
+
+.error {
+	color: #C00;
 }
 
 /* Used for invalid form fields. */
