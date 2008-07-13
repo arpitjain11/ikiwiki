@@ -24,4 +24,9 @@ adding this `clear: both`?
 >> by "clear above and below" - the clear attribute takes values none, left,
 >> right or both, and its purpose is to stop floating boxes (sidebars,
 >> mainly) from overlapping with footers.
->> --[[smcv]]
+>>
+>> ... oh, I see what you mean - this affects inlines too. In inlinepage.tmpl
+>> we could wrap the "pseudo-footer" in `<div class="inlinefooter">` too?
+>> Then sites could choose whether to set clear:both on the inlinefooter
+>> or not, and this would be separate from the same styling on whole pages.
+>> I'll do some patches to add extra CSS hooks in the templates. --[[smcv]]
