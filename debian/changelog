@@ -20,6 +20,9 @@ ikiwiki (2.54) UNRELEASED; urgency=low
   * Move yesno function out of inline and into IkiWiki core, not exported.
   * meta: fix title() PageSpec (smcv)
   * Some footer style changes. (smcv)
+  * Error handling improvement for preprocess hooks. It's now safe to call
+    error() from such hooks; it will cause a nicely formatted error message
+    to be inserted into the page.
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 

@@ -412,12 +412,13 @@ Aborts with an error message. If the second parameter is passed, it is a
 function that is called after the error message is printed, to do any final
 cleanup.
 
-Note that while any plugin can use this for a fatal error, plugins should
-try to avoid dying on bad input when building a page, as that will halt
-the entire wiki build and make the wiki unusable. So for example, if a
-[[ikiwiki/PreProcessorDirective]] is passed bad parameters, it's better to
-return an error message, which can appear on the wiki page, rather than
-calling error().
+If called inside a preprocess hook, error() does not abort the entire
+wiki build, but instead replaces the [[ikiwiki/PreProcessorDirective]] with
+a version containing the error message.
+
+In other hooks, error() is a fatal error, so use with care. Try to avoid
+dying on bad input when building a page, as that will halt
+the entire wiki build and make the wiki unusable.
 
 #### `template($;@)`
 
