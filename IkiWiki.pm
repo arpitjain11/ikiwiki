@@ -189,11 +189,6 @@ sub loadplugin ($) { #{{{
 sub error ($;$) { #{{{
 	my $message=shift;
 	my $cleaner=shift;
-	if ($config{cgi}) {
-		print "Content-type: text/html\n\n";
-		print misctemplate(gettext("Error"),
-			"<p>".gettext("Error").": $message</p>");
-	}
 	log_message('err' => $message) if $config{syslog};
 	if (defined $cleaner) {
 		$cleaner->();
