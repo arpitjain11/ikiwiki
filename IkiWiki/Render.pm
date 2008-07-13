@@ -229,10 +229,14 @@ sub render ($) { #{{{
 		will_render($file, $file, 1);
 		
 		if ($config{hardlink}) {
-			prep_writefile($file, $config{destdir});
-			unlink($config{destdir}."/".$file);
-			if (link($srcfile, $config{destdir}."/".$file)) {
-				return;
+			# only hardlink if owned by same user
+			my @stat=stat($srcfile);
+			if ($stat[4] == $>) {
+				prep_writefile($file, $config{destdir});
+				unlink($config{destdir}."/".$file);
+				if (link($srcfile, $config{destdir}."/".$file)) {
+					return;
+				}
 			}
 			# if hardlink fails, fall back to copying
 		}
