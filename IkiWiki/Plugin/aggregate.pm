@@ -113,46 +113,45 @@ sub launchaggregation () { #{{{
 	return 1;
 } #}}}
 
+# Used by ikiwiki-transition aggregateinternal.
 sub migrate_to_internal { #{{{
-
 	if (! lockaggregate()) {
-		error("an aggregation process is already running");
-		return;
+		error("an aggregation process is currently running");
 	}
 
 	IkiWiki::lockwiki();
 	loadstate();
+	$config{verbose}=1;
 
 	foreach my $data (values %guids) {
 		next unless $data->{page};
-
+		
 		$config{aggregateinternal} = 0;
 		my $oldname = pagefile($data->{page});
-
+		
 		$config{aggregateinternal} = 1;
 		my $newname = pagefile($data->{page});
-
-		print "I: $oldname -> $newname\n";
+		
+		debug "moving $oldname -> $newname";
 		if (-e $newname) {
 			if (-e $oldname) {
 				error("$newname already exists");
 			}
 			else {
-				print STDERR 
-					"W: already renamed to $newname?\n";
+				debug("already renamed to $newname?");
 			}
 		}
 		elsif (-e $oldname) {
 			rename($oldname, $newname) || error("$!");
 		}
 		else {
-			print "W: $oldname not found\n";
+			debug("$oldname not found");
 		}
 	}
-
+	
 	savestate();
 	IkiWiki::unlockwiki;
-
+	
 	unlockaggregate();
 } #}}}
 
