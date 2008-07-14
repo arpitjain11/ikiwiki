@@ -1,0 +1,145 @@
+[[!template id=plugin name=pedigree author="intrigeri"]]
+[[!tag type/useful]]
+
+This plugin provides a bunch of loops that one can use in his/her
+`HTML::Template`'s to iterate over all or a subset of a page's
+parents. One can think of pedigree as "`PARENTLINKS` on steroids".
+
+[[!toc ]]
+
+Content
+=======
+
+Loop variables
+--------------
+
+Inside any loop provided by the pedigree plugin, every path element
+has not only the `URL` and `PAGE` variables, as with `PARENTLINKS`,
+but also the following ones:
+
+* `ABSDEPTH` (positive integer): depth of the path leading to the
+  current path element, counting from the wiki's root, which has
+  `ABSDEPTH=0`
+* `DISTANCE` (positive integer): distance, expressed in path elements,
+  from the current page to the current path element; e.g. this is
+  1 for the current page's mother, 2 for its grand-mother, etc.
+* `IS_ROOT` (boolean): true if, and only if, this path element is the
+  wiki's root
+* `IS_SECOND_ANCESTOR` (boolean): true if, and only if, this path
+  element is the first one after the wiki's root, on the path leading
+  to the current page
+* `IS_GRAND_MOTHER` (boolean): true if, and only if, this path element
+  is the current page's grand-mother
+* `IS_MOTHER` (boolean): true if, and only if, this path element
+  is the current page's mother
+
+Loops
+-----
+
+### `PEDIGREE`
+
+Returns the same parents list as `PARENTLINKS` would, along with
+additional loop variables as explained above.
+
+### `PEDIGREE_BUT_ROOT`
+
+Returns the same parents list as `PEDIGREE` would, **but** the wiki
+root (i.e. homepage).
+
+In addition to pedigree's common loop variables, `PEDIGREE_BUT_ROOT`
+provides `RELDEPTH` (positive integer), whose value, for a given
+parent, is its relative depth, i.e. the depth of the path leading to
+it, counting from the first element returned by this loop.
+
+### `PEDIGREE_BUT_TWO_OLDEST`
+
+Returns the same parents list as `PEDIGREE` would, **but** the wiki
+root (i.e. homepage) and the next path component.
+
+In addition to pedigree's common loop variables,
+`PEDIGREE_BUT_TWO_OLDEST` provides `RELDEPTH`: depth of the path
+leading to the current parent, relative to the first element returned
+by this loop.
+
+Usage
+=====
+
+Styling parents depending on their depth
+----------------------------------------
+
+Say you want the parent links to be styled depending on their depth in
+the path leading to the current page; just add the following lines in
+`page.tmpl`:
+
+	<TMPL_LOOP NAME="PEDIGREE">
+	<a href="<TMPL_VAR NAME="URL">" class="parentdepth<TMPL_VAR NAME="ABSDEPTH">">
+	  <TMPL_VAR NAME="PAGE">
+	</a> / 
+	</TMPL_LOOP>
+
+Then write the appropriate CSS bits for `a.parentdepth1`, etc.
+
+Skip some parents, style the others depending on their distance
+---------------------------------------------------------------
+
+Say you want to display the parents links, skipping the wiki homepage,
+styled depending on their distance from the current page; just add the
+following lines in `page.tmpl`:
+
+	<TMPL_LOOP NAME="PEDIGREE_BUT_ROOT">
+	<a href="<TMPL_VAR NAME="URL">" class="parentdistance<TMPL_VAR NAME="DISTANCE">">
+	  <TMPL_VAR NAME="PAGE">
+	</a> / 
+	</TMPL_LOOP>
+
+Then write the appropriate CSS bits for `a.parentdistance1`, etc.
+
+Full-blown example
+------------------
+
+Let's have a look at a more complicated example; combining the boolean
+loop variables provided by this plugin (`IS_ROOT` and friends) and
+`HTML::Template` flow control structures, you can have custom HTML
+and/or CSS generated for some special path components; e.g.:
+
+	<!-- all parents, skipping mother and grand'ma, inside a common div+ul -->
+	<div id="oldestparents">
+	<ul>
+	<TMPL_LOOP NAME="PEDIGREE">
+	  <TMPL_IF NAME="IS_GRAND_MOTHER">
+	  <TMPL_ELSE>
+	    <TMPL_IF NAME="IS_MOTHER">
+	    <TMPL_ELSE>
+	      <li><a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a></li>
+	    </TMPL_IF>
+	  </TMPL_IF>
+	</TMPL_LOOP>
+	</ul>
+	</div>
+	
+	<!-- dedicated div's for mother and grand'ma -->
+	<TMPL_LOOP NAME="PEDIGREE">
+	  <TMPL_IF NAME="IS_GRAND_MOTHER">
+	    <div id="grandma">
+	      <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>
+	    </div>
+	  <TMPL_ELSE>
+	    <TMPL_IF NAME="IS_MOTHER">
+	      <div id="mother">
+		<a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>
+	      </div>
+	    </TMPL_IF>
+	  </TMPL_IF>
+	</TMPL_LOOP>
+	
+	<!-- eventually, the current page title -->
+	<TMPL_VAR NAME="TITLE">
+	</div>
+
+Known bugs
+==========
+
+If `PEDIGREE_BUT_ROOT` and `PEDIGREE_BUT_TWO_OLDEST` are used in the
+same `HTML::Template`, `RELDEPTH` has wrong values inside the
+`PEDIGREE_BUT_ROOT` loop. This can be fixed if anyone needs this to
+be working.
