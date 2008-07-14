@@ -28,3 +28,5 @@ mainline ikiwiki?
 
 (I'll try never to rebase this branch, but writing this plugin has
 been a pretext for me to start learning Git, so...)
+
+To finish with, it seems no plugin bundled with ikiwiki uses the current parentlinks implementation, so one could event think of moving it from the core to this plugin (which should then be enabled by default, since the default templates do use parentlinks ;).
