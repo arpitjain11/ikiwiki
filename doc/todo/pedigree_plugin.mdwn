@@ -21,12 +21,45 @@ examples) are in the 'pedigree' Git branch in this repo:
 
 Seems there is also a [gitweb](http://repo.or.cz/w/ikiwiki/intrigeri.git).
 
+> Ok, I'll take a look. BTW, could you allow user joey on repo.or.cz
+> push access to the main ikiwiki repo you set up there? --[[Joey]]
+
 Any opinions on the idea/design/implementation?
 
-What needs to be changed so that it's possible to include it in
-mainline ikiwiki?
+> Seems that there should be a more generic way to do `PEDIGREE_BUT_ROOT`
+> and `PEDIGREE_BUT_TWO_OLDEST` (also `is_second_ancestor`,
+> `is_grand_mother` etc). One way would be to include in `PEDIGREE`
+> a set of values like `depth_1`, `depth_2`, etc. The one corresponding
+> to the `absdepth` would be true. This would allow a template like this:
+
+	<TMPL_LOOP NAME="PEDIGREE">
+	  <TMPL_IF NAME="depth_1">
+	    </TMPL_ELSE>
+	    <TMPL_IF NAME="depth_2">
+	    </TMPL_ELSE>
+	      <TMPL_VAR PAGE> /* only showing pages 2 levels deep */
+	    </TMPL_IF>
+	  </TMPL_IF>
+	</TMPL_LOOP>
+
+> The only missing information would be `reldepth`, but in the above
+> example the author of that template knows that it's `absdepth - 1`
+> (Things would be a lot nicer if `HTML::Template` had equality tests!)
+> 
+> Since this would make it more generic and also fix your one documented
+> bug, I can see no reason not to do it. ;-) --[[Joey]]
 
 (I'll try never to rebase this branch, but writing this plugin has
 been a pretext for me to start learning Git, so...)
 
-To finish with, it seems no plugin bundled with ikiwiki uses the current parentlinks implementation, so one could event think of moving it from the core to this plugin (which should then be enabled by default, since the default templates do use parentlinks ;).
+To finish with, it seems no plugin bundled with ikiwiki uses the current
+parentlinks implementation, so one could event think of moving it from the
+core to this plugin (which should then be enabled by default, since the
+default templates do use parentlinks ;).
+
+> I think that moving parentlinks out to a plugin is a good idea.
+> However, if it's done, I think the plugin should be named parentlinks,
+> and should continue to use the same template variables as are used now,
+> to avoid needing to change custom templates. Pedigree is a quite nice
+> name, but renaming it to parentlinks seems to be the way to go to me.
+> --[[Joey]]
