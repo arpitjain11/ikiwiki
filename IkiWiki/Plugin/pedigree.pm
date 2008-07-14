@@ -27,6 +27,7 @@ sub pedigree ($) { #{{{
 			    url => urlto($path, $page),
 			    page => $title,
 			    absdepth => $i,
+			    distance => ($pagedepth - $i),
 			    is_root => ($i eq 0),
 			    is_second_ancestor => ($i eq 1),
 			    is_grand_mother => ($i eq ($pagedepth - 2)),
