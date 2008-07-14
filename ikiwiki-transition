@@ -99,12 +99,25 @@ sub hashpassword {
 	}
 }
 
+sub aggregateinternal {
+	$config{srcdir} = shift;
+	$config{wikistatedir} = $config{srcdir}."/.ikiwiki";
+	$config{htmlext} = (shift or "html");
+
+	require IkiWiki::Plugin::aggregate;
+
+	IkiWiki::Plugin::aggregate::migrate_to_internal();
+
+	print "... now add aggregateinternal => 1 to your .setup file\n";
+}
+
 sub usage {
 	print STDERR "Usage: ikiwiki-transition type ...\n";
 	print STDERR "Currently supported transition subcommands:\n";
 	print STDERR "	prefix_directives file\n";
 	print STDERR "	indexdb srcdir\n";
 	print STDERR "	hashpassword srcdir\n";
+	print STDERR "	aggregateinternal srcdir [htmlext]\n";
 	exit 1;
 }
 
@@ -119,6 +132,9 @@ elsif ($mode eq 'hashpassword') {
 }
 elsif ($mode eq 'indexdb') {
 	indexdb(@ARGV);
+}
+elsif ($mode eq 'aggregateinternal') {
+	aggregateinternal(@ARGV);
 }
 else {
 	usage();

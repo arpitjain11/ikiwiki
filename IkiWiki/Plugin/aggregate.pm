@@ -113,6 +113,49 @@ sub launchaggregation () { #{{{
 	return 1;
 } #}}}
 
+sub migrate_to_internal { #{{{
+
+	if (! lockaggregate()) {
+		error("an aggregation process is already running");
+		return;
+	}
+
+	IkiWiki::lockwiki();
+	loadstate();
+
+	foreach my $data (values %guids) {
+		next unless $data->{page};
+
+		$config{aggregateinternal} = 0;
+		my $oldname = pagefile($data->{page});
+
+		$config{aggregateinternal} = 1;
+		my $newname = pagefile($data->{page});
+
+		print "I: $oldname -> $newname\n";
+		if (-e $newname) {
+			if (-e $oldname) {
+				error("$newname already exists");
+			}
+			else {
+				print STDERR 
+					"W: already renamed to $newname?\n";
+			}
+		}
+		elsif (-e $oldname) {
+			rename($oldname, $newname) || error("$!");
+		}
+		else {
+			print "W: $oldname not found\n";
+		}
+	}
+
+	savestate();
+	IkiWiki::unlockwiki;
+
+	unlockaggregate();
+} #}}}
+
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 	
