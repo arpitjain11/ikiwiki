@@ -14,3 +14,15 @@ It's not as easy in usage like color name or definition as plugin argument,
 but I don't have a better idea right now.
 
 What do you think about it? --[[Paweł|ptecza]]
+
+> Making a plugin preserve style attributes can be done, it just has to add
+> them after the sanitize step, which strips them. The general method is
+> adding placeholders first, and replacing them with the real html later.
+> 
+> The hard thing to me seems to be finding a syntax that is better than a
+> `<span>`. A preprocessor directive is not really any less ugly than html
+> tags, though at least it could play nicely with nested markdown: --[[Joey]]
+> 
+>	\[[color red,green """
+>	Xmas-colored markdown here
+>	"""]]
