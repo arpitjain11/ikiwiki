@@ -54,8 +54,11 @@ sub forget_oldest ($@) { #{{{
 			# references to hashes)...
 			$parent=shift @pedigree;
 			# ... but we have no copy of the referenced hashes, so we
-			# actually are modifying them in-place, but we don't care
-			# here since reldepth has to be computed everytime anyway.
+			# actually are modifying them in-place, which
+			# means the second (and following) calls to
+			# this function overwrite the previous one's
+			# reldepth values => known bug if PEDIGREE_BUT_ROOT and
+			# PEDIGREE_BUT_TWO_OLDEST are used in the same template
 			$parent->{reldepth}=($parent->{absdepth} - $offset);
 			push @ret, $parent;
 		}
@@ -68,16 +71,18 @@ sub pagetemplate (@) { #{{{
         my $page=$params{page};
         my $template=$params{template};
 
-	if ($template->query(name => "pedigree")
-	    or $template->query(name => "pedigree_but_root")
-	    or $template->query(name => "pedigree_but_two_oldest")
-	   )
-	  {
-		  my @pedigree=pedigree($page);
-		  $template->param(pedigree => \@pedigree);
-		  $template->param(pedigree_but_root => [forget_oldest(1, @pedigree)]);
-		  $template->param(pedigree_but_two_oldest => [forget_oldest(2, @pedigree)]);
-	  }
+	my @pedigree=pedigree($page)
+	  if ($template->query(name => "pedigree")
+	      or $template->query(name => "pedigree_but_root")
+	      or $template->query(name => "pedigree_but_two_oldest")
+	     );
+
+	$template->param(pedigree => \@pedigree)
+	  if ($template->query(name => "pedigree"));
+	$template->param(pedigree_but_root => [forget_oldest(1, @pedigree)])
+	  if ($template->query(name => "pedigree_but_root"));
+	$template->param(pedigree_but_two_oldest => [forget_oldest(2, @pedigree)])
+	  if ($template->query(name => "pedigree_but_two_oldest"));
 
 } # }}}
 
