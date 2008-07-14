@@ -2,7 +2,7 @@
 system developed by Matt Mackall. Ikiwiki supports storing a wiki in a
 mercurial repository.
 
-Ikiwiki can run as a post-update hook to update a wiki whenever commits
+Ikiwiki can run as a post-commit and/or install hook to update a wiki whenever commits or remote pushes
 come in. When running as a [[cgi]] with Mercurial, ikiwiki automatically
 commits edited pages, and uses the Mercurial history to generate the
 [[RecentChanges]] page.
