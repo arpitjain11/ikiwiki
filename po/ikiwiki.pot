@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-12 23:07-0400\n"
+"POT-Creation-Date: 2008-07-13 15:04-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759
+#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759 ../IkiWiki.pm:782
 msgid "Error"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/conditional.pm:18
+#: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/testpagespec.pm:17
 #, perl-format
 msgid "%s parameter is required"
 msgstr ""
@@ -212,7 +212,7 @@ msgstr ""
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:111
+#: ../IkiWiki/Plugin/edittemplate.pm:113
 msgid "failed to process"
 msgstr ""
 
@@ -233,7 +233,7 @@ msgid "prog not a valid graphviz program"
 msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:49
-msgid "Image::Magick not installed"
+msgid "Image::Magick is not installed"
 msgstr ""
 
 #: ../IkiWiki/Plugin/img.pm:56
@@ -287,7 +287,7 @@ msgstr ""
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
-#: ../IkiWiki/Plugin/linkmap.pm:98
+#: ../IkiWiki/Plugin/linkmap.pm:97
 msgid "failed to run dot"
 msgstr ""
 
@@ -408,7 +408,7 @@ msgid "polygen not installed"
 msgstr ""
 
 #: ../IkiWiki/Plugin/polygen.pm:51
-msgid "polygen failed"
+msgid "command failed"
 msgstr ""
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
@@ -612,47 +612,47 @@ msgstr ""
 msgid "getctime not implemented"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:286 ../IkiWiki/Render.pm:307
+#: ../IkiWiki/Render.pm:290 ../IkiWiki/Render.pm:311
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:361
+#: ../IkiWiki/Render.pm:365
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:401
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:410
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:427
+#: ../IkiWiki/Render.pm:431
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:448
+#: ../IkiWiki/Render.pm:452
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:487
+#: ../IkiWiki/Render.pm:491
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:499
+#: ../IkiWiki/Render.pm:503
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:523
+#: ../IkiWiki/Render.pm:527
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -729,6 +729,6 @@ msgstr ""
 msgid "%s preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1203
+#: ../IkiWiki.pm:1212
 msgid "yes"
 msgstr ""

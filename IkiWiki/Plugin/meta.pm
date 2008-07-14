@@ -138,7 +138,7 @@ sub preprocess (@) { #{{{
 		# editable page as a stylesheet
 		my $stylesheet=bestlink($page, $value.".css");
 		if (! length $stylesheet) {
-			return "[[meta ".gettext("stylesheet not found")."]]";
+			error gettext("stylesheet not found")
 		}
 		push @{$metaheaders{$page}}, '<link href="'.urlto($stylesheet, $page).
 			'" rel="'.encode_entities($rel).
@@ -172,7 +172,7 @@ sub preprocess (@) { #{{{
 			add_depends($page, $redir_page);
 			my $link=bestlink($page, $redir_page);
 			if (! length $link) {
-				return "[[meta ".gettext("redir page not found")."]]";
+				error gettext("redir page not found")
 			}
 
 			$value=urlto($link, $page);
@@ -185,7 +185,7 @@ sub preprocess (@) { #{{{
 			my %seen;
 			while (exists $pagestate{$at}{meta}{redir}) {
 				if ($seen{$at}) {
-					return "[[meta ".gettext("redir cycle is not allowed")."]]";
+					error gettext("redir cycle is not allowed")
 				}
 				$seen{$at}=1;
 				$at=$pagestate{$at}{meta}{redir};

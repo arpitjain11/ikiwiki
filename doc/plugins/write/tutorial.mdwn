@@ -169,7 +169,7 @@ be a guard on how high it will go.
 		}
 		my $num=$last{$page}++;
 		if ($num > 25) {
-			return "[[fib will only calculate the first 25 numbers in the sequence]]";
+			error "can only calculate the first 25 numbers in the sequence";
 		}
 		return fib($num);
 	}
@@ -182,7 +182,7 @@ does for numbers less than 1. Or for any number that's not an integer. In
 either case, it will run forever. Here's one way to fix that:
 
 		if (int($num) != $num || $num < 1) {
-			return "[[fib positive integers only, please]]";
+			error "positive integers only, please";
 		}
 
 As these security problems have demonstrated, even a simple input from the

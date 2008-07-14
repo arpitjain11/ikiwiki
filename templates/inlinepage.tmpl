@@ -1,4 +1,7 @@
 <div class="inlinepage">
+
+<div class="inlineheader">
+
 <TMPL_IF NAME="AUTHOR">
 <span class="author">
 <TMPL_IF NAME="AUTHORURL">
@@ -15,7 +18,14 @@
 <a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a>
 </TMPL_IF>
 </span>
+
+</div><!--.inlineheader-->
+
+<div class="inlinecontent">
 <TMPL_VAR CONTENT>
+</div><!--.inlinecontent-->
+
+<div class="inlinefooter">
 
 <span class="pagedate">
 Posted <TMPL_VAR CTIME>
@@ -52,7 +62,9 @@ License: <TMPL_VAR LICENSE>
 <li><TMPL_VAR DISCUSSIONLINK></li>
 </TMPL_IF>
 </ul>
-</div>
+</div><!--.actions-->
 </TMPL_IF>
 
-</div>
+</div><!--.inlinefooter-->
+
+</div><!--.inlinepage-->
