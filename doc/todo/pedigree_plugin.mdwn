@@ -1,0 +1,32 @@
+After realizing (thanks to
+[[Allow_TITLE_to_include_part_of_the_path_in_addition_to_the_basename]])
+that I needed some kind of "parentlinks on steroids", I wrote a new
+plugin, called pedigree.
+
+This plugin provides a bunch of loops that one can use in his/her
+`HTML::Template`'s to iterate over all or a subset of a page's
+parents. Inside these loops, half a dozen variables are made
+available, in addition to `PAGE` and `URL` that are already provided
+by parentlinks.
+
+Amongst many possibilities, one can e.g. simply use this plugin to
+give every parent link a different `class=` attribute, depending
+either on its depth in the path leading to the current page, or on its
+distance to it.
+
+The code and documentation (including simple and complex usage
+examples) are in the 'pedigree' Git branch in this repo:
+
+	git://repo.or.cz/ikiwiki/intrigeri.git
+
+Seems there is also a [gitweb](http://repo.or.cz/w/ikiwiki/intrigeri.git).
+
+Any opinions on the idea/design/implementation?
+
+What needs to be changed so that it's possible to include it in
+mainline ikiwiki?
+
+(I'll try never to rebase this branch, but writing this plugin has
+been a pretext for me to start learning Git, so...)
+
+To finish with, it seems no plugin bundled with ikiwiki uses the current parentlinks implementation, so one could event think of moving it from the core to this plugin (which should then be enabled by default, since the default templates do use parentlinks ;).
