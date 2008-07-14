@@ -27,14 +27,14 @@ sub preprocess (@) { #{{{
 	
 	my $code = $params{code};
 	if (! defined $code && ! length $code) {
-		return "[[teximg ".gettext("missing tex code"). "]]";
+		error gettext("missing tex code");
 	}
 
 	if (check($code)) {
 		return create($code, check_height($height), \%params);
 	}
 	else {
-		return "[[teximg ".gettext("code includes disallowed latex commands"). "]]";
+		error gettext("code includes disallowed latex commands")
 	}
 } #}}}
 
@@ -85,7 +85,7 @@ sub create ($$$) { #{{{
 			.qq{" class="teximg" />};
 	}
 	else {
-		return qq{[[teximg <a href="$logurl">}.gettext("failed to generate image from code")."</a>]]";
+		error qq{<a href="$logurl">}.gettext("failed to generate image from code")."</a>";
 	}
 } #}}}
 

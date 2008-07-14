@@ -1,0 +1,28 @@
+Recently I've wanted to colour some piece of text on my Ikiwiki page.
+It seems that Markdown can do it only using HTML tags, so I used
+&lt;span class="color"&gt;foo bar baz&lt;/span&gt;.
+
+However, in my opinion mixing Markdown syntax and HTML tags is rather ugly,
+so maybe we should create a new color plugin to add more color to Ikiwiki ;)
+I know that another Wikis have similar plugin, for example
+[WikiDot](http://www.wikidot.com/).
+
+I've noticed that htmlscrubber plugin strips `style` attribute, because of
+security, so probably we need to use `class` attribute of HTML. But then
+we have to customize our `local.css` file to add all color we want to use.
+It's not as easy in usage like color name or definition as plugin argument,
+but I don't have a better idea right now.
+
+What do you think about it? --[[Paweł|ptecza]]
+
+> Making a plugin preserve style attributes can be done, it just has to add
+> them after the sanitize step, which strips them. The general method is
+> adding placeholders first, and replacing them with the real html later.
+> 
+> The hard thing to me seems to be finding a syntax that is better than a
+> `<span>`. A preprocessor directive is not really any less ugly than html
+> tags, though at least it could play nicely with nested markdown: --[[Joey]]
+> 
+>	\[[color red,green """
+>	Xmas-colored markdown here
+>	"""]]

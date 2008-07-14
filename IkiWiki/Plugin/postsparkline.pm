@@ -29,14 +29,14 @@ sub preprocess (@) { #{{{
 	}
 
 	if (! exists $params{formula}) {
-		return "[[postsparkline ".gettext("missing formula")."]]";
+		error gettext("missing formula")
 	}
 	my $formula=$params{formula};
 	$formula=~s/[^a-zA-Z0-9]*//g;
 	$formula=IkiWiki::possibly_foolish_untaint($formula);
 	if (! length $formula ||
 	    ! IkiWiki::Plugin::postsparkline::formula->can($formula)) {
-		return "[[postsparkline ".gettext("unknown formula")."]]";
+		error gettext("unknown formula");
 	}
 
 	add_depends($params{page}, $params{pages});
@@ -53,7 +53,7 @@ sub preprocess (@) { #{{{
 
 	my @data=eval qq{IkiWiki::Plugin::postsparkline::formula::$formula(\\\%params, \@list)};
 	if ($@) {
-		return "[[postsparkline error $@]]";
+		error $@;
 	}
 
 	if (! @data) {

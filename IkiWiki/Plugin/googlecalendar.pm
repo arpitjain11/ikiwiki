@@ -19,7 +19,7 @@ sub preprocess (@) { #{{{
 	# Avoid XSS attacks..
 	my ($url)=$params{html}=~m#iframe\s+src="http://www\.google\.com/calendar/embed\?([^"<>]+)"#;
 	if (! defined $url || ! length $url) {
-		return "[[googlecalendar ".gettext("failed to find url in html")."]]";
+		error gettext("failed to find url in html")
 	}
 	my ($height)=$params{html}=~m#height="(\d+)"#;
 	my ($width)=$params{html}=~m#width="(\d+)"#;

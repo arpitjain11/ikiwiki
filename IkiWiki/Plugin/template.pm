@@ -16,7 +16,7 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 
 	if (! exists $params{id}) {
-		return "[[template ".gettext("missing id parameter")."]]";
+		error gettext("missing id parameter")
 	}
 
 	my $template_page="templates/$params{id}";
@@ -42,7 +42,7 @@ sub preprocess (@) { #{{{
 		);
 	};
 	if ($@) {
-		return "[[template ".gettext("failed to process:")." $@]]";
+		error gettext("failed to process:")." $@"
 	}
 
 	$params{basename}=IkiWiki::basename($params{page});

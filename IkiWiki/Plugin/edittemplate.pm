@@ -38,10 +38,10 @@ sub preprocess (@) { #{{{
 	return "" if $params{page} ne $params{destpage};
 
 	if (! exists $params{template} || ! length($params{template})) {
-		return "[[meta ".gettext("template not specified")."]]";
+		error gettext("template not specified")
 	}
 	if (! exists $params{match} || ! length($params{match})) {
-		return "[[meta ".gettext("match not specified")."]]";
+		error gettext("match not specified")
 	}
 
 	$pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
@@ -108,7 +108,9 @@ sub filltemplate ($$) { #{{{
 		);
 	};
 	if ($@) {
-		return "[[pagetemplate ".gettext("failed to process")." $@]]";
+		# Indicate that the earlier preprocessor directive set 
+		# up a template that doesn't work.
+		return "[[!pagetemplate ".gettext("failed to process")." $@]]";
 	}
 
 	$template->param(name => $page);

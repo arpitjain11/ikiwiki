@@ -19,6 +19,12 @@ ikiwiki (2.54) UNRELEASED; urgency=low
     uuid in feeds. (smcv)
   * Move yesno function out of inline and into IkiWiki core, not exported.
   * meta: fix title() PageSpec (smcv)
+  * Some footer style changes. (smcv)
+  * Error handling improvement for preprocess hooks. It's now safe to call
+    error() from such hooks; it will cause a nicely formatted error message
+    to be inserted into the page.
+  * Cut the size of the binary package in half by excluding pages for bugs
+    and todo items from the html shipped in it.
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 

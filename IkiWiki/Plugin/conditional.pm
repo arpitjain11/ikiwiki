@@ -15,7 +15,7 @@ sub preprocess_if (@) { #{{{
 
 	foreach my $param (qw{test then}) {
 		if (! exists $params{$param}) {
-			return "[[if ".sprintf(gettext('%s parameter is required'), $param)."]]";
+			error sprintf(gettext('%s parameter is required'), $param);
 		}
 	}
 
