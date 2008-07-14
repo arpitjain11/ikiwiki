@@ -20,9 +20,12 @@
 <div class="pageheader">
 <div class="header">
 <span>
+<span class="parentlinks">
 <TMPL_LOOP NAME="PARENTLINKS">
 <a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
 </TMPL_LOOP>
+</span>
+<span class="title">
 <TMPL_VAR TITLE>
 </span>
 <TMPL_IF NAME="SEARCHFORM">
