@@ -1,0 +1,14 @@
+Trying to build current Git master in a (two weeks old - no DSL here) sid chroot triggers :
+
+        rendering news.mdwn
+        Can't locate Image/Magick.pm in @INC (@INC contains: . blib/lib /etc/perl /usr/local/lib/perl/5.10.0 /usr/local/share/perl/5.10.0 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.10 /usr/share/perl/5.10 /usr/local/lib/site_perl .) at (eval 175) line 2.
+        BEGIN failed--compilation aborted at (eval 175) line 2.
+
+        make[1]: *** [extra_build] Error 2
+        make[1]: Leaving directory `/tmp/buildd/ikiwiki-2.54'
+        make: *** [build-stamp] Error 2
+
+Adding perlmagick to the build-deps fixes it. I read somewhere in debian/changelog that this build-deb was not needed, but...
+
+> It's not needed by the test suite, but once I added a img to the source
+> wiki, it became needed. [[done]] --[[Joey]]

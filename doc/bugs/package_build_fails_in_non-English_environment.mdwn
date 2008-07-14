@@ -1,0 +1,11 @@
+basewiki_brokenlinks.t fails when running dpkg-buildpackage in non-English environment : it greps for an (non-)error message that is i18n'd. This of course does not happen when building in a proper chroot environment... which happens to fail as well, for other reasons, but this will be for another bug.
+
+The `LANG=` on line 9 does not seem to do what it's supposed to, go figure.
+
+I've never had to understand the Unix locales, so I randomly tried to replace `LANG=` in basewiki_brokenlinks.t with :
+
+- `LANG=C` : fails
+- `LANGUAGE=` : fails
+- `LANGUAGE=C` : works!
+
+> For maximum precedence it should have been LC_ALL=C. [[done]], I think... --[[smcv]]

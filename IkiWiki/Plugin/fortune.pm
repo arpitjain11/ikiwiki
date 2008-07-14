@@ -15,7 +15,7 @@ sub preprocess (@) { #{{{
 	my $f = `fortune 2>/dev/null`;
 
 	if ($?) {
-		return "[[".gettext("fortune failed")."]]";
+		error gettext("fortune failed");
 	}
 	else {
 		return "<pre>$f</pre>\n";

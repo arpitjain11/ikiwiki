@@ -46,14 +46,14 @@ sub preprocess (@) { #{{{
 	my $base = IkiWiki::basename($file);
 
 	eval q{use Image::Magick};
-	error($@) if $@;
+	error gettext("Image::Magick is not installed") if $@;
 	my $im = Image::Magick->new;
 	my $imglink;
 	my $r;
 
 	if ($params{size} ne 'full') {
 		my ($w, $h) = ($params{size} =~ /^(\d+)x(\d+)$/);
-		return "[[img ".sprintf(gettext('bad size "%s"'), $params{size})."]]"
+		error sprintf(gettext('bad size "%s"'), $params{size})
 			unless (defined $w && defined $h);
 
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
@@ -63,14 +63,14 @@ sub preprocess (@) { #{{{
 
 		if (-e $outfile && (-M srcfile($file) >= -M $outfile)) {
 			$r = $im->Read($outfile);
-			return "[[img ".sprintf(gettext("failed to read %s: %s"), $outfile, $r)."]]" if $r;
+			error sprintf(gettext("failed to read %s: %s"), $outfile, $r) if $r;
 		}
 		else {
 			$r = $im->Read(srcfile($file));
-			return "[[img ".sprintf(gettext("failed to read %s: %s"), $file, $r)."]]" if $r;
+			error sprintf(gettext("failed to read %s: %s"), $file, $r) if $r;
 
 			$r = $im->Resize(geometry => "${w}x${h}");
-			return "[[img ".sprintf(gettext("failed to resize: %s"), $r)."]]" if $r;
+			error sprintf(gettext("failed to resize: %s"), $r) if $r;
 
 			# don't actually write file in preview mode
 			if (! $params{preview}) {
@@ -84,7 +84,7 @@ sub preprocess (@) { #{{{
 	}
 	else {
 		$r = $im->Read(srcfile($file));
-		return "[[img ".sprintf(gettext("failed to read %s: %s"), $file, $r)."]]" if $r;
+		error sprintf(gettext("failed to read %s: %s"), $file, $r) if $r;
 		$imglink = $file;
 	}
 
@@ -101,7 +101,7 @@ sub preprocess (@) { #{{{
 	}
 
 	if (! defined($im->Get("width")) || ! defined($im->Get("height"))) {
-		return "[[img ".sprintf(gettext("failed to determine size of image %s"), $file)."]]";
+		error sprintf(gettext("failed to determine size of image %s"), $file)
 	}
 
 	my $imgtag='<img src="'.$imgurl.

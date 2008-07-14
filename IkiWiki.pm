@@ -189,11 +189,6 @@ sub loadplugin ($) { #{{{
 sub error ($;$) { #{{{
 	my $message=shift;
 	my $cleaner=shift;
-	if ($config{cgi}) {
-		print "Content-type: text/html\n\n";
-		print misctemplate(gettext("Error"),
-			"<p>".gettext("Error").": $message</p>");
-	}
 	log_message('err' => $message) if $config{syslog};
 	if (defined $cleaner) {
 		$cleaner->();
@@ -773,21 +768,30 @@ sub preprocess ($$$;$$) { #{{{
 			}
 			my $ret;
 			if (! $scan) {
-				$ret=$hooks{preprocess}{$command}{call}->(
-					@params,
-					page => $page,
-					destpage => $destpage,
-					preview => $preprocess_preview,
-				);
+				$ret=eval {
+					$hooks{preprocess}{$command}{call}->(
+						@params,
+						page => $page,
+						destpage => $destpage,
+						preview => $preprocess_preview,
+					);
+				};
+				if ($@) {
+					chomp $@;
+				 	$ret="[[!$command <span class=\"error\">".
+						gettext("Error").": $@"."</span>]]";
+				}
 			}
 			else {
 				# use void context during scan pass
-				$hooks{preprocess}{$command}{call}->(
-					@params,
-					page => $page,
-					destpage => $destpage,
-					preview => $preprocess_preview,
-				);
+				eval {
+					$hooks{preprocess}{$command}{call}->(
+						@params,
+						page => $page,
+						destpage => $destpage,
+						preview => $preprocess_preview,
+					);
+				};
 				$ret="";
 			}
 			$preprocessing{$page}--;

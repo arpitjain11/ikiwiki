@@ -15,3 +15,21 @@ adding this `clear: both`?
 > before the modification date. So all of them have to clear both above and
 > below. I'm sure there are better ways for the CSS to handle that.
 > --[[Joey]] 
+
+>> There is indeed a better way - all the optional things below the
+>> content are wrapped in `<div id="footer">`, so to have the browser wait
+>> until all floating boxes have finished before rendering the footer, it
+>> would be sufficient to have `#footer { clear: both; }` and remove all
+>> the other footer-related `clear` attributes. I'm not sure what you mean
+>> by "clear above and below" - the clear attribute takes values none, left,
+>> right or both, and its purpose is to stop floating boxes (sidebars,
+>> mainly) from overlapping with footers.
+>>
+>> ... oh, I see what you mean - this affects inlines too. In inlinepage.tmpl
+>> we could wrap the "pseudo-footer" in `<div class="inlinefooter">` too?
+>> Then sites could choose whether to set clear:both on the inlinefooter
+>> or not, and this would be separate from the same styling on whole pages.
+>>
+>> [[done]] --[[smcv]]
+
+[[patch]]

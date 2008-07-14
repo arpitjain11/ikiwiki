@@ -97,6 +97,8 @@ sub setup () { #{{{
 	loadplugins();
 	checkconfig();
 
+	require IkiWiki::Render;
+
 	if ($config{render}) {
 		commandline_render();
 	}

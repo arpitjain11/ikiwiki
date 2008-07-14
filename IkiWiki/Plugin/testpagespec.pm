@@ -14,7 +14,7 @@ sub preprocess (@) { #{{{
 	
 	foreach my $param (qw{match pagespec}) {
 		if (! exists $params{$param}) {
-			return "[[testpagespec $param parameter is required]]";
+			error sprintf(gettext("%s parameter is required"), $param);
 		}
 	}
 

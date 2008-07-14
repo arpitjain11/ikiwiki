@@ -29,7 +29,7 @@ sub preprocess (@) { #{{{
 
 	my $grmfile = '/usr/share/polygen/ita/polygen.grm';
 	if (! -d '/usr/share/polygen') {
-		return "[[".gettext("polygen not installed")."]]";
+		error gettext("polygen not installed");
 	}
 	find({wanted => sub {
 			if (substr($File::Find::name, -length($grammar)) eq $grammar) {
@@ -48,7 +48,7 @@ sub preprocess (@) { #{{{
 	}
 
 	if ($?) {
-		$res="[[".gettext("polygen failed")."]]";
+		error gettext("command failed");
 	}
 
 	# Strip trailing spaces and newlines so that we flow well with the

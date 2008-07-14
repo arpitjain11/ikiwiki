@@ -134,7 +134,7 @@ sub preprocess (@) { #{{{
 
 	foreach my $required (qw{name url}) {
 		if (! exists $params{$required}) {
-			return "[[aggregate ".sprintf(gettext("missing %s parameter"), $required)."]]";
+			error sprintf(gettext("missing %s parameter"), $required)
 		}
 	}
 

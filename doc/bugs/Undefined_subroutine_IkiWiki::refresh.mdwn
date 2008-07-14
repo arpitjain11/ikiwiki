@@ -1,0 +1,7 @@
+After building a fresh deb from current Git master (9b62dac4bcf62f3a1f76ec5a7ed5a90db16ea1c8) :
+
+        $ ikiwiki --setup ~/ikiwiki.setup  --rebuild
+        Undefined subroutine &IkiWiki::refresh called at /usr/share/perl5/IkiWiki/Setup.pm line 113.
+
+> [[done]], it just needed "require IkiWiki::Render" before it started
+> rendering. --[[smcv]]
