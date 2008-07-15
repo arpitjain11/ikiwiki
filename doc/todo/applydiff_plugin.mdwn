@@ -1,0 +1,56 @@
+[[!tag wishlist]]
+
+[[!toc ]]
+
+Summary
+=======
+
+Allow a user to apply an arbitrary diff, in order to modify a given
+page (or, even better, a given set of pages).
+
+Rationale
+=========
+
+To edit intensively an ikiwiki-powered website can quickly get
+annoying for anybody meeting enough of the following conditions:
+
+* living mainly offline
+* having no commit access to the RCS backing up the site (BTW, please
+  note I can send my ssh public key to anyone who asks for, free of
+  charges)
+* hating web-browsers and despising textareas
+* loving in his/her own preferred `$EDITOR`
+
+... and when one gathers all of these defaults, she/he is on her/his
+way to get mad. Soon.
+
+Before it's too late, some dareful ones dream of the following
+playflow:
+
+1. Go online.
+1. Update local working copy.
+1. Go offline.
+1. `$EDITOR` : write, report, answer, propose
+1. Go online.
+1. Update local working copy (and optionally fix conflicts between
+   local changes and remote ones).
+1. Generate a diff.
+1. Use a web-browser to paste the diffs (or better, upload them into
+   a form) somewhere on the wiki, and click "Apply".
+1. git pull (to reflect locally the fact that the diff has been
+   applied to the remote repo)
+1. Go offline.
+
+(This is for sure a bit theoretical: the ones who dream of this would
+actually insert various steps about branching, merging and rebasing
+random stuff.)
+
+Design
+======
+
+This has to be thought very carefully, to avoid one to apply diffs to
+pages he/she is not allowed to edit. Restricting a given diff to
+modify only *one* page may be easier.
+
+Implementation
+==============
