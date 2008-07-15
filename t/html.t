@@ -6,7 +6,7 @@ use Test::More;
 my @pages;
 
 BEGIN {
-	@pages=qw(index todo features news plugins/map security);
+	@pages=qw(index features news plugins/map security);
 	if (! -x "/usr/bin/validate") {
 		plan skip_all => "/usr/bin/validate html validator not present";
 	}
