@@ -25,6 +25,11 @@ Note that if the page contains wiki links with spaces, which some
 older versions of ikiwiki accepted, the prefix_directives transition will
 treat these as preprocessor directives and convert them.
 
+# aggregateinternal
+
+The `aggregateinternal` mode moves pages aggregated by the aggregate plugin
+so that the `aggregateinternal` option can be endabled 
+
 # indexdb
 
 The `indexdb` mode handles converting a plain text `.ikiwiki/index` file to

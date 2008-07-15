@@ -174,8 +174,12 @@ use IkiWiki::Setup::Standard {
 	# pages anonymous users can edit
 	#anonok_pagespec => "*",
 	
-	# For use with the aggregate plugin, to allow aggregation to be
-	# triggered via the web.
+	# For use with the aggregate plugin.
+	# Enable aggregation to internal pages. New wikis should set this to 1,
+	# but if you use aggregate already, read the aggregate plugin docs
+	# before enabling it.
+	#aggregateinternal => 1,
+	# Allow aggregation to be triggered via the web.
 	#aggregate_webtrigger => 1,
 	
 	# For use with the pinger plugin, how many seconds to wait before
