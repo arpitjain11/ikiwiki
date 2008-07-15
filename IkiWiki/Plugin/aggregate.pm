@@ -157,8 +157,9 @@ sub migrate_to_internal { #{{{
 			debug("$oldname not found");
 		}
 		if (-e $oldoutput) {
+			use IkiWiki::Render;
 			debug("removing output file $oldoutput");
-			unlink($oldoutput) || error ("$!");
+			IkiWIki::prune($oldoutput) || error ("$!");
 		}
 	}
 	
