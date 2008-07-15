@@ -1,6 +1,17 @@
 [[!meta title="aggregate/inline planets wrongly link to posts"]]
 
 Please see 
-<http://vcs-pkg.org/planet/>. The headers of posts link to the HTML pages, which ikiwiki scraped. Also, the `\[[meta]]` titles and author directives aren't processed, but included inline. I believe that the headers should link to the posts directly, not the "cached" copies ikiwiki keeps around.
+<http://vcs-pkg.org/planet/>. The headers of posts link to the HTML pages, which ikiwiki scraped.
+I believe that the headers should link to the posts directly, not the "cached" copies ikiwiki keeps around.
+
+> As far as I can see, that problem no longer exists.
+
+Also, the `\[[meta]]` titles and author directives aren't processed, but included inline. 
+
+> Hmm, I don't see that either.
 
 What's also not ideal is that the cached copies can be edited. Any edits there will never make it to the VCS and thus won't show up in recentchanges.
+
+> That can be disabled now by enabling `aggreageinternal` --[[Joey]]
+
+> Calling this [[done]], please let me know if I missed something.
