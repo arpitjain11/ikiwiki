@@ -1,20 +1,19 @@
-[[!template id=plugin name=pedigree author="intrigeri"]]
-[[!tag type/useful]]
+[[!template id=plugin name=parentlinks core=1 author="[[intrigeri]]"]]
+[[!tag type/link]]
 
 This plugin offers a `HTML::Template` loop that iterates over all or
-a subset of a page's parents, providing a few bonus possibilities,
-such as styling the parent links depending on their place in the path.
-One can think of pedigree as "`PARENTLINKS` on steroids".
+a subset of a page's parents. It also provides a few bonus
+possibilities, such as styling the parent links depending on their
+place in the path.
 
 [[!toc ]]
 
 Content
 =======
 
-This plugin provides one template loop, called `PEDIGREE`, that
-returns the same parents list as `PARENTLINKS` would; as a bonus,
-every path element returned by the `PEDIGREE` loop has the following
-variables set:
+This plugin provides one template loop, called `PARENTLINKS`, that
+returns the list of parent pages for the current page. Every returned
+path element has the following variables set:
 
 * `URL` (string): url to the current path element
 * `PAGE` (string): title of the current path element
@@ -38,6 +37,18 @@ The `DEPTH` and `HEIGHT` variables allow the template writer to apply
 general treatment, depending on one of these variables, to *every*
 parent: they are counters.
 
+Basic usage
+-----------
+
+As in the default `page.tmpl`, one can simply display the list of
+parent pages:
+
+	<TMPL_LOOP NAME="PARENTLINKS">
+	<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
+	</TMPL_LOOP>
+	<TMPL_VAR TITLE>
+
+
 Styling parents depending on their depth
 ----------------------------------------
 
@@ -45,7 +56,7 @@ Say you want the parent links to be styled depending on their depth in
 the path going from the wiki root to the current page; just add the
 following lines in `page.tmpl`:
 
-	<TMPL_LOOP NAME="PEDIGREE">
+	<TMPL_LOOP NAME="PARENTLINKS">
 	<a href="<TMPL_VAR NAME="URL">" class="depth<TMPL_VAR NAME="DEPTH">">
 	  <TMPL_VAR NAME="PAGE">
 	</a> / 
@@ -60,7 +71,7 @@ Say you want to display all the parents links but the wiki homepage,
 styled depending on their distance to the current page; just add the
 following lines in `page.tmpl`:
 
-	<TMPL_LOOP NAME="PEDIGREE">
+	<TMPL_LOOP NAME="PARENTLINKS">
 	<TMPL_IF NAME="DEPTH_0">
 	<TMPL_ELSE>
 	<a href="<TMPL_VAR NAME="URL">" class="height<TMPL_VAR NAME="HEIGHT">">
@@ -81,7 +92,7 @@ and/or CSS generated for some special path components; e.g.:
 	<!-- all parents, skipping mother and grand'ma, inside a common div+ul -->
 	<div id="oldestparents">
 	<ul>
-	<TMPL_LOOP NAME="PEDIGREE">
+	<TMPL_LOOP NAME="PARENTLINKS">
 	  <TMPL_IF NAME="HEIGHT_2">
 	  <TMPL_ELSE>
 	    <TMPL_IF NAME="HEIGHT_1">
@@ -94,7 +105,7 @@ and/or CSS generated for some special path components; e.g.:
 	</div>
 	
 	<!-- dedicated div's for mother and grand'ma -->
-	<TMPL_LOOP NAME="PEDIGREE">
+	<TMPL_LOOP NAME="PARENTLINKS">
 	  <TMPL_IF NAME="HEIGHT_2">
 	    <div id="grandma">
 	      <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>

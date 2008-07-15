@@ -77,7 +77,8 @@ sub defaultconfig () { #{{{
 	adminuser => undef,
 	adminemail => undef,
 	plugin => [qw{mdwn link inline htmlscrubber passwordauth openid
-			signinedit lockedit conditional recentchanges}],
+			signinedit lockedit conditional recentchanges
+			parentlinks}],
 	libdir => undef,
 	timeformat => '%c',
 	locale => undef,

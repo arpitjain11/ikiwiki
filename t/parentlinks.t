@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # -*- cperl-indent-level: 8; -*-
-# Testcases for the Ikiwiki pedigree plugin.
+# Testcases for the Ikiwiki parentlinks plugin.
 
 use warnings;
 use strict;
@@ -14,13 +14,12 @@ BEGIN { use_ok("IkiWiki"); }
 %config=IkiWiki::defaultconfig();
 $config{srcdir}=$config{destdir}="/dev/null";
 $config{underlaydir}="underlays/basewiki";
-$config{templatedir}="t/pedigree/templates";
+$config{templatedir}="t/parentlinks/templates";
 IkiWiki::loadplugins();
 IkiWiki::checkconfig();
-ok(IkiWiki::loadplugin("pedigree"), "pedigree plugin loaded");
 
 # Test data
-$expected{'pedigree'} =
+$expected{'parentlinks'} =
   {
    "" => [],
    "ikiwiki" => [],
@@ -42,7 +41,7 @@ sub test_loop($$) {
 	my $template;
 	my %params;
 
-	ok($template=template('pedigree.tmpl'), "template created");
+	ok($template=template('parentlinks.tmpl'), "template created");
 	ok($params{template}=$template, "params populated");
 
 	while ((my $page, my $exp) = each %{$expected}) {
@@ -53,7 +52,7 @@ sub test_loop($$) {
 		# manually run the plugin hook
 		$params{page}=$page;
 		$template->clear_params();
-		IkiWiki::Plugin::pedigree::pagetemplate(%params);
+		IkiWiki::Plugin::parentlinks::pagetemplate(%params);
 		my $res=$template->param($loop);
 
 		is(scalar(@$res), $pagedepth, "$msgprefix: path length");
@@ -80,4 +79,4 @@ sub test_loop($$) {
 }
 
 # Main
-test_loop('pedigree', $expected{'pedigree'});
+test_loop('parentlinks', $expected{'parentlinks'});

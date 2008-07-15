@@ -1,17 +1,17 @@
 #!/usr/bin/perl
 # -*- cperl-indent-level: 8; -*-
-# Ikiwiki pedigree plugin.
-package IkiWiki::Plugin::pedigree;
+# Ikiwiki parentlinks plugin.
+package IkiWiki::Plugin::parentlinks;
 
 use warnings;
 use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "pagetemplate", id => "pedigree", call => \&pagetemplate);
+	hook(type => "pagetemplate", id => "parentlinks", call => \&pagetemplate);
 } # }}}
 
-sub pedigree ($) { #{{{
+sub parentlinks ($) { #{{{
 	my $page=shift;
 
 	my @ret;
@@ -47,8 +47,8 @@ sub pagetemplate (@) { #{{{
         my $page=$params{page};
         my $template=$params{template};
 
-	if ($template->query(name => "pedigree")) {
-		$template->param(pedigree => [pedigree($page)]);
+	if ($template->query(name => "parentlinks")) {
+		$template->param(parentlinks => [parentlinks($page)]);
 	}
 } # }}}
 
