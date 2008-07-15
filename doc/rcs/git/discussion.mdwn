@@ -84,6 +84,8 @@ I think it would be a good thing if the various git pages where somehow unified.
 
 # Does 'push' from the shallow clones work for you? git-clone and git-fetch explicitly state it doesn't... 
 
+-------
+
 ## Permissions for web users and local users editing and creating pages
 What is the right permissions setup for a situation where both web and local users will be editing and creatingt pages? 
 My usage is this: I have a repository /srv/git/wiki.git chowned to me:apache with 775/664 permissions recursively (where 'me' is my account and the ikiwiki administrator), a /srv/www/ikisrc chowned to apache:apache, and a /srv/www/html/wiki chowned to apache:apache. As is, I can commit to the wiki.git repo (because it is owned by me) and web users can commit to it as well (because the group also has write access) what happens when I create a new page from either of those sources? For example, the apache user running ikiwiki.cgi would create /srv/www/ikisrc/something.mdwn, commit and push it to /srv/git/wiki.git, but that new object is owned by apache:apache. If I then try to commit a change to something.mdwn from a cloned repo sitting on my laptop, for example, will the commit not fail because apache created the files? 
