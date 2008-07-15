@@ -15,16 +15,23 @@ ikiwiki (2.54) UNRELEASED; urgency=low
   * Change deb dependencies to list Text::Markdown before markdown, since
     the former, while slower, has a much better html parser that avoids
     numerous bugs.
-  * meta, inline: Support guid options, to allow forcing a particular url or
-    uuid in feeds. (smcv)
   * Move yesno function out of inline and into IkiWiki core, not exported.
-  * meta: fix title() PageSpec (smcv)
-  * Some footer style changes. (smcv)
   * Error handling improvement for preprocess hooks. It's now safe to call
     error() from such hooks; it will cause a nicely formatted error message
     to be inserted into the page.
   * Cut the size of the binary package in half by excluding pages for bugs
     and todo items from the html shipped in it.
+
+  [ Simon McVittie ]
+  * meta, inline: Support guid options, to allow forcing a particular url or
+    uuid in feeds.
+  * meta: fix title() PageSpec
+  * Some footer style changes.
+  * aggregate: Add an `aggregateinternal` option, which allows storing
+    aggregated data to internal-use files, rather than wiki pages. This
+    can save disk space, and be faster.
+  * ikiwiki-transition: Add a `aggregateinternal` transition to rename
+    the aggregated files.
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 
