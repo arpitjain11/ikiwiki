@@ -101,8 +101,7 @@ you should follow this process:
    be changed to `internal(foo/*)`. This has to be done because internal
    pages are not matched by regular globs.
 2. Turn on `aggregateinternal` in the setup file.
-3. Use [[ikiwiki-transition]] to move all existing aggregated `.html`
-   files. The command to run is `ikiwiki-transition aggregateinternal $srcdir`,
-   or if you have changed the `htmlext` option to something other than "html",
-   `ikiwiki-transition aggregateinternal $srcdir $htmlext`
+3. Use [[ikiwiki-transition]] to rename all existing aggregated `.html`
+   files in the srcdir. The command to run is
+   `ikiwiki-transition aggregateinternal $setupfile`,
 4. Refresh the wiki. (`ikiwiki -setup your.setup -refresh`)

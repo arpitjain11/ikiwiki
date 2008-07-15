@@ -132,9 +132,11 @@ sub migrate_to_internal { #{{{
 
 	foreach my $data (values %guids) {
 		next unless $data->{page};
+		next if $data->{expired};
 		
 		$config{aggregateinternal} = 0;
 		my $oldname = pagefile($data->{page});
+		my $oldoutput = $config{destdir}."/".IkiWiki::htmlpage($data->{page});
 		
 		$config{aggregateinternal} = 1;
 		my $newname = pagefile($data->{page});
@@ -153,6 +155,10 @@ sub migrate_to_internal { #{{{
 		}
 		else {
 			debug("$oldname not found");
+		}
+		if (-e $oldoutput) {
+			debug("removing output file $oldoutput");
+			unlink($oldoutput) || error ("$!");
 		}
 	}
 	
