@@ -100,11 +100,11 @@ sub hashpassword {
 }
 
 sub aggregateinternal {
-	$config{srcdir} = shift;
-	$config{wikistatedir} = $config{srcdir}."/.ikiwiki";
-	$config{htmlext} = (shift or "html");
-
+	require IkiWiki::Setup;
 	require IkiWiki::Plugin::aggregate;
+
+	%config = (IkiWiki::defaultconfig(), IkiWiki::Setup::load(shift));
+	IkiWiki::checkconfig();
 
 	IkiWiki::Plugin::aggregate::migrate_to_internal();
 
@@ -117,7 +117,7 @@ sub usage {
 	print STDERR "	prefix_directives file\n";
 	print STDERR "	indexdb srcdir\n";
 	print STDERR "	hashpassword srcdir\n";
-	print STDERR "	aggregateinternal srcdir [htmlext]\n";
+	print STDERR "	aggregateinternal setupfile\n";
 	exit 1;
 }
 

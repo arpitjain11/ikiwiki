@@ -100,8 +100,8 @@ you should follow this process:
    in those PageSpecs. For example, if the PageSpec was `foo/*`, it should
    be changed to `internal(foo/*)`. This has to be done because internal
    pages are not matched by regular globs.
-2. Use [[ikiwiki-transition]] to move all existing aggregated `.html`
-   files. The command to run is `ikiwiki-transition aggregateinternal $srcdir`,
-   or if you have changed the `htmlext` option to something other than "html",
-   `ikiwiki-transition aggregateinternal $srcdir $htmlext`
+2. Use [[ikiwiki-transition]] to rename all existing aggregated `.html`
+   files in the input directory, and delete the corresponding files from
+   the output directory. The command to run is
+   `ikiwiki-transition aggregateinternal $setupfile`
 3. Turn on `aggregateinternal` in the setup file and rebuild the wiki.
