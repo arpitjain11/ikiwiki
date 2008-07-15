@@ -34,3 +34,10 @@ Regards.
 > 		notify => 1,
 > 	}
 >	],
+
+
+Hello, I've setup ikiwiki with subversion. I can edit pages from web browser using CGI and, when I go to recentchanges, it shows that modification with "web" word. But, if I modify any .mdwn file, it gets updated in website but it doesn't show in recentchanges entry with "svn" word. If I run "svn ci -m changes", it shows in recentchanges correctly.
+
+So, I think I miss something, because I don't think I must run "svn add" or "svn commit" anytime I modify or create a wiki file.
+
+Thanks
