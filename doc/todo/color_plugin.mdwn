@@ -1,6 +1,6 @@
 Recently I've wanted to colour some piece of text on my Ikiwiki page.
 It seems that Markdown can do it only using HTML tags, so I used
-&lt;span class="color"&gt;foo bar baz&lt;/span&gt;.
+`<span class="color">foo bar baz</span>`.
 
 However, in my opinion mixing Markdown syntax and HTML tags is rather ugly,
 so maybe we should create a new color plugin to add more color to Ikiwiki ;)
@@ -26,3 +26,11 @@ What do you think about it? --[[Paweł|ptecza]]
 >	\[[color red,green """
 >	Xmas-colored markdown here
 >	"""]]
+
+>> I'm glad you like that idea. In my opinion your syntax looks good.
+>> Out of curiosity, why did you used 2 colors in your example? What is HTML
+>> result for it? ;)
+
+>> I can try to create that plugin, if you are too busy now. I'm not Perl
+>> hacker, but I wrote a lot of Perl scripts in my life and color plugin
+>> doesn't seem to be very hard task. --[[Paweł|ptecza]]
