@@ -83,8 +83,8 @@ that can be used, turned on by the `aggregateinternal` option in the setup
 file.
 
 If `aggregateinternal` is enabled, aggregated pages are stored in the source
-directory with a "._aggregate" extension. These pages cannot be edited by
-web users, and do not generate first-class wiki pages. They can only be
+directory with a "._aggregated" extension. These pages cannot be edited by
+web users, and do not generate first-class wiki pages. They can still be
 inlined into a blog.
 
 If you are already using aggregate and want to enable `aggregateinternal`,
