@@ -73,6 +73,14 @@ Any opinions on the idea/design/implementation?
 >>>   Javascript might do the trick, but if it's getting so complicated, I'll
 >>>   just style my parentlinks another way.
 
+>>>> Perhaps I misunderstood what `is_grand_mother` is supposed to do. The
+>>>> docs were not very clear to me. If it's supposed to be 2 down from
+>>>> the page, (and not from the root), this could be achieved by reversing
+>>>> the `depth_n` variables. So the page gets `depth_1` set, its parent gets
+>>>> `depth_2` set, etc. If you want to be able to include/exclude
+>>>> from both ends, you could also have a `height_n` that is 1 for the
+>>>> root, and counts upwards. --[[Joey]]
+
 >>> In my understanding, your suggestion gives us little more than can already
 >>> be achieved anyway with `HTML::Template`'s `loop_context_vars` (i.e.
 >>> `__first__`, `__last__` and `__counter__`). The only added bonus is doing
@@ -119,6 +127,11 @@ Any opinions on the idea/design/implementation?
 >>> bare minimum. Let's say it is my up-to-date proposal. (Well, if the various
 >>> shortcuts don't really annoy you, I'd be glad to keep them ;)
 
+>>>> This sounds fairly similar to what I just described above. (I called
+>>>> DISTANCE "height".) I don't know about the CSS tricks; seems like if
+>>>> `DEPTH_n` and `DISTANCE_n` are provided, you can test for them inside
+>>>> the loop using HTML::Template's lame testing, and isolate any page or
+>>>> range of pages. --[[Joey]]
 
 (I'll try never to rebase this branch, but writing this plugin has
 been a pretext for me to start learning Git, so...)
