@@ -1,98 +1,74 @@
 [[!template id=plugin name=pedigree author="intrigeri"]]
 [[!tag type/useful]]
 
-This plugin provides a bunch of loops that one can use in his/her
-`HTML::Template`'s to iterate over all or a subset of a page's
-parents. One can think of pedigree as "`PARENTLINKS` on steroids".
+This plugin offers a `HTML::Template` loop that iterates over all or
+a subset of a page's parents, providing a few bonus possibilities,
+such as styling the parent links depending on their place in the path.
+One can think of pedigree as "`PARENTLINKS` on steroids".
 
 [[!toc ]]
 
 Content
 =======
 
-Loop variables
---------------
+This plugin provides one template loop, called `PEDIGREE`, that
+returns the same parents list as `PARENTLINKS` would; as a bonus,
+every path element returned by the `PEDIGREE` loop has the following
+variables set:
 
-Inside any loop provided by the pedigree plugin, every path element
-has not only the `URL` and `PAGE` variables, as with `PARENTLINKS`,
-but also the following ones:
-
-* `ABSDEPTH` (positive integer): depth of the path leading to the
+* `URL` (string): url to the current path element
+* `PAGE` (string): title of the current path element
+* `DEPTH` (positive integer): depth of the path leading to the
   current path element, counting from the wiki's root, which has
-  `ABSDEPTH=0`
-* `DISTANCE` (positive integer): distance, expressed in path elements,
+  `DEPTH=0`
+* `HEIGHT` (positive integer): distance, expressed in path elements,
   from the current page to the current path element; e.g. this is
   1 for the current page's mother, 2 for its grand-mother, etc.
-* `IS_ROOT` (boolean): true if, and only if, this path element is the
-  wiki's root
-* `IS_SECOND_ANCESTOR` (boolean): true if, and only if, this path
-  element is the first one after the wiki's root, on the path leading
-  to the current page
-* `IS_GRAND_MOTHER` (boolean): true if, and only if, this path element
-  is the current page's grand-mother
-* `IS_MOTHER` (boolean): true if, and only if, this path element
-  is the current page's mother
-
-Loops
------
-
-### `PEDIGREE`
-
-Returns the same parents list as `PARENTLINKS` would, along with
-additional loop variables as explained above.
-
-### `PEDIGREE_BUT_ROOT`
-
-Returns the same parents list as `PEDIGREE` would, **but** the wiki
-root (i.e. homepage).
-
-In addition to pedigree's common loop variables, `PEDIGREE_BUT_ROOT`
-provides `RELDEPTH` (positive integer), whose value, for a given
-parent, is its relative depth, i.e. the depth of the path leading to
-it, counting from the first element returned by this loop.
-
-### `PEDIGREE_BUT_TWO_OLDEST`
-
-Returns the same parents list as `PEDIGREE` would, **but** the wiki
-root (i.e. homepage) and the next path component.
-
-In addition to pedigree's common loop variables,
-`PEDIGREE_BUT_TWO_OLDEST` provides `RELDEPTH`: depth of the path
-leading to the current parent, relative to the first element returned
-by this loop.
+* `DEPTH_n` (boolean): true if, and only if, `DEPTH==n`
+* `HEIGHT_n` (boolean): true if, and only if, `HEIGHT==n`
 
 Usage
 =====
+
+The `DEPTH_n` and `HEIGHT_n` variables allow the template writer to
+skip arbitrary elements in the parents list: they are arbitrary
+page-range selectors.
+
+The `DEPTH` and `HEIGHT` variables allow the template writer to apply
+general treatment, depending on one of these variables, to *every*
+parent: they are counters.
 
 Styling parents depending on their depth
 ----------------------------------------
 
 Say you want the parent links to be styled depending on their depth in
-the path leading to the current page; just add the following lines in
-`page.tmpl`:
-
-	<TMPL_LOOP NAME="PEDIGREE">
-	<a href="<TMPL_VAR NAME="URL">" class="parentdepth<TMPL_VAR NAME="ABSDEPTH">">
-	  <TMPL_VAR NAME="PAGE">
-	</a> / 
-	</TMPL_LOOP>
-
-Then write the appropriate CSS bits for `a.parentdepth1`, etc.
-
-Skip some parents, style the others depending on their distance
----------------------------------------------------------------
-
-Say you want to display the parents links, skipping the wiki homepage,
-styled depending on their distance from the current page; just add the
+the path going from the wiki root to the current page; just add the
 following lines in `page.tmpl`:
 
-	<TMPL_LOOP NAME="PEDIGREE_BUT_ROOT">
-	<a href="<TMPL_VAR NAME="URL">" class="parentdistance<TMPL_VAR NAME="DISTANCE">">
+	<TMPL_LOOP NAME="PEDIGREE">
+	<a href="<TMPL_VAR NAME="URL">" class="depth<TMPL_VAR NAME="DEPTH">">
 	  <TMPL_VAR NAME="PAGE">
 	</a> / 
 	</TMPL_LOOP>
 
-Then write the appropriate CSS bits for `a.parentdistance1`, etc.
+Then write the appropriate CSS bits for `a.depth1`, etc.
+
+Skip some parents, style the others depending on their distance to the current page
+-----------------------------------------------------------------------------------
+
+Say you want to display all the parents links but the wiki homepage,
+styled depending on their distance to the current page; just add the
+following lines in `page.tmpl`:
+
+	<TMPL_LOOP NAME="PEDIGREE">
+	<TMPL_IF NAME="DEPTH_0">
+	<TMPL_ELSE>
+	<a href="<TMPL_VAR NAME="URL">" class="height<TMPL_VAR NAME="HEIGHT">">
+	  <TMPL_VAR NAME="PAGE">
+	</a> / 
+	</TMPL_LOOP>
+
+Then write the appropriate CSS bits for `a.height1`, etc.
 
 Full-blown example
 ------------------
@@ -106,9 +82,9 @@ and/or CSS generated for some special path components; e.g.:
 	<div id="oldestparents">
 	<ul>
 	<TMPL_LOOP NAME="PEDIGREE">
-	  <TMPL_IF NAME="IS_GRAND_MOTHER">
+	  <TMPL_IF NAME="HEIGHT_2">
 	  <TMPL_ELSE>
-	    <TMPL_IF NAME="IS_MOTHER">
+	    <TMPL_IF NAME="HEIGHT_1">
 	    <TMPL_ELSE>
 	      <li><a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a></li>
 	    </TMPL_IF>
@@ -119,12 +95,12 @@ and/or CSS generated for some special path components; e.g.:
 	
 	<!-- dedicated div's for mother and grand'ma -->
 	<TMPL_LOOP NAME="PEDIGREE">
-	  <TMPL_IF NAME="IS_GRAND_MOTHER">
+	  <TMPL_IF NAME="HEIGHT_2">
 	    <div id="grandma">
 	      <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>
 	    </div>
 	  <TMPL_ELSE>
-	    <TMPL_IF NAME="IS_MOTHER">
+	    <TMPL_IF NAME="HEIGHT_1">
 	      <div id="mother">
 		<a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>
 	      </div>
@@ -135,11 +111,3 @@ and/or CSS generated for some special path components; e.g.:
 	<!-- eventually, the current page title -->
 	<TMPL_VAR NAME="TITLE">
 	</div>
-
-Known bugs
-==========
-
-If `PEDIGREE_BUT_ROOT` and `PEDIGREE_BUT_TWO_OLDEST` are used in the
-same `HTML::Template`, `RELDEPTH` has wrong values inside the
-`PEDIGREE_BUT_ROOT` loop. This can be fixed if anyone needs this to
-be working.
