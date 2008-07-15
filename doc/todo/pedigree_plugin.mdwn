@@ -26,7 +26,7 @@ Seems there is also a [gitweb](http://repo.or.cz/w/ikiwiki/intrigeri.git).
 
 >> I did not. The main ikiwiki repo on repo.or.cz seems to have been
 >> been setup by johannes.schindelin@gmx.de ; mine is what they call
->> a "fork" (but it's not, obviously).
+>> a "fork" (but it's not, obviously). -- intrigeri
 
 Any opinions on the idea/design/implementation?
 
@@ -58,6 +58,68 @@ Any opinions on the idea/design/implementation?
 >> online costs bucks to me, my old modem gently weeps,
 >> and I hate webbrowsers.) -- intrigeri
 
+>>> Well, I maybe didn't get your idea properly; I may be missing 
+>>> something obvious, but:
+
+>>> * I don't understand how this would replace `is_grand_mother`. As a template
+>>>   writer, I don't know, given an absolute array index (and this is the only
+>>>   piece of data your solution gives me), if it will be e.g. the before-last
+>>>   (how do I say this in correct English?) element of an array whose
+>>>   (variable) size is unknown to me.
+>>> * Knowing that `reldepth`'s value is, in a given loop, always equal to
+>>>   `absdepth - 1` is of little use to me (as a template writer): how do I use
+>>>   this piece of information programmatically in my templates, if I want all
+>>>   links with `reldepth==2` to be given the same style? I guess some bits of
+>>>   Javascript might do the trick, but if it's getting so complicated, I'll
+>>>   just style my parentlinks another way.
+
+>>> In my understanding, your suggestion gives us little more than can already
+>>> be achieved anyway with `HTML::Template`'s `loop_context_vars` (i.e.
+>>> `__first__`, `__last__` and `__counter__`). The only added bonus is doing
+>>> custom stuff for an arbitrary element in the loop, chosen by its absolute
+>>> depth. Please correct me if needed.
+
+>>> (Intermezzo: in the meantime, to suit my personal real-world needs, I added
+>>> a `DISTANCE` loop-variable. Quoting the documentation, it's "thedistance,
+>>> expressed in path elements, from the current page to the current path
+>>> element; e.g. this is 1 for the current page's mother, 2 for its
+>>> grand-mother, etc.".)
+
+>>> Anyway, your comments have made me think of other ways to simplify a bit
+>>> this plugin, which admittedly provides too much overlapping functionality.
+>>> Bellow is my reasoning.
+
+>>> In one of my own real world examples, my two main use cases are :
+
+>>> * the "full-blown example" provided in the documentation (i.e.
+>>>   displaying every parent but mother and grand'ma as a group, and giving
+>>>   every of these two last ones their dedicated div);
+>>> * skipping the two oldest parents, and inside what's left, displaying the
+>>>   three youngest parents (i.e. mother, grand'ma and grand'grand'ma), each
+>>>   one with a dedicated style;
+
+>>> Both of these can be achieved by combining `PEDIGREE`, `DISTANCE`, and some
+>>> CSS tricks to hide some parts of the list. `IS_MOTHER` and
+>>> `IS_GRAND_MOTHER`, as well as `PEDIGREE_BUT_TWO_OLDEST`, would be convenient
+>>> shortcuts, but I do not formally need them.
+
+>>> So... it seems things can be simplified greatly:
+
+>>> * I initially added `RELDEPTH` for completeness, but I'm not sure anyone
+>>>   would use it. Let's give it up.
+>>> * Once `RELDEPTH` is lost (modulo Git tendencies to preserve history), the
+>>>   known bug is gone as well, and `PEDIGREE_BUT_ROOT` and
+>>>   `PEDIGREE_BUT_TWO_OLDEST` are now only convenient shortcuts functions;
+>>>   they could as well disappear, if you prefer to.
+
+>>> It appears then that I'd be personally happy with the single `PEDIGREE` loop
+>>> (renamed to `PARENTLINKS`), providing only `PAGE`, `URL`, `ABSDEPTH` (maybe
+>>> renamed to `DEPTH`), and `DISTANCE`. This would make my templates a bit more
+>>> complicated to write and read, but would also keep the plugin's code to the
+>>> bare minimum. Let's say it is my up-to-date proposal. (Well, if the various
+>>> shortcuts don't really annoy you, I'd be glad to keep them ;)
+
+
 (I'll try never to rebase this branch, but writing this plugin has
 been a pretext for me to start learning Git, so...)
 
@@ -74,3 +136,7 @@ default templates do use parentlinks ;).
 > --[[Joey]]
 
 >> Agreed. -- intrigeri
+
+>> Just commited a testsuite for this plugin, BTW. It's nearly twice 
+>> big as the plugin itself, I'm wondering... -- intrigeri
+

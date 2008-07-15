@@ -21,6 +21,7 @@ sub import { #{{{
 	hook(type => "preprocess", id => "aggregate", call => \&preprocess);
         hook(type => "delete", id => "aggregate", call => \&delete);
 	hook(type => "savestate", id => "aggregate", call => \&savestate);
+	hook(type => "htmlize", id => "_aggregated", call => \&htmlize);
 	if (exists $config{aggregate_webtrigger} && $config{aggregate_webtrigger}) {
 		hook(type => "cgi", id => "aggregate", call => \&cgi);
 	}
@@ -111,6 +112,12 @@ sub launchaggregation () { #{{{
 	unlockaggregate();
 
 	return 1;
+} #}}}
+
+#  Pages with extension _aggregated have plain html markup, pass through.
+sub htmlize (@) { #{{{
+	my %params=@_;
+	return $params{content};
 } #}}}
 
 sub migrate_to_internal { #{{{
@@ -641,7 +648,7 @@ sub pagefile ($) { #{{{
 } #}}}
 
 sub htmlfn ($) { #{{{
-	return shift().".".($config{aggregateinternal} ? "_" : "").$config{htmlext};
+	return shift().".".($config{aggregateinternal} ? "_aggregated" : $config{htmlext});
 } #}}}
 
 my $aggregatelock;
