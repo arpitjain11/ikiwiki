@@ -175,9 +175,10 @@ use IkiWiki::Setup::Standard {
 	#anonok_pagespec => "*",
 	
 	# For use with the aggregate plugin.
-	# Enable aggregation to internal pages. Read aggregate plugin docs
-	# before enabling.
-	#aggregateinternal => 1,
+	# Enable aggregation to internal pages. New wikis should use this,
+	# but if you use aggregate already, read the aggregate plugin docs
+	# before enabling it.
+	aggregateinternal => 1,
 	# Allow aggregation to be triggered via the web.
 	#aggregate_webtrigger => 1,
 	

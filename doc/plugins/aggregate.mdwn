@@ -1,10 +1,10 @@
-[[template id=plugin name=aggregate author="[[Joey]]"]]
-[[tag type/useful]]
+[[!template id=plugin name=aggregate author="[[Joey]]"]]
+[[!tag type/useful]]
 
 This plugin allows content from other feeds to be aggregated into the wiki.
 Aggregate a feed as follows:
 
-	\[[aggregate name="example blog" dir="example"
+	\[[!aggregate name="example blog" dir="example"
 	feedurl="http://example.com/index.rss"
 	url="http://example.com/" updateinterval="15"]]
 
@@ -15,12 +15,15 @@ the example/ directory in the wiki.
 You can then use ikiwiki's [[ikiwiki/blog]] support to create a blog of one or
 more aggregated feeds. For example:
 
-	\[[inline pages="internal(example/*)"]]
+	\[[!inline pages="internal(example/*)"]]
 
 ## setup
 
-Make sure that you have the [[html]] plugin enabled, as the created pages are
-in html format. The [[meta]] and [[tag]] plugins are also recommended. The
+New users of aggregate should enable the `aggregateinternal => 1` option in the
+.setup file. If you don't do so, you will need to enable the [[html]] plugin
+as well as aggregate itself, since feed entries will be stored as HTML.
+
+The [[meta]] and [[tag]] plugins are also recommended. The
 [[htmltidy]] plugin is suggested, since feeds can easily contain html
 problems, some of which tidy can fix.
 
@@ -68,33 +71,37 @@ Note that even if you are using subversion or another revision control
 system, pages created by aggregation will *not* be checked into revision
 control.
 
-## internal pages
+## internal pages and `aggregateinternal`
 
 This plugin creates a page for each aggregated item. 
 
-Currently, by default, these pages have the ".html" extension, and are
-first-class wiki pages -- which allows them to be inlined into blogs
-and even edited.
+If the `aggregateinternal` option is enabled in the setup file (which is
+recommended), aggregated pages are stored in the source directory with a
+"._aggregated" extension. These pages cannot be edited by web users, and
+do not generate first-class wiki pages. They can still be inlined into a
+blog, but you have to use `internal` in [[PageSpecs|IkiWiki/PageSpec]],
+like `internal(blog/*)`.
+
+For backward compatibility, the default is that these pages have the
+".html" extension, and are first-class wiki pages -- each one generates
+a separate HTML page in the output, and they can even be edited.
 
 That turns out to not be ideal for aggregated content, because publishing
-files for each of those pages is a waste of disk space and CPU, and you probably
-don't want to allow them to be edited. So, there is an alternate method
-that can be used, turned on by the `aggregateinternal` option in the setup
-file.
-
-If `aggregateinternal` is enabled, aggregated pages are stored in the source
-directory with a "._aggregated" extension. These pages cannot be edited by
-web users, and do not generate first-class wiki pages. They can still be
-inlined into a blog.
+files for each of those pages is a waste of disk space and CPU, and you
+probably don't want to allow them to be edited. So, there is an alternative
+method that can be used (and is recommended), turned on by the
+`aggregateinternal` option in the setup file.
 
 If you are already using aggregate and want to enable `aggregateinternal`,
 you should follow this process:
 
 1. Update all [[PageSpecs|ikiwiki/PageSpec]] that refer to the aggregated
    pages -- such as those in inlines. Put "internal()" around globs 
-   in those PageSpecs. For example, if the PageSpec was "foo/*", it should
-   be changed to "internal(foo/*)". This has to be done because internal
+   in those PageSpecs. For example, if the PageSpec was `foo/*`, it should
+   be changed to `internal(foo/*)`. This has to be done because internal
    pages are not matched by regular globs.
 2. Use [[ikiwiki-transition]] to move all existing aggregated `.html`
-   files. The command to run is `ikiwiki-transition aggregateinternal $srcdir`
+   files. The command to run is `ikiwiki-transition aggregateinternal $srcdir`,
+   or if you have changed the `htmlext` option to something other than "html",
+   `ikiwiki-transition aggregateinternal $srcdir $htmlext`
 3. Turn on `aggregateinternal` in the setup file and rebuild the wiki.
