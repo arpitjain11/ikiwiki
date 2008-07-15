@@ -133,6 +133,29 @@ Any opinions on the idea/design/implementation?
 >>>> the loop using HTML::Template's lame testing, and isolate any page or
 >>>> range of pages. --[[Joey]]
 
+>>>>> Ok, I definitely like this idea, as an effective and generic
+>>>>> page-range selection tool; this seems the way to go to me.
+
+>>>>> But if you discard the `DEPTH` and `HEIGHT`
+>>>>> counters, we lack a way to **style**, for example, every parent link
+>>>>> depending on its depth or height; one can do this for arbitrary
+>>>>> parents (chosen by their height or depth), but *not* for *any* parent,
+>>>>> since there is no way to express, with HTML::Template, something like
+>>>>> "display the name of the only `DEPTH_n` variable that is currently
+>>>>> true". So I am in favor of keeping the `DEPTH` and `HEIGHT` counters,
+>>>>> to allow constructs like:
+
+	<TMPL_LOOP NAME="PARENTLINKS">
+	<a href="<TMPL_VAR NAME="URL">" class="parentdistance<TMPL_VAR NAME="DISTANCE">">
+	  <TMPL_VAR NAME="PAGE">
+	</a> / 
+	</TMPL_LOOP>
+
+>>>>> This seems to me a nice functionality bonus, and should not
+>>>>> imply too bloated code. I'm thus going to rewrite the plugin
+>>>>> with only `PEDIGREE`, `DEPTH`, `HEIGHT`, `DEPTH_n` and
+>>>>> `HEIGHT_n`. -- intrigeri
+
 (I'll try never to rebase this branch, but writing this plugin has
 been a pretext for me to start learning Git, so...)
 
