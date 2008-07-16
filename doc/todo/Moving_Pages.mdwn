@@ -436,3 +436,11 @@ Cases that have to be dealt with:
 * Alice renames (or deletes) a page. In the meantime, Bob is uploading an
   attachment to it, and finishes after the rename finishes. Is it
   acceptible for the attachment to be saved under the old name?
+* Alice starts creating a new page. In the meantime, Bob renames a
+  different page to that name. Alice should get an error message when
+  committing; and it should have conflict markers. Ie, this should work the
+  same as if Bob had edited the new page at the same time as Alice did.
+* Bob starts renaming a page. In the meantime, Alice creates a new page
+  with the name he's renaming it to. Here Bob should get a error message
+  that he can't rename the page to an existing name. (A conflict resolution
+  edit would also be ok.)
