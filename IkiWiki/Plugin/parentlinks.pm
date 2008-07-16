@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-# -*- cperl-indent-level: 8; -*-
 # Ikiwiki parentlinks plugin.
 package IkiWiki::Plugin::parentlinks;
 
@@ -28,13 +27,13 @@ sub parentlinks ($) { #{{{
 		$depth=$i;
 		$height=($pagedepth - $depth);
 		push @ret, {
-			    url => urlto($path, $page),
-			    page => $title,
-			    depth => $depth,
-			    height => $height,
-			    "depth_$depth" => 1,
-			    "height_$height" => 1,
-			   };
+			url => urlto($path, $page),
+			page => $title,
+			depth => $depth,
+			height => $height,
+			"depth_$depth" => 1,
+			"height_$height" => 1,
+		};
 		$path.="/".$dir;
 		$title=IkiWiki::pagetitle($dir);
 		$i++;
