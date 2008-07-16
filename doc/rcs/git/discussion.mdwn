@@ -91,3 +91,7 @@ What is the right permissions setup for a situation where both web and local use
 My usage is this: I have a repository /srv/git/wiki.git chowned to me:apache with 775/664 permissions recursively (where 'me' is my account and the ikiwiki administrator), a /srv/www/ikisrc chowned to apache:apache, and a /srv/www/html/wiki chowned to apache:apache. As is, I can commit to the wiki.git repo (because it is owned by me) and web users can commit to it as well (because the group also has write access) what happens when I create a new page from either of those sources? For example, the apache user running ikiwiki.cgi would create /srv/www/ikisrc/something.mdwn, commit and push it to /srv/git/wiki.git, but that new object is owned by apache:apache. If I then try to commit a change to something.mdwn from a cloned repo sitting on my laptop, for example, will the commit not fail because apache created the files? 
 
 Does that mean that apache:apache should just own everything, and I should only commit through that user (via git:// protocol only, maybe, or ssh as apache instead of myself)? For some reason, my head can't quite wrap itself around the whole permissions issue. Thanks. --mrled
+
+> Ikiwiki is designed so that you don't have to worry about this kind of permissions issue.
+> Instead you can just configure the ikiwiki.cgi, in the setup file, to be suid to your
+> user. Then there's no need to let the web server's user modify files at all. --[[Joey]]
