@@ -41,3 +41,7 @@ Hello, I've setup ikiwiki with subversion. I can edit pages from web browser usi
 So, I think I miss something, because I don't think I must run "svn add" or "svn commit" anytime I modify or create a wiki file.
 
 Thanks
+
+> Yes, ikiwiki does expect you to use your revision control system to check
+> in changes. Otherwise, recentchanges cannot work right, since it uses the
+> commit history from your revision control system. --[[Joey]]
