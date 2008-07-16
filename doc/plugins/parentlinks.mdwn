@@ -1,0 +1,124 @@
+[[!template id=plugin name=parentlinks core=1 author="[[intrigeri]]"]]
+[[!tag type/link]]
+
+This plugin offers a `HTML::Template` loop that iterates over all or
+a subset of a page's parents. It also provides a few bonus
+possibilities, such as styling the parent links depending on their
+place in the path.
+
+[[!toc ]]
+
+Content
+=======
+
+This plugin provides one template loop, called `PARENTLINKS`, that
+returns the list of parent pages for the current page. Every returned
+path element has the following variables set:
+
+* `URL` (string): url to the current path element
+* `PAGE` (string): title of the current path element
+* `DEPTH` (positive integer): depth of the path leading to the
+  current path element, counting from the wiki's root, which has
+  `DEPTH=0`
+* `HEIGHT` (positive integer): distance, expressed in path elements,
+  from the current page to the current path element; e.g. this is
+  1 for the current page's mother, 2 for its grand-mother, etc.
+* `DEPTH_n` (boolean): true if, and only if, `DEPTH==n`
+* `HEIGHT_n` (boolean): true if, and only if, `HEIGHT==n`
+
+Usage
+=====
+
+The `DEPTH_n` and `HEIGHT_n` variables allow the template writer to
+skip arbitrary elements in the parents list: they are arbitrary
+page-range selectors.
+
+The `DEPTH` and `HEIGHT` variables allow the template writer to apply
+general treatment, depending on one of these variables, to *every*
+parent: they are counters.
+
+Basic usage
+-----------
+
+As in the default `page.tmpl`, one can simply display the list of
+parent pages:
+
+	<TMPL_LOOP NAME="PARENTLINKS">
+	<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
+	</TMPL_LOOP>
+	<TMPL_VAR TITLE>
+
+
+Styling parents depending on their depth
+----------------------------------------
+
+Say you want the parent links to be styled depending on their depth in
+the path going from the wiki root to the current page; just add the
+following lines in `page.tmpl`:
+
+	<TMPL_LOOP NAME="PARENTLINKS">
+	<a href="<TMPL_VAR NAME="URL">" class="depth<TMPL_VAR NAME="DEPTH">">
+	  <TMPL_VAR NAME="PAGE">
+	</a> / 
+	</TMPL_LOOP>
+
+Then write the appropriate CSS bits for `a.depth1`, etc.
+
+Skip some parents, style the others depending on their distance to the current page
+-----------------------------------------------------------------------------------
+
+Say you want to display all the parents links but the wiki homepage,
+styled depending on their distance to the current page; just add the
+following lines in `page.tmpl`:
+
+	<TMPL_LOOP NAME="PARENTLINKS">
+	<TMPL_IF NAME="DEPTH_0">
+	<TMPL_ELSE>
+	<a href="<TMPL_VAR NAME="URL">" class="height<TMPL_VAR NAME="HEIGHT">">
+	  <TMPL_VAR NAME="PAGE">
+	</a> / 
+	</TMPL_LOOP>
+
+Then write the appropriate CSS bits for `a.height1`, etc.
+
+Full-blown example
+------------------
+
+Let's have a look at a more complicated example; combining the boolean
+loop variables provided by this plugin (`IS_ROOT` and friends) and
+`HTML::Template` flow control structures, you can have custom HTML
+and/or CSS generated for some special path components; e.g.:
+
+	<!-- all parents, skipping mother and grand'ma, inside a common div+ul -->
+	<div id="oldestparents">
+	<ul>
+	<TMPL_LOOP NAME="PARENTLINKS">
+	  <TMPL_IF NAME="HEIGHT_2">
+	  <TMPL_ELSE>
+	    <TMPL_IF NAME="HEIGHT_1">
+	    <TMPL_ELSE>
+	      <li><a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a></li>
+	    </TMPL_IF>
+	  </TMPL_IF>
+	</TMPL_LOOP>
+	</ul>
+	</div>
+	
+	<!-- dedicated div's for mother and grand'ma -->
+	<TMPL_LOOP NAME="PARENTLINKS">
+	  <TMPL_IF NAME="HEIGHT_2">
+	    <div id="grandma">
+	      <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>
+	    </div>
+	  <TMPL_ELSE>
+	    <TMPL_IF NAME="HEIGHT_1">
+	      <div id="mother">
+		<a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="PAGE"></a>
+	      </div>
+	    </TMPL_IF>
+	  </TMPL_IF>
+	</TMPL_LOOP>
+	
+	<!-- eventually, the current page title -->
+	<TMPL_VAR NAME="TITLE">
+	</div>

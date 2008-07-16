@@ -47,23 +47,6 @@ sub backlinks ($) { #{{{
 	return @links;
 } #}}}
 
-sub parentlinks ($) { #{{{
-	my $page=shift;
-	
-	my @ret;
-	my $pagelink="";
-	my $path="";
-	my $title=$config{wikiname};
-	
-	foreach my $dir (split("/", $page)) {
-		next if $dir eq 'index';
-		push @ret, { url => urlto($path, $page), page => $title };
-		$path.="/".$dir;
-		$title=pagetitle($dir);
-	}
-	return @ret;
-} #}}}
-
 sub genpage ($$) { #{{{
 	my $page=shift;
 	my $content=shift;
@@ -121,7 +104,6 @@ sub genpage ($$) { #{{{
 			? $config{wikiname} 
 			: pagetitle(basename($page)),
 		wikiname => $config{wikiname},
-		parentlinks => [parentlinks($page)],
 		content => $content,
 		backlinks => $backlinks,
 		more_backlinks => $more_backlinks,
