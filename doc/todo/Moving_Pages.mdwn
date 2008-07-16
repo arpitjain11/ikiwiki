@@ -313,3 +313,126 @@ before it is moved? Bail, or shrug and proceed?
      <TMPL_IF NAME="RECENTCHANGESURL">
      <li><a href="<TMPL_VAR RECENTCHANGESURL>">RecentChanges</a></li>
      </TMPL_IF>
+
+----
+
+I'm going to try to run through a full analysis and design for moving and
+deleting pages here. I want to make sure all cases are covered. --[[Joey]]
+
+## UI
+
+The UI I envision is to add "Rename" and "Delete" buttons to the file edit
+page. Both next to the Save button, and also at the bottom of the attachment
+management interface.
+
+The attachment(s) to rename or delete would be selected using the check boxes
+and then the button applies to all of them. Deleting multiple attachments
+in one go is fine; renaming multiple attachments in one go is ambiguous,
+and it can just error out if more than one is selected for rename.
+(Alternatively, it could allow moving them all to a different subdirectory.)
+
+The Delete buttons lead to a page to confirm the deletion(s).
+
+The Rename buttons lead to a page with a text edit box for editing the
+page name. The title of the page is edited, not the actual filename.
+
+There will also be a optional comment field, so a commit message can be
+written for the rename/delete.
+
+Note that there's an edge case concerning pages that have a "/" encoded
+as part of their title. There's no way for a title edit box to
+differentiate between that, and a "/" that is instended to refer to a
+subdirectory to move the page to. Consequence is that "/" will always be
+treated literally, as a subdir separator; it will not be possible to use
+this interface to put an encoded "/" in a page's name.
+
+Once a page is renamed, ikiwiki will return to the page edit interface,
+now for the renamed page. Any modifications that the user had made to the
+textarea will be preserved.
+
+Similarly, when an attachment is renamed, or deleted, return to the page
+edit interface (with the attachments displayed).
+
+When a page is deleted, redirect the user to the toplevel index.
+
+Note that this design, particularly the return to the edit interface after
+rename, means that the rename button can *only* be put on the page edit ui.
+It won't be possible to put it on the action bar or somewhere else. (It
+would be possible to code up a different rename button that doesn't do
+that, and use it elsewhere.)
+
+## SubPages
+
+When renaming `foo`, it probably makes sense to also rename
+`foo/Discussion`. Should other SubPages in `foo/` also be renamed? I think
+it's probably simplest to rename all of its SubPages too.
+
+When deleting `foo`, I don't think SubPages should be deleted. The
+potential for mistakes and abuse is too large.
+
+## link fixups
+
+When renaming a page, it's desirable to keep links that point to it
+working. Rather than use redirection pages, I think that all pages that
+link to it should be modified to fix their links.
+
+In some cases, a redirection page will be wanted, to keep long-lived urls
+working. Since the meta plugin supports creating such pages, and since they
+won't always be needed, I think it will be simplest to just leave it up to
+the user to create such a redirection page after renaming a page.
+
+## who can delete/rename what?
+
+The source page must be editable by the user to be deleted/renamed.
+When renaming, the dest page must not already exist, and must be creatable
+by the user, too.
+
+When deleting/renaming attachments, the `allowed_attachments` PageSpec
+is checked too.
+
+## RCS
+
+Two new optional functions are added to the RCS interface:
+
+* `rcs_delete(file, message, rcstoken, user, ipaddr)`
+* `rcs_rename(old, new, message, rcstoken, user, ipaddr)`
+
+The page move/rename code will check if these are not available, and error
+out.
+
+Similar to `rcs_commit` both of these take a rcstoken, which is generated
+by an earlier `rcs_prepedit`.
+
+## conflicts
+
+Cases that have to be dealt with:
+
+* Alice clicks "delete" button for a page; Bob makes a modification;
+  Alice confirms deletion. Ideally in this case, Alice should get an error
+  message that there's a conflict.
+* Alice opens edit UI for a page; Bob makes a modification; Alice
+  clicks delete button and confirms deletion. Again here, Alice should get
+  a conflict error. Note that this means that the rcstoken should be
+  recorded when the edit UI is first opened, not when the delete button is
+  hit.
+* Alice and Bob both try to delete a page at the same time. It's fine for
+  the second one to get a message that it no longer exists. Or just to
+  silently fail to delete the deleted page..
+* Alice deletes a page; Bob had edit window open for it, and saves
+  it afterwards. I think that Bob should win in this case; Alice can always
+  notice the page has been added back, and delete it again.
+* Alice clicks "rename" button for a page; Bob makes a modification;
+  Alice confirms rename. This case seems easy, it should just rename the
+  modified page.
+* Alice opens edit UI for a page; Bob makes a modification; Alice
+  clicks rename button and confirms rename. Seems same as previous case.
+* Alice and Bob both try to rename a page at the same time (to probably
+  different names). Or one tries to delete, and the other to rename. 
+  I think it's acceptible for the second one to get an error message that
+  the page no longer exists.
+* Alice renames a page; Bob had edit window open for it, and saves
+  it afterwards, under old name. I think it's acceptible for Bob to succeed
+  in saving it under the old name in this case, though not ideal.
+* Alice renames (or deletes) a page. In the meantime, Bob is uploading an
+  attachment to it, and finishes after the rename finishes. Is it
+  acceptible for the attachment to be saved under the old name?
