@@ -324,15 +324,14 @@ sub rcs_commit ($$$;$$) { #{{{
 	# Set the commit author to the web committer.
 	my %env=%ENV;
 	if (defined $user || defined $ipaddr) {
-		$ENV{GIT_AUTHOR_NAME}=defined $user ? $user : $ipaddr;
+		$ENV{GIT_AUTHOR_NAME}=(defined $user ? $user : $ipaddr)." (web)";
 		$ENV{GIT_AUTHOR_EMAIL}="";
-		$message.="\n\nWeb-commit: true\n";
 	}
 
 	# git commit returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
 	$message = possibly_foolish_untaint($message);
-	if (run_or_non('git', 'commit', '-q', '-m', $message, '-i', $file)) {
+	if (run_or_non('git', 'commit', '--cleanup=verbatim', '-q', '-m', $message, '-i', $file)) {
 		if (length $config{gitorigin_branch}) {
 			run_or_cry('git', 'push', $config{gitorigin_branch});
 		}
@@ -384,28 +383,23 @@ sub rcs_recentchanges ($) { #{{{
 			};
 		}
 
-		my $web_commit=0;
 		my @messages;
 		my $pastblank=0;
 		foreach my $line (@{$ci->{'comment'}}) {
 			$pastblank=1 if $line eq '';
 			next if $pastblank && $line=~m/^ *(signed[ \-]off[ \-]by[ :]|acked[ \-]by[ :]|cc[ :])/i;
-			if ($pastblank && $line=~m/^ *web-commit: true$/i) {
-				$web_commit=1;
-				next;
-			}
 			push @messages, { line => $line };
 		}
 
-		my $user;
+		my $user=$ci->{'author_username'};
+		my $web_commit = ($user=~s/\s+\(web\)$//);
+		
 		# compatability code for old web commit messages
-		if (! $web_commit && defined $messages[0] &&
-		    $messages[0]->{line} =~ m/$config{web_commit_regexp}/) {
+		if (! $web_commit &&
+		      defined $messages[0] &&
+		      $messages[0]->{line} =~ m/$config{web_commit_regexp}/) {
 			$user = defined $2 ? "$2" : "$3";
 			$messages[0]->{line} = $4;
-		}
-		else {
-			$user = $ci->{'author_username'};
 		}
 
 		push @rets, {
