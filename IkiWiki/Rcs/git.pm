@@ -180,14 +180,14 @@ sub _parse_diff_tree ($@) { #{{{
 			$ci{ "${who}_epoch" } = $epoch;
 			$ci{ "${who}_tz"    } = $tz;
 
-			if ($name =~ m/^([^<]+) <([^@>]+)/) {
-				my ($fullname, $username) = ($1, $2);
-				$ci{"${who}_fullname"}    = $fullname;
-				$ci{"${who}_username"}    = $username;
+			if ($name =~ m/^[^<]+\s+<([^@>]+)/) {
+				$ci{"${who}_username"} = $1;
+			}
+			elsif ($name =~ m/^([^<]+)\s+<>$/) {
+				$ci{"${who}_username"} = $1;
 			}
 			else {
-				$ci{"${who}_fullname"} =
-					$ci{"${who}_username"} = $name;
+				$ci{"${who}_username"} = $name;
 			}
 		}
 		elsif ($line =~ m/^$/) {
@@ -311,15 +311,6 @@ sub rcs_commit ($$$;$$) { #{{{
 
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
-	if (defined $user) {
-		$message = "web commit by $user" .
-		    (length $message ? ": $message" : "");
-	}
-	elsif (defined $ipaddr) {
-		$message = "web commit from $ipaddr" .
-		    (length $message ? ": $message" : "");
-	}
-
 	# Check to see if the page has been changed by someone else since
 	# rcs_prepedit was called.
 	my $cur    = git_sha1($file);
@@ -328,6 +319,14 @@ sub rcs_commit ($$$;$$) { #{{{
 	if (defined $cur && defined $prev && $cur ne $prev) {
 		my $conflict = _merge_past($prev, $file, $dummy_commit_msg);
 		return $conflict if defined $conflict;
+	}
+	
+	# Set the commit author to the web committer.
+	my %env=%ENV;
+	if (defined $user || defined $ipaddr) {
+		$ENV{GIT_AUTHOR_NAME}=defined $user ? $user : $ipaddr;
+		$ENV{GIT_AUTHOR_EMAIL}="";
+		$message.="\n\nWeb-commit: true\n";
 	}
 
 	# git commit returns non-zero if file has not been really changed.
@@ -338,7 +337,8 @@ sub rcs_commit ($$$;$$) { #{{{
 			run_or_cry('git', 'push', $config{gitorigin_branch});
 		}
 	}
-
+	
+	%ENV=%env;
 	return undef; # success
 } #}}}
 
@@ -368,7 +368,7 @@ sub rcs_recentchanges ($) { #{{{
 			$ci->{'author_epoch'}
 		);
 
-		my (@pages, @messages);
+		my @pages;
 		foreach my $detail (@{ $ci->{'details'} }) {
 			my $file = $detail->{'file'};
 
@@ -384,26 +384,34 @@ sub rcs_recentchanges ($) { #{{{
 			};
 		}
 
-		push @messages, { line => $_ } foreach grep {
-			! m/^ *(signed[ \-]off[ \-]by[ :]|acked[ \-]by[ :]|cc[ :])/i
-		}  @{$ci->{'comment'}};
+		my $web_commit=0;
+		my @messages;
+		my $pastblank=0;
+		foreach my $line (@{$ci->{'comment'}}) {
+			$pastblank=1 if $line eq '';
+			next if $pastblank && $line=~m/^ *(signed[ \-]off[ \-]by[ :]|acked[ \-]by[ :]|cc[ :])/i;
+			if ($pastblank && $line=~m/^ *web-commit: true$/i) {
+				$web_commit=1;
+				next;
+			}
+			push @messages, { line => $line };
+		}
 
-		my ($user, $type) = (q{}, "web");
-
-		if (defined $messages[0] &&
+		my $user;
+		# compatability code for old web commit messages
+		if (! $web_commit && defined $messages[0] &&
 		    $messages[0]->{line} =~ m/$config{web_commit_regexp}/) {
 			$user = defined $2 ? "$2" : "$3";
 			$messages[0]->{line} = $4;
 		}
 		else {
-			$type ="git";
 			$user = $ci->{'author_username'};
 		}
 
 		push @rets, {
 			rev        => $sha1,
 			user       => $user,
-			committype => $type,
+			committype => $web_commit ? "web" : "git",
 			when       => $when,
 			message    => [@messages],
 			pages      => [@pages],
