@@ -23,6 +23,9 @@ ikiwiki (2.54) UNRELEASED; urgency=low
     and todo items from the html shipped in it.
   * parentlinks: New plugin, split out of ikiwiki core and enabled by default,
     and several new fields added to allow for advanced styling. (intrigeri)
+  * smileys: Some fixes for escaped smileys.
+  * smileys: Note that smileys need to be double-escaped for the escaping to
+    work. Markdown removes one level of escaping.
 
   [ Simon McVittie ]
   * meta, inline: Support guid options, to allow forcing a particular url or

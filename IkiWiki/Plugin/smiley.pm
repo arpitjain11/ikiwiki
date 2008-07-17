@@ -15,7 +15,7 @@ sub import { #{{{
 
 sub build_regexp () { #{{{
 	my $list=readfile(srcfile("smileys.mdwn"));
-	while ($list =~ m/^\s*\*\s+\\([^\s]+)\s+\[\[([^]]+)\]\]/mg) {
+	while ($list =~ m/^\s*\*\s+\\\\([^\s]+)\s+\[\[([^]]+)\]\]/mg) {
 		my $smiley=$1;
 		my $file=$2;
 
@@ -48,7 +48,7 @@ sub sanitize (@) { #{{{
 	
 	$_=$params{content};
 	return $_ unless length $smiley_regexp;
-	
+			
 MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 		my $escape=$1;
 		my $smiley=$2;
@@ -68,10 +68,11 @@ MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 			# Reset pos back to where it was before this test.
 			pos=$pos;
 		}
-
+	
 		if ($escape) {
 			# Remove escape.
 			substr($_, $epos, 1)="";
+			pos=$epos+1;
 		}
 		else {
 			# Replace the smiley with its expanded value.
@@ -79,6 +80,10 @@ MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 				htmllink($params{page}, $params{destpage},
 				         $smileys{$smiley}, linktext => $smiley);
 		}
+
+		# Breaks out at end, otherwise it will scan through again,
+		# replacing de-escaped ones.
+		last unless defined pos;
 	}
 
 	return $_;
