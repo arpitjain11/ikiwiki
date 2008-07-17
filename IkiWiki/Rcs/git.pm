@@ -391,7 +391,7 @@ sub rcs_recentchanges ($) { #{{{
 		}
 
 		my $user=$ci->{'author_username'};
-		my $web_commit = ($user=~s/\@web//);
+		my $web_commit = ($ci->{'author'} =~ /\@web>/);
 		
 		# compatability code for old web commit messages
 		if (! $web_commit &&
