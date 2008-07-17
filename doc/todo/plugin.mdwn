@@ -19,6 +19,19 @@ Suggestions of ideas for plugins:
     to selectively add to the set of files in the working copy that the edit CGI
     will consider editable? --ChapmanFlack 17July2008
 
+    > It looks like 80% of the job would be accomplished by hooking `htmlize` for
+    > the `.xml` extension. That would satisfy the `pagetype` test that causes
+    > the edit CGI to say `not an editable page`. (That happens too early for a
+    > `canedit` hook.) The `htmlize` hook could just
+    > copy in to out unchanged (this is an internal wiki, I'm not thinking hard
+    > about evil XML content right now). For extra credit, an `editcontent` hook
+    > could validate the XML. (Can an `editcontent` hook signal a content error?)
+
+    > The tricky bit seems to be to register the fact that the target file should
+    > have extension `.xml` and not `.html`.  Maybe what's needed is a generalized
+    > notion of an `htmlize` hook, one that specifies its output extension as well
+    > as its input, and isn't assumed to produce html? --ChapmanFlack 17July2008
+
 * list of registered users - tricky because it sorta calls for a way to rebuild the page when a new user is registered. Might be better as a cgi?
 > At best, this could only show the users who have logged in, not all
 > permitted by the current auth plugin(s).  HTTP auth would need
