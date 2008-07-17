@@ -21,7 +21,7 @@ documentation yet, I'm waiting for feedback first, but I'll do it for sure. -- [
 >> --[[intrigeri]]
 
 	\[[if  test="foo/*" then="""
-	\[[map pages="foo/*"]]
-	"""]]
+	[[map pages="foo/*"]]
+	""" else="no pages"]]
 
 --[[Joey]]
