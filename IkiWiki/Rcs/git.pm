@@ -399,6 +399,7 @@ sub rcs_recentchanges ($) { #{{{
 		      $messages[0]->{line} =~ m/$config{web_commit_regexp}/) {
 			$user = defined $2 ? "$2" : "$3";
 			$messages[0]->{line} = $4;
+		 	$web_commit=1;
 		}
 
 		push @rets, {
