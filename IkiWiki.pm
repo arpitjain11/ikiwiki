@@ -826,7 +826,8 @@ sub preprocess ($$$;$$) { #{{{
 			*)?		# 0 or more parameters
 			\]\]		# directive closed
 		}sx;
-	} else {
+	}
+	else {
 		$regex = qr{
 			(\\?)		# 1: escape?
 			\[\[(!?)	# directive open; 2: optional prefix
