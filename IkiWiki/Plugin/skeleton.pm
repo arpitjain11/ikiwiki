@@ -18,6 +18,7 @@ sub import { #{{{
 	hook(type => "scan", id => "skeleton", call => \&scan);
 	hook(type => "htmlize", id => "skeleton", call => \&htmlize);
 	hook(type => "sanitize", id => "skeleton", call => \&sanitize);
+	hook(type => "postscan", id => "skeleton", call => \&postscan);
 	hook(type => "format", id => "skeleton", call => \&format);
 	hook(type => "pagetemplate", id => "skeleton", call => \&pagetemplate);
 	hook(type => "templatefile", id => "skeleton", call => \&templatefile);
@@ -87,6 +88,12 @@ sub sanitize (@) { #{{{
 	debug("skeleton plugin running as a sanitizer");
 
 	return $params{content};
+} # }}}
+
+sub postscan (@) { #{{{
+	my %params=@_;
+	
+	debug("skeleton plugin running as postscan");
 } # }}}
 
 sub format (@) { #{{{

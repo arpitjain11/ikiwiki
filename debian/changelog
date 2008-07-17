@@ -26,6 +26,8 @@ ikiwiki (2.54) UNRELEASED; urgency=low
   * smileys: Some fixes for escaped smileys.
   * smileys: Note that smileys need to be double-escaped for the escaping to
     work. Markdown removes one level of escaping.
+  * Add a postscan hook.
+  * search: Use postscan hook, avoid updating index when previewing.
 
   [ Simon McVittie ]
   * meta, inline: Support guid options, to allow forcing a particular url or
