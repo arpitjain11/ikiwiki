@@ -81,3 +81,18 @@ no determination of uniqueness)
 > to be left in. But it will need to take care to only parse that if the
 > commit isn't flagged as a web commit! Else web committers could forge
 > commits from others. --[[Joey]]
+> 
+> BTW, I decided not to use the user's email address in the commit, because
+> then the email becomes part of project history, and you don't really
+> expect that to happen when you give your email address on signup to a web
+> site.
+> 
+> The problem with leaving the email empty is that it confuses some things
+> that try to parse it, including: 
+> * cia (wants a username in there):
+> * git pull --rebase (?)
+> * github pushes to twitter ;-)
+> 
+> So while I tried that way at first, I'm now leaning toward encoding the
+> username in the email address. Like "user <user@web>", or
+> "joey <http://joey.kitenet.net/@web>".

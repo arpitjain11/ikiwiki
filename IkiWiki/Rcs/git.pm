@@ -319,11 +319,12 @@ sub rcs_commit ($$$;$$) { #{{{
 		return $conflict if defined $conflict;
 	}
 	
-	# Set the commit author to the web committer.
+	# Set the commit author and email to the web committer.
 	my %env=%ENV;
 	if (defined $user || defined $ipaddr) {
-		$ENV{GIT_AUTHOR_NAME}=(defined $user ? $user : $ipaddr)." (web)";
-		$ENV{GIT_AUTHOR_EMAIL}="";
+		my $u=defined $user ? $user : $ipaddr;
+		$ENV{GIT_AUTHOR_NAME}=$u;
+		$ENV{GIT_AUTHOR_EMAIL}="$u\@web";
 	}
 
 	# git commit returns non-zero if file has not been really changed.
@@ -390,7 +391,7 @@ sub rcs_recentchanges ($) { #{{{
 		}
 
 		my $user=$ci->{'author_username'};
-		my $web_commit = ($user=~s/\s+\(web\)$//);
+		my $web_commit = ($user=~s/\@web//);
 		
 		# compatability code for old web commit messages
 		if (! $web_commit &&
