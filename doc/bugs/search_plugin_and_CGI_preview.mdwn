@@ -1,0 +1,17 @@
+Text on a page gets indexed when you preview.
+
+I discovered this by using (perhaps this is weird) the Sandbox to
+preview my markup in a file that I was preparing to check in through svn.
+I just deleted the original Sandbox text in the edit form, pasted in my
+file, hit Preview, then cancelled the edit, leaving the Sandbox unchanged.
+
+After that, the Sandbox was one of the search hits for terms in the new
+page, and the Sandbox excerpt in the search results showed text taken
+from the new page, that was never really in the Sandbox page at all.
+
+Clicking Edit and then Preview on the original Sandbox page corrected
+the problem, of course.
+
+Making the indexing only happen on a real commit might also speed the
+Preview up a small amount.
+--Chapman Flack
