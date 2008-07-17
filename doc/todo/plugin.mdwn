@@ -32,6 +32,35 @@ Suggestions of ideas for plugins:
     > notion of an `htmlize` hook, one that specifies its output extension as well
     > as its input, and isn't assumed to produce html? --ChapmanFlack 17July2008
 
+    > Belay that, there's nothing good about trying to use `htmlize` for this; too
+    > many html-specific assumptions follow. For now I'm back to an embarrassing quick
+    > hack that allows editing my xml file.  But here's the larger generalization I
+    > think this is driving at:
+
+    > IkiWiki is currently a tool that can compile a wiki by doing two things:
+    > 1. Process files of various input types _foo_ into a single output type, html, by
+    >    finding suitable _foo_->html plugins, applying various useful transformations
+    >    along the way.
+    > 1. Process files of other input types by copying them with no useful transformations at all.
+
+    > What it could be: a tool that compiles a wiki by doing this:
+    > 1. Process files of various input types _foo_ into various output types _bar_, by
+    >    finding suitable _foo_->_bar_ plugins, applying various useful transformations along
+    >    the way, but only those that apply to the _foo_->_bar_ conversion.
+    > 1. The second case above is now just a special case of 1 where _foo_->_foo_ for any
+    >    unknown _foo_ is just a copy, and no other transformations apply.
+
+    > In some ways this seems like an easy and natural generalization. `%renderedfiles`
+    > is already mostly there, keeping the actual names of rendered files without assuming
+    > an html extension. There isn't a mechanism yet to say which transformations for
+    > linkification, preprocessing, etc., apply to which in/out types, but it could be
+    > easily added without a flag day. Right now, they _all_ apply to any input type for
+    > which an `htmlize` hook exists, and _none_ otherwise. That rule could be retained
+    > with an optional hook parameter available to override it.
+
+    > The hard part is just that right now the assumption of html as the one destination
+    > type is in the code a lot. --ChapmanFlack
+
 * list of registered users - tricky because it sorta calls for a way to rebuild the page when a new user is registered. Might be better as a cgi?
 > At best, this could only show the users who have logged in, not all
 > permitted by the current auth plugin(s).  HTTP auth would need
