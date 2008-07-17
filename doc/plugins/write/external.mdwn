@@ -1,7 +1,9 @@
 External plugins are standalone, executable programs, that can be written
 in any language. When ikiwiki starts up, it runs the program, and
-communicates with it using XML RPC. If you want to [[write]] an external
+communicates with it using [XML RPC][xmlrpc]. If you want to [[write]] an external
 plugin, read on..
+
+[xmlrpc]: http://www.xmlrpc.com/
 
 ikiwiki contains one sample external plugin, named `externaldemo`. This is
 written in perl, but is intended to be an example of how to write an
