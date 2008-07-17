@@ -1,5 +1,24 @@
 Suggestions of ideas for plugins:
 
+* enable editable, non-htmlized files
+
+    Some months ago, before upgrading my wiki, I used svn to check in an XML file
+    and a companion XSL file for client-side styling. That was cool, ikiwiki
+    copied them over unchanged and the file could be linked to as `\[[foo|foo.xml]]`.
+
+    I even had the XSL produce an `Edit` link at the top, because I wanted a simple
+    way for a web user to edit the XML. But I had to hack stuff to make the edit CGI
+    not say `foo.xml is not an editable page`.
+
+    I did that in a kind of slash-and-burn way, and apparently that's the one change
+    that was uncommitted when I upgraded ikiwiki, so now it's in the same place
+    as the wikiwyg project. On the bright side, that's a chance to think about how to
+    do it better.
+
+    Any suggestions for appropriate uses of existing plugins, or the plugin API,
+    to selectively add to the set of files in the working copy that the edit CGI
+    will consider editable? --ChapmanFlack 17July2008
+
 * list of registered users - tricky because it sorta calls for a way to rebuild the page when a new user is registered. Might be better as a cgi?
 > At best, this could only show the users who have logged in, not all
 > permitted by the current auth plugin(s).  HTTP auth would need
