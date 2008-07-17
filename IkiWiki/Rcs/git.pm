@@ -197,7 +197,7 @@ sub _parse_diff_tree ($@) { #{{{
 	}
 
 	debug("No 'tree' seen in diff-tree output") if !defined $ci{'tree'};
-
+	
 	if (defined $ci{'parents'}) {
 		$ci{'parent'} = @{ $ci{'parents'} }[0];
 	}
@@ -205,15 +205,13 @@ sub _parse_diff_tree ($@) { #{{{
 		$ci{'parent'} = 0 x 40;
 	}
 
-	# Commit message.
-	while (my $line = shift @{ $dt_ref }) {
-		if ($line =~ m/^$/) {
-			# Trailing empty line signals next section.
-			last;
-		};
+	# Commit message (optional).
+	while ($dt_ref->[0] =~ /^    /) {
+		my $line = shift @{ $dt_ref };
 		$line =~ s/^    //;
 		push @{ $ci{'comment'} }, $line;
 	}
+	shift @{ $dt_ref } if $dt_ref->[0] =~ /^$/;
 
 	# Modified files.
 	while (my $line = shift @{ $dt_ref }) {
@@ -360,7 +358,7 @@ sub rcs_recentchanges ($) { #{{{
 	my @rets;
 	foreach my $ci (git_commit_info('HEAD', $num)) {
 		# Skip redundant commits.
-		next if (@{$ci->{'comment'}}[0] eq $dummy_commit_msg);
+		next if ($ci->{'comment'} && @{$ci->{'comment'}}[0] eq $dummy_commit_msg);
 
 		my ($sha1, $when) = (
 			$ci->{'sha1'},

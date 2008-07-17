@@ -31,6 +31,7 @@ ikiwiki (2.54) UNRELEASED; urgency=low
   * git: Put web committer name/openid/address in the git author field.
     The committer's email address is not used (because leaking email addresses
     is not liked by many users). Closes: #451023
+  * git: Fix parsing of git logs with no commit messages at all.
 
   [ Simon McVittie ]
   * meta, inline: Support guid options, to allow forcing a particular url or
