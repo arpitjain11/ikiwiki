@@ -63,3 +63,21 @@ no determination of uniqueness)
 >>Sounds good to me, 
 >>
 >> --[[harningt]]
+
+> I think the thing to do is, as Josh suggested originally, use
+> GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL. Note that setting these
+> individually is best, so git can independently validate/sanitize both
+> (which it does do somewhat). Always put the username/openid/IP in
+> GIT_AUTHOR_NAME; if the user has configured an email address,
+> GIT_AUTHOR_EMAIL can also be set.
+> 
+> There is one thing yet to be solved, and that is how to tell the
+> difference between a web commit by 'Joey Hess <joey@kitenet.net>',
+> and a git commit by the same. I think we do want to differentiate these,
+> and the best way to do it seems to be to add a line to the end of the
+> commit message. Something like: "\n\nWeb-commit: true"
+> 
+> For backwards compatability, the code that parses the current stuff needs
+> to be left in. But it will need to take care to only parse that if the
+> commit isn't flagged as a web commit! Else web committers could forge
+> commits from others. --[[Joey]]
