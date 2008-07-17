@@ -123,9 +123,9 @@ sub index (@) { #{{{
 	$tg->index_text($caption, 2);
 	$tg->index_text($title, 2) if $title ne $caption;
 	$tg->index_text($toindex);
-	$tg->index_text(lc($title), 1, "ZS"); # for title:foo
+	$tg->index_text(lc($title), 1, "S"); # for title:foo
 	foreach my $link (@{$links{$params{page}}}) {
-		$tg->index_text(lc($link), 1, "ZLINK"); # for link:bar
+		$tg->index_text(lc($link), 1, "XLINK"); # for link:bar
 	}
 
 	$doc->add_term($pageterm);
