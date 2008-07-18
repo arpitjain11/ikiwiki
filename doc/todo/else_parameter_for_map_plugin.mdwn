@@ -25,3 +25,13 @@ documentation yet, I'm waiting for feedback first, but I'll do it for sure. -- [
 	""" else="no pages"]]
 
 --[[Joey]]
+
+>>> I'm not convinced: the syntax you're proposing implies to duplicate
+>>> the pagespec (once in the test clause, and once in the map query), which I find
+>>> not only inelegant, which I can live with, but also tiring and unpractical:
+>>> my `else` suggestion
+>>> finds its roots in map queries with rather long pagespecs. On the other
+>>> hand, if I'm the only one using map in such a way, I can live with this
+>>> heavy duplicated syntax without bloating the map plugin with features
+>>> no-one but me needs. On the other other hand, the patch is a 3-liner.
+>>> I'm not fixed yet, I'll think about it. --[[intrigeri]]
