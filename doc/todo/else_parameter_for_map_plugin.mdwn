@@ -39,3 +39,9 @@ documentation yet, I'm waiting for feedback first, but I'll do it for sure. -- [
 >>>> Write a [[plugins/template]] which accepts a pagespec and an
 >>>> "else" clause, and then you won't have to duplicate the
 >>>> pagespec. --[[JoshTriplett]]
+
+>>>> Yeah, the patch is obviously very simple. My problem with it really is
+>>>> that there would seem to be several other places in ikiwiki where
+>>>> someone might want to be able to handle an "else" case where a
+>>>> pagespec expands to nothing. And adding else cases for all of them
+>>>> could be a bit much. --[[Joey]]
