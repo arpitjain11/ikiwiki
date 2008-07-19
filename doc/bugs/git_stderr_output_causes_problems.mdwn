@@ -1,0 +1,16 @@
+I've just been getting ikiwiki running on a hosted server.  The server is wrapping all cgi scripts to 'harden' them.  Unfortunately, that script is sensitive to what a cgi script outputs on stderr.
+
+Ikiwiki's git handling is sending a bunch of output to stderr.  The following patch closes stderr in the child process that ikiwiki forks to run git.  This allows me to use ikiwiki on this hosted server.  (patch inline - check source to get it)
+
+diff --git a/IkiWiki/Rcs/git.pm b/IkiWiki/Rcs/git.pm
+index 425536f..5734bb2 100644
+--- a/IkiWiki/Rcs/git.pm
++++ b/IkiWiki/Rcs/git.pm
+@@ -24,6 +24,7 @@ sub _safe_git (&@) { #{{{
+        if (!$pid) {
+                # In child.
+                # Git commands want to be in wc.
++               open STDERR, '>/dev/null';
+                chdir $config{srcdir}
+                    or error("Cannot chdir to $config{srcdir}: $!");
+                exec @cmdline or error("Cannot exec '@cmdline': $!");
