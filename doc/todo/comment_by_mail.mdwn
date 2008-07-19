@@ -43,17 +43,9 @@ Any comments? Write them here or send them to [[DavidBremner]]
 > the appropriate mailbox file, with ikiwiki then running to process it.
 > --[[Joey]]
 >> It is an interesting idea.  I like that it uses an arbitrary MUA 
->> as a "moderation" interface.  One thing it made me think about is 
->> how to encode reference (threading) information. One can of 
->> course encode this into local-part, but I wonder if it would be 
->> better to use header features of mailto (this could also be an 
->> alternative to tagged mail addresses for page references).  
->> Various client handling of mailto always seemed a bit fragile to 
->> me but maybe I am just behind the times.  Most headers are ignored, but
->> pseudo-headers in the body might work. For example: 
->>[test](mailto:bremner@somewhere.ca?body=X-Iki-Page:%20test%0AX-Iki-thread:%20foobar).  I hesitate to use the subject because every mail admin in the 
->> world seems to want to add things to the front of it. 
->> -- [[DavidBremner]]
+>> as a "moderation" interface.  After I killed a debian BTS entry with 
+>> clumsy pseudoheader editing I think any 
+>> reference info should also be encoded into the address.
 >>> Although it is in python, just from reading the Debian ITP, it 
 >>> looks like 
 >>> [mnemosyne-blog](http://www.red-bean.com/~decklin/mnemosyne/)  
