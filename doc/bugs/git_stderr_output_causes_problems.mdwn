@@ -31,3 +31,9 @@ Ikiwiki's git handling is sending a bunch of output to stderr.  The following pa
 >
 > (Also indented all the lines of your patch so markdown won't eat it :-) )
 > --[[smcv]]
+
+> Right, I don't like throwing stderr away because stderr is supposed to be
+> logged to error.log for a reason: To allow debugging problems.
+> It's unfortunate that git [abuses atderr](http://bugs.debian.org/447395),
+> outputting non-errors to it. That doesn't mean that git might not also
+> output actual error messages there. --[[Joey]]
