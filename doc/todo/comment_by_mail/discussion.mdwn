@@ -10,3 +10,16 @@ appropriate. --[[DavidBremner]]
     >> I guess you are right, there is no point being more obscure 
     >> than necessary.  I am leaning towards   [something](http://www.cs.unb.ca/~bremner/blog/posts/encoding) not        
    >> calling titlepage but in the same spirit. --[[DavidBremner]]
+
+In response to the suggestion by Joey to process mailboxes into blogs
+>> One thing it made me think about is 
+>> how to encode reference (threading) information. One can of 
+>> course encode this into local-part, but I wonder if it would be 
+>> better to use header features of mailto (this could also be an 
+>> alternative to tagged mail addresses for page references).  
+>> Various client handling of mailto always seemed a bit fragile to 
+>> me but maybe I am just behind the times.  Most headers are ignored, but
+>> pseudo-headers in the body might work. For example: 
+>>[test](mailto:bremner@somewhere.ca?body=X-Iki-Page:%20test%0AX-Iki-thread:%20foobar).  I hesitate to use the subject because every mail admin in the 
+>> world seems to want to add things to the front of it. 
+>> -- [[DavidBremner]]
