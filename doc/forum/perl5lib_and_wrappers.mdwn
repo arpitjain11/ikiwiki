@@ -1,28 +1,9 @@
 I don't know if I'm doing this right...  I'm using a server provider that doesn't allow me to install into standard perl locations, so I used PREFIX to install things in my home dir.  The problem is that when the wrapper is run by the CGI server, it can't find the perl modules I installed.  There didn't seem to be a way to set the PERL5LIB from the standard config, so I added one.  Patch attached.  Or did I miss something and this was already possible?
 
-diff --git a/IkiWiki/Wrapper.pm b/IkiWiki/Wrapper.pm
-index 79b9eb3..e88118b 100644
---- a/IkiWiki/Wrapper.pm
-+++ b/IkiWiki/Wrapper.pm
-@@ -37,6 +41,13 @@ sub gen_wrapper () { #{{{
- EOF
-        }
-        
-+       my $wrapperperllib="";
-+       if (defined $config{wrapperperl5lib}) {
-+           $wrapperperllib =<<"EOF"
-+           newenviron[i++]="PERL5LIB=$config{wrapperperl5lib}";
-+EOF
-+       }
-+
-        $Data::Dumper::Indent=0; # no newlines
-        my $configstring=Data::Dumper->Dump([\%config], ['*config']);
-        $configstring=~s/\\/\\\\/g;
-@@ -72,6 +83,7 @@ int main (int argc, char **argv) {
- $envsave
-        newenviron[i++]="HOME=$ENV{HOME}";
-        newenviron[i++]="WRAPPED_OPTIONS=$configstring";
-+$wrapperperllib
-        newenviron[i]=NULL;
-        environ=newenviron;
- 
+> The standard way to do it is to set `INSTALL_BASE=$HOME` when running
+> `Makefile.PL`. If you do this, ikiwiki will be built with a special `use
+> lib $HOME` line inserted, that will make it look in the specified
+> directory for perl modules.
+> 
+> The [[tips/nearlyfreespeech]] tip has an example of doing this.
+> --[[Joey]]
