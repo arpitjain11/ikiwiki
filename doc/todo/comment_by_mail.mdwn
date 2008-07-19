@@ -10,10 +10,10 @@ I have in mind something like
     [more details](http://www.cs.unb.ca/~bremner/blog/posts/encoding)         
    
   * on the mail receiving end, these messages are either deleted, or ran through
-    a filter to be turned into blog posts.
-
-    - I'm thinking about how the filter should work. Within a 
-    mail client, or as a batch tool to scan a mailbox? How to    interact with version control, if at all?
+    a filter to be turned into blog posts.  As a first step, I have
+[written](http://pivot.cs.unb.ca/git/?p=ikipostal.git;a=blob_plain;f=filters/postal-filer.pl;hb=010357a08e9)
+a filter that decodes the address and writes the message into an appropriate 
+mailbox. I would be interested in any ideas people have about security.
 
   * the same plugin can check for comments on a particular page next time the wiki 
     is generated, and add a link. (more or less done)
