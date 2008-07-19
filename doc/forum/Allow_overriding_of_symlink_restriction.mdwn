@@ -7,52 +7,88 @@ I think there are two issues here:
 
 The first appears to me to be less of a security issue.  If there is a way for a malicious person to change where that path points, then you have problems this check isn't going to solve.  The second is quite clearly a security issue - if someone were to commit a symlink into the source dir they could cause lots of stuff to be published that shouldn't be.
 
+> Correct. However, where does the revision controlled source directory end? Ikiwiki has no way
+> of knowing. It cannot assume that `srcdir` is in revision control, and
+> everything outside is not. For example, ikiwiki's own source tree has the
+> doc wiki source inside `ikiwiki/doc`. So to fully close the source dir
+> symlink issue, it's best to, by default, assume that the revision
+> controlled directories could go down arbitrarily deep, down to the root of
+> the filesystem. --[[Joey]]
+
 The current code seems to check this constraint at the top of IkiWiki/Render.pm at the start of refresh().  It seems to only check the source dir itself, not the subdirs.  Then it uses File::Find to recuse which doesn't follow symlinks.
 
 Now my problem:  I have a hosted server where I cannot avoid having a symlink in the source path.  I've made a patch to optionally turn off the symlink checking in the source path itself.  The patch would still not follow symlinks inside the source dir.  This would seem to be ok security-wise for me as I know that path is ok and it isn't going to change on me.
+
+> BTW, if you have a problem, please file it in [[todo]] or [[bugs]] in the
+> future. Especially if you also have a patch. :-) --[[Joey]]
 
 Is there a huge objection to this patch?
 
 (note: patch inline - look at the source to get it.  And I didn't re-indent the code when I added the if...)
 
-index 990fcaa..d7cb37e 100644
---- a/IkiWiki/Render.pm
-+++ b/IkiWiki/Render.pm
-@@ -260,6 +260,7 @@ sub prune ($) { #{{{
- 
- sub refresh () { #{{{
-        # security check, avoid following symlinks in the srcdir path
-+       if (! $config{allowsrcdirlinks}) {
-        my $test=$config{srcdir};
-        while (length $test) {
-                if (-l $test) {
-@@ -269,6 +270,7 @@ sub refresh () { #{{{
-                        $test=dirname($test);
-                }
-        }
-+       }
+	index 990fcaa..d7cb37e 100644
+	--- a/IkiWiki/Render.pm
+	+++ b/IkiWiki/Render.pm
+	@@ -260,6 +260,7 @@ sub prune ($) { #{{{
+	 
+	 sub refresh () { #{{{
+	        # security check, avoid following symlinks in the srcdir path
+	+       if (! $config{allowsrcdirlinks}) {
+	        my $test=$config{srcdir};
+	        while (length $test) {
+	                if (-l $test) {
+	@@ -269,6 +270,7 @@ sub refresh () { #{{{
+	                        $test=dirname($test);
+	                }
+	        }
+	+       }
         
-        run_hooks(refresh => sub { shift->() });
- 
+        	run_hooks(refresh => sub { shift->() });
 
-There is a second location where this can be an issue.  That is in the front of the wrapper.  There the issue is that the path to the source dir as seen on the cgi server and on the git server are different - each has symlinks in place to support the other.  The current wrapper gets the absolute path to the source dir, and that breaks things for me.  This is a slightly different, albeit related, issue to the one above.  The following patch fixes things.  Again, patch inline.  Again, this patch could be cleaned up :).  I just wanted to see if there was any chance of a patch like this being accepted before I bothered.
+> No, I don't have a big objection to such an option, as long as it's
+> extremely well documented that it will make many setups insecure.
+> It would be nice to come up with an option name that makes clear that
+> it's allowing symlinks in the path to the `srcdir`, but still not inside
+> the `srcdir`.
+> --[[Joey]]
 
-diff --git a/IkiWiki/Wrapper.pm b/IkiWiki/Wrapper.pm
-index 79b9eb3..e88118b 100644
---- a/IkiWiki/Wrapper.pm
-+++ b/IkiWiki/Wrapper.pm
-@@ -9,9 +9,13 @@ use Data::Dumper;
- use IkiWiki;
- 
- sub gen_wrapper () { #{{{
-+        my $this = $0;
-+        if ($config{allowsrcdirlinks}) {
-+       } else {
-        $config{srcdir}=abs_path($config{srcdir});
-        $config{destdir}=abs_path($config{destdir});
-        my $this=abs_path($0);
-+       }
-        if (! -x $this) {
-                error(sprintf(gettext("%s doesn't seem to be executable"), $this
-        }
+There is a second location where this can be an issue.  That is in the
+front of the wrapper.  There the issue is that the path to the source dir
+as seen on the cgi server and on the git server are different - each has
+symlinks in place to support the other.  The current wrapper gets the
+absolute path to the source dir, and that breaks things for me.  This is a
+slightly different, albeit related, issue to the one above.  The following
+patch fixes things.  Again, patch inline.  Again, this patch could be
+cleaned up :).  I just wanted to see if there was any chance of a patch
+like this being accepted before I bothered.
 
+	diff --git a/IkiWiki/Wrapper.pm b/IkiWiki/Wrapper.pm
+	index 79b9eb3..e88118b 100644
+	--- a/IkiWiki/Wrapper.pm
+	+++ b/IkiWiki/Wrapper.pm
+	@@ -9,9 +9,13 @@ use Data::Dumper;
+	 use IkiWiki;
+	 
+	 sub gen_wrapper () { #{{{
+	+        my $this = $0;
+	+        if ($config{allowsrcdirlinks}) {
+	+       } else {
+	        $config{srcdir}=abs_path($config{srcdir});
+	        $config{destdir}=abs_path($config{destdir});
+	        my $this=abs_path($0);
+	+       }
+	        if (! -x $this) {
+	                error(sprintf(gettext("%s doesn't seem to be executable"), $this
+	        }
+
+> ikiwiki uses absolute paths for `srcdir`, `destdir` and `this` because
+> the wrapper could be run from any location, and if any of them happen to
+> be a relative path, it would crash and burn.
+> 
+> I think the thing to do might be to make it check if `srcdir` and
+> `destdir` look like an absolute path (ie, start with "/"). If so, it can
+> skip running `abs_path` on them.
+> 
+> I suppose you could do the same thing with `$this`, but it does not sound
+> like it has caused you problems anyway.
+> --[[Joey]]
