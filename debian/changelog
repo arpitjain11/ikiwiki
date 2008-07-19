@@ -32,6 +32,9 @@ ikiwiki (2.54) UNRELEASED; urgency=low
     The committer's email address is not used (because leaking email addresses
     is not liked by many users). Closes: #451023
   * git: Fix parsing of git logs with no commit messages at all.
+  * search: Fixes for title stemming, and use better term for tags. (Gabriel McManus)
+    (Rebuilding the wiki on upgrade to this version is recommended if you use the
+    search plugin.)
 
   [ Simon McVittie ]
   * meta, inline: Support guid options, to allow forcing a particular url or
