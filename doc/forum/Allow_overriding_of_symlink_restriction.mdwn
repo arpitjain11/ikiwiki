@@ -34,3 +34,25 @@ index 990fcaa..d7cb37e 100644
         
         run_hooks(refresh => sub { shift->() });
  
+
+There is a second location where this can be an issue.  That is in the front of the wrapper.  There the issue is that the path to the source dir as seen on the cgi server and on the git server are different - each has symlinks in place to support the other.  The current wrapper gets the absolute path to the source dir, and that breaks things for me.  This is a slightly different, albeit related, issue to the one above.  The following patch fixes things.  Again, patch inline.  Again, this patch could be cleaned up :).  I just wanted to see if there was any chance of a patch like this being accepted before I bothered.
+
+diff --git a/IkiWiki/Wrapper.pm b/IkiWiki/Wrapper.pm
+index 79b9eb3..e88118b 100644
+--- a/IkiWiki/Wrapper.pm
++++ b/IkiWiki/Wrapper.pm
+@@ -9,9 +9,13 @@ use Data::Dumper;
+ use IkiWiki;
+ 
+ sub gen_wrapper () { #{{{
++        my $this = $0;
++        if ($config{allowsrcdirlinks}) {
++       } else {
+        $config{srcdir}=abs_path($config{srcdir});
+        $config{destdir}=abs_path($config{destdir});
+        my $this=abs_path($0);
++       }
+        if (! -x $this) {
+                error(sprintf(gettext("%s doesn't seem to be executable"), $this
+        }
+
