@@ -1,0 +1,12 @@
+I am moving some of the "settled" discussion here, I hope that is 
+appropriate. --[[DavidBremner]]
+
+  > I wonder if it would be more or less natural to put an encoded form
+    > of the page name in the email address? I'm thinking about something
+    > like `wikiname+index@host` or `wikiname+todo+comment_by_mail@host`.
+    > The basic transformation would be to call `titlepage($page)` (in the
+    > C locale), followed by replacing "/" with "+" (since "/" is not
+    > valid in mails). --[[Joey]]
+    >> I guess you are right, there is no point being more obscure 
+    >> than necessary.  I am leaning towards   [something](http://www.cs.unb.ca/~bremner/blog/posts/encoding) not        
+   >> calling titlepage but in the same spirit. --[[DavidBremner]]
