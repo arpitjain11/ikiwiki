@@ -1,0 +1,36 @@
+There is currently a restriction in ikiwiki that there cannot be any symlinks in the source path.  This is to deal with a security issue discussed [[here|security#index29h2]].  The issue, as I understand it, is that someone might change a symlink and so cause things on the server to be published when the server admin doesn't want them to be.
+
+I think there are two issues here:
+
+ - Symlinks with the source dir path itself, and
+ - Symlinks inside the source directory.
+
+The first appears to me to be less of a security issue.  If there is a way for a malicious person to change where that path points, then you have problems this check isn't going to solve.  The second is quite clearly a security issue - if someone were to commit a symlink into the source dir they could cause lots of stuff to be published that shouldn't be.
+
+The current code seems to check this constraint at the top of IkiWiki/Render.pm at the start of refresh().  It seems to only check the source dir itself, not the subdirs.  Then it uses File::Find to recuse which doesn't follow symlinks.
+
+Now my problem:  I have a hosted server where I cannot avoid having a symlink in the source path.  I've made a patch to optionally turn off the symlink checking in the source path itself.  The patch would still not follow symlinks inside the source dir.  This would seem to be ok security-wise for me as I know that path is ok and it isn't going to change on me.
+
+Is there a huge objection to this patch?
+
+(note: patch inline - look at the source to get it.  And I didn't re-indent the code when I added the if...)
+
+index 990fcaa..d7cb37e 100644
+--- a/IkiWiki/Render.pm
++++ b/IkiWiki/Render.pm
+@@ -260,6 +260,7 @@ sub prune ($) { #{{{
+ 
+ sub refresh () { #{{{
+        # security check, avoid following symlinks in the srcdir path
++       if (! $config{allowsrcdirlinks}) {
+        my $test=$config{srcdir};
+        while (length $test) {
+                if (-l $test) {
+@@ -269,6 +270,7 @@ sub refresh () { #{{{
+                        $test=dirname($test);
+                }
+        }
++       }
+        
+        run_hooks(refresh => sub { shift->() });
+ 
