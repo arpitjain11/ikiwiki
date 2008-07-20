@@ -319,6 +319,10 @@ sub refresh () { #{{{
 	# check for added or removed pages
 	foreach my $file (@files) {
 		my $page=pagename($file);
+		if (exists $pagesources{$page} && $pagesources{$page} ne $file) {
+			# the page has changed its type
+			$forcerebuild{$page}=1;
+		}
 		$pagesources{$page}=$file;
 		if (! $pagemtime{$page}) {
 			if (isinternal($page)) {
