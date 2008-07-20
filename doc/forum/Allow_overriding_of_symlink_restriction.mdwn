@@ -15,12 +15,16 @@ The first appears to me to be less of a security issue.  If there is a way for a
 > controlled directories could go down arbitrarily deep, down to the root of
 > the filesystem. --[[Joey]]
 
+>> Fair point.
+
 The current code seems to check this constraint at the top of IkiWiki/Render.pm at the start of refresh().  It seems to only check the source dir itself, not the subdirs.  Then it uses File::Find to recuse which doesn't follow symlinks.
 
 Now my problem:  I have a hosted server where I cannot avoid having a symlink in the source path.  I've made a patch to optionally turn off the symlink checking in the source path itself.  The patch would still not follow symlinks inside the source dir.  This would seem to be ok security-wise for me as I know that path is ok and it isn't going to change on me.
 
 > BTW, if you have a problem, please file it in [[todo]] or [[bugs]] in the
 > future. Especially if you also have a patch. :-) --[[Joey]]
+
+>> Well, I was unsure I wasn't missing something.  I wanted to discuss the concept of the patch as much as submit the patch.  But, ok :)
 
 Is there a huge objection to this patch?
 
@@ -51,6 +55,8 @@ Is there a huge objection to this patch?
 > it's allowing symlinks in the path to the `srcdir`, but still not inside
 > the `srcdir`.
 > --[[Joey]]
+
+>> Ok, I'll try to get it cleaned up and documented.
 
 There is a second location where this can be an issue.  That is in the
 front of the wrapper.  There the issue is that the path to the source dir
@@ -84,11 +90,17 @@ like this being accepted before I bothered.
 > ikiwiki uses absolute paths for `srcdir`, `destdir` and `this` because
 > the wrapper could be run from any location, and if any of them happen to
 > be a relative path, it would crash and burn.
-> 
+
+>> Which makes perfect sense.  It is annoying that abs_path() is also
+>> expanding symlinks.
+
 > I think the thing to do might be to make it check if `srcdir` and
 > `destdir` look like an absolute path (ie, start with "/"). If so, it can
 > skip running `abs_path` on them.
-> 
+
+>> I'll do that.  I assume something like <code> File::Spec->file_name_is_absolute( $path ); </code> would have more cross-platformy goodness.
+>> hrm.  I might see if <code> File::Spec->rel2abs( $path ) ; </code> will give absolute an path without expanding symlinks.
+
 > I suppose you could do the same thing with `$this`, but it does not sound
 > like it has caused you problems anyway.
 > --[[Joey]]
