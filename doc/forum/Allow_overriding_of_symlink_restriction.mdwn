@@ -68,24 +68,30 @@ patch fixes things.  Again, patch inline.  Again, this patch could be
 cleaned up :).  I just wanted to see if there was any chance of a patch
 like this being accepted before I bothered.
 
-	diff --git a/IkiWiki/Wrapper.pm b/IkiWiki/Wrapper.pm
-	index 79b9eb3..e88118b 100644
-	--- a/IkiWiki/Wrapper.pm
-	+++ b/IkiWiki/Wrapper.pm
-	@@ -9,9 +9,13 @@ use Data::Dumper;
-	 use IkiWiki;
-	 
-	 sub gen_wrapper () { #{{{
-	+        my $this = $0;
-	+        if ($config{allowsrcdirlinks}) {
-	+       } else {
-	        $config{srcdir}=abs_path($config{srcdir});
-	        $config{destdir}=abs_path($config{destdir});
-	        my $this=abs_path($0);
-	+       }
-	        if (! -x $this) {
-	                error(sprintf(gettext("%s doesn't seem to be executable"), $this
-	        }
+>>> Patch updated:
+
+    index 79b9eb3..ce1c395 100644
+    --- a/IkiWiki/Wrapper.pm
+    +++ b/IkiWiki/Wrapper.pm
+    @@ -4,14 +4,14 @@ package IkiWiki;
+     
+     use warnings;
+     use strict;
+    -use Cwd q{abs_path};
+     use Data::Dumper;
+     use IkiWiki;
+    +use File::Spec;
+     
+     sub gen_wrapper () { #{{{
+    -       $config{srcdir}=abs_path($config{srcdir});
+    -       $config{destdir}=abs_path($config{destdir});
+    -       my $this=abs_path($0);
+    +       $config{srcdir}=File::Spec->rel2abs($config{srcdir});
+    +       $config{destdir}=File::Spec->rel2abs($config{destdir});
+    +       my $this=File::Spec->rel2abs($0);
+            if (! -x $this) {
+                    error(sprintf(gettext("%s doesn't seem to be executable"), $this
+            }
 
 > ikiwiki uses absolute paths for `srcdir`, `destdir` and `this` because
 > the wrapper could be run from any location, and if any of them happen to
@@ -100,6 +106,7 @@ like this being accepted before I bothered.
 
 >> I'll do that.  I assume something like <code> File::Spec->file_name_is_absolute( $path ); </code> would have more cross-platformy goodness.
 >> hrm.  I might see if <code> File::Spec->rel2abs( $path ) ; </code> will give absolute an path without expanding symlinks.
+>>> Patch using rel2abs() works well - it no longer expands symlinks.
 
 > I suppose you could do the same thing with `$this`, but it does not sound
 > like it has caused you problems anyway.
