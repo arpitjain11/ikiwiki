@@ -12,5 +12,10 @@ http://bugs.debian.org/411786)
 There are also other variables supported by MakeMaker, including PREFIX,
 INSTALL_BASE, and DESTDIR. See ExtUtils::MakeMaker(3).
 
+In particular, INSTALL_BASE is very useful if you want to install ikiwiki
+to some other location, as it configures it to see the perl libraries
+there. See `doc/tips/nearlyfreespeech.mdwn` for an example of using this to
+install ikiwiki and its dependencies in a home directory.
+
 All other documentation is in the ikiwiki documentation wiki, which is also
 available online at <http://ikiwiki.info/>
