@@ -106,7 +106,23 @@ sub sessioncgi ($$) { #{{{
 			exit 0;
 		}
 		elsif ($form->submitted eq 'Remove' && $form->validate) {
-			error("removal not yet implemented"); # TODO
+			my $page=IkiWiki::titlepage($form->field("page"));
+			my $file=$pagesources{$page};
+
+			# Do removal, and update the wiki.
+			require IkiWiki::Render;
+			if ($config{rcs}) {
+				IkiWiki::rcs_remove($file);
+				IkiWiki::disable_commit_hook();
+				IkiWiki::rcs_commit($file, gettext("removed"),
+					IkiWiki::rcs_prepedit($file),
+					$session->param("name"), $ENV{REMOTE_ADDR});
+				IkiWiki::enable_commit_hook();
+				IkiWiki::rcs_update();
+			}
+			IkiWiki::prune("$config{srcdir}/$file");
+			IkiWiki::refresh();
+			IkiWiki::saveindex();
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);
