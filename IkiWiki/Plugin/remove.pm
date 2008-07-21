@@ -65,15 +65,16 @@ sub formbuilder (@) { #{{{
 
 	if (defined $form->field("do") && $form->field("do") eq "edit" &&
 	    $form->submitted eq "Remove") {
-		# When the remove button is pressed on the edit form,
-		# save the rest of the form state and generate a small
-		# remove confirmation form.
-
-		# TODO save state
-
-
 		my $q=$params{cgi};
 		my $session=$params{session};
+	    	# Save current form state to allow returning to it later
+		# without losing any edits.
+		# (But don't save what button was submitted.)
+		$q->param(-name => "_submit", -value => "");
+		$session->param(postremove => scalar $q->Vars);
+		IkiWiki::cgi_savesession($session);
+
+		# Display a small confirmation form.
 		my ($f, $buttons)=confirmation_form($q, $session);
 		$f->field(name => "page", value => $form->field("page"),
 			force => 1);
@@ -90,7 +91,12 @@ sub sessioncgi ($$) { #{{{
 		my ($form, $buttons)=confirmation_form($q, $session);
 		IkiWiki::decode_form_utf8($form);
 		if ($form->submitted eq 'Cancel') {
-			error("canceled"); # TODO load state
+			# Load saved form state and return to edit form.
+			my $postremove=CGI->new($session->param("postremove"));
+			$session->clear("postremove");
+			IkiWiki::cgi_savesession($session);
+			IkiWiki::cgi($postremove, $session);
+			exit 0;
 		}
 		elsif ($form->submitted eq 'Remove' && $form->validate) {
 			error("removal not yet implemented"); # TODO
