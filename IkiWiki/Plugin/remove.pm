@@ -116,7 +116,6 @@ sub sessioncgi ($$) { #{{{
 		}
 		elsif ($form->submitted eq 'Remove' && $form->validate) {
 			my @pages=$q->param("page");
-			my @files = map { $pagesources{$_} } @pages;
 	
 			# Validate removal by checking that the page exists,
 			# and that the user is allowed to edit(/remove) it.
@@ -128,7 +127,7 @@ sub sessioncgi ($$) { #{{{
 				}
 				IkiWiki::check_canedit($page, $q, $session);
 
-				my $file=$pagesources{$_};
+				my $file=$pagesources{$page};
 				if (! -e "$config{srcdir}/$file") {
 					error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
 				}
