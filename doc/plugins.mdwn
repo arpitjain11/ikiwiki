@@ -1,7 +1,7 @@
 Most of ikiwiki's [[features]] are implemented as plugins. Many of these 
 plugins are included with ikiwiki.
 
-[[pagestats pages="plugins/type/* and !plugins/type/slow"]]
+[[!pagestats pages="plugins/type/* and !plugins/type/slow"]]
 
 There's documentation if you want to [[write]] your own plugins, or you can
 [[install]] plugins [[contributed|contrib]] by others.
@@ -13,7 +13,7 @@ will fit most uses of ikiwiki.
 
 ## Plugin directory
 
-[[inline pages="plugins/* and !plugins/type/* and !plugins/write and 
+[[!inline pages="plugins/* and !plugins/type/* and !plugins/write and 
 !plugins/write/* and !plugins/contrib and !plugins/install and !*/Discussion"
 feedpages="created_after(plugins/graphviz)" archive="yes"
 rootpage="plugins/contrib" postformtext="Add a new plugin named:" show=0]]

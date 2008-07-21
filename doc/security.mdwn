@@ -6,7 +6,7 @@ security issues with this program than with cat(1). If, however, you let
 others edit pages in your wiki, then some possible security issues do need
 to be kept in mind.
 
-[[toc levels=2]]
+[[!toc levels=2]]
 
 ----
 
@@ -362,9 +362,9 @@ allow the security hole to be exploited.
 
 The htmlscrubber did not block javascript in uris. This was fixed by adding
 a whitelist of valid uri types, which does not include javascript. 
-([[cve CVE-2008-0809]]) Some urls specifyable by the meta plugin could also
+([[!cve CVE-2008-0809]]) Some urls specifyable by the meta plugin could also
 theoretically have been used to inject javascript; this was also blocked
-([[cve CVE-2008-0808]]).
+([[!cve CVE-2008-0808]]).
 
 This hole was discovered on 10 February 2008 and fixed the same day
 with the release of ikiwiki 2.31.1. (And a few subsequent versions..)
@@ -377,7 +377,7 @@ parties.
 Cross Site Request Forging could be used to constuct a link that would
 change a logged-in user's password or other preferences if they clicked on
 the link. It could also be used to construct a link that would cause a wiki
-page to be modified by a logged-in user. ([[cve CVE-2008-0165]])
+page to be modified by a logged-in user. ([[!cve CVE-2008-0165]])
 
 These holes were discovered on 10 April 2008 and fixed the same day with
 the release of ikiwiki 2.42. A fix was also backported to Debian etch, as
@@ -391,7 +391,7 @@ pre-emtively guard against that, current versions of ikiwiki store password
 hashes (using Eksblowfish).
 
 If you use the [[plugins/passwordauth]] plugin, I recommend upgrading to
-ikiwiki 2.48, installing the [[cpan Authen::Passphrase]] perl module, and running
+ikiwiki 2.48, installing the [[!cpan Authen::Passphrase]] perl module, and running
 `ikiwiki-transition hashpassword` to replace all existing cleartext passwords
 with strong blowfish hashes. 
 
@@ -404,7 +404,7 @@ passwords in cleartext over the net to log in, either.
 This hole allowed ikiwiki to accept logins using empty passwords, to openid
 accounts that didn't use a password. It was introduced in version 1.34, and
 fixed in version 2.48. The [bug](http://bugs.debian.org/483770) was
-discovered on 30 May 2008 and fixed the same day. ([[cve CVE-2008-0169]])
+discovered on 30 May 2008 and fixed the same day. ([[!cve CVE-2008-0169]])
 
 I recommend upgrading to 2.48 immediatly if your wiki allows both password
 and openid logins.

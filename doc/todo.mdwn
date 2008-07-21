@@ -3,19 +3,19 @@ as any [[patches|patch]]. If it seems more like a bug in the existing code,
 post it to [[bugs]] instead. Link items to [[todo/done]] when done.
 
 <!-- currently commented out because I lost all my mtimes :-)
-[[if test="enabled(postsparkline)"
+[[!if test="enabled(postsparkline)"
 then="""
 How long will it take your todo item to be fixed? Well...  
-[[postsparkline pages="todo/* and !todo/done and !link(todo/done) and !todo/*/*"
+[[!postsparkline pages="todo/* and !todo/done and !link(todo/done) and !todo/*/*"
 max=12 ymin=10 formula=permonth style=bar barwidth=2 barspacing=1 height=13]]
 this many are being added per month  
-[[postsparkline pages="todo/* and !todo and link(todo/done)"
+[[!postsparkline pages="todo/* and !todo and link(todo/done)"
 max=12 ymin=10 formula=permonth time=mtime style=bar barwidth=2 barspacing=1 height=13]]
 while this many are being fixed.
 """]]
 -->
 
-[[inline pages="todo/* and !todo/done and !link(todo/done) and
+[[!inline pages="todo/* and !todo/done and !link(todo/done) and
 !link(patch) and !link(wishlist) and !todo/*/*"
 feedpages="created_after(todo/supporting_comments_via_disussion_pages)"
 actions=yes archive=yes rootpage="todo" postformtext="Add a new todo item titled:" show=0]]

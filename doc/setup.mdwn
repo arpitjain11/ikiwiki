@@ -1,6 +1,6 @@
 This tutorial will walk you through setting up a wiki with ikiwiki.
 
-[[toc ]]
+[[!toc ]]
 
 ## [[Download]] and [[install]] ikiwiki.
 
@@ -32,8 +32,8 @@ This will create a simple main page for the wiki.
 	$EDITOR index.mdwn
 
 In the editor, you could start by entering a simple page like
-[[toggle id=page text="this one"]].
-[[toggleable id=page text="""
+[[!toggle id=page text="this one"]].
+[[!toggleable id=page text="""
 	Welcome to your new wiki.
 
 	All wikis are supposed to have a \[[SandBox]],
@@ -116,14 +116,14 @@ should be preserved, but not checked into revision control.
 The new [[ikiwiki-makerepo]] command automates setting up a wiki in
 revision control.
 
-[[toggle id=subversion text="Subversion"]]
-[[toggleable id=subversion text="""
+[[!toggle id=subversion text="Subversion"]]
+[[!toggleable id=subversion text="""
 	REPOSITORY=~/wikirepo
 	ikiwiki-makerepo svn $SRCDIR $REPOSITORY
 """]]
 
-[[toggle id=git text="Git"]]
-[[toggleable id=git text="""
+[[!toggle id=git text="Git"]]
+[[!toggleable id=git text="""
 	REPOSITORY=~/wiki.git
 	ikiwiki-makerepo git $SRCDIR $REPOSITORY
 
@@ -132,20 +132,20 @@ ikiwiki uses git repositories, and some important caveats
 about using the git repositories.
 """]]
 
-[[toggle id=mercurial text="Mercurial"]]
-[[toggleable id=mercurial text="""
+[[!toggle id=mercurial text="Mercurial"]]
+[[!toggleable id=mercurial text="""
 	REPOSITORY=$SRCDIR
 	ikiwiki-makerepo mercurial $SRCDIR
 """]]
 
-[[toggle id=bazaar text="Bazaar"]]
-[[toggleable id=bazaar text="""
+[[!toggle id=bazaar text="Bazaar"]]
+[[!toggleable id=bazaar text="""
 	REPOSITORY=$SRCDIR
 	ikiwiki-makerepo bzr $SRCDIR
 """]]
 
-[[toggle id=tla text="TLA"]]
-[[toggleable id=tla text="""
+[[!toggle id=tla text="TLA"]]
+[[!toggleable id=tla text="""
 	REPOSITORY=~/wikirepo
 	tla make-archive me@localhost--wiki $REPOSITORY
 	tla my-id "<me@localhost>"
@@ -158,8 +158,8 @@ about using the git repositories.
 	tla import
 """]]
 
-[[toggle id=monotone text="Monotone"]]
-[[toggleable id=monotone text="""
+[[!toggle id=monotone text="Monotone"]]
+[[!toggleable id=monotone text="""
 	# These instructions are standard instructions to import a directory into monotone
 	# and set it up so that you don't need any passwords to use it
 	REPOSITORY=~/.ikiwiki/mtn.db

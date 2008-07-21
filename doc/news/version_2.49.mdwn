@@ -1,8 +1,8 @@
 News for ikiwiki 2.49:
 
    The search plugin no longer uses hyperestraier. Instead, to use it you
-   will now need to install xapian-omega, and the [[cpan Search::Xapian]],
-   [[cpan HTML::Scrubber]], and [[cpan Digest::SHA1]] perl modules. Ie,
+   will now need to install xapian-omega, and the [[!cpan Search::Xapian]],
+   [[!cpan HTML::Scrubber]], and [[!cpan Digest::SHA1]] perl modules. Ie,
    `apt-get install xapian-omega libsearch-xapian-perl libhtml-scrubber-perl libdigest-sha1-perl`
 
    Also, wikis that use the search plugin will need to be rebuilt, 
@@ -10,8 +10,8 @@ News for ikiwiki 2.49:
    but can be done by running `ikiwiki-mass-upgrade` as root, or
    running `ikiwiki -setup` on individual setup files.
 
-ikiwiki 2.49 released with [[toggle text="these changes"]]
-[[toggleable text="""
+ikiwiki 2.49 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
    * haiku: Generate valid xhtml.
    * ikiwiki-mass-rebuild: Don't trust $! when setting $)
    * inline: The optimisation in 2.41 broke nested inlines. Detect those
