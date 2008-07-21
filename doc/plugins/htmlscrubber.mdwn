@@ -1,5 +1,5 @@
-[[template id=plugin name=htmlscrubber core=1 author="[[Joey]]"]]
-[[tag type/html]]
+[[!template id=plugin name=htmlscrubber core=1 author="[[Joey]]"]]
+[[!tag type/html]]
 
 This plugin is enabled by default. It sanitizes the html on pages it renders
 to avoid XSS attacks and the like.
@@ -13,7 +13,7 @@ All attributes that can be used to specify an url are checked to make sure
 that the url is in a known, safe scheme, and to block embedded javascript
 in such urls.
 
-It uses the [[cpan HTML::Scrubber]] perl module to perform its html
+It uses the [[!cpan HTML::Scrubber]] perl module to perform its html
 sanitisation, and this perl module also deals with various entity encoding
 tricks.
 

@@ -1,5 +1,5 @@
-[[template id=plugin name=toggle author="[[Joey]]"]]
-[[tag type/chrome]]
+[[!template id=plugin name=toggle author="[[Joey]]"]]
+[[!tag type/chrome]]
 
 With this plugin you can create links on pages that, when clicked, toggle
 display of other parts of the page.
@@ -9,15 +9,15 @@ always see the full page content.
 
 Example use:
 
-	\[[toggle id="ipsum" text="show"]]
+	\[[!toggle id="ipsum" text="show"]]
 
-	\[[toggleable id="ipsum" text="""
+	\[[!toggleable id="ipsum" text="""
 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 	eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 	ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 	aliquip ex ea commodo consequat.
 
-	[[toggle id="ipsum" text="hide"]]
+	[[!toggle id="ipsum" text="hide"]]
 	"""]]
 
 Note that you can include wiki markup in the toggleable text,

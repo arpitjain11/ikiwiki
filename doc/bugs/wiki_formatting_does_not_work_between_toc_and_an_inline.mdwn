@@ -1,15 +1,15 @@
-Wiki formatting between `\[[toc ]]` and an inline fails to render.  The
+Wiki formatting between `\[[!toc ]]` and an inline fails to render.  The
 problem does not seem to trigger if the inline uses the titlepage template,
 or if it doesn't match any pages.  See example below; also reproducible
 with a single-file wiki containing the text below, rendered via `ikiwiki
 --plugin toc`.
 
-> This is [[debbug 421843]], and I suspect it affects certian other plugins
+> This is [[!debbug 421843]], and I suspect it affects certian other plugins
 > that also use empty divs as placeholders. It's fixed in markdown 1.0.2 b7
 > (available in debian experimental). So I'll [[close|done]] this as it's
 > not really an ikiwiki bug. --[[Joey]]
 
-[[toc ]]
+[[!toc ]]
 
 **not bold**
 
@@ -19,7 +19,7 @@ with a single-file wiki containing the text below, rendered via `ikiwiki
 
 [not a link](http://ikiwiki.info)
 
-[[inline pages="news/*" description="Sparse News" show=1 feeds=no]]
+[[!inline pages="news/*" description="Sparse News" show=1 feeds=no]]
 
 **bold**
 

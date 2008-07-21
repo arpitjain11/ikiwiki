@@ -11,8 +11,8 @@ nesting, a new syntax would be needed. Maybe something xml-like?
 >
 > For example, I *think* you can unambiguously parse the following:
 >
->     \[[if test="enabled(template) and templates/foo" then="""
->     [[template id=foo content="""Flying Purple People Eater"""]]
+>     \[[!if test="enabled(template) and templates/foo" then="""
+>     [[!template id=foo content="""Flying Purple People Eater"""]]
 >     """]]
 >
 > --[[JoshTriplett]]

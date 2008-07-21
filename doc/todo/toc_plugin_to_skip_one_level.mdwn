@@ -1,6 +1,6 @@
 It would be great if I could to this:
 
-     \[[toc levels=3 skip=1]]
+     \[[!toc levels=3 skip=1]]
 
 I use h1 for big title on each page, and don't want it in my toc on that page.
 
@@ -10,7 +10,7 @@ That way I could have toc for h2 and h3 and h1 is skipped bacause it is big titl
 > another option is added, I wonder why you're using a h1 for a title on
 > each page when the page name already appears at the top of each page. And
 > if the page name isn't right for the title, you can use 
-> \[[meta title="foo"]] to override it. And this purposefully doesn't show
+> \[[!meta title="foo"]] to override it. And this purposefully doesn't show
 > up in the toc. --[[Joey]]
 
 >> aaaahhh, I made a mistake. U used some other page.tmpl and title was hidden,

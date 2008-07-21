@@ -1,12 +1,12 @@
-[[template id=plugin name=haiku author="[[Joey]]"]]
-[[tag type/fun]]
+[[!template id=plugin name=haiku author="[[Joey]]"]]
+[[!tag type/fun]]
 
 This plugin allows inserting a randomly generated haiku into a wiki page.
 Just type:
 
-	\[[haiku hint="argument"]]
+	\[[!haiku hint="argument"]]
 
-[[haiku hint="argument test"]]
+[[!haiku hint="argument test"]]
 
 The hint parameter can be omitted, it only provides the generator a hint of
 what to write the haiku about. If no hint is given, it might base it on the

@@ -1,5 +1,5 @@
-[[template id=plugin name=sparkline author="[[Joey]]"]]
-[[tag type/chrome]]
+[[!template id=plugin name=sparkline author="[[Joey]]"]]
+[[!tag type/chrome]]
 
 This plugin allows for easily embedding sparklines into wiki pages. A
 sparkline is a small word-size graphic chart, that is designed to be
@@ -15,32 +15,32 @@ to use the plugin, you will need:
   php can find it when `sparkline/Sparkline.php` is required.
 * The GD PHP module used by the Sparkline library.
 * A "php" program in the path, that can run standalone php programs.
-* [[cpan Digest::SHA1]]
+* [[!cpan Digest::SHA1]]
 
 On a Debian system, this can be accomplished by installing these packages:
 `libsparkline-php` `php5-gd` `php5-cli` `libdigest-sha1-perl`
 
-This plugin also uses the [[cpan Digest::SHA1]] perl module.
+This plugin also uses the [[!cpan Digest::SHA1]] perl module.
 
 # examples
 
-	\[[sparkline 1 3 5 -3 10 0 width=40 height=16
+	\[[!sparkline 1 3 5 -3 10 0 width=40 height=16
 	featurepoint="4,-3,red,3" featurepoint="5,10,green,3"]]
 
 This creates a simple line graph, graphing several points.
-[[if test="enabled(sparkline)" then="""
-[[sparkline 1 3 5 -3 10 0 width=40 height=16
+[[!if test="enabled(sparkline)" then="""
+[[!sparkline 1 3 5 -3 10 0 width=40 height=16
 featurepoint="4,-3,red,3" featurepoint="5,10,green,3"]]
 """]]
 It will be drawn 40 pixels wide and 16 pixels high. The high point in the
 line has a green marker, and the low point has a red marker.
 
-	\[[sparkline 1 -1(red) 1 -1(red) 1 1 1 -1(red) -1(red) style=bar barwidth=2
+	\[[!sparkline 1 -1(red) 1 -1(red) 1 1 1 -1(red) -1(red) style=bar barwidth=2
 	barspacing=1 height=13]]
 
 This more complex example generates a bar graph. 
-[[if test="enabled(sparkline)" then="""
-[[sparkline 1 -1(red) 1 -1(red) 1 1 1 -1(red) -1(red)
+[[!if test="enabled(sparkline)" then="""
+[[!sparkline 1 -1(red) 1 -1(red) 1 1 1 -1(red) -1(red)
 style=bar barwidth=2 barspacing=1 height=13]]
 """]]
 The bars are 2 pixels wide, and separated by one pixel, and the graph is 13

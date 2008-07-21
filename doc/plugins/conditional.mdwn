@@ -1,10 +1,10 @@
-[[template id=plugin name=conditional core=1 author="[[Joey]]"]]
-[[tag type/format]]
+[[!template id=plugin name=conditional core=1 author="[[Joey]]"]]
+[[!tag type/format]]
 
 With this plugin, you can make text be conditionally displayed on a page.
 For example:
 
-	\[[if test="enabled(smiley)"
+	\[[!if test="enabled(smiley)"
 	      then="The smiley plugin is enabled :-)"
 	      else="No smiley plugin here.."]]
 

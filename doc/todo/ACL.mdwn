@@ -21,7 +21,7 @@ something, that I think is very valuable.
 >>>> Which would rule out openid, or other fun forms of auth. And routing all access
 >>>> through the CGI sort of defeats the purpose of ikiwiki. --[[Ethan]]
 
-Also see [[debbug 443346]].
+Also see [[!debbug 443346]].
 
 I am considering giving this a try, implementing it as a module.
 Here is how I see it:
@@ -30,10 +30,10 @@ Here is how I see it:
     for a given (user, page, operation), as in:
 
     <pre>
-    \[[acl user=joe page=*.png allow=upload]]
-    \[[acl user=bob page=/blog/bob/* allow=*]]
-    \[[acl user=* page=/blog/bob/* deny=*]]
-    \[[acl user=http://jeremie.koenig.myopenid.com/ page=/todo/* deny=create
+    \[[!acl user=joe page=*.png allow=upload]]
+    \[[!acl user=bob page=/blog/bob/* allow=*]]
+    \[[!acl user=* page=/blog/bob/* deny=*]]
+    \[[!acl user=http://jeremie.koenig.myopenid.com/ page=/todo/* deny=create
            reason="spends his time writing todo items instead of source code"]]
     </pre>
 
@@ -43,5 +43,5 @@ Here is how I see it:
     Possibly could refer to other ACL pages, as in:
 
     <pre>
-    \[[acl user=* page=/subsite/* acl=/subsite/acl.mdwn]]
+    \[[!acl user=* page=/subsite/* acl=/subsite/acl.mdwn]]
     </pre>

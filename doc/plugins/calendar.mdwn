@@ -1,16 +1,16 @@
-[[template id=plugin name=calendar author="[[ManojSrivastava]]"]]
-[[tag type/chrome]]
+[[!template id=plugin name=calendar author="[[ManojSrivastava]]"]]
+[[!tag type/chrome]]
 
 This plugin displays a calendar, similar to the typical calendars shown on
 some blogs.
 
 # examples
 
-	\[[calendar ]]
+	\[[!calendar ]]
 
-	\[[calendar type="month" pages="blog/* and !*/Discussion"]]
+	\[[!calendar type="month" pages="blog/* and !*/Discussion"]]
 
-	\[[calendar type="year" year="2005" pages="blog/* and !*/Discussion"]]
+	\[[!calendar type="year" year="2005" pages="blog/* and !*/Discussion"]]
 
 This plugin is inspired by the calendar plugin for Blosxom, but
 derives no code from it. This plugin is essentially a fancy front end

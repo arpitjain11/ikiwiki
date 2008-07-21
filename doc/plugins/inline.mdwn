@@ -1,9 +1,9 @@
-[[template id=plugin name=inline core=1 author="[[Joey]]"]]
+[[!template id=plugin name=inline core=1 author="[[Joey]]"]]
 
 This is a [[ikiwiki/PreProcessorDirective]] that allows including one wiki page
 inside another. For example:
 
-	\[[inline pages="blog/*"]]
+	\[[!inline pages="blog/*"]]
 
 The most common use of inlining is generating blogs and RSS or Atom feeds.
 See [[ikiwiki/blog]] for details.

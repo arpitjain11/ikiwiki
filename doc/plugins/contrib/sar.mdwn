@@ -1,5 +1,5 @@
-[[template id=plugin name=sar author="[[VictorMoral]]"]]
-[[tag type/chrome type/slow ]]
+[[!template id=plugin name=sar author="[[VictorMoral]]"]]
+[[!tag type/chrome type/slow ]]
 
 The `sar` plugin is useful to make global or local search and replace operations
 using common or specific terms.
@@ -14,19 +14,19 @@ The global dictionary page is like this:
 
     ## Sites and projects
 
-    - [[sar search="ikiwiki" first="[IkiWiki](http://ikiwiki.info)" next="_IkiWiki_"]]
-    - [[sar search="debian" first="[Debian](http://debian.org)" next="_Debian_"]]
-    - [[sar search="perl" first="[Perl](http://perl.org)" next="_Perl_"]]
-    - [[sar search="linux" replace="GNU/Linux"]]
+    - [[!sar search="ikiwiki" first="[IkiWiki](http://ikiwiki.info)" next="_IkiWiki_"]]
+    - [[!sar search="debian" first="[Debian](http://debian.org)" next="_Debian_"]]
+    - [[!sar search="perl" first="[Perl](http://perl.org)" next="_Perl_"]]
+    - [[!sar search="linux" replace="GNU/Linux"]]
    
     ## Persons
-    - [[sar search="joey" first="[Joey Hess](http://ikiwiki.info/users/joey]]" next="_Joey_" ]]
-    - [[sar search="angel" first="[Angel](http://triptico.com)" next="Angel"]]
+    - [[!sar search="joey" first="[Joey Hess](http://ikiwiki.info/users/joey]]" next="_Joey_" ]]
+    - [[!sar search="angel" first="[Angel](http://triptico.com)" next="Angel"]]
 
     ## Technical terms
 
-    - [[sar search="smtp" first="\[[wp SMTP]]" next="‘SMTP‘"]]
-    - [[sar search="pop3" first="\[[wp POP3]]" next="’POP3’"]]
+    - [[!sar search="smtp" first="\[[!wp SMTP]]" next="‘SMTP‘"]]
+    - [[!sar search="pop3" first="\[[!wp POP3]]" next="’POP3’"]]
 
 The search expressions must be surrounded by double dashes in a source ikiwiki
 page, like this:
@@ -70,11 +70,11 @@ value is `*`, but a recommended value is `link(tag/sar)`.
 
 In a ikiwiki source page we can write this
 
-    \[[sar search=debian replace="__Debian__"]]
+    \[[!sar search=debian replace="__Debian__"]]
 
 for define a global replace for the term `--debian--` or
 
-    \[[sar search=ibm first=’[IBM](http://www.ibm.com)’
+    \[[!sar search=ibm first=’[IBM](http://www.ibm.com)’
             next="_IBM_"]]
 
 to define a replace for the first match of the string `--ibm--` and a different

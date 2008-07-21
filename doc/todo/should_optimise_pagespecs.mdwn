@@ -18,8 +18,8 @@ Couldn't isolate the cause, but some sources for this problem may be:
 
 Other special things in my templates and site:
 
-* a sidebar with \[[include pages="notes/\*" template=foo]] while notes.mdwn has 
-  a \[[include pages="notes/*"]] and uses the sidebar; removed it, doesn't change
+* a sidebar with \[[!include pages="notes/\*" template=foo]] while notes.mdwn has 
+  a \[[!include pages="notes/*"]] and uses the sidebar; removed it, doesn't change
 * a template (biblio.tmpl) calling the "img" plugin with a template parameter as the
   image filename; removed it, doesn't change
 * some strange games with tags whose page calls a "map" directive to show other tags
@@ -79,4 +79,4 @@ I can think about reducung the size of my wiki source and making it available on
 > 
 > --[[Joey]]
 
-[[tag wishlist]]
+[[!tag wishlist]]

@@ -1,13 +1,13 @@
 <span class="infobox">
 Plugin: <TMPL_VAR name><br />
 Author: <TMPL_VAR author><br />
-Included in ikiwiki: [[if test="sourcepage(plugins/contrib/*)" then="""no""" else="""yes"""]]<br />
+Included in ikiwiki: [[!if test="sourcepage(plugins/contrib/*)" then="""no""" else="""yes"""]]<br />
 Enabled by default: <TMPL_IF core>yes<TMPL_ELSE>no</TMPL_IF><br />
-Included in [[/plugins/goodstuff]]: [[if test="backlink(plugins/goodstuff)" all=no then="""yes""" else="""no"""]]<br />
-Currently enabled: [[if test="enabled(<TMPL_VAR name>)" then="yes" else="no"]]<br />
+Included in [[/plugins/goodstuff]]: [[!if test="backlink(plugins/goodstuff)" all=no then="""yes""" else="""no"""]]<br />
+Currently enabled: [[!if test="enabled(<TMPL_VAR name>)" then="yes" else="no"]]<br />
 </span>
-[[if test="sourcepage(plugins/contrib/*)" then="""[[meta title="<TMPL_VAR name> (third party plugin)"]]"""]]
-<TMPL_IF core>[[tag plugins/type/core]]</TMPL_IF>
+[[!if test="sourcepage(plugins/contrib/*)" then="""[[!meta title="<TMPL_VAR name> (third party plugin)"]]"""]]
+<TMPL_IF core>[[!tag plugins/type/core]]</TMPL_IF>
 <TMPL_UNLESS NAME="name">
 This template is used to create an infobox for an ikiwiki plugin. It uses
 these parameters:

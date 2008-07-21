@@ -1,7 +1,7 @@
 How about a skip option for [[plugins/inline]]?  This would allow things like the following:
 
-    \[[inline pages="news/*" show="5"]]
-    \[[inline pages="news/*" skip="5" show="5" archive="yes"]]
+    \[[!inline pages="news/*" show="5"]]
+    \[[!inline pages="news/*" skip="5" show="5" archive="yes"]]
 
 > I just wrote a patch. --Ethan
 

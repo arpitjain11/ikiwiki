@@ -1,7 +1,7 @@
 There should be a way to add metadata to a page. Probably a plugin could do
 this, for example:
 
-	\[[meta foo="bar"]]
+	\[[!meta foo="bar"]]
 
 Uses for this include:
 
@@ -11,9 +11,9 @@ Uses for this include:
   except it doesn't have to show up in the page text.
 * Recording page licenses.
 
-[[meta link=done]]
-[[meta title="supporting metadata..."]]
-[[meta author="Joey Hess"]]
-[[meta link="foo.css" rel="stylesheet" type="text/css"]]
+[[!meta link=done]]
+[[!meta title="supporting metadata..."]]
+[[!meta author="Joey Hess"]]
+[[!meta link="foo.css" rel="stylesheet" type="text/css"]]
 
 [[todo/done]]

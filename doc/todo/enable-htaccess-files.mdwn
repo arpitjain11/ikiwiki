@@ -12,7 +12,7 @@
                     qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//],
            wiki_link_regexp => qr/\[\[(?:([^\]\|]+)\|)?([^\s\]#]+)(?:#([^\s\]]+))?\]\]/,
 
-[[tag patch]]
+[[!tag patch]]
 
 This lets the site administrator have a `.htaccess` file in their underlay
 directory, say, then get it copied over when the wiki is built. Without
@@ -37,7 +37,7 @@ Hi, I would like to have my htaccess files in svn repository so ikiwiki would ex
 That way I have revision control on that file too. That may be a security concern, but I trust everybody that has svn commit
 access and such .htaccess files should not be accessible through wiki cgi. Of course, it could default to 'off'.
 
-> See [[debbug 447267]] for a patch for this.
+> See [[!debbug 447267]] for a patch for this.
 
 ---
 
@@ -47,4 +47,4 @@ but I use ikiwiki with a very small group of people collaborating so svn/web acc
 and htaccess is for limiting access to some areas of wiki.   
 It should be off by default of course. --Max
 
-[[tag patch]]
+[[!tag patch]]

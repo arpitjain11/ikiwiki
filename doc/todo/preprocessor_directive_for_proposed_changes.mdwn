@@ -10,11 +10,11 @@ and wait for someone with the access/confidence to apply them.
 Maybe this can be enhanced with a [[ikiwiki/PreprocessorDirective]]:
 
 <pre>
-\[[suggest op=merge dstfile=trunk srcfile=branches/jk oldrev=1234 newrev=1342]]
+\[[!suggest op=merge dstfile=trunk srcfile=branches/jk oldrev=1234 newrev=1342]]
 
-\[[suggest op=move srcpage=/blog dstpage=/blog_support]]
+\[[!suggest op=move srcpage=/blog dstpage=/blog_support]]
 
-\[[suggest patch="""
+\[[!suggest patch="""
 Index: IkiWiki/CGI.pm
 ===================================================================
 --- IkiWiki/CGI.pm      (révision 4119)

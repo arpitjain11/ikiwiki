@@ -1,6 +1,6 @@
 I'd like to see some way to conditionally include wiki text based on
 whether the wiki enables or disables certain features.  For example,
-[[ikiwiki/formatting]], could use `\[[if (enabled smiley) """Also, because
+[[ikiwiki/formatting]], could use `\[[!if (enabled smiley) """Also, because
 this wiki has the smiley plugin enabled, you can insert \[[smileys]] and
 some other useful symbols."""]]`, and a standard template for [[plugins]]
 pages could check for the given plugin name to print "enabled" or
@@ -52,7 +52,7 @@ Syntax could vary greatly here, both for the
 > As to the syntax, to fit it into standard preprocessor syntax, it would
 > need to look something like this:
 >
->	\[[if test="enabled(smiley)" """foo"""]]
+>	\[[!if test="enabled(smiley)" """foo"""]]
 > 
 > --[[Joey]]
 
@@ -70,7 +70,7 @@ Syntax could vary greatly here, both for the
 >>
 >> A few use cases for `included`, which I would really like to see:
 >>
->> * On the sidebar page, you could say something like \[[if test="!included"
+>> * On the sidebar page, you could say something like \[[!if test="!included"
 >>   """This page, without this help message, appears as a sidebar on all
 >>   pages."""]].  The help text would then only appear on the sidebar page
 >>   itself, not the sidebar included on all pages.
@@ -110,7 +110,7 @@ This is now completely [[todo/done]]! See [[plugins/conditional]].
 Is there a way to test features other than plugins? For example,
 to add to [[ikiwiki/Markdown]] something like
 
-    \[[if test="enabled(multimarkdown)" then="You can also use..."]]
+    \[[!if test="enabled(multimarkdown)" then="You can also use..."]]
 
 (I tried it like that just to see if it would work, but I wasn't that lucky.)
 --ChapmanFlack

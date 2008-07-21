@@ -1,14 +1,14 @@
-[[meta title="Integrated issue tracking with Ikiwiki"]]
+[[!meta title="Integrated issue tracking with Ikiwiki"]]
 
-[[meta author="Joey Hess, LinuxWorld.com"]]
+[[!meta author="Joey Hess, LinuxWorld.com"]]
 
-[[meta copyright="""
+[[!meta copyright="""
 Copyright 2007 Joey Hess <joeyh@ikiwiki.info>, LinuxWorld.com  
 [First published](http://www.linuxworld.com/news/2007/040607-integrated-issue-tracking-ikiwiki.html)
 on [LinuxWorld.com](http://www.linuxworld.com/), a publication of Network
 World Inc., 118 Turnpike Rd., Southboro, MA 01772.
 """]]
-[[meta license="[[GPL|freesoftware]]"]]
+[[!meta license="[[GPL|freesoftware]]"]]
 
 Wikis are not just for encyclopedias and websites anymore. You can use
 Ikiwiki in combination with your revision control system to handle issue
@@ -137,7 +137,7 @@ etc, to document different stages of
 their lifecycle. A developer can take ownership of a
 bug by tagging it with something like "owner/Joey".
 
-To tag a wiki page, edit it and add text such as "\[[tag done]]". Note that
+To tag a wiki page, edit it and add text such as "\[[!tag done]]". Note that
 adding a wiki link to "\[[done]]" will have the same categorisation effect
 as a tag, but the link will show up in the body of the page, which is a
 nice effect if used in a sentence such as "This was \[[done]] in version
@@ -155,23 +155,23 @@ be inlined into a given page. A few examples:
 * A typical list of all open bugs, with their full text, and a form to post new
   bugs.
 
-        \[[inline pages="bugs/* and !link(done) and !*/Discussion" actions=yes postform=yes show=0]]
+        \[[!inline pages="bugs/* and !link(done) and !*/Discussion" actions=yes postform=yes show=0]]
 
 * Index of the 30 most recently fixed bugs.
 
-        \[[inline pages="bugs/* and link(done) and !*/Discussion" sort=mtime show=30 archive=yes]]
+        \[[!inline pages="bugs/* and link(done) and !*/Discussion" sort=mtime show=30 archive=yes]]
 
 * Index of the 10 most recently active bugs.
 
-        \[[inline pages="bugs/* and !link(done) and !*/Discussion" sort=mtime show=10]]
+        \[[!inline pages="bugs/* and !link(done) and !*/Discussion" sort=mtime show=10]]
 
 * Open security issues.
 
-        \[[inline pages="bugs/* and link(security) and !link(done) and !*/Discussion"]]
+        \[[!inline pages="bugs/* and link(security) and !link(done) and !*/Discussion"]]
 
 * Full text of bugs assigned to Joey.
 
-        \[[inline pages="bugs/* and link(owner/Joey) and !link(done) and !*/Discussion" show=0]]
+        \[[!inline pages="bugs/* and link(owner/Joey) and !link(done) and !*/Discussion" show=0]]
 
 It may seem strange to consider using a wiki for issue tracking when there
 are several dedicated bug tracking systems, like Bugzilla, that handle all

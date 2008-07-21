@@ -62,7 +62,7 @@ So, I have some code, included below.  For some reason that I don't quite get it
 
 What I ended up doing is write something like this to the page:
 
-    [[blogcomment from="""Username""" timestamp="""12345""" subject="""Some text""" text="""the text of the comment"""]]
+    [[!blogcomment from="""Username""" timestamp="""12345""" subject="""Some text""" text="""the text of the comment"""]]
 
 Each comment is processed to something like this:
 
@@ -133,7 +133,7 @@ Each comment is processed to something like this:
             $cgi->param('comments') : '';
         my $comment=$cgi->param('blogcomment');
 
-        $content.=qq{[[blogcomment from="""$name""" timestamp="""$timestamp""" subject="""$subject""" text="""$comment"""]]\n\n};
+        $content.=qq{[[!blogcomment from="""$name""" timestamp="""$timestamp""" subject="""$subject""" text="""$comment"""]]\n\n};
         $content=~s/\n/\r\n/g;
         $form->field(name => "editcontent", value => $content, force => 1);
     } # }}}

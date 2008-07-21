@@ -3,7 +3,7 @@ I'm using the tags plugin with tagbase="tags".
 Already existing tags, corresponding to pages like tags/foo.html work just
 fine.
 
-If I add to a page a tag which is not existing (e.g. with [[tag newtag]])
+If I add to a page a tag which is not existing (e.g. with [[!tag newtag]])
 the just modified page will have a link which point to tags/newtag. This is
 in theory correct, but in practice leads to creating a tags/newtag subpage
 of the page I'm editing, while my tagbase is supposed to be relative to the

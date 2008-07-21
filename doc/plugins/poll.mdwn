@@ -1,10 +1,10 @@
-[[template id=plugin name=poll author="[[Joey]]"]]
-[[tag type/useful]]
+[[!template id=plugin name=poll author="[[Joey]]"]]
+[[!tag type/useful]]
 
 This plugin allows you to create online polls in the wiki. Here's an
 example use:
 
-	\[[poll 0 "red" 0 "green" 0 "blue"]]
+	\[[!poll 0 "red" 0 "green" 0 "blue"]]
 
 The numbers indicate how many users voted for that choice. When a user
 votes for a choice in the poll, the page is modified and the number

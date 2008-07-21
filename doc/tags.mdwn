@@ -9,11 +9,11 @@ special link that ikiwiki knows is intended to be used as a tag.
 Generally you will tag a page without putting a visible link on it.
 The [[tag_plugin|plugins/tag]] allows you to do so, like this:
 
-	\[[tag mytag othertag thirdtag]]
+	\[[!tag mytag othertag thirdtag]]
 
 You can also tag a page with a visible link:
 
-	\[[taglink mytag]]
+	\[[!taglink mytag]]
 
 This tag will be displayed just like a regular [[ikiwiki/WikiLink]].
 

@@ -58,9 +58,9 @@ Other alternatives would be
 > I agree that a plugin would probably be more cumbersome, but it is very
 > doable. It might look something like this:
 
-	\[[link bar]]
+	\[[!link bar]]
 
-	\[[link bar=VeryLongPageName]]
+	\[[!link bar=VeryLongPageName]]
 
 >> This is, however, still missing specifying the link text, and adding that option would seem to me to complicate the plugin syntax a lot, unless support is added for the |-syntax for specifying a particular parameter to every plugin.
 
@@ -74,13 +74,13 @@ Other alternatives would be
 >> ... Returning to this, the syntax infact wouldn't be so bad with the |-syntax, given a short name for the plugin:
 
        [[whatever|ref 1]]
-       \[[ref 1=page_with_long_name]]
+       \[[!ref 1=page_with_long_name]]
 
 >>> A way to do this that doesn't need hacking at the preprocessor syntax
 >>> follows: --[[Joey]]
 
-	\[[link bar=1]]
-	\[[dest 1=page_with_long_name]]
+	\[[!link bar=1]]
+	\[[!dest 1=page_with_long_name]]
 
 >>>> But this doesn't work so well for links that aren't valid keys. Such
 >>>> as stuff with spaces in it. I'd like to be able to write any kind of
@@ -88,8 +88,8 @@ Other alternatives would be
 
 >>>>> You're right, and to fix that it could be turned around: --[[Joey]]
 
-	\[[link 1=bar]]
-	\[[dest 1=page_with_long_name]]
+	\[[!link 1=bar]]
+	\[[!dest 1=page_with_long_name]]
 
 >> It also shouldn't be difficult to support non-wiki links in this same
 >> way, so that you could still link everywhere in an uniform manner, as

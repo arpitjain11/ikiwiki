@@ -1,6 +1,6 @@
 I try to create wikilink in table. But it does not work. Here is example:
 
-	\[[table class=table1 data="""
+	\[[!table class=table1 data="""
 	\[[wikilink_test|index]]
 	\[[wikilink_test\|index]]
 	[wikilink test](/servers/webmail1)
@@ -21,7 +21,7 @@ What exactly is a difference between wikilink and URL reference to the same page
 
 Trying to report this I found something weird. I changed in the example [[ with || because wiki renders something wrongly. You can see what I tried originally here:
 
-	\[[table class=table1 data="""
+	\[[!table class=table1 data="""
 	\[[wikilink_test|servers/webmail1]]
 	\[[wikilink_test|servers/webmail1]]
 	[wikilink test](/servers/webmail1)

@@ -1,12 +1,12 @@
-[[template id=plugin name=typography author="[[Roktas]]"]]
-[[tag type/format]]
+[[!template id=plugin name=typography author="[[Roktas]]"]]
+[[!tag type/format]]
 
 This plugin, also known as
 [SmartyPants](http://daringfireball.net/projects/smartypants/), translates
 plain ASCII punctuation characters into ``smart'' typographic punctuation HTML
-entities. To use it, you need to have the [[cpan Text::Typography]] module
+entities. To use it, you need to have the [[!cpan Text::Typography]] module
 installed.
 
 This plugin has a configuration option. To change the attributes,
 set `--typographyattributes=whatever`. See the documentation for
-[[cpan Text::Typography]] for available attributes.
+[[!cpan Text::Typography]] for available attributes.

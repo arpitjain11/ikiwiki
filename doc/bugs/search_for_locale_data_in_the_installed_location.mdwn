@@ -11,7 +11,7 @@ It seems like gettext only searches for locale information in /usr/share/locale,
                     return $gettext_obj->get(shift);
             }
 
-[[tag patch]]
+[[!tag patch]]
 -- [[ThomasBleher]]
 
 > According to my testing, this patch makes ikiwiki's localisation fail for

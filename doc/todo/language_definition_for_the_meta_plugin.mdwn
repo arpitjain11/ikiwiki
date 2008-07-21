@@ -1,5 +1,5 @@
 Here is a patch for the [[plugins/meta]] plugin. It adds the possibility to define the language 
-used for a page, with \[[meta lang="ja"]]
+used for a page, with \[[!meta lang="ja"]]
 
 It doesn't insert the langage information in the xhtml meta elements, but defines a LANG
 variable to use in the templates, for example with
@@ -81,4 +81,4 @@ This may be useful for sites with a few pages in different languages, but no ful
 > Please resolve lang somewhere reusable rather than within meta plugin: It is certainly usable outside
 > the scope of the meta plugin as well. --[[JonasSmedegaard]]
 
-[[tag wishlist patch plugins/meta translation]]
+[[!tag wishlist patch plugins/meta translation]]

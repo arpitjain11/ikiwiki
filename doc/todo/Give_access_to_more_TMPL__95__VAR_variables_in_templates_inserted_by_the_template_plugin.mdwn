@@ -1,4 +1,4 @@
-[[tag wishlist patch]]
+[[!tag wishlist patch]]
 
 # Context
 
@@ -54,7 +54,7 @@ of the pages tagged d1.
 
 My current plan is :
 
-- thanks to the edittemplate plugin, `/view/dev/*` and `/view/howto/*` would contain respectively `\[[template id=dev_direction]]` and `\[[template id=howto_usage]]`
+- thanks to the edittemplate plugin, `/view/dev/*` and `/view/howto/*` would contain respectively `\[[!template id=dev_direction]]` and `\[[!template id=howto_usage]]`
 - `/templates/dev_direction.mdwn` and `/templates/howto_usage.mdwn` would use `\[[!map ...]]` directives to build their views
 
 # My issue
@@ -68,7 +68,7 @@ Where `BASENAME` value would be, e.g., `u1` or `d2`, depending on the
 page inserting the template. But `BASENAME` does not exist. I found
 that `<TMPL_VAR PAGE>` is replaced with the full path to the page, but
 I did not found how to get the page's basename in a template included
-with a `\[[template id=...]]` directive.
+with a `\[[!template id=...]]` directive.
 
 Any idea ?
 
@@ -88,7 +88,7 @@ avoid the ad-hoc plugin solution.
 most possible of these pages.
 
 > The following patch adds a `basename` `TMPL_VAR` variable that can be
-> used in the templates inserted by \[[template plugin]] :
+> used in the templates inserted by \[[!template plugin]] :
 
 >        diff --git a/IkiWiki/Plugin/template.pm b/IkiWiki/Plugin/template.pm
 >        index a6e34fc..bb9dd8d 100644

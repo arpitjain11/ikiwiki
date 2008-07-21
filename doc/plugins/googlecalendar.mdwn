@@ -1,5 +1,5 @@
-[[template id=plugin name=googlecalendar author="[[Joey]]"]]
-[[tag type/special-purpose]]
+[[!template id=plugin name=googlecalendar author="[[Joey]]"]]
+[[!tag type/special-purpose]]
 
 *Note*: This plugin is deprecated. Please switch to the [[embed]] plugin.
 
@@ -11,7 +11,7 @@ content. This plugin is an example of how to deal with this in ikiwiki.
 
 Example use:
 
-	\[[googlecalendar html="""
+	\[[!googlecalendar html="""
 	<iframe src="http://www.google.com/calendar/embed?src=adkrdken8mupngh13jshlbenoc%40group.calendar.google.com&title=OSEL%20Calendar&chrome=NAVIGATION&bgcolor=%2371d873&height=588" style=" border-width:0 " width="480" frameborder="0"	height="588"></iframe>
 	"""]]
 

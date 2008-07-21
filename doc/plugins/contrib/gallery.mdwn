@@ -1,4 +1,4 @@
-[[template id=plugin name=gallery author="[[arpitjain]]"]]
+[[!template id=plugin name=gallery author="[[arpitjain]]"]]
 
 This plugin would create a nice looking gallery of the images. It has been build over the img plugin in Ikiwiki
 
@@ -6,7 +6,7 @@ SVN repository of plugin is located at <http://ned.snow-crash.org:8080/svn/ikiwi
 
 
 USAGE : 
-\[[gallery imagedir="images" option="value"]]
+\[[!gallery imagedir="images" option="value"]]
 
 Available options : <br>
     * imagedir(required) => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.<br>
@@ -35,4 +35,4 @@ Additional details are available [here](http://myweb.unomaha.edu/~ajain/ikiwikig
 
 -- [[arpitjain]]
 
-[[tag plugins]] [[tag patch]] [[tag soc]] [[tag wishlist]]
+[[!tag plugins]] [[!tag patch]] [[!tag soc]] [[!tag wishlist]]

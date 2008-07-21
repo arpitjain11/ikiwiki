@@ -1,5 +1,5 @@
-[[template id=plugin name=postsparkline author="[[Joey]]"]]
-[[tag type/chrome]]
+[[!template id=plugin name=postsparkline author="[[Joey]]"]]
+[[!tag type/chrome]]
 
 This plugin uses the [[sparkline]] plugin to create a sparkline of
 statistics about a set of pages, such as posts to a blog.
@@ -7,11 +7,11 @@ statistics about a set of pages, such as posts to a blog.
 # examples
 
 	Post interval: 
-	\[[postsparkline pages="blog/* and !*/Discussion" max=100
+	\[[!postsparkline pages="blog/* and !*/Discussion" max=100
 	formula=interval style=bar barwidth=2 barspacing=1 height=13]]
 	
 	Posts per month this year: 
-	\[[postsparkline pages="blog/* and !*/Discussion" max=12
+	\[[!postsparkline pages="blog/* and !*/Discussion" max=12
 	formula=permonth style=bar barwidth=2 barspacing=1 height=13]]
 
 # usage

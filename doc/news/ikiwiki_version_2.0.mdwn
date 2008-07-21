@@ -9,7 +9,7 @@ default configuration:
   the procedure described at [[tips/switching_to_usedirs]]
   or edit your setup file to turn `usedirs` off: `usedirs => 0,`
 * [[plugins/OpenID]] logins are now enabled by default, if the
-  [[cpan Net::OpenID::Consumer]] perl module is available. Password logins
+  [[!cpan Net::OpenID::Consumer]] perl module is available. Password logins
   are also still enabled by default. If you like, you can turn either OpenID
   or password logins off via the `disable_plugins` setting.
 
@@ -29,4 +29,4 @@ An overview of changes in the year since the 1.0 release:
 * Some support for other markup languages than markdown: rst, textile.
 * Unit test suite, with more than 300 tests.
 
-[[meta date="2007-04-30 00:51:57 -0400"]]
+[[!meta date="2007-04-30 00:51:57 -0400"]]

@@ -1,15 +1,15 @@
 I attempted to make a new webpage by having wiki code with
-    [[new page]]
+    [[!new page]]
     [newpage]
 
 This was converted to literal:
-    [[new page]]
+    [[!new page]]
 and the correct hyperlink:
     ?newpage
 
 So when has a space it doesn't let you create a new page. I am using 1.35. Let's see what happens here:
 
-[[new page]]
+[[!new page]]
 
 A moment later ... same thing ... it is not a link (no question mark to create).
 

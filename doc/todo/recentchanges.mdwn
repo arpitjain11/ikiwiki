@@ -92,7 +92,7 @@ your pages. --Ethan
 Here's a full design for redoing recentchanges, based on Ethan's ideas:
 
 * Add a recentchanges plugin that has a preprocessor directive:
-	\[[recentchanges num=100 pages=* template=recentchanges.tmpl]]
+	\[[!recentchanges num=100 pages=* template=recentchanges.tmpl]]
   If put on the [[recentchanges]] page, this would result in up to 100
   recentchanges/change_$id.mdwn files being created.
 * Which means the plugin has to store state and use a checkconfig hook

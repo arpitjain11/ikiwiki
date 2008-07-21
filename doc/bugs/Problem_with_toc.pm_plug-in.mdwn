@@ -5,7 +5,7 @@ Here is a patch for toc.pm for producing non-empty 'a' elements.
 > Thanks for the patch, but I already fixed this in 2.4 using a different
 > approach. I think your patch is slightly broken, an anchor tag isn't
 > really meant to enclose all the html it anchors to, but just be stuck in
-> front of it. --[[Joey]] [[tag done]]
+> front of it. --[[Joey]] [[!tag done]]
 
     --- IkiWiki/Plugin/toc.pm.orig	Thu Jun  7 11:53:53 2007
     +++ IkiWiki/Plugin/toc.pm	Thu Jun  7 13:00:00 2007

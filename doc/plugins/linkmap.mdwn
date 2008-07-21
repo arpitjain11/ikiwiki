@@ -1,10 +1,10 @@
-[[template id=plugin name=linkmap author="[[Joey]]"]]
-[[tag type/meta]]
-[[tag type/slow]]
+[[!template id=plugin name=linkmap author="[[Joey]]"]]
+[[!tag type/meta]]
+[[!tag type/slow]]
 This plugin uses [graphviz](http://www.graphviz.org/) to generate a graph showing the links between a
 set of pages in the wiki. Example usage:
 
-	\[[linkmap pages="* and !blog/* and !*/Discussion"]]
+	\[[!linkmap pages="* and !blog/* and !*/Discussion"]]
 
 Only links between mapped pages will be shown; links pointing to or from
 unmapped pages will be omitted. If the pages to include are not specified,
@@ -22,8 +22,8 @@ directive:
   in inches. Both must be specified for the limiting to take effect, otherwise
   the map's size is not limited.
 
-[[if test="enabled(linkmap)" then="""
+[[!if test="enabled(linkmap)" then="""
 Here is an example link map, of the index page and all pages it links to:
 
-[[linkmap pages="index or (backlink(index) and !*.png)"]]
+[[!linkmap pages="index or (backlink(index) and !*.png)"]]
 """]]

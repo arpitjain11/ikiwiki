@@ -1,12 +1,12 @@
-[[template id=plugin name=openid core=1 author="[[Joey]]"]]
-[[tag type/auth]]
+[[!template id=plugin name=openid core=1 author="[[Joey]]"]]
+[[!tag type/auth]]
 
 This plugin allows users to use their [OpenID](http://openid.net/) to log
 into the wiki.
 
-The plugin needs the [[cpan Net::OpenID::Consumer]] perl module. The
-[[cpan LWPx::ParanoidAgent]] perl module is used if available, for added
-security. Finally, the [[cpan Crypt::SSLeay]] perl module is needed to support
+The plugin needs the [[!cpan Net::OpenID::Consumer]] perl module. The
+[[!cpan LWPx::ParanoidAgent]] perl module is used if available, for added
+security. Finally, the [[!cpan Crypt::SSLeay]] perl module is needed to support
 users entering "https" OpenID urls.
 
 This plugin has a configuration option. You can set `--openidsignup`

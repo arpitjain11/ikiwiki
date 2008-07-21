@@ -1,5 +1,5 @@
-[[template id=plugin name=attachment core=0 author="[[Joey]]"]]
-[[tag type/useful]]
+[[!template id=plugin name=attachment core=0 author="[[Joey]]"]]
+[[!tag type/useful]]
 
 This plugin allows files to be uploaded to the wiki over the web.
 
@@ -24,7 +24,7 @@ If you enable this plugin, be sure to lock that down, by entering an
 [[enhanced_PageSpec|ikiwiki/pagespec/attachment]] in the "Allowed
 Attachments" field of the wiki admin's preferences page.
 
-This plugin will use the [[cpan File::MimeInfo::Magic]] perl module, if
+This plugin will use the [[!cpan File::MimeInfo::Magic]] perl module, if
 available, for mimetype checking.
 
 The `virusfree` [[PageSpec|ikiwiki/pagespec/attachment]] requires that

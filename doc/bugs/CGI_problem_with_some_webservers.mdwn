@@ -1,5 +1,5 @@
 The "ikwiki.cgi?page=index&do=edit" function has a problem
-when running with [[debpkg thttpd]] or [[debpkg mini-httpd]]:
+when running with [[!debpkg thttpd]] or [[!debpkg mini-httpd]]:
 for some reason the headers ikiwiki outputs are transmitted
 as the page content. Surprisingly, the "do=prefs" function
 works as expected.
@@ -15,7 +15,7 @@ Here is what it looks like in iceweasel:
     <html>
     (...)
 
-Ikiwiki runs fine with [[debpkg boa]].
+Ikiwiki runs fine with [[!debpkg boa]].
 
 --[[JeremieKoenig]]
 
@@ -64,6 +64,6 @@ Why do they appear two times with conflicting values in the very same hashes?
 >>> where ikiwiki might output to stderr, and that's the right thing to do.
 >>> So I don't see any way to address this in ikiwiki. --[[Joey]]
 
->>>> (reported as [[debbug 437927]] and [[debbug 437932]]) --[[JeremieKoenig]]
+>>>> (reported as [[!debbug 437927]] and [[!debbug 437932]]) --[[JeremieKoenig]]
 
 Marking [[done]] since it's not really an ikiwiki bug. --[[Joey]]

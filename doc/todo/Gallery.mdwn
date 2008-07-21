@@ -28,9 +28,9 @@ That's one way to do it, and it has some nice benefits, like being able to edit 
 
 --[[Joey]]
 
-[[tag soc]]
+[[!tag soc]]
 
-[[tag wishlist]]
+[[!tag wishlist]]
 
 ----
 
@@ -39,7 +39,7 @@ I have implemented the first version of the Gallery Plugin for Ikiwiki as part o
 Plugin can be downloaded from [here](http://myweb.unomaha.edu/~ajain/gallery.tar). 
 
 It can be used as : <br>
-\[[gallery imagedir="images" thumbnailsize="200x200" cols="3" alt="Can not be displayed" title="My Pictures"]]
+\[[!gallery imagedir="images" thumbnailsize="200x200" cols="3" alt="Can not be displayed" title="My Pictures"]]
 
 where-<br>
 * imagedir  => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.<br>
@@ -59,7 +59,7 @@ For any feedback or query, feel free to mail me at arpitjain11 [AT] gmail.com
 
 Additional details are available [here](http://myweb.unomaha.edu/~ajain/ikiwikigallery.html).
 
-[[tag patch]]
+[[!tag patch]]
 
 > I'd love to merge this into ikiwiki.
 > 

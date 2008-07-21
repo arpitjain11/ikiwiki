@@ -1,7 +1,7 @@
-[[template id=plugin name=syntax author="[[VictorMoral]]"]]
-[[tag type/chrome type/slow]]
+[[!template id=plugin name=syntax author="[[VictorMoral]]"]]
+[[!tag type/chrome type/slow]]
 
-The `syntax` plugin adds support to ikiwiki for syntax highlighting through the *vim* editor and its perl interface [[cpan Text::VimColor]].  It depends on a functional vim installation.
+The `syntax` plugin adds support to ikiwiki for syntax highlighting through the *vim* editor and its perl interface [[!cpan Text::VimColor]].  It depends on a functional vim installation.
 
 The plugin inserts a fragment of HTML with special marks from a file or a string text. It accepts the following parameters:
 
@@ -17,7 +17,7 @@ In the case of file parameter, `syntax` will build a html link for direct downlo
 
 Example:
 
-       \[[syntax type="perl" text="""  
+       \[[!syntax type="perl" text="""  
        #!/usr/bin/perl
 
        my $a = "World";
@@ -26,7 +26,7 @@ Example:
 
 or 
 
-       \[[syntax file="/examples/hello.pl" description="My first perl program"]]
+       \[[!syntax file="/examples/hello.pl" description="My first perl program"]]
 
 This plugin create the following CSS styles:
 
