@@ -18,20 +18,23 @@ sub formbuilder_setup (@) { #{{{
 	my $q=$params{cgi};
 
 	if (defined $form->field("do") && $form->field("do") eq "edit") {
+		# Removal button for the page, and also for attachments.
 		push @{$params{buttons}}, "Remove";
-		# TODO button for attachments
+		$form->tmpl_param("field-remove" => '<input name="_submit" type="submit" value="Remove Attachments" />');
 	}
 } #}}}
 
-sub confirmation_form ($$) { #{{{ 
+sub confirmation_form ($$$) { #{{{ 
 	my $q=shift;
 	my $session=shift;
+	my $page=shift;
 
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 	my @fields=qw(do page);
 	my $f = CGI::FormBuilder->new(
-		title => "confirm removal",
+		title => sprintf(gettext("confirm removal of %s"),
+			IkiWiki::pagetitle($page)),
 		name => "remove",
 		header => 0,
 		charset => "utf-8",
@@ -44,20 +47,7 @@ sub confirmation_form ($$) { #{{{
 	);
 	
 	$f->field(name => "do", type => "hidden", value => "remove", force => 1);
-	$f->field(name => "page", label => "Will remove:", size => 60,
-		validate => sub {
-		# Validate page by checking that the page exists, and that
-		# the user is allowed to edit(/remove) it.
-		my $page=IkiWiki::titlepage(shift);
-		if (! exists $pagesources{$page}) {
-			$f->field(name => "page", message => gettext("page does not exist"));
-			return 0;
-		}
-		else {
-			IkiWiki::check_canedit($page, $q, $session);
-			return 1;
-		}
-	});
+	$f->field(name => "page", type => "hidden", value => $page, force => 1);
 
 	return $f, ["Remove", "Cancel"];
 } #}}}
@@ -66,27 +56,28 @@ sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
-	if (defined $form->field("do") && $form->field("do") eq "edit" &&
-	    $form->submitted eq "Remove") {
-		my $q=$params{cgi};
-		my $session=$params{session};
+	if (defined $form->field("do") && $form->field("do") eq "edit") {
+		if ($form->submitted eq "Remove") {
+			my $q=$params{cgi};
+			my $session=$params{session};
 
-	    	# Save current form state to allow returning to it later
-		# without losing any edits.
-		# (But don't save what button was submitted, to avoid
-		# looping back to here.)
-		# Note: "_submit" is CGI::FormBuilder internals.
-		$q->param(-name => "_submit", -value => "");
-		$session->param(postremove => scalar $q->Vars);
-		IkiWiki::cgi_savesession($session);
-
-		# Display a small confirmation form.
-		my ($f, $buttons)=confirmation_form($q, $session);
-		$f->field(name => "page", 
-			value => IkiWiki::pagetitle($form->field("page")),
-			force => 1);
-		IkiWiki::showform($f, $buttons, $session, $q);
-		exit 0;
+		    	# Save current form state to allow returning to it later
+			# without losing any edits.
+			# (But don't save what button was submitted, to avoid
+			# looping back to here.)
+			# Note: "_submit" is CGI::FormBuilder internals.
+			$q->param(-name => "_submit", -value => "");
+			$session->param(postremove => scalar $q->Vars);
+			IkiWiki::cgi_savesession($session);
+	
+			# Display a small confirmation form.
+			my ($f, $buttons)=confirmation_form($q, $session, $form->field("page"));
+			IkiWiki::showform($f, $buttons, $session, $q);
+			exit 0;
+		}
+		elsif ($form->submitted eq "Remove Attachments") {
+			
+		}
 	}
 } #}}}
 
@@ -95,7 +86,7 @@ sub sessioncgi ($$) { #{{{
 
 	if ($q->param("do") eq 'remove') {
         	my $session=shift;
-		my ($form, $buttons)=confirmation_form($q, $session);
+		my ($form, $buttons)=confirmation_form($q, $session, $session->param("page"));
 		IkiWiki::decode_form_utf8($form);
 
 		if ($form->submitted eq 'Cancel') {
@@ -106,8 +97,16 @@ sub sessioncgi ($$) { #{{{
 			IkiWiki::cgi($postremove, $session);
 		}
 		elsif ($form->submitted eq 'Remove' && $form->validate) {
-			my $page=IkiWiki::titlepage($form->field("page"));
+			my $page=$form->field("page");
 			my $file=$pagesources{$page};
+	
+			# Validate removal by checking that the page exists,
+			# and that the user is allowed to edit(/remove) it.
+			if (! exists $pagesources{$page}) {
+				error(sprintf(gettext("%s does not exist"),
+				htmllink("", "", $page, noimageinline => 1)));
+			}
+			IkiWiki::check_canedit($page, $q, $session);
 
 			# Do removal, and update the wiki.
 			require IkiWiki::Render;
