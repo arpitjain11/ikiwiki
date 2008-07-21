@@ -123,6 +123,14 @@ sub sessioncgi ($$) { #{{{
 			IkiWiki::prune("$config{srcdir}/$file");
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
+
+			# Redirect to parent of the page.
+			my $parent=IkiWiki::dirname($page);
+			if (! exists $pagesources{$parent}) {
+				$parent="index";
+			}
+			IkiWiki::redirect($q, $config{url}."/".htmlpage($parent));
+			exit 0;
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);
