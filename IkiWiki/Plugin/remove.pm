@@ -139,7 +139,7 @@ sub sessioncgi ($$) { #{{{
 				# verified the file is a known source file,
 				# and is in the srcdir, and is a regular
 				# file.
-				push @files, possibly_foolish_untaint($file);
+				push @files, IkiWiki::possibly_foolish_untaint($file);
 			}
 
 			# Do removal, and update the wiki.
