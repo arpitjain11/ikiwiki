@@ -407,17 +407,26 @@ Cases that have to be dealt with:
 * Alice clicks "delete" button for a page; Bob makes a modification;
   Alice confirms deletion. Ideally in this case, Alice should get an error
   message that there's a conflict.
+  Update: In my current code, alice's deletion will fail if the file was
+  moved or deleted in the meantime; if the file was modified since alice
+  clicked on the delete button, the modifications will be deleted too. I
+  think this is acceptable.
 * Alice opens edit UI for a page; Bob makes a modification; Alice
   clicks delete button and confirms deletion. Again here, Alice should get
   a conflict error. Note that this means that the rcstoken should be
   recorded when the edit UI is first opened, not when the delete button is
   hit.
+  Update: Again here, there's no conflict, but the delete succeeds. Again,
+  basically acceptible.
 * Alice and Bob both try to delete a page at the same time. It's fine for
   the second one to get a message that it no longer exists. Or just to
   silently fail to delete the deleted page..
+  Update: It will display an error to the second one that the page doesn't
+  exist.
 * Alice deletes a page; Bob had edit window open for it, and saves
   it afterwards. I think that Bob should win in this case; Alice can always
   notice the page has been added back, and delete it again.
+  Update: Bob wins.
 * Alice clicks "rename" button for a page; Bob makes a modification;
   Alice confirms rename. This case seems easy, it should just rename the
   modified page.
