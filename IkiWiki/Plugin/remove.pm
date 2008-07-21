@@ -47,7 +47,7 @@ sub confirmation_form ($$) { #{{{
 	$f->field(name => "page", label => "Will remove:", size => 60,
 		validate => sub {
 		# Validate page by checking that the page exists, and that
-		# the user is allowed to edit(/delete) it.
+		# the user is allowed to edit(/remove) it.
 		my $page=IkiWiki::titlepage(shift);
 		if (! exists $pagesources{$page}) {
 			$f->field(name => "page", message => gettext("page does not exist"));
@@ -97,13 +97,13 @@ sub sessioncgi ($$) { #{{{
         	my $session=shift;
 		my ($form, $buttons)=confirmation_form($q, $session);
 		IkiWiki::decode_form_utf8($form);
+
 		if ($form->submitted eq 'Cancel') {
 			# Load saved form state and return to edit form.
 			my $postremove=CGI->new($session->param("postremove"));
 			$session->clear("postremove");
 			IkiWiki::cgi_savesession($session);
 			IkiWiki::cgi($postremove, $session);
-			exit 0;
 		}
 		elsif ($form->submitted eq 'Remove' && $form->validate) {
 			my $page=IkiWiki::titlepage($form->field("page"));
@@ -130,12 +130,12 @@ sub sessioncgi ($$) { #{{{
 				$parent="index";
 			}
 			IkiWiki::redirect($q, $config{url}."/".htmlpage($parent));
-			exit 0;
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);
-			exit 0;
 		}
+
+		exit 0;
 	}
 }
 
