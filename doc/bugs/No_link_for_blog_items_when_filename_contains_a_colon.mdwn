@@ -6,7 +6,7 @@ EDIT: I just found that in this wiki under <http://ikiwiki.info/bugs/done/> the 
 enabled, then `$safe_url_regexp` determines the URL unsafe because of the
 colon and hence removes the `src` attribute.
 
-Digging into this, I find that [[rfc 3986]] pretty much discourages colons in
+Digging into this, I find that [[!rfc 3986]] pretty much discourages colons in
 filenames:
 
 > A path segment that contains a colon character (e.g., "this:that") cannot be

@@ -1,4 +1,4 @@
-[[meta title="map does not link entries which are equal to basename(current_page)"]]
+[[!meta title="map does not link entries which are equal to basename(current_page)"]]
 
 On <http://phd.martin-krafft.net/wiki/tag/factors/>, the top-level `factors` entry is not linked to the corresponding page. Looking at <http://phd.martin-krafft.net/wiki/tag/factors/language/>, this must be because the page name is the same as the entry name, and ikiwiki probably doesn't take the complete path of subpages into account.
 

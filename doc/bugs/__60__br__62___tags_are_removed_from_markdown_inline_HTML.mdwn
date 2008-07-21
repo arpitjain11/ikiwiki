@@ -23,8 +23,8 @@ I tried searching the web and wiki but could not find any information on why <br
 
 > > `<br/>` is also valid, so this is a bug still. --[[madduck]]
 
->>> It _is_ the htmlscrubber that removes that. It's due to [[debbug 365971]], 
->>> basically the [[cspan HTML::Scrubber]] doesn't understand xhtml tags
+>>> It _is_ the htmlscrubber that removes that. It's due to [[!debbug 365971]], 
+>>> basically the [[!cspan HTML::Scrubber]] doesn't understand xhtml tags
 >>> of this sort at all, I hacked it to support `<br />` by tellig it to treak 
 >>> the "/" as an attribute, but if there's no space, it doesn't see it as 
 >>> an attribute. Hmm, I could also add `br` as a tag name, that would catch both cases.

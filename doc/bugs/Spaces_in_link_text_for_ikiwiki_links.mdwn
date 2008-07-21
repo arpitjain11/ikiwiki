@@ -1,7 +1,7 @@
 Versions 2.0 and 2.1 of ikiwiki, and I think earlier versions as well,
-allowed wiki links to have spaces in the link text. For example, [[ikiwiki
+allowed wiki links to have spaces in the link text. For example, [[!ikiwiki
 logo page|logo]] should create an anchor tag referencing the logo page, and
-[[ikiwiki logo|logo/ikiwiki.png]] should create an image tag referencing
+[[!ikiwiki logo|logo/ikiwiki.png]] should create an image tag referencing
 the logo.
 
 As of version 2.2, this no longer works. I think the pattern \\[[...|...]]

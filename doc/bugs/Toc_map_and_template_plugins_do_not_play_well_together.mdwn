@@ -21,7 +21,7 @@ in the HTML output, without any leading `<p>` or any HTML formatting.
 > html parser, that will get confused if markdown is present between two
 > separate html blocks, and not format the markdown.
 > 
-> This is fixed in [[cpan Text::MarkDown]] 1.0.19. markdown 1.0.2 also
+> This is fixed in [[!cpan Text::MarkDown]] 1.0.19. markdown 1.0.2 also
 > fixes the problem. Install either one. I'm going to make ikiwiki's
 > dependencies list Text::Markdown before markdown, since people keep
 > stumbling over this. (The downside is that the old broken markdown is

@@ -26,7 +26,7 @@ All this is displayed correctly if toc is removed.
 > [here](http://bugs.debian.org/421843).
 > 
 > I'm going to close this bug report since it's a markdown bug. --[[Joey]]
-[[tag done]]
+[[!tag done]]
 
 >> thanks, that fixes it.
 
@@ -42,11 +42,11 @@ bla bla bla
  * bl bla
  * aadsd
 
-[[toc levels=2]]
+[[!toc levels=2]]
 
 bla bla
 
-[[table data="""
+[[!table data="""
 Customer|Amount
 Fulanito|134,34
 Menganito|234,56
@@ -59,6 +59,6 @@ Menganito|234,56
 Here's a paragraph.
 
 
-[[inline pages="users/joey" raw="yes"]]
+[[!inline pages="users/joey" raw="yes"]]
 
 bla bla

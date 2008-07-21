@@ -23,11 +23,11 @@ feed I'm seeing this with is http://www.wirelesscommons.org/feed.php
 > This is a bug in XML::Parser. Unfortunately, perl does not have a feed
 > parser that handles invalid feeds, and in particular, XML::Parser has
 > issues with feeds that claim to be encoded in utf-8 and contain invalid
-> utf sequences, as well as other encoding issues. See also [[debbug 380426]].
+> utf sequences, as well as other encoding issues. See also [[!debbug 380426]].
 > Note though that this invalid feed does not really crash the aggregate plugin,
 > it just notes that XML::Parser crashed on it and continues. This is the
 > best I can do in ikiwiki. I have filed a bug on XML::Parser about this,
-> it's [[debbug 420636]].  I've also put in a workaround, so [[done]].
+> it's [[!debbug 420636]].  I've also put in a workaround, so [[done]].
 
 **Wonderful**, thanks Joey! -- Adam.
 
