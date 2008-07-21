@@ -42,10 +42,13 @@ sub confirmation_form ($$) { #{{{
 		stylesheet => IkiWiki::baseurl()."style.css",
 		fields => \@fields,
 	);
-		
+	
 	$f->field(name => "do", type => "hidden", value => "remove", force => 1);
-	$f->field(name => "page", label => "Will remove:", validate => sub {
-		my $page=shift;
+	$f->field(name => "page", label => "Will remove:", size => 60,
+		validate => sub {
+		# Validate page by checking that the page exists, and that
+		# the user is allowed to edit(/delete) it.
+		my $page=IkiWiki::titlepage(shift);
 		if (! exists $pagesources{$page}) {
 			$f->field(name => "page", message => gettext("page does not exist"));
 			return 0;
@@ -67,16 +70,20 @@ sub formbuilder (@) { #{{{
 	    $form->submitted eq "Remove") {
 		my $q=$params{cgi};
 		my $session=$params{session};
+
 	    	# Save current form state to allow returning to it later
 		# without losing any edits.
-		# (But don't save what button was submitted.)
+		# (But don't save what button was submitted, to avoid
+		# looping back to here.)
+		# Note: "_submit" is CGI::FormBuilder internals.
 		$q->param(-name => "_submit", -value => "");
 		$session->param(postremove => scalar $q->Vars);
 		IkiWiki::cgi_savesession($session);
 
 		# Display a small confirmation form.
 		my ($f, $buttons)=confirmation_form($q, $session);
-		$f->field(name => "page", value => $form->field("page"),
+		$f->field(name => "page", 
+			value => IkiWiki::pagetitle($form->field("page")),
 			force => 1);
 		IkiWiki::showform($f, $buttons, $session, $q);
 		exit 0;
