@@ -135,7 +135,12 @@ sub sessioncgi ($$) { #{{{
 				elsif (! -f "$config{srcdir}/$file") {
 					error(sprintf(gettext("%s is not a file"), $file));
 				}
-				push @files, $file;
+
+				# This untaint is safe because we've
+				# verified the file is a known source file,
+				# and is in the srcdir, and is a regular
+				# file.
+				push @files, possibly_foolish_untaint($file);
 			}
 
 			# Do removal, and update the wiki.
