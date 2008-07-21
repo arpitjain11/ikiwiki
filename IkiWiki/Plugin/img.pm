@@ -41,6 +41,10 @@ sub preprocess (@) { #{{{
 	}
 
 	my $file = bestlink($params{page}, $image);
+	my $srcfile = srcfile($file, 1);
+	if (! defined $srcfile) {
+		error(sprintf(gettext("%s not found"), $image));
+	}
 
 	my $dir = $params{page};
 	my $base = IkiWiki::basename($file);
@@ -61,12 +65,12 @@ sub preprocess (@) { #{{{
 		
 		will_render($params{page}, $imglink);
 
-		if (-e $outfile && (-M srcfile($file) >= -M $outfile)) {
+		if (-e $outfile && (-M $srcfile >= -M $outfile)) {
 			$r = $im->Read($outfile);
 			error sprintf(gettext("failed to read %s: %s"), $outfile, $r) if $r;
 		}
 		else {
-			$r = $im->Read(srcfile($file));
+			$r = $im->Read($srcfile);
 			error sprintf(gettext("failed to read %s: %s"), $file, $r) if $r;
 
 			$r = $im->Resize(geometry => "${w}x${h}");
@@ -83,7 +87,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	else {
-		$r = $im->Read(srcfile($file));
+		$r = $im->Read($srcfile);
 		error sprintf(gettext("failed to read %s: %s"), $file, $r) if $r;
 		$imglink = $file;
 	}
