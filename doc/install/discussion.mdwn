@@ -1,5 +1,17 @@
 No matter what I do, ikiwiki gives me a `Can't locate loadable object for module Locale::gettext in @INC` although I've installed (and reinstalled) the Locale module, and no luck. If I look at the directories in the INC path, I can see the file. The wiki won't compile in spite of this, and I've tried everything I can think of.. -- [[tychoish]]
 
+> Sounds like the `Locale::gettext` perl module is there, but your perl
+> installation is broken so that the accompnying so file is not there, or
+> doesn't work. On my system I have 
+> `/usr/lib/perl5/Locale/gettext.pm` and
+> `/usr/lib/perl5/auto/Locale/gettext.so` -- suspect your problem is with
+> the second one.
+> 
+> If you can't fix it, this problem could probably be worked around by
+> unsetting all environment variables when running ikiwiki (`LANG`,
+> `LC_ALL`, `LC_MESSAGES`). Then it won't try to load `Locale::gettext` at
+> all. --[[Joey]]
+
 ---
 
 I am trying to install Ikiwiki version 2.1 from the source tarball.
