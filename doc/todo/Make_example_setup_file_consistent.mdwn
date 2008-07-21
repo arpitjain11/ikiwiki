@@ -1,0 +1,22 @@
+The current example [[ikiwiki.setup]] file has a number of options included, but commented out.  This is standard.  Unfortunately there are two standards for the settings of those commented out options:
+
+  - Have the commented out options showing the default setting, or
+  - Have the commented out options showing the most common alternate setting.
+
+Each of these has its advantages.  The first makes it clear what the default setting is.  The second makes it easy to switch the option on -- you just uncomment the option.
+
+My issue with ikiwiki's example setup file is that it doesn't appear to be consistent.  Looking at the 'svn' entries (the first set of rcs entries), we see that
+
+    svnpath => "trunk",
+
+is an example of the first type, but 
+
+    rcs => "svn",
+
+is an example of the second type.
+
+I think things could be improved if a clear decision was made here.  Most of the settings seem to be of the second type.  Perhaps all that is needed is for settings of the first type to grow a comment:
+
+    svnpath => "trunk",        #default
+
+What do others think?
