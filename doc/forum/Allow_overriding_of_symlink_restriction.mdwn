@@ -28,26 +28,50 @@ Now my problem:  I have a hosted server where I cannot avoid having a symlink in
 
 Is there a huge objection to this patch?
 
-(note: patch inline - look at the source to get it.  And I didn't re-indent the code when I added the if...)
+>>> [[patch]] updated.
 
-	index 990fcaa..d7cb37e 100644
-	--- a/IkiWiki/Render.pm
-	+++ b/IkiWiki/Render.pm
-	@@ -260,6 +260,7 @@ sub prune ($) { #{{{
-	 
-	 sub refresh () { #{{{
-	        # security check, avoid following symlinks in the srcdir path
-	+       if (! $config{allowsrcdirlinks}) {
-	        my $test=$config{srcdir};
-	        while (length $test) {
-	                if (-l $test) {
-	@@ -269,6 +270,7 @@ sub refresh () { #{{{
-	                        $test=dirname($test);
-	                }
-	        }
-	+       }
-        
-        	run_hooks(refresh => sub { shift->() });
+    diff --git a/IkiWiki/Render.pm b/IkiWiki/Render.pm
+    index 990fcaa..0fb78ba 100644
+    --- a/IkiWiki/Render.pm
+    +++ b/IkiWiki/Render.pm
+    @@ -260,13 +260,15 @@ sub prune ($) { #{{{
+     
+     sub refresh () { #{{{
+     	# security check, avoid following symlinks in the srcdir path
+    -	my $test=$config{srcdir};
+    -	while (length $test) {
+    -		if (-l $test) {
+    -			error("symlink found in srcdir path ($test)");
+    -		}
+    -		unless ($test=~s/\/+$//) {
+    -			$test=dirname($test);
+    +	if (! $config{allow_insecure_symlinks_in_path_to_srcdir}) {
+    +		my $test=$config{srcdir};
+    +		while (length $test) {
+    +			if (-l $test) {
+    +				error("symlink found in srcdir path ($test)");
+    +			}
+    +			unless ($test=~s/\/+$//) {
+    +				$test=dirname($test);
+    +			}
+     		}
+     	}
+     	
+    diff --git a/doc/ikiwiki.setup b/doc/ikiwiki.setup
+    index 10cb3da..eb86e49 100644
+    --- a/doc/ikiwiki.setup
+    +++ b/doc/ikiwiki.setup
+    @@ -203,4 +203,10 @@ use IkiWiki::Setup::Standard {
+     	# For use with the attachment plugin, a program that returns
+     	# nonzero if its standard input contains an virus.
+     	#virus_checker => "clamdscan -",
+    +	
+    +	# The following setting allows symlinks in the path to your
+    +	# srcdir.  Symlinks are still not followed within srcdir.
+    +	# Allowing symlinks to be followed, even in the path to srcdir,
+    +	# will make some setups insecure.
+    +	#allow_insecure_symlinks_in_path_to_srcdir => 0,
+     }
 
 > No, I don't have a big objection to such an option, as long as it's
 > extremely well documented that it will make many setups insecure.
