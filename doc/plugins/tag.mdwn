@@ -24,6 +24,12 @@ tags/tech, tags/life, and tags/linux. This is a useful way to avoid
 having to write the full path to tags, if you want to keep them grouped
 together out of the way.
 
+If you want to override the tagbase for a particular tag, you can use
+something like this:
+
+	\[[!tag ./foo]]
+	\[[!taglink /foo]]
+
 [[!if test="enabled(tag)" then="""
 This wiki has the tag plugin enabled, so you'll see a note below that this
 page is tagged with the "tags" tag.
