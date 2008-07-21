@@ -1,4 +1,4 @@
-`\[[debbug 123456]]` expands to "bug #123456", which is hyperlinked. Could you please drop the leading "bug", for two reasons?
+`\[[!debbug 123456]]` expands to "bug #123456", which is hyperlinked. Could you please drop the leading "bug", for two reasons?
 
 First, #123456 is not a bug, it's a bug report. And second, #123456 suffices, doesn't it? By hardcoding the "bug" in there, you make it impossible to start a sentence with a bug number, e.g.:
 

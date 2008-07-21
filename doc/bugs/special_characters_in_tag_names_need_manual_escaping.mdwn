@@ -1,3 +1,3 @@
-Having read i18n_characters_in_post_title, I have a page named `St John's` in a file named `St_John__39__s.mdwn`.  Regular wikilinks like `\\[[St_John's]]` successfully point to that page.  However, if I tag a page with `\[[tag St_John's]]`, that link is shown as pointing to a non-existant page.  Modify the tag to read `\[[tag St_John__39__s]]` works around the problem.
+Having read i18n_characters_in_post_title, I have a page named `St John's` in a file named `St_John__39__s.mdwn`.  Regular wikilinks like `\\[[St_John's]]` successfully point to that page.  However, if I tag a page with `\[[!tag St_John's]]`, that link is shown as pointing to a non-existant page.  Modify the tag to read `\[[!tag St_John__39__s]]` works around the problem.
 
 [[done]] in 1.49 --[[Joey]]

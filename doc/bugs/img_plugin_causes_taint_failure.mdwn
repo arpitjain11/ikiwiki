@@ -1,6 +1,6 @@
 The img plugin causes a taint failure if one tries to link a scaled image, e.g.
 
-    \[[img foo.png size=64x64]]
+    \[[!img foo.png size=64x64]]
 
     .ikiwiki.setup: Insecure dependency in mkdir while running with -T switch at /usr/lib/perl5/vendor_perl/5.8.8/IkiWiki.pm line 360.
     BEGIN failed--compilation aborted at (eval 5) line 109.
