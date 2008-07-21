@@ -2,7 +2,7 @@ I don't segregate my blog entries into a directory, but instead want
 my blog to simply consist of all pages that have been tagged. That is,
 I'd like to have my blog page look like this:
 
-	\[[inline pages="link(tag/*)"]]
+	\[[!inline pages="link(tag/*)"]]
 
 That doesn't work in ikiwiki 2.1, but I have it
 [working](http://www.cworth.org/blog) with the following patch:

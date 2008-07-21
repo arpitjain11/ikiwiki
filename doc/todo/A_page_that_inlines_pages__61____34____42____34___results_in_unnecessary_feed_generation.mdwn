@@ -3,7 +3,7 @@ getting regenerated even when I edited only a page that did not affect
 any feed.
 
 I found that the problem only occurs in the presence of a file that
-contains \[[inline pages="*"]].
+contains \[[!inline pages="*"]].
 
 > How is this unexpected? By inlining _every_ page in the wiki, you're
 > making that page depend on every other page; any change to any page in
@@ -23,7 +23,7 @@ that it will create):
 
 	cd /tmp
 	mkdir ikiwiki-test; cd ikiwiki-test; mkdir src
-	echo '\[[inline pages="blog/*"]]' > src/myblog.mdwn
+	echo '\[[!inline pages="blog/*"]]' > src/myblog.mdwn
 	mkdir src/blog; echo "A blog entry" > src/blog/entry.mdwn
 	echo 'use IkiWiki::Setup::Standard {
 		srcdir => "src",
@@ -41,7 +41,7 @@ that it will create):
 	echo "not a blog entry" > src/not-a-blog.mdwn
 	ikiwiki --setup setup
 	ls -l --time-style=full-iso output/myblog/index.rss
-	echo '\[[inline pages="*"]]' > src/archives.mdwn
+	echo '\[[!inline pages="*"]]' > src/archives.mdwn
 	ikiwiki --setup setup
 	ls -l --time-style=full-iso output/myblog/index.rss
 	echo "still not blogging" >> src/not-a-blog.mdwn
@@ -58,7 +58,7 @@ Here's the tail of the output that I see for this command:
 	done
 	$ ls -l --time-style=full-iso output/myblog/index.rss
 	-rw-r--r-- 1 cworth cworth 459 2007-06-01 06:34:36.000000000 -0700 output/myblog/index.rss
-	$ echo '\[[inline pages="*"]]' > src/archives.mdwn
+	$ echo '\[[!inline pages="*"]]' > src/archives.mdwn
 	$ ikiwiki --setup setup
 	refreshing wiki..
 	scanning archives.mdwn

@@ -1,4 +1,4 @@
-Currently, the page title (either the name of the page or the title specified with `\[[meta title="..."]]`) shows up in a `<div class="header">`.  I tend to follow the [w3c guideline recommending the use of h1 for the title](http://www.w3.org/QA/Tips/Use_h1_for_Title); for this purpose, how about an option to make the page title an `<h1 class="header">`, and shift the markdown headings down by one (making # an h2, ## an h3, etc; or alternatively making # equivalent to `\[[meta title="..."]]`)?
+Currently, the page title (either the name of the page or the title specified with `\[[!meta title="..."]]`) shows up in a `<div class="header">`.  I tend to follow the [w3c guideline recommending the use of h1 for the title](http://www.w3.org/QA/Tips/Use_h1_for_Title); for this purpose, how about an option to make the page title an `<h1 class="header">`, and shift the markdown headings down by one (making # an h2, ## an h3, etc; or alternatively making # equivalent to `\[[!meta title="..."]]`)?
 
 > The reason I don't use a h1 for the navbar is that while it incorporates
 > the page title, it's not just a page title, it has the links to parent pages.

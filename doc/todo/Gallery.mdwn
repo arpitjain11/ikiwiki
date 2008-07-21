@@ -39,7 +39,7 @@ I have implemented the first version of the Gallery Plugin for Ikiwiki as part o
 Plugin can be downloaded from [here](http://myweb.unomaha.edu/~ajain/gallery.tar). 
 
 It can be used as : <br>
-\[[gallery imagedir="images" thumbnailsize="200x200" cols="3" alt="Can not be displayed" title="My Pictures"]]
+\[[!gallery imagedir="images" thumbnailsize="200x200" cols="3" alt="Can not be displayed" title="My Pictures"]]
 
 where-<br>
 * imagedir  => Directory containing images. It will scan all the files with jpg|png|gif extension from the directory and will put it in the gallery.<br>

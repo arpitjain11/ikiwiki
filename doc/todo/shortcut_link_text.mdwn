@@ -1,19 +1,19 @@
 [[plugins/shortcut]] creates link shortcut [[ikiwiki/PreprocessorDirective]]s,
 which substitute their argument into the specified shortcut URL to generate
 the link target, and use the argument as the link text.  For example, given
-the example [[shortcuts]], `\[[wikipedia ikiwiki]]` generates a link to
+the example [[shortcuts]], `\[[!wikipedia ikiwiki]]` generates a link to
 <http://en.wikipedia.org/wiki/ikiwiki>, with the link text "ikiwiki".  This
 works well in many cases; however, for things like the `debbug` example, it
 simply uses the number as the link text, which does not always provide
 enough context to understand the link at first glance.  For example,
-`\[[debbug 397501]]` generates a link to <http://bugs.debian.org/397501>,
+`\[[!debbug 397501]]` generates a link to <http://bugs.debian.org/397501>,
 with just "397501" as the link text.  While [[plugins/template]] provides a
 general solution for arbitrary cases, it would help to have a simple option
 via the shortcut plugin to set the link text, with a `%s` substitution.
-Thus, something like `\[[shortcut name=debbug
+Thus, something like `\[[!shortcut name=debbug
 url="http://bugs.debian.org/%s" desc="bug #%s"]]` might suffice on a
 Debian-specific wiki to indicate a bug number, while a more general wiki
-might use something like `\[[shortcut name=debbug
+might use something like `\[[!shortcut name=debbug
 url="http://bugs.debian.org/%s" desc="Debian bug #%s"]]`.
 
 > [[todo/done]] --[[Joey]]

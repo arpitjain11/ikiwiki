@@ -1,6 +1,6 @@
 I am serving notice that I am starting work on a calendar plugin inspired by Blosxom's calendar plugin. The current plan is to create a plugin that looks through all the source files matching a certain pagespec, and optionally spit out a month view for the specified month (default to current), or spit out a year view for a given year (defaulting to the current year), of a list  of year with posts in them. The output would be a table, with the same CSS directives that the Blosxom plugin used to use (so that I can just reuse my css file).  The links would be created to a $config{archivedir}/$year or $config{archivedir}/$year-$month file, which can just have 
 
-     \[[inline pages="blog/* and !*/Discussion and creation_year($year) and creation_month($month)" rss="no" atom="no" show="0"]]
+     \[[!inline pages="blog/* and !*/Discussion and creation_year($year) and creation_month($month)" rss="no" atom="no" show="0"]]
 
 or some thing to generate a archive of postings. 
 
@@ -10,21 +10,21 @@ ManojSrivastava
 
 This plugin is inspired by the calendar plugin for Blosxom, but derivesno code from it. This plugin is essentially a fancy front end to archives of previous pages, usually used for blogs. It can produce a calendar for a given month, or a list of months for a given year. To invoke the calendar, just use the preprocessor directive:
 
-     \[[calendar ]]
+     \[[!calendar ]]
 
 or
 
-      \[[calendar type="month" pages="blog/* and !*/Discussion"]]
+      \[[!calendar type="month" pages="blog/* and !*/Discussion"]]
 
 or
 
-       \[[calendar type="year"  year="2005" pages="blog/* and !*/Discussion"]]
+       \[[!calendar type="year"  year="2005" pages="blog/* and !*/Discussion"]]
 
 
 The year and month entities in the out put have links to archive index pages, which are supposed to exist already. The idea is to create an archives hierarchy, rooted in the subdirectory specified in the site-wide customization variable, archivebase. archivebase defaults to "archives".  Links are created to pages "$archivebase/$year" and "$archivebase/$year/$month". The idea is to create annual and monthly indices, for example, by using something like this sample from my archives/2006/01.mdwn 
 
-          \[[meta title="Archives for 2006/01"]]
-          \[[inline rootpage="blog" atom="no" rss="no" show="0" pages="blog/* and !*/Discussion and creation_year(2006) and creation_month(01)" ]]
+          \[[!meta title="Archives for 2006/01"]]
+          \[[!inline rootpage="blog" atom="no" rss="no" show="0" pages="blog/* and !*/Discussion and creation_year(2006) and creation_month(01)" ]]
 
 I'll send in the patch via email.
 

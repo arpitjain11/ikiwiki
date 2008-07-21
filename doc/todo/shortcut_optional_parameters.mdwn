@@ -6,39 +6,39 @@ Consider the "All files in this package search" on
 To create a "debfiles" [[shortcut|shortcuts]] that takes a package name, you
 could just hardcode the architecture and distribution:
 
-    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=unstable&arch=i386"]]
-    \[[debfiles ikiwiki]]
+    \[[!shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=unstable&arch=i386"]]
+    \[[!debfiles ikiwiki]]
 
 But what if you could have them as optional parameters instead?  The syntax
 for the invocation should look like this:
 
-    \[[debfiles ikiwiki dist=testing]]
+    \[[!debfiles ikiwiki dist=testing]]
 
 Some possible syntax choices for the shortcut definition:
 
-    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%(dist)s&arch=%(arch)s" dist="unstable" arch="i386"]]
-    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%(dist=unstable)s&arch=%(arch=i386)s"]]
-    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%{dist=unstable}&arch=%{arch=i386}"]]
-    \[[shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=$*&searchmode=filelist&case=insensitive&version=${dist=unstable}&arch=${arch=i386}"]]
+    \[[!shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%(dist)s&arch=%(arch)s" dist="unstable" arch="i386"]]
+    \[[!shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%(dist=unstable)s&arch=%(arch=i386)s"]]
+    \[[!shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=%s&searchmode=filelist&case=insensitive&version=%{dist=unstable}&arch=%{arch=i386}"]]
+    \[[!shortcut name=debfiles url="http://packages.debian.org/cgi-bin/search_contents.pl?word=$*&searchmode=filelist&case=insensitive&version=${dist=unstable}&arch=${arch=i386}"]]
 
 --[[JoshTriplett]]
 
 Well, you can already do this kind of thing with templates. Invocation does
 look different:
 
-    \[[template id=debfiles package=ikiwiki dist=testing]]
+    \[[!template id=debfiles package=ikiwiki dist=testing]]
 
 --[[Joey]]
 
 > I think I would find templates sufficient, if:
 >
 > 1. I could use the name of the template as a preprocessor directive
->    (`\[[templatename ...]]`), rather than using the `template` directive
->    with an `id` argument (`\[[template id=templatename]]`).
+>    (`\[[!templatename ...]]`), rather than using the `template` directive
+>    with an `id` argument (`\[[!template id=templatename]]`).
 > 2. Template invocation allowed bare values in addition to `key=value`
 >    arguments, and template definition supported some means to access the
->    value.  This would allow `\[[debfiles ikiwiki]]` rather than
->    `\[[debfiles package=ikiwiki]]`.
+>    value.  This would allow `\[[!debfiles ikiwiki]]` rather than
+>    `\[[!debfiles package=ikiwiki]]`.
 > 3. I could use ikiwiki syntax in the template, not just HTML and
 >    HTML::Template.  (If I can already do that, then [[/plugins/template]]
 >    should make that more clear.)

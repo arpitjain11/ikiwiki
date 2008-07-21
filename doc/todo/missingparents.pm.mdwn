@@ -4,9 +4,9 @@ has a child). Basically, you give it a page called missingparents.mdwn,
 something like this:
 
 <pre>
-[[!missingparents pages="posts/* and !posts/*/*" generate="""[[template id=year text="$page"]]"""]]
-[[!missingparents pages="posts/*/* and !posts/*/*/*" generate="""[[template id=month text="$page"]]"""]]
-[[!missingparents pages="posts/*/*/* and !posts/*/*/*/*" generate="""[[template id=day text="$page"]]"""]]
+[[!missingparents pages="posts/* and !posts/*/*" generate="""[[!template id=year text="$page"]]"""]]
+[[!missingparents pages="posts/*/* and !posts/*/*/*" generate="""[[!template id=month text="$page"]]"""]]
+[[!missingparents pages="posts/*/*/* and !posts/*/*/*/*" generate="""[[!template id=day text="$page"]]"""]]
 </pre>
 
 And it scans the whole wiki for pages that match the pagespecs but are missing
