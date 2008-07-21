@@ -1,4 +1,4 @@
-[[!tag type/patch]]
+[[!tag patch type/auth]]
 
 ikiwiki should support [Central Authentication
 Service](http://www.ja-sig.org/products/cas/) authentication in order to use
@@ -121,8 +121,8 @@ follows) ?
     --- /dev/null
     +++ b/doc/plugins/cas.mdwn
     @@ -0,0 +1,18 @@
-    +[[!template id=plugin name=cas core=0 author="[[bbb]]"]]
-    +[[!tag type/auth]]
+    +[[ template id=plugin name=cas core=0 author="[[bbb]]"]]
+    +[[ tag type/auth]]
     +
     +This plugin allows users to use authentication offered by a
     +[JaSIG](http://www.ja-sig.org) [<acronym title='Central Authentication
