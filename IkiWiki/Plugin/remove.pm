@@ -160,11 +160,6 @@ sub sessioncgi ($$) { #{{{
 					IkiWiki::prune("$config{srcdir}/$file");
 				}
 			}
-			foreach my $file (@files) {
-				delete $IkiWiki::pagecase{$file};
-				print STDERR "delete $file\n";
-				delete $IkiWiki::links{$file};
-			}
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
