@@ -4,7 +4,7 @@
 This plugin uses [graphviz](http://www.graphviz.org/) to generate a graph showing the links between a
 set of pages in the wiki. Example usage:
 
-	\[[linkmap pages="* and !blog/* and !*/Discussion"]]
+	\[[!linkmap pages="* and !blog/* and !*/Discussion"]]
 
 Only links between mapped pages will be shown; links pointing to or from
 unmapped pages will be omitted. If the pages to include are not specified,

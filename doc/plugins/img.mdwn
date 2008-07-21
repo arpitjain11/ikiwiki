@@ -14,7 +14,7 @@ Note that this is a stripped down version of Christian Mock's
 
 ## usage
 
-	\[[img image1.jpg size="200x200" alt="clouds"]]
+	\[[!img image1.jpg size="200x200" alt="clouds"]]
 
 The image file will be searched for using the same rules as used to find
 the file pointed to by a [[ikiwiki/WikiLink]].
@@ -35,7 +35,7 @@ to another page instead, or "link=no" to disable the link, or
 You can also set default values that will be applied to all later images on
 the page, unless overridden. Useful when including many images on a page.
 
-	\[[img defaults size=200x200 alt="wedding photo"]]
-	\[[img photo1.jpg]]
-	\[[img photo2.jpg]]
-	\[[img photo3.jpg size=200x600]]
+	\[[!img defaults size=200x200 alt="wedding photo"]]
+	\[[!img photo1.jpg]]
+	\[[!img photo2.jpg]]
+	\[[!img photo3.jpg size=200x600]]

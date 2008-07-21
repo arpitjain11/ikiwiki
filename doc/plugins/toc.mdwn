@@ -3,14 +3,14 @@
 
 Add a table of contents to a page:
 
-	\[[toc ]]
+	\[[!toc ]]
 
 The table of contents will be automatically generated based on the
 headers of the page. By default only the largest headers present on the
 page will be shown; to control how many levels of headers are shown, use
 the `levels` parameter:
 
-	\[[toc levels=2]]
+	\[[!toc levels=2]]
 
 The toc plugin will take the level of the first header as the topmost
 level, even if there are higher levels seen later in the file.

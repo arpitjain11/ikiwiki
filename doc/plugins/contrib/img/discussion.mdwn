@@ -10,18 +10,18 @@ differently scaled versions of the image, why not just create three pages
 and use the plugin once per page? Something like this on the first one if
 it's got multiple clickable thumbnails:
 
-	\[[img foo.jpg width=256 link=page2]]
+	\[[!img foo.jpg width=256 link=page2]]
 
 This on the second:
 
-	\[[img foo.jpg width=1024 link=page3]]
+	\[[!img foo.jpg width=1024 link=page3]]
 	\[[small|page1]]
 	\[[medium|page2]]
 	\[[large|page3]]
 
 This on the third:
 	
-	\[[img foo.jpg link=page3]]
+	\[[!img foo.jpg link=page3]]
 	\[[small|page1]]
 	\[[medium|page2]]
 	\[[large|parge3]]

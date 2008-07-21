@@ -38,10 +38,10 @@ I have a sidebar that contains
 <pre>
   #### Archives
 
-  \[[calendar type="year" months_per_row="6"  pages="blog/* and !*/Discussion"]]
-  \[[calendar type="month" pages="blog/* and !*/Discussion"]]
+  \[[!calendar type="year" months_per_row="6"  pages="blog/* and !*/Discussion"]]
+  \[[!calendar type="month" pages="blog/* and !*/Discussion"]]
   &lt;h4&gt;Indices&lt;/h4&gt
-  \[[map pages="archives/* and !*/Discussion"]]
+  \[[!map pages="archives/* and !*/Discussion"]]
 </pre>
 I am trying to make it so that the archives and index only show up if the destpage is either blog/* or / -- the top of the wiki. Unfortunately, I don't think I am getting the
 conditional right -- I have a "]] left over at the end (looking at the rendered html). Ideally, I would like to be able to do todays calendar on the top level pagel and 

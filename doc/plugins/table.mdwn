@@ -8,14 +8,14 @@ It needs the perl module [[!cpan Text::CSV]] for the CSV data.
 
 ## examples
 
-	\[[table data="""
+	\[[!table data="""
 	Customer|Amount
 	Fulanito|134,34
 	Menganito|234,56
 	Menganito|234,56
 	"""]]
     
-	\[[table class="book_record" format=csv file="data/books/record1"]]
+	\[[!table class="book_record" format=csv file="data/books/record1"]]
 
 In this second example the `record1` page should be similar to:
 
@@ -26,7 +26,7 @@ In this second example the `record1` page should be similar to:
 To make a cell span multiple columns, follow it with one or more empty
 cells. For example:
 
-	\[[table data="""
+	\[[!table data="""
 	left||right|
 	a|b|c|d
 	this cell spans 4 columns|||

@@ -20,14 +20,14 @@ Translatable pages and translations must have the following format:
 `pagename.$LANG`, where `$LANG` is a ISO639-1 (two-letter) language code.
 To enable linguas, add the following line in the source code of the page:
 
-	\[[linguas ]]
+	\[[!linguas ]]
 
 Note that linguas is only required in one of the pages (the original,
 for instance); the rest of translations will be automatically
 updated. Additionally, it is also possible to specify the title of
 the translation:
 
-	\[[linguas title="Translated title"]]
+	\[[!linguas title="Translated title"]]
 
 
 Template

@@ -25,8 +25,8 @@ The global dictionary page is like this:
 
     ## Technical terms
 
-    - [[!sar search="smtp" first="\[[wp SMTP]]" next="‘SMTP‘"]]
-    - [[!sar search="pop3" first="\[[wp POP3]]" next="’POP3’"]]
+    - [[!sar search="smtp" first="\[[!wp SMTP]]" next="‘SMTP‘"]]
+    - [[!sar search="pop3" first="\[[!wp POP3]]" next="’POP3’"]]
 
 The search expressions must be surrounded by double dashes in a source ikiwiki
 page, like this:
@@ -70,11 +70,11 @@ value is `*`, but a recommended value is `link(tag/sar)`.
 
 In a ikiwiki source page we can write this
 
-    \[[sar search=debian replace="__Debian__"]]
+    \[[!sar search=debian replace="__Debian__"]]
 
 for define a global replace for the term `--debian--` or
 
-    \[[sar search=ibm first=’[IBM](http://www.ibm.com)’
+    \[[!sar search=ibm first=’[IBM](http://www.ibm.com)’
             next="_IBM_"]]
 
 to define a replace for the first match of the string `--ibm--` and a different

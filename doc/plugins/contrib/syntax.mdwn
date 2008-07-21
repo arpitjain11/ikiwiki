@@ -17,7 +17,7 @@ In the case of file parameter, `syntax` will build a html link for direct downlo
 
 Example:
 
-       \[[syntax type="perl" text="""  
+       \[[!syntax type="perl" text="""  
        #!/usr/bin/perl
 
        my $a = "World";
@@ -26,7 +26,7 @@ Example:
 
 or 
 
-       \[[syntax file="/examples/hello.pl" description="My first perl program"]]
+       \[[!syntax file="/examples/hello.pl" description="My first perl program"]]
 
 This plugin create the following CSS styles:
 

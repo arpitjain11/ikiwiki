@@ -1,4 +1,4 @@
-I'd like to modify this plugin such that the tag pages are automatically created and populated with a list of relevant posts. The content of the tag page is simply `"\[[inline pages="link(tag/$tag)"]]`. The tag plugin will have to determine whether a page for the given tag already exists, and if not use that Markdown fragment to  generate it.
+I'd like to modify this plugin such that the tag pages are automatically created and populated with a list of relevant posts. The content of the tag page is simply `"\[[!inline pages="link(tag/$tag)"]]`. The tag plugin will have to determine whether a page for the given tag already exists, and if not use that Markdown fragment to  generate it.
 
 There are clearly many ways to do this, but any opinions on which is the cleanest?
 

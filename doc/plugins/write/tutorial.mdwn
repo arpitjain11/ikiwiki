@@ -139,7 +139,7 @@ Ok, one more enhancement. Just incrementing the numbers is pretty boring.
 It would be nice to be able to jump directly to a given point in the
 sequence:
 
-	\[[fib seed=20]], [[!fib ]], [[!fib ]]
+	\[[!fib seed=20]], [[!fib ]], [[!fib ]]
 
 Just insert these lines of code inside `preprocess`, in the appropriate
 spot:
