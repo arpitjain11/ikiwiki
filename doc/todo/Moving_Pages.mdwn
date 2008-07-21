@@ -361,6 +361,9 @@ It won't be possible to put it on the action bar or somewhere else. (It
 would be possible to code up a different rename button that doesn't do
 that, and use it elsewhere.)
 
+Hmm, unless it saves the edit state and reloads it later, while using a separate
+form. Which seems to solve other problems, so I think is the way to go.
+
 ## SubPages
 
 When renaming `foo`, it probably makes sense to also rename
