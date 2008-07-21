@@ -2,8 +2,8 @@ Either [[plugins/template]] or [[plugins/shortcut]] should support some form
 of very simple text parsing or regex application, to make it possible to write
 shortcuts like these:
 
-    [[mmlist listname@lists.example.org]] -> <listname@example.org> ([mailman page] (http://lists.example.org/mailman/listinfo/listname)
-    [[debcl packagename]] -> [packagename changelog](http://packages.debian.org/changelogs/pool/main/p/packagename/current/changelog)
+    [[!mmlist listname@lists.example.org]] -> <listname@example.org> ([mailman page] (http://lists.example.org/mailman/listinfo/listname)
+    [[!debcl packagename]] -> [packagename changelog](http://packages.debian.org/changelogs/pool/main/p/packagename/current/changelog)
 
 For shortcut definitions, a `match` parameter could supply a regex, and then the `url` and `desc` parameters could make use of the named or numbered groups from the match.
 

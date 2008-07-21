@@ -30,14 +30,14 @@ Brad
 >
 > This could also be implemented using a combination of raw inline and meta
 > to change the title (add a "redirected from etc." page. This could be done
-> with a plugin. A redirect page would be [[redirect page="newpage"]].
+> with a plugin. A redirect page would be [[!redirect page="newpage"]].
 > But then if you click "edit" on this redirect page, you won't be able
 > to edit the new page, only the call to redirect.
 > --Ethan
 
 -----
 
-[[tag patch]]
+[[!tag patch]]
 
 This is my second cut at a feature like that requested here.
 It can also be found [here](http://ikidev.betacantrips.com/patches/move.patch).

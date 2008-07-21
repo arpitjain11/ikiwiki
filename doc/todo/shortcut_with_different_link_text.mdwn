@@ -49,9 +49,9 @@ specifying the actual target elsewhere from the text, with just a short referenc
 
     Here [is][1] a link.
 
-      [1]: [[l a_page_in_the_wiki]]
+      [1]: [[!l a_page_in_the_wiki]]
 
-    Obviously [this]([[l another_page]]) also works, although the syntax is quite cumbersome.
+    Obviously [this]([[!l another_page]]) also works, although the syntax is quite cumbersome.
 
 So that the 'l' plugin inserts the location the page there, and markdown does the rest. My plugin currently fails if it can't find the page, as that is sufficient for my needs. Differing colouring for non-existing pages is not doable in a straightforward manner with this approach.
 

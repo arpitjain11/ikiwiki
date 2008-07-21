@@ -9,8 +9,8 @@ Here's Thomas Schwinge unfinished darcs support for ikiwiki.
 
 -- [Thomas Schwinge](mailto:tschwinge@gnu.org)
 
-[[toggle text="show"]]
-[[toggleable text="""
+[[!toggle text="show"]]
+[[!toggleable text="""
 	# Support for the darcs rcs, <URL:http://darcs.net/>.
 	# Copyright (C) 2006  Thomas Schwinge <tschwinge@gnu.org>
 	#
@@ -206,8 +206,8 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 
 `rcs_commit()` uses backticks instead of `system()`, to prevent darcs' output being sent to the browser and mucking with the HTTP headers (`darcs record` has no --quiet option). And `rcs_recentchanges()` uses regexes rather than parsing darcs' XML output.
 
-[[toggle text="show" id="bma"]]
-[[toggleable id="bma" text="""
+[[!toggle text="show" id="bma"]]
+[[!toggleable id="bma" text="""
 
 	#!/usr/bin/perl
 	
@@ -334,8 +334,8 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 
 Well, here's my version too. It only does getctime -- using a real XML parser, instead of regexp ugliness -- and maybe recentchanges, but that may be bitrotted, or maybe I never finished it, as I only need the getctime. As for actual commits, I have previously voiced my opinion, that this should be done by the plugin generating a patch bundle, and forwarding it to darcs in some way (`darcs apply` or even email to another host, possibly moderated), instead of the hacky direct modification of a working copy. It could also be faster to getctime in a batch. Just reading in all the changes the first time they're needed, might not be a big improvement in many cases, but if we got a batch request from ikiwiki, we could keep reaing the changes until all the files in this batch request have been met.  --[[tuomov]]
 
-[[toggle text="show" id="tuomov"]]
-[[toggleable id="tuomov" text="""
+[[!toggle text="show" id="tuomov"]]
+[[!toggleable id="tuomov" text="""
 <pre>
 #!/usr/bin/perl
 # Stubs for no revision control.
@@ -484,4 +484,4 @@ I have addressed the recentchanges bit, you can find my hacked up darcs.pm at <h
 
 It's got couple of FIXMEs, and a very site-specific filter for recentchanges. Not sure how to do that better though. I will eventually add web commits, probably of my own (and mention it here).
 
-[[tag patch]]
+[[!tag patch]]
