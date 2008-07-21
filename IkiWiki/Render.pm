@@ -245,11 +245,11 @@ sub prune ($) { #{{{
 } #}}}
 
 sub refresh () { #{{{
-	# security check, avoid following symlinks in the srcdir path
+	# security check, avoid following symlinks in the srcdir path by default
 	my $test=$config{srcdir};
 	while (length $test) {
-		if (-l $test) {
-			error("symlink found in srcdir path ($test)");
+		if (-l $test && ! $config{allow_symlinks_before_srcdir}) {
+			error("symlink found in srcdir path ($test) -- set allow_symlinks_before_srcdir to allow this");
 		}
 		unless ($test=~s/\/+$//) {
 			$test=dirname($test);
