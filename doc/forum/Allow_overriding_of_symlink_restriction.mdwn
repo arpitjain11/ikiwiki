@@ -132,6 +132,4 @@ like this being accepted before I bothered.
 >> hrm.  I might see if <code> File::Spec->rel2abs( $path ) ; </code> will give absolute an path without expanding symlinks.
 >>> Patch using rel2abs() works well - it no longer expands symlinks.
 
-> I suppose you could do the same thing with `$this`, but it does not sound
-> like it has caused you problems anyway.
-> --[[Joey]]
+>>>> That patch is applied now. --[[Joey]]

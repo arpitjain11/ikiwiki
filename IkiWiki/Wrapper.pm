@@ -4,14 +4,14 @@ package IkiWiki;
 
 use warnings;
 use strict;
-use Cwd q{abs_path};
+use File::Spec;
 use Data::Dumper;
 use IkiWiki;
 
 sub gen_wrapper () { #{{{
-	$config{srcdir}=abs_path($config{srcdir});
-	$config{destdir}=abs_path($config{destdir});
-	my $this=abs_path($0);
+	$config{srcdir}=File::Spec->rel2abs($config{srcdir});
+	$config{destdir}=File::Spec->rel2abs($config{destdir});
+	my $this=File::Spec->rel2abs($0);
 	if (! -x $this) {
 		error(sprintf(gettext("%s doesn't seem to be executable"), $this));
 	}
