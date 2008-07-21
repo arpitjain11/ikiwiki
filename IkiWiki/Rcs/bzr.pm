@@ -89,6 +89,12 @@ sub rcs_add ($) { # {{{
 	}
 } #}}}
 
+sub rcs_remove ($) { # {{{
+	my ($file) = @_;
+
+	error("rcs_remove not implemented for bzr"); # TODO
+} #}}}
+
 sub rcs_recentchanges ($) { #{{{
 	my ($num) = @_;
 

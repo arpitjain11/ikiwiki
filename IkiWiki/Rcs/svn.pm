@@ -134,6 +134,23 @@ sub rcs_add ($) { #{{{
 	}
 } #}}}
 
+sub rcs_remove ($) { #{{{
+	# filename is relative to the root of the srcdir
+	my $file=shift;
+
+	if (-d "$config{srcdir}/.svn") {
+		my $parent=dirname($file);
+		while (! -d "$config{srcdir}/$parent/.svn") {
+			$file=$parent;
+			$parent=dirname($file);
+		}
+		
+		if (system("svn", "rm", "--force", "--quiet", "$config{srcdir}/$file") != 0) {
+			warn("svn rm failed\n");
+		}
+	}
+} #}}}
+
 sub rcs_recentchanges ($) { #{{{
 	my $num=shift;
 	my @ret;

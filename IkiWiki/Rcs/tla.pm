@@ -88,6 +88,12 @@ sub rcs_add ($) { #{{{
 	}
 } #}}}
 
+sub rcs_remove ($) { # {{{
+	my $file = shift;
+
+	error("rcs_remove not implemented for tla"); # TODO
+} #}}}
+
 sub rcs_recentchanges ($) {
 	my $num=shift;
 	my @ret;

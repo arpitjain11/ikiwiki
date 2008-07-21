@@ -33,6 +33,12 @@ sub rcs_add ($) {
 	# prepare for it to be checked in when rcs_commit is called.
 }
 
+sub rcs_remove ($) {
+	# Remove a file. The filename is relative to the root of the srcdir.
+	# Note that this should not check the removal in, it should only
+	# prepare for it to be checked in when rcs_commit is called.
+}
+
 sub rcs_recentchanges ($) {
 	# Examine the RCS history and generate a list of recent changes.
 	# The data structure returned for each change is:

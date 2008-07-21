@@ -348,6 +348,14 @@ sub rcs_add ($) { # {{{
 	run_or_cry('git', 'add', $file);
 } #}}}
 
+sub rcs_remove ($) { # {{{
+	# Remove file from archive.
+
+	my ($file) = @_;
+
+	run_or_cry('git', 'rm', '-f', $file);
+} #}}}
+
 sub rcs_recentchanges ($) { #{{{
 	# List of recent changes.
 

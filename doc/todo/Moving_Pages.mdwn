@@ -395,16 +395,10 @@ is checked too.
 
 ## RCS
 
-Two new optional functions are added to the RCS interface:
+Two new functions are added to the RCS interface:
 
-* `rcs_delete(file, message, rcstoken, user, ipaddr)`
-* `rcs_rename(old, new, message, rcstoken, user, ipaddr)`
-
-The page move/rename code will check if these are not available, and error
-out.
-
-Similar to `rcs_commit` both of these take a rcstoken, which is generated
-by an earlier `rcs_prepedit`.
+* `rcs_remove(file)`
+* `rcs_rename(old, new)`
 
 ## conflicts
 
