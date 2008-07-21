@@ -1,0 +1,37 @@
+It should be possible to configure ikiwiki online, in the wiki admin's
+preferences form. Rather than the current situation where most settings are
+in ikiwiki.setup, and one or two (like locked pages and upload limits) in
+the admin preferences.
+
+In theory, every setting could be configured there. In practice, some
+settings, like `srcdir` and `destdir` are ones you want to keep far away
+from editing via the web.
+
+One way to do it would be for the ikiwiki.setup to allow delegating
+specific settings to the admin prefs.. lets say by setting them to undef,
+while values that the admin prefs can't set would be set as usual:
+
+	rss => undef,
+	atom => undef,
+	discussion => undef,
+	syslog => undef,
+	srcdir => "/srv/www",
+	plugins => undef,
+
+Currently admin prefs are per-admin, and are stored in the userdb.
+That seems like a bad choice in the context of this idea. Instead, admin
+prefs should be shared amoung all admins, and the ideal storage would be
+another ikiwiki setup file, which could be loaded in, and written back out.
+
+If `ikiwiki-makerepo` were extended a little bit to generate the stub setup
+file that's enough to get `ikiwiki.cgi` working, and that sets values for
+all the dangerous options, leaving only safe ones 'undef', then users could
+set up ikiwiki using it, and configure the rest with the web interface,
+without ever needing to edit a setup file.
+
+Implementing this probably means, for every setup option, adding a short
+description, that links to a long description on a basewiki page, and a type
+specifier so that it can be represented well in the web interface. Also
+some way to group options into sections. --[[Joey]]
+
+[[tag wishlist]]
