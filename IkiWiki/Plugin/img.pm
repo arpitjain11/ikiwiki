@@ -42,8 +42,8 @@ sub preprocess (@) { #{{{
 
 	my $file = bestlink($params{page}, $image);
 	my $srcfile = srcfile($file, 1);
-	if (! defined $srcfile) {
-		error(sprintf(gettext("%s not found"), $image));
+	if (! length $file || ! defined $srcfile) {
+		return htmllink($params{page}, $params{destpage}, $image);
 	}
 
 	my $dir = $params{page};
