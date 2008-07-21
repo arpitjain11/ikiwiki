@@ -18,3 +18,12 @@ A demo is at <http://www.attacklab.net/showdown-gui.html>
 >> be worthwhile to consider this option again? It seems to have a companion
 >> product (wmd) with formatting widgets and a live preview pane, that is
 >> promised to be MIT licensed as of the next release.... --Chapman Flack
+
+>>> What sort of integration would be needed to put in WMD?
+>>> It looks like it would need to be aware of some plugin/wikiword behavior
+>>> ... perhaps taking a Wikiword and making it appear like a link in preview, but
+>>> with a different style (perhaps diff color/font).  For plugin commands,
+>>> applying a 'real' preview would probably be difficult, so it'd probably
+>>> be necessary to insert some sort of placeholder, perhaps by outputting
+>>> the text in monospace form w/ a lighter font to denote that it won't
+>>> directly be shown in the page... -- [[harningt]]

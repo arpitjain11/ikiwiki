@@ -1,0 +1,143 @@
+[[!tag patch wishlist]]
+
+ikiwiki should support [Central Authentication
+Service](http://www.ja-sig.org/products/cas/) authentication in order to use
+this <acronym title='Single Sign On'>SSO</acronym> mechanism very popular in
+universities web services.
+
+I have already written a first draft plugin supporting that authentication
+mechanism. It works for me with my university CAS service. I did not try it
+with other CAS server but it do not see any reason why it should not work.
+
+What is the best way to submit it to you (just in case it can help my patch
+follows) ?
+
+--[[/users/bbb]]
+
+------------------------------------------------------------------------------
+    diff --git a/IkiWiki/Plugin/cas.pm b/IkiWiki/Plugin/cas.pm
+    new file mode 100644
+    index 0000000..ea189df
+    --- /dev/null
+    +++ b/IkiWiki/Plugin/cas.pm
+    @@ -0,0 +1,94 @@
+    +#!/usr/bin/perl
+    +# JaSIG CAS support by Bruno Beaufils <bruno@boulgour.com>
+    +package IkiWiki::Plugin::cas;
+    +
+    +use warnings;
+    +use strict;
+    +use IkiWiki 2.00;
+    +use AuthCAS;                  # http://search.cpan.org/~osalaun/AuthCAS-1.3.1/
+    +
+    +sub import { #{{{
+    +    hook(type => "getopt", id => "cas", call => \&getopt);
+    +    hook(type => "auth", id => "cas", call => \&auth);
+    +    hook(type => "formbuilder_setup", id => "cas", call => \&formbuilder_setup);
+    +} # }}}
+    +
+    +# FIXME: We should check_config to ensure that :
+    +# * cas_url and ca_file are present
+    +# * no other auth plugin are present (at least passwordauth and openid)
+    +
+    +sub getopt () { #{{{
+    +    eval q{use Getopt::Long};
+    +    error($@) if $@;
+    +    Getopt::Long::Configure('pass_through');
+    +    GetOptions("cas_url=s" => \$config{cas_url});
+    +    GetOptions("ca_file=s" => \$config{ca_file});
+    +} #}}}
+    +
+    +sub auth ($$) { #{{{
+    +    my $q=shift;
+    +    my $session=shift;
+    +
+    +    my $cas = new AuthCAS(casUrl => $config{'cas'}{'cas_url'},
+    +                          CAFile => $config{'cas'}{'ca_file'});
+    +
+    +    my $service = $config{'cgiurl'};
+    +    my $ticket = $q->param('ticket');
+    +
+    +    unless (defined($ticket)) {
+    +        $service .= "?$ENV{QUERY_STRING}";
+    +        my $login_url = $cas->getServerLoginURL($service);
+    +        debug("CAS: asking a Service Ticket for service $service");
+    +        IkiWiki::redirect($q, $login_url);
+    +        exit 0;
+    +    } else {
+    +        $service = $service . "?$ENV{QUERY_STRING}";
+    +        $service =~ s/\&ticket=$ticket//;
+    +        my $user = $cas->validateST($service, $ticket);
+    +        if (defined $user) {
+    +            debug("CAS: validating a Service Ticket ($ticket) for service $service");
+    +            $session->param(name=>$user);
+    +            $session->param(CASservice=>$service);
+    +            IkiWiki::cgi_savesession($session);
+    +        } else {
+    +            error("CAS failure: ".&AuthCAS::get_errors());
+    +        }
+    +    }
+    +} #}}}
+    +
+    +# I use formbuilder_setup and not formbuilder type in order to bypass the
+    +# Logout processing done in IkiWiki::CGI::cgi_prefs()
+    +sub formbuilder_setup (@) { #{{{
+    +    my %params=@_;
+    +    
+    +    my $form=$params{form};
+    +    my $session=$params{session};
+    +    my $cgi=$params{cgi};
+    +    my $buttons=$params{buttons};
+    +
+    +    my $cas = new AuthCAS(casUrl => $config{'cas'}{'cas_url'},
+    +                          CAFile => $config{'cas'}{'ca_file'});
+    +
+    +    if ($form->title eq "preferences") {
+    +        # Show the login
+    +        if (! defined $form->field(name => "name")) {
+    +            $form->field(name => "CAS ID",
+    +                         disabled => 1,
+    +                         value => $session->param("name"), 
+    +                         size => 50,
+    +                         force => 1,
+    +                         fieldset => "login");
+    +        }
+    +        
+    +        # Force a logout if asked
+    +        if ($form->submitted && $form->submitted eq 'Logout')
+    +        {
+    +            debug("CAS: asking to remove the Ticket Grant Cookie");
+    +            IkiWiki::redirect($cgi, $cas->getServerLogoutURL($config{'url'}));
+    +            $session->delete();
+    +            exit 0;
+    +        }
+    +    }
+    +}
+    +
+    +1
+    diff --git a/doc/plugins/cas.mdwn b/doc/plugins/cas.mdwn
+    new file mode 100644
+    index 0000000..2f2f53e
+    --- /dev/null
+    +++ b/doc/plugins/cas.mdwn
+    @@ -0,0 +1,18 @@
+    +[[ template id=plugin name=cas core=0 author="[[bbb]]"]]
+    +[[ tag type/auth]]
+    +
+    +This plugin allows users to use authentication offered by a
+    +[JaSIG](http://www.ja-sig.org) [<acronym title='Central Authentication
+    +Service'>CAS</acronym>](http://www.ja-sig.org/products/cas/) server to log
+    +into the wiki.
+    +
+    +The plugin needs the [[!cpan AuthCAS-1.3.1]] perl module.
+    +
+    +This plugin has two mandatory configuration option. You **must** set `--cas_url`
+    +to the url of a server offering CAS 2.0 authentication. You must also set the
+    +`--ca_file` to an absolute path to the file containing CA certificates used by
+    +the server (generally, aka under Debian, fixing that value to
+    +`/etc/ssl/certs/ca-certificates.crt` is sufficient).
+    +
+    +This plugin is not enabled by default. It can not be used with other
+    +authentication plugin, such as [[passwordauth]] or [[openid]].
+
+------------------------------------------------------------------------------
