@@ -1,0 +1,66 @@
+It should be possible to configure ikiwiki online, in the wiki admin's
+preferences form. Rather than the current situation where most settings are
+in ikiwiki.setup, and one or two (like locked pages and upload limits) in
+the admin preferences.
+
+In theory, every setting could be configured there. In practice, some
+settings, like `srcdir` and `destdir` are ones you want to keep far away
+from editing via the web.
+
+Currently admin prefs are per-admin, and are stored in the userdb.
+That seems like a bad choice in the context of this idea. Instead, admin
+setup should be configured on a separate page than the regular user prefs
+page, and should be shared amoung all admins, and the ideal storage would be
+another ikiwiki setup file, which could be loaded in, and written back out.
+
+If `ikiwiki-makerepo` were extended a little bit to generate the stub setup
+file that's enough to get `ikiwiki.cgi` working, and that sets values for
+all the dangerous options, leaving only safe ones 'undef', then users could
+set up ikiwiki using it, and configure the rest with the web interface,
+without ever needing to edit a setup file.
+
+The setup page could `require` every available plugin, and then call a
+`getsetup` function, which would look something like:
+
+	sub getsetup () {
+		eval q{use Some::Thing};
+		die $@ if $@;
+
+		return option_foo => {
+			safe => 1,
+			rebuild => 1,
+			type => "boolean",
+			default => 0,
+			description => gettext("Enable foo."),
+		},
+		option_bar => {
+			safe => 0,
+			rebuild => 0,
+			type => "password",
+			default => "",
+			description => gettext("Password for bar."),
+		};
+	}
+
+The types would be: boolean, string, password, filename, other.
+This would be the type of the leaf fields; if a value in `%config` is an
+array or hash, the type specifies the type of values that go into it.
+
+From this info, a form can be built, that has core setup values at the
+top, followed by each plugin whose `getsetup` succeeded, with a check box
+to enable/disable that plugin, and all of its setup options listed after
+it.
+
+The main setup file could control what options are read from the
+online setup file:
+
+	online_setup_include => 'safe', # all things with safe = 1
+	online_setup_exclude => [qw{option_baz}],
+
+Note that posting the setup form would sometimes need to cause a rebuild
+of the whole wiki. This could be done with output streamed to the admin in
+the web browser. The `rebuild` fields would be set to 1 for values that
+require a wiki rebuild when changed, and to 0 for values that only need the
+wrappers to be refreshed.
+
+[[tag wishlist]]
