@@ -1,5 +1,5 @@
-[[template id=plugin name=mdwn core=1 author="[[Joey]]"]]
-[[tag type/format]]
+[[!template id=plugin name=mdwn core=1 author="[[Joey]]"]]
+[[!tag type/format]]
 
 This plugin lets ikwiki convert files with names ending in ".mdwn" to html.
 It uses the [[ikiwiki/markdown]] minimal markup language.
@@ -10,9 +10,9 @@ are also available in other plugins.
 There are several implementations of markdown support that can be used by
 this plugin. The [original version of
 markdown](http://daringfireball.net/projects/markdown/) can be used, or the
-[[cpan Text::Markdown]] perl module.
+[[!cpan Text::Markdown]] perl module.
 
-[[cpan Text::Markdown]] also includes a markdown variant called
+[[!cpan Text::Markdown]] also includes a markdown variant called
 [multimarkdown](http://fletcherpenney.net/MultiMarkdown/), which supports
 tables, footnotes, and other new features. Multimarkdown is not enabled by
 default, but can be turned on via the `multimarkdown` option in the setup

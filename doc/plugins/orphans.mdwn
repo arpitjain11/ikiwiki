@@ -1,5 +1,5 @@
-[[template id=plugin name=orphans author="[[Joey]]"]]
-[[tag type/meta]]
+[[!template id=plugin name=orphans author="[[Joey]]"]]
+[[!tag type/meta]]
 
 This plugin generates a list of possibly orphaned pages -- pages that no
 other page links to.
@@ -11,10 +11,10 @@ Note that it takes [[BackLinks]] into account, but does not count inlining a
 page as linking to it, so will generally count many blog-type pages as
 orphans.
 
-[[if test="enabled(orphans)" then="""
+[[!if test="enabled(orphans)" then="""
 Here's a list of orphaned pages on this wiki:
 
-[[orphans pages="* and !news/* and !todo/* and !bugs/* and !users/* and
+[[!orphans pages="* and !news/* and !todo/* and !bugs/* and !users/* and
 !recentchanges and !examples/* and !tips/* and !sandbox/* and !templates/* and
 !wikiicons/* and !plugins/*"]]
 """]]

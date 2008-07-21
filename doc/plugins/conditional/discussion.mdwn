@@ -14,9 +14,9 @@ is supposed to have *no* blank lines between...
 > The blank lines in this example are coming from the newline after `then="`, and also from the newline before the close quote. If you remove those newlines, I think it should work. --[[Joey]]
 
 >> No, that's unfortunately not it, see here:
->> [[if test="enabled(trallala)" then="foot"]]
+>> [[!if test="enabled(trallala)" then="foot"]]
 >> Continued.  But on the other
->> [[if test="enabled(trallala)" then="foot" else="hand:"]]
+>> [[!if test="enabled(trallala)" then="foot" else="hand:"]]
 >> Continued.  --[[tschwinge]]
 
 >>> Seems ok, no? The only linebreaks I see in the source are the ones you
@@ -25,9 +25,9 @@ is supposed to have *no* blank lines between...
 >>>> Okay, that would explain the linebreak between 1 and 3.  But then, why are all linebreaks removed between 3 and 5?
 
 >>>> 1 No, that's unfortunately not it, see here:
->>>> [[if test="enabled(trallala)" then="foot"]]
+>>>> [[!if test="enabled(trallala)" then="foot"]]
 >>>> 3 Continued.  But on the other
->>>> [[if test="enabled(trallala)" then="foot" else="hand:"]]
+>>>> [[!if test="enabled(trallala)" then="foot" else="hand:"]]
 >>>> 5 Continued.  --[[tschwinge]]
 
 >>>>> The conditional after 1 evaluates to "", so there's a blank line

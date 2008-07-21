@@ -3,7 +3,7 @@ written to extend ikiwiki in many ways. Despite the length of this page,
 it's not really hard. This page is a complete reference to everything a
 plugin might want to do. There is also a quick [[tutorial]].
 
-[[toc levels=2]]
+[[!toc levels=2]]
 
 ## Types of plugins
 
@@ -189,7 +189,7 @@ ikiwiki, like generating a page, or part of a blog page, or an rss feed, or
 a cgi. This hook allows modifying the variables available on those
 templates. The function is passed named parameters. The "page" and
 "destpage" parameters are the same as for a preprocess hook. The "template"
-parameter is a [[cpan HTML::Template]] object that is the template that
+parameter is a [[!cpan HTML::Template]] object that is the template that
 will be used to generate the page. The function can manipulate that
 template object.
 
@@ -325,7 +325,7 @@ It can modify the content as desired, and should return the content.
 	hook(type => "formbuilder_setup", id => "foo", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "foo", call => \&formbuilder);
 
-These hooks allow tapping into the parts of ikiwiki that use [[cpan
+These hooks allow tapping into the parts of ikiwiki that use [[!cpan
 CGI::FormBuilder]] to generate web forms. These hooks are passed named
 parameters: `cgi`, `session`, `form`, and `buttons`. These are, respectively,
 the `CGI` object, the user's `CGI::Session`, a `CGI::FormBuilder`, and a
@@ -433,7 +433,7 @@ the entire wiki build and make the wiki unusable.
 
 #### `template($;@)`
 
-Creates and returns a [[cpan HTML::Template]] object. The first parameter
+Creates and returns a [[!cpan HTML::Template]] object. The first parameter
 is the name of the file in the template directory. The optional remaining
 parameters are passed to `HTML::Template->new`.
 

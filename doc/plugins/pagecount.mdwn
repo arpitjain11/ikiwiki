@@ -1,5 +1,5 @@
-[[template id=plugin name=pagecount author="[[Joey]]"]]
-[[tag type/meta]]
+[[!template id=plugin name=pagecount author="[[Joey]]"]]
+[[!tag type/meta]]
 
 Provides a \\[[pagecount ]] [[ikiwiki/PreProcessorDirective]] that is
 replaced with the total number of pages currently in the wiki.
@@ -10,5 +10,5 @@ pages to count, default is to count them all.
 This plugin is included in ikiwiki, but is not enabled by default.
 
 If it is turned on it can tell us that this wiki includes
-[[pagecount pages="* and !recentchanges"]]
-pages, of which [[pagecount pages="*/Discussion"]] are discussion pages.
+[[!pagecount pages="* and !recentchanges"]]
+pages, of which [[!pagecount pages="*/Discussion"]] are discussion pages.

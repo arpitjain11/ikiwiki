@@ -5,7 +5,7 @@ What should the plugin do? Let's make it calculate and output the Fibonacci
 sequence. To output the next number in the sequence, all a user has to do
 is write this on a wiki page:
 
-	[[fib ]]
+	[[!fib ]]
 
 When the page is built, the [[ikiwiki/PreProcessorDirective]] will be
 replaced by the next number in the sequence.
@@ -44,7 +44,7 @@ that "fib" has shown up again. It doesn't actually have to match the module
 name this time, but it generally will. This "fib" is telling ikiwiki what
 kind of PreprocessorDirective to handle, namely one that looks like this:
 
-	[[fib ]]
+	[[!fib ]]
 
 Notice the `\&preprocess`? This is how you pass a reference to a function,
 and the `preprocess` function is the one that ikiwiki will call to expand
@@ -98,7 +98,7 @@ And let's change the `preprocess` sub to use it:
 
 Feel free to try it out with a simple page like this:
 
-	[[fib ]], [[fib ]], [[fib ]], [[fib ]], [[fib ]]
+	[[!fib ]], [[!fib ]], [[!fib ]], [[!fib ]], [[!fib ]]
 
 Looks like it works ok, doesn't it? That creates a page that lists:
 
@@ -139,7 +139,7 @@ Ok, one more enhancement. Just incrementing the numbers is pretty boring.
 It would be nice to be able to jump directly to a given point in the
 sequence:
 
-	\[[fib seed=20]], [[fib ]], [[fib ]]
+	\[[fib seed=20]], [[!fib ]], [[!fib ]]
 
 Just insert these lines of code inside `preprocess`, in the appropriate
 spot:

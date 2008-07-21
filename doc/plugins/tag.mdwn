@@ -1,5 +1,5 @@
-[[template id=plugin name=tag author="[[Joey]]"]]
-[[tag type/tags type/link]]
+[[!template id=plugin name=tag author="[[Joey]]"]]
+[[!tag type/tags type/link]]
 
 This plugin allows tagging pages. List tags as follows:
 
@@ -24,7 +24,7 @@ tags/tech, tags/life, and tags/linux. This is a useful way to avoid
 having to write the full path to tags, if you want to keep them grouped
 together out of the way.
 
-[[if test="enabled(tag)" then="""
+[[!if test="enabled(tag)" then="""
 This wiki has the tag plugin enabled, so you'll see a note below that this
 page is tagged with the "tags" tag.
 """]]

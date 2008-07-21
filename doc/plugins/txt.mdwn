@@ -1,5 +1,5 @@
-[[template id=plugin name=txt author="[[Gabriel]]"]]
-[[tag type/format]]
+[[!template id=plugin name=txt author="[[Gabriel]]"]]
+[[!tag type/format]]
 
 This plugin makes ikiwiki treat files with names ending in ".txt"
 as wiki pages.
@@ -10,5 +10,5 @@ with html markup characters such as ">" escaped.
 
 The only exceptions are that [[WikiLinks|WikiLink]] and
 [[PreprocessorDirectives|PreprocessorDirective]] are still expanded by
-ikiwiki, and that, if the [[cpan URI::Find]] perl module is installed, URLs
+ikiwiki, and that, if the [[!cpan URI::Find]] perl module is installed, URLs
 in the txt file are converted to hyperlinks.

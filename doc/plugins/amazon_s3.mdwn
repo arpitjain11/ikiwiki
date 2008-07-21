@@ -1,12 +1,12 @@
-[[template id=plugin name=amazon_s3 author="[[Joey]]"]]
-[[tag type/special-purpose]]
+[[!template id=plugin name=amazon_s3 author="[[Joey]]"]]
+[[!tag type/special-purpose]]
 
 This plugin allows ikiwiki to publish a wiki in the [Amazon Simple Storage
 Service](http://aws.amazon.com/s3) (S3). As pages are rendered, ikiwiki
 will upload them to Amazon S3. The entire wiki contents, aside from the
 ikiwiki CGI, can then be served directly out of Amazon S3.
 
-You'll need the [[cpan Net::Amazon::S3]] and [[cpan File::MimeInfo]] perl
+You'll need the [[!cpan Net::Amazon::S3]] and [[!cpan File::MimeInfo]] perl
 modules and an Amazon S3 account to use this plugin.
 
 ## configuration

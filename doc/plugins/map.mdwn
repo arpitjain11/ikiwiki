@@ -1,7 +1,7 @@
-[[template id=plugin name=map author="Alessandro Dotti Contra"]]
-[[tag type/meta]]
+[[!template id=plugin name=map author="Alessandro Dotti Contra"]]
+[[!tag type/meta]]
 
-[[meta description="some page description"]]
+[[!meta description="some page description"]]
 
 This plugin generates a hierarchical page map for the wiki. Example usage:
 
@@ -19,7 +19,7 @@ the [[meta]] plugin). For example:
 Hint: To limit the map to displaying pages less than a certain level deep,
 use a [[ikiwiki/PageSpec]] like this: `pages="* and !*/*/*"`
 
-[[if test="enabled(map)" then="""
+[[!if test="enabled(map)" then="""
 Here's an example map, for the plugins section of this wiki:
 
 [[!map pages="(plugins or plugins/*) and !*/*/*"]]
