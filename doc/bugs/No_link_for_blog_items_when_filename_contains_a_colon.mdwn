@@ -53,3 +53,9 @@ At the moment I see two possible solutions:
          } #}}}
 
 What do you think about that? Does the patch have any side-effects I didn't see?
+
+> What version of ikiwiki are you seeing it with? I fixed another
+> colon-bug in version 2.53; you'd need to rebuild any affected wikis to
+> get the fix. The relevant code is in `beautify_urlpath`, where it adds
+> "./" in front of every relative url. An example of it working in this
+> very wiki is a link to [[colon:problem]] --[[Joey]]
