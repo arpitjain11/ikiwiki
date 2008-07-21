@@ -120,12 +120,22 @@ sub sessioncgi ($$) { #{{{
 	
 			# Validate removal by checking that the page exists,
 			# and that the user is allowed to edit(/remove) it.
+			my @files;
 			foreach my $page (@pages) {
 				if (! exists $pagesources{$page}) {
 					error(sprintf(gettext("%s does not exist"),
 					htmllink("", "", $page, noimageinline => 1)));
 				}
 				IkiWiki::check_canedit($page, $q, $session);
+
+				my $file=$pagesources{$_};
+				if (! -e "$config{srcdir}/$file") {
+					error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
+				}
+				elsif (! -f "$config{srcdir}/$file") {
+					error(sprintf(gettext("%s is not a file"), $file));
+				}
+				push @files, $file;
 			}
 
 			# Do removal, and update the wiki.
@@ -133,23 +143,30 @@ sub sessioncgi ($$) { #{{{
 			if ($config{rcs}) {
 				IkiWiki::disable_commit_hook();
 				foreach my $file (@files) {
+					my $token=IkiWiki::rcs_prepedit($file);
 					IkiWiki::rcs_remove($file);
 					IkiWiki::rcs_commit($file, gettext("removed"),
-						IkiWiki::rcs_prepedit($file),
-						$session->param("name"), $ENV{REMOTE_ADDR});
+						$token, $session->param("name"), $ENV{REMOTE_ADDR});
 				}
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
 			}
+			else {
+				foreach my $file (@files) {
+					IkiWiki::prune("$config{srcdir}/$file");
+				}
+			}
 			foreach my $file (@files) {
-				IkiWiki::prune("$config{srcdir}/$file");
+				delete $IkiWiki::pagecase{$file};
+				print STDERR "delete $file\n";
+				delete $IkiWiki::links{$file};
 			}
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
 			if ($q->param("attachment")) {
 				# Attachments were deleted, so redirect
-				# to the edit form.
+				# back to the edit form.
 				postremove($session);
 			}
 			else {
