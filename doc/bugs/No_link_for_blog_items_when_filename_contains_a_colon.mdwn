@@ -22,4 +22,39 @@ In any case, `htmlscrubber` should get a new regexp, courtesy of dato:
 [Commit/patch
 be0b4f60](http://git.madduck.net/v/code/ikiwiki.git?a=commit;h=be0b4f603f918444b906e42825908ddac78b7073) fixes this.
 
-[[done]]
+
+**July 21 2008:** I update this bug report as it still seems to be an issue: E.g. when creating a subpage whose name contains
+a colon by inserting an appropriate wikilink in the parent page: the new page can be created using that link, but afterwards
+there won't be a link to this page. Like madduck said above it seems to be htmlscrubber removing this link. However everything
+works fine if the same page is being linked to from another subpage because in that case the resulting link starts with `../`.
+
+At the moment I see two possible solutions:
+
+1. let all relative links at least start with `./`. I haven't tested this.
+
+2. Escape the colon in page titles. I created the following patch which worked for me:
+
+        --- IkiWiki.pm.2.53-save        2008-07-08 15:56:38.000000000 +0200
+        +++ IkiWiki.pm  2008-07-21 20:41:35.000000000 +0200
+        @@ -477,13 +477,13 @@
+
+         sub titlepage ($) { #{{{
+                my $title=shift;
+        -       $title=~s/([^-[:alnum:]:+\/.])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+        +       $title=~s/([^-[:alnum:]+\/.])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+                return $title;
+         } #}}}
+
+         sub linkpage ($) { #{{{
+                my $link=shift;
+        -       $link=~s/([^-[:alnum:]:+\/._])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+        +       $link=~s/([^-[:alnum:]+\/._])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+                return $link;
+         } #}}}
+
+What do you think about that? Does the patch have any side-effects I didn't see?
+
+> I almost really fixed this in 2.53, but missed one case. All fixed now
+> AFAICS. --[[Joey]]
+
+[[tag done]]

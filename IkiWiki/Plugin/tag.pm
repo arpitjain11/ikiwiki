@@ -25,7 +25,8 @@ sub getopt () { #{{{
 sub tagpage ($) { #{{{
 	my $tag=shift;
 			
-	if (exists $config{tagbase} &&
+	if ($tag !~ m{^\.?/} &&
+	    exists $config{tagbase} &&
 	    defined $config{tagbase}) {
 		$tag=$config{tagbase}."/".$tag;
 	}
