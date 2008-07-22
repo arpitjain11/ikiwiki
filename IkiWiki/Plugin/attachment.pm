@@ -32,7 +32,7 @@ sub check_canattach ($$;$) {
 		}
 	}
 	if (! $allowed) {
-		error(gettext("attachment rejected")." ($allowed)");
+		error(gettext("prohibited by allowed_attachments")." ($allowed)");
 	}
 	else {
 		return 1;
