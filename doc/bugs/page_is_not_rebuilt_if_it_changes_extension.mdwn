@@ -1,0 +1,20 @@
+Suppose a wiki has a source page a.mdwn, which is then moved to a.wiki.
+(Suppose both the mdwn and wikitext plugins are enabled, so this changes how "a" is rendered.)
+Currently, when the wiki is refreshed, ikiwiki doesn't notice the change
+and the page is not rebuilt.
+
+I have a [[patch]] that fixes this.
+The relevant commit on [my Github fork of ikiwiki](http://github.com/gmcmanus/ikiwiki/) is:
+
+    b6a3b8a683fed7a7f6d77a5b3f2dfbd14c849843
+
+The patch (ab)uses`%forcerebuild`, which is meant for use by plugins.
+If, for some reason, a plugin deletes the page's entry in `%forcerebuild`, it won't be rebuilt.
+
+This patch uncovers another problem.
+Suppose a wiki has a source page "a" (no extension)
+which is then moved to "a.mdwn" (or vice versa).
+ikiwiki fails when trying to create a directory "a" where there is a file "a"
+(or vice versa).
+
+The same problem occurs if both "a" and "a.mdwn" exist in the wiki.

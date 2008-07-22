@@ -1,0 +1,30 @@
+From the source of [[usage]]:
+
+    <a href="mailto:joey@ikiwiki.info">&#x6A;&#111;&#101;&#x79;&#64;i&#107;&#105;w&#105;&#107;&#x69;&#46;&#105;n&#x66;&#x6F;</a>
+
+Text::Markdown obfuscates email addresses in the href= attribute and in the text.
+Apparently this can't be configured.
+
+HTML::Scrubber doesn't set `attr_encoded` for its HTML::Parser, so the href= attribtute is decoded.
+Currently it seems it doesn't set `attr_encoded` for good reason: so attributes can be sanitized easily,
+e.g. as in htmlscrubber with `$safe_url_regexp`.
+This apparently can't be configured either.
+
+So I can't see an obvious solution to this.
+Perhaps improvements to Text::Markdown or HTML::Scrubber can allow a fix.
+
+One question is: how useful is email obfuscation?
+Don't spammers use HTML parsers?
+
+> I now see this was noted in the formatting [[/ikiwiki/formatting/discussion]], and won't/can't be fixed.
+> So I guess this is [[done]]. --Gabriel
+
+I've [[patch]]ed mdwn.pm to prevent Text::Markdown from obfuscating the emails.
+The relevant commits are on the master branch of [my "fork" of ikiwiki on Github] [github]:
+
+- 7d0970adbcf0b63e7e5532c239156f6967d10158
+- 52c241e723ced4d7c6a702dd08cda37feee75531
+
+--Gabriel.
+
+[github]: http://github.com/gmcmanus/ikiwiki/

@@ -22,4 +22,15 @@ For now, I want to try and resolve the issues with net\_ssl\_test, and run more 
 > is good.
 > --[[Joey]]
 
-[[!tag done]]
+>> Ok, so I guess the worst that could happen when ikiwiki talks to the http
+>> address is that it gets intercepted, and ikiwiki gets the wrong address.
+>> ikiwiki will then redirect the browser to the wrong address. An attacker could
+>> trick ikiwiki to redirect to their site which always validates the user
+>> and then redirects back to ikiwiki. The legitimate user may not even notice.
+>> That doesn't so seem secure to me...
+
+>> All the attacker needs is access to the network somewhere between ikiwiki
+>> and http://joey.kitenet.net/ or the ability to inject false DNS host names
+>> for use by ikiwiki and the rest is simple.
+
+>> -- Brian May
