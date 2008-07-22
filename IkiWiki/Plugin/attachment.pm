@@ -430,6 +430,9 @@ sub match_user ($$;@) { #{{{
 	if (defined $params{user} && lc $params{user} eq lc $user) {
 		return IkiWiki::SuccessReason->new("user is $user");
 	}
+	elsif (! defined $params{user}) {
+		return IkiWiki::FailReason->new("not logged in");
+	}
 	else {
 		return IkiWiki::FailReason->new("user is $params{user}, not $user");
 	}
