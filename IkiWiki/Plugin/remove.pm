@@ -129,9 +129,6 @@ sub sessioncgi ($$) { #{{{
 					error(sprintf(gettext("%s does not exist"),
 					htmllink("", "", $page, noimageinline => 1)));
 				}
-				
-				# Must be editiable.
-				IkiWiki::check_canedit($page, $q, $session);
 
 				# Must exist on disk, and be a regular file.
 				my $file=$pagesources{$page};
@@ -141,11 +138,19 @@ sub sessioncgi ($$) { #{{{
 				elsif (-l "$config{srcdir}/$file" && ! -f _) {
 					error(sprintf(gettext("%s is not a file"), $file));
 				}
+				
+				# Must be editiable.
+				IkiWiki::check_canedit($page, $q, $session);
+
+				# This is sorta overkill, but better safe
+				# than sorry. If a user can't upload an
+				# attachment, don't let them delete it.
+				if ($q->param("attachment")) {
+					IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
+				}
 
 				push @files, IkiWiki::possibly_foolish_untaint($file);
 			}
-
-			# TODO check attachment limits.
 
 			# Do removal, and update the wiki.
 			require IkiWiki::Render;
