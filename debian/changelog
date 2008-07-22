@@ -1,11 +1,13 @@
 ikiwiki (2.55) UNRELEASED; urgency=low
 
+  * remove: New plugin that adds the ability to remove pages via the web.
+    (Sponsored by The TOVA Company.)
+  * rename: New plugin that adds the ability to rename pages via the web.
+    (Sponsored by The TOVA Company.) (This one's for you, Kyle.)
   * prefix_directives enabled in doc wiki, all preprocessor directives
     converted. (Simon McVittie)
   * editpage: Don't show attachments link when attachments are disabled.
   * All rcs backends need to implement rcs_remove. (Done for svn, git).
-  * remove: New plugin that adds the ability to remove pages via the web.
-    (Sponsored by The TOVA Company.)
   * tag: Allow tagbase to be overridden by starting a tag with "./" or "/".
     (Simon McVittie)
   * Really fix bug with links to pages with names containing colons. 

@@ -97,11 +97,11 @@ sub formbuilder (@) { #{{{
 			removal_confirm($q, $session, 0, $form->field("page"));
 		}
 		elsif ($form->submitted eq "Remove Attachments") {
-			my @pages=$q->param("attachment_select");
-			if (! @pages) {
+			my @selected=$q->param("attachment_select");
+			if (! @selected) {
 				error(gettext("Please select the attachments to remove."));
 			}
-			removal_confirm($q, $session, 1, @pages);
+			removal_confirm($q, $session, 1, @selected);
 		}
 	}
 } #}}}
@@ -144,6 +144,8 @@ sub sessioncgi ($$) { #{{{
 
 				push @files, IkiWiki::possibly_foolish_untaint($file);
 			}
+
+			# TODO check attachment limits.
 
 			# Do removal, and update the wiki.
 			require IkiWiki::Render;
