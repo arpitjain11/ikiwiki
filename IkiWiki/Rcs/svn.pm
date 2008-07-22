@@ -117,6 +117,28 @@ sub rcs_commit ($$$;$$) { #{{{
 	return undef # success
 } #}}}
 
+sub rcs_commit_staged ($$$) {
+	# Commits all staged changes. Changes can be staged using rcs_add,
+	# rcs_remove, and rcs_rename.
+	my ($message, $user, $ipaddr)=@_;
+	
+	if (defined $user) {
+		$message="web commit by $user".(length $message ? ": $message" : "");
+	}
+	elsif (defined $ipaddr) {
+		$message="web commit from $ipaddr".(length $message ? ": $message" : "");
+	}
+	
+	if (system("svn", "commit", "--quiet",
+	           "--encoding", "UTF-8", "-m",
+	           possibly_foolish_untaint($message),
+		   $config{srcdir}) != 0) {
+		warn("svn commit failed\n");
+		return 1; # failure	
+	}
+	return undef # success
+}
+
 sub rcs_add ($) { #{{{
 	# filename is relative to the root of the srcdir
 	my $file=shift;
@@ -139,14 +161,31 @@ sub rcs_remove ($) { #{{{
 	my $file=shift;
 
 	if (-d "$config{srcdir}/.svn") {
-		my $parent=dirname($file);
-		while (! -d "$config{srcdir}/$parent/.svn") {
-			$file=$parent;
-			$parent=dirname($file);
-		}
-		
 		if (system("svn", "rm", "--force", "--quiet", "$config{srcdir}/$file") != 0) {
 			warn("svn rm failed\n");
+		}
+	}
+} #}}}
+
+sub rcs_rename ($$) { #{{{
+	# filenames relative to the root of the srcdir
+	my ($src, $dest)=@_;
+	
+	if (-d "$config{srcdir}/.svn") {
+		# Add parent directory for $dest
+		my $parent=dirname($dest);
+		if (! -d "$config{srcdir}/$parent/.svn") {
+			while (! -d "$config{srcdir}/$parent/.svn") {
+				$parent=dirname($dest);
+			}
+			if (system("svn", "add", "--quiet", "$config{srcdir}/$parent") != 0) {
+				warn("svn add $parent failed\n");
+			}
+		}
+
+		if (system("svn", "mv", "--force", "--quiet", 
+		    "$config{srcdir}/$src", "$config{srcdir}/$dest") != 0) {
+			warn("svn rename failed\n");
 		}
 	}
 } #}}}

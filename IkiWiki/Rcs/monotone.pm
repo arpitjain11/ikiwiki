@@ -359,6 +359,14 @@ sub rcs_commit ($$$;$$) { #{{{
 	return undef # success
 } #}}}
 
+sub rcs_commit_staged ($$$) {
+	# Commits all staged changes. Changes can be staged using rcs_add,
+	# rcs_remove, and rcs_rename.
+	my ($message, $user, $ipaddr)=@_;
+	
+	error("rcs_commit_staged not implemented for monotone"); # TODO
+}
+
 sub rcs_add ($) { #{{{
 	my $file=shift;
 
@@ -374,6 +382,12 @@ sub rcs_remove ($) { # {{{
 	my $file = shift;
 
 	error("rcs_remove not implemented for monotone"); # TODO
+} #}}}
+
+sub rcs_rename ($$) { # {{{
+	my ($src, $dest) = @_;
+
+	error("rcs_rename not implemented for monotone"); # TODO
 } #}}}
 
 sub rcs_recentchanges ($) { #{{{

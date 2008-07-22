@@ -318,7 +318,16 @@ sub rcs_commit ($$$;$$) { #{{{
 		my $conflict = _merge_past($prev, $file, $dummy_commit_msg);
 		return $conflict if defined $conflict;
 	}
-	
+
+	rcs_add($file);	
+	return rcs_commit_staged($message, $user, $ipaddr);
+} #}}}
+
+sub rcs_commit_staged ($$$) {
+	# Commits all staged changes. Changes can be staged using rcs_add,
+	# rcs_remove, and rcs_rename.
+	my ($message, $user, $ipaddr)=@_;
+
 	# Set the commit author and email to the web committer.
 	my %env=%ENV;
 	if (defined $user || defined $ipaddr) {
@@ -330,7 +339,8 @@ sub rcs_commit ($$$;$$) { #{{{
 	# git commit returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
 	$message = possibly_foolish_untaint($message);
-	if (run_or_non('git', 'commit', '--cleanup=verbatim', '-q', '-m', $message, '-i', $file)) {
+	if (run_or_non('git', 'commit', '--cleanup=verbatim',
+	               '-q', '-m', $message)) {
 		if (length $config{gitorigin_branch}) {
 			run_or_cry('git', 'push', $config{gitorigin_branch});
 		}
@@ -338,7 +348,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	
 	%ENV=%env;
 	return undef; # success
-} #}}}
+}
 
 sub rcs_add ($) { # {{{
 	# Add file to archive.
@@ -354,6 +364,12 @@ sub rcs_remove ($) { # {{{
 	my ($file) = @_;
 
 	run_or_cry('git', 'rm', '-f', $file);
+} #}}}
+
+sub rcs_rename ($$) { # {{{
+	my ($src, $dest) = @_;
+
+	run_or_cry('git', 'mv', '-f', $src, $dest);
 } #}}}
 
 sub rcs_recentchanges ($) { #{{{

@@ -171,11 +171,10 @@ sub sessioncgi ($$) { #{{{
 			if ($config{rcs}) {
 				IkiWiki::disable_commit_hook();
 				foreach my $file (@files) {
-					my $token=IkiWiki::rcs_prepedit($file);
 					IkiWiki::rcs_remove($file);
-					IkiWiki::rcs_commit($file, gettext("removed"),
-						$token, $session->param("name"), $ENV{REMOTE_ADDR});
 				}
+				IkiWiki::rcs_commit_staged(gettext("removed"),
+					$session->param("name"), $ENV{REMOTE_ADDR});
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
 			}

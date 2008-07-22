@@ -66,7 +66,9 @@ sub check_canrename ($$$$$$$) { #{{{
 		# Must be editable.
 		IkiWiki::check_canedit($dest, $q, $session);
 		if ($attachment) {
-			IkiWiki::Plugin::attachment::check_canattach($session, $dest, $destfile);
+			# Note that $srcfile is used here, not $destfile,
+			# because it wants the current file, to check it.
+			IkiWiki::Plugin::attachment::check_canattach($session, $dest, $srcfile);
 		}
 	}
 } #}}}
@@ -210,15 +212,16 @@ sub sessioncgi ($$) { #{{{
 			check_canrename($src, $srcfile, $dest, $destfile,
 				$q, $session, $q->param("attachment"));
 
+			# Ensures that the dest directory exists and is ok.
+			IkIWiki::prep_writefile($destfile, $config{srcdir});
+
 			# Do rename, and update the wiki.
 			require IkiWiki::Render;
 			if ($config{rcs}) {
 				IkiWiki::disable_commit_hook();
-				my $token=IkiWiki::rcs_prepedit($srcfile);
 				IkiWiki::rcs_rename($srcfile, $destfile);
-				# TODO commit destfile too
-				IkiWiki::rcs_commit($srcfile, gettext("rename $srcfile to $destfile"),
-					$token, $session->param("name"), $ENV{REMOTE_ADDR});
+				IkiWiki::rcs_commit_staged(gettext("rename $srcfile to $destfile"),
+					$session->param("name"), $ENV{REMOTE_ADDR});
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
 			}
