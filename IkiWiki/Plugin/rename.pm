@@ -141,22 +141,27 @@ sub rename_start ($$$$) {
 	exit 0;
 }
 
-sub postrename ($;$) {
+sub postrename ($;$$) {
 	my $session=shift;
-	my $newname=shift;
+	my $dest=shift;
+	my $attachment=shift;
 
-	# Load saved form state and return to edit form.
+	# Load saved form state and return to edit page.
 	my $postrename=CGI->new($session->param("postrename"));
-	if (defined $newname) {
-		# They renamed the page they were editing.
-		# Tweak the edit form to be editing the new
-		# page name, and redirect back to it.
-		# (Deep evil here.)
-		error("don't know how to redir back!"); ## FIXME
-	}
 	$session->clear("postrename");
 	IkiWiki::cgi_savesession($session);
-	IkiWiki::cgi($postrename, $session);
+
+	if (defined $dest && ! $attachment) {
+		# They renamed the page they were editing. This requires
+		# fixups to the edit form state.
+		# Tweak the edit form to be editing the new page.
+		$postrename->param("page", $dest);
+		# Get a new edit token; old one might not be valid for the
+		# renamed file.
+		$postrename->param("rcsinfo", IkiWiki::rcs_prepedit($pagesources{$dest}));
+	}
+
+	IkiWiki::cgi_editpage($postrename, $session);
 }
 
 sub formbuilder (@) { #{{{
@@ -234,12 +239,7 @@ sub sessioncgi ($$) { #{{{
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
-			if ($q->param("attachment")) {
-				postrename($session);
-			}
-			else {
-				postrename($session, $dest);
-			}
+			postrename($session, $dest, $q->param("attachment"));
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);
