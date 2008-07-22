@@ -11,6 +11,34 @@ sub import { #{{{
 	hook(type => "formbuilder", id => "attachment", call => \&formbuilder);
 } # }}}
 
+sub check_canattach ($$;$) {
+	my $session=shift;
+	my $dest=shift; # where it's going to be put, under the srcdir
+	my $file=shift; # the path to the attachment currently
+
+	# Use a special pagespec to test that the attachment is valid.
+	my $allowed=1;
+	foreach my $admin (@{$config{adminuser}}) {
+		my $allowed_attachments=IkiWiki::userinfo_get($admin, "allowed_attachments");
+		if (defined $allowed_attachments &&
+		    length $allowed_attachments) {
+			$allowed=pagespec_match($dest,
+				$allowed_attachments,
+				file => $file,
+				user => $session->param("name"),
+				ip => $ENV{REMOTE_ADDR},
+			);
+			last if $allowed;
+		}
+	}
+	if (! $allowed) {
+		error(gettext("attachment rejected")." ($allowed)");
+	}
+	else {
+		return 1;
+	}
+}
+
 sub checkconfig () { #{{{
 	$config{cgi_disable_uploads}=0;
 } #}}}
@@ -113,25 +141,8 @@ sub formbuilder (@) { #{{{
 		# Check that the user is allowed to edit a page with the
 		# name of the attachment.
 		IkiWiki::check_canedit($filename, $q, $session, 1);
-		
-		# Use a special pagespec to test that the attachment is valid.
-		my $allowed=1;
-		foreach my $admin (@{$config{adminuser}}) {
-			my $allowed_attachments=IkiWiki::userinfo_get($admin, "allowed_attachments");
-			if (defined $allowed_attachments &&
-			    length $allowed_attachments) {
-				$allowed=pagespec_match($filename,
-					$allowed_attachments,
-					file => $tempfile,
-					user => $session->param("name"),
-					ip => $ENV{REMOTE_ADDR},
-				);
-				last if $allowed;
-			}
-		}
-		if (! $allowed) {
-			error(gettext("attachment rejected")." ($allowed)");
-		}
+		# And that the attachment itself is acceptable.
+		check_canattach($session, $filename, $tempfile);
 
 		# Needed for fast_file_copy and for rendering below.
 		require IkiWiki::Render;
