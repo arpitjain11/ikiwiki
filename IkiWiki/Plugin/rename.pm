@@ -12,6 +12,65 @@ sub import { #{{{
 
 } # }}}
 
+sub check_canrename ($$$$$$$) { #{{{
+	my $src=shift;
+	my $srcfile=shift;
+	my $dest=shift;
+	my $destfile=shift;
+	my $q=shift;
+	my $session=shift;
+	my $attachment=shift;
+
+	# Must be a known source file.
+	if (! exists $pagesources{$src}) {
+		error(sprintf(gettext("%s does not exist"),
+			htmllink("", "", $src, noimageinline => 1)));
+	}
+	
+	# Must exist on disk, and be a regular file.
+	if (! -e "$config{srcdir}/$srcfile") {
+		error(sprintf(gettext("%s is not in the srcdir, so it cannot be renamed"), $srcfile));
+	}
+	elsif (-l "$config{srcdir}/$srcfile" && ! -f _) {
+		error(sprintf(gettext("%s is not a file"), $srcfile));
+	}
+
+	# Must be editable.
+	IkiWiki::check_canedit($src, $q, $session);
+	if ($attachment) {
+		IkiWiki::Plugin::attachment::check_canattach($session, $src, $srcfile);
+	}
+	
+	# Dest checks can be omitted by passing undef.
+	if (defined $dest) {
+		if ($src eq $dest || $srcfile eq $destfile) {
+			error(gettext("no change to the file name was specified"));
+		}
+
+		# Must be a legal filename.	
+		if (file_pruned($destfile, $config{srcdir})) {
+			error(sprintf(gettext("illegal name")));
+		}
+
+		# Must not be a known source file.
+		if (exists $pagesources{$dest}) {
+			error(sprintf(gettext("%s already exists"),
+				htmllink("", "", $dest, noimageinline => 1)));
+		}
+	
+		# Must not exist on disk already.
+		if (-l "$config{srcdir}/$destfile" || -e _) {
+			error(sprintf(gettext("%s already exists on disk"), $destfile));
+		}
+	
+		# Must be editable.
+		IkiWiki::check_canedit($dest, $q, $session);
+		if ($attachment) {
+			IkiWiki::Plugin::attachment::check_canattach($session, $dest, $destfile);
+		}
+	}
+} #}}}
+
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
@@ -57,6 +116,9 @@ sub rename_start ($$$$) {
 	my $session=shift;
 	my $attachment=shift;
 	my $page=shift;
+
+	check_canrename($page, $pagesources{$page}, undef, undef,
+		$q, $session, $attachment);
 
    	# Save current form state to allow returning to it later
 	# without losing any edits.
@@ -130,46 +192,38 @@ sub sessioncgi ($$) { #{{{
 			postrename($session);
 		}
 		elsif ($form->submitted eq 'Rename' && $form->validate) {
-			my $page=$q->param("page");
+			# These untaints are safe because of the checks
+			# performed in check_canrename below.
+			my $src=$q->param("page");
+			my $srcfile=IkiWiki::possibly_foolish_untaint($pagesources{$src});
+			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
 
-			# This untaint is safe because of the checks below.
-			my $file=IkiWiki::possibly_foolish_untaint($pagesources{$page});
-
-			# Must be a known source file.
-			if (! defined $file) {
-				error(sprintf(gettext("%s does not exist"),
-				htmllink("", "", $page, noimageinline => 1)));
-			}
-				
-			# Must be editiable.
-			IkiWiki::check_canedit($page, $q, $session);
-
-			# Must exist on disk, and be a regular file.
-			if (! -e "$config{srcdir}/$file") {
-				error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
-			}
-			elsif (-l "$config{srcdir}/$file" && ! -f _) {
-				error(sprintf(gettext("%s is not a file"), $file));
+			# The extension of dest is the same as src if it's
+			# a page. If it's an extension, the extension is
+			# already included.
+			my $destfile=$dest;
+			if (! $q->param("attachment")) {
+				my ($ext)=$srcfile=~/(\.[^.]+)$/;
+				$destfile.=$ext;
 			}
 
-			# TODO: check attachment limits
-
-			my $dest=IkiWiki::titlepage($q->param("new_name"));
-			# XXX TODO check $dest!
+			check_canrename($src, $srcfile, $dest, $destfile,
+				$q, $session, $q->param("attachment"));
 
 			# Do rename, and update the wiki.
 			require IkiWiki::Render;
 			if ($config{rcs}) {
 				IkiWiki::disable_commit_hook();
-				my $token=IkiWiki::rcs_prepedit($file);
-				IkiWiki::rcs_rename($file, $dest);
-				IkiWiki::rcs_commit($file, gettext("rename $file to $dest"),
+				my $token=IkiWiki::rcs_prepedit($srcfile);
+				IkiWiki::rcs_rename($srcfile, $destfile);
+				# TODO commit destfile too
+				IkiWiki::rcs_commit($srcfile, gettext("rename $srcfile to $destfile"),
 					$token, $session->param("name"), $ENV{REMOTE_ADDR});
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
 			}
 			else {
-				if (! rename("$config{srcdir}/$file", "$config{srcdir}/$dest")) {
+				if (! rename("$config{srcdir}/$srcfile", "$config{srcdir}/$destfile")) {
 					error("rename: $!");
 				}
 			}

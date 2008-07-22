@@ -21,7 +21,7 @@ sub check_canremove ($$$$) {
 	# Must be a known source file.
 	if (! exists $pagesources{$page}) {
 		error(sprintf(gettext("%s does not exist"),
-		htmllink("", "", $page, noimageinline => 1)));
+			htmllink("", "", $page, noimageinline => 1)));
 	}
 
 	# Must exist on disk, and be a regular file.
@@ -159,7 +159,10 @@ sub sessioncgi ($$) { #{{{
 			my @files;
 			foreach my $page (@pages) {
 				check_canremove($page, $q, $session, $q->param("attachment"));
-
+				
+				# This untaint is safe because of the
+				# checks performed above, which verify the
+				# page is a normal file, etc.
 				push @files, IkiWiki::possibly_foolish_untaint($pagesources{$page});
 			}
 
