@@ -370,14 +370,32 @@ When renaming `foo`, it probably makes sense to also rename
 `foo/Discussion`. Should other SubPages in `foo/` also be renamed? I think
 it's probably simplest to rename all of its SubPages too.
 
+(For values of "simplest" that don't include the pain of dealing with all
+the changed links on subpages.. as well as issues like pagespecs that
+continue to match the old subpages, and cannot reasonably be auto-converted
+to use the new, etc, etc... So still undecided about this.)
+
 When deleting `foo`, I don't think SubPages should be deleted. The
-potential for mistakes and abuse is too large.
+potential for mistakes and abuse is too large. Deleting Discussion page
+might be a useful exception.
 
 ## link fixups
 
 When renaming a page, it's desirable to keep links that point to it
 working. Rather than use redirection pages, I think that all pages that
 link to it should be modified to fix their links.
+
+The rename plugin can add a "rename" hook, which other plugins can use to
+update links &etc. The hook would be passed page content, the old and new
+link names, and would modify the content and return it. At least the link
+plugin should have such a hook.
+
+After calling the "rename" hook, and rendering the wiki, the rename plugin
+can check to see what links remain pointing to the old page. There could
+still be some, for example, CamelCase links probably won't be changed; img
+plugins and others contain logical links to the file, etc. The user can be
+presented with a list of all the pages that still have links to the old
+page, and can manually deal with them.
 
 In some cases, a redirection page will be wanted, to keep long-lived urls
 working. Since the meta plugin supports creating such pages, and since they
@@ -390,15 +408,16 @@ The source page must be editable by the user to be deleted/renamed.
 When renaming, the dest page must not already exist, and must be creatable
 by the user, too.
 
-When deleting/renaming attachments, the `allowed_attachments` PageSpec
+lWhen deleting/renaming attachments, the `allowed_attachments` PageSpec
 is checked too.
 
 ## RCS
 
-Two new functions are added to the RCS interface:
+Three new functions are added to the RCS interface:
 
 * `rcs_remove(file)`
 * `rcs_rename(old, new)`
+* `rcs_commit_staged(message, user, ip)`
 
 ## conflicts
 
@@ -430,23 +449,32 @@ Cases that have to be dealt with:
 * Alice clicks "rename" button for a page; Bob makes a modification;
   Alice confirms rename. This case seems easy, it should just rename the
   modified page.
+  Update: it does
 * Alice opens edit UI for a page; Bob makes a modification; Alice
   clicks rename button and confirms rename. Seems same as previous case.
+  Update: check
 * Alice and Bob both try to rename a page at the same time (to probably
   different names). Or one tries to delete, and the other to rename. 
   I think it's acceptible for the second one to get an error message that
   the page no longer exists.
+  Update: check, that happens
 * Alice renames a page; Bob had edit window open for it, and saves
   it afterwards, under old name. I think it's acceptible for Bob to succeed
   in saving it under the old name in this case, though not ideal.
-* Alice renames (or deletes) a page. In the meantime, Bob is uploading an
-  attachment to it, and finishes after the rename finishes. Is it
-  acceptible for the attachment to be saved under the old name?
+  Update: Behavior is the same as if Alice renamed the page and Bob created
+  a new page with the old name. Seems acceptable, though could be mildly
+  confusing to Bob (or Alice).
 * Alice starts creating a new page. In the meantime, Bob renames a
   different page to that name. Alice should get an error message when
   committing; and it should have conflict markers. Ie, this should work the
   same as if Bob had edited the new page at the same time as Alice did.
+  Update: That should happen. Haven't tested this case yet to make sure.
 * Bob starts renaming a page. In the meantime, Alice creates a new page
   with the name he's renaming it to. Here Bob should get a error message
   that he can't rename the page to an existing name. (A conflict resolution
   edit would also be ok.)
+  Update: Bob gets an error message.
+
+* Alice renames (or deletes) a page. In the meantime, Bob is uploading an
+  attachment to it, and finishes after the rename finishes. Is it
+  acceptible for the attachment to be saved under the old name?
