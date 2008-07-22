@@ -30,7 +30,6 @@ sub confirmation_form ($$) { #{{{
 
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
-	my @fields=qw(do page);
 	my $f = CGI::FormBuilder->new(
 		name => "remove",
 		header => 0,
@@ -40,7 +39,7 @@ sub confirmation_form ($$) { #{{{
 		params => $q,
 		action => $config{cgiurl},
 		stylesheet => IkiWiki::baseurl()."style.css",
-		fields => \@fields,
+		fields => [qw{do page}],
 	);
 	
 	$f->field(name => "do", type => "hidden", value => "remove", force => 1);
@@ -98,7 +97,11 @@ sub formbuilder (@) { #{{{
 			removal_confirm($q, $session, 0, $form->field("page"));
 		}
 		elsif ($form->submitted eq "Remove Attachments") {
-			removal_confirm($q, $session, 1, $q->param("attachment_select"));
+			my @pages=$q->param("attachment_select");
+			if (! @pages) {
+				error(gettext("Please select the attachments to remove."));
+			}
+			removal_confirm($q, $session, 1, @pages);
 		}
 	}
 } #}}}
