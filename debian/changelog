@@ -2,10 +2,10 @@ ikiwiki (2.55) UNRELEASED; urgency=low
 
   * remove: New plugin that adds the ability to remove pages via the web.
     (Sponsored by The TOVA Company.)
-  * All rcs backends need to implement rcs_remove, rcs_commitstaged,
-    and rcs_rename. (Done for svn, git).
   * rename: New plugin that adds the ability to rename pages via the web.
     (Sponsored by The TOVA Company.) (This one's for you, Kyle.)
+  * All rcs backends need to implement rcs_remove, rcs_commitstaged,
+    and rcs_rename. (Done for svn, git).
   * prefix_directives enabled in doc wiki, all preprocessor directives
     converted. (Simon McVittie)
   * editpage: Don't show attachments link when attachments are disabled.

@@ -213,7 +213,7 @@ sub sessioncgi ($$) { #{{{
 				$q, $session, $q->param("attachment"));
 
 			# Ensures that the dest directory exists and is ok.
-			IkIWiki::prep_writefile($destfile, $config{srcdir});
+			IkiWiki::prep_writefile($destfile, $config{srcdir});
 
 			# Do rename, and update the wiki.
 			require IkiWiki::Render;
