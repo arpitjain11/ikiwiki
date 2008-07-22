@@ -226,7 +226,7 @@ sub sessioncgi ($$) { #{{{
 			if ($config{rcs}) {
 				IkiWiki::disable_commit_hook();
 				IkiWiki::rcs_rename($srcfile, $destfile);
-				IkiWiki::rcs_commit_staged(gettext("rename $srcfile to $destfile"),
+				IkiWiki::rcs_commit_staged(sprintf(gettext("rename %s to %s", $src, $dest)),
 					$session->param("name"), $ENV{REMOTE_ADDR});
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
