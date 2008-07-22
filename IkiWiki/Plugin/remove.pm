@@ -121,24 +121,24 @@ sub sessioncgi ($$) { #{{{
 			# and that the user is allowed to edit(/remove) it.
 			my @files;
 			foreach my $page (@pages) {
+				# Must be a known source file.
 				if (! exists $pagesources{$page}) {
 					error(sprintf(gettext("%s does not exist"),
 					htmllink("", "", $page, noimageinline => 1)));
 				}
+				
+				# Must be editiable.
 				IkiWiki::check_canedit($page, $q, $session);
 
+				# Must exist on disk, and be a regular file.
 				my $file=$pagesources{$page};
 				if (! -e "$config{srcdir}/$file") {
 					error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
 				}
-				elsif (! -f "$config{srcdir}/$file") {
+				elsif (-l "$config{srcdir}/$file" && ! -f _) {
 					error(sprintf(gettext("%s is not a file"), $file));
 				}
 
-				# This untaint is safe because we've
-				# verified the file is a known source file,
-				# and is in the srcdir, and is a regular
-				# file.
 				push @files, IkiWiki::possibly_foolish_untaint($file);
 			}
 
