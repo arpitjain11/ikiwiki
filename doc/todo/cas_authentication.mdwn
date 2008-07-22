@@ -14,6 +14,13 @@ follows) ?
 
 --[[/users/bbb]]
 
+> Inline here is ok; git-am by mail is ok; a git repo I can pull from also
+> ok.
+> 
+> This looks pretty acceptable as-is, but you need to put a copyright and
+> license statement at the top. I have a few questions that I'll insert
+> inline with the patch below. --[[Joey]]
+
 ------------------------------------------------------------------------------
     diff --git a/IkiWiki/Plugin/cas.pm b/IkiWiki/Plugin/cas.pm
     new file mode 100644
@@ -29,17 +36,31 @@ follows) ?
     +use strict;
     +use IkiWiki 2.00;
     +use AuthCAS;                  # http://search.cpan.org/~osalaun/AuthCAS-1.3.1/
+
+> In ikiwiki we generally deman-load perl modules only when they're used.
+> This avoids loading expensive modules when the CGI isn't doing
+> authentication. Can you do that with AuthCAS? Something like this before
+> the use of it: `eval q{use AuthCAS}; error $@ if $@`
+
     +
     +sub import { #{{{
     +    hook(type => "getopt", id => "cas", call => \&getopt);
     +    hook(type => "auth", id => "cas", call => \&auth);
     +    hook(type => "formbuilder_setup", id => "cas", call => \&formbuilder_setup);
     +} # }}}
-    +
+
+> Could you please use tabs for indentation of program flow?
+
     +# FIXME: We should check_config to ensure that :
     +# * cas_url and ca_file are present
+
+> Please fix that..
+
     +# * no other auth plugin are present (at least passwordauth and openid)
-    +
+
+> Why would you want to make other auth plugins not work? Could a site not
+> legitimatly chose to use this and another auth method?
+
     +sub getopt () { #{{{
     +    eval q{use Getopt::Long};
     +    error($@) if $@;
@@ -130,13 +151,20 @@ follows) ?
     +into the wiki.
     +
     +The plugin needs the [[!cpan AuthCAS-1.3.1]] perl module.
+
+> Does it really need that specific version? I think you should lose the
+> version part.
+
     +
     +This plugin has two mandatory configuration option. You **must** set `--cas_url`
     +to the url of a server offering CAS 2.0 authentication. You must also set the
     +`--ca_file` to an absolute path to the file containing CA certificates used by
     +the server (generally, aka under Debian, fixing that value to
     +`/etc/ssl/certs/ca-certificates.crt` is sufficient).
-    +
+
+> It would be good to add commented-out examples of these to
+> [[ikiwiki.setup]] as well.
+
     +This plugin is not enabled by default. It can not be used with other
     +authentication plugin, such as [[passwordauth]] or [[openid]].
 
