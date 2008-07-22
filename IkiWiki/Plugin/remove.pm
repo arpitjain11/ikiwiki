@@ -12,6 +12,38 @@ sub import { #{{{
 
 } # }}}
 
+sub check_canremove ($$$$) {
+	my $page=shift;
+	my $q=shift;
+	my $session=shift;
+	my $attachment=shift;
+
+	# Must be a known source file.
+	if (! exists $pagesources{$page}) {
+		error(sprintf(gettext("%s does not exist"),
+		htmllink("", "", $page, noimageinline => 1)));
+	}
+
+	# Must exist on disk, and be a regular file.
+	my $file=$pagesources{$page};
+	if (! -e "$config{srcdir}/$file") {
+		error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
+	}
+	elsif (-l "$config{srcdir}/$file" && ! -f _) {
+		error(sprintf(gettext("%s is not a file"), $file));
+	}
+	
+	# Must be editiable.
+	IkiWiki::check_canedit($page, $q, $session);
+
+	# This is sorta overkill, but better safe
+	# than sorry. If a user can't upload an
+	# attachment, don't let them delete it.
+	if ($attachment) {
+		IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
+	}
+}
+
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
@@ -52,6 +84,8 @@ sub removal_confirm ($$@) {
 	my $session=shift;
 	my $attachment=shift;
 	my @pages=@_;
+
+	check_canremove($_, $q, $session, $attachment) foreach @pages;
 
    	# Save current form state to allow returning to it later
 	# without losing any edits.
@@ -124,32 +158,9 @@ sub sessioncgi ($$) { #{{{
 			# and that the user is allowed to edit(/remove) it.
 			my @files;
 			foreach my $page (@pages) {
-				# Must be a known source file.
-				if (! exists $pagesources{$page}) {
-					error(sprintf(gettext("%s does not exist"),
-					htmllink("", "", $page, noimageinline => 1)));
-				}
+				check_canremove($page, $q, $session, $q->param("attachment"));
 
-				# Must exist on disk, and be a regular file.
-				my $file=$pagesources{$page};
-				if (! -e "$config{srcdir}/$file") {
-					error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
-				}
-				elsif (-l "$config{srcdir}/$file" && ! -f _) {
-					error(sprintf(gettext("%s is not a file"), $file));
-				}
-				
-				# Must be editiable.
-				IkiWiki::check_canedit($page, $q, $session);
-
-				# This is sorta overkill, but better safe
-				# than sorry. If a user can't upload an
-				# attachment, don't let them delete it.
-				if ($q->param("attachment")) {
-					IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
-				}
-
-				push @files, IkiWiki::possibly_foolish_untaint($file);
+				push @files, IkiWiki::possibly_foolish_untaint($pagesources{$page});
 			}
 
 			# Do removal, and update the wiki.
