@@ -1,0 +1,17 @@
+From the source of [[usage]]:
+
+    <a href="mailto:joey@ikiwiki.info">&#x6A;&#111;&#101;&#x79;&#64;i&#107;&#105;w&#105;&#107;&#x69;&#46;&#105;n&#x66;&#x6F;</a>
+
+Text::Markdown obfuscates email addresses in the href= attribute and in the text.
+Apparently this can't be configured.
+
+HTML::Scrubber doesn't set `attr_encoded` for its HTML::Parser, so the href= attribtute is decoded.
+Currently it seems it doesn't set `attr_encoded` for good reason: so attributes can be sanitized easily,
+e.g. as in htmlscrubber with `$safe_url_regexp`.
+This apparently can't be configured either.
+
+So I can't see an obvious solution to this.
+Perhaps improvements to Text::Markdown or HTML::Scrubber can allow a fix.
+
+One question is: how useful is email obfuscation?
+Don't spammers use HTML parsers?
