@@ -18,3 +18,13 @@ Don't spammers use HTML parsers?
 
 > I now see this was noted in the formatting [[/ikiwiki/formatting/discussion]], and won't/can't be fixed.
 > So I guess this is [[done]]. --Gabriel
+
+I've [[patch]]ed mdwn.pm to prevent Text::Markdown from obfuscating the emails.
+The relevant commits are on the master branch of [my "fork" of ikiwiki on Github] [github]:
+
+- 7d0970adbcf0b63e7e5532c239156f6967d10158
+- 52c241e723ced4d7c6a702dd08cda37feee75531
+
+--Gabriel.
+
+[github]: http://github.com/gmcmanus/ikiwiki/
