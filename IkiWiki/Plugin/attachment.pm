@@ -16,6 +16,12 @@ sub check_canattach ($$;$) {
 	my $dest=shift; # where it's going to be put, under the srcdir
 	my $file=shift; # the path to the attachment currently
 
+	# Don't allow an attachment to be uploaded with the same name as an
+	# existing page.
+	if (exists $pagesources{$dest} && $pagesources{$dest} ne $dest) {
+		error(sprintf(gettext("there is already a page named %s"), $dest));
+	}
+
 	# Use a special pagespec to test that the attachment is valid.
 	my $allowed=1;
 	foreach my $admin (@{$config{adminuser}}) {
