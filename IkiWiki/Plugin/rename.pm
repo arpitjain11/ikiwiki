@@ -48,7 +48,7 @@ sub check_canrename ($$$$$$$) { #{{{
 		}
 
 		# Must be a legal filename.	
-		if (file_pruned($destfile, $config{srcdir})) {
+		if (IkiWiki::file_pruned($destfile, $config{srcdir})) {
 			error(sprintf(gettext("illegal name")));
 		}
 
