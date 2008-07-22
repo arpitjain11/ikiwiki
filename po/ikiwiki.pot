@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-21 10:11-0400\n"
+"POT-Creation-Date: 2008-07-22 19:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,16 +62,16 @@ msgid "creating %s"
 msgstr ""
 
 #: ../IkiWiki/CGI.pm:512 ../IkiWiki/CGI.pm:540 ../IkiWiki/CGI.pm:550
-#: ../IkiWiki/CGI.pm:584 ../IkiWiki/CGI.pm:629
+#: ../IkiWiki/CGI.pm:586 ../IkiWiki/CGI.pm:631
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:729
+#: ../IkiWiki/CGI.pm:731
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759 ../IkiWiki.pm:783
+#: ../IkiWiki/CGI.pm:760 ../IkiWiki/CGI.pm:761 ../IkiWiki.pm:783
 msgid "Error"
 msgstr ""
 
@@ -173,15 +173,20 @@ msgstr ""
 msgid "Failed to delete file from S3: "
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:110
+#: ../IkiWiki/Plugin/attachment.pm:22
+#, perl-format
+msgid "there is already a page named %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:41
+msgid "prohibited by allowed_attachments"
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:144
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:133
-msgid "attachment rejected"
-msgstr ""
-
-#: ../IkiWiki/Plugin/attachment.pm:169
+#: ../IkiWiki/Plugin/attachment.pm:186
 msgid "attachment upload"
 msgstr ""
 
@@ -232,27 +237,27 @@ msgstr ""
 msgid "prog not a valid graphviz program"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:49
+#: ../IkiWiki/Plugin/img.pm:53
 msgid "Image::Magick is not installed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:56
+#: ../IkiWiki/Plugin/img.pm:60
 #, perl-format
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:66 ../IkiWiki/Plugin/img.pm:70
-#: ../IkiWiki/Plugin/img.pm:87
+#: ../IkiWiki/Plugin/img.pm:70 ../IkiWiki/Plugin/img.pm:74
+#: ../IkiWiki/Plugin/img.pm:91
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:73
+#: ../IkiWiki/Plugin/img.pm:77
 #, perl-format
 msgid "failed to resize: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:104
+#: ../IkiWiki/Plugin/img.pm:108
 #, perl-format
 msgid "failed to determine size of image %s"
 msgstr ""
@@ -496,6 +501,76 @@ msgstr ""
 msgid "(Diff truncated)"
 msgstr ""
 
+#: ../IkiWiki/Plugin/remove.pm:23 ../IkiWiki/Plugin/rename.pm:26
+#, perl-format
+msgid "%s does not exist"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:30
+#, perl-format
+msgid "%s is not in the srcdir, so it cannot be deleted"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:33 ../IkiWiki/Plugin/rename.pm:35
+#, perl-format
+msgid "%s is not a file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:100
+#, perl-format
+msgid "confirm removal of %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:136
+msgid "Please select the attachments to remove."
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:176
+msgid "removed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:32
+#, perl-format
+msgid "%s is not in the srcdir, so it cannot be renamed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:47
+msgid "no change to the file name was specified"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:53
+#, perl-format
+msgid "illegal name"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:58
+#, perl-format
+msgid "%s already exists"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:64
+#, perl-format
+msgid "%s already exists on disk"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:98
+#, perl-format
+msgid "rename %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:181
+msgid "Only one attachment can be renamed at a time."
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:184
+msgid "Please select the attachment to rename."
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:229
+#, perl-format
+msgid "rename %s to %s"
+msgstr ""
+
 #: ../IkiWiki/Plugin/search.pm:20
 #, perl-format
 msgid "Must specify %s when using the search plugin"
@@ -608,7 +683,7 @@ msgstr ""
 msgid "failed to generate image from code"
 msgstr ""
 
-#: ../IkiWiki/Rcs/Stub.pm:69
+#: ../IkiWiki/Rcs/Stub.pm:96
 msgid "getctime not implemented"
 msgstr ""
 

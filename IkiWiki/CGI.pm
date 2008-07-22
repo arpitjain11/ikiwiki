@@ -365,6 +365,7 @@ sub cgi_editpage ($$) { #{{{
 		htmllink($page, $page, "ikiwiki/formatting",
 			noimageinline => 1,
 			linktext => "FormattingHelp"));
+	$form->tmpl_param("message", "");
 	
 	if ($form->submitted eq "Cancel") {
 		if ($form->field("do") eq "create" && defined $from) {
@@ -416,7 +417,6 @@ sub cgi_editpage ($$) { #{{{
 	elsif ($form->submitted eq "Save Page") {
 		$form->tmpl_param("page_preview", "");
 	}
-	$form->tmpl_param("page_conflict", "");
 	
 	if ($form->submitted ne "Save Page" || ! $form->validate) {
 		if ($form->field("do") eq "create") {
@@ -532,7 +532,7 @@ sub cgi_editpage ($$) { #{{{
 
 		if ($form->field("do") ne "create" && ! $exists &&
 		    ! defined srcfile($file, 1)) {
-			$form->tmpl_param("page_gone", 1);
+			$form->tmpl_param("message", template("editpagegone.tmpl")->output);
 			$form->field(name => "do", value => "create", force => 1);
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
@@ -542,7 +542,7 @@ sub cgi_editpage ($$) { #{{{
 			return;
 		}
 		elsif ($form->field("do") eq "create" && $exists) {
-			$form->tmpl_param("creation_conflict", 1);
+			$form->tmpl_param("message", template("editcreationconflict.tmpl")->output);
 			$form->field(name => "do", value => "edit", force => 1);
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
@@ -575,8 +575,9 @@ sub cgi_editpage ($$) { #{{{
 		if ($@) {
 			$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 				force => 1);
-			$form->tmpl_param("failed_save", 1);
-			$form->tmpl_param("error_message", $@);
+			my $mtemplate=template("editfailedsave.tmpl");
+			$mtemplate->param(error_message => $@);
+			$form->tmpl_param("message", $mtemplate->output);
 			$form->field("editcontent", value => $content, force => 1);
 			$form->tmpl_param("page_select", 0);
 			$form->field(name => "page", type => 'hidden');
@@ -620,7 +621,7 @@ sub cgi_editpage ($$) { #{{{
 		if (defined $conflict) {
 			$form->field(name => "rcsinfo", value => rcs_prepedit($file),
 				force => 1);
-			$form->tmpl_param("page_conflict", 1);
+			$form->tmpl_param("message", template("editconflict.tmpl")->output);
 			$form->field("editcontent", value => $conflict, force => 1);
 			$form->field("do", "edit", force => 1);
 			$form->tmpl_param("page_select", 0);
