@@ -348,6 +348,15 @@ This hook is called whenever ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
 
+## renamepage
+
+	hook(type => "renamepage", id => "foo", call => \&renamepage);
+
+This hook is called by the [[plugins/rename]] plugin when it renames
+something. The hook is passed named parameters: `page`, `oldpage`,
+`newpage`, and `content`, and should try to modify the content to reflect
+the name change. For example, by converting links to point to the new page.
+
 ## Plugin interface
 
 To import the ikiwiki plugin interface:

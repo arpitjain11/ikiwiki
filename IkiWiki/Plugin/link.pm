@@ -80,4 +80,28 @@ sub scan (@) { #{{{
 	}
 } # }}}
 
+sub renamepage (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	my $old=$params{oldpage};
+	my $new=$params{newpage};
+
+	$params{content} =~ s{(?<!\\)$link_regexp}{
+		my $link=$2;
+		if (bestlink($page, $2) eq $old) {
+			if (index($2, "/") == 0) {
+				$link="/$new";
+			}
+			else {
+				$link=$new;
+			}
+		}
+		defined $1
+			? ( "[[$1|$link".($3 ? "#$3" : "")."]]" )
+			: ( "[[$link".   ($3 ? "#$3" : "")."]]" )
+	}eg;
+
+	return $params{content};
+} #}}}
+
 1
