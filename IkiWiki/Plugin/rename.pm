@@ -144,10 +144,10 @@ sub postrename ($;$$) {
 		# fixups to the edit form state.
 		# Tweak the edit form to be editing the new page.
 		$postrename->param("page", $dest);
-		# Get a new edit token; old one might not be valid for the
-		# renamed file.
-		$postrename->param("rcsinfo", IkiWiki::rcs_prepedit($pagesources{$dest}));
 	}
+
+	# Get a new edit token; old likely not valid.
+	$postrename->param("rcsinfo", IkiWiki::rcs_prepedit($pagesources{$dest}));
 
 	IkiWiki::cgi_editpage($postrename, $session);
 }
@@ -227,26 +227,56 @@ sub sessioncgi ($$) { #{{{
 			# Ensures that the dest directory exists and is ok.
 			IkiWiki::prep_writefile($destfile, $config{srcdir});
 
-			# Do rename, and update the wiki.
+			# Do rename, update other pages, and refresh site.
+			IkiWiki::disable_commit_hook() if $config{rcs};
 			require IkiWiki::Render;
 			if ($config{rcs}) {
-				IkiWiki::disable_commit_hook();
 				IkiWiki::rcs_rename($srcfile, $destfile);
 				IkiWiki::rcs_commit_staged(
 					sprintf(gettext("rename %s to %s"), $src, $dest),
 					$session->param("name"), $ENV{REMOTE_ADDR});
-				IkiWiki::enable_commit_hook();
-				IkiWiki::rcs_update();
 			}
 			else {
 				if (! rename("$config{srcdir}/$srcfile", "$config{srcdir}/$destfile")) {
 					error("rename: $!");
 				}
 			}
+			my @fixedlinks;
+			foreach my $page (keys %links) {
+				my $needfix=0;
+				foreach my $link (@{$links{$page}}) {
+					my $bestlink=bestlink($page, $link);
+					if ($bestlink eq $src) {
+						$needfix=1;
+					}
+				}
+				if ($needfix) {
+					my $file=$pagesources{$page};
+					my $oldcontent=readfile($config{srcdir}."/".$file);
+					my $content=renamepage_hook($page, $src, $dest, $oldcontent);
+					if ($oldcontent ne $content) {
+						my $token=IkiWiki::rcs_prepedit($file);
+						eval { writefile($file, $config{srcdir}, $content) };
+						next if $@;
+						my $conflict=IkiWiki::rcs_commit(
+							$file,
+							sprintf(gettext("update for rename of %s to %s"), $src, $dest),
+							$token,
+							$session->param("name"), 
+							$ENV{REMOTE_ADDR}
+						);
+						push @fixedlinks, $page if ! defined $conflict;
+					}
+				}
+			}
+			if ($config{rcs}) {
+				IkiWiki::enable_commit_hook();
+				IkiWiki::rcs_update();
+			}
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
-			# scan for broken links to $src
+			# Scan for any remaining broken links to $src.
 			my @brokenlinks;
 			foreach my $page (keys %links) {
 				foreach my $link (@{$links{$page}}) {
@@ -262,13 +292,21 @@ sub sessioncgi ($$) { #{{{
 			my $template=template("renamesummary.tmpl");
 			$template->param(src => $src);
 			$template->param(dest => $dest);
-			$template->param(linklist => [
+			$template->param(brokenlinks => [
 				map {
 					{
 						page => htmllink($dest, $dest, $_,
 								noimageinline => 1)
 					}
 				} @brokenlinks
+			]);
+			$template->param(fixedlinks => [
+				map {
+					{
+						page => htmllink($dest, $dest, $_,
+								noimageinline => 1)
+					}
+				} @fixedlinks
 			]);
 			$renamesummary=$template->output;
 
@@ -280,6 +318,21 @@ sub sessioncgi ($$) { #{{{
 
 		exit 0;
 	}
-}
+} #}}}
+
+sub renamepage_hook ($$$$) { #{{{
+	my ($page, $src, $dest, $content)=@_;
+
+	IkiWiki::run_hooks(renamepage => sub {
+		$content=shift->(
+			page => $page,
+			oldpage => $src,
+			newpage => $dest,
+			content => $content,
+		);
+	});
+
+	return $content;
+}# }}}
 
 1

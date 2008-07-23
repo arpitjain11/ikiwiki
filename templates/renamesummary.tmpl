@@ -2,10 +2,16 @@
 <b>Successfully renamed <TMPL_VAR SRC> to <TMPL_VAR DEST>.</b>
 </p>
 <p>
-<TMPL_IF LINKLIST>
+<TMPL_IF FIXEDLINKS>
+The following pages have been automatically modified to update their links to <TMPL_VAR DEST>:
+<ul>
+<TMPL_LOOP NAME=FIXEDLINKS><li><TMPL_VAR PAGE></li></TMPL_LOOP>
+</ul>
+</TMPL_IF>
+<TMPL_IF BROKENLINKS>
 The following pages still link to <TMPL_VAR SRC>:
 <ul>
-<TMPL_LOOP NAME=LINKLIST><li><TMPL_VAR PAGE></li></TMPL_LOOP>
+<TMPL_LOOP NAME=BROKENLINKS><li><TMPL_VAR PAGE></li></TMPL_LOOP>
 </ul>
 <TMPL_ELSE>
 No pages have broken links to <TMPL_VAR SRC>.
