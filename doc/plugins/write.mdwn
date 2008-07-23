@@ -635,4 +635,5 @@ when imported, populate `$IkiWiki::Setup::raw_setup` with a reference
 to a hash containing all the config items.
 
 By the way, to parse a ikiwiki setup file, a program just needs to
-do something like `use IkiWiki::Setup; my %setup=IkiWiki::Setup::load($filename)`
+do something like:
+`use IkiWiki::Setup; my %setup=IkiWiki::Setup::load($filename)`
