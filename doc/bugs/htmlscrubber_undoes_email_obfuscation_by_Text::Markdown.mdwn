@@ -28,3 +28,10 @@ The relevant commits are on the master branch of [my "fork" of ikiwiki on Github
 --Gabriel.
 
 [github]: http://github.com/gmcmanus/ikiwiki/
+
+> Thanks for coming up with a patch, but overriding
+> `Text::Markdown::_EncodeEmailAddress` gets into its internals more than
+> I'm comfortable with.
+> 
+> It would probably be best to add an option to [[cpan Text;:Markdown]] to
+> let the email address munging be disabled. --[[Joey]]
