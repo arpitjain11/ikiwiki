@@ -1,9 +1,4 @@
 If a file in the srcdir is removed, exposing a file in the underlaydir,
-ikiwiki will not notice the change and rebuild it until the file in the
-underlaydir gets a mtime newer than the mtime the removed file had.
-
-Relatedly, if there are two files with different extensions that build a
-page with the same name, in a directory, ikiwiki will update the page
-whenever either changes, using the changed one as the source. But if that
-most recently changed one is removed, it won't rebuild the page using the
-older one as the source.
+ikiwiki will notice the removal and delete the page from the destdir. The
+page from the underlay will not be built. (However, it will be if the wiki
+gets rebuilt.)

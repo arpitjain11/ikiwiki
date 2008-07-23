@@ -18,3 +18,10 @@ ikiwiki fails when trying to create a directory "a" where there is a file "a"
 (or vice versa).
 
 The same problem occurs if both "a" and "a.mdwn" exist in the wiki.
+
+> Thank you for looking into it!
+> 
+> On the use of forcerebuild, I think it's acceptable; plugins that unset
+> it would break other plugins that set it, too. 
+> 
+> [[cherry-picked|done]] --[[Joey]]
