@@ -129,10 +129,8 @@ sub rename_start ($$$$) {
 	exit 0;
 }
 
-my $renamesummary;
-sub postrename ($;$$$) {
+sub postrename ($;$$) {
 	my $session=shift;
-	my $src=shift;
 	my $dest=shift;
 	my $attachment=shift;
 
@@ -140,15 +138,6 @@ sub postrename ($;$$$) {
 	my $postrename=CGI->new($session->param("postrename"));
 	$session->clear("postrename");
 	IkiWiki::cgi_savesession($session);
-
-	if (defined $src) {
-		# Generate a rename summary, that will be shown at the top
-		# of the edit template.
-		my $template=template("renamesummary.tmpl");
-		$template->param(src => $src);
-		$template->param(dest => $dest);
-		$renamesummary=$template->output;
-	}
 
 	if (defined $dest && ! $attachment) {
 		# They renamed the page they were editing. This requires
@@ -162,22 +151,6 @@ sub postrename ($;$$$) {
 
 	IkiWiki::cgi_editpage($postrename, $session);
 }
-
-sub formbuilder_setup (@) { #{{{
-	my %params=@_;
-	my $form=$params{form};
-	my $q=$params{cgi};
-
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
-		# Rename button for the page, and also for attachments.
-		push @{$params{buttons}}, "Rename";
-		$form->tmpl_param("field-rename" => '<input name="_submit" type="submit" value="Rename Attachment" />');
-
-		if (defined $renamesummary) {
-			$form->tmpl_param(message => $renamesummary);
-		}
-	}
-} #}}}
 
 sub formbuilder (@) { #{{{
 	my %params=@_;
@@ -199,6 +172,24 @@ sub formbuilder (@) { #{{{
 				error(gettext("Please select the attachment to rename."))
 			}
 			rename_start($q, $session, 1, $selected[0]);
+		}
+	}
+} #}}}
+
+my $renamesummary;
+
+sub formbuilder_setup (@) { #{{{
+	my %params=@_;
+	my $form=$params{form};
+	my $q=$params{cgi};
+
+	if (defined $form->field("do") && $form->field("do") eq "edit") {
+		# Rename button for the page, and also for attachments.
+		push @{$params{buttons}}, "Rename";
+		$form->tmpl_param("field-rename" => '<input name="_submit" type="submit" value="Rename Attachment" />');
+
+		if (defined $renamesummary) {
+			$form->tmpl_param(message => $renamesummary);
 		}
 	}
 } #}}}
@@ -255,7 +246,33 @@ sub sessioncgi ($$) { #{{{
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
-			postrename($session, $src, $dest, $q->param("attachment"));
+			# scan for broken links to $src
+			my @brokenlinks;
+			foreach my $page (keys %links) {
+				foreach my $link (@{$links{$page}}) {
+					my $bestlink=bestlink($page, $link);
+					if ($bestlink eq $src) {
+						push @brokenlinks, $page;
+					}
+				}
+			}
+
+			# Generate a rename summary, that will be shown at the top
+			# of the edit template.
+			my $template=template("renamesummary.tmpl");
+			$template->param(src => $src);
+			$template->param(dest => $dest);
+			$template->param(linklist => [
+				map {
+					{
+						page => htmllink($dest, $dest, $_,
+								noimageinline => 1)
+					}
+				} @brokenlinks
+			]);
+			$renamesummary=$template->output;
+
+			postrename($session, $dest, $q->param("attachment"));
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);

@@ -2,5 +2,12 @@
 <b>Successfully renamed <TMPL_VAR SRC> to <TMPL_VAR DEST>.</b>
 </p>
 <p>
-Summary of links: TODO
+<TMPL_IF LINKLIST>
+The following pages still link to <TMPL_VAR SRC>:
+<ul>
+<TMPL_LOOP NAME=LINKLIST><li><TMPL_VAR PAGE></li></TMPL_LOOP>
+</ul>
+<TMPL_ELSE>
+No pages have broken links to <TMPL_VAR SRC>.
+</TMPL_IF>
 </p>
