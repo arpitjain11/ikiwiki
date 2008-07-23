@@ -129,8 +129,9 @@ sub rename_start ($$$$) {
 	exit 0;
 }
 
-sub postrename ($;$$) {
+sub postrename ($;$$$) {
 	my $session=shift;
+	my $src=shift;
 	my $dest=shift;
 	my $attachment=shift;
 
@@ -139,15 +140,24 @@ sub postrename ($;$$) {
 	$session->clear("postrename");
 	IkiWiki::cgi_savesession($session);
 
-	if (defined $dest && ! $attachment) {
-		# They renamed the page they were editing. This requires
-		# fixups to the edit form state.
-		# Tweak the edit form to be editing the new page.
-		$postrename->param("page", $dest);
-	}
+	if (defined $dest) {
+		if (! $attachment) {
+			# They renamed the page they were editing. This requires
+			# fixups to the edit form state.
+			# Tweak the edit form to be editing the new page.
+			$postrename->param("page", $dest);
+		}
 
-	# Get a new edit token; old likely not valid.
-	$postrename->param("rcsinfo", IkiWiki::rcs_prepedit($pagesources{$dest}));
+		# Update edit form content to fix any links present
+		# on it.
+		$postrename->param("editcontent",
+			renamepage_hook($dest, $src, $dest,
+				 $postrename->param("editcontent")));
+
+		# Get a new edit token; old was likely invalidated.
+		$postrename->param("rcsinfo",
+			IkiWiki::rcs_prepedit($pagesources{$dest}));
+	}
 
 	IkiWiki::cgi_editpage($postrename, $session);
 }
@@ -248,6 +258,7 @@ sub sessioncgi ($$) { #{{{
 					my $bestlink=bestlink($page, $link);
 					if ($bestlink eq $src) {
 						$needfix=1;
+						last;
 					}
 				}
 				if ($needfix) {
@@ -279,12 +290,15 @@ sub sessioncgi ($$) { #{{{
 			# Scan for any remaining broken links to $src.
 			my @brokenlinks;
 			foreach my $page (keys %links) {
+				my $broken=0;
 				foreach my $link (@{$links{$page}}) {
 					my $bestlink=bestlink($page, $link);
 					if ($bestlink eq $src) {
-						push @brokenlinks, $page;
+						$broken=1;
+						last;
 					}
 				}
+				push @brokenlinks, $page if $broken;
 			}
 
 			# Generate a rename summary, that will be shown at the top
@@ -310,7 +324,7 @@ sub sessioncgi ($$) { #{{{
 			]);
 			$renamesummary=$template->output;
 
-			postrename($session, $dest, $q->param("attachment"));
+			postrename($session, $src, $dest, $q->param("attachment"));
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);
