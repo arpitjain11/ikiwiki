@@ -57,7 +57,7 @@ sub rcs_rename ($$) {
 	# prepare it for when rcs_commit is called.
 	# The new filename may be in a new subdir, that is not yet added to
 	# version control. If so, the subdir will exist already, and should
-	# be added.
+	# be added to revision control.
 }
 
 sub rcs_recentchanges ($) {
