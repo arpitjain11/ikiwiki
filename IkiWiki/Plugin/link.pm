@@ -92,9 +92,10 @@ sub renamepage (@) { #{{{
 		my $link=$linktext;
 		if (bestlink($page, $2) eq $old) {
 			$link=$new;
-			if ($linktext =~ m/\/*?[A-Z]/) {
-				# preserve leading cap
-				$link=ucfirst($link);
+			if ($linktext =~ m/.*\/*?[A-Z]/) {
+				# preserve leading cap of last component
+				my @bits=split("/", $link);
+				$link=join("/", @bits[0..$#bits-1], ucfirst($bits[$#bits]));
 			}
 			if (index($linktext, "/") == 0) {
 				# absolute link
