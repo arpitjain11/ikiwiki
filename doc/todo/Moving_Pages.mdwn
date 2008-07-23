@@ -37,285 +37,6 @@ Brad
 
 -----
 
-[[!tag patch]]
-
-This is my second cut at a feature like that requested here.
-It can also be found [here](http://ikidev.betacantrips.com/patches/move.patch).
-
-A few shortcomings exist: 
-
-* No precautions whatsoever are made to protect against race conditions or failures
-  in the rcs\_move function. I didn't even do the `cgi_editpage` thing where I hold
-  the lock and render afterwards (mostly because the copy I was editing was not
-  up-to-date enough to have that code). Although FAILED_SAVE is in movepage.tmpl,
-  no code activates it yet.
-* Some code is duplicated between cgi\_movepage and cgi\_editpage, as well
-  as rcs\_commit and rcs\_move.
-* The user interface is pretty lame. I couldn't figure out a good way to let
-  the user specify which directory to move things to without implementing a
-  FileChooser thing.
-* No redirect pages like those mentioned on [[todo/Moving_Pages]] exist yet, 
-  so none are created.
-* I added a Move link to page.tmpl but it may belong better someplace else --
-  maybe editpage.tmpl? Not sure.
-* from is redundant with page so far -- but since the Move links could someday
-  come from someplace other than the page itself I kept it around.
-* If I move foo.mdwn to bar.mdwn, foo/* should move too, probably.
-
-> Looks like a good start, although I agree about many of the points above,
-> and also feel that something needs to be done about rcses that don't
-> implement a move operation -- falling back to an add and delete.
-> --[[Joey]]
-
-Hmm. Shouldn't that be done on a by-RCS basis, though? (i.e. implemented
-by backends in the `rcs_move` function)
-
-> Probably, yes, but maybe there's a way to avoid duplicating code for that
-> in several of them.
-
-Also, how should ikiwiki react if a page is edited (say, by another user)
-before it is moved? Bail, or shrug and proceed?
-
-> The important thing is to keep in mind that the page could be edited,
-> moved, deleted, etc in between the user starting the move and the move
-> happening. So, the code really needs to deal with all of these cases in
-> some way. It seems fine to me to go ahead with the move even if the page
-> was edited. If the page was deleted or moved, it seems reasonable to exit
-> with an error.
-
-    diff -urNX ignorepats ikiwiki/IkiWiki/CGI.pm ikidev/IkiWiki/CGI.pm
-    --- ikiwiki/IkiWiki/CGI.pm  2007-02-14 18:17:12.000000000 -0800
-    +++ ikidev/IkiWiki/CGI.pm   2007-02-22 18:54:23.194982000 -0800
-    @@ -561,6 +561,106 @@
-        }
-     } #}}}
-
-    +sub cgi_movepage($$) {
-    +   my $q = shift;
-    +   my $session = shift;
-    +   eval q{use CGI::FormBuilder};
-    +   error($@) if $@;
-    +   my @fields=qw(do from rcsinfo page newdir newname comments);
-    +   my @buttons=("Rename Page", "Cancel");
-    +
-    +   my $form = CGI::FormBuilder->new(
-    +           fields => \@fields,
-    +                header => 1,
-    +                charset => "utf-8",
-    +                method => 'POST',
-    +           action => $config{cgiurl},
-    +                template => (-e "$config{templatedir}/movepage.tmpl" ?
-    +                        {template_params("movepage.tmpl")} : ""),
-    +   );
-    +   run_hooks(formbuilder_setup => sub {
-    +           shift->(form => $form, cgi => $q, session => $session);
-    +   });
-    +
-    +   decode_form_utf8($form);
-    +
-    +   # This untaint is safe because if the page doesn't exist, bail.
-    +   my $page = $form->field('page');
-    +   $page = possibly_foolish_untaint($page);
-    +   if (! exists $pagesources{$page}) {
-    +           error("page does not exist");
-    +   }
-    +   my $file=$pagesources{$page};
-    +   my $type=pagetype($file);
-    +
-    +   my $from;
-    +   if (defined $form->field('from')) {
-    +           ($from)=$form->field('from')=~/$config{wiki_file_regexp}/;
-    +   }
-    +
-    +   $form->field(name => "do", type => 'hidden');
-    +   $form->field(name => "from", type => 'hidden');
-    +   $form->field(name => "rcsinfo", type => 'hidden');
-    +   $form->field(name => "newdir", type => 'text', size => 80);
-    +   $form->field(name => "page", value => $page, force => 1);
-    +   $form->field(name => "newname", type => "text", size => 80);
-    +   $form->field(name => "comments", type => "text", size => 80);
-    +   $form->tmpl_param("can_commit", $config{rcs});
-    +   $form->tmpl_param("indexlink", indexlink());
-    +   $form->tmpl_param("baseurl", baseurl());
-    +
-    +   if (! $form->submitted) {
-    +           $form->field(name => "rcsinfo", value => rcs_prepedit($file),
-    +                        force => 1);
-    +   }
-    +
-    +   if ($form->submitted eq "Cancel") {
-    +           redirect($q, "$config{url}/".htmlpage($page));
-    +           return;
-    +   }
-    +
-    +   if (! $form->submitted || ! $form->validate) {
-    +           check_canedit($page, $q, $session);
-    +           $form->tmpl_param("page_select", 0);
-    +           $form->field(name => "page", type => 'hidden');
-    +           $form->field(name => "type", type => 'hidden');
-    +           $form->title(sprintf(gettext("moving %s"), pagetitle($page)));
-    +           my $pname = basename($page);
-    +           my $dname = dirname($page);
-    +           if (! defined $form->field('newname') ||
-    +               ! length $form->field('newname')) {
-    +                   $form->field(name => "newname",
-    +                                value => pagetitle($pname, 1), force => 1);
-    +           }
-    +           if (! defined $form->field('newdir') ||
-    +               ! length $form->field('newdir')) {
-    +                   $form->field(name => "newdir",
-    +                                value => pagetitle($dname, 1), force => 1);
-    +           }
-    +           print $form->render(submit => \@buttons);
-    +   }
-    +   else{
-    +           # This untaint is safe because titlepage removes any problematic
-    +           # characters.
-    +           my ($newname)=$form->field('newname');
-    +           $newname=titlepage(possibly_foolish_untaint($newname));
-    +           my ($newdir)=$form->field('newdir');
-    +           $newdir=titlepage(possibly_foolish_untaint($newdir));
-    +           if (! defined $newname || ! length $newname || file_pruned($newname, $config{srcdir}) || $newname=~/^\//) {
-    +                   error("bad page name");
-    +           }
-    +           check_canedit($page, $q, $session);
-    +
-    +           my $newpage = ($newdir?"$newdir/":"") . $newname;
-    +           my $newfile = $newpage . ".$type";
-    +           my $message = $form->field('comments');
-    +           unlockwiki();
-    +           rcs_move($file, $newfile, $message, $form->field("rcsinfo"),
-    +                    $session->param("name"), $ENV{REMOTE_ADDR});
-    +           redirect($q, "$config{url}/".htmlpage($newpage));
-    +   }
-    +}
-    +
-     sub cgi_getsession ($) { #{{{
-        my $q=shift;
-
-    @@ -656,6 +756,9 @@
-        elsif (defined $session->param("postsignin")) {
-                cgi_postsignin($q, $session);
-        }
-    +   elsif ($do eq 'move') {
-    +           cgi_movepage($q, $session);
-    +   }
-        elsif ($do eq 'prefs') {
-                cgi_prefs($q, $session);
-        }
-    diff -urNX ignorepats ikiwiki/IkiWiki/Rcs/svn.pm ikidev/IkiWiki/Rcs/svn.pm
-    --- ikiwiki/IkiWiki/Rcs/svn.pm      2007-01-27 16:04:48.000000000 -0800
-    +++ ikidev/IkiWiki/Rcs/svn.pm       2007-02-22 01:51:29.923626000 -0800
-    @@ -60,6 +60,34 @@
-        }
-     } #}}}
-
-    +sub rcs_move ($$$$;$$) {
-    +   my $file=shift;
-    +   my $newname=shift;
-    +   my $message=shift;
-    +   my $rcstoken=shift;
-    +   my $user=shift;
-    +   my $ipaddr=shift;
-    +   if (defined $user) {
-    +           $message="web commit by $user".(length $message ? ": $message" : "");
-    +   }
-    +   elsif (defined $ipaddr) {
-    +           $message="web commit from $ipaddr".(length $message ? ": $message" : "");
-    +   }
-    +
-    +   chdir($config{srcdir}); # svn merge wants to be here
-    +
-    +   if (system("svn", "move", "--quiet",
-    +              "$file", "$newname") != 0) {
-    +           return 1;
-    +   }
-    +   if (system("svn", "commit", "--quiet",
-    +              "--encoding", "UTF-8", "-m",
-    +              possibly_foolish_untaint($message)) != 0) {
-    +           return 1;
-    +   }
-    +   return undef # success
-    +}
-    +
-     sub rcs_commit ($$$;$$) { #{{{
-        # Tries to commit the page; returns undef on _success_ and
-        # a version of the page with the rcs's conflict markers on failure.
-    diff -urNX ignorepats ikiwiki/IkiWiki/Render.pm ikidev/IkiWiki/Render.pm
-    --- ikiwiki/IkiWiki/Render.pm       2007-02-14 17:00:05.000000000 -0800
-    +++ ikidev/IkiWiki/Render.pm        2007-02-22 18:30:00.451755000 -0800
-    @@ -80,6 +80,7 @@
-
-        if (length $config{cgiurl}) {
-                $template->param(editurl => cgiurl(do => "edit", page => $page));
-    +           $template->param(moveurl => cgiurl(do => "move", page => $page));
-                $template->param(prefsurl => cgiurl(do => "prefs"));
-                if ($config{rcs}) {
-                        $template->param(recentchangesurl => cgiurl(do => "recentchanges"));
-    diff -urNX ignorepats ikiwiki/templates/movepage.tmpl ikidev/templates/movepage.tmpl
-    --- ikiwiki/templates/movepage.tmpl 1969-12-31 16:00:00.000000000 -0800
-    +++ ikidev/templates/movepage.tmpl  2007-02-22 18:40:39.751763000 -0800
-    @@ -0,0 +1,44 @@
-    +<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    + "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-    +<html>
-    +<head>
-    +<base href="<TMPL_VAR BASEURL>" />
-    +<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    +<title><TMPL_VAR FORM-TITLE></title>
-    +<link rel="stylesheet" href="<TMPL_VAR BASEURL>style.css" type="text/css" />
-    +<link rel="stylesheet" href="<TMPL_VAR BASEURL>local.css" type="text/css" />
-    +<TMPL_IF NAME="FAVICON">
-    +<link rel="icon" href="<TMPL_VAR BASEURL><TMPL_VAR FAVICON>" type="image/x-icon" />
-    +</TMPL_IF>
-    +</head>
-    +<body>
-    +<TMPL_IF NAME="FAILED_SAVE">
-    +<p>
-    +<b>Failed to save your changes.</b>
-    +</p>
-    +<p>
-    +Your changes were not able to be saved to disk. The system gave the error:
-    +<blockquote>
-    +<TMPL_VAR ERROR_MESSAGE>
-    +</blockquote>
-    +Your changes are preserved below, and you can try again to save them.
-    +</p>
-    +</TMPL_IF>
-    +<TMPL_VAR FORM-START>
-    +<div class="header">
-    +<span><TMPL_VAR INDEXLINK>/ <TMPL_VAR FORM-TITLE></span>
-    +</div>
-    +<TMPL_VAR FIELD-DO>
-    +<TMPL_VAR FIELD-FROM>
-    +<TMPL_VAR FIELD-RCSINFO>
-    +<TMPL_VAR FIELD-PAGE>
-    +New location: <TMPL_VAR FIELD-NEWDIR>/ <TMPL_VAR FIELD-NEWNAME>
-    +<br />
-    +<TMPL_IF NAME="CAN_COMMIT">
-    +Optional comment about this change:<br />
-    +<TMPL_VAR FIELD-COMMENTS><br />
-    +</TMPL_IF>
-    +<input id="_submit" name="_submit" type="submit" value="Rename Page" /><input id="_submit_2" name="_submit" type="submit" value="Cancel" />
-    +<TMPL_VAR FORM-END>
-    +</body>
-    +</html>
-    diff -urNX ignorepats ikiwiki/templates/page.tmpl ikidev/templates/page.tmpl
-    --- ikiwiki/templates/page.tmpl     2006-12-28 12:27:01.000000000 -0800
-    +++ ikidev/templates/page.tmpl      2007-02-22 01:52:33.078464000 -0800
-    @@ -32,6 +32,9 @@
-     <TMPL_IF NAME="EDITURL">
-     <li><a href="<TMPL_VAR EDITURL>">Edit</a></li>
-     </TMPL_IF>
-    +<TMPL_IF NAME="MOVEURL">
-    +<li><a href="<TMPL_VAR MOVEURL>">Move</a></li>
-    +</TMPL_IF>
-     <TMPL_IF NAME="RECENTCHANGESURL">
-     <li><a href="<TMPL_VAR RECENTCHANGESURL>">RecentChanges</a></li>
-     </TMPL_IF>
-
-----
-
 I'm going to try to run through a full analysis and design for moving and
 deleting pages here. I want to make sure all cases are covered. --[[Joey]]
 
@@ -379,6 +100,8 @@ When deleting `foo`, I don't think SubPages should be deleted. The
 potential for mistakes and abuse is too large. Deleting Discussion page
 might be a useful exception.
 
+TODO: Currently, subpages are not addressed.
+
 ## link fixups
 
 When renaming a page, it's desirable to keep links that point to it
@@ -419,9 +142,11 @@ Three new functions are added to the RCS interface:
 * `rcs_rename(old, new)`
 * `rcs_commit_staged(message, user, ip)`
 
+See [[rcs_updates_needed_for_rename_and_remove]].
+
 ## conflicts
 
-Cases that have to be dealt with:
+Cases to consider:
 
 * Alice clicks "delete" button for a page; Bob makes a modification;
   Alice confirms deletion. Ideally in this case, Alice should get an error
@@ -474,7 +199,9 @@ Cases that have to be dealt with:
   that he can't rename the page to an existing name. (A conflict resolution
   edit would also be ok.)
   Update: Bob gets an error message.
-
 * Alice renames (or deletes) a page. In the meantime, Bob is uploading an
   attachment to it, and finishes after the rename finishes. Is it
   acceptible for the attachment to be saved under the old name?
+  Update: Meh. It's certianly not ideal; if Bob tries to save the page he
+  uploaded the attachment to, he'll get a message about it having been
+  deleted/renamed, and he can try to figure out what to do... :-/
