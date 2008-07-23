@@ -11,6 +11,7 @@ sub import { #{{{
 	hook(type => "checkconfig", id => "link", call => \&checkconfig);
 	hook(type => "linkify", id => "link", call => \&linkify);
 	hook(type => "scan", id => "link", call => \&scan);
+	hook(type => "renamepage", id => "link", call => \&renamepage);
 } # }}}
 
 sub checkconfig () { #{{{
@@ -87,13 +88,17 @@ sub renamepage (@) { #{{{
 	my $new=$params{newpage};
 
 	$params{content} =~ s{(?<!\\)$link_regexp}{
-		my $link=$2;
+		my $linktext=$2;
+		my $link=$linktext;
 		if (bestlink($page, $2) eq $old) {
-			if (index($2, "/") == 0) {
-				$link="/$new";
+			$link=$new;
+			if ($linktext =~ m/\/*?[A-Z]/) {
+				# preserve leading cap
+				$link=ucfirst($link);
 			}
-			else {
-				$link=$new;
+			if (index($linktext, "/") == 0) {
+				# absolute link
+				$link="/$link";
 			}
 		}
 		defined $1

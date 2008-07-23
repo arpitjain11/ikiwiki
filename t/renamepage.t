@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 11;
+use Test::More tests => 14;
 use Encode;
 
 BEGIN { use_ok("IkiWiki"); }
@@ -34,6 +34,8 @@ is(try("z", "foo" => "bar", "[[xxx]]"), "[[xxx]]"); # unrelated link
 is(try("z", "foo" => "bar", "[[bar]]"), "[[bar]]"); # link already to new page
 is(try("z", "foo" => "bar", "[[foo]]"), "[[bar]]"); # basic conversion to new page name
 is(try("z", "foo" => "bar", "[[/foo]]"), "[[/bar]]"); # absolute link
+is(try("z", "foo" => "bar", "[[Foo]]"), "[[Bar]]"); # preserve case
+is(try("z", "foo" => "bar", "[[/Foo]]"), "[[/Bar]]"); # preserve case w/absolute
 is(try("z", "foo" => "bar", "[[foo]] [[xxx]]"), "[[bar]] [[xxx]]"); # 2 links, 1 converted
 is(try("z", "foo" => "bar", "[[xxx|foo]]"), "[[xxx|bar]]"); # conversion w/text
 is(try("z", "foo" => "bar", "[[foo#anchor]]"), "[[bar#anchor]]"); # with anchor
