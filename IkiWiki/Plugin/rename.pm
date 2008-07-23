@@ -74,18 +74,6 @@ sub check_canrename ($$$$$$$) { #{{{
 	}
 } #}}}
 
-sub formbuilder_setup (@) { #{{{
-	my %params=@_;
-	my $form=$params{form};
-	my $q=$params{cgi};
-
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
-		# Rename button for the page, and also for attachments.
-		push @{$params{buttons}}, "Rename";
-		$form->tmpl_param("field-rename" => '<input name="_submit" type="submit" value="Rename Attachment" />');
-	}
-} #}}}
-
 sub rename_form ($$$) { #{{{ 
 	my $q=shift;
 	my $session=shift;
@@ -141,8 +129,10 @@ sub rename_start ($$$$) {
 	exit 0;
 }
 
-sub postrename ($;$$) {
+my $renamesummary;
+sub postrename ($;$$$) {
 	my $session=shift;
+	my $src=shift;
 	my $dest=shift;
 	my $attachment=shift;
 
@@ -150,6 +140,15 @@ sub postrename ($;$$) {
 	my $postrename=CGI->new($session->param("postrename"));
 	$session->clear("postrename");
 	IkiWiki::cgi_savesession($session);
+
+	if (defined $src) {
+		# Generate a rename summary, that will be shown at the top
+		# of the edit template.
+		my $template=template("renamesummary.tmpl");
+		$template->param(src => $src);
+		$template->param(dest => $dest);
+		$renamesummary=$template->output;
+	}
 
 	if (defined $dest && ! $attachment) {
 		# They renamed the page they were editing. This requires
@@ -163,6 +162,22 @@ sub postrename ($;$$) {
 
 	IkiWiki::cgi_editpage($postrename, $session);
 }
+
+sub formbuilder_setup (@) { #{{{
+	my %params=@_;
+	my $form=$params{form};
+	my $q=$params{cgi};
+
+	if (defined $form->field("do") && $form->field("do") eq "edit") {
+		# Rename button for the page, and also for attachments.
+		push @{$params{buttons}}, "Rename";
+		$form->tmpl_param("field-rename" => '<input name="_submit" type="submit" value="Rename Attachment" />');
+
+		if (defined $renamesummary) {
+			$form->tmpl_param(message => $renamesummary);
+		}
+	}
+} #}}}
 
 sub formbuilder (@) { #{{{
 	my %params=@_;
@@ -226,7 +241,8 @@ sub sessioncgi ($$) { #{{{
 			if ($config{rcs}) {
 				IkiWiki::disable_commit_hook();
 				IkiWiki::rcs_rename($srcfile, $destfile);
-				IkiWiki::rcs_commit_staged(sprintf(gettext("rename %s to %s", $src, $dest)),
+				IkiWiki::rcs_commit_staged(
+					sprintf(gettext("rename %s to %s"), $src, $dest),
 					$session->param("name"), $ENV{REMOTE_ADDR});
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
@@ -239,7 +255,7 @@ sub sessioncgi ($$) { #{{{
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
-			postrename($session, $dest, $q->param("attachment"));
+			postrename($session, $src, $dest, $q->param("attachment"));
 		}
 		else {
 			IkiWiki::showform($form, $buttons, $session, $q);

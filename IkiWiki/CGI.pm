@@ -365,7 +365,6 @@ sub cgi_editpage ($$) { #{{{
 		htmllink($page, $page, "ikiwiki/formatting",
 			noimageinline => 1,
 			linktext => "FormattingHelp"));
-	$form->tmpl_param("message", "");
 	
 	if ($form->submitted eq "Cancel") {
 		if ($form->field("do") eq "create" && defined $from) {
