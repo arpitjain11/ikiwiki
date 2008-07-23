@@ -1,0 +1,7 @@
+I've just noticed that `attachment` plugin esacapes underscore characters
+in attached filenames. For example, when I wanted to add
+`foo_bar_baz.txt` file, then Ikiwiki added file `foo__95__bar__95__baz.txt`
+to my Subversion repo. I hope that the filename is terribly ugly not only
+for me ;)
+
+Is it a bug or security feature? --[[Paweł|ptecza]]
