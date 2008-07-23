@@ -11,6 +11,7 @@ ikiwiki (2.55) UNRELEASED; urgency=low
   * Add allow_symlinks_before_srcdir config setting that can be used to avoid
     a security check that is a good safe default, but problimatic overkill in
     some situations.
+  * attachment: Do not escape _ when determining attachment filenames.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 21 Jul 2008 11:35:46 -0400
 
