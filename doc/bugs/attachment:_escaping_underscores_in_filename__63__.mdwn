@@ -5,3 +5,13 @@ to my Subversion repo. I hope that the filename is terribly ugly not only
 for me ;)
 
 Is it a bug or security feature? --[[Paweł|ptecza]]
+
+>> Update: It's not only problem with attached filenames. I have
+>> `mysql/myisam_vs_ndb.mdwn` page in my wiki and attached two
+>> images (`myisam_vs_ndb_sql.png` and `myisam_vs_ndb_cpu.png`)
+>> and one OpenDocument file (`myisam_vs_ndb.ods`). Ikiwiki placed
+>> them into `myisam__95__vs__95__ndb` subdirectory as
+>> `myisam__95__vs__95__ndb__95__sql.png`, `myisam__95__vs__95__ndb__95__cpu.png`
+>> and `myisam__95__vs__95__ndb.ods` files. When I click "Attachments" link,
+>> I can't see my uploaded files, because there are in another subdirectory
+>> (`myisam__95__vs__95__ndb` instead of `myisam_vs_ndb`).  --[[Paweł|ptecza]]
