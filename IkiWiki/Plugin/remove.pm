@@ -12,7 +12,7 @@ sub import { #{{{
 
 } # }}}
 
-sub check_canremove ($$$$) {
+sub check_canremove ($$$$) { #{{{
 	my $page=shift;
 	my $q=shift;
 	my $session=shift;
@@ -42,7 +42,7 @@ sub check_canremove ($$$$) {
 	if ($attachment) {
 		IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
 	}
-}
+} #}}}
 
 sub formbuilder_setup (@) { #{{{
 	my %params=@_;
@@ -79,7 +79,7 @@ sub confirmation_form ($$) { #{{{
 	return $f, ["Remove", "Cancel"];
 } #}}}
 
-sub removal_confirm ($$@) {
+sub removal_confirm ($$@) { #{{{
 	my $q=shift;
 	my $session=shift;
 	my $attachment=shift;
@@ -107,9 +107,9 @@ sub removal_confirm ($$@) {
 
 	IkiWiki::showform($f, $buttons, $session, $q);
 	exit 0;
-}
+} #}}}
 
-sub postremove ($) {
+sub postremove ($) { #{{{
 	my $session=shift;
 
 	# Load saved form state and return to edit form.
@@ -117,7 +117,7 @@ sub postremove ($) {
 	$session->clear("postremove");
 	IkiWiki::cgi_savesession($session);
 	IkiWiki::cgi($postremove, $session);
-}
+} #}}}
 
 sub formbuilder (@) { #{{{
 	my %params=@_;

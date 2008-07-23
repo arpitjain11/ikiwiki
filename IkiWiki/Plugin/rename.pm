@@ -102,7 +102,7 @@ sub rename_form ($$$) { #{{{
 	return $f, ["Rename", "Cancel"];
 } #}}}
 
-sub rename_start ($$$$) {
+sub rename_start ($$$$) { #{{{
 	my $q=shift;
 	my $session=shift;
 	my $attachment=shift;
@@ -127,9 +127,9 @@ sub rename_start ($$$$) {
 	
 	IkiWiki::showform($f, $buttons, $session, $q);
 	exit 0;
-}
+} #}}}
 
-sub postrename ($;$$$) {
+sub postrename ($;$$$) { #{{{
 	my $session=shift;
 	my $src=shift;
 	my $dest=shift;
@@ -160,7 +160,7 @@ sub postrename ($;$$$) {
 	}
 
 	IkiWiki::cgi_editpage($postrename, $session);
-}
+} #}}}
 
 sub formbuilder (@) { #{{{
 	my %params=@_;

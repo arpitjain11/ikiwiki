@@ -11,7 +11,7 @@ sub import { #{{{
 	hook(type => "formbuilder", id => "attachment", call => \&formbuilder);
 } # }}}
 
-sub check_canattach ($$;$) {
+sub check_canattach ($$;$) { #{{{
 	my $session=shift;
 	my $dest=shift; # where it's going to be put, under the srcdir
 	my $file=shift; # the path to the attachment currently
@@ -43,7 +43,7 @@ sub check_canattach ($$;$) {
 	else {
 		return 1;
 	}
-}
+} #}}}
 
 sub checkconfig () { #{{{
 	$config{cgi_disable_uploads}=0;
@@ -207,7 +207,7 @@ sub formbuilder (@) { #{{{
 	$form->tmpl_param("attachment_list" => [attachment_list($form->field('page'))]);
 } # }}}
 
-sub attachment_location ($) {
+sub attachment_location ($) { #{{{
 	my $page=shift;
 	
 	# Put the attachment in a subdir of the page it's attached
@@ -216,9 +216,9 @@ sub attachment_location ($) {
 	$page.="/" if length $page;
 	
 	return $page;
-}
+} #}}}
 
-sub attachment_list ($) {
+sub attachment_list ($) { #{{{
 	my $page=shift;
 	my $loc=attachment_location($page);
 
@@ -240,9 +240,9 @@ sub attachment_list ($) {
 	# Sort newer attachments to the top of the list, so a newly-added
 	# attachment appears just before the form used to add it.
 	return sort { $b->{mtime_raw} <=> $a->{mtime_raw} || $a->{link} cmp $b->{link} } @ret;
-}
+} #}}}
 
-my %units=(		# size in bytes
+my %units=( #{{{	# size in bytes
 	B		=> 1,
 	byte		=> 1,
 	KB		=> 2 ** 10,
@@ -274,7 +274,7 @@ my %units=(		# size in bytes
 	# ikiwiki, if you find you need larger data quantities, either modify
 	# yourself to add them, or travel back in time to 2008 and kill me.
 	#   -- Joey
-);
+); #}}}
 
 sub parsesize ($) { #{{{
 	my $size=shift;
