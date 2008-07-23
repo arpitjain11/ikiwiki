@@ -1,0 +1,26 @@
+The [[plugins/map]] plugin has inconsistent behaviour.  In particular, I have in my wiki some directory structures holding files without wikitext pointers (I point directly to the files from elsewhere).  For example, imagine the following file structure in the source dir:
+
+* Assignments.mdwn
+* Assignments
+    * 2004
+        * Assign1.pdf
+        * Assign2.pdf
+    * 2005
+        * Assign1.pdf
+        * Assign2.pdf
+    * 2006
+        * etc., etc.
+
+When I use map to make a map of this, the result looks more like this:
+
+* Assignments        # this is a link to the correct page
+    * 2004                   # this has a create link
+        * Assign1.pdf
+        * Assign2.pdf
+        * Assign1.pdf
+        * Assign2.pdf
+        * etc., etc.
+
+Note that while the 2004 directory exists with a create link, the 2005 and 2006 (etc) directories are missing from the site map.
+
+I could imagine including all 'bare' directories in the map, and I could imagine including no 'bare' directories in the map.  Just including the first bare directory seems a strange intermediate point.

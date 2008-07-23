@@ -3,4 +3,10 @@ I'd like to be able to drop an unmodified RFC2822 email message into ikiwiki, an
 > We're discussing doing just that (well, whole mailboxes, really) over in
 > [[comment_by_mail]] --[[Joey]]
 
->> I am going to start putting something simple together. [[DavidBremner]]
+>> I am going to start putting something simple together, but 
+>> probably not too quickly.
+>> So far I don't see a way to have ikiwiki process directories 
+>> (i.e. maildirs or mh folders) as a single page.  This not that 
+>> big of a deal, but it means that every mailbox will need 
+>> something like \[[!mailbox type=maildir path=thedir]] in some  
+>> "normal" (e.g. markdown) page -- [[DavidBremner]]

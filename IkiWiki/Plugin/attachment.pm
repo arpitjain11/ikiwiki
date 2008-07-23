@@ -136,7 +136,7 @@ sub formbuilder (@) { #{{{
 			}
 		}
 
-		$filename=IkiWiki::titlepage(
+		$filename=IkiWiki::linkpage(
 			IkiWiki::possibly_foolish_untaint(
 				attachment_location($form->field('page')).
 				IkiWiki::basename($filename)));

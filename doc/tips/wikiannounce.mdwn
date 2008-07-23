@@ -2,7 +2,7 @@ One thing I use ikiwiki for is the web pages for software projects I
 maintain. Each of my projects has a news page with an announcements feed,
 and to automatically update this when I release a new version, generating
 an announcement from the debian/changelog and debian/NEWS files, I use a
-[wikiannounce](http://git.kitenet.net/?p=joey/home;a=blob_plain;f=bin/wikiannounce)
+[wikiannounce](http://git.kitenet.net/?p=joey/home.git;a=blob_plain;f=bin/wikiannounce)
 program. It's somewhat specific to dealing with Debian packages, and uses a
 special `announcedir` target in debian/rules, but the general idea could be
 useful. --[[Joey]]
