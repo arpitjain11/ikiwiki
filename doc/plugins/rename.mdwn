@@ -5,3 +5,7 @@ This plugin allows pages or other files to be renamed using the web
 interface.
 
 Users can only rename things that they are allowed to edit or upload.
+
+It attempts to fix up links to renamed pages, and if some links cannot be
+fixed up, the pages that contain the broken links will be displayed after
+the rename.
