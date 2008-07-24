@@ -364,7 +364,28 @@ sub rcs_commit_staged ($$$) {
 	# rcs_remove, and rcs_rename.
 	my ($message, $user, $ipaddr)=@_;
 	
-	error("rcs_commit_staged not implemented for monotone"); # TODO
+	# Note - this will also commit any spurious changes that happen to be
+	# lying around in the working copy.  There shouldn't be any, but...
+	
+	check_config();
+
+	my $author;
+
+	if (defined $user) {
+		$author="Web user: " . $user;
+	}
+	elsif (defined $ipaddr) {
+		$author="Web IP: " . $ipaddr;
+	}
+	else {
+		$author="Web: Anonymous";
+	}
+
+	if (system("mtn", "--root=$config{mtnrootdir}", "commit", "--quiet",
+	           "--author", $author, "--key", $config{mtnkey}, "-m",
+		   possibly_foolish_untaint($message)) != 0) {
+		error("Monotone commit failed");
+	}
 }
 
 sub rcs_add ($) { #{{{
@@ -381,13 +402,30 @@ sub rcs_add ($) { #{{{
 sub rcs_remove ($) { # {{{
 	my $file = shift;
 
-	error("rcs_remove not implemented for monotone"); # TODO
+	check_config();
+
+	# Note: it is difficult to undo a remove in Monotone at the moment.
+	# Until this is fixed, it might be better to make 'rm' move things
+	# into an attic, rather than actually remove them.
+	# To resurrect a file, you currently add a new file with the contents
+	# you want it to have.  This loses all connectivity and automated
+	# merging with the 'pre-delete' versions of the file.
+
+	if (system("mtn", "--root=$config{mtnrootdir}", "rm", "--quiet",
+	           $file) != 0) {
+		error("Monotone remove failed");
+	}
 } #}}}
 
 sub rcs_rename ($$) { # {{{
 	my ($src, $dest) = @_;
 
-	error("rcs_rename not implemented for monotone"); # TODO
+	check_config();
+
+	if (system("mtn", "--root=$config{mtnrootdir}", "rename", "--quiet",
+	           $src, $dest) != 0) {
+		error("Monotone rename failed");
+	}
 } #}}}
 
 sub rcs_recentchanges ($) { #{{{
@@ -498,7 +536,26 @@ sub rcs_recentchanges ($) { #{{{
 } #}}}
 
 sub rcs_diff ($) { #{{{
-	# TODO
+	my $rev=shift;
+	my ($sha1) = $rev =~ /^($sha1_pattern)$/; # untaint
+	
+	check_config();
+
+	my $child = open(MTNDIFF, "-|");
+	if (! $child) {
+		exec("mtn", "diff", "--root=$config{mtnrootdir}", "-r", "p:".$sha1, "-r", $sha1) || error("mtn diff $sha1 failed to run");
+	}
+
+	my (@lines) = <MTNDIFF>;
+
+	close MTNDIFF || debug("mtn diff $sha1 exited $?");
+
+	if (wantarray) {
+		return @lines;
+	}
+	else {
+		return join("", @lines);
+	}
 } #}}}
 
 sub rcs_getctime ($) { #{{{
