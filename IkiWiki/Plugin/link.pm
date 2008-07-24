@@ -91,7 +91,7 @@ sub renamepage (@) { #{{{
 		my $linktext=$2;
 		my $link=$linktext;
 		if (bestlink($page, $2) eq $old) {
-			$link=$new;
+			$link=IkiWiki::pagetitle($new, 1);
 			if ($linktext =~ m/.*\/*?[A-Z]/) {
 				# preserve leading cap of last component
 				my @bits=split("/", $link);
