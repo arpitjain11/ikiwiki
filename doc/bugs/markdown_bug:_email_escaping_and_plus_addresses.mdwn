@@ -9,3 +9,21 @@ compare:
 It seems putting a '+' in there throws it. Maybe it's a markdown bug, or maybe the obfuscation markdown applies to email-links is being caught by the HTML sanitizer.
 
  -- [[JonDowland]]
+
+> It's a markdown bug. For some reason, markdown doesn't recognize the email with a '+' as an email:
+>
+>     $ echo '<a+b@c.org>' | markdown
+>     <p><a+b@c.org></p>
+>
+> htmlscrubber then (rightly) removes this unknown tag.
+>
+> But I've noticed some other Text::Markdown bugs that, even with htmlscrubber, produce
+> [ill-formed (X)HTML](http://validator.w3.org/check?uri=http%3A%2F%2Fikiwiki.info%2Fbugs%2Fmarkdown_bug%3A_email_escaping_and_plus_addresses%2F).
+> (View the markdown source of this page.)
+>
+> --Gabriel
+
+<tt>
+
+- 
+>
