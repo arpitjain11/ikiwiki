@@ -12,6 +12,10 @@ For now, I want to try and resolve the issues with net\_ssl\_test, and run more 
 > ikiwiki) performing any sanity checking of the openid server. All the
 > security authentication goes on between your web browser and the openid
 > server. This may involve ssl, or not.
+>
+>> Note that I'm not an openid expert, and the above may need to be taken
+>> with a grain of salt. I also can make no general statements about openid
+>> being secure. ;-) --[[Joey]]
 > 
 > For example, my openid is "http://joey.kitenet.net/". If I log in with
 > this openid, ikiwiki connects to that http url to determine what openid
@@ -34,3 +38,15 @@ For now, I want to try and resolve the issues with net\_ssl\_test, and run more 
 >> for use by ikiwiki and the rest is simple.
 
 >> -- Brian May
+
+>>> I guess that the place to add SSL cert checking would be in either
+>>> [[cpan LWPx::ParanoidAgent]] or [[cpan Net::OpenID::Consumer]]. Adding
+>>> it to ikiwiki itself, which is just a user of those libraries, doesn't
+>>> seem right.
+>>> 
+>>> It's not particularly clear to me how a SSL cert can usefully be
+>>> checked at this level, where there is no way to do anything but
+>>> succeed, or fail; and where the extent of the check that can be done is
+>>> that the SSL cert is issued by a trusted party and matches the domain name
+>>> of the site being connected to. I also don't personally think that SSL
+>>> certs are the right fix for DNS poisoning issues. --[[Joey]]
