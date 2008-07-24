@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 15;
+use Test::More tests => 21;
 use Encode;
 
 BEGIN { use_ok("IkiWiki"); }
@@ -43,3 +43,9 @@ is(try("z", "foo" => "bar", "[[foo#anchor]]"), "[[bar#anchor]]"); # with anchor
 is(try("z", "foo" => "bar", "[[xxx|foo#anchor]]"), "[[xxx|bar#anchor]]"); # with anchor
 is(try("z", "foo" => "bar", "[[!moo ]]"), "[[!moo ]]"); # preprocessor directive unchanged
 is(try("bugs", "bugs/foo" => "wishlist/bar", "[[foo]]"), "[[wishlist/bar]]"); # subpage link
+is(try("z", "foo_bar" => "bar", "[[foo_bar]]"), "[[bar]]"); # old link with underscore
+is(try("z", "foo" => "bar_foo", "[[foo]]"), "[[bar_foo]]"); # new link with underscore
+is(try("z", "foo_bar" => "bar_foo", "[[foo_bar]]"), "[[bar_foo]]"); # both with underscore
+is(try("z", "foo" => "bar__".ord("(")."__", "[[foo]]"), "[[bar(]]"); # new link with escaped chars
+is(try("z", "foo__".ord("(")."__" => "bar(", "[[foo(]]"), "[[bar(]]"); # old link with escaped chars
+is(try("z", "foo__".ord("(")."__" => "bar__".ord(")")."__", "[[foo(]]"), "[[bar)]]"); # both with escaped chars
