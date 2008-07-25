@@ -24,3 +24,32 @@ Looking at the Safari Web Inspector, it believes there is a parse error on line 
 > I wonder if webkit is actually in the right here, and using a reseved
 > word like, presumably, "class" as a variable name is not legal. As I try
 > to ignore javascript as much as possible, I can't say. [[done]] --[[Joey]]
+
+>> I also started having a look at this.  I found the same issue with the
+>> the variable 'class'.  I'm not a javascript guru so I looked on the web
+>> at other implementations of getElementsByClass() and noticed some
+>> things that we might use.  I took a bunch of different ideas and came
+>> up with this:
+
+    function getElementsByClass(cls, node, tag) {
+    	if (document.getElementsByClass)
+    		return document.getElementsByClass(cls, node, tag);
+    	if (! node) node = document;
+    	if (! tag) tag = '*';
+    	var ret = new Array();
+    	var pattern = new RegExp("(^|\\s)"+cls+"(\\s|$)");
+    	var els = node.getElementsByTagName(tag);
+    	for (i = 0; i < els.length; i++) {
+    		if ( pattern.test(els[i].className) ) {
+    			ret.push(els[i]);
+    		}
+    	}
+    	return ret;
+    }
+
+>> Most of the changes are minor, except that this one will use the
+>> built in function if it is available.  That is likely to be significantly
+>> faster.  Adding the extra parameters doesn't cause a problem --
+>> they're filled in with useful defaults.
+
+>> I don't know if it is worth making this change, but it is there if you want it.
