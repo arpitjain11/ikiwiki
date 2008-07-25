@@ -53,18 +53,24 @@ sub rcs_prepedit ($) { #{{{
 	return "";
 } #}}}
 
+sub bzr_author ($$) { #{{{
+	my ($user, $ipaddr) = @_;
+
+	if (defined $user) {
+		return possibly_foolish_untaint($user);
+	}
+	elsif (defined $ipaddr) {
+		return "Anonymous from ".possibly_foolish_untaint($ipaddr);
+	}
+	else {
+		return "Anonymous";
+	}
+} #}}}
+
 sub rcs_commit ($$$;$$) { #{{{
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
-	if (defined $user) {
-		$user = possibly_foolish_untaint($user);
-	}
-	elsif (defined $ipaddr) {
-		$user = "Anonymous from ".possibly_foolish_untaint($ipaddr);
-	}
-	else {
-		$user = "Anonymous";
-	}
+	$user = bzr_author($user, $ipaddr);
 
 	$message = possibly_foolish_untaint($message);
 	if (! length $message) {
@@ -84,9 +90,22 @@ sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
 	# rcs_remove, and rcs_rename.
 	my ($message, $user, $ipaddr)=@_;
-	
-	error("rcs_commit_staged not implemented for bzr"); # TODO
-}
+
+	$user = bzr_author($user, $ipaddr);
+
+	$message = possibly_foolish_untaint($message);
+	if (! length $message) {
+		$message = "no message given";
+	}
+
+	my @cmdline = ("bzr", "commit", "--quiet", "-m", $message, "--author", $user,
+	               $config{srcdir});
+	if (system(@cmdline) != 0) {
+		warn "'@cmdline' failed: $!";
+	}
+
+	return undef; # success
+} #}}}
 
 sub rcs_add ($) { # {{{
 	my ($file) = @_;
@@ -100,13 +119,19 @@ sub rcs_add ($) { # {{{
 sub rcs_remove ($) { # {{{
 	my ($file) = @_;
 
-	error("rcs_remove not implemented for bzr"); # TODO
+	my @cmdline = ("bzr", "rm", "--force", "--quiet", "$config{srcdir}/$file");
+	if (system(@cmdline) != 0) {
+		warn "'@cmdline' failed: $!";
+	}
 } #}}}
 
 sub rcs_rename ($$) { # {{{
 	my ($src, $dest) = @_;
 
-	error("rcs_rename not implemented for bzr"); # TODO
+	my @cmdline = ("bzr", "mv", "--quiet", "$config{srcdir}/$src", "$config{srcdir}/$dest");
+	if (system(@cmdline) != 0) {
+		warn "'@cmdline' failed: $!";
+	}
 } #}}}
 
 sub rcs_recentchanges ($) { #{{{

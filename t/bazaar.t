@@ -12,7 +12,7 @@ BEGIN {
 		}
 	}
 }
-use Test::More tests => 11;
+use Test::More tests => 13;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -45,7 +45,7 @@ my $message = "Added the second page";
 my $test2 = readfile("t/test2.mdwn");
 writefile('test2.mdwn', $config{srcdir}, $test2);
 system "bzr add $config{srcdir}/test2.mdwn";
-system "bzr commit --author \"$user\" -m \"$message\" $config{srcdir}";
+system "bzr commit --quiet --author \"$user\" -m \"$message\" $config{srcdir}";
 	
 @changes = IkiWiki::rcs_recentchanges(3);
 
@@ -58,5 +58,18 @@ is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
 
 my $ctime = IkiWiki::rcs_getctime("test2.mdwn");
 ok($ctime >= time() - 20);
+
+writefile('test3.mdwn', $config{srcdir}, $test1);
+IkiWiki::rcs_add("test3.mdwn");
+IkiWiki::rcs_rename("test3.mdwn", "test4.mdwn");
+IkiWiki::rcs_commit_staged("Added the 4th page", "moo", "Joe User");
+
+@changes = IkiWiki::rcs_recentchanges(4);
+
+is($#changes, 2);
+is($changes[0]{pages}[0]{"page"}, "test4.mdwn");
+
+IkiWiki::rcs_remove("test4.mdwn");
+IkiWiki::rcs_commit_staged("Remove the 4th page", "moo", "Joe User");
 
 system "rm -rf $dir";
