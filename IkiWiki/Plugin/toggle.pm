@@ -39,18 +39,22 @@ function toggle(s) {
 		style.display = "none";
 }
 
-function getElementsByClass(c) {
+function getElementsByClass(cls, node, tag) {
+	if (document.getElementsByClass)
+		return document.getElementsByClass(cls, node, tag);
+	if (! node) node = document;
+	if (! tag) tag = '*';
 	var ret = new Array();
-	var pattern = new RegExp("(^|\\s)"+c+"(\\s|$)");
-	var els = document.getElementsByTagName('*');
-	for (i = 0, j = 0; i < els.length; i++) {
+	var pattern = new RegExp("(^|\\s)"+cls+"(\\s|$)");
+	var els = node.getElementsByTagName(tag);
+	for (i = 0; i < els.length; i++) {
 		if ( pattern.test(els[i].className) ) {
-			ret[j] = els[i];
-			j++;
+			ret.push(els[i]);
 		}
 	}
 	return ret;
 }
+
 //-->
 </script>
 EOF
