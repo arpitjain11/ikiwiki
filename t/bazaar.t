@@ -12,7 +12,7 @@ BEGIN {
 		}
 	}
 }
-use Test::More tests => 13;
+use Test::More tests => 16;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -69,7 +69,16 @@ IkiWiki::rcs_commit_staged("Added the 4th page", "moo", "Joe User");
 is($#changes, 2);
 is($changes[0]{pages}[0]{"page"}, "test4.mdwn");
 
-IkiWiki::rcs_remove("test4.mdwn");
-IkiWiki::rcs_commit_staged("Remove the 4th page", "moo", "Joe User");
+ok(mkdir($config{srcdir}."/newdir"));
+IkiWiki::rcs_rename("test4.mdwn", "newdir/test5.mdwn");
+IkiWiki::rcs_commit_staged("Added the 5th page", "moo", "Joe User");
+
+@changes = IkiWiki::rcs_recentchanges(4);
+
+is($#changes, 3);
+is($changes[0]{pages}[0]{"page"}, "newdir/test5.mdwn");
+
+IkiWiki::rcs_remove("newdir/test5.mdwn");
+IkiWiki::rcs_commit_staged("Remove the 5th page", "moo", "Joe User");
 
 system "rm -rf $dir";
