@@ -18,6 +18,7 @@ BEGIN {
 
 sub import { #{{{
 	hook(type => "getopt", id => "amazon_s3", call => \&getopt);
+	hook(type => "getsetup", id => "amazon_s3", call => \&getsetup);
 	hook(type => "checkconfig", id => "amazon_s3", call => \&checkconfig);
 } # }}}
 
@@ -37,6 +38,54 @@ sub getopt () { #{{{
 		debug(gettext("done"));
 		exit(0);
 	});
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		 amazon_s3_key_id => {
+			type => "boolean",
+			default => "",
+			description => "public access key id",
+			safe => 1,
+			rebuild => 0,
+		},
+		amazon_s3_key_id => {
+			type => "string",
+			default => "",
+			description => "file holding secret key",
+			safe => 0, # ikiwiki reads this file
+			rebuild => 0,
+		},
+		amazon_s3_bucket => {
+			type => "string",
+			default => "",
+			example => "mywiki",
+			description => "globally unique name of bucket to store wiki in",
+			safe => 1,
+			rebuild => 1,
+		},
+		amazon_s3_prefix => {
+			type => "string",
+			default => "wiki/",
+			description => "a prefix to prepend to each page name",
+			safe => 1,
+			rebuild => 1,
+		},
+		amazon_s3_location => {
+			type => "string",
+			default => "",
+			example => "EU",
+			description => "which S3 datacenter to use (leave blank for default)",
+			safe => 1,
+			rebuild => 1,
+		},
+		amazon_s3_dupindex => {
+			type => "boolean",
+			default => 0,
+			description => "store each index file twice, to allow urls ending in \"/index.html\" and \"/\"",
+			safe => 1,
+			rebuild => 1,
+		},
 } #}}}
 
 sub checkconfig { #{{{

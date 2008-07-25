@@ -8,6 +8,7 @@ use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "getopt", id => "openid", call => \&getopt);
+	hook(type => "getsetup", id => "openid", call => \&getsetup);
 	hook(type => "auth", id => "openid", call => \&auth);
 	hook(type => "formbuilder_setup", id => "openid",
 		call => \&formbuilder_setup, last => 1);
@@ -18,6 +19,18 @@ sub getopt () { #{{{
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
 	GetOptions("openidsignup=s" => \$config{openidsignup});
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		openidsignup => {
+			type => "string",
+			default => "",
+			example => "http://myopenid.com/",
+			description => "an url where users can signup for an OpenID",
+			safe => 1,
+			rebuild => 0,
+		},
 } #}}}
 
 sub formbuilder_setup (@) { #{{{

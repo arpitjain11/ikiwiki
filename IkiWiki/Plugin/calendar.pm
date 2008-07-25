@@ -30,8 +30,20 @@ my $time=time;
 my @now=localtime($time);
 
 sub import { #{{{
+	hook(type => "getsetup", id => "version", call => \&getsetup);
 	hook(type => "needsbuild", id => "version", call => \&needsbuild);
 	hook(type => "preprocess", id => "calendar", call => \&preprocess);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		archivebase => {
+			type => "string",
+			default => "archives",
+			description => "base of the archives hierarchy",
+			safe => 1,
+			rebuild => 1,
+		},
 } #}}}
 
 sub is_leap_year (@) { #{{{

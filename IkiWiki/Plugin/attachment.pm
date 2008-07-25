@@ -6,10 +6,23 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "attachment", call => \&getsetup);
 	hook(type => "checkconfig", id => "attachment", call => \&checkconfig);
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "attachment", call => \&formbuilder);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		 => {
+			type => "string",
+			default => "",
+			example => "clamdscan -",
+			description => "virus checker program (reads STDIN, returns nonzero if virus found)",
+			safe => 0, # executed
+			rebuild => 0,
+		},
+} #}}}
 
 sub check_canattach ($$;$) { #{{{
 	my $session=shift;

@@ -6,8 +6,21 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "canedit", id => "anonok", call => \&canedit,);
+	hook(type => "getsetup", id => "anonok", call => \&getsetup);
+	hook(type => "canedit", id => "anonok", call => \&canedit);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		anonok_pagespec => {
+			type => "string",
+			default => "",
+			example => "*/discussion",
+			description => "PageSpec to limit which pages anonymouse users can edit",
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub canedit ($$$) { #{{{
 	my $page=shift;

@@ -40,8 +40,27 @@ sub default_timetable {
 }
 
 sub import { #{{{
+	hook(type => "getsetup", id => "getsetup", call => \&getsetup);
 	hook(type => "checkconfig", id => "prettydate", call => \&checkconfig);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		prettydateformat => {
+			type => "string",
+			default => '%X, %B %o, %Y',
+			description => "format to use to display date",
+			safe => 1,
+			rebuild => 1,
+		},
+		timetable => {
+			type => undef, # don't try to show in interface
+			default => '%X, %B %o, %Y',
+			description => "array of time descriptions",
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 sub checkconfig () { #{{{
 	if (! defined $config{prettydateformat} ||

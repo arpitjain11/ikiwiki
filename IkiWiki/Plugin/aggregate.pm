@@ -16,6 +16,7 @@ my %guids;
 
 sub import { #{{{
 	hook(type => "getopt", id => "aggregate", call => \&getopt);
+	hook(type => "getsetup", id => "aggregate", call => \&getsetup);
 	hook(type => "checkconfig", id => "aggregate", call => \&checkconfig);
 	hook(type => "needsbuild", id => "aggregate", call => \&needsbuild);
 	hook(type => "preprocess", id => "aggregate", call => \&preprocess);
@@ -35,6 +36,24 @@ sub getopt () { #{{{
 		"aggregate" => \$config{aggregate},
 		"aggregateinternal!" => \$config{aggregateinternal},
 	);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		aggregateinternal => {
+			type => "boolean",
+			default => 0,
+			description => "enable aggregation to internal pages",
+			safe => 0, # enabling needs manual transition
+			rebuild => 0,
+		},
+		aggregate_webtrigger => {
+			type => "boolean",
+			default => 0,
+			description => "allow aggregation to be triggered via the web",
+			safe => 1,
+			rebuild => 0,
+		},
 } #}}}
 
 sub checkconfig () { #{{{

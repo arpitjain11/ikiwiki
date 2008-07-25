@@ -7,12 +7,29 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-        hook(type => "formbuilder_setup", id => "passwordauth",
-		call => \&formbuilder_setup);
-        hook(type => "formbuilder", id => "passwordauth",
-		call => \&formbuilder);
+	hook(type => "getsetup", id => "passwordauth", "call" => \&getsetup);
+        hook(type => "formbuilder_setup", id => "passwordauth", call => \&formbuilder_setup);
+        hook(type => "formbuilder", id => "passwordauth", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "passwordauth", call => \&sessioncgi);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		account_creation_password => {
+			type => "string",
+			default => "",
+			description => "a password that must be entered when signing up for an account",
+			safe => 1,
+			rebuild => 0,
+		},
+		password_cost => {
+			type => "integer",
+			default => 8,
+			description => "cost of generating a password using Authen::Passphrase::BlowfishCrypt",
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 # Checks if a string matches a user's password, and returns true or false.
 sub checkpassword ($$;$) { #{{{

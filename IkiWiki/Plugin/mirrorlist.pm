@@ -6,8 +6,20 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "mirrorlist", call => \&getsetup);
 	hook(type => "pagetemplate", id => "mirrorlist", call => \&pagetemplate);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		mirrorlist => {
+			type => "string",
+			default => "",
+			description => "list of mirrors",
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 sub pagetemplate (@) { #{{{
 	my %params=@_;

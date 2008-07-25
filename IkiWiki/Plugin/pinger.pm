@@ -9,11 +9,23 @@ my %pages;
 my $pinged=0;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "pinger", call => \&getsetup);
 	hook(type => "needsbuild", id => "pinger", call => \&needsbuild);
 	hook(type => "preprocess", id => "ping", call => \&preprocess);
 	hook(type => "delete", id => "pinger", call => \&ping);
 	hook(type => "change", id => "pinger", call => \&ping);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		pinger_timeout => {
+			type => "int",
+			default => 15,
+			description => "how many seconds to try pinging before timing out",
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
