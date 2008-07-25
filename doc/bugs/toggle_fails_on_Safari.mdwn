@@ -1,0 +1,16 @@
+The [[plugins/toggle]] plugin has no effect when viewed on the Safari web browser.
+
+All toggles appear open all the time.
+
+I don't know if this is true for other webkit browsers (the new Konqeror, the iPhone, etc).
+I'm currently testing in the Safari nightly builds, but I've seen the bug in the current release
+of Safari too.
+
+Looking at the Safari Wed Inspector, it believes there is a parse error on line 47 of the
+[[news]] page.  This is the definition of the getElementsByClass(class) function.
+
+    45 }
+    46
+    47 function getElementsByClass(class) {
+       SyntaxError: Parse error
+    48 	var ret = new Array();
