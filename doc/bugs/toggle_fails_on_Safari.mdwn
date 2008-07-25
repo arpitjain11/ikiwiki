@@ -14,3 +14,13 @@ Looking at the Safari Web Inspector, it believes there is a parse error on line 
     47 function getElementsByClass(class) {
        SyntaxError: Parse error
     48 	var ret = new Array();
+
+> Reproduced in epiphany-webkit on debian.
+> 
+> Also noticed something interesting when I opened the page in vim. It
+> highlighted the "class" like a type definition, not a variable. Sure
+> enough, replacing with "c" fixed it.
+> 
+> I wonder if webkit is actually in the right here, and using a reseved
+> word like, presumably, "class" as a variable name is not legal. As I try
+> to ignore javascript as much as possible, I can't say. [[done]] --[[Joey]]

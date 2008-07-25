@@ -39,9 +39,9 @@ function toggle(s) {
 		style.display = "none";
 }
 
-function getElementsByClass(class) {
+function getElementsByClass(c) {
 	var ret = new Array();
-	var pattern = new RegExp("(^|\\s)"+class+"(\\s|$)");
+	var pattern = new RegExp("(^|\\s)"+c+"(\\s|$)");
 	var els = document.getElementsByTagName('*');
 	for (i = 0, j = 0; i < els.length; i++) {
 		if ( pattern.test(els[i].className) ) {
