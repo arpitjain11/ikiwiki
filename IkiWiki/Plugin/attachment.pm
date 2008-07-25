@@ -206,8 +206,10 @@ sub formbuilder (@) { #{{{
 		IkiWiki::saveindex();
 	}
 	elsif ($form->submitted eq "Insert Links") {
+		my $page=quotemeta($q->param("page"));
 		my $add="";
 		foreach my $f ($q->param("attachment_select")) {
+			$f=~s/^$page\///;
 			$add.="[[$f]]\n";
 		}
 		$form->field(name => 'editcontent',
