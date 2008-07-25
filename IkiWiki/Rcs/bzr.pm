@@ -25,7 +25,7 @@ sub bzr_log ($) { #{{{
 			unless (defined($infos[$#infos]{$key})) { $infos[$#infos]{$key} = ""; }
 		}
 		elsif (defined($key) and $line =~ /^  (.*)/) {
-			$infos[$#infos]{$key} .= $1;
+			$infos[$#infos]{$key} .= "$1\n";
 		}
 		elsif ($line eq "------------------------------------------------------------\n") {
 			$key = undef;
@@ -128,6 +128,11 @@ sub rcs_remove ($) { # {{{
 sub rcs_rename ($$) { # {{{
 	my ($src, $dest) = @_;
 
+	my $parent = dirname($dest);
+	if (system("bzr", "add", "--quiet", "$config{srcdir}/$parent") != 0) {
+		warn("bzr add $parent failed\n");
+	}
+
 	my @cmdline = ("bzr", "mv", "--quiet", "$config{srcdir}/$src", "$config{srcdir}/$dest");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
@@ -154,7 +159,14 @@ sub rcs_recentchanges ($) { #{{{
 		}
 
 		foreach my $file (split(/\n/, $info->{files})) {
-			my ($filename, $fileid) = split(/[ \t]+/, $file);
+			my ($filename, $fileid) = ($file =~ /^(.*?) +([^ ]+)$/);
+
+			# Skip directories
+			next if ($filename =~ /\/$/);
+
+			# Skip source name in renames
+			$filename =~ s/^.* => //;
+
 			my $diffurl = $config{'diffurl'};
 			$diffurl =~ s/\[\[file\]\]/$filename/go;
 			$diffurl =~ s/\[\[file-id\]\]/$fileid/go;
