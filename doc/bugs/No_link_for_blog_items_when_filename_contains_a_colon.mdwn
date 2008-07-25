@@ -61,6 +61,9 @@ What do you think about that? Does the patch have any side-effects I didn't see?
 >> at least I hope so ;-) ): I just created a test post in the sandbox here: [[sandbox/test: with a colon in its name]]
 >> (btw, why doesn't this get a hyperlink here?).
 >>
+>>> Because wikilinks cannot have spaces, convert to underscores.
+>>> --[[Joey]]
+>>
 >> As it is put in the list of blog posts as a relative link, it starts
 >> with `<word><colon>` -- this makes the browser think that "test" is a protocol specification which is to replace `http`,
 >> so it complains (at least Opera and Firefox/Iceweasel on my Debian Etch do). What I described above for subpages
@@ -69,3 +72,5 @@ What do you think about that? Does the patch have any side-effects I didn't see?
 >>
 >> I think the cleanest solution would be to quote colons in page names (like it is currently done for slashes)?
 >> Starting the links with "`./`", as I proposed above, now seems a bit ugly to me...  --Mathias
+
+>>> No, it's all [[done]] in 2.55. --[[Joey]]
