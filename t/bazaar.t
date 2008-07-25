@@ -66,7 +66,7 @@ IkiWiki::rcs_commit_staged("Added the 4th page", "moo", "Joe User");
 
 @changes = IkiWiki::rcs_recentchanges(4);
 
-is($#changes, 2);
+is($#changes, 3);
 is($changes[0]{pages}[0]{"page"}, "test4.mdwn");
 
 ok(mkdir($config{srcdir}."/newdir"));
