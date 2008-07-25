@@ -44,7 +44,7 @@ my $message = "Added the second page";
 
 my $test2 = readfile("t/test2.mdwn");
 writefile('test2.mdwn', $config{srcdir}, $test2);
-system "bzr add $config{srcdir}/test2.mdwn";
+system "bzr add --quiet $config{srcdir}/test2.mdwn";
 system "bzr commit --quiet --author \"$user\" -m \"$message\" $config{srcdir}";
 	
 @changes = IkiWiki::rcs_recentchanges(3);
