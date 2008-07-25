@@ -211,3 +211,10 @@ Cases to consider:
   I think it would be enough that you cannot rename to a location outside
   of srcdir, you cannot rename to a location that you wouldn't be able
   to edit because it is locked, and you cannot rename to an existing page.
+
+  > Well, there are a few more cases (like not renaming to a pruned
+  > filename, and not renaming _from_ a file that is not a known source
+  > file or is locked), but yes, that's essentially it.
+  > 
+  > PS, the first thing I do to any
+  > web form is type /etc/passwd and ../../../../etc/passwd into it. ;-) --[[Joey]]
