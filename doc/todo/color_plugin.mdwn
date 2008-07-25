@@ -45,6 +45,29 @@ What do you think about it? --[[Paweł|ptecza]]
 This is a RC1 of my `color` plugin. It works for me well, but all your
 comments are very welcome. --[[Paweł|ptecza]]
 
+> Sure, I have a couple.
+> 
+> The preprocess function is passed named parameters. The hack you have of
+> hardcoding use of `$_[0]` and `$_[2]` can fail at any time.
+> 
+> `replace_preserved_style` is passed a single parameter, so its prototype
+> should be `($)`, not `(@)`.  Ditt `preserve_style`, it should have
+> `($$)`.
+> 
+> The sanitize hook is always passed `$params{content}`, so there should be
+> no reason to check that it exists. Also, it shouldn't be done in a
+> sanitize hook, since html sanitization could run _after_ that santize
+> hook. It should use a format hook.
+> 
+> The preprocess hook needs to call `IkiWiki::preprocess` on the content
+> passed into it if you want to support nesting other preprocessor
+> directives inside the color directive. See `preprocess_toggleable` in the
+> toggle plugin, for example.
+> 
+> I'm not a big fan of the dummy text `COLORS { ... } SROLOC;TEXT { ... TXET }`
+> The method used by toggle of using two real `<div>`s seems slightly
+> better. --[[Joey]]
+
 	--- /dev/null	2008-07-24 09:38:19.000000000 +0200
 	+++ color.pm	2008-07-25 14:43:15.000000000 +0200
 	@@ -0,0 +1,75 @@
