@@ -2,11 +2,11 @@ The [[plugins/toggle]] plugin has no effect when viewed on the Safari web browse
 
 All toggles appear open all the time.
 
-I don't know if this is true for other webkit browsers (the new Konqeror, the iPhone, etc).
+I don't know if this is true for other webkit browsers (the new Konqueror, the iPhone, etc).
 I'm currently testing in the Safari nightly builds, but I've seen the bug in the current release
 of Safari too.
 
-Looking at the Safari Wed Inspector, it believes there is a parse error on line 47 of the
+Looking at the Safari Web Inspector, it believes there is a parse error on line 47 of the
 [[news]] page.  This is the definition of the getElementsByClass(class) function.
 
     45 }
