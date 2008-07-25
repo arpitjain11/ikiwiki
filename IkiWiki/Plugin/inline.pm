@@ -15,6 +15,7 @@ my $nested=0;
 
 sub import { #{{{
 	hook(type => "getopt", id => "inline", call => \&getopt);
+	hook(type => "getsetup", id => "inline", call => \&getsetup);
 	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
 	hook(type => "sessioncgi", id => "inline", call => \&sessioncgi);
 	hook(type => "preprocess", id => "inline", 
@@ -39,8 +40,51 @@ sub getopt () { #{{{
 		"atom!" => \$config{atom},
 		"allowrss!" => \$config{allowrss},
 		"allowatom!" => \$config{allowatom},
+		"pingurl=s" => sub {
+			push @{$config{pingurl}}, $_[1];
+		},      
 	);
-}
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		rss => {
+			type => "boolean",
+			default => 0,
+			description => "enable rss feeds by default",
+			safe => 1,
+			rebuild => 1,
+		},
+		atom => {
+			type => "boolean",
+			default => 0,
+			description => "enable atom feeds by default",
+			safe => 1,
+			rebuild => 1,
+		},
+		allowrss => {
+			type => "boolean",
+			default => 0,
+			description => "allow rss feeds to be used",
+			safe => 1,
+			rebuild => 1,
+		},
+		allowatom => {
+			type => "boolean",
+			default => 0,
+			description => "allow atom feeds to be used",
+			safe => 1,
+			rebuild => 1,
+		},
+		pingurl => {
+			type => "string",
+			default => "",
+			example => "http://rpc.technorati.com/rpc/ping",
+			description => "urls to ping (using XMP-RPC) on feed update",
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub checkconfig () { #{{{
 	if (($config{rss} || $config{atom}) && ! length $config{url}) {

@@ -73,9 +73,6 @@ sub getconfig () { #{{{
 			"disable-plugin=s@" => sub {
 				push @{$config{disable_plugins}}, $_[1];
 			},
-			"pingurl=s" => sub {
-				push @{$config{pingurl}}, $_[1];
-			},
 			"set=s" => sub {
 				my ($var, $val)=split('=', $_[1], 2);
 				if (! defined $var || ! defined $val) {
