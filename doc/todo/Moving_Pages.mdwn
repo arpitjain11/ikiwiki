@@ -205,3 +205,9 @@ Cases to consider:
   Update: Meh. It's certianly not ideal; if Bob tries to save the page he
   uploaded the attachment to, he'll get a message about it having been
   deleted/renamed, and he can try to figure out what to do... :-/
+* I don't know if this is a conflict, but it is an important case to consider;
+  you need to make sure that there are no security holes.  You dont want
+  someone to be able to rename something to <code>/etc/passwd</code>.
+  I think it would be enough that you cannot rename to a location outside
+  of srcdir, you cannot rename to a location that you wouldn't be able
+  to edit because it is locked, and you cannot rename to an existing page.
