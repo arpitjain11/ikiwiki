@@ -7,8 +7,20 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "mdwn", call => \&getsetup);
 	hook(type => "htmlize", id => "mdwn", call => \&htmlize);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		multimarkdown => {
+			type => "boolean",
+			default => 0,
+			description => "enable use of multimarkdown features",
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 my $markdown_sub;
 sub htmlize (@) { #{{{
@@ -25,13 +37,13 @@ sub htmlize (@) { #{{{
 		if (exists $config{multimarkdown} && $config{multimarkdown}) {
 			eval q{use Text::MultiMarkdown};
 			if ($@) {
-				error(gettext("multimarkdown is enabled, but Text::MultiMarkdown is not installed"));
+				debug(gettext("multimarkdown is enabled, but Text::MultiMarkdown is not installed"));
 			}
 			$markdown_sub=sub {
 				Text::MultiMarkdown::markdown(shift, {use_metadata => 0});
 			}
 		}
-		else {
+		if (! defined $markdown_sub) {
 			eval q{use Text::Markdown};
 			if (! $@) {
 				if (Text::Markdown->can('markdown')) {
