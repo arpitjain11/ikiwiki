@@ -141,7 +141,7 @@ sub main () { #{{{
 		
 		# ignore syslog setting from setup file
 		# while doing initial setup
-		$config{syslog}=0;	
+		$config{syslog}=0 unless $config{dumpsetup};
 		
 		loadplugins();
 		checkconfig();
