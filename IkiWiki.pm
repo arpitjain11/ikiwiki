@@ -252,7 +252,29 @@ sub getsetup () { #{{{
 		safe => 0, # paranoia
 		rebuild => 0,
 	},
-
+	umask => {
+		type => "integer",
+		description => "",
+		example => "022",
+		description => "force ikiwiki to use a particular umask",
+		safe => 0, # paranoia
+		rebuild => 0,
+	},
+	libdir => {
+		type => "string",
+		default => "",
+		example => "$ENV{HOME}/.ikiwiki/",
+		description => "extra library and plugin directory",
+		safe => 0, # directory
+		rebuild => 0,
+	},
+	ENV => {
+		type => "string", 
+		default => {},
+		description => "environment variables",
+		safe => 0, # paranoia
+		rebuild => 0,
+	},
 	exclude => {
 		type => "string",
 		default => undef,
@@ -342,14 +364,6 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
-	libdir => {
-		type => "internal",
-		default => undef,
-		example => "$ENV{HOME}/.ikiwiki/",
-		description => "extra library and plugin directory",
-		safe => 0,
-		rebuild => 0,
-	},
 } #}}}
 
 sub defaultconfig () { #{{{
@@ -408,7 +422,7 @@ sub checkconfig () { #{{{
 		require IkiWiki::Rcs::Stub;
 	}
 
-	if (exists $config{umask}) {
+	if (defined $config{umask}) {
 		umask(possibly_foolish_untaint($config{umask}));
 	}
 

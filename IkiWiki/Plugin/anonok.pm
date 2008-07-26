@@ -14,9 +14,8 @@ sub getsetup () { #{{{
 	return
 		anonok_pagespec => {
 			type => "string",
-			default => "",
 			example => "*/discussion",
-			description => "PageSpec to limit which pages anonymouse users can edit",
+			description => "PageSpec to limit which pages anonymous users can edit",
 			safe => 1,
 			rebuild => 0,
 		},

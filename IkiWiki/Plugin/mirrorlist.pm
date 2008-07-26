@@ -14,7 +14,7 @@ sub getsetup () { #{{{
 	return
 		mirrorlist => {
 			type => "string",
-			default => "",
+			default => {},
 			description => "list of mirrors",
 			safe => 1,
 			rebuild => 1,

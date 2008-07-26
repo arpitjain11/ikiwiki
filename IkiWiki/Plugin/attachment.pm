@@ -14,7 +14,7 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
-		 => {
+		virus_checker => {
 			type => "string",
 			default => "",
 			example => "clamdscan -",
