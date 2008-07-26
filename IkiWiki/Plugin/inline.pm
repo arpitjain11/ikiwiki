@@ -28,7 +28,6 @@ sub import { #{{{
 	# pings interrupting page builds.
 	hook(type => "change", id => "inline", 
 		call => \&IkiWiki::pingurl);
-
 } # }}}
 
 sub getopt () { #{{{
@@ -95,6 +94,9 @@ sub checkconfig () { #{{{
 	}
 	if ($config{atom}) {
 		push @{$config{wiki_file_prune_regexps}}, qr/\.atom$/;
+	}
+	if (! exists $config{pingurl}) {
+		$config{pingurl}=[];
 	}
 } #}}}
 
