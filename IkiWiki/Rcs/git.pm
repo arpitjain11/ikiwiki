@@ -11,6 +11,15 @@ use open qw{:utf8 :std};
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 
+hook(type => "checkconfig", id => "git", call => sub { #{{{
+	if (! defined $config{gitorigin_branch}) {
+		$config{gitorigin_branch}="origin";
+	}
+	if (! defined $config{gitmaster_branch}) {
+		$config{gitmaster_branch}="master";
+	}
+}); #}}}
+
 hook(type => "getsetup", id => "git", call => sub { #{{{
 	return
 		historyurl => {

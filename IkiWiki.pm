@@ -94,45 +94,12 @@ sub getsetup () { #{{{
 		safe => 0, # don't allow overriding
 		rebuild => 0,
 	},
-	historyurl => {
-		type => "string",
-		# TODO should be set per-rcs to allow different
-		# examples and descriptions
-		default => '',
-		example => "XXX",
-		description => "XXX",
-		safe => 1,
-		rebuild => 1,
-	},
-	diffurl => {
-		type => "string",
-		# TODO ditto above
-		default => '',
-		example => "XXX",
-		description => "XXX",
-		safe => 1,
-		rebuild => 1,
-	},
 	discussion => {
 		type => "boolean",
 		default => 1,
 		description => "enable Discussion pages?",
 		safe => 1,
 		rebuild => 1,
-	},
-	gitorigin_branch => {
-		type => "string",
-		default => "origin",
-		description => "the git origin to pull from",
-		safe => 0, # paranoia
-		rebuild => 0,
-	},
-	gitmaster_branch => {
-		type => "string",
-		default => "master",
-		description => "the git master branch",
-		safe => 0, # paranoia
-		rebuild => 0,
 	},
 	wrappers => {
 		type => "string",
