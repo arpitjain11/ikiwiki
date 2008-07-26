@@ -78,22 +78,26 @@ sub gendump ($) { #{{{
 	
 	push @ret, "\t# basic setup";
 	push @ret, dumpvalues(\%setup, IkiWiki::getsetup());
-	push @ret, "";
 
-	# sort rcs plugin first
-	my @plugins=sort {
-		($a eq $config{rcs}) <=> ($b eq $config{rcs})
-		||
-		$a cmp $b
-	} keys %{$IkiWiki::hooks{getsetup}};
+	# Load all plugins, so that all setup options are available.
+	my @plugins=sort(IkiWiki::listplugins());
+	foreach my $plugin (@plugins) {
+		eval { IkiWiki::loadplugin($plugin) };
+		if (exists $IkiWiki::hooks{checkconfig}{$plugin}{call}) {
+			my @s=eval { $IkiWiki::hooks{checkconfig}{$plugin}{call}->() };
+		}
+	}
+	unshift @plugins, $config{rcs} if $config{rcs};
 
-	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
-		# use an array rather than a hash, to preserve order
-		my @s=$IkiWiki::hooks{getsetup}{$id}{call}->();
-		return unless @s;
-		push @ret, "\t# $id".($id ne $config{rcs} ? " plugin" : "");
-		push @ret, dumpvalues(\%setup, @s);
-		push @ret, "";
+	foreach my $id (@plugins) {
+		my $title="\t# $id".($id ne $config{rcs} ? " plugin" : "");
+		if (exists $IkiWiki::hooks{getsetup}{$id}{call}) {
+			# use an array rather than a hash, to preserve order
+			my @s=eval { $IkiWiki::hooks{getsetup}{$id}{call}->() };
+			next unless @s;
+			push @ret, "", $title;
+			push @ret, dumpvalues(\%setup, @s);
+		}
 	}
 	
 	unshift @ret,

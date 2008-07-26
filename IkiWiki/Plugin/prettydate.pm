@@ -54,8 +54,8 @@ sub getsetup () { #{{{
 			rebuild => 1,
 		},
 		timetable => {
-			type => undef, # don't try to show in interface
-			default => '%X, %B %o, %Y',
+			type => "internal",
+			default => undef,
 			description => "array of time descriptions",
 			safe => 1,
 			rebuild => 1,

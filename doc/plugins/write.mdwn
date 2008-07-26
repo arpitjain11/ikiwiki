@@ -390,9 +390,8 @@ describing the option. For example:
 			},
 
 * `type` can be "boolean", "string", "integer", "internal" (used for values
-  that are not user-visible) or `undef` (use for complex types). Note that
-  the type is the type of the leaf values; the `%config` option may be an
-  array or hash of these.
+  that are not user-visible). The type is the type of the leaf values; 
+  the `%config` option may be an array or hash of these.
 * `default` should be set to the default value of the option, if any.
 * `example` can be set to an example value, which will not be used by default.
 * `description` is a short description of the option.
