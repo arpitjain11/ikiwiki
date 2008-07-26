@@ -41,6 +41,7 @@ hook(type => "checkconfig", id => "monotone", call => sub { #{{{
 		error("Monotone version too old, is $version but required 0.38");
 	}
 }); #}}}
+
 hook(type => "getsetup", id => "monotone", call => sub { #{{{
 	return
 		mtnkey => {
@@ -55,7 +56,7 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 			type => "string",
 			default => "",
 			example => "http://viewmtn.example.com/branch/head/filechanges/com.example.branch/[[file]]",
-			description => "viewmtn url to show file history ([[file]] substituted)"
+			description => "viewmtn url to show file history ([[file]] substituted)",
 			safe => 1,
 			rebuild => 1,
 		},
@@ -63,7 +64,7 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 			type => "string",
 			default => "",
 			example => "http://viewmtn.example.com/revision/diff/[[r1]]/with/[[r2]]/[[file]]",
-			description => "viewmtn url to show a diff ([[r1]], [[r2]], and [[file]] substituted)"
+			description => "viewmtn url to show a diff ([[r1]], [[r2]], and [[file]] substituted)",
 			safe => 1,
 			rebuild => 1,
 		},
@@ -73,6 +74,7 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 			description => "sync on update and commit?",
 			safe => 0, # paranoia
 			rebuild => 0,
+		},
 		mtnrootdir => {
 			type => "string",
 			default => "",
