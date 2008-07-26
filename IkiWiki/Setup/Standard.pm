@@ -7,12 +7,11 @@ package IkiWiki::Setup::Standard;
 
 use warnings;
 use strict;
+use IkiWiki;
 
 sub import { #{{{
 	$IkiWiki::Setup::raw_setup=$_[1];
 } #}}}
-
-package IkiWiki::Setup;
 
 sub dumpline ($$$) { #{{{
 	my $key=shift;

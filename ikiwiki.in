@@ -149,9 +149,8 @@ sub main () { #{{{
 	}
 
 	if ($config{dumpsetup}) {
-		loadplugins();
-		checkconfig();
-		IkiWiki::Setup::dump($config{dumpsetup});
+		require IkiWiki::Setup::Standard;
+		IkiWiki::Setup::Standard::dump($config{dumpsetup});
 	}
 	elsif ($config{wrapper}) {
 		lockwiki();
