@@ -11,7 +11,7 @@ use Date::Format qw(time2str);
 
 my $sha1_pattern = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
 
-sub check_config() { #{{{
+hook(type => "checkconfig", id => "monotone", call => sub { #{{{
 	if (!defined($config{mtnrootdir})) {
 		$config{mtnrootdir} = $config{srcdir};
 	}
@@ -19,9 +19,6 @@ sub check_config() { #{{{
 		error("Ikiwiki srcdir does not seem to be a Monotone workspace (or set the mtnrootdir)!");
 	}
 	
-	chdir $config{srcdir}
-	    or error("Cannot chdir to $config{srcdir}: $!");
-
 	my $child = open(MTN, "-|");
 	if (! $child) {
 		open STDERR, ">/dev/null";
@@ -43,7 +40,47 @@ sub check_config() { #{{{
 	if ($version < 0.38) {
 		error("Monotone version too old, is $version but required 0.38");
 	}
-} #}}}
+}); #}}}
+hook(type => "getsetup", id => "monotone", call => sub { #{{{
+	return
+		mtnkey => {
+			type => "string",
+			default => "",
+			example => 'web@example.com',
+			description => "your monotone key",
+			safe => 1,
+			rebuild => 0,
+		},
+		historyurl => {
+			type => "string",
+			default => "",
+			example => "http://viewmtn.example.com/branch/head/filechanges/com.example.branch/[[file]]",
+			description => "viewmtn url to show file history ([[file]] substituted)"
+			safe => 1,
+			rebuild => 1,
+		},
+		diffurl => {
+			type => "string",
+			default => "",
+			example => "http://viewmtn.example.com/revision/diff/[[r1]]/with/[[r2]]/[[file]]",
+			description => "viewmtn url to show a diff ([[r1]], [[r2]], and [[file]] substituted)"
+			safe => 1,
+			rebuild => 1,
+		},
+		mtnsync => {
+			type => "boolean",
+			default => 0,
+			description => "sync on update and commit?",
+			safe => 0, # paranoia
+			rebuild => 0,
+		mtnrootdir => {
+			type => "string",
+			default => "",
+			description => "path to your workspace (defaults to the srcdir; specify if the srcdir is a subdirectory of the workspace)",
+			safe => 0, # path
+			rebuild => 0,
+		},
+}); #}}}
 
 sub get_rev () { #{{{
 	my $sha1 = `mtn --root=$config{mtnrootdir} automate get_base_revision_id`;
@@ -190,7 +227,8 @@ sub get_changed_files ($$) { #{{{
 } #}}}
 
 sub rcs_update () { #{{{
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	if (defined($config{mtnsync}) && $config{mtnsync}) {
 		if (system("mtn", "--root=$config{mtnrootdir}", "sync",
@@ -208,7 +246,8 @@ sub rcs_update () { #{{{
 sub rcs_prepedit ($) { #{{{
 	my $file=shift;
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	# For monotone, return the revision of the file when
 	# editing begins.
@@ -236,7 +275,8 @@ sub rcs_commit ($$$;$$) { #{{{
 		$author="Web: Anonymous";
 	}
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	my ($oldrev)= $rcstoken=~ m/^($sha1_pattern)$/; # untaint
 	my $rev = get_rev();
@@ -367,7 +407,8 @@ sub rcs_commit_staged ($$$) {
 	# Note - this will also commit any spurious changes that happen to be
 	# lying around in the working copy.  There shouldn't be any, but...
 	
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	my $author;
 
@@ -391,7 +432,8 @@ sub rcs_commit_staged ($$$) {
 sub rcs_add ($) { #{{{
 	my $file=shift;
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	if (system("mtn", "--root=$config{mtnrootdir}", "add", "--quiet",
 	           $file) != 0) {
@@ -402,7 +444,8 @@ sub rcs_add ($) { #{{{
 sub rcs_remove ($) { # {{{
 	my $file = shift;
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	# Note: it is difficult to undo a remove in Monotone at the moment.
 	# Until this is fixed, it might be better to make 'rm' move things
@@ -420,7 +463,8 @@ sub rcs_remove ($) { # {{{
 sub rcs_rename ($$) { # {{{
 	my ($src, $dest) = @_;
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	if (system("mtn", "--root=$config{mtnrootdir}", "rename", "--quiet",
 	           $src, $dest) != 0) {
@@ -432,7 +476,8 @@ sub rcs_recentchanges ($) { #{{{
 	my $num=shift;
 	my @ret;
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	# use log --brief to get a list of revs, as this
 	# gives the results in a nice order
@@ -539,7 +584,8 @@ sub rcs_diff ($) { #{{{
 	my $rev=shift;
 	my ($sha1) = $rev =~ /^($sha1_pattern)$/; # untaint
 	
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	my $child = open(MTNDIFF, "-|");
 	if (! $child) {
@@ -561,7 +607,8 @@ sub rcs_diff ($) { #{{{
 sub rcs_getctime ($) { #{{{
 	my $file=shift;
 
-	check_config();
+	chdir $config{srcdir}
+	    or error("Cannot chdir to $config{srcdir}: $!");
 
 	my $child = open(MTNLOG, "-|");
 	if (! $child) {

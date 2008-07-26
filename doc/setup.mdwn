@@ -167,7 +167,7 @@ about using the git repositories.
 	# remember the password you use in the next step and
 	# substitute it for 'wikiKeyPass' in the get_passphrase() hook below
 	# note the you should never generate two monotone keys with the same name
-	mtn genkey web@machine.company.com
+	mtn genkey web@example.com
 	mtn db init --db=$REPOSITORY
 	mv $SRCDIR $SRCDIR-old
 	cd $SRCDIR-old
