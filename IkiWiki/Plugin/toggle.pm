@@ -110,7 +110,7 @@ sub preprocess_toggleable (@) { #{{{
 sub format (@) { #{{{
         my %params=@_;
 
-	if ($params{content}=~s!(<div class="toggleable(?:-open)?" id="[^"]+">)</div>!$1!g) {
+	if ($params{content}=~s!(<div class="toggleable(?:-open)?" id="[^"]+">\s*)</div>!$1!g) {
 		$params{content}=~s/<div class="toggleableend">//g;
 		if (! ($params{content}=~s!^<body>!<body>$javascript!m)) {
 			# no </body> tag, probably in preview mode
