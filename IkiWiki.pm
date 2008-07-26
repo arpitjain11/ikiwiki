@@ -116,7 +116,7 @@ sub getsetup () { #{{{
 	discussion => {
 		type => "boolean",
 		default => 1,
-		description => "enable Discussion pages",
+		description => "enable Discussion pages?",
 		safe => 1,
 		rebuild => 1,
 	},
@@ -166,14 +166,14 @@ sub getsetup () { #{{{
 	verbose => {
 		type => "boolean",
 		default => 0,
-		description => "display verbose messages when building",
+		description => "display verbose messages when building?",
 		safe => 1,
 		rebuild => 0,
 	},
 	syslog => {
 		type => "boolean",
 		default => 0,
-		description => "log to syslog",
+		description => "log to syslog?",
 		safe => 1,
 		rebuild => 0,
 	},
@@ -245,7 +245,7 @@ sub getsetup () { #{{{
 	hardlink => {
 		type => "boolean",
 		default => 0,
-		description => "attempt to hardlink source files (optimisation for large files)",
+		description => "attempt to hardlink source files? (optimisation for large files)",
 		safe => 0, # paranoia
 		rebuild => 0,
 	},

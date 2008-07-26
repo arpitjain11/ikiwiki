@@ -43,7 +43,7 @@ sub getopt () { #{{{
 sub getsetup () { #{{{
 	return
 		 amazon_s3_key_id => {
-			type => "boolean",
+			type => "string",
 			default => "",
 			description => "public access key id",
 			safe => 1,
@@ -82,7 +82,7 @@ sub getsetup () { #{{{
 		amazon_s3_dupindex => {
 			type => "boolean",
 			default => 0,
-			description => "store each index file twice, to allow urls ending in \"/index.html\" and \"/\"",
+			description => "store each index file twice? (to allow urls ending in \"/index.html\" and \"/\")",
 			safe => 1,
 			rebuild => 1,
 		},

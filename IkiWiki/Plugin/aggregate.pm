@@ -43,14 +43,14 @@ sub getsetup () { #{{{
 		aggregateinternal => {
 			type => "boolean",
 			default => 0,
-			description => "enable aggregation to internal pages",
+			description => "enable aggregation to internal pages?",
 			safe => 0, # enabling needs manual transition
 			rebuild => 0,
 		},
 		aggregate_webtrigger => {
 			type => "boolean",
 			default => 0,
-			description => "allow aggregation to be triggered via the web",
+			description => "allow aggregation to be triggered via the web?",
 			safe => 1,
 			rebuild => 0,
 		},
