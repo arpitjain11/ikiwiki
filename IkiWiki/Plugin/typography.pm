@@ -38,7 +38,7 @@ sub sanitize (@) { #{{{
 	my %params=@_;
 
 	eval q{use Text::Typography};
-	error($@) if $@;
+	return $params{content} if $@;
 
 	my $attributes=defined $config{typographyattributes} ? $config{typographyattributes} : '3';
 	return Text::Typography::typography($params{content}, $attributes);
