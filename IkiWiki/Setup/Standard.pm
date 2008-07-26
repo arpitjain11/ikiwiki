@@ -8,8 +8,58 @@ package IkiWiki::Setup::Standard;
 use warnings;
 use strict;
 
-sub import {
+sub import { #{{{
 	$IkiWiki::Setup::raw_setup=$_[1];
-}
+} #}}}
+
+sub generate (@) { #{{{
+	my %setup=@_;
+
+	eval q{use Data::Dumper};
+	error($@) if $@;
+	local $Data::Dumper::Terse=1;
+
+	my @ret="#!/usr/bin/perl
+# Setup file for ikiwiki.
+# Passing this to ikiwiki --setup will make ikiwiki generate wrappers and
+# build the wiki.
+#
+# Remember to re-run ikiwiki --setup any time you edit this file.
+
+use IkiWiki::Setup::Standard {";
+
+	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
+		my @setup=$IkiWiki::hooks{getsetup}{$id}{call}->();
+		return unless @setup;
+		push @ret, "\t# $id plugin";
+		while (@setup) {
+			my $key=shift @setup;
+			my %info=%{shift @setup};
+	
+			push @ret, "\t# ".$info{description} if exists $info{description};
+	
+			my $value=undef;
+			my $prefix="#";
+			if (exists $setup{$key} && defined $setup{$key}) {
+				$value=$setup{$key};
+				$prefix="";
+			}
+			elsif (exists $info{default}) {
+				$value=$info{default};
+			}
+			elsif (exists $info{example}) {
+				$value=$info{example};
+			}
+	
+			my $dumpedvalue=Dumper($value);
+			chomp $dumpedvalue;
+			push @ret, "\t$prefix$key=$dumpedvalue,";
+		}
+		push @ret, "";
+	}
+
+	push @ret, "}";
+	return @ret;
+} #}}}
 
 1
