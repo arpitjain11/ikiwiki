@@ -79,7 +79,7 @@ sub getsetup () { #{{{
 			type => "string",
 			default => "",
 			example => "http://rpc.technorati.com/rpc/ping",
-			description => "urls to ping (using XMP-RPC) on feed update",
+			description => "urls to ping (using XML-RPC) on feed update",
 			safe => 1,
 			rebuild => 0,
 		},
