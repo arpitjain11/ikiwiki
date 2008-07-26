@@ -357,6 +357,49 @@ something. The hook is passed named parameters: `page`, `oldpage`,
 `newpage`, and `content`, and should try to modify the content to reflect
 the name change. For example, by converting links to point to the new page.
 
+### getsetup
+
+	hook(type => "getsetup", id => "foo", call => \&getsetup);
+
+This hooks is not called during normal operation, but only when setting up 
+the wiki, or generating a setup file. Plugins can use this hook to add
+configuration options.
+
+The hook is passed no parameters. It returns data about the configuration
+options added by the plugin. It can also check if the plugin is usable, and
+die if the plugin is not available, which will cause the plugin to not be
+offered in the configuration interface.
+
+The data returned is a list of `%config` options, followed by a hash
+describing the option. For example:
+
+                return
+			option_foo => {
+				type => "boolean",
+				default => 0,
+				description => "enable foo",
+				safe => 1,
+				rebuild => 1,
+	                },
+			option_bar => {
+				type => "string",
+				example => "hello",
+				description => "what to say",
+				safe => 1,
+				rebuild => 0,
+			},
+
+* `type` can be "boolean", "string", "integer", or `undef` (use for complex
+  types). Note that the type is the type of the leaf values; the `%config`
+  option may be an array or hash of these.
+* `default` should be set to the default value of the option, if any.
+* `example` can be set to an example value, which will not be used by default.
+* `description` is a short description of the option.
+* `safe` should be false if the option should not be displayed in unsafe
+  configuration methods, such as the web interface. Anything that specifies
+  a command to run, a path on disk, or a regexp should be marked as unsafe.
+* `rebuild` should be true if changing the option will require a wiki rebuild.
+
 ## Plugin interface
 
 To import the ikiwiki plugin interface:

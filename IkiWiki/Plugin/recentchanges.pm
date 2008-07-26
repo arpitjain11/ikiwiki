@@ -24,7 +24,7 @@ sub getsetup () { #{{{
 			rebuild => 1,
 		},
 		recentchangesnum => {
-			type => "int",
+			type => "integer",
 			default => 100,
 			description => "number of changes to track",
 			safe => 1,
