@@ -18,8 +18,10 @@ sub generate (@) { #{{{
 	eval q{use Data::Dumper};
 	error($@) if $@;
 	local $Data::Dumper::Terse=1;
-	local $Data::Dumper::Sortkeys=1;
+	local $Data::Dumper::Indent=1;
 	local $Data::Dumper::Pad="\t";
+	local $Data::Dumper::Sortkeys=1;
+	local $Data::Dumper::Quotekeys=0;
 
 	my @ret="#!/usr/bin/perl
 # Setup file for ikiwiki.
