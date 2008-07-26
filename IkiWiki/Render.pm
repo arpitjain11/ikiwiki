@@ -68,7 +68,7 @@ sub genpage ($$) { #{{{
 		$actions++;
 	}
 		
-	if (length $config{historyurl}) {
+	if (defined $config{historyurl} && length $config{historyurl}) {
 		my $u=$config{historyurl};
 		$u=~s/\[\[file\]\]/$pagesources{$page}/g;
 		$template->param(historyurl => $u);
