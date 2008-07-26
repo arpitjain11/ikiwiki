@@ -57,7 +57,7 @@ sub dumpvalues ($@) { #{{{
 } #}}}
 
 sub dump ($) { #{{{
-	my $file=shift;
+	my $file=IkiWiki::possibly_foolish_untaint(shift);
 	
 	my %setup=(%config);
 	my @ret;
