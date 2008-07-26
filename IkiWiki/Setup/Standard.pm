@@ -18,6 +18,8 @@ sub generate (@) { #{{{
 	eval q{use Data::Dumper};
 	error($@) if $@;
 	local $Data::Dumper::Terse=1;
+	local $Data::Dumper::Sortkeys=1;
+	local $Data::Dumper::Pad="\t";
 
 	my @ret="#!/usr/bin/perl
 # Setup file for ikiwiki.
@@ -53,6 +55,7 @@ use IkiWiki::Setup::Standard {";
 	
 			my $dumpedvalue=Dumper($value);
 			chomp $dumpedvalue;
+			$dumpedvalue=~/^\t//;
 			push @ret, "\t$prefix$key=$dumpedvalue,";
 		}
 		push @ret, "";
