@@ -28,7 +28,7 @@ sub getconfig () { #{{{
 			"refresh!" => \$config{refresh},
 			"post-commit" => \$config{post_commit},
 			"render=s" => \$config{render},
-			"wrappers!" => \$config{wrappers},
+			"wrappers!" => \$config{genwrappers},
 			"usedirs!" => \$config{usedirs},
 			"prefix-directives!" => \$config{prefix_directives},
 			"getctime" => \$config{getctime},
@@ -68,7 +68,7 @@ sub getconfig () { #{{{
 				$config{wrappermode}=possibly_foolish_untaint($_[1])
 			},
 			"plugin=s@" => sub {
-				push @{$config{plugin}}, $_[1];
+				push @{$config{add_plugins}}, $_[1];
 			},
 			"disable-plugin=s@" => sub {
 				push @{$config{disable_plugins}}, $_[1];
@@ -112,13 +112,15 @@ sub main () { #{{{
 	if ($config{setup}) {
 		require IkiWiki::Setup;
 		IkiWiki::Setup::load($config{setup});
-		if (! $config{render} && ! $config{dumpsetup} &&
-		    (! $config{refresh} || $config{wrappers})) {
+		if (@{$config{wrappers}} && 
+		    ! $config{render} && ! $config{dumpsetup} &&
+		    (! $config{refresh} || $config{genwrappers})) {
 			debug(gettext("generating wrappers.."));
 			require IkiWiki::Wrapper;
 			my %origconfig=(%config);
 			my @wrappers=@{$config{wrappers}};
 			delete $config{wrappers};
+			delete $config{genwrappers};
 			foreach my $wrapper (@wrappers) {
 				%config=(%origconfig,
 					rebuild => 0,

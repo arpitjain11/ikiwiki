@@ -142,6 +142,27 @@ sub getsetup () { #{{{
 		safe => 0, # paranoia
 		rebuild => 0,
 	},
+	wrappers => {
+		type => "string",
+		default => undef,
+		description => "definitions of wrappers to generate",
+		safe => 0,
+		rebuild => 0,
+	},
+	wrapper => {
+		type => "internal",
+		default => undef,
+		description => "wrapper filename",
+		safe => 0,
+		rebuild => 0,
+	},
+	wrappermode => {
+		type => "internal",
+		default => undef,
+		description => "mode of wrapper file",
+		safe => 0,
+		rebuild => 0,
+	},
 	templatedir => {
 		type => "string",
 		default => "$installdir/share/ikiwiki/templates",
@@ -250,6 +271,14 @@ sub getsetup () { #{{{
 		rebuild => 0,
 	},
 
+	exclude => {
+		type => "string",
+		default => undef,
+		example => '\.wav$',
+		description => "regexp of source files to ignore",
+		safe => 0, # regexp
+		rebuild => 1,
+	},
 	wiki_file_prune_regexps => {
 		type => "internal",
 		default => [qr/(^|\/)\.\.(\/|$)/, qr/^\./, qr/\/\./,
@@ -324,20 +353,6 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
-	wrapper => {
-		type => "internal",
-		default => undef,
-		description => "wrapper file to generate",
-		safe => 0,
-		rebuild => 0,
-	},
-	wrappermode => {
-		type => "internal",
-		default => undef,
-		description => "mode of wrapper file",
-		safe => 0,
-		rebuild => 0,
-	},
 	setup => {
 		type => "internal",
 		default => undef,
@@ -345,13 +360,27 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
-	plugin => {
+	default_plugins => {
 		type => "internal",
 		default => [qw{mdwn link inline htmlscrubber passwordauth
 				openid signinedit lockedit conditional
 				recentchanges parentlinks}],
-		description => "enabled plugins",
-		safe => 0,
+		description => "plugins to enable by default",
+		safe => 1,
+		rebuild => 1,
+	},
+	add_plugins => {
+		type => "string",
+		default => [],
+		description => "plugins to add to the default configuration",
+		safe => 1,
+		rebuild => 1,
+	},
+	disable_plugins => {
+		type => "string",
+		default => [],
+		description => "plugins to disable",
+		safe => 1,
 		rebuild => 1,
 	},
 	libdir => {
@@ -434,7 +463,7 @@ sub loadplugins () { #{{{
 		unshift @INC, possibly_foolish_untaint($config{libdir});
 	}
 
-	loadplugin($_) foreach @{$config{plugin}};
+	loadplugin($_) foreach @{$config{default_plugins}}, @{$config{add_plugins}};
 
 	run_hooks(getopt => sub { shift->() });
 	if (grep /^-/, @ARGV) {

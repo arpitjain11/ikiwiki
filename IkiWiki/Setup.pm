@@ -36,17 +36,15 @@ sub load ($) { # {{{
 	$raw_setup=undef;
 
 	# Merge setup into existing config and untaint.
-	$setup{plugin}=$config{plugin};
 	if (exists $setup{add_plugins}) {
-		push @{$setup{plugin}}, @{$setup{add_plugins}};
-		delete $setup{add_plugins};
+		push @{$setup{add_plugins}}, @{$config{add_plugins}};
 	}
 	if (exists $setup{exclude}) {
 		push @{$config{wiki_file_prune_regexps}}, $setup{exclude};
 	}
 	foreach my $c (keys %setup) {
 		if (defined $setup{$c}) {
-			if (! ref $setup{$c}) {
+			if (! ref $setup{$c} || ref $setup{$c} eq 'Regexp') {
 				$config{$c}=IkiWiki::possibly_foolish_untaint($setup{$c});
 			}
 			elsif (ref $setup{$c} eq 'ARRAY') {

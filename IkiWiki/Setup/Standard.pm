@@ -29,7 +29,13 @@ sub dumpline ($$$$) { #{{{
 	
 	my $dumpedvalue;
 	if ($type eq 'boolean' || $type eq 'integer') {
+		# avoid quotes
 		$dumpedvalue=$value;
+	}
+	elsif ($type eq 'string' && ref $value eq 'ARRAY' && @$value &&
+	    ! grep { /[^-A-Za-z0-9_]/ } @$value) {
+		# dump simple array as qw{}
+		$dumpedvalue="[qw{ ".join(" ", @$value)." }]";
 	}
 	else {
 		$dumpedvalue=Dumper($value);
@@ -37,7 +43,7 @@ sub dumpline ($$$$) { #{{{
 		$dumpedvalue=~s/^\t//;
 	}
 	
-	return "\t$prefix$key=$dumpedvalue,";
+	return "\t$prefix$key => $dumpedvalue,";
 } #}}}
 
 sub dumpvalues ($@) { #{{{
