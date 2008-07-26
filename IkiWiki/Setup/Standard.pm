@@ -80,7 +80,7 @@ sub gendump ($) { #{{{
 	push @ret, dumpvalues(\%setup, IkiWiki::getsetup());
 
 	# Load all plugins, so that all setup options are available.
-	my @plugins=sort(IkiWiki::listplugins());
+	my @plugins=grep { ! /externaldemo|pythondemo/ } sort(IkiWiki::listplugins());
 	foreach my $plugin (@plugins) {
 		eval { IkiWiki::loadplugin($plugin) };
 		if (exists $IkiWiki::hooks{checkconfig}{$plugin}{call}) {
