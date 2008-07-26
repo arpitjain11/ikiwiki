@@ -1,20 +1,18 @@
 #!/usr/bin/perl
 # Ikiwiki setup files are perl files that 'use IkiWiki::Setup::foo',
 # passing it some sort of configuration data.
-#
-# There can be multiple modules, with different configuration styles.
-# The setup modules each convert the data into the hashes used by ikiwiki
-# internally (if it's not already in that format), and store it in
-# IkiWiki::Setup::$raw_setup, to pass it back to this module.
 
 package IkiWiki::Setup;
 
 use warnings;
 use strict;
 use IkiWiki;
-use IkiWiki::Wrapper;
 use open qw{:utf8 :std};
 
+# There can be multiple modules, with different configuration styles.
+# The setup modules each convert the data into the hashes used by ikiwiki
+# internally (if it's not already in that format), and store it in
+# IkiWiki::Setup::$raw_setup, to pass it back to this module.
 our $raw_setup;
 
 sub load ($) { # {{{
@@ -34,17 +32,10 @@ sub load ($) { # {{{
 	eval $code;
 	error("$setup: ".$@) if $@;
 
-	my $ret=$raw_setup;
+	my %setup=%{$raw_setup};
 	$raw_setup=undef;
 
-	return %$ret;
-} #}}}
-
-package IkiWiki;
-
-sub setup () { #{{{
-	my %setup=IkiWiki::Setup::load($config{setup});
-
+	# Merge setup into existing config and untaint.
 	$setup{plugin}=$config{plugin};
 	if (exists $setup{add_plugins}) {
 		push @{$setup{plugin}}, @{$setup{add_plugins}};
@@ -53,35 +44,17 @@ sub setup () { #{{{
 	if (exists $setup{exclude}) {
 		push @{$config{wiki_file_prune_regexps}}, $setup{exclude};
 	}
-
-	if (! $config{render} && (! $config{refresh} || $config{wrappers})) {
-		debug(gettext("generating wrappers.."));
-		my @wrappers=@{$setup{wrappers}};
-		delete $setup{wrappers};
-		my %startconfig=(%config);
-		foreach my $wrapper (@wrappers) {
-			%config=(%startconfig, rebuild => 0, verbose => 0, %setup, %{$wrapper});
-			checkconfig();
-			if (! $config{cgi} && ! $config{post_commit}) {
-				$config{post_commit}=1;
-			}
-			gen_wrapper();
-		}
-		%config=(%startconfig);
-	}
-	
 	foreach my $c (keys %setup) {
-		next if $c eq 'syslog';
 		if (defined $setup{$c}) {
 			if (! ref $setup{$c}) {
-				$config{$c}=possibly_foolish_untaint($setup{$c});
+				$config{$c}=IkiWiki::possibly_foolish_untaint($setup{$c});
 			}
 			elsif (ref $setup{$c} eq 'ARRAY') {
-				$config{$c}=[map { possibly_foolish_untaint($_) } @{$setup{$c}}]
+				$config{$c}=[map { IkiWiki::possibly_foolish_untaint($_) } @{$setup{$c}}]
 			}
 			elsif (ref $setup{$c} eq 'HASH') {
 				foreach my $key (keys %{$setup{$c}}) {
-					$config{$c}{$key}=possibly_foolish_untaint($setup{$c}{$key});
+					$config{$c}{$key}=IkiWiki::possibly_foolish_untaint($setup{$c}{$key});
 				}
 			}
 		}
@@ -89,33 +62,6 @@ sub setup () { #{{{
 			$config{$c}=undef;
 		}
 	}
-	
-	if (! $config{refresh}) {
-		$config{rebuild}=1;
-	}
-	
-	loadplugins();
-	checkconfig();
-
-	require IkiWiki::Render;
-
-	if ($config{render}) {
-		commandline_render();
-	}
-
-	if (! $config{refresh}) {
-		debug(gettext("rebuilding wiki.."));
-	}
-	else {
-		debug(gettext("refreshing wiki.."));
-	}
-
-	lockwiki();
-	loadindex();
-	refresh();
-
-	debug(gettext("done"));
-	saveindex();
 } #}}}
 
 1

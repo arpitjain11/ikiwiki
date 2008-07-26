@@ -12,10 +12,20 @@ sub import { #{{{
 	$IkiWiki::Setup::raw_setup=$_[1];
 } #}}}
 
+package IkiWiki::Setup;
+
 sub dumpline ($$$) { #{{{
 	my $key=shift;
 	my $value=shift;
 	my $prefix=shift;
+	
+	eval q{use Data::Dumper};
+	error($@) if $@;
+	local $Data::Dumper::Terse=1;
+	local $Data::Dumper::Indent=1;
+	local $Data::Dumper::Pad="\t";
+	local $Data::Dumper::Sortkeys=1;
+	local $Data::Dumper::Quotekeys=0;
 	
 	my $dumpedvalue=Dumper($value);
 	chomp $dumpedvalue;
@@ -24,7 +34,7 @@ sub dumpline ($$$) { #{{{
 	return "\t$prefix$key=$dumpedvalue,";
 } #}}}
 
-sub dumpsetup ($@) { #{{{
+sub dumpvalues ($@) { #{{{
 	my $setup=shift;
 	my @ret;
 	while (@_) {
@@ -47,24 +57,18 @@ sub dumpsetup ($@) { #{{{
 	return @ret;
 } #}}}
 
-sub dump (@) { #{{{
-	my %setup=@_;
+sub dump ($) { #{{{
+	my $file=shift;
 	
-	eval q{use Data::Dumper};
-	error($@) if $@;
-	local $Data::Dumper::Terse=1;
-	local $Data::Dumper::Indent=1;
-	local $Data::Dumper::Pad="\t";
-	local $Data::Dumper::Sortkeys=1;
-	local $Data::Dumper::Quotekeys=0;
-	
+	my %setup=(%config);
 	my @ret;
+
 	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
 		# use an array rather than a hash, to preserve order
 		my @s=$IkiWiki::hooks{getsetup}{$id}{call}->();
 		return unless @s;
 		push @ret, "\t# $id plugin";
-		push @ret, dumpsetup(\%setup, @s);
+		push @ret, dumpvalues(\%setup, @s);
 		push @ret, "";
 	}
 	
@@ -84,7 +88,10 @@ sub dump (@) { #{{{
 
 use IkiWiki::Setup::Standard {";
 	push @ret, "}";
-	return @ret;
+
+	open (OUT, ">", $file) || die "$file: $!";
+	print OUT "$_\n" foreach @ret;
+	close OUT;
 } #}}}
 
 1
