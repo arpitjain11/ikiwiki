@@ -12,9 +12,44 @@ sub import { #{{{
 	$IkiWiki::Setup::raw_setup=$_[1];
 } #}}}
 
-sub generate (@) { #{{{
-	my %setup=@_;
+sub dumpline ($$$) { #{{{
+	my $key=shift;
+	my $value=shift;
+	my $prefix=shift;
+	
+	my $dumpedvalue=Dumper($value);
+	chomp $dumpedvalue;
+	$dumpedvalue=~s/^\t//;
+	
+	return "\t$prefix$key=$dumpedvalue,";
+} #}}}
 
+sub dumpsetup ($@) { #{{{
+	my $setup=shift;
+	my @ret;
+	while (@_) {
+		my $key=shift;
+		my %info=%{shift()};
+		
+		push @ret, "\t# ".$info{description} if exists $info{description};
+		
+		if (exists $setup->{$key} && defined $setup->{$key}) {
+			push @ret, dumpline($key, $setup->{$key}, "");
+			delete $setup->{$key};
+		}
+		elsif (exists $info{default}) {
+			push @ret, dumpline($key, $info{default}, "#");
+		}
+		elsif (exists $info{example}) {
+			push @ret, dumpline($key, $info{example}, "#");
+		}
+	}
+	return @ret;
+} #}}}
+
+sub dump (@) { #{{{
+	my %setup=@_;
+	
 	eval q{use Data::Dumper};
 	error($@) if $@;
 	local $Data::Dumper::Terse=1;
@@ -22,8 +57,25 @@ sub generate (@) { #{{{
 	local $Data::Dumper::Pad="\t";
 	local $Data::Dumper::Sortkeys=1;
 	local $Data::Dumper::Quotekeys=0;
-
-	my @ret="#!/usr/bin/perl
+	
+	my @ret;
+	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
+		# use an array rather than a hash, to preserve order
+		my @s=$IkiWiki::hooks{getsetup}{$id}{call}->();
+		return unless @s;
+		push @ret, "\t# $id plugin";
+		push @ret, dumpsetup(\%setup, @s);
+		push @ret, "";
+	}
+	
+	if (%setup) {
+		push @ret, "\t# other";
+		foreach my $key (sort keys %setup) {
+			push @ret, dumpline($key, $setup{$key}, "");
+		}
+	}
+	
+	unshift @ret, "#!/usr/bin/perl
 # Setup file for ikiwiki.
 # Passing this to ikiwiki --setup will make ikiwiki generate wrappers and
 # build the wiki.
@@ -31,38 +83,6 @@ sub generate (@) { #{{{
 # Remember to re-run ikiwiki --setup any time you edit this file.
 
 use IkiWiki::Setup::Standard {";
-
-	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
-		my @setup=$IkiWiki::hooks{getsetup}{$id}{call}->();
-		return unless @setup;
-		push @ret, "\t# $id plugin";
-		while (@setup) {
-			my $key=shift @setup;
-			my %info=%{shift @setup};
-	
-			push @ret, "\t# ".$info{description} if exists $info{description};
-	
-			my $value=undef;
-			my $prefix="#";
-			if (exists $setup{$key} && defined $setup{$key}) {
-				$value=$setup{$key};
-				$prefix="";
-			}
-			elsif (exists $info{default}) {
-				$value=$info{default};
-			}
-			elsif (exists $info{example}) {
-				$value=$info{example};
-			}
-	
-			my $dumpedvalue=Dumper($value);
-			chomp $dumpedvalue;
-			$dumpedvalue=~/^\t//;
-			push @ret, "\t$prefix$key=$dumpedvalue,";
-		}
-		push @ret, "";
-	}
-
 	push @ret, "}";
 	return @ret;
 } #}}}
