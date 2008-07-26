@@ -6,6 +6,26 @@ use warnings;
 use strict;
 use IkiWiki;
 
+hook(type => "getsetup", id => "tla", call => sub { #{{{
+	return
+		historyurl => {
+			type => "string",
+			default => "",
+			#example => "", # TODO example
+			description => "url to show file history ([[file]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+		diffurl => {
+			type => "string",
+			default => "",
+			#example => "", # TODO example
+			description => "url to show a diff ([[file]] and [[rev]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+}); #}}}
+
 sub quiet_system (@) {
 	# See Debian bug #385939.
 	open (SAVEOUT, ">&STDOUT");
