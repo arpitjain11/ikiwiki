@@ -9,7 +9,7 @@ use IkiWiki 2.00;
 use IPC::Open2;
 
 sub import { #{{{
-	hook(type => "preprocess", id => "graph", call => \&graph);
+	hook(type => "preprocess", id => "graphviz", call => \&graph);
 } # }}}
 
 my %graphviz_programs = (
