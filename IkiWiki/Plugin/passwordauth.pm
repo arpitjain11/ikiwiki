@@ -105,7 +105,9 @@ sub formbuilder_setup (@) { #{{{
 		
 		if ($form->submitted eq "Register" || $form->submitted eq "Create Account") {
 			$form->field(name => "confirm_password", type => "password");
-			$form->field(name => "account_creation_password", type => "password") if (length $config{account_creation_password});
+			$form->field(name => "account_creation_password", type => "password")
+				 if (defined $config{account_creation_password} &&
+				     length $config{account_creation_password});
 			$form->field(name => "email", size => 50);
 			$form->title("register");
 			$form->text("");
@@ -142,7 +144,8 @@ sub formbuilder_setup (@) { #{{{
 						shift eq $config{account_creation_password};
 					},
 					required => 1,
-				) if (length $config{account_creation_password});
+				) if (defined $config{account_creation_password} &&
+				      length $config{account_creation_password});
 				$form->field(
 					name => "email",
 					validate => "EMAIL",
