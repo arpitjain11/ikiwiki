@@ -62,6 +62,11 @@ These options control the mode that ikiwiki operates in.
   If you only want to build any changed pages, you can use --refresh with
   --setup.
 
+* --dumpsetup configfile
+
+  Causes ikiwiki to write to the specified config file, dumping out
+  its current configuration.
+
 * --wrappers
 
   If used with --setup --refresh, this makes it also update any configured
