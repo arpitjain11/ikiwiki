@@ -13,9 +13,10 @@ sub import { #{{{
 	$IkiWiki::Setup::raw_setup=$_[1];
 } #}}}
 
-sub dumpline ($$$) { #{{{
+sub dumpline ($$$$) { #{{{
 	my $key=shift;
 	my $value=shift;
+	my $type=shift;
 	my $prefix=shift;
 	
 	eval q{use Data::Dumper};
@@ -26,9 +27,15 @@ sub dumpline ($$$) { #{{{
 	local $Data::Dumper::Sortkeys=1;
 	local $Data::Dumper::Quotekeys=0;
 	
-	my $dumpedvalue=Dumper($value);
-	chomp $dumpedvalue;
-	$dumpedvalue=~s/^\t//;
+	my $dumpedvalue;
+	if ($type eq 'boolean' || $type eq 'integer') {
+		$dumpedvalue=$value;
+	}
+	else {
+		$dumpedvalue=Dumper($value);
+		chomp $dumpedvalue;
+		$dumpedvalue=~s/^\t//;
+	}
 	
 	return "\t$prefix$key=$dumpedvalue,";
 } #}}}
@@ -39,18 +46,20 @@ sub dumpvalues ($@) { #{{{
 	while (@_) {
 		my $key=shift;
 		my %info=%{shift()};
+
+		next if $info{type} eq "internal";
 		
 		push @ret, "\t# ".$info{description} if exists $info{description};
 		
 		if (exists $setup->{$key} && defined $setup->{$key}) {
-			push @ret, dumpline($key, $setup->{$key}, "");
+			push @ret, dumpline($key, $setup->{$key}, $info{type}, "");
 			delete $setup->{$key};
 		}
-		elsif (exists $info{default}) {
-			push @ret, dumpline($key, $info{default}, "#");
+		elsif (exists $info{default} && defined $info{default}) {
+			push @ret, dumpline($key, $info{default}, $info{type}, "#");
 		}
 		elsif (exists $info{example}) {
-			push @ret, dumpline($key, $info{example}, "#");
+			push @ret, dumpline($key, $info{example}, $info{type}, "#");
 		}
 	}
 	return @ret;
@@ -61,6 +70,10 @@ sub dump ($) { #{{{
 	
 	my %setup=(%config);
 	my @ret;
+	
+	push @ret, "\t# basic setup";
+	push @ret, dumpvalues(\%setup, IkiWiki::getsetup());
+	push @ret, "";
 
 	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
 		# use an array rather than a hash, to preserve order
@@ -69,13 +82,6 @@ sub dump ($) { #{{{
 		push @ret, "\t# $id plugin";
 		push @ret, dumpvalues(\%setup, @s);
 		push @ret, "";
-	}
-	
-	if (%setup) {
-		push @ret, "\t# other";
-		foreach my $key (sort keys %setup) {
-			push @ret, dumpline($key, $setup{$key}, "");
-		}
 	}
 	
 	unshift @ret, "#!/usr/bin/perl

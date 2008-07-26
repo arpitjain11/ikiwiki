@@ -32,65 +32,346 @@ memoize("abs2rel");
 memoize("pagespec_translate");
 memoize("file_pruned");
 
+sub getsetup () { #{{{
+	wikiname => {
+		type => "string",
+		default => "wiki",
+		description => "name of the wiki",
+		safe => 1,
+		rebuild => 1,
+	},
+	srcdir => {
+		type => "string",
+		default => undef,
+		example => "$ENV{HOME}/wiki",
+		description => "where the source of the wiki is located",
+		safe => 0, # path
+		rebuild => 1,
+	},
+	destdir => {
+		type => "string",
+		default => undef,
+		example => "/var/www/wiki",
+		description => "where to build the wiki",
+		safe => 0, # path
+		rebuild => 1,
+	},
+	adminuser => {
+		type => "string",
+		default => [],
+		description => "user names of wiki admins",
+		safe => 1,
+		rebuild => 0,
+	},
+	adminemail => {
+		type => "string",
+		default => undef,
+		example => 'me@example.com',
+		description => "contact email for wiki",
+		safe => 1,
+		rebuild => 0,
+	},
+	url => {
+		type => "string",
+		default => '',
+		example => "http://example.com/wiki",
+		description => "base url to the wiki",
+		safe => 1,
+		rebuild => 1,
+	},
+	cgiurl => {
+		type => "string",
+		default => '',
+		examples => "http://example.com/wiki/ikiwiki.cgi",
+		description => "url to the ikiwiki.cgi",
+		safe => 1,
+		rebuild => 1,
+	},
+	rcs => {
+		type => "string",
+		default => '',
+		description => "rcs backend to use",
+		safe => 0, # don't allow overriding
+		rebuild => 0,
+	},
+	historyurl => {
+		type => "string",
+		# TODO should be set per-rcs to allow different
+		# examples and descriptions
+		default => '',
+		example => "XXX",
+		description => "XXX",
+		safe => 1,
+		rebuild => 1,
+	},
+	diffurl => {
+		type => "string",
+		# TODO ditto above
+		default => '',
+		example => "XXX",
+		description => "XXX",
+		safe => 1,
+		rebuild => 1,
+	},
+	discussion => {
+		type => "boolean",
+		default => 1,
+		description => "enable Discussion pages",
+		safe => 1,
+		rebuild => 1,
+	},
+	svnpath => {
+		# TODO move
+		type => "string",
+		default => "trunk",
+		description => "path inside svn repo where wiki is located",
+		safe => 0, # could expose/overwrite data
+		rebuild => 0,
+	},
+	gitorigin_branch => {
+		type => "string",
+		default => "origin",
+		description => "the git origin to pull from",
+		safe => 0, # paranoia
+		rebuild => 0,
+	},
+	gitmaster_branch => {
+		type => "string",
+		default => "master",
+		description => "the git master branch",
+		safe => 0, # paranoia
+		rebuild => 0,
+	},
+	templatedir => {
+		type => "string",
+		default => "$installdir/share/ikiwiki/templates",
+		description => "location of template files",
+		safe => 0, # path
+		rebuild => 1,
+	},
+	underlaydir => {
+		type => "string",
+		default => "$installdir/share/ikiwiki/basewiki",
+		description => "base wiki source location",
+		safe => 0, # path
+		rebuild => 0,
+	},
+	underlaydirs => {
+		type => "internal",
+		default => [],
+		description => "additional underlays to use",
+		safe => 0,
+		rebuild => 0,
+	},
+	verbose => {
+		type => "boolean",
+		default => 0,
+		description => "display verbose messages when building",
+		safe => 1,
+		rebuild => 0,
+	},
+	syslog => {
+		type => "boolean",
+		default => 0,
+		description => "log to syslog",
+		safe => 1,
+		rebuild => 0,
+	},
+	usedirs => {
+		type => "boolean",
+		default => 1,
+		description => "create output files named page/index.html?",
+		safe => 0, # changing requires manual transition
+		rebuild => 1,
+	},
+	prefix_directives => {
+		type => "boolean",
+		default => 0,
+		description => "use '!'-prefixed preprocessor directives?",
+		safe => 0, # changing requires manual transition
+		rebuild => 1,
+	},
+	default_pageext => {
+		type => "string",
+		default => "mdwn",
+		description => "extension to use for new pages",
+		safe => 0, # not sanitized
+		rebuild => 0,
+	},
+	htmlext => {
+		type => "string",
+		default => "html",
+		description => "extension to use for html files",
+		safe => 0, # not sanitized
+		rebuild => 1,
+	},
+	timeformat => {
+		type => "string",
+		default => '%c',
+		description => "strftime format string to display date",
+		safe => 1,
+		rebuild => 1,
+	},
+	locale => {
+		type => "string",
+		default => undef,
+		example => "en_US.UTF-8",
+		description => "UTF-8 locale to use",
+		safe => 0,
+		rebuild => 1,
+	},
+	sslcookie => {
+		type => "boolean",
+		default => 0,
+		description => "only send cookies over SSL connections?",
+		safe => 1,
+		rebuild => 0,
+	},
+	userdir => {
+		type => "string",
+		default => "",
+		example => "users",
+		description => "put user pages below specified page",
+		safe => 1,
+		rebuild => 1,
+	},
+	numbacklinks => {
+		type => "integer",
+		default => 10,
+		description => "how many backlinks to show before hiding excess (0 to show all)",
+		safe => 1,
+		rebuild => 1,
+	},
+	hardlink => {
+		type => "boolean",
+		default => 0,
+		description => "attempt to hardlink source files (optimisation for large files)",
+		safe => 0, # paranoia
+		rebuild => 0,
+	},
+
+	wiki_file_prune_regexps => {
+		type => "internal",
+		default => [qr/(^|\/)\.\.(\/|$)/, qr/^\./, qr/\/\./,
+			qr/\.x?html?$/, qr/\.ikiwiki-new$/,
+			qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
+			qr/(^|\/)_MTN\//,
+			qr/\.dpkg-tmp$/],
+		description => "regexps of source files to ignore",
+		safe => 0,
+		rebuild => 1,
+	},
+	wiki_file_regexp => {
+		type => "internal",
+		default => qr/(^[-[:alnum:]_.:\/+]+$)/,
+		description => "regexp of legal source files",
+		safe => 0,
+		rebuild => 1,
+	},
+	web_commit_regexp => {
+		type => "internal",
+		default => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
+		description => "regexp to parse web commits from logs",
+		safe => 0,
+		rebuild => 0,
+	},
+	cgi => {
+		type => "internal",
+		default => 0,
+		description => "run as a cgi",
+		safe => 0,
+		rebuild => 0,
+	},
+	cgi_disable_uploads => {
+		type => "internal",
+		default => 1,
+		description => "whether CGI should accept file uploads",
+		safe => 0,
+		rebuild => 0,
+	},
+	post_commit => {
+		type => "internal",
+		default => 0,
+		description => "run as a post-commit hook",
+		safe => 0,
+		rebuild => 0,
+	},
+	rebuild => {
+		type => "internal",
+		default => 0,
+		description => "running in rebuild mode",
+		safe => 0,
+		rebuild => 0,
+	},
+	refresh => {
+		type => "internal",
+		default => 0,
+		description => "running in refresh mode",
+		safe => 0,
+		rebuild => 0,
+	},
+	getctime => {
+		type => "internal",
+		default => 0,
+		description => "running in getctime mode",
+		safe => 0,
+		rebuild => 0,
+	},
+	w3mmode => {
+		type => "internal",
+		default => 0,
+		description => "running in w3mmode",
+		safe => 0,
+		rebuild => 0,
+	},
+	wrapper => {
+		type => "internal",
+		default => undef,
+		description => "wrapper file to generate",
+		safe => 0,
+		rebuild => 0,
+	},
+	wrappermode => {
+		type => "internal",
+		default => undef,
+		description => "mode of wrapper file",
+		safe => 0,
+		rebuild => 0,
+	},
+	setup => {
+		type => "internal",
+		default => undef,
+		description => "setup file to read",
+		safe => 0,
+		rebuild => 0,
+	},
+	plugin => {
+		type => "internal",
+		default => [qw{mdwn link inline htmlscrubber passwordauth
+				openid signinedit lockedit conditional
+				recentchanges parentlinks}],
+		description => "enabled plugins",
+		safe => 0,
+		rebuild => 1,
+	},
+	libdir => {
+		type => "internal",
+		default => undef,
+		example => "$ENV{HOME}/.ikiwiki/",
+		description => "extra library and plugin directory",
+		safe => 0,
+		rebuild => 0,
+	},
+} #}}}
+
 sub defaultconfig () { #{{{
-	return
-	wiki_file_prune_regexps => [qr/(^|\/)\.\.(\/|$)/, qr/^\./, qr/\/\./,
-		qr/\.x?html?$/, qr/\.ikiwiki-new$/,
-		qr/(^|\/).svn\//, qr/.arch-ids\//, qr/{arch}\//,
-		qr/(^|\/)_MTN\//,
-		qr/\.dpkg-tmp$/],
-	wiki_file_regexp => qr/(^[-[:alnum:]_.:\/+]+$)/,
-	web_commit_regexp => qr/^web commit (by (.*?(?=: |$))|from (\d+\.\d+\.\d+\.\d+)):?(.*)/,
-	verbose => 0,
-	syslog => 0,
-	wikiname => "wiki",
-	default_pageext => "mdwn",
-	htmlext => "html",
-	cgi => 0,
-	post_commit => 0,
-	rcs => '',
-	url => '',
-	cgiurl => '',
-	historyurl => '',
-	diffurl => '',
-	rss => 0,
-	atom => 0,
-	allowrss => 0,
-	allowatom => 0,
-	discussion => 1,
-	rebuild => 0,
-	refresh => 0,
-	getctime => 0,
-	w3mmode => 0,
-	wrapper => undef,
-	wrappermode => undef,
-	svnpath => "trunk",
-	gitorigin_branch => "origin",
-	gitmaster_branch => "master",
-	srcdir => undef,
-	destdir => undef,
-	pingurl => [],
-	templatedir => "$installdir/share/ikiwiki/templates",
-	underlaydir => "$installdir/share/ikiwiki/basewiki",
-	underlaydirs => [],
-	setup => undef,
-	adminuser => undef,
-	adminemail => undef,
-	plugin => [qw{mdwn link inline htmlscrubber passwordauth openid
-			signinedit lockedit conditional recentchanges
-			parentlinks}],
-	libdir => undef,
-	timeformat => '%c',
-	locale => undef,
-	sslcookie => 0,
-	httpauth => 0,
-	userdir => "",
-	usedirs => 1,
-	numbacklinks => 10,
-	account_creation_password => "",
-	prefix_directives => 0,
-	hardlink => 0,
-	cgi_disable_uploads => 1,
+	my %s=getsetup();
+	my @ret;
+	foreach my $key (keys %s) {
+		push @ret, $key, $s{$key}->{default};
+	}
+	use Data::Dumper;
+	return @ret;
 } #}}}
 
 sub checkconfig () { #{{{
