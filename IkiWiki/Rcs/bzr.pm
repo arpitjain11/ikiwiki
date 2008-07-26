@@ -8,6 +8,26 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
+hook(type => "getsetup", id => "bzr", call => sub { #{{{
+	return
+		historyurl => {
+			type => "string",
+			default => "",
+			#example => "", # FIXME add example
+			description => "url to show file history, using loggerhead ([[file]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+		diffurl => {
+			type => "string",
+			default => "",
+			example => "http://example.com/revision?start_revid=[[r2]]#[[file]]-s",
+			description => "url to view a diff, using loggerhead ([[file]] and [[r2]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+}); #}}}
+
 sub bzr_log ($) { #{{{
 	my $out = shift;
 	my @infos = ();

@@ -1,23 +1,58 @@
 #!/usr/bin/perl
 
-package IkiWiki::Rcs::svn;
+package IkiWiki;
 
 use warnings;
 use strict;
 use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
 
-sub import { #{{{
-	if (exists $IkiWiki::config{svnpath}) {
-		# code depends on the path not having extraneous slashes
-		$IkiWiki::config{svnpath}=~tr#/#/#s;
-		$IkiWiki::config{svnpath}=~s/\/$//;
-		$IkiWiki::config{svnpath}=~s/^\///;
+hook(type => "checkconfig", id => "svn", call => sub { #{{{
+	if (! defined $config{svnpath}) {
+		$config{svnpath}="trunk";
 	}
-} #}}}
+	if (exists $config{svnpath}) {
+		# code depends on the path not having extraneous slashes
+		$config{svnpath}=~tr#/#/#s;
+		$config{svnpath}=~s/\/$//;
+		$config{svnpath}=~s/^\///;
+	}
+}); #}}}
 
-
-package IkiWiki;
+hook(type => "getsetup", id => "svn", call => sub { #{{{
+	return
+		svnrepo => {
+			type => "string",
+			default => "",
+			example => "/svn/wiki",
+			description => "subversion repository location",
+			safe => 0, # path
+			rebuild => 0,
+		},
+		svnpath => {
+			type => "string",
+			default => "trunk",
+			description => "path inside repository where the wiki is located",
+			safe => 0, # paranoia
+			rebuild => 0,
+		},
+		historyurl => {
+			type => "string",
+			default => "",
+			example => "http://svn.example.org/trunk/[[file]]",
+			description => "viewvc url to show file history ([[file]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+		diffurl => {
+			type => "string",
+			default => "",
+			example => "http://svn.example.org/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
+			description => "viewvc url to show a diff ([[file]], [[r1]], and [[r2]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+}); #}}}
 
 # svn needs LC_CTYPE set to a UTF-8 locale, so try to find one. Any will do.
 sub find_lc_ctype() {

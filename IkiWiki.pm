@@ -120,14 +120,6 @@ sub getsetup () { #{{{
 		safe => 1,
 		rebuild => 1,
 	},
-	svnpath => {
-		# TODO move
-		type => "string",
-		default => "trunk",
-		description => "path inside svn repo where wiki is located",
-		safe => 0, # could expose/overwrite data
-		rebuild => 0,
-	},
 	gitorigin_branch => {
 		type => "string",
 		default => "origin",
