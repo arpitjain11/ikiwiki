@@ -119,7 +119,13 @@ sub getsetup () { #{{{
 	},
 	wrappers => {
 		type => "string",
-		default => undef,
+		example => [
+			{
+				cgi => 1,
+				wrapper => "/var/www/wiki/ikiwiki.cgi",
+				wrappermode => "06755",
+			},
+		],
 		description => "definitions of wrappers to generate",
 		safe => 0,
 		rebuild => 0,

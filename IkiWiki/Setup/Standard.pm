@@ -40,7 +40,17 @@ sub dumpline ($$$$) { #{{{
 	else {
 		$dumpedvalue=Dumper($value);
 		chomp $dumpedvalue;
+		if (length $prefix) {
+			# add to second and subsequent lines
+			my @lines=split(/\n/, $dumpedvalue);
+			$dumpedvalue="";
+			for (my $x=0; $x <= $#lines; $x++) {
+				$lines[$x] =~ s/^\t//;
+				$dumpedvalue.="\t".($x ? $prefix : "").$lines[$x]."\n";
+			}
+		}
 		$dumpedvalue=~s/^\t//;
+		chomp $dumpedvalue;
 	}
 	
 	return "\t$prefix$key => $dumpedvalue,";
