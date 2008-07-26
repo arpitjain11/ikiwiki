@@ -94,10 +94,26 @@ sub getsetup () { #{{{
 		safe => 0, # don't allow overriding
 		rebuild => 0,
 	},
-	discussion => {
-		type => "boolean",
-		default => 1,
-		description => "enable Discussion pages?",
+	default_plugins => {
+		type => "internal",
+		default => [qw{mdwn link inline htmlscrubber passwordauth
+				openid signinedit lockedit conditional
+				recentchanges parentlinks}],
+		description => "plugins to enable by default",
+		safe => 1,
+		rebuild => 1,
+	},
+	add_plugins => {
+		type => "string",
+		default => [],
+		description => "plugins to add to the default configuration",
+		safe => 1,
+		rebuild => 1,
+	},
+	disable_plugins => {
+		type => "string",
+		default => [],
+		description => "plugins to disable",
 		safe => 1,
 		rebuild => 1,
 	},
@@ -169,6 +185,13 @@ sub getsetup () { #{{{
 		default => 0,
 		description => "use '!'-prefixed preprocessor directives?",
 		safe => 0, # changing requires manual transition
+		rebuild => 1,
+	},
+	discussion => {
+		type => "boolean",
+		default => 1,
+		description => "enable Discussion pages?",
+		safe => 1,
 		rebuild => 1,
 	},
 	default_pageext => {
@@ -318,29 +341,6 @@ sub getsetup () { #{{{
 		description => "setup file to read",
 		safe => 0,
 		rebuild => 0,
-	},
-	default_plugins => {
-		type => "internal",
-		default => [qw{mdwn link inline htmlscrubber passwordauth
-				openid signinedit lockedit conditional
-				recentchanges parentlinks}],
-		description => "plugins to enable by default",
-		safe => 1,
-		rebuild => 1,
-	},
-	add_plugins => {
-		type => "string",
-		default => [],
-		description => "plugins to add to the default configuration",
-		safe => 1,
-		rebuild => 1,
-	},
-	disable_plugins => {
-		type => "string",
-		default => [],
-		description => "plugins to disable",
-		safe => 1,
-		rebuild => 1,
 	},
 	libdir => {
 		type => "internal",
