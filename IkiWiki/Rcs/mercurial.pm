@@ -28,7 +28,7 @@ hook(type => "getsetup", id => "mercurial", call => sub { #{{{
 		},
 }); #}}}
 
-sub mercurial_log($) {
+sub mercurial_log ($) { #{{{
 	my $out = shift;
 	my @infos;
 
@@ -72,7 +72,7 @@ sub mercurial_log($) {
 	close $out;
 
 	return @infos;
-}
+} #}}}
 
 sub rcs_update () { #{{{
 	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "update");
