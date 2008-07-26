@@ -62,4 +62,14 @@ sub load ($) { # {{{
 	}
 } #}}}
 
+sub dump ($) { #{{{
+	my $file=IkiWiki::possibly_foolish_untaint(shift);
+	
+	require IkiWiki::Setup::Standard;
+
+	open (OUT, ">", $file) || die "$file: $!";
+	print OUT "$_\n" foreach IkiWiki::Setup::Standard::gendump();
+	close OUT;
+}
+
 1

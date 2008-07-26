@@ -71,9 +71,7 @@ sub dumpvalues ($@) { #{{{
 	return @ret;
 } #}}}
 
-sub dump ($) { #{{{
-	my $file=IkiWiki::possibly_foolish_untaint(shift);
-	
+sub gendump () { #{{{
 	my %setup=(%config);
 	my @ret;
 	
@@ -100,9 +98,7 @@ sub dump ($) { #{{{
 use IkiWiki::Setup::Standard {";
 	push @ret, "}";
 
-	open (OUT, ">", $file) || die "$file: $!";
-	print OUT "$_\n" foreach @ret;
-	close OUT;
+	return @ret;
 } #}}}
 
 1
