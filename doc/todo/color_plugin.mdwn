@@ -46,19 +46,37 @@ This is a RC1 of my `color` plugin. It works for me well, but all your
 comments are very welcome. --[[Paweł|ptecza]]
 
 > Sure, I have a couple.
-> 
+
+>> Great! Thank you very much! --[[Paweł|ptecza]]
+
 > The preprocess function is passed named parameters. The hack you have of
 > hardcoding use of `$_[0]` and `$_[2]` can fail at any time.
-> 
+
+>> But the problem is that arguments of my plugin don't have a name.
+>> How can I identify them in `params` hash?
+
+>> Similar hardcoded method I've found in `img` plugin :) But only one
+>> argument is not named there (image path).
+
+>> Maybe I shouldn't use so simple plugin syntax? For following syntax
+>> I wouldn't have that problem:
+
+>>     \[[!color fg=white bg=red text="White text on red background"]]
+
 > `replace_preserved_style` is passed a single parameter, so its prototype
 > should be `($)`, not `(@)`.  Ditt `preserve_style`, it should have
 > `($$)`.
-> 
+
+>> OK, it will be fixed.
+
 > The sanitize hook is always passed `$params{content}`, so there should be
 > no reason to check that it exists. Also, it shouldn't be done in a
 > sanitize hook, since html sanitization could run _after_ that santize
 > hook. It should use a format hook.
-> 
+
+>> Probably you're right. It was rather paranoid checking ;) Thanks for
+>> the hook hint!
+
 > The preprocess hook needs to call `IkiWiki::preprocess` on the content
 > passed into it if you want to support nesting other preprocessor
 > directives inside the color directive. See `preprocess_toggleable` in the
@@ -67,6 +85,9 @@ comments are very welcome. --[[Paweł|ptecza]]
 > I'm not a big fan of the dummy text `COLORS { ... } SROLOC;TEXT { ... TXET }`
 > The method used by toggle of using two real `<div>`s seems slightly
 > better. --[[Joey]]
+
+>> I don't like that too, but I didn't have better idea :) Thank you for
+>> the hint! I'll take a look at `toggle` plugin.
 
 	--- /dev/null	2008-07-24 09:38:19.000000000 +0200
 	+++ color.pm	2008-07-25 14:43:15.000000000 +0200
