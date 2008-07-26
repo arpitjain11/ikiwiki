@@ -8,6 +8,26 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
+hook(type => "getsetup", id => "mercurial", call => sub { #{{{
+	return
+		historyurl => {
+			type => "string",
+			default => "",
+			example => "http://example.com:8000/log/tip/[[file]]",
+			description => "url to hg serve'd repository, to show file history ([[file]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+		diffurl => {
+			type => "string",
+			default => "",
+			example => "http://localhost:8000/?fd=[[r2]];file=[[file]]",
+			description => "url to hg serve'd repository, to show diff ([[file]] and [[r2]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+}); #}}}
+
 sub mercurial_log($) {
 	my $out = shift;
 	my @infos;
