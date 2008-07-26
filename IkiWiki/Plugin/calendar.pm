@@ -30,8 +30,8 @@ my $time=time;
 my @now=localtime($time);
 
 sub import { #{{{
-	hook(type => "getsetup", id => "version", call => \&getsetup);
-	hook(type => "needsbuild", id => "version", call => \&needsbuild);
+	hook(type => "getsetup", id => "calendar", call => \&getsetup);
+	hook(type => "needsbuild", id => "calendar", call => \&needsbuild);
 	hook(type => "preprocess", id => "calendar", call => \&preprocess);
 } #}}}
 
