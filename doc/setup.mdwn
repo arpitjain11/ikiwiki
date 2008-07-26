@@ -74,11 +74,16 @@ and `--rebuild` too. Get comfortable with its command line (see
 By now you should be getting tired of typing in all the command line
 options each time you change something in your wiki's setup. Time to
 introduce setup files.
-   
-A sample setup file is [[ikiwiki.setup]]. Download it (or copy it from
-`doc/ikiwiki.setup` in the ikiwiki sources), and edit it. Note that this
-file should *not* be put in your wiki's directory with the rest of the
-files. A good place to put it is in a ~/.ikiwiki/ subdirectory.
+
+To generate a setup file, use `ikiwiki --dumpsetup`. You can pass
+all the options have you been including at the command line, and they
+will be stored in the setup file.
+
+	ikiwiki $SRCDIR $DESTDIR --url=http://example.org/~you/wiki/ --dumpsetup ikiwiki.setup
+
+Note that this file should *not* be put in your wiki's directory with
+the rest of the files. A good place to put it is in a ~/.ikiwiki/
+subdirectory.
    
 Most of the options, like `wikiname` in the setup file are the same as
 ikiwiki's command line options (documented in [[usage]]. `srcdir` and
@@ -91,7 +96,7 @@ will set everything up.
 
 ## Turn on additional features.
 
-Now you have a basic wiki with a configuration file. Time to experiment
+Now you have a basic wiki with a setup file. Time to experiment
 with ikiwiki's many features. 
    
 Let's first enable a key wiki feature and set up [[CGI]] to allow
@@ -113,7 +118,7 @@ on the revision control system you choose, the way this is done varies.
 Note that the .ikiwiki subdirectory is where ikiwiki keeps its state, and
 should be preserved, but not checked into revision control.
 
-The new [[ikiwiki-makerepo]] command automates setting up a wiki in
+The [[ikiwiki-makerepo]] command automates setting up a wiki in
 revision control.
 
 [[!toggle id=subversion text="Subversion"]]
