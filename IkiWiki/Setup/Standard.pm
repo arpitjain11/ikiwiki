@@ -80,11 +80,18 @@ sub gendump ($) { #{{{
 	push @ret, dumpvalues(\%setup, IkiWiki::getsetup());
 	push @ret, "";
 
+	# sort rcs plugin first
+	my @plugins=sort {
+		($a eq $config{rcs}) <=> ($b eq $config{rcs})
+		||
+		$a cmp $b
+	} keys %{$IkiWiki::hooks{getsetup}};
+
 	foreach my $id (sort keys %{$IkiWiki::hooks{getsetup}}) {
 		# use an array rather than a hash, to preserve order
 		my @s=$IkiWiki::hooks{getsetup}{$id}{call}->();
 		return unless @s;
-		push @ret, "\t# $id plugin";
+		push @ret, "\t# $id".($id ne $config{rcs} ? " plugin" : "");
 		push @ret, dumpvalues(\%setup, @s);
 		push @ret, "";
 	}

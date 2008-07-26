@@ -11,6 +11,40 @@ use open qw{:utf8 :std};
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 
+hook(type => "getsetup", id => "git", call => sub { #{{{
+	return
+		historyurl => {
+			type => "string",
+			default => "",
+			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
+			description => "gitweb url to show file history ([[file]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+		diffurl => {
+			type => "string",
+			default => "",
+			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
+			description => "gitweb url to show a diff ([[sha1_to]], [[sha1_from]], [[sha1_parent]], and [[file]] substituted)",
+			safe => 1,
+			rebuild => 1,
+		},
+		gitorigin_branch => {
+			type => "string",
+			default => "origin",
+			description => "where to pull and push changes (unset to not pull/push)",
+			safe => 0, # paranoia
+			rebuild => 0,
+		},
+		gitmaster_branch => {
+			type => "string",
+			default => "master",
+			description => "branch that the wiki is stored in",
+			safe => 0, # paranoia
+			rebuild => 0,
+		},
+}); #}}}
+
 sub _safe_git (&@) { #{{{
 	# Start a child process safely without resorting /bin/sh.
 	# Return command output or success state (in scalar context).
