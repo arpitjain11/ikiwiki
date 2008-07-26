@@ -7,12 +7,24 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "search", call => \&getsetup);
 	hook(type => "checkconfig", id => "search", call => \&checkconfig);
 	hook(type => "pagetemplate", id => "search", call => \&pagetemplate);
 	hook(type => "postscan", id => "search", call => \&index);
 	hook(type => "delete", id => "search", call => \&delete);
 	hook(type => "cgi", id => "search", call => \&cgi);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		omega_cgi => {
+			type => "string",
+			default => "/usr/lib/cgi-bin/omega/omega",
+			description => "path to the omega cgi program",
+			safe => 0, # external program
+			rebuild => 0,
+		},
+} #}}}
 
 sub checkconfig () { #{{{
 	foreach my $required (qw(url cgiurl)) {

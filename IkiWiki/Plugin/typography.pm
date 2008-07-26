@@ -8,6 +8,7 @@ use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "getopt", id => "typography", call => \&getopt);
+	hook(type => "getsetup", id => "typography", call => \&getsetup);
 	IkiWiki::hook(type => "sanitize", id => "typography", call => \&sanitize);
 } # }}}
 
@@ -16,6 +17,21 @@ sub getopt () { #{{{
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
 	GetOptions("typographyattributes=s" => \$config{typographyattributes});
+} #}}}
+
+sub getsetup () { #{{{
+	eval q{use Text::Typography};
+	error($@) if $@;
+
+	return
+		typographyattributes => {
+			type => "string",
+			default => "3",
+			example => "tag",
+			description => "Text::Typography attributes value",
+			safe => 1,
+			rebuild => 1,
+		},
 } #}}}
 
 sub sanitize (@) { #{{{

@@ -10,6 +10,7 @@ my %tags;
 
 sub import { #{{{
 	hook(type => "getopt", id => "tag", call => \&getopt);
+	hook(type => "getsetup", id => "tag", call => \&getsetup);
 	hook(type => "preprocess", id => "tag", call => \&preprocess_tag, scan => 1);
 	hook(type => "preprocess", id => "taglink", call => \&preprocess_taglink, scan => 1);
 	hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
@@ -20,6 +21,18 @@ sub getopt () { #{{{
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
 	GetOptions("tagbase=s" => \$config{tagbase});
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		tagbase => {
+			type => "string",
+			default => "",
+			example => "tag",
+			description => "parent page tags are located under",
+			safe => 1,
+			rebuild => 1,
+		},
 } #}}}
 
 sub tagpage ($) { #{{{

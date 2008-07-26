@@ -6,11 +6,30 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "recentchanges", call => \&getsetup);
 	hook(type => "checkconfig", id => "recentchanges", call => \&checkconfig);
 	hook(type => "refresh", id => "recentchanges", call => \&refresh);
 	hook(type => "pagetemplate", id => "recentchanges", call => \&pagetemplate);
 	hook(type => "htmlize", id => "_change", call => \&htmlize);
 	hook(type => "cgi", id => "recentchanges", call => \&cgi);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		recentchangespage => {
+			type => "string",
+			default => "recentchanges",
+			description => "name of the recentchanges page",
+			safe => 1,
+			rebuild => 1,
+		},
+		recentchangesnum => {
+			type => "int",
+			default => 100,
+			description => "number of changes to track",
+			safe => 1,
+			rebuild => 0,
+		},
 } #}}}
 
 sub checkconfig () { #{{{

@@ -40,7 +40,7 @@ sub default_timetable {
 }
 
 sub import { #{{{
-	hook(type => "getsetup", id => "getsetup", call => \&getsetup);
+	hook(type => "getsetup", id => "prettydate", call => \&getsetup);
 	hook(type => "checkconfig", id => "prettydate", call => \&checkconfig);
 } # }}}
 
