@@ -71,7 +71,8 @@ sub dumpvalues ($@) { #{{{
 	return @ret;
 } #}}}
 
-sub gendump () { #{{{
+sub gendump ($) { #{{{
+	my $description=shift;
 	my %setup=(%config);
 	my @ret;
 	
@@ -88,14 +89,15 @@ sub gendump () { #{{{
 		push @ret, "";
 	}
 	
-	unshift @ret, "#!/usr/bin/perl
-# Setup file for ikiwiki.
-# Passing this to ikiwiki --setup will make ikiwiki generate wrappers and
-# build the wiki.
-#
-# Remember to re-run ikiwiki --setup any time you edit this file.
-
-use IkiWiki::Setup::Standard {";
+	unshift @ret,
+		"#!/usr/bin/perl",
+		"# $description",
+		"#",
+		"# Passing this to ikiwiki --setup will make ikiwiki generate",
+		"# wrappers and build the wiki.",
+		"#",
+		"# Remember to re-run ikiwiki --setup any time you edit this file.",
+		"use IkiWiki::Setup::Standard {";
 	push @ret, "}";
 
 	return @ret;

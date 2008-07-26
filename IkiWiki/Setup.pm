@@ -66,9 +66,10 @@ sub dump ($) { #{{{
 	my $file=IkiWiki::possibly_foolish_untaint(shift);
 	
 	require IkiWiki::Setup::Standard;
+	my @dump=IkiWiki::Setup::Standard::gendump("Setup file for ikiwiki.");
 
 	open (OUT, ">", $file) || die "$file: $!";
-	print OUT "$_\n" foreach IkiWiki::Setup::Standard::gendump();
+	print OUT "$_\n" foreach @dump;
 	close OUT;
 }
 
