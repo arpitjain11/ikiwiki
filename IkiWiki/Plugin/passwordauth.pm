@@ -279,7 +279,9 @@ sub formbuilder (@) { #{{{
 				error($@) if $@;
 				sendmail(
 					To => IkiWiki::userinfo_get($user_name, "email"),
-					From => "$config{wikiname} admin <".(defined $config{adminemail} ? $config{adminemail} : "")>",
+					From => "$config{wikiname} admin <".
+						(defined $config{adminemail} ? $config{adminemail} : "")
+						.">",
 					Subject => "$config{wikiname} information",
 					Message => $template->output,
 				) or error(gettext("Failed to send mail"));
