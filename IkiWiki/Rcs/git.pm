@@ -41,7 +41,7 @@ hook(type => "getsetup", id => "git", call => sub { #{{{
 		gitorigin_branch => {
 			type => "string",
 			default => "origin",
-			description => "where to pull and push changes (unset to not pull/push)",
+			description => "where to pull and push changes (set to empty string to disable)",
 			safe => 0, # paranoia
 			rebuild => 0,
 		},
