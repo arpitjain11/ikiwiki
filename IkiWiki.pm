@@ -764,13 +764,10 @@ sub preprocess ($$$;$$) { #{{{
 			if ($preprocessing{$page}++ > 3) {
 				# Avoid loops of preprocessed pages preprocessing
 				# other pages that preprocess them, etc.
-				#translators: The first parameter is a
-				#translators: preprocessor directive name,
-				#translators: the second a page name, the
-				#translators: third a number.
-				return "[[".sprintf(gettext("%s preprocessing loop detected on %s at depth %i"),
-					$command, $page, $preprocessing{$page}).
-				"]]";
+				return "[[!$command <span class=\"error\">".
+					sprintf(gettext("preprocessing loop detected on %s at depth %i"),
+						$page, $preprocessing{$page}).
+					"</span>]]";
 			}
 			my $ret;
 			if (! $scan) {
