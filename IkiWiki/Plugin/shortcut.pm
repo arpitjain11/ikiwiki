@@ -6,11 +6,11 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "shortcut", call => \&checkconfig);
+	hook(type => "refresh", id => "shortcut", call => \&refresh);
 	hook(type => "preprocess", id => "shortcut", call => \&preprocess_shortcut);
 } #}}}
 
-sub checkconfig () { #{{{
+sub refresh () { #{{{
 	# Preprocess the shortcuts page to get all the available shortcuts
 	# defined before other pages are rendered.
 	my $srcfile=srcfile("shortcuts.mdwn", 1);

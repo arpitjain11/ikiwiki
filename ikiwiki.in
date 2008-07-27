@@ -88,10 +88,14 @@ sub getconfig () { #{{{
 
 		if (! $config{setup} && ! $config{render}) {
 			loadplugins();
-			usage() unless @ARGV == 2;
-			$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
-			$config{destdir} = possibly_foolish_untaint(shift @ARGV);
-			checkconfig();
+			if (@ARGV == 2) {
+				$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
+				$config{destdir} = possibly_foolish_untaint(shift @ARGV);
+				checkconfig();
+			}
+			else {
+				usage() unless $config{dumpsetup};
+			}
 		}
 	}
 	else {
