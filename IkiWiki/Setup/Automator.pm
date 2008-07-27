@@ -110,7 +110,7 @@ sub import (@) { #{{{
 		die "ikiwiki --wrappers --setup $config{dumpsetup} failed";
 	}
 
-	# Add it to the wikiwiki.
+	# Add it to the wikilist.
 	mkpath("$ENV{HOME}/.ikiwiki");
 	open (WIKILIST, ">>$ENV{HOME}/.ikiwiki/wikilist") || die "$ENV{HOME}/.ikiwiki/wikilist: $!";
 	print WIKILIST "$ENV{USER} $config{dumpsetup}\n";
