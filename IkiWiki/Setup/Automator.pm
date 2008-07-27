@@ -6,6 +6,7 @@ package IkiWiki::Setup::Automator;
 use warnings;
 use strict;
 use IkiWiki;
+use IkiWiki::UserInfo;
 use Term::ReadLine;
 use File::Path;
 
@@ -36,11 +37,11 @@ sub import (@) { #{{{
 	foreach my $key (qw{srcdir destdir repository dumpsetup}) {
 		next unless exists $config{$key};
 		my $add="";
-		while (-e $config{$key}.$add) {
+		while (-e $add.$config{$key}) {
 			$add=1 if ! $add;
 			$add++;
 		}
-		$config{$key}.=$add;
+		$config{$key}=$add.$config{$key};
 	}
 
 	IkiWiki::checkconfig();
@@ -76,10 +77,37 @@ sub import (@) { #{{{
 	}
 	IkiWiki::Setup::dump($config{dumpsetup});
 
-	# Build the wiki.
+	# Build the wiki, but w/o wrappers, so it's not live yet.
 	mkpath($config{destdir}) || die "mkdir $config{destdir}: $!";
-	if (system("ikiwiki", "--setup", $config{dumpsetup}) != 0) {
-		die "ikiwiki --setup $config{dumpsetup} failed";
+	if (system("ikiwiki", "--refresh", "--setup", $config{dumpsetup}) != 0) {
+		die "ikiwiki --refresh --setup $config{dumpsetup} failed";
+	}
+
+	# Create admin user(s).
+	foreach my $admin (@{$config{adminuser}}) {
+		next if $admin=~/^http\?:\/\//; # openid
+		
+		# Prompt for password w/o echo.
+		system('stty -echo 2>/dev/null');
+		local $|=1;
+		print "\n\nCreating wiki admin $admin ...\n";
+		print "Choose a password: ";
+		chomp(my $password=<STDIN>);
+		print "\n\n\n";
+		system('stty sane 2>/dev/null');
+
+		if (IkiWiki::userinfo_setall($admin, { regdate => time }) &&
+		    IkiWiki::Plugin::passwordauth::setpassword($admin, $password)) {
+			IkiWiki::userinfo_set($admin, "email", $config{adminemail}) if defined $config{adminemail};
+		}
+		else {
+			error("problem setting up $admin user");
+		}
+	}
+	
+	# Add wrappers, make live.
+	if (system("ikiwiki", "--wrappers", "--setup", $config{dumpsetup}) != 0) {
+		die "ikiwiki --wrappers --setup $config{dumpsetup} failed";
 	}
 
 	# Done!
