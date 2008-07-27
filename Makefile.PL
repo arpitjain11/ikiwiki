@@ -31,6 +31,7 @@ ikiwiki.out: ikiwiki.in
 	chmod +x ikiwiki.out
 
 extra_build: ikiwiki.out
+	$(PERL) -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -dumpsetup ikiwiki.setup
 	$(PERL) -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -setup docwiki.setup -refresh
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
@@ -41,8 +42,7 @@ extra_build: ikiwiki.out
 
 extra_clean:
 	rm -rf html doc/.ikiwiki
-	rm -f *.man ikiwiki.out
-	rm -f plugins/*.pyc
+	rm -f *.man ikiwiki.out ikiwiki.setup plugins/*.pyc
 	$(MAKE) -C po clean
 
 extra_install:
