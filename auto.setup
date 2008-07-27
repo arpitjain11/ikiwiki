@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# Simple ikiwiki setup.
+# Ikiwiki setup automator.
 # 
 # This setup file causes ikiwiki to create a wiki, check it into revision
 # control, generate a setup file for the new wiki, and set everything up.
@@ -40,4 +40,4 @@ IkiWiki::Setup::Automator->import(
 	syslog => 1,
 	prefix_directives => 1,
 	hardlink => 1,
-);
+)
