@@ -116,6 +116,10 @@ sub main () { #{{{
 	if ($config{setup}) {
 		require IkiWiki::Setup;
 		IkiWiki::Setup::load($config{setup});
+		
+		loadplugins();
+		checkconfig();
+
 		if (@{$config{wrappers}} && 
 		    ! $config{render} && ! $config{dumpsetup} &&
 		    (! $config{refresh} || $config{genwrappers})) {
@@ -148,9 +152,6 @@ sub main () { #{{{
 		# ignore syslog setting from setup file
 		# while doing initial setup
 		$config{syslog}=0 unless $config{dumpsetup};
-		
-		loadplugins();
-		checkconfig();
 	}
 
 	if ($config{dumpsetup}) {
