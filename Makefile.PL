@@ -30,8 +30,10 @@ ikiwiki.out: ikiwiki.in
 	./pm_filter $(PREFIX) $(VER) $(PROBABLE_INST_LIB) < ikiwiki.in > ikiwiki.out
 	chmod +x ikiwiki.out
 
-extra_build: ikiwiki.out
-	$(PERL) -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -dumpsetup ikiwiki.setup
+ikiwiki.setup: ikiwiki.out
+	HOME=/home/me $(PERL) -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -dumpsetup ikiwiki.setup
+
+extra_build: ikiwiki.out ikiwiki.setup
 	$(PERL) -Iblib/lib $(extramodules) $(tflag) ikiwiki.out -libdir . -setup docwiki.setup -refresh
 	./mdwn2man ikiwiki 1 doc/usage.mdwn > ikiwiki.man
 	./mdwn2man ikiwiki-mass-rebuild 8 doc/ikiwiki-mass-rebuild.mdwn > ikiwiki-mass-rebuild.man
