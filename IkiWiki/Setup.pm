@@ -48,7 +48,13 @@ sub load ($) { # {{{
 				$config{$c}=IkiWiki::possibly_foolish_untaint($setup{$c});
 			}
 			elsif (ref $setup{$c} eq 'ARRAY') {
-				$config{$c}=[map { IkiWiki::possibly_foolish_untaint($_) } @{$setup{$c}}]
+				if ($c eq 'wrappers') {
+					# backwards compatability code
+					$config{$c}=$setup{$c};
+				}
+				else {
+					$config{$c}=[map { IkiWiki::possibly_foolish_untaint($_) } @{$setup{$c}}]
+				}
 			}
 			elsif (ref $setup{$c} eq 'HASH') {
 				foreach my $key (keys %{$setup{$c}}) {
@@ -59,6 +65,14 @@ sub load ($) { # {{{
 		else {
 			$config{$c}=undef;
 		}
+	}
+	
+	if (exists $config{cgi_wrapper}) {
+		push @{$config{wrappers}}, {
+			cgi => 1,
+			wrapper => $config{cgi_wrapper},
+			wrappermode => (defined $config{cgi_wrappermode} ? $config{cgi_wrappermode} : "06755"),
+		};
 	}
 } #}}}
 

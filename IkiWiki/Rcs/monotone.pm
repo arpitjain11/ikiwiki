@@ -40,13 +40,33 @@ hook(type => "checkconfig", id => "monotone", call => sub { #{{{
 	if ($version < 0.38) {
 		error("Monotone version too old, is $version but required 0.38");
 	}
+
+	if (exists $config{mtn_wrapper}) {
+		push @{$config{wrappers}}, {
+			wrapper => $config{mtn_wrapper},
+			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),
+		};
+	}
 }); #}}}
 
 hook(type => "getsetup", id => "monotone", call => sub { #{{{
 	return
+		mtn_wrapper => {
+			type => "string",
+			example => "/srv/mtn/wiki/_MTN/ikiwiki-netsync-hook",
+			description => "monotone netsync hook executable to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		mtn_wrappermode => {
+			type => "string",
+			example => '06755',
+			description => "mode for mtn_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
 		mtnkey => {
 			type => "string",
-			default => "",
 			example => 'web@example.com',
 			description => "your monotone key",
 			safe => 1,
@@ -54,7 +74,6 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 		},
 		historyurl => {
 			type => "string",
-			default => "",
 			example => "http://viewmtn.example.com/branch/head/filechanges/com.example.branch/[[file]]",
 			description => "viewmtn url to show file history ([[file]] substituted)",
 			safe => 1,
@@ -62,7 +81,6 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 		},
 		diffurl => {
 			type => "string",
-			default => "",
 			example => "http://viewmtn.example.com/revision/diff/[[r1]]/with/[[r2]]/[[file]]",
 			description => "viewmtn url to show a diff ([[r1]], [[r2]], and [[file]] substituted)",
 			safe => 1,
@@ -70,14 +88,13 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 		},
 		mtnsync => {
 			type => "boolean",
-			default => 0,
+			example => 0,
 			description => "sync on update and commit?",
 			safe => 0, # paranoia
 			rebuild => 0,
 		},
 		mtnrootdir => {
 			type => "string",
-			default => "",
 			description => "path to your workspace (defaults to the srcdir; specify if the srcdir is a subdirectory of the workspace)",
 			safe => 0, # path
 			rebuild => 0,

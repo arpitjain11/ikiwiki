@@ -8,6 +8,9 @@ use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
 
 hook(type => "checkconfig", id => "svn", call => sub { #{{{
+	if (! defined $config{diffurl}) {
+		$config{diffurl}="";
+	}
 	if (! defined $config{svnpath}) {
 		$config{svnpath}="trunk";
 	}
@@ -17,13 +20,18 @@ hook(type => "checkconfig", id => "svn", call => sub { #{{{
 		$config{svnpath}=~s/\/$//;
 		$config{svnpath}=~s/^\///;
 	}
+	if (exists $config{svn_wrapper}) {
+		push @{$config{wrappers}}, {
+			wrapper => $config{svn_wrapper},
+			wrappermode => (defined $config{svn_wrappermode} ? $config{svn_wrappermode} : "04755"),
+		};
+	}
 }); #}}}
 
 hook(type => "getsetup", id => "svn", call => sub { #{{{
 	return
 		svnrepo => {
 			type => "string",
-			default => "",
 			example => "/svn/wiki",
 			description => "subversion repository location",
 			safe => 0, # path
@@ -31,14 +39,27 @@ hook(type => "getsetup", id => "svn", call => sub { #{{{
 		},
 		svnpath => {
 			type => "string",
-			default => "trunk",
+			example => "trunk",
 			description => "path inside repository where the wiki is located",
 			safe => 0, # paranoia
 			rebuild => 0,
 		},
+		svn_wrapper => {
+			type => "string",
+			example => "/svn/wikirepo/hooks/post-commit",
+			description => "svn post-commit executable to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		svn_wrappermode => {
+			type => "string",
+			example => '04755',
+			description => "mode for svn_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
 		historyurl => {
 			type => "string",
-			default => "",
 			example => "http://svn.example.org/trunk/[[file]]",
 			description => "viewvc url to show file history ([[file]] substituted)",
 			safe => 1,
@@ -46,7 +67,6 @@ hook(type => "getsetup", id => "svn", call => sub { #{{{
 		},
 		diffurl => {
 			type => "string",
-			default => "",
 			example => "http://svn.example.org/trunk/[[file]]?root=wiki&amp;r1=[[r1]]&amp;r2=[[r2]]",
 			description => "viewvc url to show a diff ([[file]], [[r1]], and [[r2]] substituted)",
 			safe => 1,

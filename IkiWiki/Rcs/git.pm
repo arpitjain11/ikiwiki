@@ -12,19 +12,41 @@ my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 
 hook(type => "checkconfig", id => "git", call => sub { #{{{
+	if (! defined $config{diffurl}) {
+		$config{diffurl}="";
+	}
 	if (! defined $config{gitorigin_branch}) {
 		$config{gitorigin_branch}="origin";
 	}
 	if (! defined $config{gitmaster_branch}) {
 		$config{gitmaster_branch}="master";
 	}
+	if (exists $config{git_wrapper}) {
+		push @{$config{wrappers}}, {
+			wrapper => $config{git_wrapper},
+			wrappermode => (defined $config{git_wrappermode} ? $config{git_wrappermode} : "06755"),
+		};
+	}
 }); #}}}
 
 hook(type => "getsetup", id => "git", call => sub { #{{{
 	return
+		git_wrapper => {
+			type => "string",
+			example => "/git/wiki.git/hooks/post-update",
+			description => "git post-update executable to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		git_wrappermode => {
+			type => "string",
+			example => '06755',
+			description => "mode for git_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
 		historyurl => {
 			type => "string",
-			default => "",
 			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=history;f=[[file]]",
 			description => "gitweb url to show file history ([[file]] substituted)",
 			safe => 1,
@@ -32,7 +54,6 @@ hook(type => "getsetup", id => "git", call => sub { #{{{
 		},
 		diffurl => {
 			type => "string",
-			default => "",
 			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
 			description => "gitweb url to show a diff ([[sha1_to]], [[sha1_from]], [[sha1_parent]], and [[file]] substituted)",
 			safe => 1,
@@ -40,14 +61,14 @@ hook(type => "getsetup", id => "git", call => sub { #{{{
 		},
 		gitorigin_branch => {
 			type => "string",
-			default => "origin",
+			example => "origin",
 			description => "where to pull and push changes (set to empty string to disable)",
 			safe => 0, # paranoia
 			rebuild => 0,
 		},
 		gitmaster_branch => {
 			type => "string",
-			default => "master",
+			example => "master",
 			description => "branch that the wiki is stored in",
 			safe => 0, # paranoia
 			rebuild => 0,

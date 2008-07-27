@@ -6,11 +6,36 @@ use warnings;
 use strict;
 use IkiWiki;
 
+hook(type => "checkconfig", id => "tla", call => sub { #{{{
+	if (! defined $config{diffurl}) {
+		$config{diffurl}="";
+	}
+	if (exists $config{tla_wrapper}) {
+		push @{$config{wrappers}}, {
+			wrapper => $config{tla_wrapper},
+			wrappermode => (defined $config{tla_wrappermode} ? $config{tla_wrappermode} : "06755"),
+		};
+	}
+}); #}}}
+
 hook(type => "getsetup", id => "tla", call => sub { #{{{
 	return
+		tla_wrapper => {
+			type => "string",
+			#example => "", # TODO example
+			description => "tla post-commit executable to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		tla_wrappermode => {
+			type => "string",
+			example => '06755',
+			description => "mode for tla_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
 		historyurl => {
 			type => "string",
-			default => "",
 			#example => "", # TODO example
 			description => "url to show file history ([[file]] substituted)",
 			safe => 1,
@@ -18,7 +43,6 @@ hook(type => "getsetup", id => "tla", call => sub { #{{{
 		},
 		diffurl => {
 			type => "string",
-			default => "",
 			#example => "", # TODO example
 			description => "url to show a diff ([[file]] and [[rev]] substituted)",
 			safe => 1,

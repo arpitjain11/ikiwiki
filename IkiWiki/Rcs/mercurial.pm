@@ -8,11 +8,36 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
+hook(type => "checkconfig", id => "mercurial", call => sub { #{{{
+	if (! defined $config{diffurl}) {
+		$config{diffurl}="";
+	}
+	if (exists $config{mercurial_wrapper}) {
+		push @{$config{wrappers}}, {
+			wrapper => $config{mercurial_wrapper},
+			wrappermode => (defined $config{mercurial_wrappermode} ? $config{mercurial_wrappermode} : "06755"),
+		};
+	}
+}); #}}}
+
 hook(type => "getsetup", id => "mercurial", call => sub { #{{{
 	return
+		mercurial_wrapper => {
+			type => "string",
+			#example => # FIXME add example
+			description => "mercurial post-commit executable to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		mercurial_wrappermode => {
+			type => "string",
+			example => '06755',
+			description => "mode for mercurial_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
 		historyurl => {
 			type => "string",
-			default => "",
 			example => "http://example.com:8000/log/tip/[[file]]",
 			description => "url to hg serve'd repository, to show file history ([[file]] substituted)",
 			safe => 1,
@@ -20,7 +45,6 @@ hook(type => "getsetup", id => "mercurial", call => sub { #{{{
 		},
 		diffurl => {
 			type => "string",
-			default => "",
 			example => "http://localhost:8000/?fd=[[r2]];file=[[file]]",
 			description => "url to hg serve'd repository, to show diff ([[file]] and [[r2]] substituted)",
 			safe => 1,

@@ -8,11 +8,36 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
+hook(type => "checkconfig", id => "bzr", call => sub { #{{{
+	if (! defined $config{diffurl}) {
+		$config{diffurl}="";
+	}
+	if (exists $config{bzr_wrapper}) {
+		push @{$config{wrappers}}, {
+			wrapper => $config{bzr_wrapper},
+			wrappermode => (defined $config{bzr_wrappermode} ? $config{bzr_wrappermode} : "06755"),
+		};
+	}
+}); #}}}
+
 hook(type => "getsetup", id => "bzr", call => sub { #{{{
 	return
+		bzr_wrapper => {
+			type => "string",
+			#example => "", # FIXME add example
+			description => "bzr post-commit executable to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		bzr_wrappermode => {
+			type => "string",
+			example => '06755',
+			description => "mode for bzr_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
 		historyurl => {
 			type => "string",
-			default => "",
 			#example => "", # FIXME add example
 			description => "url to show file history, using loggerhead ([[file]] substituted)",
 			safe => 1,
@@ -20,7 +45,6 @@ hook(type => "getsetup", id => "bzr", call => sub { #{{{
 		},
 		diffurl => {
 			type => "string",
-			default => "",
 			example => "http://example.com/revision?start_revid=[[r2]]#[[file]]-s",
 			description => "url to view a diff, using loggerhead ([[file]] and [[r2]] substituted)",
 			safe => 1,

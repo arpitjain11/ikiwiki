@@ -82,10 +82,25 @@ sub getsetup () { #{{{
 	cgiurl => {
 		type => "string",
 		default => '',
-		examples => "http://example.com/wiki/ikiwiki.cgi",
+		example => "http://example.com/wiki/ikiwiki.cgi",
 		description => "url to the ikiwiki.cgi",
 		safe => 1,
 		rebuild => 1,
+	},
+	cgi_wrapper => {
+		type => "string",
+		default => '',
+		example => "/var/www/wiki/ikiwiki.cgi",
+		description => "cgi executable to generate",
+		safe => 0, # file
+		rebuild => 0,
+	},
+	cgi_wrappermode => {
+		type => "string",
+		default => '06755',
+		description => "mode for cgi_wrapper (can safely be made suid)",
+		safe => 0,
+		rebuild => 0,
 	},
 	rcs => {
 		type => "string",
@@ -117,33 +132,6 @@ sub getsetup () { #{{{
 		safe => 1,
 		rebuild => 1,
 	},
-	wrappers => {
-		type => "string",
-		example => [
-			{
-				cgi => 1,
-				wrapper => "/var/www/wiki/ikiwiki.cgi",
-				wrappermode => "06755",
-			},
-		],
-		description => "definitions of wrappers to generate",
-		safe => 0,
-		rebuild => 0,
-	},
-	wrapper => {
-		type => "internal",
-		default => undef,
-		description => "wrapper filename",
-		safe => 0,
-		rebuild => 0,
-	},
-	wrappermode => {
-		type => "internal",
-		default => undef,
-		description => "mode of wrapper file",
-		safe => 0,
-		rebuild => 0,
-	},
 	templatedir => {
 		type => "string",
 		default => "$installdir/share/ikiwiki/templates",
@@ -156,6 +144,13 @@ sub getsetup () { #{{{
 		default => "$installdir/share/ikiwiki/basewiki",
 		description => "base wiki source location",
 		safe => 0, # path
+		rebuild => 0,
+	},
+	wrappers => {
+		type => "internal",
+		default => [],
+		description => "wrappers to generate",
+		safe => 0,
 		rebuild => 0,
 	},
 	underlaydirs => {
