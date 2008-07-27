@@ -10,7 +10,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
-	$IkiWiki::Setup::raw_setup=$_[1];
+	IkiWiki::Setup::merge($_[1]);
 } #}}}
 
 sub dumpline ($$$$) { #{{{
