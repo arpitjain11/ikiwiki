@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use English;
 
+my $remove=(@ARGV && $ARGV[0] eq '-r');
+
 my $username=getpwuid($REAL_USER_ID);
 if (! defined $username || ! length $username) {
 	die "unable to determine user name for UID $REAL_USER_ID\n";
@@ -15,7 +17,8 @@ if (! -e $wikilist) {
 	die "$wikilist does not exist\n";
 }
 
-my $removed=0;
+my $changed=0;
+my $seen=0;
 my @lines;
 open (my $list, "<$wikilist") || die "read $wikilist: $!";
 while (<$list>) {
@@ -23,7 +26,10 @@ while (<$list>) {
 	if (/^\s*([^\s]+)\s*$/) {
 		my $user=$1;
 		if ($user eq $username) {
-			$removed=1;		
+			if (! $remove) {
+				$seen=1;
+				push @lines, $_;
+			}
 		}
 		else {
 			push @lines, $_;
@@ -33,16 +39,24 @@ while (<$list>) {
 		push @lines, $_;
 	}
 }
-close $list || die "error reading $list: $!";
-open ($list, ">$wikilist") || die "write $wikilist: $!";
-foreach (@lines) {
-	print $list "$_\n";
+if (! $seen && ! $remove) {
+	push @lines, $username;
+	$changed=1;
 }
-if ($removed) {
-	print "removed user $username from $wikilist\n";
+if ($changed) {
+	close $list || die "ikiwiki-update-wikilist: error reading $list: $!\n";
+	open ($list, ">$wikilist") || die "ikiwiki-update-wikilist: error writing $wikilist: $!\n";
+	foreach (@lines) {
+		print $list "$_\n";
+	}
+	if ($remove) {
+		print "ikiwiki-update-wikilist: removed user $username from $wikilist\n";
+	}
+	else {
+		print "ikiwiki-update-wikilist: added user $username to $wikilist\n";
+	}
+	close $list || die "ikiwiki-update-wikilist: error writing $wikilist: $!\n";
 }
 else {
-	print $list "$username\n";
-	print "added user $username to $wikilist\n";
+	print "ikiwiki-update-wikilist: no changes need to be made\n";
 }
-close $list || die "error writing $list: $!";

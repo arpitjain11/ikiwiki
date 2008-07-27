@@ -4,14 +4,16 @@ ikiwiki-update-wikilist - add or remove user from /etc/ikiwiki/wikilist
 
 # SYNOPSIS
 
-ikiwiki-update-wikilist
+ikiwiki-update-wikilist [-r]
 
 # DESCRIPTION
 
-`ikiwiki-update-wikilist` is designed to be made suid root, but not installed
+`ikiwiki-update-wikilist` is designed to be made suid root, but is not installed
 suid by default. If made suid, it allows users to add or remove their names
-from the `/etc/ikiwiki/wikilist` file. If a user's name is not in the file,
-it will be added; if the name is already present, it will be removed.
+from the `/etc/ikiwiki/wikilist` file. 
+
+By default, the user's name will be added.
+The `-r` switch causes the user's name to be removed.
 
 If your name is in `/etc/ikiwiki/wikilist`, the [[ikiwiki-mass-rebuild]](8)
 command will look for a ~/.ikiwiki/wikilist file, and rebuild the wikis listed
