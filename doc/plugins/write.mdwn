@@ -367,8 +367,8 @@ configuration options.
 
 The hook is passed no parameters. It returns data about the configuration
 options added by the plugin. It can also check if the plugin is usable, and
-die if the plugin is not available, which will cause the plugin to not be
-offered in the configuration interface.
+die if not, which will cause the plugin to not be offered in the configuration
+interface.
 
 The data returned is a list of `%config` options, followed by a hash
 describing the option. For example:
