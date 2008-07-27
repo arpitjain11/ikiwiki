@@ -26,9 +26,6 @@ sub import { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	if (! defined $config{diffurl}) {
-		$config{diffurl}="";
-	}
 	if (! defined $config{gitorigin_branch}) {
 		$config{gitorigin_branch}="origin";
 	}
@@ -472,7 +469,7 @@ sub rcs_recentchanges ($) { #{{{
 		foreach my $detail (@{ $ci->{'details'} }) {
 			my $file = $detail->{'file'};
 
-			my $diffurl = $config{'diffurl'};
+			my $diffurl = defined $config{'diffurl'} ? $config{'diffurl'} : "";
 			$diffurl =~ s/\[\[file\]\]/$file/go;
 			$diffurl =~ s/\[\[sha1_parent\]\]/$ci->{'parent'}/go;
 			$diffurl =~ s/\[\[sha1_from\]\]/$detail->{'sha1_from'}/go;

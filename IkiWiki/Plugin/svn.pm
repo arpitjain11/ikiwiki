@@ -22,9 +22,6 @@ sub import { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	if (! defined $config{diffurl}) {
-		$config{diffurl}="";
-	}
 	if (! defined $config{svnpath}) {
 		$config{svnpath}="trunk";
 	}
@@ -318,7 +315,7 @@ sub rcs_recentchanges ($) { #{{{
 				$file=$1;
 			}
 
-			my $diffurl=$config{diffurl};
+			my $diffurl=defined $config{diffurl} ? $config{diffurl} : "";
 			$diffurl=~s/\[\[file\]\]/$file/g;
 			$diffurl=~s/\[\[r1\]\]/$rev - 1/eg;
 			$diffurl=~s/\[\[r2\]\]/$rev/g;

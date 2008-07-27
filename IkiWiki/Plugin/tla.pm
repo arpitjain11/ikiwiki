@@ -21,9 +21,6 @@ sub import { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	if (! defined $config{diffurl}) {
-		$config{diffurl}="";
-	}
 	if (defined $config{tla_wrapper} && length $config{tla_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{tla_wrapper},
@@ -215,7 +212,7 @@ sub rcs_recentchanges ($) {
 		my @pages;
 
 		foreach my $file (@paths) {
-			my $diffurl=$config{diffurl};
+			my $diffurl=defined $config{diffurl} ? $config{diffurl} : "";
 			$diffurl=~s/\[\[file\]\]/$file/g;
 			$diffurl=~s/\[\[rev\]\]/$change/g;
 			push @pages, {

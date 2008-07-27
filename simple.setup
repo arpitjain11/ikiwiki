@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+# Simple ikiwiki setup.
+# 
+# This setup file causes ikiwiki to create a wiki, check it into revision
+# control, generate a setup file for the new wiki, and set everything up.
+#
+# Just run: ikiwiki -setup /etc/ikiwiki/simple.setup
+#
+# By default, it asks two questions, and confines itself to the user's home
+# directory. You can edit it to change what it asks questions about, or to
+# modify the values to use site-specific settings.
+
+require IkiWiki::Setup::Automator;
+
+our $wikiname=IkiWiki::Setup::Automator::ask(
+	"What will the wiki be named?", "wiki");
+our $rcs=IkiWiki::Setup::Automator::ask(
+	"What revision control system to use?", "git");
+
+IkiWiki::Setup::Automator::import(
+	wikiname => $wikiname,
+	rcs => $rcs,
+	srcdir => "$ENV{HOME}/$wikiname",
+	destdir => "$ENV{HOME}/public_html/$wikiname",
+	repository => "$ENV{HOME}/$wikiname.$rcs",
+	setupfile => "$ENV{HOME}/$wikiname.setup",
+);

@@ -23,9 +23,6 @@ sub import { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	if (! defined $config{diffurl}) {
-		$config{diffurl}="";
-	}
 	if (exists $config{mercurial_wrapper} && length $config{mercurial_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{mercurial_wrapper},
@@ -199,7 +196,7 @@ sub rcs_recentchanges ($) { #{{{
 		}
 
 		foreach my $file (split / /,$info->{files}) {
-			my $diffurl = $config{'diffurl'};
+			my $diffurl = defined $config{diffurl} ? $config{'diffurl'} : "";
 			$diffurl =~ s/\[\[file\]\]/$file/go;
 			$diffurl =~ s/\[\[r2\]\]/$info->{changeset}/go;
 

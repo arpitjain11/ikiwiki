@@ -23,9 +23,6 @@ sub import { #{{{
 } #}}}
 
 sub checkconfig () { #{{{
-	if (! defined $config{diffurl}) {
-		$config{diffurl}="";
-	}
 	if (defined $config{bzr_wrapper} && length $config{bzr_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{bzr_wrapper},
@@ -225,7 +222,7 @@ sub rcs_recentchanges ($) { #{{{
 			# Skip source name in renames
 			$filename =~ s/^.* => //;
 
-			my $diffurl = $config{'diffurl'};
+			my $diffurl = defined $config{'diffurl'} ? $config{'diffurl'} : "";
 			$diffurl =~ s/\[\[file\]\]/$filename/go;
 			$diffurl =~ s/\[\[file-id\]\]/$fileid/go;
 			$diffurl =~ s/\[\[r2\]\]/$info->{revno}/go;
