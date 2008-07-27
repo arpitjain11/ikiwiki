@@ -74,6 +74,9 @@ sub dumpvalues ($@) { #{{{
 		elsif (exists $info{example}) {
 			push @ret, dumpline($key, $info{example}, $info{type}, "#");
 		}
+		else {
+			push @ret, dumpline($key, "", $info{type}, "#");
+		}
 	}
 	return @ret;
 } #}}}

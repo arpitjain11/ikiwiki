@@ -388,9 +388,9 @@ describing the option. For example:
 				rebuild => 0,
 			},
 
-* `type` can be "boolean", "string", "integer", "internal" (used for values
-  that are not user-visible). The type is the type of the leaf values; 
-  the `%config` option may be an array or hash of these.
+* `type` can be "boolean", "string", "integer", "pagespec", or "internal" 
+  (used for values that are not user-visible). The type is the type of
+  the leaf values;  the `%config` option may be an array or hash of these.
 * `example` can be set to an example value.
 * `description` is a short description of the option.
 * `safe` should be false if the option should not be displayed in unsafe
