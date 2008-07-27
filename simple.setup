@@ -6,7 +6,7 @@
 #
 # Just run: ikiwiki -setup /etc/ikiwiki/simple.setup
 #
-# By default, it asks two questions, and confines itself to the user's home
+# By default, it asks a few questions, and confines itself to the user's home
 # directory. You can edit it to change what it asks questions about, or to
 # modify the values to use site-specific settings.
 
@@ -16,15 +16,18 @@ our $wikiname=IkiWiki::Setup::Automator::ask(
 	"What will the wiki be named?", "wiki");
 our $rcs=IkiWiki::Setup::Automator::ask(
 	"What revision control system to use?", "git");
+our $admin=IkiWiki::Setup::Automator::ask(
+	"What wiki user (or openid) will be wiki admin?", $ENV{USER});
 our $hostname=`hostname -f`; chomp $hostname;
 
-IkiWiki::Setup::Automator::import(
+IkiWiki::Setup::Automator->import(
 	wikiname => $wikiname,
+	adminuser => [$admin],
 	rcs => $rcs,
 	srcdir => "$ENV{HOME}/$wikiname",
 	destdir => "$ENV{HOME}/public_html/$wikiname",
 	repository => "$ENV{HOME}/$wikiname.$rcs",
-	setupfile => "$ENV{HOME}/$wikiname.setup",
+	dumpsetup => "$ENV{HOME}/$wikiname.setup",
 	url => "http://$hostname/~$ENV{USER}/$wikiname",
 	cgiurl => "http://$hostname/~$ENV{USER}/$wikiname/ikiwiki.cgi",
 	cgi_wrapper => "$ENV{HOME}/public_html/$wikiname/ikiwiki.cgi",

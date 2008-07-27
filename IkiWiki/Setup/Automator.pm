@@ -16,95 +16,81 @@ sub ask ($$) { #{{{
 	$r->readline($question." ", $default);
 } #}}}
 
+sub prettydir ($) { #{{{
+	my $dir=shift;
+	$dir=~s/^\Q$ENV{HOME}\E\//~\//;
+	return $dir;
+} #}}}
+
 sub import (@) { #{{{
-	my %setup=@_;
+	my $this=shift;
+	IkiWiki::Setup::merge({@_});
 
 	# Sanitize this to avoid problimatic directory names.
-	$setup{wikiname}=~s/[^-A-Za-z0-9_] //g;
-	if (! length $setup{wikiname}) {
+	$config{wikiname}=~s/[^-A-Za-z0-9_] //g;
+	if (! length $config{wikiname}) {
 		die "you must enter a wikiname\n";
 	}
 
 	# Avoid overwriting any existing files.
-	foreach my $key (qw{srcdir destdir repository setupfile}) {
-		next unless exists $setup{$key};
+	foreach my $key (qw{srcdir destdir repository dumpsetup}) {
+		next unless exists $config{$key};
 		my $add="";
-		while (-e $setup{$key}.$add) {
+		while (-e $config{$key}.$add) {
 			$add=1 if ! $add;
 			$add++;
 		}
-		$setup{$key}.=$add;
+		$config{$key}.=$add;
 	}
 
-	print "\n\nSetting up $setup{wikiname} ...\n";
+	IkiWiki::checkconfig();
+
+	print "\n\nSetting up $config{wikiname} ...\n";
 
 	# Set up the repository.
-	mkpath($setup{srcdir}) || die "mkdir $setup{srcdir}: $!";
-	delete $setup{repository} if ! $setup{rcs} || $setup{rcs}=~/bzr|mercurial/;
-	if ($setup{rcs}) {
-		my @params=($setup{rcs}, $setup{srcdir});
-		push @params, $setup{repository} if exists $setup{repository};
+	mkpath($config{srcdir}) || die "mkdir $config{srcdir}: $!";
+	delete $config{repository} if ! $config{rcs} || $config{rcs}=~/bzr|mercurial/;
+	if ($config{rcs}) {
+		my @params=($config{rcs}, $config{srcdir});
+		push @params, $config{repository} if exists $config{repository};
 		if (system("ikiwiki-makerepo", @params) != 0) {
 			die "failed: ikiwiki-makerepo @params";
 		}
 	}
 
 	# Generate setup file.
-	my @params=(
-		"--dumpsetup", $setup{setupfile},
-		"--wikiname", $setup{wikiname},
-		"--url", $setup{url},
-		"--cgiurl", $setup{cgiurl}
-	);
-	if ($setup{rcs}) {
-		push @params, "--rcs", $setup{rcs};
-		if ($setup{rcs} eq 'git') {
-			push @params, "--set", "git_wrapper=".
-				$setup{repository}."/hooks/post-update";
+	require IkiWiki::Setup;
+	if ($config{rcs}) {
+		if ($config{rcs} eq 'git') {
+			$config{git_wrapper}=$config{repository}."/hooks/post-update";
 		}
-		elsif ($setup{rcs} eq 'svn') {
-			push @params, "--set", "svn_wrapper=".
-				$setup{repository}."/hooks/post-commit";
+		elsif ($config{rcs} eq 'svn') {
+			$config{svn_wrapper}=$config{repository}."/hooks/post-commit";
 		}
-		elsif ($setup{rcs} eq 'bzr') {
+		elsif ($config{rcs} eq 'bzr') {
 			# TODO
 		}
-		elsif ($setup{rcs} eq 'mercurial') {
+		elsif ($config{rcs} eq 'mercurial') {
 			# TODO
 		}
 	}
-	if (exists $setup{add_plugins}) {
-		foreach my $plugin (@{$setup{add_plugins}}) {
-			push @params, "--plugin", $plugin;
-		}
-	}
-	if (exists $setup{disable_plugins}) {
-		foreach my $plugin (@{$setup{disable_plugins}}) {
-			push @params, "--disable-plugin", $plugin;
-		}
-	}
-	foreach my $key (keys %setup) {
-		next if $key =~ /^(disable_plugins|add_plugins|setupfile|wikiname|url|cgiurl||srcdir|destdir|repository)$/;
-		push @params, "--set", "$key=$setup{$key}";
-	}
-	if (system("ikiwiki", @params, $setup{srcdir}, $setup{destdir}) != 0) {
-		die "failed: ikiwiki @params";
-	}
+	IkiWiki::Setup::dump($config{dumpsetup});
 
 	# Build the wiki.
-	mkpath($setup{destdir}) || die "mkdir $setup{destdir}: $!";
-	if (system("ikiwiki", "--setup", $setup{setupfile}) != 0) {
-		die "ikiwiki --setup $setup{setupfile} failed";
+	mkpath($config{destdir}) || die "mkdir $config{destdir}: $!";
+	if (system("ikiwiki", "--setup", $config{dumpsetup}) != 0) {
+		die "ikiwiki --setup $config{dumpsetup} failed";
 	}
 
 	# Done!
-	print "\n\nSuccessfully set up $setup{wikiname}:\n";
-	foreach my $key (qw{url srcdir destdir repository setupfile}) {
-		next unless exists $setup{$key};
-		my $value=$setup{$key};
-		$value=~s/^\Q$ENV{HOME}\E\//~\//;
-		print "\t$key: ".(" " x (10 - length($key)))." $value\n";
+	print "\n\nSuccessfully set up $config{wikiname}:\n";
+	foreach my $key (qw{url srcdir destdir repository}) {
+		next unless exists $config{$key};
+		print "\t$key: ".(" " x (10 - length($key)))." ".
+			prettydir($config{$key})."\n";
 	}
+	print "To modify settings, edit ".prettydir($config{dumpsetup})." and then run:\n";
+	print "	ikiwiki -setup ".prettydir($config{dumpsetup})."\n";
 	exit 0;
 } #}}}
 
