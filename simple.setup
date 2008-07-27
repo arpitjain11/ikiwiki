@@ -16,6 +16,7 @@ our $wikiname=IkiWiki::Setup::Automator::ask(
 	"What will the wiki be named?", "wiki");
 our $rcs=IkiWiki::Setup::Automator::ask(
 	"What revision control system to use?", "git");
+our $hostname=`hostname -f`; chomp $hostname;
 
 IkiWiki::Setup::Automator::import(
 	wikiname => $wikiname,
@@ -24,4 +25,16 @@ IkiWiki::Setup::Automator::import(
 	destdir => "$ENV{HOME}/public_html/$wikiname",
 	repository => "$ENV{HOME}/$wikiname.$rcs",
 	setupfile => "$ENV{HOME}/$wikiname.setup",
+	url => "http://$hostname/~$ENV{USER}/$wikiname",
+	cgiurl => "http://$hostname/~$ENV{USER}/$wikiname/ikiwiki.cgi",
+	cgi_wrapper => "$ENV{HOME}/public_html/$wikiname/ikiwiki.cgi",
+	adminemail => "$ENV{USER}\@$hostname",
+	add_plugins => [qw{ goodstuff }],
+	disable_plugins => [qw{  }],
+	libdir => "$ENV{HOME}/.ikiwiki",
+	rss => 1,
+	atom => 1,
+	syslog => 1,
+	prefix_directives => 1,
+	hardlink => 1,
 );
