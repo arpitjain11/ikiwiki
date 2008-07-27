@@ -89,12 +89,19 @@ comments are very welcome. --[[Paweł|ptecza]]
 >> I don't like that too, but I didn't have better idea :) Thank you for
 >> the hint! I'll take a look at `toggle` plugin.
 
-	--- /dev/null	2008-07-24 09:38:19.000000000 +0200
-	+++ color.pm	2008-07-25 14:43:15.000000000 +0200
-	@@ -0,0 +1,75 @@
+---
+
+And here is RC2 of that plugin. I've changed a plugin syntax, because the old
+seems to be too enigmatic and it was hard to me to handle unnamed parameters
+in not hardcoded way. I hope that my changes are acceptable for you.
+Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
+
+	--- /dev/null	2008-06-21 02:02:15.000000000 +0200
+	+++ color.pm	2008-07-27 14:58:12.000000000 +0200
+	@@ -0,0 +1,69 @@
 	+#!/usr/bin/perl
 	+# Ikiwiki text colouring plugin
-	+# Paweł Tęcza <ptecza@net.icm.edu.pl>
+	+# Paweł‚ Tęcza <ptecza@net.icm.edu.pl>
 	+package IkiWiki::Plugin::color;
 	+
 	+use warnings;
@@ -103,101 +110,99 @@ comments are very welcome. --[[Paweł|ptecza]]
 	+
 	+sub import { #{{{
 	+	hook(type => "preprocess", id => "color", call => \&preprocess);
-	+	hook(type => "sanitize",   id => "color", call => \&sanitize);
+	+	hook(type => "format",     id => "color", call => \&format);
 	+} #}}}
 	+
-	+sub preserve_style(@) { #{{{
-	+	my ($colors, $text) = @_;
-	+	$colors = '' unless $colors;	# foreground and background colors
-	+	$text   = '' unless $text;	# text
-	+	
-	+	# Check colors
-	+	my ($color1, $color2) = ();
-	+	$colors = lc($colors);	# Regexps on lower case strings are simpler
-	+	if ($colors =~ /,/) {
-	+		# Probably defined both foreground and background color
-	+		($color1, $color2) = ($colors =~ /(.*),(.*)/);
-	+	}
-	+	else {
-	+		# Probably defined only foreground color
-	+		($color1, $color2) = ($colors, '');
-	+	}
-	+	
+	+sub preserve_style($$$) { #{{{
+	+	my $foreground = shift;
+	+	my $background = shift;
+	+	my $text       = shift;
+	+
+	+	$foreground = defined $foreground ? lc($foreground) : '';
+	+	$background = defined $background ? lc($background) : '';
+	+	$text       = '' unless (defined $text);
+	+
 	+	# Validate colors. Only color name or color code are valid.
-	+	my ($fg, $bg) = ();
-	+	$fg = $color1 if ($color1 &&
-	+			 ($color1 =~ /^[a-z]+$/ || $color1 =~ /^#[0-9a-f]{3,6}$/));
-	+	$bg = $color2 if ($color2 &&
-	+			 ($color2 =~ /^[a-z]+$/ || $color2 =~ /^#[0-9a-f]{3,6}$/));
+	+	$foreground = '' unless ($foreground &&
+	+				($foreground =~ /^[a-z]+$/ || $foreground =~ /^#[0-9a-f]{3,6}$/));
+	+	$background = '' unless ($background &&
+	+				($background =~ /^[a-z]+$/ || $background =~ /^#[0-9a-f]{3,6}$/));
 	+
 	+	my $preserved = '';
-	+	if ($fg || $bg) {
-	+		$preserved .= 'COLORS {';
-	+		$preserved .= 'color: '.$fg if ($fg);
-	+		$preserved .= '; ' if ($fg && $bg);
-	+		$preserved .= 'background-color: '.$bg if ($bg);
-	+		$preserved .= '} SROLOC;TEXT {'.$text.'} TXET';
-	+	}
+	+	$preserved .= '<span class="color">';
+	+	$preserved .= 'color: '.$foreground if ($foreground);
+	+	$preserved .= '; ' if ($foreground && $background);
+	+	$preserved .= 'background-color: '.$background if ($background);
+	+	$preserved .= '</span>';
+	+	$preserved .= '<span class="colorend">'.$text.'</span>';
 	+	
 	+	return $preserved;
 	+
 	+} #}}}
 	+
-	+sub replace_preserved_style(@) { #{{{
+	+sub replace_preserved_style($) { #{{{
 	+	my $content = shift;
 	+
-	+	if ($content) {
-	+		$content =~ s/COLORS {/<span style="/;
-	+		$content =~ s/} SROLOC;TEXT {/">/;
-	+		$content =~ s/} TXET/<\/span>/;
-	+	}
+	+	$content =~ s!<span class="color">((color: ([a-z]+|\#[0-9a-f]{3,6})?)?((; )?(background-color: ([a-z]+|\#[0-9a-f]{3,6})?)?)?)</span>!<span class="color" style="$1">!g;
+	+	$content =~ s!<span class="colorend">!!g;
 	+
 	+	return $content; 
 	+} #}}}
 	+
-	+sub preprocess (@) { #{{{
-	+	return preserve_style($_[0], $_[2]);
+	+sub preprocess(@) { #{{{
+	+	my %params = @_;
+	+
+	+	# Preprocess the text to expand any preprocessor directives
+	+	# embedded inside it.
+	+	$params{text} = IkiWiki::preprocess($params{page}, $params{destpage},
+	+				IkiWiki::filter($params{page}, $params{destpage}, $params{text}));
+	+
+	+	return preserve_style($params{foreground}, $params{background}, $params{text});
 	+} #}}}
 	+
-	+sub sanitize (@) { #{{{
+	+sub format(@) { #{{{
 	+	my %params = @_;
-	+	
-	+	return replace_preserved_style($params{content})
-	+		if (exists $params{content})
+	+
+	+	$params{content} = replace_preserved_style($params{content});
+	+	return $params{content};	
 	+} #}}}
 	+
 	+1
-	--- /dev/null	2008-07-24 09:38:19.000000000 +0200
-	+++ color.mdwn	2008-07-25 14:50:19.000000000 +0200
-	@@ -0,0 +1,31 @@
-	+\[[!template id=plugin name=color core=0 author="[[Paweł Tęcza|ptecza]]"]]
+	--- /dev/null	2008-06-21 02:02:15.000000000 +0200
+	+++ color.mdwn	2008-07-27 15:04:42.000000000 +0200
+	@@ -0,0 +1,25 @@
+	+\[[!template id=plugin name=color core=0 author="[[ptecza]]"]]
 	+
 	+This plugin can be used to color a piece of text on Ikiwiki page.
 	+It's possible setting foreground and/or background color of the text.
 	+
-	+The plugin syntax is very simple. You only need to type name (e.g. `white`)
-	+or HTML code of colors (e.g. `#ffffff`) and a text you want to color.
-	+The colors should by separated using a comma character.
+	+You can use name (e.g. `white`) or HTML code of colors (e.g. `#ffffff`)
+	+to define colors. 
 	+
 	+Below are a few examples:
 	+
-	+    \[[!color white,#ff0000 "White text on red background"]]
+	+    \[[!color foreground=white background=#ff0000 text="White text on red background"]]
 	+
 	+Foreground color is defined as a word, background color is defined as HTML
 	+color code.
 	+
-	+    \[[!color white "White text on default color background"]]
-	+
-	+Foreground color is default color if only one color was typed and a comma
-	+character is missing.
-	+
-	+    \[[!color white, "White text on default color background"]]
+	+    \[[!color foreground=white text="White text on default color background"]]
 	+
 	+Background color is missing, so the text is displayed on default background.
 	+
-	+    \[[!color ,#ff0000 "Default color text on red background"]]
+	+    \[[!color background=#ff0000 text="Default color text on red background"]]
 	+
 	+Foreground is missing, so the text has default color.
 	+
 	+This plugin is not enabled by default. You can do that in [[ikiwiki.setup]]
 	+file (hint: `add_plugins` variable).
+	--- style.css-orig	2008-07-27 15:12:39.000000000 +0200
+	+++ style.css	2008-07-27 15:15:06.000000000 +0200
+	@@ -333,3 +333,7 @@
+	 	background: #eee; 
+	 	color: black !important;
+	 }
+	+
+	+span.color {
+	+	padding: 2px;
+	+}
