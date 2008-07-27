@@ -19,7 +19,7 @@ sub preprocess_cut (@) { #{{{
 
 	foreach my $param (qw{id text}) {
 		if (! exists $params{$param}) {
-			return "[[cut ".sprintf(gettext('%s parameter is required'), $param)."]]";
+			error sprintf(gettext('%s parameter is required'), $param);
 		}
 	}
 
@@ -34,7 +34,7 @@ sub preprocess_copy (@) { #{{{
 
 	foreach my $param (qw{id text}) {
 		if (! exists $params{$param}) {
-			return "[[copy ".sprintf(gettext('%s parameter is required'), $param)."]]";
+			error sprintf(gettext('%s parameter is required'), $param);
 		}
 	}
 
@@ -50,15 +50,15 @@ sub preprocess_paste (@) { #{{{
 
 	foreach my $param (qw{id}) {
 		if (! exists $params{$param}) {
-			return "[[paste ".sprintf(gettext('%s parameter is required'), $param)."]]";
+			error sprintf(gettext('%s parameter is required'), $param);
 		}
 	}
 
 	if (! exists $savedtext{$params{page}}) {
-		return "[[paste ".gettext('no text was copied in this page')."]]";
+		error gettext('no text was copied in this page');
 	}
 	if (! exists $savedtext{$params{page}}->{$params{id}}) {
-		return "[[paste ".sprintf(gettext('no text was copied in this page with id %s'), $params{id})."]]";
+		error sprintf(gettext('no text was copied in this page with id %s'), $params{id});
 	}
 
 	return IkiWiki::preprocess($params{page}, $params{destpage}, 
