@@ -433,14 +433,14 @@ sub listplugins () { #{{{
 	my %ret;
 
 	foreach my $dir (@INC, $config{libdir}) {
-		next unless defined $dir;
+		next unless defined $dir && length $dir;
 		foreach my $file (glob("$dir/IkiWiki/Plugin/*.pm")) {
 			my ($plugin)=$file=~/.*\/(.*)\.pm$/;
 			$ret{$plugin}=1;
 		}
 	}
 	foreach my $dir ($config{libdir}, "$installdir/lib/ikiwiki") {
-		next unless defined $dir;
+		next unless defined $dir && length $dir;
 		foreach my $file (glob("$dir/plugins/*")) {
 			$ret{basename($file)}=1 if -x $file;
 		}
@@ -450,7 +450,7 @@ sub listplugins () { #{{{
 } #}}}
 
 sub loadplugins () { #{{{
-	if (defined $config{libdir}) {
+	if (defined $config{libdir} && length $config{libdir}) {
 		unshift @INC, possibly_foolish_untaint($config{libdir});
 	}
 
