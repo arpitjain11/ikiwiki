@@ -62,7 +62,7 @@ extra_install:
 	
 	install -d $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins
 	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\*`; do \
-		install -m 755 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
+		cp -a $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
 	done; \
 
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1
