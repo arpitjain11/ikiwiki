@@ -110,6 +110,17 @@ sub import (@) { #{{{
 		die "ikiwiki --wrappers --setup $config{dumpsetup} failed";
 	}
 
+	# Add it to the wikiwiki.
+	mkpath("$ENV{HOME}/.ikiwiki");
+	open (WIKILIST, ">>$ENV{HOME}/.ikiwiki/wikilist") || die "$ENV{HOME}/.ikiwiki/wikilist: $!";
+	print WIKILIST "$ENV{USER} $config{dumpsetup}\n";
+	close WIKILIST;
+	if (system("ikiwiki-update-wikilist") != 0) {
+		print STDERR "** Failed to add you to the system wikilist file.\n";
+		print STDERR "** (Probably ikiwiki-update-wikilist is not SUID root.)\n";
+		print STDERR "** Your wiki will not be automatically updated when ikiwiki is upgraded.\n";
+	}
+	
 	# Done!
 	print "\n\nSuccessfully set up $config{wikiname}:\n";
 	foreach my $key (qw{url srcdir destdir repository}) {

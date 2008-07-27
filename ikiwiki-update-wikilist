@@ -45,7 +45,7 @@ if (! $seen && ! $remove) {
 }
 if ($changed) {
 	close $list || die "ikiwiki-update-wikilist: error reading $list: $!\n";
-	open ($list, ">$wikilist") || die "ikiwiki-update-wikilist: error writing $wikilist: $!\n";
+	open ($list, ">$wikilist") || die "ikiwiki-update-wikilist: cannot write to $wikilist\n";
 	foreach (@lines) {
 		print $list "$_\n";
 	}
