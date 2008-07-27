@@ -76,16 +76,15 @@ Here is an example of how I set up a wiki:
 
 	mkdir ~/wiki
 	cd ~/wiki
-	cp ~/ikiwiki/doc/ikiwiki.setup .
 	cp -r ~/ikiwiki/doc/examples/blog/* .
+	ikiwiki -dumpsetup ikiwiki.setup
 	nano ikiwiki.setup
 	# Set destdir to /home/htdocs
 	# Set srcdir to /home/private/wiki
 	# Set url to http://yoursite.nfshost.com/ , set cgiurl likewise
-	# Uncomment the `rcs => "git"` line, and the cgi and git
-	# post-update wrapper blocks.
-	# Set the cgi wrapper path to /home/htdocs/ikiwiki.cgi
-	# Set the git wrapper path to /home/private/wiki.git/hooks/post-update
+	# Uncomment the `rcs => "git"` line.
+	# Set the cgi_wrapper path to /home/htdocs/ikiwiki.cgi
+	# Set the git_wrapper path to /home/private/wiki.git/hooks/post-update
 	# Configure the rest to your liking and save the file.
 	ikiwiki-makerepo git . ../wiki.git
 	ikiwiki -setup ikiwiki.setup

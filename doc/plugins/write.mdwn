@@ -417,7 +417,7 @@ it's not exported, the wise choice is to not use it.
 
 A plugin can access the wiki's configuration via the `%config`
 hash. The best way to understand the contents of the hash is to look at
-[[ikiwiki.setup]], which sets the hash content to configure the wiki.
+your ikiwiki setup file, which sets the hash content to configure the wiki.
 
 ### %pagestate
 
@@ -769,15 +769,15 @@ IkiWiki::FailReason object if the match fails.
 
 ### Setup plugins
 
-The ikiwiki setup file is loaded using a pluggable mechanism. If you
-look at the top of [[ikiwiki.setup]], it starts with 
-'use IkiWiki::Setup::Standard', and the rest of the file is passed to
-that module's import method.
+The ikiwiki setup file is loaded using a pluggable mechanism. If you look
+at the top of a setup file, it starts with 'use IkiWiki::Setup::Standard',
+and the rest of the file is passed to that module's import method.
 
 It's possible to write other modules in the `IkiWiki::Setup::` namespace that
 can be used to configure ikiwiki in different ways. These modules should,
 when imported, populate `$IkiWiki::Setup::raw_setup` with a reference
-to a hash containing all the config items.
+to a hash containing all the config items. They should also implement a
+`gendump` function.
 
 By the way, to parse a ikiwiki setup file, a program just needs to
 do something like:

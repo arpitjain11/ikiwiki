@@ -12,7 +12,7 @@ I can see two good ways to implement this.  Ideally, with
 [[conditional_text_based_on_ikiwiki_features]] available, ikiwiki could
 parse a page like conditionalpages.mdwn, which could contain a set of
 conditional-wrapped page names; that seems like the most elegant and
-ikiwiki-like approach.  Alternatively, [[/ikiwiki.setup]] could contain a
+ikiwiki-like approach.  Alternatively, ikiwiki.setup could contain a
 Perl-generated exclude option by default; that would work, but it seems
 hackish.
 

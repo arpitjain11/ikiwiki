@@ -55,8 +55,6 @@ These options control the mode that ikiwiki operates in.
   In setup mode, ikiwiki reads the config file, which is really a perl
   program that can call ikiwiki internal functions.
 
-  [[ikiwiki.setup]] is an example of such a config file.
-
   The default action when --setup is specified is to automatically generate
   wrappers for a wiki based on data in a config file, and rebuild the wiki.
   If you only want to build any changed pages, you can use --refresh with

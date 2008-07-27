@@ -17,19 +17,13 @@ use IkiWiki::Setup::Standard {
 	cgiurl => 'ikiwiki.cgi',
 	rcs => "",
 
-	wrappers => [
-		{
-			# The cgi wrapper.
-			cgi => 1,
-			# The wrapper must be put in ~/.ikiwiki/wrappers/, since
-			# ikiwiki-w3m.cgi only looks in this one location.
-			# The wrapper can be given any name as long as it's 
-			# in that directory.
-			wrapper => "$ENV{HOME}/.ikiwiki/wrappers/ikiwiki.cgi",
-			wrappermode => "0755",
-		},
-	],
-	
+	# The wrapper must be put in ~/.ikiwiki/wrappers/, since
+	# ikiwiki-w3m.cgi only looks in this one location.
+	# The wrapper can be given any name as long as it's 
+	# in that directory.
+	cgi_wrapper => "$ENV{HOME}/.ikiwiki/wrappers/ikiwiki.cgi",
+	cgi_wrappermode => "0755",
+
 	add_plugins => [qw{anonok}],
 	rss => 1,
 	atom => 1,

@@ -1,4 +1,4 @@
-The current example [[ikiwiki.setup]] file has a number of options included, but commented out.  This is standard.  Unfortunately there are two standards for the settings of those commented out options:
+The current example ikiwiki.setup file has a number of options included, but commented out.  This is standard.  Unfortunately there are two standards for the settings of those commented out options:
 
   - Have the commented out options showing the default setting, or
   - Have the commented out options showing the most common alternate setting.
@@ -26,4 +26,8 @@ What do others think?
 > I may not work on it myself, since I have some
 > [[interesting_ideas|online_configuration]] that would let ikiwiki
 > generate a setup file for you, rather than having to keep maintain the
-> current example. --[[Joey]]
+> current example. 
+> 
+> And.. [[done]].. setup files are now generated with `--dumpsetup`, based on
+> the built-in defaults, and commented options show an example
+> setting, not a default. --[[Joey]]
