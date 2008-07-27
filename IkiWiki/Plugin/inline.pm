@@ -247,7 +247,7 @@ sub preprocess_inline (@) { #{{{
 	my $atomurl=basename(atompage($params{destpage}).$feednum) if $feeds && $atom;
 	my $ret="";
 
-	if ($config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
+	if (length $config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
 			(exists $params{postform} && yesno($params{postform})))) {
 		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
