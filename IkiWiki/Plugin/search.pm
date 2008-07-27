@@ -19,6 +19,7 @@ sub getsetup () { #{{{
 	return
 		omega_cgi => {
 			type => "string",
+			example => "/usr/lib/cgi-bin/omega/omega",
 			description => "path to the omega cgi program",
 			safe => 0, # external program
 			rebuild => 0,
@@ -32,7 +33,7 @@ sub checkconfig () { #{{{
 		}
 	}
 	
-	if (! exists $config{omega_cgi}) {
+	if (! defined $config{omega_cgi}) {
 		$config{omega_cgi}="/usr/lib/cgi-bin/omega/omega";
 	}
 } #}}}

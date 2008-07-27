@@ -12,7 +12,7 @@ hook(type => "checkconfig", id => "bzr", call => sub { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
-	if (exists $config{bzr_wrapper}) {
+	if (length $config{bzr_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{bzr_wrapper},
 			wrappermode => (defined $config{bzr_wrappermode} ? $config{bzr_wrappermode} : "06755"),

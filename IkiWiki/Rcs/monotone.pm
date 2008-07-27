@@ -41,7 +41,7 @@ hook(type => "checkconfig", id => "monotone", call => sub { #{{{
 		error("Monotone version too old, is $version but required 0.38");
 	}
 
-	if (exists $config{mtn_wrapper}) {
+	if (length $config{mtn_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{mtn_wrapper},
 			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),

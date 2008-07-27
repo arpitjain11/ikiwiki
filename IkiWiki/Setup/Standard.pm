@@ -71,9 +71,6 @@ sub dumpvalues ($@) { #{{{
 			push @ret, dumpline($key, $setup->{$key}, $info{type}, "");
 			delete $setup->{$key};
 		}
-		elsif (exists $info{default} && defined $info{default}) {
-			push @ret, dumpline($key, $info{default}, $info{type}, "#");
-		}
 		elsif (exists $info{example}) {
 			push @ret, dumpline($key, $info{example}, $info{type}, "#");
 		}

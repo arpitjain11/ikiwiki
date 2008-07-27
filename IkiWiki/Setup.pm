@@ -67,7 +67,7 @@ sub load ($) { # {{{
 		}
 	}
 	
-	if (exists $config{cgi_wrapper}) {
+	if (length $config{cgi_wrapper}) {
 		push @{$config{wrappers}}, {
 			cgi => 1,
 			wrapper => $config{cgi_wrapper},

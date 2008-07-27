@@ -12,7 +12,7 @@ hook(type => "checkconfig", id => "mercurial", call => sub { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
-	if (exists $config{mercurial_wrapper}) {
+	if (length $config{mercurial_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{mercurial_wrapper},
 			wrappermode => (defined $config{mercurial_wrappermode} ? $config{mercurial_wrappermode} : "06755"),

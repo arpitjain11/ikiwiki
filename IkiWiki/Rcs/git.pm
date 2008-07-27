@@ -21,7 +21,7 @@ hook(type => "checkconfig", id => "git", call => sub { #{{{
 	if (! defined $config{gitmaster_branch}) {
 		$config{gitmaster_branch}="master";
 	}
-	if (exists $config{git_wrapper}) {
+	if (length $config{git_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{git_wrapper},
 			wrappermode => (defined $config{git_wrappermode} ? $config{git_wrappermode} : "06755"),

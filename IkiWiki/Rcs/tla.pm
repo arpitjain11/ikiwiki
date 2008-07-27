@@ -10,7 +10,7 @@ hook(type => "checkconfig", id => "tla", call => sub { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
-	if (exists $config{tla_wrapper}) {
+	if (length $config{tla_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{tla_wrapper},
 			wrappermode => (defined $config{tla_wrappermode} ? $config{tla_wrappermode} : "06755"),

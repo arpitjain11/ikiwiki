@@ -20,7 +20,7 @@ hook(type => "checkconfig", id => "svn", call => sub { #{{{
 		$config{svnpath}=~s/\/$//;
 		$config{svnpath}=~s/^\///;
 	}
-	if (exists $config{svn_wrapper}) {
+	if (length $config{svn_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{svn_wrapper},
 			wrappermode => (defined $config{svn_wrappermode} ? $config{svn_wrappermode} : "04755"),
