@@ -1,6 +1,5 @@
 #!/usr/bin/perl
-
-package IkiWiki;
+package IkiWiki::Plugin::git;
 
 use warnings;
 use strict;
@@ -11,7 +10,22 @@ use open qw{:utf8 :std};
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 
-hook(type => "checkconfig", id => "git", call => sub { #{{{
+sub import { #{{{
+	hook(type => "checkconfig", id => "git", call => \&checkconfig);
+	hook(type => "getsetup", id => "git", call => \&getsetup);
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
+	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
+	hook(type => "rcs", id => "rcs_commit_staged", call => \&rcs_commit_staged);
+	hook(type => "rcs", id => "rcs_add", call => \&rcs_add);
+	hook(type => "rcs", id => "rcs_remove", call => \&rcs_remove);
+	hook(type => "rcs", id => "rcs_rename", call => \&rcs_rename);
+	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
+	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
+	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+} #}}}
+
+sub checkconfig () { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
@@ -21,15 +35,15 @@ hook(type => "checkconfig", id => "git", call => sub { #{{{
 	if (! defined $config{gitmaster_branch}) {
 		$config{gitmaster_branch}="master";
 	}
-	if (length $config{git_wrapper}) {
+	if (defined $config{git_wrapper} && length $config{git_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{git_wrapper},
 			wrappermode => (defined $config{git_wrappermode} ? $config{git_wrappermode} : "06755"),
 		};
 	}
-}); #}}}
+} #}}}
 
-hook(type => "getsetup", id => "git", call => sub { #{{{
+sub getsetup () { #{{{
 	return
 		git_wrapper => {
 			type => "string",
@@ -73,9 +87,9 @@ hook(type => "getsetup", id => "git", call => sub { #{{{
 			safe => 0, # paranoia
 			rebuild => 0,
 		},
-}); #}}}
+} #}}}
 
-sub _safe_git (&@) { #{{{
+sub safe_git (&@) { #{{{
 	# Start a child process safely without resorting /bin/sh.
 	# Return command output or success state (in scalar context).
 
@@ -107,12 +121,12 @@ sub _safe_git (&@) { #{{{
 	return wantarray ? @lines : ($? == 0);
 }
 # Convenient wrappers.
-sub run_or_die ($@) { _safe_git(\&error, @_) }
-sub run_or_cry ($@) { _safe_git(sub { warn @_ },  @_) }
-sub run_or_non ($@) { _safe_git(undef,            @_) }
+sub run_or_die ($@) { safe_git(\&error, @_) }
+sub run_or_cry ($@) { safe_git(sub { warn @_ },  @_) }
+sub run_or_non ($@) { safe_git(undef,            @_) }
 #}}}
 
-sub _merge_past ($$$) { #{{{
+sub merge_past ($$$) { #{{{
 	# Unlike with Subversion, Git cannot make a 'svn merge -rN:M file'.
 	# Git merge commands work with the committed changes, except in the
 	# implicit case of '-m' of git checkout(1).  So we should invent a
@@ -206,7 +220,7 @@ sub _merge_past ($$$) { #{{{
 	return $conflict;
 } #}}}
 
-sub _parse_diff_tree ($@) { #{{{
+sub parse_diff_tree ($@) { #{{{
 	# Parse the raw diff tree chunk and return the info hash.
 	# See git-diff-tree(1) for the syntax.
 
@@ -326,7 +340,7 @@ sub git_commit_info ($;$) { #{{{
 	my ($prefix) = run_or_die('git', 'rev-parse', '--show-prefix');
 
 	my @ci;
-	while (my $parsed = _parse_diff_tree(($prefix or ""), \@raw_lines)) {
+	while (my $parsed = parse_diff_tree(($prefix or ""), \@raw_lines)) {
 		push @ci, $parsed;
 	}
 
@@ -379,7 +393,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	my ($prev) = $rcstoken =~ /^($sha1_pattern)$/; # untaint
 
 	if (defined $cur && defined $prev && $cur ne $prev) {
-		my $conflict = _merge_past($prev, $file, $dummy_commit_msg);
+		my $conflict = merge_past($prev, $file, $dummy_commit_msg);
 		return $conflict if defined $conflict;
 	}
 
@@ -402,7 +416,7 @@ sub rcs_commit_staged ($$$) {
 
 	# git commit returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
-	$message = possibly_foolish_untaint($message);
+	$message = IkiWiki::possibly_foolish_untaint($message);
 	if (run_or_non('git', 'commit', '--cleanup=verbatim',
 	               '-q', '-m', $message)) {
 		if (length $config{gitorigin_branch}) {

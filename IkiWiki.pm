@@ -414,13 +414,10 @@ sub checkconfig () { #{{{
 		unless exists $config{wikistatedir};
 	
 	if ($config{rcs}) {
-		eval qq{use IkiWiki::Rcs::$config{rcs}};
-		if ($@) {
-			error("Failed to load RCS module IkiWiki::Rcs::$config{rcs}: $@");
-		}
+		loadplugin($config{rcs});
 	}
 	else {
-		require IkiWiki::Rcs::Stub;
+		loadplugin("norcs");
 	}
 
 	if (defined $config{umask}) {
@@ -1426,6 +1423,46 @@ sub run_hooks ($$) { # {{{
 	}
 
 	return 1;
+} #}}}
+
+sub rcs_update () { #{{{
+	$hooks{rcs}{rcs_update}{call}->(@_);
+} #}}}
+
+sub rcs_prepedit ($) { #{{{
+	$hooks{rcs}{rcs_prepedit}{call}->(@_);
+} #}}}
+
+sub rcs_commit ($$$;$$) { #{{{
+	$hooks{rcs}{rcs_commit}{call}->(@_);
+} #}}}
+
+sub rcs_commit_staged ($$$) { #{{{
+	$hooks{rcs}{rcs_commit_staged}{call}->(@_);
+} #}}}
+
+sub rcs_add ($) { #{{{
+	$hooks{rcs}{rcs_add}{call}->(@_);
+} #}}}
+
+sub rcs_remove ($) { #{{{
+	$hooks{rcs}{rcs_remove}{call}->(@_);
+} #}}}
+
+sub rcs_rename ($$) { #{{{
+	$hooks{rcs}{rcs_rename}{call}->(@_);
+} #}}}
+
+sub rcs_recentchanges ($) { #{{{
+	$hooks{rcs}{rcs_recentchanges}{call}->(@_);
+} #}}}
+
+sub rcs_diff ($) { #{{{
+	$hooks{rcs}{rcs_diff}{call}->(@_);
+} #}}}
+
+sub rcs_getctime ($) { #{{{
+	$hooks{rcs}{rcs_getctime}{call}->(@_);
 } #}}}
 
 sub globlist_to_pagespec ($) { #{{{

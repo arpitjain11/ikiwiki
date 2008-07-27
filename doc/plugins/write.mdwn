@@ -654,15 +654,107 @@ PageSpecs glob patterns, but instead only by a special `internal()`
 
 ### RCS plugins
 
-ikiwiki's support for [[revision_control_systems|rcs]] also uses pluggable
-perl modules. These are in the `IkiWiki::RCS` namespace, for example
-`IkiWiki::RCS::svn`. 
+ikiwiki's support for [[revision_control_systems|rcs]] is also done via
+plugins. See [[RCS_details|rcs/details]] for some more info.
 
-Each RCS plugin must support all the `IkiWiki::rcs_*` functions.
-See IkiWiki::RCS::Stub for the full list of functions. It's ok if
-`rcs_getctime` does nothing except for throwing an error.
+RCS plugins must register a number of hooks. Each hook has type 'rcs', 
+and the 'id' field is set to the name of the hook. For example:
+	
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
 
-See [[RCS_details|rcs/details]] for some more info.
+#### `rcs_update()`
+
+Updates the working directory with any remote changes.
+
+#### `rcs_prepedit($)`
+
+Is passed a file to prepare to edit. It can generate and return an arbitrary
+token, that will be passed into `rcs_commit` when committing. For example,
+it might return the current revision ID of the file, and use that
+information later when merging changes.
+
+#### `rcs_commit($$$;$$)`
+
+Passed a file, message, token (from `rcs_prepedit`), user, and ip address.
+Should try to commit the file. Returns `undef` on *success* and a version
+of the page with the rcs's conflict markers on failure.
+
+#### `rcs_commit_staged($$$)`
+
+Passed a message, user, and ip address. Should commit all staged changes.
+Returns undef on success, and an error message on failure.
+
+Changes can be staged by calls to `rcs_add, `rcs_remove`, and
+`rcs_rename`.
+
+#### `rcs_add($)`
+
+Adds the passed file to the archive. The filename is relative to the root
+of the srcdir.
+
+Note that this should not check the new file in, it should only
+prepare for it to be checked in when rcs_commit (or `rcs_commit_staged`) is
+called. Note that the file may be in a new subdir that is not yet in
+to version control; the subdir can be added if so.
+
+#### `rcs_remove($)`
+
+Remove a file. The filename is relative to the root of the srcdir.
+
+Note that this should not check the removal in, it should only prepare for it
+to be checked in when `rcs_commit` (or `rcs_commit_staged`) is called. Note
+that the new file may be in a new subdir that is not yet inversion
+control; the subdir can be added if so.
+
+#### `rcs_rename($$)`
+
+Rename a file. The filenames are relative to the root of the srcdir.
+
+Note that this should not commit the rename, it should only
+prepare it for when `rcs_commit` (or `rcs_commit_staged`) is called.
+The new filename may be in a new subdir, that is not yet added to
+version control. If so, the subdir will exist already, and should
+be added to revision control.
+
+#### `rcs_recentchanges($)`
+
+Examine the RCS history and generate a list of recent changes.
+The parameter is how many changes to return.
+
+The data structure returned for each change is:
+
+	{
+		rev => # the RCSs id for this commit
+		user => # name of user who made the change,
+		committype => # either "web" or the name of the rcs,
+		when => # time when the change was made,
+		message => [
+			{ line => "commit message line 1" },
+			{ line => "commit message line 2" },
+			# etc,
+		],
+		pages => [
+			{
+				page => # name of page changed,
+				diffurl => # optional url to a diff of changes
+			},
+			# repeat for each page changed in this commit,
+		],
+	}
+
+#### `rcs_diff($)`
+
+The parameter is the rev from `rcs_recentchanges`.
+Should return a list of lines of the diff (including \n) in list
+context, and the whole diff in scalar context.
+
+#### `rcs_getctime($)`
+
+This is used to get the page creation time for a file from the RCS, by looking
+it up in the history.
+
+It's ok if this is not implemented, and throws an error.
 
 ### PageSpec plugins
 

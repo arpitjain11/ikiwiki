@@ -3,9 +3,11 @@ ikiwiki (2.60) UNRELEASED; urgency=low
   * Add getsetup hook, all plugins that add fields to %config should use it.
   * ikiwiki --dumpsetup can generate a nice setup file snapshotting ikiwiki's
     current configuration.
+  * Large amounts of internal config data reorg.
   * The way wrappers are defined in the setup file has changed. Old setup
     files will continue to work, for now.
- 
+  * Version control backends promoted to first-class plugins.
+
  -- Joey Hess <joeyh@debian.org>  Mon, 21 Jul 2008 11:35:46 -0400
 
 ikiwiki (2.55) UNRELEASED; urgency=low

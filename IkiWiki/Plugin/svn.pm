@@ -1,13 +1,27 @@
 #!/usr/bin/perl
-
-package IkiWiki;
+package IkiWiki::Plugin::svn;
 
 use warnings;
 use strict;
 use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
 
-hook(type => "checkconfig", id => "svn", call => sub { #{{{
+sub import { #{{{
+	hook(type => "checkconfig", id => "svn", call => \&checkconfig);
+	hook(type => "getsetup", id => "svn", call => \&getsetup);
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
+	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
+	hook(type => "rcs", id => "rcs_commit_staged", call => \&rcs_commit_staged);
+	hook(type => "rcs", id => "rcs_add", call => \&rcs_add);
+	hook(type => "rcs", id => "rcs_remove", call => \&rcs_remove);
+	hook(type => "rcs", id => "rcs_rename", call => \&rcs_rename);
+	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
+	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
+	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+} #}}}
+
+sub checkconfig () { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
@@ -20,15 +34,15 @@ hook(type => "checkconfig", id => "svn", call => sub { #{{{
 		$config{svnpath}=~s/\/$//;
 		$config{svnpath}=~s/^\///;
 	}
-	if (length $config{svn_wrapper}) {
+	if (defined $config{svn_wrapper} && length $config{svn_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{svn_wrapper},
 			wrappermode => (defined $config{svn_wrappermode} ? $config{svn_wrappermode} : "04755"),
 		};
 	}
-}); #}}}
+} #}}}
 
-hook(type => "getsetup", id => "svn", call => sub { #{{{
+sub getsetup () { #{{{
 	return
 		svnrepo => {
 			type => "string",
@@ -72,7 +86,7 @@ hook(type => "getsetup", id => "svn", call => sub { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-}); #}}}
+} #}}}
 
 # svn needs LC_CTYPE set to a UTF-8 locale, so try to find one. Any will do.
 sub find_lc_ctype() {
@@ -160,7 +174,7 @@ sub rcs_commit ($$$;$$) { #{{{
 
 		if (system("svn", "commit", "--quiet", 
 		           "--encoding", "UTF-8", "-m",
-		           possibly_foolish_untaint($message),
+		           IkiWiki::possibly_foolish_untaint($message),
 			   $config{srcdir}) != 0) {
 			my $conflict=readfile("$config{srcdir}/$file");
 			if (system("svn", "revert", "--quiet", "$config{srcdir}/$file") != 0) {
@@ -186,7 +200,7 @@ sub rcs_commit_staged ($$$) {
 	
 	if (system("svn", "commit", "--quiet",
 	           "--encoding", "UTF-8", "-m",
-	           possibly_foolish_untaint($message),
+	           IkiWiki::possibly_foolish_untaint($message),
 		   $config{srcdir}) != 0) {
 		warn("svn commit failed\n");
 		return 1; # failure	
@@ -199,10 +213,10 @@ sub rcs_add ($) { #{{{
 	my $file=shift;
 
 	if (-d "$config{srcdir}/.svn") {
-		my $parent=dirname($file);
+		my $parent=IkiWiki::dirname($file);
 		while (! -d "$config{srcdir}/$parent/.svn") {
 			$file=$parent;
-			$parent=dirname($file);
+			$parent=IkiWiki::dirname($file);
 		}
 		
 		if (system("svn", "add", "--quiet", "$config{srcdir}/$file") != 0) {
@@ -329,7 +343,7 @@ sub rcs_recentchanges ($) { #{{{
 } #}}}
 
 sub rcs_diff ($) { #{{{
-	my $rev=possibly_foolish_untaint(int(shift));
+	my $rev=IkiWiki::possibly_foolish_untaint(int(shift));
 	return `svnlook diff $config{svnrepo} -r$rev --no-diff-deleted`;
 } #}}}
 

@@ -1,6 +1,5 @@
 #!/usr/bin/perl
-
-package IkiWiki;
+package IkiWiki::Plugin::mercurial;
 
 use warnings;
 use strict;
@@ -8,19 +7,34 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
-hook(type => "checkconfig", id => "mercurial", call => sub { #{{{
+sub import { #{{{
+	hook(type => "checkconfig", id => "mercurial", call => \&checkconfig);
+	hook(type => "getsetup", id => "mercurial", call => \&getsetup);
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
+	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
+	hook(type => "rcs", id => "rcs_commit_staged", call => \&rcs_commit_staged);
+	hook(type => "rcs", id => "rcs_add", call => \&rcs_add);
+	hook(type => "rcs", id => "rcs_remove", call => \&rcs_remove);
+	hook(type => "rcs", id => "rcs_rename", call => \&rcs_rename);
+	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
+	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
+	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+} #}}}
+
+sub checkconfig () { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
-	if (length $config{mercurial_wrapper}) {
+	if (exists $config{mercurial_wrapper} && length $config{mercurial_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{mercurial_wrapper},
 			wrappermode => (defined $config{mercurial_wrappermode} ? $config{mercurial_wrappermode} : "06755"),
 		};
 	}
-}); #}}}
+} #}}}
 
-hook(type => "getsetup", id => "mercurial", call => sub { #{{{
+sub getsetup () { #{{{
 	return
 		mercurial_wrapper => {
 			type => "string",
@@ -50,7 +64,7 @@ hook(type => "getsetup", id => "mercurial", call => sub { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-}); #}}}
+} #}}}
 
 sub mercurial_log ($) { #{{{
 	my $out = shift;
@@ -113,16 +127,16 @@ sub rcs_commit ($$$;$$) { #{{{
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
 	if (defined $user) {
-		$user = possibly_foolish_untaint($user);
+		$user = IkiWiki::possibly_foolish_untaint($user);
 	}
 	elsif (defined $ipaddr) {
-		$user = "Anonymous from ".possibly_foolish_untaint($ipaddr);
+		$user = "Anonymous from ".IkiWiki::possibly_foolish_untaint($ipaddr);
 	}
 	else {
 		$user = "Anonymous";
 	}
 
-	$message = possibly_foolish_untaint($message);
+	$message = IkiWiki::possibly_foolish_untaint($message);
 	if (! length $message) {
 		$message = "no message given";
 	}

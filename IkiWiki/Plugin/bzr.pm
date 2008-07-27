@@ -1,6 +1,5 @@
 #!/usr/bin/perl
-
-package IkiWiki;
+package IkiWiki::Plugin::bzr;
 
 use warnings;
 use strict;
@@ -8,19 +7,34 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
-hook(type => "checkconfig", id => "bzr", call => sub { #{{{
+sub import { #{{{
+	hook(type => "checkconfig", id => "bzr", call => \&checkconfig);
+	hook(type => "getsetup", id => "bzr", call => \&getsetup);
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
+	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
+	hook(type => "rcs", id => "rcs_commit_staged", call => \&rcs_commit_staged);
+	hook(type => "rcs", id => "rcs_add", call => \&rcs_add);
+	hook(type => "rcs", id => "rcs_remove", call => \&rcs_remove);
+	hook(type => "rcs", id => "rcs_rename", call => \&rcs_rename);
+	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
+	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
+	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+} #}}}
+
+sub checkconfig () { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
-	if (length $config{bzr_wrapper}) {
+	if (defined $config{bzr_wrapper} && length $config{bzr_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{bzr_wrapper},
 			wrappermode => (defined $config{bzr_wrappermode} ? $config{bzr_wrappermode} : "06755"),
 		};
 	}
-}); #}}}
+} #}}}
 
-hook(type => "getsetup", id => "bzr", call => sub { #{{{
+sub getsetup () { #{{{
 	return
 		bzr_wrapper => {
 			type => "string",
@@ -50,7 +64,7 @@ hook(type => "getsetup", id => "bzr", call => sub { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-}); #}}}
+} #}}}
 
 sub bzr_log ($) { #{{{
 	my $out = shift;
@@ -101,10 +115,10 @@ sub bzr_author ($$) { #{{{
 	my ($user, $ipaddr) = @_;
 
 	if (defined $user) {
-		return possibly_foolish_untaint($user);
+		return IkiWiki::possibly_foolish_untaint($user);
 	}
 	elsif (defined $ipaddr) {
-		return "Anonymous from ".possibly_foolish_untaint($ipaddr);
+		return "Anonymous from ".IkiWiki::possibly_foolish_untaint($ipaddr);
 	}
 	else {
 		return "Anonymous";
@@ -116,7 +130,7 @@ sub rcs_commit ($$$;$$) { #{{{
 
 	$user = bzr_author($user, $ipaddr);
 
-	$message = possibly_foolish_untaint($message);
+	$message = IkiWiki::possibly_foolish_untaint($message);
 	if (! length $message) {
 		$message = "no message given";
 	}
@@ -137,7 +151,7 @@ sub rcs_commit_staged ($$$) {
 
 	$user = bzr_author($user, $ipaddr);
 
-	$message = possibly_foolish_untaint($message);
+	$message = IkiWiki::possibly_foolish_untaint($message);
 	if (! length $message) {
 		$message = "no message given";
 	}
@@ -172,7 +186,7 @@ sub rcs_remove ($) { # {{{
 sub rcs_rename ($$) { # {{{
 	my ($src, $dest) = @_;
 
-	my $parent = dirname($dest);
+	my $parent = IkiWiki::dirname($dest);
 	if (system("bzr", "add", "--quiet", "$config{srcdir}/$parent") != 0) {
 		warn("bzr add $parent failed\n");
 	}

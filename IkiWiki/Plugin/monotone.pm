@@ -1,6 +1,5 @@
 #!/usr/bin/perl
-
-package IkiWiki;
+package IkiWiki::Plugin::monotone;
 
 use warnings;
 use strict;
@@ -11,7 +10,22 @@ use Date::Format qw(time2str);
 
 my $sha1_pattern = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
 
-hook(type => "checkconfig", id => "monotone", call => sub { #{{{
+sub import { #{{{
+	hook(type => "checkconfig", id => "monotone", call => \&checkconfig);
+	hook(type => "getsetup", id => "monotone", call => \&getsetup);
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
+	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
+	hook(type => "rcs", id => "rcs_commit_staged", call => \&rcs_commit_staged);
+	hook(type => "rcs", id => "rcs_add", call => \&rcs_add);
+	hook(type => "rcs", id => "rcs_remove", call => \&rcs_remove);
+	hook(type => "rcs", id => "rcs_rename", call => \&rcs_rename);
+	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
+	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
+	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+} #}}}
+
+sub checkconfig () { #{{{
 	if (!defined($config{mtnrootdir})) {
 		$config{mtnrootdir} = $config{srcdir};
 	}
@@ -47,9 +61,9 @@ hook(type => "checkconfig", id => "monotone", call => sub { #{{{
 			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),
 		};
 	}
-}); #}}}
+} #}}}
 
-hook(type => "getsetup", id => "monotone", call => sub { #{{{
+sub getsetup () { #{{{
 	return
 		mtn_wrapper => {
 			type => "string",
@@ -99,7 +113,7 @@ hook(type => "getsetup", id => "monotone", call => sub { #{{{
 			safe => 0, # path
 			rebuild => 0,
 		},
-}); #}}}
+} #}}}
 
 sub get_rev () { #{{{
 	my $sha1 = `mtn --root=$config{mtnrootdir} automate get_base_revision_id`;
@@ -156,7 +170,7 @@ sub mtn_merge ($$$$) { #{{{
 	return $mergeRev;
 } #}}}
 
-sub commit_file_to_new_rev($$$$$$$$) { #{{{
+sub commit_file_to_new_rev ($$$$$$$$) { #{{{
 	my $automator=shift;
 	my $wsfilename=shift;
 	my $oldFileID=shift;
@@ -398,7 +412,7 @@ sub rcs_commit ($$$;$$) { #{{{
 
 	if (system("mtn", "--root=$config{mtnrootdir}", "commit", "--quiet",
 	           "--author", $author, "--key", $config{mtnkey}, "-m",
-		   possibly_foolish_untaint($message), $file) != 0) {
+		   IkiWiki::possibly_foolish_untaint($message), $file) != 0) {
 		debug("Traditional commit failed! Returning data as conflict.");
 		my $conflict=readfile("$config{srcdir}/$file");
 		if (system("mtn", "--root=$config{mtnrootdir}", "revert",
@@ -443,7 +457,7 @@ sub rcs_commit_staged ($$$) {
 
 	if (system("mtn", "--root=$config{mtnrootdir}", "commit", "--quiet",
 	           "--author", $author, "--key", $config{mtnkey}, "-m",
-		   possibly_foolish_untaint($message)) != 0) {
+		   IkiWiki::possibly_foolish_untaint($message)) != 0) {
 		error("Monotone commit failed");
 	}
 }

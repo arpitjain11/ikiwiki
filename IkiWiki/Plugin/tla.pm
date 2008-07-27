@@ -1,24 +1,38 @@
 #!/usr/bin/perl
-
-package IkiWiki;
+package IkiWiki::Plugin::tla;
 
 use warnings;
 use strict;
 use IkiWiki;
 
-hook(type => "checkconfig", id => "tla", call => sub { #{{{
+sub import { #{{{
+	hook(type => "checkconfig", id => "tla", call => \&checkconfig);
+	hook(type => "getsetup", id => "tla", call => \&getsetup);
+	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
+	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
+	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
+	hook(type => "rcs", id => "rcs_commit_staged", call => \&rcs_commit_staged);
+	hook(type => "rcs", id => "rcs_add", call => \&rcs_add);
+	hook(type => "rcs", id => "rcs_remove", call => \&rcs_remove);
+	hook(type => "rcs", id => "rcs_rename", call => \&rcs_rename);
+	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
+	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
+	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+} #}}}
+
+sub checkconfig () { #{{{
 	if (! defined $config{diffurl}) {
 		$config{diffurl}="";
 	}
-	if (length $config{tla_wrapper}) {
+	if (defined $config{tla_wrapper} && length $config{tla_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{tla_wrapper},
 			wrappermode => (defined $config{tla_wrappermode} ? $config{tla_wrappermode} : "06755"),
 		};
 	}
-}); #}}}
+} #}}}
 
-hook(type => "getsetup", id => "tla", call => sub { #{{{
+sub getsetup () { #{{{
 	return
 		tla_wrapper => {
 			type => "string",
@@ -48,9 +62,9 @@ hook(type => "getsetup", id => "tla", call => sub { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-}); #}}}
+} #}}}
 
-sub quiet_system (@) {
+sub quiet_system (@) { #{{{
 	# See Debian bug #385939.
 	open (SAVEOUT, ">&STDOUT");
 	close STDOUT;
@@ -60,7 +74,7 @@ sub quiet_system (@) {
 	open (STDOUT, ">&SAVEOUT");
 	close SAVEOUT;
 	return $ret;
-}
+} #}}}
 
 sub rcs_update () { #{{{
 	if (-d "$config{srcdir}/{arch}") {
@@ -110,7 +124,7 @@ sub rcs_commit ($$$;$$) { #{{{
 		}
 
 		if (quiet_system("tla", "commit",
-		           "-L".possibly_foolish_untaint($message),
+		           "-L".IkiWiki::possibly_foolish_untaint($message),
 			   '-d', $config{srcdir}) != 0) {
 			my $conflict=readfile("$config{srcdir}/$file");
 			if (system("tla", "undo", "-n", "--quiet", "-d", "$config{srcdir}") != 0) {
