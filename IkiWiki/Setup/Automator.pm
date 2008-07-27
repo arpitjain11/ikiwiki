@@ -56,7 +56,23 @@ sub import (@) { #{{{
 		"--url", $setup{url},
 		"--cgiurl", $setup{cgiurl}
 	);
-	push @params, "--rcs", $setup{rcs} if $setup{rcs};
+	if ($setup{rcs}) {
+		push @params, "--rcs", $setup{rcs};
+		if ($setup{rcs} eq 'git') {
+			push @params, "--set", "git_wrapper=".
+				$setup{repository}."/hooks/post-update";
+		}
+		elsif ($setup{rcs} eq 'svn') {
+			push @params, "--set", "svn_wrapper=".
+				$setup{repository}."/hooks/post-commit";
+		}
+		elsif ($setup{rcs} eq 'bzr') {
+			# TODO
+		}
+		elsif ($setup{rcs} eq 'mercurial') {
+			# TODO
+		}
+	}
 	if (exists $setup{add_plugins}) {
 		foreach my $plugin (@{$setup{add_plugins}}) {
 			push @params, "--plugin", $plugin;
