@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-26 22:24-0400\n"
+"POT-Creation-Date: 2008-07-27 01:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,7 +152,7 @@ msgstr ""
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:188
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:193
 msgid "done"
 msgstr ""
 
@@ -199,9 +199,20 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/testpagespec.pm:17
+#: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/cutpaste.pm:22
+#: ../IkiWiki/Plugin/cutpaste.pm:37 ../IkiWiki/Plugin/cutpaste.pm:53
+#: ../IkiWiki/Plugin/testpagespec.pm:17
 #, perl-format
 msgid "%s parameter is required"
+msgstr ""
+
+#: ../IkiWiki/Plugin/cutpaste.pm:58
+msgid "no text was copied in this page"
+msgstr ""
+
+#: ../IkiWiki/Plugin/cutpaste.pm:61
+#, perl-format
+msgid "no text was copied in this page with id %s"
 msgstr ""
 
 #: ../IkiWiki/Plugin/edittemplate.pm:41
@@ -784,15 +795,15 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:118
+#: ../ikiwiki.in:126
 msgid "generating wrappers.."
 msgstr ""
 
-#: ../ikiwiki.in:177
+#: ../ikiwiki.in:182
 msgid "rebuilding wiki.."
 msgstr ""
 
-#: ../ikiwiki.in:180
+#: ../ikiwiki.in:185
 msgid "refreshing wiki.."
 msgstr ""
 
