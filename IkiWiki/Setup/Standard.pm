@@ -83,26 +83,30 @@ sub gendump ($) { #{{{
 	my %setup=(%config);
 	my @ret;
 	
+	# disable logging to syslog while dumping
+	$config{syslog}=0;
+
 	push @ret, "\t# basic setup";
 	push @ret, dumpvalues(\%setup, IkiWiki::getsetup());
 
 	# Load all plugins, so that all setup options are available.
-	my @plugins=grep { ! /externaldemo|pythondemo/ } sort(IkiWiki::listplugins());
+	# (But skip a few problematic external demo plugins.)
+	my @plugins=grep { ! /^(externaldemo|pythondemo|\Q$config{rcs}\E)$/ }
+		sort(IkiWiki::listplugins());
+	unshift @plugins, $config{rcs} if $config{rcs}; # rcs plugin 1st
 	foreach my $plugin (@plugins) {
 		eval { IkiWiki::loadplugin($plugin) };
 		if (exists $IkiWiki::hooks{checkconfig}{$plugin}{call}) {
 			my @s=eval { $IkiWiki::hooks{checkconfig}{$plugin}{call}->() };
 		}
 	}
-	unshift @plugins, $config{rcs} if $config{rcs};
 
 	foreach my $id (@plugins) {
-		my $title="\t# $id".($id ne $config{rcs} ? " plugin" : "");
 		if (exists $IkiWiki::hooks{getsetup}{$id}{call}) {
 			# use an array rather than a hash, to preserve order
 			my @s=eval { $IkiWiki::hooks{getsetup}{$id}{call}->() };
 			next unless @s;
-			push @ret, "", $title;
+			push @ret, "", "\t# $id plugin";
 			push @ret, dumpvalues(\%setup, @s);
 		}
 	}
