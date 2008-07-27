@@ -39,7 +39,7 @@ sub getsetup () { #{{{
 	return
 		archivebase => {
 			type => "string",
-			default => "archives",
+			example => "archives",
 			description => "base of the archives hierarchy",
 			safe => 1,
 			rebuild => 1,

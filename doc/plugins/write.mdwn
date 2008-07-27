@@ -376,7 +376,6 @@ describing the option. For example:
                 return
 			option_foo => {
 				type => "boolean",
-				default => 0,
 				description => "enable foo",
 				safe => 1,
 				rebuild => 1,
@@ -392,8 +391,7 @@ describing the option. For example:
 * `type` can be "boolean", "string", "integer", "internal" (used for values
   that are not user-visible). The type is the type of the leaf values; 
   the `%config` option may be an array or hash of these.
-* `default` should be set to the default value of the option, if any.
-* `example` can be set to an example value, which will not be used by default.
+* `example` can be set to an example value.
 * `description` is a short description of the option.
 * `safe` should be false if the option should not be displayed in unsafe
   configuration methods, such as the web interface. Anything that specifies

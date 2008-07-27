@@ -18,14 +18,14 @@ sub getsetup () { #{{{
 	return
 		recentchangespage => {
 			type => "string",
-			default => "recentchanges",
+			example => "recentchanges",
 			description => "name of the recentchanges page",
 			safe => 1,
 			rebuild => 1,
 		},
 		recentchangesnum => {
 			type => "integer",
-			default => 100,
+			example => 100,
 			description => "number of changes to track",
 			safe => 1,
 			rebuild => 0,

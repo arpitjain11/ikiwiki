@@ -17,14 +17,14 @@ sub getsetup () { #{{{
 	return
 		account_creation_password => {
 			type => "string",
-			default => "",
+			example => "s3cr1t",
 			description => "a password that must be entered when signing up for an account",
 			safe => 1,
 			rebuild => 0,
 		},
 		password_cost => {
 			type => "integer",
-			default => 8,
+			example => 8,
 			description => "cost of generating a password using Authen::Passphrase::BlowfishCrypt",
 			safe => 1,
 			rebuild => 0,

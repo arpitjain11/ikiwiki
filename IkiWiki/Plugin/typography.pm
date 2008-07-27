@@ -26,7 +26,7 @@ sub getsetup () { #{{{
 	return
 		typographyattributes => {
 			type => "string",
-			default => "3",
+			example => "3",
 			example => "tag",
 			description => "Text::Typography attributes value",
 			safe => 1,

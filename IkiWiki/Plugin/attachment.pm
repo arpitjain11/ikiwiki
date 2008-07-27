@@ -16,7 +16,6 @@ sub getsetup () { #{{{
 	return
 		virus_checker => {
 			type => "string",
-			default => "",
 			example => "clamdscan -",
 			description => "virus checker program (reads STDIN, returns nonzero if virus found)",
 			safe => 0, # executed

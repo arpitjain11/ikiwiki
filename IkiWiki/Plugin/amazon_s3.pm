@@ -79,7 +79,7 @@ sub getsetup () { #{{{
 		},
 		amazon_s3_dupindex => {
 			type => "boolean",
-			default => 0,
+			example => 0,
 			description => "store each index file twice? (allows urls ending in \"/index.html\" and \"/\")",
 			safe => 1,
 			rebuild => 1,

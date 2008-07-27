@@ -20,7 +20,7 @@ sub getsetup () { #{{{
 	return
 		pinger_timeout => {
 			type => "integer",
-			default => 15,
+			example => 15,
 			description => "how many seconds to try pinging before timing out",
 			safe => 1,
 			rebuild => 0,

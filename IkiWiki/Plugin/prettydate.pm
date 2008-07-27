@@ -48,14 +48,13 @@ sub getsetup () { #{{{
 	return
 		prettydateformat => {
 			type => "string",
-			default => '%X, %B %o, %Y',
+			example => '%X, %B %o, %Y',
 			description => "format to use to display date",
 			safe => 1,
 			rebuild => 1,
 		},
 		timetable => {
 			type => "internal",
-			default => undef,
 			description => "array of time descriptions",
 			safe => 1,
 			rebuild => 1,

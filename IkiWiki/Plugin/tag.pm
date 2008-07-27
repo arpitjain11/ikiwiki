@@ -27,7 +27,6 @@ sub getsetup () { #{{{
 	return
 		tagbase => {
 			type => "string",
-			default => "",
 			example => "tag",
 			description => "parent page tags are located under",
 			safe => 1,

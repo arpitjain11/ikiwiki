@@ -15,7 +15,7 @@ sub getsetup () { #{{{
 	return
 		multimarkdown => {
 			type => "boolean",
-			default => 0,
+			example => 0,
 			description => "enable multimarkdown features?",
 			safe => 1,
 			rebuild => 1,

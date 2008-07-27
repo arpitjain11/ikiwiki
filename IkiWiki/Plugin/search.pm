@@ -19,7 +19,6 @@ sub getsetup () { #{{{
 	return
 		omega_cgi => {
 			type => "string",
-			default => "/usr/lib/cgi-bin/omega/omega",
 			description => "path to the omega cgi program",
 			safe => 0, # external program
 			rebuild => 0,

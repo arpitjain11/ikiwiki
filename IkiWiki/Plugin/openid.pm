@@ -25,7 +25,6 @@ sub getsetup () { #{{{
 	return
 		openidsignup => {
 			type => "string",
-			default => "",
 			example => "http://myopenid.com/",
 			description => "an url where users can signup for an OpenID",
 			safe => 1,
