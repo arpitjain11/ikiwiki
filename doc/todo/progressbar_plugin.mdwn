@@ -7,13 +7,16 @@ Here is proposition of the plugin syntax:
 
     \[[!progress done=50]]
 
+Of course, `done` argument is integer from 0 to 100. 
+
 A here is its HTML result:
 
     <div class="progress">
       <div class="progress-done" style="width: 50%">50%</div>
     </div>
 
-Of course, `done` argument is integer from 0 to 100. 
+Note: I was trying with `<span>` tags too, but that tag is inline, so I can't
+set `width` property for it.
 
 Default CSS styles for the plugin can be like below:
 
