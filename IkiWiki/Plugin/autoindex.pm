@@ -16,6 +16,9 @@ sub genindex ($) { #{{{
 	my $template=template("autoindex.tmpl");
 	$template->param(page => $page);
 	writefile($file, $config{srcdir}, $template->output);
+	if ($config{rcs}) {
+		IkiWiki::rcs_add($file);
+	}
 } #}}}
 
 sub refresh () { #{{{
@@ -45,9 +48,23 @@ sub refresh () { #{{{
 		}
 	}, $config{srcdir});
 
+	my @needed;
 	foreach my $dir (keys %dirs) {
 		if (! exists $pages{$dir}) {
-			genindex($dir);
+			push @needed, $dir;
+		}
+	}
+	
+	if (@needed) {
+		if ($config{rcs}) {
+			IkiWiki::disable_commit_hook();
+		}
+		genindex($_) foreach @needed;
+		if ($config{rcs}) {
+			IkiWiki::rcs_commit_staged(
+				gettext("automatic index generation"),
+				undef, undef);
+			IkiWiki::enable_commit_hook();
 		}
 	}
 } #}}}
