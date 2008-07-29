@@ -1,0 +1,154 @@
+[[!template id=plugin name=unixauth core=0 author="[[schmonz]]"]]
+[[!tag type/auth]]
+
+This plugin authenticates users against the Unix user database. It presents a similar UI to [[plugins/passwordauth]], but simpler, as there's no need to be able to register or change one's password.
+
+[pwauth](http://www.unixpapa.com/pwauth/) must be installed and working. In particular, it must be configured to recognize the UID of the calling web server, or authentication will always fail. Set `pwauth_path` to the full path of your pwauth binary.
+
+As [with passwordauth](/security/#index14h2), be wary of sending usernames and passwords in cleartext. Unlike with passwordauth, sniffing these credentials can get an attacker much further than mere wiki access. SSL with this plugin is a __must__.
+
+[[!toggle id="code" text="unixauth.pm"]]
+
+[[!toggleable id="code" text="""
+
+    #!/usr/bin/perl
+    # Ikiwiki unixauth authentication.
+    package IkiWiki::Plugin::unixauth;
+    
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+    
+    sub import { #{{{
+            hook(type => "formbuilder_setup", id => "unixauth",
+                call => \&formbuilder_setup);
+            hook(type => "formbuilder", id => "unixauth",
+                call => \&formbuilder);
+        hook(type => "sessioncgi", id => "unixauth", call => \&sessioncgi);
+    } # }}}
+    
+    # Checks if a string matches a user's password, and returns true or false.
+    sub checkpassword ($$;$) { #{{{
+        my $user=shift;
+        my $password=shift;
+        my $field=shift || "password";
+    
+        # It's very important that the user not be allowed to log in with
+        # an empty password!
+        if (! length $password) {
+                return 0;
+        }
+    
+        my $ret=0;
+        if (! exists $config{pwauth_path}) {
+                $config{pwauth_path}="/usr/libexec/pwauth";
+        }
+        open PWAUTH, "|$config{pwauth_path}" or die("Could not run pwauth");
+        print PWAUTH "$user\n$password\n";
+        close PWAUTH;
+        $ret=!($?>>8);
+    
+        if ($ret) {
+            my $userinfo=IkiWiki::userinfo_retrieve();
+            if (! length $user || ! defined $userinfo ||
+                ! exists $userinfo->{$user} || ! ref $userinfo->{$user}) {
+                    IkiWiki::userinfo_setall($user, {
+                        'email' => '',
+                        'regdate' => time,
+                    });
+            }
+        }
+    
+        return $ret;
+    } #}}}
+    
+    sub formbuilder_setup (@) { #{{{
+        my %params=@_;
+    
+        my $form=$params{form};
+        my $session=$params{session};
+        my $cgi=$params{cgi};
+    
+        if ($form->title eq "signin") {
+                $form->field(name => "name", required => 0);
+                $form->field(name => "password", type => "password", required => 0);
+                
+                if ($form->submitted) {
+                        my $submittype=$form->submitted;
+                        # Set required fields based on how form was submitted.
+                        my %required=(
+                                "Login" => [qw(name password)],
+                        );
+                        foreach my $opt (@{$required{$submittype}}) {
+                                $form->field(name => $opt, required => 1);
+                        }
+        
+                        # Validate password against name for Login.
+                        if ($submittype eq "Login") {
+                                $form->field(
+                                        name => "password",
+                                        validate => sub {
+                                                checkpassword($form->field("name"), shift);
+                                        },
+                                );
+                        }
+                        
+                        elsif ($submittype eq "Login") {
+                                $form->field( 
+                                        name => "name",
+                                        validate => sub {
+                                                my $name=shift;
+                                                length $name &&
+                                                IkiWiki::userinfo_get($name, "regdate");
+                                        },
+                                );
+                        }
+                }
+                else {
+                        # First time settings.
+                        $form->field(name => "name");
+                        if ($session->param("name")) {
+                                $form->field(name => "name", value => $session->param("name"));
+                        }
+                }
+        }
+        elsif ($form->title eq "preferences") {
+                $form->field(name => "name", disabled => 1, 
+                        value => $session->param("name"), force => 1,
+                        fieldset => "login");
+                $form->field(name => "password", disabled => 1, type => "password",
+                        fieldset => "login"),
+        }
+    }
+    
+    sub formbuilder (@) { #{{{
+        my %params=@_;
+    
+        my $form=$params{form};
+        my $session=$params{session};
+        my $cgi=$params{cgi};
+        my $buttons=$params{buttons};
+    
+        if ($form->title eq "signin") {
+                if ($form->submitted && $form->validate) {
+                        if ($form->submitted eq 'Login') {
+                                $session->param("name", $form->field("name"));
+                                IkiWiki::cgi_postsignin($cgi, $session);
+                        }
+                }
+        }
+        elsif ($form->title eq "preferences") {
+                if ($form->submitted eq "Save Preferences" && $form->validate) {
+                        my $user_name=$form->field('name');
+                }
+        }
+    } #}}}
+    
+    sub sessioncgi ($$) { #{{{
+        my $q=shift;
+        my $session=shift;
+    } #}}}
+    
+    1
+
+"""]]
