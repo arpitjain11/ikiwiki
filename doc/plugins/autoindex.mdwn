@@ -1,0 +1,7 @@
+[[!template id=plugin name=autoindex core=0 author="[[Joey]]"]]
+[[!tag type/useful]]
+
+This plugin searches for [[SubPages|ikiwiki/subpage]] with a missing parent
+page, and generates a parent page for them. The generated page content is
+controlled by the autoindex [[template|wikitemplates]], which by default,
+uses a [[map]] to list the SubPages.

@@ -1,0 +1,44 @@
+I would like to add next plugin to Ikiwiki. It's `progressbar` or simply `progress`.
+I'm not sure what plugin name better is, probably that shorter ;) I know that
+[DokuWiki](http://wiki.splitbrain.org/plugin:progressbar) has similar plugin,
+so I think it can be useful also for Ikiwiki users.
+
+Here is proposition of the plugin syntax:
+
+    \[[!progress done=50]]
+
+Of course, `done` argument is integer from 0 to 100. 
+
+A here is its HTML result:
+
+    <div class="progress">
+      <div class="progress-done" style="width: 50%">50%</div>
+    </div>
+
+Note: I was trying with `<span>` tags too, but that tag is inline, so I can't
+set `width` property for it.
+
+Default CSS styles for the plugin can be like below:
+
+    div.progress {
+            border: 1px solid #ddd;
+            /* border: 2px solid #ddd; */
+            width: 200px;
+            background: #fff;
+            padding: 2px;
+            /* padding: 0px; */
+            border: 2px solid #aaa;
+            background: #eee;
+    }
+    div.progress-done {
+            height: 14px;
+            background: #ff6600;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: middle;
+    }
+
+You can use alternative, commented CSS code for `div.progress` if you dislike
+padding around done strip.
+
+Any comments? --[[Paweł|ptecza]]
