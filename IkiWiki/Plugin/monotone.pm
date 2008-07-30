@@ -11,6 +11,9 @@ use Date::Format qw(time2str);
 my $sha1_pattern = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
 
 sub import { #{{{
+	if (exists $IkiWiki::hooks{rcs}) {
+		error(gettext("cannot use multiple rcs plugins"));
+	}
 	hook(type => "checkconfig", id => "monotone", call => \&checkconfig);
 	hook(type => "getsetup", id => "monotone", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);

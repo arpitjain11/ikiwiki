@@ -6,6 +6,9 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
+	if (exists $IkiWiki::hooks{rcs}) {
+		error(gettext("cannot use multiple rcs plugins"));
+	}
 	hook(type => "checkconfig", id => "tla", call => \&checkconfig);
 	hook(type => "getsetup", id => "tla", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
