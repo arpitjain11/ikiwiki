@@ -14,6 +14,8 @@ Config variables that affect the behavior of `unixauth`:
 
 __Security__: [As with passwordauth](/security/#index14h2), be wary of sending usernames and passwords in cleartext. Unlike passwordauth, sniffing `unixauth` credentials can get an attacker much further than mere wiki access. Therefore, this plugin defaults to not even _displaying_ the login form fields unless we're running under SSL. Nobody should be able to do anything remotely dumb until the admin has done at least a little thinking. After that, dumb things are always possible. ;-)
 
+_XXX hang on, looks like we don't have the huge CGI environment so testing for ${HTTPS} always fails; need another way to be sure_
+
 [[!toggle id="code" text="unixauth.pm"]]
 
 [[!toggleable id="code" text="""
