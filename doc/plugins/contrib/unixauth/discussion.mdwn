@@ -15,3 +15,5 @@ all of which require taking the lock.
 
 So I don't think I'll be accepting this plugin into ikiwiki itself..
 --[[Joey]]
+
+Thanks for the comments. That's definitely an undesirable interaction between pwauth and ikiwiki; in my current application it wouldn't be a serious problem, but I'd like this plugin to be general-purpose and safe enough for inclusion in ikiwiki. It's the system-users-are-wiki-users idea I'm married to here, not pwauth itself; can you suggest another approach I might take?
