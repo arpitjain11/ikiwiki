@@ -14,13 +14,31 @@ Config variables that affect the behavior of `unixauth`:
 
 __Security__: [As with passwordauth](/security/#index14h2), be wary of sending usernames and passwords in cleartext. Unlike passwordauth, sniffing `unixauth` credentials can get an attacker much further than mere wiki access. Therefore, this plugin defaults to not even _displaying_ the login form fields unless we're running under SSL. Nobody should be able to do anything remotely dumb until the admin has done at least a little thinking. After that, dumb things are always possible. ;-)
 
-_XXX hang on, looks like we don't have the huge CGI environment so testing for ${HTTPS} always fails; need another way to be sure_
+`unixauth` tests for the presence of the `HTTPS` environment variable. `Wrapper.pm` needs to be tweaked to pass it through; without that, the plugin fails closed.
+
+[[!toggle id="diff" text="Wrapper.pm.diff"]]
+
+[[!toggleable id="diff" text="""
+
+    --- Wrapper.pm.orig 2008-07-29 00:09:10.000000000 -0400
+    +++ Wrapper.pm
+    @@ -28,7 +28,7 @@ sub gen_wrapper () { #{{{
+        my @envsave;
+        push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
+                       CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE
+    -                  HTTP_COOKIE REMOTE_USER} if $config{cgi};
+    +                  HTTP_COOKIE REMOTE_USER HTTPS} if $config{cgi};
+        my $envsave="";
+        foreach my $var (@envsave) {
+                $envsave.=<<"EOF"
+
+"""]]
 
 [[!toggle id="code" text="unixauth.pm"]]
 
 [[!toggleable id="code" text="""
 
-    #!/usr/bin/perl
+    #!/usr//bin/perl
     # Ikiwiki unixauth authentication.
     package IkiWiki::Plugin::unixauth;
     
@@ -96,9 +114,10 @@ _XXX hang on, looks like we don't have the huge CGI environment so testing for $
         if (! exists $config{unixauth_requiressl}) {
                 $config{unixauth_requiressl} = 1;
         }
-        if ($config{unixauth_requiressl} && \
-            (! $config{sslcookie} || ! exists $ENV{'HTTPS'})) {
-                die("SSL required to login. Contact your administrator.");
+        if ($config{unixauth_requiressl}) {
+            if ((! $config{sslcookie}) || (! exists $ENV{'HTTPS'})) {
+                die("SSL required to login. Contact your administrator.<br>");
+            }
         }
     
         if ($form->title eq "signin") {
