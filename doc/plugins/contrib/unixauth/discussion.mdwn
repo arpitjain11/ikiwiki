@@ -23,3 +23,6 @@ Thanks for the comments. That's definitely an undesirable interaction between pw
 
 Actually, yes. That's how I made sure I had pwauth working to begin with. I'm partial to the form-based approach because I'm not aware of any way to reliably "log out" browsers from HTTP authentication. If that *is* reliably possible, then I worked way too hard for no reason. ;-)
 -- [[schmonz]]
+
+I've added support for [checkpassword](http://cr.yp.to/checkpwd/interface.html), since those generally don't have any rate-limiting cleverness to interfere with ikiwiki's, and made a few other changes. Please check out the plugin docs again and let me know if this is closer to being acceptable.
+-- [[schmonz]]
