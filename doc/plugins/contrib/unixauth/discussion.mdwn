@@ -18,3 +18,5 @@ So I don't think I'll be accepting this plugin into ikiwiki itself..
 
 Thanks for the comments. That's definitely an undesirable interaction between pwauth and ikiwiki; in my current application it wouldn't be a serious problem, but I'd like this plugin to be general-purpose and safe enough for inclusion in ikiwiki. It's the system-users-are-wiki-users idea I'm married to here, not pwauth itself; can you suggest another approach I might take?
 -- [[schmonz]]
+
+> Have you considered using [[plugins/httpauth]] and then the appropriate apache module?  There are apache modules like [mod_authnz_external](http://unixpapa.com/mod_auth_external.html) that might help.  The advantage of these solutions is that they usually make the security implications explicit.  -- Will
