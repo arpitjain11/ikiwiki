@@ -20,3 +20,6 @@ Thanks for the comments. That's definitely an undesirable interaction between pw
 -- [[schmonz]]
 
 > Have you considered using [[plugins/httpauth]] and then the appropriate apache module?  There are apache modules like [mod_authnz_external](http://unixpapa.com/mod_auth_external.html) that might help.  The advantage of these solutions is that they usually make the security implications explicit.  -- Will
+
+Actually, yes. That's how I made sure I had pwauth working to begin with. I'm partial to the form-based approach because I'm not aware of any way to reliably "log out" browsers from HTTP authentication. If that *is* reliably possible, then I worked way too hard for no reason. ;-)
+-- [[schmonz]]
