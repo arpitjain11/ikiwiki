@@ -26,3 +26,7 @@ Actually, yes. That's how I made sure I had pwauth working to begin with. I'm pa
 
 I've added support for [checkpassword](http://cr.yp.to/checkpwd/interface.html), since those generally don't have any rate-limiting cleverness to interfere with ikiwiki's, and made a few other changes. Please check out the plugin docs again and let me know if this is closer to being acceptable.
 -- [[schmonz]]
+
+> I actually think that the rate limiting is a good thing. After all,
+> ikiwiki doesn't do its own login rate limiting. Just need to find a way
+> to disentangle the two locks. --[[Joey]]
