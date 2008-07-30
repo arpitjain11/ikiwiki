@@ -3,7 +3,7 @@
 
 This plugin authenticates users against the Unix user database. It presents a similar UI to [[plugins/passwordauth]], but simpler, as there's no need to be able to register or change one's password.
 
-To authenticate, either [checkpassword](http://cr.yp.to/checkpwd.html) or [pwauth](http://www.unixpapa.com/pwauth/) must be installed and configured. `checkpassword` is strongly preferred. If your web server runs as an unprivileged user -- as it darn well should! -- then `checkpassword` needs to be setuid root. Other checkpassword implementations are available, notably [checkpassword-pam](http://checkpasswd-pam.sourceforge.net/).
+To authenticate, either [checkpassword](http://cr.yp.to/checkpwd.html) or [pwauth](http://www.unixpapa.com/pwauth/) must be installed and configured. `checkpassword` is strongly preferred. If your web server runs as an unprivileged user -- as it darn well should! -- then `checkpassword` needs to be setuid root. (Or your ikiwiki CGI wrapper, I guess, but don't do that.) Other checkpassword implementations are available, notably [checkpassword-pam](http://checkpasswd-pam.sourceforge.net/).
 
 Config variables that affect the behavior of `unixauth`:
 
