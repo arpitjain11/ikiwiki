@@ -1,0 +1,7 @@
+The new [[plugins/rename]] plugin allows files to be renamed, but doesn't seem to allow changing the page type.  It would be nice if there was a way to change page type through the web interface.
+
+#### Background
+
+I'm currently moving a couple of projects from [Trac](http://trac.edgewall.org/) to Ikiwiki.  I don't want to have to re-do all the wiki formatting at once.  Initially I simply imported all the old wiki pages without suffixes.  This made them appear on the web as raw un-editable text.  I wanted other project members to be able to do the updating to the new markup language, so I then renamed the files to use '.txt' suffixes, and that allows them to be edited.  Unfortunately, there is still no way to convert them to '.mdwn' files on the web.
+
+I was hoping that the [[plugins/rename]] plugin would allow web uses to change the filename suffix, but it doesn't.  This means that the page type can be set on page creation using the web interface, but cannot be changed thereafter using the web interface.  I was thinking the UI would be something like adding the 'Page type' drop-down menu that appears on the creation page to either the edit or rename pages.
