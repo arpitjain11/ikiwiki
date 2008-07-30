@@ -1,0 +1,10 @@
+If a blog entry contains a HTML named entity, such as the `&mdash;` produced by [[plugins/rst]] for blockquote citations, it's pasted into the Atom feed as-is. However, Atom feeds don't have a DTD, so named entities beyond `&lt;`, `&gt;`, `&quot;`, `&amp;` and `&apos;` aren't well-formed XML.
+
+Possible solutions:
+
+* Put HTML in Atom feeds as type="html" (and use ESCAPE=HTML) instead
+
+* Keep HTML in Atom feeds as type="xhtml", but replace named entities with numeric ones,
+  like in the re-escape-entities branch in my repository: http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commitdiff;h=c0eb041c65d0653bacf0d4acb7a602e9bda8888e
+
+(Also, the HTML in RSS feeds would probably get better interoperability if it was escaped with ESCAPE=HTML rather than being in a CDATA section?)
