@@ -3,9 +3,16 @@
 
 This plugin authenticates users against the Unix user database. It presents a similar UI to [[plugins/passwordauth]], but simpler, as there's no need to be able to register or change one's password.
 
-[pwauth](http://www.unixpapa.com/pwauth/) must be installed and working. In particular, it must be configured to recognize the UID of the calling web server, or authentication will always fail. Set `pwauth_path` to the full path of your pwauth binary.
+To authenticate, either [checkpassword](http://cr.yp.to/checkpwd.html) or [pwauth](http://www.unixpapa.com/pwauth/) must be installed and configured. `checkpassword` is strongly preferred. If your web server runs as an unprivileged user -- as it darn well should! -- then `checkpassword` needs to be setuid root. Other checkpassword implementations are available, notably [checkpassword-pam](http://checkpasswd-pam.sourceforge.net/).
 
-As [with passwordauth](/security/#index14h2), be wary of sending usernames and passwords in cleartext. Unlike with passwordauth, sniffing these credentials can get an attacker much further than mere wiki access. SSL with this plugin is a __must__.
+Config variables that affect the behavior of `unixauth`:
+
+* `unixauth_type`: defaults to unset, can be "checkpassword" or "pwauth"
+* `unixauth_command`: defaults to unset, should contain the full path and any arguments
+* `unixauth_sslrequire`: defaults to 1, can be 0
+* `sslcookie`: needs to be 1 if `unixauth_sslrequire` is 1 (perhaps this should be done automatically?)
+
+__Security__: [As with passwordauth](/security/#index14h2), be wary of sending usernames and passwords in cleartext. Unlike passwordauth, sniffing `unixauth` credentials can get an attacker much further than mere wiki access. Therefore, this plugin defaults to not even _displaying_ the login form fields unless we're running under SSL. Nobody should be able to do anything remotely dumb until the admin has done at least a little thinking. After that, dumb things are always possible. ;-)
 
 [[!toggle id="code" text="unixauth.pm"]]
 
@@ -40,13 +47,26 @@ As [with passwordauth](/security/#index14h2), be wary of sending usernames and p
         }
     
         my $ret=0;
-        if (! exists $config{pwauth_path}) {
-                $config{pwauth_path}="/usr/libexec/pwauth";
+        if (! exists $config{unixauth_type}) {
+                # admin needs to carefully think over his configuration
+                return 0;
         }
-        open PWAUTH, "|$config{pwauth_path}" or die("Could not run pwauth");
-        print PWAUTH "$user\n$password\n";
-        close PWAUTH;
-        $ret=!($?>>8);
+        elsif ($config{unixauth_type} eq "checkpassword") {
+                open UNIXAUTH, "|$config{unixauth_command} true 3<&0" or die("Could not run $config{unixauth_type}");
+                print UNIXAUTH "$user\0$password\0Y123456\0";
+                close UNIXAUTH;
+                $ret=!($?>>8);
+        }
+        elsif ($config{unixauth_type} eq "pwauth") {
+                open UNIXAUTH, "|$config{unixauth_command}" or die("Could not run $config{unixauth_type}");
+                print UNIXAUTH "$user\n$password\n";
+                close UNIXAUTH;
+                $ret=!($?>>8);
+        }
+        else {
+                # no such authentication type
+                return 0;
+        }
     
         if ($ret) {
             my $userinfo=IkiWiki::userinfo_retrieve();
@@ -68,6 +88,16 @@ As [with passwordauth](/security/#index14h2), be wary of sending usernames and p
         my $form=$params{form};
         my $session=$params{session};
         my $cgi=$params{cgi};
+    
+        # if not under SSL, die before even showing a login form,
+        # unless the admin explicitly says it's fine
+        if (! exists $config{unixauth_requiressl}) {
+                $config{unixauth_requiressl} = 1;
+        }
+        if ($config{unixauth_requiressl} && \
+            (! $config{sslcookie} || ! exists $ENV{'HTTPS'})) {
+                die("SSL required to login. Contact your administrator.");
+        }
     
         if ($form->title eq "signin") {
                 $form->field(name => "name", required => 0);
@@ -93,6 +123,7 @@ As [with passwordauth](/security/#index14h2), be wary of sending usernames and p
                                 );
                         }
                         
+                        # XXX is this reachable? looks like no
                         elsif ($submittype eq "Login") {
                                 $form->field( 
                                         name => "name",
