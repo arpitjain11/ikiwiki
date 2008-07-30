@@ -115,7 +115,7 @@ sub getsetup () { #{{{
 				openid signinedit lockedit conditional
 				recentchanges parentlinks}],
 		description => "plugins to enable by default",
-		safe => 1,
+		safe => 0,
 		rebuild => 1,
 	},
 	add_plugins => {
