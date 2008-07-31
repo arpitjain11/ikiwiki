@@ -6,6 +6,5 @@ I'd like to be able to drop an unmodified RFC2822 email message into ikiwiki, an
 >> [mailbox](http://pivot.cs.unb.ca/git/?p=ikimailbox.git;a=summary) 
 >> plugin.  At the moment, it reads all of the messages in a maildir and passes them through 
 >> a template of your choice.  Kinda acts like `cat` at the moment because none of the 
->> css is defined yet.  Next missions are threading (Email::Thread?)  and filtering of headers. 
->> also, do something to preserve the bodies of the mail messages. Maybe with Text::Quoted. Or just &lt; pre&gt; :-)
+>> css is defined yet.  Next missions are threading (Email::Thread?), and maybe some simple css. 
 >> To see the (unsurprising) syntax, look at [a trivial example markdown file](http://pivot.cs.unb.ca/git/?p=ikimailbox.git;a=blob;f=test/in/index.mdwn;hb=HEAD)
