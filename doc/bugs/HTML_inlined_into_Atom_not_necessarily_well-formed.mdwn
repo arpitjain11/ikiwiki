@@ -12,6 +12,8 @@ Possible solutions:
 >>> And the same content will be treated as html (probably as tag soup) if it's
 >>> in a rss feed.
 
+>>> [[merged|done]]
+
 * Keep HTML in Atom feeds as type="xhtml", but replace named entities with numeric ones,
   like in the re-escape-entities branch in my repository ([diff here](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commitdiff;h=c0eb041c65d0653bacf0d4acb7a602e9bda8888e))
 
