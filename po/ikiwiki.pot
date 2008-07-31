@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-25 16:16-0400\n"
+"POT-Creation-Date: 2008-07-31 19:25-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759 ../IkiWiki.pm:788
+#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759 ../IkiWiki.pm:785
 msgid "Error"
 msgstr ""
 
@@ -190,6 +190,10 @@ msgstr ""
 msgid "attachment upload"
 msgstr ""
 
+#: ../IkiWiki/Plugin/autoindex.pm:65
+msgid "automatic index generation"
+msgstr ""
+
 #: ../IkiWiki/Plugin/brokenlinks.pm:40
 #, perl-format
 msgid "%s from %s"
@@ -199,9 +203,20 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/testpagespec.pm:17
+#: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/cutpaste.pm:22
+#: ../IkiWiki/Plugin/cutpaste.pm:37 ../IkiWiki/Plugin/cutpaste.pm:53
+#: ../IkiWiki/Plugin/testpagespec.pm:17
 #, perl-format
 msgid "%s parameter is required"
+msgstr ""
+
+#: ../IkiWiki/Plugin/cutpaste.pm:58
+msgid "no text was copied in this page"
+msgstr ""
+
+#: ../IkiWiki/Plugin/cutpaste.pm:61
+#, perl-format
+msgid "no text was copied in this page with id %s"
 msgstr ""
 
 #: ../IkiWiki/Plugin/edittemplate.pm:41
@@ -800,15 +815,11 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#. translators: The first parameter is a
-#. translators: preprocessor directive name,
-#. translators: the second a page name, the
-#. translators: third a number.
-#: ../IkiWiki.pm:771
+#: ../IkiWiki.pm:768
 #, perl-format
-msgid "%s preprocessing loop detected on %s at depth %i"
+msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1219
+#: ../IkiWiki.pm:1216
 msgid "yes"
 msgstr ""
