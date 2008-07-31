@@ -128,26 +128,34 @@ of a plugin.
 
         hook(type => "preprocess", id => "foo", call => \&preprocess);
 
-Replace "foo" with the command name that will be used inside brackets for
-the preprocessor directive.
-
-Each time the directive is processed, the referenced function (`preprocess`
-in the example above) is called, and is passed named parameters. A "page"
-parameter gives the name of the page that embedded the preprocessor
-directive, while a "destpage" parameter gives the name of the page the
-content is going to (different for inlined pages), and a "preview"
-parameter is set to a true value if the page is being previewed. All
-parameters included in the directive are included as named parameters as
-well. Whatever the function returns goes onto the page in place of the
+Replace "foo" with the command name that will be used for the preprocessor
 directive.
 
-An optional "scan" parameter, if set to a true value, makes the hook be
-called during the preliminary scan that ikiwiki makes of updated pages,
-before begining to render pages. This parameter should be set to true if
-the hook modifies data in `%links`. Note that doing so will make the hook
-be run twice per page build, so avoid doing it for expensive hooks. (As an
-optimisation, if your preprocessor hook is called in a void contets, you
-can assume it's being run in scan mode.)
+Each time the directive is processed, the referenced function (`preprocess`
+in the example above) is called. Whatever the function returns goes onto
+the page in place of the directive. Or, if the function aborts using
+`error()`, the directive will be replaced with the error message.
+
+The function is passed named parameters. First come the parameters set
+in the preprocessor directive. These are passed in the same order as
+they're in the directive, and if the preprocessor directive contains a bare
+parameter (example: `\[[!foo param]]`), that parameter will be passed with
+an empty value.
+
+After the parameters from the preprocessor directive some additional ones
+are passed: A "page" parameter gives the name of the page that embedded the
+preprocessor directive, while a "destpage" parameter gives the name of the
+page the content is going to (different for inlined pages), and a "preview"
+parameter is set to a true value if the page is being previewed.
+
+If `hook` is passed an optional "scan" parameter, set to a true value, this
+makes the hook be called during the preliminary scan that ikiwiki makes of
+updated pages, before begining to render pages. This should be done if the
+hook modifies data in `%links`. Note that doing so will make the hook be
+run twice per page build, so avoid doing it for expensive hooks. (As an
+optimisation, if your preprocessor hook is called in a void context, you
+can assume it's being run in scan mode, and avoid doing expensive things at
+that point.)
 
 Note that if the [[htmlscrubber]] is enabled, html in
 [[ikiwiki/PreProcessorDirective]] output is sanitised, which may limit what
