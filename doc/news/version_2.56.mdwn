@@ -1,0 +1,10 @@
+ikiwiki 2.56 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * autoindex: New plugin that generates missing index pages.
+     (Sponsored by The TOVA Company.)
+   * Escape HTML is rss and atom feeds instead of respectively using CDATA and
+     treating it as XHTML. This avoids problems with escaping the end of the
+     CDATA when the htmlscrubber is not used, and it avoids problems with atom
+     XHTML using named entity references that are not in the atom DTD. (Simon McVittie)
+   * Add test for old versions of git that don't support --cleanup=verbatim,
+     and munge empty commit messages."""]]
