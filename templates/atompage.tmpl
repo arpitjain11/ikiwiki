@@ -12,22 +12,18 @@
 </TMPL_IF>
 </author>
 <TMPL_IF NAME="COPYRIGHT">
- <rights type="xhtml" xml:lang="en">
-  <div xmlns="http://www.w3.org/1999/xhtml">
+ <rights type="html" xml:lang="en">
    <TMPL_IF NAME="LICENSE">
     <TMPL_VAR LICENSE>
-    <TMPL_VAR COPYRIGHT>
+    <TMPL_VAR COPYRIGHT ESCAPE=HTML>
    <TMPL_ELSE>
-    <TMPL_VAR COPYRIGHT>
+    <TMPL_VAR COPYRIGHT ESCAPE=HTML>
    </TMPL_IF>
-  </div>
  </rights>
 <TMPL_ELSE>
  <TMPL_IF NAME="LICENSE">
-  <rights type="xhtml" xml:lang="en">
-   <div xmlns="http://www.w3.org/1999/xhtml">
-    <TMPL_VAR LICENSE>
-   </div>
+  <rights type="html">
+    <TMPL_VAR LICENSE ESCAPE=HTML>
   </rights>
  </TMPL_IF>
 </TMPL_IF>
