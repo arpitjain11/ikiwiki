@@ -58,6 +58,11 @@ comments are very welcome. --[[Paweł|ptecza]]
 >> Similar hardcoded method I've found in `img` plugin :) But only one
 >> argument is not named there (image path).
 
+>>> I think I hadn't realized what you were doing there. The order
+>>> for unnamed parameters can in fact be relied on. 
+>>> 
+>>> --[[Joey]]
+
 >> Maybe I shouldn't use so simple plugin syntax? For following syntax
 >> I wouldn't have that problem:
 
@@ -95,6 +100,8 @@ And here is RC2 of that plugin. I've changed a plugin syntax, because the old
 seems to be too enigmatic and it was hard to me to handle unnamed parameters
 in not hardcoded way. I hope that my changes are acceptable for you.
 Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
+
+> One question, why the 2px padding for span.color? --[[Joey]]
 
 	--- /dev/null	2008-06-21 02:02:15.000000000 +0200
 	+++ color.pm	2008-07-27 14:58:12.000000000 +0200
@@ -146,7 +153,7 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 	+	$content =~ s!<span class="color">((color: ([a-z]+|\#[0-9a-f]{3,6})?)?((; )?(background-color: ([a-z]+|\#[0-9a-f]{3,6})?)?)?)</span>!<span class="color" style="$1">!g;
 	+	$content =~ s!<span class="colorend">!!g;
 	+
-	+	return $content; 
+	+	return $content;
 	+} #}}}
 	+
 	+sub preprocess(@) { #{{{
