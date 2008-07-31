@@ -414,11 +414,23 @@ sub rcs_commit_staged ($$$) {
 		$ENV{GIT_AUTHOR_EMAIL}="$u\@web";
 	}
 
+	$message = IkiWiki::possibly_foolish_untaint($message);
+	my @opts;
+	if ($message !~ /\S/) {
+		# Force git to allow empty commit messages.
+		# (If this version of git supports it.)
+		my ($version)=`git --version` =~ /git version (.*)/;
+		if ($version ge "1.5.4") {
+			push @opts, '--cleanup=verbatim';
+		}
+		else {
+			$message.=".";
+		}
+	}
+	push @opts, '-q';
 	# git commit returns non-zero if file has not been really changed.
 	# so we should ignore its exit status (hence run_or_non).
-	$message = IkiWiki::possibly_foolish_untaint($message);
-	if (run_or_non('git', 'commit', '--cleanup=verbatim',
-	               '-q', '-m', $message)) {
+	if (run_or_non('git', 'commit', @opts, '-m', $message)) {
 		if (length $config{gitorigin_branch}) {
 			run_or_cry('git', 'push', $config{gitorigin_branch});
 		}

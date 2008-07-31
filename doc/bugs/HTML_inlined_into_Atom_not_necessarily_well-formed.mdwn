@@ -1,0 +1,35 @@
+If a blog entry contains a HTML named entity, such as the `&mdash;` produced by [[plugins/rst]] for blockquote citations, it's pasted into the Atom feed as-is. However, Atom feeds don't have a DTD, so named entities beyond `&lt;`, `&gt;`, `&quot;`, `&amp;` and `&apos;` aren't well-formed XML.
+
+Possible solutions:
+
+* Put HTML in Atom feeds as type="html" (and use ESCAPE=HTML) instead
+
+> Are there any particular downsides to doing that ..? --[[Joey]]
+
+>> It's the usual XHTML/HTML distinction. type="html" will always be interpreted as "tag soup", I believe - this may lead to it being rendered differently in some browsers. In general ikiwiki seems to claim to produce XHTML (at least, the default page.tmpl makes it claim to be XHTML Strict). On the other hand, this is a much simpler solution... see escape-feed-html branch in my repository, which I'm now using instead --[[smcv]]
+
+>>> Of course, browsers [probably don't treat xhtml pages as xhtml anyway](http://hixie.ch/advocacy/xhtml).
+>>> And the same content will be treated as html (probably as tag soup) if it's
+>>> in a rss feed.
+
+>>> [[merged|done]]
+
+* Keep HTML in Atom feeds as type="xhtml", but replace named entities with numeric ones,
+  like in the re-escape-entities branch in my repository ([diff here](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=commitdiff;h=c0eb041c65d0653bacf0d4acb7a602e9bda8888e))
+
+>> I can see why you think this is excessively complex! --[[smcv]]
+
+(Also, the HTML in RSS feeds would probably get better interoperability if it was escaped with ESCAPE=HTML rather than being in a CDATA section?)
+
+> Can't see why? --[[Joey]]
+
+>> For a start, `]]>` in content wouldn't break the feed :-) but I was really thinking of non-XML, non-SGML parsers (more tag soup) that don't understand CDATA (I've suffered from CDATA damage when feeding generated code through gtkdoc, for instance). --[[smcv]]
+
+>>> FWIW, the htmlscrubber escapes the `]]>`. (Wouldn't hurt to make that
+>>> more robust tho.)
+>>> 
+>>> ikiwiki has used CDATA from the beginning -- this is the first time
+>>> I've heard about rss 2.0 parsers that didn't know about CDATA.
+>>>
+>>> (IIRC, I used CDATA because the result is more space-efficient and less
+>>> craptacular to read manually.)

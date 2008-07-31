@@ -1,0 +1,32 @@
+The security of this plugin scares me. As noted in the plugin
+documentation, you basically have to use it with SSL, since snooping on the
+login password doesn't give you an essentially useless account -- it gives
+you an actual account on the machine!
+
+Also, apparently pwauth defers *all* auth attempts if one fails, and it
+does this by using a lock file, and sleeping after a failed auth attempt.
+Which is needed to avoid brute-forcing, since this is a significant
+password.. but how will that interact with ikiwiki? Well, ikiwiki _also_
+uses a lock file. So, at a minimum, someone can not only try to brute-force
+the pwauth password, but the ikiwiki processes that stack up due to that
+will also keep ikiwiki's lock held. Which basically DOSes the wiki for
+everyone else; noone else can try to log in, or log out, or edit a page,
+all of which require taking the lock.
+
+So I don't think I'll be accepting this plugin into ikiwiki itself..
+--[[Joey]]
+
+Thanks for the comments. That's definitely an undesirable interaction between pwauth and ikiwiki; in my current application it wouldn't be a serious problem, but I'd like this plugin to be general-purpose and safe enough for inclusion in ikiwiki. It's the system-users-are-wiki-users idea I'm married to here, not pwauth itself; can you suggest another approach I might take?
+-- [[schmonz]]
+
+> Have you considered using [[plugins/httpauth]] and then the appropriate apache module?  There are apache modules like [mod_authnz_external](http://unixpapa.com/mod_auth_external.html) that might help.  The advantage of these solutions is that they usually make the security implications explicit.  -- Will
+
+Actually, yes. That's how I made sure I had pwauth working to begin with. I'm partial to the form-based approach because I'm not aware of any way to reliably "log out" browsers from HTTP authentication. If that *is* reliably possible, then I worked way too hard for no reason. ;-)
+-- [[schmonz]]
+
+I've added support for [checkpassword](http://cr.yp.to/checkpwd/interface.html), since those generally don't have any rate-limiting cleverness to interfere with ikiwiki's, and made a few other changes. Please check out the plugin docs again and let me know if this is closer to being acceptable.
+-- [[schmonz]]
+
+> I actually think that the rate limiting is a good thing. After all,
+> ikiwiki doesn't do its own login rate limiting. Just need to find a way
+> to disentangle the two locks. --[[Joey]]

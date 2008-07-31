@@ -21,6 +21,6 @@
 	<TMPL_IF NAME="ENCLOSURE">
 	<enclosure url="<TMPL_VAR ENCLOSURE>" type="<TMPL_VAR TYPE>" length="<TMPL_VAR LENGTH>" />
 	<TMPL_ELSE>
-	<description><![CDATA[<TMPL_VAR CONTENT>]]></description>
+	<description><TMPL_VAR CONTENT ESCAPE=HTML></description>
 	</TMPL_IF>
 </item>

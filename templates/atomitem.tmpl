@@ -10,22 +10,18 @@
 	 <author><name><TMPL_VAR AUTHOR ESCAPE=HTML></name></author>
 	</TMPL_IF>
 	<TMPL_IF NAME="COPYRIGHT">
-	 <rights type="xhtml" xml:lang="en">
-	  <div xmlns="http://www.w3.org/1999/xhtml">
+	 <rights type="html" xml:lang="en">
 	   <TMPL_IF NAME="LICENSE">
-	    <TMPL_VAR LICENSE>
-	    <TMPL_VAR COPYRIGHT>
+	    <TMPL_VAR LICENSE ESCAPE=HTML>
+	    <TMPL_VAR COPYRIGHT ESCAPE=HTML>
 	   <TMPL_ELSE>
-	    <TMPL_VAR COPYRIGHT>
+	    <TMPL_VAR COPYRIGHT ESCAPE=HTML>
 	   </TMPL_IF>
-	  </div>
 	 </rights>
 	<TMPL_ELSE>
 	 <TMPL_IF NAME="LICENSE">
-	  <rights type="xhtml" xml:lang="en">
-	   <div xmlns="http://www.w3.org/1999/xhtml">
-	    <TMPL_VAR LICENSE>
-	   </div>
+	  <rights type="html" xml:lang="en">
+	    <TMPL_VAR LICENSE ESCAPE=HTML>
 	  </rights>
 	 </TMPL_IF>
 	</TMPL_IF>
@@ -39,10 +35,8 @@
 	<TMPL_IF NAME="ENCLOSURE">
 	 <link rel="enclosure" type="<TMPL_VAR TYPE>" href="<TMPL_VAR ENCLOSURE>" length="<TMPL_VAR LENGTH>" />
 	<TMPL_ELSE>
-	 <content type="xhtml" xml:lang="en">
-	  <div xmlns="http://www.w3.org/1999/xhtml">
-	  <TMPL_VAR CONTENT>
-	  </div>
+	 <content type="html" xml:lang="en">
+	  <TMPL_VAR CONTENT ESCAPE=HTML>
 	 </content>
 	</TMPL_IF>
 </entry>
