@@ -6,6 +6,8 @@ ikiwiki (2.56) UNRELEASED; urgency=low
     treating it as XHTML. This avoids problems with escaping the end of the
     CDATA when the htmlscrubber is not used, and it avoids problems with atom
     XHTML using named entity references that are not in the atom DTD. (Simon McVittie)
+  * Add test for old versions of git that don't support --cleanup=verbatim,
+    and munge empty commit messages.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 29 Jul 2008 15:53:26 -0400
 
