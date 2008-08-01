@@ -284,6 +284,13 @@ sub getsetup () { #{{{
 		safe => 0, # regexp
 		rebuild => 1,
 	},
+	banned_users => {
+		type => "string",
+		default => [],
+		description => "users who cannot use the wiki",
+		safe => 1,
+		rebuild => 0,
+	},
 	wiki_file_prune_regexps => {
 		type => "internal",
 		default => [qr/(^|\/)\.\.(\/|$)/, qr/^\./, qr/\/\./,

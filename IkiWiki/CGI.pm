@@ -18,7 +18,6 @@ sub printheader ($) { #{{{
 	} else {
 		print $session->header(-charset => 'utf-8');
 	}
-
 } #}}}
 
 sub showform ($$$$;@) { #{{{
@@ -231,16 +230,24 @@ sub cgi_prefs ($$) { #{{{
 		fieldset => "admin");
 	
 	my $user_name=$session->param("name");
+
+	# XXX deprecated, should be removed eventually
 	if (! is_admin($user_name)) {
 		$form->field(name => "banned_users", type => "hidden");
 	}
-
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
 			value => userinfo_get($user_name, "email"));
 		if (is_admin($user_name)) {
-			$form->field(name => "banned_users", force => 1,
-				value => join(" ", get_banned_users()));
+			my $value=join(" ", get_banned_users());
+			if (length $value) {
+				$form->field(name => "banned_users", force => 1,
+					value => join(" ", get_banned_users()),
+					comment => "deprecated; please move to banned_users in setup file");
+			}
+			else {
+				$form->field(name => "banned_users", type => "hidden");
+			}
 		}
 	}
 	
@@ -258,12 +265,18 @@ sub cgi_prefs ($$) { #{{{
 			userinfo_set($user_name, 'email', $form->field('email')) ||
 				error("failed to set email");
 		}
+
+		# XXX deprecated, should be removed eventually
 		if (is_admin($user_name)) {
 			set_banned_users(grep { ! is_admin($_) }
 					split(' ',
 						$form->field("banned_users"))) ||
 				error("failed saving changes");
+			if (! length $form->field("banned_users")) {
+				$form->field(name => "banned_users", type => "hidden");
+			}
 		}
+
 		$form->text(gettext("Preferences saved."));
 	}
 	
@@ -638,6 +651,25 @@ sub cgi_editpage ($$) { #{{{
 		}
 	}
 } #}}}
+	
+sub check_banned ($$) { #{{{
+	my $q=shift;
+	my $session=shift;
+
+	my $name=$session->param("name");
+	if (defined $name) {
+		# XXX banned in userinfo is deprecated, should be removed
+		# eventually, and only banned_users be checked.
+		if (userinfo_get($session->param("name"), "banned") ||
+		    grep { $name eq $_ } @{$config{banned_users}}) {
+			print $q->header(-status => "403 Forbidden");
+			$session->delete();
+			print gettext("You are banned.");
+			cgi_savesession($session);
+			exit;
+		}
+	}
+}
 
 sub cgi_getsession ($) { #{{{
 	my $q=shift;
@@ -722,14 +754,8 @@ sub cgi (;$$) { #{{{
 		}
 	}
 	
-	if (defined $session->param("name") &&
-	    userinfo_get($session->param("name"), "banned")) {
-		print $q->header(-status => "403 Forbidden");
-		$session->delete();
-		print gettext("You are banned.");
-		cgi_savesession($session);
-	}
-
+	check_banned($q, $session);
+	
 	run_hooks(sessioncgi => sub { shift->($q, $session) });
 
 	if ($do eq 'signin') {

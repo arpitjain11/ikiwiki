@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 15:43-0400\n"
+"POT-Creation-Date: 2008-08-01 17:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,62 +16,62 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:140
+#: ../IkiWiki/CGI.pm:139
 msgid "You need to log in first."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:171
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:526
+#: ../IkiWiki/CGI.pm:189 ../IkiWiki/CGI.pm:539
 msgid "Your login session has expired."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:211
+#: ../IkiWiki/CGI.pm:210
 msgid "Login"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:212
+#: ../IkiWiki/CGI.pm:211
 msgid "Preferences"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:213
+#: ../IkiWiki/CGI.pm:212
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:267
+#: ../IkiWiki/CGI.pm:280
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:326
+#: ../IkiWiki/CGI.pm:339
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/CGI.pm:450 ../IkiWiki/Plugin/brokenlinks.pm:24
 #: ../IkiWiki/Plugin/inline.pm:306 ../IkiWiki/Plugin/opendiscussion.pm:17
 #: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:78
 #: ../IkiWiki/Render.pm:148
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:493
+#: ../IkiWiki/CGI.pm:506
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:511 ../IkiWiki/CGI.pm:539 ../IkiWiki/CGI.pm:549
-#: ../IkiWiki/CGI.pm:584 ../IkiWiki/CGI.pm:629
+#: ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:552 ../IkiWiki/CGI.pm:562
+#: ../IkiWiki/CGI.pm:597 ../IkiWiki/CGI.pm:642
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:729
+#: ../IkiWiki/CGI.pm:667
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759 ../IkiWiki.pm:1086
+#: ../IkiWiki/CGI.pm:784 ../IkiWiki/CGI.pm:785 ../IkiWiki.pm:1096
 msgid "Error"
 msgstr ""
 
@@ -182,11 +182,11 @@ msgstr ""
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:184
+#: ../IkiWiki/Plugin/attachment.pm:187
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:226
+#: ../IkiWiki/Plugin/attachment.pm:229
 msgid "attachment upload"
 msgstr ""
 
@@ -201,12 +201,6 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:47
 msgid "There are no broken links!"
-msgstr ""
-
-#: ../IkiWiki/Plugin/bzr.pm:12 ../IkiWiki/Plugin/git.pm:15
-#: ../IkiWiki/Plugin/mercurial.pm:12 ../IkiWiki/Plugin/monotone.pm:15
-#: ../IkiWiki/Plugin/svn.pm:11 ../IkiWiki/Plugin/tla.pm:10
-msgid "cannot use multiple rcs plugins"
 msgstr ""
 
 #: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/cutpaste.pm:22
@@ -817,15 +811,19 @@ msgstr ""
 msgid "refreshing wiki.."
 msgstr ""
 
-#: ../IkiWiki.pm:410
+#: ../IkiWiki.pm:417
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:1069
+#: ../IkiWiki.pm:461
+msgid "cannot use multiple rcs plugins"
+msgstr ""
+
+#: ../IkiWiki.pm:1079
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1557
+#: ../IkiWiki.pm:1567
 msgid "yes"
 msgstr ""

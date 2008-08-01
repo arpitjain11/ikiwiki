@@ -11,10 +11,7 @@ ikiwiki (2.60) UNRELEASED; urgency=low
   * Version control backends promoted to first-class plugins.
   * ikiwiki-update-wikilist: Add -r switch to remove. Default behavior is now
     always to add.
-  * The locked pages configuration is moving to a locked_pages option in the
-    setup file, and the allowed attachments configuration to
-    allowed_attachments. The admin prefs page can still be used for these, but
-    that's depreacted and will only be shown if there's currently a value.
+  * Start moving admin preferences from the web interface to the setup file.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 21 Jul 2008 11:35:46 -0400
 

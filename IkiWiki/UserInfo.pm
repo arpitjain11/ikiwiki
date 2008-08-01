@@ -74,6 +74,7 @@ sub is_admin ($) { #{{{
 	return grep { $_ eq $user_name } @{$config{adminuser}};
 } #}}}
 
+# XXX deprecated, should be removed eventually
 sub get_banned_users () { #{{{
 	my @ret;
 	my $userinfo=userinfo_retrieve();
@@ -83,6 +84,7 @@ sub get_banned_users () { #{{{
 	return @ret;
 } #}}}
 
+# XXX deprecated, should be removed eventually
 sub set_banned_users (@) { #{{{
 	my %banned=map { $_ => 1 } @_;
 	my $userinfo=userinfo_retrieve();
