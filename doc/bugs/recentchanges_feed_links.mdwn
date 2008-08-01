@@ -39,3 +39,16 @@ to turn on? --Chapman Flack
 >>>> and the inline plugin would then generate working links in feeds?  How should
 >>>> the guid be constructed? Something based on the rcs revision number?  I guess
 >>>> I'm still not completely clear on your vision for how it ought to work. --Chap
+
+>>>> My idea is to use `\[[meta guid="http://url/recentchanges#rev"]]`, with the
+>>>> `#rev` anchor also included in the change file, and being the rcs's
+>>>> internal revision id. Then the guid is globally unique, and actually
+>>>> links to the change in the recentchanges page. And, when the change
+>>>> has fallen off the page, the link will still go to the recentchanges page.
+>>>> 
+>>>> First, need to check that guids in rss and atom feeds can have anchors in
+>>>> them, and that the anchor is treated as part of the guid. (If the guid
+>>>> is interpreted as just "http://url/recentchanges", then it's
+>>>> not a very good guid.) If using an anchor for a guid is a problem,
+>>>> it could instead generate a random uuid, and use `\[[meta
+>>>> guid="urn:uuid:<foo>" permalink="http://url/recentchanges"]]`
