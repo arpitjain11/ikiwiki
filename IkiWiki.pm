@@ -412,13 +412,6 @@ sub checkconfig () { #{{{
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
 		unless exists $config{wikistatedir};
-	
-	if ($config{rcs}) {
-		loadplugin($config{rcs});
-	}
-	else {
-		loadplugin("norcs");
-	}
 
 	if (defined $config{umask}) {
 		umask(possibly_foolish_untaint($config{umask}));
@@ -455,6 +448,16 @@ sub loadplugins () { #{{{
 	}
 
 	loadplugin($_) foreach @{$config{default_plugins}}, @{$config{add_plugins}};
+	
+	if ($config{rcs}) {
+		if (exists $IkiWiki::hooks{rcs}) {
+			error(gettext("cannot use multiple rcs plugins"));
+		}
+		loadplugin($config{rcs});
+	}
+	if (! exists $IkiWiki::hooks{rcs}) {
+		loadplugin("norcs");
+	}
 
 	run_hooks(getopt => sub { shift->() });
 	if (grep /^-/, @ARGV) {

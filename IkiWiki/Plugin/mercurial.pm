@@ -8,9 +8,6 @@ use Encode;
 use open qw{:utf8 :std};
 
 sub import { #{{{
-	if (exists $IkiWiki::hooks{rcs}) {
-		error(gettext("cannot use multiple rcs plugins"));
-	}
 	hook(type => "checkconfig", id => "mercurial", call => \&checkconfig);
 	hook(type => "getsetup", id => "mercurial", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);

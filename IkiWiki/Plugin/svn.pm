@@ -7,9 +7,6 @@ use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
 
 sub import { #{{{
-	if (exists $IkiWiki::hooks{rcs}) {
-		error(gettext("cannot use multiple rcs plugins"));
-	}
 	hook(type => "checkconfig", id => "svn", call => \&checkconfig);
 	hook(type => "getsetup", id => "svn", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);

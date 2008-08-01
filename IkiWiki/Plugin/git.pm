@@ -11,9 +11,6 @@ my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 
 sub import { #{{{
-	if (exists $IkiWiki::hooks{rcs}) {
-		error(gettext("cannot use multiple rcs plugins"));
-	}
 	hook(type => "checkconfig", id => "git", call => \&checkconfig);
 	hook(type => "getsetup", id => "git", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
