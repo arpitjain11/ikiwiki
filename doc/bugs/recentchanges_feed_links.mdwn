@@ -27,8 +27,15 @@ to turn on? --Chapman Flack
 >>> todo about [[todo/ability_to_force_particular_UUIDs_on_blog_posts]],
 >>> and then by just using that new ability in the page. --[[Joey]]
 
->>>> Ah. The prerequisite todo looks like more than I'd like to take on.
+>>>> <del title="Prerequisite done now?">Ah. The prerequisite todo looks like more than I'd like to take on.
 >>>> In the meantime, would it be very involved to change whatever bug now
 >>>> optimizes away the change pages, or to simply have all the links in the
 >>>> feed point to the recentchanges page itself, with no fragment id?
->>>> Either would be a bit nicer than having broken links in the feed. --Chap
+>>>> Either would be a bit nicer than having broken links in the feed. --Chap</del>
+
+>>>> Does the completion of that todo mean it would be straightforward to get
+>>>> recentchanges working now?  Is it just that the recentchanges plugin
+>>>> needs to generate `\[[!meta guid=something]]` into the internal files,
+>>>> and the inline plugin would then generate working links in feeds?  How should
+>>>> the guid be constructed? Something based on the rcs revision number?  I guess
+>>>> I'm still not completely clear on your vision for how it ought to work. --Chap
