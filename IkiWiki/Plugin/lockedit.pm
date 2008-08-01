@@ -94,6 +94,9 @@ sub formbuilder_setup (@) { #{{{
 				IkiWiki::userinfo_set($user_name, "locked_pages",
 					$form->field("locked_pages")) ||
 						error("failed to set locked_pages");
+				if (! length $form->field("locked_pages")) {
+					$form->field(name => "locked_pages", type => "hidden");
+				}
 			}
 		}
 	}
