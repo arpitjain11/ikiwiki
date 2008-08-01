@@ -21,6 +21,18 @@ sub getsetup () { #{{{
 			safe => 0, # executed
 			rebuild => 0,
 		},
+		allowed_attachments => {
+			type => "string",
+			example => "mimetype(image/*) and maxsize(50kb)",
+			description => "enhanced PageSpec specifying what attachments are allowed",
+			description_html => htmllink("", "", 
+				"ikiwiki/PageSpec/attachment", 
+				noimageinline => 1,
+				linktext => "enhanced PageSpec",
+				)." specifying what attachments are allowed",
+			safe => 1,
+			rebuild => 0,
+		},
 } #}}}
 
 sub check_canattach ($$;$) { #{{{
@@ -36,19 +48,33 @@ sub check_canattach ($$;$) { #{{{
 
 	# Use a special pagespec to test that the attachment is valid.
 	my $allowed=1;
-	foreach my $admin (@{$config{adminuser}}) {
-		my $allowed_attachments=IkiWiki::userinfo_get($admin, "allowed_attachments");
-		if (defined $allowed_attachments &&
-		    length $allowed_attachments) {
-			$allowed=pagespec_match($dest,
-				$allowed_attachments,
-				file => $file,
-				user => $session->param("name"),
-				ip => $ENV{REMOTE_ADDR},
-			);
-			last if $allowed;
+	if (defined $config{allowed_attachments} &&
+	    length $config{allowed_attachments}) {
+		$allowed=pagespec_match($dest,
+			$config{allowed_attachments},
+			file => $file,
+			user => $session->param("name"),
+			ip => $ENV{REMOTE_ADDR},
+		);
+	}
+
+	# XXX deprecated, should be removed eventually
+	if ($allowed) {
+		foreach my $admin (@{$config{adminuser}}) {
+			my $allowed_attachments=IkiWiki::userinfo_get($admin, "allowed_attachments");
+			if (defined $allowed_attachments &&
+			    length $allowed_attachments) {
+				$allowed=pagespec_match($dest,
+					$allowed_attachments,
+					file => $file,
+					user => $session->param("name"),
+					ip => $ENV{REMOTE_ADDR},
+				);
+				last if $allowed;
+			}
 		}
 	}
+
 	if (! $allowed) {
 		error(gettext("prohibited by allowed_attachments")." ($allowed)");
 	}
@@ -91,24 +117,26 @@ sub formbuilder_setup (@) { #{{{
 		}
 	}
 	elsif ($form->title eq "preferences") {
+		# XXX deprecated, should remove eventually
 		my $session=$params{session};
 		my $user_name=$session->param("name");
 
 		$form->field(name => "allowed_attachments", size => 50,
 			fieldset => "admin",
-			comment => "(".
-				htmllink("", "", 
-					"ikiwiki/PageSpec/attachment", 
-					noimageinline => 1,
-					linktext => "Enhanced PageSpec",
-				).")"
+			comment => "deprecated; please move to allowed_attachments in setup file",
 		);
 		if (! IkiWiki::is_admin($user_name)) {
 			$form->field(name => "allowed_attachments", type => "hidden");
 		}
                 if (! $form->submitted) {
-			$form->field(name => "allowed_attachments", force => 1,
-				value => IkiWiki::userinfo_get($user_name, "allowed_attachments"));
+			my $value=IkiWiki::userinfo_get($user_name, "allowed_attachments");
+			if (length $value) {
+				$form->field(name => "allowed_attachments", force => 1,
+					value => IkiWiki::userinfo_get($user_name, "allowed_attachments"));
+			}
+			else {
+				$form->field(name => "allowed_attachments", type => "hidden");
+			}
                 }
 		if ($form->submitted && $form->submitted eq 'Save Preferences') {
 			if (defined $form->field("allowed_attachments")) {

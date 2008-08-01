@@ -20,9 +20,9 @@ Bear in mind that if you let anyone upload a particular kind of file
    contains html as a web page; including running any malicious javascript
    embedded in that page.
 
-If you enable this plugin, be sure to lock that down, by entering an
-[[enhanced_PageSpec|ikiwiki/pagespec/attachment]] in the "Allowed
-Attachments" field of the wiki admin's preferences page.
+If you enable this plugin, be sure to lock it down, via the
+`allowed_attachments` setup file option. This is a special 
+[[enhanced_PageSpec|ikiwiki/pagespec/attachment]].
 
 This plugin will use the [[!cpan File::MimeInfo::Magic]] perl module, if
 available, for mimetype checking.
