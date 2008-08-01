@@ -22,6 +22,7 @@ BEGIN { use_ok("IkiWiki"); }
 %config=IkiWiki::defaultconfig();
 $config{rcs} = "git";
 $config{srcdir} = "$dir/src";
+IkiWiki::loadplugins();
 IkiWiki::checkconfig();
 
 system "cd $gitrepo && git init >/dev/null 2>&1";
@@ -46,7 +47,7 @@ IkiWiki::rcs_commit("test1.mdwn", "Added the first page", "moo");
 
 is($#changes, 1);
 is($changes[0]{message}[0]{"line"}, "Added the first page");
-is($changes[0]{pages}[0]{"page"}, "test1.mdwn");
+is($changes[0]{pages}[0]{"page"}, "test1");
 	
 # Manual commit
 my $message = "Added the second page";
@@ -61,9 +62,9 @@ system "cd $config{srcdir}; git push origin >/dev/null 2>&1";
 
 is($#changes, 2);
 is($changes[0]{message}[0]{"line"}, $message);
-is($changes[0]{pages}[0]{"page"}, "test2.mdwn");
+is($changes[0]{pages}[0]{"page"}, "test2");
 
-is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
+is($changes[1]{pages}[0]{"page"}, "test1");
 
 # Renaming
 
@@ -75,7 +76,7 @@ IkiWiki::rcs_commit_staged("Added the 4th page", "moo", "Joe User");
 @changes = IkiWiki::rcs_recentchanges(4);
 
 is($#changes, 3);
-is($changes[0]{pages}[0]{"page"}, "test4.mdwn");
+is($changes[0]{pages}[0]{"page"}, "test4");
 
 ok(mkdir($config{srcdir}."/newdir"));
 IkiWiki::rcs_rename("test4.mdwn", "newdir/test5.mdwn");
@@ -84,7 +85,7 @@ IkiWiki::rcs_commit_staged("Added the 5th page", "moo", "Joe User");
 @changes = IkiWiki::rcs_recentchanges(4);
 
 is($#changes, 3);
-is($changes[0]{pages}[0]{"page"}, "newdir/test5.mdwn");
+is($changes[0]{pages}[0]{"page"}, "newdir/test5");
 
 IkiWiki::rcs_remove("newdir/test5.mdwn");
 IkiWiki::rcs_commit_staged("Remove the 5th page", "moo", "Joe User");

@@ -19,6 +19,7 @@ BEGIN { use_ok("IkiWiki"); }
 %config=IkiWiki::defaultconfig();
 $config{rcs} = "mercurial";
 $config{srcdir} = "$dir/repo";
+IkiWiki::loadplugins();
 IkiWiki::checkconfig();
 
 system "hg init $config{srcdir}";
@@ -34,7 +35,7 @@ my @changes;
 
 is($#changes, 0);
 is($changes[0]{message}[0]{"line"}, "Added the first page");
-is($changes[0]{pages}[0]{"page"}, "test1.mdwn");
+is($changes[0]{pages}[0]{"page"}, "test1");
 is($changes[0]{user}, "Joe User");
 	
 # Manual commit
@@ -52,9 +53,9 @@ system "hg commit -R $config{srcdir} -u \"$user\" -m \"$message\" -d \"0 0\"";
 is($#changes, 1);
 is($changes[0]{message}[0]{"line"}, $message);
 is($changes[0]{user}, $username);
-is($changes[0]{pages}[0]{"page"}, "test2.mdwn");
+is($changes[0]{pages}[0]{"page"}, "test2");
 
-is($changes[1]{pages}[0]{"page"}, "test1.mdwn");
+is($changes[1]{pages}[0]{"page"}, "test1");
 
 my $ctime = IkiWiki::rcs_getctime("test2.mdwn");
 is($ctime, 0);
