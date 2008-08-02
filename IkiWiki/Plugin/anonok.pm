@@ -16,6 +16,8 @@ sub getsetup () { #{{{
 			type => "string",
 			example => "*/discussion",
 			description => "PageSpec to limit which pages anonymous users can edit",
+			description_html => htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).
+				" to limit which pages anonymous users can edit",
 			safe => 1,
 			rebuild => 0,
 		},
