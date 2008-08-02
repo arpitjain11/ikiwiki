@@ -52,3 +52,43 @@ to turn on? --Chapman Flack
 >>>> not a very good guid.) If using an anchor for a guid is a problem,
 >>>> it could instead generate a random uuid, and use `\[[meta
 >>>> guid="urn:uuid:<foo>" permalink="http://url/recentchanges"]]`
+
+>>>>> I had a quick look into this after fixing the "prerequisite", but got
+>>>>> bogged down in minor details. Anyway, I'd be happy to help.
+>>>>> I think the guid stuff is actually fairly irrelevant, you just need
+>>>>> `\[[!meta permalink]]` (and in fact you're using guid incorrectly, by
+>>>>> expecting it to be treated as a link).
+>>>>>
+>>>>> My advice would be: first, fix the bug as reported, by
+>>>>> using `\[[!meta permalink="http://blah/blah/blah#change-$rev"]]` (starting
+>>>>> anchor names with a number isn't syntactically valid, if I remember
+>>>>> correctly, so do have a prefix like "change-" or "rev-" or something).
+>>>>>
+>>>>> Then, optionally, force the guid too (although it defaults to the permalink
+>>>>> anyway, so this shouldn't actually be necessary).
+>>>>>
+>>>>> Some more explanation of how guids work: it's actually easier to think
+>>>>> about them in Atom terms than in RSS terms, since Atom has a clearer
+>>>>> conceptual model.
+>>>>>
+>>>>> The `\[[!meta permalink]]` becomes the `<link>`
+>>>>> element in Atom, which contains a link that users can follow; if it's not
+>>>>> explicitly given, ikiwiki uses its idea of the page's URL.
+>>>>>
+>>>>> The `\[[!meta guid]]` becomes the `<id>` element in Atom, which contains an
+>>>>> opaque, not-necessarily-resolvable identifier; if it's
+>>>>> not explicitly given, ikiwiki uses the same URL as the `<link>`.
+>>>>>
+>>>>> In RSS the semantics aren't so clear-cut (which is part of why Atom exists!),
+>>>>> but the way ikiwiki interprets them is:
+>>>>>
+>>>>> * `<link>` is the same as in Atom
+>>>>> * if `\[[!meta guid]]` is explicitly given, put it in `<guid permalink="no">`
+>>>>>   (the assumption in this case is that it's a UUID or something)
+>>>>> * if `\[[!meta guid]]` is not explicitly given, copy the `<link>` into the `<guid>`
+>>>>>
+>>>>> I believe RSS aggregators (are meant to) compare `<guid>`s as opaque
+>>>>> strings, so using an anchor there should be fine. Atom aggregators are certainly
+>>>>> required to compare `<id>`s as opaque strings.
+>>>>>
+>>>>> --[[smcv]]
