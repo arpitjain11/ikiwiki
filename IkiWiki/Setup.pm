@@ -28,9 +28,9 @@ sub load ($) { # {{{
 } #}}}
 
 sub merge ($) {
+	# Merge setup into existing config and untaint.
 	my %setup=%{shift()};
 
-	# Merge setup into existing config and untaint.
 	if (exists $setup{add_plugins}) {
 		push @{$setup{add_plugins}}, @{$config{add_plugins}};
 	}
@@ -69,6 +69,35 @@ sub merge ($) {
 			wrappermode => (defined $config{cgi_wrappermode} ? $config{cgi_wrappermode} : "06755"),
 		};
 	}
+} #}}}
+
+sub getsetup () { #{{{
+	# Gets all available setup data from all plugins. Returns an ordered list of
+	# [plugin, setup] pairs.
+	my @ret;
+
+	# Load all plugins, so that all setup options are available.
+	# (But skip a few problematic external demo plugins.)
+	my @plugins=grep { ! /^(externaldemo|pythondemo|\Q$config{rcs}\E)$/ }
+		sort(IkiWiki::listplugins());
+	unshift @plugins, $config{rcs} if $config{rcs}; # rcs plugin 1st
+	foreach my $plugin (@plugins) {
+		eval { IkiWiki::loadplugin($plugin) };
+		if (exists $IkiWiki::hooks{checkconfig}{$plugin}{call}) {
+			my @s=eval { $IkiWiki::hooks{checkconfig}{$plugin}{call}->() };
+		}
+	}
+
+	foreach my $plugin (@plugins) {
+		if (exists $IkiWiki::hooks{getsetup}{$plugin}{call}) {
+			# use an array rather than a hash, to preserve order
+			my @s=eval { $IkiWiki::hooks{getsetup}{$plugin}{call}->() };
+			next unless @s;
+			push @ret, [ $plugin, \@s ],
+		}
+	}
+
+	return @ret;
 } #}}}
 
 sub dump ($) { #{{{
