@@ -1,0 +1,15 @@
+A quick [[patch]] to silence a [[rcs/monotone]] warning I started seeing:
+
+    diff --git a/IkiWiki/Plugin/monotone.pm b/IkiWiki/Plugin/monotone.pm
+    index 4b9be31..9d4e280 100644
+    --- a/IkiWiki/Plugin/monotone.pm
+    +++ b/IkiWiki/Plugin/monotone.pm
+    @@ -55,7 +55,7 @@ sub checkconfig () { #{{{
+     		error("Monotone version too old, is $version but required 0.38");
+     	}
+     
+    -	if (length $config{mtn_wrapper}) {
+    +	if (defined $config{mtn_wrapper} && length $config{mtn_wrapper}) {
+     		push @{$config{wrappers}}, {
+     			wrapper => $config{mtn_wrapper},
+     			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),
