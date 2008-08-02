@@ -5,3 +5,76 @@ The new [[plugins/rename]] plugin allows files to be renamed, but doesn't seem t
 I'm currently moving a couple of projects from [Trac](http://trac.edgewall.org/) to Ikiwiki.  I don't want to have to re-do all the wiki formatting at once.  Initially I simply imported all the old wiki pages without suffixes.  This made them appear on the web as raw un-editable text.  I wanted other project members to be able to do the updating to the new markup language, so I then renamed the files to use '.txt' suffixes, and that allows them to be edited.  Unfortunately, there is still no way to convert them to '.mdwn' files on the web.
 
 I was hoping that the [[plugins/rename]] plugin would allow web uses to change the filename suffix, but it doesn't.  This means that the page type can be set on page creation using the web interface, but cannot be changed thereafter using the web interface.  I was thinking the UI would be something like adding the 'Page type' drop-down menu that appears on the creation page to either the edit or rename pages.
+
+#### [[patch]]
+
+    diff --git a/IkiWiki/Plugin/rename.pm b/IkiWiki/Plugin/rename.pm
+    index 527ee88..123b772 100644
+    --- a/IkiWiki/Plugin/rename.pm
+    +++ b/IkiWiki/Plugin/rename.pm
+    @@ -43,7 +43,7 @@ sub check_canrename ($$$$$$$) { #{{{
+     	
+     	# Dest checks can be omitted by passing undef.
+     	if (defined $dest) {
+    -		if ($src eq $dest || $srcfile eq $destfile) {
+    +		if ($srcfile eq $destfile) {
+     			error(gettext("no change to the file name was specified"));
+     		}
+     
+    @@ -54,7 +54,7 @@ sub check_canrename ($$$$$$$) { #{{{
+     		}
+     
+     		# Must not be a known source file.
+    -		if (exists $pagesources{$dest}) {
+    +		if ($src ne $dest && exists $pagesources{$dest}) {
+     			error(sprintf(gettext("%s already exists"),
+     				htmllink("", "", $dest, noimageinline => 1)));
+     		}
+    @@ -97,6 +97,24 @@ sub rename_form ($$$) { #{{{
+     	$f->field(name => "do", type => "hidden", value => "rename", force => 1);
+     	$f->field(name => "page", type => "hidden", value => $page, force => 1);
+     	$f->field(name => "new_name", value => IkiWiki::pagetitle($page), size => 60);
+    +	if (!$q->param("attachment")) {
+    +		# insert the standard extensions
+    +		my @page_types;
+    +		if (exists $IkiWiki::hooks{htmlize}) {
+    +			@page_types=grep { !/^_/ }
+    +				keys %{$IkiWiki::hooks{htmlize}};
+    +		}
+    +	
+    +		# make sure the current extension is in the list
+    +		my ($ext) = $pagesources{$page}=~/\.([^.]+)$/;
+    +		if (! $IkiWiki::hooks{htmlize}{$ext}) {
+    +			unshift(@page_types, $ext);
+    +		}
+    +	
+    +		$f->field(name => "type", type => 'select',
+    +			options => \@page_types,
+    +			value => $ext, force => 1);
+    +	}
+     	$f->field(name => "attachment", type => "hidden");
+     
+     	return $f, ["Rename", "Cancel"];
+    @@ -223,12 +241,19 @@ sub sessioncgi ($$) { #{{{
+     			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
+     
+     			# The extension of dest is the same as src if it's
+    -			# a page. If it's an extension, the extension is
+    +			# a page. If it's an attachment, the extension is
+     			# already included.
+     			my $destfile=$dest;
+     			if (! $q->param("attachment")) {
+    -				my ($ext)=$srcfile=~/(\.[^.]+)$/;
+    -				$destfile.=$ext;
+    +				my $type=$q->param('type');
+    +				if (defined $type && length $type && $IkiWiki::hooks{htmlize}{$type}) {
+    +					$type=IkiWiki::possibly_foolish_untaint($type);
+    +				} else {
+    +					my ($ext)=$srcfile=~/\.([^.]+)$/;
+    +					$type=$ext;
+    +				}
+    +				
+    +				$destfile.=".".$type;
+     			}
+     
+     			check_canrename($src, $srcfile, $dest, $destfile,
