@@ -39,4 +39,8 @@ According to [Google Webmaster tools](https://www.google.com/webmasters/tools/),
 
 There is a [sitemap XML standard](http://www.sitemaps.org/protocol.php) that ikiwiki needs to generate for. 
 
-Update: I've since discovered under [Google Webmaster tools 'Subscriber stats'](https://www.google.com/webmasters/tools/subscriberstats), you can tell Google to treat a feed as a sitemap. Therefore in many cases just submitting your [[ikiwiki/blog/]]'s feed will be enough for Google to start better indexing your ikiwiki site.
+Update: I've since discovered under [Google Webmaster tools 'Subscriber stats'](https://www.google.com/webmasters/tools/subscriberstats), you can tell Google to treat a feed as a sitemap. Therefore in many cases just submitting your [[ikiwiki/blog/]]'s feed will be enough for Google to start better indexing your ikiwiki site. **Update:** Sorry this is bollocks. Google doesn't grok a feed as a sitemap. You'll get a ERROR:
+
+	We were unable to read your Sitemap. It may contain an entry we are unable to recognize. Please validate your Sitemap before resubmitting.
+
+[Google should grok feeds as sitemaps.](http://www.google.com/support/webmasters/bin/answer.py?answer=34654) Or rather [[plugins/inline]] should be improved to support the [sitemap protocol](http://sitemaps.org/protocol.php) natively.
