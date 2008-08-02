@@ -7,12 +7,6 @@ In theory, every setting could be configured there. In practice, some
 settings, like `srcdir` and `destdir` are ones you want to keep far away
 from editing via the web.
 
-Currently admin prefs are per-admin, and are stored in the userdb.
-That seems like a bad choice in the context of this idea. Instead, admin
-setup should be configured on a separate page than the regular user prefs
-page, and should be shared amoung all admins, and the ideal storage would be
-a ikiwiki setup file, which could be loaded in, and written back out.
-
 The underlying work has been done to privide metadata about all options via
 getsetup hooks, so it's just a matter of writing a web interface plugin.
 
@@ -24,7 +18,7 @@ The plugin could have these config options:
 	websetup_exclude => [qw{option_baz}],
 	# list of plugins that cannot be enabled/disabled via the web
 	# interface
-	websetup_unconfigurable_plugins => [qw{}]
+	websetup_unconfigurable_plugins => [qw{git svn bzr mercurial monotone tla}]
 
 Leaning toward just making it write out to the same setup file, rather than
 writing to a subsidiary setup file. However, this would mean that any
