@@ -6,7 +6,10 @@ use strict;
 use IkiWiki 2.00;
 
 my @rcs_plugins=(qw{git svn bzr mercurial monotone tla norcs});
-my @default_force_plugins=(qw{amazon_s3});
+
+# amazon_s3 is not something that should be enabled via the web.
+# external is not a standalone plugin.
+my @default_force_plugins=(qw{amazon_s3 external});
 
 sub import { #{{{
 	hook(type => "checkconfig", id => "websetup", call => \&checkconfig);

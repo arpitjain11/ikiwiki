@@ -77,9 +77,7 @@ sub getsetup () { #{{{
 	my @ret;
 
 	# Load all plugins, so that all setup options are available.
-	# (But skip a few problematic external demo plugins.)
-	my @plugins=grep { ! /^(externaldemo|pythondemo|\Q$config{rcs}\E)$/ }
-		sort(IkiWiki::listplugins());
+	my @plugins=grep { $_ ne $config{rcs} } sort(IkiWiki::listplugins());
 	unshift @plugins, $config{rcs} if $config{rcs}; # rcs plugin 1st
 	foreach my $plugin (@plugins) {
 		eval { IkiWiki::loadplugin($plugin) };
