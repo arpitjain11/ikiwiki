@@ -22,7 +22,7 @@ sub getsetup () { #{{{
 			rebuild => 0,
 		},
 		allowed_attachments => {
-			type => "string",
+			type => "pagespec",
 			example => "mimetype(image/*) and maxsize(50kb)",
 			description => "enhanced PageSpec specifying what attachments are allowed",
 			description_html => htmllink("", "", 

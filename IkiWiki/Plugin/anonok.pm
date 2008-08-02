@@ -13,7 +13,7 @@ sub import { #{{{
 sub getsetup () { #{{{
 	return
 		anonok_pagespec => {
-			type => "string",
+			type => "pagespec",
 			example => "*/discussion",
 			description => "PageSpec to limit which pages anonymous users can edit",
 			description_html => htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).

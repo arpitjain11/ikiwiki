@@ -13,7 +13,8 @@ use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
 	    %pagestate %renderedfiles %oldrenderedfiles %pagesources
-	    %destsources %depends %hooks %forcerebuild $gettext_obj};
+	    %destsources %depends %hooks %forcerebuild $gettext_obj
+	    %loaded_plugins};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
@@ -486,6 +487,7 @@ sub loadplugin ($) { #{{{
 		if (defined $dir && -x "$dir/plugins/$plugin") {
 			require IkiWiki::Plugin::external;
 			import IkiWiki::Plugin::external "$dir/plugins/$plugin";
+			$loaded_plugins{$plugin}=1;
 			return 1;
 		}
 	}
@@ -495,6 +497,7 @@ sub loadplugin ($) { #{{{
 	if ($@) {
 		error("Failed to load plugin $mod: $@");
 	}
+	$loaded_plugins{$plugin}=1;
 	return 1;
 } #}}}
 

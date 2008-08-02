@@ -15,7 +15,7 @@ sub import { #{{{
 sub getsetup () { #{{{
 	return
 		locked_pages => {
-			type => "string",
+			type => "pagespec",
 			example => "!*/Discussion",
 			description => "PageSpec controlling which pages are locked",
 			description_html => htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).

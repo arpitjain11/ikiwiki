@@ -18,7 +18,7 @@ The plugin could have these config options:
 	websetup_exclude => [qw{option_baz}],
 	# list of plugins that cannot be enabled/disabled via the web
 	# interface
-	websetup_unconfigurable_plugins => [qw{git svn bzr mercurial monotone tla}]
+	websetup_force_plugins => [qw{git svn bzr mercurial monotone tla}]
 
 Leaning toward just making it write out to the same setup file, rather than
 writing to a subsidiary setup file. However, this would mean that any
