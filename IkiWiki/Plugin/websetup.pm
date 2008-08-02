@@ -12,6 +12,56 @@ sub import { #{{{
 	     call => \&formbuilder_setup);
 } # }}}
 
+sub addfields ($$@) {
+	my $form=shift;
+	my $section=shift;
+
+	while (@_) {
+		my $key=shift;
+		my %info=%{shift()};
+
+		next if ! $info{safe} || $info{type} eq "internal";
+
+		my $description=exists $info{description_html} ? $info{description_html} : $info{description};
+
+		my $value=$config{$key};
+		# multiple plugins can have the same key
+		my $name=$section.".".$key;
+
+		if ($info{type} eq "string") {
+			$form->field(
+				name => $name,
+				label => $description,
+				comment => exists $info{example} && length $info{example} && $info{example} ne $value ? "<br/ ><small>Example: <tt>$info{example}</tt></small>" : "",
+				type => "text",
+				value => $value,
+				size => 60,
+				fieldset => $section,
+			);
+		}
+		elsif ($info{type} eq "integer") {
+			$form->field(
+				name => $name,
+				label => $description,
+				type => "text",
+				value => $value,
+				validate => '/^[0-9]+$/',
+				fieldset => $section,
+			);
+		}
+		elsif ($info{type} eq "boolean") {
+			$form->field(
+				name => $name,
+				label => "",
+				type => "checkbox",
+				value => $value,
+				options => [ [ 1 => $description ] ],
+				fieldset => $section,
+			);
+		}
+	}
+}
+
 sub showform ($$) { #{{{
 	my $cgi=shift;
 	my $session=shift;
@@ -30,6 +80,7 @@ sub showform ($$) { #{{{
 		header => 0,
 		charset => "utf-8",
 		method => 'POST',
+		javascript => 0,
 		params => $cgi,
 		action => $config{cgiurl},
 		template => {type => 'div'},
@@ -46,9 +97,12 @@ sub showform ($$) { #{{{
 
 	$form->field(name => "do", type => "hidden", value => "setup",
 		force => 1);
-
-	if (! $form->submitted) {
-		# TODO
+	addfields($form, gettext("main"), IkiWiki::getsetup());
+	require IkiWiki::Setup;
+	foreach my $pair (IkiWiki::Setup::getsetup()) {
+		my $plugin=$pair->[0];
+		my $setup=$pair->[1];
+		addfields($form, $plugin." ".gettext("plugin"), @{$setup});
 	}
 
 	if ($form->submitted eq "Cancel") {
