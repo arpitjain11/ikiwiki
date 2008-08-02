@@ -226,12 +226,11 @@ sub cgi_prefs ($$) { #{{{
 	$form->field(name => "sid", type => "hidden", value => $session->id,
 		force => 1);
 	$form->field(name => "email", size => 50, fieldset => "preferences");
-	$form->field(name => "banned_users", size => 50,
-		fieldset => "admin");
 	
 	my $user_name=$session->param("name");
 
 	# XXX deprecated, should be removed eventually
+	$form->field(name => "banned_users", size => 50, fieldset => "admin");
 	if (! is_admin($user_name)) {
 		$form->field(name => "banned_users", type => "hidden");
 	}
