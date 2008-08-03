@@ -41,6 +41,28 @@ sub getsetup () { #{{{
 		safe => 1,
 		rebuild => 1,
 	},
+	adminemail => {
+		type => "string",
+		default => undef,
+		example => 'me@example.com',
+		description => "contact email for wiki",
+		safe => 1,
+		rebuild => 0,
+	},
+	adminuser => {
+		type => "string",
+		default => [],
+		description => "users who are wiki admins",
+		safe => 1,
+		rebuild => 0,
+	},
+	banned_users => {
+		type => "string",
+		default => [],
+		description => "users who are banned from the wiki",
+		safe => 1,
+		rebuild => 0,
+	},
 	srcdir => {
 		type => "string",
 		default => undef,
@@ -56,21 +78,6 @@ sub getsetup () { #{{{
 		description => "where to build the wiki",
 		safe => 0, # path
 		rebuild => 1,
-	},
-	adminuser => {
-		type => "string",
-		default => [],
-		description => "user names of wiki admins",
-		safe => 1,
-		rebuild => 0,
-	},
-	adminemail => {
-		type => "string",
-		default => undef,
-		example => 'me@example.com',
-		description => "contact email for wiki",
-		safe => 1,
-		rebuild => 0,
 	},
 	url => {
 		type => "string",
@@ -198,6 +205,14 @@ sub getsetup () { #{{{
 		safe => 1,
 		rebuild => 1,
 	},
+	sslcookie => {
+		type => "boolean",
+		default => 0,
+		description => "only send cookies over SSL connections?",
+		advanced => 1,
+		safe => 1,
+		rebuild => 0,
+	},
 	default_pageext => {
 		type => "string",
 		default => "mdwn",
@@ -228,14 +243,6 @@ sub getsetup () { #{{{
 		advanced => 1,
 		safe => 0,
 		rebuild => 1,
-	},
-	sslcookie => {
-		type => "boolean",
-		default => 0,
-		description => "only send cookies over SSL connections?",
-		advanced => 1,
-		safe => 1,
-		rebuild => 0,
 	},
 	userdir => {
 		type => "string",
@@ -293,13 +300,6 @@ sub getsetup () { #{{{
 		advanced => 1,
 		safe => 0, # regexp
 		rebuild => 1,
-	},
-	banned_users => {
-		type => "string",
-		default => [],
-		description => "users who are banned from the wiki",
-		safe => 1,
-		rebuild => 0,
 	},
 	wiki_file_prune_regexps => {
 		type => "internal",
