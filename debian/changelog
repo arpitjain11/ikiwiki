@@ -12,6 +12,8 @@ ikiwiki (2.60) UNRELEASED; urgency=low
   * ikiwiki-update-wikilist: Add -r switch to remove. Default behavior is now
     always to add.
   * Start moving admin preferences from the web interface to the setup file.
+  * ikiwiki-makerepo: Bail if both srcdir and repository are not specified.
+    Closes: #493628
 
  -- Joey Hess <joeyh@debian.org>  Mon, 21 Jul 2008 11:35:46 -0400
 

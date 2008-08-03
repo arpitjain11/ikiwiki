@@ -4,7 +4,7 @@ set -e
 rcs="$1"
 srcdir="$2"
 repository="$3"
-	
+
 usage () {
 	echo "usage: ikiwiki-makerepo svn|git srcdir repository" >&2
 	echo "       ikiwiki-makerepo bzr|mercurial srcdir" >&2
@@ -21,6 +21,10 @@ if [ ! -d "$srcdir" ]; then
 fi
 
 if [ "$rcs" != mercurial ] && [ "$rcs" != bzr ]; then
+	if [ -z "$repository" ]; then
+		echo "you need to specify both a srcdir and a repository for $rcs" >&2
+		usage
+	fi
 	if [ -e "$repository" ]; then
 		echo "repository $repository already exists, aborting" >&2 
 		exit 1
