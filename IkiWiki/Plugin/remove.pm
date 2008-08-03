@@ -6,11 +6,20 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "remove", call => \&getsetup);
 	hook(type => "formbuilder_setup", id => "remove", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "remove", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "remove", call => \&sessioncgi);
 
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub check_canremove ($$$$) { #{{{
 	my $page=shift;

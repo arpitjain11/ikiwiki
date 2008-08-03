@@ -8,10 +8,19 @@ use IkiWiki 2.00;
 use open qw{:utf8 :std};
 
 sub import { #{{{
+	hook(type => "getsetup", id => "otl", call => \&getsetup);
 	hook(type => "filter", id => "otl", call => \&filter);
 	hook(type => "htmlize", id => "otl", call => \&htmlize);
 
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => 1, # format plugin
+		},
+} #}}}
 
 sub filter (@) { #{{{
 	my %params=@_;

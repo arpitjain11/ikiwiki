@@ -6,8 +6,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
-	hook(type => "cgi", id => "aggregate", call => \&cgi);
+	hook(type => "getsetup", id => "pingee", call => \&getsetup);
+	hook(type => "cgi", id => "pingee", call => \&cgi);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub cgi ($) { #{{{
 	my $cgi=shift;

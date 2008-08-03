@@ -16,6 +16,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
 		recentchangespage => {
 			type => "string",
 			example => "recentchanges",

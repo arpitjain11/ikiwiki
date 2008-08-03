@@ -23,6 +23,10 @@ sub getopt () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 		openidsignup => {
 			type => "string",
 			example => "http://myopenid.com/",

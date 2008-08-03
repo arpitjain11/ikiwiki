@@ -15,6 +15,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 		account_creation_password => {
 			type => "string",
 			example => "s3cr1t",

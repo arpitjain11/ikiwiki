@@ -11,8 +11,17 @@ use IkiWiki 2.00;
 use File::Find;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "polygen", call => \&getsetup);
 	hook(type => "preprocess", id => "polygen", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

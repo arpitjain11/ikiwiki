@@ -7,8 +7,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "orphans", call => \&getsetup);
 	hook(type => "preprocess", id => "orphans", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

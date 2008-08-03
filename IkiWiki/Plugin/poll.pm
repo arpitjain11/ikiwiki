@@ -7,9 +7,18 @@ use IkiWiki 2.00;
 use Encode;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "poll", call => \&getsetup);
 	hook(type => "preprocess", id => "poll", call => \&preprocess);
 	hook(type => "sessioncgi", id => "poll", call => \&sessioncgi);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 my %pagenum;
 sub preprocess (@) { #{{{

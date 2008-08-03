@@ -17,6 +17,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
 		omega_cgi => {
 			type => "string",
 			example => "/usr/lib/cgi-bin/omega/omega",

@@ -18,8 +18,17 @@ use IkiWiki 2.00;
 our @classes = ('smallestPC', 'smallPC', 'normalPC', 'bigPC', 'biggestPC' );
 
 sub import { #{{{
+	hook(type => "getsetup", id => "pagestats", call => \&getsetup);
 	hook(type => "preprocess", id => "pagestats", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

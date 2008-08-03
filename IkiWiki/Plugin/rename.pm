@@ -6,11 +6,20 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "rename", call => \&getsetup);
 	hook(type => "formbuilder_setup", id => "rename", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "rename", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "rename", call => \&sessioncgi);
 
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub check_canrename ($$$$$$$) { #{{{
 	my $src=shift;

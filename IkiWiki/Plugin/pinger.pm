@@ -18,6 +18,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 		pinger_timeout => {
 			type => "integer",
 			example => 15,

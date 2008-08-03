@@ -7,8 +7,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "parentlinks", id => "parentlinks", call => \&parentlinks);
 	hook(type => "pagetemplate", id => "parentlinks", call => \&pagetemplate);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 sub parentlinks ($) { #{{{
 	my $page=shift;

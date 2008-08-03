@@ -8,8 +8,18 @@ use IkiWiki 2.00;
 my $maxlines=200;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "recentchangesdiff",
+		call => \&getsetup);
 	hook(type => "pagetemplate", id => "recentchangesdiff",
 		call => \&pagetemplate);
+} #}}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
 } #}}}
 
 sub pagetemplate (@) { #{{{

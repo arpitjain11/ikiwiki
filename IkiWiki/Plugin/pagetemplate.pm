@@ -8,9 +8,18 @@ use IkiWiki 2.00;
 my %templates;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "pagetemplate", call => \&getsetup);
 	hook(type => "preprocess", id => "pagetemplate", call => \&preprocess);
 	hook(type => "templatefile", id => "pagetemplate", call => \&templatefile);
 } # }}}
+
+sub getsetup () { #{{{
+	return 
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;
