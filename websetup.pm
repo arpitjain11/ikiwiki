@@ -1,1 +1,0 @@
-/home/joey/src/ikiwiki/IkiWiki/Plugin/websetup.pm
