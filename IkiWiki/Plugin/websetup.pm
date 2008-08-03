@@ -12,7 +12,6 @@ my @rcs_plugins=(qw{git svn bzr mercurial monotone tla norcs});
 my @default_force_plugins=(qw{amazon_s3 external});
 
 sub import { #{{{
-	hook(type => "checkconfig", id => "websetup", call => \&checkconfig);
 	hook(type => "getsetup", id => "websetup", call => \&getsetup);
 	hook(type => "sessioncgi", id => "websetup", call => \&sessioncgi);
 	hook(type => "formbuilder_setup", id => "websetup", 
@@ -28,12 +27,6 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 0,
 		},
-} #}}}
-
-sub checkconfig () { #{{{
-	if (! exists $config{websetup_force_plugins}) {
-		$config{websetup_force_plugins}=\@default_force_plugins;
-	}
 } #}}}
 
 sub formatexample ($) { #{{{
@@ -141,7 +134,16 @@ sub showplugintoggle ($$$$) { #{{{
 	my $enabled=shift;
 	my $section=shift;
 
-	return 0 if (grep { $_ eq $plugin } @{$config{websetup_force_plugins}}, @rcs_plugins);
+	if (exists $config{websetup_force_plugins} &&
+	    grep { $_ eq $plugin } @{$config{websetup_force_plugins}}, @rcs_plugins) {
+		return 0;
+	}
+	elsif (! exists $config{websetup_force_plugins} &&
+	       grep { $_ eq $plugin } @default_force_plugins, @rcs_plugins) {
+		return 0;
+	}
+
+	print STDERR ">>$plugin (@{$config{websetup_force_plugins}})\n";
 
 	$form->field(
 		name => "enable.$plugin",
@@ -219,7 +221,7 @@ sub showform ($$) { #{{{
 	}
 	elsif ($form->submitted eq 'Save Setup' && $form->validate) {
 		# TODO
-
+		IkiWiki::Setup::dump("/tmp/s");
 		$form->text(gettext("Setup saved."));
 	}
 
