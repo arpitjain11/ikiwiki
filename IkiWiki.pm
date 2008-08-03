@@ -844,7 +844,8 @@ sub preprocess ($$$;$$) { #{{{
 		}sx;
 	}
 
-	$content =~ s{$regex}{$handle->($1, $2, $3, $4)}eg;
+	# $4 can be undef if the directive was [[!foo]]
+	$content =~ s{$regex}{$handle->($1, $2, $3, ($4 or ""))}eg;
 	return $content;
 } #}}}
 
