@@ -1,26 +1,71 @@
 The [[plugins/map]] plugin has inconsistent behaviour.  In particular, I have in my wiki some directory structures holding files without wikitext pointers (I point directly to the files from elsewhere).  For example, imagine the following file structure in the source dir:
 
-* Assignments.mdwn
-* Assignments
-    * 2004
-        * Assign1.pdf
-        * Assign2.pdf
-    * 2005
-        * Assign1.pdf
-        * Assign2.pdf
-    * 2006
-        * etc., etc.
+    ; ls -R dirA dirB
+    dirA:
+    subA	subB
+    
+    dirA/subA:
+    filea.mdwn	fileb.mdwn
+    
+    dirA/subB:
+    filec.mdwn	filed.mdwn
+    
+    dirB:
+    subA	subC
+    
+    dirB/subA:
+    filea.mdwn
+    
+    dirB/subC:
+    fileb.mdwn	filec.mdwn
 
 When I use map to make a map of this, the result looks more like this:
 
-* Assignments        # this is a link to the correct page
-    * 2004                   # this has a create link
-        * Assign1.pdf
-        * Assign2.pdf
-        * Assign1.pdf
-        * Assign2.pdf
-        * etc., etc.
+<ul>
+<li><span class="createlink">? dirA</span>
+<ul>
+<li><span class="createlink">? subA</span>
+<ul>
+<li>filea
+</li>
+</ul>
+<ul>
+<li>fileb
+</li>
+</ul>
+<ul>
+<li>filec
+</li>
+<li>filed
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="createlink">? dirB</span>
+<ul>
+<li><span class="createlink">? subA</span>
+<ul>
+<li>filea
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><span class="createlink">? subC</span>
+<ul>
+<li>fileb
+</li>
+</ul>
+<ul>
+<li>filec
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-Note that while the 2004 directory exists with a create link, the 2005 and 2006 (etc) directories are missing from the site map.
+Note that while the dirA/subA directory exists with a create link, the dirA/subB directory is missing from the map.  Interstingly, dirB/subC is shown in the map.  If you add a second file to dirB/subA then dirB/subC disappears as well.
 
 I could imagine including all 'bare' directories in the map, and I could imagine including no 'bare' directories in the map.  Just including the first bare directory seems a strange intermediate point.
