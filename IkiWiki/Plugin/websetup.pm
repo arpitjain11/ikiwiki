@@ -82,17 +82,35 @@ sub showfields ($$$@) { #{{{
 		push @show, $key, \%info;
 	}
 
+	my $section=defined $plugin ? $plugin." ".gettext("plugin") : "main";
+	my %enabledfields;
+	my $shownfields=0;
+	
 	my $plugin_forced=defined $plugin && (! $plugininfo{safe} ||
 		(exists $config{websetup_force_plugins} && grep { $_ eq $plugin } @{$config{websetup_force_plugins}}));
 	if ($plugin_forced && ! $enabled) {
 		# plugin is forced disabled, so skip its configuration
 		@show=();
 	}
+	# show plugin toggle
+	if (defined $plugin && (! $plugin_forced || $config{websetup_advanced})) {
+		my $name="enable.$plugin";
+		$form->field(
+			name => $name,
+			label => "",
+			type => "checkbox",
+			options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
+			value => $enabled,
+			fieldset => $section,
+		);
+		if ($plugin_forced) {
+			$form->field(name => $name, disabled => 1);
+		}
+		else {
+			$enabledfields{$name}=[$name, \%plugininfo];
+		}
+	}
 
-	my %shownfields;
-	my %skippedfields;
-	my $section=defined $plugin ? $plugin." ".gettext("plugin") : "main";
-	
 	while (@show) {
 		my $key=shift @show;
 		my %info=%{shift @show};
@@ -164,33 +182,21 @@ sub showfields ($$$@) { #{{{
 		
 		if (! $info{safe}) {
 			$form->field(name => $name, disabled => 1);
-			$skippedfields{$name}=1;
 		}
 		else {
-			$shownfields{$name}=[$key, \%info];
+			$enabledfields{$name}=[$key, \%info];
 		}
+		$shownfields++;
+	}
+	
+	# if no fields were shown for the plugin, drop it into the
+	# plugins fieldset
+	if (defined $plugin && (! $plugin_forced || $config{websetup_advanced}) &&
+	    ! $shownfields) {
+		$form->field(name => "enable.$plugin", fieldset => "plugins");
 	}
 
-	if (defined $plugin && (! $plugin_forced || $config{websetup_advanced})) {
-		my $name="enable.$plugin";
-		$section="plugins" unless %shownfields || (%skippedfields && $config{websetup_advanced});
-		$form->field(
-			name => $name,
-			label => "",
-			type => "checkbox",
-			options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
-			value => $enabled,
-			fieldset => $section,
-		);
-		if ($plugin_forced) {
-			$form->field(name => $name, disabled => 1);
-		}
-		else {
-			$shownfields{$name}=[$name, \%plugininfo];
-		}
-	}
-
-	return %shownfields;
+	return %enabledfields;
 } #}}}
 
 sub showform ($$) { #{{{
