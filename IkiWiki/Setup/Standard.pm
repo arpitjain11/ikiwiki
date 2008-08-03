@@ -28,7 +28,7 @@ sub dumpline ($$$$) { #{{{
 	local $Data::Dumper::Quotekeys=0;
 	
 	my $dumpedvalue;
-	if ($type eq 'boolean' || $type eq 'integer') {
+	if (($type eq 'boolean' || $type eq 'integer') && $value=~/^[0-9]+$/) {
 		# avoid quotes
 		$dumpedvalue=$value;
 	}
