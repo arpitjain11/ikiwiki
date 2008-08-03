@@ -89,9 +89,10 @@ sub showfields ($$$@) { #{{{
 	my $plugin_forced=defined $plugin && (! $plugininfo{safe} ||
 		(exists $config{websetup_force_plugins} && grep { $_ eq $plugin } @{$config{websetup_force_plugins}}));
 	if ($plugin_forced && ! $enabled) {
-		# plugin is forced disabled, so skip its configuration
+		# plugin is forced disabled, so skip its settings
 		@show=();
 	}
+
 	# show plugin toggle
 	if (defined $plugin && (! $plugin_forced || $config{websetup_advanced})) {
 		my $name="enable.$plugin";
@@ -111,6 +112,7 @@ sub showfields ($$$@) { #{{{
 		}
 	}
 
+	# show plugin settings
 	while (@show) {
 		my $key=shift @show;
 		my %info=%{shift @show};
@@ -228,6 +230,9 @@ sub showform ($$) { #{{{
 		template => {type => 'div'},
 		stylesheet => IkiWiki::baseurl()."style.css",
 	);
+	
+	$form->field(name => "do", type => "hidden", value => "setup",
+		force => 1);
 
 	if ($form->submitted eq 'Basic Mode') {
 		$form->field(name => "showadvanced", type => "hidden", 
@@ -256,8 +261,6 @@ sub showform ($$) { #{{{
 	});
 	IkiWiki::decode_form_utf8($form);
 
-	$form->field(name => "do", type => "hidden", value => "setup",
-		force => 1);
 	my %fields=showfields($form, undef, undef, IkiWiki::getsetup());
 	
 	# record all currently enabled plugins before all are loaded
@@ -265,14 +268,12 @@ sub showform ($$) { #{{{
 
 	# per-plugin setup
 	require IkiWiki::Setup;
-	my %plugins=map { $_ => 1 } IkiWiki::listplugins();
 	foreach my $pair (IkiWiki::Setup::getsetup()) {
 		my $plugin=$pair->[0];
 		my $setup=$pair->[1];
 
 		my %shown=showfields($form, $plugin, $enabled_plugins{$plugin}, @{$setup});
 		if (%shown) {
-			delete $plugins{$plugin};
 			$fields{$_}=$shown{$_} foreach keys %shown;
 		}
 	}
@@ -282,62 +283,99 @@ sub showform ($$) { #{{{
 		return;
 	}
 	elsif (($form->submitted eq 'Save Setup' || $form->submitted eq 'Rebuild Wiki') && $form->validate) {
+		# Push values from form into %config, avoiding unnecessary
+		# changes, and keeping track of which changes need a
+		# rebuild.
 		my %rebuild;
 		foreach my $field (keys %fields) {
-			if ($field=~/^enable\./) {
-				# rebuild is overkill for many plugins,
-				# but no good way to tell which
-				$rebuild{$field}=1; # TODO only if state changed tho
-				# TODO plugin enable/disable
-				next;
-			}
-			
 			my %info=%{$fields{$field}->[1]};
 			my $key=$fields{$field}->[0];
 			my @value=$form->field($field);
-			
+			if (! @value) {
+				@value=0;
+			}
+		
 			if (! $info{safe}) {
 	 			error("unsafe field $key"); # should never happen
 			}
-
-			next unless @value;
-			# Avoid setting fields to empty strings,
-			# if they were not set before.
-			next if ! defined $config{$key} && ! grep { length $_ } @value;
+		
+			if (exists $info{rebuild} &&
+			    ($info{rebuild} || ! defined $info{rebuild})) {
+				$rebuild{$field}=$info{rebuild};
+			}
+					
+			if ($field=~/^enable\.(.*)/) {
+				my $plugin=$1;
+				if ($value[0] != exists $enabled_plugins{$plugin}) {
+					# TODO plugin enable/disable
+				}
+				else {
+					delete $rebuild{$field};
+				}
+				next;
+			}
 
 			if (ref $config{$key} eq "ARRAY" || ref $info{example} eq "ARRAY") {
-				if ($info{rebuild} && (! defined $config{$key} || (@{$config{$key}}) != (@value))) {
-					$rebuild{$field}=1;
+				@value=sort grep { length $_ } @value;
+				my @oldvalue=sort grep { length $_ }
+					(defined $config{$key} ? @{$config{$key}} : ());
+				if ((@oldvalue) == (@value)) {
+					delete $rebuild{$field};
 				}
-				$config{$key}=\@value;
+				else {
+					$config{$key}=\@value;
+				}
 			}
 			elsif (ref $config{$key} || ref $info{example}) {
 				error("complex field $key"); # should never happen
 			}
 			else {
-				if ($info{rebuild} && (! defined $config{$key} || $config{$key} ne $value[0])) {
-					$rebuild{$field}=1;
+				if (defined $config{$key} && $config{$key} eq $value[0]) {
+					delete $rebuild{$field};
 				}
-				$config{$key}=$value[0];
-			}		
+				elsif (! defined $config{$key} && ! length $value[0]) {
+					delete $rebuild{$field};
+				}
+				elsif (! defined $config{$key} && ! $value[0] &&
+				       $info{type} eq "boolean") {
+					delete $rebuild{$field};
+				}
+				else {
+					print STDERR ">>$key (@value) ($config{$key})\n";
+					$config{$key}=$value[0];
+				}
+			}
 		}
-
-		if (%rebuild && $form->submitted eq 'Save Setup') {
-			$form->text(gettext("The configuration changes shown below require a wiki rebuild to take effect."));
+		
+		if (%rebuild && ! $form->field("rebuild_asked")) {
+			print STDERR ">>".(join "," , keys %rebuild)."\n";
+			my $required=0;
 			foreach my $field ($form->field) {
-				next if $rebuild{$field};
+				$required=1 if $rebuild{$field};
+				next if exists $rebuild{$field};
 				$form->field(name => $field, type => "hidden",
 					force => 1);
 			}
+			if ($required) {
+				$form->text(gettext("The configuration changes shown below require a wiki rebuild to take effect."));
+				$buttons=["Rebuild Wiki", "Cancel"];
+			}
+			else {
+				$form->text(gettext("For the configuration changes shown below to fully take effect, you may need to rebuild the wiki."));
+				$buttons=["Rebuild Wiki", "Save Setup", "Cancel"];
+			}
+			$form->field(name => "rebuild_asked", type => "hidden",
+				value => 1, force => 1);
 			$form->reset(0); # doesn't really make sense here
-			$buttons=["Rebuild Wiki", "Cancel"];
 		}
 		else {
+			$form->field(name => "rebuild_asked", type => "hidden",
+				value => 0, force => 1);
 			# TODO save to real path
 			IkiWiki::Setup::dump("/tmp/s");
 			$form->text(gettext("Setup saved."));
-
-			if (%rebuild) {
+	
+			if ($form->submitted eq 'Rebuild Wiki') {
 				# TODO rebuild
 			}
 		}
