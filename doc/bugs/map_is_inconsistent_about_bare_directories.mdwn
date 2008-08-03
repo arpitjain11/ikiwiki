@@ -66,6 +66,53 @@ When I use map to make a map of this, the result looks more like this:
 </li>
 </ul>
 
-Note that while the dirA/subA directory exists with a create link, the dirA/subB directory is missing from the map.  Interstingly, dirB/subC is shown in the map.  If you add a second file to dirB/subA then dirB/subC disappears as well.
+Note that while the dirA/subA directory exists with a create link, the dirA/subB directory is missing from the map.  Interestingly, dirB/subC is shown in the map.  If you add a second file to dirB/subA then dirB/subC disappears as well.
 
 I could imagine including all 'bare' directories in the map, and I could imagine including no 'bare' directories in the map.  Just including the first bare directory seems a strange intermediate point.
+
+Attached is a [[patch]] that fixes the issue.  The current map code makes one pass over the sorted list of pages.  This adds an initial pass that goes through and makes sure that all parent directories are included.  With this initial pass added, the following pass could probably be simplified.
+
+Note: This patch adds items to a map while it is in a foreach loop over a sorted list of keys from that same map.  Changing a map while iterating through it is normally problematic.  I'm assuming the sort insulates the code from this - I do not need to iterate over any of the newly added elements.
+
+    diff --git a/IkiWiki/Plugin/map.pm b/IkiWiki/Plugin/map.pm
+    index 5b6a843..142073d 100644
+    --- a/IkiWiki/Plugin/map.pm
+    +++ b/IkiWiki/Plugin/map.pm
+    @@ -67,6 +67,37 @@ sub preprocess (@) { #{{{
+     	# are removed.
+     	add_depends($params{page}, join(" or ", keys %mapitems));
+     
+    +	# Include all the parent directories in the map
+    +	my $lastbase="";
+    +	foreach my $item (sort keys %mapitems) {
+    +		$item=~s/^\Q$common_prefix\E\///
+    +			if defined $common_prefix && length $common_prefix;
+    +		my $itembase=IkiWiki::dirname($item);
+    +		if ($itembase ne $lastbase) {
+    +			# find the common dir
+    +			my @a=split(/\//, $itembase);
+    +			my @b=split(/\//, $lastbase);
+    +			my $common_dir="";
+    +			while (@a && @b && $a[0] eq $b[0]) {
+    +				if (length $common_dir) {
+    +					$common_dir.="/";
+    +				}
+    +				$common_dir.=shift(@a);
+    +				shift @b;
+    +			}
+    +			# add all the dirs down to the current base
+    +			while (@a) {
+    +				if (length $common_dir) {
+    +					$common_dir.="/";
+    +				}
+    +				$common_dir.=shift(@a);
+    +				$mapitems{$common_dir}=''
+    +					unless defined $mapitems{$common_dir};
+    +			}
+    +			$lastbase = $itembase;
+    +		}
+    +	}
+    +
+     	# Create the map.
+     	my $parent="";
+     	my $indent=0;
