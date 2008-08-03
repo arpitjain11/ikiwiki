@@ -5,12 +5,6 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-my @rcs_plugins=(qw{git svn bzr mercurial monotone tla norcs});
-
-# amazon_s3 is not something that should be enabled via the web.
-# external is not a standalone plugin.
-my @force_plugins=(qw{amazon_s3 external});
-
 sub import { #{{{
 	hook(type => "getsetup", id => "websetup", call => \&getsetup);
 	hook(type => "checkconfig", id => "websetup", call => \&checkconfig);
@@ -64,12 +58,13 @@ sub showfields ($$$@) { #{{{
 	my $enabled=shift;
 
 	my @show;
+	my %plugininfo;
 	while (@_) {
 		my $key=shift;
 		my %info=%{shift()};
 
 		# skip internal settings
-		next if $info{type} eq "internal";
+		next if defined $info{type} && $info{type} eq "internal";
 		# XXX hashes not handled yet
 		next if ref $config{$key} && ref $config{$key} eq 'HASH' || ref $info{example} eq 'HASH';
 		# maybe skip unsafe settings
@@ -78,26 +73,26 @@ sub showfields ($$$@) { #{{{
 		next if $info{advanced} && ! $config{websetup_advanced};
 		# these are handled specially, so don't show
 		next if $key eq 'add_plugins' || $key eq 'disable_plugins';
+
+		if ($key eq 'plugin') {
+			%plugininfo=%info;
+			next;
+		}
 		
 		push @show, $key, \%info;
 	}
 
-	return unless @show;
-
-	my $section=defined $plugin ? $plugin." ".gettext("plugin") : gettext("main");
-
-	my %shownfields;
-	if (defined $plugin) {
-		if (showplugintoggle($form, $plugin, $enabled, $section)) {
-			$shownfields{"enable.$plugin"}=[$plugin];
-		}
-		elsif (! $enabled) {
-		    # plugin not enabled and cannot be, so skip showing
-		    # its configuration
-		    return;
-		}
+	my $plugin_forced=defined $plugin && (! $plugininfo{safe} ||
+		(exists $config{websetup_force_plugins} && grep { $_ eq $plugin } @{$config{websetup_force_plugins}}));
+	if ($plugin_forced && ! $enabled) {
+		# plugin is disabled and cannot be turned on,
+		# so skip its configuration
+		return;
 	}
 
+	my %shownfields;
+	my $section=defined $plugin ? $plugin." ".gettext("plugin") : "main";
+	
 	while (@show) {
 		my $key=shift @show;
 		my %info=%{shift @show};
@@ -169,40 +164,32 @@ sub showfields ($$$@) { #{{{
 		
 		if (! $info{safe}) {
 			$form->field(name => $name, disabled => 1);
-			$form->text(gettext("Note: Disabled options cannot be configured here, but only by editing the setup file."));
 		}
 		else {
 			$shownfields{$name}=[$key, \%info];
 		}
 	}
 
+	if (defined $plugin && (! $plugin_forced || $config{websetup_advanced})) {
+		my $name="enable.$plugin";
+		$section="plugins" unless %shownfields;
+		$form->field(
+			name => $name,
+			label => "",
+			type => "checkbox",
+			options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
+			value => $enabled,
+			fieldset => $section,
+		);
+		if ($plugin_forced) {
+			$form->field(name => $name, disabled => 1);
+		}
+		else {
+			$shownfields{$name}=[$name, \%plugininfo];
+		}
+	}
+
 	return %shownfields;
-} #}}}
-
-sub showplugintoggle ($$$$) { #{{{
-	my $form=shift;
-	my $plugin=shift;
-	my $enabled=shift;
-	my $section=shift;
-
-	if (exists $config{websetup_force_plugins} &&
-	    grep { $_ eq $plugin } @{$config{websetup_force_plugins}}) {
-		return 0;
-	}
-	if (grep { $_ eq $plugin } @force_plugins, @rcs_plugins) {
-		return 0;
-	}
-
-	$form->field(
-		name => "enable.$plugin",
-		label => "",
-		type => "checkbox",
-		options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
-		value => $enabled,
-		fieldset => $section,
-	);
-
-	return 1;
 } #}}}
 
 sub showform ($$) { #{{{
@@ -226,6 +213,10 @@ sub showform ($$) { #{{{
 		javascript => 0,
 		reset => 1,
 		params => $cgi,
+		fieldsets => [
+			[main => gettext("main")], 
+			[plugins => gettext("plugins")]
+		],
 		action => $config{cgiurl},
 		template => {type => 'div'},
 		stylesheet => IkiWiki::baseurl()."style.css",
@@ -271,21 +262,11 @@ sub showform ($$) { #{{{
 	foreach my $pair (IkiWiki::Setup::getsetup()) {
 		my $plugin=$pair->[0];
 		my $setup=$pair->[1];
-		
-		# skip all rcs plugins except for the one in use
-		next if $plugin ne $config{rcs} && grep { $_ eq $plugin } @rcs_plugins;
 
 		my %shown=showfields($form, $plugin, $enabled_plugins{$plugin}, @{$setup});
 		if (%shown) {
 			delete $plugins{$plugin};
 			$fields{$_}=$shown{$_} foreach keys %shown;
-		}
-	}
-
-	# list all remaining plugins (with no setup options) at the end
-	foreach (sort keys %plugins) {
-		if (showplugintoggle($form, $_, $enabled_plugins{$_}, gettext("other plugins"))) {
-			$fields{"enable.$_"}=[$_];
 		}
 	}
 	

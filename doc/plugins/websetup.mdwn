@@ -2,18 +2,15 @@
 [[!tag type/useful]]
 
 This plugin allows wiki admins to configure the wiki using a web interface,
-rather than editing the setup file directly. A "Wiki Setup" button is added to the
-admins' preferences page.
+rather than editing the setup file directly. A "Wiki Setup" button is added
+to the admins' preferences page.
 
-Most settings can be modified using the web interface. Some settings are
-not considered safe enough to be manipulated over the web; these are still
-shown, by default, but cannot be modified. To hide them, set `websetup_show_unsafe` 
-to false in the setup file. A few settings have too complex a data type
-to be configured via the web.
+Most settings can be modified using the web interface. Plugins can be
+enabled and disabled using it too. Some settings are not considered safe
+enough to be manipulated over the web; these are still shown, by default,
+but cannot be modified. To hide them, set `websetup_show_unsafe` to false
+in the setup file. A few settings have too complex a data type to be
+configured via the web.
 
-The web interface can also be used to enable and disable plugins, with
-limitations. The plugin for the [[revision_control_system|rcs]] being used
-cannot be enabled/disabled, and no other rcs plugins can be enabled. A few
-problematic/unsafe plugins are also blacklisted from being enabled. Other
-plugins that should not be enabled/disabled via the web interface can be
+Plugins that should not be enabled/disabled via the web interface can be
 listed in `websetup_force_plugins` in the setup file.

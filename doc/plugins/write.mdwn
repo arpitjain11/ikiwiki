@@ -379,12 +379,13 @@ die if not, which will cause the plugin to not be offered in the configuration
 interface.
 
 The data returned is a list of `%config` options, followed by a hash
-describing the option. For example:
+describing the option. There can also be an item named "plugin", which
+describes the plugin as a whole. For example:
 
                 return
 			option_foo => {
 				type => "boolean",
-				description => "enable foo",
+				description => "enable foo?",
 				advanced => 1,
 				safe => 1,
 				rebuild => 1,
@@ -392,9 +393,14 @@ describing the option. For example:
 			option_bar => {
 				type => "string",
 				example => "hello",
-				description => "what to say",
+				description => "option bar",
 				safe => 1,
 				rebuild => 0,
+			},
+			plugin => {
+				description => "description of this plugin",
+				safe => 1,
+				rebuild => 1,
 			},
 
 * `type` can be "boolean", "string", "integer", "pagespec",
@@ -410,7 +416,12 @@ describing the option. For example:
 * `safe` should be false if the option should not be displayed in unsafe
   configuration methods, such as the web interface. Anything that specifies
   a command to run, a path on disk, or a regexp should be marked as unsafe.
-* `rebuild` should be true if changing the option will require a wiki rebuild.
+  If a plugin is marked as unsafe, that prevents it from being
+  enabled/disabled.
+* `rebuild` should be true if changing the option (or enabling/disabling
+  the plugin) will require a wiki rebuild, false if no rebuild is needed,
+  and undef if a rebuild could be needed in some circumstances, but is not
+  strictly required.
 
 ## Plugin interface
 

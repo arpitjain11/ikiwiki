@@ -62,7 +62,7 @@ sub dumpvalues ($@) { #{{{
 		my $key=shift;
 		my %info=%{shift()};
 
-		next if $info{type} eq "internal";
+		next if $info{type} eq "internal" || $key eq "plugin";
 		
 		push @ret, "\t# ".$info{description} if exists $info{description};
 		

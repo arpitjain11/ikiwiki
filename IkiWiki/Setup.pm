@@ -72,11 +72,12 @@ sub merge ($) {
 } #}}}
 
 sub getsetup () { #{{{
-	# Gets all available setup data from all plugins. Returns an ordered list of
-	# [plugin, setup] pairs.
+	# Gets all available setup data from all plugins. Returns an
+	# ordered list of [plugin, setup] pairs.
 	my @ret;
 
-        # disable logging to syslog while dumping, broken plugins may whine when loaded
+        # disable logging to syslog while dumping, broken plugins may
+	# whine when loaded
 	my $syslog=$config{syslog};
         $config{syslog}=0;
 
