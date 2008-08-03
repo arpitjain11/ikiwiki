@@ -78,15 +78,19 @@ sub showfields ($$$@) { #{{{
 		push @show, $key, \%info;
 	}
 
-	return 0 unless @show;
+	return unless @show;
 
 	my $section=defined $plugin ? $plugin." ".gettext("plugin") : gettext("main");
 
+	my %shownfields;
 	if (defined $plugin) {
-		if (! showplugintoggle($form, $plugin, $enabled, $section) && ! $enabled) {
+		if (showplugintoggle($form, $plugin, $enabled, $section)) {
+			$shownfields{"enable.$plugin"}=$plugin;
+		}
+		elsif (! $enabled) {
 		    # plugin not enabled and cannot be, so skip showing
 		    # its configuration
-		    return 0;
+		    return;
 		}
 	}
 
@@ -149,9 +153,12 @@ sub showfields ($$$@) { #{{{
 			$form->field(name => $name, disabled => 1);
 			$form->text(gettext("Note: Disabled options cannot be configured here, but only by editing the setup file."));
 		}
+		else {
+			$shownfields{$name}=$key;
+		}
 	}
 
-	return 1;
+	return %shownfields;
 } #}}}
 
 sub showplugintoggle ($$$$) { #{{{
@@ -170,7 +177,7 @@ sub showplugintoggle ($$$$) { #{{{
 	}
 
 	$form->field(
-		name => "enable.$plugin",
+		ame => "enable.$plugin",
 		label => "",
 		type => "checkbox",
 		options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
@@ -217,7 +224,7 @@ sub showform ($$) { #{{{
 
 	$form->field(name => "do", type => "hidden", value => "setup",
 		force => 1);
-	showfields($form, undef, undef, IkiWiki::getsetup());
+	my %fields=showfields($form, undef, undef, IkiWiki::getsetup());
 	
 	# record all currently enabled plugins before all are loaded
 	my %enabled_plugins=%IkiWiki::loaded_plugins;
@@ -232,19 +239,31 @@ sub showform ($$) { #{{{
 		# skip all rcs plugins except for the one in use
 		next if $plugin ne $config{rcs} && grep { $_ eq $plugin } @rcs_plugins;
 
-		delete $plugins{$plugin} if showfields($form, $plugin, $enabled_plugins{$plugin}, @{$setup});
+		my %shown=showfields($form, $plugin, $enabled_plugins{$plugin}, @{$setup});
+		if (%shown) {
+			delete $plugins{$plugin};
+			$fields{$_}=$shown{$_} foreach keys %shown;
+		}
 	}
 
 	# list all remaining plugins (with no setup options) at the end
-	showplugintoggle($form, $_, $enabled_plugins{$_}, gettext("other plugins"))
-		foreach sort keys %plugins;
+	foreach (sort keys %plugins) {
+		if (showplugintoggle($form, $_, $enabled_plugins{$_}, gettext("other plugins"))) {
+			$fields{"enable.$_"}=$_;
+		}
+	}
 	
 	if ($form->submitted eq "Cancel") {
 		IkiWiki::redirect($cgi, $config{url});
 		return;
 	}
 	elsif ($form->submitted eq 'Save Setup' && $form->validate) {
-		# TODO
+		foreach my $field (keys %fields) {
+			# TODO plugin enable/disable
+			next if $field=~/^enable\./; # plugin
+			$config{$fields{$field}}=$form->field($field);
+		}
+		# TODO save to real path
 		IkiWiki::Setup::dump("/tmp/s");
 		$form->text(gettext("Setup saved."));
 	}
