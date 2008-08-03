@@ -385,6 +385,7 @@ describing the option. For example:
 			option_foo => {
 				type => "boolean",
 				description => "enable foo",
+				advanced => 1,
 				safe => 1,
 				rebuild => 1,
 	                },
@@ -404,6 +405,8 @@ describing the option. For example:
 * `description` is a short description of the option.
 * `link` is a link to further information about the option. This can either
   be a wikilink, or an url.
+* `advanced` can be set to true if the option is more suitable for advanced
+  users.
 * `safe` should be false if the option should not be displayed in unsafe
   configuration methods, such as the web interface. Anything that specifies
   a command to run, a path on disk, or a regexp should be marked as unsafe.

@@ -137,6 +137,7 @@ sub getsetup () { #{{{
 		type => "string",
 		default => "$installdir/share/ikiwiki/templates",
 		description => "location of template files",
+		advanced => 1,
 		safe => 0, # path
 		rebuild => 1,
 	},
@@ -144,6 +145,7 @@ sub getsetup () { #{{{
 		type => "string",
 		default => "$installdir/share/ikiwiki/basewiki",
 		description => "base wiki source location",
+		advanced => 1,
 		safe => 0, # path
 		rebuild => 0,
 	},
@@ -214,6 +216,7 @@ sub getsetup () { #{{{
 		type => "string",
 		default => '%c',
 		description => "strftime format string to display date",
+		advanced => 1,
 		safe => 1,
 		rebuild => 1,
 	},
@@ -222,6 +225,7 @@ sub getsetup () { #{{{
 		default => undef,
 		example => "en_US.UTF-8",
 		description => "UTF-8 locale to use",
+		advanced => 1,
 		safe => 0,
 		rebuild => 1,
 	},
@@ -229,6 +233,7 @@ sub getsetup () { #{{{
 		type => "boolean",
 		default => 0,
 		description => "only send cookies over SSL connections?",
+		advanced => 1,
 		safe => 1,
 		rebuild => 0,
 	},
@@ -251,6 +256,7 @@ sub getsetup () { #{{{
 		type => "boolean",
 		default => 0,
 		description => "attempt to hardlink source files? (optimisation for large files)",
+		advanced => 1,
 		safe => 0, # paranoia
 		rebuild => 0,
 	},
@@ -259,6 +265,7 @@ sub getsetup () { #{{{
 		description => "",
 		example => "022",
 		description => "force ikiwiki to use a particular umask",
+		advanced => 1,
 		safe => 0, # paranoia
 		rebuild => 0,
 	},
@@ -267,6 +274,7 @@ sub getsetup () { #{{{
 		default => "",
 		example => "$ENV{HOME}/.ikiwiki/",
 		description => "extra library and plugin directory",
+		advanced => 1,
 		safe => 0, # directory
 		rebuild => 0,
 	},
@@ -282,6 +290,7 @@ sub getsetup () { #{{{
 		default => undef,
 		example => '\.wav$',
 		description => "regexp of source files to ignore",
+		advanced => 1,
 		safe => 0, # regexp
 		rebuild => 1,
 	},

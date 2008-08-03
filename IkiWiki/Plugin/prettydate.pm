@@ -50,6 +50,7 @@ sub getsetup () { #{{{
 			type => "string",
 			example => '%X, %B %o, %Y',
 			description => "format to use to display date",
+			advanced => 1,
 			safe => 1,
 			rebuild => 1,
 		},

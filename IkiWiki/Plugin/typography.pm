@@ -28,6 +28,7 @@ sub getsetup () { #{{{
 			type => "string",
 			example => "3",
 			description => "Text::Typography attributes value",
+			advanced => 1,
 			safe => 1,
 			rebuild => 1,
 		},

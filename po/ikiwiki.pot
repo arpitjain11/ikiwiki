@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-02 15:27-0400\n"
+"POT-Creation-Date: 2008-08-03 14:48-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:783 ../IkiWiki/CGI.pm:784 ../IkiWiki.pm:1096
+#: ../IkiWiki/CGI.pm:783 ../IkiWiki/CGI.pm:784 ../IkiWiki.pm:1108
 msgid "Error"
 msgstr ""
 
@@ -173,20 +173,20 @@ msgstr ""
 msgid "Failed to delete file from S3: "
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:46
+#: ../IkiWiki/Plugin/attachment.pm:42
 #, perl-format
 msgid "there is already a page named %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:79
+#: ../IkiWiki/Plugin/attachment.pm:75
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:187
+#: ../IkiWiki/Plugin/attachment.pm:183
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:229
+#: ../IkiWiki/Plugin/attachment.pm:225
 msgid "attachment upload"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgstr ""
 msgid "failed to run dot"
 msgstr ""
 
-#: ../IkiWiki/Plugin/lockedit.pm:43 ../IkiWiki/Plugin/lockedit.pm:57
+#: ../IkiWiki/Plugin/lockedit.pm:42 ../IkiWiki/Plugin/lockedit.pm:56
 #, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr ""
@@ -495,15 +495,15 @@ msgstr ""
 msgid "%A night"
 msgstr ""
 
-#: ../IkiWiki/Plugin/prettydate.pm:96
+#: ../IkiWiki/Plugin/prettydate.pm:97
 msgid "at teatime on %A"
 msgstr ""
 
-#: ../IkiWiki/Plugin/prettydate.pm:100
+#: ../IkiWiki/Plugin/prettydate.pm:101
 msgid "at midnight"
 msgstr ""
 
-#: ../IkiWiki/Plugin/prettydate.pm:103
+#: ../IkiWiki/Plugin/prettydate.pm:104
 msgid "at noon on %A"
 msgstr ""
 
@@ -707,19 +707,39 @@ msgstr ""
 msgid "failed to generate image from code"
 msgstr ""
 
-#: ../IkiWiki/Plugin/websetup.pm:120
-msgid "you are not logged in as an admin"
-msgstr ""
-
-#: ../IkiWiki/Plugin/websetup.pm:149
-msgid "main"
-msgstr ""
-
-#: ../IkiWiki/Plugin/websetup.pm:158
+#: ../IkiWiki/Plugin/websetup.pm:85
 msgid "plugin"
 msgstr ""
 
-#: ../IkiWiki/Plugin/websetup.pm:168
+#: ../IkiWiki/Plugin/websetup.pm:85
+msgid "main"
+msgstr ""
+
+#: ../IkiWiki/Plugin/websetup.pm:170
+msgid ""
+"Note: Disabled options cannot be configured here, but only by editing the "
+"setup file."
+msgstr ""
+
+#: ../IkiWiki/Plugin/websetup.pm:198
+#, perl-format
+msgid "enable %s?"
+msgstr ""
+
+#: ../IkiWiki/Plugin/websetup.pm:212
+msgid "you are not logged in as an admin"
+msgstr ""
+
+#: ../IkiWiki/Plugin/websetup.pm:266
+msgid "other plugins"
+msgstr ""
+
+#: ../IkiWiki/Plugin/websetup.pm:317
+msgid ""
+"The configuration changes shown below require a wiki rebuild to take effect."
+msgstr ""
+
+#: ../IkiWiki/Plugin/websetup.pm:329
 msgid "Setup saved."
 msgstr ""
 
@@ -827,19 +847,19 @@ msgstr ""
 msgid "refreshing wiki.."
 msgstr ""
 
-#: ../IkiWiki.pm:417
+#: ../IkiWiki.pm:427
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:461
+#: ../IkiWiki.pm:471
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:1079
+#: ../IkiWiki.pm:1091
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1567
+#: ../IkiWiki.pm:1579
 msgid "yes"
 msgstr ""

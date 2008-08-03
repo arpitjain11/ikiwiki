@@ -73,7 +73,9 @@ sub showfields ($$$@) { #{{{
 		# XXX hashes not handled yet
 		next if ref $config{$key} && ref $config{$key} eq 'HASH' || ref $info{example} eq 'HASH';
 		# maybe skip unsafe settings
-		next if ! $info{safe} && ! $config{websetup_show_unsafe};
+		next if ! $info{safe} && ! ($config{websetup_show_unsafe} && $config{websetup_advanced});
+		# maybe skip advanced settings
+		next if $info{advanced} && ! $config{websetup_advanced};
 		# these are handled specially, so don't show
 		next if $key eq 'add_plugins' || $key eq 'disable_plugins';
 		
@@ -228,7 +230,26 @@ sub showform ($$) { #{{{
 		template => {type => 'div'},
 		stylesheet => IkiWiki::baseurl()."style.css",
 	);
-	my $buttons=["Save Setup", "Cancel"];
+
+	if ($form->submitted eq 'Basic') {
+		$form->field(name => "showadvanced", type => "hidden", 
+			value => 0, force => 1);
+	}
+	elsif ($form->submitted eq 'Advanced') {
+		$form->field(name => "showadvanced", type => "hidden", 
+			value => 1, force => 1);
+	}
+	my $advancedtoggle;
+	if ($form->field("showadvanced")) {
+		$config{websetup_advanced}=1;
+		$advancedtoggle="Basic";
+	}
+	else {
+		$config{websetup_advanced}=0;
+		$advancedtoggle="Advanced";
+	}
+
+	my $buttons=["Save Setup", $advancedtoggle, "Cancel"];
 
 	IkiWiki::decode_form_utf8($form);
 	IkiWiki::run_hooks(formbuilder_setup => sub {
