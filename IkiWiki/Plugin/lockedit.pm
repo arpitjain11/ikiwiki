@@ -18,8 +18,7 @@ sub getsetup () { #{{{
 			type => "pagespec",
 			example => "!*/Discussion",
 			description => "PageSpec controlling which pages are locked",
-			description_html => htmllink("", "", "ikiwiki/PageSpec", noimageinline => 1).
-				" controlling which pages are locked",
+			link => "ikiwiki/PageSpec",
 			safe => 1,
 			rebuild => 0,
 		},

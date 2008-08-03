@@ -100,7 +100,16 @@ sub showfields ($$$@) { #{{{
 		my $key=shift @show;
 		my %info=%{shift @show};
 
-		my $description=exists $info{description_html} ? $info{description_html} : $info{description};
+		my $description=$info{description};
+		if (exists $info{link} && length $info{link}) {
+			if ($info{link} =~ /^\w+:\/\//) {
+				$description="<a href=\"$info{link}\">$description</a>";
+			}
+			else {
+				$description=htmllink("", "", $info{link}, noimageinline => 1, linktext => $description);
+			}
+		}
+
 		my $value=$config{$key};
 		# multiple plugins can have the same field
 		my $name=defined $plugin ? $plugin.".".$key : $key;

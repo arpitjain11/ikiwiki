@@ -402,7 +402,8 @@ describing the option. For example:
   hash of these.
 * `example` can be set to an example value.
 * `description` is a short description of the option.
-* `description_html` is an optional short description, that can contain html
+* `link` is a link to further information about the option. This can either
+  be a wikilink, or an url.
 * `safe` should be false if the option should not be displayed in unsafe
   configuration methods, such as the web interface. Anything that specifies
   a command to run, a path on disk, or a regexp should be marked as unsafe.
