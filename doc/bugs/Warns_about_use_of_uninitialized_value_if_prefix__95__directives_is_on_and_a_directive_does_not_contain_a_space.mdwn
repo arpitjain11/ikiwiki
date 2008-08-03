@@ -1,0 +1,17 @@
+In `IkiWiki::preprocess`, the last capturing group in the regex used to parse directives in prefix_directives mode is of the form `(\s+...)?\]\]`, which will not be matched if the directive is something without arguments or whitespace, like `\[[!orphans]]`. As a result, its value is undef instead of being an empty string, causing a warning when it is used in the anonymous sub `$handle`. A trivial fix is to treat it as "" if it is undef.
+
+[[patch]] in the master branch of my git repository, and quoted here. --[[smcv]]
+
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 241a7c0..d2c35a2 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -1167,7 +1167,8 @@ sub preprocess ($$$;$$) { #{{{
+                    }sx;
+            }
+     
+    -       $content =~ s{$regex}{$handle->($1, $2, $3, $4)}eg;
+    +       # $4 can be undef if the directive was \[[!foo]]
+    +       $content =~ s{$regex}{$handle->($1, $2, $3, ($4 or ""))}eg;
+            return $content;
+     } #}}}

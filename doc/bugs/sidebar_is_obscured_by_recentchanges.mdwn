@@ -1,0 +1,14 @@
+I've set up a simple sidebar on an otherwise fairly default wiki.  The sidebar uses css float:right and sits above most pages quite nicely.
+
+For example, my wiki's [front](http://www.cse.unsw.edu.au/~cs3431/wiki/) and [news](http://www.cse.unsw.edu.au/~cs3431/wiki/news/) pages show the sidebar nicely floating on top of the background.  (As a side note, I had to add:
+
+    #sidebar {
+    	border: 1px solid;
+    	background: white;
+    }	
+
+to <code>local.css</code> to get the border and make sure that the RSS feed's grey title didn't show through on the news page.)
+
+Unfortunately, the [recentchanges](http://www.cse.unsw.edu.au/~cs3431/wiki/recentchanges/) page doesn't look so nice - the sidebar appears below the recentchanges list.
+
+I don't understand why the sidebar is appearing below the recentchanges inline, but above the news inline.
