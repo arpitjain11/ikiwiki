@@ -25,6 +25,12 @@ rarer thing to want than unconnected top level pages. --[[Joey]]
 > <http://jameswestby.net/scratch/create.diff>
 > -- JamesWestby
 
+> For what it's worth, the following works:  
+> `\[[!inline pages=!* rss=no atom=no postform=yes postformtext="Add a new page titled:"]]`  
+> Add `rootpage=/` if you do this in `index.mdwn` to avoid creating subpages.
+> --[[JeremieKoenig]]
+
+
 Maybe a very simple PHP frontend for serving the
 statically generated pages, that would display a page editing form or
 something like that for non-existent pages, wouldn't be too bad a thing
