@@ -34,7 +34,7 @@ sub dumpline ($$$$) { #{{{
 	}
 	elsif (ref $value eq 'ARRAY' && @$value && ! grep { /[^-A-Za-z0-9_]/ } @$value) {
 		# dump simple array as qw{}
-		$dumpedvalue="[qw{ ".join(" ", @$value)." }]";
+		$dumpedvalue="[qw{".join(" ", @$value)."}]";
 	}
 	else {
 		$dumpedvalue=Dumper($value);
@@ -62,7 +62,7 @@ sub dumpvalues ($@) { #{{{
 		my $key=shift;
 		my %info=%{shift()};
 
-		next if $info{type} eq "internal" || $key eq "plugin";
+		next if $key eq "plugin" || $info{type} eq "internal";
 		
 		push @ret, "\t# ".$info{description} if exists $info{description};
 		
@@ -92,8 +92,10 @@ sub gendump ($) { #{{{
 	foreach my $pair (IkiWiki::Setup::getsetup()) {
 		my $plugin=$pair->[0];
 		my $setup=$pair->[1];
-		push @ret, "", "\t# $plugin plugin";
-		push @ret, dumpvalues(\%setup, @{$setup});
+		my @values=dumpvalues(\%setup, @{$setup});
+		if (@values) {
+			push @ret, "", "\t# $plugin plugin", @values;
+		}
 	}
 
 	unshift @ret,
