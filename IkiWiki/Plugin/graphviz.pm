@@ -9,8 +9,17 @@ use IkiWiki 2.00;
 use IPC::Open2;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "graphviz", call => \&getsetup);
 	hook(type => "preprocess", id => "graphviz", call => \&graph);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 my %graphviz_programs = (
 	"dot" => 1, "neato" => 1, "fdp" => 1, "twopi" => 1, "circo" => 1

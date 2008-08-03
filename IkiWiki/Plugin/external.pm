@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # Support for external plugins written in other languages.
-# Communication via XML RPC a pipe.
+# Communication via XML RPC to a pipe.
 # See externaldemo for an example of a plugin that uses this.
 package IkiWiki::Plugin::external;
 

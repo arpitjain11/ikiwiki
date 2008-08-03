@@ -10,6 +10,7 @@ use IkiWiki 2.00;
 our $safe_url_regexp;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "htmlscrubber", call => \&getsetup);
 	hook(type => "sanitize", id => "htmlscrubber", call => \&sanitize);
 
 	# Only known uri schemes are allowed to avoid all the ways of
@@ -33,6 +34,14 @@ sub import { #{{{
 	# disallow data:text/javascript and everything else.
 	$safe_url_regexp=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+(?:$|\/))/i;
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub sanitize (@) { #{{{
 	my %params=@_;

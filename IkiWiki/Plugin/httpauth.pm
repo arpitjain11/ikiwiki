@@ -7,8 +7,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "httpauth", call => \&getsetup);
 	hook(type => "auth", id => "httpauth", call => \&auth);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub auth ($$) { #{{{
 	my $cgi=shift;

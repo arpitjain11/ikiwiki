@@ -12,6 +12,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 0,
+			rebuild => 0,
+		},
 		anonok_pagespec => {
 			type => "pagespec",
 			example => "*/discussion",

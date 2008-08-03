@@ -8,12 +8,22 @@ use HTML::Template;
 use Encode;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "edittemplate",
+		call => \&getsetup);
 	hook(type => "needsbuild", id => "edittemplate",
 		call => \&needsbuild);
 	hook(type => "preprocess", id => "edittemplate",
 		call => \&preprocess);
 	hook(type => "formbuilder", id => "edittemplate",
 		call => \&formbuilder);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 } #}}}
 
 sub needsbuild (@) { #{{{

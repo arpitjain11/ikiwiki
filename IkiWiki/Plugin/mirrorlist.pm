@@ -12,6 +12,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
 		mirrorlist => {
 			type => "string",
 			example => {},

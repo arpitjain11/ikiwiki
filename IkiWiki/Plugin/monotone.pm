@@ -65,6 +65,10 @@ sub checkconfig () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 0, # rcs plugin
+			rebuild => undef,
+		},
 		mtn_wrapper => {
 			type => "string",
 			example => "/srv/mtn/wiki/_MTN/ikiwiki-netsync-hook",

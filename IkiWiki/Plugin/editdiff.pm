@@ -9,8 +9,17 @@ use HTML::Entities;
 use IPC::Open2;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "editdiff", call => \&getsetup);
 	hook(type => "formbuilder_setup", id => "editdiff",
 		call => \&formbuilder_setup);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 } #}}}
 
 sub diff ($$) { #{{{

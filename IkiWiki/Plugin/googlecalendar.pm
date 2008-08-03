@@ -6,11 +6,21 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "googlecalendar",
+		call => \&getsetup);
 	hook(type => "preprocess", id => "googlecalendar",
 		call => \&preprocess);
 	hook(type => "format", id => "googlecalendar",
 		call => \&format);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

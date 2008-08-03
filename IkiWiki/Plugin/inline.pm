@@ -47,6 +47,10 @@ sub getopt () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 		rss => {
 			type => "boolean",
 			example => 0,

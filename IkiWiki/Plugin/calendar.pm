@@ -37,6 +37,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 		archivebase => {
 			type => "string",
 			example => "archives",

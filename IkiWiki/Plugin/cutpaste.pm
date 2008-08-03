@@ -9,10 +9,19 @@ use UNIVERSAL;
 my %savedtext;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "cutpaste", call => \&getsetup);
 	hook(type => "preprocess", id => "cut", call => \&preprocess_cut, scan => 1);
 	hook(type => "preprocess", id => "copy", call => \&preprocess_copy, scan => 1);
 	hook(type => "preprocess", id => "paste", call => \&preprocess_paste);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess_cut (@) { #{{{
 	my %params=@_;

@@ -85,8 +85,7 @@ sub showfields ($$$@) { #{{{
 	my $plugin_forced=defined $plugin && (! $plugininfo{safe} ||
 		(exists $config{websetup_force_plugins} && grep { $_ eq $plugin } @{$config{websetup_force_plugins}}));
 	if ($plugin_forced && ! $enabled) {
-		# plugin is disabled and cannot be turned on,
-		# so skip its configuration
+		# plugin is forced disabled, so skip its configuration
 		return;
 	}
 

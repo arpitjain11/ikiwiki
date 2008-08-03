@@ -14,6 +14,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 		virus_checker => {
 			type => "string",
 			example => "clamdscan -",
@@ -23,7 +27,7 @@ sub getsetup () { #{{{
 		},
 		allowed_attachments => {
 			type => "pagespec",
-			example => "mimetype(image/*) and maxsize(50kb)",
+			example => "virusfree() and mimetype(image/*) and maxsize(50kb)",
 			description => "enhanced PageSpec specifying what attachments are allowed",
 			link => "ikiwiki/PageSpec/attachment",
 			safe => 1,

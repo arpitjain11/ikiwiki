@@ -40,6 +40,10 @@ sub getopt () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 		aggregateinternal => {
 			type => "boolean",
 			example => 0,

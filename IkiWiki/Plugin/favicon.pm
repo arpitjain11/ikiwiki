@@ -8,8 +8,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "favicon", call => \&getsetup);
 	hook(type => "pagetemplate", id => "favicon", call => \&pagetemplate);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 sub pagetemplate (@) { #{{{
 	my %params=@_;

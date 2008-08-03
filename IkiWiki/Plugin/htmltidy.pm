@@ -13,8 +13,17 @@ use IkiWiki 2.00;
 use IPC::Open2;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "tidy", call => \&getsetup);
 	hook(type => "sanitize", id => "tidy", call => \&sanitize);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub sanitize (@) { #{{{
 	my %params=@_;

@@ -33,6 +33,10 @@ sub checkconfig () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 0, # rcs plugin
+			rebuild => undef,
+		},
 		mercurial_wrapper => {
 			type => "string",
 			#example => # FIXME add example

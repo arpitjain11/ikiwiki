@@ -13,6 +13,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 1, # format plugin
+		},
 		multimarkdown => {
 			type => "boolean",
 			example => 0,

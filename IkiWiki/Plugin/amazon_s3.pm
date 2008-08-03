@@ -42,7 +42,11 @@ sub getopt () { #{{{
 
 sub getsetup () { #{{{
 	return
-		 amazon_s3_key_id => {
+		plugin => {
+			safe => 0,
+			rebuild => 0,
+		},
+		amazon_s3_key_id => {
 			type => "string",
 			example => "XXXXXXXXXXXXXXXXXXXX",
 			description => "public access key id",

@@ -7,9 +7,18 @@ use IkiWiki 2.00;
 use IPC::Open2;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "linkmap", call => \&getsetup);
 	hook(type => "preprocess", id => "linkmap", call => \&preprocess);
 	hook(type => "format", id => "linkmap", call => \&format);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 my $mapnum=0;
 my %maps;

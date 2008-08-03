@@ -6,8 +6,17 @@ use IkiWiki 2.00;
 no warnings;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "ddate", call => \&getsetup);
 	hook(type => "checkconfig", id => "ddate", call => \&checkconfig);
 } # }}}
+
+sub getsetup { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 sub checkconfig () { #{{{
 	if (! defined $config{timeformat} ||

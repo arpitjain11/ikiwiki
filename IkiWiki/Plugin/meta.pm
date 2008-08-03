@@ -9,10 +9,19 @@ use IkiWiki 2.00;
 my %metaheaders;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "meta", call => \&getsetup);
 	hook(type => "needsbuild", id => "meta", call => \&needsbuild);
 	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
 	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;

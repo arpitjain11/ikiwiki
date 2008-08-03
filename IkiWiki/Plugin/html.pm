@@ -7,6 +7,7 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "html", call => \&getsetup);
 	hook(type => "htmlize", id => "html", call => \&htmlize);
 	hook(type => "htmlize", id => "htm", call => \&htmlize);
 
@@ -14,6 +15,14 @@ sub import { #{{{
 	# make it process them so this plugin can take effect
 	$config{wiki_file_prune_regexps} = [ grep { !m/\\\.x\?html\?\$/ } @{$config{wiki_file_prune_regexps}} ];
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1, # format plugin
+		},
+} #}}}
 
 sub htmlize (@) { #{{{
 	my %params=@_;

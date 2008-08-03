@@ -42,6 +42,10 @@ sub checkconfig () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 0, # rcs plugin
+			rebuild => undef,
+		},
 		git_wrapper => {
 			type => "string",
 			example => "/git/wiki.git/hooks/post-update",

@@ -14,6 +14,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 		locked_pages => {
 			type => "pagespec",
 			example => "!*/Discussion",

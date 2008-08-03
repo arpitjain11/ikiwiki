@@ -7,6 +7,7 @@ use strict;
 use IkiWiki;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "norcs", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
 	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
 	hook(type => "rcs", id => "rcs_commit", call => \&rcs_commit);
@@ -18,6 +19,15 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
 } #}}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 0, # rcs plugin
+			rebuild => 0,
+		},
+} #}}}
+
 
 sub rcs_update () { #{{{
 } #}}}

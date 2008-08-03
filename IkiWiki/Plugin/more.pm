@@ -8,8 +8,17 @@ use IkiWiki 2.00;
 my $linktext = gettext("more");
 
 sub import { #{{{
-	hook(type => "preprocess",  id => "more", call => \&preprocess);
+	hook(type => "getsetup", id => "more", call => \&getsetup);
+	hook(type => "preprocess", id => "more", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

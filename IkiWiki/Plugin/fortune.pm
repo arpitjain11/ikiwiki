@@ -7,8 +7,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "fortune", call => \&getsetup);
 	hook(type => "preprocess", id => "fortune", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	$ENV{PATH}="$ENV{PATH}:/usr/games:/usr/local/games";

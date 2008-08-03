@@ -8,11 +8,20 @@ use IkiWiki 2.00;
 my $link_regexp;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "link", call => \&getsetup);
 	hook(type => "checkconfig", id => "link", call => \&checkconfig);
 	hook(type => "linkify", id => "link", call => \&linkify);
 	hook(type => "scan", id => "link", call => \&scan);
 	hook(type => "renamepage", id => "link", call => \&renamepage);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
 
 sub checkconfig () { #{{{
 	if ($config{prefix_directives}) {

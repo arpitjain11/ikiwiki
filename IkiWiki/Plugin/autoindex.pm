@@ -7,8 +7,17 @@ use IkiWiki 2.00;
 use Encode;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "autoindex", call => \&getsetup);
 	hook(type => "refresh", id => "autoindex", call => \&refresh);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub genindex ($) { #{{{
 	my $page=shift;

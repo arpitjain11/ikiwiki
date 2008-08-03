@@ -23,9 +23,18 @@ my $link_regexp=qr{
 }x;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "camelcase", call => \&getsetup);
 	hook(type => "linkify", id => "camelcase", call => \&linkify);
 	hook(type => "scan", id => "camelcase", call => \&scan);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		};
+} #}}}
 
 sub linkify (@) { #{{{
 	my %params=@_;

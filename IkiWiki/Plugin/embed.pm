@@ -44,8 +44,17 @@ my $safehtml=qr{(
 my @embedded;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "embed", call => \&getsetup);
 	hook(type => "filter", id => "embed", call => \&filter);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub embed ($) { #{{{
 	hook(type => "format", id => "embed", call => \&format) unless @embedded;
