@@ -110,13 +110,14 @@ sub showfields ($$$@) { #{{{
 			}
 		}
 
-		my $value=$config{$key};
-		if (ref $config{$key} eq 'ARRAY' || ref $info{example} eq 'ARRAY') {
-			push @{$value}, "", ""; # blank items for expansion
-		}
-
 		# multiple plugins can have the same field
 		my $name=defined $plugin ? $plugin.".".$key : $key;
+
+		my $value=$config{$key};
+
+		if ($info{safe} && (ref $config{$key} eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
+			push @{$value}, "", ""; # blank items for expansion
+		}
 
 		if ($info{type} eq "string") {
 			$form->field(
