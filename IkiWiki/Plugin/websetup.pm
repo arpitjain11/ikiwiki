@@ -85,7 +85,7 @@ sub showfields ($$$@) { #{{{
 	my %shownfields;
 	if (defined $plugin) {
 		if (showplugintoggle($form, $plugin, $enabled, $section)) {
-			$shownfields{"enable.$plugin"}=$plugin;
+			$shownfields{"enable.$plugin"}=[$plugin];
 		}
 		elsif (! $enabled) {
 		    # plugin not enabled and cannot be, so skip showing
@@ -154,7 +154,7 @@ sub showfields ($$$@) { #{{{
 			$form->text(gettext("Note: Disabled options cannot be configured here, but only by editing the setup file."));
 		}
 		else {
-			$shownfields{$name}=$key;
+			$shownfields{$name}=[$key, \%info];
 		}
 	}
 
@@ -249,7 +249,7 @@ sub showform ($$) { #{{{
 	# list all remaining plugins (with no setup options) at the end
 	foreach (sort keys %plugins) {
 		if (showplugintoggle($form, $_, $enabled_plugins{$_}, gettext("other plugins"))) {
-			$fields{"enable.$_"}=$_;
+			$fields{"enable.$_"}=[$_];
 		}
 	}
 	
@@ -257,24 +257,51 @@ sub showform ($$) { #{{{
 		IkiWiki::redirect($cgi, $config{url});
 		return;
 	}
-	elsif ($form->submitted eq 'Save Setup' && $form->validate) {
+	elsif (($form->submitted eq 'Save Setup' || $form->submitted eq 'Rebuild Wiki') && $form->validate) {
+		my %rebuild;
 		foreach my $field (keys %fields) {
 			# TODO plugin enable/disable
 			next if $field=~/^enable\./; # plugin
 
-			my $key=$fields{$field};
+			my $key=$fields{$field}->[0];
+			my %info=%{$fields{$field}->[1]};
 			my $value=$form->field($field);
+
+			if (! $info{safe}) {
+				error("unsafe field $key"); # should never happen
+			}
 
 			next unless defined $value;
 			# Avoid setting fields to empty strings,
 			# if they were not set before.
 			next if ! defined $config{$key} && ! length $value;
 
+			if ($info{rebuild} && (! defined $config{$key} || $config{$key} ne $value)) {
+				$rebuild{$field}=1;
+			}
+
 			$config{$key}=$value;
 		}
-		# TODO save to real path
-		IkiWiki::Setup::dump("/tmp/s");
-		$form->text(gettext("Setup saved."));
+
+		if (%rebuild && $form->submitted eq 'Save Setup') {
+			$form->text(gettext("The configuration changes shown below require a wiki rebuild to take effect."));
+			foreach my $field ($form->field) {
+				next if $rebuild{$field};
+				$form->field(name => $field, type => "hidden",
+					force => 1);
+			}
+			$form->reset(0); # doesn't really make sense here
+			$buttons=["Rebuild Wiki", "Cancel"];
+		}
+		else {
+			# TODO save to real path
+			IkiWiki::Setup::dump("/tmp/s");
+			$form->text(gettext("Setup saved."));
+
+			if (%rebuild) {
+				# TODO rebuild
+			}
+		}
 	}
 
 	IkiWiki::showform($form, $buttons, $session, $cgi);
