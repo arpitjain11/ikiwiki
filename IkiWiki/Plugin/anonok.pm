@@ -13,7 +13,7 @@ sub import { #{{{
 sub getsetup () { #{{{
 	return
 		plugin => {
-			safe => 0,
+			safe => 1,
 			rebuild => 0,
 		},
 		anonok_pagespec => {
