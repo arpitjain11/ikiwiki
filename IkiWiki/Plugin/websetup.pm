@@ -68,8 +68,10 @@ sub showfields ($$$@) { #{{{
 		my $key=shift;
 		my %info=%{shift()};
 
-		# skip complex or internal settings
-		next if ref $config{$key} || ref $info{example} || $info{type} eq "internal";
+		# skip internal settings
+		next if $info{type} eq "internal";
+		# XXX hashes not handled yet
+		next if ref $config{$key} && ref $config{$key} eq 'HASH' || ref $info{example} eq 'HASH';
 		# maybe skip unsafe settings
 		next if ! $info{safe} && ! $config{websetup_show_unsafe};
 		# these are handled specially, so don't show
@@ -102,8 +104,19 @@ sub showfields ($$$@) { #{{{
 		my $value=$config{$key};
 		# multiple plugins can have the same field
 		my $name=defined $plugin ? $plugin.".".$key : $key;
-		
-		if ($info{type} eq "string") {
+
+		if (ref $config{$key} eq 'ARRAY' || ref $info{example} eq 'ARRAY') {
+			$form->field(
+				name => $name,
+				label => $description,
+				comment => formatexample($info{example}, $value),
+				type => "text",
+				value => [ref $value eq 'ARRAY' ? @{$value} : "", , "", ""],
+				size => 60,
+				fieldset => $section,
+			);
+		}
+		elsif ($info{type} eq "string") {
 			$form->field(
 				name => $name,
 				label => $description,
@@ -259,27 +272,42 @@ sub showform ($$) { #{{{
 	elsif (($form->submitted eq 'Save Setup' || $form->submitted eq 'Rebuild Wiki') && $form->validate) {
 		my %rebuild;
 		foreach my $field (keys %fields) {
-			# TODO plugin enable/disable
-			next if $field=~/^enable\./; # plugin
-
-			my $key=$fields{$field}->[0];
+			if ($field=~/^enable\./) {
+				# rebuild is overkill for many plugins,
+				# but no good way to tell which
+				$rebuild{$field}=1; # TODO only if state changed tho
+				# TODO plugin enable/disable
+				next;
+			}
+			
 			my %info=%{$fields{$field}->[1]};
-			my $value=$form->field($field);
-
+			my $key=$fields{$field}->[0];
+			my @value=$form->field($field);
+			
 			if (! $info{safe}) {
-				error("unsafe field $key"); # should never happen
+	 			error("unsafe field $key"); # should never happen
 			}
 
-			next unless defined $value;
+			next unless @value;
 			# Avoid setting fields to empty strings,
 			# if they were not set before.
-			next if ! defined $config{$key} && ! length $value;
+			next if ! defined $config{$key} && ! grep { length $_ } @value;
 
-			if ($info{rebuild} && (! defined $config{$key} || $config{$key} ne $value)) {
-				$rebuild{$field}=1;
+			if (ref $config{$key} eq "ARRAY" || ref $info{example} eq "ARRAY") {
+				if ($info{rebuild} && (! defined $config{$key} || (@{$config{$key}}) != (@value))) {
+					$rebuild{$field}=1;
+				}
+				$config{$key}=\@value;
 			}
-
-			$config{$key}=$value;
+			elsif (ref $config{$key} || ref $info{example}) {
+				error("complex field $key"); # should never happen
+			}
+			else {
+				if ($info{rebuild} && (! defined $config{$key} || $config{$key} ne $value[0])) {
+					$rebuild{$field}=1;
+				}
+				$config{$key}=$value[0];
+			}		
 		}
 
 		if (%rebuild && $form->submitted eq 'Save Setup') {
