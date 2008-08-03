@@ -86,7 +86,7 @@ sub showfields ($$$@) { #{{{
 		(exists $config{websetup_force_plugins} && grep { $_ eq $plugin } @{$config{websetup_force_plugins}}));
 	if ($plugin_forced && ! $enabled) {
 		# plugin is forced disabled, so skip its configuration
-		return;
+		@show=();
 	}
 
 	my %shownfields;
