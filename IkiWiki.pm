@@ -288,7 +288,7 @@ sub getsetup () { #{{{
 	banned_users => {
 		type => "string",
 		default => [],
-		description => "users who cannot use the wiki",
+		description => "users who are banned from the wiki",
 		safe => 1,
 		rebuild => 0,
 	},
