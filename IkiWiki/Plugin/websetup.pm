@@ -9,7 +9,7 @@ my @rcs_plugins=(qw{git svn bzr mercurial monotone tla norcs});
 
 # amazon_s3 is not something that should be enabled via the web.
 # external is not a standalone plugin.
-my @default_force_plugins=(qw{amazon_s3 external});
+my @force_plugins=(qw{amazon_s3 external});
 
 sub import { #{{{
 	hook(type => "getsetup", id => "websetup", call => \&getsetup);
@@ -23,7 +23,7 @@ sub getsetup () { #{{{
 	return
 		websetup_force_plugins => {
 			type => "string",
-			example => \@default_force_plugins,
+			example => [],
 			description => "list of plugins that cannot be enabled/disabled via the web interface",
 			safe => 0,
 			rebuild => 0,
@@ -168,16 +168,15 @@ sub showplugintoggle ($$$$) { #{{{
 	my $section=shift;
 
 	if (exists $config{websetup_force_plugins} &&
-	    grep { $_ eq $plugin } @{$config{websetup_force_plugins}}, @rcs_plugins) {
+	    grep { $_ eq $plugin } @{$config{websetup_force_plugins}}) {
 		return 0;
 	}
-	elsif (! exists $config{websetup_force_plugins} &&
-	       grep { $_ eq $plugin } @default_force_plugins, @rcs_plugins) {
+	if (grep { $_ eq $plugin } @force_plugins, @rcs_plugins) {
 		return 0;
 	}
 
 	$form->field(
-		ame => "enable.$plugin",
+		name => "enable.$plugin",
 		label => "",
 		type => "checkbox",
 		options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
