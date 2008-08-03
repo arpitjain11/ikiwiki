@@ -76,6 +76,10 @@ sub getsetup () { #{{{
 	# [plugin, setup] pairs.
 	my @ret;
 
+        # disable logging to syslog while dumping, broken plugins may whine when loaded
+	my $syslog=$config{syslog};
+        $config{syslog}=0;
+
 	# Load all plugins, so that all setup options are available.
 	my @plugins=grep { $_ ne $config{rcs} } sort(IkiWiki::listplugins());
 	unshift @plugins, $config{rcs} if $config{rcs}; # rcs plugin 1st
@@ -94,6 +98,8 @@ sub getsetup () { #{{{
 			push @ret, [ $plugin, \@s ],
 		}
 	}
+	
+        $config{syslog}=$syslog;
 
 	return @ret;
 } #}}}

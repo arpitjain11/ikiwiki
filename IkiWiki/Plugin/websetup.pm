@@ -143,8 +143,6 @@ sub showplugintoggle ($$$$) { #{{{
 		return 0;
 	}
 
-	print STDERR ">>$plugin (@{$config{websetup_force_plugins}})\n";
-
 	$form->field(
 		name => "enable.$plugin",
 		label => "",
