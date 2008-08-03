@@ -31,6 +31,10 @@ sub checkconfig () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 0, # rcs plugin
+			rebuild => undef,
+		},
 		tla_wrapper => {
 			type => "string",
 			#example => "", # TODO example

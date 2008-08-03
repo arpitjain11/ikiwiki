@@ -15,8 +15,17 @@ my %locmap=(
 );
 
 sub import { #{{{
+	hook(type => "getsetup", id => "sparkline", call => \&getsetup);
 	hook(type => "preprocess", id => "sparkline", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

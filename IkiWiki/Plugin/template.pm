@@ -9,8 +9,17 @@ use HTML::Template;
 use Encode;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "template", call => \&getsetup);
 	hook(type => "preprocess", id => "template", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub preprocess (@) { #{{{
 	my %params=@_;

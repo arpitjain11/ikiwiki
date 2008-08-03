@@ -7,9 +7,18 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "version", call => \&getsetup);
 	hook(type => "needsbuild", id => "version", call => \&needsbuild);
 	hook(type => "preprocess", id => "version", call => \&preprocess);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;

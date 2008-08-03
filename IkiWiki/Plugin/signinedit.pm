@@ -6,9 +6,18 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "signinedit", call => \&getsetup);
 	hook(type => "canedit", id => "signinedit", call => \&canedit,
 	     last => 1);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
+} #}}}
 
 sub canedit ($$$) { #{{{
 	my $page=shift;

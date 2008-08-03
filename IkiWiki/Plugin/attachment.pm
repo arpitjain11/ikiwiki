@@ -18,19 +18,19 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-		virus_checker => {
-			type => "string",
-			example => "clamdscan -",
-			description => "virus checker program (reads STDIN, returns nonzero if virus found)",
-			safe => 0, # executed
-			rebuild => 0,
-		},
 		allowed_attachments => {
 			type => "pagespec",
 			example => "virusfree() and mimetype(image/*) and maxsize(50kb)",
 			description => "enhanced PageSpec specifying what attachments are allowed",
 			link => "ikiwiki/PageSpec/attachment",
 			safe => 1,
+			rebuild => 0,
+		},
+		virus_checker => {
+			type => "string",
+			example => "clamdscan -",
+			description => "virus checker program (reads STDIN, returns nonzero if virus found)",
+			safe => 0, # executed
 			rebuild => 0,
 		},
 } #}}}

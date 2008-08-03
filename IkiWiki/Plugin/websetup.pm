@@ -15,6 +15,10 @@ sub import { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 0,
+		},
 		websetup_force_plugins => {
 			type => "string",
 			example => [],

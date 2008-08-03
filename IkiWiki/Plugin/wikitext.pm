@@ -7,8 +7,18 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "wiki", call => \&getsetup);
 	hook(type => "htmlize", id => "wiki", call => \&htmlize);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 0, # format plugin
+			rebuild => undef,
+		},
+} #}}}
+
 
 sub htmlize (@) { #{{{
 	my %params=@_;

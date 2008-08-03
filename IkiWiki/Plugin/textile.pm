@@ -10,8 +10,17 @@ use IkiWiki 2.00;
 use Encode;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "textile", call => \&getsetup);
 	hook(type => "htmlize", id => "txtl", call => \&htmlize);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1, # format plugin
+		},
+} #}}}
 
 sub htmlize (@) { #{{{
 	my %params=@_;

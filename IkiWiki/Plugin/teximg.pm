@@ -11,7 +11,16 @@ use HTML::Entities;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "teximg", call => \&getsetup);
 	hook(type => "preprocess", id => "teximg", call => \&preprocess);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 } #}}}
 
 sub preprocess (@) { #{{{

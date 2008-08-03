@@ -8,9 +8,18 @@ use IkiWiki 2.00;
 use HTML::Parser;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "toc", call => \&getsetup);
 	hook(type => "preprocess", id => "toc", call => \&preprocess);
 	hook(type => "format", id => "toc", call => \&format);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 my %tocpages;
 

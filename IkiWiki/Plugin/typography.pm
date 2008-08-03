@@ -24,6 +24,10 @@ sub getsetup () { #{{{
 	error($@) if $@;
 
 	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
 		typographyattributes => {
 			type => "string",
 			example => "3",

@@ -14,7 +14,8 @@ use HTML::Entities;
 my $findurl=0;
 
 sub import {
-	hook(type => "filter",  id => "txt", call => \&filter);
+	hook(type => "getsetup", id => "txt", call => \&getsetup);
+	hook(type => "filter", id => "txt", call => \&filter);
 	hook(type => "htmlize", id => "txt", call => \&htmlize);
 
 	eval q{use URI::Find};
@@ -22,6 +23,14 @@ sub import {
 		$findurl=1;
 	}
 }
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1, # format plugin
+		},
+} #}}}
 
 # We use filter to convert raw text to HTML
 # (htmlize is called after other plugins insert HTML)

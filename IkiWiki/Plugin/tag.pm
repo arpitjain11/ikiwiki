@@ -25,6 +25,10 @@ sub getopt () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 		tagbase => {
 			type => "string",
 			example => "tag",

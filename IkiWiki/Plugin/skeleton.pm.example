@@ -42,6 +42,10 @@ sub getopt () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 		skeleton => {
 			type => "boolean",
 			example => 0,

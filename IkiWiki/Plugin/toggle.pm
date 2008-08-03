@@ -60,12 +60,21 @@ function getElementsByClass(cls, node, tag) {
 EOF
 
 sub import { #{{{
+	hook(type => "getsetup", id => "toggle", call => \&getsetup);
 	hook(type => "preprocess", id => "toggle",
 		call => \&preprocess_toggle);
 	hook(type => "preprocess", id => "toggleable",
 		call => \&preprocess_toggleable);
 	hook(type => "format", id => "toggle", call => \&format);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
 
 sub genid ($$) { #{{{
 	my $page=shift;

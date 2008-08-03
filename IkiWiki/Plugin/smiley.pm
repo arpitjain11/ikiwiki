@@ -10,8 +10,19 @@ my $smiley_regexp;
 
 sub import { #{{{
 	add_underlay("smiley");
+	hook(type => "getsetup", id => "smiley", call => \&getsetup);
 	hook(type => "sanitize", id => "smiley", call => \&sanitize);
 } # }}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			# force a rebuild because turning it off
+			# removes the smileys, which would break links
+			rebuild => 1,
+		},
+} #}}}
 
 sub build_regexp () { #{{{
 	my $list=readfile(srcfile("smileys.mdwn"));

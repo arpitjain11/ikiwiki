@@ -6,8 +6,17 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	hook(type => "getsetup", id => "shortcut", call => \&getsetup);
 	hook(type => "refresh", id => "shortcut", call => \&refresh);
 	hook(type => "preprocess", id => "shortcut", call => \&preprocess_shortcut);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
 } #}}}
 
 sub refresh () { #{{{

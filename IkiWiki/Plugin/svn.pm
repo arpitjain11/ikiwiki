@@ -41,6 +41,10 @@ sub checkconfig () { #{{{
 
 sub getsetup () { #{{{
 	return
+		plugin => {
+			safe => 0, # rcs plugin
+			rebuild => undef,
+		},
 		svnrepo => {
 			type => "string",
 			example => "/svn/wiki",
