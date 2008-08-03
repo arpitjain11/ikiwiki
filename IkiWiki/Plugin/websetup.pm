@@ -90,6 +90,7 @@ sub showfields ($$$@) { #{{{
 	}
 
 	my %shownfields;
+	my %skippedfields;
 	my $section=defined $plugin ? $plugin." ".gettext("plugin") : "main";
 	
 	while (@show) {
@@ -163,6 +164,7 @@ sub showfields ($$$@) { #{{{
 		
 		if (! $info{safe}) {
 			$form->field(name => $name, disabled => 1);
+			$skippedfields{$name}=1;
 		}
 		else {
 			$shownfields{$name}=[$key, \%info];
@@ -171,7 +173,7 @@ sub showfields ($$$@) { #{{{
 
 	if (defined $plugin && (! $plugin_forced || $config{websetup_advanced})) {
 		my $name="enable.$plugin";
-		$section="plugins" unless %shownfields;
+		$section="plugins" unless %shownfields || (%skippedfields && $config{websetup_advanced});
 		$form->field(
 			name => $name,
 			label => "",
@@ -221,22 +223,22 @@ sub showform ($$) { #{{{
 		stylesheet => IkiWiki::baseurl()."style.css",
 	);
 
-	if ($form->submitted eq 'Basic') {
+	if ($form->submitted eq 'Basic Mode') {
 		$form->field(name => "showadvanced", type => "hidden", 
 			value => 0, force => 1);
 	}
-	elsif ($form->submitted eq 'Advanced') {
+	elsif ($form->submitted eq 'Advanced Mode') {
 		$form->field(name => "showadvanced", type => "hidden", 
 			value => 1, force => 1);
 	}
 	my $advancedtoggle;
 	if ($form->field("showadvanced")) {
 		$config{websetup_advanced}=1;
-		$advancedtoggle="Basic";
+		$advancedtoggle="Basic Mode";
 	}
 	else {
 		$config{websetup_advanced}=0;
-		$advancedtoggle="Advanced";
+		$advancedtoggle="Advanced Mode";
 	}
 
 	my $buttons=["Save Setup", $advancedtoggle, "Cancel"];
