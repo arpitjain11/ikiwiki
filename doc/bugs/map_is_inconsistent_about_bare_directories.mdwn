@@ -75,15 +75,17 @@ Attached is a [[patch]] that fixes the issue.  The current map code makes one pa
 Note: This patch adds items to a map while it is in a foreach loop over a sorted list of keys from that same map.  Changing a map while iterating through it is normally problematic.  I'm assuming the sort insulates the code from this - I do not need to iterate over any of the newly added elements.
 
     diff --git a/IkiWiki/Plugin/map.pm b/IkiWiki/Plugin/map.pm
-    index 5b6a843..142073d 100644
+    index 5b6a843..16de45e 100644
     --- a/IkiWiki/Plugin/map.pm
     +++ b/IkiWiki/Plugin/map.pm
-    @@ -67,6 +67,37 @@ sub preprocess (@) { #{{{
+    @@ -67,6 +67,39 @@ sub preprocess (@) { #{{{
      	# are removed.
      	add_depends($params{page}, join(" or ", keys %mapitems));
      
     +	# Include all the parent directories in the map
     +	my $lastbase="";
+    +	my $commonbase = "";
+    +	$commonbase = $common_prefix if defined $common_prefix && length $common_prefix;
     +	foreach my $item (sort keys %mapitems) {
     +		$item=~s/^\Q$common_prefix\E\///
     +			if defined $common_prefix && length $common_prefix;
@@ -92,7 +94,7 @@ Note: This patch adds items to a map while it is in a foreach loop over a sorted
     +			# find the common dir
     +			my @a=split(/\//, $itembase);
     +			my @b=split(/\//, $lastbase);
-    +			my $common_dir="";
+    +			my $common_dir=$commonbase;
     +			while (@a && @b && $a[0] eq $b[0]) {
     +				if (length $common_dir) {
     +					$common_dir.="/";
