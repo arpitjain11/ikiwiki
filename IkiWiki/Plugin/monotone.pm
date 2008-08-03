@@ -68,7 +68,7 @@ sub getsetup () { #{{{
 		mtn_wrapper => {
 			type => "string",
 			example => "/srv/mtn/wiki/_MTN/ikiwiki-netsync-hook",
-			description => "monotone netsync hook executable to generate",
+			description => "monotone netsync hook to generate",
 			safe => 0, # file
 			rebuild => 0,
 		},

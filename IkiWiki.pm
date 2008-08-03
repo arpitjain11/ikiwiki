@@ -92,7 +92,7 @@ sub getsetup () { #{{{
 		type => "string",
 		default => '',
 		example => "/var/www/wiki/ikiwiki.cgi",
-		description => "cgi executable to generate",
+		description => "cgi wrapper to generate",
 		safe => 0, # file
 		rebuild => 0,
 	},

@@ -34,7 +34,7 @@ sub getsetup () { #{{{
 		tla_wrapper => {
 			type => "string",
 			#example => "", # TODO example
-			description => "tla post-commit executable to generate",
+			description => "tla post-commit hook to generate",
 			safe => 0, # file
 			rebuild => 0,
 		},

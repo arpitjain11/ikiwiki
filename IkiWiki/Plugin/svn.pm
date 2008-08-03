@@ -58,7 +58,7 @@ sub getsetup () { #{{{
 		svn_wrapper => {
 			type => "string",
 			example => "/svn/wikirepo/hooks/post-commit",
-			description => "svn post-commit executable to generate",
+			description => "svn post-commit hook to generate",
 			safe => 0, # file
 			rebuild => 0,
 		},

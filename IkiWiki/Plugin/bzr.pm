@@ -36,7 +36,7 @@ sub getsetup () { #{{{
 		bzr_wrapper => {
 			type => "string",
 			#example => "", # FIXME add example
-			description => "bzr post-commit executable to generate",
+			description => "bzr post-commit hook to generate",
 			safe => 0, # file
 			rebuild => 0,
 		},

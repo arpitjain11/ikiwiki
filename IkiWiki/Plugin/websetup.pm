@@ -13,6 +13,7 @@ my @default_force_plugins=(qw{amazon_s3 external});
 
 sub import { #{{{
 	hook(type => "getsetup", id => "websetup", call => \&getsetup);
+	hook(type => "checkconfig", id => "websetup", call => \&checkconfig);
 	hook(type => "sessioncgi", id => "websetup", call => \&sessioncgi);
 	hook(type => "formbuilder_setup", id => "websetup", 
 	     call => \&formbuilder_setup);
@@ -27,12 +28,29 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 0,
 		},
+		websetup_show_unsafe => {
+			type => "boolean",
+			example => 1,
+			description => "show unsafe settings, read-only, in web interface?",
+			safe => 0,
+			rebuild => 0,
+		},
 } #}}}
 
-sub formatexample ($) { #{{{
-	my $example=shift;
+sub checkconfig () { #{{{
+	if (! exists $config{websetup_show_unsafe}) {
+		$config{websetup_show_unsafe}=1;
+	}
+} #}}}
 
-	if (defined $example && ! ref $example && length $example) {
+sub formatexample ($$) { #{{{
+	my $example=shift;
+	my $value=shift;
+
+	if (defined $value && length $value) {
+		return "";
+	}
+	elsif (defined $example && ! ref $example && length $example) {
 		return "<br/ ><small>Example: <tt>$example</tt></small>";
 	}
 	else {
@@ -50,8 +68,10 @@ sub showfields ($$$@) { #{{{
 		my $key=shift;
 		my %info=%{shift()};
 
-		# skip complex, unsafe, or internal settings
-		next if ref $config{$key} || ! $info{safe} || $info{type} eq "internal";
+		# skip complex or internal settings
+		next if ref $config{$key} || ref $info{example} || $info{type} eq "internal";
+		# maybe skip unsafe settings
+		next if ! $info{safe} && ! $config{websetup_show_unsafe};
 		# these are handled specially, so don't show
 		next if $key eq 'add_plugins' || $key eq 'disable_plugins';
 		
@@ -83,7 +103,7 @@ sub showfields ($$$@) { #{{{
 			$form->field(
 				name => $name,
 				label => $description,
-				comment => defined $value && length $value ? "" : formatexample($info{example}),
+				comment => formatexample($info{example}, $value),
 				type => "text",
 				value => $value,
 				size => 60,
@@ -94,7 +114,7 @@ sub showfields ($$$@) { #{{{
 			$form->field(
 				name => $name,
 				label => $description,
-				comment => formatexample($info{example}),
+				comment => formatexample($info{example}, $value),
 				type => "text",
 				value => $value,
 				size => 60,
@@ -106,6 +126,7 @@ sub showfields ($$$@) { #{{{
 			$form->field(
 				name => $name,
 				label => $description,
+				comment => formatexample($info{example}, $value),
 				type => "text",
 				value => $value,
 				size => 5,
@@ -122,6 +143,11 @@ sub showfields ($$$@) { #{{{
 				options => [ [ 1 => $description ] ],
 				fieldset => $section,
 			);
+		}
+		
+		if (! $info{safe}) {
+			$form->field(name => $name, disabled => 1);
+			$form->text(gettext("Note: Disabled options cannot be configured here, but only by editing the setup file."));
 		}
 	}
 

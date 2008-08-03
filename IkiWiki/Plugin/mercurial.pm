@@ -36,7 +36,7 @@ sub getsetup () { #{{{
 		mercurial_wrapper => {
 			type => "string",
 			#example => # FIXME add example
-			description => "mercurial post-commit executable to generate",
+			description => "mercurial post-commit hook to generate",
 			safe => 0, # file
 			rebuild => 0,
 		},
