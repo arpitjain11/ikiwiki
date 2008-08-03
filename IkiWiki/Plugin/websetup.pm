@@ -261,7 +261,16 @@ sub showform ($$) { #{{{
 		foreach my $field (keys %fields) {
 			# TODO plugin enable/disable
 			next if $field=~/^enable\./; # plugin
-			$config{$fields{$field}}=$form->field($field);
+
+			my $key=$fields{$field};
+			my $value=$form->field($field);
+
+			next unless defined $value;
+			# Avoid setting fields to empty strings,
+			# if they were not set before.
+			next if ! defined $config{$key} && ! length $value;
+
+			$config{$key}=$value;
 		}
 		# TODO save to real path
 		IkiWiki::Setup::dump("/tmp/s");
