@@ -192,6 +192,7 @@ return the htmlized content.
 
 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
+
 [[Templates|wikitemplates]] are filled out for many different things in
 ikiwiki, like generating a page, or part of a blog page, or an rss feed, or
 a cgi. This hook allows modifying the variables available on those
@@ -356,7 +357,7 @@ This hook is called whenever ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
 
-## renamepage
+### renamepage
 
 	hook(type => "renamepage", id => "foo", call => \&renamepage);
 
