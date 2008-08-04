@@ -9,6 +9,14 @@ For example, my wiki's [front](http://www.cse.unsw.edu.au/~cs3431/wiki/) and [ne
 
 to <code>local.css</code> to get the border and make sure that the RSS feed's grey title didn't show through on the news page.)
 
+> Hmm the background color setting seems like a change it makes sense to make to
+> style.css .. done.
+> --[[Joey]]
+
 Unfortunately, the [recentchanges](http://www.cse.unsw.edu.au/~cs3431/wiki/recentchanges/) page doesn't look so nice - the sidebar appears below the recentchanges list.
 
 I don't understand why the sidebar is appearing below the recentchanges inline, but above the news inline.
+
+> I don't see the problem here in firefox 3. The sidebar is at the top of
+> both pages. However, it might have to do with the recentchanges page
+> itself using floating elements to build up the table-like display. --[[Joey]]
