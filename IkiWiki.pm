@@ -1043,7 +1043,9 @@ sub preprocess ($$$;$$) { #{{{
 		my $prefix=shift;
 		my $command=shift;
 		my $params=shift;
-		if (length $escape) {
+		$params="" if ! defined $params;
+
+		f (length $escape) {
 			return "[[$prefix$command $params]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
@@ -1176,8 +1178,7 @@ sub preprocess ($$$;$$) { #{{{
 		}sx;
 	}
 
-	# $4 can be undef if the directive was [[!foo]]
-	$content =~ s{$regex}{$handle->($1, $2, $3, ($4 or ""))}eg;
+	$content =~ s{$regex}{$handle->($1, $2, $3, $4)}eg;
 	return $content;
 } #}}}
 
