@@ -32,7 +32,7 @@ sub dumpline ($$$$) { #{{{
 		# avoid quotes
 		$dumpedvalue=$value;
 	}
-	elsif (ref $value eq 'ARRAY' && @$value && ! grep { /[^-A-Za-z0-9_]/ } @$value) {
+	elsif (ref $value eq 'ARRAY' && @$value && ! grep { /[^\S]/ } @$value) {
 		# dump simple array as qw{}
 		$dumpedvalue="[qw{".join(" ", @$value)."}]";
 	}
