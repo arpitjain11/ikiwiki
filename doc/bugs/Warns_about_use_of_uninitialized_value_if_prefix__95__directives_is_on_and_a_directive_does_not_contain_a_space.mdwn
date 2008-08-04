@@ -15,3 +15,5 @@ In `IkiWiki::preprocess`, the last capturing group in the regex used to parse di
     +       $content =~ s{$regex}{$handle->($1, $2, $3, ($4 or ""))}eg;
             return $content;
      } #}}}
+ 
+[[cherry-picked|done]] --[[Joey]]
