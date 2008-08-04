@@ -7,6 +7,7 @@ I'd like to be able to drop an unmodified RFC2822 email message into ikiwiki, an
 >> plugin is roughly feature complete at this point.  It can read mbox, maildir, and
 >> MH folders, does threading, and deals with MIME. Well, blindly decodes and copies 
 >> to ikiwiki all of 
->> the MIME parts. Some sanity checking is clearly needed.    No doubt lots of things could be 
+>> the MIME parts. Some sanity checking is clearly needed. It looks like attachement.pm has some code
+>> that may be helpful.   No doubt lots of things could be 
 >> be improved, and it hasn't been tested a great deal. Formatting of the body could be attempted
 >> as well. -- [[DavidBremner]]
