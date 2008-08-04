@@ -102,15 +102,14 @@ sub showfields ($$$@) { #{{{
 		my $name="enable.$plugin";
 		$form->field(
 			name => $name,
-			label => sprintf(gettext("enable %s?"), $plugin),
-			type => "radio",
-			value => $enabled,
+			label => "",
+			type => "checkbox",
 			fieldset => $section,
-			options => [
-				[ 1 => gettext("Yes") ],
-				[ 0 => gettext("No") ]
-			],
+			options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ]]
 		);
+		if (! $form->submitted) {
+			$form->field(name => $name, value => $enabled);
+		}
 		if ($plugin_forced) {
 			$form->field(name => $name, disabled => 1);
 		}
@@ -181,15 +180,14 @@ sub showfields ($$$@) { #{{{
 		elsif ($info{type} eq "boolean") {
 			$form->field(
 				name => $name,
-				label => $description,
-				type => "radio",
-				value => $value,
-				options => [
-					[ 1 => gettext("Yes") ],
-					[ 0 => gettext("No") ]
-				],
+				label => "",
+				type => "checkbox",
+				options => [ [ 1 => $description ] ],
 				fieldset => $section,
 			);
+			if (! $form->submitted) {
+				$form->field(name => $name, value => $value);
+			}
 		}
 		
 		if (! $info{safe}) {
@@ -237,7 +235,6 @@ sub showform ($$) { #{{{
 			[plugins => gettext("plugins")]
 		],
 		action => $config{cgiurl},
-		table => 0,
 		template => {type => 'div'},
 		stylesheet => IkiWiki::baseurl()."style.css",
 	);
