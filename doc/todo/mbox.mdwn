@@ -4,7 +4,6 @@ I'd like to be able to drop an unmodified RFC2822 email message into ikiwiki, an
 > [[comment_by_mail]] --[[Joey]]
 >> The 
 >> [mailbox](http://pivot.cs.unb.ca/git/?p=ikimailbox.git;a=summary) 
->> plugin can now be considered a prototype of itself, tested only with maildirs.
->>  Basic threading and some simple css is now included.  Next mission:
->> doing something sensible with MIME.
->> To see the (unsurprising) syntax, look at [a trivial example markdown file](http://pivot.cs.unb.ca/git/?p=ikimailbox.git;a=blob;f=test/in/index.mdwn;hb=HEAD)
+>> plugin is roughly feature complete at this point.  It can read mbox, maildir, and
+>> MH folders, does threading, and deals with MIME.  No doubt lots of things could be 
+>> be improved, and it hasn't been tested a great deal. -- [[DavidBremner]]
