@@ -13,3 +13,5 @@ A quick [[patch]] to silence a [[rcs/monotone]] warning I started seeing:
      		push @{$config{wrappers}}, {
      			wrapper => $config{mtn_wrapper},
      			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),
+
+> Thanks, [[done]]

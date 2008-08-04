@@ -55,7 +55,7 @@ sub checkconfig () { #{{{
 		error("Monotone version too old, is $version but required 0.38");
 	}
 
-	if (length $config{mtn_wrapper}) {
+	if (defined $config{mtn_wrapper} && length $config{mtn_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{mtn_wrapper},
 			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),
