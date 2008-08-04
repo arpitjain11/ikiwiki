@@ -134,11 +134,11 @@ sub showfields ($$$@) { #{{{
 		}
 
 		# multiple plugins can have the same field
-		my $name=defined $plugin ? $plugin.".".$key : $key;
+		my $name=defined $plugin ? $plugin.".".$key : $section.".".$key;
 
 		my $value=$config{$key};
 
-		if ($info{safe} && (ref $config{$key} eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
+		if ($info{safe} && (ref $value eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
 			push @{$value}, "", ""; # blank items for expansion
 		}
 
