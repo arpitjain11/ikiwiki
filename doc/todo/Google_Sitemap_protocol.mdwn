@@ -34,13 +34,14 @@ for an example.  You will probably need to strip out the metadata variables I
 >>>[xtermin.us rather than localhost](http://xtermin.us/git/?p=website.git;a=blob;f=plugins/googlesitemap.pm) is 404 now.
 >>> -- weakish
 
-
-According to [Google Webmaster tools](https://www.google.com/webmasters/tools/), my site isn't indexed for weeks at a time. Since I [blog](http://webconverger.org/blog/) every couple of days, that doesn't work. Yes I do have pingurl configured which [Google reader](http://reader.google.com/) does pick up quickly, but **not** the general search results from Google.
-
 There is a [sitemap XML standard](http://www.sitemaps.org/protocol.php) that ikiwiki needs to generate for. 
 
-Update: I've since discovered under [Google Webmaster tools 'Subscriber stats'](https://www.google.com/webmasters/tools/subscriberstats), you can tell Google to treat a feed as a sitemap. Therefore in many cases just submitting your [[ikiwiki/blog/]]'s feed will be enough for Google to start better indexing your ikiwiki site. **Update:** Sorry this is bollocks. Google doesn't grok a feed as a sitemap. You'll get a ERROR:
+# Google Webmaster tools and RSS
+
+On [Google Webmaster tools](https://www.google.com/webmasters/tools) you can substitute an RSS feed as a sitemap. Do not use Atom as if you have malformed XHTML it will fail to parse and you will get a ERROR message like so:
 
 	We were unable to read your Sitemap. It may contain an entry we are unable to recognize. Please validate your Sitemap before resubmitting.
 
 [Google should grok feeds as sitemaps.](http://www.google.com/support/webmasters/bin/answer.py?answer=34654) Or rather [[plugins/inline]] should be improved to support the [sitemap protocol](http://sitemaps.org/protocol.php) natively.
+
+-- [[Hendry]]
