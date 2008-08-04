@@ -102,11 +102,14 @@ sub showfields ($$$@) { #{{{
 		my $name="enable.$plugin";
 		$form->field(
 			name => $name,
-			label => "",
-			type => "checkbox",
-			options => [ [ 1 => sprintf(gettext("enable %s?"), $plugin) ] ],
+			label => sprintf(gettext("enable %s?"), $plugin),
+			type => "radio",
 			value => $enabled,
 			fieldset => $section,
+			options => [
+				[ 1 => gettext("Yes") ],
+				[ 0 => gettext("No") ]
+			],
 		);
 		if ($plugin_forced) {
 			$form->field(name => $name, disabled => 1);
@@ -178,10 +181,13 @@ sub showfields ($$$@) { #{{{
 		elsif ($info{type} eq "boolean") {
 			$form->field(
 				name => $name,
-				label => "",
-				type => "checkbox",
+				label => $description,
+				type => "radio",
 				value => $value,
-				options => [ [ 1 => $description ] ],
+				options => [
+					[ 1 => gettext("Yes") ],
+					[ 0 => gettext("No") ]
+				],
 				fieldset => $section,
 			);
 		}
@@ -231,6 +237,7 @@ sub showform ($$) { #{{{
 			[plugins => gettext("plugins")]
 		],
 		action => $config{cgiurl},
+		table => 0,
 		template => {type => 'div'},
 		stylesheet => IkiWiki::baseurl()."style.css",
 	);
@@ -345,14 +352,12 @@ sub showform ($$) { #{{{
 					delete $rebuild{$field};
 				}
 				else {
-					print STDERR ">>$key (@value) ($config{$key})\n";
 					$config{$key}=$value[0];
 				}
 			}
 		}
 		
 		if (%rebuild && ! $form->field("rebuild_asked")) {
-			print STDERR ">>".(join "," , keys %rebuild)."\n";
 			my $required=0;
 			foreach my $field ($form->field) {
 				$required=1 if $rebuild{$field};
