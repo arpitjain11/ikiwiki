@@ -139,7 +139,7 @@ sub showfields ($$$@) { #{{{
 		my $value=$config{$key};
 
 		if ($info{safe} && (ref $value eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
-			push @{$value}, "", ""; # blank items for expansion
+			$value=[@{$value}, "", ""]; # blank items for expansion
 		}
 
 		if ($info{type} eq "string") {
@@ -209,6 +209,24 @@ sub showfields ($$$@) { #{{{
 	return %enabledfields;
 } #}}}
 
+sub enable_plugin ($) { #{{{
+	my $plugin=shift;
+
+	$config{disable_plugins}=[grep { $_ ne $plugin } @{$config{disable_plugins}}];
+	push @{$config{add_plugins}}, $plugin;
+}
+
+sub disable_plugin ($) { #{{{
+	my $plugin=shift;
+
+	if (grep { $_ eq $plugin } @{$config{add_plugins}}) {
+		$config{add_plugins}=[grep { $_ ne $plugin } @{$config{add_plugins}}];
+	}
+	else {
+		push @{$config{disable_plugins}}, $plugin;
+	}
+}
+
 sub showform ($$) { #{{{
 	my $cgi=shift;
 	my $session=shift;
@@ -241,6 +259,7 @@ sub showform ($$) { #{{{
 	
 	$form->field(name => "do", type => "hidden", value => "setup",
 		force => 1);
+	$form->field(name => "rebuild_asked", type => "hidden");
 
 	if ($form->submitted eq 'Basic Mode') {
 		$form->field(name => "showadvanced", type => "hidden", 
@@ -314,8 +333,15 @@ sub showform ($$) { #{{{
 					
 			if ($field=~/^enable\.(.*)/) {
 				my $plugin=$1;
+				$value[0]=0 if ! length $value[0];
 				if ($value[0] != exists $enabled_plugins{$plugin}) {
-					# TODO plugin enable/disable
+					if ($value[0]) {
+						enable_plugin($plugin);
+					}
+					else {
+						disable_plugin($plugin);
+
+					}
 				}
 				else {
 					delete $rebuild{$field};
@@ -344,8 +370,8 @@ sub showform ($$) { #{{{
 				elsif (! defined $config{$key} && ! length $value[0]) {
 					delete $rebuild{$field};
 				}
-				elsif (! defined $config{$key} && ! $value[0] &&
-				       $info{type} eq "boolean") {
+				elsif ((! defined $config{$key} || ! $config{$key}) &&
+				       ! $value[0] && $info{type} eq "boolean") {
 					delete $rebuild{$field};
 				}
 				else {
@@ -359,8 +385,7 @@ sub showform ($$) { #{{{
 			foreach my $field ($form->field) {
 				$required=1 if $rebuild{$field};
 				next if exists $rebuild{$field};
-				$form->field(name => $field, type => "hidden",
-					force => 1);
+				$form->field(name => $field, type => "hidden");
 			}
 			if ($required) {
 				$form->text(gettext("The configuration changes shown below require a wiki rebuild to take effect."));
@@ -370,8 +395,7 @@ sub showform ($$) { #{{{
 				$form->text(gettext("For the configuration changes shown below to fully take effect, you may need to rebuild the wiki."));
 				$buttons=["Rebuild Wiki", "Save Setup", "Cancel"];
 			}
-			$form->field(name => "rebuild_asked", type => "hidden",
-				value => 1, force => 1);
+			$form->field(name => "rebuild_asked", value => 1, force => 1);
 			$form->reset(0); # doesn't really make sense here
 		}
 		else {
