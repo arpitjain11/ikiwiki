@@ -82,14 +82,9 @@ only parts of a repository).
 
 For example use, here's how to roll out a clone of the [Redpill support site](http://support.redpill.dk/):
 
-    mkdir -p ~/private_webdata
-    git clone http://source.redpill.dk/support.git ~/private_webdata/support.redpill.dk
-    cd ~/private_webdata/support.redpill.dk
-    make
-    mkdir -p ~/public_websites/support.redpill.dk
-    mkdir -p ~/public_websites/source.redpill.dk/support_content.git/hooks
     mkdir -p ~/public_cgi/support.redpill.dk
-    make install
+    git clone git://source.jones.dk/bin
+    bin/localikiwikicreatesite -o git://source.redpill.dk/support rpdemo
 
 (Redpill support is inspired by <http://help.riseup.net> but needs to be reusable for several similarly configured networks)
 
