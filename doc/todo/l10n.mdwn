@@ -72,11 +72,8 @@ Updates are retrieved with this single command:
 
     make
 
-Right now the l10n is maintained by manually comparing against each new upstream release, and
-updating both the master mirror and the l10n as needed.
-
-Work is in progress to semi-automate this to still check manually for updates, but maintain the
-l10n as PO files - to allow more translations to more than the few languages I know about myself.
+l10n is maintained using po4a for basewiki, smiley and templates - please  send me PO files if you
+translate to other languagess than the few I know about myself: <dr@jones.dk>
 
 As upstream ikiwiki is now maintained in GIT too, keeping the master mirror in sync with upstream
 could probably be automated even more - but an obstacle seems to be that content is not maintained
