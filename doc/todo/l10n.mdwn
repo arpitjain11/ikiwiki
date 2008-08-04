@@ -89,3 +89,11 @@ For example use, here's how to roll out a clone of the [Redpill support site](ht
 (Redpill support is inspired by <http://help.riseup.net> but needs to be reusable for several similarly configured networks)
 
 --[[JonasSmedegaard]]
+
+> I don't understand at all why you're using git the way you are.
+> 
+> I think that this needs to be reworked into a patch against the regular
+> ikiwiki tree, that adds the po4a stuff needed to generate the pot files for the
+> basewiki and template content, as well as the stuff that generates the
+> translated versions of those from the po files.
+> --[[Joey]]

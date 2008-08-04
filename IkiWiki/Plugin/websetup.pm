@@ -404,10 +404,14 @@ sub showform ($$) { #{{{
 			# TODO save to real path
 			IkiWiki::Setup::dump("/tmp/s");
 			$form->text(gettext("Setup saved."));
-	
+
 			if ($form->submitted eq 'Rebuild Wiki') {
 				# TODO rebuild
 			}
+			else {
+				# TODO refresh wiki and wrappers
+			}
+	
 		}
 	}
 
