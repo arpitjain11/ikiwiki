@@ -132,7 +132,7 @@ sub main () { #{{{
 			foreach my $wrapper (@wrappers) {
 				%config=(%origconfig,
 					rebuild => 0,
-					verbose => 0,
+					verbose => undef,
 					%{$wrapper},
 				);
 				checkconfig();
