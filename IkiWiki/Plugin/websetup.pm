@@ -349,7 +349,10 @@ sub showform ($$) { #{{{
 				next;
 			}
 
+			print STDERR "on $key\n";
+
 			if (ref $config{$key} eq "ARRAY" || ref $info{example} eq "ARRAY") {
+				print STDERR "$key is array\n";
 				@value=sort grep { length $_ } @value;
 				my @oldvalue=sort grep { length $_ }
 					(defined $config{$key} ? @{$config{$key}} : ());
@@ -365,16 +368,20 @@ sub showform ($$) { #{{{
 			}
 			else {
 				if (defined $config{$key} && $config{$key} eq $value[0]) {
+					print STDERR "$key SET SAME ($config{$key})\n";
 					delete $rebuild{$field};
 				}
 				elsif (! defined $config{$key} && ! length $value[0]) {
+					print STDERR "$key UNDEF and unset\n";
 					delete $rebuild{$field};
 				}
 				elsif ((! defined $config{$key} || ! $config{$key}) &&
 				       ! $value[0] && $info{type} eq "boolean") {
+				        print STDERR "omitting false $key\n";
 					delete $rebuild{$field};
 				}
 				else {
+					print STDERR "for $key : $value[0] vs $config{$key}; type: $info{type}\n";
 					$config{$key}=$value[0];
 				}
 			}
