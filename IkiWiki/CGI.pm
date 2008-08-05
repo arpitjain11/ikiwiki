@@ -775,7 +775,7 @@ sub cgi (;$$) { #{{{
 	}
 } #}}}
 
-# Does not need tobe called directly; all errors will go through here.
+# Does not need to be called directly; all errors will go through here.
 sub cgierror ($) { #{{{
 	my $message=shift;
 
