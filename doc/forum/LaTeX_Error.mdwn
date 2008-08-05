@@ -54,3 +54,9 @@ No pages of output.
 
 
 Some idea ?. 
+
+>> It looks like teximg uses some less standard LaTeX packages.  (see line 100 of Ikiwiki/Plugin/teximg.pm in the Ikiwiki source.)
+>> A quick work-around for an end-user would be to install the 'mhchem' LaTeX package (look in [CTAN](http://www.ctan.org/) ).
+>> A medium-term workaround would be to replace 'scrartcl' on line 100 with 'article', and delete line 101 in the teximg source.
+>> Longer term it would be nice to give teximg a configurable preamble.
+
