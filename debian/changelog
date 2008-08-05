@@ -15,6 +15,9 @@ ikiwiki (2.60) UNRELEASED; urgency=low
   * websetup: New plugin providing a setup form on the web.
   * ikiwiki-makerepo: Bail if both srcdir and repository are not specified.
     Closes: #493628
+  * Clarify some wording in the setup documentation that could maybe lead
+    users to putting paths with "~/" in the setup file, which doesn't work.
+    Closes: #493835
 
  -- Joey Hess <joeyh@debian.org>  Mon, 21 Jul 2008 11:35:46 -0400
 
