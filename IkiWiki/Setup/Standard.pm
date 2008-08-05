@@ -86,7 +86,7 @@ sub gendump ($) { #{{{
 	my @ret;
 	
 	# disable logging to syslog while dumping
-	$config{syslog}=0;
+	$config{syslog}=undef;
 
 	push @ret, dumpvalues(\%setup, IkiWiki::getsetup());
 	foreach my $pair (IkiWiki::Setup::getsetup()) {

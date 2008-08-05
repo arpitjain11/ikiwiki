@@ -79,7 +79,7 @@ sub getsetup () { #{{{
         # disable logging to syslog while dumping, broken plugins may
 	# whine when loaded
 	my $syslog=$config{syslog};
-        $config{syslog}=0;
+        $config{syslog}=undef;
 
 	# Load all plugins, so that all setup options are available.
 	my @plugins=grep { $_ ne $config{rcs} } sort(IkiWiki::listplugins());
