@@ -72,6 +72,8 @@ I could imagine including all 'bare' directories in the map, and I could imagine
 
 Attached is a [[patch]] that fixes the issue.  The current map code makes one pass over the sorted list of pages.  This adds an initial pass that goes through and makes sure that all parent directories are included.  With this initial pass added, the following pass could probably be simplified.
 
+One solution could also use the [[plugins/autoindex]] plugin to make sure that parent pages actually exist.  This is really only a stop-gap solution until the patch is applied - map still needs to be made bug-free.
+
 Note: This patch adds items to a map while it is in a foreach loop over a sorted list of keys from that same map.  Changing a map while iterating through it is normally problematic.  I'm assuming the sort insulates the code from this - I do not need to iterate over any of the newly added elements.
 
     diff --git a/IkiWiki/Plugin/map.pm b/IkiWiki/Plugin/map.pm
