@@ -42,3 +42,14 @@ I think there is:
 
   * A display bug in safari, and
   * It would be nice to clean up the way recentchanges are displayed so that there isn't a vertical gap for the sidebar.  I'll play with this and see what I can do.
+
+Looked at this a little more.  I've found the following.  Here is my current local.css:
+
+    div.recentchanges {
+    	clear: both;
+    	overflow: visible;
+    }
+
+Adding "clear: both;" makes the recentchanges div start below the sidebar.  This makes safari behave like firefox above (2nd screenshot).
+
+Adding "overflow: visible;"  (or removing "overflow: auto" from style.css) makes the sidebar appear above the recentchanges rather than below it (like the third screen shot above).  Unfortunately because ".recentchanges .pagelinks" uses "float: right;" it doesn't look look exactly like the third screen-shot.  For this reason I use the "clear:both;" as well.
