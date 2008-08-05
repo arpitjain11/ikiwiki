@@ -172,14 +172,14 @@ sub getsetup () { #{{{
 	},
 	verbose => {
 		type => "boolean",
-		default => 0,
+		example => 1,
 		description => "display verbose messages when building?",
 		safe => 1,
 		rebuild => 0,
 	},
 	syslog => {
 		type => "boolean",
-		default => 0,
+		example => 1,
 		description => "log to syslog?",
 		safe => 1,
 		rebuild => 0,
