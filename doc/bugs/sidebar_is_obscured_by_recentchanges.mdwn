@@ -20,3 +20,25 @@ I don't understand why the sidebar is appearing below the recentchanges inline, 
 > I don't see the problem here in firefox 3. The sidebar is at the top of
 > both pages. However, it might have to do with the recentchanges page
 > itself using floating elements to build up the table-like display. --[[Joey]]
+
+>> I didn't test in firefox.  I now have screenshots for both firefox and safari.  It is still interesting to compare the layout.  The first is quite broken.  The second is only a little broken.  The third is what I was expecting.
+
+Here is a screenshot of the broken behaviour in Safari:
+
+<img src="http://www.cse.unsw.edu.au/~willu/screenshots/safari-1.png" alt="screenshot of broken behaviour in Safari" width="50%" />
+
+Here is a screenshot of the same thing in FireFox.  Notice that while there are no overlaps, there is still a large gap in the layout.
+
+<img src="http://www.cse.unsw.edu.au/~willu/screenshots/firefox-1.png" alt="screenshot of semi-working behaviour in Firefox" width="50%" />
+
+Here is an inline news page (in Safari, but it looks similar in firefox).  I was expecting both of the previous layouts to look like this.
+
+<img src="http://www.cse.unsw.edu.au/~willu/screenshots/safari-2.png" alt="screenshot of working behaviour in Safari" width="50%" />
+
+What really surprises me is WHY this looks any different.  And when you look at style.css you see that recentchanges and sidebar both use float, whereas normal inline pages do not.
+Note that in the third (working) screenshot, the top bullet point is wrapped.  This is because the sidebar is floated.
+
+I think there is:
+
+  * A display bug in safari, and
+  * It would be nice to clean up the way recentchanges are displayed so that there isn't a vertical gap for the sidebar.  I'll play with this and see what I can do.
