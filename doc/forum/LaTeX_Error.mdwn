@@ -1,0 +1,56 @@
+Greetings. 
+
+I am put this code in one page:
+[[!teximg code="\frac{1}{5}" alt="1/5"]]
+
+this is the configuration file ikiwiki.info:
+
+add_plugins => [qw{sidebar goodstuff textile html htmlscrubber table pagetemplate teximg map meta anonok img version textile txt}]
+
+  *Here the log*
+
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=latex 2008.8.4)  5 AUG 2008 10:01
+entering extended mode
+ %&-line parsing enabled.
+**/tmp/fb7742f8dd0c66473643ba40592e2be2.SBQfJo94ii/fb7742f8dd0c66473643ba40592e
+2be2.tex
+
+(/tmp/fb7742f8dd0c66473643ba40592e2be2.SBQfJo94ii/fb7742f8dd0c66473643ba40592e2
+be2.tex
+
+[...]
+
+Package scrkbase Info: You've used the obsolete option `12pt'.
+(scrkbase)             \KOMAoptions{fontsize=12pt} will be used instead.
+(scrkbase)             You should do this change too on input line 594.
+
+[...]
+
+! LaTeX Error: File `mhchem.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.1 ...l}\usepackage[version=3]{mhchem}\usepackage
+
+                                                  {amsmath}\usepackage{amsfo...
+
+(cannot \read from terminal in nonstop modes)
+ 
+
+Here is how much of TeX's memory you used:
+ 761 strings out of 94074
+ 10268 string characters out of 1167096
+ 66007 words of memory out of 1500000
+ 4120 multiletter control sequences out of 10000+50000
+ 3938 words of font info for 15 fonts, out of 1200000 for 2000
+ 645 hyphenation exceptions out of 8191
+ 30i,1n,28p,410b,45s stack positions out of 5000i,500n,6000p,200000b,10000s
+No pages of output.
+
+
+Some idea ?. 
