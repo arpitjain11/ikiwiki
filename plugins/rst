@@ -28,11 +28,15 @@ def rst2html(proxy, *kwargs):
                                                })
     return '\n'.join(parts['html_body'].splitlines()[1:-1])
 
+def getsetup(proxy, *kwargs):
+    return 'plugin', { 'safe' : 1, 'rebuild' : 1 }
+
 import sys
 def debug(s):
     sys.stderr.write(__name__ + ':DEBUG:%s\n' % s)
     sys.stderr.flush()
 
 proxy = IkiWikiProcedureProxy(__name__, debug_fn=None)
+proxy.hook('getsetup', getsetup)
 proxy.hook('htmlize', rst2html)
 proxy.run()
