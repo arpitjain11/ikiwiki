@@ -217,8 +217,7 @@ sub hook ($@) { #{{{
 	delete $params{call};
 
 	IkiWiki::hook(%params, call => sub {
-		my $ret=IkiWiki::Plugin::external::rpc_call($plugin, $callback, @_);
-		return $ret;
+		IkiWiki::Plugin::external::rpc_call($plugin, $callback, @_);
 	});
 } #}}}
 
