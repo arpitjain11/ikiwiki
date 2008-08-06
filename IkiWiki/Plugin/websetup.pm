@@ -236,6 +236,10 @@ sub showform ($$) { #{{{
 		error(gettext("you are not logged in as an admin"));
 	}
 
+	if (! exists $config{setupfile}) {
+		error(gettext("setup file for this wiki is not known"));
+	}
+
 	eval q{use CGI::FormBuilder};
 	error($@) if $@;
 
@@ -399,19 +403,40 @@ sub showform ($$) { #{{{
 			$form->reset(0); # doesn't really make sense here
 		}
 		else {
-			$form->field(name => "rebuild_asked", type => "hidden",
-				value => 0, force => 1);
-			# TODO save to real path
-			IkiWiki::Setup::dump("/tmp/s");
-			$form->text(gettext("Setup saved."));
+			IkiWiki::Setup::dump($config{setupfile});
 
+			IkiWiki::saveindex();
+			IkiWiki::unlockwiki();
+
+			# Print the top part of a standard misctemplate,
+			# then show the rebuild or refresh.
+			my $divider="xxx";
+			my $html=IkiWiki::misctemplate("setup", $divider);
+			IkiWiki::printheader($session);
+			my ($head, $tail)=split($divider, $html, 2);
+			print $head."<pre>\n";
+
+			my @command;
 			if ($form->submitted eq 'Rebuild Wiki') {
-				# TODO rebuild
+				@command=("ikiwiki", "-setup", $config{setupfile},
+                                        "-rebuild", "-v");
 			}
 			else {
-				# TODO refresh wiki and wrappers
+				@command=("ikiwiki", "-setup", $config{setupfile},
+					"-refresh", "-wrappers", "-v");
 			}
-	
+
+			my $ret=system(@command);
+			print "\n<pre>";
+			if ($ret != 0) {
+				print '<p class="error">'.
+					sprintf(gettext("<p class=\"error\">Error: %s exited nonzero (%s)"),
+						join(" ", @command), $ret).
+					'</p>';
+			}
+
+			print $tail;			
+			exit 0;
 		}
 	}
 
