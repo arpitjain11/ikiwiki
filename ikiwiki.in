@@ -19,7 +19,11 @@ sub getconfig () { #{{{
 		eval q{use Getopt::Long};
 		Getopt::Long::Configure('pass_through');
 		GetOptions(
-			"setup|s=s" => \$config{setup},
+			"setup|s=s" => sub {
+				require IkiWiki::Setup;
+				IkiWiki::Setup::load($_[1]);
+				$config{setup}=1;
+			},
 			"dumpsetup|s=s" => \$config{dumpsetup},
 			"wikiname=s" => \$config{wikiname},
 			"verbose|v!" => \$config{verbose},
@@ -115,9 +119,7 @@ sub main () { #{{{
 	getconfig();
 	
 	if ($config{setup}) {
-		require IkiWiki::Setup;
-		IkiWiki::Setup::load($config{setup});
-		
+		delete $config{setup};
 		loadplugins();
 		checkconfig();
 
@@ -149,10 +151,6 @@ sub main () { #{{{
 		if (! $config{refresh}) {
 			$config{rebuild}=1;
 		}
-		
-		# ignore syslog setting from setup file
-		# while doing initial setup
-		$config{syslog}=0 unless $config{dumpsetup};
 	}
 
 	if ($config{dumpsetup}) {

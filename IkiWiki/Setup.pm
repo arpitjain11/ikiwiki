@@ -12,8 +12,8 @@ use File::Spec;
 
 sub load ($) { # {{{
 	my $setup=IkiWiki::possibly_foolish_untaint(shift);
-	$config{setupfile}=File::Spec->rel2abs($config{setup});
-	delete $config{setup};
+	$config{setupfile}=File::Spec->rel2abs($setup);
+
 	#translators: The first parameter is a filename, and the second
 	#translators: is a (probably not translated) error message.
 	open (IN, $setup) || error(sprintf(gettext("cannot read %s: %s"), $setup, $!));

@@ -354,6 +354,13 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
+	setup => {
+		type => "internal",
+		default => undef,
+		description => "running in setup mode",
+		safe => 0,
+		rebuild => 0,
+	},
 	refresh => {
 		type => "internal",
 		default => 0,
@@ -375,10 +382,10 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
-	setup => {
+	setupfile => {
 		type => "internal",
 		default => undef,
-		description => "setup file to read",
+		description => "path to setup file",
 		safe => 0,
 		rebuild => 0,
 	},
