@@ -8,9 +8,11 @@ use warnings;
 use strict;
 use IkiWiki;
 use open qw{:utf8 :std};
+use File::Spec;
 
 sub load ($) { # {{{
 	my $setup=IkiWiki::possibly_foolish_untaint(shift);
+	$config{setupfile}=File::Spec->rel2abs($config{setup});
 	delete $config{setup};
 	#translators: The first parameter is a filename, and the second
 	#translators: is a (probably not translated) error message.
