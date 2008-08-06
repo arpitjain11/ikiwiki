@@ -5,6 +5,12 @@ This plugin allows wiki admins to configure the wiki using a web interface,
 rather than editing the setup file directly. A "Wiki Setup" button is added
 to the admins' preferences page.
 
+Warning: This plugin rewrites your setup file. Any comments or unusual
+things (such as perl code) in the setup file will not be preserved. Also,
+it will only work correctly with new format setup files, as introduced in
+ikiwiki 2.60. Older setup files have a "wrappers" section, which will not
+be properly preserved if this plugin is used.
+
 Most settings can be modified using the web interface. Plugins can be
 enabled and disabled using it too. Some settings are not considered safe
 enough to be manipulated over the web; these are still shown, by default,
@@ -14,3 +20,7 @@ configured via the web.
 
 Plugins that should not be enabled/disabled via the web interface can be
 listed in `websetup_force_plugins` in the setup file.
+
+When the setup is saved, the setup file will be rewritten with the new
+settings, and the wiki will be refreshed, or rebuilt, to make the setip
+changes take effect.
