@@ -35,31 +35,34 @@ sub refresh () { #{{{
 	error($@) if $@;
 
 	my (%pages, %dirs);
-	find({
-		no_chdir => 1,
-		wanted => sub {
-			$_=decode_utf8($_);
-			if (IkiWiki::file_pruned($_, $config{srcdir})) {
-				$File::Find::prune=1;
-			}
-			elsif (! -l $_) {
-				my ($f)=/$config{wiki_file_regexp}/; # untaint
-				return unless defined $f;
-				$f=~s/^\Q$config{srcdir}\E\/?//;
-				return unless length $f;
-				if (! -d _) {
-					$pages{pagename($f)}=1;
+	foreach my $dir ($config{srcdir}, @{$config{underlaydirs}}, $config{underlaydir}) {
+		find({
+			no_chdir => 1,
+			wanted => sub {
+				$_=decode_utf8($_);
+				if (IkiWiki::file_pruned($_, $dir)) {
+					$File::Find::prune=1;
 				}
-				else {
-					$dirs{$f}=1;
+				elsif (! -l $_) {
+					my ($f)=/$config{wiki_file_regexp}/; # untaint
+					return unless defined $f;
+					$f=~s/^\Q$dir\E\/?//;
+					return unless length $f;
+					return if $f =~ /\._([^.]+)$/; # skip internal page
+					if (! -d _) {
+						$pages{pagename($f)}=1;
+					}
+					elsif ($dir eq $config{srcdir}) {
+						$dirs{$f}=1;
+					}
 				}
 			}
-		}
-	}, $config{srcdir});
+		}, $dir);
+	}
 
 	my @needed;
 	foreach my $dir (keys %dirs) {
-		if (! exists $pages{$dir}) {
+		if (! exists $pages{$dir} && grep /^$dir\/.*/, keys %pages) {
 			push @needed, $dir;
 		}
 	}
