@@ -2,10 +2,9 @@ ikiwiki (2.60) UNRELEASED; urgency=low
  
   * Starting with this version, "ikiwiki -setup /etc/ikiwiki/auto.setup"
     can be used create a new wiki in seconds.
-  * Add getsetup hook, all plugins that add fields to %config should use it.
+  * websetup: New plugin providing a setup form on the web.
   * ikiwiki --dumpsetup can generate a nice setup file snapshotting ikiwiki's
     current configuration.
-  * Large amounts of internal config data reorg.
   * The way wrappers are defined in the setup file has changed. Old setup
     files will continue to work, for now.
   * ikiwiki-transition setupformat can be used to convert a setup file to the
@@ -14,7 +13,9 @@ ikiwiki (2.60) UNRELEASED; urgency=low
   * ikiwiki-update-wikilist: Add -r switch to remove. Default behavior is now
     always to add.
   * Start moving admin preferences from the web interface to the setup file.
-  * websetup: New plugin providing a setup form on the web.
+  * Add getsetup hook, all plugins should use it to record information about
+    themselves and any fields they add to %config
+  * Large amounts of internal config data reorg.
   * ikiwiki-makerepo: Bail if both srcdir and repository are not specified.
     Closes: #493628
   * Clarify some wording in the setup documentation that could maybe lead
@@ -33,7 +34,8 @@ ikiwiki (2.56) unstable; urgency=low
   * Escape HTML is rss and atom feeds instead of respectively using CDATA and
     treating it as XHTML. This avoids problems with escaping the end of the
     CDATA when the htmlscrubber is not used, and it avoids problems with atom
-    XHTML using named entity references that are not in the atom DTD. (Simon McVittie)
+    XHTML using named entity references that are not in the atom DTD.
+    (Simon McVittie)
   * Add test for old versions of git that don't support --cleanup=verbatim,
     and munge empty commit messages.
 
@@ -47,8 +49,8 @@ ikiwiki (2.55) unstable; urgency=low
     (Sponsored by The TOVA Company.) (This one's for you, Kyle.)
   * All rcs backends need to implement rcs_remove, rcs_commitstaged,
     and rcs_rename. (Done for svn, git).
-  * This version adds renamepage hooks, which can be used to modify page content,
-    including links, during renames.
+  * This version adds renamepage hooks, which can be used to modify page
+    content, including links, during renames.
   * prefix_directives enabled in doc wiki, all preprocessor directives
     converted. (Simon McVittie)
   * editpage: Don't show attachments link when attachments are disabled.
