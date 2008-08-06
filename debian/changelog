@@ -8,6 +8,8 @@ ikiwiki (2.60) UNRELEASED; urgency=low
   * Large amounts of internal config data reorg.
   * The way wrappers are defined in the setup file has changed. Old setup
     files will continue to work, for now.
+  * ikiwiki-transition setupformat can be used to convert a setup file to the
+    new format.
   * Version control backends promoted to first-class plugins.
   * ikiwiki-update-wikilist: Add -r switch to remove. Default behavior is now
     always to add.

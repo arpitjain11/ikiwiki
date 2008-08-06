@@ -25,6 +25,14 @@ Note that if the page contains wiki links with spaces, which some
 older versions of ikiwiki accepted, the prefix_directives transition will
 treat these as preprocessor directives and convert them.
 
+# setupformat
+
+The `setupformat` mode converts a setup file from using a single `wrappers` block
+to using `cgi_wrapper`, `git_wrapper`, etc.
+
+Note that all comments and any unusual stuff like perl code in the setup
+file will be lost, as it is entirely rewritten by the transition.
+
 # aggregateinternal
 
 The `aggregateinternal` mode moves pages aggregated by the aggregate plugin
