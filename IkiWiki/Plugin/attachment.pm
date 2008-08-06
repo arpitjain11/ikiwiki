@@ -143,7 +143,7 @@ sub formbuilder_setup (@) { #{{{
 				IkiWiki::userinfo_set($user_name, "allowed_attachments",
 				$form->field("allowed_attachments")) ||
 					error("failed to set allowed_attachments");
-				if (length $form->field("allowed_attachments")) {
+				if (! length $form->field("allowed_attachments")) {
 					$form->field(name => "allowed_attachments", type => "hidden");
 				}
 			}
