@@ -130,14 +130,24 @@ sub setupformat {
 	IkiWiki::checkconfig();
 	
 	# unpack old-format wrappers setting into new fields
+	my $cgi_seen=0;
+	my $rcs_seen=0;
 	foreach my $wrapper (@{$config{wrappers}}) {
 		if ($wrapper->{cgi}) {
+			if ($cgi_seen) {
+				die "don't know what to do with second cgi wrapper ".$wrapper->{wrapper}."\n";
+			}
+			$cgi_seen++;
 			print "setting cgi_wrapper to ".$wrapper->{wrapper}."\n";
 			$config{cgi_wrapper}=$wrapper->{wrapper};
 			$config{cgi_wrappermode}=$wrapper->{wrappermode}
 				if exists $wrapper->{wrappermode};
 		}
 		elsif ($config{rcs}) {
+			if ($rcs_seen) {
+				die "don't know what to do with second rcs wrapper ".$wrapper->{wrapper}."\n";
+			}
+			$rcs_seen++;
 			print "setting $config{rcs}_wrapper to ".$wrapper->{wrapper}."\n";
 			$config{$config{rcs}."_wrapper"}=$wrapper->{wrapper};
 			$config{$config{rcs}."_wrappermode"}=$wrapper->{wrappermode}
