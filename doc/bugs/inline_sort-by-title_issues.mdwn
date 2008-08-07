@@ -16,3 +16,38 @@ which appears to list `unixauth` before `creole`.
 I'm not sure what the best fix is.  One fix would be to add another sort option, `sort="path"`, that would use the current (broken) sort by title.  Then add a true `sort="title"` that actually sorts on the title.  It might also be interesting to modify the sort=path to actually list the full path in the links - that way it would be obvious how it is sorted.  Or you could ignore the idea for `sort="path"`, and tell people to use [[plugins/map]] for that.
 
 --Will
+
+And here is a [[patch]] for this.  It makes `sort=title` actually sort on the title, and adds `sort=path` if you really want to sort on the path.  `sort=path` still only displays titles.  Just use map if you want more.
+
+    diff --git a/IkiWiki/Plugin/inline.pm b/IkiWiki/Plugin/inline.pm
+    index 9c336e7..99f6de3 100644
+    --- a/IkiWiki/Plugin/inline.pm
+    +++ b/IkiWiki/Plugin/inline.pm
+    @@ -185,9 +185,12 @@ sub preprocess_inline (@) { #{{{
+     		}
+     	}
+     
+    -	if (exists $params{sort} && $params{sort} eq 'title') {
+    +	if (exists $params{sort} && $params{sort} eq 'path') {
+     		@list=sort @list;
+     	}
+    +	elsif (exists $params{sort} && $params{sort} eq 'title') {
+    +		@list=sort { lc(pagetitle(basename($a))) cmp lc(pagetitle(basename($b))) } @list;
+    +	}
+     	elsif (exists $params{sort} && $params{sort} eq 'mtime') {
+     		@list=sort { $pagemtime{$b} <=> $pagemtime{$a} } @list;
+     	}
+    diff --git a/doc/ikiwiki/blog.mdwn b/doc/ikiwiki/blog.mdwn
+    index 19ec7ac..7608628 100644
+    --- a/doc/ikiwiki/blog.mdwn
+    +++ b/doc/ikiwiki/blog.mdwn
+    @@ -89,7 +89,8 @@ Here are some less often needed parameters:
+       inlining page.
+     * `sort` - Controls how inlined pages are sorted. The default, "age" is to
+       sort newest created pages first. Setting it to "title" will sort pages by
+    -  title, and "mtime" sorts most recently modified pages first.
+    +  title, "path" sorts by the path to the page, and "mtime" sorts most
+    +  recently modified pages first.
+     * `reverse` - If set to "yes", causes the sort order to be reversed.
+     * `feedshow` - Specify the maximum number of matching pages to include in
+       the rss/atom feeds. The default is the same as the `show` value above.
