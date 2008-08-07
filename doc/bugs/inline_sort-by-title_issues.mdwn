@@ -15,7 +15,7 @@ which appears to list `unixauth` before `creole`.
 
 I'm not sure what the best fix is.  One fix would be to add another sort option, `sort="path"`, that would use the current (broken) sort by title.  Then add a true `sort="title"` that actually sorts on the title.  It might also be interesting to modify the sort=path to actually list the full path in the links - that way it would be obvious how it is sorted.  Or you could ignore the idea for `sort="path"`, and tell people to use [[plugins/map]] for that.
 
---Will
+--[[users/Will]]
 
 And here is a [[patch]] for this.  It makes `sort=title` actually sort on the title, and adds `sort=path` if you really want to sort on the path.  `sort=path` still only displays titles.  Just use map if you want more.
 
