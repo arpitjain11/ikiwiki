@@ -53,3 +53,5 @@ Looked at this a little more.  I've found the following.  Here is my current loc
 Adding "clear: both;" makes the recentchanges div start below (as in further down the page) the sidebar.  This makes safari behave like firefox above (changes the 1st screenshot to look more like the 2nd screenshot).
 
 Adding "overflow: visible;"  (or removing "overflow: auto" from style.css) makes the sidebar appear above (as in printed over the top of, not higher up the page) the recentchanges (similar to the third screen shot above).  Unfortunately because ".recentchanges .pagelinks" uses "float: right;" it looks strange in other ways.  For this reason I use the "clear:both;" as well.
+
+-- [[users/Will]]
