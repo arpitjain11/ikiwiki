@@ -52,7 +52,7 @@ sub check_canrename ($$$$$$$) { #{{{
 	
 	# Dest checks can be omitted by passing undef.
 	if (defined $dest) {
-		if ($src eq $dest || $srcfile eq $destfile) {
+		if ($srcfile eq $destfile) {
 			error(gettext("no change to the file name was specified"));
 		}
 
@@ -63,7 +63,7 @@ sub check_canrename ($$$$$$$) { #{{{
 		}
 
 		# Must not be a known source file.
-		if (exists $pagesources{$dest}) {
+		if ($src ne $dest && exists $pagesources{$dest}) {
 			error(sprintf(gettext("%s already exists"),
 				htmllink("", "", $dest, noimageinline => 1)));
 		}
@@ -106,6 +106,24 @@ sub rename_form ($$$) { #{{{
 	$f->field(name => "do", type => "hidden", value => "rename", force => 1);
 	$f->field(name => "page", type => "hidden", value => $page, force => 1);
 	$f->field(name => "new_name", value => IkiWiki::pagetitle($page), size => 60);
+	if (!$q->param("attachment")) {
+		# insert the standard extensions
+		my @page_types;
+		if (exists $IkiWiki::hooks{htmlize}) {
+			@page_types=grep { !/^_/ }
+				keys %{$IkiWiki::hooks{htmlize}};
+		}
+	
+		# make sure the current extension is in the list
+		my ($ext) = $pagesources{$page}=~/\.([^.]+)$/;
+		if (! $IkiWiki::hooks{htmlize}{$ext}) {
+			unshift(@page_types, $ext);
+		}
+	
+		$f->field(name => "type", type => 'select',
+			options => \@page_types,
+			value => $ext, force => 1);
+	}
 	$f->field(name => "attachment", type => "hidden");
 
 	return $f, ["Rename", "Cancel"];
@@ -232,12 +250,19 @@ sub sessioncgi ($$) { #{{{
 			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
 
 			# The extension of dest is the same as src if it's
-			# a page. If it's an extension, the extension is
+			# a page. If it's an attachment, the extension is
 			# already included.
 			my $destfile=$dest;
 			if (! $q->param("attachment")) {
-				my ($ext)=$srcfile=~/(\.[^.]+)$/;
-				$destfile.=$ext;
+				my $type=$q->param('type');
+				if (defined $type && length $type && $IkiWiki::hooks{htmlize}{$type}) {
+					$type=IkiWiki::possibly_foolish_untaint($type);
+				} else {
+					my ($ext)=$srcfile=~/\.([^.]+)$/;
+					$type=$ext;
+				}
+				
+				$destfile.=".".$type;
 			}
 
 			check_canrename($src, $srcfile, $dest, $destfile,
