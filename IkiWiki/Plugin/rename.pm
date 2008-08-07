@@ -274,7 +274,7 @@ sub sessioncgi ($$) { #{{{
 			if ($config{rcs}) {
 				IkiWiki::rcs_rename($srcfile, $destfile);
 				IkiWiki::rcs_commit_staged(
-					sprintf(gettext("rename %s to %s"), $src, $dest),
+					sprintf(gettext("rename %s to %s"), $srcfile, $destfile),
 					$session->param("name"), $ENV{REMOTE_ADDR});
 			}
 			else {
@@ -303,7 +303,7 @@ sub sessioncgi ($$) { #{{{
 							next if $@;
 							my $conflict=IkiWiki::rcs_commit(
 								$file,
-								sprintf(gettext("update for rename of %s to %s"), $src, $dest),
+								sprintf(gettext("update for rename of %s to %s"), $srcfile, $destfile),
 								$token,
 								$session->param("name"), 
 								$ENV{REMOTE_ADDR}
