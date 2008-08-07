@@ -2,6 +2,8 @@ I don't necessarily trust all OpenID providers to stop bots.  I note that ikiwik
 
 I imagine a plugin that modifies the login screen to use <http://recaptcha.net/>.  You would then be required to fill in the captcha as well as log in in the normal way.
 
+-- [[users/Will]]
+
 > I hate CAPTCHAs with a passion. Someone else is welcome to write such a
 > plugin.
 >
@@ -55,7 +57,7 @@ ignored.
 > This is still not fixed.  I would have thought the following patch would
 > have fixed this second issue, but it doesn't.
 
-(code snipped as a working patch is below)
+(code snipped as a working [[patch]] is below)
 
 >> What seems to be happing here is that the openid plugin defines a
 >> validate hook for openid_url that calls validate(). validate() in turn
@@ -323,4 +325,3 @@ sub check_answer {
 }
 
 1;
-
