@@ -3,3 +3,15 @@ I started using Ikiwiki as a way to replace [Trac](http://trac.edgewall.org/) wh
 Lately I've been using Ikiwiki for other things and seem to scratching a few itches here and there. :)
 
 I generally use my [[ikiwiki/openid]] login when editing here: <http://www.cse.unsw.edu.au/~willu/>
+
+### Open Bugs:
+
+[[!inline pages="link(users/Will) and bugs/* and !bugs/done and !bugs/discussion and !link(patch) and !link(bugs/done) and !bugs/*/*" archive="yes" feeds="no" ]]
+
+### Open ToDos:
+
+[[!inline pages="link(users/Will) and todo/* and !todo/done and !todo/discussion and !link(patch) and !link(bugs/done) and !bugs/*/*" archive="yes" feeds="no" ]]
+
+### Unapplied Patches:
+
+[[!inline pages="link(users/Will) and (todo/* or bugs/*) and !bugs/done and !bugs/discussion and !todo/done and !todo/discussion and link(patch) and !link(bugs/done) and !bugs/*/*" archive="yes" feeds="no" ]]
