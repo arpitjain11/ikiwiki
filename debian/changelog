@@ -1,5 +1,6 @@
 ikiwiki (2.60) UNRELEASED; urgency=low
  
+  [ Joey Hess ]
   * Starting with this version, "ikiwiki -setup /etc/ikiwiki/auto.setup"
     can be used create a new wiki in seconds.
   * websetup: New plugin providing a setup form on the web.
@@ -30,7 +31,10 @@ ikiwiki (2.60) UNRELEASED; urgency=low
     options overrode most command line options.
   * Added a small icon to the search input box.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 21 Jul 2008 11:35:46 -0400
+  [ Josh Triplett ]
+  * Add Suggests on texlive and texlive-science for the teximg plugin
+
+ -- Josh Triplett <josh@freedesktop.org>  Wed, 06 Aug 2008 20:56:06 -0700
 
 ikiwiki (2.56) unstable; urgency=low
 
