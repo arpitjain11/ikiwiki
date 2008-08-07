@@ -8,6 +8,7 @@ The following pages have been automatically modified to update their links to <T
 <TMPL_LOOP NAME=FIXEDLINKS><li><TMPL_VAR PAGE></li></TMPL_LOOP>
 </ul>
 </TMPL_IF>
+<TMPL_IF BROKENLINKS_CHECKED>
 <TMPL_IF BROKENLINKS>
 The following pages still link to <TMPL_VAR SRC>:
 <ul>
@@ -15,5 +16,6 @@ The following pages still link to <TMPL_VAR SRC>:
 </ul>
 <TMPL_ELSE>
 No pages have broken links to <TMPL_VAR SRC>.
+</TMPL_IF>
 </TMPL_IF>
 </p>

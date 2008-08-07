@@ -249,9 +249,6 @@ sub sessioncgi ($$) { #{{{
 			my $srcfile=IkiWiki::possibly_foolish_untaint($pagesources{$src});
 			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
 
-			# The extension of dest is the same as src if it's
-			# a page. If it's an attachment, the extension is
-			# already included.
 			my $destfile=$dest;
 			if (! $q->param("attachment")) {
 				my $type=$q->param('type');
@@ -286,31 +283,33 @@ sub sessioncgi ($$) { #{{{
 				}
 			}
 			my @fixedlinks;
-			foreach my $page (keys %links) {
-				my $needfix=0;
-				foreach my $link (@{$links{$page}}) {
-					my $bestlink=bestlink($page, $link);
-					if ($bestlink eq $src) {
-						$needfix=1;
-						last;
+			if ($src ne $dest) {
+				foreach my $page (keys %links) {
+					my $needfix=0;
+					foreach my $link (@{$links{$page}}) {
+						my $bestlink=bestlink($page, $link);
+						if ($bestlink eq $src) {
+							$needfix=1;
+							last;
+						}
 					}
-				}
-				if ($needfix) {
-					my $file=$pagesources{$page};
-					my $oldcontent=readfile($config{srcdir}."/".$file);
-					my $content=renamepage_hook($page, $src, $dest, $oldcontent);
-					if ($oldcontent ne $content) {
-						my $token=IkiWiki::rcs_prepedit($file);
-						eval { writefile($file, $config{srcdir}, $content) };
-						next if $@;
-						my $conflict=IkiWiki::rcs_commit(
-							$file,
-							sprintf(gettext("update for rename of %s to %s"), $src, $dest),
-							$token,
-							$session->param("name"), 
-							$ENV{REMOTE_ADDR}
-						);
-						push @fixedlinks, $page if ! defined $conflict;
+					if ($needfix) {
+						my $file=$pagesources{$page};
+						my $oldcontent=readfile($config{srcdir}."/".$file);
+						my $content=renamepage_hook($page, $src, $dest, $oldcontent);
+						if ($oldcontent ne $content) {
+							my $token=IkiWiki::rcs_prepedit($file);
+							eval { writefile($file, $config{srcdir}, $content) };
+							next if $@;
+							my $conflict=IkiWiki::rcs_commit(
+								$file,
+								sprintf(gettext("update for rename of %s to %s"), $src, $dest),
+								$token,
+								$session->param("name"), 
+								$ENV{REMOTE_ADDR}
+							);
+							push @fixedlinks, $page if ! defined $conflict;
+						}
 					}
 				}
 			}
@@ -323,39 +322,44 @@ sub sessioncgi ($$) { #{{{
 
 			# Scan for any remaining broken links to $src.
 			my @brokenlinks;
-			foreach my $page (keys %links) {
-				my $broken=0;
-				foreach my $link (@{$links{$page}}) {
-					my $bestlink=bestlink($page, $link);
-					if ($bestlink eq $src) {
-						$broken=1;
-						last;
+			if ($src ne $dest) {
+				foreach my $page (keys %links) {
+					my $broken=0;
+					foreach my $link (@{$links{$page}}) {
+						my $bestlink=bestlink($page, $link);
+						if ($bestlink eq $src) {
+							$broken=1;
+							last;
+						}
 					}
+					push @brokenlinks, $page if $broken;
 				}
-				push @brokenlinks, $page if $broken;
 			}
 
 			# Generate a rename summary, that will be shown at the top
 			# of the edit template.
 			my $template=template("renamesummary.tmpl");
-			$template->param(src => $src);
-			$template->param(dest => $dest);
-			$template->param(brokenlinks => [
-				map {
-					{
-						page => htmllink($dest, $dest, $_,
-								noimageinline => 1)
-					}
-				} @brokenlinks
-			]);
-			$template->param(fixedlinks => [
-				map {
-					{
-						page => htmllink($dest, $dest, $_,
-								noimageinline => 1)
-					}
-				} @fixedlinks
-			]);
+			$template->param(src => $srcfile);
+			$template->param(dest => $destfile);
+			if ($src ne $dest) {
+				$template->param(brokenlinks_checked => 1);
+				$template->param(brokenlinks => [
+					map {
+						{
+							page => htmllink($dest, $dest, $_,
+									noimageinline => 1)
+						}
+					} @brokenlinks
+				]);
+				$template->param(fixedlinks => [
+					map {
+						{
+							page => htmllink($dest, $dest, $_,
+									noimageinline => 1)
+						}
+					} @fixedlinks
+				]);
+			}
 			$renamesummary=$template->output;
 
 			postrename($session, $src, $dest, $q->param("attachment"));
