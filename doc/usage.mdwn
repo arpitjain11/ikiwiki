@@ -30,26 +30,6 @@ These options control the mode that ikiwiki operates in.
 
   Force a rebuild of all pages.
 
-* --cgi
-
-  Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and
-  supports editing pages, signing in, and registration.
-
-  To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
-  to generate a wrapper. The wrapper will generally need to run suid 6755 to
-  the user who owns the `source` and `destination` directories.
-
-* --wrapper [file]
-
-  Generate a wrapper binary that is hardcoded to do action specified by
-  the other options, using the specified input files and `destination`
-  directory. The filename to use for the wrapper is optional.
-
-  The wrapper is designed to be safely made suid and be run by untrusted
-  users, as a [[post-commit]] hook, or as a [[CGI]].
-
-  Note that the generated wrapper will ignore all command line parameters.
-
 * --setup configfile
 
   In setup mode, ikiwiki reads the config file, which is really a perl
@@ -69,6 +49,26 @@ These options control the mode that ikiwiki operates in.
 
   If used with --setup --refresh, this makes it also update any configured
   wrappers.
+
+* --cgi
+
+  Enable [[CGI]] mode. In cgi mode ikiwiki runs as a cgi script, and
+  supports editing pages, signing in, and registration.
+
+  To use ikiwiki as a [[CGI]] program you need to use --wrapper or --setup
+  to generate a wrapper. The wrapper will generally need to run suid 6755 to
+  the user who owns the `source` and `destination` directories.
+
+* --wrapper [file]
+
+  Generate a wrapper binary that is hardcoded to do action specified by
+  the other options, using the specified input files and `destination`
+  directory. The filename to use for the wrapper is optional.
+
+  The wrapper is designed to be safely made suid and be run by untrusted
+  users, as a [[post-commit]] hook, or as a [[CGI]].
+
+  Note that the generated wrapper will ignore all command line parameters.
 
 * --aggregate
 
