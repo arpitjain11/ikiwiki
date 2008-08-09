@@ -51,10 +51,16 @@ Any comments? --[[Paweł|ptecza]]
 > to have a progress bar marking how many bugs were compete for a
 > particular milestone.  -- [[Will]]
 
+>> Thanks a lot for your comment, Will! It seems very interesting for me.
+>> I need to think more about improving that plugin. --[[Paweł|ptecza]]
+
 >> Attached is a [[patch]] (well, source) for this.  You also need to add the proposed CSS above to `style.css`.
 >> At the moment this plugin interacts poorly with the [[plugins/htmlscrubber]] plugin.
 >> HTMLScrubber plugin removes the `style` attribute from the `progress-done` `div` tag, and so it defaults
 >> to a width of 100%. -- [[Will]]
+
+>>> Thank you for the code! I know how to fix that problem, because I had
+>>> the same issue while writing [[todo/color_plugin]] :) --[[Paweł|ptecza]]
 
     #!/usr/bin/perl
     package IkiWiki::Plugin::progress;
