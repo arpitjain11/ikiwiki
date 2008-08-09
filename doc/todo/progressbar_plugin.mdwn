@@ -63,7 +63,7 @@ Any comments? --[[Paweł|ptecza]]
     use strict;
     use IkiWiki 2.00;
     
-    my $percentage_pattern = qr/[0-9]\%/; # pattern to validate percentages
+    my $percentage_pattern = qr/[0-9]+\%/; # pattern to validate percentages
     
     sub import { #{{{
     	hook(type => "getsetup", id => "progress", call => \&getsetup);
