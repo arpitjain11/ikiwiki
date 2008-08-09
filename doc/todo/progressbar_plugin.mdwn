@@ -100,7 +100,7 @@ Any comments? --[[Paweł|ptecza]]
     		}
     		
     		if ($totalcount == 0) {
-    			$fill = "100%"
+    			$fill = "100%";
     		} else {
     			my $number = $donecount/$totalcount*100;
     			$fill = sprintf("%u%%", $number);
