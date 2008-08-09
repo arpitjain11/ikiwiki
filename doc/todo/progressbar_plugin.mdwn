@@ -62,6 +62,8 @@ Any comments? --[[Paweł|ptecza]]
 >>> Thank you for the code! I know how to fix that problem, because I had
 >>> the same issue while writing [[todo/color_plugin]] :) --[[Paweł|ptecza]]
 
+>>>> Ahh - good idea.  Patch updated to work with HTMLScrubber. --[[Will]]
+
     #!/usr/bin/perl
     package IkiWiki::Plugin::progress;
     
@@ -74,6 +76,7 @@ Any comments? --[[Paweł|ptecza]]
     sub import { #{{{
     	hook(type => "getsetup", id => "progress", call => \&getsetup);
     	hook(type => "preprocess", id => "progress", call => \&preprocess);
+    	hook(type => "format",     id => "progress", call => \&format);
     } # }}}
     
     sub getsetup () { #{{{
@@ -124,4 +127,38 @@ Any comments? --[[Paweł|ptecza]]
     
     } # }}}
     
+    sub format(@) { #{{{
+    	my %params = @_;
+    
+    	# If HTMLScrubber has removed the style attribute, then bring it back
+    
+    	$params{content} =~ s!<div class="progress-done">($percentage_pattern)</div>!<div class="progress-done" style="width: $1">$1</div>!g;
+    
+    	return $params{content};    
+    } #}}}
+    
     1
+
+Here is a potential documentation page:
+
+-----
+
+[[!template id=plugin name=progress author="[[Will]]"]]
+[[!tag type/meta]]
+
+Provides a \\[[!progress ]] [[ikiwiki/PreProcessorDirective]] that is
+replaced with a progress bar.
+
+There are two possible parameter sets.  The first is a single parameter
+`percent` which holds a percentage figure for how complete the progress bar is.
+
+The second possible set of parameters is a pair of [[ikiwiki/PageSpec]]s,
+`totalpages` and `donepages`.  The progress plugin counts the number of
+pages in each pagespec and shows the percentage of the total pages that are
+done.
+
+This plugin is included in ikiwiki, but is not enabled by default.
+
+If it is turned on it can show what percentage of pages have discussion pages:
+
+[[!progress totalpages="* and !*/Discussion" donepages="*/Discussion"]]
