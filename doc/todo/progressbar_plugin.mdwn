@@ -42,3 +42,11 @@ You can use alternative, commented CSS code for `div.progress` if you dislike
 padding around done strip.
 
 Any comments? --[[Paweł|ptecza]]
+
+> This looks like a nice idea.  If I could add one further suggestion: Allow your
+> ratio to be a pair of pagespecs.  Then you could have something like:
+
+    \[[!progress totalpages="bugs/* and backlink(milestoneB)" donepages="bugs/* and backlink(milestoneB) and !link(bugs/done)"]]
+
+> to have a progress bar marking how many bugs were compete for a
+> particular milestone.  -- [[Will]]
