@@ -42,3 +42,86 @@ You can use alternative, commented CSS code for `div.progress` if you dislike
 padding around done strip.
 
 Any comments? --[[Paweł|ptecza]]
+
+> This looks like a nice idea.  If I could add one further suggestion: Allow your
+> ratio to be a pair of pagespecs.  Then you could have something like:
+
+    \[[!progress totalpages="bugs/* and backlink(milestoneB)" donepages="bugs/* and backlink(milestoneB) and !link(bugs/done)"]]
+
+> to have a progress bar marking how many bugs were compete for a
+> particular milestone.  -- [[Will]]
+
+>> Thanks a lot for your comment, Will! It seems very interesting for me.
+>> I need to think more about improving that plugin. --[[Paweł|ptecza]]
+
+>> Attached is a [[patch]] (well, source) for this.  You also need to add the proposed CSS above to `style.css`.
+>> At the moment this plugin interacts poorly with the [[plugins/htmlscrubber]] plugin.
+>> HTMLScrubber plugin removes the `style` attribute from the `progress-done` `div` tag, and so it defaults
+>> to a width of 100%. -- [[Will]]
+
+>>> Thank you for the code! I know how to fix that problem, because I had
+>>> the same issue while writing [[todo/color_plugin]] :) --[[Paweł|ptecza]]
+
+    #!/usr/bin/perl
+    package IkiWiki::Plugin::progress;
+    
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+    
+    my $percentage_pattern = qr/[0-9]+\%/; # pattern to validate percentages
+    
+    sub import { #{{{
+    	hook(type => "getsetup", id => "progress", call => \&getsetup);
+    	hook(type => "preprocess", id => "progress", call => \&preprocess);
+    } # }}}
+    
+    sub getsetup () { #{{{
+    	return 
+    		plugin => {
+    			safe => 1,
+    			rebuild => undef,
+    		},
+    } #}}}
+    
+    sub preprocess (@) { #{{{
+    	my %params=@_;
+    	
+    	my $fill;
+    	
+    	if (defined $params{percent}) {
+    		$fill = $params{percent};
+    		($fill) = $fill =~ m/($percentage_pattern)/; # fill is untainted now
+    	}
+    	elsif (defined $params{totalpages} and defined $params{donepages}) {
+    		add_depends($params{page}, $params{totalpages});
+    		add_depends($params{page}, $params{donepages});
+    
+    		my @pages=keys %pagesources;
+    		my $totalcount=0;
+    		my $donecount=0;
+    		foreach my $page (@pages) {
+    			$totalcount++ if pagespec_match($page, $params{totalpages}, location => $params{page});
+    			$donecount++ if pagespec_match($page, $params{donepages}, location => $params{page});
+    		}
+    		
+    		if ($totalcount == 0) {
+    			$fill = "100%";
+    		} else {
+    			my $number = $donecount/$totalcount*100;
+    			$fill = sprintf("%u%%", $number);
+    		}
+    	}
+    	else {
+    		error("Missing parameters to progress plugin.  Need either `percent` or `totalpages` and `donepages` parameters.");
+    	}
+    
+    	return <<EODIV
+    <div class="progress">
+      <div class="progress-done" style="width: $fill">$fill</div>
+    </div>
+    EODIV
+    
+    } # }}}
+    
+    1

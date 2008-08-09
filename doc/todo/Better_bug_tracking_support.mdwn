@@ -20,7 +20,17 @@ be embedded to the source code repository commit messages.
 > I sorta take your point about bug numbers. It can be a pain to refer to
 > 'using_a_wiki_for_issue_tracking' as a bug name in a place like a
 > changelog.
-> 
+
+>> Would a modified [[plugins/inline]] plugin that allowed new pages, but without a title field, be ok?
+>> When you hit the edit button it just chooses a new number and makes a page with that
+>> name.
+
+>> The only issue I can see with this is if you're using a distributed wiki for
+>> distributed bug tracking.  In that case you're going to have to make sure that you
+>> don't get conflicting bug ids.
+>> Maybe there should be two options - consecutive numbering, and uuid numbering
+>> which uses a random (128 bit, base64 encoded = 22 chars) name. -- [[Will]]
+
 > OTOH, I don't see a need for specially formatted commit messages to be
 > used to close bugs. Instead, if your BTS is kept in an ikiwiki wiki in
 > an RCS along with your project, you can do like I do here, and just edit a
