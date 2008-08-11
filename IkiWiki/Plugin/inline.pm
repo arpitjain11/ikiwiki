@@ -579,15 +579,15 @@ sub pingurl (@) { #{{{
 					$title, $url);
 				my $res = $client->send_request($req);
 				if (! ref $res) {
-					debug("Did not receive response to ping");
+					error("Did not receive response to ping");
 				}
 				my $r=$res->value;
 				if (! exists $r->{flerror} || $r->{flerror}) {
-					debug("Ping rejected: ".(exists $r->{message} ? $r->{message} : "[unknown reason]"));
+					error("Ping rejected: ".(exists $r->{message} ? $r->{message} : "[unknown reason]"));
 				}
 			};
 			if ($@) {
-				debug "Ping failed: $@";
+				error "Ping failed: $@";
 			}
 		}
 	}
