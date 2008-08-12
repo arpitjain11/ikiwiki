@@ -4,8 +4,8 @@
      else="This wiki has attachments **disabled**."]]
 
 If attachments are enabled, the wiki admin can control what types of
-attachments will be accepted, by entering a [[ikiwiki/PageSpec]] in the
-"Allowed Attachments" field of their preferences page.
+attachments will be accepted, via the `allowed_attachments`
+configuration setting.
 
 For example, to limit arbitrary files to 50 kilobytes, but allow
 larger mp3 files to be uploaded by joey into a specific directory, and
