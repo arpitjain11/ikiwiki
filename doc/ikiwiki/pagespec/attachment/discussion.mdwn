@@ -1,3 +1,9 @@
 Would it be possible to factor out this pagespec 
 code so that other plugins can use it without enabling attachments?
 I am interested for [[todo/mbox]] --[[DavidBremner]]
+
+> I can split out all of them except for `ip()` and `user()` easily. I
+> have just changed the code so the rest will test the existing source file
+> is no other filename is specified. Do you have any reason to want to
+> check ip addresses and user names? Not sure what to call the plugin, but
+> breaking it out is easy enough. --[[Joey]]
