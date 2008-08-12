@@ -19,7 +19,7 @@ severity = 1
 # when they are part of the core program. I don't plan to have more than
 # the one exporting module in IkiWiki, so let's ignore this test.
 [-Modules::RequireFilenameMatchesPackage]
-# IkiWIki also switches _out_ of the core package when a package namespace
+# IkiWiki also switches _out_ of the core package when a package namespace
 # is a good way to group a set of functions. This doesn't mean I want it
 # loading up a separate file though, so it's in the same file.
 [-Modules::ProhibitMultiplePackages]

@@ -24,7 +24,7 @@ my %pagenum;
 sub preprocess (@) { #{{{
 	my %params=(open => "yes", total => "yes", percent => "yes", @_);
 
-	my $open=IkiWIki::yesno($params{open});
+	my $open=IkiWiki::yesno($params{open});
 	my $showtotal=IkiWiki::yesno($params{total});
 	my $showpercent=IkiWiki::yesno($params{percent});
 	$pagenum{$params{page}}++;
