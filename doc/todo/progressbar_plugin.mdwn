@@ -18,7 +18,18 @@ A here is its HTML result:
 Note: I was trying with `<span>` tags too, but that tag is inline, so I can't
 set `width` property for it.
 
-> In the poll plugin, I ended up using 
+> In the poll plugin, I ended up using a `<hr>` for the progress-like
+> thing. One reason I did so is because it actually works in text-mode
+> browsers (w3m, lynx), that do not support css or colorized
+> divs. Since the hr is an element they display, just setting its width can
+> make a basic progress-type display. The style then makes it display
+> better in more capable browsers.
+> 
+> The other advantage to that approach is that the htmlscrubber lets
+> through the `class` and `width` fields, that are all that are needed for
+> it to work. No need to work around htmlscrubber.
+> 
+> So I suggest adapting this to use similar html. --[[Joey]]
 
 Default CSS styles for the plugin can be like below:
 
@@ -39,6 +50,10 @@ Default CSS styles for the plugin can be like below:
             text-align: center;
             vertical-align: middle;
     }
+
+> Please make sure to always set a foreground color if a background color is
+> set, and use '!important' so the foreground color can be overridden. (CSS
+> best practices) --[[Joey]]
 
 You can use alternative, commented CSS code for `div.progress` if you dislike
 padding around done strip.
@@ -166,4 +181,4 @@ This plugin is included in ikiwiki, but is not enabled by default.
 
 If it is turned on it can show what percentage of pages have discussion pages:
 
-[[!progress totalpages="* and !*/Discussion" donepages="*/Discussion"]]
+	\[[!progress totalpages="* and !*/Discussion" donepages="*/Discussion"]]
