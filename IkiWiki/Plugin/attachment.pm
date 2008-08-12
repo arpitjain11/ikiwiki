@@ -42,7 +42,8 @@ sub check_canattach ($$;$) { #{{{
 
 	# Don't allow an attachment to be uploaded with the same name as an
 	# existing page.
-	if (exists $pagesources{$dest} && $pagesources{$dest} ne $dest) {
+	if (exists $IkiWiki::pagesources{$dest} &&
+	    $IkiWiki::pagesources{$dest} ne $dest) {
 		error(sprintf(gettext("there is already a page named %s"), $dest));
 	}
 
@@ -349,19 +350,20 @@ sub humansize ($) { #{{{
 package IkiWiki::PageSpec;
 
 sub match_maxsize ($$;@) { #{{{
-	shift;
+	my $page=shift;
 	my $maxsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
 	if ($@) {
 		return IkiWiki::FailReason->new("unable to parse maxsize (or number too large)");
 	}
 
 	my %params=@_;
-	if (! exists $params{file}) {
+	my $file=exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page};
+	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
 	}
 
-	if (-s $params{file} > $maxsize) {
-		return IkiWiki::FailReason->new("file too large (".(-s $params{file})." >  $maxsize)");
+	if (-s $file > $maxsize) {
+		return IkiWiki::FailReason->new("file too large (".(-s $file)." >  $maxsize)");
 	}
 	else {
 		return IkiWiki::SuccessReason->new("file not too large");
@@ -369,18 +371,19 @@ sub match_maxsize ($$;@) { #{{{
 } #}}}
 
 sub match_minsize ($$;@) { #{{{
-	shift;
+	my $page=shift;
 	my $minsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
 	if ($@) {
 		return IkiWiki::FailReason->new("unable to parse minsize (or number too large)");
 	}
 
 	my %params=@_;
-	if (! exists $params{file}) {
+	my $file=exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page};
+	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
 	}
 
-	if (-s $params{file} < $minsize) {
+	if (-s $file < $minsize) {
 		return IkiWiki::FailReason->new("file too small");
 	}
 	else {
@@ -389,11 +392,12 @@ sub match_minsize ($$;@) { #{{{
 } #}}}
 
 sub match_mimetype ($$;@) { #{{{
-	shift;
+	my $page=shift;
 	my $wanted=shift;
 
 	my %params=@_;
-	if (! exists $params{file}) {
+	my $file=exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page};
+	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
 	}
 
@@ -403,7 +407,7 @@ sub match_mimetype ($$;@) { #{{{
 	if ($@) {
 		return IkiWiki::FailReason->new("failed to load File::MimeInfo::Magic ($@); cannot check MIME type");
 	}
-	my $mimetype=File::MimeInfo::Magic::magic($params{file});
+	my $mimetype=File::MimeInfo::Magic::magic($file);
 	if (! defined $mimetype) {
 		$mimetype="unknown";
 	}
@@ -418,11 +422,12 @@ sub match_mimetype ($$;@) { #{{{
 } #}}}
 
 sub match_virusfree ($$;@) { #{{{
-	shift;
+	my $page=shift;
 	my $wanted=shift;
 
 	my %params=@_;
-	if (! exists $params{file}) {
+	my $file=exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page};
+	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
 	}
 
@@ -436,7 +441,7 @@ sub match_virusfree ($$;@) { #{{{
 	# used, clamd would fail to read it.
 	eval q{use IPC::Open2};
 	error($@) if $@;
-	open (IN, "<", $params{file}) || return IkiWiki::FailReason->new("failed to read file");
+	open (IN, "<", $file) || return IkiWiki::FailReason->new("failed to read file");
 	binmode(IN);
 	my $sigpipe=0;
 	$SIG{PIPE} = sub { $sigpipe=1 };
