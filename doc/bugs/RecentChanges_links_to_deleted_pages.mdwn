@@ -1,1 +1,15 @@
-[[RecentChanges]] should not link to pages that are being deleted. For as example, see the change with the title 'add news item for ikiwiki 2.60' which includes the deletion of "news/version 2.52". Maybe it should be made clear in RecentChanges that the change to the file is it being deleted.
+[[RecentChanges]] should not link to pages that are being deleted. For as
+example, see the change with the title 'add news item for ikiwiki 2.60'
+which includes the deletion of "news/version 2.52". Maybe it should be made
+clear in RecentChanges that the change to the file is it being deleted.
+
+> It needs to link to the deleted page so that you can recreate the page if
+> desired.
+> 
+> The link is not of the normal form used for a link to a nonexistant page,
+> instead it redirects through a CGI. This is done because updating the
+> links would require rebuilding all change pages each time, which would be
+> 100x as slow as the current method.
+> 
+> I don't feel that being 100 times faster at the expense of a marginally
+> inconsistent, but still usable interface is a bug. --[[Joey]] [[done]]
