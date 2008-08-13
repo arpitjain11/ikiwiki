@@ -1,0 +1,14 @@
+In ikiwiki-2.60, external plug-ins are yet again installed using 'cp -a' instead of 'install -m 755'. This poses a problem on at least FreeBSD 6.x, since the cp(1) command doesn't support the '-a' flag.
+
+The change in question (from 2.56 to 2.60) can be seen here:
+
+    -       for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\*`; do \
+    -               install -m 755 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
+    -       done; \
+    +       for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\* | grep -v demo`; do \
+    +               cp -a $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
+    +       done \
+
+Please restore the old behaviour of using 'install' :-)
+
+  -- [[HenrikBrixAndersen]]
