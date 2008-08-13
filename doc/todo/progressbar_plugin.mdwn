@@ -31,6 +31,31 @@ set `width` property for it.
 > 
 > So I suggest adapting this to use similar html. --[[Joey]]
 
+>> I just had a brief play with this.  It seems there are some trade-offs involved.
+>> The `width` attribute of an `<hr>` tag is deprecated, but that's not the big one.
+>> I can't see how to place text next to an `<hr>` tag.  I note that in the
+>> [[plugins/poll]] plugin there is text above and below the 'graph line', but none
+>> on the same line as the graph.  I prefer the way the current code renders,
+>> with the percentage complete appearing as text inside the graph.
+>>
+>> So, if we use `hr` we get:
+>>
+>> - Graph line on text / non-css browsers
+>> - No percentage complete text on the same line as the graph line
+>> - Deprecated HTML
+>>
+>> If we use `div` we get:
+>>
+>> - Need to clean up after HTMLScrubber (which is not hard - already implemented)
+>> - Get the percentage written as text on text / non-css browsers
+>> - Get the percentage on the same line as the graph in css browsers
+>>
+>> I'm strongly in favour of having the percentage text label on the graph, and on
+>> text based browsers I think having the text label is enough -- the lack of the line
+>> in that case doesn't bother me.
+>> So, given the choice between the two suggested techniques, I'd take the second and
+>> stay with div... unless you know how to get text next to (or within) an `<hr>` tag. -- [[Will]]
+
 Default CSS styles for the plugin can be like below:
 
     div.progress {
@@ -51,14 +76,32 @@ Default CSS styles for the plugin can be like below:
             vertical-align: middle;
     }
 
-> Please make sure to always set a foreground color if a background color is
-> set, and use '!important' so the foreground color can be overridden. (CSS
-> best practices) --[[Joey]]
-
 You can use alternative, commented CSS code for `div.progress` if you dislike
 padding around done strip.
 
 Any comments? --[[Paweł|ptecza]]
+
+> Please make sure to always set a foreground color if a background color is
+> set, and use '!important' so the foreground color can be overridden. (CSS
+> best practices) --[[Joey]]
+
+>> Below is the CSS I've been using -- [[Will]]
+
+    div.progress {
+    	margin-top: 1ex;
+    	margin-bottom: 1ex;
+    	border: 1px solid #888;
+    	width: 400px;
+    	background: #eee;
+    	color: black !important;
+    	padding: 1px;
+    }
+    div.progress-done {
+    	background: #ea6 !important;
+    	color: black !important;
+    	text-align: center;
+    	padding: 1px;
+    }
 
 > This looks like a nice idea.  If I could add one further suggestion: Allow your
 > ratio to be a pair of pagespecs.  Then you could have something like:
