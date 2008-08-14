@@ -12,3 +12,8 @@ The change in question (from 2.56 to 2.60) can be seen here:
 Please restore the old behaviour of using 'install' :-)
 
   -- [[HenrikBrixAndersen]]
+
+> I use cp -a because I don't want non-executable files to be installed
+> executable. (Causes breakage with setup file creation code) I really
+> wish *BSD could get out of the 70's in this area..
+> --[[Joey]]
