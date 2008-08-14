@@ -10,7 +10,7 @@ use IPC::Open2;
 
 sub import { #{{{
 	hook(type => "getsetup", id => "graphviz", call => \&getsetup);
-	hook(type => "preprocess", id => "graphviz", call => \&graph);
+	hook(type => "preprocess", id => "graph", call => \&graph);
 } # }}}
 
 sub getsetup () { #{{{
