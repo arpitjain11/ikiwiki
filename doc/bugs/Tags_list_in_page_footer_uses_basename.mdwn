@@ -1,0 +1,5 @@
+Page footers contain a list of links to the page and a list of tags applied to the page.  The link list uses the full path to pages.  However, the tag list contains only the basename of the tag pages.  For instance, if I tag a page with person1/foo and person2/bar, the tag list will just list foo and bar without the necessary disambiguating prefixes.
+
+I think the tag list should always contain the full path to the tag, with the tagbase value removed.
+
+--[[JoshTriplett]]
