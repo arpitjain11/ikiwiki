@@ -17,3 +17,41 @@ Please restore the old behaviour of using 'install' :-)
 > executable. (Causes breakage with setup file creation code) I really
 > wish *BSD could get out of the 70's in this area..
 > --[[Joey]]
+
+>> Well, really what's happening here is that *BSD (along with, for
+>> example, Solaris) is adhering rather closely to the Single UNIX
+>> Specification, whereas `-a` is a nonstandard option added to the
+>> GNU variant of `cp` (a habit Richard Stallman never really got under
+>> control). To install ikiwiki on Solaris I had to replace all uses not
+>> only of `cp` but also of `install` and `xgettext` with the GNU
+>> embrace-and-extend variants, and make sure I had those installed.
+>> That really is a bit of a PITA.
+
+>> I think there's an opportunity here for a really clean solution, though.
+
+>> Why not do the installation in pure Perl?
+
+>> The file manipulations being done by `cp` and `install` would be
+>> straightforward to code in Perl, and there really isn't a complicated
+>> build requiring the full functionality of `gmake`. `gxgettext` I'm
+>> not so sure about, but even getting rid of _almost_ all the
+>> nonstandard-utility dependencies would be a win.
+
+>> The idea is that if you're distributing a Perl-based app, one thing
+>> you'll always be absolutely certain of in the target environment is a
+>> working Perl. The fact that the current build starts out in Perl, but
+>> uses it to write a Makefile and then hand off to other utilities that
+>> are less dependably compatible across platforms is a disadvantage.
+
+>> A pure-Perl install can also query the very Perl it's running in to
+>> determine the proper places to install files, and that will be less
+>> error-prone that making a human edit the right paths into some files.
+>> It would be quite useful here, actually, where we have several distinct
+>> Perl builds installed at different paths, and ikiwiki could be correctly
+>> installed for any one of them simply by using the chosen Perl to run the
+>> install. That means this would also be a complete solution to
+>> [[todo/assumes_system_perl|todo/assumes_system_perl]].
+>> --ChapmanFlack
+
+
+
