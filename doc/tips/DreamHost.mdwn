@@ -10,7 +10,11 @@ We're going to assume that you're installing CPAN and other Perl modules into ~/
 
 In your .bashrc/.bash_profile/.profile, add:
 
-    export PERL5LIB=~/site/perl/share/perl/5.8:~/site/perl/share/perl/5.8.4:~/site/perl/lib/perl5:~/site/perl/lib/perl/5.8.4
+    export PERL5LIB="$HOME/site/perl/share/perl/5.8:$HOME/site/perl/share/perl/5.8.4:$HOME/site/perl/lib/perl5:$HOME/site/perl/lib/perl/5.8.4"
+
+These locations may be different on your computer. For example, I use:
+
+    export PERL5LIB="$HOME/site/perl/lib/perl5:$HOME/site/perl/lib/perl5/site_perl/5.8.8:$PERL5LIB"
 
 You probably want to add *~/site/perl/bin/* to your path, as well, since Ikiwiki's scripts are put in there.
 
