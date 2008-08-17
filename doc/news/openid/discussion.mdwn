@@ -63,3 +63,7 @@ Even if IkiWiki does let me log out, how do I *stay* logged out?  Let's say I'm 
 > don't check the box that makes your provider set a cookie when you log in.)
 > 
 > AFAIK openid doesn't have single signoff capabilities yet. --[[Joey]]
+
+I'm having a problem using my preferred openid. I have http://thewordnerd.info configured as a delegate to thewordnerd.myopenid.com. It works fine on Lighthouse, Slicehost and everywhere else I've used it. Here, though, if I use the delegate I'm sent to my openid identity URL on myopenid.com. If I use the identity URL directly, I get the verification page.
+
+Is my delegation broken in some way that works for all these other apps but which fails here? Or is something broken in Ikiwiki's implementation?
