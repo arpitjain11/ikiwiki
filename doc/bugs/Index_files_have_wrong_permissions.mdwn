@@ -7,3 +7,6 @@ ikiwiki has files that are not group-readable:
 I chmod a+r them, but then when I edit something through the web, its permissions are reverted to only user-readable. How do I resolve this? 
 
  -- [[JosephTurian]]
+
+> My index files have the correct permissions. Have you tried setting 'umask => 022' in your ikiwiki.setup file?
+>   -- [[HenrikBrixAndersen]]
