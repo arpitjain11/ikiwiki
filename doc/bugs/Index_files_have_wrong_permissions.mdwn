@@ -1,0 +1,7 @@
+ikiwiki has files that are not group-readable:
+
+    -rw------- 1 joseph users  541 Aug 18 12:02 index.atom
+    -rw------- 1 joseph users 2328 Aug 18 12:02 index.html
+    -rw------- 1 joseph users  282 Aug 18 12:02 index.rss
+
+I chmod a+r them, but then when I edit something through the web, its permissions are reverted to only user-readable. How do I resolve this? 
