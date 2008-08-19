@@ -1,0 +1,26 @@
+<a href="http://disqus.com">Disqus</a> is a comment system that you can add to your blog to manage comments.
+
+To add it to ikiwiki first create an account at disqus and add you blog. Then click on the Admin link at that top of the main page.
+
+In the admin section there should be a tab called "Tools" for you site. Select the "Generic Code" option to install your site and then tweak the settings so the comments box looks like you want. This will then create a bit of javascript. Copy that code.
+
+In ikiwiki templates edit the page.tmpl and somewhere down the bottom, I put mine just before the footer, paste in the code that you had from before. This will add a disqus comment box to every page on your site.
+
+If you want to change your blog to also use the comments then you need to edit the inlinepage.tmpl template as well. This time remove the lines 
+
+    <TMPL_IF NAME="DISCUSSIONLINK">
+    <li><TMPL_VAR DISCUSSIONLINK></li>
+
+and replace with
+
+    <li>
+    <TMPL_IF NAME="PERMALINK">
+    <a href="<TMPL_VAR PERMALINK>">Comment</a>
+    <TMPL_ELSE>
+    <a href="<TMPL_VAR PAGEURL>">Comment</a>
+    </TMPL_IF>
+    </li>
+
+This changes the discussion link to a Comment link that takes you to the full page for that blog entry which should contain the disqus comments form that you added before.
+
+Note: This does then mean that to add a comment people need to have javascript enabled.
