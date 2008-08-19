@@ -100,7 +100,7 @@ The patch also makes some other changes:
     +		# ensure destination directory exists
     +		writefile("$imagedir/$digest.png", $config{destdir}, "") &&
     +		(($config{teximg_dvipng} &&
-    +			system("dvipng -D 120 -bg Transparent -T tight -o $config{destdir}/$imagedir/$digest.png $tmp/$digest.dvi 2> $tmp/$digest.log") == 0
+    +			system("dvipng -D 120 -bg Transparent -T tight -o $config{destdir}/$imagedir/$digest.png $tmp/$digest.dvi > $tmp/$digest.log") == 0
     +			) || 
     +		(!$config{teximg_dvipng} &&
     +			system("dvips -E $tmp/$digest.dvi -o $tmp/$digest.ps 2> $tmp/$digest.log") == 0 &&
