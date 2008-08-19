@@ -1,0 +1,110 @@
+The [[plugins/teximg]] plugin currently has a TODO in the source code to make the preamble configurable.  The included [[patch]] makes this change.
+
+The patch also makes some other changes:
+
+  - The default latex preamble is changed to the international standard `article` class from the European `scrartcl` class.
+  - Removed the non-standard `mhchem` package from the default preamble.
+  - Allow the use of `dvipng` rather than `dvips` and `convert` (`convert` is not a standard part of a latex install).  This is configurable.
+
+-- [[Will]]
+
+    diff --git a/IkiWiki/Plugin/teximg.pm b/IkiWiki/Plugin/teximg.pm
+    index 369c108..8c3379f 100644
+    --- a/IkiWiki/Plugin/teximg.pm
+    +++ b/IkiWiki/Plugin/teximg.pm
+    @@ -10,6 +10,18 @@ use File::Temp qw(tempdir);
+     use HTML::Entities;
+     use IkiWiki 2.00;
+     
+    +my $default_prefix = <<EOPREFIX
+    +\\documentclass{article}
+    +\\usepackage{amsmath}
+    +\\usepackage{amsfonts}
+    +\\usepackage{amssymb}
+    +\\pagestyle{empty}
+    +\\begin{document}
+    +EOPREFIX
+    +;
+    +
+    +my $default_postfix = '\\end{document}';
+    +
+     sub import { #{{{
+     	hook(type => "getsetup", id => "teximg", call => \&getsetup);
+     	hook(type => "preprocess", id => "teximg", call => \&preprocess);
+    @@ -21,6 +33,26 @@ sub getsetup () { #{{{
+     			safe => 1,
+     			rebuild => undef,
+     		},
+    +		teximg_dvipng => {
+    +			type => "boolean",
+    +			description => "Should teximg use dvipng to render, or dvips and convert?",
+    +			safe => 0,
+    +			rebuild => 0,
+    +		},
+    +		teximg_prefix => {
+    +			type => "string",
+    +			example => $default_prefix,
+    +			description => "LaTeX prefix for teximg plugin",
+    +			safe => 0, # Not sure how secure LaTeX is...
+    +			rebuild => 1,
+    +		},
+    +		teximg_postfix => {
+    +			type => "string",
+    +			example => $default_postfix,
+    +			description => "LaTeX postfix for teximg plugin",
+    +			safe => 0, # Not sure how secure LaTeX is...
+    +			rebuild => 1,
+    +		},
+     } #}}}
+     
+     sub preprocess (@) { #{{{
+    @@ -105,25 +137,34 @@ sub gen_image ($$$$) { #{{{
+     	my $digest = shift;
+     	my $imagedir = shift;
+     
+    -	#TODO This should move into the setup file.
+    -	my $tex = '\documentclass['.$height.'pt]{scrartcl}';
+    -	$tex .= '\usepackage[version=3]{mhchem}';
+    -	$tex .= '\usepackage{amsmath}';
+    -	$tex .= '\usepackage{amsfonts}';
+    -	$tex .= '\usepackage{amssymb}';
+    -	$tex .= '\pagestyle{empty}';
+    -	$tex .= '\begin{document}';
+    +	if (!defined $config{teximg_prefix}) {
+    +		$config{teximg_prefix} = $default_prefix;
+    +	}
+    +	if (!defined $config{teximg_postfix}) {
+    +		$config{teximg_postfix} = $default_postfix;
+    +	}
+    +	if (!defined $config{teximg_dvipng}) {
+    +		# TODO: Can we detect whether dvipng or convert is in the path?
+    +		$config{teximg_dvipng} = 1;
+    +	}
+    +	
+    +	my $tex = $config{teximg_prefix};
+     	$tex .= '$$'.$code.'$$';
+    -	$tex .= '\end{document}';
+    +	$tex .= $config{teximg_postfix};
+    +	$tex =~ s!\\documentclass{article}!\\documentclass[${height}pt]{article}!g;
+     
+     	my $tmp = eval { create_tmp_dir($digest) };
+     	if (! $@ &&
+    -	    writefile("$digest.tex", $tmp, $tex) &&
+    -	    system("cd $tmp; latex --interaction=nonstopmode $tmp/$digest.tex > /dev/null") == 0 &&
+    -	    system("dvips -E $tmp/$digest.dvi -o $tmp/$digest.ps 2> $tmp/$digest.log") == 0 &&
+    -	    # ensure destination directory exists
+    -	    writefile("$imagedir/$digest.png", $config{destdir}, "") &&
+    -	    system("convert -density 120  -trim -transparent \"#FFFFFF\" $tmp/$digest.ps $config{destdir}/$imagedir/$digest.png > $tmp/$digest.log") == 0) {
+    +		writefile("$digest.tex", $tmp, $tex) &&
+    +		system("cd $tmp; latex --interaction=nonstopmode $tmp/$digest.tex > /dev/null") == 0 &&
+    +		# ensure destination directory exists
+    +		writefile("$imagedir/$digest.png", $config{destdir}, "") &&
+    +		(($config{teximg_dvipng} &&
+    +			system("dvipng -D 120 -bg Transparent -T tight -o $config{destdir}/$imagedir/$digest.png $tmp/$digest.dvi 2> $tmp/$digest.log") == 0
+    +			) || 
+    +		(!$config{teximg_dvipng} &&
+    +			system("dvips -E $tmp/$digest.dvi -o $tmp/$digest.ps 2> $tmp/$digest.log") == 0 &&
+    +			system("convert -density 120  -trim -transparent \"#FFFFFF\" $tmp/$digest.ps $config{destdir}/$imagedir/$digest.png > $tmp/$digest.log") == 0))) {
+     		return 1;
+     	}
+     	else {
