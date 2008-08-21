@@ -1,5 +1,22 @@
 I've found myself wanting to know which [[plugins]] are switched on so I know which pre-processor commands I can use.  The attached [[patch]] adds a new plugin that generates the list of available plugins. -- [[Will]]
 
+> Good idea, I do see a few problems:
+> 
+> - preprocessor directives do not necessarily have the same name as the
+>   plugin that contains them (for example, the graphviz plugin adds a graph
+>   directive). Won't keys `%{IkiWiki::hooks{preprocess}}` work?
+> - "listplugins" is a bit misnamed since it only does preprocessor directives.
+> - comment was copied from version plugin and still mentions version :-)
+> - Seems like [[ikiwiki/formatting]] could benefit from including the
+>   list.. however, just a list of preprocessor directive names is not
+>   the most user-friendly thing that could be put on that page. It would
+>   be nice if there were also a short description and maybe an example of
+>   use. Seems like the place to include that info would be in the call
+>   to `hook()`.
+>   (Maybe adding that is more involved than you want to go though..)
+> 
+> --[[Joey]]
+
     #!/usr/bin/perl
     # Ikiwiki listplugins plugin.
     package IkiWiki::Plugin::listplugins;
