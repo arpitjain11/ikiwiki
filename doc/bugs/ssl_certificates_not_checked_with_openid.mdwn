@@ -50,3 +50,19 @@ For now, I want to try and resolve the issues with net\_ssl\_test, and run more 
 >>> that the SSL cert is issued by a trusted party and matches the domain name
 >>> of the site being connected to. I also don't personally think that SSL
 >>> certs are the right fix for DNS poisoning issues. --[[Joey]]
+
+I was a bit vague myself on the details on openid. So I looked up the standard.
+I was surprised to note that they have already considered these issues, in
+section 15.1.2, <http://openid.net/specs/openid-authentication-2_0.html#anchor41>.
+
+It says:
+
+"Using SSL with certificates signed by a trusted authority prevents these kinds of
+attacks by verifying the results of the DNS look-up against the certificate. Once
+the validity of the certificate has been established, tampering is not possible.
+Impersonating an SSL server requires forging or stealing a certificate, which is
+significantly harder than the network based attacks."
+
+With regards to implementation, I am surprised that the libraries don't seem to
+do this checking, already, and by default. Unfortunately, I am not sure how to test
+this adequately, see <http://bugs.debian.org/466055>. -- Brian May
