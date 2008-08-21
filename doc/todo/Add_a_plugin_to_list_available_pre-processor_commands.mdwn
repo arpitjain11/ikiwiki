@@ -1,0 +1,73 @@
+I've found myself wanting to know which [[plugins]] are switched on so I know which pre-processor commands I can use.  The attached [[patch]] adds a new plugin that generates the list of available plugins. -- [[Will]]
+
+    #!/usr/bin/perl
+    # Ikiwiki listplugins plugin.
+    package IkiWiki::Plugin::listplugins;
+    
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+    
+    sub import { #{{{
+    	hook(type => "getsetup", id => "listplugins", call => \&getsetup);
+    	hook(type => "needsbuild", id => "listplugins", call => \&needsbuild);
+    	hook(type => "preprocess", id => "listplugins", call => \&preprocess);
+    } # }}}
+    
+    sub getsetup () { #{{{
+    	return
+    		plugin => {
+    			safe => 1,
+    			rebuild => undef,
+    		},
+    } #}}}
+    
+    my @pluginlist;
+    my $pluginString;
+    
+    sub needsbuild (@) { #{{{
+    	my $needsbuild=shift;
+    
+    	my @rawpluginlist = sort(IkiWiki::listplugins());
+    	@pluginlist = ();
+    	
+    	foreach my $plugin (@rawpluginlist) {
+    		if ( exists $IkiWiki::hooks{preprocess}{$plugin} ) {
+    			push(@pluginlist,$plugin);
+    		}
+    	}
+    
+    	$pluginString = join (' ', @pluginlist);
+    
+    	foreach my $page (keys %pagestate) {
+    		if (exists $pagestate{$page}{listplugins}{shown}) {
+    			if ($pagestate{$page}{listplugins}{shown} ne $pluginString) {
+    				push @$needsbuild, $pagesources{$page};
+    			}
+    			if (exists $pagesources{$page} &&
+    			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
+    				# remove state, will be re-added if
+    				# the version is still shown during the
+    				# rebuild
+    				delete $pagestate{$page}{listplugins}{shown};
+    			}
+    		}
+    	}
+    } # }}}
+    
+    sub preprocess (@) { #{{{
+    	my %params=@_;
+    	
+    	$pagestate{$params{destpage}}{listplugins}{shown}=$pluginString;
+    	
+    	my $result = "<ul class=\"pluginlist\">";
+    	my $thisPlugin;
+    	foreach $thisPlugin (@pluginlist) {
+    		$result .= "<li class=\"pluginlist\">$thisPlugin</li>";
+    	}
+    	$result .= "</ul>";
+    	
+    	return $result;
+    } # }}}
+    
+    1
