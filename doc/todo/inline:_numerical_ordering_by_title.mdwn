@@ -1,0 +1,21 @@
+Could you please add numerical ordering by title to [[inline|plugins/inline]]
+plugin? Now I can do only alphabetical order by title, but sometime it's not enough.
+
+BTW, it seems that ordering by title is rather ordering by filename of page.
+For me "title" means title of page I can set using `title` parameter
+of [[meta|plugins/meta]] plugin :)
+
+Why do I need that feature? I've just been migrating an info site of our university
+[mail system](http://poczta.uw.edu.pl/) to Ikiwiki from very static, console handling
+Makefile+[WML](http://thewml.org/)+XML+XSL=HTML solution. I have many news files
+(`1.mdwn`, `2.mdwn`, etc.) and unfortunately I did very stupid thing. I've commited
+all of them in the same revision of our Subversion repo...
+
+Now I have a problem with sorting these files using inline plugin. I can't do
+sorting by age, because both old and young news files have the same age. I can't
+sort by title too. For example, when I sort them by title, then `9.mdwn` page is
+between `90.mdwn` and `89.mdwn` pages... It sucks, of course. Sorting by mtime
+also is not a solution for me, because it means that I can't touch/fix old news
+anymore.
+
+Do you have any idea how to workaround that issue? --[[Paweł|ptecza]]
