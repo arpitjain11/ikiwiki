@@ -8,6 +8,12 @@ The patch also makes some other changes:
 
 -- [[Will]]
 
+> I like making this configurable. I do fear that changing what's included
+> by default could break some existing uses of teximg? That needs to be
+> considered, and either the breakage documented in NEWS, or avoided. Also,
+> if mchem is dropped, I think the suggests on texlive-science in
+> debian/control should probably go? --[[Joey]]
+
     diff --git a/IkiWiki/Plugin/teximg.pm b/IkiWiki/Plugin/teximg.pm
     index 369c108..8c3379f 100644
     --- a/IkiWiki/Plugin/teximg.pm
