@@ -3,3 +3,9 @@ It seems that the orphans plugin doesn't recognize markdown-style links of the k
     [Pretty link name](realname)
 
 In my wiki, the page "realname" shows up as an orphan although it's being linked to.
+
+> Like anything in ikiwiki that deals with links, this only takes
+> [[WikiLinks|ikiwiki/wikilink]] into account. There should be no real
+> reason to use other link mechanisms provided by eg, markdown for internal
+> links in the wiki (indeed, using them is likely to cause broken links
+> when doing things like inlining or renaming pages). --[[Joey]]
