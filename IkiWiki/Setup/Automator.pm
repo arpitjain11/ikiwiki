@@ -28,7 +28,7 @@ sub import (@) { #{{{
 	IkiWiki::Setup::merge({@_});
 
 	# Sanitize this to avoid problimatic directory names.
-	$config{wikiname}=~s/[^-A-Za-z0-9_] //g;
+	$config{wikiname}=~s/[^-A-Za-z0-9_]//g;
 	if (! length $config{wikiname}) {
 		error gettext("you must enter a wikiname (that contains alphanumerics)");
 	}
