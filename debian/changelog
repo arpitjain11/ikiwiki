@@ -2,6 +2,8 @@ ikiwiki (2.62) UNRELEASED; urgency=low
 
   * Avoid using cp -a (again). (HenrikBrixAndersen)
   * Add missing PREFIX to a few lines of the Makefile. (Thomas Keller)
+  * Avoid using hostname -f for portability to eg, OS X, use Net::Domain
+    instead, and prompt if it fails.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 21 Aug 2008 16:20:58 -0400
 
