@@ -94,12 +94,12 @@ monotone)
 	fi
 	repodir=$(dirname "$repository")
 	mkdir -p "$repodir"
-	file_basename=$(basename -s .monotone "$repository" |\
+	file_basename=$(basename "$repository" | sed -e 's/\.monotone$//' |\
 		tr -s "[:space:]" "_" | sed 's/_$//g')
-	reverse_hostname=$((hostname -f 2>/dev/null || hostname) |\
-		tr  "." "\n" | tail -r | tr "\n" ".")
+	reverse_hostname=$( (hostname -f 2>/dev/null || hostname) |\
+		tr  "." "\n" | tac | tr "\n" ".")
 	branch_name="$reverse_hostname$file_basename"
-	reponame_with_ext="$file_basename.mtn"
+	reponame_with_ext="$file_basename.monotone"
 	mtn db init -d "$repodir/$reponame_with_ext"
 	mtn setup -d "$repodir/$reponame_with_ext" -b "$branch_name" "$srcdir"
 	cd "$srcdir"
@@ -109,6 +109,17 @@ monotone)
 	# with a default key floating around...
 	mtn ci -m "initial import"
 	echo "Directory $srcdir is now set up as a monotone repository"
+	echo ""
+	echo "Note: If your monotone key has a passphrase, you need to configure"
+	echo "monotone to automatically use it. Otherwise, web commits to ikiwiki"
+	echo "will fail."
+	echo ""
+	echo "You can create a $srcdir/_MTN/monotonerc"
+	echo "containing the passphrase:"
+	echo ""
+	echo "function get_passphrase (branchname)"
+	echo '    return "passphrasehere"'
+	echo "end"
 ;;
 *)
 	echo "Unsupported revision control system $rcs" >&2

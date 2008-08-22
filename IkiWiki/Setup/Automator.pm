@@ -52,6 +52,9 @@ sub import (@) { #{{{
 		elsif ($config{rcs} eq 'svn') {
 			$config{svn_wrapper}=$config{repository}."/hooks/post-commit";
 		}
+		elsif ($config{rcs} eq 'monotone') {
+			$config{mtn_wrapper}=$config{srcdir}."_MTN/ikiwiki-netsync-hook";
+		}
 		elsif ($config{rcs} eq 'bzr') {
 			# TODO
 		}

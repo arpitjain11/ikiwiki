@@ -181,28 +181,9 @@ about using the git repositories.
 
 [[!toggle id=monotone text="Monotone"]]
 [[!toggleable id=monotone text="""
-	# These instructions are standard instructions to import a directory into monotone
-	# and set it up so that you don't need any passwords to use it
-	REPOSITORY=~/.ikiwiki/mtn.db
-	BRANCH=com.company.wikiname
-	# remember the password you use in the next step and
-	# substitute it for 'wikiKeyPass' in the get_passphrase() hook below
-	# note the you should never generate two monotone keys with the same name
-	mtn genkey web@example.com
-	mtn db init --db=$REPOSITORY
-	mv $SRCDIR $SRCDIR-old
-	cd $SRCDIR-old
-	echo ".ikiwiki" > $SRCDIR-old/.mtn-ignore
-	mtn --db=$REPOSITORY --branch=$BRANCH import . -m "initial import"
-	cd ..
-	mtn --db=$REPOSITORY --branch=$BRANCH checkout $SRCDIR
-	mv $SRCDIR-old/.ikiwiki $SRCDIR
-	cat << EOF > $SRCDIR/_MTN/monotonerc
-	function get_passphrase (branchname)
-	    return "wikiKeyPass"
-	end
-	EOF
-	rm -r $SRCDIR-old
+	# This assumes that you have already used "mtn genkey you@hostname".
+	REPOSITORY=~/wiki.monotone
+	ikiwiki-makerepo git $SRCDIR $REPOSITORY
 """]]
 
 ## Configure ikiwiki to use revision control.
