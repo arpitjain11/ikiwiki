@@ -48,9 +48,9 @@ extra_clean:
 	$(MAKE) -C po clean
 
 extra_install:
-	install -d $(DESTDIR)$(PREFIX)/etc/ikiwiki
-	install -m 0644 wikilist $(DESTDIR)$(PREFIX)/etc/ikiwiki
-	install -m 0644 auto.setup $(DESTDIR)$(PREFIX)/etc/ikiwiki
+	install -d $(DESTDIR)/etc/ikiwiki
+	install -m 0644 wikilist $(DESTDIR)/etc/ikiwiki
+	install -m 0644 auto.setup $(DESTDIR)/etc/ikiwiki
 
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki
 	for dir in `cd underlays && find . -follow -type d ! -regex '.*\.svn.*'`; do \
