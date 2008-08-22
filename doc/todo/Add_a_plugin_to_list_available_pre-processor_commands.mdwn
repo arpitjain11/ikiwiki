@@ -5,8 +5,19 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 > - preprocessor directives do not necessarily have the same name as the
 >   plugin that contains them (for example, the graphviz plugin adds a graph
 >   directive). Won't keys `%{IkiWiki::hooks{preprocess}}` work?
+
+>>> Er, yeah - that's a much better solution. :)
+
 > - "listplugins" is a bit misnamed since it only does preprocessor directives.
+
+>>> Yes.  Initially this was going to list all enabled plugins.  Then when searching
+>>> for enabled plugins I changed my mind and decided that a list of pre-processor
+>>> directives was more useful.  I'll fix that too.
+
 > - comment was copied from version plugin and still mentions version :-)
+
+>>> :-)
+
 > - Seems like [[ikiwiki/formatting]] could benefit from including the
 >   list.. however, just a list of preprocessor directive names is not
 >   the most user-friendly thing that could be put on that page. It would
@@ -16,6 +27,23 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >   (Maybe adding that is more involved than you want to go though..)
 > 
 > --[[Joey]]
+
+>> Adding a whole new hook for a usage example is more effort than I
+>> wanted to go to.  I was thinking of either:
+>>
+>>    - Adding a configuration for a wiki directory.  If a matching page is in the
+>>      specified wiki directory then the plugin name gets turned into a link to that
+>>      page
+>>    - Adding configuration for an external URL.  Each plugin name is added as
+>>       a link to the plugin name appended to the URL.
+
+>>The first option is easier to navigate and wouldn't produce broken links,
+>>but requires all the plugin documentation to be local.  The second option
+>>can link back to the main IkiWiki site, but if you have any non-standard
+>>plugins then you'll get broken links.
+>>
+>>Hrm.  After listing all of that, maybe your idea with the hooks is the better
+>>solution.  I'll think about it some more. -- [[Will]]
 
     #!/usr/bin/perl
     # Ikiwiki listplugins plugin.
