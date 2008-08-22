@@ -13,14 +13,14 @@
 require IkiWiki::Setup::Automator;
 
 our $wikiname=IkiWiki::Setup::Automator::ask(
-	"What will the wiki be named?", "wiki");
+	gettext("What will the wiki be named?"), gettext("wiki"));
 our $rcs=IkiWiki::Setup::Automator::ask(
-	"What revision control system to use?", "git");
+	gettext("What revision control system to use?"), "git");
 our $admin=IkiWiki::Setup::Automator::ask(
-	"What wiki user (or openid) will be wiki admin?", $ENV{USER});
+	gettext("What wiki user (or openid) will be wiki admin?"), $ENV{USER});
 use Net::Domain q{hostfqdn};
 our $domain=hostfqdn() || ikiwiki::setup::automator::ask(
-	"What is the domain name of the web server?", "");
+	gettext("What is the domain name of the web server?"), "");
 
 IkiWiki::Setup::Automator->import(
 	wikiname => $wikiname,

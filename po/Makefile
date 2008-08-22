@@ -1,6 +1,6 @@
 # List here all source files with translatable strings.
 POTFILES=$(sort $(shell find ../IkiWiki -type f -name \*.pm)) \
-	../ikiwiki.in ../IkiWiki.pm
+	../ikiwiki.in ../IkiWiki.pm ../auto.setup
 
 POFILES=$(wildcard *.po)
 MOFILES=$(POFILES:.po=.mo)
