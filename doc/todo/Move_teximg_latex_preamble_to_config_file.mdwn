@@ -14,6 +14,43 @@ The patch also makes some other changes:
 > if mchem is dropped, I think the suggests on texlive-science in
 > debian/control should probably go? --[[Joey]]
 
+>> Yes, changing the defaults could break some existing uses.  I think in
+>> this case, documenting in NEWS and dropping texlive-science is the
+>> best option.  In fact, NEWS should probably document the config
+>> setting to return things to how they were.
+>>
+>> The reason I prefer dropping `mchem` rather than keeping it is that `mchem`
+>> is non-standard.  Now that things are configurable and it is easy to
+>> add in if you want it, having only standard packages by default is a
+>> good thing.  Here is a proposed NEWS entry:
+
+File: TexImg standard preamble changed
+
+The [[plugins/teximg]] [[plugin]] now has a configurable LaTeX preamble.
+As part of this change the `mchem` LaTeX package has been removed from
+the default LaTeX preamble as it wasn't included in many TeX installations.
+
+The previous behaviour can be restored by adding the following to your ikiwiki setup:
+
+    	teximg_prefix => '\documentclass{scrartcl}
+    		\usepackage[version=3]{mhchem}
+    		\usepackage{amsmath}
+    		\usepackage{amsfonts}
+    		\usepackage{amssymb}
+    		\pagestyle{empty}
+    		\begin{document}',
+
+In addition, the rendering mechanism has been changed to use `dvipng` by default.
+If you would like to return to the old rendering mechanism using `dvips` and `convert`
+then you should add the following line to your ikiwiki setup:
+
+    	teximg_dvipng => 0,
+
+The LaTeX postfix is unchanged, but is also now configurable using `teximg_postfix`.
+Happy TeXing.
+
+>> I think that about covers it.  -- [[Will]]
+
     diff --git a/IkiWiki/Plugin/teximg.pm b/IkiWiki/Plugin/teximg.pm
     index 369c108..8c3379f 100644
     --- a/IkiWiki/Plugin/teximg.pm
@@ -64,7 +101,7 @@ The patch also makes some other changes:
      } #}}}
      
      sub preprocess (@) { #{{{
-    @@ -105,25 +137,34 @@ sub gen_image ($$$$) { #{{{
+    @@ -105,25 +137,35 @@ sub gen_image ($$$$) { #{{{
      	my $digest = shift;
      	my $imagedir = shift;
      
@@ -92,6 +129,7 @@ The patch also makes some other changes:
     -	$tex .= '\end{document}';
     +	$tex .= $config{teximg_postfix};
     +	$tex =~ s!\\documentclass{article}!\\documentclass[${height}pt]{article}!g;
+    +	$tex =~ s!\\documentclass{scrartcl}!\\documentclass[${height}pt]{scrartcl}!g;
      
      	my $tmp = eval { create_tmp_dir($digest) };
      	if (! $@ &&
