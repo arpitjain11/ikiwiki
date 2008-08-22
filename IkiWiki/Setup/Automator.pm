@@ -30,7 +30,7 @@ sub import (@) { #{{{
 	# Sanitize this to avoid problimatic directory names.
 	$config{wikiname}=~s/[^-A-Za-z0-9_] //g;
 	if (! length $config{wikiname}) {
-		die "you must enter a wikiname\n";
+		error gettext("you must enter a wikiname (that contains alphanumerics)");
 	}
 
 	# Avoid overwriting any existing files.
@@ -43,24 +43,8 @@ sub import (@) { #{{{
 		}
 		$config{$key}=$add.$config{$key};
 	}
-
-	IkiWiki::checkconfig();
-
-	print "\n\nSetting up $config{wikiname} ...\n";
-
-	# Set up the repository.
-	mkpath($config{srcdir}) || die "mkdir $config{srcdir}: $!";
-	delete $config{repository} if ! $config{rcs} || $config{rcs}=~/bzr|mercurial/;
-	if ($config{rcs}) {
-		my @params=($config{rcs}, $config{srcdir});
-		push @params, $config{repository} if exists $config{repository};
-		if (system("ikiwiki-makerepo", @params) != 0) {
-			die "failed: ikiwiki-makerepo @params";
-		}
-	}
-
-	# Generate setup file.
-	require IkiWiki::Setup;
+	
+	# Set up wrapper
 	if ($config{rcs}) {
 		if ($config{rcs} eq 'git') {
 			$config{git_wrapper}=$config{repository}."/hooks/post-update";
@@ -74,7 +58,29 @@ sub import (@) { #{{{
 		elsif ($config{rcs} eq 'mercurial') {
 			# TODO
 		}
+		else {
+			error sprintf(gettext("unsupported revision control system %s"),
+			       	$config{rcs});
+		}
 	}
+
+	IkiWiki::checkconfig();
+
+	print "\n\nSetting up $config{wikiname} ...\n";
+
+	# Set up the repository.
+	mkpath($config{srcdir}) || die "mkdir $config{srcdir}: $!";
+	delete $config{repository} if ! $config{rcs} || $config{rcs}=~/bzr|mercurial/;
+	if ($config{rcs}) {
+		my @params=($config{rcs}, $config{srcdir});
+		push @params, $config{repository} if exists $config{repository};
+		if (system("ikiwiki-makerepo", @params) != 0) {
+			error gettext("failed to set up the repository with ikiwiki-makerepo");
+		}
+	}
+
+	# Generate setup file.
+	require IkiWiki::Setup;
 	IkiWiki::Setup::dump($config{dumpsetup});
 
 	# Build the wiki, but w/o wrappers, so it's not live yet.
