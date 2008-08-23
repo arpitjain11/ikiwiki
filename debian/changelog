@@ -5,6 +5,8 @@ ikiwiki (2.62) UNRELEASED; urgency=low
     instead, and prompt if it fails.
   * Fix bug in wikiname sanitisation in the setup automator.
   * ikiwiki-makerepo: Added support for monotone. (Thomas Keller)
+  * map: The fix for #449285 was buggy and broke display of parents in certian
+    circumstances.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 21 Aug 2008 16:20:58 -0400
 

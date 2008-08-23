@@ -80,7 +80,7 @@ sub preprocess (@) { #{{{
 	my $parent="";
 	my $indent=0;
 	my $openli=0;
-	my $dummy=0;
+	my $addparent="";
 	my $map = "<div class='map'>\n<ul>\n";
 	foreach my $item (sort keys %mapitems) {
 		my @linktext = (length $mapitems{$item} ? (linktext => $mapitems{$item}) : ());
@@ -88,17 +88,16 @@ sub preprocess (@) { #{{{
 			if defined $common_prefix && length $common_prefix;
 		my $depth = ($item =~ tr/\//\//) + 1;
 		my $baseitem=IkiWiki::dirname($item);
-		print STDERR "!! parent: $parent baseitem: $baseitem\n";
 		while (length $parent && length $baseitem && $baseitem !~ /^\Q$parent\E(\/|$)/) {
 			$parent=IkiWiki::dirname($parent);
-			last if !$dummy && length $parent && $baseitem =~ /^\Q$parent\E(\/|$)/;
+			last if length $addparent && $baseitem =~ /^\Q$addparent\E(\/|$)/;
+			$addparent="";
 			$indent--;
 			$map .= "</li>\n";
 			if ($indent > 0) {
 				$map .= "</ul>\n";
 			}
 		}
-		$dummy=0;
 		while ($depth < $indent) {
 			$indent--;
 			$map .= "</li>\n";
@@ -116,14 +115,14 @@ sub preprocess (@) { #{{{
 			}
 			if ($depth > $indent) {
 				$p.="/".shift(@bits);
-				#$p=~s/^\///;
+				$addparent=$p;
+				$addparent=~s/^\///;
 				$map .= "<li>"
 					.htmllink($params{page}, $params{destpage},
 						 "/".$common_prefix.$p, class => "mapparent",
 						 noimageinline => 1)
 					."\n";
 				$openli=1;
-				$dummy=1;
 			}
 			else {
 				$openli=0;

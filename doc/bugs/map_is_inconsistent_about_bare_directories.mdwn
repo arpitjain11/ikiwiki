@@ -76,49 +76,11 @@ One solution could also use the [[plugins/autoindex]] plugin to make sure that p
 
 Note: This patch adds items to a map while it is in a foreach loop over a sorted list of keys from that same map.  Changing a map while iterating through it is normally problematic.  I'm assuming the sort insulates the code from this - I do not need to iterate over any of the newly added elements.
 
-    diff --git a/IkiWiki/Plugin/map.pm b/IkiWiki/Plugin/map.pm
-    index 5b6a843..16de45e 100644
-    --- a/IkiWiki/Plugin/map.pm
-    +++ b/IkiWiki/Plugin/map.pm
-    @@ -67,6 +67,39 @@ sub preprocess (@) { #{{{
-     	# are removed.
-     	add_depends($params{page}, join(" or ", keys %mapitems));
-     
-    +	# Include all the parent directories in the map
-    +	my $lastbase="";
-    +	my $commonbase = "";
-    +	$commonbase = $common_prefix if defined $common_prefix && length $common_prefix;
-    +	foreach my $item (sort keys %mapitems) {
-    +		$item=~s/^\Q$common_prefix\E\///
-    +			if defined $common_prefix && length $common_prefix;
-    +		my $itembase=IkiWiki::dirname($item);
-    +		if ($itembase ne $lastbase) {
-    +			# find the common dir
-    +			my @a=split(/\//, $itembase);
-    +			my @b=split(/\//, $lastbase);
-    +			my $common_dir=$commonbase;
-    +			while (@a && @b && $a[0] eq $b[0]) {
-    +				if (length $common_dir) {
-    +					$common_dir.="/";
-    +				}
-    +				$common_dir.=shift(@a);
-    +				shift @b;
-    +			}
-    +			# add all the dirs down to the current base
-    +			while (@a) {
-    +				if (length $common_dir) {
-    +					$common_dir.="/";
-    +				}
-    +				$common_dir.=shift(@a);
-    +				$mapitems{$common_dir}=''
-    +					unless defined $mapitems{$common_dir};
-    +			}
-    +			$lastbase = $itembase;
-    +		}
-    +	}
-    +
-     	# Create the map.
-     	my $parent="";
-     	my $indent=0;
-
 -- [[users/Will]]
+
+> The patch is subtly buggy and just papers over the actual bug with a
+> lot of extra code. Thanks for trying to come up with a patch for this
+> annyoingly complicated bug.. I think I've fixed the underlying bug now.
+> --[[Joey]]
+> 
+> [[tag done]]
