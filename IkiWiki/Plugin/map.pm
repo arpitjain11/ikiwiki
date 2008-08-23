@@ -106,22 +106,22 @@ sub preprocess (@) { #{{{
 			}
 		}
 		my @bits=split("/", $item);
-		my $p="";
-		$p.="/".shift(@bits) for 1..$indent;
 		while ($depth > $indent) {
 			$indent++;
 			if ($indent > 1) {
 				$map .= "<ul>\n";
 			}
 			if ($depth > $indent) {
-				$dummy=1;
-				$p.="/".shift(@bits);
+				my $p="";
+				$p.="/".shift(@bits) for 1..$indent+1;
+				$p=~s/^\///;
 				$map .= "<li>"
 					.htmllink($params{page}, $params{destpage},
 						 $p, class => "mapparent",
 						 noimageinline => 1)
 					."\n";
 				$openli=1;
+				$dummy=1;
 			}
 			else {
 				$openli=0;
