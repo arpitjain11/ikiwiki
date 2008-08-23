@@ -30,7 +30,10 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 
 >> Adding a whole new hook for a usage example is more effort than I
 >> wanted to go to.  I was thinking of either:
->>
+
+>>> Just to clarify, I meant adding new parameters to the same hook call
+>>> that registers the plugin. --[[Joey]]
+
 >>    - Adding a configuration for a wiki directory.  If a matching page is in the
 >>      specified wiki directory then the plugin name gets turned into a link to that
 >>      page
@@ -44,6 +47,24 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>
 >>Hrm.  After listing all of that, maybe your idea with the hooks is the better
 >>solution.  I'll think about it some more. -- [[Will]]
+
+>>> I've also run into this problem with the websetup plugin, and
+>>> considered those ideas too. I don't like the external url, because
+>>> ikiwiki.info may be out of sync with the version of ikiwiki being used.
+>>> (Or maybe it's gone! :-) The first idea is fine, except for the bloat
+>>> issue. If turning on listpreprocessors and/or websetup means adding
+>>> hundreds of pages (and of kilobytes) to your wiki, that could be an
+>>> incentive to not turn them on..
+>>>
+>>> Hmm.. maybe the thing to do is to use _internal pages for the plugins;
+>>> then the individual pages would not be rendered, and your inlines would
+>>> still work. Although I don't know how websetup would use it then, and
+>>> also they would have to be non-internal for ikiwiki's own docwiki. Hmm.
+>>> Maybe these are two different things; one is a set of pages describing
+>>> preprocessor directives, and the second a set of pages describing
+>>> plugins. They're so closely related though it seems a shame to keep
+>>> them separate..
+>>> --[[Joey]]
 
 >>> I started implementing the hook based solution, and decided I didn't like
 >>> it because there was no nice way to rebuild pages when the preprocessor
@@ -71,7 +92,22 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>> shortcuts have been added).  While this was unplanned, it seems a reasonable
 >>>> tradeoff between including all the large number of shortcuts and including none. -- [[Will]]
 
-Here is the main listpreprocessors plugin. (Note, because this has double square brackets in the source, it isn't quite displaying correctly - look at the page source for details.)  New template files follow:
+>>>>>> I think that using an inline is elegant! However, I don't understand
+>>>>>> why it has to create stub description pages? I doubt that, if a
+>>>>>> directive is missing a page, the stub will be filled out in many
+>>>>>> wikis. And it adds a lot of complexity, particularly committing a
+>>>>>> bunch of generated pages to revision control when the user just
+>>>>>> wants a plugin list seems undesirable.
+>>>>>>
+>>>>>> Seems to me it could use the inline for pages that exist, and append
+>>>>>> to the bottom a generated text for anything that is currently missing.
+>>>>>> The generated text could even have a page creation link in it if
+>>>>>> you wanted.
+>>>>>> --[[Joey]]
+
+Here is the main listpreprocessors plugin. (Note, because this has double
+square brackets in the source, it isn't quite displaying correctly - look
+at the page source for details.)  New template files follow:
 
     #!/usr/bin/perl
     # Ikiwiki listpreprocessors plugin.
