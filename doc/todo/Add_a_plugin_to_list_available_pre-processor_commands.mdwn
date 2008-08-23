@@ -64,6 +64,13 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>
 >>> -- [[Will]]
 
+>>>> Just a quick note: pages are only created for pre-processor commands
+>>>> that exist when the `refresh` hook is called.  This is before the [[shortcuts]] are
+>>>> processed.  However, the list of available pre-processor commands will include
+>>>> shortcuts if they have description pages (the list is generated later, after the
+>>>> shortcuts have been added).  While this was unplanned, it seems a reasonable
+>>>> tradeoff between including all the large number of shortcuts and including none. -- [[Will]]
+
 Here is the main listpreprocessors plugin. (Note, because this has double square brackets in the source, it isn't quite displaying correctly - look at the page source for details.)  New template files follow:
 
     #!/usr/bin/perl
@@ -72,6 +79,7 @@ Here is the main listpreprocessors plugin. (Note, because this has double square
     
     use warnings;
     use strict;
+    use Encode;
     use IkiWiki 2.00;
     
     sub import { #{{{
@@ -113,6 +121,8 @@ Here is the main listpreprocessors plugin. (Note, because this has double square
     } #}}}
     
     sub refresh () { #{{{
+    	eval q{use File::Find};
+    	error($@) if $@;
     
     	if (defined $config{preprocessor_description_autocreate} && ! $config{preprocessor_description_autocreate}) {
     		return;	# create pages unless they explicitly ask us not to
@@ -132,18 +142,48 @@ Here is the main listpreprocessors plugin. (Note, because this has double square
     			$pluginpages{$plugin} = $config{preprocessor_description_dir} . $plugin;
     		}
     
+    		my %pages;
+    		foreach my $dir ($config{srcdir}, @{$config{underlaydirs}}, $config{underlaydir}) {
+    			find({
+    				no_chdir => 1,
+    				wanted => sub {
+    					$_=decode_utf8($_);
+    					if (IkiWiki::file_pruned($_, $dir)) {
+    						$File::Find::prune=1;
+    					}
+    					elsif (! -l $_) {
+    						my ($f)=/$config{wiki_file_regexp}/; # untaint
+    						return unless defined $f;
+    						$f=~s/^\Q$dir\E\/?//;
+    						return unless length $f;
+    						return if $f =~ /\._([^.]+)$/; # skip internal page
+    						if (! -d _) {
+    							$pages{pagename($f)}=$f;
+    						}
+    					}
+    				}
+    			}, $dir);
+    		}
+    
     		if ($config{rcs}) {
     			IkiWiki::disable_commit_hook();
     		}
     		
+    		my $needcommit = 0;
+    		
     		while (($plugin,$page) = each %pluginpages) {
-    			gendescription($plugin,$page);
+    			if (! exists $pages{$page}) {
+    				$needcommit = 1;
+    				gendescription($plugin,$page);
+    			}
     		}
     		
     		if ($config{rcs}) {
-    			IkiWiki::rcs_commit_staged(
-    				gettext("automatic pre-processor description generation"),
-    				undef, undef);
+    			if ($needcommit) {
+    				IkiWiki::rcs_commit_staged(
+    					gettext("automatic pre-processor description generation"),
+    					undef, undef);
+    			}
     			IkiWiki::enable_commit_hook();
     		}
     	}
