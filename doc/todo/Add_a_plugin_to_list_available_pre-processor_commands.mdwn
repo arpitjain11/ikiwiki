@@ -6,17 +6,17 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >   plugin that contains them (for example, the graphviz plugin adds a graph
 >   directive). Won't keys `%{IkiWiki::hooks{preprocess}}` work?
 
->>> Er, yeah - that's a much better solution. :)
+>>> Er, yeah - that's a much better solution. :) -- and done
 
 > - "listplugins" is a bit misnamed since it only does preprocessor directives.
 
 >>> Yes.  Initially this was going to list all enabled plugins.  Then when searching
 >>> for enabled plugins I changed my mind and decided that a list of pre-processor
->>> directives was more useful.  I'll fix that too.
+>>> directives was more useful.  I'll fix that too. -- changed to `listpreprocessors`
 
 > - comment was copied from version plugin and still mentions version :-)
 
->>> :-)
+>>> :-) -- fixed
 
 > - Seems like [[ikiwiki/formatting]] could benefit from including the
 >   list.. however, just a list of preprocessor directive names is not
@@ -45,18 +45,39 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>Hrm.  After listing all of that, maybe your idea with the hooks is the better
 >>solution.  I'll think about it some more. -- [[Will]]
 
+>>> I started implementing the hook based solution, and decided I didn't like
+>>> it because there was no nice way to rebuild pages when the preprocessor
+>>> descriptions changed.  So instead I assumed that the the [[plugins]] pages
+>>> would be moved into the underlay directory.  This plugin then uses an
+>>> `inline` directive to include those pages.  You can use the `inline`
+>>> parameter to decide if you want to include all the descriptions or
+>>> just the titles.  There is also an option to auto-create default/blank
+>>> description pages if they are missing (from a template).  As preprocessor
+>>> commands don't list unless they have a description page, auto-creation
+>>> is enabled by default.
+>>>
+>>>  There are three new templates that are needed.  These are for:
+>>>
+>>>  - The auto-created description pages are generated from `preprocessor-description.tmpl`.
+>>>  - When only pre-processor names are listed, the `listpreprocessors-listonly.tmpl` template is used.
+>>>  - When pre-processor descriptions are included inline, the `listpreprocessors-inline.tmpl` template is used.
+>>>
+>>> -- [[Will]]
+
+Here is the main listpreprocessors plugin. (Note, because this has double square brackets in the source, it isn't quite displaying correctly - look at the page source for details.)  New template files follow:
+
     #!/usr/bin/perl
-    # Ikiwiki listplugins plugin.
-    package IkiWiki::Plugin::listplugins;
+    # Ikiwiki listpreprocessors plugin.
+    package IkiWiki::Plugin::listpreprocessors;
     
     use warnings;
     use strict;
     use IkiWiki 2.00;
     
     sub import { #{{{
-    	hook(type => "getsetup", id => "listplugins", call => \&getsetup);
-    	hook(type => "needsbuild", id => "listplugins", call => \&needsbuild);
-    	hook(type => "preprocess", id => "listplugins", call => \&preprocess);
+    	hook(type => "getsetup", id => "listpreprocessors", call => \&getsetup);
+    	hook(type => "preprocess", id => "listpreprocessors", call => \&preprocess);
+    	hook(type => "refresh", id => "listpreprocessors", call => \&refresh);
     } # }}}
     
     sub getsetup () { #{{{
@@ -65,54 +86,128 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
     			safe => 1,
     			rebuild => undef,
     		},
+    		preprocessor_description_dir => {
+    			type => "string",
+    			description => "The ikiwiki directory that contains plugin descriptions.",
+    			safe => 1,
+    			rebuild => 1,
+    		},
+    		preprocessor_description_autocreate => {
+    			type => "boolean",
+    			description => "Should pre-processor command descriptions be automatically created from a template.",
+    			safe => 1,
+    			rebuild => 1,
+    		},
     } #}}}
     
-    my @pluginlist;
-    my $pluginString;
+    sub gendescription ($$) { #{{{
+    	my $plugin=shift;
+    	my $page=shift;
+    	my $file=$page.".".$config{default_pageext};
+    	my $template=template("preprocessor-description.tmpl");
+    	$template->param(page => $page, plugin => $plugin);
+    	writefile($file, $config{srcdir}, $template->output);
+    	if ($config{rcs}) {
+    		IkiWiki::rcs_add($file);
+    	}
+    } #}}}
     
-    sub needsbuild (@) { #{{{
-    	my $needsbuild=shift;
+    sub refresh () { #{{{
     
-    	my @rawpluginlist = sort(IkiWiki::listplugins());
-    	@pluginlist = ();
+    	if (defined $config{preprocessor_description_autocreate} && ! $config{preprocessor_description_autocreate}) {
+    		return;	# create pages unless they explicitly ask us not to
+    	}
+    
+    	if (!defined $config{preprocessor_description_dir}) {
+    		$config{preprocessor_description_dir} = "ikiwiki/plugin/";
+    	}
     	
-    	foreach my $plugin (@rawpluginlist) {
-    		if ( exists $IkiWiki::hooks{preprocess}{$plugin} ) {
-    			push(@pluginlist,$plugin);
+    	my @pluginlist = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+    	my %pluginpages;
+    
+    	if (@pluginlist) {
+    		my ($plugin,$page);
+    		
+    		foreach $plugin (@pluginlist) {
+    			$pluginpages{$plugin} = $config{preprocessor_description_dir} . $plugin;
+    		}
+    
+    		if ($config{rcs}) {
+    			IkiWiki::disable_commit_hook();
+    		}
+    		
+    		while (($plugin,$page) = each %pluginpages) {
+    			gendescription($plugin,$page);
+    		}
+    		
+    		if ($config{rcs}) {
+    			IkiWiki::rcs_commit_staged(
+    				gettext("automatic pre-processor description generation"),
+    				undef, undef);
+    			IkiWiki::enable_commit_hook();
     		}
     	}
-    
-    	$pluginString = join (' ', @pluginlist);
-    
-    	foreach my $page (keys %pagestate) {
-    		if (exists $pagestate{$page}{listplugins}{shown}) {
-    			if ($pagestate{$page}{listplugins}{shown} ne $pluginString) {
-    				push @$needsbuild, $pagesources{$page};
-    			}
-    			if (exists $pagesources{$page} &&
-    			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
-    				# remove state, will be re-added if
-    				# the version is still shown during the
-    				# rebuild
-    				delete $pagestate{$page}{listplugins}{shown};
-    			}
-    		}
-    	}
-    } # }}}
+    } #}}}
     
     sub preprocess (@) { #{{{
     	my %params=@_;
     	
-    	$pagestate{$params{destpage}}{listplugins}{shown}=$pluginString;
-    	
-    	my $result = "<ul class=\"pluginlist\">";
-    	my $thisPlugin;
-    	foreach $thisPlugin (@pluginlist) {
-    		$result .= "<li class=\"pluginlist\">$thisPlugin</li>";
+    	if (!defined $config{plugin_description_dir}) {
+    		$config{plugin_description_dir} = "ikiwiki/plugin/";
     	}
-    	$result .= "</ul>";
     	
-    	return $result;
+    	my @pluginlist = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+    	foreach my $plugin (@pluginlist) {
+    		$plugin = $config{plugin_description_dir} . $plugin;
+    	}
+    	my $pluginString = join (' or ', @pluginlist);
+    	
+    	my $result = "[[!inline pages=\"$pluginString\" feeds=\"no\" show=0 sort=\"title\"";
+    	
+    	if (defined $params{inline}) {
+    		$result .= ' template=\"listpreprocessors-listonly\" archive="yes"';
+    	} else {
+    		$result .= ' template=\"listpreprocessors-inline\" archive="no"';
+    	}
+    	
+    	$result .= "]]";
+    	
+    	return IkiWiki::preprocess($params{page}, $params{destpage}, 
+    		IkiWiki::filter($params{page}, $params{destpage}, $result));
     } # }}}
     
     1
+
+--------
+
+This is what I was using for `listpreprocessors-inline.tmpl`:
+
+    <div class="listpreprocessorsinline">
+    
+    <div class="inlineheader">
+    
+    <span class="header">
+    <a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a>
+    </span>
+    
+    </div><!--.inlineheader-->
+    
+    <div class="inlinecontent">
+    <TMPL_VAR CONTENT>
+    </div><!--.inlinecontent-->
+    
+    </div><!--.listpreprocessorsinline-->
+
+--------
+
+This is what I was using for `listpreprocessors-listonly.tmpl`:
+
+    <p class="listpreprocessors"><a href="<TMPL_VAR PAGEURL>"><TMPL_VAR TITLE></a></p>
+
+--------
+
+This is what I was using for `preprocessor-description.tmpl`:
+
+    The <TMPL_VAR plugin> preprocessor command currently has no description.
+    
+    Maybe you should edit this page to add one.
