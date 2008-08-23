@@ -43,3 +43,174 @@ I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so 
 > Without having different types of links, I don't see how this would be possible.
 >
 > -- [[Will]]
+
+Okie - I've had a quick attempt at this.  Initial patch attached.  This one doesn't quite work.
+And there is still a lot of debugging stuff in there.
+
+At the moment I've added a new preprocessor plugin, `definepagespec`, which is like
+shortcut for pagespecs.  To reference a named pagespec, use `~` like this:
+
+    [ [!definepagespec name="bugs" spec="bugs/* and !*/Discussion"]]
+    [ [!definepagespec name="openbugs" spec="~bugs and !link(done)"]]
+    [ [!definepagespec name="readybugs" spec="~openbugs and !link(~openbugs)"]]
+
+At the moment the problem is in `match_link()` when we're trying to find a sub-page that
+matches the appropriate page spec.  There is no good list of pages available to iterate over.
+
+    foreach my $nextpage (keys %IkiWiki::pagesources)
+
+does not give me a good list of pages.  I found the same thing when I was working on
+this todo [[todo/Add_a_plugin_to_list_available_pre-processor_commands]].
+
+Immediately below is a patch for IkiWiki.pm.  Below that is a new plugin `definepagespec `
+which behaves like `shortcut` for pagespecs.
+
+----
+
+diff --git a/IkiWiki.pm b/IkiWiki.pm
+index e476521..1d2d48c 100644
+--- a/IkiWiki.pm
++++ b/IkiWiki.pm
+@@ -14,7 +14,7 @@ use open qw{:utf8 :std};
+ use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
+ 	    %pagestate %renderedfiles %oldrenderedfiles %pagesources
+ 	    %destsources %depends %hooks %forcerebuild $gettext_obj
+-	    %loaded_plugins};
++	    %loaded_plugins %named_pagespec};
+ 
+ use Exporter q{import};
+ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+@@ -22,7 +22,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
+                  displaytime will_render gettext urlto targetpage
+ 		 add_underlay
+                  %config %links %pagestate %renderedfiles
+-                 %pagesources %destsources);
++                 %pagesources %destsources %named_pagespec);
+ our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
+ our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
+ my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+@@ -1271,7 +1271,7 @@ sub loadindex () { #{{{
+ 	%oldrenderedfiles=%pagectime=();
+ 	if (! $config{rebuild}) {
+ 		%pagesources=%pagemtime=%oldlinks=%links=%depends=
+-		%destsources=%renderedfiles=%pagecase=%pagestate=();
++		%destsources=%renderedfiles=%pagecase=%pagestate=%named_pagespec=();
+ 	}
+ 	my $in;
+ 	if (! open ($in, "<", "$config{wikistatedir}/indexdb")) {
+@@ -1729,6 +1729,8 @@ sub match_glob ($$;@) { #{{{
+ 	
+ 	my $from=exists $params{location} ? $params{location} : '';
+ 	
++	print "Matching glob $glob \n";
++	
+ 	# relative matching
+ 	if ($glob =~ m!^\./!) {
+ 		$from=~s#/?[^/]+$##;
+@@ -1736,6 +1738,18 @@ sub match_glob ($$;@) { #{{{
+ 		$glob="$from/$glob" if length $from;
+ 	}
+ 
++	if (substr($glob, 0, 1) eq '~') {
++		my $specname = substr($glob, 1);
++		print "Checking for pagespec named $specname \n";
++		if (exists $IkiWiki::named_pagespec{$specname}) {
++			my $spec = $IkiWiki::named_pagespec{$specname};
++			return IkiWiki::pagespec_match($page, $spec, %params);
++		} else {
++			print "Couldn't find pagespec\n";
++			return IkiWiki::FailReason->new("Page spec $specname referenced on page $page does not exist");
++		}
++	}
++
+ 	my $regexp=IkiWiki::glob2re($glob);
+ 	if ($page=~/^$regexp$/i) {
+ 		if (! IkiWiki::isinternal($page) || $params{internal}) {
+@@ -1756,11 +1770,36 @@ sub match_internal ($$;@) { #{{{
+ 
+ sub match_link ($$;@) { #{{{
+ 	my $page=shift;
+-	my $link=lc(shift);
++	my $fulllink=shift;
++	my $link=lc($fulllink);
+ 	my %params=@_;
+ 
++	print "Matching link $fulllink \n";
++	
+ 	my $from=exists $params{location} ? $params{location} : '';
+ 
++	if (substr($fulllink, 0, 1) eq '~') {
++		my $specname = substr($fulllink, 1);
++		print "Checking link pagespec $specname \n";
++		if (exists $IkiWiki::named_pagespec{$specname}) {
++			my $spec = $IkiWiki::named_pagespec{$specname};
++			
++			print "Checking all pages against $spec\n";
++			
++			foreach my $nextpage (keys %IkiWiki::pagesources) {
++				print "Checking $nextpage against $spec\n";
++				if (pagespec_match($nextpage, $spec, %params) && IkiWiki::PageSpec::match_link($page, $nextpage, %params)) {
++					return IkiWiki::SuccessReason->new("$page links to page $nextpage matching $link")
++				}
++			}
++			
++			return IkiWiki::FailReason->new("$page has no links to any pages that match $spec");
++		} else {
++			print "Pagespec $specname not found\n";
++			return IkiWiki::FailReason->new("$page cannot link to nonexistent spec name $specname");
++		}
++	}
++
+ 	# relative matching
+ 	if ($link =~ m!^\.! && defined $from) {
+ 		$from=~s#/?[^/]+$##;
+
+----
+
+#!/usr/bin/perl
+package IkiWiki::Plugin::definepagespec;
+
+use warnings;
+use strict;
+use IkiWiki 2.00;
+
+sub import { #{{{
+	hook(type => "getsetup", id => "definepagespec", call => \&getsetup);
+	hook(type => "refresh", id => "definepagespec", call => \&refresh);
+	hook(type => "preprocess", id => "definepagespec", call => \&preprocess);
+} #}}}
+
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => undef,
+		},
+} #}}}
+
+sub refresh () { #{{{
+	# Preprocess the shortcuts page to get all the available shortcuts
+	# defined before other pages are rendered.
+	my $srcfile=srcfile("pagespecs.mdwn", 1);
+	if (! defined $srcfile) {
+		error(gettext("definepagespec plugin will not work without a pagespecs.mdwn"));
+	}
+	IkiWiki::preprocess("pagespecs", "pagespecs", readfile($srcfile));
+} # }}}
+
+sub preprocess (@) { #{{{
+	my %params=@_;
+
+	if (! defined $params{name} || ! defined $params{spec}) {
+		error gettext("missing name or spec parameter");
+	}
+
+	$IkiWiki::named_pagespec{$params{name}} = $params{spec};
+
+	#translators: This is used to display what shortcuts are defined.
+	#translators: First parameter is the name of the shortcut, the second
+	#translators: is an URL.
+	return sprintf(gettext("pagespec %s refers to <i>%s</i>"), $params{name}, $params{spec});
+} # }}}
+
+1
