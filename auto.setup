@@ -28,7 +28,7 @@ IkiWiki::Setup::Automator->import(
 	rcs => $rcs,
 	srcdir => "$ENV{HOME}/$wikiname",
 	destdir => "$ENV{HOME}/public_html/$wikiname",
-	repository => "$ENV{HOME}/$wikiname.$rcs",
+	repository => "$ENV{HOME}/$wikiname.".($rcs eq "monotone" ? "mtn" : $rcs),
 	dumpsetup => "$ENV{HOME}/$wikiname.setup",
 	url => "http://$domain/~$ENV{USER}/$wikiname",
 	cgiurl => "http://$domain/~$ENV{USER}/$wikiname/ikiwiki.cgi",

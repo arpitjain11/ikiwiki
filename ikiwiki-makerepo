@@ -94,8 +94,6 @@ monotone)
 	fi
 
 	mkdir -p "$(dirname "$repository")"
-	# fix the repository suffix we get from auto.setup
-	repository="$(echo "$repository" | sed 's/.monotone/.mtn/g')"
 	mtn db init -d "$repository"
 
 	cleaned_srcdir=$(basename "$srcdir" | tr -s "[:space:]" "_" | sed 's/_$//g')
