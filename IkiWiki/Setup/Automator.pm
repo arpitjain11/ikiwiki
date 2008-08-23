@@ -37,11 +37,13 @@ sub import (@) { #{{{
 	foreach my $key (qw{srcdir destdir repository dumpsetup}) {
 		next unless exists $config{$key};
 		my $add="";
-		while (-e $add.$config{$key}) {
+		my $dir=IkiWiki::dirname($config{$key})."/";
+		my $base=IkiWiki::basename($config{$key});
+		while (-e $dir.$add.$base) {
 			$add=1 if ! $add;
 			$add++;
 		}
-		$config{$key}=$add.$config{$key};
+		$config{$key}=$dir.$add.$base;
 	}
 	
 	# Set up wrapper
