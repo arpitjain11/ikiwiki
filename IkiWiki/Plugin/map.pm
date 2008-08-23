@@ -113,11 +113,11 @@ sub preprocess (@) { #{{{
 			}
 			if ($depth > $indent) {
 				my $p="";
-				$p.="/".shift(@bits) for 1..$indent+1;
+				$p.="/".shift(@bits) for 1..$indent;
 				$p=~s/^\///;
 				$map .= "<li>"
 					.htmllink($params{page}, $params{destpage},
-						 $p, class => "mapparent",
+						 "/".$common_prefix."/".$p, class => "mapparent",
 						 noimageinline => 1)
 					."\n";
 				$openli=1;
