@@ -1,1 +1,38 @@
 I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so on several wikis.  However, as far as I can tell, ikiwiki has no functionality which can represent dependencies between bugs and allow pagespecs to select based on dependencies.  For instance, I can't write a pagespec which selects all bugs with no dependencies on bugs not marked as done.  --[[JoshTriplett]]
+
+> I started having a think about this.  I'm going to start with the idea that expanding
+> the pagespec syntax is the way to attack this.  It seems that any pagespec that is going
+> to represent "all bugs with no dependencies on bugs not marked as done" is going to
+> need some way to represent "bugs not marked as done" as a collection of pages, and
+> then represent "bugs which do not link to pages in the previous collection".
+>
+> One way to do this would be to introduce variables into the pagespec, along with
+> universal and/or existential [[!wikipedia Quantification]].  That looks quite complex.
+>
+> Another option would be go with a more functional syntax.  The concept here would
+> be to allow a pagespec to appear in a 'pagespec function' anywhere a page can.  e.g.
+> I could pass a pagespec to `link()` and that would return true if there is a link to any
+> page matching the pagespec.  This makes the variables and existential quantification
+> implicit.  It would allow the example requested above:
+>
+>> `bugs/* and !*/Discussion and !link(bugs/* and !*/Discussion and !link(done))`
+>
+> Unfortunately, this is also going to make the pagespec parsing more complex because
+> we now need to parse nested sets of parentheses to know when the nested pagespec
+> ends, and that isn't a regular language (we can't use regular expression matching for
+> easy parsing).
+>
+> One simplification of that would be to introduce some pagespec [[shortcuts]].  We could
+> then allow pagespec functions to take either pages, or named pagespec shortcuts.  The
+> pagespec shortcuts would just be listed on a special page, like current [[shortcuts]].
+> (It would probably be a good idea to require that shortcuts on that page can only refer
+> to named pagespecs higher up that page than themselves.  That would stop some
+> looping issues...)  These shortcuts would be used as follows: when trying to match
+> a page (without globs) you look to see if the page exists.  If it does then you have a
+> match.  If it doesn't, then you look to see if a similarly named pagespec shortcut
+> exists.  If it does, then you check that pagespec recursively to see if you have a match.
+> The ordering requirement on named pagespecs stops infinite recursion.
+>
+> Does that seem like a reasonable first approach?
+>
+> -- [[Will]]
