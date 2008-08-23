@@ -92,16 +92,18 @@ monotone)
 		echo "$srcdir already seems to be a monotone working copy" >&2
 		exit 1
 	fi
-	repodir=$(dirname "$repository")
-	mkdir -p "$repodir"
-	file_basename=$(basename "$repository" | sed -e 's/\.monotone$//' |\
-		tr -s "[:space:]" "_" | sed 's/_$//g')
+
+	mkdir -p "$(dirname "$repository")"
+	# fix the repository suffix we get from auto.setup
+	repository="$(echo "$repository" | sed 's/.monotone/.mtn/g')"
+	mtn db init -d "$repository"
+
+	cleaned_srcdir=$(basename "$srcdir" | tr -s "[:space:]" "_" | sed 's/_$//g')
 	reverse_hostname=$( (hostname -f 2>/dev/null || hostname) |\
-		tr  "." "\n" | tac | tr "\n" ".")
-	branch_name="$reverse_hostname$file_basename"
-	reponame_with_ext="$file_basename.monotone"
-	mtn db init -d "$repodir/$reponame_with_ext"
-	mtn setup -d "$repodir/$reponame_with_ext" -b "$branch_name" "$srcdir"
+		tr  "." "\n" | ( tac 2>/dev/null || tail -r ) | tr "\n" "." )
+	branch_name="$reverse_hostname$cleaned_srcdir"
+	mtn setup -d "$repository" -b "$branch_name" "$srcdir"
+
 	cd "$srcdir"
 	echo \.ikiwiki$ > .mtn-ignore
 	mtn add -R .
