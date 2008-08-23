@@ -9,6 +9,9 @@ I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so 
 > One way to do this would be to introduce variables into the pagespec, along with
 > universal and/or existential [[!wikipedia Quantification]].  That looks quite complex.
 >
+>> I thought about this briefly, and got about that far.. glad you got
+>> further. :-) --[[Joey]]
+> 
 > Another option would be go with a more functional syntax.  The concept here would
 > be to allow a pagespec to appear in a 'pagespec function' anywhere a page can.  e.g.
 > I could pass a pagespec to `link()` and that would return true if there is a link to any
@@ -21,6 +24,9 @@ I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so 
 > we now need to parse nested sets of parentheses to know when the nested pagespec
 > ends, and that isn't a regular language (we can't use regular expression matching for
 > easy parsing).
+>
+>> Also, it may cause ambiguities with page names that contain parens
+>> (though some such ambigutities already exist with the pagespec syntax).
 >
 > One simplification of that would be to introduce some pagespec [[shortcuts]].  We could
 > then allow pagespec functions to take either pages, or named pagespec shortcuts.  The
@@ -36,6 +42,21 @@ I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so 
 > Does that seem like a reasonable first approach?
 >
 > -- [[Will]]
+
+>> Having a separate page for the shortcuts feels unwieldly.. perhaps
+>> instead the shortcut could be defined earlier in the scope of the same
+>> pagespec that uses it?
+>> 
+>> Example: `define(~bugs, bugs/* and !*/Discussion) and define(~openbugs, ~bugs and !link(done)) and ~openbugs and !link(~openbugs)`
+>>
+>> Note that I made the "~" explicit, not implicit, so it could be left out. In the case of ambiguity between
+>> a definition and a page name, the definition would win.
+>>
+>> So, equivilant example: `define(bugs, bugs/* and !*/Discussion) and define(openbugs, bugs and !link(done)) and openbugs and !link(openbugs)`
+>> 
+>> Re recursion, it is avoided.. but building a pagespec that is O(N^X) where N is the
+>> number of pages in the wiki is not avoided. Probably need to add DOS prevention.
+>>  --[[Joey]]
 
 > One quick further thought.  All the above discussion assumes that 'dependency' is the
 > same as 'links to', which is not really true.  For example, you'd like to be able to say
@@ -61,6 +82,9 @@ matches the appropriate page spec.  There is no good list of pages available to 
 
 does not give me a good list of pages.  I found the same thing when I was working on
 this todo [[todo/Add_a_plugin_to_list_available_pre-processor_commands]].
+
+> I'm not sure why iterating over `%pagesources` wouldn't work here, it's the same method
+> used by anything that needs to match a pagespec against all pages..? --[[Joey]]
 
 Immediately below is a patch for IkiWiki.pm.  Below that is a new plugin `definepagespec `
 which behaves like `shortcut` for pagespecs.
