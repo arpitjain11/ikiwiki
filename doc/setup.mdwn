@@ -183,7 +183,7 @@ about using the git repositories.
 [[!toggleable id=monotone text="""
 	# This assumes that you have already used "mtn genkey you@hostname".
 	REPOSITORY=~/wiki.monotone
-	ikiwiki-makerepo git $SRCDIR $REPOSITORY
+	ikiwiki-makerepo monotone $SRCDIR $REPOSITORY
 """]]
 
 ## Configure ikiwiki to use revision control.
