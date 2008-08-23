@@ -76,16 +76,6 @@ One solution could also use the [[plugins/autoindex]] plugin to make sure that p
 
 Note: This patch adds items to a map while it is in a foreach loop over a sorted list of keys from that same map.  Changing a map while iterating through it is normally problematic.  I'm assuming the sort insulates the code from this - I do not need to iterate over any of the newly added elements.
 
-> This patch causes a small bug in the case where the map includes pages in
-> two subdirs, and does not explicitly include either subdir. In that case,
-> the map is supposed to show both subdirs, but use special styling an no
-> link for either. With the patch, which otherwise seems to work ok, some
-> of the non-included subdirs are displayed as if included. (I
-> assume because the loop you added does in fact include them..)
-> 
-> Example of the problem: \[[!map pages="plugins/contrib/* or plugins/type/*"]]
-> --[[Joey]]
-
     diff --git a/IkiWiki/Plugin/map.pm b/IkiWiki/Plugin/map.pm
     index 5b6a843..16de45e 100644
     --- a/IkiWiki/Plugin/map.pm
