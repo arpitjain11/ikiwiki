@@ -114,8 +114,28 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>>>>> links.  The old patch is still here if you decide you prefer that. -- [[Will]]
 
 >>>>>>>> Can you explain the full/early list (why track both?) and generated parameter?
+
+>>>>>>>>> If you add in all the shortcuts you get quite a long list.  My original idea
+>>>>>>>>> was to just track the plugin commands.  This is the early list.  But then
+>>>>>>>>> I thought that it might be nice for someone looking at wiki source and
+>>>>>>>>> seeing a shortcut to know where it came from.  So I decided to make
+>>>>>>>>> displaying the full list an option, with the original concept as the default.
+
+>>>>>>>>> Another option here might be to generate the full list every time, but give
+>>>>>>>>> generated pre-processor commands (e.g. shortcuts) a different css class.
+>>>>>>>>> I'm not sure that is better than what I have though. 
+
+>>>>>>>>> I keep track of both in the page state because if a command moves from
+>>>>>>>>> a shortcut to the early list (or vice versa) it changes what should be
+>>>>>>>>> displayed in the default use of the plugin.  I thought about tracking just what
+>>>>>>>>> was actually used on the page, but I don't know in the needsbuild hook whether the `generated`
+>>>>>>>>> parameter has been supplied (or maybe the plugin is used twice on the page -
+>>>>>>>>> once in each form).  It was just easier to track both.
+
 >>>>>>>> Only code change I'd suggest is using `htmllink` rather than 
 >>>>>>>> generating a wikilink.
+
+>>>>>>>>> Yeah - that would make sense.  Will do. -- [[Will]]
 
     #!/usr/bin/perl
     # Ikiwiki listpreprocessors plugin.
