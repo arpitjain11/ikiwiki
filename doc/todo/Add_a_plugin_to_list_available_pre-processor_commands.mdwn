@@ -113,9 +113,6 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>>>>> pages get linked correctly, and missing pages get normal creation
 >>>>>>> links.  The old patch is still here if you decide you prefer that. -- [[Will]]
 
-Note that because there are double square brackets in the source, this might not
-display quite right.
-
     #!/usr/bin/perl
     # Ikiwiki listpreprocessors plugin.
     package IkiWiki::Plugin::listpreprocessors;
@@ -126,8 +123,9 @@ display quite right.
     
     sub import { #{{{
     	hook(type => "getsetup", id => "listpreprocessors", call => \&getsetup);
-    	hook(type => "preprocess", id => "listpreprocessors", call => \&preprocess);
     	hook(type => "checkconfig", id => "listpreprocessors", call => \&checkconfig);
+    	hook(type => "needsbuild", id => "listpreprocessors", call => \&needsbuild);
+    	hook(type => "preprocess", id => "listpreprocessors", call => \&preprocess);
     } # }}}
     
     sub getsetup () { #{{{
@@ -144,37 +142,60 @@ display quite right.
     		},
     } #}}}
     
+    my @fullPluginList;
     my @earlyPluginList;
+    my $pluginString;
     
     sub checkconfig () { #{{{
+        if (!defined $config{plugin_description_dir}) {
+            $config{plugin_description_dir} = "ikiwiki/plugin/";
+        }
     
-    	if (!defined $config{plugin_description_dir}) {
-    		$config{plugin_description_dir} = "ikiwiki/plugin/";
-    	}
-    	
-    	@earlyPluginList = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+        @earlyPluginList = sort( keys %{ $IkiWiki::hooks{preprocess} } );
     } #}}}
+    
+    sub needsbuild (@) { #{{{
+    	my $needsbuild=shift;
+    
+    	@fullPluginList = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+    	$pluginString = join (' ', @earlyPluginList) . " : ". join (' ', @fullPluginList);
+    
+    	foreach my $page (keys %pagestate) {
+    		if (exists $pagestate{$page}{listpreprocessors}{shown}) {
+    			if ($pagestate{$page}{listpreprocessors}{shown} ne $pluginString) {
+    				push @$needsbuild, $pagesources{$page};
+    			}
+    			if (exists $pagesources{$page} &&
+    					grep { $_ eq $pagesources{$page} } @$needsbuild) {
+    				# remove state, will be re-added if
+    				# the [[!listpreprocessors]] is still there during the
+    				# rebuild
+    				delete $pagestate{$page}{listpreprocessors}{shown};
+    			}
+    		}
+    	}
+    } # }}}
     
     sub preprocess (@) { #{{{
     	my %params=@_;
     	
+    	$pagestate{$params{destpage}}{listpreprocessors}{shown}=$pluginString;
+    	
     	my @pluginlist;
     	
     	if (! defined $params{generated}) {
-    		@pluginlist = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+    		@pluginlist = @fullPluginList;
     	} else {
     		@pluginlist = @earlyPluginList;
     	}
     	
     	my $result = '<ul class="listpreprocessors">';
-    
+    	
     	foreach my $plugin (@pluginlist) {
     		$result .= '<li class="listpreprocessors">[[' . $config{plugin_description_dir} . $plugin . ']]</li>';
     	}
-    
-    	$result .= "</ul>";
     	
-    	print $result;
+    	$result .= "</ul>";
     	
     	return IkiWiki::preprocess($params{page}, $params{destpage}, 
     		IkiWiki::filter($params{page}, $params{destpage}, $result));
