@@ -65,6 +65,8 @@ I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so 
 >>> If you memoize the outcomes of the named pagespecs you can make in O(N.X), no?
 >>> -- [[Will]]
 
+>>>> Yeah, guess that'd work. :-)
+
 > One quick further thought.  All the above discussion assumes that 'dependency' is the
 > same as 'links to', which is not really true.  For example, you'd like to be able to say
 > "This bug does not depend upon [ [ link to other bug ] ]" and not have a dependency.
@@ -96,6 +98,11 @@ this todo [[todo/Add_a_plugin_to_list_available_pre-processor_commands]].
 >> My uchecked hypothesis is that %pagesources is created after the refresh hook.
 >> I've also been concerned about how globally defined pagespec shortcuts would interact with
 >> the page dependancy system.  Your idea of internally defined shortcuts should fix that. -- [[Will]]
+
+>>> You're correct, the refresh hook is run very early, before pagesources
+>>> is populated. (It will be partially populated on a refresh, but will
+>>> not be updated to reflect new pages.) Agree that internally defined
+>>> seems the way to go. --[[Joey]]
 
 Immediately below is a patch for IkiWiki.pm.  Below that is a new plugin `definepagespec `
 which behaves like `shortcut` for pagespecs.
