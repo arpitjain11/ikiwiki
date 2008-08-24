@@ -113,6 +113,10 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>>>>> pages get linked correctly, and missing pages get normal creation
 >>>>>>> links.  The old patch is still here if you decide you prefer that. -- [[Will]]
 
+>>>>>>>> Can you explain the full/early list (why track both?) and generated parameter?
+>>>>>>>> Only code change I'd suggest is using `htmllink` rather than 
+>>>>>>>> generating a wikilink.
+
     #!/usr/bin/perl
     # Ikiwiki listpreprocessors plugin.
     package IkiWiki::Plugin::listpreprocessors;
