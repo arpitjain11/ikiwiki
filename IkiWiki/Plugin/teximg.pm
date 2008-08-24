@@ -10,6 +10,17 @@ use File::Temp qw(tempdir);
 use HTML::Entities;
 use IkiWiki 2.00;
 
+my $default_prefix = <<EOPREFIX;
+\\documentclass{article}
+\\usepackage{amsmath}
+\\usepackage{amsfonts}
+\\usepackage{amssymb}
+\\pagestyle{empty}
+\\begin{document}
+EOPREFIX
+
+my $default_postfix = '\\end{document}';
+
 sub import { #{{{
 	hook(type => "getsetup", id => "teximg", call => \&getsetup);
 	hook(type => "preprocess", id => "teximg", call => \&preprocess);
@@ -20,6 +31,26 @@ sub getsetup () { #{{{
 		plugin => {
 			safe => 1,
 			rebuild => undef,
+		},
+		teximg_dvipng => {
+			type => "boolean",
+			description => "Should teximg use dvipng to render, or dvips and convert?",
+			safe => 0,
+			rebuild => undef,
+		},
+		teximg_prefix => {
+			type => "string",
+			example => $default_prefix,
+			description => "LaTeX prefix for teximg plugin",
+			safe => 0, # Not sure how secure LaTeX is...
+			rebuild => 1,
+		},
+		teximg_postfix => {
+			type => "string",
+			example => $default_postfix,
+			description => "LaTeX postfix for teximg plugin",
+			safe => 0, # Not sure how secure LaTeX is...
+			rebuild => 1,
 		},
 } #}}}
 
@@ -105,25 +136,34 @@ sub gen_image ($$$$) { #{{{
 	my $digest = shift;
 	my $imagedir = shift;
 
-	#TODO This should move into the setup file.
-	my $tex = '\documentclass['.$height.'pt]{scrartcl}';
-	$tex .= '\usepackage[version=3]{mhchem}';
-	$tex .= '\usepackage{amsmath}';
-	$tex .= '\usepackage{amsfonts}';
-	$tex .= '\usepackage{amssymb}';
-	$tex .= '\pagestyle{empty}';
-	$tex .= '\begin{document}';
+	if (!defined $config{teximg_prefix}) {
+		$config{teximg_prefix} = $default_prefix;
+	}
+	if (!defined $config{teximg_postfix}) {
+		$config{teximg_postfix} = $default_postfix;
+	}
+	if (!defined $config{teximg_dvipng}) {
+		$config{teximg_dvipng} = length `which dvipng 2>/dev/null`;
+	}
+	
+	my $tex = $config{teximg_prefix};
 	$tex .= '$$'.$code.'$$';
-	$tex .= '\end{document}';
+	$tex .= $config{teximg_postfix};
+	$tex =~ s!\\documentclass{article}!\\documentclass[${height}pt]{article}!g;
+	$tex =~ s!\\documentclass{scrartcl}!\\documentclass[${height}pt]{scrartcl}!g;
 
 	my $tmp = eval { create_tmp_dir($digest) };
 	if (! $@ &&
 	    writefile("$digest.tex", $tmp, $tex) &&
 	    system("cd $tmp; latex --interaction=nonstopmode $tmp/$digest.tex > /dev/null") == 0 &&
-	    system("dvips -E $tmp/$digest.dvi -o $tmp/$digest.ps 2> $tmp/$digest.log") == 0 &&
 	    # ensure destination directory exists
 	    writefile("$imagedir/$digest.png", $config{destdir}, "") &&
-	    system("convert -density 120  -trim -transparent \"#FFFFFF\" $tmp/$digest.ps $config{destdir}/$imagedir/$digest.png > $tmp/$digest.log") == 0) {
+	    (($config{teximg_dvipng} &&
+	    	system("dvipng -D 120 -bg Transparent -T tight -o $config{destdir}/$imagedir/$digest.png $tmp/$digest.dvi > $tmp/$digest.log") == 0
+	    ) || (!$config{teximg_dvipng} &&
+	    	system("dvips -E $tmp/$digest.dvi -o $tmp/$digest.ps 2> $tmp/$digest.log") == 0 &&
+	    	system("convert -density 120  -trim -transparent \"#FFFFFF\" $tmp/$digest.ps $config{destdir}/$imagedir/$digest.png > $tmp/$digest.log") == 0
+	    ))) {
 		return 1;
 	}
 	else {

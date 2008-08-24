@@ -1,3 +1,27 @@
+ikiwiki (2.62) unstable; urgency=low
+
+  TexImg standard preamble changed
+
+  The teximg plugin now has a configurable LaTeX preamble.
+  As part of this change the `mchem` LaTeX package has been removed from
+  the default LaTeX preamble as it wasn't included in many TeX installations.
+
+  The previous behaviour can be restored by adding the following to your
+  ikiwiki setup:
+
+        teximg_prefix => '\documentclass{scrartcl}
+                \usepackage[version=3]{mhchem}
+                \usepackage{amsmath}
+                \usepackage{amsfonts}
+                \usepackage{amssymb}
+                \pagestyle{empty}
+                \begin{document}',
+
+  In addition, the rendering mechanism has been changed to use `dvipng` by
+  default, if available.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 24 Aug 2008 15:00:40 -0400
+
 ikiwiki (2.60) unstable; urgency=low
 
   Admin preferences are moving from the web interface to the setup file.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-21 22:49-0400\n"
+"POT-Creation-Date: 2008-08-24 15:06-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -695,15 +695,15 @@ msgstr ""
 msgid "failed to process:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/teximg.pm:39
+#: ../IkiWiki/Plugin/teximg.pm:70
 msgid "missing tex code"
 msgstr ""
 
-#: ../IkiWiki/Plugin/teximg.pm:46
+#: ../IkiWiki/Plugin/teximg.pm:77
 msgid "code includes disallowed latex commands"
 msgstr ""
 
-#: ../IkiWiki/Plugin/teximg.pm:97
+#: ../IkiWiki/Plugin/teximg.pm:128
 msgid "failed to generate image from code"
 msgstr ""
 
@@ -798,6 +798,19 @@ msgstr ""
 #: ../IkiWiki/Setup.pm:19
 #, perl-format
 msgid "cannot read %s: %s"
+msgstr ""
+
+#: ../IkiWiki/Setup/Automator.pm:33
+msgid "you must enter a wikiname (that contains alphanumerics)"
+msgstr ""
+
+#: ../IkiWiki/Setup/Automator.pm:67
+#, perl-format
+msgid "unsupported revision control system %s"
+msgstr ""
+
+#: ../IkiWiki/Setup/Automator.pm:83
+msgid "failed to set up the repository with ikiwiki-makerepo"
 msgstr ""
 
 #: ../IkiWiki/Wrapper.pm:16

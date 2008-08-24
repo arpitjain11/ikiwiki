@@ -27,3 +27,11 @@ To add an alt text to the image, use alt="text":
 	\[[!teximg code="\frac{1}{2}" alt="1/2"]]
 
 See [this site](http://www.der-winnie.de/opensource/gsoc2007) for rendered images.
+
+## configuration
+
+There are several configuration directives that can be used in the setup
+file. `teximg_prefix` can be set to change the LaTeX preamble, and
+`teximg_postfix` to change the LaTeX postfix. The `teximg_dvipng` setting
+can be set to 0 to disable use of `dvipng`, and instead force use of `dvips`
+and `convert`.
