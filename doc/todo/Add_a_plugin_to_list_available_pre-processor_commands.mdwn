@@ -105,6 +105,85 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>>>> you wanted.
 >>>>>> --[[Joey]]
 
+>>>>>>> I kinda agree about the page generation.  I don't like mixing an
+>>>>>>> inlined and a list though.  Besides which, that ends
+>>>>>>> up keeping much of complexity of the page generation because
+>>>>>>> the code still has to detect which pages are missing.  I've added
+>>>>>>> a patch that uses a list of wikilinks instead.  This way available
+>>>>>>> pages get linked correctly, and missing pages get normal creation
+>>>>>>> links.  The old patch is still here if you decide you prefer that. -- [[Will]]
+
+Note that because there are double square brackets in the source, this might not
+display quite right.
+
+    #!/usr/bin/perl
+    # Ikiwiki listpreprocessors plugin.
+    package IkiWiki::Plugin::listpreprocessors;
+    
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+    
+    sub import { #{{{
+    	hook(type => "getsetup", id => "listpreprocessors", call => \&getsetup);
+    	hook(type => "preprocess", id => "listpreprocessors", call => \&preprocess);
+    	hook(type => "checkconfig", id => "listpreprocessors", call => \&checkconfig);
+    } # }}}
+    
+    sub getsetup () { #{{{
+    	return
+    		plugin => {
+    			safe => 1,
+    			rebuild => undef,
+    		},
+    		preprocessor_description_dir => {
+    			type => "string",
+    			description => "The ikiwiki directory that contains plugin descriptions.",
+    			safe => 1,
+    			rebuild => 1,
+    		},
+    } #}}}
+    
+    my @earlyPluginList;
+    
+    sub checkconfig () { #{{{
+    
+    	if (!defined $config{plugin_description_dir}) {
+    		$config{plugin_description_dir} = "ikiwiki/plugin/";
+    	}
+    	
+    	@earlyPluginList = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+    } #}}}
+    
+    sub preprocess (@) { #{{{
+    	my %params=@_;
+    	
+    	my @pluginlist;
+    	
+    	if (! defined $params{generated}) {
+    		@pluginlist = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+    	} else {
+    		@pluginlist = @earlyPluginList;
+    	}
+    	
+    	my $result = '<ul class="listpreprocessors">';
+    
+    	foreach my $plugin (@pluginlist) {
+    		$result .= '<li class="listpreprocessors">[[' . $config{plugin_description_dir} . $plugin . ']]</li>';
+    	}
+    
+    	$result .= "</ul>";
+    	
+    	print $result;
+    	
+    	return IkiWiki::preprocess($params{page}, $params{destpage}, 
+    		IkiWiki::filter($params{page}, $params{destpage}, $result));
+    } # }}}
+    
+    1
+
+----
+
 Here is the main listpreprocessors plugin. (Note, because this has double
 square brackets in the source, it isn't quite displaying correctly - look
 at the page source for details.)  New template files follow:
