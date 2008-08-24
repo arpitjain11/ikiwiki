@@ -48,15 +48,22 @@ I like the idea of [[tips/integrated_issue_tracking_with_ikiwiki]], and I do so 
 >> pagespec that uses it?
 >> 
 >> Example: `define(~bugs, bugs/* and !*/Discussion) and define(~openbugs, ~bugs and !link(done)) and ~openbugs and !link(~openbugs)`
->>
+
+>>> That could work.  parens are only ever nested 1 deep in that grammar so it is regular and the current parsing would be ok.
+
 >> Note that I made the "~" explicit, not implicit, so it could be left out. In the case of ambiguity between
 >> a definition and a page name, the definition would win.
->>
+
+>>> That was my initial thought too :), but when implementing it I decided that requiring the ~ made things easier.  I'll probably require the ~ for the first pass at least.
+
 >> So, equivilant example: `define(bugs, bugs/* and !*/Discussion) and define(openbugs, bugs and !link(done)) and openbugs and !link(openbugs)`
 >> 
 >> Re recursion, it is avoided.. but building a pagespec that is O(N^X) where N is the
 >> number of pages in the wiki is not avoided. Probably need to add DOS prevention.
 >>  --[[Joey]]
+
+>>> If you memoize the outcomes of the named pagespecs you can make in O(N.X), no?
+>>> -- [[Will]]
 
 > One quick further thought.  All the above discussion assumes that 'dependency' is the
 > same as 'links to', which is not really true.  For example, you'd like to be able to say
@@ -85,6 +92,10 @@ this todo [[todo/Add_a_plugin_to_list_available_pre-processor_commands]].
 
 > I'm not sure why iterating over `%pagesources` wouldn't work here, it's the same method
 > used by anything that needs to match a pagespec against all pages..? --[[Joey]]
+
+>> My uchecked hypothesis is that %pagesources is created after the refresh hook.
+>> I've also been concerned about how globally defined pagespec shortcuts would interact with
+>> the page dependancy system.  Your idea of internally defined shortcuts should fix that. -- [[Will]]
 
 Immediately below is a patch for IkiWiki.pm.  Below that is a new plugin `definepagespec `
 which behaves like `shortcut` for pagespecs.
