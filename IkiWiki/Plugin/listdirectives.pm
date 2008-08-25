@@ -21,8 +21,8 @@ sub getsetup () { #{{{
 		},
 		directive_description_dir => {
 			type => "string",
-			description => "directory in srcdir that contains PreprocessorDirective descriptions",
-			example => "ikiwiki/plugin",
+			description => "directory in srcdir that contains directive descriptions",
+			example => "ikiwiki/directive",
 			safe => 1,
 			rebuild => 1,
 		},
@@ -34,20 +34,20 @@ my $pluginstring;
 
 sub checkconfig () { #{{{
 	if (! defined $config{directive_description_dir}) {
-		$config{directive_description_dir} = "ikiwiki/plugin";
+		$config{directive_description_dir} = "ikiwiki/directive";
 	}
 	else {
-		$config{directive_description_dir}=~s/\/+$//;
+		$config{directive_description_dir} =~ s/\/+$//;
 	}
 
-	@earlylist = sort( keys %{ $IkiWiki::hooks{preprocess} } );
+	@earlylist = sort keys %{$IkiWiki::hooks{preprocess}};
 } #}}}
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 
-	@fulllist = sort( keys %{ $IkiWiki::hooks{preprocess} } );
-	$pluginstring = join (' ', @earlylist) . " : ". join (' ', @fulllist);
+	@fulllist = sort keys %{$IkiWiki::hooks{preprocess}};
+	$pluginstring = join(' ', @earlylist) . " : " . join(' ', @fulllist);
 
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{listdirectives}{shown}) {
@@ -83,8 +83,9 @@ sub preprocess (@) { #{{{
 	
 	foreach my $plugin (@pluginlist) {
 		$result .= '<li class="listdirectives">';
-		$result .= htmllink($params{page}, $params{destpage},
-			IkiWiki::linkpage($config{directive_description_dir}."/".$plugin));
+		my $link=IkiWiki::linkpage($config{directive_description_dir}."/".$plugin);
+		add_depends($params{page}, $link);
+		$result .= htmllink($params{page}, $params{destpage}, $link);
 		$result .= '</li>';
 	}
 	
