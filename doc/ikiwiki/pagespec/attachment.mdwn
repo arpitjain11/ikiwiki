@@ -13,7 +13,7 @@ check all attachments for virii, something like this could be used:
   
 	virusfree() and ((user(joey) and podcast/*.mp3 and mimetype(audio/mpeg) and maxsize(15mb)) or (!ispage() and maxsize(50kb)))
 
-The regular [[ikiwiki/PageSpec]] syntax is expanded with thw following
+The regular [[ikiwiki/PageSpec]] syntax is expanded with the following
 additional tests:
 
 * maxsize(size)

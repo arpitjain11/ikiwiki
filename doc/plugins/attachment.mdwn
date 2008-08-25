@@ -22,13 +22,6 @@ Bear in mind that if you let anyone upload a particular kind of file
 
 If you enable this plugin, be sure to lock it down, via the
 `allowed_attachments` setup file option. This is a special 
-[[enhanced_PageSpec|ikiwiki/pagespec/attachment]].
-
-This plugin will use the [[!cpan File::MimeInfo::Magic]] perl module, if
-available, for mimetype checking.
-
-The `virusfree` [[PageSpec|ikiwiki/pagespec/attachment]] requires that
-ikiwiki be configured with a virus scanner program via the `virus_checker`
-option in the setup file. If using `clamav`, with `clamd`, set it to
-"clamdscan -". Or to use clamav without the `clamd` daemon, you
-could set it to "clamscan -".
+[[enhanced_PageSpec|ikiwiki/pagespec/attachment]] using tests provided by
+the [[filecheck]] plugin. That plugin will be automatically enabled when
+this plugin is enabled.
