@@ -1,0 +1,77 @@
+The current basewiki is not self-documenting. In particular, if
+[[plugins/listdirectives]] is used, it creates a list with a bunch of
+broken links to directives/*, pages that do not currently exist in the
+docwiki or basewiki.
+
+This could be fixed by adding a page for each directive under to
+`ikiwiki/directives`, and put those into a new underlay, which the plugin
+could enable. Rather a lot of work and maintenance to document all the
+directives like that.
+
+I also considered having it link to the plugin that defined the
+directive. Then all the plugins can be included in a new underlay, which
+both [[plugins/listdirectives]] and [[plugins/websetup]] could enable.
+(The latter could be improved by making the plugin names in the web setup
+be links to docs about each plugin..) 
+
+The problem I ran into doing that is that the existing plugin pages have a
+lot of stuff on them you probably don't want an underlay doing. The biggest
+issues were wikilinks to other pages in the docwiki (which would end up
+broken if the plugins were used as an underlay), and plugin pages that
+include examples of the plugin in use, which are sometimes rather expensive
+(eg, brokenlinks).
+
+Either way requires a lot of reorganisation/doc work, and an onging
+maintenance load.
+
+BTW, this patch would be needed for the second approach, to allow
+listdirectives to map from preprocessor directives back to the plugin that
+defined them:  --[[Joey]]
+
+    commit 0486b46a629cae19ce89492d5ac498bbf9b84f5f
+    Author: Joey Hess <joey@kodama.kitenet.net>
+    Date:   Mon Aug 25 15:38:51 2008 -0400
+    
+        record which plugins registered which hooks
+    
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index e476521..afe982a 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -493,6 +493,7 @@ sub loadplugins () { #{{{
+     	return 1;
+     } #}}}
+     
+    +my $loading_plugin;
+     sub loadplugin ($) { #{{{
+     	my $plugin=shift;
+     
+    @@ -502,14 +503,18 @@ sub loadplugin ($) { #{{{
+     	                 "$installdir/lib/ikiwiki") {
+     		if (defined $dir && -x "$dir/plugins/$plugin") {
+     			require IkiWiki::Plugin::external;
+    +			$loading_plugin=$plugin;
+     			import IkiWiki::Plugin::external "$dir/plugins/$plugin";
+    +			$loading_plugin=undef;
+     			$loaded_plugins{$plugin}=1;
+     			return 1;
+     		}
+     	}
+     
+     	my $mod="IkiWiki::Plugin::".possibly_foolish_untaint($plugin);
+    +	$loading_plugin=$plugin;
+     	eval qq{use $mod};
+    +	$loading_plugin=undef;
+     	if ($@) {
+     		error("Failed to load plugin $mod: $@");
+     	}
+    @@ -1429,6 +1434,9 @@ sub hook (@) { # {{{
+     
+     	return if $param{no_override} && exists $hooks{$param{type}}{$param{id}};
+     	
+    +	# Record which plugin was being loaded when the hook was defined.
+    +	$param{plugin}=$loading_plugin if defined $loading_plugin;
+    +
+     	$hooks{$param{type}}{$param{id}}=\%param;
+     	return 1;
+     } # }}}
