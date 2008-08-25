@@ -1,3 +1,15 @@
-When I use my OpenID, http://thewordnerd.info, I am redirected to http://thewordnerd.myopenid.com, the identity to which thewordnerd.info delegates. That is, I'm redirected to the exact identity URL, not to an authorization link.
+When I use my OpenID, http://thewordnerd.info, I am redirected to
+http://thewordnerd.myopenid.com, the identity to which thewordnerd.info
+delegates. That is, I'm redirected to the exact identity URL, not to an
+authorization link.
 
-I am successfully using thewordnerd.info as my identity on many sites, so I know the delegation is pretty standard. It's stock WordPress with the delegation plugin. I also just attempted registration on http://identi.ca and successfully exchanged sreg data. So it seems like something is broken when using a delegate specifically with ikiwiki, and while I can use thewordnerd.myopenid.com, I'd rather use my delegate and free myself to switch to other providers in the future.
+I am successfully using thewordnerd.info as my identity on many sites, so I
+know the delegation is pretty standard. It's stock WordPress with the
+delegation plugin. I also just attempted registration on http://identi.ca
+and successfully exchanged sreg data. So it seems like something is broken
+when using a delegate specifically with ikiwiki, and while I can use
+thewordnerd.myopenid.com, I'd rather use my delegate and free myself to
+switch to other providers in the future.
+
+> Hmm, I entered http://thewordnerd.info as the openid, and ended up at
+> http://thewordnerd.myopenid.com/ , which seems right? --[[Joey]]
