@@ -135,7 +135,7 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
 >>>>>>>> Only code change I'd suggest is using `htmllink` rather than 
 >>>>>>>> generating a wikilink.
 
->>>>>>>>> Yeah - that would make sense.  Will do. -- [[Will]]
+>>>>>>>>> Yeah - that would make sense.  done. -- [[Will]]
 
     #!/usr/bin/perl
     # Ikiwiki listpreprocessors plugin.
@@ -207,7 +207,7 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
     	
     	my @pluginlist;
     	
-    	if (! defined $params{generated}) {
+    	if (defined $params{generated}) {
     		@pluginlist = @fullPluginList;
     	} else {
     		@pluginlist = @earlyPluginList;
@@ -216,13 +216,14 @@ I've found myself wanting to know which [[plugins]] are switched on so I know wh
     	my $result = '<ul class="listpreprocessors">';
     	
     	foreach my $plugin (@pluginlist) {
-    		$result .= '<li class="listpreprocessors">[[' . $config{plugin_description_dir} . $plugin . ']]</li>';
+    		$result .= '<li class="listpreprocessors">';
+    		$result .= htmllink($params{page}, $params{destpage}, IkiWiki::linkpage($config{plugin_description_dir} . $plugin));
+    		$result .= '</li>';
     	}
     	
     	$result .= "</ul>";
-    	
-    	return IkiWiki::preprocess($params{page}, $params{destpage}, 
-    		IkiWiki::filter($params{page}, $params{destpage}, $result));
+    
+    	return $result;
     } # }}}
     
     1
