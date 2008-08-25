@@ -219,7 +219,7 @@ Index: doc/plugins/rst.mdwn
 -* reStructuredText does not allow raw html to be inserted into
 -  documents, but ikiwiki does so in many cases, including
 -  [[WikiLinks|ikiwiki/WikiLink]] and many
--  [[PreprocessorDirectives|ikiwiki/PreprocessorDirective]].
+-  [[Directives|ikiwiki/Directive]].
 +* Some bits of ikiwiki may still assume that markdown is used or embed html
 +  in ways that break reStructuredText. (Report bugs if you find any.)
  * It's slow; it forks a copy of python for each page. While there is a

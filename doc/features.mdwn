@@ -32,7 +32,7 @@ Any page with a filename ending in ".mdwn" is converted from markdown to html
 by ikiwiki. Markdown understands text formatted as it would be in an email,
 and is quite smart about converting it to html. The only additional markup
 provided by ikiwiki on top of regular markdown is the [[ikiwiki/WikiLink]] and 
-[[ikiwiki/PreprocessorDirective]].
+the [[ikiwiki/directive]].
 
 If you prefer to use some other markup language, ikiwiki allows others to
 easily be added by [[plugins]]. For example it also supports traditional
@@ -74,7 +74,7 @@ can change the look and layout of all pages in any way you would like.
 
 Plugins can be used to add additional features to ikiwiki. The interface
 is quite flexible, allowing plugins to implement additional markup
-languages, register [[ikiwiki/PreProcessorDirective]]s, hook into [[CGI]] mode,
+languages, register [[directives|ikiwiki/directive]], hook into [[CGI]] mode,
 and more. Most of ikiwiki's features are actually provided by plugins.
 Ikiwiki's backend RCS support is also pluggable, so support for new
 revision control systems can be added to ikiwiki.

@@ -1,0 +1,11 @@
+[[!template id=plugin name=listdirectives author="Will"]]
+[[!tag type/meta]]
+
+This plugin generates a list of available
+[[directives|ikiwiki/directive]].
+
+	\[[!listdirectives]]
+
+Each directive links to a wiki page with the same name. The location of the
+pages in the wiki can be controlled via the `directive_description_dir`
+setting in the setup file.

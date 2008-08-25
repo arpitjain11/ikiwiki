@@ -123,7 +123,7 @@ make arbitrary changes. The function is passed named parameters "page",
 
 ### preprocess
 
-Adding a [[ikiwiki/PreProcessorDirective]] is probably the most common use
+Adding a preprocessor [[ikiwiki/directive]] is probably the most common use
 of a plugin.
 
         hook(type => "preprocess", id => "foo", call => \&preprocess);
@@ -158,7 +158,7 @@ can assume it's being run in scan mode, and avoid doing expensive things at
 that point.)
 
 Note that if the [[htmlscrubber]] is enabled, html in
-[[ikiwiki/PreProcessorDirective]] output is sanitised, which may limit what
+preprocessor [[ikiwiki/directive]] output is sanitised, which may limit what
 your plugin can do. Also, the rest of the page content is not in html
 format at preprocessor time. Text output by a preprocessor directive will
 be linkified and passed through markdown (or whatever engine is used to
@@ -500,7 +500,7 @@ function that is called after the error message is printed, to do any final
 cleanup.
 
 If called inside a preprocess hook, error() does not abort the entire
-wiki build, but instead replaces the [[ikiwiki/PreProcessorDirective]] with
+wiki build, but instead replaces the preprocessor [[ikiwiki/directive]] with
 a version containing the error message.
 
 In other hooks, error() is a fatal error, so use with care. Try to avoid

@@ -25,7 +25,7 @@ include an `else` clause; if so, you could label the text used if true as
 `then`.
 
 Syntax could vary greatly here, both for the
-[[ikiwiki/PreprocessorDirective]] and for the condition itself.
+[[ikiwiki/Directive]] and for the condition itself.
 
 > I think this is a good thing to consider, although conditionals tend to
 > make everything a lot more complicated, so I also want to KISS, and not
@@ -57,7 +57,7 @@ Syntax could vary greatly here, both for the
 > --[[Joey]]
 
 >> [[ikiwiki/PageSpec]] syntax seems perfect, and your proposed syntax for the `if`
->> [[ikiwiki/PreprocessorDirective]] looks fine to me.
+>> [[ikiwiki/Directive]] looks fine to me.
 >>
 >> [[ikiwiki/PageSpec]]s don't give you `none` for free, since `!foo/*` as a boolean
 >> would mean "does any page not matching `foo/*` exist", not "does `foo/*`

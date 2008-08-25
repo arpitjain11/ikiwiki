@@ -23,11 +23,11 @@ page, but the link will appear like this: [[foo_bar|SandBox]].
 To link to an anchor inside a page, you can use something like
 `\[[WikiLink#foo]]`
 
-## Preprocessor directives and wikilinks
+## Directives and WikiLinks
 
 ikiwiki has two syntaxes for
-[[preprocessor_directives|PreprocessorDirective]].  The older syntax
-used spaces to distinguish between preprocessor directives and
+[[directives|directive]].  The older syntax
+used spaces to distinguish between directives and
 wikilinks; as a result, with that syntax in use, you cannot use spaces
 in WikiLinks, and must replace spaces with underscores.  The newer
 syntax, enabled with the `prefix_directives` option in an ikiwiki

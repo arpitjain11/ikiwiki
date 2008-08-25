@@ -5,9 +5,9 @@ What should the plugin do? Let's make it calculate and output the Fibonacci
 sequence. To output the next number in the sequence, all a user has to do
 is write this on a wiki page:
 
-	[[!fib ]]
+	[[!fib]]
 
-When the page is built, the [[ikiwiki/PreProcessorDirective]] will be
+When the page is built, the [[ikiwiki/directive]] will be
 replaced by the next number in the sequence.
 
 Most of ikiwiki's plugins are written in Perl, and it's currently easiest
@@ -39,16 +39,16 @@ register hooks that ikiwiki will call later.
 	}
 
 This has hooked our plugin into the preprocess hook, which ikiwiki uses to
-expand [[PreprocessorDirectives|ikiwiki/preprocessordirective]]. Notice
+expand preprocessor [[directives|ikiwiki/directive]]. Notice
 that "fib" has shown up again. It doesn't actually have to match the module
 name this time, but it generally will. This "fib" is telling ikiwiki what
-kind of PreprocessorDirective to handle, namely one that looks like this:
+kind of preprocessor directive to handle, namely one that looks like this:
 
 	[[!fib ]]
 
 Notice the `\&preprocess`? This is how you pass a reference to a function,
 and the `preprocess` function is the one that ikiwiki will call to expand
-the PreprocessorDirective. So, time to write that function:
+the preprocessor directive. So, time to write that function:
 
 	sub preprocess {
 		my %params=@_;

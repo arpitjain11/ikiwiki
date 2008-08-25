@@ -2,15 +2,15 @@ Pages could have a `linktitle` (perhaps via [[plugins/meta]]), and
 [[wikilinks|ikiwiki/wikilink]] could use that title by default when linking
 to the page.  That would allow pages to have a simple, easily linkable name
 (without spaces, for instance), but use the proper title for links.  For
-example, [[ikiwiki/PreprocessorDirective]] could use the `linktitle`
+example, [[ikiwiki/Directive]] could use the `linktitle`
 "preprocessor directive", and pages for [[users]] could have `linktitle`s
 that put spaces in their names.
 
 Ideally, perhaps two versions of the title could exist, one for general
 use, and an optional one for if the case in the actual link starts with an
-uppercase letter.  That would allow [[ikiwiki/preprocessordirective]] to
+uppercase letter.  That would allow [[ikiwiki/directive]] to
 use the link text "preprocessor directive", but
-[[ikiwiki/PreprocessorDirective]] to use the link text "Preprocessor
+[[ikiwiki/Directive]] to use the link text "Preprocessor
 Directive", for use at the beginnings of sentences.  If the second version
 did not exist, the first version would apply to both cases. However, that
 also seems like potential overkill, and less important than the basic

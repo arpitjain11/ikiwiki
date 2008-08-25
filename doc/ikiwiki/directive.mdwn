@@ -1,5 +1,5 @@
 [[!meta robots="noindex, follow"]]
-Preprocessor directives are similar to a [[WikiLink]] in form, except they
+Directives are similar to a [[WikiLink]] in form, except they
 begin with `!` and may contain parameters. The general form is:
 
 	\[[!directive param="value" param="value"]]
@@ -12,7 +12,7 @@ Also, some directives may use parameters without values, for example:
 
 	\[[!tag foo]]
 
-A preprocessor directive does not need to all be on one line, it can be
+A directive does not need to all be on one line, it can be
 wrapped to multiple lines if you like:
 	
 	\[[!directive foo="baldersnatch"
@@ -28,7 +28,7 @@ of text with triple-quotes:
 	3. "baz"
 	"""]]
 
-ikiwiki also has an older syntax for preprocessor directives, which requires a
+ikiwiki also has an older syntax for directives, which requires a
 space in directives to distinguish them from [[wikilinks|wikilink]].  This
 syntax has several disadvantages: it requires a space after directives with no
 parameters (such as `\[[pagecount ]]`), and it prohibits spaces in

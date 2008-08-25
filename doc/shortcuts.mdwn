@@ -61,13 +61,13 @@ This page controls what shortcut links the wiki supports.
 * [[!shortcut name=ohloh url="http://www.ohloh.net/projects/%s"]]
 
 To add a new shortcut, use the `shortcut`
-[[ikiwiki/PreprocessorDirective]]. In the url, "%s" is replaced with the
+[[ikiwiki/directive]]. In the url, "%s" is replaced with the
 text passed to the named shortcut, after url-encoding it, and '%S' is
 replaced with the raw, non-encoded text. The optional `desc` parameter
 controls the description of the link.
 
 Remember that the `name` you give the shortcut will become a new
-[[ikiwiki/PreprocessorDirective]].  Avoid using a `name` that conflicts
+[[ikiwiki/directive]].  Avoid using a `name` that conflicts
 with an existing directive.  These directives also accept a `desc`
 parameter that will override the one provided at definition time.
 

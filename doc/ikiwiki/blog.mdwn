@@ -7,7 +7,7 @@
      then="You can"
      else="If this wiki had the inline plugin enabled, you could"]]
 turn any page on this wiki into a weblog by using the `inline`
-[[PreProcessorDirective]]. For example:
+[[directive]]. For example:
 
 	\[[!inline pages="blog/* and !*/Discussion" show="10" rootpage="blog"]]
 
@@ -17,9 +17,9 @@ of them will appear in the page. Note that if files that are not pages
 match the [[PageSpec]], they will be included in the feed using RSS
 enclosures, which is useful for podcasting.
 
-The optional `rootpage` parameter tells the wiki that new posts to this blog
-should default to being [[SubPage]]s of "blog", and enables a form at the
-top of the blog that can be used to add new items.
+The optional `rootpage` parameter tells the wiki that new posts to this
+blog should default to being [[SubPages|SubPage]] of "blog", and enables a
+form at the top of the blog that can be used to add new items.
 
 If you want your blog to have an archive page listing every post ever made
 to it, you can accomplish that like this:

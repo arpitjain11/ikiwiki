@@ -18,7 +18,7 @@ A few pointers and I might be able to implement this myself. -- JamesWestby
 > Now, the description field currently defaults to the wiki name,
 > and that could indeed stand to be made configurable. Since the
 > current (svn) version of ikiwiki supports long, word-wrapped
-> blocks of text as parameters to [[ikiwiki/PreProcessorDirective]]s, seems
+> blocks of text as parameters to [[ikiwiki/Directive]]s, seems
 > to me the best way would be to simple modify inline.pm to make the
 > descripion configurable by such parameter, with a fallback to the
 > wiki name. You'll need to modify rsspage.tmpl to use whatever new

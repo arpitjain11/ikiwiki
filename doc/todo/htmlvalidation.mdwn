@@ -31,8 +31,8 @@
 	Because [ [inlinepage] ] isn't separated by a blank line it gets treated as a block-level element. Hmm, will this stop all formatting, including *'s to em-tags? --[[JeroenSchot]]
 
     Ah didn't realize you meant it fixed it at the markdown level. I'll
-    think about making postprocessordirectives into
-    [[ikiwiki/preprocessordirective]]s instead, then I could use that fix (but I'm not
+    think about making postprocessor directives into
+    preprocessor directives instead, then I could use that fix (but I'm not
     sure how feasible it is to do that). --[[Joey]]
 
     Done.. inlining is now a preprocessor directive, happens before

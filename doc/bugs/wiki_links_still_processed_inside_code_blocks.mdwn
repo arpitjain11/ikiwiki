@@ -1,6 +1,6 @@
 In [[ikiwiki/markdown]] syntax, none of the other special characters get processed
 inside a code block.  However, in ikiwiki, [[wiki_links|ikiwiki/wikilink]] and
-[[preprocessor_directives|ikiwiki/preprocessordirective]] still get processed
+[[preprocessor_directives|ikiwiki/directive]] still get processed
 inside a code block, requiring additional escaping.  For example, `[links
 don't work](#here)`, but `a [[ikiwiki/wikilink]] becomes HTML`. --[[JoshTriplett]]
 
