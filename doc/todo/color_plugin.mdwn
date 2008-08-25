@@ -110,6 +110,10 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 
 >>> Joey, will you add that plugin to Ikiwiki 2.61? :) --[[Paweł|ptecza]]
 
+>>>> I also had a long net-free summer holiday. :-) The [[patch]] is
+>>>> ready for integration (made a few minor changes). Is this GPL 2?
+>>>> --[[Joey]]
+
 	--- /dev/null	2008-06-21 02:02:15.000000000 +0200
 	+++ color.pm	2008-07-27 14:58:12.000000000 +0200
 	@@ -0,0 +1,69 @@
@@ -127,7 +131,7 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 	+	hook(type => "format",     id => "color", call => \&format);
 	+} #}}}
 	+
-	+sub preserve_style($$$) { #{{{
+	+sub preserve_style ($$$) { #{{{
 	+	my $foreground = shift;
 	+	my $background = shift;
 	+	my $text       = shift;
@@ -154,7 +158,7 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 	+
 	+} #}}}
 	+
-	+sub replace_preserved_style($) { #{{{
+	+sub replace_preserved_style ($) { #{{{
 	+	my $content = shift;
 	+
 	+	$content =~ s!<span class="color">((color: ([a-z]+|\#[0-9a-f]{3,6})?)?((; )?(background-color: ([a-z]+|\#[0-9a-f]{3,6})?)?)?)</span>!<span class="color" style="$1">!g;
@@ -163,7 +167,7 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 	+	return $content;
 	+} #}}}
 	+
-	+sub preprocess(@) { #{{{
+	+sub preprocess (@) { #{{{
 	+	my %params = @_;
 	+
 	+	# Preprocess the text to expand any preprocessor directives
@@ -174,7 +178,7 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 	+	return preserve_style($params{foreground}, $params{background}, $params{text});
 	+} #}}}
 	+
-	+sub format(@) { #{{{
+	+sub format (@) { #{{{
 	+	my %params = @_;
 	+
 	+	$params{content} = replace_preserved_style($params{content});
@@ -187,26 +191,26 @@ Of course, I'm open for discussion or exchange of ideas :) --[[Paweł|ptecza]]
 	@@ -0,0 +1,25 @@
 	+\[[!template id=plugin name=color core=0 author="[[ptecza]]"]]
 	+
-	+This plugin can be used to color a piece of text on Ikiwiki page.
-	+It's possible setting foreground and/or background color of the text.
+	+This plugin can be used to color a piece of text on a page.
+	+It can be used to set the foreground and/or background color of the text.
 	+
-	+You can use name (e.g. `white`) or HTML code of colors (e.g. `#ffffff`)
+	+You can use a color name (e.g. `white`) or HTML code (e.g. `#ffffff`)
 	+to define colors. 
 	+
 	+Below are a few examples:
 	+
 	+    \[[!color foreground=white background=#ff0000 text="White text on red background"]]
 	+
-	+Foreground color is defined as a word, background color is defined as HTML
+	+In the above example, the foreground color is defined as a word, while the background color is defined as a HTML
 	+color code.
 	+
 	+    \[[!color foreground=white text="White text on default color background"]]
 	+
-	+Background color is missing, so the text is displayed on default background.
+	+The background color is missing, so the text is displayed on default background.
 	+
 	+    \[[!color background=#ff0000 text="Default color text on red background"]]
 	+
-	+Foreground is missing, so the text has default color.
+	+The foreground is missing, so the text has the default foreground color.
 	--- style.css-orig	2008-07-27 15:12:39.000000000 +0200
 	+++ style.css	2008-07-27 15:15:06.000000000 +0200
 	@@ -333,3 +333,7 @@
