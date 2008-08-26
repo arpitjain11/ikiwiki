@@ -126,6 +126,22 @@ The following three inlines work for me with this patch:
 > needing to change the prototype of every pagespec function, since several
 > plugins define them too. --[[Joey]]
 
+>> Maybe - it needs more thought.  I also considered it when I was going though changing all those plugins :).
+>> My concern was that `%params` can contain other user-defined parameters,
+>> e.g. `link(target, otherparameter)`, and that means that the specFuncs could be clobbered by a user (or other
+>> weird security hole).  I thought it better to separate it, but I didn't think about it too hard.  I might move it to
+>> the first parameter rather than the second.  Ikiwiki is my first real perl hacking and I'm still discovering
+>> good ways to write things in perl.
+>>
+>> What do you think is best to do about `is_globlist()`?  At the moment it requires that the 'second word', as
+>> delimited by a space and ignoring parens, is 'and' or 'or'.  This doesn't hold in the above example pagespecs (so I just hard wired it to 0 to test my patch).
+>> My thought was just to search for 'and' or 'or' as words anywhere in the pagespec.  Thoughts?
+
+>> Oh, one more thing.  In pagespec_translate (now pagespec_makeperl), there is a part of the regular expression for `# any other text`.
+>> This contained `()`, which has no effect.  I replaced that with `\(\)`, but that is a change in the definition of pagespecs unrelated to the
+>> rest of this patch. In a related change, commands were not able to contain `)` in their parameters.  I've extended that so the cannot
+>> contain `(` or `)`.  -- [[Will]]
+
 ----
 
 diff --git a/IkiWiki.pm b/IkiWiki.pm
