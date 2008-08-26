@@ -13,6 +13,9 @@ ikiwiki (2.54) UNRELEASED; urgency=low
     work. Markdown removes one level of escaping.
   * Add a postscan hook.
   * search: Use postscan hook, avoid updating index when previewing.
+  * search: Fixes for title stemming, and use better term for tags. (Gabriel McManus)
+    (Rebuilding the wiki on upgrade to this version is recommended if you use the
+    search plugin.)
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 
