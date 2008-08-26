@@ -449,8 +449,8 @@ your ikiwiki setup file, which sets the hash content to configure the wiki.
 
 The `%pagestate` hash can be used by plugins to save state that they will need
 next time ikiwiki is run. The hash holds per-page state, so to set a value,
-use `%pagestate{$page}{$id}{$key}=$value`, and to retrieve the value,
-use `%pagestate{$page}{$id}{$key}`.
+use `$pagestate{$page}{$id}{$key}=$value`, and to retrieve the value,
+use `$pagestate{$page}{$id}{$key}`.
 
 The `$value` can be anything that perl's Storable module is capable of
 serializing. `$key` can be any string you like, but `$id` must be the same
