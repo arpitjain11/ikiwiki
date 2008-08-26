@@ -29,8 +29,11 @@ sub pagetemplate (@) { #{{{
 	my %params=@_;
         my $template=$params{template};
 	
-	$template->param(extrafooter => mirrorlist($params{page}))
-		if $template->query(name => "extrafooter");
+	if ($template->query(name => "extrafooter")) {
+		my $value=$template->param("extrafooter");
+		$value.=mirrorlist($params{page});
+		$template->param(extrafooter => $value);
+	}
 } # }}}
 
 sub mirrorlist ($) { #{{{
