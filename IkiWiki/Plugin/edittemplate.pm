@@ -54,7 +54,9 @@ sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
-	return if $form->field("do") ne "create";
+	return if $form->field("do") ne "create" ||
+		length $form->field("editcontent");
+	
 	my $page=$form->field("page");
 	
 	# The tricky bit here is that $page is probably just the base
