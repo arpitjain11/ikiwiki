@@ -1,7 +1,0 @@
-This is a link to a non-existent page in the root directory: [[/root_page_test]] (\[[/root\_page\_test]])
-
-When you click on the question mark to create the page, you get *Error: bad page name*.  It's a valid [[wikilink]], shouldn't it create the page? --[[sabr]]
-
-> Is it a valid wikilink?  Should Iki prevent the page from being created? --[[sabr]], 2 months later
-
-This type of page name (with leading slash) also gets created by the aggregate plugin: /cgi-bin/ikiwiki.cgi?page=%2FCalculated_Risk&from=news%2FAll_Stories&do=create  I'm now pretty convinced that Iki should handle this without error.  I'll investigate if I can find the time.
