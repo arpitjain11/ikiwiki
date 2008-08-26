@@ -122,6 +122,10 @@ The following three inlines work for me with this patch:
     
     [ [!inline pages="define(~bugs, bugs/* and ! */Discussion) and define(~openbugs,~bugs and !link(done)) and define(~readybugs,~openbugs and !link(~openbugs)) and ~readybugs" archive="yes"]]
 
+> Nice! Could the specfuncsref be passed in %params? I'd like to avoid
+> needing to change the prototype of every pagespec function, since several
+> plugins define them too. --[[Joey]]
+
 ----
 
 diff --git a/IkiWiki.pm b/IkiWiki.pm
