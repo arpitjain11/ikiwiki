@@ -92,10 +92,6 @@ MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 				         $smileys{$smiley}, linktext => $smiley);
 			pos=$epos+1;
 		}
-
-		# Breaks out at end, otherwise it will scan through again,
-		# replacing de-escaped ones.
-		#last unless defined pos;
 	}
 
 	return $_;
