@@ -2,8 +2,10 @@ ikiwiki (2.54) UNRELEASED; urgency=low
 
   * Fix uninitialised value warning from a [[!foo]] preprocessor directive
     with no whitespace.
+  * ikiwiki-transition: Fix command-line processing so the prefix_directives
+    transition works again.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 26 Aug 2008 12:18:36 -0400
+ -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 
 ikiwiki (2.53) unstable; urgency=low
 

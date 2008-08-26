@@ -114,7 +114,7 @@ my $mode=shift;
 if ($mode eq 'prefix_directives') {
 	prefix_directives(@ARGV);
 }
-if ($mode eq 'hashpassword') {
+elsif ($mode eq 'hashpassword') {
 	hashpassword(@ARGV);
 }
 elsif ($mode eq 'indexdb') {
