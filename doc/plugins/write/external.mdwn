@@ -134,7 +134,7 @@ large quantity of data conversion going on. In contrast, `preprocess` hooks
 are called generally rarely, and pass around minimal data.
 
 External plugins should avoid making RPC calls unnecessarily (ie, in a loop).
-Memorizing the results of appropriate RPC calls is one good way to minimize the
+Memoizing the results of appropriate RPC calls is one good way to minimize the
 number of calls.
 
 Injecting a replacement for a commonly called ikiwiki function
