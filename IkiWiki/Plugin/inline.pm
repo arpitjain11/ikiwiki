@@ -142,7 +142,7 @@ sub preprocess_inline (@) { #{{{
 	}
 
 	if (exists $params{sort} && $params{sort} eq 'title') {
-		@list=sort @list;
+		@list=sort { pagetitle(basename($a)) cmp pagetitle(basename($b)) } @list;
 	}
 	elsif (exists $params{sort} && $params{sort} eq 'mtime') {
 		@list=sort { $pagemtime{$b} <=> $pagemtime{$a} } @list;
