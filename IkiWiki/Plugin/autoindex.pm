@@ -59,11 +59,37 @@ sub refresh () { #{{{
 			}
 		}, $dir);
 	}
+	
+	my %deleted;
+        if (ref $pagestate{index}{autoindex}{deleted}) {
+	       %deleted=%{$pagestate{index}{autoindex}{deleted}};
+		foreach my $dir (keys %deleted) {
+			# remove deleted page state if the deleted page is re-added,
+			# or if all its subpages are deleted
+			if ($deleted{$dir} && (exists $pages{$dir} ||
+			                       ! grep /^$dir\/.*/, keys %pages)) {
+				delete $deleted{$dir};
+			}
+		}
+		$pagestate{index}{autoindex}{deleted}=\%deleted;
+	}
 
 	my @needed;
 	foreach my $dir (keys %dirs) {
-		if (! exists $pages{$dir} && grep /^$dir\/.*/, keys %pages) {
-			push @needed, $dir;
+		if (! exists $pages{$dir} && ! $deleted{$dir} &&
+		    grep /^$dir\/.*/, keys %pages) {
+		    	if (exists $IkiWiki::pagemtime{$dir}) {
+				# This page must have just been deleted, so
+				# don't re-add it. And remember it was
+				# deleted.
+				if (! ref $pagestate{index}{autoindex}{deleted}) {
+					$pagestate{index}{autoindex}{deleted}={};
+				}
+				${$pagestate{index}{autoindex}{deleted}}{$dir}=1;
+			}
+			else {
+				push @needed, $dir;
+			}
 		}
 	}
 	
