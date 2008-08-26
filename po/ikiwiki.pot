@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-09 16:55-0400\n"
+"POT-Creation-Date: 2008-07-25 16:16-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:525
+#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:526
 msgid "Your login session has expired."
 msgstr ""
 
@@ -44,102 +44,106 @@ msgstr ""
 msgid "Preferences saved."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:325
+#: ../IkiWiki/CGI.pm:326
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:436 ../IkiWiki/Plugin/brokenlinks.pm:24
-#: ../IkiWiki/Plugin/inline.pm:266 ../IkiWiki/Plugin/opendiscussion.pm:17
-#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:95
-#: ../IkiWiki/Render.pm:162
+#: ../IkiWiki/CGI.pm:437 ../IkiWiki/Plugin/brokenlinks.pm:24
+#: ../IkiWiki/Plugin/inline.pm:261 ../IkiWiki/Plugin/opendiscussion.pm:17
+#: ../IkiWiki/Plugin/orphans.pm:28 ../IkiWiki/Render.pm:78
+#: ../IkiWiki/Render.pm:148
 msgid "discussion"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:492
+#: ../IkiWiki/CGI.pm:493
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:510 ../IkiWiki/CGI.pm:538 ../IkiWiki/CGI.pm:548
-#: ../IkiWiki/CGI.pm:582 ../IkiWiki/CGI.pm:627
+#: ../IkiWiki/CGI.pm:511 ../IkiWiki/CGI.pm:539 ../IkiWiki/CGI.pm:549
+#: ../IkiWiki/CGI.pm:584 ../IkiWiki/CGI.pm:629
 #, perl-format
 msgid "editing %s"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:721
+#: ../IkiWiki/CGI.pm:729
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:53
+#: ../IkiWiki/CGI.pm:758 ../IkiWiki/CGI.pm:759 ../IkiWiki.pm:788
+msgid "Error"
+msgstr ""
+
+#: ../IkiWiki/Plugin/aggregate.pm:57
 msgid "Aggregation triggered via web."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:62
+#: ../IkiWiki/Plugin/aggregate.pm:66
 msgid "Nothing to do right now, all feeds are up-to-date!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:134
+#: ../IkiWiki/Plugin/aggregate.pm:193
 #, perl-format
 msgid "missing %s parameter"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:168
+#: ../IkiWiki/Plugin/aggregate.pm:227
 msgid "new feed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:182
+#: ../IkiWiki/Plugin/aggregate.pm:241
 msgid "posts"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:184
+#: ../IkiWiki/Plugin/aggregate.pm:243
 msgid "new"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:347
+#: ../IkiWiki/Plugin/aggregate.pm:406
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:354
+#: ../IkiWiki/Plugin/aggregate.pm:413
 #, perl-format
 msgid "expiring %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:381
+#: ../IkiWiki/Plugin/aggregate.pm:440
 #, perl-format
 msgid "processed ok at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:385
+#: ../IkiWiki/Plugin/aggregate.pm:444
 #, perl-format
 msgid "checking feed %s ..."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:390
+#: ../IkiWiki/Plugin/aggregate.pm:449
 #, perl-format
 msgid "could not find feed at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:405
+#: ../IkiWiki/Plugin/aggregate.pm:464
 msgid "feed not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:416
+#: ../IkiWiki/Plugin/aggregate.pm:475
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:422
+#: ../IkiWiki/Plugin/aggregate.pm:481
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:428
+#: ../IkiWiki/Plugin/aggregate.pm:487
 msgid "feed crashed XML::Feed!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:502
+#: ../IkiWiki/Plugin/aggregate.pm:561
 #, perl-format
 msgid "creating new page %s"
 msgstr ""
@@ -148,7 +152,7 @@ msgstr ""
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:37 ../IkiWiki/Setup/Standard.pm:89
+#: ../IkiWiki/Plugin/amazon_s3.pm:37 ../IkiWiki/Setup.pm:117
 msgid "done"
 msgstr ""
 
@@ -169,15 +173,20 @@ msgstr ""
 msgid "Failed to delete file from S3: "
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:110
+#: ../IkiWiki/Plugin/attachment.pm:22
+#, perl-format
+msgid "there is already a page named %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:41
+msgid "prohibited by allowed_attachments"
+msgstr ""
+
+#: ../IkiWiki/Plugin/attachment.pm:144
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:133
-msgid "attachment rejected"
-msgstr ""
-
-#: ../IkiWiki/Plugin/attachment.pm:169
+#: ../IkiWiki/Plugin/attachment.pm:186
 msgid "attachment upload"
 msgstr ""
 
@@ -190,7 +199,7 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/conditional.pm:18
+#: ../IkiWiki/Plugin/conditional.pm:18 ../IkiWiki/Plugin/testpagespec.pm:17
 #, perl-format
 msgid "%s parameter is required"
 msgstr ""
@@ -208,7 +217,7 @@ msgstr ""
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:111
+#: ../IkiWiki/Plugin/edittemplate.pm:113
 msgid "failed to process"
 msgstr ""
 
@@ -228,23 +237,27 @@ msgstr ""
 msgid "prog not a valid graphviz program"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:56
+#: ../IkiWiki/Plugin/img.pm:53
+msgid "Image::Magick is not installed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/img.pm:60
 #, perl-format
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:66 ../IkiWiki/Plugin/img.pm:70
-#: ../IkiWiki/Plugin/img.pm:87
+#: ../IkiWiki/Plugin/img.pm:70 ../IkiWiki/Plugin/img.pm:74
+#: ../IkiWiki/Plugin/img.pm:91
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:73
+#: ../IkiWiki/Plugin/img.pm:77
 #, perl-format
 msgid "failed to resize: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:104
+#: ../IkiWiki/Plugin/img.pm:108
 #, perl-format
 msgid "failed to determine size of image %s"
 msgstr ""
@@ -253,33 +266,33 @@ msgstr ""
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:106
+#: ../IkiWiki/Plugin/inline.pm:101
 msgid "missing pages parameter"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:154
+#: ../IkiWiki/Plugin/inline.pm:149
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:225
+#: ../IkiWiki/Plugin/inline.pm:220
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:241
+#: ../IkiWiki/Plugin/inline.pm:236
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:274 ../IkiWiki/Render.pm:99
+#: ../IkiWiki/Plugin/inline.pm:269 ../IkiWiki/Render.pm:82
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:504
+#: ../IkiWiki/Plugin/inline.pm:506
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
-#: ../IkiWiki/Plugin/linkmap.pm:98
+#: ../IkiWiki/Plugin/linkmap.pm:97
 msgid "failed to run dot"
 msgstr ""
 
@@ -297,15 +310,15 @@ msgstr ""
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:137
+#: ../IkiWiki/Plugin/meta.pm:141
 msgid "stylesheet not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:171
+#: ../IkiWiki/Plugin/meta.pm:175
 msgid "redir page not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:184
+#: ../IkiWiki/Plugin/meta.pm:188
 msgid "redir cycle is not allowed"
 msgstr ""
 
@@ -387,11 +400,11 @@ msgstr ""
 msgid "LWP not found, not pinging"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:65
+#: ../IkiWiki/Plugin/poll.pm:60
 msgid "vote"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:73
+#: ../IkiWiki/Plugin/poll.pm:68
 msgid "Total votes:"
 msgstr ""
 
@@ -400,7 +413,7 @@ msgid "polygen not installed"
 msgstr ""
 
 #: ../IkiWiki/Plugin/polygen.pm:51
-msgid "polygen failed"
+msgid "command failed"
 msgstr ""
 
 #: ../IkiWiki/Plugin/postsparkline.pm:32
@@ -488,17 +501,92 @@ msgstr ""
 msgid "(Diff truncated)"
 msgstr ""
 
+#: ../IkiWiki/Plugin/remove.pm:23 ../IkiWiki/Plugin/rename.pm:26
+#, perl-format
+msgid "%s does not exist"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:30
+#, perl-format
+msgid "%s is not in the srcdir, so it cannot be deleted"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:33 ../IkiWiki/Plugin/rename.pm:35
+#, perl-format
+msgid "%s is not a file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:100
+#, perl-format
+msgid "confirm removal of %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:136
+msgid "Please select the attachments to remove."
+msgstr ""
+
+#: ../IkiWiki/Plugin/remove.pm:176
+msgid "removed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:32
+#, perl-format
+msgid "%s is not in the srcdir, so it cannot be renamed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:47
+msgid "no change to the file name was specified"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:53
+#, perl-format
+msgid "illegal name"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:58
+#, perl-format
+msgid "%s already exists"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:64
+#, perl-format
+msgid "%s already exists on disk"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:86
+#, perl-format
+msgid "rename %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:179
+msgid "Only one attachment can be renamed at a time."
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:182
+msgid "Please select the attachment to rename."
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:246
+#, perl-format
+msgid "rename %s to %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:274
+#, perl-format
+msgid "update for rename of %s to %s"
+msgstr ""
+
 #: ../IkiWiki/Plugin/search.pm:20
 #, perl-format
 msgid "Must specify %s when using the search plugin"
 msgstr ""
 
-#: ../IkiWiki/Plugin/search.pm:170
+#: ../IkiWiki/Plugin/search.pm:166
 #, perl-format
 msgid "need Digest::SHA1 to index %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/search.pm:205
+#: ../IkiWiki/Plugin/search.pm:201
 msgid "search"
 msgstr ""
 
@@ -600,71 +688,71 @@ msgstr ""
 msgid "failed to generate image from code"
 msgstr ""
 
-#: ../IkiWiki/Rcs/Stub.pm:69
+#: ../IkiWiki/Rcs/Stub.pm:96
 msgid "getctime not implemented"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:286 ../IkiWiki/Render.pm:307
+#: ../IkiWiki/Render.pm:276 ../IkiWiki/Render.pm:297
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:361
+#: ../IkiWiki/Render.pm:355
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:401
+#: ../IkiWiki/Render.pm:395
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:406
+#: ../IkiWiki/Render.pm:400
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:427
+#: ../IkiWiki/Render.pm:421
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:448
+#: ../IkiWiki/Render.pm:442
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:487
+#: ../IkiWiki/Render.pm:481
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:499
+#: ../IkiWiki/Render.pm:493
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:523
+#: ../IkiWiki/Render.pm:517
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
 
 #. translators: The first parameter is a filename, and the second
 #. translators: is a (probably not translated) error message.
-#: ../IkiWiki/Setup.pm:15
+#: ../IkiWiki/Setup.pm:25
 #, perl-format
 msgid "cannot read %s: %s"
 msgstr ""
 
-#: ../IkiWiki/Setup/Standard.pm:32
+#: ../IkiWiki/Setup.pm:58
 msgid "generating wrappers.."
 msgstr ""
 
-#: ../IkiWiki/Setup/Standard.pm:79
+#: ../IkiWiki/Setup.pm:107
 msgid "rebuilding wiki.."
 msgstr ""
 
-#: ../IkiWiki/Setup/Standard.pm:82
+#: ../IkiWiki/Setup.pm:110
 msgid "refreshing wiki.."
 msgstr ""
 
@@ -708,19 +796,19 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../IkiWiki.pm:124
+#: ../IkiWiki.pm:126
 msgid "Must specify url to wiki with --url when using --cgi"
-msgstr ""
-
-#: ../IkiWiki.pm:193 ../IkiWiki.pm:194
-msgid "Error"
 msgstr ""
 
 #. translators: The first parameter is a
 #. translators: preprocessor directive name,
 #. translators: the second a page name, the
 #. translators: third a number.
-#: ../IkiWiki.pm:769
+#: ../IkiWiki.pm:771
 #, perl-format
 msgid "%s preprocessing loop detected on %s at depth %i"
+msgstr ""
+
+#: ../IkiWiki.pm:1219
+msgid "yes"
 msgstr ""

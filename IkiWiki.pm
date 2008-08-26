@@ -548,16 +548,21 @@ sub beautify_url ($) { #{{{
 	return $url;
 } #}}}
 
-sub urlto ($$) { #{{{
+sub urlto ($$;$) { #{{{
 	my $to=shift;
 	my $from=shift;
-
+	my $absolute=shift;
+	
 	if (! length $to) {
 		return beautify_url(baseurl($from)."index.$config{htmlext}");
 	}
 
 	if (! $destsources{$to}) {
 		$to=htmlpage($to);
+	}
+
+	if ($absolute) {
+		return $config{url}.beautify_urlpath("/".$to);
 	}
 
 	my $link = abs2rel($to, dirname(htmlpage($from)));

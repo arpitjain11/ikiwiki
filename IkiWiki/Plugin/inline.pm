@@ -423,13 +423,13 @@ sub genfeed ($$$$@) { #{{{
 	my $page=shift;
 	my @pages=@_;
 	
-	my $url=URI->new(encode_utf8($config{url}."/".urlto($page,"")));
+	my $url=URI->new(encode_utf8(urlto($page,"",1)));
 	
 	my $itemtemplate=template($feedtype."item.tmpl", blind_cache => 1);
 	my $content="";
 	my $lasttime = 0;
 	foreach my $p (@pages) {
-		my $u=URI->new(encode_utf8($config{url}."/".urlto($p, "")));
+		my $u=URI->new(encode_utf8(urlto($p, "", 1)));
 		my $pcontent = absolute_urls(get_inline_content($p, $page), $url);
 
 		$itemtemplate->param(
@@ -519,7 +519,7 @@ sub pingurl (@) { #{{{
 
 	foreach my $page (keys %toping) {
 		my $title=pagetitle(basename($page), 0);
-		my $url="$config{url}/".urlto($page, "");
+		my $url=urlto($page, "", 1);
 		foreach my $pingurl (@{$config{pingurl}}) {
 			debug("Pinging $pingurl for $page");
 			eval {
