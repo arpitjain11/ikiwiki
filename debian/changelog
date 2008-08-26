@@ -1,7 +1,5 @@
-ikiwiki (2.54) UNRELEASED; urgency=low
+ikiwiki (2.53.1) UNRELEASED; urgency=low
 
-  * Fix uninitialised value warning from a [[!foo]] preprocessor directive
-    with no whitespace.
   * ikiwiki-transition: Fix command-line processing so the prefix_directives
     transition works again.
   * Fixes creation of pages when clicking on WikiLinks starting with "/".
@@ -17,6 +15,8 @@ ikiwiki (2.54) UNRELEASED; urgency=low
     (Rebuilding the wiki on upgrade to this version is recommended if you use the
     search plugin.)
   * meta: fix title() PageSpec
+  * Really fix bug with links to pages with names containing colons. 
+    Previous fix mised a few cases.
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 
