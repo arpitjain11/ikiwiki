@@ -135,6 +135,10 @@ sub genpage ($$) { #{{{
 	});
 	
 	$content=$template->output;
+	
+	run_hooks(postscan => sub {
+		shift->(page => $page, content => $content);
+	});
 
 	run_hooks(format => sub {
 		$content=shift->(

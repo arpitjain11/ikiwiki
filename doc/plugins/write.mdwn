@@ -214,6 +214,17 @@ modify the body of a page after it has been fully converted to html.
 The function is passed named parameters: "page", "destpage", and "content",
 and should return the sanitized content.
 
+### postscan
+
+	hook(type => "postscan", id => "foo", call => \&postscan);
+
+This hook is called once the full page body is available (but before the
+format hook). The most common use is to update search indexes. Added in
+ikiwiki 2.54.
+
+The function is passed named parameters "page" and "content". Its return
+value is ignored.
+
 ### format
 
 	hook(type => "format", id => "foo", call => \&format);

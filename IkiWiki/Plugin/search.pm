@@ -9,7 +9,7 @@ use IkiWiki 2.00;
 sub import { #{{{
 	hook(type => "checkconfig", id => "search", call => \&checkconfig);
 	hook(type => "pagetemplate", id => "search", call => \&pagetemplate);
-	hook(type => "sanitize", id => "search", call => \&index);
+	hook(type => "postscan", id => "search", call => \&index);
 	hook(type => "delete", id => "search", call => \&delete);
 	hook(type => "cgi", id => "search", call => \&cgi);
 } # }}}
@@ -48,8 +48,6 @@ my $scrubber;
 my $stemmer;
 sub index (@) { #{{{
 	my %params=@_;
-	
-	return $params{content} if $IkiWiki::preprocessing{$params{destpage}};
 
 	setupfiles();
 
@@ -132,8 +130,6 @@ sub index (@) { #{{{
 
 	$doc->add_term($pageterm);
 	$db->replace_document_by_term($pageterm, $doc);
-
-	return $params{content};
 } #}}}
 
 sub delete (@) { #{{{
