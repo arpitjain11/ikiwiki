@@ -29,7 +29,7 @@ stdin, using XML RPC. Dispatch the command, and return its result to
 stdout, also using XML RPC. After reading a command, and before returning
 the result, the plugin can output XML RPC requests of its own, calling
 functions in ikiwiki. Note: *Never* make an XML RPC request at any other
-time. Ikiwiki won't be listening for it, and you will deadlock.
+time. IkiWiki won't be listening for it, and you will deadlock.
 
 When ikiwiki starts up an external plugin, the first RPC it will make
 is to call the plugin's `import()` function. That function typically makes
@@ -44,7 +44,7 @@ supported in ikiwiki version 2.6.
 
 ## Accessing data structures
 
-Ikiwiki has a few global data structures such as `%config`, which holds
+IkiWiki has a few global data structures such as `%config`, which holds
 its configuration. External plugins can use the `getvar` and `setvar` RPCs
 to access any such global hash. To get the "url" configuration value,
 call `getvar("config", "url")`. To set it, call 
@@ -134,12 +134,12 @@ large quantity of data conversion going on. In contrast, `preprocess` hooks
 are called generally rarely, and pass around minimal data.
 
 External plugins should avoid making RPC calls unnecessarily (ie, in a loop).
-Memoizing the results of appropriate RPC calls is one good way to minimise the
+Memorizing the results of appropriate RPC calls is one good way to minimize the
 number of calls.
 
 Injecting a replacement for a commonly called ikiwiki function
 could result in a lot more RPC calls than expected and slow
-eveything down. `pagetitle`, for instance, is called about 100 times
+everything down. `pagetitle`, for instance, is called about 100 times
 per page build. Whenever possible, you should tell ikiwiki to memoize
 injected functions.
 
