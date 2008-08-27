@@ -72,7 +72,7 @@ extra_install:
 	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\* ! -name \*demo\* -name \*.py`; do \
 		install -m 644 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
 	done
-	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\* ! -name \*demo\* ! -name \*.py`; do \
+	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\* ! -name \*demo\* ! -name \*.py ! -name \*.pyc`; do \
 		install -m 755 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
 	done
 
