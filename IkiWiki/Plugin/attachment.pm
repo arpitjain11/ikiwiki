@@ -277,7 +277,7 @@ sub attachment_list ($) { #{{{
 			push @ret, {
 				"field-select" => '<input type="checkbox" name="attachment_select" value="'.$f.'" />',
 				link => htmllink($page, $page, $f, noimageinline => 1),
-				size => humansize((stat(_))[7]),
+				size => IkiWiki::Plugin::filecheck::humansize((stat(_))[7]),
 				mtime => displaytime($IkiWiki::pagemtime{$f}),
 				mtime_raw => $IkiWiki::pagemtime{$f},
 			};

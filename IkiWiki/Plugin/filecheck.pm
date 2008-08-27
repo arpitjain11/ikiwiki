@@ -53,6 +53,7 @@ sub parsesize ($) { #{{{
 	return $base;
 } #}}}
 
+# This is provided for other plugins that want to convert back the other way.
 sub humansize ($) { #{{{
 	my $size=shift;
 
