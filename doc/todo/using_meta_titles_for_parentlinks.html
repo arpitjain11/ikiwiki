@@ -80,15 +80,13 @@ diff -c /usr/share/perl5/IkiWiki/Plugin/meta.pm.distrib /usr/share/perl5/IkiWiki
   
 ***************
 *** 289,294 ****
---- 290,323 ----
+--- 290,319 ----
         }
   } #}}}
   
 + sub IkiWiki::pagetitle ($;$) { #{{{
 +       my $page=shift;
 +       my $unescaped=shift;
-+ 
-+       print "debug1: $page\n";
 + 
 +       if ($page =~ m#/#) {
 +               $page =~ s#^/##;
@@ -106,8 +104,6 @@ diff -c /usr/share/perl5/IkiWiki/Plugin/meta.pm.distrib /usr/share/perl5/IkiWiki
 +       else {
 +               $page=~s/(__(\d+)__|_)/$1 eq '_' ? ' ' : "&#$2;"/eg;
 +       }
-+ 
-+       print "debug2: $page\n";
 + 
 +       return $page;
 + } #}}}
