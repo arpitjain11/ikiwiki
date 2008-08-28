@@ -3,3 +3,12 @@ typical place for security bugs.  Would it be worthwhile to have library functio
 and directories?  If nothing else, it would serve as documentation of the "official way".
 
 Off to cut and paste :-) --[[DavidBremner]]
+
+> Hmm, I see only three users of temp files in all ikiwiki:
+> * hnb uses `File::Temp::mkstemp` to create two temp file handles.
+> * teximg uses `File::Temp::tempdir` to create a temporary directory.
+> * attachment retrieves a temp file from `CGI::tmpFileName`.
+> These are three quite different uses of temp files, not subject to
+> unification. Using `File::Temp` (and avoiding the posibly insecure
+> `mktemp`, `tmpname`, and `tempnam` functions) is probably as unified as
+> can be managed. --[[Joey]]
