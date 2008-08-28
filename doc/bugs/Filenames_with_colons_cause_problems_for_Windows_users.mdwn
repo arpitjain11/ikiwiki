@@ -8,3 +8,36 @@ Windows does not support filenames containing any of these characters: `/ \ * : 
 > browsing to urls that have colons in them from windows? --[[Joey]]
 
 >> Correct.  You can't directly check out a wiki's repository from Windows if it includes filenames with those characters; you will get errors on those filenames.
+
+>>> Ok, first, if a windows user fails to check out ikiwiki's own svn^Wgit
+>>> repo on windows due to the colons, that seems to be a bug in svn^Wgit
+>>> on windows -- those programs should deal with colons in filenames being
+>>> checked in/out somehow. Like they deal with windows using backslash
+>>> rather than slash, presumably. And there's nothing ikiwiki can do if
+>>> the source repo it's working on has a file with a problem character
+>>> added to it, since the breakage will happen at the revision control
+>>> system level.
+>>>
+>>> OTOH, there are some simple mods to ikiwiki that can make it escape
+>>> colons etc the same way it already escapes other problem characters
+>>> like "*", "?", etc. Without actually testing it, it should suffice to
+>>> edit `IkiWiki.pm` and modify `titlepage` and `linkpage`, removing the
+>>> colon from the character class in each. Also modify the
+>>> `wiki_file_regexp` similarly. Then ikiwiki will read and
+>>> write files with escaped colons, avoiding the problem.
+>>>
+>>> So that's a simple fix, but on the gripping hand, I can't just make
+>>> that change, because it would break all existing unix-based
+>>> wikis that actually contain colons in their filenames, requiring an
+>>> annoying transition. I could do a OS test and do it in Windows, but then
+>>> there would be interop problems if a Windows and non-windows system both
+>>> acted on the same wiki source.
+>>> 
+>>> So, I guess it has to be a config option, possibly defaulting on
+>>> when the OS is Windows. And if being able to checkout/etc the wiki
+>>> source on windows systems is desired, you'd have to remember to turn
+>>> that on when setting up a wiki, even if the wiki was hosted on unix.
+>>>
+>>> BTW, I suspect there are lots of other problems with actually running
+>>> ikiwiki on windows, including its assumption that the directory
+>>> separator is "/". --[[Joey]]
