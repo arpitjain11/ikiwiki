@@ -69,7 +69,7 @@ package IkiWiki::PageSpec;
 
 sub match_maxsize ($$;@) { #{{{
 	my $page=shift;
-	my $maxsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
+	my $maxsize=eval{IkiWiki::Plugin::filecheck::parsesize(shift)};
 	if ($@) {
 		return IkiWiki::FailReason->new("unable to parse maxsize (or number too large)");
 	}
@@ -90,7 +90,7 @@ sub match_maxsize ($$;@) { #{{{
 
 sub match_minsize ($$;@) { #{{{
 	my $page=shift;
-	my $minsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
+	my $minsize=eval{IkiWiki::Plugin::filecheck::parsesize(shift)};
 	if ($@) {
 		return IkiWiki::FailReason->new("unable to parse minsize (or number too large)");
 	}
