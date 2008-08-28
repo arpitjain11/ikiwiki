@@ -133,14 +133,39 @@ The following three inlines work for me with this patch:
 >> the first parameter rather than the second.  Ikiwiki is my first real perl hacking and I'm still discovering
 >> good ways to write things in perl.
 >>
+>>>> `%params` contains the parameters passed to `pagespec_match`, not
+>>>> user-supplied parameters. The user-supplied parameter to a function
+>>>> like `match_glob()` or `match_link()` is passed in the second positional parameter. --[[Joey]]
+>>
 >> What do you think is best to do about `is_globlist()`?  At the moment it requires that the 'second word', as
 >> delimited by a space and ignoring parens, is 'and' or 'or'.  This doesn't hold in the above example pagespecs (so I just hard wired it to 0 to test my patch).
 >> My thought was just to search for 'and' or 'or' as words anywhere in the pagespec.  Thoughts?
+
+>>> Dunno, we could just finish deprecating it. Or change the regexp to
+>>> skip over spaces in parens. (`/[^\s]+\s+([^)]+)/`) --[[Joey]]
 
 >> Oh, one more thing.  In pagespec_translate (now pagespec_makeperl), there is a part of the regular expression for `# any other text`.
 >> This contained `()`, which has no effect.  I replaced that with `\(\)`, but that is a change in the definition of pagespecs unrelated to the
 >> rest of this patch. In a related change, commands were not able to contain `)` in their parameters.  I've extended that so the cannot
 >> contain `(` or `)`.  -- [[Will]]
+
+>>> `[^\s()]+` is a character class matching all characters not spaces or
+>>> parens. Since the pervious terminals in the regexp consume most
+>>> occurances of an open paren or close paren, it's unlikely for one to
+>>> get through to that part of the regexp. For example, "foo()" will be
+>>> matched by the command matcher; "(foo)" will be matched by the open
+>>> paren literal terminal. "foo(" and "foo)" can get through to the
+>>> end, and would be matched as a page name, if it didn't exclude parens.
+>>>
+>>> So why exclude them? Well, consider "foo and(bar and baz)". We don't
+>>> want it to match "and(" as a page name!
+>>> 
+>>> Escaping the parens in the character class actually changes nothing; the
+>>> changed character class still matches all characters not spaces or
+>>> parens. (Try it!).
+>>> 
+>>> Re commands containing '(', I don't really see any reason not to
+>>> allow that, unless it breaks something. --[[Joey]]
 
 >>> Updated patch.  Moved the specFuncsRef to the front of the arg list.  Still haven't thought through the security implications of
 >>> having it in `%params`.  I've also removed all the debugging `print` statements.  And I've updated the `is_globlist()` function.
