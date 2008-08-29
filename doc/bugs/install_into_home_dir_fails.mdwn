@@ -1,5 +1,28 @@
 dunno if it just me, but I had to add PREFIX a few places to get 'perl INSTALL_BASE=$HOME' to work
 
+> That will cause the files to be installed into a place that ikiwiki
+> doesn't look for them. It will also cause them to be installed into
+> /usr/etc by default, where ikiwiki also won't find them. 
+> 
+> Thomas Keller also ran into some sort of problem with the MacPort
+> involving the installation into /etc. From that discussion:
+> 
+> Both ikiwiki-update-wikilist and ikiwiki-mass-rebuild hardcode /etc; so
+> do several pages in the doc wiki.
+> 
+> The real problem though is that MakeMaker does not have a standard way
+> of specifying where /etc files go. In Debian we want everything to go
+> into /usr, rather than the default /usr/local, so set PREFIX=/usr -- but
+> we still want config files in /etc, not /usr/etc. The only way I can see
+> around this is to add a nonstandard variable to control the location of
+> /etc, that would override the PREFIX.
+> 
+> Which implies that you can't just use "$installdir/etc/" in the /etc
+> hardcoding scripts, and would instead need to record the new variable
+> at build time, like PREFIX is recorded in $installdir.
+>
+> --[[Joey]]
+
 <pre>
 From a1e02fbdaba3725730418a837b506e713904ada5 Mon Sep 17 00:00:00 2001
 From: David Bremner <bremner@pivot.cs.unb.ca>
