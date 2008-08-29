@@ -1,0 +1,32 @@
+The names are a bit backwards, but I guess inverting the sense of age would make people angry :-)
+
+I do not believe copy-and-paste of 3 lines is copyrightable, but in any case feel free to include in ikiwiki under the same terms.
+[[DavidBremner]]
+
+<pre>
+From 2fb2b561a678616bb0054a2d7a9d29df11998bc2 Mon Sep 17 00:00:00 2001
+From: David Bremner <bremner@pivot.cs.unb.ca>
+Date: Fri, 29 Aug 2008 15:05:41 -0300
+Subject: [PATCH] add sort='youth' to inline plugin
+
+---
+ IkiWiki/Plugin/inline.pm |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/IkiWiki/Plugin/inline.pm b/IkiWiki/Plugin/inline.pm
+index d2e5832..9e52712 100644
+--- a/IkiWiki/Plugin/inline.pm
++++ b/IkiWiki/Plugin/inline.pm
+@@ -194,6 +194,9 @@ sub preprocess_inline (@) { #{{{
+        elsif (! exists $params{sort} || $params{sort} eq 'age') {
+                @list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+        }
++       elsif (! exists $params{sort} || $params{sort} eq 'youth') {
++               @list=sort { $pagectime{$a} <=> $pagectime{$b} } @list;
++       }
+        else {
+                return sprintf(gettext("unknown sort type %s"), $params{sort});
+        }
+--
+1.5.6.3
+</pre>
