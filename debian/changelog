@@ -2,6 +2,8 @@ ikiwiki (2.63) UNRELEASED; urgency=low
 
   * Set cookies HttpOnly.
   * Typo. Closes: #497003
+  * Ignore failure to install files into /etc, in case install is running as
+    non-root.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 28 Aug 2008 16:08:18 -0400
 

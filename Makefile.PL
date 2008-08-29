@@ -50,10 +50,6 @@ extra_clean:
 	$(MAKE) -C po clean
 
 extra_install:
-	install -d $(DESTDIR)/etc/ikiwiki
-	install -m 0644 wikilist $(DESTDIR)/etc/ikiwiki
-	install -m 0644 auto.setup $(DESTDIR)/etc/ikiwiki
-
 	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki
 	for dir in `cd underlays && find . -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
@@ -96,6 +92,12 @@ extra_install:
 	install ikiwiki-makerepo ikiwiki-transition ikiwiki-update-wikilist $(DESTDIR)$(PREFIX)/bin/
 
 	$(MAKE) -C po install DESTDIR=$(DESTDIR) PREFIX=$(PREFIX)
+	
+	# These might fail if a regular user is installing into a home
+	# directory.
+	-install -d $(DESTDIR)/etc/ikiwiki
+	-install -m 0644 wikilist $(DESTDIR)/etc/ikiwiki
+	-install -m 0644 auto.setup $(DESTDIR)/etc/ikiwiki
 }
 }
 
