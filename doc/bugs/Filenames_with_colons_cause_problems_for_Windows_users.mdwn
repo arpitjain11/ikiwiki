@@ -17,7 +17,16 @@ Windows does not support filenames containing any of these characters: `/ \ * : 
 >>> the source repo it's working on has a file with a problem character
 >>> added to it, since the breakage will happen at the revision control
 >>> system level.
->>>
+
+>>>> Just a quick note that the version control community generally doesn't
+>>>> agree with that view.  They'll store what you ask them to store.  If you
+>>>> want to work cross platform, then you need to make sure that all
+>>>> your file names work on all the platforms you're interested in.  (Note: many systems will
+>>>> warn on commit, but not all.  Many systems also have a way to fix
+>>>> the problem without checking out, but not all.)  Another common place for this to
+>>>> arise is case insensitive file systems.  If you have two files committed
+>>>> that differ only in case, then you cannot check out on a Mac in most systems.
+
 >>> OTOH, there are some simple mods to ikiwiki that can make it escape
 >>> colons etc the same way it already escapes other problem characters
 >>> like "*", "?", etc. Without actually testing it, it should suffice to
@@ -32,7 +41,16 @@ Windows does not support filenames containing any of these characters: `/ \ * : 
 >>> annoying transition. I could do a OS test and do it in Windows, but then
 >>> there would be interop problems if a Windows and non-windows system both
 >>> acted on the same wiki source.
->>> 
+
+>>>> I haven't checked the source, but need this break existing wikis?
+>>>> I can imagine a system where a colon gets converted to something safe,
+>>>> and the safe encoding gets converted back to a colon.  But if you
+>>>> already have a colon, that doesn't get converted and stays a colon, and
+>>>> so it should still work shouldn't it?  The only
+>>>> problem would be with pages that already have the 'safe encoding for a colon'.
+>>>> They'll suddenly change names. Well, I should finish frying my current fish
+>>>> before taking on something new, so I'll shut up now :). -- [[Will]]
+
 >>> So, I guess it has to be a config option, possibly defaulting on
 >>> when the OS is Windows. And if being able to checkout/etc the wiki
 >>> source on windows systems is desired, you'd have to remember to turn
