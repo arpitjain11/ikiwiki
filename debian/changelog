@@ -1,6 +1,7 @@
-ikiwiki (2.62.2) UNRELEASED; urgency=low
+ikiwiki (2.63) UNRELEASED; urgency=low
 
   * Set cookies HttpOnly.
+  * Typo. Closes: #497003
 
  -- Joey Hess <joeyh@debian.org>  Thu, 28 Aug 2008 16:08:18 -0400
 
@@ -17,7 +18,7 @@ ikiwiki (2.62) unstable; urgency=low
     instead, and prompt if it fails.
   * Fix bug in wikiname sanitisation in the setup automator.
   * ikiwiki-makerepo: Added support for monotone. (Thomas Keller)
-  * map: The fix for #449285 was buggy and broke display of parents in certian
+  * map: The fix for #449285 was buggy and broke display of parents in certain
     circumstances.
   * teximg: The prefix is configurable, and has changed to not include the
     nonstandard mhchem by default. (willu)
