@@ -1,0 +1,32 @@
+dunno if it just me, but I had to add PREFIX a few places to get 'perl INSTALL_BASE=$HOME' to work
+
+<pre>
+From a1e02fbdaba3725730418a837b506e713904ada5 Mon Sep 17 00:00:00 2001
+From: David Bremner <bremner@pivot.cs.unb.ca>
+Date: Fri, 29 Aug 2008 15:18:24 -0300
+Subject: [PATCH] add missing $(PREFIX) to install path
+
+---
+ Makefile.PL |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 979483c..1f27394 100755
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -50,9 +50,9 @@ extra_clean:
+        $(MAKE) -C po clean
+
+ extra_install:
+-       install -d $(DESTDIR)/etc/ikiwiki
+-       install -m 0644 wikilist $(DESTDIR)/etc/ikiwiki
+-       install -m 0644 auto.setup $(DESTDIR)/etc/ikiwiki
++       install -d $(DESTDIR)$(PREFIX)/etc/ikiwiki
++       install -m 0644 wikilist $(DESTDIR)$(PREFIX)/etc/ikiwiki
++       install -m 0644 auto.setup $(DESTDIR)$(PREFIX)/etc/ikiwiki
+
+        install -d $(DESTDIR)$(PREFIX)/share/ikiwiki
+        for dir in `cd underlays && find . -follow -type d ! -regex '.*\.svn.*'`; do \
+--
+1.5.6.3
+</pre>
