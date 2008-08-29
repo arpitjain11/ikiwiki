@@ -51,6 +51,10 @@ Windows does not support filenames containing any of these characters: `/ \ * : 
 >>>> They'll suddenly change names. Well, I should finish frying my current fish
 >>>> before taking on something new, so I'll shut up now :). -- [[Will]]
 
+>>>>> If `linkpage()` is changed to escape colons, then links to pages 
+>>>>> with literal colons in their names will stop working; ikiwiki will
+>>>>> instead look for page names with escaped colons. --[[Joey]]
+
 >>> So, I guess it has to be a config option, possibly defaulting on
 >>> when the OS is Windows. And if being able to checkout/etc the wiki
 >>> source on windows systems is desired, you'd have to remember to turn
