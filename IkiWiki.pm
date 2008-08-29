@@ -151,7 +151,9 @@ sub loadplugins () { #{{{
 		unshift @INC, possibly_foolish_untaint($config{libdir});
 	}
 
-	loadplugin($_) foreach @{$config{plugin}};
+	foreach my $plugin (@{$config{plugin}}) {
+		loadplugin($plugin);
+	}
 
 	run_hooks(getopt => sub { shift->() });
 	if (grep /^-/, @ARGV) {

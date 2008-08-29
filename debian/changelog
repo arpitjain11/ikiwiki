@@ -24,6 +24,8 @@ ikiwiki (2.53.1) UNRELEASED; urgency=low
   * edittemplate: Don't wipe out edits on preview.
   * map: The fix for #449285 was buggy and broke display of parents in certian
     circumstances.
+  * Work around perl $_ scoping nonsense that caused breakage when loading
+    external plugins.
 
  -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
 
