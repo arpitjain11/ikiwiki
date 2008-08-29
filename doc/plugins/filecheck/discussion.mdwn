@@ -6,3 +6,5 @@ There is a heuristic ::default that decides between text/plain and application/o
 
 Would you be receptive to a patch that e.g. called File::MimeInfo::Magic::default()
 if ::magic() returns undef?  --[[DavidBremner]]
+
+> Yes, that looks to be ok. --[[Joey]]
