@@ -471,7 +471,9 @@ sub loadplugins () { #{{{
 		unshift @INC, possibly_foolish_untaint($config{libdir});
 	}
 
-	loadplugin($_) foreach @{$config{default_plugins}}, @{$config{add_plugins}};
+	foreach my $plugin (@{$config{default_plugins}}, @{$config{add_plugins}}) {
+		loadplugin($plugin);
+	}
 	
 	if ($config{rcs}) {
 		if (exists $IkiWiki::hooks{rcs}) {

@@ -14,6 +14,13 @@
 
 **patch comment:** solves the problem on 2.61. as these are the first lines of perl i've knowingly written, i can not explain what exactly was happening there.
 
+> Perl's `$_` handling is the worst wart on it, or possibly any language.
+> Here it's an alias to the actual value in the array, and when deep
+> in the external plugin load code something resets `$_` to a different
+> value, the alias remains and it changes the value at a distance.
+> 
+> Thanks for the excellent problem report, [[fixed|done]]. --[[Joey]]
+
 ------------------------------------------------------------------------------
     diff --git a/IkiWiki.pm b/IkiWiki.pm
     index e476521..d43abd4 100644
