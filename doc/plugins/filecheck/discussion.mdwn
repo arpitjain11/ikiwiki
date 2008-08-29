@@ -1,0 +1,8 @@
+First, thanks again for making this plugin.
+
+I don't know if this is a problem for [[plugins/attachment]], but there seems to
+be no way to detect text/plain using File::MimeInfo::Magic::magic().
+There is a heuristic ::default that decides between text/plain and application/octet-stream.  
+
+Would you be receptive to a patch that e.g. called File::MimeInfo::Magic::default()
+if ::magic() returns undef?  --[[DavidBremner]]
