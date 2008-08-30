@@ -8,3 +8,34 @@ Would you be receptive to a patch that e.g. called File::MimeInfo::Magic::defaul
 if ::magic() returns undef?  --[[DavidBremner]]
 
 > Yes, that looks to be ok. --[[Joey]]
+
+>> OK, here is such a patch. One modification of previous behaviour is that 
+>> that if default returns undef, this is returned. As far as I understand
+>> the code/doc for File::MimeInfo, under is used only as an error return
+>> for ::default
+<pre>
+From 84f40d7fa822c6cc09506cca2dbf38a8b19f8bb7 Mon Sep 17 00:00:00 2001
+From: David Bremner <bremner@unb.ca>
+Date: Fri, 29 Aug 2008 20:46:20 -0300
+Subject: [PATCH] call File::MimeInfo::default if ::magic() returns undef
+
+---
+ IkiWiki/Plugin/filecheck.pm |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/IkiWiki/Plugin/filecheck.pm b/IkiWiki/Plugin/filecheck.pm
+index 9c7a8db..a94c02b 100644
+--- a/IkiWiki/Plugin/filecheck.pm
++++ b/IkiWiki/Plugin/filecheck.pm
+@@ -127,7 +127,7 @@ sub match_mimetype ($$;@) { #{{{
+        }
+        my $mimetype=File::MimeInfo::Magic::magic($file);
+        if (! defined $mimetype) {
+-               $mimetype="unknown";
++               $mimetype=File::MimeInfo::Magic::default($file);
+        }
+
+        my $regexp=IkiWiki::glob2re($wanted);
+--
+1.5.6.3
+</pre>
