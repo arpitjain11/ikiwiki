@@ -727,7 +727,7 @@ sub preprocess ($$$;$$) { #{{{
 		my $params=shift;
 		$params="" if ! defined $params;
 
-		f (length $escape) {
+		if (length $escape) {
 			return "[[$prefix$command $params]]";
 		}
 		elsif (exists $hooks{preprocess}{$command}) {
