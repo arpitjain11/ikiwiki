@@ -33,7 +33,7 @@ sub merge ($) {
 	# Merge setup into existing config and untaint.
 	my %setup=%{shift()};
 
-	if (exists $setup{add_plugins}) {
+	if (exists $setup{add_plugins} && exists $config{add_plugins}) {
 		push @{$setup{add_plugins}}, @{$config{add_plugins}};
 	}
 	if (exists $setup{exclude}) {
