@@ -127,7 +127,10 @@ sub match_mimetype ($$;@) { #{{{
 	}
 	my $mimetype=File::MimeInfo::Magic::magic($file);
 	if (! defined $mimetype) {
-		$mimetype="unknown";
+		$mimetype=File::MimeInfo::Magic::default($file);
+		if (! defined $mimetype) {
+			$mimetype="unknown";
+		}
 	}
 
 	my $regexp=IkiWiki::glob2re($wanted);

@@ -7,6 +7,8 @@ ikiwiki (2.63) UNRELEASED; urgency=low
   * Work around perl $_ scoping nonsense that caused breakage when loading
     external plugins.
   * style.css: Add missing semicolon. Closes: #497176 
+  * filecheck: Fall back to testing for binary or plain text files
+    if no mime type is detected.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 28 Aug 2008 16:08:18 -0400
 
