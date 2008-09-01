@@ -1,5 +1,6 @@
 ikiwiki (2.53.1) UNRELEASED; urgency=low
 
+  * Backported all relevant bug fixes from mainline to debian testing.
   * ikiwiki-transition: Fix command-line processing so the prefix_directives
     transition works again.
   * Fixes creation of pages when clicking on WikiLinks starting with "/".
@@ -14,7 +15,7 @@ ikiwiki (2.53.1) UNRELEASED; urgency=low
   * search: Fixes for title stemming, and use better term for tags. (Gabriel McManus)
     (Rebuilding the wiki on upgrade to this version is recommended if you use the
     search plugin.)
-  * meta: fix title() PageSpec
+  * meta: fix title() PageSpec (DOS). Closes: #497444
   * Really fix bug with links to pages with names containing colons. 
     Previous fix mised a few cases.
   * toggle: Fix incompatability between javascript and webkit.
