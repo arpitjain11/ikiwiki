@@ -29,3 +29,18 @@ I hope this might be intresting for some ikiwiki user's.
 > (Just FYI, in future, I recommend using a unified diff. Also, not
 > renaming variables that don't really need to be renamed makes your patch
 > easier to apply.) --[[Joey]]
+
+---
+
+# Horizontal cell alignment
+
+Do you know any easy method of horizontal cell alignment? I know I can set `class`
+attribute for the table, but how to set different `class` for different cells?
+
+[DokuWiki](http://www.dokuwiki.org/) has a nice horizontal alignment solution.
+Suppose that we have `|foo|` cell. If I want to align the cell to left,
+then I should type `|foo |`. If I want to do right alignment, then I type `| foo|`.
+For centering cell content I need to type `| foo |`. Please note that I used
+only one space for all examples, but in DokuWiki I can use many spaces.
+
+Do you like it? Can you implement the same in Ikiwiki? :) --[[Paweł|ptecza]]
