@@ -74,7 +74,7 @@ sub preprocess (@) { #{{{
 	}
 
 	my $header;
-	if (lc($params{header}) eq "row" || lc($params{header}) eq "yes") {
+	if (lc($params{header}) eq "row" || IkiWiki::yesno($params{header})) {
 		$header=shift @data;
 	}
 	if (! @data) {
