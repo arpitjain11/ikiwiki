@@ -29,3 +29,46 @@ Do you have any idea how to workaround that issue? --[[Paweł|ptecza]]
 >>     09.mdwn  100.mdwn  101.mdwn  102.mdwn  89.mdwn  90.mdwn
 
 >> I don't want to rename all previous files to add `0` prefix. --[[Paweł|ptecza]]
+
+---
+
+Below is my simple patch. Feel free to use it or comment!
+
+I have also 2 considerations for inline sorting:
+
+1. Maybe changing name of `sort` parameter to `sortby` or `sortkey` will
+   be good idea?
+1. Maybe you should use `title` sort key for title from meta plugin and `name`, 
+   `filename`, `page` or `pagename` for page names? In the future you can also
+   sort by meta author, license or another key.
+
+--[[Paweł|ptecza]]
+
+    --- inline.pm-orig  2008-09-02 09:53:20.000000000 +0200
+    +++ inline.pm       2008-09-02 10:09:02.000000000 +0200
+    @@ -186,7 +186,15 @@
+        }
+
+        if (exists $params{sort} && $params{sort} eq 'title') {
+    -           @list=sort { pagetitle(basename($a)) cmp pagetitle(basename($b)) } @list;
+    +           if (! $params{sorttype} || $params{sorttype} eq 'lexical') {
+    +                   @list=sort { pagetitle(basename($a)) cmp pagetitle(basename($b)) } @list;
+    +           }
+    +           elsif ($params{sorttype} eq 'numeric') {
+    +                   @list=sort { pagetitle(basename($a)) <=> pagetitle(basename($b)) } @list;
+    +           }
+    +           else {
+    +                   return sprintf(gettext("unknown sort type %s"), $params{sorttype});
+    +           }
+        }
+        elsif (exists $params{sort} && $params{sort} eq 'mtime') {
+                @list=sort { $pagemtime{$b} <=> $pagemtime{$a} } @list;
+    @@ -195,7 +203,7 @@
+                @list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+        }
+        else {
+    -           return sprintf(gettext("unknown sort type %s"), $params{sort});
+    +           return sprintf(gettext("unknown sort key %s"), $params{sort});
+        }
+
+        if (yesno($params{reverse})) {
