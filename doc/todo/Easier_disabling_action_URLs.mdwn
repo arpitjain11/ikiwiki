@@ -1,0 +1,26 @@
+Disabling some of action URLs is not possible now without creating own
+version of `templates/page.tmpl` file. For example, how to disable
+displaying `EDITURL`, `RECENTCHANGESURL` or `PREFSURL` without
+touching original `page.tmpl` template?
+
+Now I can only enable/disable `HISTORYURL` and `DISCUSSIONLINK`.
+It's not hard for me, but I think that the way to do it can be
+confusing for another Ikiwiki users. For example, if I don't
+want `HISTORYURL`, then I need to comment `historyurl` hash
+in setup file. But if I want to disable discussions, then I need
+to set `discussion=0` there. So, you can see that we don't have
+one common method here.
+
+Maybe Ikiwiki setup file should has more hashes for action URLs,
+for example `edit=[01]`, `recentchanges=[01]`, `prefs=[01]`
+and `history=[01]`?
+
+If you are curious why I need that features, I can clarify it.
+I'm building "parallel" version of my site. It means that I want
+to have one editable version for internal users and second only
+readable version (+ search feature) for external users. I build
+both versions on secure, internal machine from the same pages,
+of course, and separated setup files and different templates.
+The readable version of the site will be rsynced to clustered WWW
+front-ends immediately via `post-commit` hook file or periodically
+by Cron. I haven't decided how to do it yet.
