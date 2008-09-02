@@ -24,3 +24,12 @@ of course, and separated setup files and different templates.
 The readable version of the site will be rsynced to clustered WWW
 front-ends immediately via `post-commit` hook file or periodically
 by Cron. I haven't decided how to do it yet. --[[Paweł|ptecza]]
+
+> You disable display of recentchanges by disabling that plugin.
+> You disable edit and preferences by not enabling a cgiurl at all.
+> 
+> Maybe page editing will become a plugin some day, or be made
+> configurable -- there are a few things like searching and websetup
+> (and possibly the poll plugin, aggregate webtrigger, and pingee)
+> that it may make sense to enable a cgi for even if you don't want to
+> allow page editing. --[[Joey]]
