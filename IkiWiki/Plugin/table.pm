@@ -22,7 +22,7 @@ sub getsetup () { #{{{
 sub preprocess (@) { #{{{
 	my %params =(
 		format	=> 'auto',
-		header	=> 'yes',
+		header	=> 'row',
 		@_
 	);
 
@@ -74,7 +74,7 @@ sub preprocess (@) { #{{{
 	}
 
 	my $header;
-	if (lc($params{header}) eq "yes") {
+	if (lc($params{header}) eq "row" || lc($params{header}) eq "yes") {
 		$header=shift @data;
 	}
 	if (! @data) {
@@ -86,11 +86,10 @@ sub preprocess (@) { #{{{
 			? "<table class=\"".$params{class}.'">'
 			: '<table>';
 	push @lines, "\t<thead>",
-		genrow($params{page}, $params{destpage}, "th", @$header),
+		genrow(\%params, "th", @$header),
 	        "\t</thead>" if defined $header;
 	push @lines, "\t<tbody>" if defined $header;
-	push @lines, genrow($params{page}, $params{destpage}, "td", @$_)
-		foreach @data;
+	push @lines, genrow(\%params, "td", @$_) foreach @data;
 	push @lines, "\t</tbody>" if defined $header;
 	push @lines, '</table>';
 	my $html = join("\n", @lines);
@@ -153,39 +152,44 @@ sub split_dsv ($$) { #{{{
 	return @data;
 } #}}}
 
-sub genrow ($$$@) { #{{{
-	my $page = shift;
-	my $destpage = shift;
+sub genrow ($@) { #{{{
+	my %params=%{shift()};
 	my $elt = shift;
 	my @data = @_;
+
+	my $page=$params{page};
+	my $destpage=$params{destpage};
+	my $type=pagetype($pagesources{$page});
 
 	my @ret;
 	push @ret, "\t\t<tr>";
 	for (my $x=0; $x < @data; $x++) {
-		my $cell=htmlize($page, $destpage, $data[$x]);
+		my $cell=IkiWiki::htmlize($page, $destpage, $type,
+		         IkiWiki::preprocess($page, $destpage, $data[$x]));
+
+		# automatic colspan for empty cells
 		my $colspan=1;
 		while ($x+1 < @data && $data[$x+1] eq '') {
 			$x++;
 			$colspan++;
 		}
+
+		# check if the first column should be a header
+		my $e=$elt;
+		if ($x == 0 && lc($params{header}) eq "column") {
+			$e="th";
+		}
+
 		if ($colspan > 1) {
-			push @ret, "\t\t\t<$elt colspan=\"$colspan\">$cell</$elt>"
+			push @ret, "\t\t\t<$e colspan=\"$colspan\">$cell</$e>"
 		}
 		else {
-			push @ret, "\t\t\t<$elt>$cell</$elt>"
+			push @ret, "\t\t\t<$e>$cell</$e>"
 		}
 	}
 	push @ret, "\t\t</tr>";
 
 	return @ret;
 } #}}}
-
-sub htmlize ($$$) { #{{{
-	my $page = shift;
-	my $destpage = shift;
-
-	return IkiWiki::htmlize($page, $destpage, pagetype($pagesources{$page}),
-		IkiWiki::preprocess($page, $destpage, shift));
-}
 
 1

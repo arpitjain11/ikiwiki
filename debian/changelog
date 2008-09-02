@@ -9,6 +9,8 @@ ikiwiki (2.63) UNRELEASED; urgency=low
   * style.css: Add missing semicolon. Closes: #497176 
   * filecheck: Fall back to testing for binary or plain text files
     if no mime type is detected.
+  * table: Support header=column to make the table header be the first
+    column of the data. (AlexandreDupas)
 
  -- Joey Hess <joeyh@debian.org>  Thu, 28 Aug 2008 16:08:18 -0400
 
