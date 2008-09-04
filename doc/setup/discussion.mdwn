@@ -118,3 +118,12 @@ If I do a git clone ssh://odin/path/to/$REPOSITORY from another machine and try 
 I follow every steps of the setup procedure, change some templates and tried to modify some page through the web but was not able to do so. Every page seems to be locked by the adminuser user. When I remove the adminuser in the setup file, every ran fine. Did I miss something ? What is exactly the adminuser supposed to be allowed to ? Is he the only user allowed to modify pages ?
 
 > This was a bug in ikwiki that was fixed in version 2.44. --[[Joey]]
+
+-----
+I hope you guys can put up with an absolute newbie. I am fairly new to linux and completely new to Perl. I have just installed MoinMoin locally in my PC, running ubuntu 8.4 and was about to use it until I ran into your ikiwiki. I thought ikiwiki is a better fit for what I want to do, so am seriously considering installing it as well in ubuntu. Except that the install seems way beyond my understanding.
+
+Do i need to install git first? Which git -- the git-core? Ubuntu's instructions on installing the git-core is: "sudo apt-get install git-core". Is that it? Do I need to do a git-init as well, or will the ikiwiki-makerepo handle that? If I have to do a git-init as well, what --share values should I specify?
+
+It seems I will have to install the ikiwiki from the tar.gz file. I have downloaded it, but do I need to install CPAN or CPAN++ first? That doesn't sound right. I am totally confused already. Does anyone have some install documents pitched to someone as ignorant as I am? -- [[WillDioneda]]
+
+----

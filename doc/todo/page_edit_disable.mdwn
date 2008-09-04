@@ -26,10 +26,19 @@ front-ends immediately via `post-commit` hook file or periodically
 by Cron. I haven't decided how to do it yet. --[[Paweł|ptecza]]
 
 > You disable display of recentchanges by disabling that plugin.
+
+>> Thanks for the hint! I didn't think about it :)
+
 > You disable edit and preferences by not enabling a cgiurl at all.
-> 
+
+>> Yes, I've just discovered it. Unfortunately I need cgiurl,
+>> because I would like to use searching feature also for read-only
+>> pages.
+
 > Maybe page editing will become a plugin some day, or be made
 > configurable -- there are a few things like searching and websetup
 > (and possibly the poll plugin, aggregate webtrigger, and pingee)
 > that it may make sense to enable a cgi for even if you don't want to
 > allow page editing. --[[Joey]]
+
+>> I'm glad you agree that it may make sense :) --[[Paweł|ptecza]]
