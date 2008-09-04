@@ -1,0 +1,57 @@
+This is an idea from [[JoshTriplett]].  --[[Joey]]
+
+Some uses of ikiwiki, such as for a BTS, move a bit away from the wiki end
+of the spectrum, and toward storing structured data about a page or instead
+of a page. 
+
+For example, in a bug report you might want to choose a severity from a
+list, enter a version number, and have a bug submitter or owner recorded,
+etc. When editing online, it would be nice if these were separate fields on
+the form, rather than the data being edited in the big edit form.
+
+There's a tension here between remaining a wiki with human-editable source
+files, containing freeform markup, and more structured data storage. I
+think that it would be best to include the structured data in the page,
+using a directive. Something like:
+
+	part of page content
+	\[[data yaml="<arbitrary yaml here>"]]
+	rest of page content 
+
+As long as the position of the directive is not significant, it could be
+stripped out when web editing, the yaml used to generate/populate form fields, 
+and then on save, the directive regenerated and inserted at top/bottom of
+the page.
+
+Josh thinks that yaml is probably a good choice, but the source could be a
+`.yaml` file that contains no directives, and just yaml. An addition
+complication in this scenario is, if the yaml included wiki page formatted content,
+ikiwiki would have to guess or be told what markup language it used.
+
+Either way, the yaml on the page would encode fields and their current content.
+Information about data types would be encoded elsewhere, probably on a
+parent page (using a separate directive). That way, all child pages could
+be forced to have the same fields.
+
+There would be some simple types like select, boolean, multiselect, string.
+Probably lists of these (ie, list of strings). Possibly more complex data
+structures.
+
+It should also be possible for plugins to define new types, and the type
+definitions should include validation of entered data, and how to prompt
+the user for the data.
+
+This seems conceptually straightforward, if possibly quite internally
+complex to handle the more complicated types and validation.
+
+One implementation wrinkle is how to build the html form. The editpage.tmpl
+currently overrides the standard [[cpan CGI::FormBuilder]] generated form,
+which was done to make the edit page be laid out in a nice way. This,
+however, means that new fields cannot be easily added to it using
+[[cpan CGI::FormBuilder]]. The attachment plugin uses the hack of bouilding
+up html by hand and dumping it into the form via a template variable. 
+
+It would be nice if the type implementation code could just use
+FormBuilder, since its automatic form generation, and nice field validation
+model is a perfect match for structured data. But this problem with
+editpage.tmpl would have to be sorted out to allow that.
