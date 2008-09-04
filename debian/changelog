@@ -11,6 +11,10 @@ ikiwiki (2.63) UNRELEASED; urgency=low
     if no mime type is detected.
   * table: Support header=column to make the table header be the first
     column of the data. (AlexandreDupas)
+  * For fine control over what characters are allowed, unescaped in source filenames,
+    the wiki_file_chars setting is added. For example, set to "-[:alnum:]+/._" to
+    disable colons from being used in source files (which can cause trouble
+    om Windows).
 
  -- Joey Hess <joeyh@debian.org>  Thu, 28 Aug 2008 16:08:18 -0400
 

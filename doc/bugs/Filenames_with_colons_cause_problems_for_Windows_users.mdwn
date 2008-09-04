@@ -60,6 +60,11 @@ Windows does not support filenames containing any of these characters: `/ \ * : 
 >>> source on windows systems is desired, you'd have to remember to turn
 >>> that on when setting up a wiki, even if the wiki was hosted on unix.
 >>>
+>>> Ok, `wiki_file_chars` config option added, set to 
+>>> `"-[:alnum:]+/._"` to exclude colons from filenames read or written by
+>>> ikiwiki. [[done]]
+>>> 
 >>> BTW, I suspect there are lots of other problems with actually running
 >>> ikiwiki on windows, including its assumption that the directory
->>> separator is "/". --[[Joey]]
+>>> separator is "/". Windows will be supported when someone sends me a
+>>> comprehansive and not ugly or performance impacting patch. :-) --[[Joey]]

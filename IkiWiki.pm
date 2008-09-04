@@ -312,9 +312,15 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 1,
 	},
+	wiki_file_chars => {
+		type => "string",
+		description => "specifies the characters that are allowed in source filenames",
+		default => "-[:alnum:]+/.:_",
+		safe => 0,
+		rebuild => 1,
+	},
 	wiki_file_regexp => {
 		type => "internal",
-		default => qr/(^[-[:alnum:]_.:\/+]+$)/,
 		description => "regexp of legal source files",
 		safe => 0,
 		rebuild => 1,
@@ -412,6 +418,10 @@ sub checkconfig () { #{{{
 			$ENV{LANG}=$config{locale};
 			$gettext_obj=undef;
 		}
+	}
+		
+	if (! defined $config{wiki_file_regexp}) {
+		$config{wiki_file_regexp}=qr/(^[$config{wiki_file_chars}]+$)/;
 	}
 
 	if (ref $config{ENV} eq 'HASH') {
@@ -770,7 +780,7 @@ sub bestlink ($$) { #{{{
 		elsif (exists $pagecase{lc $l}) {
 			return $pagecase{lc $l};
 		}
-	} while $cwd=~s!/?[^/]+$!!;
+	} while $cwd=~s{/?[^/]+$}{};
 
 	if (length $config{userdir}) {
 		my $l = "$config{userdir}/".lc($link);
@@ -808,13 +818,16 @@ sub pagetitle ($;$) { #{{{
 
 sub titlepage ($) { #{{{
 	my $title=shift;
-	$title=~s/([^-[:alnum:]:+\/.])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+	# support use w/o %config set
+	my $chars = defined $config{wiki_file_chars} ? $config{wiki_file_chars} : "-[:alnum:]+/.:_";
+	$title=~s/([^$chars]|_)/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
 	return $title;
 } #}}}
 
 sub linkpage ($) { #{{{
 	my $link=shift;
-	$link=~s/([^-[:alnum:]:+\/._])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
+	my $chars = defined $config{wiki_file_chars} ? $config{wiki_file_chars} : "-[:alnum:]+/.:_";
+	$link=~s/([^$chars])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
 	return $link;
 } #}}}
 
