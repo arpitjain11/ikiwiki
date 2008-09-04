@@ -55,3 +55,13 @@ It would be nice if the type implementation code could just use
 FormBuilder, since its automatic form generation, and nice field validation
 model is a perfect match for structured data. But this problem with
 editpage.tmpl would have to be sorted out to allow that.
+
+Additional tie-ins:
+
+* Pagespecs that can select pages with a field with a given value, etc.
+* The search plugin could allow searching for specific fields with specific
+  content. (xapian term search is a good fit).
+
+See also:
+
+[[tracking_bugs_with_dependencies]]
