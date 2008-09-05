@@ -63,7 +63,8 @@ sub genpage ($$) { #{{{
 	my $actions=0;
 
 	if (length $config{cgiurl}) {
-		$template->param(editurl => cgiurl(do => "edit", page => $page));
+		$template->param(editurl => cgiurl(do => "edit", page => $page))
+			if IkiWiki->can("cgi_editpage");
 		$template->param(prefsurl => cgiurl(do => "prefs"));
 		$actions++;
 	}

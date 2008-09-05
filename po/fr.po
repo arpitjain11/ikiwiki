@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-04 14:10-0400\n"
+"POT-Creation-Date: 2008-09-05 13:41-0400\n"
 "PO-Revision-Date: 2008-04-29 17:46+0200\n"
 "Last-Translator: Christian Perrier <bubulle@debian.org>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -18,63 +18,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../IkiWiki/CGI.pm:140
+#: ../IkiWiki/CGI.pm:113
 msgid "You need to log in first."
 msgstr "Vous devez d'abord vous identifier."
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:145
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "Échec de l'identification, vous devriez peut-être autoriser les cookies."
 
-#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:539
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:310
 msgid "Your login session has expired."
 msgstr "Session d'authentification expirée."
 
-#: ../IkiWiki/CGI.pm:211
+#: ../IkiWiki/CGI.pm:184
 msgid "Login"
 msgstr "S’identifier"
 
-#: ../IkiWiki/CGI.pm:212
+#: ../IkiWiki/CGI.pm:185
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../IkiWiki/CGI.pm:213
+#: ../IkiWiki/CGI.pm:186
 msgid "Admin"
 msgstr "Administrateur"
 
-#: ../IkiWiki/CGI.pm:280
+#: ../IkiWiki/CGI.pm:253
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:339
-#, perl-format
-msgid "%s is not an editable page"
-msgstr "%s n'est pas une page éditable"
-
-#: ../IkiWiki/CGI.pm:450 ../IkiWiki/Plugin/brokenlinks.pm:33
-#: ../IkiWiki/Plugin/inline.pm:310 ../IkiWiki/Plugin/opendiscussion.pm:26
-#: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:78
-#: ../IkiWiki/Render.pm:148
-msgid "discussion"
-msgstr "Discussion"
-
-#: ../IkiWiki/CGI.pm:506
-#, perl-format
-msgid "creating %s"
-msgstr "Création de %s"
-
-#: ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:552 ../IkiWiki/CGI.pm:562
-#: ../IkiWiki/CGI.pm:597 ../IkiWiki/CGI.pm:642
-#, perl-format
-msgid "editing %s"
-msgstr "Édition de %s"
-
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:271
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:784 ../IkiWiki/CGI.pm:785 ../IkiWiki.pm:1132
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1132
 msgid "Error"
 msgstr "Erreur"
 
@@ -199,6 +176,13 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:221
+#: ../IkiWiki/Plugin/inline.pm:317 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
+#: ../IkiWiki/Render.pm:149
+msgid "discussion"
+msgstr "Discussion"
+
 #: ../IkiWiki/Plugin/brokenlinks.pm:49
 #, perl-format
 msgid "%s from %s"
@@ -223,6 +207,23 @@ msgstr ""
 #, perl-format
 msgid "no text was copied in this page with id %s"
 msgstr ""
+
+#: ../IkiWiki/Plugin/editpage.pm:110
+#, perl-format
+msgid "%s is not an editable page"
+msgstr "%s n'est pas une page éditable"
+
+#: ../IkiWiki/Plugin/editpage.pm:277
+#, perl-format
+msgid "creating %s"
+msgstr "Création de %s"
+
+#: ../IkiWiki/Plugin/editpage.pm:295 ../IkiWiki/Plugin/editpage.pm:323
+#: ../IkiWiki/Plugin/editpage.pm:333 ../IkiWiki/Plugin/editpage.pm:368
+#: ../IkiWiki/Plugin/editpage.pm:413
+#, perl-format
+msgid "editing %s"
+msgstr "Édition de %s"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:51
 msgid "template not specified"
@@ -289,30 +290,35 @@ msgstr ""
 "Vous devez indiquer l'URL du wiki par --url lors de l'utilisation de --rss "
 "ou --atom"
 
-#: ../IkiWiki/Plugin/inline.pm:150
+#: ../IkiWiki/Plugin/inline.pm:139
+#, fuzzy
+msgid "page editing not allowed"
+msgstr "Redirection cyclique non autorisée"
+
+#: ../IkiWiki/Plugin/inline.pm:156
 #, fuzzy
 msgid "missing pages parameter"
 msgstr "Paramètre %s manquant"
 
-#: ../IkiWiki/Plugin/inline.pm:198
+#: ../IkiWiki/Plugin/inline.pm:204
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:269
+#: ../IkiWiki/Plugin/inline.pm:276
 msgid "Add a new post titled:"
 msgstr "Ajouter un nouvel article dont le titre est :"
 
-#: ../IkiWiki/Plugin/inline.pm:285
+#: ../IkiWiki/Plugin/inline.pm:292
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "Le modèle (« template ») %s n'existe pas"
 
-#: ../IkiWiki/Plugin/inline.pm:318 ../IkiWiki/Render.pm:82
+#: ../IkiWiki/Plugin/inline.pm:325 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:555
+#: ../IkiWiki/Plugin/inline.pm:562
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -764,47 +770,47 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:276 ../IkiWiki/Render.pm:297
+#: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:298
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "Omission du fichier au nom incorrect %s"
 
-#: ../IkiWiki/Render.pm:355
+#: ../IkiWiki/Render.pm:356
 #, perl-format
 msgid "removing old page %s"
 msgstr "Suppression de l'ancienne page %s"
 
-#: ../IkiWiki/Render.pm:395
+#: ../IkiWiki/Render.pm:396
 #, perl-format
 msgid "scanning %s"
 msgstr "Parcours de %s"
 
-#: ../IkiWiki/Render.pm:400
+#: ../IkiWiki/Render.pm:401
 #, perl-format
 msgid "rendering %s"
 msgstr "Affichage de %s"
 
-#: ../IkiWiki/Render.pm:421
+#: ../IkiWiki/Render.pm:422
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "Affichage de %s, qui est lié à %s"
 
-#: ../IkiWiki/Render.pm:442
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "Affichage de %s, qui dépend de %s"
 
-#: ../IkiWiki/Render.pm:481
+#: ../IkiWiki/Render.pm:482
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "Affichage de %s, afin de mettre à jour ses rétroliens"
 
-#: ../IkiWiki/Render.pm:493
+#: ../IkiWiki/Render.pm:494
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "Suppression de %s, qui n'est plus affiché par %s"
 
-#: ../IkiWiki/Render.pm:517
+#: ../IkiWiki/Render.pm:518
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki : impossible d'afficher %s"

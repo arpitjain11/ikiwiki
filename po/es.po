@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-04 14:10-0400\n"
+"POT-Creation-Date: 2008-09-05 13:41-0400\n"
 "PO-Revision-Date: 2008-03-06 11:07+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -15,63 +15,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../IkiWiki/CGI.pm:140
+#: ../IkiWiki/CGI.pm:113
 msgid "You need to log in first."
 msgstr "Antes es necesario identificarse."
 
-#: ../IkiWiki/CGI.pm:172
+#: ../IkiWiki/CGI.pm:145
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 "registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
 
-#: ../IkiWiki/CGI.pm:190 ../IkiWiki/CGI.pm:539
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:310
 msgid "Your login session has expired."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:211
+#: ../IkiWiki/CGI.pm:184
 msgid "Login"
 msgstr "Identificación"
 
-#: ../IkiWiki/CGI.pm:212
+#: ../IkiWiki/CGI.pm:185
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: ../IkiWiki/CGI.pm:213
+#: ../IkiWiki/CGI.pm:186
 msgid "Admin"
 msgstr "Administración"
 
-#: ../IkiWiki/CGI.pm:280
+#: ../IkiWiki/CGI.pm:253
 msgid "Preferences saved."
 msgstr "Las preferencias se han guardado."
 
-#: ../IkiWiki/CGI.pm:339
-#, perl-format
-msgid "%s is not an editable page"
-msgstr "la página %s no es modificable"
-
-#: ../IkiWiki/CGI.pm:450 ../IkiWiki/Plugin/brokenlinks.pm:33
-#: ../IkiWiki/Plugin/inline.pm:310 ../IkiWiki/Plugin/opendiscussion.pm:26
-#: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:78
-#: ../IkiWiki/Render.pm:148
-msgid "discussion"
-msgstr "comentarios"
-
-#: ../IkiWiki/CGI.pm:506
-#, perl-format
-msgid "creating %s"
-msgstr "creando página %s"
-
-#: ../IkiWiki/CGI.pm:524 ../IkiWiki/CGI.pm:552 ../IkiWiki/CGI.pm:562
-#: ../IkiWiki/CGI.pm:597 ../IkiWiki/CGI.pm:642
-#, perl-format
-msgid "editing %s"
-msgstr "modificando página %s"
-
-#: ../IkiWiki/CGI.pm:667
+#: ../IkiWiki/CGI.pm:271
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:784 ../IkiWiki/CGI.pm:785 ../IkiWiki.pm:1132
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1132
 msgid "Error"
 msgstr "Error"
 
@@ -196,6 +173,13 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:221
+#: ../IkiWiki/Plugin/inline.pm:317 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
+#: ../IkiWiki/Render.pm:149
+msgid "discussion"
+msgstr "comentarios"
+
 #: ../IkiWiki/Plugin/brokenlinks.pm:49
 #, perl-format
 msgid "%s from %s"
@@ -220,6 +204,23 @@ msgstr ""
 #, perl-format
 msgid "no text was copied in this page with id %s"
 msgstr ""
+
+#: ../IkiWiki/Plugin/editpage.pm:110
+#, perl-format
+msgid "%s is not an editable page"
+msgstr "la página %s no es modificable"
+
+#: ../IkiWiki/Plugin/editpage.pm:277
+#, perl-format
+msgid "creating %s"
+msgstr "creando página %s"
+
+#: ../IkiWiki/Plugin/editpage.pm:295 ../IkiWiki/Plugin/editpage.pm:323
+#: ../IkiWiki/Plugin/editpage.pm:333 ../IkiWiki/Plugin/editpage.pm:368
+#: ../IkiWiki/Plugin/editpage.pm:413
+#, perl-format
+msgid "editing %s"
+msgstr "modificando página %s"
 
 #: ../IkiWiki/Plugin/edittemplate.pm:51
 msgid "template not specified"
@@ -287,30 +288,35 @@ msgstr ""
 "Es obligatorio indicar un url al wiki cuando se usan los parámetros --rss ó "
 "--atom"
 
-#: ../IkiWiki/Plugin/inline.pm:150
+#: ../IkiWiki/Plugin/inline.pm:139
+#, fuzzy
+msgid "page editing not allowed"
+msgstr "ciclo de redirección no permitido"
+
+#: ../IkiWiki/Plugin/inline.pm:156
 #, fuzzy
 msgid "missing pages parameter"
 msgstr "falta el parámetro %s"
 
-#: ../IkiWiki/Plugin/inline.pm:198
+#: ../IkiWiki/Plugin/inline.pm:204
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "no conozco este tipo de ordenación %s"
 
-#: ../IkiWiki/Plugin/inline.pm:269
+#: ../IkiWiki/Plugin/inline.pm:276
 msgid "Add a new post titled:"
 msgstr "Añadir una entrada nueva titulada:"
 
-#: ../IkiWiki/Plugin/inline.pm:285
+#: ../IkiWiki/Plugin/inline.pm:292
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "la plantilla %s no existe "
 
-#: ../IkiWiki/Plugin/inline.pm:318 ../IkiWiki/Render.pm:82
+#: ../IkiWiki/Plugin/inline.pm:325 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:555
+#: ../IkiWiki/Plugin/inline.pm:562
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
@@ -761,49 +767,49 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:276 ../IkiWiki/Render.pm:297
+#: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:298
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ignorando el archivo %s porque su nombre no es correcto"
 
-#: ../IkiWiki/Render.pm:355
+#: ../IkiWiki/Render.pm:356
 #, perl-format
 msgid "removing old page %s"
 msgstr "eliminando la antigua página %s"
 
-#: ../IkiWiki/Render.pm:395
+#: ../IkiWiki/Render.pm:396
 #, perl-format
 msgid "scanning %s"
 msgstr "explorando %s"
 
-#: ../IkiWiki/Render.pm:400
+#: ../IkiWiki/Render.pm:401
 #, perl-format
 msgid "rendering %s"
 msgstr "convirtiendo %s"
 
-#: ../IkiWiki/Render.pm:421
+#: ../IkiWiki/Render.pm:422
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "convirtiendo la página %s, la cual referencia a %s"
 
-#: ../IkiWiki/Render.pm:442
+#: ../IkiWiki/Render.pm:443
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "convirtiendo la página %s, la cual depende de %s"
 
-#: ../IkiWiki/Render.pm:481
+#: ../IkiWiki/Render.pm:482
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 "convirtiendo la página %s para actualizar la lista de páginas que hacen "
 "referencia a ella."
 
-#: ../IkiWiki/Render.pm:493
+#: ../IkiWiki/Render.pm:494
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 
-#: ../IkiWiki/Render.pm:517
+#: ../IkiWiki/Render.pm:518
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikwiki: no puedo convertir la página %s"
