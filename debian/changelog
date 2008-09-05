@@ -15,6 +15,7 @@ ikiwiki (2.63) UNRELEASED; urgency=low
     the wiki_file_chars setting is added. For example, set to "-[:alnum:]+/._" to
     disable colons from being used in source files (which can cause trouble
     om Windows).
+  * po/Makefile: update po files when the pot file has changed. Closes: #497951
 
  -- Joey Hess <joeyh@debian.org>  Thu, 28 Aug 2008 16:08:18 -0400
 

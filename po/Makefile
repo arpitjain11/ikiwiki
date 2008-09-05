@@ -28,7 +28,7 @@ clean:
 %.mo: %.po
 	msgfmt -o $@ $<
 
-%.po:
+%.po: ikiwiki.pot
 	@echo -n "Merging ikiwiki.pot and $@"
 	@msgmerge $@ ikiwiki.pot -o $@.new 2>&1
 # Typically all that changes was a date or line number. I'd prefer not to
