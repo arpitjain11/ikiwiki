@@ -4,7 +4,6 @@ package IkiWiki::Plugin::cutpaste;
 use warnings;
 use strict;
 use IkiWiki 2.00;
-use UNIVERSAL;
 
 my %savedtext;
 
