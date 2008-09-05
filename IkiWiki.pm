@@ -121,7 +121,7 @@ sub getsetup () { #{{{
 		type => "internal",
 		default => [qw{mdwn link inline htmlscrubber passwordauth
 				openid signinedit lockedit conditional
-				recentchanges parentlinks}],
+				recentchanges parentlinks editpage}],
 		description => "plugins to enable by default",
 		safe => 0,
 		rebuild => 1,

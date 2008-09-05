@@ -131,7 +131,13 @@ sub sessioncgi () { #{{{
 		$q->param('page', $page.$add);
 		# now go create the page
 		$q->param('do', 'create');
-		IkiWiki::cgi_editpage($q, $session);
+		# make sure the editpage plugin in loaded
+		if (IkiWiki->can("cgi_editpage")) {
+			IkiWiki::cgi_editpage($q, $session);
+		}
+		else {
+			error(gettext("page editing not allowed"));
+		}
 		exit;
 	}
 }
@@ -252,7 +258,8 @@ sub preprocess_inline (@) { #{{{
 	my $ret="";
 
 	if (length $config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
-			(exists $params{postform} && yesno($params{postform})))) {
+	    (exists $params{postform} && yesno($params{postform}))) &&
+	    IkiWiki->can("cgi_editpage")) {
 		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
