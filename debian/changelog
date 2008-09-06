@@ -12,9 +12,10 @@ ikiwiki (2.53.1) testing-proposed-updates; urgency=low
     work. Markdown removes one level of escaping.
   * Add a postscan hook.
   * search: Use postscan hook, avoid updating index when previewing.
-  * search: Fixes for title stemming, and use better term for tags. (Gabriel McManus)
-    (Rebuilding the wiki on upgrade to this version is recommended if you use the
-    search plugin.)
+  * search: Fixes for title stemming, and use better term for tags.
+    (Gabriel McManus)
+    (Rebuilding the wiki on upgrade to this version is recommended if you
+    use the search plugin.)
   * meta: fix title() PageSpec (DOS). Closes: #497444
   * Really fix bug with links to pages with names containing colons. 
     Previous fix mised a few cases.
