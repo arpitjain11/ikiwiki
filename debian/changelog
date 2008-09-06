@@ -1,4 +1,4 @@
-ikiwiki (2.53.1) UNRELEASED; urgency=low
+ikiwiki (2.53.1) testing-proposed-updates; urgency=low
 
   * Backported all relevant bug fixes from mainline to debian testing.
   * ikiwiki-transition: Fix command-line processing so the prefix_directives
@@ -28,7 +28,7 @@ ikiwiki (2.53.1) UNRELEASED; urgency=low
   * Work around perl $_ scoping nonsense that caused breakage when loading
     external plugins.
 
- -- Josh Triplett <josh@freedesktop.org>  Wed, 09 Jul 2008 21:30:33 -0700
+ -- Joey Hess <joeyh@debian.org>  Fri, 05 Sep 2008 20:55:53 -0400
 
 ikiwiki (2.53) unstable; urgency=low
 
