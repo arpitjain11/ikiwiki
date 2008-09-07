@@ -9,3 +9,8 @@ I'd like to be able to drop an unmodified RFC2822 email message into ikiwiki, an
 >> pagespec based sanity checking).  No doubt lots of things could be 
 >> be improved, and it hasn't been tested a great deal. Formatting of the body could be attempted
 >> as well. -- [[DavidBremner]]
+>>> One hitch I noticed was that it is not currently possible to treat a maildir
+>>> or an MH directory as a page (i.e. just call it foo.mh and have it transformed 
+>>> to page foo). I'm not sure if this is possible and worthwhile to fix. 
+>>  It is certainly workable
+>>> to use a \[[!mailbox ]] directive. -- [[DavidBremner]]
