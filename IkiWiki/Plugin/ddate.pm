@@ -7,7 +7,6 @@ no warnings;
 
 sub import { #{{{
 	hook(type => "getsetup", id => "ddate", call => \&getsetup);
-	hook(type => "checkconfig", id => "ddate", call => \&checkconfig);
 } # }}}
 
 sub getsetup { #{{{
@@ -18,18 +17,14 @@ sub getsetup { #{{{
 		},
 } #}}}
 
-sub checkconfig () { #{{{
-	if (! defined $config{timeformat} ||
-	    $config{timeformat} eq '%c') {
-		$config{timeformat}='on %A, the %e of %B, %Y. %N%nCelebrate %H';
-	}
-} #}}}
-
 sub IkiWiki::displaytime ($;$) { #{{{
 	my $time=shift;
 	my $format=shift;
 	if (! defined $format) {
 		$format=$config{timeformat};
+		if ($format eq '%c') {
+			$format='on %A, the %e of %B, %Y. %N%nCelebrate %H';
+		}
 	}
 	eval q{
 		use DateTime;
