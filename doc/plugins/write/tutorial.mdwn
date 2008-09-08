@@ -116,7 +116,7 @@ a page that uses fib. Now the inlined page will have one set of numbers,
 and the standalone page another. The numbers might even skip over part of
 the sequence in some cases.
 
-Obviously, using a global `$last` veriable was a bad idea. It would
+Obviously, using a global `$last` variable was a bad idea. It would
 work ok in a more regular cgi-based wiki, which only outputs one page per
 run. But since ikiwiki is a wiki *compiler*, things are a bit more
 complicated. It's not very hard to fix, though, if we do want the sequence
