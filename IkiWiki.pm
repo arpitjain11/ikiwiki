@@ -564,7 +564,7 @@ sub urlto ($$;$) { #{{{
 	}
 
 	if ($absolute) {
-		return $config{url}.beautify_urlpath("/".$to);
+		return $config{url}.beautify_url("/".$to);
 	}
 
 	my $link = abs2rel($to, dirname(htmlpage($from)));
