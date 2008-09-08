@@ -59,6 +59,10 @@ editpage.tmpl would have to be sorted out to allow that.
 Additional tie-ins:
 
 * Pagespecs that can select pages with a field with a given value, etc.
+  This should use a pagespec function like field(fieldname, value).  The
+  semantics of this will depend on the type of the field; text fields will
+  match value against the text, and link fields will check for a link
+  matching the pagespec value.
 * The search plugin could allow searching for specific fields with specific
   content. (xapian term search is a good fit).
 
