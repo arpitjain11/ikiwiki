@@ -1,0 +1,5 @@
+If the timeformat option is '%c', every time websetup rewrites the setup file, it changes to a ddate-style time format (but if ddate is not actually enabled, some of the format codes aren't understood by strftime, so they get passed through).
+
+Presumably this is because websetup loads all plugins, so IkiWiki::plugin::ddate::checkconfig is run...
+
+(This bug seems oddly appropriate. Hail Eris)
