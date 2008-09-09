@@ -65,9 +65,10 @@ sub preprocess (@) { #{{{
 	my $r;
 
 	if ($params{size} ne 'full') {
-		my ($w, $h) = ($params{size} =~ /^(\d+)x(\d+)$/);
+		my ($w, $h) = ($params{size} =~ /^(\d*)x(\d*)$/);
 		error sprintf(gettext('bad size "%s"'), $params{size})
-			unless (defined $w && defined $h);
+			unless (defined $w && defined $h &&
+			        (length $w || length $h));
 
 		my $outfile = "$config{destdir}/$dir/${w}x${h}-$base";
 		$imglink = "$dir/${w}x${h}-$base";
