@@ -11,16 +11,18 @@ my @bundle=qw{
 	img
 	map
 	meta
+	more
 	orphans
 	pagecount
 	pagestats
+	progress
 	shortcut
 	smiley
 	tag
+	table
 	template
 	toc
 	toggle
-	otl
 };
 
 sub import { #{{{

@@ -6,6 +6,10 @@ ikiwiki (2.64) UNRELEASED; urgency=low
   * progress: New plugin to generate progress bars (willu)
   * Add allow_symlinks_before_srcdir to config so websetup doesn't eat it.
   * img: Support sizes like 200x. Closes: #475149
+  * goodstuff: Remove otl plugin from the bundle since it needs a significant
+    external dependency and is not commonly used. If you use otl, make sure
+    you explicitly enable it now.
+  * goodstuff: Add more, progress, and table plugins to the bundle.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 08 Sep 2008 19:21:20 -0400
 
