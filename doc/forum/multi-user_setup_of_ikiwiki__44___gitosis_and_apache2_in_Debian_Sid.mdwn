@@ -1,0 +1,58 @@
+Dear developers and users,
+
+
+# Problem
+
+I am trying to set up ikiwiki for a website. Users should be able to edit pages using the webbrowser (ikiwiki.cgi) and a few should be able to edit it using versioning control and in this case Git.
+
+I have ikiwiki working for a single user (me), but I do not [[get_the_permissions_right|/rcs/Git]] for multiple users and commiters. The wiki admin does not own the Git repository in this case. And I do not understand everything yet (especially concerning wrappers).
+
+# Programs
+
+I am running Debian Etch with gitosis (0.2+20080626-2) installed from etch-backports, Apache2 (apache2.2-common 2.2.3-4+etch5) and ikiwiki (2.63) from Sid.
+
+# Goal
+
+* The website (run by ikiwiki) should be accessable via http://www.example.org/
+* Users can edit pages using the webbrowser.
+* Git is used as the backend.
+* The Git repository should be publicaly browsable via http://git.example.org/git/project.git (gitweb).
+* The Git repository can be accessed with git clone git://git.example.org/git/project.git (git-daemon).
+* Some manually set up users can push their changes over SSH to the repository and the post-update hook updates the wiki.
+
+# Directory Layout and permissions.
+
+## Website
+
+The website is stored in /srv/www/www.example.org/htdocs/ (destdir in ikiwiki.setup) and is owned by www-data:root with rights 755.
+
+## Git repository
+
+The [package gitosis](http://joey.kitenet.net/blog/entry/locking_down_ssh_authorized_keys/) creates an user gitosis with the home directory /srv/gitosis/ and the repository are stored in /srv/gitosis/repository/project.git owned by gitosis:gitosis and permissions 750. I can setup the permissions who is allowed to access this repository and if it should be published using git-daemon or gitweb in the configuration file gitosis.conf.
+
+# My efforts without results
+
+I could not come up with a working set of users which are put into different groups to create a good result with ikiwiki. The main problem is that under Debian umask is set to 022 which means that the members of a group are not allowed to write. I did not want to change this.
+
+In the end, I did the following. I created a directory /srv/ikiwiki/ which is owned by gitosis. The [[setup_file|/usage]] is also located there (/srv/ikiwiki/project.setup). I put the srcdir there too (srcdir => '/srv/ikiwiki/project/'). So now sudo -u gitosis ikiwiki --project.setup is able to create the post-update hook (git_wrapper => '/srv/gitosis/repositories/project.git/hooks/post-update'). Since this hook is called every time something is checked in over SSH, it is run by gitosis, so I did not set it suid. Or do I have to, because ikiwiki.cgi will be run as www-data?
+
+## cgi_wrapper
+
+I do not understand those wrappers completely. The cgi is a script, which can be called by a webserver, e. g. [[Apache 2|/tips/apache_cgi]]. But www-data is normally not allowed to write to the source directory (which is owned by gitosis or push to the repository). Therefore it should be run as the user gitosis. And because cgi scripts can not be made suid, I wrapper (in this case a C program) is created (cgi_wrapper) which can be made suid and therefore be run as the user gitosis. Is this correct?
+
+So where is good place to save this wrapper? cgi_wrapper => '/srv/ikiwiki/project-wrapper'? Then /srv/ikiwiki/project-wrapper is created from a temporary C file prject-wrapper.c?
+
+
+No sudo -u gitosis ikikwiki --setup project.setup is still not able to put the compilation result into /srv/www/www.project.org/htdocs because this is owned by www-data. I just came up with two things.
+
+1. Set destdir => '/srv/ikiwiki/html-project', do ln -s /srv/ikiwiki/html-project /srv/www/www.example.org/htdocs and adduser www-data gitosis. But I am not sure about the security implications of using symbolic links.
+
+2. Since the webserver (Apache 2) has just to read the html files (is that true for static and dynamic (PHP) pages) sudo chown -R gitosis:www-data /srv/www/www.example.org/ should do it. But it is per default www-data:root under Debian, so I do not know if this should be changed.
+
+
+Could you please enlighten me. It should be possible seeing for example this site.
+
+
+Thanks in advance,
+
+--[[PaulePanter]]
