@@ -10,3 +10,11 @@ To override an incorrectly guessed path, I set setupconf in the .setup file. I a
 I meant setupfile as in IkiWiki::Setup::dump($config{setupfile}) from IkiWiki/Plugin/websetup.pm
 
 Sorry for the confusion.
+
+> Ok, that's an internal setting that I never envisioned someone digging
+> out and setting in their setup file. It could be made an exported config
+> option, but then every generated setup file will have this setting in it,
+> which will be at best redundant.
+> 
+> Can you find another solution, such as a symlink, for your special case?
+> --[[Joey]]
