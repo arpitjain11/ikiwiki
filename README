@@ -1,21 +1,23 @@
 Use ./Makefile.PL to generate a Makefile, "make" will build the
 documentation wiki and a man page, and "make install" will install ikiwiki.
 
-A few special variables you can set while using the Makefile:
-
-PROFILE=1 turns on profiling for the build of the doc wiki. Uses Devel::Profile
-
-NOTAINT=0 turns on the taint flag in the ikiwiki program. (Not recommended
-unless your perl is less buggy than mine -- see
-http://bugs.debian.org/411786)
-
-There are also other variables supported by MakeMaker, including PREFIX,
-INSTALL_BASE, and DESTDIR. See ExtUtils::MakeMaker(3).
-
-In particular, INSTALL_BASE is very useful if you want to install ikiwiki
-to some other location, as it configures it to see the perl libraries
-there. See `doc/tips/nearlyfreespeech.mdwn` for an example of using this to
-install ikiwiki and its dependencies in a home directory.
-
 All other documentation is in the ikiwiki documentation wiki, which is also
 available online at <http://ikiwiki.info/>
+
+
+A few special variables you can set while using the Makefile:
+
+  PROFILE=1 turns on profiling for the build of the doc wiki.
+  (Uses Devel::Profile)
+
+  NOTAINT=0 turns on the taint flag in the ikiwiki program. (Not recommended
+  unless your perl is less buggy than mine -- see
+  http://bugs.debian.org/411786)
+
+  There are also other variables supported by MakeMaker, including PREFIX,
+  INSTALL_BASE, and DESTDIR. See ExtUtils::MakeMaker(3).
+
+  In particular, INSTALL_BASE is very useful if you want to install ikiwiki
+  to some other location, as it configures it to see the perl libraries
+  there. See `doc/tips/nearlyfreespeech.mdwn` for an example of using this to
+  install ikiwiki and its dependencies in a home directory.
