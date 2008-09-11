@@ -8,8 +8,9 @@ Aggregate a feed as follows:
 	url="http://example.com/" updateinterval="15"]]
 
 That example aggregates posts from the specified RSS feed, updating no
-more frequently than once every 15 minutes, and puts a page per post under
-the example/ directory in the wiki.
+more frequently than once every 15 minutes (though possibly less
+frequently, if the cron job runs less frequently than that), and puts a
+page per post under the example/ directory in the wiki.
 
 You can then use ikiwiki's [[ikiwiki/blog]] support to create a blog of one or
 more aggregated feeds. For example:
