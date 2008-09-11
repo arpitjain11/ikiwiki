@@ -34,11 +34,18 @@ The [package gitosis](http://joey.kitenet.net/blog/entry/locking_down_ssh_author
 
 I could not come up with a working set of users which are put into different groups to create a good result with ikiwiki. The main problem is that under Debian umask is set to 022 which means that the members of a group are not allowed to write. I did not want to change this.
 
+> You can set the umask for ikiwiki itself, without changing the system umask, via the usmask setting in the setup file. --[[Joey]]
+
 In the end, I did the following. I created a directory /srv/ikiwiki/ which is owned by gitosis. The [[setup_file|/usage]] is also located there (/srv/ikiwiki/project.setup). I put the srcdir there too (srcdir => '/srv/ikiwiki/project/'). So now sudo -u gitosis ikiwiki --project.setup is able to create the post-update hook (git_wrapper => '/srv/gitosis/repositories/project.git/hooks/post-update'). Since this hook is called every time something is checked in over SSH, it is run by gitosis, so I did not set it suid. Or do I have to, because ikiwiki.cgi will be run as www-data?
+
+> Generally, ikiwiki.cgi is run as the user who owns the wiki and repository, in this case, gitosis. The ikwiiki.cgi needs to be able to write to source files in the wiki; it needs to be able to commit changes,
+> and it needs to be able to generate and write the html files. If you don't want ikiwiki.cgi to run as gitosis, you will need to put gitosis and www-data in a group and give them both write access, with appropriate umask, etc. --[[Joey]]
 
 ## cgi_wrapper
 
-I do not understand those wrappers completely. The cgi is a script, which can be called by a webserver, e. g. [[Apache 2|/tips/apache_cgi]]. But www-data is normally not allowed to write to the source directory (which is owned by gitosis or push to the repository). Therefore it should be run as the user gitosis. And because cgi scripts can not be made suid, I wrapper (in this case a C program) is created (cgi_wrapper) which can be made suid and therefore be run as the user gitosis. Is this correct?
+I do not understand those wrappers completely. The cgi is a script, which can be called by a webserver, e. g. [[Apache_2|/tips/apache_cgi]]. But www-data is normally not allowed to write to the source directory (which is owned by gitosis or push to the repository). Therefore it should be run as the user gitosis. And because cgi scripts can not be made suid, I wrapper (in this case a C program) is created (cgi\_wrapper) which can be made suid and therefore be run as the user gitosis. Is this correct?
+
+> It seems to me like you understand the wrapper pretty well. It's main reson to exist is to safely be suid, yes.
 
 So where is good place to save this wrapper? cgi_wrapper => '/srv/ikiwiki/project-wrapper'? Then /srv/ikiwiki/project-wrapper is created from a temporary C file prject-wrapper.c?
 
@@ -52,6 +59,8 @@ No sudo -u gitosis ikikwiki --setup project.setup is still not able to put the c
 
 Could you please enlighten me. It should be possible seeing for example this site.
 
+> www-data is not really intended to own files. So that if the web server is compromised, it cannot rewrite your web site. So make the site's destdir be owned by the same user that ikiwiki runs as.
+> /srv/www is not shipped by debian; it is a bug in debian for any package to make files owned by www-data; so it seems to me that your /srv/www www-data ownership is something you must have configured yourself. --[[Joey]]
 
 Thanks in advance,
 
