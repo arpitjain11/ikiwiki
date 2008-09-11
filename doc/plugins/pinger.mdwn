@@ -7,7 +7,8 @@ plugin to set up a loosely coupled mirror network, or a branched version of
 a wiki. By pinging the mirror or branch each time the main wiki changes, it
 can be kept up-to-date.
 
-See the [[ikiwiki/directive/ping]] [[ikiwiki/directive]] page for usage details.
+To configure what URLs to ping, use the [[ikiwiki/directive/ping]]
+[[ikiwiki/directive]].
 
 The [[!cpan LWP]] perl module is used for pinging. Or the [[!cpan
 LWPx::ParanoidAgent]] perl module is used if available, for added security.

@@ -1,11 +1,11 @@
 [[!template id=plugin name=img author="Christian Mock"]]
 [[!tag type/chrome]]
 
-This plugin implements the [[ikiwiki/directive/img]] [[ikiwiki/directive]].
-This is an image handling directive. While ikiwiki supports inlining full-size
-images by making a [[ikiwiki/WikiLink]] that points to the image, using
-this plugin you can easily scale down an image for inclusion onto a page,
-providing a link to a full-size version.
+This plugin provides the [[ikiwiki/directive/img]] [[ikiwiki/directive]].
+While ikiwiki supports inlining full-size images by making a
+[[ikiwiki/WikiLink]] that points to the image, using this directive you can
+easily scale down an image for inclusion onto a page, providing a link to a
+full-size version.
 
 This plugin uses the [ImageMagick](http://www.imagemagick.org/) tools via
 [PerlMagick](http://www.imagemagick.org/www/perl-magick.html).

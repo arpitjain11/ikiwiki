@@ -1,8 +1,10 @@
 [[!template id=plugin name=sparkline author="[[Joey]]"]]
 [[!tag type/chrome]]
 
-This plugin implements the [[ikiwiki/directive/sparkline]] [[ikiwiki/directive]].
-The directive allows for easily embedding sparklines into wiki pages.
+This plugin provides the [[ikiwiki/directive/sparkline]]
+[[ikiwiki/directive]], which allows for easily embedding sparklines into
+wiki pages. A sparkline is a small word-size graphic chart, that is designed
+to be displayed alongside text.
 
 # requirements
 
@@ -18,6 +20,3 @@ to use the plugin, you will need:
 
 On a Debian system, this can be accomplished by installing these packages:
 `libsparkline-php` `php5-gd` `php5-cli` `libdigest-sha1-perl`
-
-This plugin also uses the [[!cpan Digest::SHA1]] perl module.
-

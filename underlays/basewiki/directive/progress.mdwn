@@ -10,8 +10,7 @@ The second possible set of parameters is a pair of [[ikiwiki/PageSpec]]s,
 pages in each pagespec and shows the percentage of the total pages that are
 done.
 
-This plugin is included in ikiwiki, but is not enabled by default.
+For example, to show what percentage of pages have
+discussion pages:
 
-If it is turned on it can show what percentage of pages have discussion pages:
-
-[[!progress totalpages="* and !*/Discussion" donepages="*/Discussion"]]
+	\[[!progress totalpages="* and !*/Discussion" donepages="*/Discussion"]]

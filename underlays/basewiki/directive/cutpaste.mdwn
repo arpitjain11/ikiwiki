@@ -1,6 +1,7 @@
-The `copy`, `cut` and `paste` directives are supplied by the [[!iki plugins/cutpaste]] plugin.
+The `copy`, `cut` and `paste` directives are supplied by the
+[[!iki plugins/cutpaste]] plugin.
 
-With these directives you can store and recall pieces of text:
+With these directives you can store and recall pieces of text in a page:
 
  * `\[[!cut id=name text="text"]]` memorizes the text allowing to recall it
    using the given ID.  The text being cut is not included in the output.
@@ -42,7 +43,7 @@ This can potentially be used to create loops, but ikiwiki is clever and breaks
 them.
 
 Since you can paste without using double quotes, copy and paste can be used to
-nest directive that require multiline parameters inside each other:
+nest directives that require multiline parameters inside each other:
 
 	\[[!toggleable id=foo text="""
 	  \[[!toggleable id=bar text="\[[!paste id=baz]]"]]

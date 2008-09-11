@@ -5,9 +5,7 @@ This plugin provides the [[ikiwiki/directive/tag]] and
 [[ikiwiki/directive/taglink]] [[directives|ikiwiki/directive]].
 These directives allow tagging pages.
 
-This plugin has a configuration option. Set --tagbase=tags and links to tags
-will be located under the specified base page. If ikiwiki is configured
-this way, then the example above actually tags the page with the tags
-tags/tech, tags/life, and tags/linux. This is a useful way to avoid
-having to write the full path to tags, if you want to keep them grouped
-together out of the way.
+[[!if test="enabled(tag)" then="""
+This wiki has the tag plugin enabled, so you'll see a note below that this
+page is tagged with the "tags" tag.
+"""]]

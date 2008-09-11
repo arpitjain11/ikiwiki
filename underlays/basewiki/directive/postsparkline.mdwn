@@ -1,7 +1,7 @@
 The `postsparkline` directive is supplied by the [[!iki plugins/postsparkline]] plugin.
 
-This plugin uses the [[!iki plugins/sparkline]] plugin to create a [[sparkline]] of
-statistics about a set of pages, such as posts to a blog.
+This directive uses the [[!iki plugins/sparkline]] plugin to create a
+[[sparkline]] of statistics about a set of pages, such as posts to a blog.
 
 # examples
 
@@ -16,7 +16,7 @@ statistics about a set of pages, such as posts to a blog.
 # usage
 
 All options aside fron the `pages`, `max`, `formula`, `time`, and `color`
-options are passed on to the sparkline plugin.
+options are the same as in [[sparkline]] directive.
 
 You don't need to specify any data points (though you can if you want to).
 Instead, data points are automatically generated based on the creation

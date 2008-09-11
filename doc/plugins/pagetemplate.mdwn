@@ -1,10 +1,10 @@
 [[!template id=plugin name=pagetemplate author="[[Joey]]"]]
 [[!tag type/chrome]]
 
-This plugin implements the [[ikiwiki/directive/pagetemplate]] [[ikiwiki/directive]].
-The directive allows a page to be created using a different
+This plugin provides the [[ikiwiki/directive/pagetemplate]]
+[[ikiwiki/directive]], which allows a page to be created using a different
 [[template|wikitemplates]].
 
 This plugin can only use templates that are already installed in
-/usr/share/ikiwiki/templates (or wherever ikiwiki is configured to look for
+`/usr/share/ikiwiki/templates` (or wherever ikiwiki is configured to look for
 them). You can choose to use any .tmpl files in that directory.

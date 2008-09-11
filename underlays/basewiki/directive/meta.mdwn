@@ -90,8 +90,9 @@ Supported fields:
 
        \[[!meta link="http://joeyh.myopenid.com/" rel="openid.delegate"]]
 
-  However, this latter syntax won't be allowed if the [[!iki plugins/htmlscrubber]]
-  plugin is enabled, since it can be used to insert unsafe content.
+  However, this latter syntax won't be allowed if the 
+  [[!iki plugins/htmlscrubber]] plugin is enabled, since it can be used to
+  insert unsafe content.
 
 * redir
 
@@ -106,11 +107,12 @@ Supported fields:
 
   	\[[!meta redir="http://example.com/"]]
 
-  However, this latter syntax won't be allowed if the [[!iki plugins/htmlscrubber]]
-  plugin is enabled, since it can be used to insert unsafe content.
+  However, this latter syntax won't be allowed if the 
+  [[!iki plugins/htmlscrubber]] plugin is enabled, since it can be used to
+  insert unsafe content.
 
   For both cases, an anchor to jump to inside the destination page may also be
-  specified using the common `PAGE#ANCHOR` syntax.
+  specified using the common `#ANCHOR` syntax.
 
 * robots
 
