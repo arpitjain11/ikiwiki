@@ -49,7 +49,7 @@ sub getsetup () { #{{{
 		git_wrapper => {
 			type => "string",
 			example => "/git/wiki.git/hooks/post-update",
-			description => "git post-update hook to generate",
+			description => "git hook to generate",
 			safe => 0, # file
 			rebuild => 0,
 		},
