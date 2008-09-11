@@ -1,7 +1,7 @@
 Feature idea: I'd like to be able to tag pages in an ikiwiki blog with a
 publication date, and have the option of building a blog that excludes
 publication dates in the future.  (meta pubdate= ?)
- 
+
 I'm using ikiwiki on git for a "tip of the day" RSS feed, and I'd like to
 be able to queue up a bunch of items instead of literally putting in one
 tip per day.  In the future I think this will come in handy for other
@@ -12,6 +12,13 @@ on vacation".
 > is a wiki compiler, if something causes content to change based on the
 > date, then the wiki needs to be rebuilt periodically. So you'd need a
 > cron job or something.
-> 
-> Implemeting this feature probably needs 
-> [[todo/plugin_dependency_calulation]] to be implemented. --[[Joey]]
+>
+> Thinking about this some more, if you're going to have a cron job, you
+> could just set up a branch containing the future post. The branch could
+> have a name like 20080911. Then have the cron job git merge the day's
+> branch, if any, into master each day. And voila, post is completly hidden
+> until published. You'd want to avoid merge conflicts in your cron job ..
+> but they'd be unlikely if you limited yourself to just adding new
+> pages. Alternatively, for larger organisations wishing to deploy more
+> sweeping changes on a given date, replace cron job with intern.. ;-)
+> --[[Joey]]
