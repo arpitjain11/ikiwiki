@@ -1,6 +1,14 @@
 [[!template id=plugin name=orphans author="[[Joey]]"]]
 [[!tag type/meta]]
 
-This plugin implements the [[ikiwiki/directive/orphans]] [[ikiwiki/directive]].
-The directive generates a list of possibly orphaned pages -- pages that no
-other page links to.
+This plugin provides the [[ikiwiki/directive/orphans]]
+[[ikiwiki/directive]], which generates a list of possibly orphaned pages --
+pages that no other page links to.
+
+[[!if test="enabled(orphans)" then="""
+Here's a list of orphaned pages on this wiki:
+
+[[!orphans pages="* and !news/* and !todo/* and !bugs/* and !users/* and
+!recentchanges and !examples/* and !tips/* and !sandbox/* and !templates/* and
+!wikiicons/* and !plugins/*"]]
+"""]]

@@ -1,7 +1,9 @@
 The `orphans` directive is supplied by the [[!iki plugins/orphans]] plugin.
 
 This directive generates a list of possibly orphaned pages -- pages that no
-other page links to.
+other page links to. Example:
+
+	\[[!orphans pages="* and !blog/*"]]
 
 The optional parameter "pages" can be a [[ikiwiki/PageSpec]] specifying the
 pages to check for orphans, default is search them all.
@@ -9,11 +11,3 @@ pages to check for orphans, default is search them all.
 Note that it takes backlinks into account, but does not count inlining a
 page as linking to it, so will generally count many blog-type pages as
 orphans.
-
-[[!if test="enabled(orphans)" then="""
-Here's a list of orphaned pages on this wiki:
-
-[[!orphans pages="* and !news/* and !todo/* and !bugs/* and !users/* and
-!recentchanges and !examples/* and !tips/* and !sandbox/* and !templates/* and
-!wikiicons/* and !plugins/*"]]
-"""]]
