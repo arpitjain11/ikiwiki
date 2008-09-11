@@ -2,7 +2,7 @@ When converting an existing blog to ikiwiki it would be useful to be able to pre
 
 Also, it should be possible to change the permalink (the Atom `<link>`) of a post (e.g. moving the content and leaving a redirector behind), while keeping the same Atom `<id>` (so that aggregators don't get confused).
 
-Ideally UUIDs for [blog posts](/ikiwiki/blog/) should be chosen when the post is created, and frozen permanently by checking them in along with the content.
+Ideally UUIDs for [[blog]] posts should be chosen when the post is created, and frozen permanently by checking them in along with the content.
 
 Perhaps ikiwiki's blogging functionality could be hooked up to the [meta plugin](/meta/plugin/), with a new meta keyword (uuid? feed-uuid? atom-uuid?) to achieve this.
 

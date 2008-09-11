@@ -6,7 +6,7 @@ This wiki serves as the home for the ikiwiki wiki engine, providing collaborativ
 
 * Rather than inventing yet another simplistic, linear version control system, ikiwiki uses a standard version control system such as [[Subversion|rcs/svn]] or [[rcs/Git]].  You can edit a wiki by committing to your repository, as well as through a traditional web interface.  This makes ikiwiki ideal for collaborative software development; just keep your wiki in version control next to your software.  You can also take full advantage of the features of these systems; for instance, you can keep a local branch of your wiki via [[rcs/Git]].
 
-* You can turn any set of pages into a [[ikiwiki/blog]] or similar news feed,
+* You can turn any set of pages into a [[blog]] or similar news feed,
 * complete with RSS and Atom support.  You can run your weblog on ikiwiki (and [[many_people_do|ikiwikiusers]]), run a Planet-like [[aggregator|plugins/aggregate]] for external feeds, or keep a [[TODO]] and [[bug|bugs]] list with tags for completed items.
 
 * ikiwiki provides a wiki compiler, designed to transform your wiki content into a set of static pages.  You can then serve these pages as static content.  ikiwiki will not fall over during a Slashdotting, because page views don't require the ikiwiki CGI; as long as your web server can keep up, your site will survive.  Furthermore, you can choose whether you want to run the ikiwiki CGI for web edits or only handle commits to the underlying version control system; you can even run ikiwiki privately and just manually copy the content to another server.  So if you want to put a wiki up on a server without installing any software on that server, try ikiwiki.
