@@ -5,11 +5,9 @@ else="This wiki has templates **disabled**."
 ]]
 
 Templates are files that can be filled out and inserted into pages in the
-wiki.
+wiki, using the [[ikiwiki/directive/template]] [[ikiwiki/directive]].
 
 [[!if test="enabled(template) and enabled(inline)" then="""
-
-## Available templates
 
 These templates are available for inclusion onto other pages in this
 wiki:
