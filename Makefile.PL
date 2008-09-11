@@ -57,6 +57,15 @@ extra_install:
 			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		done; \
 	done
+
+	# The directive docs become their own special underlay.
+	install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/directives/ikiwiki/directive
+	for file in doc/ikiwiki/directive/*; do \
+		if [ -f "$$file" ]; then \
+			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/directives/ikiwiki/directive; \
+		fi \
+	done
+
 	for dir in `find templates -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		for file in `find $$dir -follow -maxdepth 1 -type f`; do \

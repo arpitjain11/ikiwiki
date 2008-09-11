@@ -1,9 +1,15 @@
 [[!template id=plugin name=listdirectives author="Will"]]
 [[!tag type/meta]]
 
-This plugin provides the [[ikiwiki/directive/linkmap]] [[ikiwiki/directive]].
-The linkmap directive inserts a list of currently available directives into the page.
+This plugin provides the [[ikiwiki/directive/linkmap]]
+[[ikiwiki/directive]], which inserts a list of currently available
+directives into the page.
 
-Each directive links to a wiki page with the same name. The location of the
-pages in the wiki can be controlled via the `directive_description_dir`
-setting in the setup file.
+Each directive links to a wiki page with the same name, that should
+document that directive. The location of these pages can be controlled via
+the `directive_description_dir` setting in the setup file, the default is
+"ikiwiki/directive/foo".
+
+When this plugin is enabled, it enables the directives underlay, which
+contains documentation about all the directives included in plugins shipped
+with ikiwiki. This adds about 200 kb to the size of your wiki.

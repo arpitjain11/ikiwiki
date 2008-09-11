@@ -7,6 +7,7 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	add_underlay("directives");
 	hook(type => "getsetup", id => "listdirectives", call => \&getsetup);
 	hook(type => "checkconfig", id => "listdirectives", call => \&checkconfig);
 	hook(type => "needsbuild", id => "listdirectives", call => \&needsbuild);
