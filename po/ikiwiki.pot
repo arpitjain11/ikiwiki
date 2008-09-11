@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-09 14:40-0400\n"
+"POT-Creation-Date: 2008-09-11 18:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1132
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1143
 msgid "Error"
 msgstr ""
 
@@ -262,18 +262,18 @@ msgstr ""
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:79 ../IkiWiki/Plugin/img.pm:83
-#: ../IkiWiki/Plugin/img.pm:100
+#: ../IkiWiki/Plugin/img.pm:80 ../IkiWiki/Plugin/img.pm:84
+#: ../IkiWiki/Plugin/img.pm:101
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:86
+#: ../IkiWiki/Plugin/img.pm:87
 #, perl-format
 msgid "failed to resize: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:117
+#: ../IkiWiki/Plugin/img.pm:118
 #, perl-format
 msgid "failed to determine size of image %s"
 msgstr ""
@@ -870,20 +870,25 @@ msgstr ""
 msgid "refreshing wiki.."
 msgstr ""
 
-#: ../IkiWiki.pm:444
+#: ../IkiWiki.pm:451
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:490
+#: ../IkiWiki.pm:497
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:1115
+#: ../IkiWiki.pm:526
+#, perl-format
+msgid "failed to load external plugin needed for %s plugin: %s"
+msgstr ""
+
+#: ../IkiWiki.pm:1126
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1603
+#: ../IkiWiki.pm:1614
 msgid "yes"
 msgstr ""
 

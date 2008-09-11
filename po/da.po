@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-05 13:41-0400\n"
+"POT-Creation-Date: 2008-09-11 18:52-0400\n"
 "PO-Revision-Date: 2008-08-11 01:04+0200\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: None\n"
@@ -51,7 +51,7 @@ msgstr "Indstillinger gemt"
 msgid "You are banned."
 msgstr "Du er banlyst."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1132
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1143
 msgid "Error"
 msgstr "Fejl"
 
@@ -132,7 +132,7 @@ msgstr "opretter ny side %s"
 msgid "deleting bucket.."
 msgstr "sletter bundt.."
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:192
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:193
 msgid "done"
 msgstr "færdig"
 
@@ -190,18 +190,18 @@ msgstr "%s fra %s"
 msgid "There are no broken links!"
 msgstr "Ingen henvisninger der ikker fungerer!"
 
-#: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:31
-#: ../IkiWiki/Plugin/cutpaste.pm:46 ../IkiWiki/Plugin/cutpaste.pm:62
+#: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:30
+#: ../IkiWiki/Plugin/cutpaste.pm:45 ../IkiWiki/Plugin/cutpaste.pm:61
 #: ../IkiWiki/Plugin/testpagespec.pm:26
 #, perl-format
 msgid "%s parameter is required"
 msgstr "parametren %s er krævet"
 
-#: ../IkiWiki/Plugin/cutpaste.pm:67
+#: ../IkiWiki/Plugin/cutpaste.pm:66
 msgid "no text was copied in this page"
 msgstr "ingen tekst blev kopieret i denne side"
 
-#: ../IkiWiki/Plugin/cutpaste.pm:70
+#: ../IkiWiki/Plugin/cutpaste.pm:69
 #, perl-format
 msgid "no text was copied in this page with id %s"
 msgstr "ingen tekst blev kopieret i denne side med id %s"
@@ -265,18 +265,18 @@ msgstr "Image::Magick ikke installeret"
 msgid "bad size \"%s\""
 msgstr "forkert størrelse \"%s\""
 
-#: ../IkiWiki/Plugin/img.pm:79 ../IkiWiki/Plugin/img.pm:83
-#: ../IkiWiki/Plugin/img.pm:100
+#: ../IkiWiki/Plugin/img.pm:80 ../IkiWiki/Plugin/img.pm:84
+#: ../IkiWiki/Plugin/img.pm:101
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr "læsning af %s mislykkedes: %s"
 
-#: ../IkiWiki/Plugin/img.pm:86
+#: ../IkiWiki/Plugin/img.pm:87
 #, perl-format
 msgid "failed to resize: %s"
 msgstr "Ændring af størrelse mislykkedes: %s"
 
-#: ../IkiWiki/Plugin/img.pm:117
+#: ../IkiWiki/Plugin/img.pm:118
 #, perl-format
 msgid "failed to determine size of image %s"
 msgstr "Vurdering af størrelse på billede mislykkedes: %s"
@@ -871,28 +871,33 @@ msgstr "brug: --set var=værdi"
 msgid "generating wrappers.."
 msgstr "bygger wrappers.."
 
-#: ../ikiwiki.in:181
+#: ../ikiwiki.in:182
 msgid "rebuilding wiki.."
 msgstr "genopbygger wiki..."
 
-#: ../ikiwiki.in:184
+#: ../ikiwiki.in:185
 msgid "refreshing wiki.."
 msgstr "genopfrisker wiki..."
 
-#: ../IkiWiki.pm:444
+#: ../IkiWiki.pm:451
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Skal angive url til wiki med --url når der bruges --cgi"
 
-#: ../IkiWiki.pm:490
+#: ../IkiWiki.pm:497
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:1115
+#: ../IkiWiki.pm:526
+#, perl-format
+msgid "failed to load external plugin needed for %s plugin: %s"
+msgstr ""
+
+#: ../IkiWiki.pm:1126
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "forudberegningssløkke fundet på %s ved dybde %i"
 
-#: ../IkiWiki.pm:1603
+#: ../IkiWiki.pm:1614
 msgid "yes"
 msgstr "ja"
 

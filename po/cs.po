@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-05 13:41-0400\n"
+"POT-Creation-Date: 2008-09-11 18:52-0400\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -47,7 +47,7 @@ msgstr "Nastavení uloženo."
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1132
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1143
 msgid "Error"
 msgstr "Chyba"
 
@@ -128,7 +128,7 @@ msgstr "vytvářím novou stránku %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:192
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:193
 msgid "done"
 msgstr "hotovo"
 
@@ -188,18 +188,18 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr "Žádné porušené odkazy!"
 
-#: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:31
-#: ../IkiWiki/Plugin/cutpaste.pm:46 ../IkiWiki/Plugin/cutpaste.pm:62
+#: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:30
+#: ../IkiWiki/Plugin/cutpaste.pm:45 ../IkiWiki/Plugin/cutpaste.pm:61
 #: ../IkiWiki/Plugin/testpagespec.pm:26
 #, perl-format
 msgid "%s parameter is required"
 msgstr "parametr %s je vyžadován"
 
-#: ../IkiWiki/Plugin/cutpaste.pm:67
+#: ../IkiWiki/Plugin/cutpaste.pm:66
 msgid "no text was copied in this page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/cutpaste.pm:70
+#: ../IkiWiki/Plugin/cutpaste.pm:69
 #, perl-format
 msgid "no text was copied in this page with id %s"
 msgstr ""
@@ -267,18 +267,18 @@ msgstr "polygen není nainstalován"
 msgid "bad size \"%s\""
 msgstr "chybná velikost \"%s\""
 
-#: ../IkiWiki/Plugin/img.pm:79 ../IkiWiki/Plugin/img.pm:83
-#: ../IkiWiki/Plugin/img.pm:100
+#: ../IkiWiki/Plugin/img.pm:80 ../IkiWiki/Plugin/img.pm:84
+#: ../IkiWiki/Plugin/img.pm:101
 #, perl-format
 msgid "failed to read %s: %s"
 msgstr "nelze číst %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:86
+#: ../IkiWiki/Plugin/img.pm:87
 #, perl-format
 msgid "failed to resize: %s"
 msgstr "nelze změnit velikost: %s"
 
-#: ../IkiWiki/Plugin/img.pm:117
+#: ../IkiWiki/Plugin/img.pm:118
 #, fuzzy, perl-format
 msgid "failed to determine size of image %s"
 msgstr "nelze změnit velikost: %s"
@@ -879,28 +879,33 @@ msgstr ""
 msgid "generating wrappers.."
 msgstr "generuji obaly..."
 
-#: ../ikiwiki.in:181
+#: ../ikiwiki.in:182
 msgid "rebuilding wiki.."
 msgstr "znovu vytvářím wiki..."
 
-#: ../ikiwiki.in:184
+#: ../ikiwiki.in:185
 msgid "refreshing wiki.."
 msgstr "obnovuji wiki..."
 
-#: ../IkiWiki.pm:444
+#: ../IkiWiki.pm:451
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:490
+#: ../IkiWiki.pm:497
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:1115
+#: ../IkiWiki.pm:526
+#, perl-format
+msgid "failed to load external plugin needed for %s plugin: %s"
+msgstr ""
+
+#: ../IkiWiki.pm:1126
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
 
-#: ../IkiWiki.pm:1603
+#: ../IkiWiki.pm:1614
 msgid "yes"
 msgstr ""
 

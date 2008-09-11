@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-05 13:41-0400\n"
+"POT-Creation-Date: 2008-09-11 18:52-0400\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -49,7 +49,7 @@ msgstr "Tùy thích đã được lưu."
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1132
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1143
 msgid "Error"
 msgstr "Lỗi"
 
@@ -131,7 +131,7 @@ msgstr "đang tạo trang mới %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:192
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:193
 msgid "done"
 msgstr "xong"
 
@@ -191,18 +191,18 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr "Không có liên kết bị ngắt nào."
 
-#: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:31
-#: ../IkiWiki/Plugin/cutpaste.pm:46 ../IkiWiki/Plugin/cutpaste.pm:62
+#: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:30
+#: ../IkiWiki/Plugin/cutpaste.pm:45 ../IkiWiki/Plugin/cutpaste.pm:61
 #: ../IkiWiki/Plugin/testpagespec.pm:26
 #, perl-format
 msgid "%s parameter is required"
 msgstr ""
 
-#: ../IkiWiki/Plugin/cutpaste.pm:67
+#: ../IkiWiki/Plugin/cutpaste.pm:66
 msgid "no text was copied in this page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/cutpaste.pm:70
+#: ../IkiWiki/Plugin/cutpaste.pm:69
 #, perl-format
 msgid "no text was copied in this page with id %s"
 msgstr ""
@@ -272,18 +272,18 @@ msgstr "chưa cài đặt polygen"
 msgid "bad size \"%s\""
 msgstr ""
 
-#: ../IkiWiki/Plugin/img.pm:79 ../IkiWiki/Plugin/img.pm:83
-#: ../IkiWiki/Plugin/img.pm:100
+#: ../IkiWiki/Plugin/img.pm:80 ../IkiWiki/Plugin/img.pm:84
+#: ../IkiWiki/Plugin/img.pm:101
 #, fuzzy, perl-format
 msgid "failed to read %s: %s"
 msgstr "lỗi ghi %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:86
+#: ../IkiWiki/Plugin/img.pm:87
 #, fuzzy, perl-format
 msgid "failed to resize: %s"
 msgstr "lỗi ghi %s: %s"
 
-#: ../IkiWiki/Plugin/img.pm:117
+#: ../IkiWiki/Plugin/img.pm:118
 #, fuzzy, perl-format
 msgid "failed to determine size of image %s"
 msgstr "lỗi ghi %s: %s"
@@ -894,28 +894,33 @@ msgstr ""
 msgid "generating wrappers.."
 msgstr "đang tạo ra các bộ bao bọc.."
 
-#: ../ikiwiki.in:181
+#: ../ikiwiki.in:182
 msgid "rebuilding wiki.."
 msgstr "đang xây dựng lại wiki.."
 
-#: ../ikiwiki.in:184
+#: ../ikiwiki.in:185
 msgid "refreshing wiki.."
 msgstr "đang làm tươi wiki.."
 
-#: ../IkiWiki.pm:444
+#: ../IkiWiki.pm:451
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:490
+#: ../IkiWiki.pm:497
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:1115
+#: ../IkiWiki.pm:526
+#, perl-format
+msgid "failed to load external plugin needed for %s plugin: %s"
+msgstr ""
+
+#: ../IkiWiki.pm:1126
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"
 
-#: ../IkiWiki.pm:1603
+#: ../IkiWiki.pm:1614
 msgid "yes"
 msgstr ""
 
