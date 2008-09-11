@@ -1,14 +1,6 @@
 The `fortune` directive is supplied by the [[!iki plugins/fortune]] plugin.
 
-This just uses the `fortune` program to insert a fortune into the page.
+This just uses the `fortune` program to insert a fortune cookie into the page.
 Usage:
 
 	\[[!fortune ]]
-
-[[!if test="enabled(fortune)" then="""
-Here's a fortune for you:
-
-----
-
-[[!fortune ]]
-"""]]

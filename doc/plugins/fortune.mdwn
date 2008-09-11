@@ -3,3 +3,11 @@
 
 This plugin implements the [[ikiwiki/directive/fortune]] [[ikiwiki/directive]].
 This directive  uses the `fortune` program to insert a fortune into the page.
+
+[[!if test="enabled(fortune)" then="""
+Here's a fortune for you:
+
+----
+
+[[!fortune ]]
+"""]]
