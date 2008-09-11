@@ -2,6 +2,12 @@
 [[!tag type/meta]]
 [[!tag type/slow]]
 
-This plugin implements the [[ikiwiki/directive/linkmap]] [[ikiwiki/directive]].
-The directive uses [graphviz](http://www.graphviz.org/) to generate a graph showing the links between a
-set of pages in the wiki.
+This plugin provides the [[ikiwiki/directive/linkmap]] [[ikiwiki/directive]].
+It uses [graphviz](http://www.graphviz.org/) to generate a graph showing the
+links between a set of pages in the wiki.
+
+[[!if test="enabled(linkmap)" then="""
+Here is an example link map, of the index page and all pages it links to:
+
+[[!linkmap pages="index or (backlink(index) and !*.png)"]]
+"""]]

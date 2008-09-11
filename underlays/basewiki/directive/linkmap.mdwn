@@ -1,7 +1,7 @@
 The `linkmap` directive is supplied by the [[!iki plugins/linkmap]] plugin.
 
-This directive uses [graphviz](http://www.graphviz.org/) to generate a graph showing the links between a
-set of pages in the wiki. Example usage:
+This directive uses [graphviz](http://www.graphviz.org/) to generate a
+graph showing the links between a set of pages in the wiki. Example usage:
 
 	\[[!linkmap pages="* and !blog/* and !*/Discussion"]]
 
@@ -20,9 +20,3 @@ directive:
 * `height`, `width` - Limit the size of the map to a given height and width,
   in inches. Both must be specified for the limiting to take effect, otherwise
   the map's size is not limited.
-
-[[!if test="enabled(linkmap)" then="""
-Here is an example link map, of the index page and all pages it links to:
-
-[[!linkmap pages="index or (backlink(index) and !*.png)"]]
-"""]]
