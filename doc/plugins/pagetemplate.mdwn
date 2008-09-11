@@ -1,14 +1,10 @@
 [[!template id=plugin name=pagetemplate author="[[Joey]]"]]
 [[!tag type/chrome]]
 
-This plugin allows a page to be created using a different
-[[template|wikitemplates]]. The page text is inserted into the template, so
-the template controls the overall look and feel of the wiki page. This is
-in contrast to the [[template]] plugin, which allows inserting templates
-_into_ the body of a page.
+This plugin implements the [[ikiwiki/directive/pagetemplate]] [[ikiwiki/directive]].
+The directive allows a page to be created using a different
+[[template|wikitemplates]].
 
 This plugin can only use templates that are already installed in
 /usr/share/ikiwiki/templates (or wherever ikiwiki is configured to look for
-them). You can choose to use any .tmpl files in that directory. Example:
-
-	\[[!pagetemplate template=my_fancy.tmpl]]
+them). You can choose to use any .tmpl files in that directory.

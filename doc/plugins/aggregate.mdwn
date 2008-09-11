@@ -1,23 +1,7 @@
 [[!template id=plugin name=aggregate author="[[Joey]]"]]
 [[!tag type/useful]]
 
-This plugin allows content from other feeds to be aggregated into the wiki.
-Aggregate a feed as follows:
-
-	\[[!aggregate name="example blog" dir="example"
-	feedurl="http://example.com/index.rss"
-	url="http://example.com/" updateinterval="15"]]
-
-That example aggregates posts from the specified RSS feed, updating no
-more frequently than once every 15 minutes, and puts a page per post under
-the example/ directory in the wiki.
-
-You can then use ikiwiki's [[ikiwiki/blog]] support to create a blog of one or
-more aggregated feeds. For example:
-
-	\[[!inline pages="internal(example/*)"]]
-
-## setup
+This plugin implements the [[ikiwiki/directive/aggregate]] [[ikiwiki/directive]].
 
 New users of aggregate should enable the `aggregateinternal => 1` option in the
 .setup file. If you don't do so, you will need to enable the [[html]] plugin
@@ -40,36 +24,6 @@ this, turn on `aggregate_webtrigger` in your setup file. The url to
 visit is `http://whatever/ikiwiki.cgi?do=aggregate_webtrigger`. Anyone
 can visit the url to trigger an aggregation run, but it will only check
 each feed if its `updateinterval` has passed.
-
-## usage
-
-Here are descriptions of all the supported parameters to the `aggregate`
-directive:
-
-* `name` - A name for the feed. Each feed must have a unique name.
-  Required.
-* `url` - The url to the web page for the feed that's being aggregated.
-  Required.
-* `dir` - The directory in the wiki where pages should be saved. Optional,
-  if not specified, the directory is based on the name of the feed.
-* `feedurl` - The url to the feed. Optional, if it's not specified ikiwiki
-  will look for feeds on the `url`. RSS and atom feeds are supported.
-* `updateinterval` - How often to check for new posts, in minutes. Default
-  is 15 minutes.
-* `expireage` - Expire old items from this feed if they are older than
-  a specified number of days. Default is to never expire on age.
-* `expirecount` - Expire old items from this feed if there are more than
-  the specified number total. Oldest items will be expired first. Default
-  is to never expire on count.
-* `tag` - A tag to tag each post from the feed with. A good tag to use is
-  the name of the feed. Can be repeated multiple times. The [[tag]] plugin
-  must be enabled for this to work.
-* `template` - Template to use for creating the aggregated pages. Defaults to
-  aggregatepost.
-
-Note that even if you are using subversion or another revision control
-system, pages created by aggregation will *not* be checked into revision
-control.
 
 ## internal pages and `aggregateinternal`
 

@@ -1,24 +1,5 @@
 [[!template id=plugin name=poll author="[[Joey]]"]]
 [[!tag type/useful]]
 
-This plugin allows you to create online polls in the wiki. Here's an
-example use:
-
-	\[[!poll 0 "red" 0 "green" 0 "blue"]]
-
-The numbers indicate how many users voted for that choice. When a user
-votes for a choice in the poll, the page is modified and the number
-incremented.
-
-While some basic precautions are taken to prevent users from accidentially
-voting twice, this sort of poll should not be counted on to be very
-accurate; all the usual concerns about web based polling apply. Unless the
-page that the poll is in is locked, users can even edit the page and change
-the numbers!
-
-Parameters: 
-
-* `open` - Whether voting is still open. Set to "no" to close the poll to
-  voting.
-* `total` - Show total number of votes at bottom of poll. Default is "yes".
-* `percent` - Whether to display percents. Default is "yes".
+This plugin implements the [[ikiwiki/directive/poll]] [[ikiwiki/directive]].
+The directive allows you to create online polls in the wiki.

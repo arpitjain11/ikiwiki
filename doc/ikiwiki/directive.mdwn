@@ -37,3 +37,15 @@ above as the preferred alternative.  However, ikiwiki still supports wikis
 using the older syntax, if the `prefix_directives` option is not enabled.
 For backward compatibility with existing wikis, this option currently
 defaults to off, so ikiwiki supports the old syntax.
+
+[[!if test="enabled(shortcut)" then="""
+The [[/ikiwiki/directive/shortcut]] directive allows defining simple wikilinks to
+remote wikis.  See the [[shortcuts]] page for a list of these shortcuts.
+"""]]
+
+[[!if test="enabled(listdirectives)" then="""
+Here is a list of available (non-[[shortcut|shortcuts]]) directives:
+
+[[!listdirectives]]
+"""]]
+

@@ -1,15 +1,6 @@
 [[!template id=plugin name=more author="Ben"]]
 [[!tag type/format]]
 
-This plugin provides a way to have a "more" link on a page in a blog, that
-leads to the full version of the page. Use it like this:
-
-	\[[!more linktext="click for more" text="""
-	This is the rest of my post. Not intended for people catching up on
-	their blogs at 30,000 feet. Because I like to make things
-	difficult.
-	"""]]
-
-If the `linktext` parameter is omitted it defaults to just "more".
-
-Note that you can accomplish something similar using a [[toggle]] instead.
+This plugin implements the [[ikiwiki/directive/more]] [[ikiwiki/directive]].
+The directive provides a way to have a "more" link on a page in a blog, that
+leads to the full version of the page.

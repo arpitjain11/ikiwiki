@@ -1,17 +1,8 @@
 [[!template id=plugin name=haiku author="[[Joey]]"]]
 [[!tag type/fun]]
 
-This plugin allows inserting a randomly generated haiku into a wiki page.
-Just type:
-
-	\[[!haiku hint="argument"]]
-
-[[!haiku hint="argument test"]]
-
-The hint parameter can be omitted, it only provides the generator a hint of
-what to write the haiku about. If no hint is given, it might base it on the
-page name. Since the vocabulary it knows is very small, many hints won't
-affect the result at all.
+This plugin implements the [[ikiwiki/directive/haiku]] [[ikiwiki/directive]].
+The directive allows inserting a randomly generated haiku into a wiki page.
 
 As a special bonus, enabling this plugin makes any error messages ikiwiki
 should display be written in haiku.

@@ -1,21 +1,9 @@
 [[!template id=plugin name=tag author="[[Joey]]"]]
 [[!tag type/tags type/link]]
 
-This plugin allows tagging pages. List tags as follows:
-
-	\[[!tag tech life linux]]
-
-The tags work the same as if you had put a (hidden) [[ikiwiki/WikiLink]] on
-the page for each tag, so you can use a [[ikiwiki/PageSpec]] match all
-pages that are tagged with a given tag, for example. The tags will also
-show up on blog entries and at the bottom of the tagged pages, as well as
-in RSS and Atom feeds.
-
-If you want a visible [[ikiwiki/WikiLink]] along with the tag, use taglink
-instead:
-
-	\[[!taglink foo]]
-	\[[!taglink tagged_as_foo|foo]]
+This plugin implements the [[ikiwiki/directive/tag]] and 
+[[ikiwiki/directive/taglink]] [[ikiwiki/directive]]s.
+These directives allow tagging pages.
 
 This plugin has a configuration option. Set --tagbase=tags and links to tags
 will be located under the specified base page. If ikiwiki is configured
@@ -23,14 +11,3 @@ this way, then the example above actually tags the page with the tags
 tags/tech, tags/life, and tags/linux. This is a useful way to avoid
 having to write the full path to tags, if you want to keep them grouped
 together out of the way.
-
-If you want to override the tagbase for a particular tag, you can use
-something like this:
-
-	\[[!tag ./foo]]
-	\[[!taglink /foo]]
-
-[[!if test="enabled(tag)" then="""
-This wiki has the tag plugin enabled, so you'll see a note below that this
-page is tagged with the "tags" tag.
-"""]]

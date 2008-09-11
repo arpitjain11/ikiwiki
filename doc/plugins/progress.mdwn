@@ -1,19 +1,5 @@
 [[!template id=plugin name=progress author="[[Will]]"]]
 [[!tag type/meta]]
 
-Provides a \\[[!progress ]] [[ikiwiki/directive]] that displays a
-progress bar.
-
-There are two possible parameter sets.  The first is a single parameter
-`percent` which holds a percentage figure for how complete the progress bar is.
-
-The second possible set of parameters is a pair of [PageSpecs|[ikiwiki/PageSpec]],
-`totalpages` and `donepages`.  The progress plugin counts the number of
-pages in each pagespec and shows the percentage of the total pages that are
-done.
-
-This plugin is included in ikiwiki, but is not enabled by default.
-
-If it is turned on it can show what percentage of pages have discussion pages:
-
-	\[[!progress totalpages="* and !*/Discussion" donepages="*/Discussion"]]
+This plugin implements the [[ikiwiki/directive/progress]] [[ikiwiki/directive]].
+The directive that displays a progress bar.

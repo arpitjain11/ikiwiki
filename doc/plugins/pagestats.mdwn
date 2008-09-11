@@ -1,14 +1,5 @@
 [[!template id=plugin name=pagestats author="Enrico Zini"]]
 [[!tag type/meta type/tags]]
 
-This plugin can generate stats about how pages link to each other. It can
-produce either a del.icio.us style cloud, or a table counting the number of
-links to each page.
-
-Here's how to use it to create a [[tag]] cloud:
-
-	\[[!pagestats pages="tags/*"]]
-
-And here's how to create a table of all the pages on the wiki:
-
-	\[[!pagestats style="table"]]
+This plugin implements the [[ikiwiki/directive/pagestats]] [[ikiwiki/directive]].
+The directive can generate stats about how pages link to each other.

@@ -1,15 +1,5 @@
 [[!template id=plugin name=fortune author="[[Joey]]"]]
 [[!tag type/fun]]
 
-This just uses the `fortune` program to insert a fortune into the page.
-Usage:
-
-	\[[!fortune ]]
-
-[[!if test="enabled(fortune)" then="""
-Here's a fortune for you:
-
-----
-
-[[!fortune ]]
-"""]]
+This plugin implements the [[ikiwiki/directive/fortune]] [[ikiwiki/directive]].
+This directive  uses the `fortune` program to insert a fortune into the page.

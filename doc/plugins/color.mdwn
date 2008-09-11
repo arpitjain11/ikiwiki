@@ -1,24 +1,5 @@
 [[!template id=plugin name=color core=0 author="[[ptecza]]"]]
 [[!tag type/chrome]]
 
-This plugin can be used to color a piece of text on a page.
-It can be used to set the foreground and/or background color of the text.
-
-You can use a color name (e.g. `white`) or HTML code (e.g. `#ffffff`)
-to define colors. 
-
-## examples
-
-Here the foreground color is defined as a word, while the background color
-is defined as a HTML color code:
-
-	\[[!color foreground=white background=#ff0000 text="White text on red background"]]
-
-The background color is missing, so the text is displayed on default
-background:
-
-	\[[!color foreground=white text="White text on default color background"]]
-
-The foreground is missing, so the text has the default foreground color:
-
-	\[[!color background=#ff0000 text="Default color text on red background"]]
+This plugin implements the [[ikiwiki/directive/color]] [[ikiwiki/directive]].
+The directive can be used to color a piece of text on a page.
