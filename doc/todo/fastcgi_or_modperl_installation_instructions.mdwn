@@ -1,1 +1,10 @@
 There has got to be a way to run the CGI wrapper under fastcgi or modperl (apache 2). Are there easy to follow instructions describing how to set this up?
+
+> AFAIK noone has done this. One immediate problem would be permissions;
+> the CGI wrapper runs setuid to you so it can write to the wiki -- if
+> running in fastcgi/modperl I guess it would run as the web server, unless
+> there's some way to control that. So you'd need to set up the perms
+> differenly, to let the web server commit changes to the wiki.
+> 
+> I've not looked at what code changes fastcgi or modperl would require in
+> ikiwiki. --[[Joey]]
