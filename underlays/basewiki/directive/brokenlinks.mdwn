@@ -7,6 +7,6 @@ are written wrong.
 The optional parameter "pages" can be a [[ikiwiki/PageSpec]] specifying the
 pages to search for broken links, default is search them all.
 
-If this plugin is turned on, here's a list of broken links on this wiki:
+Example:
 
-[[!brokenlinks pages="* and !recentchanges"]]
+	\[[!brokenlinks pages="* and !recentchanges"]]

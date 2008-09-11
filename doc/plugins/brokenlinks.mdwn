@@ -1,5 +1,9 @@
 [[!template id=plugin name=brokenlinks author="[[Joey]]"]]
 [[!tag type/link type/meta]]
 
-This plugin implements the [[ikiwiki/directive/brokenlinks]] [[ikiwiki/directive]].
-The directive generates a list of broken links on pages in the wiki.
+This plugin provides a [[ikiwiki/directive/brokenlinks]] [[ikiwiki/directive]]
+that generates a list of broken links on pages in the wiki.
+
+If this plugin is turned on, here's a list of broken links on this wiki:
+
+[[!brokenlinks pages="* and !recentchanges"]]
