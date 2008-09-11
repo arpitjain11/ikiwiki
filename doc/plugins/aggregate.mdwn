@@ -1,7 +1,9 @@
 [[!template id=plugin name=aggregate author="[[Joey]]"]]
 [[!tag type/useful]]
 
-This plugin implements the [[ikiwiki/directive/aggregate]] [[ikiwiki/directive]].
+This plugin allows content from other feeds to be aggregated into the
+wiki. To specify feeds to aggregate, use the
+[[ikiwiki/directive/aggregate]] [[ikiwiki/directive]].
 
 New users of aggregate should enable the `aggregateinternal => 1` option in the
 .setup file. If you don't do so, you will need to enable the [[html]] plugin
