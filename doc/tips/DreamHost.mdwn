@@ -142,7 +142,7 @@ In ikiwiki.setup, you have to make your source and destination folders have your
     [good]$ ls -la ~
     lrwxrwxrwx  1 root staff 25 2007-08-03 16:44 /home/user -> /home/.server/user
 
-So far, it looks like only the source and destination parameters require this unsymlinked path, but for paranoia reasons, you may want to put them everywhere.  [[news/version_2.14]] explains why this happens.
+So far, it looks like only the source and destination parameters require this unsymlinked path, but for paranoia reasons, you may want to put them everywhere. The changelog for version 2.14 explains why this happens.
 
 Next, add your installed Perl module directory to the *libdir* parameter.  It should look something like :
 
