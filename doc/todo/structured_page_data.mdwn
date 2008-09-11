@@ -45,10 +45,10 @@ This seems conceptually straightforward, if possibly quite internally
 complex to handle the more complicated types and validation.
 
 One implementation wrinkle is how to build the html form. The editpage.tmpl
-currently overrides the standard [[cpan CGI::FormBuilder]] generated form,
+currently overrides the standard [[!cpan CGI::FormBuilder]] generated form,
 which was done to make the edit page be laid out in a nice way. This,
 however, means that new fields cannot be easily added to it using
-[[cpan CGI::FormBuilder]]. The attachment plugin uses the hack of bouilding
+[[!cpan CGI::FormBuilder]]. The attachment plugin uses the hack of bouilding
 up html by hand and dumping it into the form via a template variable. 
 
 It would be nice if the type implementation code could just use
