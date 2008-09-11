@@ -1,0 +1,65 @@
+The `calendar` directive is supplied by the [[!iki plugins/calendar]] plugin.
+
+This directive displays a calendar, similar to the typical calendars shown on
+some blogs.
+
+# examples
+
+	\[[!calendar ]]
+
+	\[[!calendar type="month" pages="blog/* and !*/Discussion"]]
+
+	\[[!calendar type="year" year="2005" pages="blog/* and !*/Discussion"]]
+
+This plugin is inspired by the calendar plugin for Blosxom, but
+derives no code from it. This plugin is essentially a fancy front end
+to archives of previous pages, usually used for blogs. It can produce
+a calendar for a given month, or a list of months for a given year.
+
+This plugin requires extra setup.  See the plugin documentation for details.
+
+## usage
+
+* `type` - Used to specify the type of calendar wanted. Can be one of
+  "month" or "year". The default is a month view calendar.
+* `pages` - Specifies the [[ikiwiki/PageSpec]] of pages to link to from the
+  month calendar. Defaults to "*".
+* `archivebase` - Configures the base of the archives hierarchy. The
+  default is "archives". Note that this default can also be overridden
+  for the whole wiki by setting `archivebase` in ikiwiki's setup file.
+* `year` - The year for which the calendar is requested. Defaults to the
+  current year.
+* `month` - The numeric month for which the calendar is requested, in the
+  range 1..12. Used only for the month view calendar, and defaults to the
+  current month.
+* `week_start_day` - A number, in the range 0..6, which represents the day
+  of the week that the month calendar starts with. 0 is Sunday, 1 is Monday,
+  and so on. Defaults to 0, which is Sunday.
+* `months_per_row` - In the annual calendar, number of months to place in
+  each row. Defaults to 3.
+
+## CSS
+
+The output is liberally sprinkled with classes, for fine grained CSS
+customization.
+
+* `month-calendar` - The month calendar as a whole.
+* `month-calendar-head` - The head of the month calendar (ie,"March").
+* `month-calendar-day-head` - A column head in the month calendar (ie, a
+  day-of-week abbreviation).
+* `month-calendar-day-noday`, `month-calendar-day-link`, 
+  `month-calendar-day-nolink`, `month-calendar-day-future`,
+  `month-calendar-day-this-day` - The day squares on the month calendar,
+  for days that are not in the month (before or after the month itself), that
+  don't have links, that do have links, that are in the future, or are that
+  are the current day, respectively.
+* `Sunday`, `Monday`, `Tuesday`, ... - Each day square is also given a class
+  matching its  (localised) day of week, this can be used to highlight
+  weekends.
+* `year-calendar` - The year calendar as a whole.
+* `year-calendar-head` - The head of the year calendar (ie, "2007").
+* `year-calendar-subhead` - For example, "Months".
+* `year-calendar-month-link`, `year-calendar-month-nolink`,
+  `year-calendar-month-future`, `year-calendar-this-month` - The month
+  squares on the year calendar, for months with stories,
+  without, in the future, and currently selected, respectively.

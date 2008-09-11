@@ -1,0 +1,23 @@
+The `teximg` directive is supplied by the [[!iki plugins/teximg]] plugin.
+
+This directive renders LaTeX formulas into images.
+
+## examples
+
+	\[[!teximg code="\frac{1}{2}"]]
+	\[[!teximg code="E = - \frac{Z^2 \cdot  \mu \cdot e^4}{32\pi^2 \epsilon_0^2 \hbar^2 n^2}" ]]
+
+To scale the image, use height=x:
+
+	\[[!teximg code="\frac{1}{2}" height="17"]]
+	\[[!teximg code="\frac{1}{2}" height="8"]]
+
+If no height is choosen the default height 12 is used. Valid heights are: 8, 9,
+10, 11, 12, 14, 17, 20. If another height is entered, the closest available
+height is used.
+
+To add an alt text to the image, use alt="text":
+
+	\[[!teximg code="\frac{1}{2}" alt="1/2"]]
+
+See [this site](http://www.der-winnie.de/opensource/gsoc2007) for rendered images.

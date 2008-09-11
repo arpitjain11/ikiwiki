@@ -1,0 +1,10 @@
+The `version` directive is supplied by the [[!iki plugins/version]] plugin.
+
+This directive allows inserting the version of ikiwiki onto a page.
+
+Whenever ikiwiki is upgraded to a new version, the page will be rebuilt,
+updating the version number.
+
+Use is simple:
+
+	\[[!version ]]

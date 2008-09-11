@@ -1,0 +1,10 @@
+The `pagecount` directive is supplied by the [[!iki plugins/pagecount]] plugin.
+
+This directive counts pages currently in the wiki.
+
+The optional parameter "pages" can be a [[ikiwiki/PageSpec]] specifying the
+pages to count, default is to count them all.
+
+If it is turned on it can tell us that this wiki includes
+[[!pagecount pages="* and !recentchanges"]]
+pages, of which [[!pagecount pages="*/Discussion"]] are discussion pages.

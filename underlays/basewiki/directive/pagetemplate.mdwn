@@ -1,0 +1,12 @@
+The `pagetemplate` directive is supplied by the [[!iki plugins/pagetemplate]] plugin.
+
+This directive allows a page to be created using a different
+wikitemplates. The page text is inserted into the template, so
+the template controls the overall look and feel of the wiki page. This is
+in contrast to the [[ikiwiki/directive/template]] directive, which allows inserting templates
+_into_ the body of a page.
+
+This directive can only reference templates that are already installed
+by the system administrator. Example:
+
+	\[[!pagetemplate template=my_fancy.tmpl]]

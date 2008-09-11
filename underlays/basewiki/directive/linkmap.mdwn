@@ -1,0 +1,28 @@
+The `linkmap` directive is supplied by the [[!iki plugins/linkmap]] plugin.
+
+This directive uses [graphviz](http://www.graphviz.org/) to generate a graph showing the links between a
+set of pages in the wiki. Example usage:
+
+	\[[!linkmap pages="* and !blog/* and !*/Discussion"]]
+
+Only links between mapped pages will be shown; links pointing to or from
+unmapped pages will be omitted. If the pages to include are not specified,
+the links between all pages (and other files) in the wiki are mapped. For
+best results, only a small set of pages should be mapped, since otherwise
+the map can become very large, unweildy, and complicated. Also, the map is
+rebuilt whenever one of the mapped pages is changed, which can make the
+wiki a bit slow.
+
+Here are descriptions of all the supported parameters to the `linkmap`
+directive:
+
+* `pages` - A [[ikiwiki/PageSpec]] of the pages to map.
+* `height`, `width` - Limit the size of the map to a given height and width,
+  in inches. Both must be specified for the limiting to take effect, otherwise
+  the map's size is not limited.
+
+[[!if test="enabled(linkmap)" then="""
+Here is an example link map, of the index page and all pages it links to:
+
+[[!linkmap pages="index or (backlink(index) and !*.png)"]]
+"""]]

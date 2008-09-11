@@ -1,0 +1,53 @@
+The `copy`, `cut` and `paste` directives are supplied by the [[!iki plugins/cutpaste]] plugin.
+
+With these directives you can store and recall pieces of text:
+
+ * `\[[!cut id=name text="text"]]` memorizes the text allowing to recall it
+   using the given ID.  The text being cut is not included in the output.
+ * `\[[!copy id=name text="text"]]` memorizes the text allowing to recall it
+   using the given ID.  The text being cut *is* included in the output.
+ * `\[[!paste id=name]]` is replaced by the previously memorized text.
+
+The text being cut, copied and pasted can freely include wiki markup, including
+more calls to cut, copy and paste.
+
+You do not need to memorize the text before using it: a cut directive can
+follow the paste directive that uses its text.  In fact, this is quite useful
+to postpone big blocks of text like long annotations and have a more natural
+flow.  For example:
+
+	This plugin provides three directives:
+
+	 * \[[!toggle id="cut" text="cut"]] that cuts text
+	 * \[[!toggle id="copy" text="copy"]] that copies text
+	 * \[[!toggle id="paste" text="paste"]] that pastes text
+
+	\[[!toggleable id="cut" text="\[[!paste id=cutlongdesc]]"]]
+	\[[!toggleable id="copy" text="\[[!paste id=copylongdesc]]"]]
+	\[[!toggleable id="paste" text="\[[!paste id=pastelongdesc]]"]]
+
+	\[...some time later...]
+
+	\[[!cut id=cutlongdesc text="""
+	   blah blah blah
+	"""]]
+	\[[!cut id=copylongdesc text="""
+	   blah blah blah
+	"""]]
+	\[[!cut id=pastelongdesc text="""
+	   blah blah blah
+	"""]]
+
+This can potentially be used to create loops, but ikiwiki is clever and breaks
+them.
+
+Since you can paste without using double quotes, copy and paste can be used to
+nest directive that require multiline parameters inside each other:
+
+	\[[!toggleable id=foo text="""
+	  \[[!toggleable id=bar text="\[[!paste id=baz]]"]]
+	"""]]
+
+	\[[!cut id=baz text="""
+	multiline parameter!
+	"""]]

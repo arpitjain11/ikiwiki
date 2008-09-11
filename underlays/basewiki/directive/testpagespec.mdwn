@@ -1,0 +1,22 @@
+The `testpagespec` directive is supplied by the [[!iki plugins/testpagespec]] plugin.
+
+This directive allows testing a [[ikiwiki/PageSpec]] to see if it matches a
+page, and to see the part that matches, or causes the match to fail.
+
+Example uses:
+
+	\[[!testpagespec pagespec="foopage and barpage" match="foopage"]]
+
+This will print out something like "no match: barpage does not match
+foopage", highlighting which part of the [[ikiwiki/PageSpec]] is causing
+the match to fail.
+	
+	\[[!testpagespec pagespec="foopage or !bar*" match="barpage"]]
+
+This will print out something like "no match: bar* matches barpage", since
+the part of the [[ikiwiki/PageSpec]] that fails is this negated match.
+	
+	\[[!testpagespec pagespec="foopage or barpage" match="barpage"]]
+
+This will print out something like "match: barpage matches barpage",
+indicating the part of the [[ikiwiki/PageSpec]] that caused it to match.

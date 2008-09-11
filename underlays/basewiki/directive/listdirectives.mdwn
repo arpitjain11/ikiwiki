@@ -1,0 +1,16 @@
+The `listdirectives` directive is supplied by the [[!iki plugins/listdirectives]] plugin.
+
+This directive generates a list of available
+[[directives|ikiwiki/directive]].
+
+	\[[!listdirectives]]
+
+There is one optional keyword argument, `generated`.  Normally the `listdirectives` directive will
+list all built in directives and directives directly registered by plugins.  With this keyword,
+`listdirectives` will also list directives generated later.  For example, all [[shortcuts]] are
+directives generated in turn by the `shortcut` directive.  They will only be listed if the `generated` argument is
+supplied.
+
+    \[[!listdirectives generated]]
+
+This extended list is often quite long, and often contains many undocumented directives.

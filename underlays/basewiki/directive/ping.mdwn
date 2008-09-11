@@ -1,0 +1,16 @@
+The `ping` directive is supplied by the [[!iki plugins/pinger]] plugin.
+
+This directive allows ikiwiki to be configured to hit a URL each time it
+updates the wiki. One way to use this is in conjunction with the [[!iki plugins/pingee]]
+plugin to set up a loosely coupled mirror network, or a branched version of
+a wiki. By pinging the mirror or branch each time the main wiki changes, it
+can be kept up-to-date.
+
+        \[[!ping from="http://mywiki.com/"
+        to="http://otherwiki.com/ikiwiki.cgi?do=ping"]]
+
+The "from" parameter must be identical to the url of the wiki that is doing
+the pinging. This is used to prevent ping loops.
+
+The "to" parameter is the url to ping. The example shows how to ping
+another ikiwiki instance.

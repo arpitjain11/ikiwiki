@@ -1,0 +1,32 @@
+The `toggle` and `toggleable` directives are supplied by the [[!iki plugins/toggle]] plugin.
+
+With these directives you can create links on pages that, when clicked, toggle
+display of other parts of the page.
+
+It uses javascript to accomplish this; browsers without javascript will
+always see the full page content.
+
+Example use:
+
+	\[[!toggle id="ipsum" text="show"]]
+
+	\[[!toggleable id="ipsum" text="""
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+	eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+	ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+	aliquip ex ea commodo consequat.
+
+	[[!toggle id="ipsum" text="hide"]]
+	"""]]
+
+Note that you can include wiki markup in the toggleable text,
+including even additional toggles, as shown in the above example.
+
+Also, the toggle and the togglable definitions do not need to be next to
+each other, but can be located anywhere on the page. There can also be
+mutiple toggles that all toggle a single togglable.
+
+The id has a default value of "default", so can be omitted in simple cases.
+
+If you'd like a toggleable to be displayed by default, and toggle to
+hidden, then pass a parameter "open=yes" when setting up the toggleable.

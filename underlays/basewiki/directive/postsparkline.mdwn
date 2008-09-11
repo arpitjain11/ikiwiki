@@ -1,0 +1,43 @@
+The `postsparkline` directive is supplied by the [[!iki plugins/postsparkline]] plugin.
+
+This plugin uses the [[!iki plugins/sparkline]] plugin to create a [[sparkline]] of
+statistics about a set of pages, such as posts to a blog.
+
+# examples
+
+	Post interval: 
+	\[[!postsparkline pages="blog/* and !*/Discussion" max=100
+	formula=interval style=bar barwidth=2 barspacing=1 height=13]]
+	
+	Posts per month this year: 
+	\[[!postsparkline pages="blog/* and !*/Discussion" max=12
+	formula=permonth style=bar barwidth=2 barspacing=1 height=13]]
+
+# usage
+
+All options aside fron the `pages`, `max`, `formula`, `time`, and `color`
+options are passed on to the sparkline plugin.
+
+You don't need to specify any data points (though you can if you want to).
+Instead, data points are automatically generated based on the creation
+times of pages matched by the specified `pages` [[ikiwiki/PageSpec]]. A
+maximum of `max` data points will be generated.
+
+The `formula` parameter controls the formula used to generate data points.
+Available forumlae:
+
+* `interval` - The height of each point represents how long it has been
+  since the previous post.
+* `perday` - Each point represents a day; the height represents how
+  many posts were made that day.
+* `permonth` - Each point represents a month; the height represents how
+  many posts were made that month.
+* `peryear` - Each point represents a day; the height represents how
+  many posts were made that year.
+
+The `time` parameter has a default value of "ctime", since forumae use
+the creation times of pages by default. If you instead want
+them to use the modification times of pages, set it to "mtime".
+
+To change the color used to draw the sparkline, use the `color` parameter.
+For example, "color=red".

@@ -1,0 +1,10 @@
+The `inline` directive is supplied by the [[!iki plugins/inline]] plugin.
+
+This is a [[ikiwiki/directive]] that allows including one wiki page
+inside another. For example:
+
+	\[[!inline pages="blog/*"]]
+
+The most common use of inlining is generating blogs and RSS or Atom feeds.
+See [[ikiwiki/blog]] for details.
+

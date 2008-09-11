@@ -1,0 +1,28 @@
+The `graph` directive is supplied by the [[!iki plugins/graphviz]] plugin.
+
+This directive allows embedding [graphviz](http://www.graphviz.org/) graphs in a
+page.  Example usage:
+
+	\[[!graph src="a -> b -> c; a -> c;"]]
+
+Note that graphs will only show up in previews if your browser has
+[[!wikipedia data: URI]] support, or if the same graph already exists on that
+page.
+
+The `graph` directive supports the following parameters:
+
+- `src` - The graphviz source to render.
+- `type` - The type of graph to render: `graph` or `digraph`.  Defaults to
+  `digraph`.
+- `prog` - The graphviz program to render with: `dot`, `neato`, `fdp`, `twopi`,
+  or `circo`.  Defaults to `dot`.
+- `height`, `width` - Limit the size of the graph to a given height and width,
+  in inches. You must specify both to limit the size; otherwise, graphviz will
+  choose a size, without any limit.
+
+[[!if test="enabled(graphviz)" then="""
+Some example graphs:
+
+[[!graph src="a -> b -> c; a -> b;"]]
+[[!graph src="a -- b -- c -- a;" prog="circo" type="graph"]]
+"""]]
