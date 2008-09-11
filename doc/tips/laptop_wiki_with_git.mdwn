@@ -22,7 +22,8 @@ Now you need to write a setup file for ikiwiki on the laptop. Mostly this
 is standard, but a few special settings are needed:
 
 * Configure a cgi wrapper as usual, but configure the git wrapper to
-  be written to the `post-commit` hook of the git clone.
+  be written to the `post-commit` hook of the git clone, rather than the
+  usual `post-update` hook.
 
 * By default, ikiwiki pulls and pushes from `origin`. This shouldn't be 
   done on the laptop, because the origin may not be accessible (when the
@@ -46,4 +47,5 @@ Use standard git commands to handle pulling from and pushing to the server.
 Note that if changes are pulled from the server, you will need to manually
 update the wiki, with a command such as `ikiwiki -setup wiki.setup -refresh`.
 If you'd like it to automatically update when changes are merged in, you
-can simply symlink the post-commit hook to a post-merge hook.
+can simply make a symlink `post-merge` hook pointing at the `post-update`
+hook ikiwiki created.
