@@ -1,4 +1,4 @@
-The `meta` directive is supplied by the [[!iki plugins/meta]] plugin.
+The `meta` directive is supplied by the [[!iki plugins/meta desc=meta]] plugin.
 
 This directive allows inserting arbitrary metadata into the source of a page.
 Enter the metadata as follows:
@@ -91,7 +91,7 @@ Supported fields:
        \[[!meta link="http://joeyh.myopenid.com/" rel="openid.delegate"]]
 
   However, this latter syntax won't be allowed if the 
-  [[!iki plugins/htmlscrubber]] plugin is enabled, since it can be used to
+  [[!iki plugins/htmlscrubber desc=htmlscrubber]] plugin is enabled, since it can be used to
   insert unsafe content.
 
 * redir
@@ -108,7 +108,7 @@ Supported fields:
   	\[[!meta redir="http://example.com/"]]
 
   However, this latter syntax won't be allowed if the 
-  [[!iki plugins/htmlscrubber]] plugin is enabled, since it can be used to
+  [[!iki plugins/htmlscrubber desc=htmlscrubber]] plugin is enabled, since it can be used to
   insert unsafe content.
 
   For both cases, an anchor to jump to inside the destination page may also be
@@ -141,7 +141,7 @@ Supported fields:
 
 If the field is not one of the above predefined fields, the metadata will be
 written to the generated html page as a &lt;meta&gt; header. However, this
-won't be allowed if the [[!iki plugins/htmlscrubber]] plugin is enabled,
+won't be allowed if the [[!iki plugins/htmlscrubber desc=htmlscrubber]] plugin is enabled,
 since it can be used to insert unsafe content.
 
 [[!meta robots="noindex, follow"]]
