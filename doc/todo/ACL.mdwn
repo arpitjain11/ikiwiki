@@ -23,6 +23,24 @@ something, that I think is very valuable.
 
 Also see [[!debbug 443346]].
 
+> Just a few quick thoughts about this:
+>
+>* I'm only thinking about write ACLs.  As Joey noted, read ACLs need to be done in the web server.
+>* ACLs are going to be really hard for people with direct access to the revision control system.
+>  Which means that we really only need to define ACLs for web access.
+>* ACLs for web access can then be defined by the web master.  These might not need to be
+>  defined in the wiki pages (although they could be).
+>* Given the previous two points, can't this be done with the `match_user()`
+> function defined by the [[plugins/attachment]] plugin (see the [[ikiwiki/pagespec/attachment]] pagespec info)
+> and the [[plugins/lockedit]] plugin (see [[page_locking]])?
+>
+> For example, add the following to your config file:
+>
+> locked_pages => '!(user(john) and */Discussion) and *',
+>
+> would lock all pages unless you're john and editing a Discussion page.
+> It's a thought anyway :-).  -- [[Will]]
+
 I am considering giving this a try, implementing it as a module.
 Here is how I see it:
 

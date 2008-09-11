@@ -69,3 +69,37 @@ Additional tie-ins:
 See also:
 
 [[tracking_bugs_with_dependencies]]
+
+> I was also thinking about this for bug tracking.  I'm not sure what
+> sort of structured data is wanted in a page, so I decided to brainstorm
+> use cases:
+>
+> * You just want the page to be pretty.
+> * You want to access the data from another page.  This would be almost like
+>     like a database lookup, or the OpenOffice Calc [VLookup](http://wiki.services.openoffice.org/wiki/Documentation/How_Tos/Calc:_VLOOKUP_function) function.
+> * You want to make a pagespec depend upon the data.  This could be used
+>    for dependancy tracking - you could match against pages listed as dependencies,
+>    rather than all pages linked from a given page.
+>
+>The first use case is handled by having a template in the page creation.  You could
+>have some type of form to edit the data, but that's just sugar on top of the template.
+>If you were going to have a web form to edit the data, I can imagine a few ways to do it:
+>
+> * Have a special page type which gets compiled into the form.  The page type would
+>    need to define the form as well as hold the stored data.
+> * Have special directives that allow you to insert form elements into a normal page.
+>
+>I'm happy with template based page creation as a first pass...
+>
+>The second use case could be handled by a regular expression directive. eg:
+>
+> \[[regex spec="myBug" regex="Depends: ([^\s]+)"]]
+>
+> The directive would be replaced with the match from the regex on the 'myBug' page... or something.
+>
+>The third use case requires a pagespec function.  One that matched a regex in the page might work.
+>Otherwise, another option would be to annotate links with a type, and then check the type of links in
+>a pagespec.  e.g. you could have `depends` links and normal links.
+>
+>Anyway, I just wanted to list the thoughts.  In none of these use cases is straight yaml or json the
+>obvious answer.  -- [[Will]]
