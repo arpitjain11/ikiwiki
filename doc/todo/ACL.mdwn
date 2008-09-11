@@ -41,6 +41,11 @@ Also see [[!debbug 443346]].
 > would lock all pages unless you're john and editing a Discussion page.
 > It's a thought anyway :-).  -- [[Will]]
 
+>> Yes, writing per-user commit ACLs has become somewhat easier with recent
+>> features. Breaking `match_user` out of attachment, and making the
+>> lockedit plugin pass`user` and `ip` params when it calls `pagespec_match`
+>> would be sufficient. --[[Joey]]
+
 I am considering giving this a try, implementing it as a module.
 Here is how I see it:
 
