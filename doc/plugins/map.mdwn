@@ -1,5 +1,11 @@
 [[!template id=plugin name=map author="Alessandro Dotti Contra"]]
 [[!tag type/meta]]
 
-This plugin implements the [[ikiwiki/directive/map]] [[ikiwiki/directive]].
-The directive generates a hierarchical page map for the wiki.
+This plugin provides the [[ikiwiki/directive/map]] [[ikiwiki/directive]],
+which generates a hierarchical page map for the wiki.
+
+[[!if test="enabled(map)" then="""
+Here's an example map, for the plugins section of this wiki:
+
+[[!map pages="(plugins or plugins/*) and !*/*/*"]]
+"""]]
