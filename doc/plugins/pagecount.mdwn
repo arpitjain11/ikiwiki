@@ -1,5 +1,10 @@
 [[!template id=plugin name=pagecount author="[[Joey]]"]]
 [[!tag type/meta]]
 
-This plugin implements the [[ikiwiki/directive/pagecount]] [[ikiwiki/directive]].
-The directive displays number of pages currently in the wiki.
+This plugin provides the [[ikiwiki/directive/pagecount]]
+[[ikiwiki/directive]], which displays the number of pages
+currently in the wiki.
+
+If it is turned on it can tell us that this wiki includes
+[[!pagecount pages="* and !recentchanges"]]
+pages, of which [[!pagecount pages="*/Discussion"]] are discussion pages.
