@@ -1,7 +1,7 @@
 [[!template id=plugin name=graphviz author="[[JoshTriplett]]"]]
 [[!tag type/chrome type/format]]
 
-This plugin implements the [[ikiwiki/directive/graph]] [[ikiwiki/directive]].
+This plugin provides the [[ikiwiki/directive/graph]] [[ikiwiki/directive]].
 This directive allows embedding [graphviz](http://www.graphviz.org/) graphs in a
 page.
 
@@ -14,5 +14,12 @@ server out of memory, or use up large amounts of bandwidth.  Any user can
 already do these things with just the core of ikiwiki, but the graphviz plugin
 allows for an amplification attack, since users can send less data to use large
 amounts of processing time and disk usage.
+
+[[!if test="enabled(graphviz)" then="""
+Some example graphs:
+
+[[!graph src="a -> b -> c; a -> b;"]]
+[[!graph src="a -- b -- c -- a;" prog="circo" type="graph"]]
+"""]]
 
 This plugin uses the [[!cpan Digest::SHA1]] perl module.
