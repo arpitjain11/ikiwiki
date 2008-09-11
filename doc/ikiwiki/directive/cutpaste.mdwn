@@ -17,12 +17,6 @@ follow the paste directive that uses its text.  In fact, this is quite useful
 to postpone big blocks of text like long annotations and have a more natural
 flow.  For example:
 
-	This plugin provides three directives:
-
-	 * \[[!toggle id="cut" text="cut"]] that cuts text
-	 * \[[!toggle id="copy" text="copy"]] that copies text
-	 * \[[!toggle id="paste" text="paste"]] that pastes text
-
 	\[[!toggleable id="cut" text="\[[!paste id=cutlongdesc]]"]]
 	\[[!toggleable id="copy" text="\[[!paste id=copylongdesc]]"]]
 	\[[!toggleable id="paste" text="\[[!paste id=pastelongdesc]]"]]

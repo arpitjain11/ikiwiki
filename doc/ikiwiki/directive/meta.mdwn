@@ -1,6 +1,6 @@
 The `meta` directive is supplied by the [[!iki plugins/meta]] plugin.
 
-This plugin allows inserting arbitrary metadata into the source of a page.
+This directive allows inserting arbitrary metadata into the source of a page.
 Enter the metadata as follows:
 
 	\[[!meta field="value"]]
@@ -44,7 +44,7 @@ Supported fields:
 * description
 
   Specifies a "description" of the page. You could use this to provide
-  a summary, for example, to be picked up by the [[map]] plugin.
+  a summary, for example, to be picked up by the [[map]] directive.
 
 * permalink
 
@@ -125,9 +125,7 @@ Supported fields:
   some combinations make sense. If there is no robots meta tag, "index,
   follow" is used as the default.
 
-  The plugin escapes the value, but otherwise does not care about its
-  contents. In particular, it does not check the values against the set of
-  valid values but serves whatever you pass it.
+  The value is escaped, but its contents are not otherwise checked.
 
 * guid
 
