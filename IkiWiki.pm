@@ -520,7 +520,11 @@ sub loadplugin ($) { #{{{
 	foreach my $dir (defined $config{libdir} ? possibly_foolish_untaint($config{libdir}) : undef,
 	                 "$installdir/lib/ikiwiki") {
 		if (defined $dir && -x "$dir/plugins/$plugin") {
-			require IkiWiki::Plugin::external;
+			eval { require IkiWiki::Plugin::external };
+			if ($@) {
+				my $reason=$@;
+				error(sprintf(gettext("failed to load external plugin needed for %s plugin: %s"), $plugin, $reason));
+			}
 			import IkiWiki::Plugin::external "$dir/plugins/$plugin";
 			$loaded_plugins{$plugin}=1;
 			return 1;
