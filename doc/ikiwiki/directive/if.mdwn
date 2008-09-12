@@ -23,8 +23,8 @@ If you want the [[ikiwiki/PageSpec]] to only match against the page that
 contains the conditional, rather than matching against all pages in the
 wiki, set the "all" parameter to "no".
 
-The regular [[ikiwiki/PageSpec]] syntax is expanded with the following
-additional tests:
+In an `if` directive, the regular [[ikiwiki/PageSpec]] syntax is expanded
+with the following additional tests:
 
 * enabled(plugin)
 
