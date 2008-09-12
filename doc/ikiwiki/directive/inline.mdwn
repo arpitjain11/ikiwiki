@@ -54,7 +54,7 @@ directive. These are the commonly used ones:
 * `skip` - Specify a number of pages to skip displaying. Can be useful
   to produce a feed that only shows archived pages.
 * `postform` - Set to "yes" to enable a form to post new pages to a
-  [[blog]].
+  blog.
 * `postformtext` - Set to specify text that is displayed in a postform.
 * `rootpage` - Enable the postform, and allows controling where
   newly posted pages should go, by specifiying the page that
@@ -79,7 +79,7 @@ Here are some less often needed parameters:
   use some other, custom template, such as the `titlepage` template that
   only shows post titles. Note that you should still set `archive=yes` if
   your custom template does not include the page content.
-* `raw` - Rather than the default behavior of creating a [[blog]],
+* `raw` - Rather than the default behavior of creating a blog,
   if raw is set to "yes", the page will be included raw, without additional
   markup around it, as if it were a literal part of the source of the 
   inlining page.
