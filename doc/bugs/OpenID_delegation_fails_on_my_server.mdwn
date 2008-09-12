@@ -13,3 +13,7 @@ switch to other providers in the future.
 
 > Hmm, I entered http://thewordnerd.info as the openid, and ended up at
 > http://thewordnerd.myopenid.com/ , which seems right? --[[Joey]]
+
+Sorry, didn't notice this edit. But, no, that is incorrect. Entering http://thewordnerd.info or thewordnerd.info should do the exact same thing that entering http://thewordnerd.myopenid.com does--in your case, prompt you to log in, in mine, ask if I want to verify the request. It's redirecting to the page itself, not using it as an OpenID provider.
+
+Unfortunately I don't speak or understand enough Perl to fix this, nor do I understand how to use its debugger, but it looks as if the consumer should support delegation. Not sure why it's behaving incorrectly here.
