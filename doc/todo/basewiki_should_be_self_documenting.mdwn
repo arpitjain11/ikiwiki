@@ -2,6 +2,12 @@ The pages in the basewiki should be fully self-documenting as far as what
 users need to know to edit pages in the wiki. [[ikiwiki/Formatting]]
 documents the basics, but doesn't include every preprocessor directive.
 
+> Thanks to Joey's work applying and fixing up my patches, this is mostly done.
+> The one thing I'd add above the way things currently work would be to add
+> the [[plugins/listdirectives]] plugin to [[plugins/goodstuff]]. 
+> Doing that requires making the decision about whether you really want the
+> documentation in every wiki - it is 200k.  -- [[Will]]
+
 Note that there's a disctinction between being self-documenting for users,
 and being complete documentation for ikiwiki. The basewiki is _not_
 intended to be the latter, so it lacks the usage page, all the plugin
