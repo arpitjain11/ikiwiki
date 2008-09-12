@@ -1,0 +1,9 @@
+Hi All;
+
+I'm trying to use a filter hook as part of making [[wikilinks|ikiwiki/wikilink]] work in [[plugins/contrib/tex4ht]].
+It seems that filter is called for every page. For my application I just want it to be called for ".tex" files, 
+but right now I have to have a look at the content, which I don't like so much.
+
+Is there a better hook to use for this? I need to transform the input before preprocessing.
+
+[[DavidBremner]] 
