@@ -1,4 +1,4 @@
-The current basewiki is not self-documenting. In particular, if
+The current basewiki is not [[self-documenting|todo/basewiki_should_be_self_documenting]]. In particular, if
 [[plugins/listdirectives]] is used, it creates a list with a bunch of
 broken links to directives/*, pages that do not currently exist in the
 docwiki or basewiki.
@@ -23,6 +23,8 @@ include examples of the plugin in use, which are sometimes rather expensive
 
 Either way requires a lot of reorganisation/doc work, and an onging
 maintenance load.
+
+> Which has now been [[done]].  -- [[Will]]
 
 BTW, this patch would be needed for the second approach, to allow
 listdirectives to map from preprocessor directives back to the plugin that
