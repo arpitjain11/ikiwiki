@@ -805,6 +805,6 @@ when imported, populate `$IkiWiki::Setup::raw_setup` with a reference
 to a hash containing all the config items. They should also implement a
 `gendump` function.
 
-By the way, to parse a ikiwiki setup file, a program just needs to
-do something like:
-`use IkiWiki::Setup; my %setup=IkiWiki::Setup::load($filename)`
+By the way, to parse a ikiwiki setup file and populate `%config`, a
+program just needs to do something like:
+`use IkiWiki::Setup; IkiWiki::Setup::load($filename)`

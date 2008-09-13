@@ -6,3 +6,5 @@ Shouldn't this print a bunch of output (admittedly not very nicely formatted).
 [ 11 rocinante  ~/tmp ]  perl -M'IkiWiki::Setup' -e 'print IkiWiki::Setup::load("foo.setup");'
 </pre>
 I get nothing with ikiwiki 2.63 [[DavidBremner]]
+
+> The docs were wrong, it populates `%config`. --[[Joey]] [[done]]
