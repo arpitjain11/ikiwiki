@@ -1,0 +1,10 @@
+Maybe this is obvious, but the config variable lives in the IkiWiki module, and one probably 
+wants to call defaultconfig for most applications. 
+<pre>
+%IkiWiki::config=IkiWiki::defaultconfig();
+IkiWiki::Setup::load($config_file);
+print  join(",",keys %IkiWiki::config);
+</pre>
+
+[[DavidBremner]]
+
