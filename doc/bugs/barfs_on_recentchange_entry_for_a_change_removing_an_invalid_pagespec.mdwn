@@ -1,0 +1,23 @@
+I have a commit doing
+
+    -\[[map pages="link(tag/<TMPL_VAR name>) and !papers/*"]]
+    +\[[map pages="link(sourcepage()) and !papers/*"]]
+
+ikiwiki now fails to compile the site, barfing:
+
+    Use of uninitialized value in subroutine entry at /usr/share/perl5/IkiWiki.pm line 1288.
+    ikiwiki.setup: Can't use string ("") as a subroutine ref while "strict refs" in use at /usr/share/perl5/IkiWiki.pm line 1288.
+    BEGIN failed--compilation aborted at (eval 6) line 200.
+
+after forcefully entering the Perl mode of thinking, I reduced this to line
+1285 of IkiWiki.pm (2.53), which apparently returns `undef`:
+
+    my $sub=pagespec_translate($spec);
+
+Why does it even bother parsing the diffs of `recentchanges`?
+
+I have not recompiled this site in ages, so I am not sure when this problem
+was introduced, but it wasn't there when I worked on the site last about
+a year ago in September 2007.
+
+-- [[madduck]]
