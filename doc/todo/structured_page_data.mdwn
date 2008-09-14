@@ -104,7 +104,7 @@ See also:
 >Anyway, I just wanted to list the thoughts.  In none of these use cases is straight yaml or json the
 >obvious answer.  -- [[Will]]
 
->> Okie.  I've had a play with this.  A plugin is included inline below, but it is only a rough first pass to
+>> Okie.  I've had a play with this.  A 'form' plugin is included inline below, but it is only a rough first pass to
 >> get a feel for the design space.
 >>
 >> The current design defines a new type of page - a 'form'.  The type of page holds YAML data
@@ -144,8 +144,23 @@ See also:
     \[[!inline pages="form_eq(age,15)" archive="yes"]]
     
 >> will include a link to the page generated above.
->>
->> Anyway, here is the plugin.  As noted above this is only a preliminary, exploratory, attempt. -- [[Will]]
+
+>>> Okie, I've just made another plugin to try and do things in a different way.
+>>> This approach adds a 'data' directive.  There are two arguments, `key` and `value`.
+>>> The directive is replaced by the value.  There is also a match function, which is similar
+>>> to the one above.  It also takes two arguments, a key and a value.  It returns true if the
+>>> page has that key/value pair in a data directive.  e.g.:
+
+    \[[!data key="age" value="15"]]
+
+>>> then, in another page:
+
+    \[[!inline pages="data_eq(age,15)" archive="yes"]]
+
+>>> I expect that we could have more match functions for each type of structured data,
+>>> I just wanted to implement a rough prototype to get a feel for how it behaves.  -- [[Will]]
+
+>> Anyway, here are the plugins.  As noted above these are only preliminary, exploratory, attempts. -- [[Will]]
 
     #!/usr/bin/perl
     # Interpret YAML data to make a web form
@@ -358,6 +373,85 @@ See also:
     		return IkiWiki::SuccessReason->new("field value matches");
     	} else {
     		return IkiWiki::FailReason->new("field value does not match");
+    	}
+    } #}}}
+    
+    1
+
+----
+
+    #!/usr/bin/perl
+    # Allow data embedded in a page to be checked for
+    package IkiWiki::Plugin::data;
+    
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+    
+    sub import { #{{{
+    	hook(type => "getsetup", id => "data", call => \&getsetup);
+    	hook(type => "needsbuild", id => "data", call => \&needsbuild);
+    	hook(type => "preprocess", id => "data", call => \&preprocess, scan => 1);
+    } # }}}
+    
+    sub getsetup () { #{{{
+    	return
+    		plugin => {
+    			safe => 1,
+    			rebuild => 1, # format plugin
+    		},
+    } #}}}
+    
+    sub needsbuild (@) { #{{{
+    	my $needsbuild=shift;
+    	foreach my $page (keys %pagestate) {
+    		if (exists $pagestate{$page}{data}) {
+    			if (exists $pagesources{$page} &&
+    			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
+    				# remove state, it will be re-added
+    				# if the preprocessor directive is still
+    				# there during the rebuild
+    				delete $pagestate{$page}{data};
+    			}
+    		}
+    	}
+    }
+    
+    sub preprocess (@) { #{{{
+    	my %params=@_;
+    
+    	$pagestate{$params{page}}{data}{$params{key}} = $params{value};
+    	
+    	return IkiWiki::preprocess($params{page}, $params{destpage}, 
+    		IkiWiki::filter($params{page}, $params{destpage}, $params{value})) if defined wantarray;
+    } # }}}
+    
+    
+    package IkiWiki::PageSpec;
+    
+    sub match_data_eq ($$;@) { #{{{
+    	my $page=shift;
+    	my $argSet=shift;
+    	my @args=split(/,/, $argSet);
+    	my $key=shift @args;
+    	my $value=shift @args;
+    
+    	my $file = $IkiWiki::pagesources{$page};
+    	
+    	if (! exists $IkiWiki::pagestate{$page}{data}) {
+    		return IkiWiki::FailReason->new("page does not contain any data directives");
+    	}
+    	
+    	if (! exists $IkiWiki::pagestate{$page}{data}{$key}) {
+    		return IkiWiki::FailReason->new("page does not contain data key '$key'");
+    	}
+    	
+    	my $formVal = $IkiWiki::pagestate{$page}{data}{$key};
+    
+    	if ($formVal eq $value) {
+    		return IkiWiki::SuccessReason->new("value matches");
+    	} else {
+    		return IkiWiki::FailReason->new("value does not match");
     	}
     } #}}}
     
