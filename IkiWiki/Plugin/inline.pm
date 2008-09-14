@@ -263,8 +263,14 @@ sub preprocess_inline (@) { #{{{
 		# Add a blog post form, with feed buttons.
 		my $formtemplate=template("blogpost.tmpl", blind_cache => 1);
 		$formtemplate->param(cgiurl => $config{cgiurl});
-		$formtemplate->param(rootpage => 
-			exists $params{rootpage} ? $params{rootpage} : $params{page});
+		my $rootpage;
+		if (exists $params{rootpage}) {
+			$rootpage=bestlink($params{page}, $params{rootpage});
+		}
+		else {
+			$rootpage=$params{page};
+		}
+		$formtemplate->param(rootpage => $rootpage);
 		$formtemplate->param(rssurl => $rssurl) if $feeds && $rss;
 		$formtemplate->param(atomurl => $atomurl) if $feeds && $atom;
 		if (exists $params{postformtext}) {
