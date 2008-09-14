@@ -21,3 +21,21 @@ was introduced, but it wasn't there when I worked on the site last about
 a year ago in September 2007.
 
 -- [[madduck]]
+
+> I can't reproduce this problem. When I try, the generated
+> `recentchanges/change_$sha1._change` file has the diff properly escaped,
+> so that the map is not expanded at all.
+> 
+> I also tried de-escaping that, and still failed to reproduce any crash.
+> The bogus pagespec simply expands to nothing. The line directly after the
+> line you quoted checks for syntax errors in the pagespec translation
+> eval and seems to be working fine:
+> 
+>	joey@kodama:~>perl -e 'use IkiWiki; my
+>	$sub=IkiWiki::pagespec_translate("link(tag/<TMPL_VAR name>) and !papers/*"); print "caught failure:".$@'
+>	caught failure:syntax error at (eval 14) line 1, near "|| &&"
+> 
+> Based on your line numbers, you are not running a current version of
+> ikiwiki. (Doesn't quite seem to be version 2.53.x either) Try with a current
+> version, and see if you can send me a source tree that can reproduce the
+> problem? --[[Joey]]
