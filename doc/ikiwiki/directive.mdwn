@@ -1,5 +1,5 @@
 [[!meta robots="noindex, follow"]]
-Directives are similar to a [[WikiLink]] in form, except they
+Directives are similar to a [[ikiwiki/WikiLink]] in form, except they
 begin with `!` and may contain parameters. The general form is:
 
 	\[[!directive param="value" param="value"]]
@@ -29,12 +29,12 @@ of text with triple-quotes:
 	"""]]
 
 ikiwiki also has an older syntax for directives, which requires a
-space in directives to distinguish them from [[wikilinks|wikilink]].  This
-syntax has several disadvantages: it requires a space after directives with no
-parameters (such as `\[[pagecount ]]`), and it prohibits spaces in
-[[wikilinks|wikilink]].  ikiwiki now provides the `!`-prefixed syntax shown
-above as the preferred alternative.  However, ikiwiki still supports wikis
-using the older syntax, if the `prefix_directives` option is not enabled.
+space in directives to distinguish them from [[wikilinks|ikiwiki/wikilink]].
+This syntax has several disadvantages: it requires a space after directives
+with no parameters (such as `\[[pagecount ]]`), and it prohibits spaces in
+[[wikilinks|ikiwiki/wikilink]].  ikiwiki now provides the `!`-prefixed syntax
+shown above as the preferred alternative.  However, ikiwiki still supports
+wikis using the older syntax, if the `prefix_directives` option is not enabled.
 For backward compatibility with existing wikis, this option currently
 defaults to off, so ikiwiki supports the old syntax.
 

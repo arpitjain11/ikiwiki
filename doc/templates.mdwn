@@ -81,6 +81,7 @@ that contains it, so you can include WikiLinks and all other forms of wiki
 markup in the template. Note though that such WikiLinks will not show up as
 backlinks to the page that uses the template.
 
-Note the use of "raw_name" inside the [[WikiLink]] generator. This ensures
-that if the name contains something that might be mistaken for wiki markup,
-it's not converted to html before being processed as a [[WikiLink]].
+Note the use of "raw_name" inside the [[ikiwiki/WikiLink]] generator. This
+ensures that if the name contains something that might be mistaken for wiki
+markup, it's not converted to html before being processed as a
+[[ikiwiki/WikiLink]].
