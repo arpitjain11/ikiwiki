@@ -103,3 +103,262 @@ See also:
 >
 >Anyway, I just wanted to list the thoughts.  In none of these use cases is straight yaml or json the
 >obvious answer.  -- [[Will]]
+
+>> Okie.  I've had a play with this.  A plugin is included inline below, but it is only a rough first pass to
+>> get a feel for the design space.
+>>
+>> The current design defines a new type of page - a 'form'.  The type of page holds YAML data
+>> defining a FormBuilder form.  For example, if we add a file to the wiki source `test.form`:
+
+    ---
+    fields:
+      age:
+        comment: This is a test
+        validate: INT
+        value: 15
+
+>> The YAML content is a series of nested hashes.  The outer hash is currently checked for two keys:
+>> 'template', which specifies a parameter to pass to the FromBuilder as the template for the
+>> form, and 'fields', which specifies the data for the fields on the form.
+>> each 'field' is itself a hash.  The keys and values are arguments to the formbuilder form method.
+>> The most important one is 'value', which specifies the value of that field.
+>>
+>> Using this, the plugin below can output a form when asked to generate HTML.  The Formbuilder
+>> arguments are sanitized (need a thorough security audit here - I'm sure I've missed a bunch of
+>> holes).  The form is generated with default values as supplied in the YAML data.  It also has an
+>> 'Update Form' button at the bottom.
+>>
+>>  The 'Update Form' button in the generated HTML submits changed values back to IkiWiki.  The
+>> plugin captures these new values, updates the YAML and writes it out again.  The form is
+>> validated when edited using this method.  This method can only edit the values in the form.
+>> You cannot add new fields this way.
+>>
+>> It is still possible to edit the YAML directly using the 'edit' button.  This allows adding new fields
+>> to the form, or adding other formbuilder data to change how the form is displayed.
+>>
+>> One final part of the plugin is a new pagespec function.  `form_eq()` is a pagespec function that
+>> takes two arguments (separated by a ',').  The first argument is a field name, the second argument
+>> a value for that field.  The function matches forms (and not other page types) where the named
+>> field exists and holds the value given in the second argument.  For example:
+    
+    \[[!inline pages="form_eq(age,15)" archive="yes"]]
+    
+>> will include a link to the page generated above.
+>>
+>> Anyway, here is the plugin.  As noted above this is only a preliminary, exploratory, attempt. -- [[Will]]
+
+    #!/usr/bin/perl
+    # Interpret YAML data to make a web form
+    package IkiWiki::Plugin::form;
+    
+    use warnings;
+    use strict;
+    use CGI::FormBuilder;
+    use IkiWiki 2.00;
+    
+    sub import { #{{{
+    	hook(type => "getsetup", id => "form", call => \&getsetup);
+    	hook(type => "htmlize", id => "form", call => \&htmlize);
+    	hook(type => "sessioncgi", id => "form", call => \&cgi_submit);
+    } # }}}
+    
+    sub getsetup () { #{{{
+    	return
+    		plugin => {
+    			safe => 1,
+    			rebuild => 1, # format plugin
+    		},
+    } #}}}
+    
+    sub makeFormFromYAML ($$$) { #{{{
+    	my $page = shift;
+    	my $YAMLString = shift;
+    	my $q = shift;
+    
+    	eval q{use YAML};
+    	error($@) if $@;
+    	eval q{use CGI::FormBuilder};
+    	error($@) if $@;
+    	
+    	my ($dataHashRef) = YAML::Load($YAMLString);
+    	
+    	my @fields = keys %{ $dataHashRef->{fields} };
+    	
+    	unshift(@fields, 'do');
+    	unshift(@fields, 'page');
+    	unshift(@fields, 'rcsinfo');
+    	
+    	# print STDERR "Fields: @fields\n";
+    	
+    	my $submittedPage;
+    	
+    	$submittedPage = $q->param('page') if defined $q;
+    	
+    	if (defined $q && defined $submittedPage && ! ($submittedPage eq $page)) {
+    		error("Submitted page doensn't match current page: $page, $submittedPage");
+    	}
+    	
+    	error("Page not backed by file") unless defined $pagesources{$page};
+    	my $file = $pagesources{$page};
+    	
+    	my $template;
+    	
+    	if (defined $dataHashRef->{template}) {
+    		$template = $dataHashRef->{template};
+    	} else {
+    		$template = "form.tmpl";
+    	}
+    	
+    	my $form = CGI::FormBuilder->new(
+    		fields => \@fields,
+    		charset => "utf-8",
+    		method => 'POST',
+    		required => [qw{page}],
+    		params => $q,
+    		action => $config{cgiurl},
+    		template => scalar IkiWiki::template_params($template),
+    		wikiname => $config{wikiname},
+    		header => 0,
+    		javascript => 0,
+    		keepextras => 0,
+    		title => $page,
+    	);
+    	
+    	$form->field(name => 'do', value => 'Update Form', required => 1, force => 1, type => 'hidden');
+    	$form->field(name => 'page', value => $page, required => 1, force => 1, type => 'hidden');
+    	$form->field(name => 'rcsinfo', value => IkiWiki::rcs_prepedit($file), required => 1, force => 0, type => 'hidden');
+    	
+    	my %validkey;
+    	foreach my $x (qw{label type multiple value fieldset growable message other required validate cleanopts columns comment disabled linebreaks class}) {
+    		$validkey{$x} = 1;
+    	}
+    
+    	while ( my ($name, $data) = each(%{ $dataHashRef->{fields} }) ) {
+    		next if $name eq 'page';
+    		next if $name eq 'rcsinfo';
+    		
+    		while ( my ($key, $value) = each(%{ $data }) ) {
+    			next unless $validkey{$key};
+    			next if $key eq 'validate' && !($value =~ /^[\w\s]+$/);
+    		
+    			# print STDERR "Adding to field $name: $key => $value\n";
+    			$form->field(name => $name, $key => $value);
+    		}
+    	}
+    	
+    	# IkiWiki::decode_form_utf8($form);
+    	
+    	return $form;
+    } #}}}
+    
+    sub htmlize (@) { #{{{
+    	my %params=@_;
+    	my $content = $params{content};
+    	my $page = $params{page};
+    
+    	my $form = makeFormFromYAML($page, $content, undef);
+    
+    	return $form->render(submit => 'Update Form');
+    } # }}}
+    
+    sub cgi_submit ($$) { #{{{
+    	my $q=shift;
+    	my $session=shift;
+    	
+    	my $do=$q->param('do');
+    	return unless $do eq 'Update Form';
+    	IkiWiki::decode_cgi_utf8($q);
+    
+    	eval q{use YAML};
+    	error($@) if $@;
+    	eval q{use CGI::FormBuilder};
+    	error($@) if $@;
+    	
+    	my $page = $q->param('page');
+    	
+    	return unless exists $pagesources{$page};
+    	
+    	return unless $pagesources{$page} =~ m/\.form$/ ;
+    	
+    	return unless IkiWiki::check_canedit($page, $q, $session);
+    
+    	my $file = $pagesources{$page};
+    	my $YAMLString = readfile(IkiWiki::srcfile($file));
+    	my $form = makeFormFromYAML($page, $YAMLString, $q);
+    
+    	my ($dataHashRef) = YAML::Load($YAMLString);
+    
+    	if ($form->submitted eq 'Update Form' && $form->validate) {
+    		
+    		#first update our data structure
+    		
+    		while ( my ($name, $data) = each(%{ $dataHashRef->{fields} }) ) {
+    			next if $name eq 'page';
+    			next if $name eq 'rcs-data';
+    			
+    			if (defined $q->param($name)) {
+    				$data->{value} = $q->param($name);
+    			}
+    		}
+    		
+    		# now write / commit the data
+    		
+    		writefile($file, $config{srcdir}, YAML::Dump($dataHashRef));
+    
+    		my $message = "Web form submission";
+    
+    		IkiWiki::disable_commit_hook();
+    		my $conflict=IkiWiki::rcs_commit($file, $message,
+    			$form->field("rcsinfo"),
+    			$session->param("name"), $ENV{REMOTE_ADDR});
+    		IkiWiki::enable_commit_hook();
+    		IkiWiki::rcs_update();
+    
+    		require IkiWiki::Render;
+    		IkiWiki::refresh();
+    
+    		IkiWiki::redirect($q, "$config{url}/".htmlpage($page)."?updated");
+    
+    	} else {
+    		error("Invalid data!");
+    	}
+    
+    	exit;
+    } #}}}
+    
+    package IkiWiki::PageSpec;
+    
+    sub match_form_eq ($$;@) { #{{{
+    	my $page=shift;
+    	my $argSet=shift;
+    	my @args=split(/,/, $argSet);
+    	my $field=shift @args;
+    	my $value=shift @args;
+    
+    	my $file = $IkiWiki::pagesources{$page};
+    	
+    	if ($file !~ m/\.form$/) {
+    		return IkiWiki::FailReason->new("page is not a form");
+    	}
+    	
+    	my $YAMLString = IkiWiki::readfile(IkiWiki::srcfile($file));
+    
+    	eval q{use YAML};
+    	error($@) if $@;
+    
+    	my ($dataHashRef) = YAML::Load($YAMLString);
+    
+    	if (! defined $dataHashRef->{fields}->{$field}) {
+    		return IkiWiki::FailReason->new("field '$field' not defined in page");
+    	}
+    
+    	my $formVal = $dataHashRef->{fields}->{$field}->{value};
+    
+    	if ($formVal eq $value) {
+    		return IkiWiki::SuccessReason->new("field value matches");
+    	} else {
+    		return IkiWiki::FailReason->new("field value does not match");
+    	}
+    } #}}}
+    
+    1
