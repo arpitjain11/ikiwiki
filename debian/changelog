@@ -21,6 +21,8 @@ ikiwiki (2.64) UNRELEASED; urgency=low
     remains, but is now deprecated too.
   * Removed old redirecton pages from basewiki (helponformatting,
     markdown, openid, pagespec, preprocessordirective, subpage, wikilink).
+  * inline: Treat rootpage as a link, so that it can refer to a subpage
+    without hardcoding the path.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 08 Sep 2008 19:21:20 -0400
 
