@@ -484,4 +484,26 @@ I have addressed the recentchanges bit, you can find my hacked up darcs.pm at <h
 
 It's got couple of FIXMEs, and a very site-specific filter for recentchanges. Not sure how to do that better though. I will eventually add web commits, probably of my own (and mention it here).
 
+---
+
+And here's yet another one. :)
+
+<http://khjk.org/~pesco/ikiwiki-darcs/>
+
+I've taken all the good stuff from the above and added the missing hooks. Some of them I haven't had a chance to test, namely `rcs_rename`, `rcs_remove`, `rcs_commit_staged`, and `rcs_diff`. Also, I'm not experienced with perl and don't know where I should have used the function `possibly_foolish_untaint`.
+
+Regarding the repository layout: There are two darcs repositories. One is the `srcdir`, the other we'll call `master`.
+
+ *  HTML is generated from `srcdir`.
+ *  CGI edits happen in `srcdir`.
+ *  The backend pulls updates from `master` into `srcdir`, i.e. darcs commits should happen to `master`.
+ *  `master` calls ikiwiki (through a wrapper) in its apply posthook, i.e. `master/_darcs/prefs/defaults` should look like this:
+
+        apply posthook ikiwrap
+        apply run-posthook
+
+    (I'm not sure, should/could it be `ikiwrap --refresh` above?)
+ *  The backend pushes CGI edits from `srcdir` back into `master` (triggering the apply hook).
+ *  The working copies in `srcdir` and `master` should *not* be touched by the user, only by the CGI or darcs, respectively.
+
 [[!tag patch]]
