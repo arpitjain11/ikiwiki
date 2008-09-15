@@ -36,3 +36,6 @@ those plugins with a current ikiwiki release, i.e. 2.61, but they appeared to do
 nothing, really. Also, those example pages don't seem to use those plugins, even;
 they set "copyright" and "license" properties using ordinary [[meta]] tags. Maybe
 I'm missing something terribly obvious? --[[Peter]]
+> Only obvious if you read the source :-). You need to put a file named "copyright.html"
+>(respectively "license.html") in your wiki. Everything underneath that (in the wikilink sense) will use that
+>content for the license or copyright. Saves putting \[[meta license="foo"]] in every page [[DavidBremner]]
