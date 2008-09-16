@@ -165,7 +165,7 @@ sub auth ($$) { #{{{
 	debug("skeleton plugin running in auth");
 } #}}}
 
-sub sessionncgi ($$) { #{{{
+sub sessioncgi ($$) { #{{{
 	my $cgi=shift;
 	my $session=shift;
 
