@@ -44,3 +44,5 @@ Two things aren't working as I'd expect:
 >>> Nathan's feed contains only summary elements, with no content elements.
 >>> This is legal according to the Atom spec, so I've fixed ikiwiki to use
 >>> the summary if no content is available. --[[Joey]]
+
+>>>> After applying your diffs, blowing away my cached aggregated stuff, and running the aggregate cron job by hand, the resulting planet still doesn't have Nathan's summaries... and the two posts from each feed that aren't being expired aren't the two newest ones (not sure what the pattern is there). Have I done something wrong? --[[schmonz]]
