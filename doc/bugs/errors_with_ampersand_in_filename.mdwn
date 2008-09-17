@@ -2,6 +2,9 @@ I created an image and a mdwn with an ampersand in the filename.
 This gaves me some error messages.
 I renamed the files and committed.
 
+> Ikiwiki does not allow files containing ampersands or most other non-alphanumeric characters.
+> It will display a "skipping bad filename" warning if you have such files. --[[Joey]]
+
 Even now, I still get the following error messages:
 
     Use of uninitialized value in substitution (s///) at /usr/lib64/perl5/vendor_perl/5.8.8/IkiWiki.pm line 764.
@@ -10,3 +13,7 @@ Even now, I still get the following error messages:
     Use of uninitialized value in concatenation (.) or string at /usr/lib64/perl5/vendor_perl/5.8.8/IkiWiki.pm line 773.
     Use of uninitialized value in concatenation (.) or string at /usr/lib64/perl5/vendor_perl/5.8.8/IkiWiki.pm line 773.
     Use of uninitialized value in concatenation (.) or string at /usr/lib64/perl5/vendor_perl/5.8.8/IkiWiki.pm line 773.
+
+> To help with this I'd need to know, at a minimum, what version of ikiwiki you're using,
+> and I'd really also probably need a copy of the source of the wiki you are trying to
+> build with it. (If you'd like to email me a tarball, send it to joey@kitenet.net) --[[Joey]]
