@@ -3,6 +3,8 @@ ikiwiki (2.65) UNRELEASED; urgency=low
   * aggregate: Allow expirecount to work on the first pass. (expireage still
     needs to wait for the pages to be rendered though)
   * editdiff: Broken since 2.62 due to wrong syntax, now fixed.
+  * aggregate: Support atom feeds with only a summary element, and no content
+    elements.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 17 Sep 2008 14:26:56 -0400
 
