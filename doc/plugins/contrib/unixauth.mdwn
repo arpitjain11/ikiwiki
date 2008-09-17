@@ -47,12 +47,43 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
     use IkiWiki 2.00;
     
     sub import { #{{{
+        hook(type => "getsetup", id => "unixauth", call => \&getsetup);
             hook(type => "formbuilder_setup", id => "unixauth",
                 call => \&formbuilder_setup);
             hook(type => "formbuilder", id => "unixauth",
                 call => \&formbuilder);
         hook(type => "sessioncgi", id => "unixauth", call => \&sessioncgi);
     } # }}}
+    
+    sub getsetup () { #{{{
+        return
+        unixauth_type => {
+                type => "string",
+                example => "checkpassword",
+                description => "type of authenticator; can be 'checkpassword' or 'pwauth'",
+                safe => 0,
+                rebuild => 1,
+        },
+        unixauth_command => {
+                type => "string",
+                example => "/path/to/checkpassword",
+                description => "full path and any arguments",
+                safe => 0,
+                rebuild => 1,
+        },
+        unixauth_requiressl => {
+                type => "boolean",
+                example => "1",
+                description => "require SSL? strongly recommended",
+                safe => 0,
+                rebuild => 1,
+        },
+        plugin => {
+                description => "Unix user authentication",
+                safe => 0,
+                rebuild => 1,
+        },
+    } #}}}
     
     # Checks if a string matches a user's password, and returns true or false.
     sub checkpassword ($$;$) { #{{{
