@@ -420,10 +420,10 @@ sub expire () { #{{{
 		next unless $feed->{expireage} || $feed->{expirecount};
 		my $count=0;
 		my %seen;
-		foreach my $item (sort { ($IkiWiki::pagectime{$b->{page}}||0) <=> ($IkiWiki::pagectime{$a->{page}}||0) }
+		foreach my $item (sort { $IkiWiki::pagectime{$b->{page}} <=> $IkiWiki::pagectime{$a->{page}} }
 		                  grep { exists $_->{page} && $_->{feed} eq $feed->{name} }
 		                  values %guids) {
-			if ($feed->{expireage} && $IkiWiki::pagectime{$_->{page}}) {
+			if ($feed->{expireage}) {
 				my $days_old = (time - $IkiWiki::pagectime{$item->{page}}) / 60 / 60 / 24;
 				if ($days_old > $feed->{expireage}) {
 					debug(sprintf(gettext("expiring %s (%s days old)"),
@@ -618,10 +618,13 @@ sub add_page (@) { #{{{
 	writefile(htmlfn($guid->{page}), $config{srcdir},
 		$template->output);
 
-	# Set the mtime, this lets the build process get the right creation
-	# time on record for the new page.
-	utime $mtime, $mtime, pagefile($guid->{page})
-		if defined $mtime && $mtime <= time;
+	if (defined $mtime && $mtime <= time) {
+		# Set the mtime, this lets the build process get the right
+		# creation time on record for the new page.
+		utime $mtime, $mtime, pagefile($guid->{page});
+		# Store it in pagectime for expiry code to use also.
+		$IkiWiki::pagectime{$guid->{page}}=$mtime;
+	}
 } #}}}
 
 sub htmlescape ($) { #{{{
