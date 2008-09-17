@@ -1,0 +1,31 @@
+I'm trying to set up a [planet of my users' blogs](http://help.schmonz.com/planet/). I've enabled the aggregate, meta, and tag plugins (but not htmltidy, that thing has a gajillion dependencies). `aggregateinternal` is 1. The cron job is running and I've also enabled the webtrigger. My usage is like so:
+
+    \[[!inline pages="internal(planet/*) show=0"]]
+    
+    \[[!aggregate
+    name="Amitai's blog"
+    url="http://www.schmonz.com/"
+    dir="planet/schmonz-blog"
+    feedurl="http://www.schmonz.com/atom/"
+    expirecount="2"
+    tag="schmonz"
+    ]]
+    
+    [[!aggregate
+    name="Amitai's photos"
+    url="http://photos.schmonz.com/"
+    dir="planet/schmonz-photos"
+    feedurl="http://photos.schmonz.com/main.php?g2_view=rss.SimpleRender&g2_itemId=7"
+    expirecount="2"
+    tag="schmonz"
+    ]]
+
+
+(and a few more `aggregate` directives like these)
+
+Two things aren't working as I'd expect:
+
+1. `expirecount` doesn't take effect on the first run, but on the second. (This is minor, just a bit confusing at first.)
+2. Where are the article bodies for e.g. David's and Nathan's blogs? The bodies aren't showing up in the `._aggregated` files for those feeds, but the bodies for my own blog do, which explains the planet problem, but I don't understand the underlying aggregation problem. (Those feeds include article bodies, and show up normally in my usual feed reader rss2email.) How can I debug this further?
+
+--[[schmonz]]
