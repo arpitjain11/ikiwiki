@@ -56,7 +56,7 @@ sub formbuilder_setup { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
-	return if defined ! $form->field("do") || $form->field("do") ne "edit";
+	return if ! defined $form->field("do") || $form->field("do") ne "edit";
 
 	my $page=$form->field("page");
 	$page = IkiWiki::possibly_foolish_untaint($page);
