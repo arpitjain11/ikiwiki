@@ -11,7 +11,7 @@ I'm trying to set up a [planet of my users' blogs](http://help.schmonz.com/plane
     tag="schmonz"
     ]]
     
-    [[!aggregate
+    \[[!aggregate
     name="Amitai's photos"
     url="http://photos.schmonz.com/"
     dir="planet/schmonz-photos"
@@ -26,6 +26,20 @@ I'm trying to set up a [planet of my users' blogs](http://help.schmonz.com/plane
 Two things aren't working as I'd expect:
 
 1. `expirecount` doesn't take effect on the first run, but on the second. (This is minor, just a bit confusing at first.)
+
+> 
+
 2. Where are the article bodies for e.g. David's and Nathan's blogs? The bodies aren't showing up in the `._aggregated` files for those feeds, but the bodies for my own blog do, which explains the planet problem, but I don't understand the underlying aggregation problem. (Those feeds include article bodies, and show up normally in my usual feed reader rss2email.) How can I debug this further?
 
 --[[schmonz]]
+
+> I only looked at David's, but its rss feed is not escaping the html
+> inside the rss `description` tags, which is illegal for rss 2.0. These
+> unknown tags then get ignored, including their content, and all that's
+> left is whitespace. Escaping the html to `&lt;` and `&gt;` fixes the
+> problem. You can see the feed validator complain about it here:
+> <http://feedvalidator.org/check.cgi?url=http%3A%2F%2Fwww.davidj.org%2Frss.xml>
+> 
+> It's sorta unfortunate that [[cpan XML::Feed]] doesn't just assume the
+> un-esxaped html is part of the description field. Probably other feed
+> parsers are more lenient. --[[Joey]]
