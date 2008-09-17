@@ -520,10 +520,10 @@ sub aggregate (@) { #{{{
 		}
 
 		foreach my $entry ($f->entries) {
-			my $content=$content=$entry->content;
+			my $content=$content=$entry->content->body;
 			# atom feeds may have no content, only a summary
-			if (! defined $content) {
-				$content=$entry->summary;
+			if (! defined $content && ref $entry->summary) {
+				$content=$entry->summary->body;
 			}
 
 			add_page(
@@ -531,7 +531,7 @@ sub aggregate (@) { #{{{
 				copyright => $f->copyright,
 				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 				link => $entry->link,
-				content => defined $content ? $content->body : "",
+				content => defined $content ? $content : "",
 				guid => defined $entry->id ? $entry->id : time."_".$feed->{name},
 				ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
 			);
