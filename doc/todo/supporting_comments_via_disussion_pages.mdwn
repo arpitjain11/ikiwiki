@@ -45,6 +45,8 @@ Is this simple enough to be sensible?
 
 >>> As a side note, the feature described above (having a form not to add a page but to expand it in a formated way) would be useful for other things when the content is short (timetracking, sub-todo list items, etc..) --[[hb]]
 
+## [[MarceloMagallon]]'s implementation
+
 I've been looking into this.  I'd like to implement a "blogcomments"
 plugin.  Looking at the code, I think the way to go is to have a
 formbuilder_setup hook that uses a different template instead of the
@@ -160,6 +162,8 @@ Each comment is processed to something like this:
     } # }}}
     
     1;
+
+## [[smcv]]'s implementation
 
 I've started a smcvpostcomment plugin (to be renamed to postcomment if people like it, but I'm namespacing it while it's still experimental) which I think more closely resembles what Joey was after. The code is cargo-culted from a mixture of editpage and inline's "make a blog post" support - it has to use a lot of semi-internal IkiWiki:: functions (both of those plugins do too). It doesn't fully work yet, but I'll try to get it into a state where it basically works and can be published in the next week or two.
 
