@@ -185,715 +185,253 @@ The following three inlines work for me with this patch:
 >>> I think this is ready for people other than me to have a play.  It is not well enough tested to commit just yet.
 >>> -- [[Will]]
 
+I've lost track of the indent level, so I'm going back to not indented - I think this is a working [[patch]] taking into
+account all comments above (which doesn't mean it is above reproach :) ).  --[[Will]]
+
 ----
 
-diff --git a/IkiWiki.pm b/IkiWiki.pm
-index e476521..532aaf5 100644
---- a/IkiWiki.pm
-+++ b/IkiWiki.pm
-@@ -1524,7 +1524,16 @@ sub globlist_to_pagespec ($) { #{{{
- 
- sub is_globlist ($) { #{{{
- 	my $s=shift;
--	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
-+	return ! ($s =~ /
-+			(^\s*
-+				[^\s\(]+		# single item
-+					(\(			# possibly with parens after it
-+						([^\)]*	# with stuff inside those parens
-+						(\([^\)]*\))*)*	# maybe even nested parens
-+					\))?\s*$
-+			) |
-+				(\s and \s) | (\s or \s)	# or we find 'and' or 'or' somewhere
-+			/x);
- } #}}}
- 
- sub safequote ($) { #{{{
-@@ -1605,7 +1614,7 @@ sub pagespec_merge ($$) { #{{{
- 	return "($a) or ($b)";
- } #}}}
- 
--sub pagespec_translate ($) { #{{{
-+sub pagespec_makeperl ($) { #{{{
- 	my $spec=shift;
- 
- 	# Support for old-style GlobLists.
-@@ -1624,9 +1633,11 @@ sub pagespec_translate ($) { #{{{
- 		|
- 			\)		# )
- 		|
--			\w+\([^\)]*\)	# command(params)
-+			define\(\s*~\w+\s*,((\([^\(\)]*\)) | ([^\(\)]+))+\)	# define(~specName, spec) - spec can contain parens 1 deep
-+		|
-+			\w+\([^\(\)]*\)	# command(params) - params cannot contain parens
- 		|
--			[^\s()]+	# any other text
-+			[^\s\(\)]+	# any other text
- 		)
- 		\s*		# ignore whitespace
- 	}igx) {
-@@ -1640,16 +1651,23 @@ sub pagespec_translate ($) { #{{{
- 		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
- 			$code.=' '.$word;
- 		}
-+		elsif ($word =~ /^define\(\s*~(\w+)\s*,(.*)\)$/) {
-+			$code .= " (\$specFuncsRef->{$1}=";
-+			$code .= "memoize(";
-+			$code .= &pagespec_makeperl($2);
-+			$code .= ")";
-+			$code .= ") ";
-+		}
- 		elsif ($word =~ /^(\w+)\((.*)\)$/) {
- 			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
--				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@_)";
-+				$code.="IkiWiki::PageSpec::match_$1(\$specFuncsRef, \$page, ".safequote($2).", \@_)";
- 			}
- 			else {
- 				$code.=' 0';
- 			}
- 		}
- 		else {
--			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \@_)";
-+			$code.=" IkiWiki::PageSpec::match_glob(\$specFuncsRef, \$page, ".safequote($word).", \@_)";
- 		}
- 	}
- 
-@@ -1657,8 +1675,16 @@ sub pagespec_translate ($) { #{{{
- 		$code=0;
- 	}
- 
-+	return 'sub { my $specFuncsRef=shift; my $page=shift; '.$code.' }';
-+} #}}}
-+
-+sub pagespec_translate ($) { #{{{
-+	my $spec=shift;
-+
-+	my $code = pagespec_makeperl($spec);
-+
- 	no warnings;
--	return eval 'sub { my $page=shift; '.$code.' }';
-+	return eval $code;
- } #}}}
- 
- sub pagespec_match ($$;@) { #{{{
-@@ -1673,7 +1699,7 @@ sub pagespec_match ($$;@) { #{{{
- 
- 	my $sub=pagespec_translate($spec);
- 	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"") if $@;
--	return $sub->($page, @params);
-+	return $sub->({}, $page, @params);
- } #}}}
- 
- sub pagespec_valid ($) { #{{{
-@@ -1722,11 +1748,71 @@ sub new { #{{{
- 
- package IkiWiki::PageSpec;
- 
--sub match_glob ($$;@) { #{{{
-+sub check_named_spec($$$;@) {
-+	my $specFuncsRef=shift;
-+	my $page=shift;
-+	my $specName=shift;
-+	my %params=@_;
-+	
-+	return IkiWiki::FailReason->new("Named page spec '$specName' is not valid")
-+		unless (substr($specName, 0, 1) eq '~');
-+	
-+	$specName = substr($specName, 1);
-+
-+	if (exists $specFuncsRef->{$specName}) {
-+		# remove the named spec from the spec refs
-+		# when we recurse to avoid infinite recursion
-+		my $sub = $specFuncsRef->{$specName};
-+		$specFuncsRef->{$specName} = undef;
-+		my $result = $sub->($specFuncsRef, $page, %params);
-+		$specFuncsRef->{$specName} = $sub;
-+		return $result;
-+	} else {
-+		return IkiWiki::FailReason->new("Page spec '$specName' does not exist");
-+	}
-+}
-+
-+sub check_named_spec_existential($$$$;@) {
-+	my $specFuncsRef=shift;
-+	my $page=shift;
-+	my $specName=shift;
-+	my $funcref=shift;
-+	my %params=@_;
-+	
-+	return IkiWiki::FailReason->new("Named page spec '$specName' is not valid")
-+		unless (substr($specName, 0, 1) eq '~');
-+	$specName = substr($specName, 1);
-+	
-+	if (exists $specFuncsRef->{$specName}) {
-+		# remove the named spec from the spec refs
-+		# when we recurse to avoid infinite recursion
-+		my $sub = $specFuncsRef->{$specName};
-+		$specFuncsRef->{$specName} = undef;
-+		
-+		foreach my $nextpage (keys %IkiWiki::pagesources) {
-+			if ($sub->($specFuncsRef, $nextpage, %params)) {
-+				my $tempResult = $funcref->($specFuncsRef, $page, $nextpage, %params);
-+				return $tempResult if ($tempResult);
-+			}
-+		}
-+		
-+		$specFuncsRef->{$specName} = $sub;
-+		return IkiWiki::FailReason->new("No page in spec '$specName' was successfully matched");
-+	} else {
-+		return IkiWiki::FailReason->new("Named page spec '$specName' does not exist");
-+	}
-+}
-+
-+sub match_glob ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
- 	my $page=shift;
- 	my $glob=shift;
- 	my %params=@_;
- 	
-+	if (substr($glob, 0, 1) eq '~') {
-+		return check_named_spec($specFuncsRef, $page, $glob);
-+	}
-+
- 	my $from=exists $params{location} ? $params{location} : '';
- 	
- 	# relative matching
-@@ -1750,17 +1836,23 @@ sub match_glob ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_internal ($$;@) { #{{{
--	return match_glob($_[0], $_[1], @_, internal => 1)
-+sub match_internal ($$$;@) { #{{{
-+	return match_glob(shift, shift, shift, @_, internal => 1)
- } #}}}
- 
--sub match_link ($$;@) { #{{{
-+sub match_link ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
- 	my $page=shift;
--	my $link=lc(shift);
-+	my $fulllink=shift;
-+	my $link=lc($fulllink);
- 	my %params=@_;
- 
--	my $from=exists $params{location} ? $params{location} : '';
-+	if (substr($fulllink, 0, 1) eq '~') {
-+		return check_named_spec_existential($specFuncsRef, $page, $fulllink, \&match_link);
-+	}
- 
-+	my $from=exists $params{location} ? $params{location} : '';
-+	
- 	# relative matching
- 	if ($link =~ m!^\.! && defined $from) {
- 		$from=~s#/?[^/]+$##;
-@@ -1778,17 +1870,21 @@ sub match_link ($$;@) { #{{{
- 		}
- 		else {
- 			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
--				if match_glob($p, $link, %params);
-+				if match_glob($specFuncsRef, $p, $link, %params);
- 		}
- 	}
- 	return IkiWiki::FailReason->new("$page does not link to $link");
- } #}}}
- 
--sub match_backlink ($$;@) { #{{{
--	return match_link($_[1], $_[0], @_);
-+sub match_backlink ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
-+	my $page=shift;
-+	my $backlink=shift;
-+	return match_link($specFuncsRef, $backlink, $page, @_);
- } #}}}
- 
--sub match_created_before ($$;@) { #{{{
-+sub match_created_before ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
- 	my $page=shift;
- 	my $testpage=shift;
- 
-@@ -1805,7 +1901,8 @@ sub match_created_before ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_created_after ($$;@) { #{{{
-+sub match_created_after ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
- 	my $page=shift;
- 	my $testpage=shift;
- 
-@@ -1822,8 +1919,12 @@ sub match_created_after ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_creation_day ($$;@) { #{{{
--	if ((gmtime($IkiWiki::pagectime{shift()}))[3] == shift) {
-+sub match_creation_day ($$$;@) { #{{{
-+	shift;
-+	my $page=shift;
-+	my $time=shift;
-+
-+	if ((gmtime($IkiWiki::pagectime{$page}))[3] == $time) {
- 		return IkiWiki::SuccessReason->new('creation_day matched');
- 	}
- 	else {
-@@ -1831,8 +1932,12 @@ sub match_creation_day ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_creation_month ($$;@) { #{{{
--	if ((gmtime($IkiWiki::pagectime{shift()}))[4] + 1 == shift) {
-+sub match_creation_month ($$$;@) { #{{{
-+	shift;
-+	my $page=shift;
-+	my $time=shift;
-+
-+	if ((gmtime($IkiWiki::pagectime{$page}))[4] + 1 == $time) {
- 		return IkiWiki::SuccessReason->new('creation_month matched');
- 	}
- 	else {
-@@ -1840,8 +1945,12 @@ sub match_creation_month ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_creation_year ($$;@) { #{{{
--	if ((gmtime($IkiWiki::pagectime{shift()}))[5] + 1900 == shift) {
-+sub match_creation_year ($$$;@) { #{{{
-+	shift;
-+	my $page=shift;
-+	my $time=shift;
-+
-+	if ((gmtime($IkiWiki::pagectime{$page}))[5] + 1900 == $time) {
- 		return IkiWiki::SuccessReason->new('creation_year matched');
- 	}
- 	else {
-diff --git a/IkiWiki/Plugin/attachment.pm b/IkiWiki/Plugin/attachment.pm
-index f1f792a..a410e48 100644
---- a/IkiWiki/Plugin/attachment.pm
-+++ b/IkiWiki/Plugin/attachment.pm
-@@ -291,7 +291,8 @@ sub attachment_list ($) { #{{{
- 
- package IkiWiki::PageSpec;
- 
--sub match_user ($$;@) { #{{{
-+sub match_user ($$$;@) { #{{{
-+	shift;
- 	shift;
- 	my $user=shift;
- 	my %params=@_;
-@@ -311,7 +312,8 @@ sub match_user ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_ip ($$;@) { #{{{
-+sub match_ip ($$$;@) { #{{{
-+	shift;
- 	shift;
- 	my $ip=shift;
- 	my %params=@_;
-diff --git a/IkiWiki/Plugin/conditional.pm b/IkiWiki/Plugin/conditional.pm
-index 7716fce..c0dbb50 100644
---- a/IkiWiki/Plugin/conditional.pm
-+++ b/IkiWiki/Plugin/conditional.pm
-@@ -70,7 +70,8 @@ sub preprocess_if (@) { #{{{
- 
- package IkiWiki::PageSpec;
- 
--sub match_enabled ($$;@) { #{{{
-+sub match_enabled ($$$;@) { #{{{
-+	shift;
- 	shift;
- 	my $plugin=shift;
- 	
-@@ -83,13 +84,14 @@ sub match_enabled ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_sourcepage ($$;@) { #{{{
-+sub match_sourcepage ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
- 	shift;
- 	my $glob=shift;
- 	my %params=@_;
- 
- 	return IkiWiki::FailReason->new("cannot match sourcepage") unless exists $params{sourcepage};
--	if (match_glob($params{sourcepage}, $glob, @_)) {
-+	if (match_glob($specFuncsRef, $params{sourcepage}, $glob, @_)) {
- 		return IkiWiki::SuccessReason->new("sourcepage matches $glob");
- 	}
- 	else {
-@@ -97,13 +99,14 @@ sub match_sourcepage ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_destpage ($$;@) { #{{{
-+sub match_destpage ($$$;@) { #{{{
-+	my $specFuncsRef=shift;
- 	shift;
- 	my $glob=shift;
- 	my %params=@_;
- 	
- 	return IkiWiki::FailReason->new("cannot match destpage") unless exists $params{destpage};
--	if (match_glob($params{destpage}, $glob, @_)) {
-+	if (match_glob($specFuncsRef, $params{destpage}, $glob, @_)) {
- 		return IkiWiki::SuccessReason->new("destpage matches $glob");
- 	}
- 	else {
-@@ -111,7 +114,8 @@ sub match_destpage ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_included ($$;@) { #{{{
-+sub match_included ($$$;@) { #{{{
-+	shift;
- 	shift;
- 	shift;
- 	my %params=@_;
-diff --git a/IkiWiki/Plugin/filecheck.pm b/IkiWiki/Plugin/filecheck.pm
-index 6f71be3..3592342 100644
---- a/IkiWiki/Plugin/filecheck.pm
-+++ b/IkiWiki/Plugin/filecheck.pm
-@@ -66,7 +66,8 @@ sub humansize ($) { #{{{
- 
- package IkiWiki::PageSpec;
- 
--sub match_maxsize ($$;@) { #{{{
-+sub match_maxsize ($$$;@) { #{{{
-+	shift;
- 	my $page=shift;
- 	my $maxsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
- 	if ($@) {
-@@ -87,7 +88,8 @@ sub match_maxsize ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_minsize ($$;@) { #{{{
-+sub match_minsize ($$$;@) { #{{{
-+	shift;
- 	my $page=shift;
- 	my $minsize=eval{IkiWiki::Plugin::attachment::parsesize(shift)};
- 	if ($@) {
-@@ -108,7 +110,8 @@ sub match_minsize ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_mimetype ($$;@) { #{{{
-+sub match_mimetype ($$$;@) { #{{{
-+	shift;
- 	my $page=shift;
- 	my $wanted=shift;
- 
-@@ -138,7 +141,8 @@ sub match_mimetype ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_virusfree ($$;@) { #{{{
-+sub match_virusfree ($$$;@) { #{{{
-+	shift;
- 	my $page=shift;
- 	my $wanted=shift;
- 
-@@ -180,7 +184,7 @@ sub match_virusfree ($$;@) { #{{{
- 	}
- } #}}}
- 
--sub match_ispage ($$;@) { #{{{
-+sub match_ispage ($$$;@) { #{{{
- 	my $filename=shift;
- 
- 	if (defined IkiWiki::pagetype($filename)) {
-diff --git a/IkiWiki/Plugin/meta.pm b/IkiWiki/Plugin/meta.pm
-index b2c85c8..788f248 100644
---- a/IkiWiki/Plugin/meta.pm
-+++ b/IkiWiki/Plugin/meta.pm
-@@ -263,6 +263,7 @@ sub pagetemplate (@) { #{{{
- 
- sub match { #{{{
- 	my $field=shift;
-+	shift;
- 	my $page=shift;
- 	
- 	# turn glob into a safe regexp
-@@ -291,23 +292,23 @@ sub match { #{{{
- 
- package IkiWiki::PageSpec;
- 
--sub match_title ($$;@) { #{{{
-+sub match_title ($$$;@) { #{{{
- 	IkiWiki::Plugin::meta::match("title", @_);	
- } #}}}
- 
--sub match_author ($$;@) { #{{{
-+sub match_author ($$$;@) { #{{{
- 	IkiWiki::Plugin::meta::match("author", @_);
- } #}}}
- 
--sub match_authorurl ($$;@) { #{{{
-+sub match_authorurl ($$$;@) { #{{{
- 	IkiWiki::Plugin::meta::match("authorurl", @_);
- } #}}}
- 
--sub match_license ($$;@) { #{{{
-+sub match_license ($$$;@) { #{{{
- 	IkiWiki::Plugin::meta::match("license", @_);
- } #}}}
- 
--sub match_copyright ($$;@) { #{{{
-+sub match_copyright ($$$;@) { #{{{
- 	IkiWiki::Plugin::meta::match("copyright", @_);
- } #}}}
- 
-----
-
-diff --git a/IkiWiki.pm b/IkiWiki.pm
-index e476521..0751d56 100644
---- a/IkiWiki.pm
-+++ b/IkiWiki.pm
-@@ -1524,7 +1524,16 @@ sub globlist_to_pagespec ($) { #{{{
- 
- sub is_globlist ($) { #{{{
- 	my $s=shift;
--	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
-+	return ! ($s =~ /
-+			(^\s*
-+				[^\s(]+		# single item
-+					(\(			# possibly with parens after it
-+						([^)]*	# with stuff inside those parens
-+						(\([^)]*\))*)*	# maybe even nested parens
-+					\))?\s*$
-+			) |
-+				(\s and \s) | (\s or \s)	# or we find 'and' or 'or' somewhere
-+			/x);
- } #}}}
- 
- sub safequote ($) { #{{{
-@@ -1605,7 +1614,7 @@ sub pagespec_merge ($$) { #{{{
- 	return "($a) or ($b)";
- } #}}}
- 
--sub pagespec_translate ($) { #{{{
-+sub pagespec_makeperl ($) { #{{{
- 	my $spec=shift;
- 
- 	# Support for old-style GlobLists.
-@@ -1624,7 +1633,9 @@ sub pagespec_translate ($) { #{{{
- 		|
- 			\)		# )
- 		|
--			\w+\([^\)]*\)	# command(params)
-+			define\(\s*~\w+\s*,((\([^()]*\)) | ([^()]+))+\)	# define(~specName, spec) - spec can contain parens 1 deep
-+		|
-+			\w+\([^()]*\)	# command(params) - params cannot contain parens
- 		|
- 			[^\s()]+	# any other text
- 		)
-@@ -1640,16 +1651,23 @@ sub pagespec_translate ($) { #{{{
- 		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
- 			$code.=' '.$word;
- 		}
-+		elsif ($word =~ /^define\(\s*~(\w+)\s*,(.*)\)$/) {
-+			$code .= " (\$params{specFuncs}->{$1}=";	# (exists \$params{specFuncs}) && 
-+			$code .= "memoize(";
-+			$code .= &pagespec_makeperl($2);
-+			$code .= ")";
-+			$code .= ") ";
-+		}
- 		elsif ($word =~ /^(\w+)\((.*)\)$/) {
- 			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
--				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@_)";
-+				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \%params)";
- 			}
- 			else {
- 				$code.=' 0';
- 			}
- 		}
- 		else {
--			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \@_)";
-+			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \%params)";
- 		}
- 	}
- 
-@@ -1657,23 +1675,36 @@ sub pagespec_translate ($) { #{{{
- 		$code=0;
- 	}
- 
-+	return 'sub { my $page=shift; my %params = @_; '.$code.' }';
-+} #}}}
-+
-+sub pagespec_translate ($) { #{{{
-+	my $spec=shift;
-+
-+	my $code = pagespec_makeperl($spec);
-+
-+	print "Spec '$spec' generated code '$code'\n";
-+
- 	no warnings;
--	return eval 'sub { my $page=shift; '.$code.' }';
-+	return eval $code;
- } #}}}
- 
- sub pagespec_match ($$;@) { #{{{
- 	my $page=shift;
- 	my $spec=shift;
- 	my @params=@_;
-+	my %params=@_;
- 
- 	# Backwards compatability with old calling convention.
- 	if (@params == 1) {
--		unshift @params, 'location';
-+		%params = { location => $params[1] };
- 	}
- 
-+	$params{specFuncs} = {} unless exists $params{specFuncs};
-+
- 	my $sub=pagespec_translate($spec);
- 	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"") if $@;
--	return $sub->($page, @params);
-+	return $sub->($page, %params);
- } #}}}
- 
- sub pagespec_valid ($) { #{{{
-@@ -1722,11 +1753,84 @@ sub new { #{{{
- 
- package IkiWiki::PageSpec;
- 
-+sub check_named_spec($$;@) {
-+	my $page=shift;
-+	my $specName=shift;
-+	my %params=@_;
-+	
-+	print "Checking named spec $specName\n";
-+	
-+	error("Unable to find specFuncs in params to check_named_spec()!") unless exists $params{specFuncs};
-+	my $specFuncsRef=$params{specFuncs};
-+	
-+	print "A\n";
-+	
-+	return IkiWiki::FailReason->new("Named page spec '$specName' is not valid")
-+		unless (substr($specName, 0, 1) eq '~');
-+	
-+	$specName = substr($specName, 1);
-+
-+	if (exists $specFuncsRef->{$specName}) {
-+		# remove the named spec from the spec refs
-+		# when we recurse to avoid infinite recursion
-+		my $sub = $specFuncsRef->{$specName};
-+		$specFuncsRef->{$specName} = undef;
-+		my $result = $sub->($specFuncsRef, $page, %params);
-+		$specFuncsRef->{$specName} = $sub;
-+		return $result;
-+	} else {
-+		print "Invalid specname\n";
-+		return IkiWiki::FailReason->new("Page spec '$specName' does not exist");
-+	}
-+}
-+
-+sub check_named_spec_existential($$$;@) {
-+	my $page=shift;
-+	my $specName=shift;
-+	my $funcref=shift;
-+	my %params=@_;
-+	
-+	print "(Existential) Checking named spec $specName\n";
-+	
-+	error("Unable to find specFuncs in params to check_named_spec()!") unless exists $params{specFuncs};
-+	my $specFuncsRef=$params{specFuncs};
-+	
-+	print "B\n";
-+	
-+	return IkiWiki::FailReason->new("Named page spec '$specName' is not valid")
-+		unless (substr($specName, 0, 1) eq '~');
-+	$specName = substr($specName, 1);
-+	
-+	if (exists $specFuncsRef->{$specName}) {
-+		# remove the named spec from the spec refs
-+		# when we recurse to avoid infinite recursion
-+		my $sub = $specFuncsRef->{$specName};
-+		$specFuncsRef->{$specName} = undef;
-+		
-+		foreach my $nextpage (keys %IkiWiki::pagesources) {
-+			if ($sub->($specFuncsRef, $nextpage, %params)) {
-+				my $tempResult = $funcref->($page, $nextpage, %params);
-+				return $tempResult if ($tempResult);
-+			}
-+		}
-+		
-+		$specFuncsRef->{$specName} = $sub;
-+		return IkiWiki::FailReason->new("No page in spec '$specName' was successfully matched");
-+	} else {
-+		print "Invalid specname\n";
-+		return IkiWiki::FailReason->new("Named page spec '$specName' does not exist");
-+	}
-+}
-+
- sub match_glob ($$;@) { #{{{
- 	my $page=shift;
- 	my $glob=shift;
- 	my %params=@_;
- 	
-+	if (substr($glob, 0, 1) eq '~') {
-+		return check_named_spec($page, $glob, %params);
-+	}
-+
- 	my $from=exists $params{location} ? $params{location} : '';
- 	
- 	# relative matching
-@@ -1756,11 +1860,16 @@ sub match_internal ($$;@) { #{{{
- 
- sub match_link ($$;@) { #{{{
- 	my $page=shift;
--	my $link=lc(shift);
-+	my $fulllink=shift;
-+	my $link=lc($fulllink);
- 	my %params=@_;
- 
--	my $from=exists $params{location} ? $params{location} : '';
-+	if (substr($fulllink, 0, 1) eq '~') {
-+		return check_named_spec_existential($page, $fulllink, \&match_link, %params);
-+	}
- 
-+	my $from=exists $params{location} ? $params{location} : '';
-+	
- 	# relative matching
- 	if ($link =~ m!^\.! && defined $from) {
- 		$from=~s#/?[^/]+$##;
-@@ -1785,12 +1894,25 @@ sub match_link ($$;@) { #{{{
- } #}}}
- 
- sub match_backlink ($$;@) { #{{{
--	return match_link($_[1], $_[0], @_);
-+	my $page=shift;
-+	my $backlink=shift;
-+	my %params=@_;
-+
-+	if (substr($backlink, 0, 1) eq '~') {
-+		return check_named_spec_existential($page, $backlink, \&match_backlink, %params);
-+	}
-+
-+	return match_link($backlink, $page, %params);
- } #}}}
- 
- sub match_created_before ($$;@) { #{{{
- 	my $page=shift;
- 	my $testpage=shift;
-+	my %params=@_;
-+
-+	if (substr($testpage, 0, 1) eq '~') {
-+		return check_named_spec_existential($page, $testpage, \&match_created_before, %params);
-+	}
- 
- 	if (exists $IkiWiki::pagectime{$testpage}) {
- 		if ($IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage}) {
-@@ -1808,6 +1930,11 @@ sub match_created_before ($$;@) { #{{{
- sub match_created_after ($$;@) { #{{{
- 	my $page=shift;
- 	my $testpage=shift;
-+	my %params=@_;
-+
-+	if (substr($testpage, 0, 1) eq '~') {
-+		return check_named_spec_existential($page, $testpage, \&match_created_after, %params);
-+	}
- 
- 	if (exists $IkiWiki::pagectime{$testpage}) {
- 		if ($IkiWiki::pagectime{$page} > $IkiWiki::pagectime{$testpage}) {
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 4e4da11..2cc5f09 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -1550,7 +1550,16 @@ sub globlist_to_pagespec ($) { #{{{
+     
+     sub is_globlist ($) { #{{{
+     	my $s=shift;
+    -	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
+    +	return ! ($s =~ /
+    +			(^\s*
+    +				[^\s(]+		# single item
+    +					(\(			# possibly with parens after it
+    +						([^)]*	# with stuff inside those parens
+    +						(\([^)]*\))*)*	# maybe even nested parens
+    +					\))?\s*$
+    +			) |
+    +				(\s and \s) | (\s or \s)	# or we find 'and' or 'or' somewhere
+    +			/x);
+     } #}}}
+     
+     sub safequote ($) { #{{{
+    @@ -1631,7 +1640,7 @@ sub pagespec_merge ($$) { #{{{
+     	return "($a) or ($b)";
+     } #}}}
+     
+    -sub pagespec_translate ($) { #{{{
+    +sub pagespec_makeperl ($) { #{{{
+     	my $spec=shift;
+     
+     	# Support for old-style GlobLists.
+    @@ -1650,7 +1659,9 @@ sub pagespec_translate ($) { #{{{
+     		|
+     			\)		# )
+     		|
+    -			\w+\([^\)]*\)	# command(params)
+    +			define\(\s*~\w+\s*,((\([^()]*\)) | ([^()]+))+\)	# define(~specName, spec) - spec can contain parens 1 deep
+    +		|
+    +			\w+\([^()]*\)	# command(params) - params cannot contain parens
+     		|
+     			[^\s()]+	# any other text
+     		)
+    @@ -1666,16 +1677,23 @@ sub pagespec_translate ($) { #{{{
+     		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
+     			$code.=' '.$word;
+     		}
+    +		elsif ($word =~ /^define\(\s*~(\w+)\s*,(.*)\)$/) {
+    +			$code .= " (\$params{specFuncs}->{$1}=";	# (exists \$params{specFuncs}) && 
+    +			$code .= "memoize(";
+    +			$code .= &pagespec_makeperl($2);
+    +			$code .= ")";
+    +			$code .= ") ";
+    +		}
+     		elsif ($word =~ /^(\w+)\((.*)\)$/) {
+     			if (exists $IkiWiki::PageSpec::{"match_$1"}) {
+    -				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@_)";
+    +				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \%params)";
+     			}
+     			else {
+     				$code.=' 0';
+     			}
+     		}
+     		else {
+    -			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \@_)";
+    +			$code.=" IkiWiki::PageSpec::match_glob(\$page, ".safequote($word).", \%params)";
+     		}
+     	}
+     
+    @@ -1683,23 +1701,36 @@ sub pagespec_translate ($) { #{{{
+     		$code=0;
+     	}
+     
+    +	return 'sub { my $page=shift; my %params = @_; '.$code.' }';
+    +} #}}}
+    +
+    +sub pagespec_translate ($) { #{{{
+    +	my $spec=shift;
+    +
+    +	my $code = pagespec_makeperl($spec);
+    +
+    +	# print STDERR "Spec '$spec' generated code '$code'\n";
+    +
+     	no warnings;
+    -	return eval 'sub { my $page=shift; '.$code.' }';
+    +	return eval $code;
+     } #}}}
+     
+     sub pagespec_match ($$;@) { #{{{
+     	my $page=shift;
+     	my $spec=shift;
+     	my @params=@_;
+    +	my %params=@_;
+     
+     	# Backwards compatability with old calling convention.
+     	if (@params == 1) {
+    -		unshift @params, 'location';
+    +		%params = { location => $params[1] };
+     	}
+     
+    +	$params{specFuncs} = {} unless defined $params{specFuncs};
+    +
+     	my $sub=pagespec_translate($spec);
+     	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"") if $@;
+    -	return $sub->($page, @params);
+    +	return $sub->($page, %params);
+     } #}}}
+     
+     sub pagespec_valid ($) { #{{{
+    @@ -1748,11 +1779,78 @@ sub new { #{{{
+     
+     package IkiWiki::PageSpec;
+     
+    +sub check_named_spec($$;@) {
+    +	my $page=shift;
+    +	my $specName=shift;
+    +	my %params=@_;
+    +	
+    +	error("Unable to find specFuncs in params to check_named_spec()!") unless exists $params{specFuncs};
+    +
+    +	my $specFuncsRef=$params{specFuncs};
+    +	
+    +	return IkiWiki::FailReason->new("Named page spec '$specName' is not valid")
+    +		unless (substr($specName, 0, 1) eq '~');
+    +	
+    +	$specName = substr($specName, 1);
+    +
+    +	if (exists $specFuncsRef->{$specName}) {
+    +		# remove the named spec from the spec refs
+    +		# when we recurse to avoid infinite recursion
+    +		my $sub = $specFuncsRef->{$specName};
+    +		delete $specFuncsRef->{$specName};
+    +		my $result = $sub->($page, %params);
+    +		$specFuncsRef->{$specName} = $sub;
+    +		return $result;
+    +	} else {
+    +		return IkiWiki::FailReason->new("Page spec '$specName' does not exist");
+    +	}
+    +}
+    +
+    +sub check_named_spec_existential($$$;@) {
+    +	my $page=shift;
+    +	my $specName=shift;
+    +	my $funcref=shift;
+    +	my %params=@_;
+    +	
+    +	error("Unable to find specFuncs in params to check_named_spec_existential()!") unless exists $params{specFuncs};
+    +	my $specFuncsRef=$params{specFuncs};
+    +	
+    +	return IkiWiki::FailReason->new("Named page spec '$specName' is not valid")
+    +		unless (substr($specName, 0, 1) eq '~');
+    +	$specName = substr($specName, 1);
+    +	
+    +	if (exists $specFuncsRef->{$specName}) {
+    +		# remove the named spec from the spec refs
+    +		# when we recurse to avoid infinite recursion
+    +		my $sub = $specFuncsRef->{$specName};
+    +		delete $specFuncsRef->{$specName};
+    +		
+    +		foreach my $nextpage (keys %IkiWiki::pagesources) {
+    +			if ($sub->($nextpage, %params)) {
+    +				my $tempResult = $funcref->($page, $nextpage, %params);
+    +				if ($tempResult) {
+    +					$specFuncsRef->{$specName} = $sub;
+    +					return $tempResult;
+    +				}
+    +			}
+    +		}
+    +		
+    +		$specFuncsRef->{$specName} = $sub;
+    +		return IkiWiki::FailReason->new("No page in spec '$specName' was successfully matched");
+    +	} else {
+    +		return IkiWiki::FailReason->new("Named page spec '$specName' does not exist");
+    +	}
+    +}
+    +
+     sub match_glob ($$;@) { #{{{
+     	my $page=shift;
+     	my $glob=shift;
+     	my %params=@_;
+     	
+    +	if (substr($glob, 0, 1) eq '~') {
+    +		return check_named_spec($page, $glob, %params);
+    +	}
+    +
+     	my $from=exists $params{location} ? $params{location} : '';
+     	
+     	# relative matching
+    @@ -1782,11 +1880,16 @@ sub match_internal ($$;@) { #{{{
+     
+     sub match_link ($$;@) { #{{{
+     	my $page=shift;
+    -	my $link=lc(shift);
+    +	my $fulllink=shift;
+     	my %params=@_;
+    +	my $link=lc($fulllink);
+     
+    -	my $from=exists $params{location} ? $params{location} : '';
+    +	if (substr($fulllink, 0, 1) eq '~') {
+    +		return check_named_spec_existential($page, $fulllink, \&match_link, %params);
+    +	}
+     
+    +	my $from=exists $params{location} ? $params{location} : '';
+    +	
+     	# relative matching
+     	if ($link =~ m!^\.! && defined $from) {
+     		$from=~s#/?[^/]+$##;
+    @@ -1811,12 +1914,25 @@ sub match_link ($$;@) { #{{{
+     } #}}}
+     
+     sub match_backlink ($$;@) { #{{{
+    -	return match_link($_[1], $_[0], @_);
+    +	my $page=shift;
+    +	my $backlink=shift;
+    +	my @params=@_;
+    +
+    +	if (substr($backlink, 0, 1) eq '~') {
+    +		return check_named_spec_existential($page, $backlink, \&match_backlink, @params);
+    +	}
+    +
+    +	return match_link($backlink, $page, @params);
+     } #}}}
+     
+     sub match_created_before ($$;@) { #{{{
+     	my $page=shift;
+     	my $testpage=shift;
+    +	my @params=@_;
+    +
+    +	if (substr($testpage, 0, 1) eq '~') {
+    +		return check_named_spec_existential($page, $testpage, \&match_created_before, @params);
+    +	}
+     
+     	if (exists $IkiWiki::pagectime{$testpage}) {
+     		if ($IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage}) {
+    @@ -1834,6 +1950,11 @@ sub match_created_before ($$;@) { #{{{
+     sub match_created_after ($$;@) { #{{{
+     	my $page=shift;
+     	my $testpage=shift;
+    +	my @params=@_;
+    +
+    +	if (substr($testpage, 0, 1) eq '~') {
+    +		return check_named_spec_existential($page, $testpage, \&match_created_after, @params);
+    +	}
+     
+     	if (exists $IkiWiki::pagectime{$testpage}) {
+     		if ($IkiWiki::pagectime{$page} > $IkiWiki::pagectime{$testpage}) {
