@@ -160,3 +160,21 @@ Each comment is processed to something like this:
     } # }}}
     
     1;
+
+I've started a smcvpostcomment plugin (to be renamed to postcomment if people like it, but I'm namespacing it while it's still experimental) which I think more closely resembles what Joey was after. The code is cargo-culted from a mixture of editpage and inline's "make a blog post" support - it has to use a lot of semi-internal IkiWiki:: functions (both of those plugins do too). It doesn't fully work yet, but I'll try to get it into a state where it basically works and can be published in the next week or two.
+
+My approach is:
+
+* Comments are intended to be immutable after posting (so, only editable by direct committers), so they go on internal pages (*._comment); these internal pages are checked in to the RCS (although later I might make this optional)
+
+* ?do=smcvpostcomment (in the CGI script) gives a form that lets logged-in users (later, optionally also anonymous users) create a new comment
+
+* \[[!smcvpostcomment]] just inserts a "Post comment" button into the current page, which goes to ?do=smcvpostcomment - it's intended to be used in conjunction with an \[[!inline]] that will display the comments
+
+* The title (subject line), author and authorurl are set with \[[!meta]] directives, just like the way aggregate does it (which means I'll probably have to disallow the use of those \[[!meta]] directives in the body of the comment, to avoid spoofing - obviously, spoofing can be detected by looking at RecentChanges or gitweb, but the expectation for blog-style comments is that the metadata seen in the comment can be trusted)
+
+* The initial plan is to have comments hard-coded to be in Markdown, with further directives not allowed - I'll relax this when I've worked out what ought to be allowed!
+
+I've also updated Marcelo's code (above) to current ikiwiki, and moved it to a "marceloblogcomment" namespace - it's in the "marcelocomments" branch of my repository (see <http://git.debian.org/?p=users/smcv/ikiwiki.git;a=log;h=refs/heads/marcelocomments>). I had to reconstitute the .tmpl file, which Marcelo didn't post here.
+
+--[[smcv]]
