@@ -57,3 +57,25 @@ New bug: new posts aren't getting displayed (or cached for aggregation). After f
 > Even if you start it more frequently, aggregation will only occur every
 > `updateinterval` minutes (default 15), maximum. Does this explain what
 > you're seeing? --[[Joey]]
+
+>> Crap, right, and my test update has since made it into the planet. His post still hasn't. So it must be something with David's feed again? A quick test with XML::Feed looks like it's parsing just fine: --[[schmonz]]
+
+    $ perl 
+    use XML::Feed;
+    my $feed = XML::Feed->parse(URI->new('http://www.davidj.org/rss.xml')) or die XML::Feed->errstr;
+    print $feed->title, "\n";
+    for my $entry ($feed->entries) {
+    print $entry->title, ": ", $entry->issued, "\n";
+    }
+    ^D
+    davidj.org
+    Amway Stories - Refrigerator Pictures: 2008-09-19T00:12:27
+    Amway Stories - Coffee: 2008-09-13T10:08:17
+    Google Alphabet Update: 2008-09-11T22:55:37
+    Writing for writing's sake: 2008-09-09T23:39:05
+    Google Chrome: 2008-09-02T23:12:26
+    Mister Casual: 2008-07-25T09:01:17
+    Parental Conversations: 2008-07-24T10:44:44
+    Place Of George Orwell: 2008-06-03T22:11:07
+    The Raw Beauty Of A National Duolian: 2008-05-31T12:41:06
+
