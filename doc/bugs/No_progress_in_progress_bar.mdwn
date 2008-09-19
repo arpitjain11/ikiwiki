@@ -1,0 +1,17 @@
+I've just upgraded my Ikiwiki 2.64 backport for Ubuntu Hardy and wanted to
+see progress bar in action. Unfortunately I can't see any progress.
+
+This is my example Ikiwiki syntax:
+
+    [[!progress percent=75]]
+
+A here is a HTML result:
+
+    <div class="progress">
+      <div class="progress-done"></div>
+    </div>
+
+It seems that progress plugin works at all, but it's a problem with passing
+progress value.
+
+Anyone can confirm the bug? --[[Paweł|ptecza]]
