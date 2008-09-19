@@ -53,3 +53,7 @@ Two things aren't working as I'd expect:
 >>>>>> I can confirm, they're fixed on my end. --[[schmonz]]
 
 New bug: new posts aren't getting displayed (or cached for aggregation). After fixing his feed, David posted a new item today, and the aggregator is convinced there's nothing to do, whether by cronjob or webtrigger. I verified that it wasn't another problem with his feed by adding another of my ikiwiki's feed to the planet, running the aggregator, posting a new item, and running the aggregator again: no new item. --[[schmonz]]
+
+> Even if you start it more frequently, aggregation will only occur every
+> `updateinterval` minutes (default 15), maximum. Does this explain what
+> you're seeing? --[[Joey]]
