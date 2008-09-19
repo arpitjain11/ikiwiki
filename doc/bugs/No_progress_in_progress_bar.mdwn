@@ -15,3 +15,10 @@ It seems that progress plugin works at all, but it's a problem with passing
 progress value.
 
 Anyone can confirm the bug? --[[Paweł|ptecza]]
+
+> You are correct.  The above example does generate the HTML you suggest.  The
+> plugin requires a % sign:
+
+[[!progress percent="75%"]]
+
+>  This could probably be improved.  Certainly the documentation could be. -- [[Will]]
