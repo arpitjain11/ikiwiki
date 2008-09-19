@@ -43,3 +43,10 @@ Here is a list of currently available directives in this wiki:
 
 [[!listdirectives ]]
 """]]
+
+[[!if test="!enabled(listdirectives)" then="""
+Here is a list of all directives documented in this wiki.  Not all of them may be enabled:
+
+[[!inline pages="/ikiwiki/directive/* and !*/Discussion" archive="yes" sort=title
+rootpage="/ikiwiki/directive/contrib" postformtext="Add a new directive named:" show=0]]
+"""]]
