@@ -27,6 +27,11 @@ Anyone can confirm the bug? --[[Paweł|ptecza]]
 >> that '%' sign is confusing here and should be dropped. I hope it's clear for all
 >> people that "percent" parameter passes values in percentages. --[[Paweł|ptecza]]
 
+>>> [[fixed|done]] --[[Joey]]
+
 >>> I've forgotten to add that now the HTML code is OK, but I can see only
 >>> "75%" string on white background wihout any border. I need to look closer
 >>> at CSS styles for the progress bar. --[[Paweł|ptecza]]
+
+>>>> You need the `div.progress` and `div.progress-done` from ikiwiki's
+>>>> default `style.css`. --[[Joey]]

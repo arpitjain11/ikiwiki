@@ -5,6 +5,8 @@ ikiwiki (2.65) UNRELEASED; urgency=low
   * editdiff: Broken since 2.62 due to wrong syntax, now fixed.
   * aggregate: Support atom feeds with only a summary element, and no content
     elements.
+  * progress: Display an error if the progress cannot be parsed, and allow
+    the percent parameter to only optionally end with "%".
 
  -- Joey Hess <joeyh@debian.org>  Wed, 17 Sep 2008 14:26:56 -0400
 

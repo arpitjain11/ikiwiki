@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-my $percentage_pattern = qr/[0-9]+\%/; # pattern to validate percentages
+my $percentage_pattern = qr/[0-9]+\%?/; # pattern to validate percentages
 
 sub import { #{{{
 	hook(type => "getsetup", id => "progress", call => \&getsetup);
@@ -29,6 +29,12 @@ sub preprocess (@) { #{{{
 	if (defined $params{percent}) {
 		$fill = $params{percent};
 		($fill) = $fill =~ m/($percentage_pattern)/; # fill is untainted now
+		if (! defined $fill || ! length $fill || $fill > 100 || $fill < 0) {
+			error("illegal percent value $params{percent}");
+		}
+		elsif ($fill !~ /%$/) {
+			$fill.="%";
+		}
 	}
 	elsif (defined $params{totalpages} and defined $params{donepages}) {
 		add_depends($params{page}, $params{totalpages});
