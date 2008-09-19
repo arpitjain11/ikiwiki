@@ -1,0 +1,124 @@
+I've put together an updated bug tracking example.  This example requires some recent
+patches of mine.  It requires [[todo/tracking_bugs_with_dependencies]], 
+[[todo/Default_text_for_new_pages]] and the second [[patch]] in
+[[todo/structured_page_data]] (the data plugin, not the form plugin).
+
+You'll then want to add/replace the following files in the software project example.  The
+heading is the name of the file.  I've commented all the directives.  Oh, and I don't
+have nice CSS for this yet. I did make sure that if I borrowed
+[Trac's](http://trac.edgewall.org/) css then it would display as nicely as theirs - the
+html is there if not the CSS.
+
+### templates/bug.mdwn
+
+    \[[!datatable class="bugtable" datalist="""
+    [[!data key="Reported by" link=""]]					[[!data key="Owned by" link=""]]
+    [[!data key="Depends on"]]
+    """]]
+    
+    ### Description
+    
+    This is a bug that needs solving.
+    
+    #### Steps to reproduce:
+    
+    #### What I expect to happen:
+    
+    #### What actually happens:
+    
+    #### What I have tried to narrow it down:
+    
+### bugs.mdwn
+
+    This is FooBar's bug list. Link bugs to \[[bugs/done]] when done.
+    
+    \[[!inline pages="bugs and ! bugs" feeds=no postformtext="Report a bug:"
+    postform=yes rootpage="./blog" newposttemplate="templates/bug.mdwn"]]
+    
+    \[[!toggle id="all bugs" text="Show all bugs"]]
+    
+    \[[!toggle id="open bugs" text="Show open bugs"]]
+    
+    \[[!toggle id="ready bugs" text="Show ready bugs (open bugs with all dependencies closed)"]]
+    
+    \[[!toggleable id="ready bugs" text="""
+    #### Ready Bugs
+    
+    Open bugs with all dependencies closed.
+    
+    [[!inline pages="define(~open, ./bugs/* and !./bugs/done and !link(done) and !*/Discussion)
+    and ~open and !data_link(Depends on,~open)" actions=yes archive=yes show=0]]
+    """]]
+    
+    \[[!toggleable id="open bugs" text="""
+    #### Open Bugs
+    
+    [[!inline pages="./bugs/* and !./bugs/done and !link(done) 
+    and !*/Discussion" actions=yes archive=yes show=0]]
+    """]]
+    
+    \[[!toggleable id="all bugs" text="""
+    #### All Bugs
+    
+    [[!inline pages="./bugs/* and !./bugs/done and !*/Discussion"
+    actions=yes archive=yes show=0]]
+    """]]
+    
+### bugs/needs_more_bugs.mdwn
+
+    \[[!datatable class="bugtable" datalist="""
+    [[!data key="Reported by" link="John"]]					[[!data key="Owned by" link="Frank"]]
+    [[!data key="Depends on" link="bugs/fails_to_frobnicate"]]
+    """]]
+    
+    ### Description
+    
+    FooBar does not have enough bugs, which suggests that it's not a real Free
+    Software project. Please help create more bugs by adding code to FooBar!
+    :-)
+    
+    #### Steps to reproduce:
+    
+    Test frobnicate.
+    
+    #### What I expect to happen:
+    
+    It should fail.
+    
+    #### What actually happens:
+    
+    It works.
+    
+    #### What I have tried to narrow it down:
+    
+    I've added some code, but I'm not sure it was the right code.
+
+### bugs/fails_to_frobnicate.mdwn
+
+    \[[!datatable class="bugtable" datalist="""
+    [[!data key="Reported by" link="John"]]					[[!data key="Owned by" link="Frank"]]
+    [[!data key="Depends on"]]
+    """]]
+    
+    ### Description
+    
+    FooBar, when used with the `--frob` option, fails to properly frobnicate
+    output.
+    
+    > This is fixed in \[[news/version_1.0]]; marking this bug \[[done]].
+    
+    #### Steps to reproduce:
+    
+    Use FooBar with the `--frob` option.
+    
+    #### What I expect to happen:
+    
+    Lots of frobnication.
+    
+    #### What actually happens:
+    
+    Complete lack of frobnication
+    
+    #### What I have tried to narrow it down:
+    
+    Tested on Linux, MacOS and NetBSD.
