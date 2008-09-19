@@ -80,3 +80,10 @@ Inline below is a [[patch]] that implements this:
      <input type="hidden" name="subpage" value="1" />
      <TMPL_VAR POSTFORMTEXT>
      <input name="title" size="40" />
+
+---
+
+Perhaps I'm misunderstanding something, but can't you use already existing
+in-house means instead of this patch; use a procedure as I do in the Hurd wiki?
+<http://www.bddebian.com/~wiki/config_edittemplate/> with one template:
+<http://www.bddebian.com/~wiki/config_edittemplate/regular_page/>.
