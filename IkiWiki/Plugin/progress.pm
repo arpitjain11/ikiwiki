@@ -30,7 +30,7 @@ sub preprocess (@) { #{{{
 		$fill = $params{percent};
 		($fill) = $fill =~ m/($percentage_pattern)/; # fill is untainted now
 		if (! defined $fill || ! length $fill || $fill > 100 || $fill < 0) {
-			error("illegal percent value $params{percent}");
+			error(sprintf(gettext("illegal percent value %s"), $params{percent}));
 		}
 		elsif ($fill !~ /%$/) {
 			$fill.="%";
@@ -57,7 +57,7 @@ sub preprocess (@) { #{{{
 		}
 	}
 	else {
-		error("need either `percent` or `totalpages` and `donepages` parameters");
+		error(gettext("need either `percent` or `totalpages` and `donepages` parameters"));
 	}
 
 	return <<EODIV
