@@ -162,6 +162,9 @@ See also:
 
 >> Anyway, here are the plugins.  As noted above these are only preliminary, exploratory, attempts. -- [[Will]]
 
+>>>> I've just updated the second of the two patches below.  The two patches are not mutually
+>>>> exclusive, but I'm leaning towards the second as more useful (for the things I'm doing). -- [[Will]]
+
     #!/usr/bin/perl
     # Interpret YAML data to make a web form
     package IkiWiki::Plugin::form;
@@ -388,10 +391,13 @@ See also:
     use strict;
     use IkiWiki 2.00;
     
+    my $inTable = 0;
+    
     sub import { #{{{
     	hook(type => "getsetup", id => "data", call => \&getsetup);
     	hook(type => "needsbuild", id => "data", call => \&needsbuild);
     	hook(type => "preprocess", id => "data", call => \&preprocess, scan => 1);
+    	hook(type => "preprocess", id => "datatable", call => \&preprocess_table, scan => 1);	# does this need scan?
     } # }}}
     
     sub getsetup () { #{{{
@@ -418,14 +424,68 @@ See also:
     }
     
     sub preprocess (@) { #{{{
-    	my %params=@_;
-    
-    	$pagestate{$params{page}}{data}{$params{key}} = $params{value};
+    	my @argslist = @_;
+    	my %params=@argslist;
     	
-    	return IkiWiki::preprocess($params{page}, $params{destpage}, 
-    		IkiWiki::filter($params{page}, $params{destpage}, $params{value})) if defined wantarray;
+    	my $html = '';
+    	my $class = defined $params{class}
+    			? 'class="'.$params{class}.'"'
+    			: '';
+    	
+    	if ($inTable) {
+    		$html = "<th $class >$params{key}:</th><td $class >";
+    	} else {
+    		$html = "<span $class >$params{key}:";
+    	}
+    	
+    	while (scalar(@argslist) > 1) {
+    		my $type = shift @argslist;
+    		my $data = shift @argslist;
+    		if ($type eq 'link') {
+    			# store links raw
+    			$pagestate{$params{page}}{data}{$params{key}}{link}{$data} = 1;
+    			my $link=IkiWiki::linkpage($data);
+    			add_depends($params{page}, $link);
+    			$html .= ' ' . htmllink($params{page}, $params{destpage}, $link);
+    		} elsif ($type eq 'data') {
+    			$data = IkiWiki::preprocess($params{page}, $params{destpage}, 
+    				IkiWiki::filter($params{page}, $params{destpage}, $data));
+    			$html .= ' ' . $data;
+    			# store data after processing - allows pagecounts to be stored, etc.
+    			$pagestate{$params{page}}{data}{$params{key}}{data}{$data} = 1;
+    		}
+    	}
+    		
+    	if ($inTable) {
+    		$html .= "</td>";
+    	} else {
+    		$html .= "</span>";
+    	}
+    	
+    	return $html;
     } # }}}
     
+    sub preprocess_table (@) { #{{{
+    	my %params=@_;
+    
+    	my @lines;
+    	push @lines, defined $params{class}
+    			? "<table class=\"".$params{class}.'">'
+    			: '<table>';
+    
+    	$inTable = 1;
+    
+    	foreach my $line (split(/\n/, $params{datalist})) {
+    		push @lines, "<tr>" . IkiWiki::preprocess($params{page}, $params{destpage}, 
+    			IkiWiki::filter($params{page}, $params{destpage}, $line)) . "</tr>";
+    	}
+    
+    	$inTable = 0;
+    
+    	push @lines, '</table>';
+    
+    	return join("\n", @lines);
+    } #}}}
     
     package IkiWiki::PageSpec;
     
@@ -436,8 +496,6 @@ See also:
     	my $key=shift @args;
     	my $value=shift @args;
     
-    	my $file = $IkiWiki::pagesources{$page};
-    	
     	if (! exists $IkiWiki::pagestate{$page}{data}) {
     		return IkiWiki::FailReason->new("page does not contain any data directives");
     	}
@@ -446,13 +504,37 @@ See also:
     		return IkiWiki::FailReason->new("page does not contain data key '$key'");
     	}
     	
-    	my $formVal = $IkiWiki::pagestate{$page}{data}{$key};
-    
-    	if ($formVal eq $value) {
+    	if ($IkiWiki::pagestate{$page}{data}{$key}{data}{$value}) {
     		return IkiWiki::SuccessReason->new("value matches");
     	} else {
     		return IkiWiki::FailReason->new("value does not match");
     	}
+    } #}}}
+    
+    sub match_data_link ($$;@) { #{{{
+    	my $page=shift;
+    	my $argSet=shift;
+    	my @params=@_;
+    	my @args=split(/,/, $argSet);
+    	my $key=shift @args;
+    	my $value=shift @args;
+    
+    	if (! exists $IkiWiki::pagestate{$page}{data}) {
+    		return IkiWiki::FailReason->new("page $page does not contain any data directives and so cannot match a link");
+    	}
+    	
+    	if (! exists $IkiWiki::pagestate{$page}{data}{$key}) {
+    		return IkiWiki::FailReason->new("page $page does not contain data key '$key'");
+    	}
+    	
+    	foreach my $link (keys %{ $IkiWiki::pagestate{$page}{data}{$key}{link} }) {
+    		# print STDERR "Checking if $link matches glob $value\n";
+    		if (match_glob($link, $value, @params)) {
+    			return IkiWiki::SuccessReason->new("Data link on page $page with key $key matches glob $value: $link");
+    		}
+    	}
+    
+    	return IkiWiki::FailReason->new("No data link on page $page with key $key matches glob $value");
     } #}}}
     
     1
