@@ -1,0 +1,12 @@
+It would be nice to have feature parity with [Trac](http://trac.edgewall.org/).  Note that it is expected that the
+implementation will be quite different, but IkiWiki should support the same uses.
+
+Features needed:
+
+ * Wiki, duh.
+ * Source code viewing: Need a plugin to make an easy link to an RCS source viewer - like the `history` button, but for a source page, not the current wiki page.
+ * Trac 'Timeline' feature: view history of the RCS - the `history` button.
+ * Trac 'Roadmap' feature: Which TODOs are needed for which mielstones.  Use the [[plugins/progress]] plugin to show percentage complete for each milestone.
+ * Bug tracking: see [[tips/integrated_issue_tracking_with_ikiwiki]].
+   * Queries on bug database: e.g. all open bugs that don't depend on an open bug.  See [[todo/tracking_bugs_with_dependencies]] and [[todo/structured_page_data]].
+ * Build Status: Maybe this is just a link to an external (centralised) status board (e.g. [BuildBot](http://buildbot.net/)).
