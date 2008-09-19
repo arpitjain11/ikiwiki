@@ -1,0 +1,8 @@
+The [[ikiwiki/directive/inline]] directive allows the creation of new pages.
+It would be nice if it was possible to specify default text for the new post.
+For example:
+
+    \[[!inline pages="blog/* and !*/Discussion" postform="yes" newposttemplate="blogtemplate.mdwn"]]
+
+This would allow you to create a new blog post.  When you hit the 'Edit' button, the system presents
+you with an edit form as normal, but rather than being empty, it has the text from `blogtemplate.mdwn`.
