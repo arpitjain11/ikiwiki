@@ -62,7 +62,7 @@ sub preprocess (@) { #{{{
 	add_depends($params{page}, $link);
 	my $linkHTML = htmllink($params{page}, $params{destpage}, $link);
 
-	return sprintf(gettext("edittemplate: %s registered for %s"),
+	return sprintf(gettext("edittemplate %s registered for %s"),
 		$linkHTML, $params{match});
 } # }}}
 

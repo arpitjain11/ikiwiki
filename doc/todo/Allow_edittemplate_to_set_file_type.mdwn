@@ -5,6 +5,9 @@ Below is a [[patch]] to [[plugins/edittemplate]] that does a few things:
  * It makes the description of what was registered link to the template page (which gives feedback for typos or allows template creation)
  * It adds a colon to the standard string correcting the syntax.
 
+[[done]] except for the colon change; it's referring to the template as an
+edittemplate there. --[[Joey]]
+
 ----
 
     diff --git a/IkiWiki/Plugin/edittemplate.pm b/IkiWiki/Plugin/edittemplate.pm
@@ -39,5 +42,3 @@ Below is a [[patch]] to [[plugins/edittemplate]] that does a few things:
      					}
      				}
 
-
-[[done]]
