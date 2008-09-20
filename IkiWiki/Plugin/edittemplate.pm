@@ -93,11 +93,12 @@ sub formbuilder (@) { #{{{
 			if (exists $pagestate{$registering_page}{edittemplate}) {
 				foreach my $pagespec (sort keys %{$pagestate{$registering_page}{edittemplate}}) {
 					if (pagespec_match($p, $pagespec, location => $registering_page)) {
+						my $template=$pagestate{$registering_page}{edittemplate}{$pagespec};
 						$form->field(name => "editcontent",
-							 value => filltemplate($pagestate{$registering_page}{edittemplate}{$pagespec}, $page));
+							 value =>  filltemplate($template, $page));
 						$form->field(name => "type",
-							 value => pagetype($pagesources{$pagestate{$registering_page}{edittemplate}{$pagespec}}))
-								if $pagesources{$pagestate{$registering_page}{edittemplate}{$pagespec}};
+							 value => pagetype($pagesources{$template}))
+								if $pagesources{$template};
 						return;
 					}
 				}
