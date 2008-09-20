@@ -1,0 +1,40 @@
+Below is a [[patch]] to [[plugins/edittemplate]] that does a few things:
+
+ * It defaults the type of the file to be created to the same type as the template.
+ * It adds a 'silent' parameter to the directive that stops it from printing out what what registered.
+ * It makes the description of what was registered link to the template page (which gives feedback for typos or allows template creation)
+ * It adds a colon to the standard string correcting the syntax.
+
+----
+
+    diff --git a/IkiWiki/Plugin/edittemplate.pm b/IkiWiki/Plugin/edittemplate.pm
+    index 98308de..c381940 100644
+    --- a/IkiWiki/Plugin/edittemplate.pm
+    +++ b/IkiWiki/Plugin/edittemplate.pm
+    @@ -56,8 +56,14 @@ sub preprocess (@) { #{{{
+     
+     	$pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
+     
+    -	return sprintf(gettext("edittemplate %s registered for %s"),
+    -		$params{template}, $params{match});
+    +	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));
+    +
+    +	my $link=IkiWiki::linkpage($params{template});
+    +	add_depends($params{page}, $link);
+    +	my $linkHTML = htmllink($params{page}, $params{destpage}, $link);
+    +
+    +	return sprintf(gettext("edittemplate: %s registered for %s"),
+    +		$linkHTML, $params{match});
+     } # }}}
+     
+     sub formbuilder (@) { #{{{
+    @@ -89,6 +95,9 @@ sub formbuilder (@) { #{{{
+     					if (pagespec_match($p, $pagespec, location => $registering_page)) {
+     						$form->field(name => "editcontent",
+     							 value => filltemplate($pagestate{$registering_page}{edittemplate}{$pagespec}, $page));
+    +						$form->field(name => "type",
+    +							 value => pagetype($pagesources{$pagestate{$registering_page}{edittemplate}{$pagespec}}))
+    +								if $pagesources{$pagestate{$registering_page}{edittemplate}{$pagespec}};
+     						return;
+     					}
+     				}
