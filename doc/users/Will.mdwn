@@ -15,6 +15,11 @@ I generally use my [[ikiwiki/openid]] login when editing here: <http://www.cse.u
 >> Is it only working because you have old files in your output directory that aren't
 >> backed by source files any more? -- [[Will]]
 
+>>> This wiki's source is ikiwiki's doc/ directory, which contains all the
+>>> files that are installed into the underlay, including the directive
+>>> documentation. But, it's special that way. 
+>>> I've now enabled listdirectives on this wiki, BTW. --[[Joey]]
+
 ### Open Bugs:
 
 [[!inline pages="link(users/Will) and bugs/* and !bugs/done and !bugs/discussion and !link(patch) and !link(bugs/done) and !bugs/*/*" archive="yes" feeds="no" ]]
