@@ -56,8 +56,14 @@ sub preprocess (@) { #{{{
 
 	$pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
 
-	return sprintf(gettext("edittemplate %s registered for %s"),
-		$params{template}, $params{match});
+	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));
+
+	my $link=IkiWiki::linkpage($params{template});
+	add_depends($params{page}, $link);
+	my $linkHTML = htmllink($params{page}, $params{destpage}, $link);
+
+	return sprintf(gettext("edittemplate: %s registered for %s"),
+		$linkHTML, $params{match});
 } # }}}
 
 sub formbuilder (@) { #{{{
@@ -89,6 +95,9 @@ sub formbuilder (@) { #{{{
 					if (pagespec_match($p, $pagespec, location => $registering_page)) {
 						$form->field(name => "editcontent",
 							 value => filltemplate($pagestate{$registering_page}{edittemplate}{$pagespec}, $page));
+						$form->field(name => "type",
+							 value => pagetype($pagesources{$pagestate{$registering_page}{edittemplate}{$pagespec}}))
+								if $pagesources{$pagestate{$registering_page}{edittemplate}{$pagespec}};
 						return;
 					}
 				}
