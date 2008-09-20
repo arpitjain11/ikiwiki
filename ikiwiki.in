@@ -21,7 +21,13 @@ sub getconfig () { #{{{
 		GetOptions(
 			"setup|s=s" => sub {
 				require IkiWiki::Setup;
+				my $verbose=$config{verbose};
+				my $syslog=$config{syslog};
 				IkiWiki::Setup::load($_[1]);
+				$config{setupverbose}=$config{verbose};
+				$config{setupsyslog}=$config{syslog};
+				$config{verbose}=$verbose;
+				$config{syslog}=$syslog;
 				$config{setup}=1;
 			},
 			"dumpsetup|s=s" => \$config{dumpsetup},
@@ -129,15 +135,13 @@ sub main () { #{{{
 			debug(gettext("generating wrappers.."));
 			require IkiWiki::Wrapper;
 			my %origconfig=(%config);
-			my @wrappers=@{$config{wrappers}};
-			delete $config{wrappers};
-			delete $config{genwrappers};
-			foreach my $wrapper (@wrappers) {
-				%config=(%origconfig,
-					rebuild => 0,
-					verbose => undef,
-					%{$wrapper},
-				);
+			foreach my $wrapper (@{$config{wrappers}}) {
+				%config=(%origconfig, %{$wrapper});
+				$config{verbose}=$config{setupverbose}
+					if exists $config{setupverbose};
+				$config{syslog}=$config{setupsyslog}
+					if exists $config{setupsyslog};
+				delete @config{qw(setupsyslog setupverbose wrappers genwrappers rebuild)};
 				checkconfig();
 				if (! $config{cgi} && ! $config{post_commit}) {
 					$config{post_commit}=1;
