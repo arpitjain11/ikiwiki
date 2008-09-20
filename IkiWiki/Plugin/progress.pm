@@ -29,12 +29,11 @@ sub preprocess (@) { #{{{
 	if (defined $params{percent}) {
 		$fill = $params{percent};
 		($fill) = $fill =~ m/($percentage_pattern)/; # fill is untainted now
+		$fill=~s/%$//;
 		if (! defined $fill || ! length $fill || $fill > 100 || $fill < 0) {
 			error(sprintf(gettext("illegal percent value %s"), $params{percent}));
 		}
-		elsif ($fill !~ /%$/) {
-			$fill.="%";
-		}
+		$fill.="%";
 	}
 	elsif (defined $params{totalpages} and defined $params{donepages}) {
 		add_depends($params{page}, $params{totalpages});
