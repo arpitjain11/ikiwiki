@@ -1,6 +1,6 @@
 I've put together an updated bug tracking example.  This example requires some recent
 patches of mine.  It requires [[todo/tracking_bugs_with_dependencies]], 
-[[todo/Default_text_for_new_pages]] and the second [[patch]] in
+[[todo/Allow_edittemplate_to_set_file_type]] and the second [[patch]] in
 [[todo/structured_page_data]] (the data plugin, not the form plugin).
 
 You'll then want to add/replace the following files in the software project example.  The
@@ -8,6 +8,16 @@ heading is the name of the file.  I've commented all the directives.  Oh, and I 
 have nice CSS for this yet. I did make sure that if I borrowed
 [Trac's](http://trac.edgewall.org/) css then it would display as nicely as theirs - the
 html is there if not the CSS.
+
+It might be worth adding some justification of what is going on here.  The datatable
+and data directives generate a nice tabular form for the structured data.  The HTML
+generated is the same as for Trac, except I've got fewer fields.  Adding more is trivial.
+
+I use data directives rather than links because the data directive allows separating
+dependencies from links.  We can specify 'bugs with all dependencies closed' without
+being confused by other links on the page.
+
+-- [[Will]]
 
 ### templates/bug.mdwn
 
@@ -32,8 +42,10 @@ html is there if not the CSS.
 
     This is FooBar's bug list. Link bugs to \[[bugs/done]] when done.
     
-    \[[!inline pages="bugs and ! bugs" feeds=no postformtext="Report a bug:"
-    postform=yes rootpage="./blog" newposttemplate="templates/bug.mdwn"]]
+    \[[!inline pages="bugs and ! bugs" feeds=no postform=yes 
+    postformtext="Report a bug:" rootpage="bugs"]]
+    
+    \[[!edittemplate template="templates/bug" match="bugs/* and !*/Discussion" silent=yes]]
     
     \[[!toggle id="all bugs" text="Show all bugs"]]
     
