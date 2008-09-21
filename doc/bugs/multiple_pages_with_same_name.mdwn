@@ -9,3 +9,32 @@ Anyway, I'm thinking about possible solutions.  The best option I've come up wit
 Suggestions welcome.
 
 -- [[Will]]
+
+> Ok, this turned out not to be a hard change.  [[patch]] is below.  With this patch you can tell IkiWiki not to drop the suffix when you register a hook: `hook(type => "htmlize", id => $lang, call => \&htmlize, leavesuffix => 1);`
+
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 4e4da11..853f905 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -618,7 +618,7 @@ sub pagename ($) { #{{{
+     
+     	my $type=pagetype($file);
+     	my $page=$file;
+    -	$page=~s/\Q.$type\E*$// if defined $type;
+    +	$page=~s/\Q.$type\E*$// if defined $type && !$hooks{htmlize}{$type}{leavesuffix};
+     	return $page;
+     } #}}}
+     
+    diff --git a/t/pagename.t b/t/pagename.t
+    index 96e6a87..58811b9 100755
+    --- a/t/pagename.t
+    +++ b/t/pagename.t
+    @@ -6,7 +6,7 @@ use Test::More tests => 5;
+     BEGIN { use_ok("IkiWiki"); }
+     
+     # Used internally.
+    -$IkiWiki::hooks{htmlize}{mdwn}=1;
+    +$IkiWiki::hooks{htmlize}{mdwn}{call}=1;
+     
+     is(pagename("foo.mdwn"), "foo");
+     is(pagename("foo/bar.mdwn"), "foo/bar");
