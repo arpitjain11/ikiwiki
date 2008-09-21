@@ -71,7 +71,7 @@ sub formbuilder (@) { #{{{
 	my $form=$params{form};
 
 	return if $form->field("do") ne "create" ||
-		length $form->field("editcontent");
+		(defined $form->field("editcontent") && length $form->field("editcontent"));
 	
 	my $page=$form->field("page");
 	
