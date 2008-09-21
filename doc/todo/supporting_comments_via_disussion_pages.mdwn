@@ -182,3 +182,34 @@ My approach is:
 I've also updated Marcelo's code (above) to current ikiwiki, and moved it to a "marceloblogcomment" namespace - it's in the "marcelocomments" branch of my repository (see <http://git.debian.org/?p=users/smcv/ikiwiki.git;a=log;h=refs/heads/marcelocomments>). I had to reconstitute the .tmpl file, which Marcelo didn't post here.
 
 --[[smcv]]
+
+OK, the postcomment branch in my repository contains an implementation. What
+do you think so far? Known issues include:
+
+* The combination of RSS/Atom links and the "post new comment..." button is
+  ugly - I need a way to integrate the "new comment" button into the feed links
+  somehow, like the way inline embeds its own "new blog post..." feature
+  (I don't think the current way really scales, though)
+
+* There are some tweakables (whether to commit comments into the VCS, whether
+  wikilinks are allowed, whether directives are allowed) that are theoretically
+  configurable, but are currently hard-coded
+
+* The wikilink/directive disarming doesn't work unless you have
+  prefixdirectives set (which I just realised)
+
+* \[[!smcvpostcomment]] now displays the comments too, by invoking \[[!inline]]
+  with suitable parameters - but it does so in a very ugly way
+
+* Start-tags in a comment with no corresponding end-tag break page formatting
+  (unless htmltidy is enabled - inline and aggregate have the same problem)
+
+* There is no access control, so anonymous users can always comment, and so
+  can all logged-in users. Perhaps we need to extend canedit() to support
+  different types of edit? Or perhaps I should ignore canedit() and make the
+  access control configurable via a parameter to \[[!smcvpostcomment]]?
+  I'd like to be able to let anonymous (or at least non-admin) users comment
+  on existing pages, but not edit or create pages (but perhaps I'm being too
+  un-wikiish).
+
+--[[smcv]]
