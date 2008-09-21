@@ -38,3 +38,25 @@ Suggestions welcome.
      
      is(pagename("foo.mdwn"), "foo");
      is(pagename("foo/bar.mdwn"), "foo/bar");
+
+----
+
+I wonder if this patch will also be useful:
+
+    diff --git a/IkiWiki/Render.pm b/IkiWiki/Render.pm
+    index 752d176..3f1b67b 100644
+    --- a/IkiWiki/Render.pm
+    +++ b/IkiWiki/Render.pm
+    @@ -279,7 +279,11 @@ sub refresh () { #{{{
+     				else {
+     					$f=~s/^\Q$config{srcdir}\E\/?//;
+     					push @files, $f;
+    -					$exists{pagename($f)}=1;
+    +					my $pagename = pagename($f);
+    +					if ($exists{$pagename}) {
+    +						warn(sprintf(gettext("Page %s has multiple possible source pages"), $pagename)."\n");
+    +					}
+    +					$exists{$pagename}=1;
+     				}
+     			}
+     		},
