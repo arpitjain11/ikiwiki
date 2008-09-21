@@ -1,0 +1,11 @@
+I'm just working on an updated solution to [[todo/automatic_use_of_syntax_plugin_on_source_code_files]] (see also [[plugins/contrib/highlightcode]] or [[plugins/contrib/sourcehighlight]]).
+
+I realised that this is going to have problems when you ask it to process `.c` and `.h` files with the same base name.  e.g. `hello.c` and `hello.h`.
+
+I tested it briefly with `test.java` and `test.mdwn` just to see what would happen.  Things got quite strange.  The source-highlighting plugin was called (probably for the java file), but then when it calls `pagetype($pagesources{$page})` to figure out the file type, that function returns `mdwn`, which confuses things somewhat.
+
+Anyway, I'm thinking about possible solutions.  The best option I've come up with so far is: when registering an htmlize hook, add a new optional paramter 'keep_extension'.  This would make a source file of `hello.c` generate a page with name `hello.c` rather than the current `hello`.  This would keep the pages unique (until someone makes `hello.c.mdwn`...).
+
+Suggestions welcome.
+
+-- [[Will]]
