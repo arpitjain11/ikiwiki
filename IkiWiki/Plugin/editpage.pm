@@ -85,8 +85,9 @@ sub cgi_editpage ($$) { #{{{
 	});
 	decode_form_utf8($form);
 	
-	# This untaint is safe because we check file_pruned.
-	my $page=$form->field('page');
+	# This untaint is safe because we check file_pruned and
+	# wiki_file_regexp.
+	my ($page)=$form->field('page')=~/$config{wiki_file_regexp}/;
 	$page=possibly_foolish_untaint($page);
 	my $absolute=($page =~ s#^/+##);
 	if (! defined $page || ! length $page ||
