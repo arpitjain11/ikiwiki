@@ -54,16 +54,14 @@ sub preprocess (@) { #{{{
 		error gettext("match not specified")
 	}
 
-	$pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
+	my $link=IkiWiki::linkpage($params{template});
+	$pagestate{$params{page}}{edittemplate}{$params{match}}=$link;
 
 	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));
-
-	my $link=IkiWiki::linkpage($params{template});
 	add_depends($params{page}, $link);
-	my $linkHTML = htmllink($params{page}, $params{destpage}, $link);
-
 	return sprintf(gettext("edittemplate %s registered for %s"),
-		$linkHTML, $params{match});
+		htmllink($params{page}, $params{destpage}, $link),
+	       	$params{match});
 } # }}}
 
 sub formbuilder (@) { #{{{
