@@ -1,3 +1,104 @@
 How about a direct link from the page header to the source of the latest version, to avoid the need to either use edit or navigate to the current version via the history link?
 
  I'd like this too (and might try to implement it). -- [[jondowland]]
+
+I just implemented this.  There is one [[patch]] to the default page template, and a new plugin.  -- [[Will]]
+
+----
+
+    diff --git a/templates/page.tmpl b/templates/page.tmpl
+    index f2f9c34..3176bed 100644
+    --- a/templates/page.tmpl
+    +++ b/templates/page.tmpl
+    @@ -46,6 +46,9 @@
+     <TMPL_IF NAME="HISTORYURL">
+     <li><a href="<TMPL_VAR HISTORYURL>">History</a></li>
+     </TMPL_IF>
+    +<TMPL_IF NAME="GETSOURCEURL">
+    +<li><a href="<TMPL_VAR GETSOURCEURL>">Get Source</a></li>
+    +</TMPL_IF>
+     <TMPL_IF NAME="PREFSURL">
+     <li><a href="<TMPL_VAR PREFSURL>">Preferences</a></li>
+     </TMPL_IF>
+
+----
+
+    #!/usr/bin/perl
+    package IkiWiki::Plugin::getsource;
+    
+    use warnings;
+    use strict;
+    use IkiWiki;
+    use open qw{:utf8 :std};
+    
+    sub import { #{{{
+    	hook(type => "getsetup", id => "getsource", call => \&getsetup);
+    	hook(type => "pagetemplate", id => "getsource", call => \&pagetemplate);
+    	hook(type => "sessioncgi", id => "getsource", call => \&cgi_getsource);
+    } # }}}
+    
+    sub getsetup () { #{{{
+    	return
+    		plugin => {
+    			safe => 1,
+    			rebuild => 1,
+    		},
+    		getsource_mimetype => {
+    			type => "string",
+    			example => "application/octet-stream",
+    			description => "Mime type for returned source.",
+    			safe => 1,
+    			rebuild => 0,
+    		},
+    } #}}}
+    
+    sub pagetemplate (@) { #{{{
+    	my %params=@_;
+    
+    	my $page=$params{page};
+    	my $template=$params{template};
+    
+    	if (length $config{cgiurl}) {
+    		$template->param(getsourceurl => IkiWiki::cgiurl(do => "getsource", page => $page));
+    		$template->param(have_actions => 1);
+    	}
+    } # }}}
+    
+    sub cgi_getsource ($$) { #{{{
+    	my $cgi=shift;
+    	my $session=shift;
+    
+    	# Note: we use sessioncgi rather than just cgi
+    	# because we need $IkiWiki::pagesources{} to be
+    	# populated.
+    	
+    	return unless (defined $cgi->param('do') &&
+    					$cgi->param("do") eq "getsource");
+    
+    	IkiWiki::decode_cgi_utf8($cgi);
+    
+    	my $page=$cgi->param('page');
+    
+    	if ($IkiWiki::pagesources{$page}) {
+    		
+    		my $data = IkiWiki::readfile(IkiWiki::srcfile($IkiWiki::pagesources{$page}));
+    		
+    		if (! $config{getsource_mimetype}) {
+    			$config{getsource_mimetype} = "text/plain";
+    		}
+    		
+    		print "Content-Type: $config{getsource_mimetype}\r\n";
+    		
+    		print ("\r\n");
+    		
+    		print $data;
+    		
+    		exit 0;
+    	}
+    	
+    	error("Unable to find page source for page: $page");
+    
+    	exit 0;
+    }
+    
+    1
