@@ -1,0 +1,11 @@
+<form action="<TMPL_VAR CGIURL>" method="get">
+<div class="smcvpostcommentembed">
+<input type="hidden" name="do" value="smcvpostcomment" />
+<input type="hidden" name="page" value="<TMPL_VAR PAGE>" />
+<input type="submit" name="submit" value="Post a comment"
+  <TMPL_IF NAME=DISABLED>disabled="disabled"</TMPL_IF> />
+<TMPL_IF NAME=DISABLED>
+<label for="submit">(<TMPL_VAR NAME=DISABLED>)</label>
+</TMPL_IF>
+</div>
+</form>

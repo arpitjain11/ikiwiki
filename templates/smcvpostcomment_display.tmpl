@@ -1,0 +1,24 @@
+<div class="smcvpostcomment-page">
+
+<div class="smcvpostcomment-header">
+Posted by
+<TMPL_IF NAME="AUTHOR">
+<span class="author">
+<TMPL_IF NAME="AUTHORURL">
+<a href="<TMPL_VAR NAME=AUTHORURL>"><TMPL_VAR NAME=AUTHOR></a>
+<TMPL_ELSE>
+<TMPL_VAR NAME=AUTHOR>
+</TMPL_IF>
+</span>
+</TMPL_IF>
+
+(<TMPL_VAR CTIME>)
+</div>
+
+<div class="smcvpostcomment-subject"><TMPL_VAR TITLE></div>
+
+<div class="inlinecontent">
+<TMPL_VAR CONTENT>
+</div>
+
+</div><!--.inlinepage-->

@@ -1,0 +1,20 @@
+<TMPL_VAR MESSAGE>
+<TMPL_VAR FORM-START>
+<TMPL_VAR FIELD-DO>
+<TMPL_VAR FIELD-SID>
+<TMPL_VAR FIELD-PAGE>
+Subject: <TMPL_VAR FIELD-SUBJECT><br />
+<TMPL_VAR FIELD-BODY><br />
+<TMPL_VAR FORM-SUBMIT><br />
+<TMPL_VAR HELPONFORMATTINGLINK>
+<TMPL_VAR FORM-END>
+
+<TMPL_IF NAME="PAGE_PREVIEW">
+<hr />
+<div class="header">
+<span>Page preview:</span>
+</div>
+<div id="preview">
+<TMPL_VAR PAGE_PREVIEW>
+</div>
+</TMPL_IF>
