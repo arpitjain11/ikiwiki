@@ -1,12 +1,10 @@
 When you do various CGI actions, "index.html" is visible in the redirection URL. It's desirable that this is avoided, so there is only one visible URL for each page (search engines don't think that /foo/index.html is equivalent to /foo/, since this is not necessarily true for all servers and configurations).
 
-The beautify branch in my repository contains [[patches|patch]] for all the cases I found by grepping for "htmlpage", which are:
+[The beautify branch in my repository](http://git.debian.org/?p=users/smcv/ikiwiki.git;a=shortlog;h=refs/heads/beautify) contains [[patches|patch]] for all the cases I found by grepping for "htmlpage", which are:
 
-* editpage redirects you to the page under various circumstances, most visibly after you finish editing it
-* poll redirects you to the poll after voting
-* recentchanges redirects you to the relevant page when you click a link
-* remove redirects you to the parent of the removed page
-
-<http://git.debian.org/?p=users/smcv/ikiwiki.git;a=shortlog;h=refs/heads/beautify>
+* [[plugins/editpage]] redirects you to the page under various circumstances, most visibly after you finish editing it
+* [[plugins/poll]] redirects you to the poll after voting
+* [[plugins/recentchanges]] redirects you to the relevant page when you click a link
+* [[plugins/remove]] redirects you to the parent of the removed page
 
 I think the coding standard in future should be: use htmlpage when you want a local file, or urlto if you want a URL.
