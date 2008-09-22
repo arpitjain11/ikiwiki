@@ -1,0 +1,40 @@
+## summary
+at times it is useful to have a guided tour or trail through a subset of the pages of a wiki; in pmwiki, this is implemented as [wikitrails](http://www.pmwiki.org/wiki/PmWiki/WikiTrails).
+
+i'm working on a python xmlrpc plugin for ikiwiki to support wikitrails, both as a navigation feature (have "forward" and "back" links based on a sequence) and a modified inline that includes all pages in the trail with appropriate modifications (suitable for printing if necessary).
+
+the current status is published on `git://github.com/github076986099/ikiwiki-plugins.git`; as of now, i don't have a public demo of it.
+
+feedback on both the concept and the code is very much appreciated by [[discussion]] or [email](mailto:chrysn@fsfe.org).
+
+## usage
+
+two preprocessor commands are provided:
+
+### \[[!trail index="my_indexpage"]]
+
+embeds a navigation object with forward and back links as well as an indicator of the current position in the trail.
+
+if index is not specified, a suitable page up the path is used.
+
+this works very well together with the [[sidebar|plugins/sidebar]] plugin if the pages in a directory are roughly the same as the pages in the trail and the `index` is directory index page; just put the \[[!trail]] in the sidebar.
+
+### \[[!trailinclude index="my_indexpage"]]
+
+all pages linked from the index page are included in the same way as \[[!inline]] does, but in the proper sequence, with headings according to the indent in the source page and adoptions for the headings inside the page (a level 2 heading in a page that is a sub-sub-chapter in the whole trail will become a level 5 heading when trailincluded).
+
+## the index page
+
+the index page is parsed as markdown; numbered lists and "`*`" bulleted lists are discovered.
+
+## current issues
+
+ * rebuilding --- currently, there is no propper rebuilding of pages (will use `will_render` and `add_depends`). care has to be taken of how not yet created pages play into this.
+ * inline recursion --- there is simply no guard yet
+ * navigation layout --- has to be both flexible and usable-by-default
+ * heading shifting
+  * currently only works for markdown
+  * can break the limit of html's six heading levels
+ * search for index page is currently next to hardcoded
+ * reading the index --- markdown syntax parsing is currently on a it-can-use-what-i-produce level; maybe integrate with existing mdwn parser
+ * uses undocumented titlepage command
