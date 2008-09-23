@@ -273,6 +273,16 @@ sub sessioncgi ($$) { #{{{
 			check_canrename($src, $srcfile, $dest, $destfile,
 				$q, $session, $q->param("attachment"));
 
+			# See if subpages need to be renamed.
+			my @subpages;
+			if ($q->param("subpages") && $src ne $dest) {
+			        foreach my $p (keys %pagesources) {
+					if ($pagesources{$p}=~m/^\Q$src\E\/$/) {
+						push @subpages, $p;
+					}
+				}
+			}
+
 			# Begin renaming process, which will end with a
 			# wiki refresh.
 			require IkiWiki::Render;
@@ -280,36 +290,18 @@ sub sessioncgi ($$) { #{{{
 
 			do_rename($srcfile, $destfile, $session);
 
+			foreach my $subpage (@subpages) {
+				my $subsrc=$pagesources{$subpage};
+				my $subdest=$subsrc;
+				$subdest=~s/^\Q$src\E\//$dest/;
+				eval {
+					do_rename($subsrc, $subdest, $session)
+				};
+			}
+
 			my @fixedlinks;
 			if ($src ne $dest) {
-				foreach my $page (keys %links) {
-					my $needfix=0;
-					foreach my $link (@{$links{$page}}) {
-						my $bestlink=bestlink($page, $link);
-						if ($bestlink eq $src) {
-							$needfix=1;
-							last;
-						}
-					}
-					if ($needfix) {
-						my $file=$pagesources{$page};
-						my $oldcontent=readfile($config{srcdir}."/".$file);
-						my $content=renamepage_hook($page, $src, $dest, $oldcontent);
-						if ($oldcontent ne $content) {
-							my $token=IkiWiki::rcs_prepedit($file);
-							eval { writefile($file, $config{srcdir}, $content) };
-							next if $@;
-							my $conflict=IkiWiki::rcs_commit(
-								$file,
-								sprintf(gettext("update for rename of %s to %s"), $srcfile, $destfile),
-								$token,
-								$session->param("name"), 
-								$ENV{REMOTE_ADDR}
-							);
-							push @fixedlinks, $page if ! defined $conflict;
-						}
-					}
-				}
+				push @fixedlinks, fixlinks($src, $dest, $session);
 			}
 
 			# End renaming process and refresh wiki.
@@ -407,5 +399,44 @@ sub do_rename ($$$) { #{{{
 		}
 	}
 } # }}}
+
+sub fixlinks ($$$) { #{{{
+	my $src=shift;
+	my $dest=shift;
+	my $session=shift;
+
+	my @fixedlinks;
+
+	foreach my $page (keys %links) {
+		my $needfix=0;
+		foreach my $link (@{$links{$page}}) {
+			my $bestlink=bestlink($page, $link);
+			if ($bestlink eq $src) {
+				$needfix=1;
+				last;
+			}
+		}
+		if ($needfix) {
+			my $file=$pagesources{$page};
+			my $oldcontent=readfile($config{srcdir}."/".$file);
+			my $content=renamepage_hook($page, $src, $dest, $oldcontent);
+			if ($oldcontent ne $content) {
+				my $token=IkiWiki::rcs_prepedit($file);
+				eval { writefile($file, $config{srcdir}, $content) };
+				next if $@;
+				my $conflict=IkiWiki::rcs_commit(
+					$file,
+					sprintf(gettext("update for rename of %s to %s"), $src, $dest),
+					$token,
+					$session->param("name"), 
+					$ENV{REMOTE_ADDR}
+				);
+				push @fixedlinks, $page if ! defined $conflict;
+			}
+		}
+	}
+
+	return @fixedlinks;
+} #}}}
 
 1
