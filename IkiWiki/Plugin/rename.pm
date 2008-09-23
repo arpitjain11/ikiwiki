@@ -130,12 +130,17 @@ sub rename_form ($$$) { #{{{
 			options => \@page_types,
 			value => $ext, force => 1);
 		
-		$f->field(name => "subpages",
-			label => "",
-			type => "checkbox",
-			options => [ [ 1 => gettext("Also rename SubPages and attachments") ] ],
-			value => 1,
-			force => 1);
+		foreach my $p (keys %pagesources) {
+			if ($pagesources{$p}=~m/^\Q$page\E\//) {
+				$f->field(name => "subpages",
+					label => "",
+					type => "checkbox",
+					options => [ [ 1 => gettext("Also rename SubPages and attachments") ] ],
+					value => 1,
+					force => 1);
+				last;
+			}
+		}
 	}
 	$f->field(name => "attachment", type => "hidden");
 
@@ -256,12 +261,14 @@ sub sessioncgi ($$) { #{{{
 			postrename($session);
 		}
 		elsif ($form->submitted eq 'Rename' && $form->validate) {
+			# Queue of rename actions to perfom.
+			my @torename;
+
 			# These untaints are safe because of the checks
-			# performed in check_canrename below.
+			# performed in check_canrename later.
 			my $src=$q->param("page");
 			my $srcfile=IkiWiki::possibly_foolish_untaint($pagesources{$src});
 			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
-
 			my $destfile=$dest;
 			if (! $q->param("attachment")) {
 				my $type=$q->param('type');
@@ -275,42 +282,76 @@ sub sessioncgi ($$) { #{{{
 				
 				$destfile.=".".$type;
 			}
+			push @torename, {
+				src => $src,
+			       	srcfile => $srcfile,
+				dest => $dest,
+			       	destfile => $destfile,
+				required => 1,
+			};
 
-			check_canrename($src, $srcfile, $dest, $destfile,
-				$q, $session);
-
-			# See if subpages need to be renamed.
-			my @subpages;
+			# See if any subpages need to be renamed.
 			if ($q->param("subpages") && $src ne $dest) {
-			        foreach my $p (keys %pagesources) {
-					if ($pagesources{$p}=~m/^\Q$src\E\/$/) {
-						push @subpages, $p;
+				foreach my $p (keys %pagesources) {
+					if ($pagesources{$p}=~m/^\Q$src\E\//) {
+						my $d=$pagesources{$p};
+						$d=~s/^\Q$src\E\//$dest\//;
+						push @torename, {
+							src => $p,
+							srcfile => $pagesources{$p},
+							dest => pagename($d),
+							destfile => $d,
+							required => 0,
+						};
 					}
 				}
 			}
-
-			# Begin renaming process, which will end with a
-			# wiki refresh.
+			
 			require IkiWiki::Render;
 			IkiWiki::disable_commit_hook() if $config{rcs};
+			my %origpagesources=%pagesources;
 
-			do_rename($srcfile, $destfile, $session);
+			# First file renaming.
+			foreach my $rename (@torename) {
+				if ($rename->{required}) {
+					do_rename($rename, $q, $session);
+				}
+				else {
+					eval {do_rename($rename, $q, $session)};
+					if ($@) {
+						$rename->{error}=$@;
+						next;
+					}
+				}
 
-			foreach my $subpage (@subpages) {
-				my $subsrc=$pagesources{$subpage};
-				my $subdest=$subsrc;
-				$subdest=~s/^\Q$src\E\//$dest/;
-				eval {
-					do_rename($subsrc, $subdest, $session)
-				};
+				# Temporarily tweak pagesources to point to
+				# the renamed file, in case fixlinks needs
+				# to edit it.
+				$pagesources{$rename->{src}}=$rename->{destfile};
+			}
+			IkiWiki::rcs_commit_staged(
+				sprintf(gettext("rename %s to %s"), $srcfile, $destfile),
+				$session->param("name"), $ENV{REMOTE_ADDR}) if $config{rcs};
+
+			# Then link fixups.
+			foreach my $rename (@torename) {
+				next if $rename->{src} eq $rename->{dest};
+				next if $rename->{error};
+				foreach my $p (fixlinks($rename, $session)) {
+					# map old page names to new
+					foreach my $r (@torename) {
+						next if $rename->{error};
+						if ($r->{src} eq $p) {
+							$p=$r->{dest};
+							last;
+						}
+					}
+					push @{$rename->{fixedlinks}}, $p;
+				}
 			}
 
-			my @fixedlinks;
-			if ($src ne $dest) {
-				push @fixedlinks, fixlinks($src, $dest, $session);
-			}
-
-			# End renaming process and refresh wiki.
+			# Then refresh.
+			%pagesources=%origpagesources;
 			if ($config{rcs}) {
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
@@ -318,47 +359,51 @@ sub sessioncgi ($$) { #{{{
 			IkiWiki::refresh();
 			IkiWiki::saveindex();
 
-			# Scan for any remaining broken links to $src.
-			my @brokenlinks;
-			if ($src ne $dest) {
+			# Find pages with remaining, broken links.
+			foreach my $rename (@torename) {
+				next if $rename->{src} eq $rename->{dest};
+				
 				foreach my $page (keys %links) {
 					my $broken=0;
 					foreach my $link (@{$links{$page}}) {
 						my $bestlink=bestlink($page, $link);
-						if ($bestlink eq $src) {
-							$broken=1;
+						if ($bestlink eq $rename->{src}) {
+							push @{$rename->{brokenlinks}}, $page;
 							last;
 						}
 					}
-					push @brokenlinks, $page if $broken;
 				}
 			}
 
-			# Generate a rename summary, that will be shown at the top
+			# Generate a summary, that will be shown at the top
 			# of the edit template.
-			my $template=template("renamesummary.tmpl");
-			$template->param(src => $srcfile);
-			$template->param(dest => $destfile);
-			if ($src ne $dest) {
-				$template->param(brokenlinks_checked => 1);
-				$template->param(brokenlinks => [
-					map {
-						{
-							page => htmllink($dest, $dest, $_,
-									noimageinline => 1)
-						}
-					} @brokenlinks
-				]);
-				$template->param(fixedlinks => [
-					map {
-						{
-							page => htmllink($dest, $dest, $_,
-									noimageinline => 1)
-						}
-					} @fixedlinks
-				]);
+			$renamesummary="";
+			foreach my $rename (@torename) {
+				my $template=template("renamesummary.tmpl");
+				$template->param(src => $rename->{srcfile});
+				$template->param(dest => $rename->{destfile});
+				$template->param(error => $rename->{error});
+				if ($rename->{src} ne $rename->{dest}) {
+					$template->param(brokenlinks_checked => 1);
+					$template->param(brokenlinks => [
+						map {
+							{
+								page => htmllink($rename->{dest}, $rename->{dest}, $_,
+										noimageinline => 1)
+							}
+						} @{$rename->{brokenlinks}}
+					]);
+					$template->param(fixedlinks => [
+						map {
+							{
+								page => htmllink($rename->{dest}, $rename->{dest}, $_,
+										noimageinline => 1)
+							}
+						} @{$rename->{fixedlinks}}
+					]);
+				}
+				$renamesummary.=$template->output;
 			}
-			$renamesummary=$template->output;
 
 			postrename($session, $src, $dest, $q->param("attachment"));
 		}
@@ -386,29 +431,34 @@ sub renamepage_hook ($$$$) { #{{{
 }# }}}
 			
 sub do_rename ($$$) { #{{{
-	my $srcfile=shift;
-	my $destfile=shift;
+	my $rename=shift;
+	my $q=shift;
 	my $session=shift;
-			
-	# Actual file rename happens here.
-	# First, ensure that the dest directory exists and is ok.
-	IkiWiki::prep_writefile($destfile, $config{srcdir});
+
+	# First, check if this rename is allowed.
+	check_canrename($rename->{src},
+		$rename->{srcfile},
+		$rename->{dest},
+		$rename->{destfile},
+		$q, $session);
+
+	# Ensure that the dest directory exists and is ok.
+	IkiWiki::prep_writefile($rename->{destfile}, $config{srcdir});
+
 	if ($config{rcs}) {
-		IkiWiki::rcs_rename($srcfile, $destfile);
-		IkiWiki::rcs_commit_staged(
-			sprintf(gettext("rename %s to %s"), $srcfile, $destfile),
-			$session->param("name"), $ENV{REMOTE_ADDR});
+		IkiWiki::rcs_rename($rename->{srcfile}, $rename->{destfile});
 	}
 	else {
-		if (! rename("$config{srcdir}/$srcfile", "$config{srcdir}/$destfile")) {
+		if (! rename($config{srcdir}."/".$rename->{srcfile},
+		             $config{srcdir}."/".$rename->{destfile})) {
 			error("rename: $!");
 		}
 	}
+
 } # }}}
 
 sub fixlinks ($$$) { #{{{
-	my $src=shift;
-	my $dest=shift;
+	my $rename=shift;
 	my $session=shift;
 
 	my @fixedlinks;
@@ -417,7 +467,7 @@ sub fixlinks ($$$) { #{{{
 		my $needfix=0;
 		foreach my $link (@{$links{$page}}) {
 			my $bestlink=bestlink($page, $link);
-			if ($bestlink eq $src) {
+			if ($bestlink eq $rename->{src}) {
 				$needfix=1;
 				last;
 			}
@@ -425,14 +475,14 @@ sub fixlinks ($$$) { #{{{
 		if ($needfix) {
 			my $file=$pagesources{$page};
 			my $oldcontent=readfile($config{srcdir}."/".$file);
-			my $content=renamepage_hook($page, $src, $dest, $oldcontent);
+			my $content=renamepage_hook($page, $rename->{src}, $rename->{dest}, $oldcontent);
 			if ($oldcontent ne $content) {
 				my $token=IkiWiki::rcs_prepedit($file);
 				eval { writefile($file, $config{srcdir}, $content) };
 				next if $@;
 				my $conflict=IkiWiki::rcs_commit(
 					$file,
-					sprintf(gettext("update for rename of %s to %s"), $src, $dest),
+					sprintf(gettext("update for rename of %s to %s"), $rename->{srcfile}, $rename->{destfile}),
 					$token,
 					$session->param("name"), 
 					$ENV{REMOTE_ADDR}
