@@ -273,23 +273,13 @@ sub sessioncgi ($$) { #{{{
 			check_canrename($src, $srcfile, $dest, $destfile,
 				$q, $session, $q->param("attachment"));
 
-			# Ensures that the dest directory exists and is ok.
-			IkiWiki::prep_writefile($destfile, $config{srcdir});
-
-			# Do rename, update other pages, and refresh site.
-			IkiWiki::disable_commit_hook() if $config{rcs};
+			# Begin renaming process, which will end with a
+			# wiki refresh.
 			require IkiWiki::Render;
-			if ($config{rcs}) {
-				IkiWiki::rcs_rename($srcfile, $destfile);
-				IkiWiki::rcs_commit_staged(
-					sprintf(gettext("rename %s to %s"), $srcfile, $destfile),
-					$session->param("name"), $ENV{REMOTE_ADDR});
-			}
-			else {
-				if (! rename("$config{srcdir}/$srcfile", "$config{srcdir}/$destfile")) {
-					error("rename: $!");
-				}
-			}
+			IkiWiki::disable_commit_hook() if $config{rcs};
+
+			do_rename($srcfile, $destfile, $session);
+
 			my @fixedlinks;
 			if ($src ne $dest) {
 				foreach my $page (keys %links) {
@@ -321,6 +311,8 @@ sub sessioncgi ($$) { #{{{
 					}
 				}
 			}
+
+			# End renaming process and refresh wiki.
 			if ($config{rcs}) {
 				IkiWiki::enable_commit_hook();
 				IkiWiki::rcs_update();
@@ -394,5 +386,26 @@ sub renamepage_hook ($$$$) { #{{{
 
 	return $content;
 }# }}}
+			
+sub do_rename ($$$) { #{{{
+	my $srcfile=shift;
+	my $destfile=shift;
+	my $session=shift;
+			
+	# Actual file rename happens here.
+	# First, ensure that the dest directory exists and is ok.
+	IkiWiki::prep_writefile($destfile, $config{srcdir});
+	if ($config{rcs}) {
+		IkiWiki::rcs_rename($srcfile, $destfile);
+		IkiWiki::rcs_commit_staged(
+			sprintf(gettext("rename %s to %s"), $srcfile, $destfile),
+			$session->param("name"), $ENV{REMOTE_ADDR});
+	}
+	else {
+		if (! rename("$config{srcdir}/$srcfile", "$config{srcdir}/$destfile")) {
+			error("rename: $!");
+		}
+	}
+} # }}}
 
 1
