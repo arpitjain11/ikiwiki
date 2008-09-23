@@ -279,7 +279,11 @@ sub refresh () { #{{{
 				else {
 					$f=~s/^\Q$config{srcdir}\E\/?//;
 					push @files, $f;
-					$exists{pagename($f)}=1;
+					my $pagename = pagename($f);
+					if ($exists{$pagename}) {
+						debug(sprintf(gettext("%s has multiple possible source pages"), $pagename));
+					}
+					$exists{$pagename}=1;
 				}
 			}
 		},

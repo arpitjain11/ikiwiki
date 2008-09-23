@@ -4,6 +4,10 @@ I realised that this is going to have problems when you ask it to process `.c` a
 
 I tested it briefly with `test.java` and `test.mdwn` just to see what would happen.  Things got quite strange.  The source-highlighting plugin was called (probably for the java file), but then when it calls `pagetype($pagesources{$page})` to figure out the file type, that function returns `mdwn`, which confuses things somewhat.
 
+> This is a known possible point of confusion. If there are multiple source
+> files, it will render them both, in an arbitrary sequence, so one "wins".
+> --[[Joey]]
+
 Anyway, I'm thinking about possible solutions.  The best option I've come up with so far is: when registering an htmlize hook, add a new optional paramter 'keep_extension'.  This would make a source file of `hello.c` generate a page with name `hello.c` rather than the current `hello`.  This would keep the pages unique (until someone makes `hello.c.mdwn`...).
 
 Suggestions welcome.
@@ -11,6 +15,11 @@ Suggestions welcome.
 -- [[Will]]
 
 > Ok, this turned out not to be a hard change.  [[patch]] is below.  With this patch you can tell IkiWiki not to drop the suffix when you register a hook: `hook(type => "htmlize", id => $lang, call => \&htmlize, leavesuffix => 1);`
+
+>> I think that's a good solution to the problem that most syntax plugins
+>> have struggled with. It makes sense. It doesn't solve the case where
+>> you have source files without any extension (eg `Makefile`), but at
+>> least it covers the common cases.
 
     diff --git a/IkiWiki.pm b/IkiWiki.pm
     index 4e4da11..853f905 100644

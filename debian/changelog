@@ -16,6 +16,7 @@ ikiwiki (2.65) UNRELEASED; urgency=low
   * edittemplate: Link to template, to allow creating it. (Willu)
   * editpage: Add a missing check that the page name contains only legal
     characters, in addition to the existing check for pruned filenames.
+  * Print a debug message if a page has multiple source files.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 17 Sep 2008 14:26:56 -0400
 
