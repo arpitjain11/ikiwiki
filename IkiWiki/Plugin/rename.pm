@@ -123,6 +123,13 @@ sub rename_form ($$$) { #{{{
 		$f->field(name => "type", type => 'select',
 			options => \@page_types,
 			value => $ext, force => 1);
+		
+		$f->field(name => "subpages",
+			label => "",
+			type => "checkbox",
+			options => [ [ 1 => gettext("Also rename SubPages and attachments") ] ],
+			value => 1,
+			force => 1);
 	}
 	$f->field(name => "attachment", type => "hidden");
 
