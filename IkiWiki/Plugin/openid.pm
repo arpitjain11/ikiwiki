@@ -48,7 +48,7 @@ sub formbuilder_setup (@) { #{{{
 		# needing to depend on it.
 		eval q{use Net::OpenID::Consumer};
 		if ($@) {
-			debug("unable to load Net::OpenID::Consumer, not enabling OpenID login");
+			debug("unable to load Net::OpenID::Consumer, not enabling OpenID login ($@)");
 			return;
 		}
 
