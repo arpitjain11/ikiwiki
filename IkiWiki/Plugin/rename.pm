@@ -21,14 +21,15 @@ sub getsetup () { #{{{
 		},
 } #}}}
 
-sub check_canrename ($$$$$$$) { #{{{
+sub check_canrename ($$$$$$) { #{{{
 	my $src=shift;
 	my $srcfile=shift;
 	my $dest=shift;
 	my $destfile=shift;
 	my $q=shift;
 	my $session=shift;
-	my $attachment=shift;
+
+	my $attachment=! defined IkiWiki::pagetype($pagesources{$src});
 
 	# Must be a known source file.
 	if (! exists $pagesources{$src}) {
@@ -47,7 +48,12 @@ sub check_canrename ($$$$$$$) { #{{{
 	# Must be editable.
 	IkiWiki::check_canedit($src, $q, $session);
 	if ($attachment) {
-		IkiWiki::Plugin::attachment::check_canattach($session, $src, $srcfile);
+		if (IkiWiki::Plugin::attachment->can("check_canattach")) {
+			IkiWiki::Plugin::attachment::check_canattach($session, $src, $srcfile);
+		}
+		else {
+			error("renaming of attachments is not allowed");
+		}
 	}
 	
 	# Dest checks can be omitted by passing undef.
@@ -143,7 +149,7 @@ sub rename_start ($$$$) { #{{{
 	my $page=shift;
 
 	check_canrename($page, $pagesources{$page}, undef, undef,
-		$q, $session, $attachment);
+		$q, $session);
 
    	# Save current form state to allow returning to it later
 	# without losing any edits.
@@ -271,7 +277,7 @@ sub sessioncgi ($$) { #{{{
 			}
 
 			check_canrename($src, $srcfile, $dest, $destfile,
-				$q, $session, $q->param("attachment"));
+				$q, $session);
 
 			# See if subpages need to be renamed.
 			my @subpages;

@@ -21,11 +21,10 @@ sub getsetup () { #{{{
 		},
 } #}}}
 
-sub check_canremove ($$$$) { #{{{
+sub check_canremove ($$$) { #{{{
 	my $page=shift;
 	my $q=shift;
 	my $session=shift;
-	my $attachment=shift;
 
 	# Must be a known source file.
 	if (! exists $pagesources{$page}) {
@@ -45,11 +44,15 @@ sub check_canremove ($$$$) { #{{{
 	# Must be editiable.
 	IkiWiki::check_canedit($page, $q, $session);
 
-	# This is sorta overkill, but better safe
-	# than sorry. If a user can't upload an
-	# attachment, don't let them delete it.
-	if ($attachment) {
-		IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
+	# If a user can't upload an attachment, don't let them delete it.
+	# This is sorta overkill, but better safe than sorry.
+	if (! defined IkiWiki::pagetype($pagesources{$page})) {
+		if (IkiWiki::Plugin::attachment->can("check_canattach")) {
+			IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
+		}
+		else {
+			error("renaming of attachments is not allowed");
+		}
 	}
 } #}}}
 
@@ -94,7 +97,7 @@ sub removal_confirm ($$@) { #{{{
 	my $attachment=shift;
 	my @pages=@_;
 
-	check_canremove($_, $q, $session, $attachment) foreach @pages;
+	check_canremove($_, $q, $session) foreach @pages;
 
    	# Save current form state to allow returning to it later
 	# without losing any edits.
@@ -167,7 +170,7 @@ sub sessioncgi ($$) { #{{{
 			# and that the user is allowed to edit(/remove) it.
 			my @files;
 			foreach my $page (@pages) {
-				check_canremove($page, $q, $session, $q->param("attachment"));
+				check_canremove($page, $q, $session);
 				
 				# This untaint is safe because of the
 				# checks performed above, which verify the
