@@ -1,0 +1,9 @@
+it appears that unicode characters in the title that are unicode letters are spared the __ filename encoding but instead saved in their utf8 encoding. (correct me if i'm wrong; didn't find the code that does this.) -- see below for examples.
+
+this is not a problem per se, but (at least with git backend) the recent changes missinterpret the file name character set (it seems to read the filenames as latin1) and both display wrong titles and create broken links.
+
+the problem can be shown with an auto-setup'd ikiwiki without cgi when manually creating utf8 encoded filenames and running ikiwiki with LANG=en_GB.UTF-8 .
+
+----
+
+[[right→link]], [[germanöumlaut]], [[smalµmu]], [[cyrillicԀletter]], [[tibetan༆something]], [[devanagariऔletter]], [[subscript₉nine]], [[subscriptₐa]]
