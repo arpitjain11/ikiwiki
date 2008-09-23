@@ -254,7 +254,8 @@ sub sessioncgi ($$) { #{{{
 				my $type=$q->param('type');
 				if (defined $type && length $type && $IkiWiki::hooks{htmlize}{$type}) {
 					$type=IkiWiki::possibly_foolish_untaint($type);
-				} else {
+				}
+				else {
 					my ($ext)=$srcfile=~/\.([^.]+)$/;
 					$type=$ext;
 				}
