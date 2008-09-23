@@ -165,11 +165,10 @@ sub rename_start ($$$$) { #{{{
 	$session->param(postrename => scalar $q->Vars);
 	IkiWiki::cgi_savesession($session);
 	
-	my ($f, $buttons)=rename_form($q, $session, $page);
 	if (defined $attachment) {
-		$f->field(name => "attachment", value => $attachment, force => 1);
+		$q->param(-name => "attachment", -value => $attachment);
 	}
-	
+	my ($f, $buttons)=rename_form($q, $session, $page);
 	IkiWiki::showform($f, $buttons, $session, $q);
 	exit 0;
 } #}}}
