@@ -20,6 +20,9 @@ Suggestions welcome.
 >> have struggled with. It makes sense. It doesn't solve the case where
 >> you have source files without any extension (eg `Makefile`), but at
 >> least it covers the common cases.
+>>
+>> I'm going to be annoying and call it "keepextension", otherwise, applied
+>> as-is. --[[Joey]] [[done]]
 
     diff --git a/IkiWiki.pm b/IkiWiki.pm
     index 4e4da11..853f905 100644
@@ -51,6 +54,8 @@ Suggestions welcome.
 ----
 
 I wonder if this patch will also be useful:
+
+> Reasonable, applied.
 
     diff --git a/IkiWiki/Render.pm b/IkiWiki/Render.pm
     index 752d176..3f1b67b 100644

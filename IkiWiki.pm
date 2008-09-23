@@ -618,7 +618,7 @@ sub pagename ($) { #{{{
 
 	my $type=pagetype($file);
 	my $page=$file;
-	$page=~s/\Q.$type\E*$// if defined $type;
+	$page=~s/\Q.$type\E*$// if defined $type && !$hooks{htmlize}{$type}{keepextension};
 	return $page;
 } #}}}
 

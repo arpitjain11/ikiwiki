@@ -188,6 +188,10 @@ languages to ikiwiki.
 The function is passed named parameters: "page" and "content" and should
 return the htmlized content.
 
+If `hook` is passed an optional "keepextension" parameter, set to a true
+value, then this extension will not be stripped from the source filename when
+generating the page.
+
 ### pagetemplate
 
 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);

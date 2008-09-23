@@ -17,6 +17,7 @@ ikiwiki (2.65) UNRELEASED; urgency=low
   * editpage: Add a missing check that the page name contains only legal
     characters, in addition to the existing check for pruned filenames.
   * Print a debug message if a page has multiple source files.
+  * Add keepextension parameter to htmlize hook. (Willu)
 
  -- Joey Hess <joeyh@debian.org>  Wed, 17 Sep 2008 14:26:56 -0400
 
