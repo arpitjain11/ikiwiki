@@ -26,7 +26,7 @@ sub getconfig () { #{{{
 				IkiWiki::Setup::load($_[1]);
 				$config{setupverbose}=$config{verbose};
 				$config{setupsyslog}=$config{syslog};
-				$config{verbose}=$verbose;
+				$config{verbose}=$verbose || $config{setupverbose};
 				$config{syslog}=$syslog;
 				$config{setup}=1;
 			},
