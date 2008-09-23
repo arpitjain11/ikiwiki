@@ -165,6 +165,41 @@ See also:
 >>>> I've just updated the second of the two patches below.  The two patches are not mutually
 >>>> exclusive, but I'm leaning towards the second as more useful (for the things I'm doing). -- [[Will]]
 
+I think it's awesome that you're writing this code to explore the problem
+space, [[Will]] -- and these plugins are good stabs at at least part of it.
+Let me respond to a few of your comments.. --[[Joey]]
+
+On use cases, one use case is a user posting a bug report with structured
+data in it. A template is one way, but then the user has to deal with the
+format used to store the structured data. This is where a edit-time form
+becomes essential. Another use case is, after many such bugs have been filed,
+wanting to add a new field to each bug report. To avoid needing to edit
+every bug report it would be good if the fields in a bug report were
+defined somewhere else, so that just that one place can be edited to add
+the new field, and it will show up in each bug report (and in each bug
+report's edit page, as a new form field).
+
+Re the form plugin, I'm uncomfortable with tying things into
+[[!cpan CGI::FormBuilder]] quite so tightly as you have. CGI::FormBuilder
+could easily change in a way that broke whole wikis full of pages. Also,
+needing to sanitize FormBuilder fields with security implications is asking
+for trouble, since new FormBuilder features could add new fields, or
+add new features to existing fields (FormBuilder is very DWIM) that open
+new security holes. 
+
+I think that having a type system, that allows defining specific types,
+like "email address", by writing code (that in turn can use FormBuilder),
+is a better approach, since it should avoid becoming a security problem.
+
+One specific security hole, BTW, is that if you allow the `validate` field,
+FormBuilder will happily treat it as a regexp, and we don't want to expose
+arbitrary perl regexps, since they can at least DOS a system, and can
+probably be used to run arbitrary perl code.
+
+The data plugin only deals with a fairly small corner of the problem space,
+but I think does a nice job at what it does. And could probably be useful
+in a large number of other cases.
+
     #!/usr/bin/perl
     # Interpret YAML data to make a web form
     package IkiWiki::Plugin::form;
