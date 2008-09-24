@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-11 18:52-0400\n"
+"POT-Creation-Date: 2008-09-24 17:55-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -23,7 +23,7 @@ msgstr "તમારે પ્રથમ લોગ ઇન થવું પડશ�
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "પ્રવેશ નિષ્ફળ, કદાચ તમારી કુકીઓ સક્રિય બનાવવી પડશે?"
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:310
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:311
 msgid "Your login session has expired."
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "feed crashed XML::Feed!"
 msgstr "ફીડ ભાંગી ગયું XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:584
+#: ../IkiWiki/Plugin/aggregate.pm:590
 #, perl-format
 msgid "creating new page %s"
 msgstr "નવું પાનું %s બનાવે છે"
@@ -129,7 +129,7 @@ msgstr "નવું પાનું %s બનાવે છે"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:193
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:197
 msgid "done"
 msgstr "સંપૂર્ણ"
 
@@ -173,8 +173,8 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:221
-#: ../IkiWiki/Plugin/inline.pm:317 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:222
+#: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -205,19 +205,19 @@ msgstr ""
 msgid "no text was copied in this page with id %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:110
+#: ../IkiWiki/Plugin/editpage.pm:111
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/Plugin/editpage.pm:277
+#: ../IkiWiki/Plugin/editpage.pm:278
 #, perl-format
 msgid "creating %s"
 msgstr "%s બનાવે છે"
 
-#: ../IkiWiki/Plugin/editpage.pm:295 ../IkiWiki/Plugin/editpage.pm:323
-#: ../IkiWiki/Plugin/editpage.pm:333 ../IkiWiki/Plugin/editpage.pm:368
-#: ../IkiWiki/Plugin/editpage.pm:413
+#: ../IkiWiki/Plugin/editpage.pm:296 ../IkiWiki/Plugin/editpage.pm:324
+#: ../IkiWiki/Plugin/editpage.pm:334 ../IkiWiki/Plugin/editpage.pm:369
+#: ../IkiWiki/Plugin/editpage.pm:414
 #, perl-format
 msgid "editing %s"
 msgstr "%s સુધારે છે"
@@ -232,12 +232,12 @@ msgstr "ટેમ્પલેટ %s મળ્યું નહી"
 msgid "match not specified"
 msgstr "આવરણ ફાઇલનામ સ્પષ્ટ કરેલ નથી"
 
-#: ../IkiWiki/Plugin/edittemplate.pm:59
+#: ../IkiWiki/Plugin/edittemplate.pm:62
 #, perl-format
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:125
+#: ../IkiWiki/Plugin/edittemplate.pm:133
 #, fuzzy
 msgid "failed to process"
 msgstr "ક્રિયા કરવામાં નિષ્ફળ:"
@@ -303,20 +303,20 @@ msgstr "ખોવાયેલ %s વિકલ્પ"
 msgid "unknown sort type %s"
 msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 
-#: ../IkiWiki/Plugin/inline.pm:276
+#: ../IkiWiki/Plugin/inline.pm:282
 msgid "Add a new post titled:"
 msgstr "આ શિર્ષકથી નવું પોસ્ટ ઉમેરો:"
 
-#: ../IkiWiki/Plugin/inline.pm:292
+#: ../IkiWiki/Plugin/inline.pm:298
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "અસ્તિત્વમાં ન હોય તેવું ટેમ્પલેટ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:325 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:331 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/Plugin/inline.pm:562
+#: ../IkiWiki/Plugin/inline.pm:568
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
@@ -525,6 +525,15 @@ msgstr "મધ્યરાત્રે"
 msgid "at noon on %A"
 msgstr "બપોરે %A પર"
 
+#: ../IkiWiki/Plugin/progress.pm:34
+#, perl-format
+msgid "illegal percent value %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/progress.pm:59
+msgid "need either `percent` or `totalpages` and `donepages` parameters"
+msgstr ""
+
 #: ../IkiWiki/Plugin/recentchanges.pm:99
 #, fuzzy
 msgid "missing page"
@@ -539,78 +548,82 @@ msgstr ""
 msgid "(Diff truncated)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:32 ../IkiWiki/Plugin/rename.pm:35
+#: ../IkiWiki/Plugin/remove.pm:31 ../IkiWiki/Plugin/rename.pm:36
 #, perl-format
 msgid "%s does not exist"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:39
+#: ../IkiWiki/Plugin/remove.pm:38
 #, fuzzy, perl-format
 msgid "%s is not in the srcdir, so it cannot be deleted"
 msgstr "%s એ %s દ્વારા તાળું મરાયેલ છે અને તેમાં સુધારો કરી શકાશે નહી"
 
-#: ../IkiWiki/Plugin/remove.pm:42 ../IkiWiki/Plugin/rename.pm:44
+#: ../IkiWiki/Plugin/remove.pm:41 ../IkiWiki/Plugin/rename.pm:45
 #, fuzzy, perl-format
 msgid "%s is not a file"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/Plugin/remove.pm:109
+#: ../IkiWiki/Plugin/remove.pm:112
 #, perl-format
 msgid "confirm removal of %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:145
+#: ../IkiWiki/Plugin/remove.pm:148
 msgid "Please select the attachments to remove."
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:185
+#: ../IkiWiki/Plugin/remove.pm:188
 msgid "removed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:41
+#: ../IkiWiki/Plugin/rename.pm:42
 #, perl-format
 msgid "%s is not in the srcdir, so it cannot be renamed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:56
+#: ../IkiWiki/Plugin/rename.pm:62
 #, fuzzy
 msgid "no change to the file name was specified"
 msgstr "આવરણ ફાઇલનામ સ્પષ્ટ કરેલ નથી"
 
-#: ../IkiWiki/Plugin/rename.pm:62
+#: ../IkiWiki/Plugin/rename.pm:68
 #, perl-format
 msgid "illegal name"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:67
+#: ../IkiWiki/Plugin/rename.pm:73
 #, perl-format
 msgid "%s already exists"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:73
+#: ../IkiWiki/Plugin/rename.pm:79
 #, perl-format
 msgid "%s already exists on disk"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:95
+#: ../IkiWiki/Plugin/rename.pm:101
 #, fuzzy, perl-format
 msgid "rename %s"
 msgstr "રેન્ડર કરે છે %s"
 
-#: ../IkiWiki/Plugin/rename.pm:206
+#: ../IkiWiki/Plugin/rename.pm:138
+msgid "Also rename SubPages and attachments"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:223
 msgid "Only one attachment can be renamed at a time."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:209
+#: ../IkiWiki/Plugin/rename.pm:226
 msgid "Please select the attachment to rename."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:277
+#: ../IkiWiki/Plugin/rename.pm:332
 #, perl-format
 msgid "rename %s to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:306
+#: ../IkiWiki/Plugin/rename.pm:484
 #, fuzzy, perl-format
 msgid "update for rename of %s to %s"
 msgstr "%s નો સુધારો %s નાં %s વડે"
@@ -770,47 +783,52 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:298
+#: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:302
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr "ખરાબ ફાઇલ નામ છોડી દે છે %s"
 
-#: ../IkiWiki/Render.pm:356
+#: ../IkiWiki/Render.pm:284
+#, perl-format
+msgid "%s has multiple possible source pages"
+msgstr ""
+
+#: ../IkiWiki/Render.pm:360
 #, perl-format
 msgid "removing old page %s"
 msgstr "જુનાં પાનાં દૂર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:396
+#: ../IkiWiki/Render.pm:400
 #, perl-format
 msgid "scanning %s"
 msgstr "%s શોધે છે"
 
-#: ../IkiWiki/Render.pm:401
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "rendering %s"
 msgstr "રેન્ડર કરે છે %s"
 
-#: ../IkiWiki/Render.pm:422
+#: ../IkiWiki/Render.pm:426
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr "રેન્ડર કરે છે %s, જે %s સાથે જોડાણ ધરાવે છે"
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:447
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr "રેન્ડર કરે છે %s, જે %s પર આધારિત છે"
 
-#: ../IkiWiki/Render.pm:482
+#: ../IkiWiki/Render.pm:486
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr "રેન્ડર કરે છે %s, તેનાં પાછળનાં જોડાણો સુધારવા માટે"
 
-#: ../IkiWiki/Render.pm:494
+#: ../IkiWiki/Render.pm:498
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr "દૂર કરે છે %s, હવે %s વડે રેન્ડર કરાતું નથી"
 
-#: ../IkiWiki/Render.pm:518
+#: ../IkiWiki/Render.pm:522
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr "ikiwiki: %s રેન્ડર કરી શકાતું નથી"
@@ -871,19 +889,19 @@ msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "ઉપયોગ: ikiwiki [વિકલ્પો] source dest"
 
-#: ../ikiwiki.in:83
+#: ../ikiwiki.in:89
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:129
+#: ../ikiwiki.in:135
 msgid "generating wrappers.."
 msgstr "આવરણ બનાવે છે.."
 
-#: ../ikiwiki.in:182
+#: ../ikiwiki.in:186
 msgid "rebuilding wiki.."
 msgstr "વીકી ફરીથી બનાવે છે.."
 
-#: ../ikiwiki.in:185
+#: ../ikiwiki.in:189
 msgid "refreshing wiki.."
 msgstr "વીકીને તાજી કરે છે.."
 

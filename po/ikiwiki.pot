@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 12:57-0400\n"
+"POT-Creation-Date: 2008-09-24 17:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:310
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:311
 msgid "Your login session has expired."
 msgstr ""
 
@@ -129,7 +129,7 @@ msgstr ""
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:193
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:197
 msgid "done"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:221
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:222
 #: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -203,19 +203,19 @@ msgstr ""
 msgid "no text was copied in this page with id %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:110
+#: ../IkiWiki/Plugin/editpage.pm:111
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:277
+#: ../IkiWiki/Plugin/editpage.pm:278
 #, perl-format
 msgid "creating %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:295 ../IkiWiki/Plugin/editpage.pm:323
-#: ../IkiWiki/Plugin/editpage.pm:333 ../IkiWiki/Plugin/editpage.pm:368
-#: ../IkiWiki/Plugin/editpage.pm:413
+#: ../IkiWiki/Plugin/editpage.pm:296 ../IkiWiki/Plugin/editpage.pm:324
+#: ../IkiWiki/Plugin/editpage.pm:334 ../IkiWiki/Plugin/editpage.pm:369
+#: ../IkiWiki/Plugin/editpage.pm:414
 #, perl-format
 msgid "editing %s"
 msgstr ""
@@ -228,12 +228,12 @@ msgstr ""
 msgid "match not specified"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:59
+#: ../IkiWiki/Plugin/edittemplate.pm:62
 #, perl-format
 msgid "edittemplate %s registered for %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/edittemplate.pm:125
+#: ../IkiWiki/Plugin/edittemplate.pm:133
 msgid "failed to process"
 msgstr ""
 
@@ -512,6 +512,15 @@ msgstr ""
 msgid "at noon on %A"
 msgstr ""
 
+#: ../IkiWiki/Plugin/progress.pm:34
+#, perl-format
+msgid "illegal percent value %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/progress.pm:59
+msgid "need either `percent` or `totalpages` and `donepages` parameters"
+msgstr ""
+
 #: ../IkiWiki/Plugin/recentchanges.pm:99
 msgid "missing page"
 msgstr ""
@@ -525,77 +534,81 @@ msgstr ""
 msgid "(Diff truncated)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:32 ../IkiWiki/Plugin/rename.pm:35
+#: ../IkiWiki/Plugin/remove.pm:31 ../IkiWiki/Plugin/rename.pm:36
 #, perl-format
 msgid "%s does not exist"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:39
+#: ../IkiWiki/Plugin/remove.pm:38
 #, perl-format
 msgid "%s is not in the srcdir, so it cannot be deleted"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:42 ../IkiWiki/Plugin/rename.pm:44
+#: ../IkiWiki/Plugin/remove.pm:41 ../IkiWiki/Plugin/rename.pm:45
 #, perl-format
 msgid "%s is not a file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:109
+#: ../IkiWiki/Plugin/remove.pm:112
 #, perl-format
 msgid "confirm removal of %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:145
+#: ../IkiWiki/Plugin/remove.pm:148
 msgid "Please select the attachments to remove."
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:185
+#: ../IkiWiki/Plugin/remove.pm:188
 msgid "removed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:41
+#: ../IkiWiki/Plugin/rename.pm:42
 #, perl-format
 msgid "%s is not in the srcdir, so it cannot be renamed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:56
+#: ../IkiWiki/Plugin/rename.pm:62
 msgid "no change to the file name was specified"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:62
+#: ../IkiWiki/Plugin/rename.pm:68
 #, perl-format
 msgid "illegal name"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:67
+#: ../IkiWiki/Plugin/rename.pm:73
 #, perl-format
 msgid "%s already exists"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:73
+#: ../IkiWiki/Plugin/rename.pm:79
 #, perl-format
 msgid "%s already exists on disk"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:95
+#: ../IkiWiki/Plugin/rename.pm:101
 #, perl-format
 msgid "rename %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:206
+#: ../IkiWiki/Plugin/rename.pm:138
+msgid "Also rename SubPages and attachments"
+msgstr ""
+
+#: ../IkiWiki/Plugin/rename.pm:223
 msgid "Only one attachment can be renamed at a time."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:209
+#: ../IkiWiki/Plugin/rename.pm:226
 msgid "Please select the attachment to rename."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:277
+#: ../IkiWiki/Plugin/rename.pm:332
 #, perl-format
 msgid "rename %s to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:306
+#: ../IkiWiki/Plugin/rename.pm:484
 #, perl-format
 msgid "update for rename of %s to %s"
 msgstr ""
@@ -753,47 +766,52 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:298
+#: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:302
 #, perl-format
 msgid "skipping bad filename %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:356
+#: ../IkiWiki/Render.pm:284
+#, perl-format
+msgid "%s has multiple possible source pages"
+msgstr ""
+
+#: ../IkiWiki/Render.pm:360
 #, perl-format
 msgid "removing old page %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:396
+#: ../IkiWiki/Render.pm:400
 #, perl-format
 msgid "scanning %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:401
+#: ../IkiWiki/Render.pm:405
 #, perl-format
 msgid "rendering %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:422
+#: ../IkiWiki/Render.pm:426
 #, perl-format
 msgid "rendering %s, which links to %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:443
+#: ../IkiWiki/Render.pm:447
 #, perl-format
 msgid "rendering %s, which depends on %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:482
+#: ../IkiWiki/Render.pm:486
 #, perl-format
 msgid "rendering %s, to update its backlinks"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:494
+#: ../IkiWiki/Render.pm:498
 #, perl-format
 msgid "removing %s, no longer rendered by %s"
 msgstr ""
 
-#: ../IkiWiki/Render.pm:518
+#: ../IkiWiki/Render.pm:522
 #, perl-format
 msgid "ikiwiki: cannot render %s"
 msgstr ""
@@ -854,19 +872,19 @@ msgstr ""
 msgid "usage: ikiwiki [options] source dest"
 msgstr ""
 
-#: ../ikiwiki.in:83
+#: ../ikiwiki.in:89
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:129
+#: ../ikiwiki.in:135
 msgid "generating wrappers.."
 msgstr ""
 
-#: ../ikiwiki.in:182
+#: ../ikiwiki.in:186
 msgid "rebuilding wiki.."
 msgstr ""
 
-#: ../ikiwiki.in:185
+#: ../ikiwiki.in:189
 msgid "refreshing wiki.."
 msgstr ""
 
