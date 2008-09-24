@@ -30,6 +30,17 @@ Do you have any idea how to workaround that issue? --[[Paweł|ptecza]]
 
 >> I don't want to rename all previous files to add `0` prefix. --[[Paweł|ptecza]]
 
+>>> Rather than adding 0's or or a 'sorttype' parameter, I'd just fix the sort order.
+>>> Both MacOS and Windows use a smarter sort order than just lexical in their
+>>> file browsers (e.g. <http://support.microsoft.com/default.aspx?kbid=319827>,
+>>> <http://docs.info.apple.com/article.html?artnum=300989>).
+>>>
+>>> The [Unicode Collation algorithm](http://en.wikipedia.org/wiki/Unicode_collation_algorithm)
+>>> would seem to be a reasonable sort order.  (See also <http://www.unicode.org/unicode/reports/tr10/>.)
+>>> Unfortunately the standard perl implementation, [Unicode::Collate](http://perldoc.perl.org/Unicode/Collate.html)
+>>> doesn't handle the optional [numbers](http://www.unicode.org/unicode/reports/tr10/#Customization)
+>>> extension which is what you want.  --[[Will]]
+
 ---
 
 Below is my simple patch. Feel free to use it or comment!
