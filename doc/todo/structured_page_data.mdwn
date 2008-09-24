@@ -172,33 +172,81 @@ Let me respond to a few of your comments.. --[[Joey]]
 On use cases, one use case is a user posting a bug report with structured
 data in it. A template is one way, but then the user has to deal with the
 format used to store the structured data. This is where a edit-time form
-becomes essential. Another use case is, after many such bugs have been filed,
+becomes essential.
+
+> This was the idea with the 'form' plugin.  With the 'data' plugin I was exploring
+> a different approach: try to keep the markup simple enough that the user can edit
+> the markup directly, and still have that be ok.  I admit it is a stretch, but I thought
+> it worth exploring.
+
+Another use case is, after many such bugs have been filed,
 wanting to add a new field to each bug report. To avoid needing to edit
 every bug report it would be good if the fields in a bug report were
 defined somewhere else, so that just that one place can be edited to add
 the new field, and it will show up in each bug report (and in each bug
 report's edit page, as a new form field).
 
+> If I was going to do that, I'd use a perl script on a checked out
+> workspace.  I think you're describing a rare operation and
+> so I'd be happy not having a web interface for it.  Having said that,
+> if you just wanted to change the form for *new* pages, then you
+> can just edit the template used to create new pages.
+
 Re the form plugin, I'm uncomfortable with tying things into
-[[!cpan CGI::FormBuilder]] quite so tightly as you have. CGI::FormBuilder
+[[!cpan CGI::FormBuilder]] quite so tightly as you have.
+
+> Yeah :).  But I wanted to explore the space and that was the
+> easiest way to start.
+
+CGI::FormBuilder
 could easily change in a way that broke whole wikis full of pages. Also,
 needing to sanitize FormBuilder fields with security implications is asking
 for trouble, since new FormBuilder features could add new fields, or
 add new features to existing fields (FormBuilder is very DWIM) that open
 new security holes. 
 
+> There is a list of allowed fields.  I only interpret those.
+
 I think that having a type system, that allows defining specific types,
 like "email address", by writing code (that in turn can use FormBuilder),
 is a better approach, since it should avoid becoming a security problem.
+
+> That would be possible.  I think an extension to the 'data' plugin might
+> work here.
 
 One specific security hole, BTW, is that if you allow the `validate` field,
 FormBuilder will happily treat it as a regexp, and we don't want to expose
 arbitrary perl regexps, since they can at least DOS a system, and can
 probably be used to run arbitrary perl code.
 
+> I validate the validate field :).  It only allows validate fields that match
+> `/^[\w\s]+$/`.  This means you can really only use the pre-defined
+> validation types in FormBuilder.
+
 The data plugin only deals with a fairly small corner of the problem space,
 but I think does a nice job at what it does. And could probably be useful
 in a large number of other cases.
+
+> I think the data plugin is more likely to be useful than the form plugin.
+> I was thinking of extending the data directive by allowing an 'id' parameter.
+> When you have an id parameter, then you can display a small form for that
+> data element.  The submission handler would look through the page source
+> for the data directive with the right id parameter and edit it.  This would
+> make the data directive more like the current 'form' plugin.
+
+> That is making things significantly more complex for less significant gain though. --[[Will]]
+
+> Oh, one quick other note.  The data plugin below was designed to handle multiple
+> data elements in a single directive.  e.g.
+
+    \[[!data key="Depends on" link="bugs/bugA" link="bugs/bugB" value=6]]
+
+> would match `data_eq(Depends on,6)`, `data_link(Depends on,bugs/bugA)`, `data_link(Depends on,bugs/bugB)`
+> or, if you applied the patch in [[todo/tracking_bugs_with_dependencies]] then you can use 'defined pagespecs'
+> such as `data_link(Depends on,~openBugs)`.  The ability to label links like this allows separation of
+> dependencies between bugs from arbitrary links.
+
+----
 
     #!/usr/bin/perl
     # Interpret YAML data to make a web form
