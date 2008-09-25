@@ -100,6 +100,15 @@ Joey, have you forgotten about that request? ;) --[[Paweł|ptecza]]
 >> Hi Will! Your idea looks interesting for me, but I'm affraid that it's too big
 >> change in Ikiwiki... Maybe I'm wrong? ;) What do you think, Joey? --[[Paweł|ptecza]]
 
+>>> It isn't that big a change.  It is just supplying a sort order to the sort.  The
+>>> patch is a little larger because I then went through and made that sort
+>>> order available in other places where it makes sense.  (Looking at the
+>>> patch again briefly, I should have also used it in the `map` plugin.)
+>>>
+>>> If you wanted a simple patch, you could just move the `titlecmp` function
+>>> into the inline plugin and only use it there.  The problem with that is that
+>>> it only fixes the inline plugin. -- [[Will]]
+
 ----
 
     diff --git a/IkiWiki.pm b/IkiWiki.pm
