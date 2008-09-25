@@ -7,7 +7,9 @@ template, insert a [[ikiwiki/directive/template]] directive on some other page.
 	\[[!edittemplate template="bugtemplate" match="bugs/*"]]
 
 In the above example, the page named "bugtemplate" is registered as a
-template to be used when any page named "bugs/*" is created.
+template to be used when any page named "bugs/*" is created. To avoid
+the directive displaying a note about the template being registered, add
+"silent=yes".
 
 Often the template page contains a simple skeleton for a particular type of
 page. For the bug report pages in the above example, it might look
