@@ -311,6 +311,26 @@ sub match_user ($$;@) { #{{{
 	}
 } #}}}
 
+sub match_admin ($$;@) { #{{{
+	shift;
+	shift;
+	my %params=@_;
+	
+	if (! exists $params{user}) {
+		return IkiWiki::FailReason->new("no user specified");
+	}
+
+	if (defined $params{user} && IkiWiki::is_admin($params{user})) {
+		return IkiWiki::SuccessReason->new("user is an admin");
+	}
+	elsif (! defined $params{user}) {
+		return IkiWiki::FailReason->new("not logged in");
+	}
+	else {
+		return IkiWiki::FailReason->new("user is not an admin");
+	}
+} #}}}
+
 sub match_ip ($$;@) { #{{{
 	shift;
 	my $ip=shift;
