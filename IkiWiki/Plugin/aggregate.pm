@@ -420,11 +420,11 @@ sub expire () { #{{{
 		next unless $feed->{expireage} || $feed->{expirecount};
 		my $count=0;
 		my %seen;
-		foreach my $item (sort { $IkiWiki::pagectime{$b->{page}} <=> $IkiWiki::pagectime{$a->{page}} }
+		foreach my $item (sort { ($IkiWiki::pagectime{$b->{page}} || 0) <=> ($IkiWiki::pagectime{$a->{page}} || 0) }
 		                  grep { exists $_->{page} && $_->{feed} eq $feed->{name} }
 		                  values %guids) {
 			if ($feed->{expireage}) {
-				my $days_old = (time - $IkiWiki::pagectime{$item->{page}}) / 60 / 60 / 24;
+				my $days_old = (time - ($IkiWiki::pagectime{$item->{page}} || 0) / 60 / 60 / 24;
 				if ($days_old > $feed->{expireage}) {
 					debug(sprintf(gettext("expiring %s (%s days old)"),
 						$item->{page}, int($days_old)));

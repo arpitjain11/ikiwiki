@@ -1,6 +1,8 @@
 ikiwiki (2.66) UNRELEASED; urgency=low
 
   * recentchanges: Fix redirects to non-page files. 
+  * aggregate: Avoid uninitialized value warnings for pages with no recorded
+    ctime.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 
