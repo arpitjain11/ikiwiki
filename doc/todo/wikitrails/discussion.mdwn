@@ -1,1 +1,24 @@
-This sounds like a more general version of what I want for one-photo-per-page galleries, where each page has previous|up|next links (like this plugin) and the index page has a list or grid of thumbnails (\[[!inline]] with a specially modified template perhaps). I'll watch this with interest! --[[smcv]]
+This sounds like a more general version of what I want for
+one-photo-per-page galleries, where each page has previous|up|next links
+(like this plugin) and the index page has a list or grid of thumbnails
+(\[[!inline]] with a specially modified template perhaps). I'll watch this
+with interest! --[[smcv]]
+
+This is a nice idea, I do have my gripes about the imeplementation.
+
+Assuming that the index's list is in mdwn format is not ideal. I guess the
+other way to do it would be to make the index be a directive, something
+like: \[[!trail pages="foo bar baz"]]. Assuming that a flat trail structure
+is enough, otherwise you'd have to get more fancy.
+
+The trailinclude seems a bit redundant with inline, and wanting to inline
+together all pages in a trail for printing or whatever seems like an
+unusual use case anyway?
+
+The !trail directive could be simplified to just \[[!trail my_indexpage]].
+But I wonder if needing to add this directive to every page is the best
+approach. Alternate approach would be to make the trail index cause 
+breadcrums to be automatically inserted at the top of every page on the
+trail. (You'd have to use a directive to define the index for that to work.)
+
+--[[Joey]]
