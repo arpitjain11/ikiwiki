@@ -103,7 +103,12 @@ sub cgi ($) { #{{{
 				"</p>");
 		}
 		else {
-			IkiWiki::redirect($cgi, $config{url}.IkiWiki::beautify_urlpath("/".htmlpage($link)));
+			if (defined pagetype($link)) {
+				IkiWiki::redirect($cgi, $config{url}.IkiWiki::beautify_urlpath("/".htmlpage($link)));
+			}
+			else {
+				IkiWiki::redirect($cgi, $config{url}.IkiWiki::beautify_urlpath("/".$link));
+			}
 		}
 
 		exit;
