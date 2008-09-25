@@ -308,13 +308,16 @@ sub parse_diff_tree ($@) { #{{{
 			my $sha1_to = shift(@tmp);
 			my $status = shift(@tmp);
 
+			# git does not output utf-8 filenames, but instead
+			# double-quotes them with the utf-8 characters
+			# escaped as \nnn\nnn.
 			if ($file =~ m/^"(.*)"$/) {
 				($file=$1) =~ s/\\([0-7]{1,3})/chr(oct($1))/eg;
 			}
 			$file =~ s/^\Q$prefix\E//;
 			if (length $file) {
 				push @{ $ci{'details'} }, {
-					'file'      => decode_utf8($file),
+					'file'      => decode("utf8", $file),
 					'sha1_from' => $sha1_from[0],
 					'sha1_to'   => $sha1_to,
 				};
