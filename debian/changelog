@@ -8,6 +8,8 @@ ikiwiki (2.66) UNRELEASED; urgency=low
   * git: Fix handling of utf-8 filenames in recentchanges.
   * tag: Make edit link for new tags ensure that the tags are created
     inside tagbase, when it's set.
+  * htmlscrubber: Add a config setting that can be used to disable the
+    scrubber acting on a set of pages.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 

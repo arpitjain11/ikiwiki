@@ -31,6 +31,12 @@ Note that enabling or disabling the htmlscrubber plugin also affects some
 other HTML-related functionality, such as whether [[meta]] allows
 potentially unsafe HTML tags.
 
+The `htmlscrubber_skip` configuration setting can be used to skip scrubbing
+of some pages. Set it to a [[PageSpec]], such as "!*/Discussion", and pages
+matching that can have all the evil CSS, JavsScript, and unsafe html
+elements you like. One safe way to use this is to use [[lockedit]] to lock
+those pages, so only admins can edit them.
+
 ----
 
 Some examples of embedded javascript that won't be let through when this

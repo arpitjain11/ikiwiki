@@ -41,10 +41,26 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => undef,
 		},
+		htmlscrubber_skip => {
+			type => "pagespec",
+			example => "!*/Discussion",
+			description => "PageSpec specifying pages not to scrub",
+			link => "ikiwiki/PageSpec",
+			safe => 1,
+			rebuild => undef,
+		},
 } #}}}
 
 sub sanitize (@) { #{{{
 	my %params=@_;
+
+	if (exists $config{htmlscrubber_skip} &&
+	    length $config{htmlscrubber_skip} &&
+	    exists $params{destpage} &&
+	    pagespec_match($params{destpage}, $config{htmlscrubber_skip})) {
+		return $params{content};
+	}
+
 	return scrubber()->scrub($params{content});
 } # }}}
 
