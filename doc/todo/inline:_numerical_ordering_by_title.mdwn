@@ -23,6 +23,10 @@ Do you have any idea how to workaround that issue? --[[Paweł|ptecza]]
 > Delete all files. Add files back one at a time, committing after adding
 > each file. Sort by date. --[[Joey]]
 
+>> The simplest solutions are the best :D Thanks for the hint! I didn't
+>> want to do it before, because I was affaid that my Subversion keeps
+>> old date of creation of file. --[[Paweł|ptecza]]
+
 > Maybe you can rename `9.mdwn` to `09.mdwn`? See `rename(1)`, it renames multiple files
 > in one go. --[[buo]]
 
@@ -52,10 +56,14 @@ I have also 2 considerations for inline sorting:
 
 1. Maybe changing name of `sort` parameter to `sortby` or `sortkey` will
    be good idea?
+
    > No, that would break existing wikis. --[[Joey]]
+   >> It's no problem. You just have `ikiwiki-transition` utility :D --[[Paweł|ptecza]]
+
 1. Maybe you should use `title` sort key for title from meta plugin and `name`, 
    `filename`, `page` or `pagename` for page names? In the future you can also
    sort by meta author, license or another key.
+
    > There are many places in ikiwiki that do not use meta title info and
    > could. I'd prefer to deal with that issue as a whole, not here,
    > --[[Joey]]
@@ -94,6 +102,8 @@ I have also 2 considerations for inline sorting:
 > To users, "sort" already determines the type of sort. It can be by title,
 > or by date, etc. Adding a separate "sorttype" value is thus fairly
 > confusing. --[[Joey]]
+
+>> OK. I will be more careful when I play with inline plugin :) --[[Paweł|ptecza]]
 
 ---
 
