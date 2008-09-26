@@ -16,5 +16,10 @@ the problem can be shown with an auto-setup'd ikiwiki without cgi when manually 
 >> "missing page". it seems that bestlink can't handle utf8 encoded texts. (the
 >> same happens, by the way, when using meta-redir to a page with high bytes in
 >> the name.)
+>>
+>> update: i've had a look at the git options; you could run git with '-z' (NUL
+>> termination) in the `git_commit_info` function; this would require some
+>> changes in `parse_diff_tree`, but otherwise completely eliminate the
+>> problems with git escaping.
 >> 
 >> --[[chrysn]]
