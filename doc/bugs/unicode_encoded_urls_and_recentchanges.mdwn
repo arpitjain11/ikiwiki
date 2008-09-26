@@ -11,3 +11,10 @@ the problem can be shown with an auto-setup'd ikiwiki without cgi when manually 
 
 > Encoding issue, I figured out a fix. [[done]] --[[Joey]]
 
+>> the link text works now, but the link goes to
+>> `ikiwiki.cgi?page=uml%C3%A4ute&do=recentchanges_link`, which fails with
+>> "missing page". it seems that bestlink can't handle utf8 encoded texts. (the
+>> same happens, by the way, when using meta-redir to a page with high bytes in
+>> the name.)
+>> 
+>> --[[chrysn]]
