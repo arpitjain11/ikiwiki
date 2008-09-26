@@ -4,6 +4,7 @@ package IkiWiki::Plugin::recentchanges;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use Encode;
 
 sub import { #{{{
 	hook(type => "getsetup", id => "recentchanges", call => \&getsetup);
@@ -86,7 +87,7 @@ sub cgi ($) { #{{{
 		# page they link to is deleted, or newly created, or
 		# changes for whatever reason. So this CGI handles that
 		# dynamic linking stuff.
-		my $page=$cgi->param("page");
+		my $page=decode_utf8($cgi->param("page"));
 		if (!defined $page) {
 			error("missing page parameter");
 		}
