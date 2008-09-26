@@ -42,12 +42,26 @@ sub tagpage ($) { #{{{
 	my $tag=shift;
 			
 	if ($tag !~ m{^\.?/} &&
-	    exists $config{tagbase} &&
 	    defined $config{tagbase}) {
 		$tag=$config{tagbase}."/".$tag;
 	}
 
 	return $tag;
+} #}}}
+
+sub taglink ($$$;@) { #{{{
+	my $page=shift;
+	my $destpage=shift;
+	my $tag=shift;
+	my %opts=@_;
+
+	my $link=tagpage($tag);
+
+	# Force tag creation links to create the tag under /tagbase,
+	# if there is a tagbase and this tag used it.
+	$link="/".$link if $tag ne $link;
+
+	return htmllink($page, $destpage, $link, %opts);
 } #}}}
 
 sub preprocess_tag (@) { #{{{
@@ -80,16 +94,14 @@ sub preprocess_taglink (@) { #{{{
 			my $tag=IkiWiki::linkpage($2);
 			$tags{$params{page}}{$tag}=1;
 			push @{$links{$params{page}}}, tagpage($tag);
-			return htmllink($params{page}, $params{destpage},
-				tagpage($tag),
+			return taglink($params{page}, $params{destpage}, $tag,
 				linktext => IkiWiki::pagetitle($1));
 		}
 		else {
 			my $tag=IkiWiki::linkpage($_);
 			$tags{$params{page}}{$tag}=1;
 			push @{$links{$params{page}}}, tagpage($tag);
-			return htmllink($params{page}, $params{destpage},
-				tagpage($tag));
+			return taglink($params{page}, $params{destpage}, $tag);
 		}
 	}
 	grep {
@@ -105,8 +117,7 @@ sub pagetemplate (@) { #{{{
 
 	$template->param(tags => [
 		map { 
-			link => htmllink($page, $destpage, tagpage($_),
-					rel => "tag")
+			link => taglink($page, $destpage, $_, rel => "tag")
 		}, sort keys %{$tags{$page}}
 	]) if exists $tags{$page} && %{$tags{$page}} && $template->query(name => "tags");
 
