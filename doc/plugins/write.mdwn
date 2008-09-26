@@ -723,8 +723,8 @@ Changes can be staged by calls to `rcs_add, `rcs_remove`, and
 Adds the passed file to the archive. The filename is relative to the root
 of the srcdir.
 
-Note that this should not check the new file in, it should only
-prepare for it to be checked in when rcs_commit (or `rcs_commit_staged`) is
+Note that this should not commit the new file, it should only
+prepare for it to be committed when rcs_commit (or `rcs_commit_staged`) is
 called. Note that the file may be in a new subdir that is not yet in
 to version control; the subdir can be added if so.
 
@@ -732,9 +732,9 @@ to version control; the subdir can be added if so.
 
 Remove a file. The filename is relative to the root of the srcdir.
 
-Note that this should not check the removal in, it should only prepare for it
-to be checked in when `rcs_commit` (or `rcs_commit_staged`) is called. Note
-that the new file may be in a new subdir that is not yet inversion
+Note that this should not commit the removal, it should only prepare for it
+to be committed when `rcs_commit` (or `rcs_commit_staged`) is called. Note
+that the new file may be in a new subdir that is not yet in version
 control; the subdir can be added if so.
 
 #### `rcs_rename($$)`
