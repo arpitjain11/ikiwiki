@@ -44,7 +44,18 @@ be embedded to the source code repository commit messages.
 >> look like a wikipage anymore, but rather something like the Debian 
 >> BTS web-interface, but it would still benefit from wikilinks to the 
 >> documentation in the wiki etc.
->>
+
+>>> I think it is useful to look at these things separately:
+>>>
+>>> * Bug numbers: See above.
+>>> * Automatic timestamps on comments: this already exists with the inline directive.
+>>> * Email interface: You can certainly get an rss feed of what changes in the wiki.
+>>> * You didn't mention [[todo/structured_page_data]] but that is, I think, part
+>>>     of what you seem to be saying.
+>>> * [[todo/tracking_bugs_with_dependencies]] is also important.
+>>>
+>>> -- [[Will]]
+
 >> About the commit message interface: I was thinking about a project
 >> architecture where the code is kept in a separate revision control
 >> system branch than the metadata (blog, wiki, BTS). This would IMHO
