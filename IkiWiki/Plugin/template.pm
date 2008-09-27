@@ -33,7 +33,7 @@ sub preprocess (@) { #{{{
 
 	my $template_file=$pagesources{$template_page};
 	return sprintf(gettext("template %s not found"),
-		htmllink($params{page}, $params{destpage}, $template_page))
+		htmllink($params{page}, $params{destpage}, "/".$template_page))
 			unless defined $template_file;
 
 	my $template;
