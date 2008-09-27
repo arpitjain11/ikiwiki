@@ -1,3 +1,5 @@
+Reopening this for 3.0, to consider adding new functions.
+
 I don't want this interface to be too firm; it's ok for a plugin like
 `ddate` to redefine an internal function like IkiWiki::displaytime if it
 wants to.. But plugins that still access stuff through IkiWiki:: should be
@@ -5,38 +7,88 @@ aware that that stuff can change at any time and break them. Possibly without
 perl's type checking catching the breakage, in some cases. Plugins that
 only use exported symbols should not be broken by future ikiwiki changes.
 
-Functions used by only some plugins, undecided about exporting:
+## Most often used functions, by number of calls from plugin code
 
-* lockwiki, unlockwiki (aggregate)
-	Too internal to ever be exported.
-* loadindex (aggregate)
-	Too internal to ever be exported.
-* titlepage (aggregate)
-	Not until more than one thing uses it.
-* basename (polygen, inline, search, polygen)
-* dirname (linkmap, inline)
-	For basename and dirname, they could just use standard perl library
-	stuff. Howevever, ikiwiki's versions are slightly different and I'd
-	need to check if the standard versions work for the uses made in
-	these plugins. Inclined not to export.
-* abs2rel (linkmap, inline)
-	This *is* the library version, just optimised to work around a bug.
-	Don't export this.
-* possibly_foolish_untaint (aggregate, polygen)
-	Probably better to implement yourself.
-* htmlize
-* linkify
-* preprocess
-* filter
-	The 4 above are used by a few plugins, but problimatic since plugins 
-	typically also define functions with these names.. I also feel that
-	this part of ikiwiki needs some more work before it's set in stone.
-	These are always called together, in the same order, though
-	sometimes htmlize isn't included.
+     27 IkiWiki::possibly_foolish_untaint
 
-Variables used by plugins but not exported yet:
+Not very happy about exporting, it's not ikiwiki-specific,
+and plugins that need to untaint things should think about it, hard.
+
+     12 IkiWiki::userinfo_get
+      5 IkiWiki::userinfo_set
+
+Used by only 4 plugins, all of which are fairly core, so thinking
+don't export.
+
+     11 IkiWiki::preprocess
+      8 IkiWiki::filter
+      4 IkiWiki::linkify
+      4 IkiWiki::htmlize
+
+The page rendering chain. Note that it's very common to call `preprocess(filter(text))`,
+or `htmlize(linkify(preprocess(filter(text))))`, while `htmlize(linkify(preprocess(text))`
+is called less frequently, and it's also not unheard of to leave out a step and do
+`htmlize(preprocess(text))`. (I haven't checked if any of those cases are bugs.)
+
+It would be nice if the api could avoid exposing the details of the render chain,
+by providing a way to say "I have filtered text, and would like html", or "I have raw
+text and would like to get it up to the preprocess stage".
+
+Another problimatic thing is plugins often define functions named 'preprocess', etc.
+
+     12 IkiWiki::linkpage
+     11 IkiWiki::pagetitle
+      6 IkiWiki::titlepage
+
+These go together; linkpage is needed by all link plugins, and the others are used widely.
+All should be exported.
+
+      7 IkiWiki::saveindex
+      5 IkiWiki::loadindex
+
+Still too internal to ever be exported?
+
+      7 IkiWiki::redirect
+
+Only used by 4 plugins, and not in IkiWiki.pm itself, so probably not to be exported.
+
+      7 IkiWiki::dirname
+      4 IkiWiki::basename
+
+Not ikiwiki-specific, don't export.
+
+      6 IkiWiki::refresh
+
+Very internal, not part of IkiWiki.pm, don't export.
+
+      5 IkiWiki::yesno
+
+Not ikiwiki-specific, but worth exporting to get a consistent localised yes/no parser
+for directives.
+
+      5 IkiWiki::showform
+      4 IkiWiki::decode_form_utf8
+
+Only used by 3 fairly core plugins, not in IkiWiki.pm, don't export.
+
+      5 IkiWiki::rcs_update
+      4 IkiWiki::rcs_prepedit
+      5 IkiWiki::is_admin
+      5 IkiWiki::cgi_savesession
+      4 IkiWiki::cgiurl
+
+Not enough use, I think, to export.
+
+      5 IkiWiki::enable_commit_hook
+      5 IkiWiki::disable_commit_hook
+
+Deep internal magic, if exported people will use it wrong, only used by core plugins.
+
+      4 IkiWiki::check_canedit
+
+Probably needs to evolve more and be more widely used before being exported.
+
+## Variables used by plugins but not exported yet
 
 * %IkiWiki::pagecase (aggregate)
 * %IkiWiki::backlinks (pagestats)
-
-[[todo/done]]
