@@ -1,0 +1,9 @@
+Current git :
+
+        $ perl -c IkiWiki/Plugin/aggregate.pm  
+        syntax error at IkiWiki/Plugin/aggregate.pm line 427, near "24;"
+        IkiWiki/Plugin/aggregate.pm had compilation errors.
+
+This prevents a Debian package build (due to `t/syntax.t`).
+
+Not knowing the units being used, I don't know where to add the missing parenthesis.
