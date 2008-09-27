@@ -31,11 +31,11 @@ sub sanitize (@) { #{{{
 	my $pid;
 	my $sigpipe=0;
 	$SIG{PIPE}=sub { $sigpipe=1 };
-	$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no --markup yes');
-	
+	$pid=open2(*IN, *OUT, 'tidy -quiet -asxhtml -utf8 --show-body-only yes --show-warnings no --tidy-mark no --markup yes 2>/dev/null');
+
 	# open2 doesn't respect "use open ':utf8'"
 	binmode (IN, ':utf8');
-	binmode (OUT, ':utf8'); 
+	binmode (OUT, ':utf8');
 	
 	print OUT $params{content};
 	close OUT;
@@ -46,7 +46,7 @@ sub sanitize (@) { #{{{
 	waitpid $pid, 0;
 
 	$SIG{PIPE}="DEFAULT";
-	return $params{content} if $sigpipe;
+	return "" if $sigpipe || ! defined $ret;
 
 	return $ret;
 } # }}}

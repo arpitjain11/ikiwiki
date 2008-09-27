@@ -13,6 +13,10 @@ ikiwiki (2.66) UNRELEASED; urgency=low
   * Expand usage message and add --help. Closes: #500344
   * Beautify urls used in various places. (smcv)
   * Export pagetitle, titlepage, linkpage.
+  * htmltidy: Avoid returning undef if tidy fails. Also avoid returning the
+    untidied content if tidy crashes. In either case, it seems best to tidy
+    the content to nothing.
+  * htmltidy: Avoid spewing tidy errors to stderr.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 
