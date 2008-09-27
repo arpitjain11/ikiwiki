@@ -8,6 +8,7 @@ use open qw{:utf8 :std};
 
 sub import { #{{{
 	hook(type => "getsetup", id => "editpage", call => \&getsetup);
+	hook(type => "refresh", id => "editpage", call => \&refresh);
         hook(type => "sessioncgi", id => "editpage", call => \&IkiWiki::cgi_editpage);
 } # }}}
 
@@ -18,6 +19,26 @@ sub getsetup () { #{{{
 			rebuild => 1,
 		},
 } #}}}
+
+sub refresh () {
+	if (exists $wikistate{editpage} && exists $wikistate{editpage}{previews}) {
+		# Expire old preview files after one hour.
+		my $expire=time - (60 * 60);
+
+		my @previews;
+		foreach my $file (@{$wikistate{editpage}{previews}}) {
+			my $mtime=(stat("$config{destdir}/$file"))[9];
+			if (defined $mtime && $mtime <= $expire) {
+				debug(sprintf(gettext("removing old preview %s"), $file));
+				IkiWiki::prune("$config{destdir}/$file");
+			}
+			elsif (defined $mtime) {
+				push @previews, $file;
+			}
+		}
+		$wikistate{editpage}{previews}=\@previews;
+	}
+}
 
 # Back to ikiwiki namespace for the rest, this code is very much
 # internal to ikiwiki even though it's separated into a plugin,
@@ -169,6 +190,7 @@ sub cgi_editpage ($$) { #{{{
 			# temporarily record its type
 			$pagesources{$page}=$page.".".$type;
 		}
+		my %wasrendered=map { $_ => 1 } @{$renderedfiles{$page}};
 
 		my $content=$form->field('editcontent');
 
@@ -191,11 +213,18 @@ sub cgi_editpage ($$) { #{{{
 			);
 		});
 		$form->tmpl_param("page_preview", $preview);
-	
+		
 		if ($new) {
 			delete $pagesources{$page};
 		}
-		# previewing may have created files on disk
+
+		# Previewing may have created files on disk.
+		# Keep a list of these to be deleted later.
+		my %previews = map { $_ => 1 } @{$wikistate{editpage}{previews}};
+		foreach my $file (@{$renderedfiles{$page}}) {
+			$previews{$file}=1 unless $wasrendered{$file};
+		}
+		@{$wikistate{editpage}{previews}} = keys %previews;
 		saveindex();
 	}
 	elsif ($form->submitted eq "Save Page") {

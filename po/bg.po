@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-27 14:10-0400\n"
+"POT-Creation-Date: 2008-09-27 17:03-0400\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -24,7 +24,7 @@ msgstr "Първо трябва да влезете."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:311
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:339
 msgid "Your login session has expired."
 msgstr ""
 
@@ -175,7 +175,7 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:222
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:250
 #: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -207,19 +207,24 @@ msgstr ""
 msgid "no text was copied in this page with id %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:111
+#: ../IkiWiki/Plugin/editpage.pm:32
+#, fuzzy, perl-format
+msgid "removing old preview %s"
+msgstr "премахване на старата страница „%s”"
+
+#: ../IkiWiki/Plugin/editpage.pm:132
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:278
+#: ../IkiWiki/Plugin/editpage.pm:306
 #, perl-format
 msgid "creating %s"
 msgstr "създаване на %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:296 ../IkiWiki/Plugin/editpage.pm:324
-#: ../IkiWiki/Plugin/editpage.pm:334 ../IkiWiki/Plugin/editpage.pm:369
-#: ../IkiWiki/Plugin/editpage.pm:414
+#: ../IkiWiki/Plugin/editpage.pm:324 ../IkiWiki/Plugin/editpage.pm:352
+#: ../IkiWiki/Plugin/editpage.pm:362 ../IkiWiki/Plugin/editpage.pm:397
+#: ../IkiWiki/Plugin/editpage.pm:442
 #, perl-format
 msgid "editing %s"
 msgstr "промяна на %s"
@@ -948,7 +953,7 @@ msgstr ""
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"
 
-#: ../IkiWiki.pm:1614
+#: ../IkiWiki.pm:1635
 msgid "yes"
 msgstr ""
 

@@ -750,7 +750,7 @@ sub will_render ($$;$) { #{{{
 
 	# Important security check.
 	if (-e "$config{destdir}/$dest" && ! $config{rebuild} &&
-	    ! grep { $_ eq $dest } (@{$renderedfiles{$page}}, @{$oldrenderedfiles{$page}})) {
+	    ! grep { $_ eq $dest } (@{$renderedfiles{$page}}, @{$oldrenderedfiles{$page}}, @{$wikistate{editpage}{previews}})) {
 		error("$config{destdir}/$dest independently created, not overwriting with version from $page");
 	}
 

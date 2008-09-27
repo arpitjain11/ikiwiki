@@ -31,7 +31,7 @@ I refresh and rebuild a few times, and the files are still dangling there.  If I
 > One fix would be to stash a copy of `%renderedfiles` before generating
 > the preview, then compare it afterwards to see how it changed and
 > determine what files were added, and record those someplace, and delete
-> them on a future refresh (after some reasonable time period).
+> them on a future refresh (after some reasonable time period). [[done]]
 > 
 > Another approach would be to make previewing always render files with
 > some well-known temporary name. Then all such temp files could be removed

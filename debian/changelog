@@ -23,6 +23,8 @@ ikiwiki (2.66) UNRELEASED; urgency=low
     index format should be transparent.
   * Add %wikistate, which is like %pagestate except not specific to a given
     page, and is preserved across rebuilds.
+  * editpage: Be more aggressive (and less buggy) about cleaning up
+    temporary files rendered during page preview.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 
