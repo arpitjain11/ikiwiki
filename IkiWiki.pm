@@ -1309,31 +1309,40 @@ sub loadindex () { #{{{
 			return;
 		}
 	}
-	my $ret=Storable::fd_retrieve($in);
-	if (! defined $ret) {
+
+	my $index=Storable::fd_retrieve($in);
+	if (! defined $index) {
 		return 0;
 	}
-	my %index=%$ret;
-	foreach my $src (keys %index) {
-		my %d=%{$index{$src}};
+
+	my $pages;
+	if (exists $index->{version} && ! ref $index->{version}) {
+		$pages=$index->{page};
+	}
+	else {
+		$pages=$index;
+	}
+
+	foreach my $src (keys %$pages) {
+		my $d=$pages->{$src};
 		my $page=pagename($src);
-		$pagectime{$page}=$d{ctime};
+		$pagectime{$page}=$d->{ctime};
 		if (! $config{rebuild}) {
 			$pagesources{$page}=$src;
-			$pagemtime{$page}=$d{mtime};
-			$renderedfiles{$page}=$d{dest};
-			if (exists $d{links} && ref $d{links}) {
-				$links{$page}=$d{links};
-				$oldlinks{$page}=[@{$d{links}}];
+			$pagemtime{$page}=$d->{mtime};
+			$renderedfiles{$page}=$d->{dest};
+			if (exists $d->{links} && ref $d->{links}) {
+				$links{$page}=$d->{links};
+				$oldlinks{$page}=[@{$d->{links}}];
 			}
-			if (exists $d{depends}) {
-				$depends{$page}=$d{depends};
+			if (exists $d->{depends}) {
+				$depends{$page}=$d->{depends};
 			}
-			if (exists $d{state}) {
-				$pagestate{$page}=$d{state};
+			if (exists $d->{state}) {
+				$pagestate{$page}=$d->{state};
 			}
 		}
-		$oldrenderedfiles{$page}=[@{$d{dest}}];
+		$oldrenderedfiles{$page}=[@{$d->{dest}}];
 	}
 	foreach my $page (keys %pagesources) {
 		$pagecase{lc $page}=$page;
@@ -1364,7 +1373,7 @@ sub saveindex () { #{{{
 		next unless $pagemtime{$page};
 		my $src=$pagesources{$page};
 
-		$index{$src}={
+		$index{page}{$src}={
 			ctime => $pagectime{$page},
 			mtime => $pagemtime{$page},
 			dest => $renderedfiles{$page},
@@ -1372,17 +1381,18 @@ sub saveindex () { #{{{
 		};
 
 		if (exists $depends{$page}) {
-			$index{$src}{depends} = $depends{$page};
+			$index{page}{$src}{depends} = $depends{$page};
 		}
 
 		if (exists $pagestate{$page}) {
 			foreach my $id (@hookids) {
 				foreach my $key (keys %{$pagestate{$page}{$id}}) {
-					$index{$src}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
+					$index{page}{$src}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
 				}
 			}
 		}
 	}
+	$index{version}="3";
 	my $ret=Storable::nstore_fd(\%index, $out);
 	return if ! defined $ret || ! $ret;
 	close $out || error("failed saving to $newfile: $!", $cleanup);

@@ -19,6 +19,10 @@ ikiwiki (2.66) UNRELEASED; urgency=low
     untidied content if tidy crashes. In either case, it seems best to tidy
     the content to nothing.
   * htmltidy: Avoid spewing tidy errors to stderr.
+  * Add %wikistate, which is like %pagestate except not specific to a given
+    page, and is preserved across rebuilds.
+  * Reorganize index file, add a format version field. Upgrades to the new
+    index format should be transparent.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 

@@ -16,6 +16,8 @@ sub import { #{{{
 		call => \&preprocess);
 	hook(type => "formbuilder", id => "edittemplate",
 		call => \&formbuilder);
+	hook(type => "refresh", id => "edittemplate",
+		call => \&refresh);
 } #}}}
 
 sub getsetup () { #{{{
@@ -137,5 +139,9 @@ sub filltemplate ($$) { #{{{
 
 	return $template->output;
 } #}}}
+
+sub refresh () {
+	
+}
 
 1
