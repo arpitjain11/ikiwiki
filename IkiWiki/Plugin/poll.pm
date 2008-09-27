@@ -102,7 +102,7 @@ sub sessioncgi ($$) { #{{{
 		my $oldchoice=$session->param($choice_param);
 		if (defined $oldchoice && $oldchoice eq $choice) {
 			# Same vote; no-op.
-			IkiWiki::redirect($cgi, urlto($page, undef, 1);
+			IkiWiki::redirect($cgi, urlto($page, undef, 1));
 			exit;
 		}
 
