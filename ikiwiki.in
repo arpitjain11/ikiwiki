@@ -10,7 +10,8 @@ use lib '.'; # For use in nonstandard directory, munged by Makefile.
 use IkiWiki;
 
 sub usage () { #{{{
-	die gettext("usage: ikiwiki [options] source dest"), "\n";
+	die gettext("usage: ikiwiki [options] source dest"), "\n",
+	    gettext("       ikiwiki --setup configfile"), "\n";
 } #}}}
 
 sub getconfig () { #{{{
@@ -94,6 +95,7 @@ sub getconfig () { #{{{
 				print "ikiwiki version $IkiWiki::version\n";
 				exit;
 			},
+			"help|h" => sub { $SIG{__WARN__}=sub {}; die },
 		) || usage();
 
 		if (! $config{setup} && ! $config{render}) {
