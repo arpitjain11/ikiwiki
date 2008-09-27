@@ -95,8 +95,8 @@ sub cgi_editpage ($$) { #{{{
 		error("bad page name");
 	}
 
-	my $baseurl=$config{url}."/".htmlpage($page);
-	
+	my $baseurl = urlto($page, undef, 1);
+
 	my $from;
 	if (defined $form->field('from')) {
 		($from)=$form->field('from')=~/$config{wiki_file_regexp}/;
@@ -153,13 +153,13 @@ sub cgi_editpage ($$) { #{{{
 	
 	if ($form->submitted eq "Cancel") {
 		if ($form->field("do") eq "create" && defined $from) {
-			redirect($q, "$config{url}/".htmlpage($from));
+			redirect($q, urlto($from, undef, 1));
 		}
 		elsif ($form->field("do") eq "create") {
 			redirect($q, $config{url});
 		}
 		else {
-			redirect($q, "$config{url}/".htmlpage($page));
+			redirect($q, urlto($page, undef, 1));
 		}
 		exit;
 	}
@@ -250,7 +250,7 @@ sub cgi_editpage ($$) { #{{{
 					@page_locs=$page;
 				}
 				else {
-					redirect($q, "$config{url}/".htmlpage($page));
+					redirect($q, urlto($page, undef, 1));
 					exit;
 				}
 			}
@@ -418,7 +418,7 @@ sub cgi_editpage ($$) { #{{{
 		else {
 			# The trailing question mark tries to avoid broken
 			# caches and get the most recent version of the page.
-			redirect($q, "$config{url}/".htmlpage($page)."?updated");
+			redirect($q, urlto($page, undef, 1)."?updated");
 		}
 	}
 
