@@ -12,16 +12,16 @@ use Storable;
 use open qw{:utf8 :std};
 
 use vars qw{%config %links %oldlinks %pagemtime %pagectime %pagecase
-	    %pagestate %renderedfiles %oldrenderedfiles %pagesources
-	    %destsources %depends %hooks %forcerebuild $gettext_obj
-	    %loaded_plugins};
+	    %pagestate %wikistate %renderedfiles %oldrenderedfiles
+	    %pagesources %destsources %depends %hooks %forcerebuild
+	    $gettext_obj %loaded_plugins};
 
 use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
 		 add_underlay pagetitle titlepage linkpage
-                 %config %links %pagestate %renderedfiles
+                 %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
@@ -1318,9 +1318,11 @@ sub loadindex () { #{{{
 	my $pages;
 	if (exists $index->{version} && ! ref $index->{version}) {
 		$pages=$index->{page};
+		%wikistate=%{$index->{state}};
 	}
 	else {
 		$pages=$index;
+		%wikistate=();
 	}
 
 	foreach my $src (keys %$pages) {
@@ -1368,6 +1370,7 @@ sub saveindex () { #{{{
 	my $newfile="$config{wikistatedir}/indexdb.new";
 	my $cleanup = sub { unlink($newfile) };
 	open (my $out, '>', $newfile) || error("cannot write to $newfile: $!", $cleanup);
+
 	my %index;
 	foreach my $page (keys %pagemtime) {
 		next unless $pagemtime{$page};
@@ -1392,6 +1395,14 @@ sub saveindex () { #{{{
 			}
 		}
 	}
+
+	$index{state}={};
+	foreach my $id (@hookids) {
+		foreach my $key (keys %{$wikistate{$id}}) {
+			$index{state}{$id}{$key}=$wikistate{$id}{$key};
+		}
+	}
+	
 	$index{version}="3";
 	my $ret=Storable::nstore_fd(\%index, $out);
 	return if ! defined $ret || ! $ret;

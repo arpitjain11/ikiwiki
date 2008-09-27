@@ -467,6 +467,15 @@ When pages are deleted, ikiwiki automatically deletes their pagestate too.
 Note that page state does not persist across wiki rebuilds, only across
 wiki updates.
 
+### %wikistate
+
+The `%wikistate` hash can be used by a plugin to store persistant state
+that is not bound to any one page. To set a value, use
+`$wikistate{$id}{$key}=$value, where `$value` is anything Storable can
+serialize, `$key` is any string you like, and `$id` must be the same as the
+"id" parameter passed to `hook()` when registering the plugin, so that the
+state can be dropped if the plugin is no longer used.
+
 ### Other variables
 
 If your plugin needs to access data about other pages in the wiki. It can
