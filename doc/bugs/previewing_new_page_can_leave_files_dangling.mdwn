@@ -1,0 +1,15 @@
+Steps to reproduce:
+
+1. Make a new post via web interface.
+2. Use a directive that generates extra files (say, teximg).
+3. Click cancel.
+
+What I expect:
+
+The files that teximg created should (eventually) be removed, along with the whole directory of the non-existant new post.
+
+What I got:
+
+I refresh and rebuild a few times, and the files are still dangling there.  If I then try to create a post with the same name and same content, I get a "file independently created, not overwriting" error.
+
+For teximg, I think this can be fixed by using data url like graphviz, but I think plugins in general should be allowed to create files during preview and have them be cleaned up when the user presses cancel.  This segues into what my actual problem is: I wrote a htmlize plugin to format .tex files as page images (following hnb and teximg, since I was completely unfamiliar with perl until yesterday (and ikiwiki until a few days ago)), and there is no way to tell if I'm in preview mode (so I can use data url and not leave files dangling) or commit mode (so I can use real images and not have bloated html).
