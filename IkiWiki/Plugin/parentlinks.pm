@@ -44,7 +44,7 @@ sub parentlinks ($) { #{{{
 			"height_$height" => 1,
 		};
 		$path.="/".$dir;
-		$title=IkiWiki::pagetitle($dir);
+		$title=pagetitle($dir);
 		$i++;
 	}
 	return @ret;

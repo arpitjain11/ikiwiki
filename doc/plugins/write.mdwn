@@ -627,6 +627,23 @@ a type that ikiwiki knowns how to htmlize. Otherwise, returns undef.
 Given the name of a source file, returns the name of the wiki page
 that corresponds to that file.
 
+#### `pagetitle($)`
+
+Give the name of a wiki page, returns a version suitable to be displayed as
+the page's title. This is accomplished by de-escaping escaped characters in
+the page name. "_" is replaced with a space, and '__NN__' is replaced by 
+the UTF character with code NN.
+
+#### `titlepage($)`
+
+This performs the inverse of `pagetitle`, ie, it converts a page title into
+a wiki page name.
+
+#### `linkpage($)`
+
+This converts text that could have been entered by the user as a
+[[WikiLink]] into a wiki page name.
+
 #### `srcfile($;$)`
 
 Given the name of a source file in the wiki, searches for the file in

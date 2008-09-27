@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-24 17:55-0400\n"
+"POT-Creation-Date: 2008-09-27 14:10-0400\n"
 "PO-Revision-Date: 2008-04-29 17:46+0200\n"
 "Last-Translator: Christian Perrier <bubulle@debian.org>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -132,7 +132,7 @@ msgstr "Création de la nouvelle page %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:197
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
 msgid "done"
 msgstr "Terminé"
 
@@ -164,11 +164,11 @@ msgstr ""
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:188
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:230
 msgid "attachment upload"
 msgstr ""
 
@@ -535,11 +535,11 @@ msgstr ""
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:99
+#: ../IkiWiki/Plugin/recentchanges.pm:100
 msgid "missing page"
 msgstr "Page manquante"
 
-#: ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/recentchanges.pm:102
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "La page %s n'existe pas."
@@ -890,19 +890,23 @@ msgstr "%s a été créé avec succès"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
-#: ../ikiwiki.in:89
+#: ../ikiwiki.in:14
+msgid "       ikiwiki --setup configfile"
+msgstr ""
+
+#: ../ikiwiki.in:90
 msgid "usage: --set var=value"
 msgstr "Syntaxe : -- set var=valeur"
 
-#: ../ikiwiki.in:135
+#: ../ikiwiki.in:137
 msgid "generating wrappers.."
 msgstr "Création des fichiers CGI..."
 
-#: ../ikiwiki.in:186
+#: ../ikiwiki.in:188
 msgid "rebuilding wiki.."
 msgstr "Reconstruction du wiki..."
 
-#: ../ikiwiki.in:189
+#: ../ikiwiki.in:191
 msgid "refreshing wiki.."
 msgstr "Rafraîchissement du wiki..."
 

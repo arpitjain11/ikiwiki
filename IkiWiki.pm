@@ -20,7 +20,7 @@ use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
-		 add_underlay
+		 add_underlay pagetitle titlepage linkpage
                  %config %links %pagestate %renderedfiles
                  %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version

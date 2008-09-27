@@ -84,7 +84,7 @@ sub preprocess (@) { #{{{
 	
 	foreach my $plugin (@pluginlist) {
 		$result .= '<li class="listdirectives">';
-		my $link=IkiWiki::linkpage($config{directive_description_dir}."/".$plugin);
+		my $link=linkpage($config{directive_description_dir}."/".$plugin);
 		add_depends($params{page}, $link);
 		$result .= htmllink($params{page}, $params{destpage}, $link);
 		$result .= '</li>';

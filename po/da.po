@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-24 17:55-0400\n"
+"POT-Creation-Date: 2008-09-27 14:10-0400\n"
 "PO-Revision-Date: 2008-08-11 01:04+0200\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: None\n"
@@ -132,7 +132,7 @@ msgstr "opretter ny side %s"
 msgid "deleting bucket.."
 msgstr "sletter bundt.."
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:197
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
 msgid "done"
 msgstr "færdig"
 
@@ -162,11 +162,11 @@ msgstr "der er allerede en side ved navn %s"
 msgid "prohibited by allowed_attachments"
 msgstr "forhindret af allowed_attachments"
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:188
 msgid "bad attachment filename"
 msgstr "dårligt vedhæftningsfilnavn"
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:230
 msgid "attachment upload"
 msgstr "vedhæftningsoplægning"
 
@@ -529,11 +529,11 @@ msgstr "ugyldigt navn"
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:99
+#: ../IkiWiki/Plugin/recentchanges.pm:100
 msgid "missing page"
 msgstr "manglende side"
 
-#: ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/recentchanges.pm:102
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "Siden %s eksisterer ikke."
@@ -881,19 +881,23 @@ msgstr "Korrekt bygget %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "brug: ikiwiki [valg] kilde mål"
 
-#: ../ikiwiki.in:89
+#: ../ikiwiki.in:14
+msgid "       ikiwiki --setup configfile"
+msgstr ""
+
+#: ../ikiwiki.in:90
 msgid "usage: --set var=value"
 msgstr "brug: --set var=værdi"
 
-#: ../ikiwiki.in:135
+#: ../ikiwiki.in:137
 msgid "generating wrappers.."
 msgstr "bygger wrappers.."
 
-#: ../ikiwiki.in:186
+#: ../ikiwiki.in:188
 msgid "rebuilding wiki.."
 msgstr "genopbygger wiki..."
 
-#: ../ikiwiki.in:189
+#: ../ikiwiki.in:191
 msgid "refreshing wiki.."
 msgstr "genopfrisker wiki..."
 

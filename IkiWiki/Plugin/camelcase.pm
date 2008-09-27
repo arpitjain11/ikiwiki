@@ -42,7 +42,7 @@ sub linkify (@) { #{{{
 	my $destpage=$params{destpage};
 
 	$params{content}=~s{$link_regexp}{
-		htmllink($page, $destpage, IkiWiki::linkpage($1))
+		htmllink($page, $destpage, linkpage($1))
 	}eg;
 
 	return $params{content};
@@ -54,7 +54,7 @@ sub scan (@) { #{{{
         my $content=$params{content};
 
 	while ($content =~ /$link_regexp/g) {
-		push @{$links{$page}}, IkiWiki::linkpage($1);
+		push @{$links{$page}}, linkpage($1);
 	}
 }
 

@@ -73,7 +73,7 @@ sub index (@) { #{{{
 	
 	my $db=xapiandb();
 	my $doc=Search::Xapian::Document->new();
-	my $caption=IkiWiki::pagetitle($params{page});
+	my $caption=pagetitle($params{page});
 	my $title;
 	if (exists $pagestate{$params{page}}{meta} &&
 		exists $pagestate{$params{page}}{meta}{title}) {

@@ -54,7 +54,7 @@ sub preprocess (@) { #{{{
 		error gettext("match not specified")
 	}
 
-	my $link=IkiWiki::linkpage($params{template});
+	my $link=linkpage($params{template});
 	$pagestate{$params{page}}{edittemplate}{$params{match}}=$link;
 
 	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));

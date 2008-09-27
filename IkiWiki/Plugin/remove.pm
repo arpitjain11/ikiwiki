@@ -110,7 +110,7 @@ sub removal_confirm ($$@) { #{{{
 	
 	my ($f, $buttons)=confirmation_form($q, $session);
 	$f->title(sprintf(gettext("confirm removal of %s"),
-		join(", ", map { IkiWiki::pagetitle($_) } @pages)));
+		join(", ", map { pagetitle($_) } @pages)));
 	$f->field(name => "page", type => "hidden", value => \@pages, force => 1);
 	if (defined $attachment) {
 		$f->field(name => "attachment", type => "hidden",

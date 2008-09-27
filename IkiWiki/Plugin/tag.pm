@@ -75,7 +75,7 @@ sub preprocess_tag (@) { #{{{
 	delete $params{preview};
 
 	foreach my $tag (keys %params) {
-		$tag=IkiWiki::linkpage($tag);
+		$tag=linkpage($tag);
 		$tags{$page}{$tag}=1;
 		# hidden WikiLink
 		push @{$links{$page}}, tagpage($tag);
@@ -91,14 +91,14 @@ sub preprocess_taglink (@) { #{{{
 	my %params=@_;
 	return join(" ", map {
 		if (/(.*)\|(.*)/) {
-			my $tag=IkiWiki::linkpage($2);
+			my $tag=linkpage($2);
 			$tags{$params{page}}{$tag}=1;
 			push @{$links{$params{page}}}, tagpage($tag);
 			return taglink($params{page}, $params{destpage}, $tag,
-				linktext => IkiWiki::pagetitle($1));
+				linktext => pagetitle($1));
 		}
 		else {
-			my $tag=IkiWiki::linkpage($_);
+			my $tag=linkpage($_);
 			$tags{$params{page}}{$tag}=1;
 			push @{$links{$params{page}}}, tagpage($tag);
 			return taglink($params{page}, $params{destpage}, $tag);

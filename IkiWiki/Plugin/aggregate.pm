@@ -228,7 +228,7 @@ sub preprocess (@) { #{{{
 	$feed->{name}=$name;
 	$feed->{sourcepage}=$params{page};
 	$feed->{url}=$params{url};
-	my $dir=exists $params{dir} ? $params{dir} : $params{page}."/".IkiWiki::titlepage($params{name});
+	my $dir=exists $params{dir} ? $params{dir} : $params{page}."/".titlepage($params{name});
 	$dir=~s/^\/+//;
 	($dir)=$dir=~/$config{wiki_file_regexp}/;
 	$feed->{dir}=$dir;
@@ -559,7 +559,7 @@ sub add_page (@) { #{{{
 		$feed->{newposts}++;
 
 		# assign it an unused page
-		my $page=IkiWiki::titlepage($params{title});
+		my $page=titlepage($params{title});
 		# escape slashes and periods in title so it doesn't specify
 		# directory name or trigger ".." disallowing code.
 		$page=~s!([/.])!"__".ord($1)."__"!eg;

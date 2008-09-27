@@ -98,7 +98,7 @@ sub rename_form ($$$) { #{{{
 	error($@) if $@;
 	my $f = CGI::FormBuilder->new(
 		name => "rename",
-		title => sprintf(gettext("rename %s"), IkiWiki::pagetitle($page)),
+		title => sprintf(gettext("rename %s"), pagetitle($page)),
 		header => 0,
 		charset => "utf-8",
 		method => 'POST',
@@ -111,7 +111,7 @@ sub rename_form ($$$) { #{{{
 	
 	$f->field(name => "do", type => "hidden", value => "rename", force => 1);
 	$f->field(name => "page", type => "hidden", value => $page, force => 1);
-	$f->field(name => "new_name", value => IkiWiki::pagetitle($page), size => 60);
+	$f->field(name => "new_name", value => pagetitle($page), size => 60);
 	if (!$q->param("attachment")) {
 		# insert the standard extensions
 		my @page_types;
@@ -267,7 +267,7 @@ sub sessioncgi ($$) { #{{{
 			# performed in check_canrename later.
 			my $src=$q->param("page");
 			my $srcfile=IkiWiki::possibly_foolish_untaint($pagesources{$src});
-			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
+			my $dest=IkiWiki::possibly_foolish_untaint(titlepage($q->param("new_name")));
 			my $destfile=$dest;
 			if (! $q->param("attachment")) {
 				my $type=$q->param('type');

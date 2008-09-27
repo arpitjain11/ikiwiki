@@ -69,11 +69,11 @@ sub linkify (@) { #{{{
 		defined $2
 			? ( $1 
 				? "[[$2|$3".($4 ? "#$4" : "")."]]" 
-				: htmllink($page, $destpage, IkiWiki::linkpage($3),
-					anchor => $4, linktext => IkiWiki::pagetitle($2)))
+				: htmllink($page, $destpage, linkpage($3),
+					anchor => $4, linktext => pagetitle($2)))
 			: ( $1 
 				? "[[$3".($4 ? "#$4" : "")."]]"
-				: htmllink($page, $destpage, IkiWiki::linkpage($3),
+				: htmllink($page, $destpage, linkpage($3),
 					anchor => $4))
 	}eg;
 	
@@ -86,7 +86,7 @@ sub scan (@) { #{{{
 	my $content=$params{content};
 
 	while ($content =~ /(?<!\\)$link_regexp/g) {
-		push @{$links{$page}}, IkiWiki::linkpage($2);
+		push @{$links{$page}}, linkpage($2);
 	}
 } # }}}
 
@@ -99,8 +99,8 @@ sub renamepage (@) { #{{{
 	$params{content} =~ s{(?<!\\)$link_regexp}{
 		my $linktext=$2;
 		my $link=$linktext;
-		if (bestlink($page, IkiWiki::linkpage($linktext)) eq $old) {
-			$link=IkiWiki::pagetitle($new, 1);
+		if (bestlink($page, linkpage($linktext)) eq $old) {
+			$link=pagetitle($new, 1);
 			$link=~s/ /_/g;
 			if ($linktext =~ m/.*\/*?[A-Z]/) {
 				# preserve leading cap of last component

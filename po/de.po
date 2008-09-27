@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 2.40\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-24 17:55-0400\n"
+"POT-Creation-Date: 2008-09-27 14:10-0400\n"
 "PO-Revision-Date: 2008-03-03 21:22+0100\n"
 "Last-Translator: Kai Wasserbäch <debian@carbon-project.org>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -128,7 +128,7 @@ msgstr "erstelle neue Seite %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:197
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
 msgid "done"
 msgstr "fertig"
 
@@ -160,11 +160,11 @@ msgstr ""
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:188
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:230
 msgid "attachment upload"
 msgstr ""
 
@@ -531,11 +531,11 @@ msgstr ""
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:99
+#: ../IkiWiki/Plugin/recentchanges.pm:100
 msgid "missing page"
 msgstr "fehlende Seite"
 
-#: ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/recentchanges.pm:102
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "Die Seite %s exisitiert nicht."
@@ -884,19 +884,23 @@ msgstr "%s wurde erfolgreich erstellt"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "Benutzung: ikiwiki [Optionen] Quelle Ziel"
 
-#: ../ikiwiki.in:89
+#: ../ikiwiki.in:14
+msgid "       ikiwiki --setup configfile"
+msgstr ""
+
+#: ../ikiwiki.in:90
 msgid "usage: --set var=value"
 msgstr "Benutzung: --set Variable=Wert"
 
-#: ../ikiwiki.in:135
+#: ../ikiwiki.in:137
 msgid "generating wrappers.."
 msgstr "erzeuge Wrapper.."
 
-#: ../ikiwiki.in:186
+#: ../ikiwiki.in:188
 msgid "rebuilding wiki.."
 msgstr "erzeuge Wiki neu.."
 
-#: ../ikiwiki.in:189
+#: ../ikiwiki.in:191
 msgid "refreshing wiki.."
 msgstr "aktualisiere Wiki.."
 

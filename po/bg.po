@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-24 17:55-0400\n"
+"POT-Creation-Date: 2008-09-27 14:10-0400\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -131,7 +131,7 @@ msgstr "създаване на нова страницa „%s”"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:197
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
 msgid "done"
 msgstr "готово"
 
@@ -163,11 +163,11 @@ msgstr ""
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:188
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:230
 msgid "attachment upload"
 msgstr ""
 
@@ -544,12 +544,12 @@ msgstr ""
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:99
+#: ../IkiWiki/Plugin/recentchanges.pm:100
 #, fuzzy
 msgid "missing page"
 msgstr "липсващ параметър „id” на шаблона"
 
-#: ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/recentchanges.pm:102
 #, perl-format
 msgid "The page %s does not exist."
 msgstr ""
@@ -908,19 +908,23 @@ msgstr "успешно генериране на %s"
 msgid "usage: ikiwiki [options] source dest"
 msgstr "формат: ikiwiki [опции] източник местоназначение"
 
-#: ../ikiwiki.in:89
+#: ../ikiwiki.in:14
+msgid "       ikiwiki --setup configfile"
+msgstr ""
+
+#: ../ikiwiki.in:90
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:135
+#: ../ikiwiki.in:137
 msgid "generating wrappers.."
 msgstr "генериране на обвивки..."
 
-#: ../ikiwiki.in:186
+#: ../ikiwiki.in:188
 msgid "rebuilding wiki.."
 msgstr "обновяване на уики..."
 
-#: ../ikiwiki.in:189
+#: ../ikiwiki.in:191
 msgid "refreshing wiki.."
 msgstr "осъвременяване на уики..."
 

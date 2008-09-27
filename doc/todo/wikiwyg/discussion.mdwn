@@ -90,6 +90,7 @@ changes.diff:
     I have to use the IkiWiki package instead of IkiWiki::Plugin::Wikiwyg? Or would a 
     better approach be to just copy that function into the Wikiwyg plugin?
     * You can just call `IkiWiki::pagetitle()`.
+      > Note: pagetitle is now exported.
 
 wikiwyg.tar.gz
 

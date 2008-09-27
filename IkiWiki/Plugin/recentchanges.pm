@@ -114,7 +114,7 @@ sub cgi ($) { #{{{
 sub store ($$$) { #{{{
 	my $change=shift;
 
-	my $page="$config{recentchangespage}/change_".IkiWiki::titlepage($change->{rev});
+	my $page="$config{recentchangespage}/change_".titlepage($change->{rev});
 
 	# Optimisation to avoid re-writing pages. Assumes commits never
 	# change (or that any changes are not important).
@@ -132,11 +132,11 @@ sub store ($$$) { #{{{
 						page => $_->{page}
 					).
 					"\">".
-					IkiWiki::pagetitle($_->{page}).
+					pagetitle($_->{page}).
 					"</a>"
 			}
 			else {
-				$_->{link} = IkiWiki::pagetitle($_->{page});
+				$_->{link} = pagetitle($_->{page});
 			}
 			$_->{baseurl}="$config{url}/" if length $config{url};
 
