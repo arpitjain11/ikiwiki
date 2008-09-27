@@ -29,7 +29,7 @@ sub check_canrename ($$$$$$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
-	my $attachment=! defined IkiWiki::pagetype($pagesources{$src});
+	my $attachment=! defined pagetype($pagesources{$src});
 
 	# Must be a known source file.
 	if (! exists $pagesources{$src}) {

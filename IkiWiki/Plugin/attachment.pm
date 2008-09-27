@@ -271,7 +271,7 @@ sub attachment_list ($) { #{{{
 
 	my @ret;
 	foreach my $f (values %pagesources) {
-		if (! defined IkiWiki::pagetype($f) &&
+		if (! defined pagetype($f) &&
 		    $f=~m/^\Q$loc\E[^\/]+$/ &&
 		    -e "$config{srcdir}/$f") {
 			push @ret, {

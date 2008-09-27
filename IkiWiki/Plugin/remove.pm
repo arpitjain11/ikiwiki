@@ -46,7 +46,7 @@ sub check_canremove ($$$) { #{{{
 
 	# If a user can't upload an attachment, don't let them delete it.
 	# This is sorta overkill, but better safe than sorry.
-	if (! defined IkiWiki::pagetype($pagesources{$page})) {
+	if (! defined pagetype($pagesources{$page})) {
 		if (IkiWiki::Plugin::attachment->can("check_canattach")) {
 			IkiWiki::Plugin::attachment::check_canattach($session, $page, $file);
 		}
