@@ -522,6 +522,9 @@ parameters are passed to `HTML::Template->new`.
 Passed a page name, returns the base name that will be used for a the html
 page created from it. (Ie, it appends ".html".)
 
+Use this when constructing the filename of a html file. Use `urlto` when
+generating a link to a page.
+
 #### `add_depends($$)`
 
 Makes the specified page depend on the specified [[ikiwiki/PageSpec]].
