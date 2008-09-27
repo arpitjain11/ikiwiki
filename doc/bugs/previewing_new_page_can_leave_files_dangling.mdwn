@@ -12,4 +12,42 @@ What I got:
 
 I refresh and rebuild a few times, and the files are still dangling there.  If I then try to create a post with the same name and same content, I get a "file independently created, not overwriting" error.
 
-For teximg, I think this can be fixed by using data url like graphviz, but I think plugins in general should be allowed to create files during preview and have them be cleaned up when the user presses cancel.  This segues into what my actual problem is: I wrote a htmlize plugin to format .tex files as page images (following hnb and teximg, since I was completely unfamiliar with perl until yesterday (and ikiwiki until a few days ago)), and there is no way to tell if I'm in preview mode (so I can use data url and not leave files dangling) or commit mode (so I can use real images and not have bloated html).
+> This is specific to previewing when creating a new page. If the page
+> previously existed, the next update to the page will remove the stale
+> preview files.
+> 
+> Problem is that ikiwiki doesn't store state about files rendered by a
+> page if the page doesn't exist yet.
+> 
+> However, just storing that state wouldn't entirely solve the problem,
+> since it would still not delete the leftovers until the page is updated,
+> which it never is if it's previewed and then canceled. And requiring the
+> cancel button be hit doesn't solve this, because people won't.
+> 
+> Also, it's not really ideal that an existing page has to be updated to
+> remove stale files, because if the edit is aborted, the page might not be
+> updated for a long time.
+> 
+> One fix would be to stash a copy of `%renderedfiles` before generating
+> the preview, then compare it afterwards to see how it changed and
+> determine what files were added, and record those someplace, and delete
+> them on a future refresh (after some reasonable time period).
+> 
+> Another approach would be to make previewing always render files with
+> some well-known temporary name. Then all such temp files could be removed
+> periodically. This would need changes to all plugins that write files
+> during preview though. For example, `will_render` might be changed to
+> return the actual filename to write to. --[[Joey]]
+
+For teximg, I think this can be fixed by using data url like graphviz, but
+I think plugins in general should be allowed to create files during preview
+and have them be cleaned up when the user presses cancel.  This segues into
+what my actual problem is: I wrote a htmlize plugin to format .tex files as
+page images (following hnb and teximg, since I was completely unfamiliar
+with perl until yesterday (and ikiwiki until a few days ago)), and there is
+no way to tell if I'm in preview mode (so I can use data url and not leave
+files dangling) or commit mode (so I can use real images and not have
+bloated html).
+
+> It seems too ugly to thread an indicator to preview mode through to
+> htmlize, so I'd prefer to not deal with the problem that way.
