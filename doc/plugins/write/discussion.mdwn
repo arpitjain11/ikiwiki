@@ -8,3 +8,15 @@ print  join(",",keys %IkiWiki::config);
 
 [[DavidBremner]]
 
+I'm a little concerned about one aspect of the `%wikistate` variable that was just introduced.
+I think global state for each plugin is a fine idea, but I worry about making it persist across
+rebuilds.  (And by rebuild, I assume we're talking about the `--rebuild` option.)
+
+My reasoning is that a 'rebuild' should be similar to checking out a new copy of the wiki
+and building.  Another way of saying this is that all permanent state should be in the RCS.
+It is great that there is temporary state stored in other places - I think of it as indexing
+and caching.  I'm worried that with the persistence, plugin writers will start putting data
+there that isn't backed by the RCS and that will break IkiWiki's great abilities as a
+distributed wiki.
+
+[[Will]]
