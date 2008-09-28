@@ -19,10 +19,13 @@ the problem can be shown with an auto-setup'd ikiwiki without cgi when manually 
 >>
 >>> The problem is that all cgi inputs have to be explicitly decoded to
 >>> utf-8, which I've now done for `recentchange_link`.
+>>>> thanks a lot, i think that closed the bug.
 >>> 
 >>> I cannot, however, reproduce a problem with meta redir. Here it
 >>> generated the following html, which redirected the browser ok:
 >>>	<meta http-equiv="refresh" content="0; URL=./../â/" />
+>>>> sorry, my fault -- it was the blank which needed to be replaced by an
+>>>> underscore, not the high byte character
 >>
 >> update: i've had a look at the git options; you could run git with '-z' (NUL
 >> termination) in the `git_commit_info` function; this would require some
@@ -31,5 +34,5 @@ the problem can be shown with an auto-setup'd ikiwiki without cgi when manually 
 >> 
 >>> If you would like to develop a patch to that effect, I'd be glad to
 >>> drop the current nasty code.
->> 
->> --[[chrysn]]
+>>>> i'll have a look, but i'm afraid that's above my current perl skills.
+>>>> --[[chrysn]]
