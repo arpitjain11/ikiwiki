@@ -20,3 +20,23 @@ there that isn't backed by the RCS and that will break IkiWiki's great abilities
 distributed wiki.
 
 [[Will]]
+
+> Well, if you look at state that already persists across rebuilds, we have
+> pagectime, which can be extracted from RCS only very slowly in many
+> cases. There's also the separate state stored by the aggregate plugin,
+> which is indeed independant of the RCS, and can in some cases not be
+> replecated by rebuilding a different checkout (if the data is gone from
+> the feeds). Then there's the session cookie database, and the user
+> database, which started out with a lot of local state, has been
+> whittled down by removing admin prefs and subscriptions, but still has
+> important state including password hashes.
+> 
+> So while I take your point about the potential for abuse,
+> there's certianly legitimate reasons to need to store data across
+> rebuilds. And plugins have always been able to drop their own files in
+> wikistatedir as aggregate does and have it persist, so the abuse
+> potential has always been there, the barrier has been lowered only
+> slightly.
+>
+> OTOH, if something can be added to the documentation that encourages
+> good behavior, that'd be a good thing ... --[[Joey]]
