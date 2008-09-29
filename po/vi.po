@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-27 17:03-0400\n"
+"POT-Creation-Date: 2008-09-29 17:12-0400\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -24,7 +24,7 @@ msgstr "Trước tiên bạn cần phải đăng nhập."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:339
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:350
 msgid "Your login session has expired."
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr "Tùy thích đã được lưu."
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1143
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1153
 msgid "Error"
 msgstr "Lỗi"
 
@@ -175,7 +175,7 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:250
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
 #: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -207,24 +207,24 @@ msgstr ""
 msgid "no text was copied in this page with id %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:32
+#: ../IkiWiki/Plugin/editpage.pm:40
 #, fuzzy, perl-format
 msgid "removing old preview %s"
 msgstr "đang gỡ bỏ trang cũ %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:132
+#: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:306
+#: ../IkiWiki/Plugin/editpage.pm:317
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:324 ../IkiWiki/Plugin/editpage.pm:352
-#: ../IkiWiki/Plugin/editpage.pm:362 ../IkiWiki/Plugin/editpage.pm:397
-#: ../IkiWiki/Plugin/editpage.pm:442
+#: ../IkiWiki/Plugin/editpage.pm:335 ../IkiWiki/Plugin/editpage.pm:363
+#: ../IkiWiki/Plugin/editpage.pm:373 ../IkiWiki/Plugin/editpage.pm:408
+#: ../IkiWiki/Plugin/editpage.pm:453
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
@@ -803,6 +803,13 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
+#: ../IkiWiki/Render.pm:253
+#, perl-format
+msgid ""
+"symlink found in srcdir path (%s) -- set allow_symlinks_before_srcdir to "
+"allow this"
+msgstr ""
+
 #: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:302
 #, perl-format
 msgid "skipping bad filename %s"
@@ -929,25 +936,25 @@ msgstr "đang xây dựng lại wiki.."
 msgid "refreshing wiki.."
 msgstr "đang làm tươi wiki.."
 
-#: ../IkiWiki.pm:451
+#: ../IkiWiki.pm:458
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Cần phải xác định địa chỉ URL tới wiki với « --url » khi dùng « --cgi »"
 
-#: ../IkiWiki.pm:497
+#: ../IkiWiki.pm:504
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:526
+#: ../IkiWiki.pm:533
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1126
+#: ../IkiWiki.pm:1136
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"
 
-#: ../IkiWiki.pm:1635
+#: ../IkiWiki.pm:1645
 msgid "yes"
 msgstr ""
 
