@@ -25,6 +25,8 @@ ikiwiki (2.66) UNRELEASED; urgency=low
     page, and is preserved across rebuilds.
   * editpage: Be more aggressive (and less buggy) about cleaning up
     temporary files rendered during page preview.
+  * Add an indexpages option, which causes foo/index.mdwn to be the source
+    for page foo when foo.mdwn doesn't exist. Closes: #474611
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 

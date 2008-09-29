@@ -198,6 +198,13 @@ sub getsetup () { #{{{
 		safe => 0, # changing requires manual transition
 		rebuild => 1,
 	},
+	indexpages => {
+		type => "boolean",
+		defualt => 0,
+		description => "use page/index.mdwn source files",
+		safe => 1,
+		rebuild => 1,
+	},
 	discussion => {
 		type => "boolean",
 		default => 1,
@@ -619,6 +626,9 @@ sub pagename ($) { #{{{
 	my $type=pagetype($file);
 	my $page=$file;
 	$page=~s/\Q.$type\E*$// if defined $type && !$hooks{htmlize}{$type}{keepextension};
+	if ($config{indexpages} && $page=~/(.*)\/index$/) {
+		$page=$1;
+	}
 	return $page;
 } #}}}
 
