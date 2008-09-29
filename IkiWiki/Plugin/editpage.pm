@@ -29,8 +29,17 @@ sub refresh () {
 		foreach my $file (@{$wikistate{editpage}{previews}}) {
 			my $mtime=(stat("$config{destdir}/$file"))[9];
 			if (defined $mtime && $mtime <= $expire) {
-				debug(sprintf(gettext("removing old preview %s"), $file));
-				IkiWiki::prune("$config{destdir}/$file");
+				# Avoid deleting a preview that was later saved.
+				my $delete=1;
+				foreach my $page (keys %renderedfiles) {
+					if (grep { $_ eq $file } @{$renderedfiles{$page}}) {
+						$delete=0;
+					}
+				}
+				if ($delete) {
+					debug(sprintf(gettext("removing old preview %s"), $file));
+					IkiWiki::prune("$config{destdir}/$file");
+				}
 			}
 			elsif (defined $mtime) {
 				push @previews, $file;
@@ -225,6 +234,7 @@ sub cgi_editpage ($$) { #{{{
 			$previews{$file}=1 unless $wasrendered{$file};
 		}
 		@{$wikistate{editpage}{previews}} = keys %previews;
+		$renderedfiles{$page}=[keys %wasrendered];
 		saveindex();
 	}
 	elsif ($form->submitted eq "Save Page") {
