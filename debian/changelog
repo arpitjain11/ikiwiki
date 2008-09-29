@@ -26,7 +26,10 @@ ikiwiki (2.66) UNRELEASED; urgency=low
   * editpage: Be more aggressive (and less buggy) about cleaning up
     temporary files rendered during page preview.
   * Add an indexpages option, which causes foo/index.mdwn to be the source
-    for page foo when foo.mdwn doesn't exist. Closes: #474611
+    for page foo when foo.mdwn doesn't exist. Also, when it's enabled,
+    creating a new page will save it to foo/index.mdwn by default.
+    Closes: #474611
+    (Sponsored by The TOVA Company.)
 
  -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
 
