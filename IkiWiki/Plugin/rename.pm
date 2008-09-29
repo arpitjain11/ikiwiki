@@ -279,12 +279,7 @@ sub sessioncgi ($$) { #{{{
 					$type=$ext;
 				}
 				
-				if (! $config{indexpages}) {
-					$destfile.=".".$type;
-				}
-				else {
-					$destfile.="/index.".$type;
-				}
+				$destfile=newpagefile($dest, $type);
 			}
 			push @torename, {
 				src => $src,

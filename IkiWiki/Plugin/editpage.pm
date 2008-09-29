@@ -156,12 +156,7 @@ sub cgi_editpage ($$) { #{{{
 			$type=pagetype($pagesources{$from});
 		}
 		$type=$config{default_pageext} unless defined $type;
-		if (! $config{indexpages}) {
-			$file=$page.".".$type;
-		}
-		else {
-			$file=$page."/index.".$type;
-		}
+		$file=newpagefile($page, $type);
 		if (! $form->submitted) {
 			$form->field(name => "rcsinfo", value => "", force => 1);
 		}
