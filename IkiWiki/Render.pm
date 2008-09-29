@@ -250,7 +250,7 @@ sub refresh () { #{{{
 	my $test=$config{srcdir};
 	while (length $test) {
 		if (-l $test && ! $config{allow_symlinks_before_srcdir}) {
-			error("symlink found in srcdir path ($test) -- set allow_symlinks_before_srcdir to allow this");
+			error(sprintf(gettext("symlink found in srcdir path (%s) -- set allow_symlinks_before_srcdir to allow this")), $test);
 		}
 		unless ($test=~s/\/+$//) {
 			$test=dirname($test);
