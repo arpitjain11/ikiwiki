@@ -184,7 +184,7 @@ sub main () { #{{{
 		# do nothing
 	}
 	else {
-		if (! $config{refresh}) {
+		if ($config{rebuild}}) {
 			debug(gettext("rebuilding wiki.."));
 		}
 		else {
