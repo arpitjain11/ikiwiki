@@ -1,11 +1,13 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 54;
+use Test::More tests => 56;
 
 BEGIN { use_ok("IkiWiki"); }
 
 ok(pagespec_match("foo", "*"));
+ok(!pagespec_match("foo", ""));
+ok(pagespec_match("foo", "!bar"));
 ok(pagespec_match("page", "?ag?"));
 ok(! pagespec_match("page", "?a?g?"));
 ok(pagespec_match("foo.png", "*.*"));
