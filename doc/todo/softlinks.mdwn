@@ -4,3 +4,7 @@ The page "foo/" does not exist.
 This is too bad, because sometimes it is convenient to have several different names for the same page.
 
 Could softlinks be handled gracefully by ikiwiki?
+
+> Soft links are explicitly not handled by IkiWiki as a [[security]] measure.  If you want several names for
+> the same page, I suggest using the [[ikiwiki/directive/meta]] directive to make one page redirect to
+> another.  -- [[Will]]
