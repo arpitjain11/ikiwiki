@@ -266,6 +266,9 @@ sub preprocess_inline (@) { #{{{
 		my $rootpage;
 		if (exists $params{rootpage}) {
 			$rootpage=bestlink($params{page}, $params{rootpage});
+			if (!length $rootpage) {
+				$rootpage=$params{rootpage};
+			}
 		}
 		else {
 			$rootpage=$params{page};
