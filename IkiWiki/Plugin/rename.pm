@@ -292,17 +292,21 @@ sub sessioncgi ($$) { #{{{
 			# See if any subpages need to be renamed.
 			if ($q->param("subpages") && $src ne $dest) {
 				foreach my $p (keys %pagesources) {
-					if ($pagesources{$p}=~m/^\Q$src\E\//) {
-						my $d=$pagesources{$p};
-						$d=~s/^\Q$src\E\//$dest\//;
-						push @torename, {
-							src => $p,
-							srcfile => $pagesources{$p},
-							dest => pagename($d),
-							destfile => $d,
-							required => 0,
-						};
-					}
+					next unless $pagesources{$p}=~m/^\Q$src\E\//;
+					# If indexpages is enabled, the
+					# srcfile should not be confused
+					# with a subpage.
+					next if $pagesources{$p} eq $srcfile;
+
+					my $d=$pagesources{$p};
+					$d=~s/^\Q$src\E\//$dest\//;
+					push @torename, {
+						src => $p,
+						srcfile => $pagesources{$p},
+						dest => pagename($d),
+						destfile => $d,
+						required => 0,
+					};
 				}
 			}
 			
