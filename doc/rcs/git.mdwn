@@ -17,11 +17,7 @@ shallow, single level tree, with a bare repository (meaning that it
 does not have a working tree checked out) at the root, and various
 working clones (with working directories) as leaf nodes.  The root
 (bare) repository is meant to be pushed to and pulled from the various
-working clones. The image below displays the relationship between the
-root repository and the clone repositories (this is not a directory
-layout):
-
-![Git repository relationships](http://people.debian.org/~srivasta/ikiwiki_git.png)
+working clones.
 
 One of the leaf node clone repositories is special; it has working
 directory which is used to compile the wiki from, and is also used by the
