@@ -200,7 +200,7 @@ sub getsetup () { #{{{
 	},
 	indexpages => {
 		type => "boolean",
-		defualt => 0,
+		default => 0,
 		description => "use page/index.mdwn source files",
 		safe => 1,
 		rebuild => 1,
