@@ -3,7 +3,7 @@
 
 This plugin allows HTTP basic authentication to be used to log into the
 wiki. To use the plugin, your web server should be set up to perform HTTP
-basic authentiation. The authenticated user will be automatically signed
-into the wiki.
+basic authentiation for at least the directory containing `ikiwiki.cgi`. 
+The authenticated user will be automatically signed into the wiki.
 
 This plugin is included in ikiwiki, but is not enabled by default.
