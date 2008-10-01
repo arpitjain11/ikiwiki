@@ -506,4 +506,21 @@ Regarding the repository layout: There are two darcs repositories. One is the `s
  *  The backend pushes CGI edits from `srcdir` back into `master` (triggering the apply hook).
  *  The working copies in `srcdir` and `master` should *not* be touched by the user, only by the CGI or darcs, respectively.
 
+> Review of this one:
+> 
+> * Should use tab indentation.
+> * `rcs_getctime` should not need to use a ctime cache (such a cache should 
+>   also not be named `.ikiwiki.ctimes`). `rcs_getctime` is run exactly
+>   once per page, ever, and the data is cached in ikiwiki's index.
+> * I doubt that ENV{DARCS} will be available, since the wrapper clobbers> the entire
+>   environment. I'd say remove that.
+> * I don't understand what `darcs_info` is doing, but it seems to be
+>   parsing xml with a regexp?
+> * Looks like `rcs_commit` needs a few improvements, as marked TODO
+> * `rcs_remove` just calls "rm"? Does darcs record notice the file was removed
+>    and automatically commit the removal? (And why `system("rm")` and not
+>    `unlink`?)
+> * Is the the darcs info in [[details]] still up-to-date re this version?
+> --[[Joey]]
+
 [[!tag patch]]
