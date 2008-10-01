@@ -1344,16 +1344,22 @@ sub loadindex () { #{{{
 		%wikistate=%{$index->{state}};
 	}
 	else {
+		# transition code from old, unversioned index file (v2)
 		$pages=$index;
 		%wikistate=();
+		my %oldpages=%$pages;
+		%$pages=();
+		foreach my $src (keys %oldpages) {
+			my $page=pagename($src);
+			$pages->{$page}=$oldpages{$src};			
+		}
 	}
 
-	foreach my $src (keys %$pages) {
-		my $d=$pages->{$src};
-		my $page=pagename($src);
+	foreach my $page (keys %$pages) {
+		my $d=$pages->{$page};
 		$pagectime{$page}=$d->{ctime};
 		if (! $config{rebuild}) {
-			$pagesources{$page}=$src;
+			$pagesources{$page}=$d->{src};
 			$pagemtime{$page}=$d->{mtime};
 			$renderedfiles{$page}=$d->{dest};
 			if (exists $d->{links} && ref $d->{links}) {
@@ -1397,23 +1403,23 @@ sub saveindex () { #{{{
 	my %index;
 	foreach my $page (keys %pagemtime) {
 		next unless $pagemtime{$page};
-		my $src=$pagesources{$page};
 
-		$index{page}{$src}={
+		$index{page}{$page}={
 			ctime => $pagectime{$page},
 			mtime => $pagemtime{$page},
+			src => $pagesources{$page},
 			dest => $renderedfiles{$page},
 			links => $links{$page},
 		};
 
 		if (exists $depends{$page}) {
-			$index{page}{$src}{depends} = $depends{$page};
+			$index{page}{$page}{depends} = $depends{$page};
 		}
 
 		if (exists $pagestate{$page}) {
 			foreach my $id (@hookids) {
 				foreach my $key (keys %{$pagestate{$page}{$id}}) {
-					$index{page}{$src}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
+					$index{page}{$page}{state}{$id}{$key}=$pagestate{$page}{$id}{$key};
 				}
 			}
 		}
