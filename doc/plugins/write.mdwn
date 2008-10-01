@@ -691,6 +691,12 @@ destination file, as registered by `will_render`.
 If the third parameter is passed and is true, an absolute url will be
 constructed instead of the default relative url.
 
+#### `newpagefile($$)`
+
+This can be called when creating a new page, to determine what filename
+to save the page to. It's passed a page name, and its type, and returns
+the name of the file to create, relative to the srcdir.
+
 #### `targetpage($$)`
 
 Passed a page and an extension, returns the filename that page will be

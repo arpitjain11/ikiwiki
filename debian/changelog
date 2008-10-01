@@ -25,6 +25,11 @@ ikiwiki (2.66) UNRELEASED; urgency=low
     page, and is preserved across rebuilds.
   * editpage: Be more aggressive (and less buggy) about cleaning up
     temporary files rendered during page preview.
+  * Add an indexpages option, which causes foo/index.mdwn to be the source
+    for page foo when foo.mdwn doesn't exist. Also, when it's enabled,
+    creating a new page will save it to foo/index.mdwn by default.
+    Closes: #474611
+    (Sponsored by The TOVA Company.)
   * httpauth: Document that ikiwiki.cgi has to be in a directory subject to
     authentication. Closes: #500524 
 

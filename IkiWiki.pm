@@ -20,7 +20,7 @@ use Exporter q{import};
 our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
-		 add_underlay pagetitle titlepage linkpage
+		 add_underlay pagetitle titlepage linkpage newpagefile
                  %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
@@ -196,6 +196,13 @@ sub getsetup () { #{{{
 		default => 0,
 		description => "use '!'-prefixed preprocessor directives?",
 		safe => 0, # changing requires manual transition
+		rebuild => 1,
+	},
+	indexpages => {
+		type => "boolean",
+		defualt => 0,
+		description => "use page/index.mdwn source files",
+		safe => 1,
 		rebuild => 1,
 	},
 	discussion => {
@@ -619,16 +626,32 @@ sub pagename ($) { #{{{
 	my $type=pagetype($file);
 	my $page=$file;
 	$page=~s/\Q.$type\E*$// if defined $type && !$hooks{htmlize}{$type}{keepextension};
+	if ($config{indexpages} && $page=~/(.*)\/index$/) {
+		$page=$1;
+	}
 	return $page;
+} #}}}
+
+sub newpagefile ($$) { #{{{
+	my $page=shift;
+	my $type=shift;
+
+	if (! $config{indexpages} || $page eq 'index') {
+		return $page.".".$type;
+	}
+	else {
+		return $page."/index.".$type;
+	}
 } #}}}
 
 sub targetpage ($$) { #{{{
 	my $page=shift;
 	my $ext=shift;
 	
-	if (! $config{usedirs} || $page =~ /^index$/ ) {
+	if (! $config{usedirs} || $page eq 'index') {
 		return $page.".".$ext;
-	} else {
+	}
+	else {
 		return $page."/index.".$ext;
 	}
 } #}}}

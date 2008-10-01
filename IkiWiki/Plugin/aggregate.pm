@@ -158,11 +158,11 @@ sub migrate_to_internal { #{{{
 		next if $data->{expired};
 		
 		$config{aggregateinternal} = 0;
-		my $oldname = pagefile($data->{page});
+		my $oldname = "$config{srcdir}/".htmlfn($data->{page});
 		my $oldoutput = $config{destdir}."/".IkiWiki::htmlpage($data->{page});
 		
 		$config{aggregateinternal} = 1;
-		my $newname = pagefile($data->{page});
+		my $newname = "$config{srcdir}/".htmlfn($data->{page});
 		
 		debug "moving $oldname -> $newname";
 		if (-e $newname) {
@@ -364,13 +364,13 @@ sub garbage_collect () { #{{{
 	foreach my $guid (values %guids) {
 		# any guid whose feed is gone should be removed
 		if (! exists $feeds{$guid->{feed}}) {
-			unlink pagefile($guid->{page})
+			unlink "$config{srcdir}/".htmlfn($guid->{page})
 				if exists $guid->{page};
 			delete $guids{$guid->{guid}};
 		}
 		# handle expired guids
 		elsif ($guid->{expired} && exists $guid->{page}) {
-			unlink pagefile($guid->{page});
+			unlink "$config{srcdir}/".htmlfn($guid->{page});
 			delete $guid->{page};
 			delete $guid->{md5};
 		}
@@ -570,7 +570,7 @@ sub add_page (@) { #{{{
 		}
 		my $c="";
 		while (exists $IkiWiki::pagecase{lc $page.$c} ||
-		       -e pagefile($page.$c)) {
+		       -e "$config{srcdir}/".htmlfn($page.$c)) {
 			$c++
 		}
 
@@ -581,7 +581,7 @@ sub add_page (@) { #{{{
 			$c="";
 			$page=$feed->{dir}."/item";
 			while (exists $IkiWiki::pagecase{lc $page.$c} ||
-			       -e pagefile($page.$c)) {
+			       -e "$config{srcdir}/".htmlfn($page.$c)) {
 				$c++
 			}
 		}
@@ -621,7 +621,7 @@ sub add_page (@) { #{{{
 	if (defined $mtime && $mtime <= time) {
 		# Set the mtime, this lets the build process get the right
 		# creation time on record for the new page.
-		utime $mtime, $mtime, pagefile($guid->{page});
+		utime $mtime, $mtime, "$config{srcdir}/".htmlfn($guid->{page});
 		# Store it in pagectime for expiry code to use also.
 		$IkiWiki::pagectime{$guid->{page}}=$mtime;
 	}
@@ -677,12 +677,6 @@ sub htmlabs ($$) { #{{{
 	$p->eof;
 
 	return $ret;
-} #}}}
-
-sub pagefile ($) { #{{{
-	my $page=shift;
-
-	return "$config{srcdir}/".htmlfn($page);
 } #}}}
 
 sub htmlfn ($) { #{{{

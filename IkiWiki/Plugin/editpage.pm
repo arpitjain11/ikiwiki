@@ -156,7 +156,7 @@ sub cgi_editpage ($$) { #{{{
 			$type=pagetype($pagesources{$from});
 		}
 		$type=$config{default_pageext} unless defined $type;
-		$file=$page.".".$type;
+		$file=newpagefile($page, $type);
 		if (! $form->submitted) {
 			$form->field(name => "rcsinfo", value => "", force => 1);
 		}
@@ -230,8 +230,8 @@ sub cgi_editpage ($$) { #{{{
 		# Previewing may have created files on disk.
 		# Keep a list of these to be deleted later.
 		my %previews = map { $_ => 1 } @{$wikistate{editpage}{previews}};
-		foreach my $file (@{$renderedfiles{$page}}) {
-			$previews{$file}=1 unless $wasrendered{$file};
+		foreach my $f (@{$renderedfiles{$page}}) {
+			$previews{$f}=1 unless $wasrendered{$f};
 		}
 		@{$wikistate{editpage}{previews}} = keys %previews;
 		$renderedfiles{$page}=[keys %wasrendered];

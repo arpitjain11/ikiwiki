@@ -21,7 +21,7 @@ sub getsetup () { #{{{
 
 sub genindex ($) { #{{{
 	my $page=shift;
-	my $file=$page.".".$config{default_pageext};
+	my $file=newpagefile($page, $config{default_pageext});
 	my $template=template("autoindex.tmpl");
 	$template->param(page => $page);
 	writefile($file, $config{srcdir}, $template->output);
