@@ -94,7 +94,8 @@ sub formbuilder_setup (@) { #{{{
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
+	if (defined $form->field("do") && ($form->field("do") eq "edit" ||
+	    $form->field("do") eq "create")) {
 		# Add attachment field, set type to multipart.
 		$form->enctype(&CGI::MULTIPART);
 		$form->field(name => 'attachment', type => 'file');
@@ -158,7 +159,7 @@ sub formbuilder (@) { #{{{
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	return if ! defined $form->field("do") || $form->field("do") ne "edit";
+	return if ! defined $form->field("do") || ($form->field("do") ne "edit" && $form->field("do") ne "create") ;
 
 	my $filename=$q->param('attachment');
 	if (defined $filename && length $filename &&
