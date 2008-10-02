@@ -1,3 +1,5 @@
-If I create a page whose title contains an apostrophe, then inlining that page produces nothing.  It looks like the inline plugin is failing to do the translation from apostrophe to "_39_" that other parts of the system do, so although one can make wikilinks to such pages and have them detected as existing (for instance, by the conditional plugin), inline looks in the wrong place and doesn't see the page.
+If I create a page whose title contains an apostrophe, then inlining that
+page produces nothing.  It looks like the inline plugin is failing to do
+the translation from apostrophe to `_39_` that other parts of the system do, so although one can make wikilinks to such pages and have them detected as existing (for instance, by the conditional plugin), inline looks in the wrong place and doesn't see the page.
 
 > I can't reproduce that (btw, an apostrophe would be `__39__`) --[[Joey]]
