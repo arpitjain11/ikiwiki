@@ -210,11 +210,12 @@ sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
+	if (defined $form->field("do") && ($form->field("do") eq "edit" ||
+	    $form->field("do") eq "create")) {
 		my $q=$params{cgi};
 		my $session=$params{session};
 
-		if ($form->submitted eq "Rename") {
+		if ($form->submitted eq "Rename" && $form->field("do") eq "edit") {
 			rename_start($q, $session, 0, $form->field("page"));
 		}
 		elsif ($form->submitted eq "Rename Attachment") {
@@ -237,9 +238,10 @@ sub formbuilder_setup (@) { #{{{
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
+	if (defined $form->field("do") && ($form->field("do") eq "edit" ||
+	    $form->field("do") eq "create")) {
 		# Rename button for the page, and also for attachments.
-		push @{$params{buttons}}, "Rename";
+		push @{$params{buttons}}, "Rename" if $form->field("do") eq "edit";
 		$form->tmpl_param("field-rename" => '<input name="_submit" type="submit" value="Rename Attachment" />');
 
 		if (defined $renamesummary) {
