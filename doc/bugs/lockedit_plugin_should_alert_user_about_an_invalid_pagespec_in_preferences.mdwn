@@ -1,3 +1,17 @@
 [[plugins/lockedit]] adds the form fields for a [[pagespec]] to preferences. This pagespec should be supplied "raw"; i.e., without quotes around it. Inexperienced users (such as [[myself|jondowland]]) may provide an invalid pagespec, such as one with quotes on it. This will be merrily accepted by the form, but will cause no locking to take place.
 
 Perhaps some validation should be performed on the pagespec and the form-submission return include "warning: this pagespec is invalid" or "warning: this pagespec does not match any existing pages" or similar.
+
+> The pagespec is no longer in the preferences and instead in the setup
+> file now. That makes warning about a problem with it harder.
+> 
+> Ikiwiki could try to detect this problem and warn at setup time to
+> stderr, I guess.
+> 
+> Main problem is I see little way to actually detect the problem you
+> described. A pagespec with quotes around it is valid. For example, the
+> pagespec `"foo or bar"` matches a page named `"foo` or a page named `bar"`.
+>
+> There are small classes of invalid pagespecs. For example, `(foo or bar`
+> is invalid due to having unbalanced parens, while `foo or and bar` 
+> has invalid syntax. It's possible to detect these, I guess ... --[[Joey]]
