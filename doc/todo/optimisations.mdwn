@@ -3,6 +3,13 @@ Ikiwiki has already been optimised a lot, however..
 * Look at splitting up CGI.pm. But note that too much splitting can slow
   perl down.
 
+  > It's split enough, or possibly more than enough, now. :-)
+
 * The backlinks calculation code is still O(N^2) on the number of pages.
   If backlinks info were stored in the index file, it would go down to
   constant time for iterative builds, though still N^2 for rebuilds.
+
+  > Seems to be O(Num Pages * Num Links in Page), or effectively O(N)
+  > pages for most wikis.
+
+[[done]]
