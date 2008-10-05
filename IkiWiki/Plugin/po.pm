@@ -1,11 +1,15 @@
 #!/usr/bin/perl
 # .po as a wiki page type
+# inspired by the GPL'd po4a-translate,
+# which is Copyright 2002, 2003, 2004 by Martin Quinson (mquinson#debian.org)
 package IkiWiki::Plugin::po;
 
 use warnings;
 use strict;
 use IkiWiki 2.00;
 use Encode;
+use Locale::Po4a::Chooser;
+use File::Temp;
 
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
@@ -49,22 +53,48 @@ sub targetpage (@) { #{{{
 	}
 } #}}}
 
-# We use filter to convert PO to HTML, since the other plugins might do harm to it.
+# We use filter to convert PO to the master page's type,
+# since other plugins should not work on PO files
 sub filter (@) { #{{{
 	my %params = @_;
+	my $page = $params{page};
 	my $content = decode_utf8(encode_utf8($params{content}));
 
-	if (defined $pagesources{$params{page}} && $pagesources{$params{page}} =~ /\.po$/) {
-		$content = "<pre>" . $content . "</pre>";
+	# decide if this is a PO file that should be converted into a translated document,
+	# and perform various sanity checks
+	if (! IkiWiki::PageSpec::match_istranslation($page, $page)) {
+		return $content;
 	}
 
+	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	my $file=srcfile(exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page});
+	my $masterfile = srcfile($pagesources{$masterpage});
+	my (@pos,@masters);
+	push @pos,$file;
+	push @masters,$masterfile;
+	my %options = (
+			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+			);
+	my $doc=Locale::Po4a::Chooser::new('text',%options);
+	$doc->process(
+		'po_in_name'	=> \@pos,
+		'file_in_name'	=> \@masters,
+		'file_in_charset'  => 'utf-8',
+		'file_out_charset' => 'utf-8',
+	) or error("[po/filter:$file]: failed to translate");
+	my ($percent,$hit,$queries) = $doc->stats();
+	my $tmpfh = File::Temp->new(TEMPLATE => "/tmp/ikiwiki-po-filter-out.XXXXXXXXXX");
+	my $tmpout = $tmpfh->filename;
+	$doc->write($tmpout) or error("[po/filter:$file] could not write $tmpout");
+	$content = readfile($tmpout) or error("[po/filter:$file] could not read $tmpout");
 	return $content;
 } #}}}
 
-# We need this to register the .po file extension
 sub htmlize (@) { #{{{
 	my %params=@_;
-	return $params{content};
+	my $content = $params{content};
+	# FIXME: run master page's type htmlize hook
+	return $content;
 } #}}}
 
 package IkiWiki::PageSpec;
