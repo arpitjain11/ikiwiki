@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 #DEBHELPER#
 
 if [ "$1" = upgrade ] && dpkg --compare-versions "$2" lt 1.2; then
