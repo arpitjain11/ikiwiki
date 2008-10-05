@@ -647,8 +647,19 @@ sub newpagefile ($$) { #{{{
 sub targetpage ($$) { #{{{
 	my $page=shift;
 	my $ext=shift;
-	
-	if (! $config{usedirs} || $page eq 'index') {
+
+	my $targetpage='';
+	run_hooks(targetpage => sub {
+		$targetpage=shift->(
+			page => $page,
+			ext => $ext,
+		);
+	});
+
+	if (defined $targetpage && (length($targetpage) > 0)) {
+		return $targetpage;
+	}
+	elsif (! $config{usedirs} || $page eq 'index') {
 		return $page.".".$ext;
 	}
 	else {
