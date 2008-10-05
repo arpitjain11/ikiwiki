@@ -24,12 +24,23 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 1, # format plugin
 		},
-		po_supported_languages => {
+		po_master_language => {
 			type => "string",
-			example => { 'fr' => { 'name' => 'Français' },
+			example => {
+				'code' => 'en',
+				'name' => 'English'
+			},
+			description => "master language (non-PO files)",
+			safe => 1,
+			rebuild => 1,
+		},
+		po_slave_languages => {
+			type => "string",
+			example => {'fr' => { 'name' => 'Français' },
 				    'es' => { 'name' => 'Castellano' },
 				    'de' => { 'name' => 'Deutsch' },
 			},
+			description => "slave languages (PO files)",
 			safe => 1,
 			rebuild => 1,
 		},
@@ -127,7 +138,7 @@ sub match_istranslation ($;@) { #{{{
 		return IkiWiki::FailReason->new("the master page does not exist");
 	}
 
-	if (! defined $IkiWiki::config{po_supported_languages}{$lang}) {
+	if (! defined $IkiWiki::config{po_slave_languages}{$lang}) {
 		return IkiWiki::FailReason->new("language $lang is not supported");
 	}
 
