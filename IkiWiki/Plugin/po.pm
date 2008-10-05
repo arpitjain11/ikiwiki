@@ -36,17 +36,16 @@ sub targetpage (@) { #{{{
         my $page=$params{page};
         my $ext=$params{ext};
 
-	my ($origpage, $lang) = ($page =~ /(.*)[.]([a-z]{2}$)/);
+	if (! IkiWiki::PageSpec::match_istranslation($page, $page)) {
+		return;
+	}
 
-	if (defined $origpage && defined $lang
-	    && (length($origpage) > 0) && (length($lang) > 0)
-	    && defined $config{po_supported_languages}{$lang}) {
-		if (! $config{usedirs} || $page eq 'index') {
-			return $origpage.".".$ext.".".$lang;
-		}
-		else {
-			return $origpage."/index.".$ext.".".$lang;
-		}
+	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	if (! $config{usedirs} || $page eq 'index') {
+		return $masterpage.".".$ext.".".$lang;
+	}
+	else {
+		return $masterpage."/index.".$ext.".".$lang;
 	}
 } #}}}
 
@@ -66,6 +65,40 @@ sub filter (@) { #{{{
 sub htmlize (@) { #{{{
 	my %params=@_;
 	return $params{content};
+} #}}}
+
+package IkiWiki::PageSpec;
+
+sub match_istranslation ($;@) { #{{{
+	my $page=shift;
+	my $wanted=shift;
+
+	my %params=@_;
+	my $file=exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page};
+	if (! defined $file) {
+		return IkiWiki::FailReason->new("no file specified");
+	}
+
+	if (! IkiWiki::pagetype($page) eq 'po') {
+		return IkiWiki::FailReason->new("is not a PO file");
+	}
+
+	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	if (! defined $masterpage || ! defined $lang
+	    || ! (length($masterpage) > 0) || ! (length($lang) > 0)) {
+		return IkiWiki::FailReason->new("is not named like a translation file");
+	}
+
+	if (! defined $IkiWiki::pagesources{$masterpage}) {
+		return IkiWiki::FailReason->new("the master page does not exist");
+	}
+
+	if (! defined $IkiWiki::config{po_supported_languages}{$lang}) {
+		return IkiWiki::FailReason->new("language $lang is not supported");
+	}
+
+	return IkiWiki::SuccessReason->new("page $page is a translation");
+
 } #}}}
 
 1
