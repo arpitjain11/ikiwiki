@@ -27,7 +27,9 @@ my @bundle=qw{
 
 sub import { #{{{
 	hook(type => "getsetup", id => "goodstuff", call => \&getsetup);
-	IkiWiki::loadplugin($_) foreach @bundle;
+	foreach my $plugin (@bundle) {
+		IkiWiki::loadplugin($plugin);
+	}
 } # }}}
 
 sub getsetup { #{{{
