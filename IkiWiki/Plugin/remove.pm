@@ -98,7 +98,9 @@ sub removal_confirm ($$@) { #{{{
 	my $attachment=shift;
 	my @pages=@_;
 
-	check_canremove($_, $q, $session) foreach @pages;
+	foreach my $page (@pages) {
+		check_canremove($page, $q, $session);
+	}
 
    	# Save current form state to allow returning to it later
 	# without losing any edits.
