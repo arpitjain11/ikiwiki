@@ -1,0 +1,168 @@
+[[!template id=plugin name=po core=0 author="[[intrigeri]]"]]
+[[!tag type/format]]
+
+This plugin adds support for multi-lingual wikis, translated with
+gettext, using [po4a|http://po4a.alioth.debian.org/].
+
+It depends on the Perl `Locale::Po4a::Po` library (`apt-get install po4a`).
+
+Introduction
+============
+
+A language is decided to be the "master" one, and any other supported
+language is a "slave" one. A page written in the "master" language is
+a "master" page, and is written in any supported format but PO.
+
+Example: `bla/page.mdwn` is a "master" Markdown page written in
+English; if `usedirs` is enabled, it is rendered as
+`bla/page/index.html`, else as `bla/page.html`.
+
+Translations of a "master" page into a "slave" language are called
+"slave" pages, and is a in gettext PO format. PO is thus promoted to
+the wiki page type status.
+
+Example: `bla/page.fr.po` is the PO "message catalog" used to
+translate `bla/page.mdwn` into French; if `usedirs` is enabled, it is
+rendered as `bla/page/index.html.fr`, else as `bla/page.html.fr`
+
+
+Configuration
+=============
+
+`po_master_language` is used to set the master language in
+`ikiwiki.setup`, such as:
+
+        po_master_language => { 'code' => 'en', 'name' => 'English' }
+
+`po_slave_languages` is used to set the list of supported "slave"
+languages, such as:
+
+        po_slave_languages => { 'fr' => { 'name' => 'Français', },
+                                'es' => { 'name' => 'Castellano', },
+                                'de' => { 'name' => 'Deutsch', },
+        },
+
+
+Server support
+==============
+
+Apache
+------
+
+Using `mod_negotiation` makes it really easy to have Apache serve the
+page in the client's preferred language, if available. This is the
+default Debian Apache configuration.
+
+When `usedirs` is enabled, one has to set `DirectoryIndex index` for
+the wiki context.
+
+Setting `DefaultLanguage LL` for the wiki context can be needed, to
+ensure `bla/page/index.html` is served as `Content-Language: LL`
+(replace `LL` with your default MIME language).
+
+lighttpd
+--------
+
+lighttpd unfortunately does not support content negotiation.
+
+
+TODO
+====
+
+Display available translations
+------------------------------
+
+The [[linguas|plugins/contrib/linguas]] plugin has some code that can
+be used as a basis to display the existing translations, and allow to
+navigate between them.
+
+View translation status
+-----------------------
+
+One should be able to view some freshness information about the
+translation status, either for a given page or for the whole wiki.
+
+This should not be too hard using gettext tools. If this is
+implemented as a
+[[HTML::Template|http://search.cpan.org/search?mode=dist&query=HTML%3A%3ATemplate]]
+loop, a page using it should depend on any "master" and "slave" pages
+whose status is being displayed.
+
+Decide which pages are translatable
+-----------------------------------
+
+The subset of ("master") pages supporting translation must be
+configurable:
+
+- a `[[!translatable ]]` directive, when put on a page, makes it
+  translatable
+- this [[ikiwiki/directive]] can be used with an optional `match=PageSpec`
+  argument, to render translatable a bunch of pages at once
+
+Automatic PO files update
+-------------------------
+
+Committing changes to a "master" page must:
+
+1. update the POT file, the PO files for the supported languages, and
+   put them under version control
+2. trigger a refresh of the corresponding HTML slave pages
+
+The former can be implemented as a `needsbuild` hook, which is the
+first type of hook to run after the list of files that need to be
+built is known: that is, at a time when we know which "master" page
+was modified, and thus, which POT/PO files have to be updated.
+
+The latter can be implemented by making any "slave" page depend on the
+corresponding "master" page. The `add_depends` function can achieved
+this, if used in a FIXME hook.
+
+UI consistency: rename "Edit" button on slave pages
+---------------------------------------------------
+
+It may be surprising to some, after having pressed *Edit* on a wiki
+page, to end up editing a strange PO file. The *Edit* button must then
+be be renamed to *Improve translation* on "slave" pages.
+
+Translation quality assurance
+-----------------------------
+
+Modifying a PO file via the CGI must only be allowed if the new
+version is a valid PO file. As a bonus, check that it provides a more
+complete translation than the existing one.
+
+A new `cansave` type of hook would be needed to implement this.
+
+Note: committing to the underlying repository is a way to bypass
+this check.
+
+Translating online
+------------------
+
+As PO is a wiki page type, we already have an online PO editor, that
+is ikiwiki's CGI.
+
+A message-by-message interface could be implemented later, providing
+a nice way to translate offline (without VCS access) is provided.
+
+Translating offline without VCS access
+--------------------------------------
+
+The following workflow should be made possible for translators without
+VCS access who need to edit the PO files in another editor than a web
+browser:
+
+- download the PO file for the page
+- use any PO editor to update the translation
+- upload the updated PO file
+
+A generic mechanism to download and upload a page's source is needed.
+It's only an alternative way to do Edit/edit/Save.
+
+### Short-term workflow
+
+- pretend to edit the PO file online
+- copy the PO file content from the textarea
+- cancel the edit
+- paste the content into a local file.
+
