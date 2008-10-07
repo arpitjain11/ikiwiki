@@ -35,6 +35,7 @@ sub import { #{{{
 	hook(type => "formbuilder", id => "skeleton", call => \&formbuilder);
 	hook(type => "savestate", id => "skeleton", call => \&savestate);
 	hook(type => "targetpage", id => "skeleton", call => \&targetpage);
+	hook(type => "urlpath", id => "skeleton", call => \&urlpath);
 } # }}}
 
 sub getopt () { #{{{
@@ -207,6 +208,10 @@ sub savestate () { #{{{
 
 sub targetpage () { #{{{
 	debug("skeleton plugin running in targetpage");
+} #}}}
+
+sub urlpath () { #{{{
+	debug("skeleton plugin running in urlpath");
 } #}}}
 
 1
