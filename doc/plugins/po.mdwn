@@ -15,7 +15,7 @@ a "master" page, and is written in any supported format but PO.
 
 Example: `bla/page.mdwn` is a "master" Markdown page written in
 English; if `usedirs` is enabled, it is rendered as
-`bla/page/index.html.en`, else as `bla/page.html.en`.
+`bla/page/index.en.html`, else as `bla/page.en.html`.
 
 Any translation of a "master" page into a "slave" language is called
 a "slave" page; it is written in the gettext PO format. PO is now
@@ -23,7 +23,7 @@ a page type supported by ikiwiki.
 
 Example: `bla/page.fr.po` is the PO "message catalog" used to
 translate `bla/page.mdwn` into French; if `usedirs` is enabled, it is
-rendered as `bla/page/index.html.fr`, else as `bla/page.html.fr`
+rendered as `bla/page/index.fr.html`, else as `bla/page.fr.html`
 
 
 Configuration
@@ -58,8 +58,8 @@ the wiki context.
 
 Setting `DefaultLanguage LL` (replace `LL` with your default MIME
 language) for the wiki context can be needed, to ensure
-`bla/page/index.html.en` is served as `Content-Language: LL`.
-**FIXME**: is it still needed with the new `.html.en` naming convention?
+`bla/page/index.en.html` is served as `Content-Language: LL`.
+**FIXME**: is it still needed with the new `.en.html` naming convention?
 
 lighttpd
 --------

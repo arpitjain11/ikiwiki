@@ -54,18 +54,18 @@ sub targetpage (@) { #{{{
 	if (IkiWiki::PageSpec::match_istranslation($page, $page)) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		if (! $config{usedirs} || $page eq 'index') {
-			return $masterpage . "." . $ext . "." . $lang;
+			return $masterpage . "." . $lang . "." . $ext;
 		}
 		else {
-			return $masterpage . "/index." . $ext . "." . $lang;
+			return $masterpage . "/index." . $lang . "." . $ext;
 		}
 	}
 	else {
 		if (! $config{usedirs} || $page eq 'index') {
-			return $page . "." . $ext . "." . $config{po_master_language}{code};
+			return $page . "." . $config{po_master_language}{code} . "." . $ext;
 		}
 		else {
-			return $page . "/index." . $ext . "." . $config{po_master_language}{code};
+			return $page . "/index." . $config{po_master_language}{code} . "." . $ext;
 		}
 	}
 } #}}}
