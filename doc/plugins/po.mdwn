@@ -15,7 +15,7 @@ a "master" page, and is written in any supported format but PO.
 
 Example: `bla/page.mdwn` is a "master" Markdown page written in
 English; if `usedirs` is enabled, it is rendered as
-`bla/page/index.html`, else as `bla/page.html`.
+`bla/page/index.html.en`, else as `bla/page.html.en`.
 
 Translations of a "master" page into a "slave" language are called
 "slave" pages, and is a in gettext PO format. PO is thus promoted to
@@ -56,9 +56,10 @@ default Debian Apache configuration.
 When `usedirs` is enabled, one has to set `DirectoryIndex index` for
 the wiki context.
 
-Setting `DefaultLanguage LL` for the wiki context can be needed, to
-ensure `bla/page/index.html` is served as `Content-Language: LL`
-(replace `LL` with your default MIME language).
+Setting `DefaultLanguage LL` (replace `LL` with your default MIME
+language) for the wiki context can be needed, to ensure
+`bla/page/index.html.en` is served as `Content-Language: LL`.
+**FIXME**: is it still needed with the new `.html.en` naming convention?
 
 lighttpd
 --------

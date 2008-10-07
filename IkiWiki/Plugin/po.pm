@@ -51,16 +51,22 @@ sub targetpage (@) { #{{{
         my $page=$params{page};
         my $ext=$params{ext};
 
-	if (! IkiWiki::PageSpec::match_istranslation($page, $page)) {
-		return;
-	}
-
-	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	if (! $config{usedirs} || $page eq 'index') {
-		return $masterpage.".".$ext.".".$lang;
+	if (IkiWiki::PageSpec::match_istranslation($page, $page)) {
+		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		if (! $config{usedirs} || $page eq 'index') {
+			return $masterpage . "." . $ext . "." . $lang;
+		}
+		else {
+			return $masterpage . "/index." . $ext . "." . $lang;
+		}
 	}
 	else {
-		return $masterpage."/index.".$ext.".".$lang;
+		if (! $config{usedirs} || $page eq 'index') {
+			return $page . "." . $ext . "." . $config{po_master_language}{code};
+		}
+		else {
+			return $page . "/index." . $ext . "." . $config{po_master_language}{code};
+		}
 	}
 } #}}}
 
