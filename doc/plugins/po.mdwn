@@ -2,14 +2,14 @@
 [[!tag type/format]]
 
 This plugin adds support for multi-lingual wikis, translated with
-gettext, using [po4a|http://po4a.alioth.debian.org/].
+gettext, using [po4a](http://po4a.alioth.debian.org/).
 
 It depends on the Perl `Locale::Po4a::Po` library (`apt-get install po4a`).
 
 Introduction
 ============
 
-A language is decided to be the "master" one, and any other supported
+A language is chosen as the "master" one, and any other supported
 language is a "slave" one. A page written in the "master" language is
 a "master" page, and is written in any supported format but PO.
 
@@ -17,9 +17,9 @@ Example: `bla/page.mdwn` is a "master" Markdown page written in
 English; if `usedirs` is enabled, it is rendered as
 `bla/page/index.html.en`, else as `bla/page.html.en`.
 
-Translations of a "master" page into a "slave" language are called
-"slave" pages, and is a in gettext PO format. PO is thus promoted to
-the wiki page type status.
+Any translation of a "master" page into a "slave" language is called
+a "slave" page; it is written in the gettext PO format. PO is now
+a page type supported by ikiwiki.
 
 Example: `bla/page.fr.po` is the PO "message catalog" used to
 translate `bla/page.mdwn` into French; if `usedirs` is enabled, it is
@@ -39,8 +39,8 @@ languages, such as:
 
         po_slave_languages => { 'fr' => { 'name' => 'Français', },
                                 'es' => { 'name' => 'Castellano', },
-                                'de' => { 'name' => 'Deutsch', },
-        },
+                                'de' => { 'name' => 'Deutsch', }
+        }
 
 
 Server support
@@ -66,6 +66,9 @@ lighttpd
 
 lighttpd unfortunately does not support content negotiation.
 
+**FIXME**: does `mod_magnet` provide the functionality needed to
+ emulate this?
+
 
 TODO
 ====
@@ -80,8 +83,8 @@ navigate between them.
 View translation status
 -----------------------
 
-One should be able to view some freshness information about the
-translation status, either for a given page or for the whole wiki.
+One should be able to view some information about the translation
+completeness, either for a given page or for the whole wiki.
 
 This should not be too hard using gettext tools. If this is
 implemented as a
@@ -92,38 +95,54 @@ whose status is being displayed.
 Decide which pages are translatable
 -----------------------------------
 
-The subset of ("master") pages supporting translation must be
+The subset of "master" pages subject to translation must be
 configurable:
 
 - a `[[!translatable ]]` directive, when put on a page, makes it
   translatable
-- this [[ikiwiki/directive]] can be used with an optional `match=PageSpec`
-  argument, to render translatable a bunch of pages at once
+- to set at once a bunch of pages as being translatable, use this
+  [[ikiwiki/directive]] with the `match=PageSpec` argument.
 
 Automatic PO files update
 -------------------------
 
 Committing changes to a "master" page must:
 
-1. update the POT file, the PO files for the supported languages, and
-   put them under version control
+1. update the POT file and the PO files for the supported languages,
+   before putting them under version control
 2. trigger a refresh of the corresponding HTML slave pages
 
-The former can be implemented as a `needsbuild` hook, which is the
-first type of hook to run after the list of files that need to be
-built is known: that is, at a time when we know which "master" page
-was modified, and thus, which POT/PO files have to be updated.
+The former is to be done at a time when:
+
+- we know which "master" page was modified, and thus, which POT/PO
+  files have to be updated: the `needsbuild` hook is the first one to
+  run that provides us with the necessary information
+- we can modify the list of pages needing a refresh; this is
+  `needsbuild` hook's job
 
 The latter can be implemented by making any "slave" page depend on the
-corresponding "master" page. The `add_depends` function can achieved
-this, if used in a FIXME hook.
+corresponding "master" page. The `add_depends` function can achieve
+this, if used in a **FIXME** hook.
 
 UI consistency: rename "Edit" button on slave pages
 ---------------------------------------------------
 
 It may be surprising to some, after having pressed *Edit* on a wiki
-page, to end up editing a strange PO file. The *Edit* button must then
-be be renamed to *Improve translation* on "slave" pages.
+page, to end up editing a strange looking PO file. The *Edit* button
+displayed on "slave" pages must therefore be renamed *Improve
+translation* .
+
+Pages selection depending on language
+-------------------------------------
+
+To improve user navigation in a multi-lingual wiki, site developers
+must be enabled to write:
+
+        \[[!map pages="dev/* and preferredlang()" feeds="no"]]
+
+        \[[!map pages="dev/* and currentlang()" feeds="no"]]
+
+Some new [[ikiwiki/pagespec]] functions have to be written.
 
 Translation quality assurance
 -----------------------------
@@ -143,8 +162,9 @@ Translating online
 As PO is a wiki page type, we already have an online PO editor, that
 is ikiwiki's CGI.
 
-A message-by-message interface could be implemented later, providing
-a nice way to translate offline (without VCS access) is provided.
+A message-by-message interface could also be implemented at some
+point; a nice way to do offline translation work (without VCS access)
+still has to be offered, though.
 
 Translating offline without VCS access
 --------------------------------------
@@ -153,17 +173,23 @@ The following workflow should be made possible for translators without
 VCS access who need to edit the PO files in another editor than a web
 browser:
 
-- download the PO file for the page
+- download the page's PO file
 - use any PO editor to update the translation
 - upload the updated PO file
 
-A generic mechanism to download and upload a page's source is needed.
-It's only an alternative way to do Edit/edit/Save.
+Implementation note: a generic mechanism to upload a page's source is
+needed: it's only an alternative way to allow saving a the modified
+page's source with the CGI.
 
 ### Short-term workflow
+
+A possible workaround is:
 
 - pretend to edit the PO file online
 - copy the PO file content from the textarea
 - cancel the edit
 - paste the content into a local file.
-
+- edit the local file in any PO editor
+- pretend to edit the PO file online
+- paste the modified local file's content into the edit textarea
+- save
