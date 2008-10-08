@@ -10,8 +10,12 @@ Introduction
 ============
 
 A language is chosen as the "master" one, and any other supported
-language is a "slave" one. A page written in the "master" language is
-a "master" page, and is written in any supported format but PO.
+language is a "slave" one.
+
+A page written in the "master" language is a "master" page, and is
+written in any supported format but PO. It does not have to be named
+a special way: migration from/to this plugin does not imply heavy
+renaming work.
 
 Example: `bla/page.mdwn` is a "master" Markdown page written in
 English; if `usedirs` is enabled, it is rendered as
