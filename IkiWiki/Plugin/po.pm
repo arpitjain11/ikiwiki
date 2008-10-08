@@ -52,7 +52,7 @@ sub targetpage (@) { #{{{
         my $page=$params{page};
         my $ext=$params{ext};
 
-	if (IkiWiki::PageSpec::match_istranslation($page, $page)) {
+	if (pagespec_match($page,"istranslation()")) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		if (! $config{usedirs} || $page eq 'index') {
 			return $masterpage . "." . $lang . "." . $ext;
@@ -80,7 +80,7 @@ sub filter (@) { #{{{
 
 	# decide if this is a PO file that should be converted into a translated document,
 	# and perform various sanity checks
-	if (! IkiWiki::PageSpec::match_istranslation($page, $page)) {
+	if (! pagespec_match($page, "istranslation()")) {
 		return $content;
 	}
 
