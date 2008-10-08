@@ -15,6 +15,7 @@ sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "filter", id => "po", call => \&filter);
+	hook(type => "preprocess", id => "translatable", call => \&preprocess_translatable);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 }
 
@@ -105,6 +106,17 @@ sub filter (@) { #{{{
 	$doc->write($tmpout) or error("[po/filter:$file] could not write $tmpout");
 	$content = readfile($tmpout) or error("[po/filter:$file] could not read $tmpout");
 	return $content;
+} #}}}
+
+sub preprocess_translatable (@) { #{{{
+	my %params = @_;
+	my $match = exists $params{match} ? $params{match} : $params{page};
+
+	$pagestate{$params{page}}{po_translatable}{$match}=1;
+
+	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));
+	return sprintf(gettext("pages %s set as translatable"), $params{match});
+
 } #}}}
 
 sub htmlize (@) { #{{{
