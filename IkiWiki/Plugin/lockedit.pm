@@ -37,7 +37,10 @@ sub canedit ($$) { #{{{
 	return undef if defined $user && IkiWiki::is_admin($user);
 
 	if (defined $config{locked_pages} && length $config{locked_pages} &&
-	    pagespec_match($page, $config{locked_pages})) {
+	    pagespec_match($page, $config{locked_pages},
+		    user => $session->param("name"),
+		    ip => $ENV{REMOTE_ADDR},
+	    )) {
 		if (! defined $user ||
 		    ! IkiWiki::userinfo_get($session->param("name"), "regdate")) {
 			return sub { IkiWiki::needsignin($cgi, $session) };
@@ -51,7 +54,10 @@ sub canedit ($$) { #{{{
 
 	# XXX deprecated, should be removed eventually
 	foreach my $admin (@{$config{adminuser}}) {
-		if (pagespec_match($page, IkiWiki::userinfo_get($admin, "locked_pages"))) {
+		if (pagespec_match($page, IkiWiki::userinfo_get($admin, "locked_pages"),
+		    user => $session->param("name"),
+		    ip => $ENV{REMOTE_ADDR},
+		)) {
 			if (! defined $user ||
 			    ! IkiWiki::userinfo_get($session->param("name"), "regdate")) {
 				return sub { IkiWiki::needsignin($cgi, $session) };

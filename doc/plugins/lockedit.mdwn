@@ -17,4 +17,8 @@ One handy thing to do if you're using ikiwiki for your blog is to lock
 posts in your blog, while still letting them comment via the Discussion
 pages.
 
-Wiki administrators can always edit locked pages.
+Wiki administrators can always edit locked pages. The [[ikiwiki/PageSpec]]
+can specify that some pages are not locked for some users. For example,
+"important_page and !user(joey)" locks `important_page` while still
+allowing joey to edit it, while "!*/Discussion and user(bob)" prevents bob
+from editing pages except for Discussion pages.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 17:12-0400\n"
+"POT-Creation-Date: 2008-10-08 17:34-0400\n"
 "PO-Revision-Date: 2008-10-07 12:44+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Las preferencias se han guardado."
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1153
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
 msgid "Error"
 msgstr "Error"
 
@@ -58,7 +58,8 @@ msgstr "Contenido añadido activado vía web."
 
 #: ../IkiWiki/Plugin/aggregate.pm:89
 msgid "Nothing to do right now, all feeds are up-to-date!"
-msgstr "¡ No hay nada que hacer, todas las fuentes de noticias están actualizadas !"
+msgstr ""
+"¡ No hay nada que hacer, todas las fuentes de noticias están actualizadas !"
 
 #: ../IkiWiki/Plugin/aggregate.pm:216
 #, perl-format
@@ -159,20 +160,20 @@ msgstr "ya existe una página de nombre %s"
 msgid "prohibited by allowed_attachments"
 msgstr "prohibido por la claúsula allowed_attachments"
 
-#: ../IkiWiki/Plugin/attachment.pm:188
+#: ../IkiWiki/Plugin/attachment.pm:189
 msgid "bad attachment filename"
 msgstr "nombre de archivo adjunto erróneo"
 
-#: ../IkiWiki/Plugin/attachment.pm:230
+#: ../IkiWiki/Plugin/attachment.pm:231
 msgid "attachment upload"
 msgstr "enviado el adjunto"
 
-#: ../IkiWiki/Plugin/autoindex.pm:103
+#: ../IkiWiki/Plugin/autoindex.pm:105
 msgid "automatic index generation"
 msgstr "creación de índice automática"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:326 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -303,20 +304,20 @@ msgstr "falta el parámetro pages"
 msgid "unknown sort type %s"
 msgstr "no conozco este tipo de ordenación %s"
 
-#: ../IkiWiki/Plugin/inline.pm:282
+#: ../IkiWiki/Plugin/inline.pm:285
 msgid "Add a new post titled:"
 msgstr "Añadir una entrada nueva titulada:"
 
-#: ../IkiWiki/Plugin/inline.pm:298
+#: ../IkiWiki/Plugin/inline.pm:301
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "la plantilla %s no existe "
 
-#: ../IkiWiki/Plugin/inline.pm:331 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:334 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:568
+#: ../IkiWiki/Plugin/inline.pm:571
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
@@ -324,13 +325,15 @@ msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna
 msgid "failed to run dot"
 msgstr "no he podido ejecutar el programa dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:46 ../IkiWiki/Plugin/lockedit.pm:60
+#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
+#, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr "La página %s está bloqueada y no puede modificarse"
 
 #: ../IkiWiki/Plugin/mdwn.pm:44
 msgid "multimarkdown is enabled, but Text::MultiMarkdown is not installed"
-msgstr "el modo multimarkdown está activo, pero no está instalado Text::MultiMarkdown"
+msgstr ""
+"el modo multimarkdown está activo, pero no está instalado Text::MultiMarkdown"
 
 #: ../IkiWiki/Plugin/mdwn.pm:67
 #, perl-format
@@ -393,7 +396,9 @@ msgstr "Error creando la cuenta de usuario."
 
 #: ../IkiWiki/Plugin/passwordauth.pm:257
 msgid "No email address, so cannot email password reset instructions."
-msgstr "No tengo dirección de correo electrónica, así que no puedo enviar instrucciones para reiniciar la contraseña"
+msgstr ""
+"No tengo dirección de correo electrónica, así que no puedo enviar "
+"instrucciones para reiniciar la contraseña"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:291
 msgid "Failed to send mail"
@@ -401,7 +406,9 @@ msgstr "No he podido enviar el mensaje de correo electrónico"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:293
 msgid "You have been mailed password reset instructions."
-msgstr "Las instrucciones para reinicar la contraseña se le han enviado por correo electrónico"
+msgstr ""
+"Las instrucciones para reinicar la contraseña se le han enviado por correo "
+"electrónico"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:328
 msgid "incorrect password reset url"
@@ -558,16 +565,16 @@ msgstr "%s no está en el directorio fuente por lo que no puede ser borrada"
 msgid "%s is not a file"
 msgstr "%s no es un archivo"
 
-#: ../IkiWiki/Plugin/remove.pm:112
+#: ../IkiWiki/Plugin/remove.pm:115
 #, perl-format
 msgid "confirm removal of %s"
 msgstr "confirme el borrado de %s"
 
-#: ../IkiWiki/Plugin/remove.pm:148
+#: ../IkiWiki/Plugin/remove.pm:152
 msgid "Please select the attachments to remove."
 msgstr "Por favor seleccione los adjuntos que serán borrados."
 
-#: ../IkiWiki/Plugin/remove.pm:188
+#: ../IkiWiki/Plugin/remove.pm:192
 msgid "removed"
 msgstr "borrado"
 
@@ -604,20 +611,20 @@ msgstr "cambiando de nombre %s"
 msgid "Also rename SubPages and attachments"
 msgstr "También cambia de nombre las subpáginas y los adjuntos"
 
-#: ../IkiWiki/Plugin/rename.pm:223
+#: ../IkiWiki/Plugin/rename.pm:224
 msgid "Only one attachment can be renamed at a time."
 msgstr "Únicamente un adjunto puede ser renombrado a la vez."
 
-#: ../IkiWiki/Plugin/rename.pm:226
+#: ../IkiWiki/Plugin/rename.pm:227
 msgid "Please select the attachment to rename."
 msgstr "Por favor, seleccione el adjunto al que cambiar el nombre."
 
-#: ../IkiWiki/Plugin/rename.pm:332
+#: ../IkiWiki/Plugin/rename.pm:338
 #, perl-format
 msgid "rename %s to %s"
 msgstr "%s cambia de nombre a %s"
 
-#: ../IkiWiki/Plugin/rename.pm:484
+#: ../IkiWiki/Plugin/rename.pm:490
 #, perl-format
 msgid "update for rename of %s to %s"
 msgstr "actualizado el cambio de nombre de %s a %s"
@@ -762,13 +769,17 @@ msgstr "complementos"
 #: ../IkiWiki/Plugin/websetup.pm:395
 msgid ""
 "The configuration changes shown below require a wiki rebuild to take effect."
-msgstr "Los cambios en la configuración que se muestran más abajo precisan una reconstrucción del wiki para tener efecto."
+msgstr ""
+"Los cambios en la configuración que se muestran más abajo precisan una "
+"reconstrucción del wiki para tener efecto."
 
 #: ../IkiWiki/Plugin/websetup.pm:399
 msgid ""
 "For the configuration changes shown below to fully take effect, you may need "
 "to rebuild the wiki."
-msgstr "Para que los cambios en la configuración mostrados más abajo tengan efecto, es posible que necesite reconstruir el wiki."
+msgstr ""
+"Para que los cambios en la configuración mostrados más abajo tengan efecto, "
+"es posible que necesite reconstruir el wiki."
 
 #: ../IkiWiki/Plugin/websetup.pm:433
 #, perl-format
@@ -780,7 +791,9 @@ msgstr "<p class=\"error\">Error: %s finaliza con código distinto de cero (%s)"
 msgid ""
 "symlink found in srcdir path (%s) -- set allow_symlinks_before_srcdir to "
 "allow this"
-msgstr "encontrado un enlace simbólico en la ruta del directorio fuente (%s) -- use la directiva allow_symlinks_before_srcdir para permitir la acción"
+msgstr ""
+"encontrado un enlace simbólico en la ruta del directorio fuente (%s) -- use "
+"la directiva allow_symlinks_before_srcdir para permitir la acción"
 
 #: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:302
 #, perl-format
@@ -926,12 +939,14 @@ msgstr "no puedo emplear varios complementos rcs"
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr "no he podido cargar el complemento externo %s necesario para %s"
 
-#: ../IkiWiki.pm:1136
+#: ../IkiWiki.pm:1149
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
-msgstr "se ha detectado en la página %s un bucle de preprocesado en la iteración número %i"
+msgstr ""
+"se ha detectado en la página %s un bucle de preprocesado en la iteración "
+"número %i"
 
-#: ../IkiWiki.pm:1645
+#: ../IkiWiki.pm:1658
 msgid "yes"
 msgstr "si"
 
@@ -949,7 +964,9 @@ msgstr "¿ Qué sistema de control de versiones empleará ?"
 
 #: ../auto.setup:20
 msgid "What wiki user (or openid) will be wiki admin?"
-msgstr "¿ Qué usuario del wiki (ó identificador openid) será el administrador del wiki ? "
+msgstr ""
+"¿ Qué usuario del wiki (ó identificador openid) será el administrador del "
+"wiki ? "
 
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"

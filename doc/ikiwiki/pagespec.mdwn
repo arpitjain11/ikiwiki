@@ -22,8 +22,7 @@ match all pages except for Discussion pages and the SandBox:
 
 	* and !SandBox and !*/Discussion
 
-Some more elaborate limits can be added to what matches using any of these
-functions:
+Some more elaborate limits can be added to what matches using these functions:
 
 * "`link(page)`" - match only pages that link to a given page (or glob)
 * "`backlink(page)`" - match only pages that a given page links to
@@ -41,6 +40,13 @@ functions:
 * "`title(glob)`", "`author(glob)`", "`authorurl(glob)`",
   "`license(glob)`", "`copyright(glob)`" - match pages that have the given
   metadata, matching the specified glob.
+* "`user(username)`" - tests whether a modification is being made by a
+  user with the specified username. If openid is enabled, an openid can also
+  be put here.
+* "`admin()`" - tests whether a modification is being made by one of the
+  wiki admins.
+* "`ip(address)`" - tests whether a modification is being made from the
+  specified IP address.
 
 For example, to match all pages in a blog that link to the page about music
 and were written in 2005:

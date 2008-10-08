@@ -44,7 +44,8 @@ Also see [[!debbug 443346]].
 >> Yes, writing per-user commit ACLs has become somewhat easier with recent
 >> features. Breaking `match_user` out of attachment, and making the
 >> lockedit plugin pass`user` and `ip` params when it calls `pagespec_match`
->> would be sufficient. --[[Joey]]
+>> would be sufficient. And [[done]], configurable via
+>> [[plugin/lockedit]]'s `locked_pages`. --[[Joey]]
 
 I am considering giving this a try, implementing it as a module.
 Here is how I see it:
