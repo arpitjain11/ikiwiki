@@ -4,9 +4,10 @@ An overview of some of ikiwiki's features:
 ## Uses a real RCS
 
 Rather than implement its own system for storing page histories etc,
-ikiwiki uses a real Revision Control System. This isn't (just) because we're
-lazy, it's because a real RCS is a good thing to have, and there are
-advantages to using one that are not possible with a standard wiki.
+ikiwiki uses a real [[Revision_Control_System|rcs]]. This isn't (just)
+because we're lazy, it's because a real RCS is a good thing to have, and
+there are advantages to using one that are not possible with a standard
+wiki.
 
 Instead of editing pages in a stupid web form, you can use vim and commit
 changes via [[Subversion|rcs/svn]], [[rcs/git]], or any of a number of other
@@ -72,12 +73,11 @@ can change the look and layout of all pages in any way you would like.
 
 ## [[Plugins]]
 
-Plugins can be used to add additional features to ikiwiki. The interface
-is quite flexible, allowing plugins to implement additional markup
-languages, register [[directives|ikiwiki/directive]], hook into [[CGI]] mode,
-and more. Most of ikiwiki's features are actually provided by plugins.
-Ikiwiki's backend RCS support is also pluggable, so support for new
-revision control systems can be added to ikiwiki.
+Plugins can be used to add additional features to ikiwiki. The interface is
+quite flexible, allowing plugins to implement additional markup languages,
+register [[directives|ikiwiki/directive]], provide a [[RCS]] backend, hook
+into [[CGI]] mode, and much more. Most of ikiwiki's features are actually
+provided by plugins.
 
 The standard language for ikiwiki plugins is perl, but ikiwiki also supports
 [[plugins/write/external]] plugins: Standalone programs that can be written in
@@ -146,7 +146,7 @@ Thanks to subpages, every page can easily and automatically have a
 
 ### Edit controls
 
-Wiki admins can lock_pages so that only other admins can edit them. Or a
+Wiki admins can lock pages so that only other admins can edit them. Or a
 wiki can be set up to allow anyone to edit Discussion pages, but only
 registered users to edit other pages. These are just two possibilities,
 since page edit controls can be changed via plugins.
