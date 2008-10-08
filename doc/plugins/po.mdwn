@@ -73,6 +73,29 @@ lighttpd unfortunately does not support content negotiation.
 TODO
 ====
 
+Links
+-----
+
+Choice between two behaviors must be possible in `ikiwiki.setup`;
+a `po_link_to_current_language` option must allow switching
+between them.
+
+If `po_link_to_current_language` is disabled, `[[page]]` links to the
+negotiated preferred language, i.e.:
+
+- `usedirs` enabled: `bla/page/`
+- `usedirs` disabled: `bla/page`
+
+This obviously does not work in case Content Negotiation is not
+supported by the web server, hence one can enable
+`po_link_to_current_language` to make `[[page]]` link to the current
+page's language, i.e.:
+
+- `usedirs` enabled: `bla/page/index.LL.html`
+- `usedirs` disabled: `bla/page.LL.html`
+
+**FIXME**: should `po_link_to_current_language` be enabled by default?
+
 Display available translations
 ------------------------------
 
@@ -138,11 +161,7 @@ Pages selection depending on language
 To improve user navigation in a multi-lingual wiki, site developers
 must be enabled to write:
 
-        \[[!map pages="dev/* and preferredlang()" feeds="no"]]
-
-        \[[!map pages="dev/* and currentlang()" feeds="no"]]
-
-Some new [[ikiwiki/pagespec]] functions have to be written.
+        \[[!map pages="dev/* and lang(LL)" feeds="no"]]
 
 Translation quality assurance
 -----------------------------
