@@ -34,7 +34,7 @@ sub preprocess (@) { #{{{
 		next if grep { 
 			length $_ &&
 			($_ !~ /\/\Q$discussion\E$/i || ! $config{discussion}) &&
-			bestlink($page, $_) !~ /^($page|)$/ 
+			bestlink($page, $_) !~ /^(\Q$page\E|)$/ 
 		} @{$links{$page}};
 		push @orphans, $page;
 	}
