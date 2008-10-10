@@ -98,7 +98,8 @@ negotiated preferred language, *i.e.* `foo/page/`.
 (In)compatibility notes:
 
 - `po_link_to => negotiated` provides no useful behavior if `usedirs`
-  is disabled: 
+  is disabled; this option combination is neither implemented nor
+  allowed
 - `po_link_to => negotiated` provides no useful behavior if the web
   server does not support Content Negotiation
 

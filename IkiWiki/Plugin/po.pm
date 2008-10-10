@@ -47,10 +47,10 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-		po_link_to_current_language => {
-			type => "boolean",
-			example => 1,
-			description => "internal links point to pages in the current language (useful if Content Negotiation is not supported)",
+		po_link_to => {
+			type => "string",
+			example => "current",
+			description => "internal linking behavior (default/current/negotiated)",
 			safe => 1,
 			rebuild => 1,
 		},
@@ -62,9 +62,12 @@ sub checkconfig () { #{{{
 			error(sprintf(gettext("Must specify %s"), $field));
 		}
 	}
-	if (! exists $config{po_link_to_current_language} ||
-	    ! defined $config{po_link_to_current_language}) {
-	    $config{po_link_to_current_language}=0;
+	if (! exists $config{po_link_to} ||
+	    ! defined $config{po_link_to}) {
+	    $config{po_link_to}="default";
+	}
+	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
+		error(gettext("po_link_to=negotiated requires usedirs to be set"));
 	}
 } #}}}
 
@@ -95,7 +98,7 @@ sub targetpage (@) { #{{{
 sub tweakurlpath ($) { #{{{
 	my %params = @_;
 	my $url=$params{url};
-	if (! $config{po_link_to_current_language} && $config{usedirs}) {
+	if ($config{po_link_to} eq "negotiated") {
 		$url =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
 	}
 	return $url;
