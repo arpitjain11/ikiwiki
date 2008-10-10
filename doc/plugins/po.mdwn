@@ -46,6 +46,16 @@ languages, such as:
                                 'de' => { 'name' => 'Deutsch', }
         }
 
+Decide which pages are translatable
+-----------------------------------
+
+The subset of "master" pages subject to translation is configurable:
+
+- a `[[!translatable ]]` directive, when put on a page, makes it
+  translatable
+- to set at once a bunch of pages as being translatable, use this
+  [[ikiwiki/directive]] with the `match=PageSpec` argument.
+
 Internal links
 --------------
 
@@ -130,17 +140,6 @@ implemented as a
 [[HTML::Template|http://search.cpan.org/search?mode=dist&query=HTML%3A%3ATemplate]]
 loop, a page using it should depend on any "master" and "slave" pages
 whose status is being displayed.
-
-Decide which pages are translatable
------------------------------------
-
-The subset of "master" pages subject to translation must be
-configurable:
-
-- a `[[!translatable ]]` directive, when put on a page, makes it
-  translatable
-- to set at once a bunch of pages as being translatable, use this
-  [[ikiwiki/directive]] with the `match=PageSpec` argument.
 
 Automatic PO files update
 -------------------------
