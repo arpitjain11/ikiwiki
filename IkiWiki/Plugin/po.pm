@@ -14,6 +14,7 @@ use File::Temp;
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
+	hook(type => "needsbuild", id => "po", call => \&needsbuild);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
@@ -69,6 +70,22 @@ sub checkconfig () { #{{{
 	}
 	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
+	}
+} #}}}
+
+sub needsbuild (@) { #{{{
+	my $needsbuild=shift;
+
+	foreach my $page (keys %pagestate) {
+		if (exists $pagestate{$page}{po}{translatable}) {
+			if (exists $pagesources{$page} && 
+			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
+				# remove state, it will be re-added
+				# if the preprocessor directive is still
+				# there during the rebuild
+				delete $pagestate{$page}{po}{translatable};
+			}
+		}
 	}
 } #}}}
 
