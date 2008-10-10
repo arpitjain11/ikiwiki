@@ -46,37 +46,6 @@ languages, such as:
                                 'de' => { 'name' => 'Deutsch', }
         }
 
-
-Server support
-==============
-
-Apache
-------
-
-Using `mod_negotiation` makes it really easy to have Apache serve the
-page in the client's preferred language, if available. This is the
-default Debian Apache configuration.
-
-When `usedirs` is enabled, one has to set `DirectoryIndex index` for
-the wiki context.
-
-Setting `DefaultLanguage LL` (replace `LL` with your default MIME
-language) for the wiki context can be needed, to ensure
-`bla/page/index.en.html` is served as `Content-Language: LL`.
-**FIXME**: is it still needed with the new `.en.html` naming convention?
-
-lighttpd
---------
-
-lighttpd unfortunately does not support content negotiation.
-
-**FIXME**: does `mod_magnet` provide the functionality needed to
- emulate this?
-
-
-TODO
-====
-
 Internal links
 --------------
 
@@ -111,6 +80,37 @@ page's language, *i.e.*:
 
 - `foo/page/index.LL.html` if `usedirs` is enabled
 - `foo/page.LL.html` if `usedirs` is disabled
+
+
+Server support
+==============
+
+Apache
+------
+
+Using `mod_negotiation` makes it really easy to have Apache serve the
+page in the client's preferred language, if available. This is the
+default Debian Apache configuration.
+
+When `usedirs` is enabled, one has to set `DirectoryIndex index` for
+the wiki context.
+
+Setting `DefaultLanguage LL` (replace `LL` with your default MIME
+language) for the wiki context can be needed, to ensure
+`bla/page/index.en.html` is served as `Content-Language: LL`.
+**FIXME**: is it still needed with the new `.en.html` naming convention?
+
+lighttpd
+--------
+
+lighttpd unfortunately does not support content negotiation.
+
+**FIXME**: does `mod_magnet` provide the functionality needed to
+ emulate this?
+
+
+TODO
+====
 
 Display available translations
 ------------------------------

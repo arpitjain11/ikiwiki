@@ -16,6 +16,7 @@ sub import {
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
+	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "preprocess", id => "translatable", call => \&preprocess_translatable);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
@@ -103,6 +104,19 @@ sub tweakurlpath ($) { #{{{
 		$url =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
 	}
 	return $url;
+} #}}}
+
+sub tweakbestlink ($$) { #{{{
+	my %params = @_;
+	my $page=$params{page};
+	my $link=$params{link};
+	if ($config{po_link_to} eq "current" && pagespec_match($link, "istranslatable()")) {
+		if (pagespec_match($page, "istranslation()")) {
+			my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+			return $link . "." . $curlang;
+		}
+	}
+	return $link;
 } #}}}
 
 # We use filter to convert PO to the master page's type,
