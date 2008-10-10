@@ -122,6 +122,15 @@ lighttpd unfortunately does not support content negotiation.
 TODO
 ====
 
+Optimization
+------------
+
+Move `match_istranslation` and `match_istranslatable` code into helper
+functions, and pre-compute what can be early in the build process:
+
+- the list of translatable (master) pages
+- for every translatable page, the list of slave pages
+
 Display available translations
 ------------------------------
 
