@@ -160,7 +160,7 @@ sub preprocess_translatable (@) { #{{{
 	my %params = @_;
 	my $match = exists $params{match} ? $params{match} : $params{page};
 
-	$pagestate{$params{page}}{po_translatable}{$match}=1;
+	$pagestate{$params{page}}{po}{translatable}{$match}=1;
 
 	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));
 	return sprintf(gettext("pages %s set as translatable"), $params{match});
@@ -232,8 +232,8 @@ sub match_istranslatable ($;@) { #{{{
 	}
 
 	foreach my $registering_page (keys %pagestate) {
-		if (exists $pagestate{$registering_page}{po_translatable}) {
-			foreach my $pagespec (sort keys %{$pagestate{$registering_page}{po_translatable}}) {
+		if (exists $pagestate{$registering_page}{po}{translatable}) {
+			foreach my $pagespec (sort keys %{$pagestate{$registering_page}{po}{translatable}}) {
 				if (pagespec_match($page, $pagespec, location => $registering_page)) {
 					return IkiWiki::SuccessReason->new("is set as translatable on $registering_page");
 				}
