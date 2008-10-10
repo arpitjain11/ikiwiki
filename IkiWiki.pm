@@ -938,7 +938,7 @@ sub beautify_urlpath ($) { #{{{
 		$url =~ s!/index.$config{htmlext}$!/!;
 	}
 
-	run_hooks(urlpath => sub {
+	run_hooks(tweakurlpath => sub {
 		$url=shift->(url => $url);
 	});
 
