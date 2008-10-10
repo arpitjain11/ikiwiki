@@ -15,6 +15,7 @@ sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
+	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "preprocess", id => "translatable", call => \&preprocess_translatable);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
@@ -89,6 +90,15 @@ sub targetpage (@) { #{{{
 			return $page . "/index." . $config{po_master_language}{code} . "." . $ext;
 		}
 	}
+} #}}}
+
+sub tweakurlpath ($) { #{{{
+	my %params = @_;
+	my $url=$params{url};
+	if (! $config{po_link_to_current_language} && $config{usedirs}) {
+		$url =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
+	}
+	return $url;
 } #}}}
 
 # We use filter to convert PO to the master page's type,
