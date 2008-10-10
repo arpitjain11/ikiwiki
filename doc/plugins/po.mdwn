@@ -77,28 +77,39 @@ lighttpd unfortunately does not support content negotiation.
 TODO
 ====
 
-Links
------
+Internal links
+--------------
 
-Choice between two behaviors must be possible in `ikiwiki.setup`;
-a `po_link_to_current_language` option must allow switching
-between them.
+One can use the `po_link_to_` option in `ikiwiki.setup` to choose how
+internal links should be generated, depending on web server features
+and site-specific preferences.
 
-If `po_link_to_current_language` is disabled, `[[page]]` links to the
-negotiated preferred language, i.e.:
+### Default linking behavior
 
-- `usedirs` enabled: `bla/page/`
-- `usedirs` disabled: `bla/page`
+If `po_link_to` is unset, or set to `default`, ikiwiki's default
+linking behavior is preserved: `[[page]]` links to the master
+language's page.
 
-This obviously does not work in case Content Negotiation is not
-supported by the web server, hence one can enable
-`po_link_to_current_language` to make `[[page]]` link to the current
-page's language, i.e.:
+### Link to negotiated language
 
-- `usedirs` enabled: `bla/page/index.LL.html`
-- `usedirs` disabled: `bla/page.LL.html`
+If `po_link_to` is set to `negotiated`, `[[page]]` links to the
+negotiated preferred language, *i.e.* `foo/page/`.
 
-**FIXME**: should `po_link_to_current_language` be enabled by default?
+(In)compatibility notes:
+
+- `po_link_to => negotiated` provides no useful behavior if `usedirs`
+  is disabled: 
+- `po_link_to => negotiated` provides no useful behavior if the web
+  server does not support Content Negotiation
+
+### Link to current language
+
+If `po_link_to` is set to `current` and the destination page is either
+a translatable page or a translation, `[[page]]` links to the current
+page's language, *i.e.*:
+
+- `foo/page/index.LL.html` if `usedirs` is enabled
+- `foo/page.LL.html` if `usedirs` is disabled
 
 Display available translations
 ------------------------------
