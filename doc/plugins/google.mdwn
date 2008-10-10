@@ -1,0 +1,12 @@
+[[!template id=plugin name=google author="Peter Simons"]]
+[[!tag type/web]]
+
+This plugin adds a search form to the wiki, using google's site search.
+
+Google is asked to search for pages in the domain specified in the wiki's
+`url` configuration parameter. Results will depend on whether google has
+indexed the site, and how recently. Also, if the same domain has other
+content, outside the wiki's content, it will be searched as well.
+
+The [[search]] plugin offers full text search of only the wiki, but
+requires that a search engine be installed on your site.
