@@ -14,12 +14,11 @@ use File::Temp;
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
-	hook(type => "needsbuild", id => "po", call => \&needsbuild);
+	hook(type => "scan", id => "po", call => \&scan);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
 	hook(type => "filter", id => "po", call => \&filter);
-	hook(type => "preprocess", id => "translatable", call => \&preprocess_translatable);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 }
 
@@ -49,6 +48,14 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
+		po_translatable_pages => {
+			type => "pagespec",
+			example => "!*/Discussion",
+			description => "PageSpec controlling which pages are translatable",
+			link => "ikiwiki/PageSpec",
+			safe => 1,
+			rebuild => 1,
+		},
 		po_link_to => {
 			type => "string",
 			example => "current",
@@ -68,25 +75,21 @@ sub checkconfig () { #{{{
 	    ! defined $config{po_link_to}) {
 	    $config{po_link_to}="default";
 	}
+	if (! exists $config{po_translatable_pages} ||
+	    ! defined $config{po_translatable_pages}) {
+	    $config{po_translatable_pages}="";
+	}
 	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
 	}
 } #}}}
 
-sub needsbuild (@) { #{{{
-	my $needsbuild=shift;
+sub scan (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
 
-	foreach my $page (keys %pagestate) {
-		if (exists $pagestate{$page}{po}{translatable}) {
-			if (exists $pagesources{$page} && 
-			    grep { $_ eq $pagesources{$page} } @$needsbuild) {
-				# remove state, it will be re-added
-				# if the preprocessor directive is still
-				# there during the rebuild
-				delete $pagestate{$page}{po}{translatable};
-			}
-		}
-	}
+	# FIXME: cache (or memoize) the list of translatable/translation pages,
+	# and/or istranslation/istranslated results
 } #}}}
 
 sub targetpage (@) { #{{{
@@ -94,7 +97,7 @@ sub targetpage (@) { #{{{
         my $page=$params{page};
         my $ext=$params{ext};
 
-	if (pagespec_match($page,"istranslation()")) {
+	if (istranslation($page)) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		if (! $config{usedirs} || $page eq 'index') {
 			return $masterpage . "." . $lang . "." . $ext;
@@ -103,7 +106,7 @@ sub targetpage (@) { #{{{
 			return $masterpage . "/index." . $lang . "." . $ext;
 		}
 	}
-	elsif (pagespec_match($page,"istranslatable()")) {
+	elsif (istranslatable($page)) {
 		if (! $config{usedirs} || $page eq 'index') {
 			return $page . "." . $config{po_master_language}{code} . "." . $ext;
 		}
@@ -127,11 +130,11 @@ sub tweakbestlink ($$) { #{{{
 	my %params = @_;
 	my $page=$params{page};
 	my $link=$params{link};
-	if ($config{po_link_to} eq "current" && pagespec_match($link, "istranslatable()")) {
-		if (pagespec_match($page, "istranslation()")) {
-			my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-			return $link . "." . $curlang;
-		}
+	if ($config{po_link_to} eq "current"
+	    && istranslatable($link)
+	    && istranslation($page)) {
+		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		return $link . "." . $curlang;
 	}
 	return $link;
 } #}}}
@@ -145,7 +148,7 @@ sub filter (@) { #{{{
 
 	# decide if this is a PO file that should be converted into a translated document,
 	# and perform various sanity checks
-	if (! pagespec_match($page, "istranslation()")) {
+	if (! istranslation($page)) {
 		return $content;
 	}
 
@@ -173,17 +176,6 @@ sub filter (@) { #{{{
 	return $content;
 } #}}}
 
-sub preprocess_translatable (@) { #{{{
-	my %params = @_;
-	my $match = exists $params{match} ? $params{match} : $params{page};
-
-	$pagestate{$params{page}}{po}{translatable}{$match}=1;
-
-	return "" if ($params{silent} && IkiWiki::yesno($params{silent}));
-	return sprintf(gettext("pages %s set as translatable"), $params{match});
-
-} #}}}
-
 sub htmlize (@) { #{{{
 	my %params=@_;
 	my $page = $params{page};
@@ -195,6 +187,44 @@ sub htmlize (@) { #{{{
 	return IkiWiki::htmlize($page, $page, pagetype($masterfile), $content);
 } #}}}
 
+sub istranslatable ($) { #{{{
+	my $page=shift;
+	my $file=$pagesources{$page};
+
+	if (! defined $file
+	    || (defined pagetype($file) && pagetype($file) eq 'po')
+	    || $file =~ /\.pot$/) {
+		return 0;
+	}
+	return pagespec_match($page, $config{po_translatable_pages});
+} #}}}
+
+sub istranslation ($) { #{{{
+	my $page=shift;
+	my $file=$pagesources{$page};
+	if (! defined $file) {
+		return IkiWiki::FailReason->new("no file specified");
+	}
+
+	if (! defined $file
+	    || ! defined pagetype($file)
+ 	    || ! pagetype($file) eq 'po'
+	    || $file =~ /\.pot$/) {
+		return 0;
+	}
+
+	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	if (! defined $masterpage || ! defined $lang
+	    || ! (length($masterpage) > 0) || ! (length($lang) > 0)
+	    || ! defined $pagesources{$masterpage}
+	    || ! defined $config{po_slave_languages}{$lang}) {
+		return 0;
+	}
+
+	return istranslatable($masterpage);
+} #}}}
+
+
 package IkiWiki::PageSpec;
 use warnings;
 use strict;
@@ -202,63 +232,22 @@ use IkiWiki 2.00;
 
 sub match_istranslation ($;@) { #{{{
 	my $page=shift;
-	my $wanted=shift;
-
-	my %params=@_;
-	my $file=exists $params{file} ? $params{file} : $pagesources{$page};
-	if (! defined $file) {
-		return IkiWiki::FailReason->new("no file specified");
+	if (IkiWiki::Plugins::po::istranslation($page)) {
+		return IkiWiki::SuccessReason->new("is a translation page");
 	}
-
-	if (! defined pagetype($file) || ! pagetype($file) eq 'po') {
-		return IkiWiki::FailReason->new("is not a PO file");
+	else {
+		return IkiWiki::FailReason->new("is not a translation page");
 	}
-
-	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	if (! defined $masterpage || ! defined $lang
-	    || ! (length($masterpage) > 0) || ! (length($lang) > 0)) {
-		return IkiWiki::FailReason->new("is not named like a translation file");
-	}
-
-	if (! defined $pagesources{$masterpage}) {
-		return IkiWiki::FailReason->new("the master page does not exist");
-	}
-
-	if (! defined $config{po_slave_languages}{$lang}) {
-		return IkiWiki::FailReason->new("language $lang is not supported");
-	}
-
-	return IkiWiki::SuccessReason->new("page $page is a translation");
 } #}}}
 
 sub match_istranslatable ($;@) { #{{{
 	my $page=shift;
-	my $wanted=shift;
-
-	my %params=@_;
-	my $file=exists $params{file} ? $params{file} : $pagesources{$page};
-	if (! defined $file) {
-		return IkiWiki::FailReason->new("no file specified");
+	if (IkiWiki::Plugins::po::istranslatable($page)) {
+		return IkiWiki::SuccessReason->new("is set as translatable in po_translatable_pages");
 	}
-
-	if (defined pagetype($file) && pagetype($file) eq 'po') {
-		return IkiWiki::FailReason->new("is a PO file");
+	else {
+		return IkiWiki::FailReason->new("is not set as translatable in po_translatable_pages");
 	}
-	if ($file =~ /\.pot$/) {
-		return IkiWiki::FailReason->new("is a POT file");
-	}
-
-	foreach my $registering_page (keys %pagestate) {
-		if (exists $pagestate{$registering_page}{po}{translatable}) {
-			foreach my $pagespec (sort keys %{$pagestate{$registering_page}{po}{translatable}}) {
-				if (pagespec_match($page, $pagespec, location => $registering_page)) {
-					return IkiWiki::SuccessReason->new("is set as translatable on $registering_page");
-				}
-			}
-		}
-	}
-
-	return IkiWiki::FailReason->new("is not set as translatable");
 } #}}}
 
 1
