@@ -807,6 +807,7 @@ sub will_render ($$;$) { #{{{
 sub bestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
+	my $res=undef;
 	
 	my $cwd=$page;
 	if ($link=~s/^\/+//) {
@@ -821,25 +822,35 @@ sub bestlink ($$) { #{{{
 		$l.=$link;
 
 		if (exists $links{$l}) {
-			return $l;
+			$res=$l;
 		}
 		elsif (exists $pagecase{lc $l}) {
-			return $pagecase{lc $l};
+			$res=$pagecase{lc $l};
 		}
-	} while $cwd=~s{/?[^/]+$}{};
+	} while ($cwd=~s{/?[^/]+$}{} && ! defined $res);
 
-	if (length $config{userdir}) {
+	if (! defined $res && length $config{userdir}) {
 		my $l = "$config{userdir}/".lc($link);
 		if (exists $links{$l}) {
-			return $l;
+			$res=$l;
 		}
 		elsif (exists $pagecase{lc $l}) {
-			return $pagecase{lc $l};
+			$res=$pagecase{lc $l};
 		}
 	}
 
-	#print STDERR "warning: page $page, broken link: $link\n";
-	return "";
+	if (defined $res) {
+		run_hooks(tweakbestlink => sub {
+			$res=shift->(
+				page => $page,
+				link => $res);
+		});
+		return $res;
+	}
+	else {
+		#print STDERR "warning: page $page, broken link: $link\n";
+		return "";
+	}
 } #}}}
 
 sub isinlinableimage ($) { #{{{

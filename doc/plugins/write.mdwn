@@ -447,6 +447,17 @@ ikiwiki; it is run just after ikiwiki has removed the trailing
 
 It should return the modified url.
 
+### tweakbestlink
+
+	hook(type => "tweakbestlink", id => "foo", call => \&tweakbestlink);
+
+This hook can be used to modify the page returned by `bestlink`. It is
+passed named parameters `page` and `link`. These are, respectively,
+the page where the link will appear and the link ikiwiki would choose
+as the best one, if no `tweakbestlink` hook was in effect.
+
+It should return the modified link.
+
 ## Plugin interface
 
 To import the ikiwiki plugin interface:
