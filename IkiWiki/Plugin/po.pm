@@ -82,6 +82,7 @@ sub checkconfig () { #{{{
 	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
 	}
+	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 } #}}}
 
 sub scan (@) { #{{{
