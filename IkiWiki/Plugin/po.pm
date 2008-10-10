@@ -85,7 +85,7 @@ sub targetpage (@) { #{{{
 			return $masterpage . "/index." . $lang . "." . $ext;
 		}
 	}
-	else {
+	elsif (pagespec_match($page,"istranslatable()")) {
 		if (! $config{usedirs} || $page eq 'index') {
 			return $page . "." . $config{po_master_language}{code} . "." . $ext;
 		}
@@ -93,6 +93,7 @@ sub targetpage (@) { #{{{
 			return $page . "/index." . $config{po_master_language}{code} . "." . $ext;
 		}
 	}
+	return;
 } #}}}
 
 sub tweakurlpath ($) { #{{{
@@ -164,18 +165,21 @@ sub htmlize (@) { #{{{
 } #}}}
 
 package IkiWiki::PageSpec;
+use warnings;
+use strict;
+use IkiWiki 2.00;
 
 sub match_istranslation ($;@) { #{{{
 	my $page=shift;
 	my $wanted=shift;
 
 	my %params=@_;
-	my $file=exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page};
+	my $file=exists $params{file} ? $params{file} : $pagesources{$page};
 	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
 	}
 
-	if (! IkiWiki::pagetype($page) eq 'po') {
+	if (! defined pagetype($file) || ! pagetype($file) eq 'po') {
 		return IkiWiki::FailReason->new("is not a PO file");
 	}
 
@@ -185,16 +189,45 @@ sub match_istranslation ($;@) { #{{{
 		return IkiWiki::FailReason->new("is not named like a translation file");
 	}
 
-	if (! defined $IkiWiki::pagesources{$masterpage}) {
+	if (! defined $pagesources{$masterpage}) {
 		return IkiWiki::FailReason->new("the master page does not exist");
 	}
 
-	if (! defined $IkiWiki::config{po_slave_languages}{$lang}) {
+	if (! defined $config{po_slave_languages}{$lang}) {
 		return IkiWiki::FailReason->new("language $lang is not supported");
 	}
 
 	return IkiWiki::SuccessReason->new("page $page is a translation");
+} #}}}
 
+sub match_istranslatable ($;@) { #{{{
+	my $page=shift;
+	my $wanted=shift;
+
+	my %params=@_;
+	my $file=exists $params{file} ? $params{file} : $pagesources{$page};
+	if (! defined $file) {
+		return IkiWiki::FailReason->new("no file specified");
+	}
+
+	if (defined pagetype($file) && pagetype($file) eq 'po') {
+		return IkiWiki::FailReason->new("is a PO file");
+	}
+	if ($file =~ /\.pot$/) {
+		return IkiWiki::FailReason->new("is a POT file");
+	}
+
+	foreach my $registering_page (keys %pagestate) {
+		if (exists $pagestate{$registering_page}{po_translatable}) {
+			foreach my $pagespec (sort keys %{$pagestate{$registering_page}{po_translatable}}) {
+				if (pagespec_match($page, $pagespec, location => $registering_page)) {
+					return IkiWiki::SuccessReason->new("is set as translatable on $registering_page");
+				}
+			}
+		}
+	}
+
+	return IkiWiki::FailReason->new("is not set as translatable");
 } #}}}
 
 1
