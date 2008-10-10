@@ -13,6 +13,7 @@ use File::Temp;
 
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
+	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "preprocess", id => "translatable", call => \&preprocess_translatable);
@@ -45,6 +46,25 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
+		po_link_to_current_language => {
+			type => "boolean",
+			example => 1,
+			description => "internal links point to pages in the current language (useful if Content Negotiation is not supported)",
+			safe => 1,
+			rebuild => 1,
+		},
+} #}}}
+
+sub checkconfig () { #{{{
+	foreach my $field (qw{po_master_language po_slave_languages}) {
+		if (! exists $config{$field} || ! defined $config{$field}) {
+			error(sprintf(gettext("Must specify %s"), $field));
+		}
+	}
+	if (! exists $config{po_link_to_current_language} ||
+	    ! defined $config{po_link_to_current_language}) {
+	    $config{po_link_to_current_language}=0;
+	}
 } #}}}
 
 sub targetpage (@) { #{{{
