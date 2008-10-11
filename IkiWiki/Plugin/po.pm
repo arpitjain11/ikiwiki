@@ -10,11 +10,15 @@ use IkiWiki 2.00;
 use Encode;
 use Locale::Po4a::Chooser;
 use File::Temp;
+use Memoize;
+
+my %translations;
+memoize("istranslatable");
+memoize("_istranslation");
 
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
-	hook(type => "scan", id => "po", call => \&scan);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
@@ -83,14 +87,6 @@ sub checkconfig () { #{{{
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
 	}
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
-} #}}}
-
-sub scan (@) { #{{{
-	my %params=@_;
-	my $page=$params{page};
-
-	# FIXME: cache (or memoize) the list of translatable/translation pages,
-	# and/or istranslation/istranslated results
 } #}}}
 
 sub targetpage (@) { #{{{
@@ -203,7 +199,7 @@ sub istranslatable ($) { #{{{
 	return pagespec_match($page, $config{po_translatable_pages});
 } #}}}
 
-sub istranslation ($) { #{{{
+sub _istranslation ($) { #{{{
 	my $page=shift;
 	my $file=$pagesources{$page};
 	if (! defined $file) {
@@ -226,6 +222,16 @@ sub istranslation ($) { #{{{
 	}
 
 	return istranslatable($masterpage);
+} #}}}
+
+sub istranslation ($) { #{{{
+	my $page=shift;
+	if (_istranslation($page)) {
+		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
+		return 1;
+	}
+	return 0;
 } #}}}
 
 
