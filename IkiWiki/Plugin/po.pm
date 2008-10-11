@@ -140,16 +140,18 @@ sub tweakbestlink ($$) { #{{{
 	return $link;
 } #}}}
 
+our %filtered;
 # We use filter to convert PO to the master page's type,
 # since other plugins should not work on PO files
 sub filter (@) { #{{{
 	my %params = @_;
 	my $page = $params{page};
+	my $destpage = $params{destpage};
 	my $content = decode_utf8(encode_utf8($params{content}));
 
 	# decide if this is a PO file that should be converted into a translated document,
 	# and perform various sanity checks
-	if (! istranslation($page)) {
+	if (! istranslation($page) || $filtered{$page}{$destpage}) {
 		return $content;
 	}
 
@@ -174,6 +176,7 @@ sub filter (@) { #{{{
 	my $tmpout = $tmpfh->filename;
 	$doc->write($tmpout) or error("[po/filter:$file] could not write $tmpout");
 	$content = readfile($tmpout) or error("[po/filter:$file] could not read $tmpout");
+	$filtered{$page}{$destpage}=1;
 	return $content;
 } #}}}
 
