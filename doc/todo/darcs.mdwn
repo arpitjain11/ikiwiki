@@ -486,11 +486,11 @@ It's got couple of FIXMEs, and a very site-specific filter for recentchanges. No
 
 ---
 
-And here's yet another one. :)
+And here's yet another one, including an updated `ikiwiki-makerepo`. :)
 
-<http://khjk.org/~pesco/ikiwiki-darcs/>
+<http://khjk.org/~pesco/ikiwiki-darcs/> (now a darcs repo)
 
-I've taken all the good stuff from the above and added the missing hooks. Some of them I haven't had a chance to test, namely `rcs_rename`, `rcs_remove`, `rcs_commit_staged`, and `rcs_diff`. Also, I'm not experienced with perl and don't know where I should have used the function `possibly_foolish_untaint`.
+I've taken all the good stuff from the above and added the missing hooks. The code hasn't seen a lot of testing, so some bugs are likely yet to surface. Also, I'm not experienced with perl and don't know where I should have used the function `possibly_foolish_untaint`.
 
 Regarding the repository layout: There are two darcs repositories. One is the `srcdir`, the other we'll call `master`.
 
@@ -522,5 +522,21 @@ Regarding the repository layout: There are two darcs repositories. One is the `s
 >    `unlink`?)
 > * Is the the darcs info in [[details]] still up-to-date re this version?
 > --[[Joey]]
+
+> Update:
+>
+> I think I've addressed all of the above except for the XML parsing in `darcs_info`.
+> The function determines the md5 hash of the last patch the given file appears in.
+> That's indeed being done with regexps but my Perl isn't good enough for a quick recode
+> right now.
+>
+> As for the darcs info in [[rcs/details]], it does not accurately describe the way
+> this version works. It's similar, but the details differ slightly.
+> You could copy my description above to replace it.
+>
+> There is still some ironing to do, for instance the current version doesn't allow for
+> modifying attachments by re-uploading them via CGI ("darcs add failed"). Am I assuming
+> correctly that "adding" a file that's already in the repo should just be a no-op?
+> --pesco
 
 [[!tag patch]]
