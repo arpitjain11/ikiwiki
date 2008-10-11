@@ -20,3 +20,7 @@ Index: IkiWiki/Plugin/rst.pm
  print html[html.find('<body>')+6:html.find('</body>')].strip();
  ";
 </pre>
+
+----
+
+Does the Perl version of this plugin still exist?  There appears to be no "rst.pm" in the current distribution; all there is is the python version. --Peter
