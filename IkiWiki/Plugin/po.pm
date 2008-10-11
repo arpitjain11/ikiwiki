@@ -233,7 +233,7 @@ use IkiWiki 2.00;
 
 sub match_istranslation ($;@) { #{{{
 	my $page=shift;
-	if (IkiWiki::Plugins::po::istranslation($page)) {
+	if (IkiWiki::Plugin::po::istranslation($page)) {
 		return IkiWiki::SuccessReason->new("is a translation page");
 	}
 	else {
@@ -243,7 +243,7 @@ sub match_istranslation ($;@) { #{{{
 
 sub match_istranslatable ($;@) { #{{{
 	my $page=shift;
-	if (IkiWiki::Plugins::po::istranslatable($page)) {
+	if (IkiWiki::Plugin::po::istranslatable($page)) {
 		return IkiWiki::SuccessReason->new("is set as translatable in po_translatable_pages");
 	}
 	else {
