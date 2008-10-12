@@ -1,0 +1,7 @@
+My <code>page.tmpl</code> can contain:
+
+    Created <TMPL_VAR CTIME>.  Last edited <TMPL_VAR MTIME>.
+ 
+and that works.  However, if I have the same line in <code>inlinepage.tmpl</code> 
+or <code>archivepage.tmpl</code>, then only the <code>CTIME</code> works - the <code>MTIME</code> is blank.
+This leads to an annoying inconsistency.
