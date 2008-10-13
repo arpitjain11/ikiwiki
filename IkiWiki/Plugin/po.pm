@@ -19,6 +19,7 @@ memoize("_istranslation");
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
+	hook(type => "scan", id => "po", call => \&scan);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
@@ -87,6 +88,15 @@ sub checkconfig () { #{{{
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
 	}
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
+} #}}}
+
+sub scan (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	# let's build %translations, using istranslation's
+	# side-effect, so that we can consider it is complete at
+	# preprocess time
+	istranslation($page);
 } #}}}
 
 sub targetpage (@) { #{{{

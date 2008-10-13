@@ -123,16 +123,6 @@ lighttpd unfortunately does not support content negotiation.
 TODO
 ====
 
-Optimization
-------------
-
-Pre-compute what can be early in the build process:
-
-- the list of translatable (master) pages
-- for every translatable page, the list of slave pages
-
-... and/or memoize `istranslation`/`istranslatable` function calls.
-
 Display available translations
 ------------------------------
 
