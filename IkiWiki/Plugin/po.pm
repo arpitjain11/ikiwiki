@@ -45,9 +45,10 @@ sub getsetup () { #{{{
 		},
 		po_slave_languages => {
 			type => "string",
-			example => {'fr' => { 'name' => 'Français' },
-				    'es' => { 'name' => 'Castellano' },
-				    'de' => { 'name' => 'Deutsch' },
+			example => {
+				'fr' => 'Français',
+				'es' => 'Castellano',
+				'de' => 'Deutsch'
 			},
 			description => "slave languages (PO files)",
 			safe => 1,
@@ -243,7 +244,6 @@ sub istranslation ($) { #{{{
 	}
 	return 0;
 } #}}}
-
 
 package IkiWiki::PageSpec;
 use warnings;

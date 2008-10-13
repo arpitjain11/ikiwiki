@@ -41,9 +41,9 @@ Configuration
 `po_slave_languages` is used to set the list of supported "slave"
 languages, such as:
 
-        po_slave_languages => { 'fr' => { 'name' => 'Français', },
-                                'es' => { 'name' => 'Castellano', },
-                                'de' => { 'name' => 'Deutsch', }
+        po_slave_languages => { 'fr' => 'Français',
+                                'es' => 'Castellano',
+                                'de' => 'Deutsch',
         }
 
 Decide which pages are translatable
