@@ -28,7 +28,7 @@ sub gen_wrapper () { #{{{
 	my @envsave;
 	push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
 	               CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE
-		       HTTP_COOKIE REMOTE_USER} if $config{cgi};
+		       HTTP_COOKIE REMOTE_USER HTTPS} if $config{cgi};
 	my $envsave="";
 	foreach my $var (@envsave) {
 		$envsave.=<<"EOF"
