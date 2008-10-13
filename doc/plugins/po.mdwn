@@ -93,6 +93,29 @@ page's language, *i.e.*:
 - `foo/page.LL.html` if `usedirs` is disabled
 
 
+Templates
+---------
+
+The `OTHERLANGUAGES` loop provides ways to display the existing
+translations and/or master page. One typically adds the following code
+to `templates/page.tmpl`:
+
+	<TMPL_IF NAME="OTHERLANGUAGES">
+	<div id="otherlanguages">
+	  <ul>
+	  <TMPL_LOOP NAME="OTHERLANGUAGES">
+	    <li>
+	      <a href="<TMPL_VAR NAME="URL">"
+	         class="is_master_<TMPL_VAR NAME="MASTER">">
+	      <TMPL_VAR NAME="LANGUAGE">
+	    </a>
+	    </li>
+	  </TMPL_LOOP>
+	  </ul>
+	</div>
+	</TMPL_IF>
+
+
 Server support
 ==============
 
@@ -123,12 +146,11 @@ lighttpd unfortunately does not support content negotiation.
 TODO
 ====
 
-Display available translations
-------------------------------
+Link relationships
+------------------
 
-The [[linguas|plugins/contrib/linguas]] plugin has some code that can
-be used as a basis to display the existing translations, and allow to
-navigate between them.
+Should pages using the `OTHERLANGUAGES` template loop be declared as
+linking to the same page in other versions?
 
 View translation status
 -----------------------
@@ -138,9 +160,13 @@ completeness, either for a given page or for the whole wiki.
 
 This should not be too hard using gettext tools. If this is
 implemented as a
-[[HTML::Template|http://search.cpan.org/search?mode=dist&query=HTML%3A%3ATemplate]]
+[HTML::Template](http://search.cpan.org/search?mode=dist&query=HTML%3A%3ATemplate)
 loop, a page using it should depend on any "master" and "slave" pages
 whose status is being displayed.
+
+If it's not too heavy to compute, this status data may be made
+available in the `OTHERLANGUAGES` template loop; else, a dedicated
+loop would be needed.
 
 Automatic PO files update
 -------------------------

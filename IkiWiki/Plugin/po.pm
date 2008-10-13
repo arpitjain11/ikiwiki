@@ -25,6 +25,7 @@ sub import {
 	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
+	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
 }
 
 sub getsetup () { #{{{
@@ -197,6 +198,49 @@ sub htmlize (@) { #{{{
 	# force content to be htmlize'd as if it was the same type as the master page
 	return IkiWiki::htmlize($page, $page, pagetype($masterfile), $content);
 } #}}}
+
+sub otherlanguages ($) { #{{{
+	my $page=shift;
+	my @ret;
+	if (istranslatable($page)) {
+		foreach my $lang (sort keys %{$translations{$page}}) {
+			push @ret, {
+				url => urlto($translations{$page}{$lang}, $page),
+				code => $lang,
+				language => $config{po_slave_languages}{$lang},
+				master => 0,
+			};
+		}
+	}
+	elsif (istranslation($page)) {
+		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		push @ret, {
+			url => urlto($masterpage, $page),
+			code => $config{po_master_language}{code},
+			language => $config{po_master_language}{name},
+			master => 1,
+		};
+		foreach my $lang (sort keys %{$translations{$masterpage}}) {
+			push @ret, {
+				url => urlto($translations{$masterpage}{$lang}, $page),
+				code => $lang,
+				language => $config{po_slave_languages}{$lang},
+				master => 0,
+			} unless ($lang eq $curlang);
+		}
+	}
+	return @ret;
+} #}}}
+
+sub pagetemplate (@) { #{{{
+	my %params=@_;
+        my $page=$params{page};
+        my $template=$params{template};
+
+	if ($template->query(name => "otherlanguages")) {
+		$template->param(otherlanguages => [otherlanguages($page)]);
+	}
+} # }}}
 
 sub istranslatable ($) { #{{{
 	my $page=shift;
