@@ -67,12 +67,12 @@ and site-specific preferences.
 ### Default linking behavior
 
 If `po_link_to` is unset, or set to `default`, ikiwiki's default
-linking behavior is preserved: `[[page]]` links to the master
+linking behavior is preserved: `\[[page]]` links to the master
 language's page.
 
 ### Link to negotiated language
 
-If `po_link_to` is set to `negotiated`, `[[page]]` links to the
+If `po_link_to` is set to `negotiated`, `\[[page]]` links to the
 negotiated preferred language, *i.e.* `foo/page/`.
 
 (In)compatibility notes:
@@ -86,7 +86,7 @@ negotiated preferred language, *i.e.* `foo/page/`.
 ### Link to current language
 
 If `po_link_to` is set to `current` and the destination page is either
-a translatable page or a translation, `[[page]]` links to the current
+a translatable page or a translation, `\[[page]]` links to the current
 page's language, *i.e.*:
 
 - `foo/page/index.LL.html` if `usedirs` is enabled
