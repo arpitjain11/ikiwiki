@@ -394,4 +394,34 @@ sub match_lang ($$;@) { #{{{
 	}
 } #}}}
 
+sub match_currentlang ($$;@) { #{{{
+	my $page=shift;
+	shift;
+	my %params=@_;
+	my ($currentmasterpage, $currentlang, $masterpage, $lang);
+
+	return IkiWiki::FailReason->new("no location provided") unless exists $params{location};
+
+	if (IkiWiki::Plugin::po::istranslation($params{location})) {
+		($currentmasterpage, $currentlang) = ($params{location} =~ /(.*)[.]([a-z]{2})$/);
+	}
+	else {
+		$currentlang = $config{po_master_language}{code};
+	}
+
+	if (IkiWiki::Plugin::po::istranslation($page)) {
+		($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	}
+	else {
+		$lang = $config{po_master_language}{code};
+	}
+
+	if ($lang eq $currentlang) {
+		return IkiWiki::SuccessReason->new("file language is the same as current one, i.e. $currentlang");
+	}
+	else {
+		return IkiWiki::FailReason->new("file language is $lang, whereas current language is $currentlang");
+	}
+} #}}}
+
 1
