@@ -372,4 +372,26 @@ sub match_istranslatable ($;@) { #{{{
 	}
 } #}}}
 
+sub match_lang ($$;@) { #{{{
+	my $page=shift;
+	my $wanted=shift;
+	my $regexp=IkiWiki::glob2re($wanted);
+	my $lang;
+	my $masterpage;
+
+	if (IkiWiki::Plugin::po::istranslation($page)) {
+		($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	}
+	else {
+		$lang = $config{po_master_language}{code};
+	}
+
+	if ($lang!~/^$regexp$/i) {
+		return IkiWiki::FailReason->new("file language is $lang, not $wanted");
+	}
+	else {
+		return IkiWiki::SuccessReason->new("file language is $wanted");
+	}
+} #}}}
+
 1
