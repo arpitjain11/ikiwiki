@@ -316,6 +316,7 @@ sub preprocess_inline (@) { #{{{
 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
 				$template->param(title => pagetitle(basename($page)));
 				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
+				$template->param(mtime => displaytime($pagemtime{$page}, $params{timeformat}));
 				$template->param(first => 1) if $page eq $list[0];
 				$template->param(last => 1) if $page eq $list[$#list];
 	

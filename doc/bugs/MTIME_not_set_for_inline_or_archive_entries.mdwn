@@ -17,3 +17,6 @@ Update - even though I'm not a Perl programmer, this patch seems right:
     +				$template->param(mtime => displaytime($pagemtime{$page}, $params{timeformat}));
      				$template->param(first => 1) if $page eq $list[0];
      				$template->param(last => 1) if $page eq $list[$#list];	
+
+
+> [[done]], thanks
