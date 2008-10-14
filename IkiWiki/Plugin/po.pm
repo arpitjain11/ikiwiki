@@ -150,6 +150,13 @@ sub needsbuild () { #{{{
 			refreshpofiles(srcfile($file), map { srcfile($_) } @pofiles);
 		}
 	}
+
+	# make existing translations depend on the corresponding master page
+	foreach my $master (keys %translations) {
+		foreach my $slave (values %{$translations{$master}}) {
+			add_depends($slave, $master);
+		}
+	}
 } #}}}
 
 sub targetpage (@) { #{{{
