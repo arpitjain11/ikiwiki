@@ -114,7 +114,7 @@ sub format (@) { #{{{
 	return $params{content};
 } #}}}
 
-sub sessioncgi () { #{{{
+sub sessioncgi ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
