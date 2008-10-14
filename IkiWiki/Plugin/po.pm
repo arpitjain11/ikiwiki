@@ -9,6 +9,8 @@ use strict;
 use IkiWiki 2.00;
 use Encode;
 use Locale::Po4a::Chooser;
+use File::Basename;
+use File::Spec;
 use File::Temp;
 use Memoize;
 
@@ -92,6 +94,20 @@ sub checkconfig () { #{{{
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 } #}}}
 
+sub refreshpot ($) { #{{{
+	my $masterfile=shift;
+	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
+	my $potfile=File::Spec->catfile($dir, $name . ".pot");
+	my %options = ("markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0);
+	my $doc=Locale::Po4a::Chooser::new('text',%options);
+	$doc->read($masterfile);
+	$doc->{TT}{utf_mode} = 1;
+	$doc->{TT}{file_in_charset} = 'utf-8';
+	$doc->{TT}{file_out_charset} = 'utf-8';
+	$doc->parse or error("[po/refreshpot:$masterfile]: failed to parse");
+	$doc->writepo($potfile);
+} #}}}
+
 sub needsbuild () { #{{{
 	my $needsbuild=shift;
 
@@ -100,6 +116,9 @@ sub needsbuild () { #{{{
 		istranslation($page);
 	}
 
+	foreach my $file (@$needsbuild) {
+		refreshpot(srcfile($file)) if (istranslatable(pagename($file)));
+	}
 } #}}}
 
 sub targetpage (@) { #{{{
