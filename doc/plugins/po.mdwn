@@ -186,6 +186,10 @@ Committing changes to a "master" page:
 - all the needed POT and PO files have to be created
 - the PO files must be checked into version control
 
+**FIXME** `refreshpofiles` uses `system()`, whose args have to be
+checked more thoroughly to prevent any security issue (command
+injection, etc.).
+
 UI consistency: rename "Edit" button on slave pages
 ---------------------------------------------------
 
