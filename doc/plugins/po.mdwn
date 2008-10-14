@@ -182,6 +182,9 @@ Committing changes to a "master" page must:
    corresponding "master" page. The `add_depends` function can achieve
    this, if used in a **FIXME** hook.
 
+Also, when the plugin has just been enabled, all the needed POT and PO
+files have to be created.
+
 UI consistency: rename "Edit" button on slave pages
 ---------------------------------------------------
 
