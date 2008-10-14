@@ -138,14 +138,17 @@ sub needsbuild () { #{{{
 		istranslation($page);
 	}
 
+	# refresh POT and PO files as needed
 	foreach my $file (@$needsbuild) {
 		my $page=pagename($file);
-		refreshpot(srcfile($file)) if (istranslatable($page));
-		my @pofiles;
-		foreach my $lang (keys %{$translations{$page}}) {
-			push @pofiles, $pagesources{$translations{$page}{$lang}};
+		if (istranslatable($page)) {
+			refreshpot(srcfile($file));
+			my @pofiles;
+			foreach my $lang (keys %{$translations{$page}}) {
+				push @pofiles, $pagesources{$translations{$page}{$lang}};
+			}
+			refreshpofiles(srcfile($file), map { srcfile($_) } @pofiles);
 		}
-		refreshpofiles(srcfile($file), map { srcfile($_) } @pofiles);
 	}
 } #}}}
 
