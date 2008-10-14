@@ -93,29 +93,6 @@ page's language, *i.e.*:
 - `foo/page.LL.html` if `usedirs` is disabled
 
 
-Templates
----------
-
-The `OTHERLANGUAGES` loop provides ways to display the existing
-translations and/or master page. One typically adds the following code
-to `templates/page.tmpl`:
-
-	<TMPL_IF NAME="OTHERLANGUAGES">
-	<div id="otherlanguages">
-	  <ul>
-	  <TMPL_LOOP NAME="OTHERLANGUAGES">
-	    <li>
-	      <a href="<TMPL_VAR NAME="URL">"
-	         class="is_master_<TMPL_VAR NAME="MASTER">">
-	      <TMPL_VAR NAME="LANGUAGE">
-	    </a>
-	    </li>
-	  </TMPL_LOOP>
-	  </ul>
-	</div>
-	</TMPL_IF>
-
-
 Server support
 ==============
 
@@ -141,6 +118,38 @@ lighttpd unfortunately does not support content negotiation.
 
 **FIXME**: does `mod_magnet` provide the functionality needed to
  emulate this?
+
+
+Usage
+=====
+
+Templates
+---------
+
+The `OTHERLANGUAGES` loop provides ways to display the existing
+translations and/or master page. One typically adds the following code
+to `templates/page.tmpl`:
+
+	<TMPL_IF NAME="OTHERLANGUAGES">
+	<div id="otherlanguages">
+	  <ul>
+	  <TMPL_LOOP NAME="OTHERLANGUAGES">
+	    <li>
+	      <a href="<TMPL_VAR NAME="URL">"
+	         class="is_master_<TMPL_VAR NAME="MASTER">">
+	      <TMPL_VAR NAME="LANGUAGE">
+	    </a>
+	    </li>
+	  </TMPL_LOOP>
+	  </ul>
+	</div>
+	</TMPL_IF>
+
+Additional PageSpec tests
+-------------------------
+
+This plugin enhances the regular [[ikiwiki/PageSpec]] syntax with some
+additional tests that are documented [[here|ikiwiki/pagespec/po]].
 
 
 TODO
@@ -198,16 +207,6 @@ It may be surprising to some, after having pressed *Edit* on a wiki
 page, to end up editing a strange looking PO file. The *Edit* button
 displayed on "slave" pages must therefore be renamed *Improve
 translation* .
-
-Pages selection depending on language
--------------------------------------
-
-To improve user navigation in a multi-lingual wiki, site developers
-must be enabled to write:
-
-        \[[!map pages="dev/* and lang(LL)" feeds="no"]]
-
-        \[[!map pages="dev/* and currentlang()" feeds="no"]]
 
 Translation quality assurance
 -----------------------------
