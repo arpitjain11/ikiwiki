@@ -181,7 +181,8 @@ Committing changes to a "master" page:
    achieved by making any "slave" page dependent on the corresponding
    "master" page, in the `needsbuild` hook.
 
-**FIXME** Also, when the plugin has just been enabled:
+**FIXME** Also, when the plugin has just been enabled, or when a page
+has just been declared as being translatable:
 
 - all the needed POT and PO files have to be created
 - the PO files must be checked into version control
