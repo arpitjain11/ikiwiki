@@ -171,18 +171,20 @@ loop would be needed.
 Automatic PO files update
 -------------------------
 
-Committing changes to a "master" page must:
+Committing changes to a "master" page:
 
-1. update the POT file and the PO files for the supported languages;
-   this is done in the `needsbuild` hook; the updated PO files must
-   then be put under version control
+1. updates the POT file and the PO files for the supported languages;
+   this is done in the `needsbuild` hook; **FIXME**: the updated PO
+   files must then be put under version control
 
-2. trigger a refresh of the corresponding HTML slave pages: this is
+2. triggers a refresh of the corresponding HTML slave pages: this is
    achieved by making any "slave" page dependent on the corresponding
    "master" page, in the `needsbuild` hook.
 
-Also, when the plugin has just been enabled, all the needed POT and PO
-files have to be created.
+**FIXME** Also, when the plugin has just been enabled:
+
+- all the needed POT and PO files have to be created
+- the PO files must be checked into version control
 
 UI consistency: rename "Edit" button on slave pages
 ---------------------------------------------------
