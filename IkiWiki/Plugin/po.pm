@@ -105,7 +105,7 @@ sub refreshpot ($) { #{{{
 	$doc->{TT}{utf_mode} = 1;
 	$doc->{TT}{file_in_charset} = 'utf-8';
 	$doc->{TT}{file_out_charset} = 'utf-8';
-	$doc->parse or error("[po/refreshpot:$masterfile]: failed to parse");
+	$doc->parse;
 	$doc->writepo($potfile);
 } #}}}
 
