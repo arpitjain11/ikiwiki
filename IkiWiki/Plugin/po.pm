@@ -10,6 +10,7 @@ use IkiWiki 2.00;
 use Encode;
 use Locale::Po4a::Chooser;
 use File::Basename;
+use File::Copy;
 use File::Spec;
 use File::Temp;
 use Memoize;
@@ -108,6 +109,27 @@ sub refreshpot ($) { #{{{
 	$doc->writepo($potfile);
 } #}}}
 
+sub refreshpofiles ($@) { #{{{
+	my $masterfile=shift;
+	my @pofiles=@_;
+
+	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
+	my $potfile=File::Spec->catfile($dir, $name . ".pot");
+	error("[po/refreshpofiles] POT file ($potfile) does not exist") unless (-e $potfile);
+
+	foreach my $pofile (@pofiles) {
+		if (-e $pofile) {
+			my $cmd = "msgmerge -U $pofile $potfile";
+			system ($cmd) == 0
+				or error("[po/refreshpofiles:$pofile] failed to update");
+		}
+		else {
+			File::Copy::syscopy($potfile,$pofile)
+				or error("[po/refreshpofiles:$pofile] failed to copy the POT file");
+		}
+	}
+} #}}}
+
 sub needsbuild () { #{{{
 	my $needsbuild=shift;
 
@@ -117,7 +139,13 @@ sub needsbuild () { #{{{
 	}
 
 	foreach my $file (@$needsbuild) {
-		refreshpot(srcfile($file)) if (istranslatable(pagename($file)));
+		my $page=pagename($file);
+		refreshpot(srcfile($file)) if (istranslatable($page));
+		my @pofiles;
+		foreach my $lang (keys %{$translations{$page}}) {
+			push @pofiles, $pagesources{$translations{$page}{$lang}};
+		}
+		refreshpofiles(srcfile($file), map { srcfile($_) } @pofiles);
 	}
 } #}}}
 
