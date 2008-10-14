@@ -173,21 +173,14 @@ Automatic PO files update
 
 Committing changes to a "master" page must:
 
-1. update the POT file and the PO files for the supported languages,
-   before putting them under version control
-2. trigger a refresh of the corresponding HTML slave pages
+1. update the POT file and the PO files for the supported languages;
+   this is done in the `needsbuild` hook; the updated PO files must
+   then be put under version control
 
-The former is to be done at a time when:
-
-- we know which "master" page was modified, and thus, which POT/PO
-  files have to be updated: the `needsbuild` hook is the first one to
-  run that provides us with the necessary information
-- we can modify the list of pages needing a refresh; this is
-  `needsbuild` hook's job
-
-The latter can be implemented by making any "slave" page depend on the
-corresponding "master" page. The `add_depends` function can achieve
-this, if used in a **FIXME** hook.
+2. trigger a refresh of the corresponding HTML slave pages; this can
+   be implemented by making any "slave" page depend on the
+   corresponding "master" page. The `add_depends` function can achieve
+   this, if used in a **FIXME** hook.
 
 UI consistency: rename "Edit" button on slave pages
 ---------------------------------------------------
