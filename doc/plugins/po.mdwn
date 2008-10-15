@@ -126,24 +126,33 @@ Usage
 Templates
 ---------
 
-The `OTHERLANGUAGES` loop provides ways to display the existing
-translations and/or master page. One typically adds the following code
-to `templates/page.tmpl`:
+The `OTHERLANGUAGES` loop provides ways to display other languages'
+versions of the same page, and the translations' status.
+
+One typically adds the following code to `templates/page.tmpl`:
 
 	<TMPL_IF NAME="OTHERLANGUAGES">
 	<div id="otherlanguages">
 	  <ul>
 	  <TMPL_LOOP NAME="OTHERLANGUAGES">
 	    <li>
-	      <a href="<TMPL_VAR NAME="URL">"
-	         class="is_master_<TMPL_VAR NAME="MASTER">">
-	      <TMPL_VAR NAME="LANGUAGE">
-	    </a>
+	      <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="LANGUAGE"></a>
+	      <TMPL_UNLESS NAME="MASTER">
+	        (<TMPL_VAR NAME="PERCENT">&nbsp;%)
+	      </TMPL_UNLESS>
 	    </li>
 	  </TMPL_LOOP>
 	  </ul>
 	</div>
 	</TMPL_IF>
+
+The following variables are available inside the loop (for every page in):
+
+- `URL` - url to the page
+- `CODE` - two-letters language code
+- `LANGUAGE` - language name (as defined in `po_slave_languages`)
+- `MASTER` - is true (1) if, and only if the page is a "master" page
+- `PERCENT` - for "slave" pages, is set to the translation completeness, in percents
 
 Additional PageSpec tests
 -------------------------

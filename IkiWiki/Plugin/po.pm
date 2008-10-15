@@ -237,7 +237,6 @@ sub filter (@) { #{{{
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
 	) or error("[po/filter:$file]: failed to translate");
-	my ($percent,$hit,$queries) = $doc->stats();
 	my $tmpfh = File::Temp->new(TEMPLATE => "/tmp/ikiwiki-po-filter-out.XXXXXXXXXX");
 	my $tmpout = $tmpfh->filename;
 	$doc->write($tmpout) or error("[po/filter:$file] could not write $tmpout");
@@ -257,16 +256,40 @@ sub htmlize (@) { #{{{
 	return IkiWiki::htmlize($page, $page, pagetype($masterfile), $content);
 } #}}}
 
+sub percenttranslated ($) { #{{{
+	my $page=shift;
+	return "N/A" unless (istranslation($page));
+	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	my $file=srcfile($pagesources{$page});
+	my $masterfile = srcfile($pagesources{$masterpage});
+	my (@pos,@masters);
+	push @pos,$file;
+	push @masters,$masterfile;
+	my %options = (
+			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+			);
+	my $doc=Locale::Po4a::Chooser::new('text',%options);
+	$doc->process(
+		'po_in_name'	=> \@pos,
+		'file_in_name'	=> \@masters,
+		'file_in_charset'  => 'utf-8',
+		'file_out_charset' => 'utf-8',
+	) or error("[po/percenttranslated:$file]: failed to translate");
+	my ($percent,$hit,$queries) = $doc->stats();
+	return $percent;
+} #}}}
+
 sub otherlanguages ($) { #{{{
 	my $page=shift;
 	my @ret;
 	if (istranslatable($page)) {
 		foreach my $lang (sort keys %{$translations{$page}}) {
+			my $translation = $translations{$page}{$lang};
 			push @ret, {
-				url => urlto($translations{$page}{$lang}, $page),
+				url => urlto($translation, $page),
 				code => $lang,
 				language => $config{po_slave_languages}{$lang},
-				master => 0,
+				percent => percenttranslated($translation),
 			};
 		}
 	}
@@ -283,7 +306,7 @@ sub otherlanguages ($) { #{{{
 				url => urlto($translations{$masterpage}{$lang}, $page),
 				code => $lang,
 				language => $config{po_slave_languages}{$lang},
-				master => 0,
+				percent => percenttranslated($page),
 			} unless ($lang eq $curlang);
 		}
 	}
