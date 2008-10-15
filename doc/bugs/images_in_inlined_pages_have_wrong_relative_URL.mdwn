@@ -5,3 +5,9 @@ I can make an image link, such as:
 That will render as ![image](image.jpg).
 
 If I then inline that page, the (relative) URL no longer points to the right place.  The fix for this promises to be hairy.
+
+> Similarly, if you insert a relative link using the markdown link syntax,
+> it will tend to break when the page is inlined.
+> 
+> However, there is a simple way to avoid both problems: Use WikiLinks
+> and/or the [[img_directive|ikiwiki/directive/img]]. --[[Joey]]
