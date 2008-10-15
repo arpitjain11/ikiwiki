@@ -1,4 +1,4 @@
-[[!tag patch]]
+[[!tag patch done]]
 
 [[plugins/map]] (and I) could benefit from a bonus parameter:
 
@@ -45,3 +45,12 @@ documentation yet, I'm waiting for feedback first, but I'll do it for sure. -- [
 >>>> someone might want to be able to handle an "else" case where a
 >>>> pagespec expands to nothing. And adding else cases for all of them
 >>>> could be a bit much. --[[Joey]]
+
+>>>>> Agreed, and tagging as done. For the record, here is the [[plugins/template]] I use:
+
+        \[[!if test="<TMPL_VAR raw_pages>"
+        then="""<TMPL_VAR intro>
+        [[!map pages="<TMPL_VAR raw_pages>"]]"""
+        else="<TMPL_VAR else>"]]
+
+>>>>> --[[intrigeri]]

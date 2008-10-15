@@ -1,4 +1,22 @@
-ikiwiki (2.66) UNRELEASED; urgency=low
+ikiwiki (2.67) UNRELEASED; urgency=low
+
+  * remove: Avoid $_ breakage. (Stupid, stupid perl.)
+  * Updated Spanish translation from Victor Moral.
+  * lockedit: Support specifying which users (and IP addresses) a page
+    is locked for. This supports most of the ACL type things users have been
+    wanting to be done. Closes: #443346 (It does not control who can read a
+    page, but that's out of scope for ikiwiki.)
+  * orphans: Fix unquoted page name in regexp.
+  * google: Plugin provides google site search, contributed by Peter Simons.
+  * Pass HTTPS variable through the wrapper so that CGI->https can be used
+    by plugins. Closes: #502047
+  * inline: Allow MTIME to be used in inlinepage.tmpl.
+  * inline: Use the feed's description in the rss and atom links.
+    Closes: #502113
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 06 Oct 2008 16:07:50 -0400
+
+ikiwiki (2.66) unstable; urgency=low
 
   * recentchanges: Fix redirects to non-page files. 
   * aggregate: Avoid uninitialized value warnings for pages with no recorded
@@ -32,8 +50,13 @@ ikiwiki (2.66) UNRELEASED; urgency=low
     (Sponsored by The TOVA Company.)
   * httpauth: Document that ikiwiki.cgi has to be in a directory subject to
     authentication. Closes: #500524 
+  * inline: Fix handling of rootpage that doesn't exist.
+  * attachment: Support adding attachments to pages even as they are being
+    created.
+  * remove, rename: Allow acting on attachments as a page is being created.
+  * Updated French translation. Closes: #500929
 
- -- Joey Hess <joeyh@debian.org>  Thu, 25 Sep 2008 13:45:55 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 05 Oct 2008 19:11:08 -0400
 
 ikiwiki (2.65) unstable; urgency=low
 

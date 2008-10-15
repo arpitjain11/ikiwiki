@@ -58,3 +58,9 @@ How do I make images clickable?  The obvious guess, \[[foo.png|/index]], doesn't
 > You can do it using the img plugin. The syntax you suggested would be ambiguous,
 > as there's no way to tell if the text is meant to be an image or displayed as-is.
 > --[[Joey]]
+
+----
+
+Is it possible to refer to a page, say \[[foobar]], such that the link text is taken from foobar's title [[directive/meta]] tag? --Peter
+
+> Not yet. :-) Any suggestion for a syntax for it? Maybe something like \[[|foobar]] ? --[[Joey]]

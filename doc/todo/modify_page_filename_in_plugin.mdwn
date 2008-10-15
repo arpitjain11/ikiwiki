@@ -1,0 +1,33 @@
+I'm writing a plugin to wikify c/c++ code.
+
+By default ikiwiki generates xxx.html for a file called xxx.c.
+
+The problem is that I occasionally have xxx.c and xxx.h in the same directory and there's a filename collision.
+
+My solution is to allow plugins to provide a hook that sets the pagename. --[[/users/bstpierre]]
+
+    --- /usr/share/perl5/IkiWiki.pm.ORIG    2008-10-03 14:12:50.000000000 -0400
+    +++ /usr/share/perl5/IkiWiki.pm 2008-10-07 11:57:26.000000000 -0400
+    @@ -196,11 +196,32 @@
+
+     sub pagename ($) { #{{{
+            my $file=shift;
+
+            my $type=pagetype($file);
+    +
+    +   if(defined $type &&
+    +      exists $hooks{pagename} &&
+    +      exists $hooks{pagename}{$type}) {
+    +
+    +      return $hooks{pagename}{$type}{call}($file);
+    +
+    +   } else {
+    +
+            my $page=$file;
+            $page=~s/\Q.$type\E*$// if defined $type;
+            return $page;
+    +   }
+     } #}}}
+
+     sub htmlpage ($) { #{{{
+

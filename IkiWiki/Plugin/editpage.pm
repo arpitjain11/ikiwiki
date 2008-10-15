@@ -250,7 +250,7 @@ sub cgi_editpage ($$) { #{{{
 			    file_pruned($from, $config{srcdir}) ||
 			    $from=~/^\// || 
 			    $absolute ||
-			    $form->submitted eq "Preview") {
+			    $form->submitted) {
 				@page_locs=$best_loc=$page;
 			}
 			else {

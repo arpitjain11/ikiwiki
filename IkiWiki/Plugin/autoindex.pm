@@ -97,7 +97,9 @@ sub refresh () { #{{{
 		if ($config{rcs}) {
 			IkiWiki::disable_commit_hook();
 		}
-		genindex($_) foreach @needed;
+		foreach my $page (@needed) {
+			genindex($page);
+		}
 		if ($config{rcs}) {
 			IkiWiki::rcs_commit_staged(
 				gettext("automatic index generation"),

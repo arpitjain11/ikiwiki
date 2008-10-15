@@ -1,0 +1,22 @@
+My <code>page.tmpl</code> can contain:
+
+    Created <TMPL_VAR CTIME>.  Last edited <TMPL_VAR MTIME>.
+ 
+and that works.  However, if I have the same line in <code>inlinepage.tmpl</code> 
+or <code>archivepage.tmpl</code>, then only the <code>CTIME</code> works - the <code>MTIME</code> is blank.
+This leads to an annoying inconsistency.
+
+Update - even though I'm not a Perl programmer, this patch seems right:
+
+    --- /home/bothner/ikiwiki/ikiwiki/IkiWiki/Plugin/inline.pm	2008-10-01 14:29:11.000000000 -0700
+    +++ ./inline.pm	2008-10-12 13:26:11.000000000 -0700
+    @@ -316,6 +316,7 @@
+     				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
+     				$template->param(title => pagetitle(basename($page)));
+     				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
+    +				$template->param(mtime => displaytime($pagemtime{$page}, $params{timeformat}));
+     				$template->param(first => 1) if $page eq $list[0];
+     				$template->param(last => 1) if $page eq $list[$#list];	
+
+
+> [[done]], thanks

@@ -1,4 +1,24 @@
 [[!template id=plugin name=lockedit core=1 author="[[Joey]]"]]
 [[!tag type/auth]]
 
-This plugin enables [[page_locking]]. It is enabled by default.
+This plugin allows the administrator of a wiki to lock some pages, limiting
+who can edit them using the online interface. This doesn't prevent anyone
+who can commit to the underlying revision control system from editing the
+pages, however.
+
+The `locked_pages` setting configures what pages are locked. It is a
+[[ikiwiki/PageSpec]], so you have lots of control over what kind of pages
+to lock. For example, you could choose to lock all pages created before
+2006, or all pages that are linked to from the page named "locked". More
+usually though, you'll just list some names of pages to lock.
+
+One handy thing to do if you're using ikiwiki for your blog is to lock
+"* and !*/Discussion". This prevents others from adding to or modifying
+posts in your blog, while still letting them comment via the Discussion
+pages.
+
+Wiki administrators can always edit locked pages. The [[ikiwiki/PageSpec]]
+can specify that some pages are not locked for some users. For example,
+"important_page and !user(joey)" locks `important_page` while still
+allowing joey to edit it, while "!*/Discussion and user(bob)" prevents bob
+from editing pages except for Discussion pages.

@@ -61,9 +61,10 @@ sub formbuilder_setup (@) { #{{{
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
+	if (defined $form->field("do") && ($form->field("do") eq "edit" ||
+	    $form->field("do") eq "create")) {
 		# Removal button for the page, and also for attachments.
-		push @{$params{buttons}}, "Remove";
+		push @{$params{buttons}}, "Remove" if $form->field("do") eq "edit";
 		$form->tmpl_param("field-remove" => '<input name="_submit" type="submit" value="Remove Attachments" />');
 	}
 } #}}}
@@ -97,7 +98,9 @@ sub removal_confirm ($$@) { #{{{
 	my $attachment=shift;
 	my @pages=@_;
 
-	check_canremove($_, $q, $session) foreach @pages;
+	foreach my $page (@pages) {
+		check_canremove($page, $q, $session);
+	}
 
    	# Save current form state to allow returning to it later
 	# without losing any edits.
@@ -135,11 +138,12 @@ sub formbuilder (@) { #{{{
 	my %params=@_;
 	my $form=$params{form};
 
-	if (defined $form->field("do") && $form->field("do") eq "edit") {
+	if (defined $form->field("do") && ($form->field("do") eq "edit" ||
+	    $form->field("do") eq "create")) {
 		my $q=$params{cgi};
 		my $session=$params{session};
 
-		if ($form->submitted eq "Remove") {
+		if ($form->submitted eq "Remove" && $form->field("do") eq "edit") {
 			removal_confirm($q, $session, 0, $form->field("page"));
 		}
 		elsif ($form->submitted eq "Remove Attachments") {

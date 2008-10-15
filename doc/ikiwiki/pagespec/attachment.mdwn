@@ -16,45 +16,22 @@ check all attachments for virii, something like this could be used:
 The regular [[ikiwiki/PageSpec]] syntax is expanded with the following
 additional tests:
 
-* maxsize(size)
-
-  Tests whether the attachment is no larger than the specified size.
-  The size defaults to being in bytes, but "kb", "mb", "gb" etc can be
-  used to specify the units.
+* "`maxsize(size)`" - Tests whether the attachment is no larger than the
+  specified size. The size defaults to being in bytes, but "kb", "mb", "gb"
+  etc can be used to specify the units.
   
-* minsize(size)
+* "`minsize(size)`" - Tests whether the attachment is no smaller than the
+  specified size.
 
-  Tests whether the attachment is no smaller than the specified size.
-
-* ispage()
-
-  Tests whether the attachment will be treated by ikiwiki as a wiki page.
-  (Ie, if it has an extension of ".mdwn", or of any other enabled page
-  format).
+* "`ispage()`" - Tests whether the attachment will be treated by ikiwiki as a
+  wiki page. (Ie, if it has an extension of ".mdwn", or of any other enabled
+  page format).
 
   So, if you don't want to allow wiki pages to be uploaded as attachments,
   use `!ispage()` ; if you only want to allow wiki pages to be uploaded
   as attachments, use `ispage()`.
 
-* user(username)
+* "`mimetype(foo/bar)`" - This checks the MIME type of the attachment. You can
+  include a glob in the type, for example `mimetype(image/*)`.
 
-  Tests whether the attachment is being uploaded by a user with the
-  specified username. If openid is enabled, an openid can also be put here.
-
-* adminuser()
-
-  Tests whether the attachment is being uploded by one of the wiki admins.
-
-* ip(address)
-
-  Tests whether the attacment is being uploaded from the specified IP
-  address.
-
-* mimetype(foo/bar)
-
-  This checks the MIME type of the attachment. You can include a glob
-  in the type, for example `mimetype(image/*)`.
-
-* virusfree()
-
-  Checks the attachment with an antiviral program.
+* "`virusfree()`" - Checks the attachment with an antiviral program.

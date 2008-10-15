@@ -28,3 +28,23 @@ If I then edit the blog post, **then** the file gets commited and I can see the 
 >>>> However, the part that seems a bit wrong to me, is this: even if my locale is utf8, I have to explicitly set a utf8 locale in the wiki's setup file, or the commit fails. It looks like ikiwiki is not using this machine's default locale, which is utf8. Also, I'm not getting any errors on apache's error log.
 
 >>>> Wouldn't it make sense to use the machine's default locale if 'locale' is commented out in the setup file?
+
+>>>>> Ikiwiki wrappers only allow whitelisted environment variables
+>>>>> through, and the locale environment variables are not included
+>>>>> currently.
+>>>>>
+>>>>> But that's not the whole story, because "machine's default locale"
+>>>>> is not very well defined. For example, my laptop is a Debian system.
+>>>>> It has a locale setting in /etc/environment (`LANG="en_US.UTF-8"`).
+>>>>> But even if I start apache, making sure that LANG is set and exported
+>>>>> in the environment, CGI scripts apache runs do not see LANG in their 
+>>>>> environment. (I notice that `/etc/init.d/apache` explocitly
+>>>>> forces LANG=C. But CGI scripts don't see the C value either.)
+>>>>> Apache simply does not propigate its runtime environment to CGI
+>>>>> scripts, and this is probably to comply with the CGI specification
+>>>>> (although it doesn't seem to completly rule out CGI's being passed
+>>>>> other variables).
+>>>>>
+>>>>> If mercurial needs a utf-8 locale, I guess the mercurial plugin needs
+>>>>> to check if it's not in one, and do something sane (either fail
+>>>>> earlier, or complain, or strip utf-8 out of comments). --[[Joey]]

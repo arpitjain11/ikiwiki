@@ -9,3 +9,14 @@ In my wiki, the page "realname" shows up as an orphan although it's being linked
 > reason to use other link mechanisms provided by eg, markdown for internal
 > links in the wiki (indeed, using them is likely to cause broken links
 > when doing things like inlining or renaming pages). --[[Joey]]
+
+
+The orphans plugin fails with an error when it has to deal with a page that contains '+' characters as part of the filename. Apparently the code uses regular expressions and forgets to quote that string at some cruicial point. The error message I see is:
+
+     \[[!orphans Error: Nested quantifiers in regex; 
+     marked by <-- HERE in m/^(c++ <-- HERE |)$/ at
+     /usr/lib/perl5/vendor_perl/5.8.8/IkiWiki/Plugin/orphans.pm line 43.]]
+
+--Peter
+
+> Fixed. BTW, for an important bug like this, use [[bugs]]. --[[Joey]]

@@ -1,0 +1,20 @@
+If I put something like the below in my index.mdwn
+
+    <<!inline pages="posts/* and !*/discussion" rootpage="posts" show="10">>
+
+But posts doesn't exist, I get the following in index.html
+
+    <input type="hidden" name="do" value="blog" />
+    <input type="hidden" name="from" value="" />
+    <input type="hidden" name="subpage" value="1" />
+
+When I create posts (touch posts.mdwn), I get the following in index.html
+
+    <input type="hidden" name="do" value="blog" />
+    <input type="hidden" name="from" value="posts" />
+    <input type="hidden" name="subpage" value="1" />
+
+Bug?
+
+> Yes, thanks for reminding me I need to do something about that... [[done]]
+> --[[Joey]]

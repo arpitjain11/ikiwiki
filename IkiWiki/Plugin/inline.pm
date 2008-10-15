@@ -114,7 +114,7 @@ sub format (@) { #{{{
 	return $params{content};
 } #}}}
 
-sub sessioncgi () { #{{{
+sub sessioncgi ($$) { #{{{
 	my $q=shift;
 	my $session=shift;
 
@@ -266,6 +266,9 @@ sub preprocess_inline (@) { #{{{
 		my $rootpage;
 		if (exists $params{rootpage}) {
 			$rootpage=bestlink($params{page}, $params{rootpage});
+			if (!length $rootpage) {
+				$rootpage=$params{rootpage};
+			}
 		}
 		else {
 			$rootpage=$params{page};
@@ -313,6 +316,7 @@ sub preprocess_inline (@) { #{{{
 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
 				$template->param(title => pagetitle(basename($page)));
 				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
+				$template->param(mtime => displaytime($pagemtime{$page}, $params{timeformat}));
 				$template->param(first => 1) if $page eq $list[0];
 				$template->param(last => 1) if $page eq $list[$#list];
 	
@@ -372,7 +376,7 @@ sub preprocess_inline (@) { #{{{
 					genfeed("rss",
 						$config{url}."/".$rssp, $desc, $params{guid}, $params{destpage}, @feedlist));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
-				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="RSS" href="$rssurl" />};
+				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/rss+xml" title="$desc (RSS)" href="$rssurl" />};
 			}
 		}
 		if ($atom) {
@@ -382,7 +386,7 @@ sub preprocess_inline (@) { #{{{
 				writefile($atomp, $config{destdir},
 					genfeed("atom", $config{url}."/".$atomp, $desc, $params{guid}, $params{destpage}, @feedlist));
 				$toping{$params{destpage}}=1 unless $config{rebuild};
-				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="Atom" href="$atomurl" />};
+				$feedlinks{$params{destpage}}=qq{<link rel="alternate" type="application/atom+xml" title="$desc (Atom)" href="$atomurl" />};
 			}
 		}
 	}

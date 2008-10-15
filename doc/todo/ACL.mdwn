@@ -32,7 +32,7 @@ Also see [[!debbug 443346]].
 >  defined in the wiki pages (although they could be).
 >* Given the previous two points, can't this be done with the `match_user()`
 > function defined by the [[plugins/attachment]] plugin (see the [[ikiwiki/pagespec/attachment]] pagespec info)
-> and the [[plugins/lockedit]] plugin (see [[page_locking]])?
+> and the [[plugins/lockedit]] plugin?
 >
 > For example, add the following to your config file:
 >
@@ -44,7 +44,8 @@ Also see [[!debbug 443346]].
 >> Yes, writing per-user commit ACLs has become somewhat easier with recent
 >> features. Breaking `match_user` out of attachment, and making the
 >> lockedit plugin pass`user` and `ip` params when it calls `pagespec_match`
->> would be sufficient. --[[Joey]]
+>> would be sufficient. And [[done]], configurable via
+>> [[plugin/lockedit]]'s `locked_pages`. --[[Joey]]
 
 I am considering giving this a try, implementing it as a module.
 Here is how I see it:

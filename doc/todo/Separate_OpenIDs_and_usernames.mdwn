@@ -7,3 +7,5 @@ I see this being implemented in one of two possible ways. The easiest seems like
 A slightly more complex next step would be to request sreg from the provider and, if provided, automatically set the identity's username and email address from the provided persona. If username login to accounts with blank passwords is disabled, then you have the best of both worlds. Passwordless signin, human-friendly attribution, automatic setting of preferences.
 
 Unfortunately I don't speak Perl, so hopefully someone thinks these suggestions are good enough to code up. I've hacked on openid code in Ruby before, so hopefully these changes aren't all that difficult to implement. Even if you don't get any data via sreg, you're no worse off than where you are now, so I don't think there'd need to be much in the way of error/sanity-checking of returned data. If it's null or not available then no big deal, typing in a username is no sweat.
+
+[[!tag wishlist]]
