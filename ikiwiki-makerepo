@@ -6,8 +6,8 @@ srcdir="$2"
 repository="$3"
 
 usage () {
-	echo "usage: ikiwiki-makerepo svn|git|monotone srcdir repository" >&2
-	echo "       ikiwiki-makerepo bzr|mercurial srcdir" >&2
+	echo "usage: ikiwiki-makerepo svn|git|monotone|darcs srcdir repository" >&2
+	echo "       ikiwiki-makerepo bzr|mercurial|darcs srcdir" >&2
 	exit 1
 }
 
@@ -20,7 +20,7 @@ if [ ! -d "$srcdir" ]; then
 	exit 1
 fi
 
-if [ "$rcs" != mercurial ] && [ "$rcs" != bzr ]; then
+if [ "$rcs" != mercurial ] && [ "$rcs" != bzr ] && [ "$rcs" != darcs ]; then
 	if [ -z "$repository" ]; then
 		echo "you need to specify both a srcdir and a repository for $rcs" >&2
 		usage
@@ -120,6 +120,40 @@ monotone)
 	echo "function get_passphrase (branchname)"
 	echo '    return "passphrasehere"'
 	echo "end"
+;;
+darcs)
+	if [ -e "$srcdir/_darcs" ]; then
+		echo "$srcdir already seems to be a darcs repository" >&2
+		exit 1
+	fi
+
+	# if only one arg is given, we turn the given srcdir into the darcs
+	# master repo with a hidden srcdir inside its _darcs directory.
+	if [ -z "$repository" ]; then
+		echo "Turning $srcdir into master repo."
+		repository="$srcdir"
+		srcdir="$srcdir/_darcs/srcdir"
+		echo "The new srcdir is $srcdir - adjust ikiwiki.setup accordingly!"
+	fi
+
+	mkdir -p "$repository"
+	cd "$repository"
+	darcs initialize
+
+	mkdir -p "$srcdir"
+	cd "$srcdir"
+	darcs initialize
+	echo .ikiwiki >> _darcs/prefs/boring
+	darcs record -a -l -q -m "initial import"
+	darcs pull -a -q "$repository"
+	darcs push -a -q "$repository"
+	echo "Directory $srcdir is now a branch of darcs repo $repository"
+
+	# set up master repo's apply hook and tell user to adjust it if desired
+	darcsdefaults="$repository/_darcs/prefs/defaults"
+	echo "Preconfiguring apply hook in $darcsdefaults - adjust as desired!"
+	echo "apply posthook $repository/_darcs/ikiwrapper" >> "$darcsdefaults"
+	echo "apply run-posthook" >> "$darcsdefaults"
 ;;
 *)
 	echo "Unsupported revision control system $rcs" >&2

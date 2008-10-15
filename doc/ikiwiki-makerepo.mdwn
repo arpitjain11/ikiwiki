@@ -4,9 +4,9 @@ ikiwiki-makerepo - check an ikiwiki srcdir into revision control
 
 # SYNOPSIS
 
-ikiwiki-makerepo svn|git|monotone srcdir repository
+ikiwiki-makerepo svn|git|monotone|darcs srcdir repository
 
-ikiwiki-makerepo mercurial srcdir
+ikiwiki-makerepo mercurial|darcs srcdir
 
 # DESCRIPTION
 
@@ -16,6 +16,13 @@ mercurial repository.
 
 Note that for mercurial, the srcdir is converted into a mercurial
 repository. There is no need to have a separate repository with mercurial.
+
+For darcs, the second (one-argument) form turns the given srcdir into a
+darcs master repository with the (new) srcdir inside. Adjust your ikiwiki.setup
+according to the command output! Also, the master repo's apply hook will be
+preconfigured to call a (hypothetical) ikiwiki wrapper. The command
+reports the relevant file. Adjust it as needed or remove it if you don't use
+the cgi script.
 
 Note that for monotone, you are assumed to already have run "mtn genkey" to generate
 key.
