@@ -169,6 +169,21 @@ Additional PageSpec tests
 This plugin enhances the regular [[ikiwiki/PageSpec]] syntax with some
 additional tests that are documented [[here|ikiwiki/pagespec/po]].
 
+Automatic PO files update
+-------------------------
+
+Committing changes to a "master" page:
+
+1. updates the POT file and the PO files for the supported languages
+   (this is done in the `needsbuild` hook); the updated PO files are
+   then put under version control
+2. triggers a refresh of the corresponding HTML slave pages (this is
+   achieved by making any "slave" page dependent on the corresponding
+   "master" page, in the `needsbuild` hook)
+
+Also, when the plugin has just been enabled, or when a page has just
+been declared as being translatable, the needed POT and PO files are
+created, and the PO files are checked into version control.
 
 TODO
 ====
@@ -184,26 +199,8 @@ Should pages using the `OTHERLANGUAGES` template loop be declared as
 linking to the same page in other versions? To be rigorous, they
 should, but this may clutter the backlinks.
 
-Automatic PO files update
--------------------------
-
-Committing changes to a "master" page:
-
-1. updates the POT file and the PO files for the supported languages;
-   this is done in the `needsbuild` hook; **FIXME**: the updated PO
-   files must then be put under version control
-
-2. triggers a refresh of the corresponding HTML slave pages: this is
-   achieved by making any "slave" page dependent on the corresponding
-   "master" page, in the `needsbuild` hook.
-
-Also, when the plugin has just been enabled, or when a page
-has just been declared as being translatable:
-
-- all the needed POT and PO files are be created
-- **FIXME** the PO files must be checked into version control
-
-Security checks:
+Security checks
+---------------
 
 - `refreshpofiles` uses `system()`, whose args have to be checked more
   thoroughly to prevent any security issue (command injection, etc.).

@@ -16,6 +16,7 @@ use File::Temp;
 use Memoize;
 
 my %translations;
+our %filtered;
 memoize("istranslatable");
 memoize("_istranslation");
 memoize("percenttranslated");
@@ -151,6 +152,7 @@ sub needsbuild () { #{{{
 	}
 
 	# refresh/create POT and PO files as needed
+	my $updated_po_files=0;
 	foreach my $page (keys %pagesources) {
 		my $pageneedsbuild = grep { $_ eq $pagesources{$page} } @$needsbuild;
 		if (istranslatable($page)) {
@@ -165,8 +167,26 @@ sub needsbuild () { #{{{
 					push @pofiles, $pofile;
 				}
 			}
-			refreshpofiles($file, @pofiles) if (@pofiles);
+			if (@pofiles) {
+				refreshpofiles($file, @pofiles) ;
+				map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
+				$updated_po_files = 1;
+			}
 		}
+	}
+
+	# check staged changes in and trigger a wiki refresh.
+	if ($updated_po_files) {
+		if ($config{rcs}) {
+			IkiWiki::disable_commit_hook();
+			IkiWiki::rcs_commit_staged(gettext("updated PO files"),
+				"refreshpofiles", "127.0.0.1");
+			IkiWiki::enable_commit_hook();
+			IkiWiki::rcs_update();
+		}
+		IkiWiki::refresh();
+		IkiWiki::saveindex();
+		%filtered=undef;
 	}
 
 	# refresh %translations, using istranslation's side-effect
@@ -232,7 +252,6 @@ sub tweakbestlink ($$) { #{{{
 	return $link;
 } #}}}
 
-our %filtered;
 # We use filter to convert PO to the master page's type,
 # since other plugins should not work on PO files
 sub filter (@) { #{{{
