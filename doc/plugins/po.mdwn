@@ -203,9 +203,12 @@ has just been declared as being translatable:
 - all the needed POT and PO files are be created
 - **FIXME** the PO files must be checked into version control
 
-**FIXME** `refreshpofiles` uses `system()`, whose args have to be
-checked more thoroughly to prevent any security issue (command
-injection, etc.).
+Security checks:
+
+- `refreshpofiles` uses `system()`, whose args have to be checked more
+  thoroughly to prevent any security issue (command injection, etc.).
+- `refreshpofiles` and `refreshpot` create new files; this may need
+  some checks, e.g. using `IkiWiki::prep_writefile()`
 
 Translation quality assurance
 -----------------------------
