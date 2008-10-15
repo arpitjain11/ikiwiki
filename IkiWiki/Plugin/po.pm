@@ -169,6 +169,14 @@ sub needsbuild () { #{{{
 		}
 	}
 
+	# refresh %translations, using istranslation's side-effect
+	# (not needed yet, but when newly created POT/PO files are
+	# added to %pagesources and other data structures, we'll need
+	# this)
+	foreach my $page (keys %pagesources) {
+		istranslation($page);
+	}
+
 	# make existing translations depend on the corresponding master page
 	foreach my $master (keys %translations) {
 		foreach my $slave (values %{$translations{$master}}) {
