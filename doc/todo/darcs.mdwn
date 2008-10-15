@@ -490,6 +490,9 @@ And here's yet another one, including an updated `ikiwiki-makerepo`. :)
 
 <http://khjk.org/~pesco/ikiwiki-darcs/> (now a darcs repo)
 
+> Note that there's a 'darcs' branch in git that I'm keeping a copy of your
+> code in. Just in case. :-)
+
 I've taken all the good stuff from the above and added the missing hooks. The code hasn't seen a lot of testing, so some bugs are likely yet to surface. Also, I'm not experienced with perl and don't know where I should have used the function `possibly_foolish_untaint`.
 
 Regarding the repository layout: There are two darcs repositories. One is the `srcdir`, the other we'll call `master`.
@@ -538,5 +541,9 @@ Regarding the repository layout: There are two darcs repositories. One is the `s
 > modifying attachments by re-uploading them via CGI ("darcs add failed"). Am I assuming
 > correctly that "adding" a file that's already in the repo should just be a no-op?
 > --pesco
+
+>> It should result in the new file contents being committed by
+>> `rcs_commit_staged`. For some revision control systems, which
+>> automatically commit modifications, it would be a no-op. --[[Joey]]
 
 [[!tag patch]]
