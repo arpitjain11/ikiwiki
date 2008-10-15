@@ -207,6 +207,13 @@ Security checks
 - `refreshpofiles` and `refreshpot` create new files; this may need
   some checks, e.g. using `IkiWiki::prep_writefile()`
 
+gettext/po4a rough corners
+--------------------------
+
+- fix the "duplicate message definition" error when updating a PO
+  file; do PO files need normalizing?
+- should `*.po~` backup files really be saved?
+
 Translation quality assurance
 -----------------------------
 
