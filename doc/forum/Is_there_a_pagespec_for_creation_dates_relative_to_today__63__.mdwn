@@ -11,3 +11,12 @@ Does somebody have an idea? I just came up with using a tag “recent” or usin
 Thanks,
 
 Paul
+
+> There's no such pagespec, and doing one is difficult, because such a
+> pagespec will change what it matches over time. So ikiwiki would have to
+> somehow figure out that pages matched by it yesterday no longer match,
+> and that pages containing the pagespec need to be rebuilt. Which means
+> you'd also need a cron job.
+>
+> I suspect what you're trying to accomplish is
+> [[todo/tagging_with_a_publication_date]]? --[[Joey]]
