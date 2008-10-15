@@ -126,6 +126,8 @@ Usage
 Templates
 ---------
 
+### Display page's versions in other languages
+
 The `OTHERLANGUAGES` loop provides ways to display other languages'
 versions of the same page, and the translations' status.
 
@@ -154,6 +156,11 @@ The following variables are available inside the loop (for every page in):
 - `MASTER` - is true (1) if, and only if the page is a "master" page
 - `PERCENT` - for "slave" pages, is set to the translation completeness, in percents
 
+### Display the current translation status
+
+The `PERCENTTRANSLATED` variable is set to the translation
+completeness, expressed in percent, on "slave" pages.
+
 Additional PageSpec tests
 -------------------------
 
@@ -164,27 +171,16 @@ additional tests that are documented [[here|ikiwiki/pagespec/po]].
 TODO
 ====
 
-Link relationships
-------------------
+OTHERLANGUAGES dependencies
+---------------------------
+
+Pages using `OTHERLANGUAGES` must depend on any "master" and "slave"
+pages whose status is being displayed. It will trigger dependency
+loops; how to sort this out?
 
 Should pages using the `OTHERLANGUAGES` template loop be declared as
-linking to the same page in other versions?
-
-View translation status
------------------------
-
-One should be able to view some information about the translation
-completeness, either for a given page or for the whole wiki.
-
-This should not be too hard using gettext tools. If this is
-implemented as a
-[HTML::Template](http://search.cpan.org/search?mode=dist&query=HTML%3A%3ATemplate)
-loop, a page using it should depend on any "master" and "slave" pages
-whose status is being displayed.
-
-If it's not too heavy to compute, this status data may be made
-available in the `OTHERLANGUAGES` template loop; else, a dedicated
-loop would be needed.
+linking to the same page in other versions? To be rigorous, they
+should, but this may clutter the backlinks.
 
 Automatic PO files update
 -------------------------

@@ -18,6 +18,7 @@ use Memoize;
 my %translations;
 memoize("istranslatable");
 memoize("_istranslation");
+memoize("percenttranslated");
 
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
@@ -318,6 +319,9 @@ sub pagetemplate (@) { #{{{
         my $page=$params{page};
         my $template=$params{template};
 
+	if (istranslation($page) && $template->query(name => "percenttranslated")) {
+		$template->param(percenttranslated => percenttranslated($page));
+	}
 	if ($template->query(name => "otherlanguages")) {
 		$template->param(otherlanguages => [otherlanguages($page)]);
 	}
