@@ -368,6 +368,18 @@ sub pagetemplate (@) { #{{{
 	}
 	if ($template->query(name => "otherlanguages")) {
 		$template->param(otherlanguages => [otherlanguages($page)]);
+		if (istranslatable($page)) {
+			foreach my $translation (values %{$translations{$page}}) {
+				add_depends($page, $translation);
+			}
+		}
+		elsif (istranslation($page)) {
+			my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+			add_depends($page, $masterpage);
+			foreach my $translation (values %{$translations{$masterpage}}) {
+				add_depends($page, $translation);
+			}
+		}
 	}
 } # }}}
 

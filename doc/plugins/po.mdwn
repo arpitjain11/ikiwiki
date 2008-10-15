@@ -191,9 +191,9 @@ TODO
 OTHERLANGUAGES dependencies
 ---------------------------
 
-Pages using `OTHERLANGUAGES` must depend on any "master" and "slave"
-pages whose status is being displayed. It will trigger dependency
-loops; how to sort this out?
+Pages using `OTHERLANGUAGES` depend on any "master" and "slave" pages
+whose status is being displayed. It is supposed to trigger dependency
+loops, but no practical bugs were noticed yet.
 
 Should pages using the `OTHERLANGUAGES` template loop be declared as
 linking to the same page in other versions? To be rigorous, they
