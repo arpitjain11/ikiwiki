@@ -351,7 +351,7 @@ sub otherlanguages ($) { #{{{
 				url => urlto($translations{$masterpage}{$lang}, $page),
 				code => $lang,
 				language => $config{po_slave_languages}{$lang},
-				percent => percenttranslated($page),
+				percent => percenttranslated($translations{$masterpage}{$lang}),
 			} unless ($lang eq $curlang);
 		}
 	}
