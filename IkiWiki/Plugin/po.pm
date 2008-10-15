@@ -96,10 +96,22 @@ sub checkconfig () { #{{{
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 } #}}}
 
-sub refreshpot ($) { #{{{
+sub potfile ($) { #{{{
 	my $masterfile=shift;
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
-	my $potfile=File::Spec->catfile($dir, $name . ".pot");
+	return File::Spec->catfile($dir, $name . ".pot");
+} #}}}
+
+sub pofile ($$) { #{{{
+	my $masterfile=shift;
+	my $lang=shift;
+	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
+	return File::Spec->catfile($dir, $name . "." . $lang . ".po");
+} #}}}
+
+sub refreshpot ($) { #{{{
+	my $masterfile=shift;
+	my $potfile=potfile($masterfile);
 	my %options = ("markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->read($masterfile);
@@ -114,8 +126,7 @@ sub refreshpofiles ($@) { #{{{
 	my $masterfile=shift;
 	my @pofiles=@_;
 
-	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
-	my $potfile=File::Spec->catfile($dir, $name . ".pot");
+	my $potfile=potfile($masterfile);
 	error("[po/refreshpofiles] POT file ($potfile) does not exist") unless (-e $potfile);
 
 	foreach my $pofile (@pofiles) {
@@ -139,16 +150,22 @@ sub needsbuild () { #{{{
 		istranslation($page);
 	}
 
-	# refresh POT and PO files as needed
-	foreach my $file (@$needsbuild) {
-		my $page=pagename($file);
+	# refresh/create POT and PO files as needed
+	foreach my $page (keys %pagesources) {
+		my $pageneedsbuild = grep { $_ eq $pagesources{$page} } @$needsbuild;
 		if (istranslatable($page)) {
-			refreshpot(srcfile($file));
-			my @pofiles;
-			foreach my $lang (keys %{$translations{$page}}) {
-				push @pofiles, $pagesources{$translations{$page}{$lang}};
+			my $file=srcfile($pagesources{$page});
+			if ($pageneedsbuild || ! -e potfile($file)) {
+				refreshpot($file);
 			}
-			refreshpofiles(srcfile($file), map { srcfile($_) } @pofiles);
+			my @pofiles;
+			foreach my $lang (keys %{$config{po_slave_languages}}) {
+				my $pofile=pofile($file, $lang);
+				if ($pageneedsbuild || ! -e $pofile) {
+					push @pofiles, $pofile;
+				}
+			}
+			refreshpofiles($file, @pofiles) if (@pofiles);
 		}
 	}
 
