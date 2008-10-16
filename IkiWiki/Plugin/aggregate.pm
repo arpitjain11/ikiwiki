@@ -625,6 +625,10 @@ sub add_page (@) { #{{{
 		# Store it in pagectime for expiry code to use also.
 		$IkiWiki::pagectime{$guid->{page}}=$mtime;
 	}
+	else {
+		# Dummy value for expiry code.
+		$IkiWiki::pagectime{$guid->{page}}=time;
+	}
 } #}}}
 
 sub htmlescape ($) { #{{{
