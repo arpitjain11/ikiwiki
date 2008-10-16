@@ -88,14 +88,14 @@ sub darcs_info ($$$) {
 	($_) = <DARCS_CHANGES> =~ /$field=\'([^\']+)/;
 	$field eq 'hash' and s/\.gz//; # Strip away the '.gz' from 'hash'es.
 
-	close(DARCS_CHANGES) or error("'darcs changes' exited " . $?);
+	close(DARCS_CHANGES);
 
 	return $_;
 }
 
-sub darcs_rev($) {
-	my $file = shift; # Relative to the repodir.
-	my $repodir = $config{srcdir};
+sub file_in_vc($$) {
+    my $repodir = shift;
+    my $file = shift;
 
 	my $child = open(DARCS_MANIFEST, "-|");
 	if (! $child) {
@@ -104,11 +104,18 @@ sub darcs_rev($) {
 	}
 	my $found=0;
 	while (<DARCS_MANIFEST>) {
-		$found = 1, last if /^$file$/;
+		$found = 1, last if /^(\.\/)?$file$/;
 	}
-	return "" if (! $found);
 	close(DARCS_MANIFEST) or error("'darcs query manifest' exited " . $?);
 
+	return $found;
+}
+
+sub darcs_rev($) {
+	my $file = shift; # Relative to the repodir.
+	my $repodir = $config{srcdir};
+
+    return "" if (! file_in_vc($repodir, $file));
 	my $hash = darcs_info('hash', $repodir, $file);
 	return defined $hash ? $hash : "";
 }
@@ -304,9 +311,11 @@ sub rcs_commit_staged($$$) {
 sub rcs_add ($) {
 	my $file = shift; # Relative to the repodir.
 
-	# Intermediate directories will be added automagically.
-	system('darcs', 'add', '--quiet', '--repodir', $config{srcdir},
-	   '--boring', $file) and error("'darcs add' failed");
+	if(! file_in_vc($config{srcdir}, $file)) {
+		# Intermediate directories will be added automagically.
+		system('darcs', 'add', '--quiet', '--repodir', $config{srcdir},
+			'--boring', $file) and error("'darcs add' failed");
+	}
 }
 
 sub rcs_remove ($) {
