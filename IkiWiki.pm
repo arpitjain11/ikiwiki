@@ -681,11 +681,12 @@ sub srcfile ($;$) { #{{{
 sub add_underlay ($) { #{{{
 	my $dir=shift;
 
-	if ($dir=~/^\//) {
-		unshift @{$config{underlaydirs}}, $dir;
+	if ($dir !~ /^\//) {
+		$dir="$config{underlaydir}/../$dir";
 	}
-	else {
-		unshift @{$config{underlaydirs}}, "$config{underlaydir}/../$dir";
+
+	if (! grep { $_ eq $dir } @{$config{underlaydirs}}) {
+		unshift @{$config{underlaydirs}}, $dir;
 	}
 
 	return 1;
