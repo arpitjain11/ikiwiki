@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 17:12-0400\n"
+"POT-Creation-Date: 2008-10-17 13:14-0400\n"
 "PO-Revision-Date: 2008-08-11 01:04+0200\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: None\n"
@@ -51,7 +51,7 @@ msgstr "Indstillinger gemt"
 msgid "You are banned."
 msgstr "Du er banlyst."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1153
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
 msgid "Error"
 msgstr "Fejl"
 
@@ -162,20 +162,20 @@ msgstr "der er allerede en side ved navn %s"
 msgid "prohibited by allowed_attachments"
 msgstr "forhindret af allowed_attachments"
 
-#: ../IkiWiki/Plugin/attachment.pm:188
+#: ../IkiWiki/Plugin/attachment.pm:189
 msgid "bad attachment filename"
 msgstr "dårligt vedhæftningsfilnavn"
 
-#: ../IkiWiki/Plugin/attachment.pm:230
+#: ../IkiWiki/Plugin/attachment.pm:231
 msgid "attachment upload"
 msgstr "vedhæftningsoplægning"
 
-#: ../IkiWiki/Plugin/autoindex.pm:103
+#: ../IkiWiki/Plugin/autoindex.pm:105
 msgid "automatic index generation"
 msgstr "automatisk indeks-dannelse"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -249,6 +249,15 @@ msgstr "dannelsen mislykkedes"
 msgid "fortune failed"
 msgstr "spådom (fortune) fejlede"
 
+#: ../IkiWiki/Plugin/google.pm:27
+#, fuzzy, perl-format
+msgid "Must specify %s when using the google search plugin"
+msgstr "Skal angive %s når søgeudvidelsen bruges"
+
+#: ../IkiWiki/Plugin/google.pm:31
+msgid "Failed to parse url, cannot determine domain name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/googlecalendar.pm:32
 msgid "failed to find url in html"
 msgstr "lokalisering af url i html mislykkedes"
@@ -304,20 +313,20 @@ msgstr "mangler pages-parametren"
 msgid "unknown sort type %s"
 msgstr "ukendt sorteringsform %s"
 
-#: ../IkiWiki/Plugin/inline.pm:282
+#: ../IkiWiki/Plugin/inline.pm:285
 msgid "Add a new post titled:"
 msgstr "Tilføj nyt indlæg med følgende titel:"
 
-#: ../IkiWiki/Plugin/inline.pm:298
+#: ../IkiWiki/Plugin/inline.pm:301
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "ikke-eksisterende skabelon: %s"
 
-#: ../IkiWiki/Plugin/inline.pm:331 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Diskussion"
 
-#: ../IkiWiki/Plugin/inline.pm:568
+#: ../IkiWiki/Plugin/inline.pm:572
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client ikke fundet, pinger ikke"
 
@@ -325,7 +334,7 @@ msgstr "RPC::XML::Client ikke fundet, pinger ikke"
 msgid "failed to run dot"
 msgstr "dot-kørsel mislykkedes"
 
-#: ../IkiWiki/Plugin/lockedit.pm:46 ../IkiWiki/Plugin/lockedit.pm:60
+#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
 #, fuzzy, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr "%s er låst af %s og kan ikke redigeres"
@@ -562,16 +571,16 @@ msgstr "%s er ikke i srcdir, så kan ikke blive slettet"
 msgid "%s is not a file"
 msgstr "%s er ikke en fil"
 
-#: ../IkiWiki/Plugin/remove.pm:112
+#: ../IkiWiki/Plugin/remove.pm:115
 #, perl-format
 msgid "confirm removal of %s"
 msgstr "bekræft at %s bliver fjernet"
 
-#: ../IkiWiki/Plugin/remove.pm:148
+#: ../IkiWiki/Plugin/remove.pm:152
 msgid "Please select the attachments to remove."
 msgstr "Vælg vedhæftning der skal slettes."
 
-#: ../IkiWiki/Plugin/remove.pm:188
+#: ../IkiWiki/Plugin/remove.pm:192
 msgid "removed"
 msgstr "fjernet"
 
@@ -608,20 +617,20 @@ msgstr "omdøb %s"
 msgid "Also rename SubPages and attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:223
+#: ../IkiWiki/Plugin/rename.pm:224
 msgid "Only one attachment can be renamed at a time."
 msgstr "Kun en vedhæftning kan blive omdøbt ad gangen."
 
-#: ../IkiWiki/Plugin/rename.pm:226
+#: ../IkiWiki/Plugin/rename.pm:227
 msgid "Please select the attachment to rename."
 msgstr "Vælg vedhæftningen som skal omdøbes."
 
-#: ../IkiWiki/Plugin/rename.pm:332
+#: ../IkiWiki/Plugin/rename.pm:338
 #, perl-format
 msgid "rename %s to %s"
 msgstr "omdøb %s til %s"
 
-#: ../IkiWiki/Plugin/rename.pm:484
+#: ../IkiWiki/Plugin/rename.pm:490
 #, perl-format
 msgid "update for rename of %s to %s"
 msgstr "opdatering til omdøbning af %s til %s"
@@ -926,12 +935,12 @@ msgstr ""
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1136
+#: ../IkiWiki.pm:1149
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "forudberegningssløkke fundet på %s ved dybde %i"
 
-#: ../IkiWiki.pm:1645
+#: ../IkiWiki.pm:1658
 msgid "yes"
 msgstr "ja"
 

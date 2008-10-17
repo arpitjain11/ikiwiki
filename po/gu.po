@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 17:12-0400\n"
+"POT-Creation-Date: 2008-10-17 13:14-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -48,7 +48,7 @@ msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 msgid "You are banned."
 msgstr "તમારા પર પ્રતિબંધ છે."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1153
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
 msgid "Error"
 msgstr "ક્ષતિ"
 
@@ -161,20 +161,20 @@ msgstr ""
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:188
+#: ../IkiWiki/Plugin/attachment.pm:189
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:230
+#: ../IkiWiki/Plugin/attachment.pm:231
 msgid "attachment upload"
 msgstr ""
 
-#: ../IkiWiki/Plugin/autoindex.pm:103
+#: ../IkiWiki/Plugin/autoindex.pm:105
 msgid "automatic index generation"
 msgstr ""
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -251,6 +251,15 @@ msgstr "ક્રિયા કરવામાં નિષ્ફળ:"
 msgid "fortune failed"
 msgstr "ભવિષ્ય નિષ્ફળ"
 
+#: ../IkiWiki/Plugin/google.pm:27
+#, fuzzy, perl-format
+msgid "Must specify %s when using the google search plugin"
+msgstr "જ્યારે શોધ પ્લગઇન ઉપયોગ કરતા હોવ ત્યારે %s સ્પષ્ટ કરવું જ પડશે"
+
+#: ../IkiWiki/Plugin/google.pm:31
+msgid "Failed to parse url, cannot determine domain name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/googlecalendar.pm:32
 msgid "failed to find url in html"
 msgstr "htmlમાં યુઆરએલ શોધવામાં નિષ્ફળ"
@@ -308,20 +317,20 @@ msgstr "ખોવાયેલ %s વિકલ્પ"
 msgid "unknown sort type %s"
 msgstr "અજાણ્યો ગોઠવણી પ્રકાર %s"
 
-#: ../IkiWiki/Plugin/inline.pm:282
+#: ../IkiWiki/Plugin/inline.pm:285
 msgid "Add a new post titled:"
 msgstr "આ શિર્ષકથી નવું પોસ્ટ ઉમેરો:"
 
-#: ../IkiWiki/Plugin/inline.pm:298
+#: ../IkiWiki/Plugin/inline.pm:301
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "અસ્તિત્વમાં ન હોય તેવું ટેમ્પલેટ %s"
 
-#: ../IkiWiki/Plugin/inline.pm:331 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "ચર્ચા"
 
-#: ../IkiWiki/Plugin/inline.pm:568
+#: ../IkiWiki/Plugin/inline.pm:572
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવામાં આવતું નથી"
 
@@ -329,7 +338,7 @@ msgstr "RPC::XML::Client મળ્યું નહી, પિંગ કરવા
 msgid "failed to run dot"
 msgstr "ડોટ ચલાવવામાં નિષ્ફળ"
 
-#: ../IkiWiki/Plugin/lockedit.pm:46 ../IkiWiki/Plugin/lockedit.pm:60
+#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
 #, fuzzy, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr "%s એ %s દ્વારા તાળું મરાયેલ છે અને તેમાં સુધારો કરી શકાશે નહી"
@@ -568,16 +577,16 @@ msgstr "%s એ %s દ્વારા તાળું મરાયેલ છે �
 msgid "%s is not a file"
 msgstr "%s એ સુધારી શકાય તેવું પાનું નથી"
 
-#: ../IkiWiki/Plugin/remove.pm:112
+#: ../IkiWiki/Plugin/remove.pm:115
 #, perl-format
 msgid "confirm removal of %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:148
+#: ../IkiWiki/Plugin/remove.pm:152
 msgid "Please select the attachments to remove."
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:188
+#: ../IkiWiki/Plugin/remove.pm:192
 msgid "removed"
 msgstr ""
 
@@ -615,20 +624,20 @@ msgstr "રેન્ડર કરે છે %s"
 msgid "Also rename SubPages and attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:223
+#: ../IkiWiki/Plugin/rename.pm:224
 msgid "Only one attachment can be renamed at a time."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:226
+#: ../IkiWiki/Plugin/rename.pm:227
 msgid "Please select the attachment to rename."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:332
+#: ../IkiWiki/Plugin/rename.pm:338
 #, perl-format
 msgid "rename %s to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:484
+#: ../IkiWiki/Plugin/rename.pm:490
 #, fuzzy, perl-format
 msgid "update for rename of %s to %s"
 msgstr "%s નો સુધારો %s નાં %s વડે"
@@ -934,12 +943,12 @@ msgstr ""
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1136
+#: ../IkiWiki.pm:1149
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"
 
-#: ../IkiWiki.pm:1645
+#: ../IkiWiki.pm:1658
 msgid "yes"
 msgstr ""
 

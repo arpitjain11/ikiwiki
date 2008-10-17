@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-08 17:34-0400\n"
+"POT-Creation-Date: 2008-10-17 13:14-0400\n"
 "PO-Revision-Date: 2008-10-07 12:44+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -173,7 +173,7 @@ msgid "automatic index generation"
 msgstr "creación de índice automática"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:326 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -247,6 +247,15 @@ msgstr "fallo en el proceso"
 msgid "fortune failed"
 msgstr "el programa fortune ha fallado"
 
+#: ../IkiWiki/Plugin/google.pm:27
+#, fuzzy, perl-format
+msgid "Must specify %s when using the google search plugin"
+msgstr "Es obligatorio indicar %s cuando se utiliza el complemento de búsqueda"
+
+#: ../IkiWiki/Plugin/google.pm:31
+msgid "Failed to parse url, cannot determine domain name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/googlecalendar.pm:32
 msgid "failed to find url in html"
 msgstr ""
@@ -313,11 +322,11 @@ msgstr "Añadir una entrada nueva titulada:"
 msgid "nonexistant template %s"
 msgstr "la plantilla %s no existe "
 
-#: ../IkiWiki/Plugin/inline.pm:334 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:571
+#: ../IkiWiki/Plugin/inline.pm:572
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 

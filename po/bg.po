@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 17:12-0400\n"
+"POT-Creation-Date: 2008-10-17 13:14-0400\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -49,7 +49,7 @@ msgstr "Предпочитанията са запазени."
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1153
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
 msgid "Error"
 msgstr "Грешка"
 
@@ -163,20 +163,20 @@ msgstr ""
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:188
+#: ../IkiWiki/Plugin/attachment.pm:189
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:230
+#: ../IkiWiki/Plugin/attachment.pm:231
 msgid "attachment upload"
 msgstr ""
 
-#: ../IkiWiki/Plugin/autoindex.pm:103
+#: ../IkiWiki/Plugin/autoindex.pm:105
 msgid "automatic index generation"
 msgstr ""
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:323 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -253,6 +253,15 @@ msgstr "грешка при обработване на шаблона"
 msgid "fortune failed"
 msgstr "грешшка в приставката „fortune”"
 
+#: ../IkiWiki/Plugin/google.pm:27
+#, fuzzy, perl-format
+msgid "Must specify %s when using the google search plugin"
+msgstr "При използване на приеставката „search” е необходимо е да се укаже %s"
+
+#: ../IkiWiki/Plugin/google.pm:31
+msgid "Failed to parse url, cannot determine domain name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/googlecalendar.pm:32
 #, fuzzy
 msgid "failed to find url in html"
@@ -314,20 +323,20 @@ msgstr "липсващ параметър „id” на шаблона"
 msgid "unknown sort type %s"
 msgstr "непознат вид сортиране „%s”"
 
-#: ../IkiWiki/Plugin/inline.pm:282
+#: ../IkiWiki/Plugin/inline.pm:285
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:298
+#: ../IkiWiki/Plugin/inline.pm:301
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:331 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Дискусия"
 
-#: ../IkiWiki/Plugin/inline.pm:568
+#: ../IkiWiki/Plugin/inline.pm:572
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "модулът „RPC::XML::Client” не е намерен; източникът не е проверен"
 
@@ -336,7 +345,7 @@ msgstr "модулът „RPC::XML::Client” не е намерен; източ
 msgid "failed to run dot"
 msgstr "приставката „linkmap”: грешка при изпълнение на „dot”"
 
-#: ../IkiWiki/Plugin/lockedit.pm:46 ../IkiWiki/Plugin/lockedit.pm:60
+#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
 #, fuzzy, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr ""
@@ -579,16 +588,16 @@ msgstr ""
 msgid "%s is not a file"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:112
+#: ../IkiWiki/Plugin/remove.pm:115
 #, perl-format
 msgid "confirm removal of %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:148
+#: ../IkiWiki/Plugin/remove.pm:152
 msgid "Please select the attachments to remove."
 msgstr ""
 
-#: ../IkiWiki/Plugin/remove.pm:188
+#: ../IkiWiki/Plugin/remove.pm:192
 msgid "removed"
 msgstr ""
 
@@ -626,20 +635,20 @@ msgstr "обновяване на страницата „%s”"
 msgid "Also rename SubPages and attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:223
+#: ../IkiWiki/Plugin/rename.pm:224
 msgid "Only one attachment can be renamed at a time."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:226
+#: ../IkiWiki/Plugin/rename.pm:227
 msgid "Please select the attachment to rename."
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:332
+#: ../IkiWiki/Plugin/rename.pm:338
 #, perl-format
 msgid "rename %s to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/rename.pm:484
+#: ../IkiWiki/Plugin/rename.pm:490
 #, fuzzy, perl-format
 msgid "update for rename of %s to %s"
 msgstr "обновяване на страниците от уики „%s”: %s от потребител „%s”"
@@ -955,12 +964,12 @@ msgstr ""
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1136
+#: ../IkiWiki.pm:1149
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"
 
-#: ../IkiWiki.pm:1645
+#: ../IkiWiki.pm:1658
 msgid "yes"
 msgstr ""
 

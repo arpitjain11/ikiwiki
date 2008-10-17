@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-05 19:11-0400\n"
+"POT-Creation-Date: 2008-10-17 13:14-0400\n"
 "PO-Revision-Date: 2008-09-23 10:00+0100\n"
 "Last-Translator: Julien Patriarca <patriarcaj@gmail.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -170,12 +170,12 @@ msgstr "Mauvais nom de la pièce jointe"
 msgid "attachment upload"
 msgstr "envoi de la pièce jointe"
 
-#: ../IkiWiki/Plugin/autoindex.pm:103
+#: ../IkiWiki/Plugin/autoindex.pm:105
 msgid "automatic index generation"
 msgstr "génération de l'index automatique"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:326 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -249,6 +249,15 @@ msgstr "Échec du traitement"
 msgid "fortune failed"
 msgstr "Échec du lancement de « fortune »"
 
+#: ../IkiWiki/Plugin/google.pm:27
+#, fuzzy, perl-format
+msgid "Must specify %s when using the google search plugin"
+msgstr "Vous devez indiquer %s lors de l'utilisation du greffon de recherche"
+
+#: ../IkiWiki/Plugin/google.pm:31
+msgid "Failed to parse url, cannot determine domain name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/googlecalendar.pm:32
 msgid "failed to find url in html"
 msgstr "Échec dans la recherche d'une URL dans le Code HTML"
@@ -315,11 +324,11 @@ msgstr "Ajouter un nouvel article dont le titre est :"
 msgid "nonexistant template %s"
 msgstr "Le modèle (« template ») %s n'existe pas"
 
-#: ../IkiWiki/Plugin/inline.pm:334 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:571
+#: ../IkiWiki/Plugin/inline.pm:572
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -327,7 +336,7 @@ msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 msgid "failed to run dot"
 msgstr "Échec du lancement de dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:46 ../IkiWiki/Plugin/lockedit.pm:60
+#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
 #, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr "%s est verouillé et ne peut être édité"
@@ -566,16 +575,16 @@ msgstr "%s n'est pas dans srcdir et ne peut donc pas être supprimé"
 msgid "%s is not a file"
 msgstr "%s n'est pas un fichier"
 
-#: ../IkiWiki/Plugin/remove.pm:113
+#: ../IkiWiki/Plugin/remove.pm:115
 #, perl-format
 msgid "confirm removal of %s"
 msgstr "Suppression de %s confirmée"
 
-#: ../IkiWiki/Plugin/remove.pm:150
+#: ../IkiWiki/Plugin/remove.pm:152
 msgid "Please select the attachments to remove."
 msgstr "Veuillez choisir la pièce jointe à supprimer"
 
-#: ../IkiWiki/Plugin/remove.pm:190
+#: ../IkiWiki/Plugin/remove.pm:192
 msgid "removed"
 msgstr "supprimé"
 
