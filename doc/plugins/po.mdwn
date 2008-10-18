@@ -128,6 +128,9 @@ Usage
 Templates
 ---------
 
+The `ISTRANSLATION` and `ISTRANSLATABLE` variables can be used to
+display things only on translatable or translation pages.
+
 ### Display page's versions in other languages
 
 The `OTHERLANGUAGES` loop provides ways to display other languages'
@@ -162,6 +165,14 @@ The following variables are available inside the loop (for every page in):
 
 The `PERCENTTRANSLATED` variable is set to the translation
 completeness, expressed in percent, on "slave" pages.
+
+One can use it this way:
+
+	<TMPL_IF NAME="ISTRANSLATION">
+	<div id="percenttranslated">
+	  <TMPL_VAR NAME="PERCENTTRANSLATED">
+	</div>
+	</TMPL_IF>
 
 Additional PageSpec tests
 -------------------------
@@ -221,6 +232,13 @@ gettext/po4a rough corners
   a PO update, that changes bla.fr.po in repo2; etc.; fixed in
   `629968fc89bced6727981c0a1138072631751fee` ?
 
+Misc. improvements
+------------------
+
+### page titles
+
+Use nice page titles from meta plugin in links, as inline already does.
+
 Translation quality assurance
 -----------------------------
 
@@ -238,6 +256,8 @@ Translating online
 
 As PO is a wiki page type, we already have an online PO editor, that
 is ikiwiki's CGI.
+
+**FIXME** preview does not work for PO files.
 
 A message-by-message interface could also be implemented at some
 point; a nice way to do offline translation work (without VCS access)

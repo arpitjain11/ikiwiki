@@ -371,6 +371,12 @@ sub pagetemplate (@) { #{{{
 	if (istranslation($page) && $template->query(name => "percenttranslated")) {
 		$template->param(percenttranslated => percenttranslated($page));
 	}
+	if ($template->query(name => "istranslation")) {
+		$template->param(istranslation => istranslation($page));
+	}
+	if ($template->query(name => "istranslatable")) {
+		$template->param(istranslatable => istranslatable($page));
+	}
 	if ($template->query(name => "otherlanguages")) {
 		$template->param(otherlanguages => [otherlanguages($page)]);
 		if (istranslatable($page)) {
