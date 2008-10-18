@@ -9,6 +9,7 @@ use strict;
 use IkiWiki 2.00;
 use Encode;
 use Locale::Po4a::Chooser;
+use Locale::Po4a::Po;
 use File::Basename;
 use File::Copy;
 use File::Spec;
@@ -119,6 +120,12 @@ sub refreshpot ($) { #{{{
 	$doc->{TT}{utf_mode} = 1;
 	$doc->{TT}{file_in_charset} = 'utf-8';
 	$doc->{TT}{file_out_charset} = 'utf-8';
+	# let's cheat a bit to force porefs option to be passed to Locale::Po4a::Po;
+	# this is undocument use of internal Locale::Po4a::TransTractor's data,
+	# compulsory since this module prevents us from using the porefs option.
+	my %po_options = ('porefs' => 'none');
+	$doc->{TT}{po_out}=Locale::Po4a::Po->new(\%po_options);
+	# do the actual work
 	$doc->parse;
 	$doc->writepo($potfile);
 } #}}}
