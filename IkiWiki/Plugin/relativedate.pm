@@ -7,6 +7,7 @@ use IkiWiki 2.00;
 
 sub import { #{{{
 	add_underlay("javascript");
+	hook(type => "getsetup", id => "relativedate", call => \&getsetup);
 	hook(type => "format", id => "relativedate", call => \&format);
 } # }}}
 
