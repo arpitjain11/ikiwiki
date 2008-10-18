@@ -6,6 +6,7 @@ use strict;
 use IkiWiki 2.00;
 
 sub import { #{{{
+	add_underlay("javascript");
 	hook(type => "getsetup", id => "attachment", call => \&getsetup);
 	hook(type => "checkconfig", id => "attachment", call => \&checkconfig);
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
@@ -104,10 +105,10 @@ sub formbuilder_setup (@) { #{{{
 		$form->tmpl_param("field-upload" => '<input name="_submit" type="submit" value="Upload Attachment" />');
 		$form->tmpl_param("field-link" => '<input name="_submit" type="submit" value="Insert Links" />');
 
-		# Add the javascript from the toggle plugin;
-		# the attachments interface uses it to toggle visibility.
+		# Add the toggle javascript; the attachments interface uses
+		# it to toggle visibility.
 		require IkiWiki::Plugin::toggle;
-		$form->tmpl_param("javascript" => $IkiWiki::Plugin::toggle::javascript);
+		$form->tmpl_param("javascript" => IkiWiki::Plugin::toggle::include_javascript($params{page}, 1));
 		# Start with the attachments interface toggled invisible,
 		# but if it was used, keep it open.
 		if ($form->submitted ne "Upload Attachment" &&

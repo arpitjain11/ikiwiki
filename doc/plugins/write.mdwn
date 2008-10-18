@@ -847,3 +847,32 @@ to a hash containing all the config items. They should also implement a
 By the way, to parse a ikiwiki setup file and populate `%config`, a
 program just needs to do something like:
 `use IkiWiki::Setup; IkiWiki::Setup::load($filename)`
+
+### Javascript
+
+Some plugins use javascript to make ikiwiki look a bit more web-2.0-ish.
+
+All javascript code should be put in `.js` files in the `javascript`
+underlay, and plugins using those files can enable use of the underlay by
+calling `add_underlay("javascript");` in their `import` function.
+
+You'll have to arrange for `<script>` tags to be added to the pages that
+use your javascript. This can be done using a `format` hook.
+
+Ikiwiki provides some utility functions in `ikiwiki.js`, for use by other
+javascript code. These include:
+
+#### `getElementsByClass(cls, node, tag)` 
+
+Returns an array of elements with the given class. The node and tag are
+optional and define what document node and element names to search.
+
+#### `hook(name, call)`
+
+The function `call` will be run as part of the hook named `name`.
+
+Note that to hook into `window.onload`, you can use the `onload' hook.
+
+#### `run_hooks(name)`
+
+Runs the hooks with the specified name.

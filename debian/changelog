@@ -1,3 +1,12 @@
+ikiwiki (2.68) UNRELEASED; urgency=low
+
+  * Add an underlay for javascript, and add ikiwiki.js containing some utility
+    code.
+  * toggle: Stop embedding the full toggle code on each page using it, and
+    move it to toggle.js in the javascript underlay.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
+
 ikiwiki (2.67) unstable; urgency=low
 
   * remove: Avoid $_ breakage. (Stupid, stupid perl.)
