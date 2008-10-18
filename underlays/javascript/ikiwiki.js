@@ -1,6 +1,6 @@
 // ikiwiki's javascript utility function library
 
-var hooks = new Array;
+var hooks;
 window.onload = run_hooks_onload;
 
 function run_hooks_onload() {
@@ -8,16 +8,19 @@ function run_hooks_onload() {
 }
 
 function run_hooks(name) {
-	for (var i = 0; i < hooks.length; i++) {
-		if (hooks[i].name == name) {
-			hooks[i].call();
+	if (typeof(hooks) != "undefined") {
+		for (var i = 0; i < hooks.length; i++) {
+			if (hooks[i].name == name) {
+				hooks[i].call();
+			}
 		}
 	}
 }
 
 function hook(name, call) {
-	var h={name: name, call: call};
-	hooks.push(h);
+	if (typeof(hooks) == "undefined")
+		hooks = new Array;
+	hooks.push({name: name, call: call});
 }
 
 function getElementsByClass(cls, node, tag) {
