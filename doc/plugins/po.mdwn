@@ -214,6 +214,12 @@ gettext/po4a rough corners
 - fix the "duplicate message definition" error when updating a PO
   file; do PO files need normalizing? (may be a side effect of
   previous bug)
+- fix infinite loop when synchronizing two ikiwiki (when checkouts
+  live in different directories): say bla.fr.po has been updated in
+  repo2; pulling repo2 from repo1 seems to trigger a PO update, that
+  changes bla.fr.po in repo1; then pushing repo1 to repo2 triggers
+  a PO update, that changes bla.fr.po in repo2; etc.; fixed in
+  `629968fc89bced6727981c0a1138072631751fee` ?
 
 Translation quality assurance
 -----------------------------
