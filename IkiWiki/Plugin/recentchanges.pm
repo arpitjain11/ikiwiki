@@ -115,8 +115,6 @@ sub store ($$$) { #{{{
 	my $change=shift;
 
 	my $page="$config{recentchangespage}/change_".titlepage($change->{rev});
-	my $baseurl = IkiWiki::baseurl();
-	my $permalink="$baseurl$config{recentchangespage}/#change-".titlepage($change->{rev});
 
 	# Optimisation to avoid re-writing pages. Assumes commits never
 	# change (or that any changes are not important).
@@ -177,8 +175,11 @@ sub store ($$$) { #{{{
 		commitdate => displaytime($change->{when}, "%X %x"),
 		commitdate_raw => scalar localtime($change->{when}),
 		wikiname => $config{wikiname},
-		permalink => $permalink,
 	);
+	
+	$template->param(permalink => $config{url}."$config{recentchangespage}/#change-".titlepage($change->{rev}))
+		if exists $config{url};
+	
 	IkiWiki::run_hooks(pagetemplate => sub {
 		shift->(page => $page, destpage => $page,
 			template => $template, rev => $change->{rev});
