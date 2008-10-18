@@ -1,0 +1,16 @@
+[[!template id=plugin name=prettydate author="[[Joey]]"]]
+[[!tag type/date]]
+
+This plugin lets dates be displayed in relative form. Examples: "2 days ago", 
+"1 month and 3 days ago", "30 minutes ago". Hovering over the date will
+cause a tooltip to pop up with the absolute date.
+
+This only works in browsers with javascript enabled; other browsers will
+show the absolute date instead. Also, this plugin can be used with other
+plugins like [[prettydate]] that change how the absolute date is displayed.
+
+If this plugin is enabled, you may also add relative dates to pages in the
+wiki, by using html elements in the "date" class. For example, this will
+display as a relative date:
+
+	<span class="date">Fri Oct 17 18:36:13 EDT 2008</span>

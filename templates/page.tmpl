@@ -22,7 +22,7 @@
 <span>
 <span class="parentlinks">
 <TMPL_LOOP NAME="PARENTLINKS">
-<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>/ 
+<a href="<TMPL_VAR URL>"><TMPL_VAR PAGE></a>/ 
 </TMPL_LOOP>
 </span>
 <span class="title">
@@ -74,7 +74,7 @@
 <div class="tags">
 Tags:
 <TMPL_LOOP NAME="TAGS">
-<TMPL_VAR NAME=LINK>
+<TMPL_VAR LINK>
 </TMPL_LOOP>
 </div>
 </TMPL_IF>
@@ -83,13 +83,13 @@ Tags:
 <div id="backlinks">
 Links:
 <TMPL_LOOP NAME="BACKLINKS">
-<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>
+<a href="<TMPL_VAR URL>"><TMPL_VAR PAGE></a>
 </TMPL_LOOP>
 <TMPL_IF NAME="MORE_BACKLINKS">
 <span class="popup">...
 <span class="balloon">
 <TMPL_LOOP NAME="MORE_BACKLINKS">
-<a href="<TMPL_VAR NAME=URL>"><TMPL_VAR NAME=PAGE></a>
+<a href="<TMPL_VAR URL>"><TMPL_VAR PAGE></a>
 </TMPL_LOOP>
 </span>
 </span>
@@ -112,13 +112,13 @@ License: <TMPL_VAR LICENSE>
 </TMPL_IF>
 
 <div class="pagedate">
-Last edited <TMPL_VAR NAME=MTIME>
-<!-- Created <TMPL_VAR NAME=CTIME> -->
+Last edited <span class="date" title="<TMPL_VAR MTIME_RAW>"><TMPL_VAR MTIME></span>
+<!-- Created <TMPL_VAR CTIME> -->
 </div>
 
 </div><!-- #pageinfo -->
 <TMPL_IF EXTRAFOOTER><TMPL_VAR EXTRAFOOTER></TMPL_IF>
-<!-- from <TMPL_VAR NAME=WIKINAME> -->
+<!-- from <TMPL_VAR WIKINAME> -->
 </div><!-- .pagefooter #footer -->
 
 </body>
