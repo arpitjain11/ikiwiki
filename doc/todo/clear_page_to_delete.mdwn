@@ -1,4 +1,16 @@
 Would it make sense to automatically delete a page if it's edited and
-cleared to be entirely empty (or only have whitespace)? Discuss.
+cleared to be entirely empty (or only have whitespace)? Discuss. --[[Joey]]
 
- I'd say so; yes. A method of deleting pages via the web would be great; I can't think of a use of keeping blank pages around. What about vandalism -- if someone blanks a page and deletes it and someone else wishes to restore it; or is undoing edits via the web a bigger issue? -- [[JonDowland]]
+ I'd say so; yes. A method of deleting pages via the web would be great; I
+can't think of a use of keeping blank pages around. What about vandalism --
+if someone blanks a page and deletes it and someone else wishes to restore
+it; or is undoing edits via the web a bigger issue? -- [[JonDowland]]
+
+Of course there's already a way to delete pages (remove plugin). So the
+question is really:
+
+* Does it make sense to have a second way to do it, by clearing the page?
+* Should it be enabled even if the full remove plugin isn't?
+
+Re vandalism in general, I am generally happy using git-revert to kill the
+offending change. --[[Joey]]
