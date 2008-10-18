@@ -210,8 +210,10 @@ Security checks
 gettext/po4a rough corners
 --------------------------
 
+- fix the duplicated PO header mysterious bug
 - fix the "duplicate message definition" error when updating a PO
-  file; do PO files need normalizing?
+  file; do PO files need normalizing? (may be a side effect of
+  previous bug)
 - should `*.po~` backup files really be saved?
 
 Translation quality assurance
