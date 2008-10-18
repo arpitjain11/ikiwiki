@@ -128,6 +128,9 @@ Usage
 Templates
 ---------
 
+The `ISTRANSLATION` and `ISTRANSLATABLE` variables can be used to
+display things only on translatable or translation pages.
+
 ### Display page's versions in other languages
 
 The `OTHERLANGUAGES` loop provides ways to display other languages'
@@ -162,6 +165,14 @@ The following variables are available inside the loop (for every page in):
 
 The `PERCENTTRANSLATED` variable is set to the translation
 completeness, expressed in percent, on "slave" pages.
+
+One can use it this way:
+
+	<TMPL_IF NAME="ISTRANSLATION">
+	<div id="percenttranslated">
+	  <TMPL_VAR NAME="PERCENTTRANSLATED">
+	</div>
+	</TMPL_IF>
 
 Additional PageSpec tests
 -------------------------
