@@ -214,6 +214,25 @@ gettext/po4a rough corners
 - fix the "duplicate message definition" error when updating a PO
   file; do PO files need normalizing? (may be a side effect of
   previous bug)
+- fix infinite loop when synchronizing two ikiwiki (when checkouts
+  live in different directories): say bla.fr.po has been updated in
+  repo2; pulling repo2 from repo1 seems to trigger a PO update, that
+  changes bla.fr.po in repo1; then pushing repo1 to repo2 triggers
+  a PO update, that changes bla.fr.po in repo2; etc.; fixed in
+  `629968fc89bced6727981c0a1138072631751fee` ?
+
+Misc. bugs
+----------
+
+
+
+Misc. improvements
+------------------
+
+### page titles
+
+Use nice page titles from meta plugin in links, as inline already does.
+
 
 Translation quality assurance
 -----------------------------
@@ -232,6 +251,8 @@ Translating online
 
 As PO is a wiki page type, we already have an online PO editor, that
 is ikiwiki's CGI.
+
+**FIXME** preview does not work for PO files.
 
 A message-by-message interface could also be implemented at some
 point; a nice way to do offline translation work (without VCS access)
