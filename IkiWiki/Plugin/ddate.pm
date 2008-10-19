@@ -17,7 +17,7 @@ sub getsetup { #{{{
 		},
 } #}}}
 
-sub IkiWiki::displaytime ($;$) { #{{{
+sub IkiWiki::formattime ($;$) { #{{{
 	my $time=shift;
 	my $format=shift;
 	if (! defined $format) {

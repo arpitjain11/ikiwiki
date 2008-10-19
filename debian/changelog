@@ -9,6 +9,9 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * recentchanges: Make feed links point back to anchors on the recentchanges
     page. (JasonBlevins)
   * Updated French translation. Closes: #502694
+  * Plugins that used to override displaytime should instead override
+    formattime. displaytime will call that, and may wrap markup around the
+    formatted time.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
 

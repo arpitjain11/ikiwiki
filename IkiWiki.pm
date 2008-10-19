@@ -898,6 +898,12 @@ sub abs2rel ($$) { #{{{
 } #}}}
 
 sub displaytime ($;$) { #{{{
+	# Plugins can override this function to mark up the time for
+	# display.
+	return formattime(@_);
+} #}}}
+
+sub formattime ($;$) { #{{{
 	my $time=shift;
 	my $format=shift;
 	if (! defined $format) {

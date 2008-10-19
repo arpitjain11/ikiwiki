@@ -461,9 +461,7 @@ sub aggregate (@) { #{{{
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
 		$feed->{message}=sprintf(gettext("last checked %s"),
-			'<span class="date" title="'.
-			localtime($feed->{lastupdate}).'">'.
-			displaytime($feed->{lastupdate}).'</span>');
+			displaytime($feed->{lastupdate}));
 		$feed->{error}=0;
 
 		debug(sprintf(gettext("checking feed %s ..."), $feed->{name}));
