@@ -22,7 +22,7 @@ in `~ikiwki_example/ikiwiki_example.git/hooks/post-update`, is
 executable and contains:
 
 	#!/bin/sh
-	/usr/bin/ssh ikiwiki_amnesia@www bin/ikiwiki.update
+	/usr/bin/ssh ikiwiki_example@www bin/ikiwiki.update
 
 Password-less SSH must be setup to make this possible; one can
 restrict `gitserver:ikiwiki_example` to be able to run only the needed
