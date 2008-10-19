@@ -47,7 +47,7 @@ sub getsetup () { #{{{
 				'name' => 'English'
 			},
 			description => "master language (non-PO files)",
-			safe => 1,
+			safe => 0,
 			rebuild => 1,
 		},
 		po_slave_languages => {
@@ -58,7 +58,7 @@ sub getsetup () { #{{{
 				'de' => 'Deutsch'
 			},
 			description => "slave languages (PO files)",
-			safe => 1,
+			safe => 0,
 			rebuild => 1,
 		},
 		po_translatable_pages => {
@@ -66,14 +66,14 @@ sub getsetup () { #{{{
 			example => "!*/Discussion",
 			description => "PageSpec controlling which pages are translatable",
 			link => "ikiwiki/PageSpec",
-			safe => 1,
+			safe => 0,
 			rebuild => 1,
 		},
 		po_link_to => {
 			type => "string",
 			example => "current",
 			description => "internal linking behavior (default/current/negotiated)",
-			safe => 1,
+			safe => 0,
 			rebuild => 1,
 		},
 } #}}}
