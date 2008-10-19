@@ -22,14 +22,14 @@ in `~ikiwki_example/ikiwiki_example.git/hooks/post-update`, is
 executable and contains:
 
 	#!/bin/sh
-	/usr/bin/ssh ikiwiki_example@www bin/ikiwiki.update
+	/usr/bin/ssh ikiwiki_example@webserver bin/ikiwiki.update
 
 Password-less SSH must be setup to make this possible; one can
 restrict `gitserver:ikiwiki_example` to be able to run only the needed
 command on the web server, using such a line in
 `webserver:~ikiwiki_example/.ssh/authorized_keys`:
 
-	command="bin/ikiwiki.update",from="vcs.example.com",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa ...
+	command="bin/ikiwiki.update",from="gitserver.example.com",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa ...
 
 Web server
 ==========
