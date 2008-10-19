@@ -1,0 +1,8 @@
+I spent hours trying to understand why my wiki suddenly refused me to log in (using passwordauth).
+The failure message was always: `login failed, perhaps you need to turn on cookies?`
+
+Inspecting the cookie information (thanks to Iceweasel's webdeveloper add-on), I realized there were some weird-looking encoded chars in the cookie name.
+
+Replacing "·" with "-" in `wikiname` fixed this login issue.
+
+(BTW, such a char was replaced by -I don't remember what encoding thingie- in my setup file, when running `ikiwiki-transition setupformat`.)
