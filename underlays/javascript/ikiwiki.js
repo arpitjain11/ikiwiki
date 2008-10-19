@@ -1,9 +1,21 @@
 // ikiwiki's javascript utility function library
 
 var hooks;
+
+// Run onload as soon as the DOM is ready, if possible.
+// gecko, opera 9
+if (document.addEventListener) {
+	document.addEventListener("DOMContentLoaded", run_hooks_onload, false);
+}
+// other browsers
 window.onload = run_hooks_onload;
 
 function run_hooks_onload() {
+	// avoid firing twice
+	if (arguments.callee.done)
+		return;
+	arguments.callee.done = true;
+
 	run_hooks("onload");
 }
 
