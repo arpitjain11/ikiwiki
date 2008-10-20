@@ -460,7 +460,7 @@ sub aggregate (@) { #{{{
 	foreach my $feed (@_) {
 		$feed->{lastupdate}=time;
 		$feed->{newposts}=0;
-		$feed->{message}=sprintf(gettext("processed ok at %s"),
+		$feed->{message}=sprintf(gettext("last checked %s"),
 			displaytime($feed->{lastupdate}));
 		$feed->{error}=0;
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-17 13:14-0400\n"
+"POT-Creation-Date: 2008-10-19 19:12-0400\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -51,7 +51,7 @@ msgstr "Preferencje zapisane."
 msgid "You are banned."
 msgstr "Twój dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
 msgid "Error"
 msgstr "Błąd"
 
@@ -92,8 +92,8 @@ msgstr "wygasający wpis %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:463
 #, perl-format
-msgid "processed ok at %s"
-msgstr "kanał RSS przetworzony w dniu %s"
+msgid "last checked %s"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:467
 #, perl-format
@@ -156,20 +156,20 @@ msgstr "Awaria w trakcie wysyłania wiadomości"
 msgid "Failed to delete file from S3: "
 msgstr "awaria w trakcie zmiany rozmiaru: %s"
 
-#: ../IkiWiki/Plugin/attachment.pm:48
+#: ../IkiWiki/Plugin/attachment.pm:49
 #, perl-format
 msgid "there is already a page named %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:81
+#: ../IkiWiki/Plugin/attachment.pm:82
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:190
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:232
 msgid "attachment upload"
 msgstr ""
 
@@ -970,12 +970,12 @@ msgstr ""
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1149
+#: ../IkiWiki.pm:1156
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
 
-#: ../IkiWiki.pm:1658
+#: ../IkiWiki.pm:1665
 msgid "yes"
 msgstr ""
 
@@ -998,6 +998,9 @@ msgstr ""
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr ""
+
+#~ msgid "processed ok at %s"
+#~ msgstr "kanał RSS przetworzony w dniu %s"
 
 #~ msgid "Your password has been emailed to you."
 #~ msgstr "Wiadomość z hasłem została wysłana."

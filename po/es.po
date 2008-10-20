@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-17 13:14-0400\n"
+"POT-Creation-Date: 2008-10-19 19:12-0400\n"
 "PO-Revision-Date: 2008-10-07 12:44+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Las preferencias se han guardado."
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
 msgid "Error"
 msgstr "Error"
 
@@ -90,8 +90,8 @@ msgstr "%s caducada"
 
 #: ../IkiWiki/Plugin/aggregate.pm:463
 #, perl-format
-msgid "processed ok at %s"
-msgstr "proceso completado con éxito a %s"
+msgid "last checked %s"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:467
 #, perl-format
@@ -151,20 +151,20 @@ msgstr "No puedo guardar el archivo en S3: "
 msgid "Failed to delete file from S3: "
 msgstr "No puedo borrar archivo en S3: "
 
-#: ../IkiWiki/Plugin/attachment.pm:48
+#: ../IkiWiki/Plugin/attachment.pm:49
 #, perl-format
 msgid "there is already a page named %s"
 msgstr "ya existe una página de nombre %s"
 
-#: ../IkiWiki/Plugin/attachment.pm:81
+#: ../IkiWiki/Plugin/attachment.pm:82
 msgid "prohibited by allowed_attachments"
 msgstr "prohibido por la claúsula allowed_attachments"
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:190
 msgid "bad attachment filename"
 msgstr "nombre de archivo adjunto erróneo"
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:232
 msgid "attachment upload"
 msgstr "enviado el adjunto"
 
@@ -948,14 +948,14 @@ msgstr "no puedo emplear varios complementos rcs"
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr "no he podido cargar el complemento externo %s necesario para %s"
 
-#: ../IkiWiki.pm:1149
+#: ../IkiWiki.pm:1156
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 "se ha detectado en la página %s un bucle de preprocesado en la iteración "
 "número %i"
 
-#: ../IkiWiki.pm:1658
+#: ../IkiWiki.pm:1665
 msgid "yes"
 msgstr "si"
 
@@ -980,6 +980,9 @@ msgstr ""
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr "¿ Cuál es el dominio para el servidor web ?"
+
+#~ msgid "processed ok at %s"
+#~ msgstr "proceso completado con éxito a %s"
 
 #~ msgid "Your password has been emailed to you."
 #~ msgstr "Se le ha enviado su contraseña por correo electrónico."

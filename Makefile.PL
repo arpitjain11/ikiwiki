@@ -54,6 +54,7 @@ extra_install:
 	for dir in `cd underlays && find . -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		for file in `find underlays/$$dir -follow -maxdepth 1 -type f`; do \
+			cp -aL $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir || \
 			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		done; \
 	done

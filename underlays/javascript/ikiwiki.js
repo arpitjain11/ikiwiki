@@ -1,23 +1,38 @@
 // ikiwiki's javascript utility function library
 
-var hooks = new Array;
+var hooks;
+
+// Run onload as soon as the DOM is ready, if possible.
+// gecko, opera 9
+if (document.addEventListener) {
+	document.addEventListener("DOMContentLoaded", run_hooks_onload, false);
+}
+// other browsers
 window.onload = run_hooks_onload;
 
 function run_hooks_onload() {
+	// avoid firing twice
+	if (arguments.callee.done)
+		return;
+	arguments.callee.done = true;
+
 	run_hooks("onload");
 }
 
 function run_hooks(name) {
-	for (var i = 0; i < hooks.length; i++) {
-		if (hooks[i].name == name) {
-			hooks[i].call();
+	if (typeof(hooks) != "undefined") {
+		for (var i = 0; i < hooks.length; i++) {
+			if (hooks[i].name == name) {
+				hooks[i].call();
+			}
 		}
 	}
 }
 
 function hook(name, call) {
-	var h={name: name, call: call};
-	hooks.push(h);
+	if (typeof(hooks) == "undefined")
+		hooks = new Array;
+	hooks.push({name: name, call: call});
 }
 
 function getElementsByClass(cls, node, tag) {

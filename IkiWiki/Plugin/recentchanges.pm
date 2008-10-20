@@ -173,7 +173,6 @@ sub store ($$$) { #{{{
 	$template->param(
 		%$change,
 		commitdate => displaytime($change->{when}, "%X %x"),
-		commitdate_raw => scalar localtime($change->{when}),
 		wikiname => $config{wikiname},
 	);
 	

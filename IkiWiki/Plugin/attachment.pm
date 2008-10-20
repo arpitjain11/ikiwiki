@@ -280,7 +280,6 @@ sub attachment_list ($) { #{{{
 				link => htmllink($page, $page, $f, noimageinline => 1),
 				size => IkiWiki::Plugin::filecheck::humansize((stat(_))[7]),
 				mtime => displaytime($IkiWiki::pagemtime{$f}),
-				mtime_raw => $IkiWiki::pagemtime{$f},
 			};
 		}
 	}
