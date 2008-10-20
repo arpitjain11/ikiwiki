@@ -196,7 +196,6 @@ generating the page.
 
 	hook(type => "pagetemplate", id => "foo", call => \&pagetemplate);
 
-
 [[Templates|wikitemplates]] are filled out for many different things in
 ikiwiki, like generating a page, or part of a blog page, or an rss feed, or
 a cgi. This hook allows modifying the variables available on those
@@ -360,6 +359,13 @@ called. It can be used to validate the form, but should not display it.
 This hook is called whenever ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
+
+### displaytime
+
+	hook(type => "displaytime", id => "foo", call => \&display);
+
+This hook can be registered to override the regular `displaytime` function.
+Only the last displaytime hook will be used.
 
 ### renamepage
 
