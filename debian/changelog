@@ -20,6 +20,10 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * inline: Only the last feed link was put on the page, fix this to include
     all feed links. So rss will be included along with atom, and pages with
     multiple feeds will get links added for all feeds.
+  * tag: When tagpage is set, force the links created by tagging to point at
+    the toplevel tagpage, and not closer subpages. The html links already went
+    there, but internally the links were not recorded as absolute, which could
+    cause confusing backlinks etc.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
 
