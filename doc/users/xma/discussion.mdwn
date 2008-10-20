@@ -1,1 +1,8 @@
 How do you edit this wiki (I mean [ikiwiki]) without the web browser ? Is there a way to git clone/pull/push and thus to use our favorite [text editor](http://www.gnu.org/software/emacs) ? --[[xma]]
+
+> You can clone ikiwiki's [[git]] repo. I have not implemented a way to
+> allow users to push doc wiki only changesets anonymously, but you can
+> mails changesets to me. It would be nice to have a git recieve hook that
+> checked that a commit contained only changes to .mdwn or other allowed
+> extensions.. if someone writes up a good one, I'd be willing to deploy it
+> for ikiwiki. --[[Joey]]
