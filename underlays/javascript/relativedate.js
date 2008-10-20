@@ -1,4 +1,4 @@
-// Causes html elements in the 'date' and 'pagedate' classes to be displayed
+// Causes html elements in the 'relativedate' class to be displayed
 // as relative dates. The date is parsed from the title attribute, or from
 // the element content.
 
@@ -7,7 +7,7 @@ var dateElements;
 hook("onload", getDates);
 
 function getDates() {
-	dateElements = getElementsByClass('date');
+	dateElements = getElementsByClass('relativedate');
 	for (var i = 0; i < dateElements.length; i++) {
 		var elt = dateElements[i];
 		var title = elt.attributes.title;

@@ -53,7 +53,7 @@ sub display ($;$) { #{{{
 	my $gmtime=decode_utf8(POSIX::strftime("%a, %d %b %Y %H:%M:%S %z",
 			localtime($time)));
 
-	return '<span class="date" title="'.$gmtime.'">'.
+	return '<span class="relativedate" title="'.$gmtime.'">'.
 		IkiWiki::formattime($time, $format).'</span>';
 } #}}}
 
