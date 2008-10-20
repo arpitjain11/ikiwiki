@@ -12,6 +12,8 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * Plugins that used to override displaytime should instead override
     formattime. displaytime will call that, and may wrap markup around the
     formatted time.
+  * Fix issue with utf-8 in wikiname breaking session cookies, by
+    entity-encoding the wikiname in the session cookie.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
 

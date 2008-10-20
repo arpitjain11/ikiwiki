@@ -5,4 +5,10 @@ Inspecting the cookie information (thanks to Iceweasel's webdeveloper add-on), I
 
 Replacing "·" with "-" in `wikiname` fixed this login issue.
 
+> Hmm, Recai sent me a patch a long time ago to handle utf-8 here by encoding
+> the wikiname. But it doesn't seem to work, somehow the encoded utf-8
+> value still doesn't make it through. (CGI::Session seems to have underermined utf-8
+> issues too.) Seems like I will have to possibly break some sessions and
+> entity-encode the wikiname in the cookie.. done. --[[Joey]]
+
 (BTW, such a char was replaced by -I don't remember what encoding thingie- in my setup file, when running `ikiwiki-transition setupformat`.)
