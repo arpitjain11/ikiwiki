@@ -1,0 +1,16 @@
+I've been working on a plugin called "po", that adds support for multi-lingual wikis,
+translated with gettext, using [po4a](http://po4a.alioth.debian.org/).
+
+More information:
+
+* It can be found in my "po" branch on http://repo.or.cz/w/ikiwiki/intrigeri.git
+* It involves adding three hooks to ikiwiki core.
+* It is documented (including TODO and plans for next work steps) in `doc/plugins/po.mdwn`, which can be found in the same branch.
+* No public demo site is available so far, I'm working on this.
+
+My plan is to get this plugin clean enough to be included in ikiwiki.
+
+The current version is a proof-of-concept, mature enough for me to dare submitting it here,
+but I'm prepared to hear various helpful remarks, and to rewrite parts of it as needed.
+
+Any thoughts on this?
