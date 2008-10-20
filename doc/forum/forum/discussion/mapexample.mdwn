@@ -1,0 +1,8 @@
+This is an experiment to see if a map would be clearer for the forum sub-pages than an inline.
+----
+[[!inline pages="forum/*  and !forum/discussion and !forum/*/*" 
+actions=yes rootpage="forum" postformtext="Add a new thread titled:" show=-1]]
+<!-- show=-1 hack so we get the post form but not any inlined pages. On my TODO
+     list is to split out the form functionality into a different plugin. - JonDowland -->
+[[!map pages="forum/*  and !forum/discussion and !forum/*/*"]]
+
