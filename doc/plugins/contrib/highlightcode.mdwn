@@ -1,3 +1,6 @@
+[[!template id=plugin name=highlightcode author="[[sabr]]"]]
+[[!tag type/format]]
+
 A small plugin to allow Ikiwiki to display source files complete with syntax highlighting. Files with recognized extensions (i.e. my-file.cpp) are be rendered just like any other Ikiwiki page. You can even edit your source files with Ikiwiki's editor.
 
 It uses the Syntax::Highlight::Engine::Kate Perl module to do the highlighting.
