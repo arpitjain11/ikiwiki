@@ -1,0 +1,61 @@
+One may want to provide ikiwiki hosting with [[rcs/git]]+ssh access and web
+server located at different hosts. Here's a description for such
+a setup, using password-less SSH as a way of communication between
+these two hosts.
+
+Git server
+==========
+
+Let's create a user called `ikiwiki_example`. This user gets SSH
+access restricted to GIT pull/push, using `git-shell` as a shell.
+
+The root (bare) repository:
+
+- is stored in `~ikiwki_example/ikiwiki_example.git`
+- is owned by `ikiwiki_example:ikiwiki_example`
+- has permissions 0700
+
+The master repository's post-update hook connects via SSH to
+`webserver` as user `ikiwiki_example`, in order to run
+`~/bin/ikiwiki.update` on `webserver`; this post-update hook, located
+in `~ikiwki_example/ikiwiki_example.git/hooks/post-update`, is
+executable and contains:
+
+	#!/bin/sh
+	/usr/bin/ssh ikiwiki_example@webserver bin/ikiwiki.update
+
+Password-less SSH must be setup to make this possible; one can
+restrict `gitserver:ikiwiki_example` to be able to run only the needed
+command on the web server, using such a line in
+`webserver:~ikiwiki_example/.ssh/authorized_keys`:
+
+	command="bin/ikiwiki.update",from="gitserver.example.com",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa ...
+
+Web server
+==========
+
+Let's create a user called `ikiwiki_example` on `webserver`. She needs
+to have write permission to the destination directory.
+
+The working tree repository (`srcdir`):
+
+- is stored in `~ikiwki_example/src`
+- is owned by `ikiwiki_example:ikiwiki_example`
+- has permissions 0700
+- has the following origin: `ikiwiki_example@gitserver:ikiwiki_example.git`
+
+The CGI wrapper is generated with ownership set to
+`ikiwiki_example:ikiwiki_example` and permissions `06755`.
+
+Password-less SSH must be setup so that `ikiwiki_example@webserver` is
+allowed to push to the master repository. As told earlier, SSH access
+to `ikiwiki_example@gitserver` is restricted to GIT pull/push, which
+is just what we need.
+
+The Git wrapper is generated in `~ikiwiki_example/bin/ikiwiki.update`:
+
+	git_wrapper => '/home/ikiwiki_example/bin/ikiwiki.update'
+
+As previously explained, this wrapper is run over SSH by the master
+repository's post-update hook; it pulls updates from the master
+repository and triggers a wiki refresh.

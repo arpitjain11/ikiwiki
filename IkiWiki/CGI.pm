@@ -278,9 +278,9 @@ sub check_banned ($$) { #{{{
 sub cgi_getsession ($) { #{{{
 	my $q=shift;
 
-	eval q{use CGI::Session};
+	eval q{use CGI::Session; use HTML::Entities};
 	error($@) if $@;
-	CGI::Session->name("ikiwiki_session_".encode_utf8($config{wikiname}));
+	CGI::Session->name("ikiwiki_session_".encode_entities($config{wikiname}));
 	
 	my $oldmask=umask(077);
 	my $session = eval {

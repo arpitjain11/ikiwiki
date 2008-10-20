@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-17 13:14-0400\n"
+"POT-Creation-Date: 2008-10-19 19:12-0400\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -48,7 +48,7 @@ msgstr "Inställningar sparades."
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1166
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
 msgid "Error"
 msgstr "Fel"
 
@@ -89,8 +89,8 @@ msgstr "låter %s gå ut"
 
 #: ../IkiWiki/Plugin/aggregate.pm:463
 #, perl-format
-msgid "processed ok at %s"
-msgstr "behandlad ok på %s"
+msgid "last checked %s"
+msgstr ""
 
 #: ../IkiWiki/Plugin/aggregate.pm:467
 #, perl-format
@@ -153,20 +153,20 @@ msgstr "Misslyckades med att skicka e-post"
 msgid "Failed to delete file from S3: "
 msgstr "misslyckades med att skriva %s: %s"
 
-#: ../IkiWiki/Plugin/attachment.pm:48
+#: ../IkiWiki/Plugin/attachment.pm:49
 #, perl-format
 msgid "there is already a page named %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:81
+#: ../IkiWiki/Plugin/attachment.pm:82
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:189
+#: ../IkiWiki/Plugin/attachment.pm:190
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:231
+#: ../IkiWiki/Plugin/attachment.pm:232
 msgid "attachment upload"
 msgstr ""
 
@@ -957,12 +957,12 @@ msgstr ""
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1149
+#: ../IkiWiki.pm:1156
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"
 
-#: ../IkiWiki.pm:1658
+#: ../IkiWiki.pm:1665
 msgid "yes"
 msgstr ""
 
@@ -985,6 +985,9 @@ msgstr ""
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr ""
+
+#~ msgid "processed ok at %s"
+#~ msgstr "behandlad ok på %s"
 
 #~ msgid "Your password has been emailed to you."
 #~ msgstr "Ditt lösenord har skickats till dig via e-post."

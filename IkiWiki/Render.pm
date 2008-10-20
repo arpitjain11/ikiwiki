@@ -109,9 +109,7 @@ sub genpage ($$) { #{{{
 		backlinks => $backlinks,
 		more_backlinks => $more_backlinks,
 		mtime => displaytime($pagemtime{$page}),
-		mtime_raw => scalar localtime($pagemtime{$page}),
 		ctime => displaytime($pagectime{$page}),
-		ctime_raw => scalar localtime($pagectime{$page}),
 		baseurl => baseurl($page),
 	);
 
