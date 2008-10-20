@@ -28,3 +28,19 @@ Any thoughts on this?
 > Please keep me posted, when you get closer to having all issues solved
 > and ready for merging I can do a review and hopefully help with the
 > security items you listed. --[[Joey]]
+
+>> Thanks a lot for your quick review, it's reassuring to hear such nice words
+>> from you. I did not want to design and write a full translation system, when
+>> tools such as gettext/po4a already have all the needed functionality, for cases
+>> where the master/slave languages paradigm fits.
+>> Integrating these tools into ikiwiki plugin system was a pleasure.
+>>
+>> I'll tell you when I'm ready for merging, but in the meantime,
+>> I'd like you to review the changes I did to the core (3 added hooks).
+>> Can you please do this? If not, I'll go on and hope I'm not going to far in
+>> the wrong direction.
+>>
+>> The Discussion pages issue is something I am not sure about yet. But I will
+>> probably decide that "slave" pages, being only translations, don't deserve
+>> a discussion page: the discussion should happen in the language in which the
+>> pages are written for real, which is the "master" one. --[[intrigeri]]
