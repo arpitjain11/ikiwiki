@@ -17,6 +17,9 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * Use the pure perl Data::Dumper when generating setup files to ensure that
     utf-8 characters are written out as such, and not as the encoded perl
     strings the C Data::Dumper produces.
+  * inline: Only the last feed link was put on the page, fix this to include
+    all feed links. So rss will be included along with atom, and pages with
+    multiple feeds will get links added for all feeds.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
 
