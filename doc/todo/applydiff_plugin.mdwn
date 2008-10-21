@@ -69,13 +69,15 @@ Also see [[joey]]'s idea on [[users/xma/discussion]], to allow (filtered) anonym
 > and use `parse_diff_tree` to get a list of the files changed. Then it
 > could determine if the changes were allowed.
 > 
-> To do that, it should perhaps first look at what unix user received the
+> To do that, it should first look at what unix user received the
 > commit.  That could be mapped directly to an ikiwiki user. This would
-> typically be an unprivelidged user, but you might also want to set up
-> separate users who have fewer limits on what they can push. OTOH, I'm not
-> sure how to get this info in an ikiwiki wrapper.. the real and effective
-> gid are already trampled. So maybe leave this out and always treat it as
-> an anonymous edit from a non-logged in user?
+> typically be an unprivelidged user (that was set up just to allow
+> anonymous pushes), but you might also want to set up
+> separate users who have fewer limits on what they can push. And, of
+> course, pushes from the main user, who owns the wiki, would not be
+> checked at all. So, let's say `$config{usermap}` is a hash, something
+> like `{usera => "wikiusera", userb => "wikiuserb"}`, and pushes from
+> users not in the hash are not checked.
 > 
 > Then it seems like it would want to call `check_canedit` to test if an
 > edit to each changed page is allowed. Might also want to call
