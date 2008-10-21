@@ -1,0 +1,5 @@
+In ikiwiki 2.66, SVG images are not recognized as images. In ikiwiki.pm, the hardcoded list of image file extensions does not include ".svg", which it probably should unless there's some other issue about rendering SVGs?
+
+The 'img' plugin also seems to not support SVGs.
+
+
