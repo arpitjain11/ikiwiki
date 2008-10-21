@@ -40,6 +40,14 @@ Any thoughts on this?
 >> Can you please do this? If not, I'll go on and hope I'm not going to far in
 >> the wrong direction.
 >>
+>>> Sure.. I'm not completly happy with any of the hooks since they're very
+>>> special purpose, and also since `run_hooks` is not the best interface
+>>> for a hook that modifies a variable, where only the last hook run will
+>>> actually do anything. It might be better to just wrap
+>>> `targetpage`, `bestlink`, and `beautify_urlpath`. But, I noticed
+>>> the other day that such wrappers around exported functions are only visible by
+>>> plugins loaded after the plugin that defines them.
+>>
 >> The Discussion pages issue is something I am not sure about yet. But I will
 >> probably decide that "slave" pages, being only translations, don't deserve
 >> a discussion page: the discussion should happen in the language in which the
