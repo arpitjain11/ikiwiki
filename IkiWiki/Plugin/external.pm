@@ -202,7 +202,9 @@ sub inject ($@) { #{{{
 	my $sub = sub {
 		IkiWiki::Plugin::external::rpc_call($plugin, $params{call}, @_)
 	};
+	no warnings;
 	eval qq{*$params{name}=\$sub};
+	use warnings;
 	memoize($params{name}) if $params{memoize};
 	return 1;
 } #}}}
