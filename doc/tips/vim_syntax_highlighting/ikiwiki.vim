@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language:     Ikiwiki (links)
-" Maintainer:   Recai Oktaþ (roktasATdebian.org)
+" Maintainer:   Recai OktaÅŸ (roktasATdebian.org)
 " Last Change:  2007 May 29
 
 " Instructions:
