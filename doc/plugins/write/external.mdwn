@@ -96,14 +96,13 @@ the sentinal.
 
 ## Function injection
 
-Some parts of ikiwiki are extensible by adding functions. For example, the
-RCS interface relies on plugins providing several IkiWiki::rcs_* functions.
+Some parts of ikiwiki are extensible by adding or overriding functions.
 It's actually possible to do this from an external plugin too. 
 
-To make your external plugin provide an `IkiWiki::rcs_update` function, for
+To make your external plugin override the `IkiWiki::formattime` function, for
 example, make an RPC call to `inject`. Pass it named parameters "name" and
 "call", where "name" is the name of the function to inject into perl (here
-"Ikiwiki::rcs_update" and "call" is the RPC call ikiwiki will make whenever
+"Ikiwiki::formattime" and "call" is the RPC call ikiwiki will make whenever
 that function is run.
 
 If the RPC call is memoizable, you can also pass a "memoize" parameter, set
