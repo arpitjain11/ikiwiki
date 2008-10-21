@@ -1,5 +1,15 @@
-In ikiwiki 2.66, SVG images are not recognized as images. In ikiwiki.pm, the hardcoded list of image file extensions does not include ".svg", which it probably should unless there's some other issue about rendering SVGs?
+In ikiwiki 2.66, SVG images are not recognized as images. In ikiwiki.pm,
+the hardcoded list of image file extensions does not include ".svg", which
+it probably should unless there's some other issue about rendering SVGs?
 
 The 'img' plugin also seems to not support SVGs.
 
-
+> SVG images can only be included via an `<object>`, `<embed>`, or
+> `<iframe>` tag. Or, perhaps as [inline SVG](http://wiki.svg.org/Inline_SVG). 
+> The [[plugins/htmlscrubber]] strips all three tags since they can easily
+> be used maliciously. If doing inline SVG, I'd worry that the svg file
+> could be malformed and mess up the html, or even inject javascript. So,
+> the only options seem to be only supporting svgs on wikis that do not
+> sanitize their html, or assuming that svgs are trusted content and
+> embedding them inline. None of which seem particularly palatable.
+> --[[Joey]]
