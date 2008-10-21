@@ -47,6 +47,11 @@ Any thoughts on this?
 >>> `targetpage`, `bestlink`, and `beautify_urlpath`. But, I noticed
 >>> the other day that such wrappers around exported functions are only visible by
 >>> plugins loaded after the plugin that defines them.
+>>> 
+>>> Update: Take a look at the new "Function overriding" section of
+>>> [[plugins/write]]. I think you can just inject wrappers about a few ikiwiki
+>>> functions, rather than adding hooks. The `inject` function is pretty
+>>> insane^Wlow level, but seems to work great. --[[Joey]]
 >>
 >> The Discussion pages issue is something I am not sure about yet. But I will
 >> probably decide that "slave" pages, being only translations, don't deserve

@@ -854,6 +854,56 @@ By the way, to parse a ikiwiki setup file and populate `%config`, a
 program just needs to do something like:
 `use IkiWiki::Setup; IkiWiki::Setup::load($filename)`
 
+### Function overriding
+
+Sometimes using ikiwiki's pre-defined hooks is not enough. Your plugin
+may need to replace one of ikiwiki's own functions with a modified version,
+or wrap one of the functions.
+
+For example, your plugin might want to override `displaytime`, to change
+the html markup used when displaying a date. Or it might want to override
+`IkiWiki::formattime`, to change how a date is formatted. Or perhaps you
+want to override `bestlink` and change how ikiwiki deals with WikiLinks.
+
+By venturing into this territory, your plugin is becoming tightly tied to
+ikiwiki's internals. And it might break if those internals change. But
+don't let that stop you, if you're brave.
+
+Ikiwiki provides an `inject()` function, that is a powerful way to replace
+any function with one of your own. This even allows you to inject a
+replacement for an exported function, like `bestlink`. Everything that
+imports that function will get your version instead. Pass it the name of
+the function to replace, and a new function to call. 
+
+For example, here's how to replace `displaytime` with a version using HTML 5
+markup:
+
+	inject(name => 'IkiWiki::displaytime', call => sub {
+		return "<time>".formattime(@_)."</time>";
+	});
+
+Here's how to wrap `bestlink` with a version that tries to handle
+plural words:
+
+	my $origbestlink=\&bestlink;
+	inject(name => 'IkiWiki::bestlink', call => \&mybestlink);
+
+	sub deplural ($) {
+		my $word=shift;
+		$word =~ s/e?s$//; # just an example :-)
+		return $word;
+	}
+
+	sub mybestlink ($$) {
+		my $page=shift;
+		my $link=shift;
+		my $ret=$origbestlink->($page, $link);
+		if (! length $ret) {
+			$ret=$origbestlink->($page, deplural($link));
+		}
+		return $ret;
+	}
+
 ### Javascript
 
 Some plugins use javascript to make ikiwiki look a bit more web-2.0-ish.

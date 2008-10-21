@@ -12,7 +12,7 @@ sub import { #{{{
 	add_underlay("javascript");
 	hook(type => "getsetup", id => "relativedate", call => \&getsetup);
 	hook(type => "format", id => "relativedate", call => \&format);
-	hook(type => "displaytime", id => "relativedate", call => \&display);
+	inject(name => "IkiWiki::displaytime", call => \&mydisplaytime);
 } # }}}
 
 sub getsetup () { #{{{
@@ -43,7 +43,7 @@ sub include_javascript ($;$) { #{{{
 		'" type="text/javascript" charset="utf-8"></script>';
 } #}}}
 
-sub display ($;$) { #{{{
+sub mydisplaytime ($;$) { #{{{
 	my $time=shift;
 	my $format=shift;
 

@@ -21,6 +21,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
 		 add_underlay pagetitle titlepage linkpage newpagefile
+		 inject
                  %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
@@ -898,23 +899,13 @@ sub abs2rel ($$) { #{{{
 } #}}}
 
 sub displaytime ($;$) { #{{{
-	my $time=shift;
-	my $format=shift;
-	if (exists $hooks{displaytime}) {
-		my $ret;
-		run_hooks(displaytime => sub {
-			$ret=shift->($time, $format)
-		});
-		return $ret;
-	}
-	else {
-		return formattime($time, $format);
-	}
+	# Plugins can override this function to mark up the time to
+	# display.
+	return '<span class="date">'.formattime(@_).'</span>';
 } #}}}
 
 sub formattime ($;$) { #{{{
-	# Plugins can override this function to mark up the time for
-	# display.
+	# Plugins can override this function to format the time.
 	my $time=shift;
 	my $format=shift;
 	if (! defined $format) {
@@ -1676,6 +1667,31 @@ sub yesno ($) { #{{{
 	return (defined $val && lc($val) eq gettext("yes"));
 } #}}}
 
+sub inject { #{{{
+	# Injects a new function into the symbol table to replace an
+	# exported function.
+	my %params=@_;
+
+	# This is deep ugly perl foo, beware.
+	no strict;
+	no warnings;
+	if (! defined $params{parent}) {
+		$params{parent}='::';
+		$params{old}=\&{$params{name}};
+		$params{name}=~s/.*:://;
+	}
+	my $parent=$params{parent};
+	foreach my $ns (grep /^\w+::/, keys %{$parent}) {
+		$ns = $params{parent} . $ns;
+		inject(%params, parent => $ns) unless $ns eq '::main::';
+		*{$ns . $params{name}} = $params{call}
+			if exists ${$ns}{$params{name}} &&
+			   \&{${$ns}{$params{name}}} == $params{old};
+	}
+	use strict;
+	use warnings;
+} #}}}
+
 sub pagespec_merge ($$) { #{{{
 	my $a=shift;
 	my $b=shift;
@@ -1770,7 +1786,7 @@ sub pagespec_valid ($) { #{{{
 	my $sub=pagespec_translate($spec);
 	return ! $@;
 } #}}}
-	
+
 sub glob2re ($) { #{{{
 	my $re=quotemeta(shift);
 	$re=~s/\\\*/.*/g;

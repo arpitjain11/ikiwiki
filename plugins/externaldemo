@@ -106,9 +106,8 @@ sub import {
 		rpc_call("getvar", "config", "url")."\n";
 
 	# Here's an example of how to inject an arbitrary function into
-	# ikiwiki, replacing a core function.
-	# Note use of automatic memoization.
-	rpc_call("inject", name => "IkiWiki::formattime",
+	# ikiwiki. Note use of automatic memoization.
+	rpc_call("inject", name => "IkiWiki::bob",
 		call => "formattime", memoize => 1);
 
 	print STDERR "externaldemo plugin successfully imported\n";
@@ -126,9 +125,8 @@ sub preprocess {
 	return "externaldemo plugin preprocessing on $title!";
 }
 
-sub formattime {
-	print STDERR "externaldemo plugin's formattime called via RPC";
-	return scalar "formatted time: ".localtime(shift);
+sub bob {
+	print STDERR "externaldemo plugin's bob called via RPC";
 }
 
 # Now all that's left to do is loop and handle each incoming RPC request.

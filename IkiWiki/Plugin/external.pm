@@ -202,10 +202,16 @@ sub inject ($@) { #{{{
 	my $sub = sub {
 		IkiWiki::Plugin::external::rpc_call($plugin, $params{call}, @_)
 	};
+	$sub=memoize($sub) if $params{memoize};
+
+	# This will add it to the symbol table even if not present.
 	no warnings;
 	eval qq{*$params{name}=\$sub};
 	use warnings;
-	memoize($params{name}) if $params{memoize};
+
+	# This will ensure that everywhere it was exported to sees
+	# the injected version.
+	IkiWiki::inject(name => $params{name}, call => $sub);
 	return 1;
 } #}}}
 
