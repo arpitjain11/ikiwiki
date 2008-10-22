@@ -360,13 +360,6 @@ This hook is called whenever ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
 
-### displaytime
-
-	hook(type => "displaytime", id => "foo", call => \&display);
-
-This hook can be registered to override the regular `displaytime` function.
-Only the last displaytime hook will be used.
-
 ### renamepage
 
 	hook(type => "renamepage", id => "foo", call => \&renamepage);
