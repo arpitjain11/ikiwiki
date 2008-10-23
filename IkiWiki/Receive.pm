@@ -22,7 +22,6 @@ sub trusted () { #{{{
 
 sub test () { #{{{
 	exit 0 if trusted();
-	IkiWiki::rcs_test_receive();
 	
 	# Dummy up a cgi environment to use when calling check_canedit
 	# and friends.
@@ -31,20 +30,19 @@ sub test () { #{{{
 	my $cgi=CGI->new;
 	require IkiWiki::CGI;
 	my $session=IkiWiki::cgi_getsession($cgi);
-	my $user=getuser();
-	$session->param("name", $user);
+	$session->param("name", getuser());
 	$ENV{REMOTE_ADDR}='unknown' unless exists $ENV{REMOTE_ADDR};
 
-	lockwiki();
-	loadindex();
+	IkiWiki::lockwiki();
+	IkiWiki::loadindex();
 
 	my %newfiles;
 
 	foreach my $change (IkiWiki::rcs_receive()) {
 		# This untaint is safe because we check file_pruned and
 		# wiki_file_regexp.
-		my $file=$change->{file}=~/$config{wiki_file_regexp}/;
-		$file=possibly_foolish_untaint($file);
+		my ($file)=$change->{file}=~/$config{wiki_file_regexp}/;
+		$file=IkiWiki::possibly_foolish_untaint($file);
 		if (! defined $file || ! length $file ||
 		    IkiWiki::file_pruned($file, $config{srcdir})) {
 			error(gettext("bad file name"));
