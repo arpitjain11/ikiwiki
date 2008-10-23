@@ -9,6 +9,7 @@ use open qw{:utf8 :std};
 
 my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
+my $no_chdir=0;
 
 sub import { #{{{
 	hook(type => "checkconfig", id => "git", call => \&checkconfig);
@@ -127,8 +128,10 @@ sub safe_git (&@) { #{{{
 	if (!$pid) {
 		# In child.
 		# Git commands want to be in wc.
-		chdir $config{srcdir}
-		    or error("Cannot chdir to $config{srcdir}: $!");
+		if (! $no_chdir) {
+			chdir $config{srcdir}
+			    or error("Cannot chdir to $config{srcdir}: $!");
+		}
 		exec @cmdline or error("Cannot exec '@cmdline': $!");
 	}
 	# In parent.
@@ -606,13 +609,20 @@ sub rcs_receive () { #{{{
 	while (<>) {
 		chomp;
 		my ($oldrev, $newrev, $refname) = split(' ', $_, 3);
-
+		
 		# only allow changes to gitmaster_branch
 		if ($refname !~ /^refs\/heads\/\Q$config{gitmaster_branch}\E$/) {
 			error sprintf(gettext("you are not allowed to change %s"), $refname);
 		}
+		
+		# Avoid chdir when running git here, because the changes
+		# are in the master git repo, not the srcdir repo.
+		# The pre-recieve hook already puts us in the right place.
+		$no_chdir=1;
+		my @changes=git_commit_info($oldrev."..".$newrev);
+		$no_chdir=0;
 
-		foreach my $ci (git_commit_info($oldrev."..".$newrev)) {
+		foreach my $ci (@changes) {
 			foreach my $detail (@{ $ci->{'details'} }) {
 				my $file = $detail->{'file'};
 
@@ -623,8 +633,7 @@ sub rcs_receive () { #{{{
 					error sprintf(gettext("you are not allowed to change %s"), $file);
 				}
 
-				my $action;
-				my $mode;			
+				my ($action, $mode, $path);
 				if ($detail->{'status'} =~ /^[M]+\d*$/) {
 					$action="change";
 					$mode=$detail->{'mode_to'};
@@ -632,6 +641,15 @@ sub rcs_receive () { #{{{
 				elsif ($detail->{'status'} =~ /^[AM]+\d*$/) {
 					$action="add";
 					$mode=$detail->{'mode_to'};
+					if (! pagetype($file)) {
+						eval q{use File::Temp};
+						die $@ if $@;
+						my $fh;
+						($fh, $path)=tempfile("XXXXXXXXXX", UNLINK => 1);
+						if (system("git show ".$detail->{sha1_to}." > '$path'") != 0) {
+							error("failed writing temp file");
+						}
+					}
 				}
 				elsif ($detail->{'status'} =~ /^[DAM]+\d*/) {
 					$action="remove";
@@ -654,6 +672,7 @@ sub rcs_receive () { #{{{
 				push @rets, {
 					file => $file,
 					action => $action,
+					path => $path,
 				};
 			}
 		}

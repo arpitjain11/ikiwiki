@@ -829,13 +829,16 @@ sense to implement for all RCSs.
 
 It should examine the incoming changes, and do any sanity 
 checks that are appropriate for the RCS to limit changes to safe file adds,
-removes, and renames. If something bad is found, it should exit
+removes, and changes. If something bad is found, it should exit
 nonzero, to abort the push. Otherwise, it should return a list of
 files that were changed, in the form:
 
 	{
 		file => # name of file that was changed
 		action => # either "add", "change", or "remove"
+		path => # temp file containing the new file content, only
+			# needed for "add", and only if the file is an
+			# attachment, not a page
 	}
 
 The list will then be checked to make sure that each change is one that

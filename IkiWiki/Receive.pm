@@ -66,11 +66,10 @@ sub test () { #{{{
 				}
 			}
 			else {
-				# TODO
-				#if (IkiWiki::Plugin::attachment->can("check_canattach") &&
-				#    IkiWiki::Plugin::attachment::check_canattach($session, $file, $path)) {
-				#    	next;
-				#}
+				if (IkiWiki::Plugin::attachment->can("check_canattach") &&
+				    IkiWiki::Plugin::attachment::check_canattach($session, $file, $change->{path})) {
+				    	next;
+				}
 			}
 		}
 		elsif ($change->{action} eq 'remove') {
