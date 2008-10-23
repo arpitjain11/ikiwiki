@@ -116,7 +116,7 @@ committers. Trusted committers, including the user that ikiwiki runs as,
 will not have their commits checked by the `pre-receive` hook. Untrusted
 committers will have their commits checked. The configuration settings to
 enable are `git_test_receive_wrapper`, which enables generation of a
-`pre-receive` hook, and `git_untrusted_committers`, which is a list of
+`pre-receive` hook, and `untrusted_committers`, which is a list of
 usernames of the untrusted committers.
 
 Note that when the `pre-receive` hook is checking incoming changes, it

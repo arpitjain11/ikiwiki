@@ -23,7 +23,7 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-	hook(type => "rcs", id => "rcs_test_receive", call => \&rcs_test_receive);
+	hook(type => "rcs", id => "rcs_receive", call => \&rcs_receive);
 } #}}}
 
 sub checkconfig () { #{{{
@@ -77,7 +77,7 @@ sub getsetup () { #{{{
 			safe => 0, # file
 			rebuild => 0,
 		},
-		git_untrusted_committers => {
+		untrusted_committers => {
 			type => "string",
 			example => [],
 			description => "unix users whose commits should be checked by the pre-receive hook",
@@ -588,15 +588,7 @@ sub rcs_getctime ($) { #{{{
 	return $ctime;
 } #}}}
 
-sub rcs_test_receive () { #{{{
-	# quick success if the user is trusted
-	my $committer=(getpwuid($<))[0];
-	if (! defined $committer) {
-		error("cannot determine username for $<");
-	}
-	exit 0 if ! ref $config{git_untrusted_committers} ||
-	          ! grep { $_ eq $committer } @{$config{git_untrusted_committers}};
-
+sub rcs_receive () { #{{{
 	# The wiki may not be the only thing in the git repo.
 	# Determine if it is in a subdirectory by examining the srcdir,
 	# and its parents, looking for the .git directory.
@@ -610,54 +602,64 @@ sub rcs_test_receive () { #{{{
 		}
 	}
 
-	my @errors;
+	my @rets;
 	while (<>) {
 		chomp;
 		my ($oldrev, $newrev, $refname) = split(' ', $_, 3);
 
 		# only allow changes to gitmaster_branch
 		if ($refname !~ /^refs\/heads\/\Q$config{gitmaster_branch}\E$/) {
-			push @errors, sprintf(gettext("you are not allowed to change %s"), $refname);
+			error sprintf(gettext("you are not allowed to change %s"), $refname);
 		}
 
 		foreach my $ci (git_commit_info($oldrev."..".$newrev)) {
 			foreach my $detail (@{ $ci->{'details'} }) {
 				my $file = $detail->{'file'};
 
-				# check that all changed files are in the subdir
+				# check that all changed files are in the
+				# subdir
 				if (length $subdir &&
 				    ! ($file =~ s/^\Q$subdir\E//)) {
-					push @errors, sprintf(gettext("you are not allowed to change %s"), $file);
-					next;
+					error sprintf(gettext("you are not allowed to change %s"), $file);
 				}
 
-				if ($detail->{'mode_from'} ne $detail->{'mode_to'}) {
-					push @errors, gettext("you are not allowed to change file modes");
+				my $action;
+				my $mode;			
+				if ($detail->{'status'} =~ /^[M]+\d*$/) {
+					$action="change";
+					$mode=$detail->{'mode_to'};
 				}
-
-				if ($detail->{'status'} =~ /^D+\d*/) {
-					# TODO check_canremove
+				elsif ($detail->{'status'} =~ /^[AM]+\d*$/) {
+					$action="add";
+					$mode=$detail->{'mode_to'};
 				}
-				elsif ($detail->{'status'} !~ /^[MA]+\d*$/) {
-					push @errors, "unknown status ".$detail->{'status'};
+				elsif ($detail->{'status'} =~ /^[DAM]+\d*/) {
+					$action="remove";
+					$mode=$detail->{'mode_from'};
 				}
 				else {
-					# TODO check_canedit
-					# TODO check_canattach
+					error "unknown status ".$detail->{'status'};
 				}
+				
+				# test that the file mode is ok
+				if ($mode !~ /^100[64][64][64]$/) {
+					error sprintf(gettext("you cannot act on a file with mode %s"), $mode);
+				}
+				if ($action eq "change") {
+					if ($detail->{'mode_from'} ne $detail->{'mode_to'}) {
+						error gettext("you are not allowed to change file modes");
+					}
+				}
+
+				push @rets, {
+					file => $file,
+					action => $action,
+				};
 			}
 		}
 	}
 
-	if (@errors) {
-		# TODO clean up objects from failed push
-
-		print STDERR "$_\n" foreach @errors;
-		exit 1;
-	}
-	else {
-		exit 0;
-	}
+	return @rets;
 } #}}}
 
 1

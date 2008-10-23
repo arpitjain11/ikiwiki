@@ -41,7 +41,7 @@ sub check_canremove ($$$) { #{{{
 		error(sprintf(gettext("%s is not a file"), $file));
 	}
 	
-	# Must be editiable.
+	# Must be editable.
 	IkiWiki::check_canedit($page, $q, $session);
 
 	# If a user can't upload an attachment, don't let them delete it.

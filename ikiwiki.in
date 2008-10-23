@@ -119,9 +119,14 @@ sub getconfig () { #{{{
 		}
 		delete $ENV{WRAPPED_OPTIONS};
 
-		# optimisation for no-op post_commit 
 		if ($config{post_commit} && ! commit_hook_enabled()) {
+			# optimisation for no-op post_commit 
 			exit 0;
+		}
+		elsif ($config{test_receive}) {
+			# quick success if the user is trusted
+			require IkiWiki::Receive;
+			exit 0 if IkiWiki::Receive::trusted();
 		}
 
 		loadplugins();
@@ -190,7 +195,8 @@ sub main () { #{{{
 		# do nothing
 	}
 	elsif ($config{test_receive}) {
-		rcs_test_receive();
+		require IkiWiki::Receive;
+		IkiWiki::Receive::test();
 	}
 	else {
 		if ($config{rebuild}) {

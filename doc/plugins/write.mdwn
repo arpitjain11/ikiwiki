@@ -820,14 +820,26 @@ it up in the history.
 
 It's ok if this is not implemented, and throws an error.
 
-#### `rcs_test_receive()`
+#### `rcs_receive()`
 
-This is used to test if changes pushed into the RCS should be accepted.
-Ikiwiki will be running as a pre-receive hook (or equivilant) and should
-examine the incoming changes, decide if they are allowed, and communicate
-that to the RCS.
+This is called when ikiwiki is running as a pre-receive hook (or
+equivilant), and is testing if changes pushed into the RCS from an
+untrusted user should be accepted. This is optional, and doesn't make
+sense to implement for all RCSs.
 
-This is optional, and doesn't make sense for all RCSs.
+It should examine the incoming changes, and do any sanity 
+checks that are appropriate for the RCS to limit changes to safe file adds,
+removes, and renames. If something bad is found, it should exit
+nonzero, to abort the push. Otherwise, it should return a list of
+files that were changed, in the form:
+
+	{
+		file => # name of file that was changed
+		action => # either "add", "change", or "remove"
+	}
+
+The list will then be checked to make sure that each change is one that
+is allowed to be made via the web interface.
 
 ### PageSpec plugins
 

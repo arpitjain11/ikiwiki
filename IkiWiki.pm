@@ -1582,8 +1582,8 @@ sub rcs_getctime ($) { #{{{
 	$hooks{rcs}{rcs_getctime}{call}->(@_);
 } #}}}
 
-sub rcs_test_receive ($) { #{{{
-	$hooks{rcs}{rcs_test_receive}{call}->(@_);
+sub rcs_receive ($) { #{{{
+	$hooks{rcs}{rcs_receive}{call}->(@_);
 } #}}}
 
 sub globlist_to_pagespec ($) { #{{{
