@@ -156,7 +156,8 @@ sub main () { #{{{
 					if exists $config{setupsyslog};
 				delete @config{qw(setupsyslog setupverbose wrappers genwrappers rebuild)};
 				checkconfig();
-				if (! $config{cgi} && ! $config{post_commit}) {
+				if (! $config{cgi} && ! $config{post_commit} &&
+				    ! $config{test_receive}) {
 					$config{post_commit}=1;
 				}
 				gen_wrapper();

@@ -365,8 +365,10 @@ sub git_commit_info ($;$) { #{{{
 	# starting from the given sha1sum.
 	my ($sha1, $num) = @_;
 
-	my @raw_lines = run_or_die('git', 'log',
-		(defined $num ? "--max-count=$num" : ""), 
+	my @opts;
+	push @opts, "--max-count=$num" if defined $num;
+
+	my @raw_lines = run_or_die('git', 'log', @opts,
 		'--pretty=raw', '--raw', '--abbrev=40', '--always', '-c',
 		'-r', $sha1, '--', '.');
 	my ($prefix) = run_or_die('git', 'rev-parse', '--show-prefix');
@@ -645,7 +647,7 @@ sub rcs_receive () { #{{{
 						eval q{use File::Temp};
 						die $@ if $@;
 						my $fh;
-						($fh, $path)=tempfile("XXXXXXXXXX", UNLINK => 1);
+						($fh, $path)=File::Temp::tempfile("XXXXXXXXXX", UNLINK => 1);
 						if (system("git show ".$detail->{sha1_to}." > '$path'") != 0) {
 							error("failed writing temp file");
 						}
@@ -678,7 +680,7 @@ sub rcs_receive () { #{{{
 		}
 	}
 
-	return @rets;
+	return reverse @rets;
 } #}}}
 
 1
