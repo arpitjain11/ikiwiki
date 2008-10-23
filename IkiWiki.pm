@@ -382,6 +382,13 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
+	test_receive => {
+		type => "internal",
+		default => 0,
+		description => "running in receive test mode",
+		safe => 0,
+		rebuild => 0,
+	},
 	getctime => {
 		type => "internal",
 		default => 0,
@@ -1573,6 +1580,10 @@ sub rcs_diff ($) { #{{{
 
 sub rcs_getctime ($) { #{{{
 	$hooks{rcs}{rcs_getctime}{call}->(@_);
+} #}}}
+
+sub rcs_test_receive ($) { #{{{
+	$hooks{rcs}{rcs_test_receive}{call}->(@_);
 } #}}}
 
 sub globlist_to_pagespec ($) { #{{{

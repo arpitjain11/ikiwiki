@@ -820,6 +820,15 @@ it up in the history.
 
 It's ok if this is not implemented, and throws an error.
 
+#### `rcs_test_receive()`
+
+This is used to test if changes pushed into the RCS should be accepted.
+Ikiwiki will be running as a pre-receive hook (or equivilant) and should
+examine the incoming changes, decide if they are allowed, and communicate
+that to the RCS.
+
+This is optional, and doesn't make sense for all RCSs.
+
 ### PageSpec plugins
 
 It's also possible to write plugins that add new functions to

@@ -183,6 +183,9 @@ sub main () { #{{{
 	elsif ($config{post_commit} && ! commit_hook_enabled()) {
 		# do nothing
 	}
+	elsif ($config{test_receive}) {
+		rcs_test_receive();
+	}
 	else {
 		if ($config{rebuild}) {
 			debug(gettext("rebuilding wiki.."));

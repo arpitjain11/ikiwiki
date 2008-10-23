@@ -100,6 +100,33 @@ repository, should only be writable by the wiki's admin, and *not* by the
 group. Take care that ikiwiki uses a umask that does not cause files in
 the srcdir to become group writable. (umask 022 will work.)
 
+## git repository with untrusted committers
+
+By default, anyone who can commit to the git repository can modify any file
+on the wiki however they like. A `pre-receive` hook can be set up to limit
+incoming commits from untrusted users. Then the same limits that are placed
+on edits via the web will be in effect for commits to git for the users.
+They will not be allowed to edit locked pages, they will only be able to
+delete pages that the [[plugins/remove]] configuration allows them to
+remove, and they will only be allowed to add non-page attachments that the
+[[plugins/attachment]] configuration allows.
+
+To enable this, you need to set up the git repository to have multiple
+committers. Trusted committers, including the user that ikiwiki runs as, 
+will not have their commits checked by the `pre-receive` hook. Untrusted
+committers will have their commits checked. The configuration settings to
+enable are `git_test_receive_wrapper`, which enables generation of a
+`pre-receive` hook, and `git_untrusted_committers`, which is a list of
+usernames of the untrusted committers.
+
+Note that when the `pre-receive` hook is checking incoming changes, it
+ignores the git authorship information, and uses the username of the unix
+user who made the commit. Then tests including the `locked_pages` [[PageSpec]]
+are checked to see if that user can edit the pages in the commit.
+
+You can even set up an anonymous user, to allow anyone to push
+changes in via git rather than using the web interface.
+
 ## Optionally using a local wiki to preview changes
 
 When working on the "working clones" to add content to your wiki,

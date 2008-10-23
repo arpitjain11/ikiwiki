@@ -23,6 +23,7 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
+	hook(type => "rcs", id => "rcs_test_receive", call => \&rcs_test_receive);
 } #}}}
 
 sub checkconfig () { #{{{
@@ -32,10 +33,19 @@ sub checkconfig () { #{{{
 	if (! defined $config{gitmaster_branch}) {
 		$config{gitmaster_branch}="master";
 	}
-	if (defined $config{git_wrapper} && length $config{git_wrapper}) {
+	if (defined $config{git_wrapper} &&
+	    length $config{git_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{git_wrapper},
 			wrappermode => (defined $config{git_wrappermode} ? $config{git_wrappermode} : "06755"),
+		};
+	}
+	if (defined $config{git_test_receive_wrapper} &&
+	    length $config{git_test_receive_wrapper}) {
+		push @{$config{wrappers}}, {
+			test_receive => 1,
+			wrapper => $config{git_test_receive_wrapper},
+			wrappermode => "0755",
 		};
 	}
 } #}}}
@@ -57,6 +67,20 @@ sub getsetup () { #{{{
 			type => "string",
 			example => '06755',
 			description => "mode for git_wrapper (can safely be made suid)",
+			safe => 0,
+			rebuild => 0,
+		},
+		git_test_receive_wrapper => {
+			type => "string",
+			example => "/git/wiki.git/hooks/pre-receive",
+			description => "git pre-receive hook to generate",
+			safe => 0, # file
+			rebuild => 0,
+		},
+		git_untrusted_committers => {
+			type => "string",
+			example => [],
+			description => "unix users whose commits should be checked by the pre-receive hook",
 			safe => 0,
 			rebuild => 0,
 		},
@@ -320,6 +344,9 @@ sub parse_diff_tree ($@) { #{{{
 					'file'      => decode("utf8", $file),
 					'sha1_from' => $sha1_from[0],
 					'sha1_to'   => $sha1_to,
+					'mode_from' => $mode_from[0],
+					'mode_to'   => $mode_to,
+					'status'    => $status,
 				};
 			}
 			next;
@@ -331,14 +358,12 @@ sub parse_diff_tree ($@) { #{{{
 } #}}}
 
 sub git_commit_info ($;$) { #{{{
-	# Return an array of commit info hashes of num commits (default: 1)
+	# Return an array of commit info hashes of num commits
 	# starting from the given sha1sum.
-
 	my ($sha1, $num) = @_;
 
-	$num ||= 1;
-
-	my @raw_lines = run_or_die('git', 'log', "--max-count=$num", 
+	my @raw_lines = run_or_die('git', 'log',
+		(defined $num ? "--max-count=$num" : ""), 
 		'--pretty=raw', '--raw', '--abbrev=40', '--always', '-c',
 		'-r', $sha1, '--', '.');
 	my ($prefix) = run_or_die('git', 'rev-parse', '--show-prefix');
@@ -355,7 +380,6 @@ sub git_commit_info ($;$) { #{{{
 
 sub git_sha1 (;$) { #{{{
 	# Return head sha1sum (of given file).
-
 	my $file = shift || q{--};
 
 	# Ignore error since a non-existing file might be given.
@@ -378,7 +402,6 @@ sub rcs_update () { #{{{
 sub rcs_prepedit ($) { #{{{
 	# Return the commit sha1sum of the file when editing begins.
 	# This will be later used in rcs_commit if a merge is required.
-
 	my ($file) = @_;
 
 	return git_sha1($file);
@@ -475,7 +498,7 @@ sub rcs_recentchanges ($) { #{{{
 	error($@) if $@;
 
 	my @rets;
-	foreach my $ci (git_commit_info('HEAD', $num)) {
+	foreach my $ci (git_commit_info('HEAD', $num || 1)) {
 		# Skip redundant commits.
 		next if ($ci->{'comment'} && @{$ci->{'comment'}}[0] eq $dummy_commit_msg);
 
@@ -558,11 +581,83 @@ sub rcs_getctime ($) { #{{{
 	$file =~ s/^\Q$config{srcdir}\E\/?//;
 
 	my $sha1  = git_sha1($file);
-	my $ci    = git_commit_info($sha1);
+	my $ci    = git_commit_info($sha1, 1);
 	my $ctime = $ci->{'author_epoch'};
 	debug("ctime for '$file': ". localtime($ctime));
 
 	return $ctime;
+} #}}}
+
+sub rcs_test_receive () { #{{{
+	# quick success if the user is trusted
+	my $committer=(getpwuid($<))[0];
+	if (! defined $committer) {
+		error("cannot determine username for $<");
+	}
+	exit 0 if ! ref $config{git_untrusted_committers} ||
+	          ! grep { $_ eq $committer } @{$config{git_untrusted_committers}};
+
+	# The wiki may not be the only thing in the git repo.
+	# Determine if it is in a subdirectory by examining the srcdir,
+	# and its parents, looking for the .git directory.
+	my $subdir="";
+	my $dir=$config{srcdir};
+	while (! -d "$dir/.git") {
+		$subdir=IkiWiki::basename($dir)."/".$subdir;
+		$dir=IkiWiki::dirname($dir);
+		if (! length $dir) {
+			error("cannot determine root of git repo");
+		}
+	}
+
+	my @errors;
+	while (<>) {
+		chomp;
+		my ($oldrev, $newrev, $refname) = split(' ', $_, 3);
+
+		# only allow changes to gitmaster_branch
+		if ($refname !~ /^refs\/heads\/\Q$config{gitmaster_branch}\E$/) {
+			push @errors, sprintf(gettext("you are not allowed to change %s"), $refname);
+		}
+
+		foreach my $ci (git_commit_info($oldrev."..".$newrev)) {
+			foreach my $detail (@{ $ci->{'details'} }) {
+				my $file = $detail->{'file'};
+
+				# check that all changed files are in the subdir
+				if (length $subdir &&
+				    ! ($file =~ s/^\Q$subdir\E//)) {
+					push @errors, sprintf(gettext("you are not allowed to change %s"), $file);
+					next;
+				}
+
+				if ($detail->{'mode_from'} ne $detail->{'mode_to'}) {
+					push @errors, gettext("you are not allowed to change file modes");
+				}
+
+				if ($detail->{'status'} =~ /^D+\d*/) {
+					# TODO check_canremove
+				}
+				elsif ($detail->{'status'} !~ /^[MA]+\d*$/) {
+					push @errors, "unknown status ".$detail->{'status'};
+				}
+				else {
+					# TODO check_canedit
+					# TODO check_canattach
+				}
+			}
+		}
+	}
+
+	if (@errors) {
+		# TODO clean up objects from failed push
+
+		print STDERR "$_\n" foreach @errors;
+		exit 1;
+	}
+	else {
+		exit 0;
+	}
 } #}}}
 
 1
