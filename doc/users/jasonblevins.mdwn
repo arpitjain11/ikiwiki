@@ -1,7 +1,7 @@
 [[!meta title="Jason Blevins"]]
 
 I'm currently hosting a private ikiwiki for keeping research notes
-which, with some patches and a (currently unreleased) plugin, will
+which, with some patches and a plugin (below), will
 convert inline LaTeX expressions to MathML.  I'm working towards a
 patchset and instructions for others to do the same.
 
@@ -25,6 +25,17 @@ Current ikiwki issues of interest:
  * [[todo/svg]]
  * [[todo/Option_to_make_title_an_h1?]]
  * [[bugs/SVG_files_not_recognized_as_images]]
+
+## Plugins
+
+These plugins are experimental.  Use them at your own risk.  Read the
+perldoc documentation for more details.
+
+ * [mdwn_itex][] - Works with the `mdwn` plugin to convert inline LaTeX
+   expressions to MathML using `itex2MML`.
+
+ * [h1title][] - If present, use the leading level 1 Markdown header to
+   set the page title and remove it from the page body.
 
 ## MathML and SVG support
 
@@ -71,3 +82,5 @@ page in the first place (unless they post directly to the right URL).
 
  [template-patch]: http://xbeta.org/gitweb/?p=xbeta/ikiwiki.git;a=blobdiff;f=templates/page.tmpl;h=380ef699fa72223744eb5c1ee655fb79aa6bce5b;hp=9084ba7e11e92a10528b2ab12c9b73cf7b0f40a7;hb=416d5d1b15b94e604442e4e209a30dee4b77b684;hpb=ececf4fb8766a4ff7eff943b3ef600be81a0df49
  [cgi-patch]: http://xbeta.org/gitweb/?p=xbeta/ikiwiki.git;a=commitdiff;h=fa538c375250ab08f396634135f7d79fce2a9d36
+ [mdwn_itex]: http://code.jblevins.org/ikiwiki/plugins/mdwn_itex.pm
+ [h1title]: http://code.jblevins.org/ikiwiki/plugins/h1title.pm
