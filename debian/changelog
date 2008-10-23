@@ -31,6 +31,8 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * external: RPC functions can be injected to replace exported functions.
   * Updated Spanish translation from the ever vigilant Victor Moral.
   * Updated Danish translation from Jonas Smedegaard. Closes: #503117
+  * Optimise the no-op post-commit hook in the web edit case by skipping
+    loading plugins. (Particularly a win when using external plugins.)
 
  -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
 
