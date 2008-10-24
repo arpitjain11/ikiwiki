@@ -55,7 +55,7 @@ EOF
 #include <string.h>
 
 extern char **environ;
-char *newenviron[$#envsave+5];
+char *newenviron[$#envsave+6];
 int i=0;
 
 addenv(char *var, char *val) {
@@ -72,6 +72,7 @@ int main (int argc, char **argv) {
 $envsave
 	newenviron[i++]="HOME=$ENV{HOME}";
 	newenviron[i++]="WRAPPED_OPTIONS=$configstring";
+	asprintf(newenviron[i++], "CALLER_UID=%i", getuid());
 	newenviron[i]=NULL;
 	environ=newenviron;
 
