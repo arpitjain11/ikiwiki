@@ -619,7 +619,7 @@ sub rcs_receive () { #{{{
 		
 		# Avoid chdir when running git here, because the changes
 		# are in the master git repo, not the srcdir repo.
-		# The pre-recieve hook already puts us in the right place.
+		# The pre-receive hook already puts us in the right place.
 		$no_chdir=1;
 		my @changes=git_commit_info($oldrev."..".$newrev);
 		$no_chdir=0;
