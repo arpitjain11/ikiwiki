@@ -21,12 +21,12 @@ repository's `pre-receive` hook. There it will examine every change that
 untrusted users push into the wiki, and reject pushes that contain changes
 that cannot be made using the web interface.
 
-So, unless you have the [[ikiwiki/plugin/attachment]] plugin turned on,
+So, unless you have the [[plugins/attachment]] plugin turned on,
 non-page files cannot be added. And if it's turned on, whatever
 `allowed_attachments` checks you have configured will also check files
 pushed into git.
 
-And, unless you have the [[ikiwiki/plugin/remove]] plugin turned on, no
+And, unless you have the [[plugins/remove]] plugin turned on, no
 files can be deleted.
 
 And if you have `locked_pages` configured, then it will also affect what's
