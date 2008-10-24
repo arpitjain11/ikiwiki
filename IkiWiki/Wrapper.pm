@@ -72,7 +72,8 @@ int main (int argc, char **argv) {
 $envsave
 	newenviron[i++]="HOME=$ENV{HOME}";
 	newenviron[i++]="WRAPPED_OPTIONS=$configstring";
-	asprintf(newenviron[i++], "CALLER_UID=%i", getuid());
+	asprintf(&s, "CALLER_UID=%i", getuid());
+	newenviron[i++]=s;
 	newenviron[i]=NULL;
 	environ=newenviron;
 
