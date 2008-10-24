@@ -47,7 +47,7 @@ can make a commit that pretends to be done by someone else.
 Add a dedicated user who will push in untrusted commits. This user should have
 a locked password, and `git-shell` as its shell.
 
-	root@bluebird:/home/joey>adduser --shell=/usr/bin/git-shell--disabled-password anon
+	root@bluebird:/home/joey>adduser --shell=/usr/bin/git-shell --disabled-password anon
 	Adding user `anon' ...
 
 ## ikiwiki setup
