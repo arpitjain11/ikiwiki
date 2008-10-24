@@ -24,3 +24,12 @@ in awful and various ways when it is not the case. Any alternative idea?
 > but I sometimes use `git pull --rebase` to pull changes from a repo. That
 > will rebase your local changes on top of the changes pulled, avoiding the
 > merge commits. I'm sure more involved solutions are possible. --[[Joey]]
+
+> I decided to use my local `master` branch as a copy of `origin/master`
+> (kitenet) and move my local modifications to a separate branch.  I'm using
+> `master` to edit the wiki but there is still the problem of new upstream
+> commits since the last pull.  I already had this problem as Joey had pushed
+> some changes while I was editing locally.  Not knowing about
+> `pull --rebase`, I took the long way out: branch, roll back HEAD, rebase,
+> and merge.  That was too much work...It looks like `pull --rebase` is the
+> way to go. --[[JasonBlevins]]
