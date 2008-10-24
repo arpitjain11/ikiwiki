@@ -39,6 +39,9 @@ or manipulate tags.
 One thing to keep an eye on is uploading large files. It may be easier to
 do this via git push than using the web, and that could be abused.
 
+Also, no checking is done that the authors of commits are right, so people
+can make a commit that pretends to be done by someone else.
+
 ## user setup
 
 Add a dedicated user who will push in untrusted commits. This user should have
