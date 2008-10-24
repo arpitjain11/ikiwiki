@@ -33,7 +33,8 @@ sub test () { #{{{
 	$session->param("name", getuser());
 	$ENV{REMOTE_ADDR}='unknown' unless exists $ENV{REMOTE_ADDR};
 
-	IkiWiki::lockwiki();
+	# Wiki is not locked because we lack permission to do so.
+	# So, relying on atomic index file updates to avoid trouble.
 	IkiWiki::loadindex();
 
 	my %newfiles;
@@ -59,8 +60,8 @@ sub test () { #{{{
 		    $change->{action} eq 'add') {
 			if (defined $page) {
 				if (IkiWiki->can("check_canedit")) {
-				    IkiWiki::check_canedit($page, $cgi, $session);
-				    next;
+					IkiWiki::check_canedit($page, $cgi, $session);
+					next;
 				}
 			}
 			else {
