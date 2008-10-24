@@ -1,6 +1,13 @@
 Ikiwiki is developed in a git repository and can be checked out 
 like this:
 
+[[!template id=note text="""
+You can push changes back to ikiwiki's git repository over the `git://`
+transport, to update the wiki, if you'd like, instead of editing it on the
+web. Changes that could not be made via the web will be automatically
+rejected.
+"""]]
+
 	git clone git://git.ikiwiki.info/
 
 Or like this if your firewall only passes http traffic (slow):
