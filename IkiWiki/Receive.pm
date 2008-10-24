@@ -45,7 +45,7 @@ sub test () { #{{{
 		$file=IkiWiki::possibly_foolish_untaint($file);
 		if (! defined $file || ! length $file ||
 		    IkiWiki::file_pruned($file, $config{srcdir})) {
-			error(gettext("bad file name"));
+			error(gettext("bad file name %s"), $file);
 		}
 
 		my $type=pagetype($file);

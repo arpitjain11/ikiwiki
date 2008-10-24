@@ -619,7 +619,7 @@ sub rcs_receive () { #{{{
 		
 		# Avoid chdir when running git here, because the changes
 		# are in the master git repo, not the srcdir repo.
-		# The pre-receive hook already puts us in the right place.
+		# The pre-recieve hook already puts us in the right place.
 		$no_chdir=1;
 		my @changes=git_commit_info($oldrev."..".$newrev);
 		$no_chdir=0;
@@ -643,15 +643,6 @@ sub rcs_receive () { #{{{
 				elsif ($detail->{'status'} =~ /^[AM]+\d*$/) {
 					$action="add";
 					$mode=$detail->{'mode_to'};
-					if (! pagetype($file)) {
-						eval q{use File::Temp};
-						die $@ if $@;
-						my $fh;
-						($fh, $path)=File::Temp::tempfile("XXXXXXXXXX", UNLINK => 1);
-						if (system("git show ".$detail->{sha1_to}." > '$path'") != 0) {
-							error("failed writing temp file");
-						}
-					}
 				}
 				elsif ($detail->{'status'} =~ /^[DAM]+\d*/) {
 					$action="remove";
@@ -668,6 +659,18 @@ sub rcs_receive () { #{{{
 				if ($action eq "change") {
 					if ($detail->{'mode_from'} ne $detail->{'mode_to'}) {
 						error gettext("you are not allowed to change file modes");
+					}
+				}
+				
+				# extract attachment to temp file
+				if (($action eq 'add' || $action eq 'change') &&
+				     ! pagetype($file)) {
+					eval q{use File::Temp};
+					die $@ if $@;
+					my $fh;
+					($fh, $path)=File::Temp::tempfile("XXXXXXXXXX", UNLINK => 1);
+					if (system("git show ".$detail->{sha1_to}." > '$path'") != 0) {
+						error("failed writing temp file");
 					}
 				}
 

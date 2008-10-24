@@ -837,8 +837,8 @@ files that were changed, in the form:
 		file => # name of file that was changed
 		action => # either "add", "change", or "remove"
 		path => # temp file containing the new file content, only
-			# needed for "add", and only if the file is an
-			# attachment, not a page
+			# needed for "add"/"change", and only if the file
+			# is an attachment, not a page
 	}
 
 The list will then be checked to make sure that each change is one that
