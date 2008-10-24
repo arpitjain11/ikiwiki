@@ -7,7 +7,8 @@ use strict;
 use IkiWiki;
 
 sub getuser () { #{{{
-	my $user=(getpwuid($<))[0];
+	# CALLER_UID is set by the suid wrapper, to the original uid
+	my $user=(getpwuid(exists $ENV{CALLER_UID} ? $ENV{CALLER_UID} : $<))[0];
 	if (! defined $user) {
 		error("cannot determine username for $<");
 	}
@@ -23,20 +24,31 @@ sub trusted () { #{{{
 sub test () { #{{{
 	exit 0 if trusted();
 	
+	IkiWiki::lockwiki();
+	IkiWiki::loadindex();
+	
 	# Dummy up a cgi environment to use when calling check_canedit
 	# and friends.
 	eval q{use CGI};
 	error($@) if $@;
 	my $cgi=CGI->new;
+	$ENV{REMOTE_ADDR}='unknown' unless exists $ENV{REMOTE_ADDR};
+
+	# And dummy up a session object.
 	require IkiWiki::CGI;
 	my $session=IkiWiki::cgi_getsession($cgi);
 	$session->param("name", getuser());
-	$ENV{REMOTE_ADDR}='unknown' unless exists $ENV{REMOTE_ADDR};
-
-	# Wiki is not locked because we lack permission to do so.
-	# So, relying on atomic index file updates to avoid trouble.
-	IkiWiki::loadindex();
-
+	# Make sure whatever user was authed is in the
+	# userinfo db.
+	require IkiWiki::UserInfo;
+	if (! IkiWiki::userinfo_get($session->param("name"), "regdate")) {
+		IkiWiki::userinfo_setall($session->param("name"), {
+			email => "",
+			password => "",
+			regdate => time,
+		}) || error("failed adding user");
+	}
+	
 	my %newfiles;
 
 	foreach my $change (IkiWiki::rcs_receive()) {

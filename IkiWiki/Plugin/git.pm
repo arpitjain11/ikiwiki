@@ -46,7 +46,7 @@ sub checkconfig () { #{{{
 		push @{$config{wrappers}}, {
 			test_receive => 1,
 			wrapper => $config{git_test_receive_wrapper},
-			wrappermode => "0755",
+			wrappermode => (defined $config{git_wrappermode} ? $config{git_wrappermode} : "06755"),
 		};
 	}
 } #}}}
