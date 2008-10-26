@@ -36,7 +36,13 @@ sub gen_wrapper () { #{{{
 		addenv("$var", s);
 EOF
 	}
-	
+
+	my $test_receive="";
+	if ($config{test_receive}) {
+		require IkiWiki::Receive;
+		$test_receive=IkiWiki::Receive::gen_wrapper();
+	}
+
 	$Data::Dumper::Indent=0; # no newlines
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);
 	$configstring=~s/\\/\\\\/g;
@@ -67,13 +73,12 @@ addenv(char *var, char *val) {
 }
 
 int main (int argc, char **argv) {
-	/* Sanitize environment. */
 	char *s;
+
+$test_receive
 $envsave
 	newenviron[i++]="HOME=$ENV{HOME}";
 	newenviron[i++]="WRAPPED_OPTIONS=$configstring";
-	asprintf(&s, "CALLER_UID=%i", getuid());
-	newenviron[i++]=s;
 	newenviron[i]=NULL;
 	environ=newenviron;
 

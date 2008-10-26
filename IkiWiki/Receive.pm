@@ -7,7 +7,6 @@ use strict;
 use IkiWiki;
 
 sub getuser () { #{{{
-	# CALLER_UID is set by the suid wrapper, to the original uid
 	my $user=(getpwuid(exists $ENV{CALLER_UID} ? $ENV{CALLER_UID} : $<))[0];
 	if (! defined $user) {
 		error("cannot determine username for $<");
@@ -19,6 +18,31 @@ sub trusted () { #{{{
 	my $user=getuser();
 	return ! ref $config{untrusted_committers} ||
 		! grep { $_ eq $user } @{$config{untrusted_committers}};
+} #}}}
+
+sub gen_wrapper () { #{{{
+	# Test for commits from untrusted committers in the wrapper, to
+	# avoid loading ikiwiki at all for trusted commits.
+
+	my $ret=<<"EOF";
+	{
+		int u=getuid();
+EOF
+	$ret.="\t\tif ( ".
+		join("&&", map {
+			my $uid=getpwnam($_);
+			if (! defined $uid) {
+				error(sprintf(gettext("cannot determine id of untrusted committer %s"), $_));
+			}
+			"u != $uid";
+		} @{$config{untrusted_committers}}).
+		") exit(0);\n";
+	$ret.=<<"EOF";
+		asprintf(&s, "CALLER_UID=%i", u);
+		newenviron[i++]=s;
+	}
+EOF
+	return $ret;
 } #}}}
 
 sub test () { #{{{

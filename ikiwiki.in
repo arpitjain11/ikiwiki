@@ -123,11 +123,6 @@ sub getconfig () { #{{{
 			# optimisation for no-op post_commit 
 			exit 0;
 		}
-		elsif ($config{test_receive}) {
-			# quick success if the user is trusted
-			require IkiWiki::Receive;
-			exit 0 if IkiWiki::Receive::trusted();
-		}
 
 		loadplugins();
 		checkconfig();
