@@ -79,5 +79,7 @@ the data:
 $ENV{HTTPS\_CA\_DIR} = "/etc/ssl/certs/";  
 $ENV{HTTPS\_CA\_FILE} = "/etc/ssl/certs/file.pem";  
 
-Unfortunately I get weird results if the certificate verification fails [[!debbug 503440]].
+Unfortunately I get weird results if the certificate verification fails, see [[!debbug 503440]].
 It still seems to work though, regardless.
+
+-- Brian May
