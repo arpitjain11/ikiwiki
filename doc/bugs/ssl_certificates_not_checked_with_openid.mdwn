@@ -79,34 +79,5 @@ the data:
 $ENV{HTTPS\_CA\_DIR} = "/etc/ssl/certs/";  
 $ENV{HTTPS\_CA\_FILE} = "/etc/ssl/certs/file.pem";  
 
-Unfortunately I get weird results if the certificate verification fails, tshark shows the following communications with my proxy server:
-
-HTTP CONNECT db.debian.org:443 HTTP/1.0  
-[tls stuff]  
-HTTP CONNECT proxy.pri:3128 HTTP/1.0  
-HTTP HTTP/1.0 403 Forbidden (text/html)  
-
-Why it is trying to connect to the proxy server via the proxy server is beyond me. This only happens if the certificate verification fails (I think). I will continue investigating. My test code is:
-
-
-#!/usr/bin/perl -w
-use strict;
-#require LWPx::ParanoidAgent;
-#my $ua = LWPx::ParanoidAgent->new;
-
-require LWP::UserAgent;
-my $ua = LWP::UserAgent->new;
-
-$ua->proxy(['http'], 'http://proxy.pri:3128');
-$ENV{HTTPS_PROXY} = "http://proxy.pri:3128";
-$ENV{HTTPS_CA_DIR} = "/etc/ssl/certs/";
-
-
-my $response = $ua->get("https://db.debian.org/");
-
-if ($response->is_success) {
-    print $response->content;  # or whatever
-} else {
-    die $response->status_line;
-}
-
+Unfortunately I get weird results if the certificate verification fails [[!debbug 503440]].
+It still seems to work though, regardless.
