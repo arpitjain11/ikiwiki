@@ -76,15 +76,15 @@ enable this checking.
 I think the trick is to set on of the the following environment variables before retrieving
 the data:
 
-$ENV{HTTPS_CA_DIR} = "/etc/ssl/certs/";
-$ENV{HTTPS_CA_FILE} = "/etc/ssl/certs/file.pem";
+$ENV{HTTPS\_CA\_DIR} = "/etc/ssl/certs/";  
+$ENV{HTTPS\_CA\_FILE} = "/etc/ssl/certs/file.pem";  
 
 Unfortunately I get weird results if the certificate verification fails, tshark shows the following communications with my proxy server:
 
-HTTP CONNECT db.debian.org:443 HTTP/1.0
-<tls stuff>
-HTTP CONNECT proxy.pri:3128 HTTP/1.0
-HTTP HTTP/1.0 403 Forbidden (text/html)
+HTTP CONNECT db.debian.org:443 HTTP/1.0  
+[tls stuff]  
+HTTP CONNECT proxy.pri:3128 HTTP/1.0  
+HTTP HTTP/1.0 403 Forbidden (text/html)  
 
 Why it is trying to connect to the proxy server via the proxy server is beyond me. This only happens if the certificate verification fails (I think). I will continue investigating. My test code is:
 
