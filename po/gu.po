@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 19:12-0400\n"
+"POT-Creation-Date: 2008-10-26 15:03-0400\n"
 "PO-Revision-Date: 2007-01-11 16:05+0530\n"
 "Last-Translator: Kartik Mistry <kartik.mistry@gmail.com>\n"
 "Language-Team: Gujarati <team@utkarsh.org>\n"
@@ -48,7 +48,7 @@ msgstr "પ્રાથમિકતાઓ સંગ્રહાઇ."
 msgid "You are banned."
 msgstr "તમારા પર પ્રતિબંધ છે."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
 msgid "Error"
 msgstr "ક્ષતિ"
 
@@ -129,7 +129,7 @@ msgstr "નવું પાનું %s બનાવે છે"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
 msgid "done"
 msgstr "સંપૂર્ણ"
 
@@ -210,6 +210,10 @@ msgstr ""
 msgid "removing old preview %s"
 msgstr "જુનાં પાનાં દૂર કરે છે %s"
 
+#: ../IkiWiki/Plugin/editpage.pm:125
+msgid "bad page name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
 msgid "%s is not an editable page"
@@ -250,6 +254,21 @@ msgstr "ક્રિયા કરવામાં નિષ્ફળ:"
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "ભવિષ્ય નિષ્ફળ"
+
+#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Receive.pm:129
+#, perl-format
+msgid "you are not allowed to change %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:657
+#, perl-format
+msgid "you cannot act on a file with mode %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:661
+msgid "you are not allowed to change file modes"
+msgstr ""
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, fuzzy, perl-format
@@ -797,6 +816,16 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
+#: ../IkiWiki/Receive.pm:35
+#, perl-format
+msgid "cannot determine id of untrusted committer %s"
+msgstr ""
+
+#: ../IkiWiki/Receive.pm:85
+#, fuzzy, perl-format
+msgid "bad file name %s"
+msgstr "ખરાબ ફાઇલ નામ છોડી દે છે %s"
+
 #: ../IkiWiki/Render.pm:253
 #, perl-format
 msgid ""
@@ -889,19 +918,19 @@ msgstr "આવરણ ફાઇલનામ સ્પષ્ટ કરેલ ન�
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:48
+#: ../IkiWiki/Wrapper.pm:79
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "%s લખવામાં નિષ્ફળ: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:99
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "failed to compile %s"
 msgstr "%s કમ્પાઇલ કરવામાં નિષ્ફળ"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:119
+#: ../IkiWiki/Wrapper.pm:155
 #, perl-format
 msgid "successfully generated %s"
 msgstr "સફળતાપૂર્વક પેદા કરેલ છે %s"
@@ -918,37 +947,37 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:137
+#: ../ikiwiki.in:138
 msgid "generating wrappers.."
 msgstr "આવરણ બનાવે છે.."
 
-#: ../ikiwiki.in:188
+#: ../ikiwiki.in:194
 msgid "rebuilding wiki.."
 msgstr "વીકી ફરીથી બનાવે છે.."
 
-#: ../ikiwiki.in:191
+#: ../ikiwiki.in:197
 msgid "refreshing wiki.."
 msgstr "વીકીને તાજી કરે છે.."
 
-#: ../IkiWiki.pm:458
+#: ../IkiWiki.pm:466
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "જ્યારે --cgi ઉપયોગ કરતાં હોય ત્યારે વીકીનું યુઆરએલ સ્પષ્ટ કરવું જ પડશે"
 
-#: ../IkiWiki.pm:504
+#: ../IkiWiki.pm:512
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:533
+#: ../IkiWiki.pm:541
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1156
+#: ../IkiWiki.pm:1165
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "%s પર શોધાયેલ લુપ  %s પર ચલાવે છે %i ઉંડાણ પર"
 
-#: ../IkiWiki.pm:1665
+#: ../IkiWiki.pm:1678
 msgid "yes"
 msgstr ""
 

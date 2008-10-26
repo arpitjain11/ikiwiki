@@ -31,8 +31,8 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * external: RPC functions can be injected to replace exported functions.
   * Updated Spanish translation from the ever vigilant Victor Moral.
   * Updated Danish translation from Jonas Smedegaard. Closes: #503117
-  * Optimise the no-op post-commit hook in the web edit case by skipping
-    loading plugins. (Particularly a win when using external plugins.)
+  * Optimise the no-op post-commit hook, to speed up web edits by a fraction
+    of a second.
   * Add support for checking pushes from untrusted git committers. This can be
     used to set up anonymous git pushes, and other similar things.
 

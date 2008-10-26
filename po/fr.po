@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 19:12-0400\n"
+"POT-Creation-Date: 2008-10-26 15:03-0400\n"
 "PO-Revision-Date: 2008-10-11 10:34+0200\n"
 "Last-Translator: Julien Patriarca <patriarcaj@gmail.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -51,7 +51,7 @@ msgstr "Les préférences ont été enregistrées."
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
 msgid "Error"
 msgstr "Erreur"
 
@@ -133,7 +133,7 @@ msgstr "Création de la nouvelle page %s"
 msgid "deleting bucket.."
 msgstr "suppression du compartiment (« bucket »)..."
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
 msgid "done"
 msgstr "Terminé"
 
@@ -216,6 +216,11 @@ msgstr "Aucun texte n'a été copié dans cette page avec l'identifiant %s"
 msgid "removing old preview %s"
 msgstr "Suppression de l'ancienne prévisualisation %s"
 
+#: ../IkiWiki/Plugin/editpage.pm:125
+#, fuzzy
+msgid "bad page name"
+msgstr "Mauvais nom de la pièce jointe"
+
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
 msgid "%s is not an editable page"
@@ -253,6 +258,22 @@ msgstr "Échec du traitement"
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "Échec du lancement de « fortune »"
+
+#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Receive.pm:129
+#, fuzzy, perl-format
+msgid "you are not allowed to change %s"
+msgstr "vous n'êtes pas authentifié comme administrateur"
+
+#: ../IkiWiki/Plugin/git.pm:657
+#, perl-format
+msgid "you cannot act on a file with mode %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:661
+#, fuzzy
+msgid "you are not allowed to change file modes"
+msgstr "vous n'êtes pas authentifié comme administrateur"
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, fuzzy, perl-format
@@ -805,6 +826,16 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr "<p class=\"erreur\">Erreur: %s a quitté nonzero (%s)"
 
+#: ../IkiWiki/Receive.pm:35
+#, perl-format
+msgid "cannot determine id of untrusted committer %s"
+msgstr ""
+
+#: ../IkiWiki/Receive.pm:85
+#, fuzzy, perl-format
+msgid "bad file name %s"
+msgstr "Omission du fichier au nom incorrect %s"
+
 #: ../IkiWiki/Render.pm:253
 #, perl-format
 msgid ""
@@ -902,19 +933,19 @@ msgstr "Le nom du fichier CGI n'a pas été indiqué"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:48
+#: ../IkiWiki/Wrapper.pm:79
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "Échec de l'écriture de %s : %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:99
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "failed to compile %s"
 msgstr "Échec de la compilation de %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:119
+#: ../IkiWiki/Wrapper.pm:155
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s a été créé avec succès"
@@ -932,39 +963,39 @@ msgstr "       ikiwiki --setup fichier de configuration"
 msgid "usage: --set var=value"
 msgstr "Syntaxe : -- set var=valeur"
 
-#: ../ikiwiki.in:137
+#: ../ikiwiki.in:138
 msgid "generating wrappers.."
 msgstr "Création des fichiers CGI..."
 
-#: ../ikiwiki.in:188
+#: ../ikiwiki.in:194
 msgid "rebuilding wiki.."
 msgstr "Reconstruction du wiki..."
 
-#: ../ikiwiki.in:191
+#: ../ikiwiki.in:197
 msgid "refreshing wiki.."
 msgstr "Rafraîchissement du wiki..."
 
-#: ../IkiWiki.pm:458
+#: ../IkiWiki.pm:466
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Vous devez indiquer une URL vers le wiki par --url lors de l'utilisation de "
 "--cgi"
 
-#: ../IkiWiki.pm:504
+#: ../IkiWiki.pm:512
 msgid "cannot use multiple rcs plugins"
 msgstr "impossible d'utiliser plusieurs systèmes de contrôle des versions"
 
-#: ../IkiWiki.pm:533
+#: ../IkiWiki.pm:541
 #, fuzzy, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr "Impossible de charger le greffon externe nécessaire au greffon %s : %s"
 
-#: ../IkiWiki.pm:1156
+#: ../IkiWiki.pm:1165
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "une boucle de pré traitement a été détectée sur %s à hauteur de %i"
 
-#: ../IkiWiki.pm:1665
+#: ../IkiWiki.pm:1678
 msgid "yes"
 msgstr "oui"
 

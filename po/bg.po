@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 19:12-0400\n"
+"POT-Creation-Date: 2008-10-26 15:03-0400\n"
 "PO-Revision-Date: 2007-01-12 01:19+0200\n"
 "Last-Translator: Damyan Ivanov <dam@modsodtsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -49,7 +49,7 @@ msgstr "Предпочитанията са запазени."
 msgid "You are banned."
 msgstr "Достъпът ви е забранен."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
 msgid "Error"
 msgstr "Грешка"
 
@@ -131,7 +131,7 @@ msgstr "създаване на нова страницa „%s”"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
 msgid "done"
 msgstr "готово"
 
@@ -212,6 +212,10 @@ msgstr ""
 msgid "removing old preview %s"
 msgstr "премахване на старата страница „%s”"
 
+#: ../IkiWiki/Plugin/editpage.pm:125
+msgid "bad page name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
 msgid "%s is not an editable page"
@@ -252,6 +256,21 @@ msgstr "грешка при обработване на шаблона"
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "грешшка в приставката „fortune”"
+
+#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Receive.pm:129
+#, perl-format
+msgid "you are not allowed to change %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:657
+#, perl-format
+msgid "you cannot act on a file with mode %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:661
+msgid "you are not allowed to change file modes"
+msgstr ""
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, fuzzy, perl-format
@@ -816,6 +835,16 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
+#: ../IkiWiki/Receive.pm:35
+#, perl-format
+msgid "cannot determine id of untrusted committer %s"
+msgstr ""
+
+#: ../IkiWiki/Receive.pm:85
+#, fuzzy, perl-format
+msgid "bad file name %s"
+msgstr "пропускане на невалидното име на файл „%s”"
+
 #: ../IkiWiki/Render.pm:253
 #, perl-format
 msgid ""
@@ -908,19 +937,19 @@ msgstr "не е указан файл на обвивката"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:48
+#: ../IkiWiki/Wrapper.pm:79
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "грешка при запис на файла „%s”: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:99
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "failed to compile %s"
 msgstr "крешка при компилиране на файла %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:119
+#: ../IkiWiki/Wrapper.pm:155
 #, perl-format
 msgid "successfully generated %s"
 msgstr "успешно генериране на %s"
@@ -937,39 +966,39 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:137
+#: ../ikiwiki.in:138
 msgid "generating wrappers.."
 msgstr "генериране на обвивки..."
 
-#: ../ikiwiki.in:188
+#: ../ikiwiki.in:194
 msgid "rebuilding wiki.."
 msgstr "обновяване на уики..."
 
-#: ../ikiwiki.in:191
+#: ../ikiwiki.in:197
 msgid "refreshing wiki.."
 msgstr "осъвременяване на уики..."
 
-#: ../IkiWiki.pm:458
+#: ../IkiWiki.pm:466
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "При използване на пареметъра „--cgi” е необходимо да се укаже и "
 "местоположението на уикито чрез параметъра „--url”"
 
-#: ../IkiWiki.pm:504
+#: ../IkiWiki.pm:512
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:533
+#: ../IkiWiki.pm:541
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1156
+#: ../IkiWiki.pm:1165
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "открита е циклична завидимост при %s на „%s” на дълбочина %i"
 
-#: ../IkiWiki.pm:1665
+#: ../IkiWiki.pm:1678
 msgid "yes"
 msgstr ""
 

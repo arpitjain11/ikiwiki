@@ -119,11 +119,6 @@ sub getconfig () { #{{{
 		}
 		delete $ENV{WRAPPED_OPTIONS};
 
-		if ($config{post_commit} && ! commit_hook_enabled()) {
-			# optimisation for no-op post_commit 
-			exit 0;
-		}
-
 		loadplugins();
 		checkconfig();
 	}

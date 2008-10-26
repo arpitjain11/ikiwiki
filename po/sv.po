@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 19:12-0400\n"
+"POT-Creation-Date: 2008-10-26 15:03-0400\n"
 "PO-Revision-Date: 2007-01-10 23:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -48,7 +48,7 @@ msgstr "Inställningar sparades."
 msgid "You are banned."
 msgstr "Du är bannlyst."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
 msgid "Error"
 msgstr "Fel"
 
@@ -130,7 +130,7 @@ msgstr "skapar nya sidan %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
 msgid "done"
 msgstr "klar"
 
@@ -211,6 +211,10 @@ msgstr ""
 msgid "removing old preview %s"
 msgstr "tar bort gammal sida %s"
 
+#: ../IkiWiki/Plugin/editpage.pm:125
+msgid "bad page name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
 msgid "%s is not an editable page"
@@ -251,6 +255,21 @@ msgstr "misslyckades med att behandla mall:"
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "fortune misslyckades"
+
+#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Receive.pm:129
+#, perl-format
+msgid "you are not allowed to change %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:657
+#, perl-format
+msgid "you cannot act on a file with mode %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:661
+msgid "you are not allowed to change file modes"
+msgstr ""
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, fuzzy, perl-format
@@ -811,6 +830,16 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
+#: ../IkiWiki/Receive.pm:35
+#, perl-format
+msgid "cannot determine id of untrusted committer %s"
+msgstr ""
+
+#: ../IkiWiki/Receive.pm:85
+#, fuzzy, perl-format
+msgid "bad file name %s"
+msgstr "hoppar över felaktigt filnamn %s"
+
 #: ../IkiWiki/Render.pm:253
 #, perl-format
 msgid ""
@@ -903,19 +932,19 @@ msgstr "filnamn för wrapper har inte angivits"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:48
+#: ../IkiWiki/Wrapper.pm:79
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "misslyckades med att skriva %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:99
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "failed to compile %s"
 msgstr "misslyckades med att kompilera %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:119
+#: ../IkiWiki/Wrapper.pm:155
 #, perl-format
 msgid "successfully generated %s"
 msgstr "generering av %s lyckades"
@@ -932,37 +961,37 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:137
+#: ../ikiwiki.in:138
 msgid "generating wrappers.."
 msgstr "genererar wrappers.."
 
-#: ../ikiwiki.in:188
+#: ../ikiwiki.in:194
 msgid "rebuilding wiki.."
 msgstr "bygger om wiki.."
 
-#: ../ikiwiki.in:191
+#: ../ikiwiki.in:197
 msgid "refreshing wiki.."
 msgstr "uppdaterar wiki.."
 
-#: ../IkiWiki.pm:458
+#: ../IkiWiki.pm:466
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Måste ange url till wiki med --url när --cgi används"
 
-#: ../IkiWiki.pm:504
+#: ../IkiWiki.pm:512
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:533
+#: ../IkiWiki.pm:541
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1156
+#: ../IkiWiki.pm:1165
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "%s förbehandlingsslinga detekterades på %s, djup %i"
 
-#: ../IkiWiki.pm:1665
+#: ../IkiWiki.pm:1678
 msgid "yes"
 msgstr ""
 
