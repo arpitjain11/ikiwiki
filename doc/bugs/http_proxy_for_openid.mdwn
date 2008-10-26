@@ -18,7 +18,7 @@ Update 2008-10-26:
 
 Better solution, one that works for both http and https, and uses config options. It appears to work...
 
-Note that using $ua->proxy(['https'], ...); won't work, you get a "Not Implemented" error, see <http://community.activestate.com/forum-topic/lwp-https-requests-proxy>.
+Note that using $ua->proxy(['https'], ...); won't work, you get a "Not Implemented" error, see <http://community.activestate.com/forum-topic/lwp-https-requests-proxy>. Also see [[!debbug 129528]].
 
 Also note that the proxy won't work with liblwpx-paranoidagent-perl, I had to remove liblwpx-paranoidagent-perl first.
 
