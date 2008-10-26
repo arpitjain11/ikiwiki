@@ -73,7 +73,7 @@ I think [[!cpan Crypt::SSLeay]] already supports checking the certificate. The t
 is to get [[!cpan LWP::UserAgent]], which is used by [[!cpan LWPx::ParanoidAgent]] to
 enable this checking.
 
-I think the trick is to set on of the the following environment variables before retrieving
+I think the trick is to set one of the the following environment variables before retrieving
 the data:
 
 $ENV{HTTPS\_CA\_DIR} = "/etc/ssl/certs/";  
