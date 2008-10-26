@@ -28,7 +28,8 @@ General problems:
 
 * Using non-perl syntax highlighting backends is slow. I'd prefer either
   using a perl module, or a multiple-backend solution that can use a perl
-  module as one option.
+  module as one option. (Or, if there's a great highlighter python module,
+  we could use an external plugin..)
 * Currently no single plugin supports both modes of operation (directive
   and whole source file to page).
 * Nothing seems to support 
@@ -41,6 +42,9 @@ General problems:
 * The whole-file plugins tend to have a problem that things that look like
   wikilinks in the source code get munged into links by ikiwiki, which can
   have confusing results. Similar problem with preprocessor directives.
+  One approach that's also been requested for eg,
+  [[plugins/contrib/mediawiki]] is to allow controlling which linkification
+  types a page type can have on it.
 * The whole-file plugins all get confused if there is a `foo.c` and a `foo.h`.
   This is trivially fixable now by passing the keepextension option when
   registering the htmlize hooks, though.
@@ -48,7 +52,11 @@ General problems:
   about it is that, when creating a new page, you can then pick "c" or
   "h" or "pl" etc from the dropdown that normally has "mdwn" etc in it.
   Is this a bug, or a feature? (Even if a feature, plugins with many
-  extensions make the dropdown unusable..)
-* The per page highlighters can't handle "Makefile", or other files
-  without a significant extension.
-* 
+  extensions make the dropdown unusable.. One way to deal with that is have
+  a config setting that lists what extensions to offer highlighting for.
+  Most people won't need/want the dozens some engines support.)
+* The per page highlighters can't handle creating wiki pages from 
+  "Makefile", or other files without a significant extension.
+  Not clear how to fix this, as ikiwiki is very oriented toward file
+  extensions. The workaround is to use a directive on a wiki page, pulling
+  in the Makefile.
