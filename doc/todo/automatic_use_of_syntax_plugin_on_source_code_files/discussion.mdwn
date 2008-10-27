@@ -1,6 +1,6 @@
 Here is another [[patch]] for this.  It is more up to date than either of the patches linked on the previous page.  It is most similar to [[plugins/contrib/sourcehighlight]].
 
-Note that if this is being used with `c` or `c++` then you'll probably want to wait until [[bugs/multiple_pages_with_same_name]] is fixed.
+Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
 
 -- [[Will]]
 
@@ -92,7 +92,7 @@ Note that if this is being used with `c` or `c++` then you'll probably want to w
     	
     	foreach my $lang (split(/[, ]+/, $config{sourcecode_lang})) {
     		if ($langs{$lang}) {
-    			hook(type => "htmlize", id => $lang, call => \&htmlize);
+    			hook(type => "htmlize", id => $lang, call => \&htmlize, keepextension => 1);
     		} else {
     			error("Your installation of source-highlight cannot handle sourcecode language $lang!");
     		}
