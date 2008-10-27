@@ -5,7 +5,7 @@ Ideally, it should support both converting whole source files into wiki
 pages, as well as doing syntax highlighting as a preprocessor directive 
 (which is either passed the text, or reads it from a file).
 
-The big list of possibilities:
+## The big list of possibilities
 
 * [[plugins/contrib/highlightcode]] uses [[cpan Syntax::Highlight::Engine::Kate]],
   operates on whole source files only, has a few bugs (see
@@ -24,7 +24,7 @@ The big list of possibilities:
   also uses src-highlight, and operates on whole source files.
   Has problems with [[bugs/multiple_pages_with_same_name]].
 
-General problems:
+## General problems
 
 * Using non-perl syntax highlighting backends is slow. I'd prefer either
   using a perl module, or a multiple-backend solution that can use a perl
@@ -60,3 +60,30 @@ General problems:
   Not clear how to fix this, as ikiwiki is very oriented toward file
   extensions. The workaround is to use a directive on a wiki page, pulling
   in the Makefile.
+
+## format directive
+
+Rather than making syntax highlight plugins have to provide a preprocessor
+directive as well as handling whole source files, perhaps a generic format
+directive could be used:
+
+	\[[!format pl """..."""]]
+
+That would run the text through the pl htmlizer, from the syntax hightligh
+plugin. OTOH, if "rst" were given, it would run the text through the rst
+htmlizer. So, more generic, allows mixing different types of markup on one
+page, as well as syntax highlighting. Does require specifying the type of
+format, instead of allows it to be guessed (which some syntax highlighters
+can do).
+
+Hmm, this would also allow comments inside source files to have mdwn
+embedded in them, without making the use of mdwn a special case, or needing
+to postprocess the syntax highlighter output to find comments.
+
+	/* \[[!format mdwn """
+
+	This is a comment in my C file. You can use mdwn in here.
+
+	"""]] */
+
+Note that this assumes that directives are expanded in source files.
