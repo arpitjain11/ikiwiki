@@ -95,7 +95,7 @@ sub getsetup () { #{{{
 		diffurl => {
 			type => "string",
 			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
-			description => "gitweb url to show a diff ([[sha1_to]], [[sha1_from]], [[sha1_parent]], and [[file]] substituted)",
+			description => "gitweb url to show a diff ([[sha1_to]], [[sha1_from]], [[sha1_parent]], [[sha1_commit]] and [[file]] substituted)",
 			safe => 1,
 			rebuild => 1,
 		},
@@ -521,6 +521,7 @@ sub rcs_recentchanges ($) { #{{{
 			$diffurl =~ s/\[\[sha1_parent\]\]/$ci->{'parent'}/go;
 			$diffurl =~ s/\[\[sha1_from\]\]/$detail->{'sha1_from'}/go;
 			$diffurl =~ s/\[\[sha1_to\]\]/$detail->{'sha1_to'}/go;
+			$diffurl =~ s/\[\[sha1_commit\]\]/$sha1/go;
 
 			push @pages, {
 				page => pagename($file),

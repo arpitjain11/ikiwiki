@@ -18,4 +18,6 @@ diffurls of the following form:
      			$diffurl =~ s/\[\[sha1_parent\]\]/$ci->{'parent'}/go;
      			$diffurl =~ s/\[\[sha1_from\]\]/$detail->{'sha1_from'}/go;
      			$diffurl =~ s/\[\[sha1_to\]\]/$detail->{'sha1_to'}/go;
-     
+
+> [[done]], but I called it `sha1_commit` since I think that's what it's
+> actually a sha1 of. --[[Joey]]
