@@ -2,7 +2,7 @@ This [[patch]] allows for `\[[sha1]]` substitution in the `diffurl`
 for git repositories.  This is useful for use with [cgit][] which has
 diffurls of the following form:
 
-    /project.git/diff/[[file]]?id=\[[sha1]]
+    /project.git/diff/\[[file]]?id=\[[sha1]]
 
  [cgit]: http://hjemli.net/git/cgit/
 
