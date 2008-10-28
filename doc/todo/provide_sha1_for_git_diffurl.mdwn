@@ -2,7 +2,7 @@ This [[patch]] allows for `\[[sha1]]` substitution in the `diffurl`
 for git repositories.  This is useful for use with [cgit][] which has
 diffurls of the following form:
 
-    /project.git/diff/\[[file]]?id=\[[sha1]]
+    /project.git/diff/\[[file]]?id=\[[sha1_commit]]
 
  [cgit]: http://hjemli.net/git/cgit/
 
@@ -21,3 +21,6 @@ diffurls of the following form:
 
 > [[done]], but I called it `sha1_commit` since I think that's what it's
 > actually a sha1 of. --[[Joey]]
+
+>> I was at a loss for something more descriptive...I like that much
+>> better :) Thanks! --[[JasonBlevins]]
