@@ -23,3 +23,10 @@ What's your opinion, Joey? I hope it's also useful for another ikiwiki lovers :)
 >>> Seems like a job for good ol' string interpolation.  rootpage="post/$current_year/$current_month/$current_day"
 >>> Ikiwiki could provide some vars, and it would be nice to write plugins to also provide vars.  Sort of like templates.
 >>> Does that feel OK? --[[sabr]]
+
+> I want the exact same thing.  My compromise was to create a `datedblog` module which overrides `inline`'s `sessioncgi` hook
+> with something that sets the new page name to `%Y-%m-%d.$page` and sets up a meta directive at the beginning of
+> the content, with the title you wanted.  Now if you use the `datedblog` module, you get dated blog entries.  But I'd
+> like to have traditional `inline` functionality too.  This would work great if there were a way to change the `do`
+> parameter in the `blogpost` template's form; if I could change it to `datedblog` instead of `blog` then I could hook
+> my datedblog module in nicely, without having to override anything.  What would be the right way to do that? --[[neale]]
