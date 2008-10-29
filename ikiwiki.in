@@ -163,6 +163,7 @@ sub main () { #{{{
 
 	if ($config{dumpsetup}) {
 		$config{srdir}=$config{destdir}="";
+		$config{syslog}=1 if $config{setupsyslog};
 		require IkiWiki::Setup;
 		IkiWiki::Setup::dump($config{dumpsetup});
 	}
