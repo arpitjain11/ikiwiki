@@ -64,3 +64,5 @@ How do I make images clickable?  The obvious guess, \[[foo.png|/index]], doesn't
 Is it possible to refer to a page, say \[[foobar]], such that the link text is taken from foobar's title [[directive/meta]] tag? --Peter
 
 > Not yet. :-) Any suggestion for a syntax for it? Maybe something like \[[|foobar]] ? --[[Joey]]
+
+I like your suggestion because it's short and conscise. However, it would be nice to be able to refer to more or less arbitrary meta tags in links, not just "title". To do that, the link needs two parameters: the page name and the tag name, i.e. \[[pagename#metatag]]. Instead of '#', any sufficiently weird separater could be used. I like \[[pagename->metatag]], too, because it reminds me of accessing a data member of a structure (which is what referencing a meta tag is, really). --Peter
