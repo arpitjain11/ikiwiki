@@ -411,7 +411,7 @@ sub getsetup () { #{{{
 		rebuild => 0,
 	},
 	allow_symlinks_before_srcdir => {
-		type => "string",
+		type => "boolean",
 		default => 0,
 		description => "allow symlinks in the path leading to the srcdir (potentially insecure)",
 		safe => 0,
