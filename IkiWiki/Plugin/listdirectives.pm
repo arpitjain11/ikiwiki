@@ -30,7 +30,7 @@ sub getsetup () { #{{{
 } #}}}
 
 my @fulllist;
-my @earlylist;
+my @shortlist;
 my $pluginstring;
 
 sub checkconfig () { #{{{
@@ -40,15 +40,14 @@ sub checkconfig () { #{{{
 	else {
 		$config{directive_description_dir} =~ s/\/+$//;
 	}
-
-	@earlylist = sort keys %{$IkiWiki::hooks{preprocess}};
 } #}}}
 
 sub needsbuild (@) { #{{{
 	my $needsbuild=shift;
 
 	@fulllist = sort keys %{$IkiWiki::hooks{preprocess}};
-	$pluginstring = join(' ', @earlylist) . " : " . join(' ', @fulllist);
+	@shortlist = grep { ! $IkiWiki::hooks{preprocess}{$_}{shortcut} } @fulllist;
+	$pluginstring = join(' ', @shortlist) . " : " . join(' ', @fulllist);
 
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{listdirectives}{shown}) {
@@ -77,7 +76,7 @@ sub preprocess (@) { #{{{
 		@pluginlist = @fulllist;
 	}
 	else {
-		@pluginlist = @earlylist;
+		@pluginlist = @shortlist;
 	}
 	
 	my $result = '<ul class="listdirectives">';

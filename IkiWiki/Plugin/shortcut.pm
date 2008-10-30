@@ -39,6 +39,7 @@ sub preprocess_shortcut (@) { #{{{
 	}
 
 	hook(type => "preprocess", no_override => 1, id => $params{name},
+		shortcut => 1,
 		call => sub { shortcut_expand($params{url}, $params{desc}, @_) });
 
 	#translators: This is used to display what shortcuts are defined.
