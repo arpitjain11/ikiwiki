@@ -156,7 +156,7 @@ sub main () { #{{{
 		}
 		
 		# setup implies a wiki rebuild by default
-		if (! $config{refresh}) {
+		if (! $config{refresh} && ! $config{render}) {
 			$config{rebuild}=1;
 		}
 	}
