@@ -98,7 +98,7 @@ sub getconfig () { #{{{
 			"help|h" => sub { $SIG{__WARN__}=sub {}; die },
 		) || usage();
 
-		if (! $config{setup} && ! $config{render}) {
+		if (! $config{setup}) {
 			loadplugins();
 			if (@ARGV == 2) {
 				$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
