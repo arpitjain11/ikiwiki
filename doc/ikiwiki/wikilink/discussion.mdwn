@@ -59,6 +59,11 @@ this doesn't work, so I had to resort to using `\[[foo/bar]]` instead.
 
 > Even worse, trying to link from `/foo/bar` to `/foo/bar/foo/bar` ... this will probably need `\[[./foo/bar]]` --[[Jan|jwalzer]]
 
+>> There is no ".." syntax in wikilinks, but if the link begins with "/" it
+>> is rooted at the top of the wiki, as documented in
+>> [[subpage/linkingrules]]. Therefore, every example page name you listed
+>> above will work unchanged as a wikilink to that page! --[[Joey]]
+
 ----
 
 How do I make images clickable?  The obvious guess, \[[foo.png|/index]], doesn't work.  --[[sabr]]
