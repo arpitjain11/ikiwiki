@@ -528,6 +528,7 @@ sub commandline_render () { #{{{
 	$content=linkify($page, $page, $content);
 	$content=htmlize($page, $page, $type, $content);
 	$pagemtime{$page}=(stat($srcfile))[9];
+	$pagectime{$page}=$pagemtime{$page} if ! exists $pagectime{$page};
 
 	print genpage($page, $content);
 	exit 0;
