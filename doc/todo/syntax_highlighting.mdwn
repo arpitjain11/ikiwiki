@@ -73,8 +73,8 @@ That would run the text through the pl htmlizer, from the syntax hightligh
 plugin. OTOH, if "rst" were given, it would run the text through the rst
 htmlizer. So, more generic, allows mixing different types of markup on one
 page, as well as syntax highlighting. Does require specifying the type of
-format, instead of allows it to be guessed (which some syntax highlighters
-can do).
+format, instead of allowing it to be guessed (which some syntax highlighters
+can do). (This directive is now implemented..)
 
 Hmm, this would also allow comments inside source files to have mdwn
 embedded in them, without making the use of mdwn a special case, or needing

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-29 17:42-0400\n"
+"POT-Creation-Date: 2008-10-31 16:38-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -244,6 +244,15 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/edittemplate.pm:133
 msgid "failed to process"
+msgstr ""
+
+#: ../IkiWiki/Plugin/format.pm:22
+msgid "must specify format and text"
+msgstr ""
+
+#: ../IkiWiki/Plugin/format.pm:25
+#, perl-format
+msgid "unsupported page format %s"
 msgstr ""
 
 #: ../IkiWiki/Plugin/fortune.pm:27
@@ -671,7 +680,7 @@ msgstr ""
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:47
+#: ../IkiWiki/Plugin/shortcut.pm:48
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr ""

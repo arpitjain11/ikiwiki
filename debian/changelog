@@ -39,6 +39,9 @@ ikiwiki (2.68) UNRELEASED; urgency=low
   * shortcut: Fix display of shortcuts while previewing.
   * Preserve syslog setting when doing `ikiwiki -setup foo -dumpsetup bar`
   * Several fixes to --render mode.
+  * format: New plugin, allows embedding differntly formatted text inside a
+    page (ie, otl inside a mdwn page, or syntax highlighted code inside a
+    page).
 
  -- Joey Hess <joeyh@debian.org>  Fri, 17 Oct 2008 20:11:02 -0400
 

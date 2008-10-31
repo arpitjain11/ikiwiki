@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-26 15:03-0400\n"
+"POT-Creation-Date: 2008-10-31 16:37-0400\n"
 "PO-Revision-Date: 2008-10-22 13:54+0200\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -130,7 +130,7 @@ msgstr "creando nueva página %s"
 msgid "deleting bucket.."
 msgstr "borrando el directorio.."
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
 msgid "done"
 msgstr "completado"
 
@@ -248,22 +248,31 @@ msgstr "plantilla de edición %s registrada para %s"
 msgid "failed to process"
 msgstr "fallo en el proceso"
 
+#: ../IkiWiki/Plugin/format.pm:22
+msgid "must specify format and text"
+msgstr ""
+
+#: ../IkiWiki/Plugin/format.pm:25
+#, fuzzy, perl-format
+msgid "unsupported page format %s"
+msgstr "el sistema de control de versiones %s no está soportado"
+
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "el programa fortune ha fallado"
 
-#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
 #: ../IkiWiki/Receive.pm:129
 #, fuzzy, perl-format
 msgid "you are not allowed to change %s"
 msgstr "No está registrado como un administrador"
 
-#: ../IkiWiki/Plugin/git.pm:657
+#: ../IkiWiki/Plugin/git.pm:658
 #, perl-format
 msgid "you cannot act on a file with mode %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:661
+#: ../IkiWiki/Plugin/git.pm:662
 #, fuzzy
 msgid "you are not allowed to change file modes"
 msgstr "No está registrado como un administrador"
@@ -676,18 +685,18 @@ msgstr "se necesita la instalación de Digest::SHA1 para indexar %s"
 msgid "search"
 msgstr "buscar"
 
-#: ../IkiWiki/Plugin/shortcut.pm:27
+#: ../IkiWiki/Plugin/shortcut.pm:28
 msgid "shortcut plugin will not work without a shortcuts.mdwn"
 msgstr "el complemento shortcut no funciona sin una página shortcuts.mdwn"
 
-#: ../IkiWiki/Plugin/shortcut.pm:36
+#: ../IkiWiki/Plugin/shortcut.pm:38
 msgid "missing name or url parameter"
 msgstr "shortcut necesita el parámetro 'name' ó el parámetro 'url'"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:45
+#: ../IkiWiki/Plugin/shortcut.pm:48
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "El atajo %s apunta a <i>%s</i>"
@@ -959,11 +968,11 @@ msgstr "uso: --set variable=valor"
 msgid "generating wrappers.."
 msgstr "generando programas auxiliares.."
 
-#: ../ikiwiki.in:194
+#: ../ikiwiki.in:195
 msgid "rebuilding wiki.."
 msgstr "reconstruyendo el wiki.."
 
-#: ../ikiwiki.in:197
+#: ../ikiwiki.in:198
 msgid "refreshing wiki.."
 msgstr "actualizando el wiki.."
 

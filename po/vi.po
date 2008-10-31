@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-26 15:03-0400\n"
+"POT-Creation-Date: 2008-10-31 16:37-0400\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -131,7 +131,7 @@ msgstr "đang tạo trang mới %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
 msgid "done"
 msgstr "xong"
 
@@ -253,22 +253,31 @@ msgstr ""
 msgid "failed to process"
 msgstr "mẫu không xử lý được:"
 
+#: ../IkiWiki/Plugin/format.pm:22
+msgid "must specify format and text"
+msgstr ""
+
+#: ../IkiWiki/Plugin/format.pm:25
+#, perl-format
+msgid "unsupported page format %s"
+msgstr ""
+
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "fortune bị lỗi"
 
-#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
 #: ../IkiWiki/Receive.pm:129
 #, perl-format
 msgid "you are not allowed to change %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:657
+#: ../IkiWiki/Plugin/git.pm:658
 #, perl-format
 msgid "you cannot act on a file with mode %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:661
+#: ../IkiWiki/Plugin/git.pm:662
 msgid "you are not allowed to change file modes"
 msgstr ""
 
@@ -682,11 +691,11 @@ msgstr ""
 msgid "search"
 msgstr ""
 
-#: ../IkiWiki/Plugin/shortcut.pm:27
+#: ../IkiWiki/Plugin/shortcut.pm:28
 msgid "shortcut plugin will not work without a shortcuts.mdwn"
 msgstr ""
 
-#: ../IkiWiki/Plugin/shortcut.pm:36
+#: ../IkiWiki/Plugin/shortcut.pm:38
 #, fuzzy
 msgid "missing name or url parameter"
 msgstr "lối tắt thiếu tên hay tham số url"
@@ -694,7 +703,7 @@ msgstr "lối tắt thiếu tên hay tham số url"
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:45
+#: ../IkiWiki/Plugin/shortcut.pm:48
 #, fuzzy, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "lối tắt %s chỉ tới %s"
@@ -966,11 +975,11 @@ msgstr ""
 msgid "generating wrappers.."
 msgstr "đang tạo ra các bộ bao bọc.."
 
-#: ../ikiwiki.in:194
+#: ../ikiwiki.in:195
 msgid "rebuilding wiki.."
 msgstr "đang xây dựng lại wiki.."
 
-#: ../ikiwiki.in:197
+#: ../ikiwiki.in:198
 msgid "refreshing wiki.."
 msgstr "đang làm tươi wiki.."
 

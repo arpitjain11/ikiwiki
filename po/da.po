@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-26 15:03-0400\n"
+"POT-Creation-Date: 2008-10-31 16:37-0400\n"
 "PO-Revision-Date: 2008-10-22 19:13+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: None\n"
@@ -132,7 +132,7 @@ msgstr "opretter ny side %s"
 msgid "deleting bucket.."
 msgstr "sletter bundt.."
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:205
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
 msgid "done"
 msgstr "færdig"
 
@@ -250,22 +250,31 @@ msgstr "redigeringsskabelon %s registreret for %s"
 msgid "failed to process"
 msgstr "dannelsen mislykkedes"
 
+#: ../IkiWiki/Plugin/format.pm:22
+msgid "must specify format and text"
+msgstr ""
+
+#: ../IkiWiki/Plugin/format.pm:25
+#, fuzzy, perl-format
+msgid "unsupported page format %s"
+msgstr "revisionskontrolsystem %s ikke understøttet"
+
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "spådom (fortune) fejlede"
 
-#: ../IkiWiki/Plugin/git.pm:617 ../IkiWiki/Plugin/git.pm:635
+#: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
 #: ../IkiWiki/Receive.pm:129
 #, fuzzy, perl-format
 msgid "you are not allowed to change %s"
 msgstr "du er ikke logget på som en administrator"
 
-#: ../IkiWiki/Plugin/git.pm:657
+#: ../IkiWiki/Plugin/git.pm:658
 #, perl-format
 msgid "you cannot act on a file with mode %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:661
+#: ../IkiWiki/Plugin/git.pm:662
 #, fuzzy
 msgid "you are not allowed to change file modes"
 msgstr "du er ikke logget på som en administrator"
@@ -669,18 +678,18 @@ msgstr "behøver Digest::SHA1 til indeks %s"
 msgid "search"
 msgstr "søg"
 
-#: ../IkiWiki/Plugin/shortcut.pm:27
+#: ../IkiWiki/Plugin/shortcut.pm:28
 msgid "shortcut plugin will not work without a shortcuts.mdwn"
 msgstr "genvejsudvidelsen vil ikke fungere uden en shortcuts.mdwn"
 
-#: ../IkiWiki/Plugin/shortcut.pm:36
+#: ../IkiWiki/Plugin/shortcut.pm:38
 msgid "missing name or url parameter"
 msgstr "manglende navn eller url parameter"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:45
+#: ../IkiWiki/Plugin/shortcut.pm:48
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "genvej %s viser til <i>%s</i>"
@@ -949,11 +958,11 @@ msgstr "brug: --set var=værdi"
 msgid "generating wrappers.."
 msgstr "bygger wrappers.."
 
-#: ../ikiwiki.in:194
+#: ../ikiwiki.in:195
 msgid "rebuilding wiki.."
 msgstr "genopbygger wiki..."
 
-#: ../ikiwiki.in:197
+#: ../ikiwiki.in:198
 msgid "refreshing wiki.."
 msgstr "genopfrisker wiki..."
 
