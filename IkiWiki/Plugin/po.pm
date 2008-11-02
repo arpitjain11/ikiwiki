@@ -204,8 +204,8 @@ sub needsbuild () { #{{{
 		IkiWiki::refresh();
 		IkiWiki::saveindex();
 		# refresh module's private variables
-		%filtered=undef;
-		%translations=undef;
+		undef %filtered;
+		undef %translations;
 		foreach my $page (keys %pagesources) {
 			istranslation($page);
 		}
