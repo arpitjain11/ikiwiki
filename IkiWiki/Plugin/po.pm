@@ -18,6 +18,7 @@ use Memoize;
 
 my %translations;
 our %filtered;
+my $origbestlink=\&bestlink;
 ## FIXME: makes some test cases cry once every two tries; this may be
 ## related to the artificial way the testsuite is run, or not.
 # memoize("istranslatable");
@@ -30,10 +31,10 @@ sub import {
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
 	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
-	hook(type => "tweakbestlink", id => "po", call => \&tweakbestlink);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
+	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
 }
 
 sub getsetup () { #{{{
@@ -246,17 +247,22 @@ sub tweakurlpath ($) { #{{{
 	return $url;
 } #}}}
 
-sub tweakbestlink ($$) { #{{{
-	my %params = @_;
-	my $page=$params{page};
-	my $link=$params{link};
-	if ($config{po_link_to} eq "current"
-	    && istranslatable($link)
-	    && istranslation($page)) {
-		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-		return $link . "." . $curlang;
+sub mybestlink ($$) { #{{{
+	my $page=shift;
+	my $link=shift;
+	my $res=$origbestlink->($page, $link);
+	if (length $res) {
+		if ($config{po_link_to} eq "current"
+		    && istranslatable($res)
+		    && istranslation($page)) {
+			my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+			return $res . "." . $curlang;
+		}
+		else {
+			return $res;
+		}
 	}
-	return $link;
+	return "";
 } #}}}
 
 # We use filter to convert PO to the master page's type,
