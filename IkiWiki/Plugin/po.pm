@@ -35,7 +35,6 @@ sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
-	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
