@@ -17,7 +17,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 24;
+use Test::More tests => 34;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -36,13 +36,15 @@ $config{po_slave_languages} = {
 			       es => 'Castellano',
 			       fr => "Français"
 			      };
-$config{po_translatable_pages}='test1 or test2';
+$config{po_translatable_pages}='index or test1 or test2';
 $config{po_link_to}='negotiated';
 IkiWiki::loadplugins();
 IkiWiki::checkconfig();
 ok(IkiWiki::loadplugin('po'), "po plugin loaded");
 
 ### seed %pagesources and %pagecase
+$pagesources{'index'}='index.mdwn';
+$pagesources{'index.fr'}='index.fr.po';
 $pagesources{'test1'}='test1.mdwn';
 $pagesources{'test1.fr'}='test1.fr.po';
 $pagesources{'test2'}='test2.mdwn';
@@ -57,6 +59,14 @@ foreach my $page (keys %pagesources) {
 ### istranslatable/istranslation
 # we run these tests twice because memoization attempts made them
 # succeed once every two tries...
+ok(IkiWiki::Plugin::po::istranslatable('index'), "index is translatable");
+ok(IkiWiki::Plugin::po::istranslatable('index'), "index is translatable");
+ok(! IkiWiki::Plugin::po::istranslatable('index.fr'), "index is not translatable");
+ok(! IkiWiki::Plugin::po::istranslatable('index.fr'), "index is not translatable");
+ok(! IkiWiki::Plugin::po::istranslation('index'), "index is not a translation");
+ok(! IkiWiki::Plugin::po::istranslation('index'), "index is not a translation");
+ok(IkiWiki::Plugin::po::istranslation('index.fr'), "index.fr is a translation");
+ok(IkiWiki::Plugin::po::istranslation('index.fr'), "index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslatable('test2'), "test2 is translatable");
 ok(IkiWiki::Plugin::po::istranslatable('test2'), "test2 is translatable");
 ok(! IkiWiki::Plugin::po::istranslation('test2'), "test2 is not a translation");
@@ -73,6 +83,8 @@ is(targetpage('test1', 'html'), 'test1.en.html', "$msgprefix test1");
 is(targetpage('test1.fr', 'html'), 'test1.fr.html', "$msgprefix test1.fr");
 $config{usedirs}=1;
 $msgprefix="targetpage (usedirs=1)";
+is(targetpage('index', 'html'), 'index.en.html', "$msgprefix index");
+is(targetpage('index.fr', 'html'), 'index.fr.html', "$msgprefix index.fr");
 is(targetpage('test1', 'html'), 'test1/index.en.html', "$msgprefix test1");
 is(targetpage('test1.fr', 'html'), 'test1/index.fr.html', "$msgprefix test1.fr");
 is(targetpage('test3', 'html'), 'test3/index.html', "$msgprefix test3 (non-translatable page)");
