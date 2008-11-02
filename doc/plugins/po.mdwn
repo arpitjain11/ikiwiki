@@ -221,20 +221,17 @@ Security checks
 gettext/po4a rough corners
 --------------------------
 
-- new translations created in the web interface must get proper charset/encoding
-  gettext metadata, else the next automatic PO update removes any non-ascii
-  chars; possible solution: put such metadata into the Pot file, and let it
-  propagate
-- fix the duplicated PO header mysterious bug
-- fix the "duplicate message definition" error when updating a PO
-  file; do PO files need normalizing? (may be a side effect of
-  previous bug)
 - fix infinite loop when synchronizing two ikiwiki (when checkouts
   live in different directories): say bla.fr.po has been updated in
   repo2; pulling repo2 from repo1 seems to trigger a PO update, that
   changes bla.fr.po in repo1; then pushing repo1 to repo2 triggers
   a PO update, that changes bla.fr.po in repo2; etc.; fixed in
-  `629968fc89bced6727981c0a1138072631751fee` ?
+  `629968fc89bced6727981c0a1138072631751fee`?
+- new translations created in the web interface must get proper charset/encoding
+  gettext metadata, else the next automatic PO update removes any non-ascii
+  chars; possible solution: put such metadata into the Pot file, and let it
+  propagate; should be fixed in `773de05a7a1ee68d2bed173367cf5e716884945a`, time
+  will tell.
 
 Misc. improvements
 ------------------
@@ -250,6 +247,25 @@ Use nice page titles from meta plugin in links, as inline already does.
 ### websetup
 
 Which configuration settings are safe enough for websetup?
+
+### Discussion pages
+
+Decide something, probably that "slave" pages, being only translations, don't
+deserve a discussion page: the discussion should happen in the language in which
+the pages are written for real, which is the "master" one.
+
+### parentlinks
+
+When the wiki home page is translatable, the parentlinks plugin sets
+`./index.html` as its translations' single parent link. Ideally, the home page's
+translations should get no parent link at all, just like the version written in
+the master language.
+
+### backlinks
+
+If a given translatable `sourcepage.mdwn` links to \[[destpage]],
+`sourcepage.LL.po` also link to \[[destpage]], and the latter has the master
+page *and* all its translations listed in the backlinks.
 
 Translation quality assurance
 -----------------------------
