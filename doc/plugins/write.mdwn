@@ -427,15 +427,6 @@ describes the plugin as a whole. For example:
   and undef if a rebuild could be needed in some circumstances, but is not
   strictly required.
 
-### targetpage
-
-	hook(type => "targetpage", id => "foo", call => \&targetpage);
-
-This hook can be used to override the name of the file a page should
-be compiled into. 
-
-It should return the target filename.
-
 ## Plugin interface
 
 To import the ikiwiki plugin interface:
