@@ -252,6 +252,17 @@ sub mybeautify_urlpath ($) { #{{{
 	return $res;
 } #}}}
 
+sub urlto_with_orig_beautiful_urlpath($$) { #{{{
+	my $to=shift;
+	my $from=shift;
+
+	inject(name => "IkiWiki::beautify_urlpath", call => $origsubs{'beautify_urlpath'});
+	my $res=urlto($to, $from);
+	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
+
+	return $res;
+} #}}}
+
 sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
@@ -359,7 +370,7 @@ sub otherlanguages ($) { #{{{
 	elsif (istranslation($page)) {
 		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		push @ret, {
-			url => urlto($masterpage, $page),
+			url => urlto_with_orig_beautiful_urlpath($masterpage, $page),
 			code => $config{po_master_language}{code},
 			language => $config{po_master_language}{name},
 			master => 1,
