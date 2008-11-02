@@ -29,18 +29,19 @@ memoize("percenttranslated");
 my %origsubs;
 $origsubs{'bestlink'}=\&IkiWiki::bestlink;
 $origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
+$origsubs{'targetpage'}=\&IkiWiki::targetpage;
 
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
-	hook(type => "targetpage", id => "po", call => \&targetpage);
 	hook(type => "tweakurlpath", id => "po", call => \&tweakurlpath);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
+	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
 }
 
 sub getsetup () { #{{{
@@ -219,10 +220,9 @@ sub needsbuild () { #{{{
 	}
 } #}}}
 
-sub targetpage (@) { #{{{
-	my %params = @_;
-        my $page=$params{page};
-        my $ext=$params{ext};
+sub mytargetpage ($$) { #{{{
+	my $page=shift;
+	my $ext=shift;
 
 	if (istranslation($page)) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
@@ -241,7 +241,7 @@ sub targetpage (@) { #{{{
 			return $page . "/index." . $config{po_master_language}{code} . "." . $ext;
 		}
 	}
-	return;
+	return $origsubs{'targetpage'}->($page, $ext);
 } #}}}
 
 sub mybeautify_urlpath ($) { #{{{
