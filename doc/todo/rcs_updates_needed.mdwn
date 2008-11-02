@@ -3,3 +3,8 @@ renaming and removing files using the web interface. The mercurial and
 tla [[rcs]] backends need implementions of these functions.
 
 (The maintainers of these backends have been mailed. --[[Joey]])
+
+Also, currently git is the only VCS to have support for
+[[untrusted_push|tips/untrusted_git_push]]. It _may_ be possible to
+implement it for other DVCS, if they offer a hook that can be used to check
+incoming pushes early.

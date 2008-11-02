@@ -98,7 +98,7 @@ sub getconfig () { #{{{
 			"help|h" => sub { $SIG{__WARN__}=sub {}; die },
 		) || usage();
 
-		if (! $config{setup} && ! $config{render}) {
+		if (! $config{setup}) {
 			loadplugins();
 			if (@ARGV == 2) {
 				$config{srcdir} = possibly_foolish_untaint(shift @ARGV);
@@ -118,6 +118,7 @@ sub getconfig () { #{{{
 			error("WRAPPED_OPTIONS: $@");
 		}
 		delete $ENV{WRAPPED_OPTIONS};
+
 		loadplugins();
 		checkconfig();
 	}
@@ -145,7 +146,8 @@ sub main () { #{{{
 					if exists $config{setupsyslog};
 				delete @config{qw(setupsyslog setupverbose wrappers genwrappers rebuild)};
 				checkconfig();
-				if (! $config{cgi} && ! $config{post_commit}) {
+				if (! $config{cgi} && ! $config{post_commit} &&
+				    ! $config{test_receive}) {
 					$config{post_commit}=1;
 				}
 				gen_wrapper();
@@ -154,13 +156,14 @@ sub main () { #{{{
 		}
 		
 		# setup implies a wiki rebuild by default
-		if (! $config{refresh}) {
+		if (! $config{refresh} && ! $config{render}) {
 			$config{rebuild}=1;
 		}
 	}
 
 	if ($config{dumpsetup}) {
 		$config{srdir}=$config{destdir}="";
+		$config{syslog}=1 if $config{setupsyslog};
 		require IkiWiki::Setup;
 		IkiWiki::Setup::dump($config{dumpsetup});
 	}
@@ -182,6 +185,10 @@ sub main () { #{{{
 	}
 	elsif ($config{post_commit} && ! commit_hook_enabled()) {
 		# do nothing
+	}
+	elsif ($config{test_receive}) {
+		require IkiWiki::Receive;
+		IkiWiki::Receive::test();
 	}
 	else {
 		if ($config{rebuild}) {

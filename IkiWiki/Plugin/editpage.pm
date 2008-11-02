@@ -122,7 +122,7 @@ sub cgi_editpage ($$) { #{{{
 	my $absolute=($page =~ s#^/+##);
 	if (! defined $page || ! length $page ||
 	    file_pruned($page, $config{srcdir})) {
-		error("bad page name");
+		error(gettext("bad page name"));
 	}
 
 	my $baseurl = urlto($page, undef, 1);

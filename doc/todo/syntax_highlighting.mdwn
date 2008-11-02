@@ -1,0 +1,89 @@
+There's been a lot of work on contrib syntax highlighting plugins. One should be
+picked and added to ikiwiki core.
+
+Ideally, it should support both converting whole source files into wiki
+pages, as well as doing syntax highlighting as a preprocessor directive 
+(which is either passed the text, or reads it from a file).
+
+## The big list of possibilities
+
+* [[plugins/contrib/highlightcode]] uses [[cpan Syntax::Highlight::Engine::Kate]],
+  operates on whole source files only, has a few bugs (see
+  [here](http://u32.net/Highlight_Code_Plugin/), and needs to be updated to
+  support [[bugs/multiple_pages_with_same_name]].
+* [[cpan IkiWiki-Plugin-syntax]] only operates as a directive.
+  Interestingly, it supports multiple highlighting backends, including Kate
+  and Vim.
+* [[plugins/contrib/syntax]] only operates as a directive
+  ([[not_on_source_code_files|automatic_use_of_syntax_plugin_on_source_code_files]]),
+  and uses [[cpan Text::VimColor]].
+* [[plugins/contrib/sourcehighlight]] uses src-highlight, and operates on
+  whole source files only. Needs to be updated to
+  support [[bugs/multiple_pages_with_same_name]].
+* [[sourcecode|todo/automatic_use_of_syntax_plugin_on_source_code_files/discussion]]
+  also uses src-highlight, and operates on whole source files.
+  Updated to work with the fix for [[bugs/multiple_pages_with_same_name]].  Untested with files with no extension, e.g. `Makefile`.
+
+## General problems
+
+* Using non-perl syntax highlighting backends is slow. I'd prefer either
+  using a perl module, or a multiple-backend solution that can use a perl
+  module as one option. (Or, if there's a great highlighter python module,
+  we could use an external plugin..)
+* Currently no single plugin supports both modes of operation (directive
+  and whole source file to page).
+* Nothing seems to support 
+  [[wiki-formatted_comments|wiki-formatted_comments_with_syntax_plugin]]
+  inside source files. Doing this probably means post-processing the 
+  results of the highlighting engine, to find places where it's highlighted
+  comments, and then running them through the ikiwiki rendering pipeline.
+  This seems fairly doable with [[cpan Syntax::Highlight::Engine::Kate]],
+  at least.
+* The whole-file plugins tend to have a problem that things that look like
+  wikilinks in the source code get munged into links by ikiwiki, which can
+  have confusing results. Similar problem with preprocessor directives.
+  One approach that's also been requested for eg,
+  [[plugins/contrib/mediawiki]] is to allow controlling which linkification
+  types a page type can have on it.
+* The whole-file plugins all get confused if there is a `foo.c` and a `foo.h`.
+  This is trivially fixable now by passing the keepextension option when
+  registering the htmlize hooks, though.
+* Whole-file plugins register a bunch of htmlize hooks. The wacky thing
+  about it is that, when creating a new page, you can then pick "c" or
+  "h" or "pl" etc from the dropdown that normally has "mdwn" etc in it.
+  Is this a bug, or a feature? (Even if a feature, plugins with many
+  extensions make the dropdown unusable.. One way to deal with that is have
+  a config setting that lists what extensions to offer highlighting for.
+  Most people won't need/want the dozens some engines support.)
+* The per page highlighters can't handle creating wiki pages from 
+  "Makefile", or other files without a significant extension.
+  Not clear how to fix this, as ikiwiki is very oriented toward file
+  extensions. The workaround is to use a directive on a wiki page, pulling
+  in the Makefile.
+
+## format directive
+
+Rather than making syntax highlight plugins have to provide a preprocessor
+directive as well as handling whole source files, perhaps a generic format
+directive could be used:
+
+	\[[!format pl """..."""]]
+
+That would run the text through the pl htmlizer, from the syntax hightligh
+plugin. OTOH, if "rst" were given, it would run the text through the rst
+htmlizer. So, more generic, allows mixing different types of markup on one
+page, as well as syntax highlighting. Does require specifying the type of
+format, instead of allowing it to be guessed (which some syntax highlighters
+can do). (This directive is now implemented..)
+
+Hmm, this would also allow comments inside source files to have mdwn
+embedded in them, without making the use of mdwn a special case, or needing
+to postprocess the syntax highlighter output to find comments.
+
+	/* \[[!format mdwn """
+
+	This is a comment in my C file. You can use mdwn in here.
+
+	"""]] */
+
+Note that this assumes that directives are expanded in source files.

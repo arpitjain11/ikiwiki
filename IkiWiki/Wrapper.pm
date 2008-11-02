@@ -31,12 +31,43 @@ sub gen_wrapper () { #{{{
 		       HTTP_COOKIE REMOTE_USER HTTPS} if $config{cgi};
 	my $envsave="";
 	foreach my $var (@envsave) {
-		$envsave.=<<"EOF"
+		$envsave.=<<"EOF";
 	if ((s=getenv("$var")))
 		addenv("$var", s);
 EOF
 	}
-	
+
+	my $test_receive="";
+	if ($config{test_receive}) {
+		require IkiWiki::Receive;
+		$test_receive=IkiWiki::Receive::gen_wrapper();
+	}
+
+	my $check_commit_hook="";
+	if ($config{post_commit}) {
+		# Optimise checking !commit_hook_enabled() , 
+		# so that ikiwiki does not have to be started if the
+		# hook is disabled.
+		#
+		# Note that perl's flock may be implemented using fcntl
+		# or lockf on some systems. If so, and if there is no
+		# interop between the locking systems, the true C flock will
+		# always succeed, and this optimisation won't work.
+		# The perl code will later correctly check the lock,
+		# so the right thing will still happen, though without
+		# the benefit of this optimisation.
+		$check_commit_hook=<<"EOF";
+	{
+		int fd=open("$config{wikistatedir}/commitlock", O_CREAT | O_RDWR);
+		if (fd != -1) {
+			if (flock(fd, LOCK_SH | LOCK_NB) != 0)
+				exit(0);
+			close(fd);
+		}
+	}
+EOF
+	}
+
 	$Data::Dumper::Indent=0; # no newlines
 	my $configstring=Data::Dumper->Dump([\%config], ['*config']);
 	$configstring=~s/\\/\\\\/g;
@@ -50,12 +81,15 @@ EOF
 /* A wrapper for ikiwiki, can be safely made suid. */
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/file.h>
 
 extern char **environ;
-char *newenviron[$#envsave+5];
+char *newenviron[$#envsave+6];
 int i=0;
 
 addenv(char *var, char *val) {
@@ -67,8 +101,10 @@ addenv(char *var, char *val) {
 }
 
 int main (int argc, char **argv) {
-	/* Sanitize environment. */
 	char *s;
+
+$check_commit_hook
+$test_receive
 $envsave
 	newenviron[i++]="HOME=$ENV{HOME}";
 	newenviron[i++]="WRAPPED_OPTIONS=$configstring";

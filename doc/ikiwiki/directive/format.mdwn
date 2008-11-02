@@ -1,0 +1,21 @@
+The `format` directive is supplied by the [[!iki plugins/format desc=format]]
+plugin.
+
+The directive allows formatting a chunk of text using any available page
+format. It takes two parameters. First is the type of format to use,
+ie the extension that would be used for a standalone file of this type.
+Second is the text to format.
+
+For example, this will embed an otl outline inside a page using mdwn or
+some other format:
+
+	\[[!format otl """
+	foo
+		1
+		2
+	bar
+		3
+		4
+	"""]]
+
+[[!meta robots="noindex, follow"]]

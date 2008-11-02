@@ -6,10 +6,42 @@ I have found if I add:
 
     newenviron[i++]="HTTPS_PROXY=http://host.domain.com:3128";
 
-to IkiWiki/Wrapper.pm it solves the problem for https requests, however it obviously would be preferred if the proxy name is not configured.
+to IkiWiki/Wrapper.pm it solves the problem for https requests, however it obviously would be preferred if the proxy name is not hard coded.
 
 Also, the ability to set HTTPS\_CA\_FILE and HTTPS\_CA\_DIR might benefit some people. Then again, it I can't see any evidence that the SSL certificate of the server is being checked. See the [[bug_report|ssl_certificates_not_checked_with_openid]] I filed on this separate issue.
 
 Unfortunately, HTTP\_PROXY doesn't work for http requests, it looks like that library is different.
+
+---
+
+Update 2008-10-26:
+
+Better solution, one that works for both http and https, and uses config options. It appears to work...
+
+Note that using $ua->proxy(['https'], ...); won't work, you get a "Not Implemented" error, see <http://community.activestate.com/forum-topic/lwp-https-requests-proxy>. Also see [[!debbug 129528]].
+
+Also note that the proxy won't work with liblwpx-paranoidagent-perl, I had to remove liblwpx-paranoidagent-perl first.
+
+Please get the patch from the *.mdwn source.
+
+louie:/usr/share/perl5/IkiWiki/Plugin# diff -u openid.pm.old openid.pm
+--- openid.pm.old	2008-10-26 12:18:58.094489360 +1100
++++ openid.pm	2008-10-26 12:40:05.763429880 +1100
+@@ -165,6 +165,14 @@
+ 	        $ua=LWP::UserAgent->new;
+ 	}
+ 
++	if (defined($config{"http_proxy"})) {
++		$ua->proxy(['http'], $config{"http_proxy"});
++	}
++
++	if (defined($config{"https_proxy"})) {
++		$ENV{HTTPS_PROXY} = $config{"https_proxy"};
++	}
++
+ 	# Store the secret in the session.
+ 	my $secret=$session->param("openid_secret");
+ 	if (! defined $secret) {
+
 
 Brian May

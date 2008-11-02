@@ -43,7 +43,7 @@ sub tagpage ($) { #{{{
 			
 	if ($tag !~ m{^\.?/} &&
 	    defined $config{tagbase}) {
-		$tag=$config{tagbase}."/".$tag;
+		$tag="/".$config{tagbase}."/".$tag;
 	}
 
 	return $tag;

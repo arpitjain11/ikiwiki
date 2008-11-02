@@ -1,5 +1,12 @@
-Ikiwiki is developed in a git repository and can be checked out 
-like this:
+Ikiwiki, and this documentation wiki, are developed in a git repository and
+can be checked out like this:
+
+[[!template id=note text="""
+You can push changes back to ikiwiki's git repository over the `git://`
+transport, to update this wiki, if you'd like, instead of editing it on the
+web. Changes that could not be made via the web will be automatically
+rejected.
+"""]]
 
 	git clone git://git.ikiwiki.info/
 
@@ -13,7 +20,8 @@ There is also a mirror [on github](http://github.com/joeyh/ikiwiki/tree/master).
 
 Commits to this git repository are fed into [CIA](http://cia.vc), and can
 be browsed, subscribed to etc on its
-[project page](http://cia.vc/stats/project/ikiwiki).
+[project page](http://cia.vc/stats/project/ikiwiki). They're also fed into
+[twitter](http://twitter.com/ikiwiki).
 
 ## branches
 

@@ -1,0 +1,37 @@
+Thanks, Joey!  This is awesome...I had to try it out :)
+--[[JasonBlevins]]
+
+I am really happy to hear of this new feature, that I was (more or less)
+secretly dreaming of. But - and that's why I'm still insanely editing
+this wiki inside a web browser - I wonder how I'll use it for real: my
+own master branch contains a few dozens merge commits, and one is created
+every time I `git pull` ikiwiki repository (or another clone of it, living
+on one of my other boxes that by chance had Internet access more recently).
+I do not want to clutter Joey's repository with these commits, so I guess
+I have to learn some more of Git everything-is-possible world (a nice thing
+is: I am not limited anymore to "Emacs can do it", and I'm now in a position
+to say "Git can do it" or "ikiwiki already does it", depending on the
+situation). Well, let's focus. Git wizards amongst us (let's use this wiki
+as if it were users@ikiwiki.info, ok?), what would you suggest? I was thinking
+of having a new branch in my cloned repository, dedicated to editing this wiki;
+I could use `rebase` instead of `fetch+merge` to get the new upstream commits
+into this special-purpose branch. I guess it would work nicely if I had only
+one offline box with not-yet-pushed changes at the same time, but would break
+in awful and various ways when it is not the case. Any alternative idea?
+--[[intrigeri]]
+
+> Not that I'm very careful to avoid pushing merge commits (see git log ;-), 
+> but I sometimes use `git pull --rebase` to pull changes from a repo. That
+> will rebase your local changes on top of the changes pulled, avoiding the
+> merge commits. I'm sure more involved solutions are possible. --[[Joey]]
+
+> I decided to use my local `master` branch as a copy of `origin/master`
+> (kitenet) and move my local modifications to a separate branch.  I'm using
+> `master` to edit the wiki but there is still the problem of new upstream
+> commits since the last pull.  I already had this problem as Joey had pushed
+> some changes while I was editing locally.  Not knowing about
+> `pull --rebase`, I took the long way out: branch, roll back HEAD, rebase,
+> and merge.  That was too much work...It looks like `pull --rebase` is the
+> way to go. --[[JasonBlevins]]
+
+Awesome ! --[[xma]]

@@ -65,4 +65,21 @@ significantly harder than the network based attacks."
 
 With regards to implementation, I am surprised that the libraries don't seem to
 do this checking, already, and by default. Unfortunately, I am not sure how to test
-this adequately, see <http://bugs.debian.org/466055>. -- Brian May
+this adequately, see [[!debbug 466055]]. -- Brian May
+
+--- 
+
+I think [[!cpan Crypt::SSLeay]] already supports checking the certificate. The trick
+is to get [[!cpan LWP::UserAgent]], which is used by [[!cpan LWPx::ParanoidAgent]] to
+enable this checking.
+
+I think the trick is to set one of the the following environment variables before retrieving
+the data:
+
+$ENV{HTTPS\_CA\_DIR} = "/etc/ssl/certs/";  
+$ENV{HTTPS\_CA\_FILE} = "/etc/ssl/certs/file.pem";  
+
+Unfortunately I get weird results if the certificate verification fails, see [[!debbug 503440]].
+It still seems to work though, regardless.
+
+-- Brian May
