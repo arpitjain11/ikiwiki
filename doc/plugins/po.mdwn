@@ -196,6 +196,13 @@ Also, when the plugin has just been enabled, or when a page has just
 been declared as being translatable, the needed POT and PO files are
 created, and the PO files are checked into version control.
 
+Discussion pages
+----------------
+
+Discussion should happen in the language in which the pages are written for
+real, *i.e.* the "master" one. If discussion pages are enabled, "slave" pages
+therefore link to the "master" page's discussion page.
+
 TODO
 ====
 
@@ -247,12 +254,6 @@ Use nice page titles from meta plugin in links, as inline already does.
 ### websetup
 
 Which configuration settings are safe enough for websetup?
-
-### Discussion pages
-
-Decide something, probably that "slave" pages, being only translations, don't
-deserve a discussion page: the discussion should happen in the language in which
-the pages are written for real, which is the "master" one.
 
 ### parentlinks
 
