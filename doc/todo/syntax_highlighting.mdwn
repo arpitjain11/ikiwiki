@@ -76,10 +76,27 @@ pages, as well as doing syntax highlighting as a preprocessor directive
   extensions. The workaround is to use a directive on a wiki page, pulling
   in the Makefile.
 
-  > I wonder how hard it would be to make a patch where by a file with
+  > I wonder how hard it would be to make a patch whereby a file with
   > no `.` in the name, and a name that matches a filetype, and where
   > that filetype was registered `keepextension`, then the file is just
-  > chosen as the appropriate type...
+  > chosen as the appropriate type.  This would allow `Makefile` to
+  > work.
+
+like this:
+
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 8d728c9..1bd46a9 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -618,6 +618,8 @@ sub pagetype ($) { #{{{
+     	
+     	if ($page =~ /\.([^.]+)$/) {
+     		return $1 if exists $hooks{htmlize}{$1};
+    +	} elsif ($hooks{htmlize}{$page}{keepextension}) {
+    +		return $page;
+     	}
+     	return;
+     } #}}}
 
 ## format directive
 
