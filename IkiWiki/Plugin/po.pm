@@ -18,7 +18,9 @@ use Memoize;
 
 my %translations;
 our %filtered;
-memoize("istranslatable");
+## FIXME: makes some test cases cry once every two tries; this may be
+## related to the artificial way the testsuite is run, or not.
+# memoize("istranslatable");
 memoize("_istranslation");
 memoize("percenttranslated");
 
