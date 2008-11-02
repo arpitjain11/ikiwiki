@@ -221,6 +221,10 @@ Security checks
 gettext/po4a rough corners
 --------------------------
 
+- new translations created in the web interface must get proper charset/encoding
+  gettext metadata, else the next automatic PO update removes any non-ascii
+  chars; possible solution: put such metadata into the Pot file, and let it
+  propagate
 - fix the duplicated PO header mysterious bug
 - fix the "duplicate message definition" error when updating a PO
   file; do PO files need normalizing? (may be a side effect of
