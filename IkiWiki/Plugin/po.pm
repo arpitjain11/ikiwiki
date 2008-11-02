@@ -225,7 +225,7 @@ sub mytargetpage ($$) { #{{{
 
 	if (istranslation($page)) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-		if (! $config{usedirs} || $page eq 'index') {
+		if (! $config{usedirs} || $masterpage eq 'index') {
 			return $masterpage . "." . $lang . "." . $ext;
 		}
 		else {
