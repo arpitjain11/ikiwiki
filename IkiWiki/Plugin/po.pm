@@ -18,12 +18,17 @@ use Memoize;
 
 my %translations;
 our %filtered;
-my $origbestlink=\&bestlink;
+
 ## FIXME: makes some test cases cry once every two tries; this may be
 ## related to the artificial way the testsuite is run, or not.
 # memoize("istranslatable");
 memoize("_istranslation");
 memoize("percenttranslated");
+
+# backup references to subs that will be overriden
+my %origsubs;
+$origsubs{'bestlink'}=\&IkiWiki::bestlink;
+$origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
 
 sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
@@ -35,6 +40,7 @@ sub import {
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
+	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
 }
 
 sub getsetup () { #{{{
@@ -238,19 +244,19 @@ sub targetpage (@) { #{{{
 	return;
 } #}}}
 
-sub tweakurlpath ($) { #{{{
-	my %params = @_;
-	my $url=$params{url};
+sub mybeautify_urlpath ($) { #{{{
+	my $url=shift;
+	my $res=$origsubs{'beautify_urlpath'}->($url);
 	if ($config{po_link_to} eq "negotiated") {
-		$url =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
+		$res =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
 	}
-	return $url;
+	return $res;
 } #}}}
 
 sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
-	my $res=$origbestlink->($page, $link);
+	my $res=$origsubs{'bestlink'}->($page, $link);
 	if (length $res) {
 		if ($config{po_link_to} eq "current"
 		    && istranslatable($res)
