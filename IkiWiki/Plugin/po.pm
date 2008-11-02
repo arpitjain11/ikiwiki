@@ -134,6 +134,7 @@ sub refreshpot ($) { #{{{
 	# compulsory since this module prevents us from using the porefs option.
 	my %po_options = ('porefs' => 'none');
 	$doc->{TT}{po_out}=Locale::Po4a::Po->new(\%po_options);
+	$doc->{TT}{po_out}->set_charset('utf-8');
 	# do the actual work
 	$doc->parse;
 	$doc->writepo($potfile);
