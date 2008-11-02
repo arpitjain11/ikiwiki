@@ -1,0 +1,11 @@
+I'm using ikiwiki to manage my personal wiki. One of the things I'm toying with is storing my grocery list in a wiki. The way I typically grocery-shop is to make one huge master list containing all the items I typically buy in a single cycle. Then, on any given trip, I make a subset list containing only the items I need. I'd like to streamline this process by making the master list a series of checkboxes. Before each trip, I load the list page on my phone, check off all the items I already have, then check off individual items as I get them.
+
+I'm not sure if there's a convenient way of adding checkboxes to wiki pages, and after a bit of thought I decided that "( )" would be a good markup for this. Ideally I'd like to still have access to other markdown conventions so I could, say, organize the list with headings and such when it grows large, so I don't want to create an entirely separate format, or a separate copy of the markdown plugin.
+
+Is there an existing means of, say, adding supersets to wiki markup? I suppose I could use an inline directive that inserts a multisellect HTML element, but I really like ( ). :)
+
+Ideal would be some sort of filter infrastructure. Plugins could register with a larger filter plugin that adds an inline directive. I could then invoke the checkbox filter at the top of my grocery list, and all instances of ( ) would be replaced with HTML. Might also make sense for the individual filters to specify whether or not they're invoked before or after the page template, or perhaps just always invoke them after. *shrug*
+
+Does something like this exist? I'd really like to avoid messing around with raw HTML or an inline for each of 40-50 list items. :)
+
+-- [[Nolan]]

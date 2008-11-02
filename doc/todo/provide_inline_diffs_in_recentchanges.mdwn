@@ -1,3 +1,8 @@
 It would rock if I could view diffs from the web without going via feeds. I envision toggle-style buttons on the recentchanges page, or just links to the CGI, which then displays the diff... --[[madduck]]
 
+> The diffs are actually there, enabled by the `recentchangesdiff`
+> plugin, but they are hidden in the XHTML version by the stylesheet.
+> You might try a user stylesheet with `div.diff { display: block }`.
+> --[[JasonBlevins]]
+
 [[!tag wishlist]]

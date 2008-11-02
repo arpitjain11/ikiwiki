@@ -21,6 +21,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
 		 add_underlay pagetitle titlepage linkpage newpagefile
+		 inject
                  %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
@@ -381,6 +382,13 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
+	test_receive => {
+		type => "internal",
+		default => 0,
+		description => "running in receive test mode",
+		safe => 0,
+		rebuild => 0,
+	},
 	getctime => {
 		type => "internal",
 		default => 0,
@@ -403,7 +411,7 @@ sub getsetup () { #{{{
 		rebuild => 0,
 	},
 	allow_symlinks_before_srcdir => {
-		type => "string",
+		type => "boolean",
 		default => 0,
 		description => "allow symlinks in the path leading to the srcdir (potentially insecure)",
 		safe => 0,
@@ -647,19 +655,8 @@ sub newpagefile ($$) { #{{{
 sub targetpage ($$) { #{{{
 	my $page=shift;
 	my $ext=shift;
-
-	my $targetpage='';
-	run_hooks(targetpage => sub {
-		$targetpage=shift->(
-			page => $page,
-			ext => $ext,
-		);
-	});
-
-	if (defined $targetpage && (length($targetpage) > 0)) {
-		return $targetpage;
-	}
-	elsif (! $config{usedirs} || $page eq 'index') {
+	
+	if (! $config{usedirs} || $page eq 'index') {
 		return $page.".".$ext;
 	}
 	else {
@@ -807,7 +804,6 @@ sub will_render ($$;$) { #{{{
 sub bestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
-	my $res=undef;
 	
 	my $cwd=$page;
 	if ($link=~s/^\/+//) {
@@ -822,35 +818,25 @@ sub bestlink ($$) { #{{{
 		$l.=$link;
 
 		if (exists $links{$l}) {
-			$res=$l;
+			return $l;
 		}
 		elsif (exists $pagecase{lc $l}) {
-			$res=$pagecase{lc $l};
+			return $pagecase{lc $l};
 		}
-	} while ($cwd=~s{/?[^/]+$}{} && ! defined $res);
+	} while $cwd=~s{/?[^/]+$}{};
 
-	if (! defined $res && length $config{userdir}) {
+	if (length $config{userdir}) {
 		my $l = "$config{userdir}/".lc($link);
 		if (exists $links{$l}) {
-			$res=$l;
+			return $l;
 		}
 		elsif (exists $pagecase{lc $l}) {
-			$res=$pagecase{lc $l};
+			return $pagecase{lc $l};
 		}
 	}
 
-	if (defined $res) {
-		run_hooks(tweakbestlink => sub {
-			$res=shift->(
-				page => $page,
-				link => $res);
-		});
-		return $res;
-	}
-	else {
-		#print STDERR "warning: page $page, broken link: $link\n";
-		return "";
-	}
+	#print STDERR "warning: page $page, broken link: $link\n";
+	return "";
 } #}}}
 
 sub isinlinableimage ($) { #{{{
@@ -920,23 +906,13 @@ sub abs2rel ($$) { #{{{
 } #}}}
 
 sub displaytime ($;$) { #{{{
-	my $time=shift;
-	my $format=shift;
-	if (exists $hooks{displaytime}) {
-		my $ret;
-		run_hooks(displaytime => sub {
-			$ret=shift->($time, $format)
-		});
-		return $ret;
-	}
-	else {
-		return formattime($time, $format);
-	}
+	# Plugins can override this function to mark up the time to
+	# display.
+	return '<span class="date">'.formattime(@_).'</span>';
 } #}}}
 
 sub formattime ($;$) { #{{{
-	# Plugins can override this function to mark up the time for
-	# display.
+	# Plugins can override this function to format the time.
 	my $time=shift;
 	my $format=shift;
 	if (! defined $format) {
@@ -954,10 +930,6 @@ sub beautify_urlpath ($) { #{{{
 	if ($config{usedirs}) {
 		$url =~ s!/index.$config{htmlext}$!/!;
 	}
-
-	run_hooks(tweakurlpath => sub {
-		$url=shift->(url => $url);
-	});
 
 	# Ensure url is not an empty link, and
 	# if it's relative, make that explicit to avoid colon confusion.
@@ -1610,6 +1582,10 @@ sub rcs_getctime ($) { #{{{
 	$hooks{rcs}{rcs_getctime}{call}->(@_);
 } #}}}
 
+sub rcs_receive () { #{{{
+	$hooks{rcs}{rcs_receive}{call}->();
+} #}}}
+
 sub globlist_to_pagespec ($) { #{{{
 	my @globlist=split(' ', shift);
 
@@ -1700,6 +1676,31 @@ sub yesno ($) { #{{{
 	my $val=shift;
 
 	return (defined $val && lc($val) eq gettext("yes"));
+} #}}}
+
+sub inject { #{{{
+	# Injects a new function into the symbol table to replace an
+	# exported function.
+	my %params=@_;
+
+	# This is deep ugly perl foo, beware.
+	no strict;
+	no warnings;
+	if (! defined $params{parent}) {
+		$params{parent}='::';
+		$params{old}=\&{$params{name}};
+		$params{name}=~s/.*:://;
+	}
+	my $parent=$params{parent};
+	foreach my $ns (grep /^\w+::/, keys %{$parent}) {
+		$ns = $params{parent} . $ns;
+		inject(%params, parent => $ns) unless $ns eq '::main::';
+		*{$ns . $params{name}} = $params{call}
+			if exists ${$ns}{$params{name}} &&
+			   \&{${$ns}{$params{name}}} == $params{old};
+	}
+	use strict;
+	use warnings;
 } #}}}
 
 sub pagespec_merge ($$) { #{{{
@@ -1796,7 +1797,7 @@ sub pagespec_valid ($) { #{{{
 	my $sub=pagespec_translate($spec);
 	return ! $@;
 } #}}}
-	
+
 sub glob2re ($) { #{{{
 	my $re=quotemeta(shift);
 	$re=~s/\\\*/.*/g;

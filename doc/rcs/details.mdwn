@@ -280,6 +280,9 @@ Here is a how a commit from a remote repository works:
 
 * git-commit in the remote repository
 * git-push, pushes the commit to the master repo on the server
+* (Optionally, the master repo's pre-receive hook runs, and checks that the
+  update only modifies files that the pushing user is allowed to update. 
+  If not, it aborts the receive.)
 * the master repo's post-update hook notices this update, and runs ikiwiki
 * ikiwiki notices the modifies page source, and compiles it
 

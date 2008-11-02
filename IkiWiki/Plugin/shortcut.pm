@@ -7,7 +7,7 @@ use IkiWiki 2.00;
 
 sub import { #{{{
 	hook(type => "getsetup", id => "shortcut", call => \&getsetup);
-	hook(type => "refresh", id => "shortcut", call => \&refresh);
+	hook(type => "checkconfig", id => "shortcut", call => \&checkconfig);
 	hook(type => "preprocess", id => "shortcut", call => \&preprocess_shortcut);
 } #}}}
 
@@ -19,14 +19,16 @@ sub getsetup () { #{{{
 		},
 } #}}}
 
-sub refresh () { #{{{
-	# Preprocess the shortcuts page to get all the available shortcuts
-	# defined before other pages are rendered.
-	my $srcfile=srcfile("shortcuts.mdwn", 1);
-	if (! defined $srcfile) {
-		error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
+sub checkconfig () { #{{{
+	if (defined $config{srcdir}) {
+		# Preprocess the shortcuts page to get all the available shortcuts
+		# defined before other pages are rendered.
+		my $srcfile=srcfile("shortcuts.mdwn", 1);
+		if (! defined $srcfile) {
+			error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
+		}
+		IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
 	}
-	IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
 } # }}}
 
 sub preprocess_shortcut (@) { #{{{
@@ -37,6 +39,7 @@ sub preprocess_shortcut (@) { #{{{
 	}
 
 	hook(type => "preprocess", no_override => 1, id => $params{name},
+		shortcut => 1,
 		call => sub { shortcut_expand($params{url}, $params{desc}, @_) });
 
 	#translators: This is used to display what shortcuts are defined.

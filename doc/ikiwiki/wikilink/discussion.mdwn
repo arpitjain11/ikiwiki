@@ -51,6 +51,19 @@ simply write [[wikilink]]s like `\[[../bar]]` (or even just `\[[..]]`?), but
 this doesn't work, so I had to resort to using `\[[foo/bar]]` instead.
 --[[tschwinge]]
 
+> I believe, that doesn't entirely solve the problem. Just assume, your hierarchy is `/foo/bar/foo/bar`.
+
+> How do you access from the page `/foo/bar/foo/bar` the `/foo/bar` and not `/foo/bar/foo/bar`?
+
+> Do we have a way to implement `\[[../..]]` or `\[[/foo/bar]]`?
+
+> Even worse, trying to link from `/foo/bar` to `/foo/bar/foo/bar` ... this will probably need `\[[./foo/bar]]` --[[Jan|jwalzer]]
+
+>> There is no ".." syntax in wikilinks, but if the link begins with "/" it
+>> is rooted at the top of the wiki, as documented in
+>> [[subpage/linkingrules]]. Therefore, every example page name you listed
+>> above will work unchanged as a wikilink to that page! --[[Joey]]
+
 ----
 
 How do I make images clickable?  The obvious guess, \[[foo.png|/index]], doesn't work.  --[[sabr]]
@@ -64,3 +77,5 @@ How do I make images clickable?  The obvious guess, \[[foo.png|/index]], doesn't
 Is it possible to refer to a page, say \[[foobar]], such that the link text is taken from foobar's title [[directive/meta]] tag? --Peter
 
 > Not yet. :-) Any suggestion for a syntax for it? Maybe something like \[[|foobar]] ? --[[Joey]]
+
+I like your suggestion because it's short and conscise. However, it would be nice to be able to refer to more or less arbitrary meta tags in links, not just "title". To do that, the link needs two parameters: the page name and the tag name, i.e. \[[pagename!metatag]]. Any sufficiently weird separater can be used instead of '!', of course. I like \[[pagename->metatag]], too, because it reminds me of accessing a data member of a structure (which is what referencing a meta tag is, really). --Peter

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 19:12-0400\n"
+"POT-Creation-Date: 2008-10-31 16:37-0400\n"
 "PO-Revision-Date: 2007-05-09 21:21+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -47,7 +47,7 @@ msgstr "Nastavení uloženo."
 msgid "You are banned."
 msgstr "Jste vyhoštěni."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1173
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
 msgid "Error"
 msgstr "Chyba"
 
@@ -128,7 +128,7 @@ msgstr "vytvářím novou stránku %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:199
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
 msgid "done"
 msgstr "hotovo"
 
@@ -209,6 +209,10 @@ msgstr ""
 msgid "removing old preview %s"
 msgstr "odstraňuji starou stránku %s"
 
+#: ../IkiWiki/Plugin/editpage.pm:125
+msgid "bad page name"
+msgstr ""
+
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
 msgid "%s is not an editable page"
@@ -246,9 +250,33 @@ msgstr ""
 msgid "failed to process"
 msgstr "nepodařilo se zpracovat:"
 
+#: ../IkiWiki/Plugin/format.pm:22
+msgid "must specify format and text"
+msgstr ""
+
+#: ../IkiWiki/Plugin/format.pm:25
+#, perl-format
+msgid "unsupported page format %s"
+msgstr ""
+
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
 msgstr "fortune selhal"
+
+#: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
+#: ../IkiWiki/Receive.pm:129
+#, perl-format
+msgid "you are not allowed to change %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:658
+#, perl-format
+msgid "you cannot act on a file with mode %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/git.pm:662
+msgid "you are not allowed to change file modes"
+msgstr ""
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, fuzzy, perl-format
@@ -655,18 +683,18 @@ msgstr ""
 msgid "search"
 msgstr ""
 
-#: ../IkiWiki/Plugin/shortcut.pm:27
+#: ../IkiWiki/Plugin/shortcut.pm:28
 msgid "shortcut plugin will not work without a shortcuts.mdwn"
 msgstr ""
 
-#: ../IkiWiki/Plugin/shortcut.pm:36
+#: ../IkiWiki/Plugin/shortcut.pm:38
 msgid "missing name or url parameter"
 msgstr "chybí parametr jméno nebo url"
 
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:45
+#: ../IkiWiki/Plugin/shortcut.pm:48
 #, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "zkratka %s odkazuje na <i>%s</i>"
@@ -797,6 +825,16 @@ msgstr ""
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
 msgstr ""
 
+#: ../IkiWiki/Receive.pm:35
+#, perl-format
+msgid "cannot determine id of untrusted committer %s"
+msgstr ""
+
+#: ../IkiWiki/Receive.pm:85
+#, fuzzy, perl-format
+msgid "bad file name %s"
+msgstr "přeskakuji chybné jméno souboru %s"
+
 #: ../IkiWiki/Render.pm:253
 #, perl-format
 msgid ""
@@ -889,19 +927,19 @@ msgstr "jméno souboru s obalem nebylo zadáno"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:48
+#: ../IkiWiki/Wrapper.pm:79
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "nelze zapsat %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:99
+#: ../IkiWiki/Wrapper.pm:135
 #, perl-format
 msgid "failed to compile %s"
 msgstr "nelze zkompilovat %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:119
+#: ../IkiWiki/Wrapper.pm:155
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s byl úspěšně vytvořen"
@@ -918,37 +956,37 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:137
+#: ../ikiwiki.in:138
 msgid "generating wrappers.."
 msgstr "generuji obaly..."
 
-#: ../ikiwiki.in:188
+#: ../ikiwiki.in:195
 msgid "rebuilding wiki.."
 msgstr "znovu vytvářím wiki..."
 
-#: ../ikiwiki.in:191
+#: ../ikiwiki.in:198
 msgid "refreshing wiki.."
 msgstr "obnovuji wiki..."
 
-#: ../IkiWiki.pm:458
+#: ../IkiWiki.pm:466
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr "Při použití --cgi musíte pomocí --url zadat url k wiki"
 
-#: ../IkiWiki.pm:504
+#: ../IkiWiki.pm:512
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:533
+#: ../IkiWiki.pm:541
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1156
+#: ../IkiWiki.pm:1165
 #, fuzzy, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "Byla rozpoznána smyčka direktivy %s na %s v hloubce %i"
 
-#: ../IkiWiki.pm:1665
+#: ../IkiWiki.pm:1678
 msgid "yes"
 msgstr ""
 

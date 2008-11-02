@@ -1,0 +1,10 @@
+I'd like to have the wiki name appear in page titles as in "WikiName:
+Page Title."  If I use `<TMPL_VAR WIKINAME>: <TMPL_VAR TITLE>` in the
+template this works for all pages except the index page itself which
+will have title "WikiName: WikiName" as its title.  Does anyone know
+of a template-based solution to this or do I need to write a plugin
+that provides a `IS_HOMEPAGE` template variable? --[[JasonBlevins]]
+
+> Hmm, one way to work around this is to put a meta title directive on the
+> index page. Then TITLE will be that, rather than WIKINAME, and your
+> template should work. --[[Joey]]

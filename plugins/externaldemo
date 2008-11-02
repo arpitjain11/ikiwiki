@@ -101,15 +101,14 @@ sub import {
 	# stage of ikiwiki.
 	rpc_call("hook", type => "preprocess", id => "externaldemo", call => "preprocess");
 
-	# Here's an example of how to inject an arbitrary function into
-	# ikiwiki. Ikiwiki will be able to call bob() just like any other
-	# function. Note use of automatic memoization.
-	rpc_call("inject", name => "IkiWiki::bob", call => "bob",
-		memoize => 1);
-
 	# Here's an exmaple of how to access values in %IkiWiki::config.
 	print STDERR "url is set to: ".
 		rpc_call("getvar", "config", "url")."\n";
+
+	# Here's an example of how to inject an arbitrary function into
+	# ikiwiki. Note use of automatic memoization.
+	rpc_call("inject", name => "IkiWiki::bob",
+		call => "formattime", memoize => 1);
 
 	print STDERR "externaldemo plugin successfully imported\n";
 }

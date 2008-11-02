@@ -1,0 +1,26 @@
+sourcehighlight is annoyingly slow, but it does support wiki directives 
+in comments. See [here](http://www.cs.unb.ca/~bremner/teaching/java_examples/snippet/ListMerge/)
+for an example (tags).
+
+> I think that is just a result of it expanding directives, and wikilinks,
+> everywhere in the file, which is generally a possible problem..
+> --[[Joey]]
+
+* * * * *
+
+I think having the option to choose source code page types from the
+dropdown list is definitely a feature.  This gives users an easy way
+to contribute programs (say `.pl` files) or code snippets (like, for
+example, the Elisp area of the EmacsWiki).  Actually, would there any
+other way to create a `.pl` file without write access to the
+repository?  --[[JasonBlevins]]
+
+> Well, you can upload them as an attachment if the wiki is configured to
+> allow it. Having them in the drop down becomes a problem when there are
+> so many wacky extensions in there that you can't find anything.
+> --[[Joey]]
+
+>> I should just note that the
+>> [[sourcecode|todo/automatic_use_of_syntax_plugin_on_source_code_files/discussion]]
+>> plugin only adds the file extensions listed in the config.  This shouldn't cause
+>> massive drop-down menu pollution.  -- [[Will]]

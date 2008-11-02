@@ -5,11 +5,12 @@ Features needed:
 
  * Wiki, duh.
  * Source code viewing: This can be handled quite well with a [[shortcut|shortcuts]] to an external source viewer, or by putting
-    the source in the wiki itself (see the [[todo/automatic_use_of_syntax_plugin_on_source_code_files]] wishlist item) and using the
-    [[plugins/contrib/highlightcode]] or [[plugins/contrib/sourcehighlight]] plugins.
+    the source in the wiki itself (see the [[todo/automatic_use_of_syntax_plugin_on_source_code_files]] wishlist item and [[todo/syntax_highlighting]] todo item).
     * This could be improved with [[todo/source_link]].
     * Currently the source highlighting is a little problematic, as there can be two source files with the same wikiname.
        e.g. a `hello-world.c` and `hello-world.h`.  See [[bugs/multiple_pages_with_same_name]]
+       > That bug was fixed before you linked to the page. :-)
+       >> I was the one that fixed it... :) -- [[Will]]
  * Trac 'Timeline' feature: view history of the RCS - the `recentchanges` button.
  * Trac 'Roadmap' feature: Which TODOs/bugs are needed for which milestones.  Use the [[plugins/progress]] directive to show percentage complete for each milestone.
  * Bug tracking: see [[tips/integrated_issue_tracking_with_ikiwiki]] and [[todo/Updated_bug_tracking_example]].

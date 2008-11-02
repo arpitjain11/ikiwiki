@@ -1,0 +1,17 @@
+Shortcuts such as \[[!google foo]] do not work when previewing pages.
+--[[JasonBlevins]]
+
+> Broken during the setup dumping changes, now fixed. --[[Joey]] [[done]]
+
+>> Just a quick note that this fix interacts with the way the `listdirectives`
+>> directive gets its list of non-shortcut directives.  At the moment it
+>> still works, but it relies on the fact that the `listdirectives` `checkconfig`
+>> hook is called before the `shortcut` `checkconfig` hook.
+>> -- [[Will]]
+
+>> The order plugins are loaded is effectively random. (`keys %hooks`).
+>> So I've made shortcuts pass a 'shortcut' parameter when registering
+>> them, which listdirectives can grep out of the full list of directives.
+>> That may not be the best name to give it, especially if other plugins
+>> generate directives too. Seemed better than forcing shortcut's
+>> checkconfig hook to run last tho. --[[Joey]]

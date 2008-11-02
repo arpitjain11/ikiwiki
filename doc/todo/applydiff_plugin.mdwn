@@ -1,4 +1,4 @@
-[[!tag wishlist]]
+[[!tag wishlist done]]
 
 [[!toc ]]
 
@@ -54,3 +54,57 @@ modify only *one* page may be easier.
 
 Implementation
 ==============
+
+Also see [[joey]]'s idea on [[users/xma/discussion]], to allow (filtered) anonymous push to this wiki's repository.
+
+> Ideally the filtering should apply the same constraints on what's pushed
+> as are applied to web edits. So locked pages can't be changed, etc.
+> 
+> That could be accomplished by making the git pre-receive hook be a
+> ikiwiki wrapper. A new `git_receive_wrapper` config setting could cause
+> the wrapper to be generated, with `$config{receive}` set to true.
+> 
+> When run that way, ikiwiki would call `rcs_receive`. In the case of git,
+> that would look at the received changes as fed into the hook on stdin,
+> and use `parse_diff_tree` to get a list of the files changed. Then it
+> could determine if the changes were allowed.
+> 
+> To do that, it should first look at what unix user received the
+> commit.  That could be mapped directly to an ikiwiki user. This would
+> typically be an unprivelidged user (that was set up just to allow
+> anonymous pushes), but you might also want to set up
+> separate users who have fewer limits on what they can push. And, of
+> course, pushes from the main user, who owns the wiki, would not be
+> checked at all. So, let's say `$config{usermap}` is a hash, something
+> like `{usera => "wikiusera", userb => "wikiuserb"}`, and pushes from
+> users not in the hash are not checked.
+> 
+> Then it seems like it would want to call `check_canedit` to test if an
+> edit to each changed page is allowed. Might also want to call
+> `check_canattach` and `check_canremove` if the attach and remove plugins
+> are enabled. All three expect to be passed a CGI and a CGI::Session
+> object, which is a bit problimatic here. So dummy the objects up? (To call
+> `check_canattach` the changed attachment would need to be extracted to a
+> temp file for it to check..)
+> 
+> If a change is disallowed, it would print out what was disallowed, and
+> exit nonzero. I think that git then discards the pushed objects (or maybe
+> they remain in the database until `git-gc` .. if so, that could be used
+> to DOS by uploading junk, so need to check this point).
+> 
+> Also, I've not verified that the objects have been recieved already when
+> whe pre-receive hook is called. Although the docs seem to say that is the
+> case. --[[Joey]]
+
+>> Update: The git pre-receive hook stuff is written, and seems to work.
+>> I think it makes more sense than using diffs, and so think this todo
+>> could probably be closed.
+>> --[[Joey]]
+
+>>> I agree, closing this. I really prefer this solution to the one I was
+>>> initially proposing.
+>>> Is this pre-receive hook already enabled on ikiwiki.info?
+>>> If not, do you plan to enable it at some point?
+>>> --[[intrigeri]]
+
+>>>> [[news/git_push_to_this_wiki]] gave me the answer. Well done! --[[intrigeri]]

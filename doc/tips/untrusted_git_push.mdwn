@@ -1,0 +1,122 @@
+This tip will describe how to allow anyone on the planet to `git push`
+changes into your wiki, without needing a special account. All a user needs
+to know is:
+
+	git clone git://your.wiki/path
+	# now modify any of the files the wiki would let you modify on the web
+	git push
+
+This is a wonderful thing to set up for users, because then they can work
+on the wiki while offline, and they don't need to mess around with web
+browsers.
+
+## security
+
+But, you might be wondering, how can this possibly be secure. Won't users
+upload all sorts of garbage, change pages you don't want them to edit, and so
+on.
+
+The key to making it secure is configuring ikiwiki to run as your git
+repository's `pre-receive` hook. There it will examine every change that
+untrusted users push into the wiki, and reject pushes that contain changes
+that cannot be made using the web interface.
+
+So, unless you have the [[plugins/attachment]] plugin turned on,
+non-page files cannot be added. And if it's turned on, whatever
+`allowed_attachments` checks you have configured will also check files
+pushed into git.
+
+And, unless you have the [[plugins/remove]] plugin turned on, no
+files can be deleted.
+
+And if you have `locked_pages` configured, then it will also affect what's
+pushed into git.
+
+Untrusted committers will also not be able to upload files with strange
+modes, or push to any branch except for the configured `gitorigin_branch`,
+or manipulate tags.
+
+One thing to keep an eye on is uploading large files. It may be easier to
+do this via git push than using the web, and that could be abused.
+
+Also, no checking is done that the authors of commits are right, so people
+can make a commit that pretends to be done by someone else.
+
+## user setup
+
+Add a dedicated user who will push in untrusted commits. This user should have
+a locked password, and `git-shell` as its shell.
+
+	root@bluebird:/home/joey>adduser --shell=/usr/bin/git-shell --disabled-password anon
+	Adding user `anon' ...
+
+## ikiwiki setup
+
+You should set up ikiwiki before turning on anonymous push in git. 
+
+Edit your wiki's setup file, and uncomment the lines for
+`git_test_receive_wrapper` and `untrusted_committers`.
+
+	# git pre-receive hook to generate
+	git_test_receive_wrapper => '/srv/git/ikiwiki.info/.git/hooks/pre-receive',
+	# unix users whose commits should be checked by the pre-receive hook
+	untrusted_committers => ['anon'],
+
+The `git_test_receive_wrapper` will become the git `pre-receive` hook. The
+`untrusted_committers` list is the list of unix users who will be pushing in
+untrusted changes. It should *not* include the user that ikiwiki normally runs
+as.
+
+Once you're done modifying the setup file, don't forget to run
+`ikiwiki -setup --refresh --wrappers` on it.
+
+## git setup
+
+You'll need to arrange the permissions on your bare git repository so that
+user anon can write to it. One way to do it is to create a group, and put
+both anon and your regular user in that group. Then make make the bare git
+repository owned and writable by the group. See [[rcs/git]] for some more
+tips on setting up a git repository with multiple committers.
+
+Note that anon should *not* be able to write to the `srcdir`, *only* to the bare git
+repository for your wiki.
+
+If you want to allow git over `ssh`, generate a ssh key for anon, and
+publish the *private* key for other people to use. This is optional; you
+can use `git-daemon` instead and not worry about keys.
+
+Now set up `git-daemon`. It will need to run as user `anon`, and be
+configured to export your wiki's bare git repository. I set it up as
+follows in `/etc/inetd.conf`, and ran `/etc/init.d/openbsd-inetd restart`.
+
+	git     stream  tcp     nowait  anon          /usr/bin/git-daemon git-daemon --inetd --export-all --interpolated-path=/srv/git/%H%D /srv/git
+
+At this point you should be able to `git clone git://your.wiki/path` from
+anywhere, and check out the source to your wiki. But you won't be able to
+push to it yet, one more change is needed to turn that on. Edit the
+`config` file of your bare git repository, and allow `git-daemon` to
+receive pushes:
+
+	[daemon]
+		receivepack = true
+
+Now pushes should be accepted, and your wiki immediatly be updated. If it
+doesn't, check your git repo's permissions, and make sure that the
+`post-update` and `pre-receive` hooks are suid so they run as the user who
+owns the `srcdir`.
+
+## infelicities
+
+If a user tries to push a changeset that ikiwiki doesn't like, it will
+abort the push before refs are updated. However, the changeset will still
+be present in your repository, wasting space. Since nothing refers to it,
+it will be expired eventually. You can speed up the expiry by running `git
+prune`.
+
+When aborting a push, ikiwiki displays an error message about why it didn't
+accept it. If using git over ssh, the user will see this error message,
+which is probably useful to them. But `git-daemon` is buggy, and hides this
+message from the user. This can make it hard for users to figure out why
+their push was rejected. (If this happens to you, look at "'git log --stat
+origin/master..`" and think about whether your changes would be accepted
+over the web interface.)

@@ -17,3 +17,8 @@ There is also a mismatch between the way Ikiwiki handles conflicts and the
 way Monotone handles conflicts.  At present, if there is a conflict, then
 Ikiwiki will commit a revision with conflict markers before presenting it
 to the user.  This is ugly, but there is no clean way to fix it at present.
+
+Also note that not all recent ikiwiki features have been implemented in the
+monotone plugin.  At the moment we're missing:
+
+  * [[todo/Untrusted_push_in_Monotone]]

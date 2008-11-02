@@ -1,0 +1,28 @@
+As noted in [[tips/untrusted_git_push]] an untrusted push capability was added recently, but only implemented in git.
+(See also [[todo/rcs_updates_needed]])
+
+This note describes (but does not implement) an approach for this with the [[rcs/monotone]] rcs backend.
+
+----
+
+Monotone behaves a little differently to git in its networking.  Git allows anyone to try to push, and then
+check whether it is ok before finally accepting it.  Monotone has no way to accept or reject revisions
+in this way.  However, monotone does have the ability to mark revisions, and to ignore unmarked revisions.
+
+This marking capability can be used to achieve a somewhat similar effect to what happens with git.  The
+problem with this is that anyone could put anything into the monotone database, and while this wouldn't
+affect ikiwiki, it seems bad to leave open, untrusted storage on the web.
+
+The Plan
+=====
+
+In the `note_netsync_revision_received` hook in the monotone server, have the server check to make sure
+that either a) the revision is signed by someone trusted or, b) the revision is checked using the same
+hook that git uses in `pre-receive`.  If the revision passes the ikiwiki `pre-receive` check then the
+monotone hook signs the revision.  This gives that revision the 'ikiwiki seal of approval'.
+
+You'll also want to update the monotone trust hooks to only trust revisions signed by trusted people, or
+ikiwiki.
+
+Now anyone can upload a revision, but only those signed by a trusted person, or which pass the ikiwiki
+check and so get signed by the ikiwiki key, will be seen by ikiwiki.
