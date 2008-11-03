@@ -10,3 +10,10 @@ and the default option is
     prefix_directives => 0,
 
 My impression was that this should be enabled by default now.  --[[JasonBlevins]]
+
+> As stated in `debian/NEWS`:
+>> For backward compatibility with existing wikis,
+>> refix_directives currently defaults to false.  In ikiwiki 3.0,
+>> prefix_directives will default to true [...]
+> --[[intrigeri]]
+
