@@ -203,6 +203,15 @@ Discussion should happen in the language in which the pages are written for
 real, *i.e.* the "master" one. If discussion pages are enabled, "slave" pages
 therefore link to the "master" page's discussion page.
 
+Translating
+-----------
+
+One can edit the PO files using ikiwiki's CGI (a message-by-message interface
+could also be implemented at some point).
+
+If [[tips/untrusted_git_push]] is setup, one can edit the PO files in her
+preferred `$EDITOR`, without needing to be online.
+
 TODO
 ====
 
@@ -243,13 +252,20 @@ gettext/po4a rough corners
 Misc. improvements
 ------------------
 
+### preview
+
+preview does not work for PO files.
+
 ### automatic POT/PO update
 
 Use the `change` hook instead of `needsbuild`?
 
 ### page titles
 
-Use nice page titles from meta plugin in links, as inline already does.
+Use nice page titles from meta plugin in links, as inline already does. This is
+actually a duplicate for
+[[bugs/pagetitle_function_does_not_respect_meta_titles]], which might be fixed
+by something like [[todo/using_meta_titles_for_parentlinks]].
 
 ### websetup
 
@@ -279,43 +295,3 @@ A new `cansave` type of hook would be needed to implement this.
 
 Note: committing to the underlying repository is a way to bypass
 this check.
-
-Translating online
-------------------
-
-As PO is a wiki page type, we already have an online PO editor, that
-is ikiwiki's CGI.
-
-**FIXME** preview does not work for PO files.
-
-A message-by-message interface could also be implemented at some
-point; a nice way to do offline translation work (without VCS access)
-still has to be offered, though.
-
-Translating offline without VCS access
---------------------------------------
-
-The following workflow should be made possible for translators without
-VCS access who need to edit the PO files in another editor than a web
-browser:
-
-- download the page's PO file
-- use any PO editor to update the translation
-- upload the updated PO file
-
-Implementation note: a generic mechanism to upload a page's source is
-needed: it's only an alternative way to allow saving a the modified
-page's source with the CGI.
-
-### Short-term workflow
-
-A possible workaround is:
-
-- pretend to edit the PO file online
-- copy the PO file content from the textarea
-- cancel the edit
-- paste the content into a local file.
-- edit the local file in any PO editor
-- pretend to edit the PO file online
-- paste the modified local file's content into the edit textarea
-- save
