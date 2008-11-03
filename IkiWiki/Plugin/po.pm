@@ -134,6 +134,7 @@ sub refreshpot ($) { #{{{
 	# compulsory since this module prevents us from using the porefs option.
 	my %po_options = ('porefs' => 'none');
 	$doc->{TT}{po_out}=Locale::Po4a::Po->new(\%po_options);
+	$doc->{TT}{po_out}->set_charset('utf-8');
 	# do the actual work
 	$doc->parse;
 	$doc->writepo($potfile);
@@ -203,8 +204,8 @@ sub needsbuild () { #{{{
 		IkiWiki::refresh();
 		IkiWiki::saveindex();
 		# refresh module's private variables
-		%filtered=undef;
-		%translations=undef;
+		undef %filtered;
+		undef %translations;
 		foreach my $page (keys %pagesources) {
 			istranslation($page);
 		}
@@ -390,6 +391,7 @@ sub otherlanguages ($) { #{{{
 sub pagetemplate (@) { #{{{
 	my %params=@_;
         my $page=$params{page};
+        my $destpage=$params{destpage};
         my $template=$params{template};
 
 	if (istranslation($page) && $template->query(name => "percenttranslated")) {
@@ -415,6 +417,24 @@ sub pagetemplate (@) { #{{{
 				add_depends($page, $translation);
 			}
 		}
+	}
+	# Rely on IkiWiki::Render's genpage() to decide wether
+	# a discussion link should appear on $page; this is not
+	# totally accurate, though: some broken links may be generated
+	# when cgiurl is disabled.
+	# This compromise avoids some code duplication, and will probably
+	# prevent future breakage when ikiwiki internals change.
+	# Known limitations are preferred to future random bugs.
+	if ($template->param('discussionlink') && istranslation($page)) {
+		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		$template->param('discussionlink' => htmllink(
+							$page,
+							$destpage,
+							$masterpage . '/' . gettext("Discussion"),
+							noimageinline => 1,
+							forcesubpage => 0,
+							linktext => gettext("Discussion"),
+							));
 	}
 } # }}}
 
