@@ -1,3 +1,12 @@
 The `IkiWiki::pagetitle` function does not respect title changes via `meta.title`. It really should, so that links rendered with `htmllink` get the proper title in the link text.
 
 --[[madduck]]
+
+> Agreed. [[todo/using_meta_titles_for_parentlinks]] contains a beginning of
+> solution. A few quick notes about it:
+
+> - Using <code>inline</code> would avoid the redefinition + code duplication.
+> - A few plugins would need to be upgraded.
+> - It may be necessary to adapt the testsuite in `t/pagetitle.t`, as well.
+
+> --[[intrigeri]]

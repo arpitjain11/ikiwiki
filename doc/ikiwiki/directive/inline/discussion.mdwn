@@ -19,3 +19,14 @@ take it as far as implementing "replies" to other comments.
 ## More dynamic `rootpage` parameter of inline plugin?
 
 (Moved to [[todo/dynamic_rootpage]])
+
+---
+
+## Excluding Images
+
+Is there a simple way to exclude images, stylesheets, and other
+"non-page" files other than a blacklist approach like
+`pages="* and !*.png and !*.css"`?  --[[JasonBlevins]]
+
+> The [[plugins/filecheck]] plugin adds a 'ispage()' pagespec test that can do that.
+> --[[Joey]]
