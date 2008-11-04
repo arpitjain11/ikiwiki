@@ -19,11 +19,12 @@ use Memoize;
 my %translations;
 our %filtered;
 
-## FIXME: makes some test cases cry once every two tries; this may be
-## related to the artificial way the testsuite is run, or not.
-# memoize("istranslatable");
 memoize("_istranslation");
 memoize("percenttranslated");
+# FIXME: memoizing istranslatable() makes some test cases fail once every
+# two tries; this may be related to the artificial way the testsuite is
+# run, or not.
+# memoize("istranslatable");
 
 # backup references to subs that will be overriden
 my %origsubs;
