@@ -38,6 +38,7 @@ sub import {
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
+	hook(type => "editcontent", id => "po", call => \&editcontent);
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
 	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
@@ -282,25 +283,31 @@ sub mybestlink ($$) { #{{{
 	return "";
 } #}}}
 
-# We use filter to convert PO to the master page's type,
-# since other plugins should not work on PO files
+# We use filter to convert PO to the master page's format,
+# since the rest of ikiwiki should not work on PO files.
 sub filter (@) { #{{{
 	my %params = @_;
 	my $page = $params{page};
 	my $destpage = $params{destpage};
 	my $content = decode_utf8(encode_utf8($params{content}));
 
-	# decide if this is a PO file that should be converted into a translated document,
-	# and perform various sanity checks
-	if (! istranslation($page) || $filtered{$page}{$destpage}) {
-		return $content;
-	}
+	return $content if ( ! istranslation($page)
+			     || ( exists $filtered{$page}{$destpage}
+				  && $filtered{$page}{$destpage} eq 1 ));
+
+	# CRLF line terminators make poor Locale::Po4a feel bad
+	$content=~s/\r\n/\n/g;
+
+	# Locale::Po4a needs an input file, and I'm too lazy to learn
+	# how to disguise a variable as a file
+	my $infile = File::Temp->new(TEMPLATE => "ikiwiki-po-filter-in.XXXXXXXXXX",
+				     TMPDIR => 1)->filename;
+	writefile(basename($infile), File::Spec->tmpdir, $content);
 
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	my $file=srcfile(exists $params{file} ? $params{file} : $IkiWiki::pagesources{$page});
 	my $masterfile = srcfile($pagesources{$masterpage});
 	my (@pos,@masters);
-	push @pos,$file;
+	push @pos,$infile;
 	push @masters,$masterfile;
 	my %options = (
 			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
@@ -311,11 +318,11 @@ sub filter (@) { #{{{
 		'file_in_name'	=> \@masters,
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or error("[po/filter:$file]: failed to translate");
-	my $tmpfh = File::Temp->new(TEMPLATE => "/tmp/ikiwiki-po-filter-out.XXXXXXXXXX");
-	my $tmpout = $tmpfh->filename;
-	$doc->write($tmpout) or error("[po/filter:$file] could not write $tmpout");
-	$content = readfile($tmpout) or error("[po/filter:$file] could not read $tmpout");
+	) or error("[po/filter:$infile]: failed to translate");
+	my $tmpout = File::Temp->new(TEMPLATE => "ikiwiki-po-filter-out.XXXXXXXXXX",
+				     TMPDIR => 1)->filename;
+	$doc->write($tmpout) or error("[po/filter:$infile] could not write $tmpout");
+	$content = readfile($tmpout) or error("[po/filter:$infile] could not read $tmpout");
 	$filtered{$page}{$destpage}=1;
 	return $content;
 } #}}}
@@ -437,6 +444,16 @@ sub pagetemplate (@) { #{{{
 							));
 	}
 } # }}}
+
+sub editcontent () { #{{{
+	my %params=@_;
+	# as we're previewing or saving a page, the content may have
+	# changed, so tell the next filter() invocation it must not be lazy
+	if (exists $filtered{$params{page}}{$params{page}}) {
+		delete $filtered{$params{page}}{$params{page}};
+	}
+	return $params{content};
+} #}}}
 
 sub istranslatable ($) { #{{{
 	my $page=shift;
