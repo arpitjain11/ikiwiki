@@ -23,6 +23,8 @@ pages, as well as doing syntax highlighting as a preprocessor directive
 * [[sourcecode|todo/automatic_use_of_syntax_plugin_on_source_code_files/discussion]]
   also uses src-highlight, and operates on whole source files.
   Updated to work with the fix for [[bugs/multiple_pages_with_same_name]].  Untested with files with no extension, e.g. `Makefile`.
+* [[user/jrblevin]]'s code plugin uses src-highlight, and supports both
+  while file and directive use.
 
 ## General problems
 
@@ -32,6 +34,10 @@ pages, as well as doing syntax highlighting as a preprocessor directive
   we could use an external plugin..)
 * Currently no single plugin supports both modes of operation (directive
   and whole source file to page).
+
+  > This is now fixed by the [[ikiwiki/directive/format]] directive for all
+  > whole-source-file plugins, right?
+
 * Nothing seems to support 
   [[wiki-formatted_comments|wiki-formatted_comments_with_syntax_plugin]]
   inside source files. Doing this probably means post-processing the 
@@ -45,6 +51,17 @@ pages, as well as doing syntax highlighting as a preprocessor directive
   One approach that's also been requested for eg,
   [[plugins/contrib/mediawiki]] is to allow controlling which linkification
   types a page type can have on it.
+
+  > The previous two points seem to be related.  One thought: instead of
+  > getting the source from the `content` parameter, the plugin could
+  > re-load the page source.  That would stop directives/links from
+  > being processed in the source.  As noted above, comments
+  > could then be parsed for directives/links later.
+  >
+  > Would it be worth adding a `nodirectives` option when registering
+  > an htmlize hook that switches off directive and link processing before
+  > generating the html for a page?
+
 * The whole-file plugins all get confused if there is a `foo.c` and a `foo.h`.
   This is trivially fixable now by passing the keepextension option when
   registering the htmlize hooks, though.
@@ -60,6 +77,28 @@ pages, as well as doing syntax highlighting as a preprocessor directive
   Not clear how to fix this, as ikiwiki is very oriented toward file
   extensions. The workaround is to use a directive on a wiki page, pulling
   in the Makefile.
+
+  > I wonder how hard it would be to make a patch whereby a file with
+  > no `.` in the name, and a name that matches a filetype, and where
+  > that filetype was registered `keepextension`, then the file is just
+  > chosen as the appropriate type.  This would allow `Makefile` to
+  > work.
+
+like this:
+
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 8d728c9..1bd46a9 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -618,6 +618,8 @@ sub pagetype ($) { #{{{
+     	
+     	if ($page =~ /\.([^.]+)$/) {
+     		return $1 if exists $hooks{htmlize}{$1};
+    +	} elsif ($hooks{htmlize}{$page}{keepextension}) {
+    +		return $page;
+     	}
+     	return;
+     } #}}}
 
 ## format directive
 

@@ -23,7 +23,8 @@ sub preprocess (@) { #{{{
 		error(sprintf(gettext("unsupported page format %s"), $format));
 	}
 
-	return IkiWiki::htmlize($params{page}, $params{destpage}, $format, $text);
+	return IkiWiki::htmlize($params{page}, $params{destpage}, $format,
+		IkiWiki::preprocess($params{page}, $params{destpage}, $text));
 } #}}}
 
 1

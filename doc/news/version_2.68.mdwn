@@ -1,0 +1,44 @@
+ikiwiki 2.68 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * Add support for checking pushes from untrusted git committers. This can be
+     used to set up anonymous git pushes, and other similar things.
+   * format: New plugin, allows embedding differently formatted text inside a
+     page (ie, otl inside a mdwn page, or syntax highlighted code inside a
+     page).
+   * relativedate: New javascript-alicious plugin that makes all dates display
+     relative, in a very nice way, if I say so myself.
+   * Optimise the no-op post-commit hook, to speed up web edits by a fraction
+     of a second.
+   * git: Allow [[sha1\_commit]] to be used in the diffurl, to support cgit.
+   * shortcut: Fix display of shortcuts while previewing.
+   * Plugins that used to override displaytime should instead override
+     formattime. displaytime will call that, and may wrap markup around the
+     formatted time.
+   * Add an underlay for javascript, and add ikiwiki.js containing some utility
+     code.
+   * toggle: Stop embedding the full toggle code on each page using it, and
+     move it to toggle.js in the javascript underlay.
+   * recentchanges: Make feed links point back to anchors on the recentchanges
+     page. (JasonBlevins)
+   * Fix issue with utf-8 in wikiname breaking session cookies, by
+     entity-encoding the wikiname in the session cookie.
+   * Use the pure perl Data::Dumper when generating setup files to ensure that
+     utf-8 characters are written out as such, and not as the encoded perl
+     strings the C Data::Dumper produces.
+   * inline: Only the last feed link was put on the page, fix this to include
+     all feed links. So rss will be included along with atom, and pages with
+     multiple feeds will get links added for all feeds.
+   * tag: When tagpage is set, force the links created by tagging to point at
+     the toplevel tagpage, and not closer subpages. The html links already went
+     there, but internally the links were not recorded as absolute, which could
+     cause confusing backlinks etc.
+   * Add an inject function, that can be used by plugins that want to
+     replace one of ikiwiki's functions with their own version.
+     (This is a scary thing that grubs through the symbol table, and replaces
+     all exported occurances of a function with the injected version.)
+   * external: RPC functions can be injected to replace exported functions.
+   * Updated French translation. Closes: #[502694](http://bugs.debian.org/502694)
+   * Updated Spanish translation from the ever vigilant Victor Moral.
+   * Updated Danish translation from Jonas Smedegaard. Closes: #[503117](http://bugs.debian.org/503117)
+   * Preserve syslog setting when doing `ikiwiki -setup foo -dumpsetup bar`
+   * Several fixes to --render mode."""]]

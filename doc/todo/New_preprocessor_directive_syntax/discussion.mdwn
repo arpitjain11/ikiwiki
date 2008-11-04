@@ -1,2 +1,19 @@
 Err, is this really fixed in 2.21? I can't find it anywhere in 2.32.3 
 (debian unstable)
+
+-----
+
+I just did a `--dumpsetup` with the current version from the Git repository
+and the default option is
+
+    # use '!'-prefixed preprocessor directives?
+    prefix_directives => 0,
+
+My impression was that this should be enabled by default now.  --[[JasonBlevins]]
+
+> As stated in `debian/NEWS`:
+>> For backward compatibility with existing wikis,
+>> refix_directives currently defaults to false.  In ikiwiki 3.0,
+>> prefix_directives will default to true [...]
+> --[[intrigeri]]
+
