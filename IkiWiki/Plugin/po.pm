@@ -38,7 +38,7 @@ sub import {
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
-	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
+	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
@@ -398,9 +398,10 @@ sub otherlanguages ($) { #{{{
 
 sub pagetemplate (@) { #{{{
 	my %params=@_;
-        my $page=$params{page};
-        my $destpage=$params{destpage};
-        my $template=$params{template};
+	my $page=$params{page};
+	my $destpage=$params{destpage};
+	my $template=$params{template};
+	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/) if istranslation($page);
 
 	if (istranslation($page) && $template->query(name => "percenttranslated")) {
 		$template->param(percenttranslated => percenttranslated($page));
@@ -419,7 +420,6 @@ sub pagetemplate (@) { #{{{
 			}
 		}
 		elsif (istranslation($page)) {
-			my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 			add_depends($page, $masterpage);
 			foreach my $translation (values %{$translations{$masterpage}}) {
 				add_depends($page, $translation);
@@ -434,7 +434,6 @@ sub pagetemplate (@) { #{{{
 	# prevent future breakage when ikiwiki internals change.
 	# Known limitations are preferred to future random bugs.
 	if ($template->param('discussionlink') && istranslation($page)) {
-		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		$template->param('discussionlink' => htmllink(
 							$page,
 							$destpage,
@@ -443,6 +442,12 @@ sub pagetemplate (@) { #{{{
 							forcesubpage => 0,
 							linktext => gettext("Discussion"),
 							));
+	}
+	# remove broken parentlink to ./index.html on home page's translations
+	if ($template->param('parentlinks')
+	    && istranslation($page)
+	    && $masterpage eq "index") {
+		$template->param('parentlinks' => []);
 	}
 } # }}}
 
