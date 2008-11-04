@@ -112,14 +112,16 @@ sub checkconfig () { #{{{
 sub potfile ($) { #{{{
 	my $masterfile=shift;
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
-	return File::Spec->catfile($dir, $name . ".pot");
+	$dir='' if $dir eq './';
+	return File::Spec->catpath('', $dir, $name . ".pot");
 } #}}}
 
 sub pofile ($$) { #{{{
 	my $masterfile=shift;
 	my $lang=shift;
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
-	return File::Spec->catfile($dir, $name . "." . $lang . ".po");
+	$dir='' if $dir eq './';
+	return File::Spec->catpath('', $dir, $name . "." . $lang . ".po");
 } #}}}
 
 sub refreshpot ($) { #{{{
@@ -173,17 +175,22 @@ sub needsbuild () { #{{{
 	# refresh/create POT and PO files as needed
 	my $updated_po_files=0;
 	foreach my $page (keys %pagesources) {
-		my $pageneedsbuild = grep { $_ eq $pagesources{$page} } @$needsbuild;
 		if (istranslatable($page)) {
+			my $pageneedsbuild = grep { $_ eq $pagesources{$page} } @$needsbuild;
+			my $updated_pot_file=0;
 			my $file=srcfile($pagesources{$page});
 			if ($pageneedsbuild || ! -e potfile($file)) {
 				refreshpot($file);
+				$updated_pot_file=1;
 			}
 			my @pofiles;
 			foreach my $lang (keys %{$config{po_slave_languages}}) {
 				my $pofile=pofile($file, $lang);
-				if ($pageneedsbuild || ! -e $pofile) {
+				my $pofile_rel=pofile($pagesources{$page}, $lang);
+				if ($pageneedsbuild || $updated_pot_file || ! -e $pofile) {
 					push @pofiles, $pofile;
+					push @$needsbuild, $pofile_rel
+					  unless grep { $_ eq $pofile_rel } @$needsbuild;
 				}
 			}
 			if (@pofiles) {
@@ -194,7 +201,7 @@ sub needsbuild () { #{{{
 		}
 	}
 
-	# check staged changes in and trigger a wiki refresh.
+	# check staged changes in
 	if ($updated_po_files) {
 		if ($config{rcs}) {
 			IkiWiki::disable_commit_hook();
@@ -203,8 +210,6 @@ sub needsbuild () { #{{{
 			IkiWiki::enable_commit_hook();
 			IkiWiki::rcs_update();
 		}
-		IkiWiki::refresh();
-		IkiWiki::saveindex();
 		# refresh module's private variables
 		undef %filtered;
 		undef %translations;
@@ -212,7 +217,6 @@ sub needsbuild () { #{{{
 			istranslation($page);
 		}
 	}
-
 
 	# make existing translations depend on the corresponding master page
 	foreach my $master (keys %translations) {
