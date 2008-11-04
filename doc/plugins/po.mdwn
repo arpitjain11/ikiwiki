@@ -185,12 +185,12 @@ Automatic PO files update
 
 Committing changes to a "master" page:
 
-1. updates the POT file and the PO files for the supported languages
-   (this is done in the `needsbuild` hook); the updated PO files are
-   then put under version control
+1. updates the POT file, as well as the PO files for the "slave"
+   languages (this is done in the `needsbuild` hook); the updated PO
+   files are then put under version control;
 2. triggers a refresh of the corresponding HTML slave pages (this is
    achieved by making any "slave" page dependent on the corresponding
-   "master" page, in the `needsbuild` hook)
+   "master" page, in the `needsbuild` hook).
 
 Also, when the plugin has just been enabled, or when a page has just
 been declared as being translatable, the needed POT and PO files are
@@ -199,32 +199,22 @@ created, and the PO files are checked into version control.
 Discussion pages
 ----------------
 
-Discussion should happen in the language in which the pages are written for
-real, *i.e.* the "master" one. If discussion pages are enabled, "slave" pages
-therefore link to the "master" page's discussion page.
+Discussion should happen in the language in which the pages are
+written for real, *i.e.* the "master" one. If discussion pages are
+enabled, "slave" pages therefore link to the "master" page's
+discussion page.
 
 Translating
 -----------
 
-One can edit the PO files using ikiwiki's CGI (a message-by-message interface
-could also be implemented at some point).
+One can edit the PO files using ikiwiki's CGI (a message-by-message
+interface could also be implemented at some point).
 
-If [[tips/untrusted_git_push]] is setup, one can edit the PO files in her
-preferred `$EDITOR`, without needing to be online.
+If [[tips/untrusted_git_push]] is setup, one can edit the PO files in
+her preferred `$EDITOR`, without needing to be online.
 
 TODO
 ====
-
-OTHERLANGUAGES dependencies
----------------------------
-
-Pages using `OTHERLANGUAGES` depend on any "master" and "slave" pages
-whose status is being displayed. It is supposed to trigger dependency
-loops, but no practical bugs were noticed yet.
-
-Should pages using the `OTHERLANGUAGES` template loop be declared as
-linking to the same page in other versions? To be rigorous, they
-should, but this may clutter the backlinks.
 
 Security checks
 ---------------
@@ -243,29 +233,27 @@ gettext/po4a rough corners
   changes bla.fr.po in repo1; then pushing repo1 to repo2 triggers
   a PO update, that changes bla.fr.po in repo2; etc.; fixed in
   `629968fc89bced6727981c0a1138072631751fee`?
-- new translations created in the web interface must get proper charset/encoding
-  gettext metadata, else the next automatic PO update removes any non-ascii
-  chars; possible solution: put such metadata into the Pot file, and let it
-  propagate; should be fixed in `773de05a7a1ee68d2bed173367cf5e716884945a`, time
-  will tell.
+- new translations created in the web interface must get proper
+  charset/encoding gettext metadata, else the next automatic PO update
+  removes any non-ascii chars; possible solution: put such metadata
+  into the Pot file, and let it propagate; should be fixed in
+  `773de05a7a1ee68d2bed173367cf5e716884945a`, time will tell.
 
 Misc. improvements
 ------------------
 
-### preview
-
-preview does not work for PO files.
-
 ### automatic POT/PO update
 
-Use the `change` hook instead of `needsbuild`?
+- Use the `change` hook instead of `needsbuild`?
+- Fix (apparently harmless) undefined values that pollute logs when
+  saving a master page in the CGI
 
 ### page titles
 
-Use nice page titles from meta plugin in links, as inline already does. This is
-actually a duplicate for
-[[bugs/pagetitle_function_does_not_respect_meta_titles]], which might be fixed
-by something like [[todo/using_meta_titles_for_parentlinks]].
+Use nice page titles from meta plugin in links, as inline already
+does. This is actually a duplicate for
+[[bugs/pagetitle_function_does_not_respect_meta_titles]], which might
+be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
 ### websetup
 
@@ -274,15 +262,15 @@ Which configuration settings are safe enough for websetup?
 ### parentlinks
 
 When the wiki home page is translatable, the parentlinks plugin sets
-`./index.html` as its translations' single parent link. Ideally, the home page's
-translations should get no parent link at all, just like the version written in
-the master language.
+`./index.html` as its translations' single parent link. Ideally, the
+home page's translations should get no parent link at all, just like
+the version written in the master language.
 
 ### backlinks
 
 If a given translatable `sourcepage.mdwn` links to \[[destpage]],
-`sourcepage.LL.po` also link to \[[destpage]], and the latter has the master
-page *and* all its translations listed in the backlinks.
+`sourcepage.LL.po` also link to \[[destpage]], and the latter has the
+master page *and* all its translations listed in the backlinks.
 
 Translation quality assurance
 -----------------------------
