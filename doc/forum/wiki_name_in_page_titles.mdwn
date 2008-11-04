@@ -8,3 +8,19 @@ that provides a `IS_HOMEPAGE` template variable? --[[JasonBlevins]]
 > Hmm, one way to work around this is to put a meta title directive on the
 > index page. Then TITLE will be that, rather than WIKINAME, and your
 > template should work. --[[Joey]]
+
+>> I ended up writing a [path][] plugin since I had some other
+>> path-specific conditional things to include in my templates.
+>>
+>> So now I can do things like this:
+>>
+>>     <title>
+>>     <TMPL_VAR WIKINAME><TMPL_UNLESS IS_HOMEPAGE>: <TMPL_VAR TITLE></TMPL_UNLESS>
+>>     </title>
+>>
+>> But also more complicated path-specific conditionals like
+>> `IN_DIR_SUBDIR` to indicate subpages of `/dir/subdir/`.  I've got a
+>> few other small plugins brewing so I'll try to put up some contrib
+>> pages for them soon. --[[JasonBlevins]]
+
+[path][]: http://code.jblevins.org/ikiwiki/plugins.git/plain/path.pm
