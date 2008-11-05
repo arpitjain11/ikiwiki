@@ -13,7 +13,7 @@ A language is chosen as the "master" one, and any other supported
 language is a "slave" one.
 
 A page written in the "master" language is a "master" page. It can be
-of any page type supported by ikiwiki, but PO. It does not have to be
+of any page type supported by ikiwiki, except `po`. It does not have to be
 named a special way: migration to this plugin does not imply any page
 renaming work.
 
@@ -22,7 +22,7 @@ English; if `usedirs` is enabled, it is rendered as
 `bla/page/index.en.html`, else as `bla/page.en.html`.
 
 Any translation of a "master" page into a "slave" language is called
-a "slave" page; it is written in the gettext PO format. PO is now
+a "slave" page; it is written in the gettext PO format. `po` is now
 a page type supported by ikiwiki.
 
 Example: `bla/page.fr.po` is the PO "message catalog" used to
@@ -56,9 +56,8 @@ The `po_translatable_pages` setting configures what pages are
 translatable. It is a [[ikiwiki/PageSpec]], so you have lots of
 control over what kind of pages are translatable.
 
-The PO translations files are anyway not considered as being
-translatable, so you don't need to worry about excluding them
-explicitly from this [[ikiwiki/PageSpec]].
+The `.po` files are not considered as being translatable, so you don't need to
+worry about excluding them explicitly from this [[ikiwiki/PageSpec]].
 
 Internal links
 --------------
@@ -180,17 +179,14 @@ Additional PageSpec tests
 This plugin enhances the regular [[ikiwiki/PageSpec]] syntax with some
 additional tests that are documented [[here|ikiwiki/pagespec/po]].
 
-Automatic PO files update
--------------------------
+Automatic PO file update
+------------------------
 
 Committing changes to a "master" page:
 
-1. updates the POT file and the PO files for the supported languages
-   (this is done in the `needsbuild` hook); the updated PO files are
-   then put under version control
-2. triggers a refresh of the corresponding HTML slave pages (this is
-   achieved by making any "slave" page dependent on the corresponding
-   "master" page, in the `needsbuild` hook)
+1. updates the POT file and the PO files for the supported languages;
+   the updated PO files are then put under version control
+2. triggers a refresh of the corresponding HTML slave pages
 
 Also, when the plugin has just been enabled, or when a page has just
 been declared as being translatable, the needed POT and PO files are
