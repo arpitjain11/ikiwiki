@@ -31,7 +31,7 @@ $origsubs{'bestlink'}=\&IkiWiki::bestlink;
 $origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
 $origsubs{'targetpage'}=\&IkiWiki::targetpage;
 
-sub import {
+sub import { #{{{
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
@@ -41,7 +41,7 @@ sub import {
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
 	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
-}
+} #}}}
 
 sub getsetup () { #{{{
 	return
@@ -289,8 +289,8 @@ sub filter (@) { #{{{
 	my $destpage = $params{destpage};
 	my $content = decode_utf8(encode_utf8($params{content}));
 
-	# decide if this is a PO file that should be converted into a translated document,
-	# and perform various sanity checks
+	# decide if this is a PO file that should be converted into a
+	# translated document, and perform various sanity checks
 	if (! istranslation($page) || $filtered{$page}{$destpage}) {
 		return $content;
 	}
