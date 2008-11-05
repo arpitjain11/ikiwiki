@@ -227,8 +227,14 @@ Security checks
 
 - `refreshpofiles` uses `system()`, whose args have to be checked more
   thoroughly to prevent any security issue (command injection, etc.).
+  > Always pass `system()` a list of parameters to avoid the shell.
+  > I've checked in a change fixing that. --[[Joey]]
 - `refreshpofiles` and `refreshpot` create new files; this may need
   some checks, e.g. using `IkiWiki::prep_writefile()`
+- Can any sort of directives be put in po files that will
+  cause mischief (ie, include other files, run commands, crash gettext,
+  whatever).
+- Any security issues on running po4a on untrusted content?
 
 gettext/po4a rough corners
 --------------------------
