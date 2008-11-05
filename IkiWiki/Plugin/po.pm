@@ -27,9 +27,6 @@ memoize("percenttranslated");
 
 # backup references to subs that will be overriden
 my %origsubs;
-$origsubs{'bestlink'}=\&IkiWiki::bestlink;
-$origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
-$origsubs{'targetpage'}=\&IkiWiki::targetpage;
 
 sub import { #{{{
 	hook(type => "getsetup", id => "po", call => \&getsetup);
@@ -38,8 +35,12 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate);
+
+	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
+	$origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
+	$origsubs{'targetpage'}=\&IkiWiki::targetpage;
 	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
 } #}}}
 
