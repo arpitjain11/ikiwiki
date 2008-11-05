@@ -96,11 +96,11 @@ sub checkconfig () { #{{{
 	}
 	if (! exists $config{po_link_to} ||
 	    ! defined $config{po_link_to}) {
-	    $config{po_link_to}="default";
+		$config{po_link_to}="default";
 	}
 	if (! exists $config{po_translatable_pages} ||
 	    ! defined $config{po_translatable_pages}) {
-	    $config{po_translatable_pages}="";
+		$config{po_translatable_pages}="";
 	}
 	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
@@ -110,6 +110,7 @@ sub checkconfig () { #{{{
 
 sub potfile ($) { #{{{
 	my $masterfile=shift;
+
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
 	return File::Spec->catfile($dir, $name . ".pot");
 } #}}}
@@ -117,12 +118,14 @@ sub potfile ($) { #{{{
 sub pofile ($$) { #{{{
 	my $masterfile=shift;
 	my $lang=shift;
+
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
 	return File::Spec->catfile($dir, $name . "." . $lang . ".po");
 } #}}}
 
 sub refreshpot ($) { #{{{
 	my $masterfile=shift;
+
 	my $potfile=potfile($masterfile);
 	my %options = ("markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
@@ -211,7 +214,6 @@ sub needsbuild () { #{{{
 		}
 	}
 
-
 	# make existing translations depend on the corresponding master page
 	foreach my $master (keys %translations) {
 		foreach my $slave (values %{$translations{$master}}) {
@@ -246,9 +248,10 @@ sub mytargetpage ($$) { #{{{
 
 sub mybeautify_urlpath ($) { #{{{
 	my $url=shift;
+
 	my $res=$origsubs{'beautify_urlpath'}->($url);
 	if ($config{po_link_to} eq "negotiated") {
-		$res =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
+		$res =~ s!/\Qindex.$config{po_master_language}{code}.$config{htmlext}\E$!/!;
 	}
 	return $res;
 } #}}}
@@ -267,6 +270,7 @@ sub urlto_with_orig_beautiful_urlpath($$) { #{{{
 sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
+
 	my $res=$origsubs{'bestlink'}->($page, $link);
 	if (length $res) {
 		if ($config{po_link_to} eq "current"
@@ -286,6 +290,7 @@ sub mybestlink ($$) { #{{{
 # since other plugins should not work on PO files
 sub filter (@) { #{{{
 	my %params = @_;
+
 	my $page = $params{page};
 	my $destpage = $params{destpage};
 	my $content = decode_utf8(encode_utf8($params{content}));
@@ -303,8 +308,8 @@ sub filter (@) { #{{{
 	push @pos,$file;
 	push @masters,$masterfile;
 	my %options = (
-			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
-			);
+		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+	);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->process(
 		'po_in_name'	=> \@pos,
@@ -314,6 +319,7 @@ sub filter (@) { #{{{
 	) or error("[po/filter:$file]: failed to translate");
 	my $tmpfh = File::Temp->new(TEMPLATE => "/tmp/ikiwiki-po-filter-out.XXXXXXXXXX");
 	my $tmpout = $tmpfh->filename;
+	# XXX is there any way to avoid the useless write to a temp file? --Joey
 	$doc->write($tmpout) or error("[po/filter:$file] could not write $tmpout");
 	$content = readfile($tmpout) or error("[po/filter:$file] could not read $tmpout");
 	$filtered{$page}{$destpage}=1;
@@ -322,6 +328,7 @@ sub filter (@) { #{{{
 
 sub htmlize (@) { #{{{
 	my %params=@_;
+
 	my $page = $params{page};
 	my $content = $params{content};
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
@@ -333,7 +340,8 @@ sub htmlize (@) { #{{{
 
 sub percenttranslated ($) { #{{{
 	my $page=shift;
-	return "N/A" unless (istranslation($page));
+
+	return gettext("N/A") unless (istranslation($page));
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 	my $file=srcfile($pagesources{$page});
 	my $masterfile = srcfile($pagesources{$masterpage});
@@ -341,8 +349,8 @@ sub percenttranslated ($) { #{{{
 	push @pos,$file;
 	push @masters,$masterfile;
 	my %options = (
-			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
-			);
+		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+	);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->process(
 		'po_in_name'	=> \@pos,
@@ -356,6 +364,7 @@ sub percenttranslated ($) { #{{{
 
 sub otherlanguages ($) { #{{{
 	my $page=shift;
+
 	my @ret;
 	if (istranslatable($page)) {
 		foreach my $lang (sort keys %{$translations{$page}}) {
@@ -391,6 +400,7 @@ sub otherlanguages ($) { #{{{
 sub pagetemplate (@) { #{{{
 	my %params=@_;
         my $page=$params{page};
+
         my $destpage=$params{destpage};
         my $template=$params{template};
 
@@ -440,6 +450,7 @@ sub pagetemplate (@) { #{{{
 
 sub istranslatable ($) { #{{{
 	my $page=shift;
+
 	my $file=$pagesources{$page};
 
 	if (! defined $file
@@ -452,6 +463,7 @@ sub istranslatable ($) { #{{{
 
 sub _istranslation ($) { #{{{
 	my $page=shift;
+
 	my $file=$pagesources{$page};
 	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
@@ -477,6 +489,7 @@ sub _istranslation ($) { #{{{
 
 sub istranslation ($) { #{{{
 	my $page=shift;
+
 	if (_istranslation($page)) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
@@ -492,6 +505,7 @@ use IkiWiki 2.00;
 
 sub match_istranslation ($;@) { #{{{
 	my $page=shift;
+
 	if (IkiWiki::Plugin::po::istranslation($page)) {
 		return IkiWiki::SuccessReason->new("is a translation page");
 	}
@@ -502,6 +516,7 @@ sub match_istranslation ($;@) { #{{{
 
 sub match_istranslatable ($;@) { #{{{
 	my $page=shift;
+
 	if (IkiWiki::Plugin::po::istranslatable($page)) {
 		return IkiWiki::SuccessReason->new("is set as translatable in po_translatable_pages");
 	}
@@ -513,6 +528,7 @@ sub match_istranslatable ($;@) { #{{{
 sub match_lang ($$;@) { #{{{
 	my $page=shift;
 	my $wanted=shift;
+
 	my $regexp=IkiWiki::glob2re($wanted);
 	my $lang;
 	my $masterpage;
@@ -534,6 +550,7 @@ sub match_lang ($$;@) { #{{{
 
 sub match_currentlang ($$;@) { #{{{
 	my $page=shift;
+
 	shift;
 	my %params=@_;
 	my ($currentmasterpage, $currentlang, $masterpage, $lang);
