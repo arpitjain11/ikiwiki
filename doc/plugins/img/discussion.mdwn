@@ -7,3 +7,6 @@ instead of linking to the PNG image file.  --[[tschwinge]]
 > Done, use link=somepage --[[Joey]]
 
 It would be handy if the `class` and `id` tags were passed through to the surrounding `table` in the case of `caption` being present.  Would this break anything?  --[[neale]]
+
+> Seems unlikely to break *too* much. I can imagine css that styles the img
+> unexpectedly applying the table. --[[Joey]]
