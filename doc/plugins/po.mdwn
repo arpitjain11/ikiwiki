@@ -205,7 +205,7 @@ Translating
 One can edit the PO files using ikiwiki's CGI (a message-by-message interface
 could also be implemented at some point).
 
-If [[tips/untrusted_git_push]] is setup, one can edit the PO files in her
+If [[tips/untrusted_git_push]] is setup, one can edit the PO files in one's
 preferred `$EDITOR`, without needing to be online.
 
 TODO
@@ -266,6 +266,14 @@ by something like [[todo/using_meta_titles_for_parentlinks]].
 ### websetup
 
 Which configuration settings are safe enough for websetup?
+
+> I see no problems with `po_master_language` and `po_slave_languages`
+> (assuming websetup handles the hashes correctly). Would not hurt to check
+> that the values of these are legal language codes, in `checkconfig`. 
+> `po_translatable_pages` seems entirely safe. `po_link_to` w/o usedirs
+> causes ikiwiki to error out. If it were changed to fall back to a safe
+> setting in this case rather than error, it would be safe.
+> --[[Joey]]
 
 ### parentlinks
 

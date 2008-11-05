@@ -149,8 +149,7 @@ sub refreshpofiles ($@) { #{{{
 
 	foreach my $pofile (@pofiles) {
 		if (-e $pofile) {
-			my $cmd = "msgmerge -U --backup=none $pofile $potfile";
-			system ($cmd) == 0
+			system("msgmerge", "-U", "--backup=none", $pofile, $potfile) == 0
 				or error("[po/refreshpofiles:$pofile] failed to update");
 		}
 		else {
