@@ -255,9 +255,12 @@ Which configuration settings are safe enough for websetup?
 
 ### backlinks
 
-If a given translatable `sourcepage.mdwn` links to \[[destpage]],
-`sourcepage.LL.po` also link to \[[destpage]], and the latter has the
-master page *and* all its translations listed in the backlinks.
+`po_link_to = negotiated`: if a given translatable `sourcepage.mdwn`
+links to \[[destpage]], `sourcepage.LL.po` also link to \[[destpage]],
+and the latter has the master page *and* all its translations listed
+in the backlinks.
+
+`po_link_to = current`: seems to work nicely
 
 Translation quality assurance
 -----------------------------
