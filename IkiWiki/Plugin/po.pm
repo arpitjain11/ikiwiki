@@ -303,10 +303,24 @@ sub filter (@) { #{{{
 	# CRLF line terminators make poor Locale::Po4a feel bad
 	$content=~s/\r\n/\n/g;
 
-	# Locale::Po4a needs an input file, and I'm too lazy to learn
-	# how to disguise a variable as a file
-	my $infile = File::Temp->new(TEMPLATE => "ikiwiki-po-filter-in.XXXXXXXXXX",
-				     TMPDIR => 1)->filename;
+	# Implementation notes
+	#
+	# 1. Locale::Po4a reads/writes from/to files, and I'm too lazy
+	#    to learn how to disguise a variable as a file.
+	# 2. There are incompatibilities between some File::Temp versions
+	#    (including 0.18, bundled with Lenny's perl-modules package)
+	#    and others (e.g. 0.20, previously present in the archive as
+	#    a standalone package): under certain circumstances, some
+	#    return a relative filename, whereas others return an absolute one;
+	#    we here use this module in a way that is at least compatible
+	#    with 0.18 and 0.20. Beware, hit'n'run refactorers!
+	my $infile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-in.XXXXXXXXXX",
+				    DIR => File::Spec->tmpdir,
+				    UNLINK => 1)->filename;
+	my $outfile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-out.XXXXXXXXXX",
+				     DIR => File::Spec->tmpdir,
+				     UNLINK => 1)->filename;
+
 	writefile(basename($infile), File::Spec->tmpdir, $content);
 
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
@@ -324,10 +338,14 @@ sub filter (@) { #{{{
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
 	) or error("[po/filter:$infile]: failed to translate");
-	my $tmpout = File::Temp->new(TEMPLATE => "ikiwiki-po-filter-out.XXXXXXXXXX",
-				     TMPDIR => 1)->filename;
-	$doc->write($tmpout) or error("[po/filter:$infile] could not write $tmpout");
-	$content = readfile($tmpout) or error("[po/filter:$infile] could not read $tmpout");
+	$doc->write($outfile) or error("[po/filter:$infile] could not write $outfile");
+	$content = readfile($outfile) or error("[po/filter:$infile] could not read $outfile");
+
+	# Unlinking should happen automatically, thanks to File::Temp,
+	# but it does not work here, probably because of the way writefile()
+	# and Locale::Po4a::write() work.
+	unlink $infile, $outfile;
+
 	$filtered{$page}{$destpage}=1;
 	return $content;
 } #}}}
