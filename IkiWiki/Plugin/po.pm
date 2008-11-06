@@ -48,6 +48,8 @@ sub import { #{{{
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
 	$origsubs{'targetpage'}=\&IkiWiki::targetpage;
 	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
+	$origsubs{'urlto'}=\&IkiWiki::urlto;
+	inject(name => "IkiWiki::urlto", call => \&myurlto);
 } #}}}
 
 sub getsetup () { #{{{
@@ -254,6 +256,21 @@ sub urlto_with_orig_beautiful_urlpath($$) { #{{{
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
 
 	return $res;
+} #}}}
+
+sub myurlto ($$;$) { #{{{
+	my $to=shift;
+	my $from=shift;
+	my $absolute=shift;
+
+	if (! length $to
+	    && $config{po_link_to} eq "current"
+	    && istranslation($from)
+	    && istranslatable('index')) {
+		my ($masterpage, $curlang) = ($from =~ /(.*)[.]([a-z]{2})$/);
+		return IkiWiki::beautify_urlpath(IkiWiki::baseurl($from) . "index." . $curlang . ".$config{htmlext}");
+	}
+	return $origsubs{'urlto'}->($to,$from,$absolute);
 } #}}}
 
 sub mybestlink ($$) { #{{{
