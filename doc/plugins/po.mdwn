@@ -223,10 +223,6 @@ Security checks
 gettext/po4a rough corners
 --------------------------
 
-- commiting a new master page version updates the translations, but
-  does not refresh recentchanges anymore after having checked-in the
-  new translations (since manual IkiWiki::refresh() call was removed,
-  I guess)
 - fix infinite loop when synchronizing two ikiwiki (when checkouts
   live in different directories): say bla.fr.po has been updated in
   repo2; pulling repo2 from repo1 seems to trigger a PO update, that

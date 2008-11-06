@@ -19,6 +19,7 @@ use File::Temp;
 use Memoize;
 
 my %translations;
+my @origneedsbuild;
 our %filtered;
 
 memoize("_istranslation");
@@ -38,6 +39,7 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
+	hook(type => "change", id => "po", call => \&change);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
 
 	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
@@ -102,6 +104,9 @@ sub checkconfig () { #{{{
 		if (! exists $config{$field} || ! defined $config{$field}) {
 			error(sprintf(gettext("Must specify %s"), $field));
 		}
+	}
+	if (! (keys %{$config{po_slave_languages}})) {
+		error(gettext("At least one slave language must be defined in po_slave_languages"));
 	}
 	map {
 		islanguagecode($_)
@@ -191,56 +196,12 @@ sub refreshpofiles ($@) { #{{{
 sub needsbuild () { #{{{
 	my $needsbuild=shift;
 
+	# backup @needsbuild content so that change() can know whether
+	# a given master page was rendered because its source file was changed
+	@origneedsbuild=(@$needsbuild);
+
 	# build %translations, using istranslation's side-effect
-	foreach my $page (keys %pagesources) {
-		istranslation($page);
-	}
-
-	# refresh/create POT and PO files as needed
-	my $updated_po_files=0;
-	foreach my $page (keys %pagesources) {
-		if (istranslatable($page)) {
-			my $pageneedsbuild = grep { $_ eq $pagesources{$page} } @$needsbuild;
-			my $updated_pot_file=0;
-			my $file=srcfile($pagesources{$page});
-			if ($pageneedsbuild || ! -e potfile($file)) {
-				refreshpot($file);
-				$updated_pot_file=1;
-			}
-			my @pofiles;
-			foreach my $lang (keys %{$config{po_slave_languages}}) {
-				my $pofile=pofile($file, $lang);
-				my $pofile_rel=pofile($pagesources{$page}, $lang);
-				if ($pageneedsbuild || $updated_pot_file || ! -e $pofile) {
-					push @pofiles, $pofile;
-					push @$needsbuild, $pofile_rel
-					  unless grep { $_ eq $pofile_rel } @$needsbuild;
-				}
-			}
-			if (@pofiles) {
-				refreshpofiles($file, @pofiles);
-				map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
-				$updated_po_files = 1;
-			}
-		}
-	}
-
-	# check staged changes in
-	if ($updated_po_files) {
-		if ($config{rcs}) {
-			IkiWiki::disable_commit_hook();
-			IkiWiki::rcs_commit_staged(gettext("updated PO files"),
-				"refreshpofiles", "127.0.0.1");
-			IkiWiki::enable_commit_hook();
-			IkiWiki::rcs_update();
-		}
-		# refresh module's private variables
-		undef %filtered;
-		undef %translations;
-		foreach my $page (keys %pagesources) {
-			istranslation($page);
-		}
-	}
+	map istranslation($_), (keys %pagesources);
 
 	# make existing translations depend on the corresponding master page
 	foreach my $master (keys %translations) {
@@ -503,6 +464,54 @@ sub pagetemplate (@) { #{{{
 		$template->param('parentlinks' => []);
 	}
 } # }}}
+
+sub change(@) { #{{{
+	my @rendered=@_;
+
+	my $updated_po_files=0;
+
+	# Refresh/create POT and PO files as needed.
+	foreach my $page (map pagename($_), @rendered) {
+		next unless istranslatable($page);
+		my $file=srcfile($pagesources{$page});
+		my $updated_pot_file=0;
+		if ((grep { $_ eq $pagesources{$page} } @origneedsbuild)
+		    || ! -e potfile($file)) {
+			refreshpot($file);
+			$updated_pot_file=1;
+		}
+		my @pofiles;
+		foreach my $lang (keys %{$config{po_slave_languages}}) {
+			my $pofile=pofile($file, $lang);
+			if ($updated_pot_file || ! -e $pofile) {
+				push @pofiles, $pofile;
+			}
+		}
+		if (@pofiles) {
+			refreshpofiles($file, @pofiles);
+			map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
+			$updated_po_files=1;
+		}
+	}
+
+	if ($updated_po_files) {
+		# Check staged changes in.
+		if ($config{rcs}) {
+			IkiWiki::disable_commit_hook();
+			IkiWiki::rcs_commit_staged(gettext("updated PO files"),
+				"IkiWiki::Plugin::po::change", "127.0.0.1");
+			IkiWiki::enable_commit_hook();
+			IkiWiki::rcs_update();
+		}
+		# Reinitialize module's private variables.
+		undef %filtered;
+		undef %translations;
+		# Trigger a wiki refresh.
+		require IkiWiki::Render;
+		IkiWiki::refresh();
+		IkiWiki::saveindex();
+	}
+} #}}}
 
 sub editcontent () { #{{{
 	my %params=@_;
