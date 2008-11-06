@@ -115,9 +115,9 @@ sub checkconfig () { #{{{
 	    ! defined $config{po_link_to}) {
 		$config{po_link_to}='default';
 	}
-	elsif ($config{po_link_to} != 'default'
-	    && $config{po_link_to} != 'current'
-	    && $config{po_link_to} != 'negotiated') {
+	elsif (! grep {
+			$config{po_link_to} eq $_
+		} ('default', 'current', 'negotiated')) {
 		warn(sprintf(gettext('po_link_to=%s is not a valid setting, falling back to po_link_to=default'),
 				$config{po_link_to}));
 		$config{po_link_to}='default';
