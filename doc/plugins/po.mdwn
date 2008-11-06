@@ -215,10 +215,6 @@ TODO
 Security checks
 ---------------
 
-- `refreshpofiles` uses `system()`, whose args have to be checked more
-  thoroughly to prevent any security issue (command injection, etc.).
-  > Always pass `system()` a list of parameters to avoid the shell.
-  > I've checked in a change fixing that. --[[Joey]]
 - Can any sort of directives be put in po files that will
   cause mischief (ie, include other files, run commands, crash gettext,
   whatever).
@@ -227,6 +223,10 @@ Security checks
 gettext/po4a rough corners
 --------------------------
 
+- commiting a new master page version updates the translations, but
+  does not refresh recentchanges anymore after having checked-in the
+  new translations (since manual IkiWiki::refresh() call was removed,
+  I guess)
 - fix infinite loop when synchronizing two ikiwiki (when checkouts
   live in different directories): say bla.fr.po has been updated in
   repo2; pulling repo2 from repo1 seems to trigger a PO update, that
