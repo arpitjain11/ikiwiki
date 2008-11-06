@@ -1,3 +1,12 @@
+ikiwiki (2.69) UNRELEASED; urgency=low
+
+  * aggregate: Try to query XML::Feed for the base url when derelevatising
+    links. Since this needs the just released XML::Feed 0.3, as well 
+    as a not yet released XML::RSS, it will fall back to the old method
+    if no xml:base info is available.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 06 Nov 2008 16:01:00 -0500
+
 ikiwiki (2.68) unstable; urgency=low
 
   * Add support for checking pushes from untrusted git committers. This can be
