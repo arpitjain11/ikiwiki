@@ -257,11 +257,10 @@ be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
 ### websetup
 
-Which configuration settings are safe enough for websetup?
+Which configuration settings are safe enough for websetup, apart of
+`po_master_language` and `po_slave_languages` that already have
+been checked?
 
-> I see no problems with `po_master_language` and `po_slave_languages`
-> (assuming websetup handles the hashes correctly). Would not hurt to check
-> that the values of these are legal language codes, in `checkconfig`. 
 > `po_translatable_pages` seems entirely safe. `po_link_to` w/o usedirs
 > causes ikiwiki to error out. If it were changed to fall back to a safe
 > setting in this case rather than error, it would be safe.

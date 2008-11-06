@@ -61,7 +61,7 @@ sub getsetup () { #{{{
 				'name' => 'English'
 			},
 			description => "master language (non-PO files)",
-			safe => 0,
+			safe => 1,
 			rebuild => 1,
 		},
 		po_slave_languages => {
@@ -72,7 +72,7 @@ sub getsetup () { #{{{
 				'de' => 'Deutsch'
 			},
 			description => "slave languages (PO files)",
-			safe => 0,
+			safe => 1,
 			rebuild => 1,
 		},
 		po_translatable_pages => {
@@ -92,12 +92,21 @@ sub getsetup () { #{{{
 		},
 } #}}}
 
+sub islanguagecode ($) { #{{{
+    my $code=shift;
+    return ($code =~ /^[a-z]{2}$/);
+} #}}}
+
 sub checkconfig () { #{{{
 	foreach my $field (qw{po_master_language po_slave_languages}) {
 		if (! exists $config{$field} || ! defined $config{$field}) {
 			error(sprintf(gettext("Must specify %s"), $field));
 		}
 	}
+	map {
+		islanguagecode($_)
+		    or error(sprintf(gettext("%s is not a valid language code"), $_));
+	} ($config{po_master_language}{code}, keys %{$config{po_slave_languages}});
 	if (! exists $config{po_link_to} ||
 	    ! defined $config{po_link_to}) {
 		$config{po_link_to}="default";
