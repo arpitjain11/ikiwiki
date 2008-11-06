@@ -120,7 +120,7 @@ sub getsetup () { #{{{
 	},
 	default_plugins => {
 		type => "internal",
-		default => [qw{mdwn link inline htmlscrubber passwordauth
+		default => [qw{mdwn link inline meta htmlscrubber passwordauth
 				openid signinedit lockedit conditional
 				recentchanges parentlinks editpage}],
 		description => "plugins to enable by default",
