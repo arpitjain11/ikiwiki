@@ -3,9 +3,11 @@ translated with gettext, using [po4a](http://po4a.alioth.debian.org/).
 
 More information:
 
-* It can be found in [my "po" branch](http://repo.or.cz/w/ikiwiki/intrigeri.git?a=shortlog;h=refs/heads/po): `git clone git://repo.or.cz/ikiwiki/intrigeri.git`
-* It involves adding three hooks to ikiwiki core.
-* It is documented (including TODO and plans for next work steps) in `doc/plugins/po.mdwn`, which can be found in the same branch.
+* It can be found in my "po" branch:
+  `git clone git://gaffer.ptitcanardnoir.org/ikiwiki.git`
+* It is self-contained, *i.e.* it does not modify ikiwiki core at all.
+* It is documented (including TODO and plans for next work steps) in
+  `doc/plugins/po.mdwn`, which can be found in the same branch.
 * No public demo site is available so far, I'm working on this.
 
 My plan is to get this plugin clean enough to be included in ikiwiki.
@@ -73,14 +75,42 @@ Any thoughts on this?
 >> and could only then translate it, right? I wonder if this will be clear
 >> though to the user.
 >>
+>>> Right: a broken link points to the URL that allows to create
+>>> a page that can either be a new master page or a non-translatable
+>>> page, depending on `po_translatable_pages` value. The best
+>>> solution I can thing of is to use [[plugins/edittemplate]] to
+>>> insert something like "Warning: this is a master page, that must
+>>> be written in $MASTER_LANGUAGE" into newly created master pages,
+>>> and maybe another warning message on newly created
+>>> non-translatable pages. It seems quite doable to me, but in order
+>>> to avoid breaking existing functionality, it implies to hack a bit
+>>> [[plugins/edittemplate]] so that multiple templates can be
+>>> inserted at page creation time. [[--intrigeri]]
+>>
 >> And also, is there any way to start a translation of a page into a new
 >> lanauge using the web interface?
->> 
+>>
+>>> When a new language is added to `po_slave_languages`, a rebuild is
+>>> triggered, and all missing PO files are created and checked into
+>>> VCS. An unpriviledged wiki user can not add a new language to
+>>> `po_slave_languages`, though. One could thing of adding the needed
+>>> interface to translate a page into a yet-unsupported slave
+>>> language, and this would automagically add this new language to
+>>> `po_slave_languages`. It would probably be useful in some
+>>> usecases, but I'm not comfortable with letting unpriviledged wiki
+>>> users change the wiki configuration as a side effect of their
+>>> actions; if this were to be implemented, special care would be
+>>> needed. [[--intrigeri]]
+
 >> FWIW, I'm tracking your po branch in ikiwiki master git in the po
 >> branch. One thing I'd like to try in there is setting up a translated
 >> basewiki, which seems like it should be pretty easy to do, and would be
 >> a great demo! --[[Joey]]
 >>
->>> I've merged your changes into my own branch. Please note my
->>> repository location has changed a few days ago, see my user page
->>> for the new one. --[[intrigeri]]
+>>> I've merged your changes into my own branch, and made great
+>>> progress on the various todo items. Please note my repository
+>>> location has changed a few days ago, my user page was updated
+>>> accordingly, but I forgot to update this page at the same time.
+>>> Hoping it's not too complicated to relocated an existing remote...
+>>> (never done that, I'm a Git beginner as well as a Perl
+>>> newbie) --[[intrigeri]]
