@@ -219,12 +219,6 @@ Security checks
   thoroughly to prevent any security issue (command injection, etc.).
   > Always pass `system()` a list of parameters to avoid the shell.
   > I've checked in a change fixing that. --[[Joey]]
-- `refreshpofiles` and `refreshpot` create new files; this may need
-  some checks, e.g. using `IkiWiki::prep_writefile()`
-  > Yes, it would be ideal to call `prep_writefile` on each file 
-  > that they write, beforehand. This way you'd avoid symlink attacks etc to the
-  > generated po/pot files. I haven't done it, but it seems pretty trivial.
-  > --[[Joey]]
 - Can any sort of directives be put in po files that will
   cause mischief (ie, include other files, run commands, crash gettext,
   whatever).

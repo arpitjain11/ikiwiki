@@ -164,6 +164,7 @@ sub refreshpot ($) { #{{{
 	$doc->{TT}{po_out}->set_charset('utf-8');
 	# do the actual work
 	$doc->parse;
+	IkiWiki::prep_writefile(basename($potfile),dirname($potfile));
 	$doc->writepo($potfile);
 } #}}}
 
@@ -175,6 +176,7 @@ sub refreshpofiles ($@) { #{{{
 	error("[po/refreshpofiles] POT file ($potfile) does not exist") unless (-e $potfile);
 
 	foreach my $pofile (@pofiles) {
+		IkiWiki::prep_writefile(basename($pofile),dirname($pofile));
 		if (-e $pofile) {
 			system("msgmerge", "-U", "--backup=none", $pofile, $potfile) == 0
 				or error("[po/refreshpofiles:$pofile] failed to update");
