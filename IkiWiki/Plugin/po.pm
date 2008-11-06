@@ -28,11 +28,8 @@ memoize("percenttranslated");
 
 # backup references to subs that will be overriden
 my %origsubs;
-$origsubs{'bestlink'}=\&IkiWiki::bestlink;
-$origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
-$origsubs{'targetpage'}=\&IkiWiki::targetpage;
 
-sub import {
+sub import { #{{{
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
@@ -40,16 +37,20 @@ sub import {
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
+
+	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
+	$origsubs{'beautify_urlpath'}=\&IkiWiki::beautify_urlpath;
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
+	$origsubs{'targetpage'}=\&IkiWiki::targetpage;
 	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
-}
+} #}}}
 
 sub getsetup () { #{{{
 	return
 		plugin => {
 			safe => 0,
-			rebuild => 1, # format plugin
+			rebuild => 1, # format plugin & changes html filenames
 		},
 		po_master_language => {
 			type => "string",
@@ -97,11 +98,11 @@ sub checkconfig () { #{{{
 	}
 	if (! exists $config{po_link_to} ||
 	    ! defined $config{po_link_to}) {
-	    $config{po_link_to}="default";
+		$config{po_link_to}="default";
 	}
 	if (! exists $config{po_translatable_pages} ||
 	    ! defined $config{po_translatable_pages}) {
-	    $config{po_translatable_pages}="";
+		$config{po_translatable_pages}="";
 	}
 	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
 		error(gettext("po_link_to=negotiated requires usedirs to be set"));
@@ -111,6 +112,7 @@ sub checkconfig () { #{{{
 
 sub potfile ($) { #{{{
 	my $masterfile=shift;
+
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
 	$dir='' if $dir eq './';
 	return File::Spec->catpath('', $dir, $name . ".pot");
@@ -119,6 +121,7 @@ sub potfile ($) { #{{{
 sub pofile ($$) { #{{{
 	my $masterfile=shift;
 	my $lang=shift;
+
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
 	$dir='' if $dir eq './';
 	return File::Spec->catpath('', $dir, $name . "." . $lang . ".po");
@@ -126,6 +129,7 @@ sub pofile ($$) { #{{{
 
 sub refreshpot ($) { #{{{
 	my $masterfile=shift;
+
 	my $potfile=potfile($masterfile);
 	my %options = ("markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
@@ -153,8 +157,7 @@ sub refreshpofiles ($@) { #{{{
 
 	foreach my $pofile (@pofiles) {
 		if (-e $pofile) {
-			my $cmd = "msgmerge -U --backup=none $pofile $potfile";
-			system ($cmd) == 0
+			system("msgmerge", "-U", "--backup=none", $pofile, $potfile) == 0
 				or error("[po/refreshpofiles:$pofile] failed to update");
 		}
 		else {
@@ -252,9 +255,10 @@ sub mytargetpage ($$) { #{{{
 
 sub mybeautify_urlpath ($) { #{{{
 	my $url=shift;
+
 	my $res=$origsubs{'beautify_urlpath'}->($url);
 	if ($config{po_link_to} eq "negotiated") {
-		$res =~ s!/index.$config{po_master_language}{code}.$config{htmlext}$!/!;
+		$res =~ s!/\Qindex.$config{po_master_language}{code}.$config{htmlext}\E$!/!;
 	}
 	return $res;
 } #}}}
@@ -273,6 +277,7 @@ sub urlto_with_orig_beautiful_urlpath($$) { #{{{
 sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
+
 	my $res=$origsubs{'bestlink'}->($page, $link);
 	if (length $res) {
 		if ($config{po_link_to} eq "current"
@@ -292,6 +297,7 @@ sub mybestlink ($$) { #{{{
 # since the rest of ikiwiki should not work on PO files.
 sub filter (@) { #{{{
 	my %params = @_;
+
 	my $page = $params{page};
 	my $destpage = $params{destpage};
 	my $content = decode_utf8(encode_utf8($params{content}));
@@ -329,8 +335,8 @@ sub filter (@) { #{{{
 	push @pos,$infile;
 	push @masters,$masterfile;
 	my %options = (
-			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
-			);
+		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+	);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->process(
 		'po_in_name'	=> \@pos,
@@ -352,6 +358,7 @@ sub filter (@) { #{{{
 
 sub htmlize (@) { #{{{
 	my %params=@_;
+
 	my $page = $params{page};
 	my $content = $params{content};
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
@@ -363,7 +370,8 @@ sub htmlize (@) { #{{{
 
 sub percenttranslated ($) { #{{{
 	my $page=shift;
-	return "N/A" unless (istranslation($page));
+
+	return gettext("N/A") unless (istranslation($page));
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 	my $file=srcfile($pagesources{$page});
 	my $masterfile = srcfile($pagesources{$masterpage});
@@ -371,8 +379,8 @@ sub percenttranslated ($) { #{{{
 	push @pos,$file;
 	push @masters,$masterfile;
 	my %options = (
-			"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
-			);
+		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+	);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->process(
 		'po_in_name'	=> \@pos,
@@ -386,6 +394,7 @@ sub percenttranslated ($) { #{{{
 
 sub otherlanguages ($) { #{{{
 	my $page=shift;
+
 	my @ret;
 	if (istranslatable($page)) {
 		foreach my $lang (sort keys %{$translations{$page}}) {
@@ -423,6 +432,7 @@ sub pagetemplate (@) { #{{{
 	my $page=$params{page};
 	my $destpage=$params{destpage};
 	my $template=$params{template};
+
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/) if istranslation($page);
 
 	if (istranslation($page) && $template->query(name => "percenttranslated")) {
@@ -485,6 +495,7 @@ sub editcontent () { #{{{
 
 sub istranslatable ($) { #{{{
 	my $page=shift;
+
 	my $file=$pagesources{$page};
 
 	if (! defined $file
@@ -497,6 +508,7 @@ sub istranslatable ($) { #{{{
 
 sub _istranslation ($) { #{{{
 	my $page=shift;
+
 	my $file=$pagesources{$page};
 	if (! defined $file) {
 		return IkiWiki::FailReason->new("no file specified");
@@ -522,6 +534,7 @@ sub _istranslation ($) { #{{{
 
 sub istranslation ($) { #{{{
 	my $page=shift;
+
 	if (_istranslation($page)) {
 		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
@@ -537,6 +550,7 @@ use IkiWiki 2.00;
 
 sub match_istranslation ($;@) { #{{{
 	my $page=shift;
+
 	if (IkiWiki::Plugin::po::istranslation($page)) {
 		return IkiWiki::SuccessReason->new("is a translation page");
 	}
@@ -547,6 +561,7 @@ sub match_istranslation ($;@) { #{{{
 
 sub match_istranslatable ($;@) { #{{{
 	my $page=shift;
+
 	if (IkiWiki::Plugin::po::istranslatable($page)) {
 		return IkiWiki::SuccessReason->new("is set as translatable in po_translatable_pages");
 	}
@@ -558,6 +573,7 @@ sub match_istranslatable ($;@) { #{{{
 sub match_lang ($$;@) { #{{{
 	my $page=shift;
 	my $wanted=shift;
+
 	my $regexp=IkiWiki::glob2re($wanted);
 	my $lang;
 	my $masterpage;
@@ -579,6 +595,7 @@ sub match_lang ($$;@) { #{{{
 
 sub match_currentlang ($$;@) { #{{{
 	my $page=shift;
+
 	shift;
 	my %params=@_;
 	my ($currentmasterpage, $currentlang, $masterpage, $lang);

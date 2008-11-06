@@ -201,7 +201,7 @@ sub preprocess_inline (@) { #{{{
 		@list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
 	}
 	else {
-		return sprintf(gettext("unknown sort type %s"), $params{sort});
+		error sprintf(gettext("unknown sort type %s"), $params{sort});
 	}
 
 	if (yesno($params{reverse})) {
@@ -298,7 +298,7 @@ sub preprocess_inline (@) { #{{{
 		require HTML::Template;
 		my @params=IkiWiki::template_params($params{template}.".tmpl", blind_cache => 1);
 		if (! @params) {
-			return sprintf(gettext("nonexistant template %s"), $params{template});
+			error sprintf(gettext("nonexistant template %s"), $params{template});
 		}
 		my $template=HTML::Template->new(@params) unless $raw;
 	

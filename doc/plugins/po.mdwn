@@ -13,7 +13,7 @@ A language is chosen as the "master" one, and any other supported
 language is a "slave" one.
 
 A page written in the "master" language is a "master" page. It can be
-of any page type supported by ikiwiki, but PO. It does not have to be
+of any page type supported by ikiwiki, except `po`. It does not have to be
 named a special way: migration to this plugin does not imply any page
 renaming work.
 
@@ -22,7 +22,7 @@ English; if `usedirs` is enabled, it is rendered as
 `bla/page/index.en.html`, else as `bla/page.en.html`.
 
 Any translation of a "master" page into a "slave" language is called
-a "slave" page; it is written in the gettext PO format. PO is now
+a "slave" page; it is written in the gettext PO format. `po` is now
 a page type supported by ikiwiki.
 
 Example: `bla/page.fr.po` is the PO "message catalog" used to
@@ -56,9 +56,8 @@ The `po_translatable_pages` setting configures what pages are
 translatable. It is a [[ikiwiki/PageSpec]], so you have lots of
 control over what kind of pages are translatable.
 
-The PO translations files are anyway not considered as being
-translatable, so you don't need to worry about excluding them
-explicitly from this [[ikiwiki/PageSpec]].
+The `.po` files are not considered as being translatable, so you don't need to
+worry about excluding them explicitly from this [[ikiwiki/PageSpec]].
 
 Internal links
 --------------
@@ -180,17 +179,14 @@ Additional PageSpec tests
 This plugin enhances the regular [[ikiwiki/PageSpec]] syntax with some
 additional tests that are documented [[here|ikiwiki/pagespec/po]].
 
-Automatic PO files update
--------------------------
+Automatic PO file update
+------------------------
 
 Committing changes to a "master" page:
 
-1. updates the POT file, as well as the PO files for the "slave"
-   languages (this is done in the `needsbuild` hook); the updated PO
-   files are then put under version control;
-2. triggers a refresh of the corresponding HTML slave pages (this is
-   achieved by making any "slave" page dependent on the corresponding
-   "master" page, in the `needsbuild` hook).
+1. updates the POT file and the PO files for the "slave" languages;
+   the updated PO files are then put under version control;
+2. triggers a refresh of the corresponding HTML slave pages.
 
 Also, when the plugin has just been enabled, or when a page has just
 been declared as being translatable, the needed POT and PO files are
@@ -210,8 +206,8 @@ Translating
 One can edit the PO files using ikiwiki's CGI (a message-by-message
 interface could also be implemented at some point).
 
-If [[tips/untrusted_git_push]] is setup, one can edit the PO files in
-her preferred `$EDITOR`, without needing to be online.
+If [[tips/untrusted_git_push]] is setup, one can edit the PO files in one's
+preferred `$EDITOR`, without needing to be online.
 
 TODO
 ====
@@ -221,8 +217,18 @@ Security checks
 
 - `refreshpofiles` uses `system()`, whose args have to be checked more
   thoroughly to prevent any security issue (command injection, etc.).
+  > Always pass `system()` a list of parameters to avoid the shell.
+  > I've checked in a change fixing that. --[[Joey]]
 - `refreshpofiles` and `refreshpot` create new files; this may need
   some checks, e.g. using `IkiWiki::prep_writefile()`
+  > Yes, it would be ideal to call `prep_writefile` on each file 
+  > that they write, beforehand. This way you'd avoid symlink attacks etc to the
+  > generated po/pot files. I haven't done it, but it seems pretty trivial.
+  > --[[Joey]]
+- Can any sort of directives be put in po files that will
+  cause mischief (ie, include other files, run commands, crash gettext,
+  whatever).
+- Any security issues on running po4a on untrusted content?
 
 gettext/po4a rough corners
 --------------------------
@@ -253,6 +259,14 @@ be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
 Which configuration settings are safe enough for websetup?
 
+> I see no problems with `po_master_language` and `po_slave_languages`
+> (assuming websetup handles the hashes correctly). Would not hurt to check
+> that the values of these are legal language codes, in `checkconfig`. 
+> `po_translatable_pages` seems entirely safe. `po_link_to` w/o usedirs
+> causes ikiwiki to error out. If it were changed to fall back to a safe
+> setting in this case rather than error, it would be safe.
+> --[[Joey]]
+
 ### backlinks
 
 `po_link_to = negotiated`: if a given translatable `sourcepage.mdwn`
@@ -261,6 +275,11 @@ and the latter has the master page *and* all its translations listed
 in the backlinks.
 
 `po_link_to = current`: seems to work nicely
+
+### license
+
+> Could you please put a copyright and license on po.pm? I assume it's
+> GPLed as it's based on po4a-translate. --[[Joey]]
 
 Translation quality assurance
 -----------------------------
