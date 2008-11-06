@@ -105,7 +105,7 @@ sub checkconfig () { #{{{
 	}
 	map {
 		islanguagecode($_)
-		    or error(sprintf(gettext("%s is not a valid language code"), $_));
+			or error(sprintf(gettext("%s is not a valid language code"), $_));
 	} ($config{po_master_language}{code}, keys %{$config{po_slave_languages}});
 	if (! exists $config{po_translatable_pages} ||
 	    ! defined $config{po_translatable_pages}) {
@@ -216,7 +216,7 @@ sub needsbuild () { #{{{
 				}
 			}
 			if (@pofiles) {
-				refreshpofiles($file, @pofiles) ;
+				refreshpofiles($file, @pofiles);
 				map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
 				$updated_po_files = 1;
 			}
