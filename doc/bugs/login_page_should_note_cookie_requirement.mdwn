@@ -1,0 +1,5 @@
+At the moment, you go through the login shuffle and then are told that cookies are needed, so you lose all your data and login again.  It would be much slicker to note by the edit link, or at least on the login page, that cookies are required.
+
+Even better would be to only display the cookie note as a warning if the login page doesn't receive a session cookie.
+
+Best of all would be to use URL-based or hidden-field-based session tokens if cookies are not permitted.
