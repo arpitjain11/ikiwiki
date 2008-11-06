@@ -80,7 +80,7 @@ sub getsetup () { #{{{
 			example => "!*/Discussion",
 			description => "PageSpec controlling which pages are translatable",
 			link => "ikiwiki/PageSpec",
-			safe => 0,
+			safe => 1,
 			rebuild => 1,
 		},
 		po_link_to => {
