@@ -87,7 +87,7 @@ sub getsetup () { #{{{
 			type => "string",
 			example => "current",
 			description => "internal linking behavior (default/current/negotiated)",
-			safe => 0,
+			safe => 1,
 			rebuild => 1,
 		},
 } #}}}
@@ -107,16 +107,24 @@ sub checkconfig () { #{{{
 		islanguagecode($_)
 		    or error(sprintf(gettext("%s is not a valid language code"), $_));
 	} ($config{po_master_language}{code}, keys %{$config{po_slave_languages}});
-	if (! exists $config{po_link_to} ||
-	    ! defined $config{po_link_to}) {
-		$config{po_link_to}="default";
-	}
 	if (! exists $config{po_translatable_pages} ||
 	    ! defined $config{po_translatable_pages}) {
 		$config{po_translatable_pages}="";
 	}
-	if ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
-		error(gettext("po_link_to=negotiated requires usedirs to be set"));
+	if (! exists $config{po_link_to} ||
+	    ! defined $config{po_link_to}) {
+		$config{po_link_to}='default';
+	}
+	elsif ($config{po_link_to} != 'default'
+	    && $config{po_link_to} != 'current'
+	    && $config{po_link_to} != 'negotiated') {
+		warn(sprintf(gettext('po_link_to=%s is not a valid setting, falling back to po_link_to=default'),
+				$config{po_link_to}));
+		$config{po_link_to}='default';
+	}
+	elsif ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
+		warn(gettext('po_link_to=negotiated requires usedirs to be enabled, falling back to po_link_to=default'));
+		$config{po_link_to}='default';
 	}
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 } #}}}

@@ -255,17 +255,6 @@ does. This is actually a duplicate for
 [[bugs/pagetitle_function_does_not_respect_meta_titles]], which might
 be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
-### websetup
-
-Which configuration settings are safe enough for websetup, apart of
-`po_master_language`, `po_slave_languages` and `po_translatable_pages`
-that have been checked already?
-
-> `po_link_to` w/o usedirs causes ikiwiki to error out. If it were
-> changed to fall back to a safe setting in this case rather than
-> error, it would be safe.
-> --[[Joey]]
-
 ### backlinks
 
 `po_link_to = negotiated`: if a given translatable `sourcepage.mdwn`
