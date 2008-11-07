@@ -17,6 +17,7 @@ use File::Copy;
 use File::Spec;
 use File::Temp;
 use Memoize;
+use UNIVERSAL;
 
 my %translations;
 my @origneedsbuild;
@@ -36,6 +37,7 @@ sub import { #{{{
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
+	hook(type => "scan", id => "po", call => \&scan, last =>1);
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
@@ -214,6 +216,42 @@ sub needsbuild () { #{{{
 	foreach my $master (keys %translations) {
 		foreach my $slave (values %{$translations{$master}}) {
 			add_depends($slave, $master);
+		}
+	}
+} #}}}
+
+sub scan (@) { #{{{
+	my %params=@_;
+	my $page=$params{page};
+	my $content=$params{content};
+
+	return unless UNIVERSAL::can("IkiWiki::Plugin::link", "import");
+	return unless $config{'po_link_to'} eq 'negotiated';
+
+	if (istranslation($page)) {
+		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		foreach my $destpage (@{$links{$page}}) {
+			if (istranslatable($destpage)) {
+				# replace one occurence of $destpage in $links{$page}
+				# (we only want to replace the one that was added by
+				# IkiWiki::Plugin::link::scan, other occurences may be
+				# there for other reasons)
+				for (my $i=0; $i<@{$links{$page}}; $i++) {
+					if (@{$links{$page}}[$i] eq $destpage) {
+						@{$links{$page}}[$i] = $destpage . '.' . $curlang;
+						last;
+					}
+				}
+			}
+		}
+	}
+	elsif (! istranslatable($page) && ! istranslation($page)) {
+		foreach my $destpage (@{$links{$page}}) {
+			if (istranslatable($destpage)) {
+				map {
+					push @{$links{$page}}, $destpage . '.' . $_;
+				} (keys %{$config{po_slave_languages}});
+			}
 		}
 	}
 } #}}}

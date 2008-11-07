@@ -249,12 +249,7 @@ be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
 #### `po_link_to = negotiated`
 
-If a given translatable `sourcepage.mdwn` links to \[[destpage]],
-`sourcepage.LL.po` also link to \[[destpage]], and the latter has the
-master page *and* all its translations listed in the backlinks. On the
-other hand, translations of `destpage` get none of these backlinks.
-What would be nice is:
-
+This is now implemented:
 - if a translatable page links to another translatable page: the
   master destpage gets a backlink to the master sourcepage, and every
   slave destpage gets a backlink to the corresponding slave sourcepage
