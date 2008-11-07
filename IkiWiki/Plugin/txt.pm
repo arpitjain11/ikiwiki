@@ -39,7 +39,7 @@ sub filter (@) {
 	my $content = $params{content};
 
 	if (defined $pagesources{$params{page}} && $pagesources{$params{page}} =~ /\.txt$/) {
-		encode_entities($content);
+		encode_entities($content, "<>&");
 		if ($findurl) {
 			my $finder = URI::Find->new(sub {
 				my ($uri, $orig_uri) = @_;
