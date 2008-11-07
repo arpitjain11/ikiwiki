@@ -17,7 +17,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 45;
+use Test::More tests => 52;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -89,27 +89,48 @@ ok(! IkiWiki::Plugin::po::istranslation('test3'), "test3 is not a translation");
 ok(! IkiWiki::Plugin::po::istranslation('test3'), "test3 is not a translation");
 
 ### links
+require IkiWiki::Render;
+
+sub refresh_n_scan(@) {
+	my @masterfiles_rel=@_;
+	foreach my $masterfile_rel (@masterfiles_rel) {
+		my $masterfile=srcfile($masterfile_rel);
+		IkiWiki::scan($masterfile_rel);
+		next unless IkiWiki::Plugin::po::istranslatable(pagename($masterfile_rel));
+		my @pofiles=IkiWiki::Plugin::po::pofiles($masterfile);
+		IkiWiki::Plugin::po::refreshpot($masterfile);
+		IkiWiki::Plugin::po::refreshpofiles($masterfile, @pofiles);
+		map IkiWiki::scan(IkiWiki::abs2rel($_, $config{srcdir})), @pofiles;
+	}
+}
+
 writefile('index.mdwn', $config{srcdir}, '[[translatable]] [[nontranslatable]]');
 writefile('translatable.mdwn', $config{srcdir}, '[[nontranslatable]]');
 writefile('nontranslatable.mdwn', $config{srcdir}, '[[/]] [[translatable]]');
-map IkiWiki::Plugin::po::refreshpot(srcfile($_)), ('index.mdwn', 'translatable.mdwn');
-require IkiWiki::Render;
-foreach my $masterfile_rel ('index.mdwn', 'translatable.mdwn') {
-	my $masterfile=srcfile($masterfile_rel);
-	my @pofiles=IkiWiki::Plugin::po::pofiles($masterfile);
-	IkiWiki::Plugin::po::refreshpot($masterfile);
-	IkiWiki::Plugin::po::refreshpofiles($masterfile, @pofiles);
-	IkiWiki::scan($masterfile_rel);
-	map IkiWiki::scan(IkiWiki::abs2rel($_, $config{srcdir})), @pofiles;
-}
-IkiWiki::scan('nontranslatable.mdwn');
-is_deeply(\@{$links{'index'}}, ['translatable', 'nontranslatable'], 'index');
-is_deeply(\@{$links{'index.es'}}, ['translatable.es', 'nontranslatable'], 'index.es');
-is_deeply(\@{$links{'index.fr'}}, ['translatable.fr', 'nontranslatable'], 'index.fr');
-is_deeply(\@{$links{'translatable'}}, ['nontranslatable'], 'translatable');
-is_deeply(\@{$links{'translatable.es'}}, ['nontranslatable'], 'translatable.es');
-is_deeply(\@{$links{'translatable.fr'}}, ['nontranslatable'], 'translatable.fr');
-is_deeply(\@{$links{'nontranslatable'}}, ['/', 'translatable', 'translatable.fr', 'translatable.es'], 'nontranslatable');
+
+$config{po_link_to}='negotiated';
+$msgprefix="links (po_link_to=negotiated)";
+refresh_n_scan('index.mdwn', 'translatable.mdwn', 'nontranslatable.mdwn');
+is_deeply(\@{$links{'index'}}, ['translatable', 'nontranslatable'], "$msgprefix index");
+is_deeply(\@{$links{'index.es'}}, ['translatable.es', 'nontranslatable'], "$msgprefix index.es");
+is_deeply(\@{$links{'index.fr'}}, ['translatable.fr', 'nontranslatable'], "$msgprefix index.fr");
+is_deeply(\@{$links{'translatable'}}, ['nontranslatable'], "$msgprefix translatable");
+is_deeply(\@{$links{'translatable.es'}}, ['nontranslatable'], "$msgprefix translatable.es");
+is_deeply(\@{$links{'translatable.fr'}}, ['nontranslatable'], "$msgprefix translatable.fr");
+is_deeply(\@{$links{'nontranslatable'}}, ['/', 'translatable', 'translatable.fr', 'translatable.es'], "$msgprefix nontranslatable");
+
+$config{po_link_to}='current';
+$msgprefix="links (po_link_to=current)";
+refresh_n_scan('index.mdwn', 'translatable.mdwn', 'nontranslatable.mdwn');
+use Data::Dumper;
+print Dumper(%links);
+is_deeply(\@{$links{'index'}}, ['translatable', 'nontranslatable'], "$msgprefix index");
+is_deeply(\@{$links{'index.es'}}, [ map bestlink('index.es', $_), ('translatable.es', 'nontranslatable')], "$msgprefix index.es");
+is_deeply(\@{$links{'index.fr'}}, [ map bestlink('index.fr', $_), ('translatable.fr', 'nontranslatable')], "$msgprefix index.fr");
+is_deeply(\@{$links{'translatable'}}, [bestlink('translatable', 'nontranslatable')], "$msgprefix translatable");
+is_deeply(\@{$links{'translatable.es'}}, ['nontranslatable'], "$msgprefix translatable.es");
+is_deeply(\@{$links{'translatable.fr'}}, ['nontranslatable'], "$msgprefix translatable.fr");
+is_deeply(\@{$links{'nontranslatable'}}, ['/', 'translatable', 'translatable.fr', 'translatable.es'], "$msgprefix nontranslatable");
 
 ### targetpage
 $config{usedirs}=0;

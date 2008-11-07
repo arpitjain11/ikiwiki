@@ -245,30 +245,6 @@ does. This is actually a duplicate for
 [[bugs/pagetitle_function_does_not_respect_meta_titles]], which might
 be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
-### backlinks
-
-#### `po_link_to = negotiated`
-
-This is now implemented:
-- if a translatable page links to another translatable page: the
-  master destpage gets a backlink to the master sourcepage, and every
-  slave destpage gets a backlink to the corresponding slave sourcepage
-- if a translatable page links to a non-translatable page: the
-  destpage gets a backlink to the master sourcepage only
-- if a non-translatable page links to a translatable page: every
-  master or slave destpage gets a backlink to the sourcepage
-- if a non-translatable page links to another non-translatable page:
-  the default behavious is nice, don't change it
-
-#### `po_link_to = current`
-
-At first glance, backlinks seem to work nicely, but a more thorough
-look is needed.
-
-#### `po_link_to = default`
-
-FIXME
-
 Translation quality assurance
 -----------------------------
 

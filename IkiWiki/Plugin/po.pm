@@ -226,7 +226,6 @@ sub scan (@) { #{{{
 	my $content=$params{content};
 
 	return unless UNIVERSAL::can("IkiWiki::Plugin::link", "import");
-	return unless $config{'po_link_to'} eq 'negotiated';
 
 	if (istranslation($page)) {
 		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
