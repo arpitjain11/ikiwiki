@@ -263,6 +263,7 @@ sub myurlto ($$;$) { #{{{
 	my $from=shift;
 	my $absolute=shift;
 
+	# workaround hard-coded /index.$config{htmlext} in IkiWiki::urlto()
 	if (! length $to
 	    && $config{po_link_to} eq "current"
 	    && istranslation($from)
