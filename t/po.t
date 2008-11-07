@@ -103,8 +103,6 @@ foreach my $masterfile_rel ('index.mdwn', 'translatable.mdwn') {
 	map IkiWiki::scan(IkiWiki::abs2rel($_, $config{srcdir})), @pofiles;
 }
 IkiWiki::scan('nontranslatable.mdwn');
-use Data::Dumper;
-print Dumper(%links);
 is_deeply(\@{$links{'index'}}, ['translatable', 'nontranslatable'], 'index');
 is_deeply(\@{$links{'index.es'}}, ['translatable.es', 'nontranslatable'], 'index.es');
 is_deeply(\@{$links{'index.fr'}}, ['translatable.fr', 'nontranslatable'], 'index.fr');
