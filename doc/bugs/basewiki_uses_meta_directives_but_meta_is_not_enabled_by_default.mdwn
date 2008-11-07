@@ -1,0 +1,5 @@
+[[plugins/meta]] is not enabled by default, yet some pages in the default basewiki include [[the_meta_directive|ikiwiki/directive/meta]], notably the [[ikiwiki]] heirarchy.
+
+This means that the default output of "ikiwiki src dest", for two empty directories src and dest, result in the meta directive being displayed inline with the page text.
+
+> [[done]], meta now enabled by default.
