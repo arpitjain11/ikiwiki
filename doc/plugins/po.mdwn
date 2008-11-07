@@ -217,8 +217,27 @@ Security checks
 
 - Can any sort of directives be put in po files that will
   cause mischief (ie, include other files, run commands, crash gettext,
-  whatever).
+  whatever). The [PO file
+  format](http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files)
+  should contain the answer.
 - Any security issues on running po4a on untrusted content?
+
+### Security history
+
+#### GNU gettext
+- [CVE-2004-0966](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0966)
+  / [Debian bug #278283](http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=278283):
+  the autopoint and gettextize scripts in the GNU gettext package
+  1.14 and later versions, as used in Trustix Secure Linux 1.5
+  through 2.1 and other operating systems, allows local users to
+  overwrite files via a symlink attack on temporary files.
+
+#### po4a
+-
+  [CVE-2007-4462](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4462):
+  lib/Locale/Po4a/Po.pm in po4a before 0.32 allows local users to
+  overwrite arbitrary files via a symlink attack on the
+  gettextization.failed.po temporary file.
 
 gettext/po4a rough corners
 --------------------------
