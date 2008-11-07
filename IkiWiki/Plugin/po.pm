@@ -153,6 +153,11 @@ sub pofile ($$) { #{{{
 	return File::Spec->catpath('', $dir, $name . "." . $lang . ".po");
 } #}}}
 
+sub pofiles ($) { #{{{
+	my $masterfile=shift;
+	return map pofile($masterfile, $_), (keys %{$config{po_slave_languages}});
+} #}}}
+
 sub refreshpot ($) { #{{{
 	my $masterfile=shift;
 
