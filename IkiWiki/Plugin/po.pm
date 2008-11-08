@@ -166,10 +166,10 @@ sub refreshpot ($) { #{{{
 	my $potfile=potfile($masterfile);
 	my %options = ("markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
-	$doc->read($masterfile);
 	$doc->{TT}{utf_mode} = 1;
 	$doc->{TT}{file_in_charset} = 'utf-8';
 	$doc->{TT}{file_out_charset} = 'utf-8';
+	$doc->read($masterfile);
 	# let's cheat a bit to force porefs option to be passed to Locale::Po4a::Po;
 	# this is undocument use of internal Locale::Po4a::TransTractor's data,
 	# compulsory since this module prevents us from using the porefs option.
