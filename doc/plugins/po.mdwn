@@ -6,7 +6,7 @@ gettext, using [po4a](http://po4a.alioth.debian.org/).
 
 It depends on the Perl `Locale::Po4a::Po` library (`apt-get install po4a`).
 
-[[!toc]]
+[[!toc levels=2]]
 
 Introduction
 ============
@@ -246,31 +246,88 @@ Can any sort of directives be put in po files that will cause mischief
 (ie, include other files, run commands, crash gettext, whatever)?
 
 > No [documented](http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files)
-> directive is supposed to do so.
+> directive is supposed to do so. [[--intrigeri]]
 
 ### Running po4a on untrusted content
 
 Are there any security issues on running po4a on untrusted content?
 
-> To say the least, this issue is not well covered, at least publicly:
->
-> - the documentation does not talk about it;
-> - grep'ing the source code for `security` or `trust` gives no answer.
->
-> I'll ask their opinion to the po4a maintainers.
->
-> I'm not in a position to audit the code, but I had a look anyway:
->
-> - no use of `system()`, `exec()` or backticks in `Locale::Po4a`; are
->   there any other way to run external programs in Perl?
-> - a symlink attack vulnerability was already discovered, so I "hope"
->   the code has been checked to find some more already
-> - the po4a parts we are using themselves use the following Perl
->   modules: `DynaLoader`, `Encode`, `Encode::Guess`,
->   `Text::WrapI18N`, `Locale::gettext` (`bindtextdomain`,
->   `textdomain`, `gettext`, `dgettext`)
->
->  --[[intrigeri]]
+To say the least, this issue is not well covered, at least publicly:
+
+- the documentation does not talk about it;
+- grep'ing the source code for `security` or `trust` gives no answer.
+
+On the other hand, a po4a developer answered my questions in
+a convincing manner, stating that processing untrusted content was not
+an initial goal, and analysing in detail the possible issues.
+
+#### Already checked
+
+- the core (`Po.pm`, `Transtractor.pm`) should be safe
+- po4a source code was fully checked for other potential symlink
+  attacks, after discovery of one such issue
+- the only external program run by the core is `diff`, in `Po.pm` (in
+  parts of its code we don't use)
+- `Locale::gettext`: only used to display translated error messages
+- Nicolas François "hopes" `DynaLoader` is safe, and has "no reason to
+  think that `Encode` is not safe"
+- Nicolas François has "no reason to think that `Encode::Guess` is not
+  safe". The po plugin nevertheless avoids using it by defining the
+  input charset (`file_in_charset`) before asking `Transtractor` to
+  read any file. NB: this hack depends on po4a internals to stay
+  the same.
+
+#### To be checked
+
+##### Locale::Po4a modules
+
+- the modules we want to use have to be checked, as not all are safe
+  (e.g. the LaTeX module's behaviour is changed by commands included
+  in the content); they may use regexps generated from the content; we
+  currently only use the `Text` module
+- the `Text` module does not run any external program
+- check that no module is loaded by `Chooser.pm`, when we tell it to
+  load the `Text` one
+- `nsgmls` is used by `Sgml.pm`
+
+##### Text::WrapI18N
+
+`Text::WrapI18N` can cause DoS (see the
+[Debian bug #470250](http://bugs.debian.org/470250)), but it is
+optional and we do not need the features it provides.
+
+It is loaded if available by `Locale::Po4a::Common`; looking at the
+code, I'm not sure we can prevent this at all, but maybe some symbol
+table manipulation tricks could work; overriding
+`Locale::Po4a::Common::wrapi18n` may be easier. I'm no expert at all
+in this field. Joey? [[--intrigeri]]
+
+##### Term::ReadKey
+
+`Term::ReadKey` is not a hard dependency in our case, *i.e.* po4a
+works nicely without it. But the po4a Debian package recommends
+`libterm-readkey-perl`, so it will probably be installed on most
+systems using the po plugin.
+
+If `$ENV{COLUMNS}` is not set, `Locale::Po4a::Common` uses
+`Term::ReadKey::GetTerminalSize()` to get the terminal size. How safe
+is this?
+
+Part of `Term::ReadKey` is written in C. Depending on the runtime
+platform, this function use ioctl, environment, or C library function
+calls, and may end up running the `resize` command (without
+arguments).
+
+IMHO, using Term::ReadKey has too far reaching implications for us to
+be able to guarantee anything wrt. security. Since it is anyway of no
+use in our case, I suggest we define `ENV{COLUMNS}` before loading
+`Locale::Po4a::Common`, just to be on the safe side. Joey?
+[[--intrigeri]]
+
+### msgmerge
+
+`refreshpofiles()` runs this external program. A po4a developer
+answered he does "not expect any security issues from it".
 
 ### Fuzzing input
 
@@ -278,9 +335,12 @@ I was not able to find any public information about gettext or po4a
 having been tested with a fuzzing program, such as `zzuf` or `fusil`.
 Moreover, some gettext parsers seem to be quite
 [easy to crash](http://fusil.hachoir.org/trac/browser/trunk/fuzzers/fusil-gettext),
-so it might be useful to bang gettext/po4a's heads against such
+so it might be useful to bang msgmerge/po4a's heads against such
 a program in order to easily detect some of the most obvious DoS.
 [[--intrigeri]]
+
+> po4a was not fuzzy-tested, but according to one of its developers,
+> "it would be really appreciated". [[--intrigeri]]
 
 gettext/po4a rough corners
 --------------------------
@@ -292,7 +352,8 @@ gettext/po4a rough corners
   a PO update, that changes bla.fr.po in repo2; etc.; quickly fixed in
   `629968fc89bced6727981c0a1138072631751fee`, by disabling references
   in Pot files. Using `Locale::Po4a::write_if_needed` might be
-  a cleaner solution.
+  a cleaner solution. (warning: this function runs the external
+  `diff` program, have to check security)
 - new translations created in the web interface must get proper
   charset/encoding gettext metadata, else the next automatic PO update
   removes any non-ascii chars; possible solution: put such metadata
@@ -313,7 +374,8 @@ be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
 
 Markdown is supported, great, but what about others? The set of file
 formats supported both in ikiwiki and po4a probably is greater than
-`{markdown}`.
+`{markdown}`. Warning: the po4a modules are the place where one can
+expect security issues.
 
 Translation quality assurance
 -----------------------------
