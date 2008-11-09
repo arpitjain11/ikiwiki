@@ -1901,6 +1901,10 @@ sub match_link ($$;@) { #{{{
 		else {
 			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
 				if match_glob($p, $link, %params);
+			$p=~s/^\///;
+			$link=~s/^\///;
+			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
+				if match_glob($p, $link, %params);
 		}
 	}
 	return IkiWiki::FailReason->new("$page does not link to $link");

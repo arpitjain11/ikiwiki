@@ -7,6 +7,8 @@ ikiwiki (2.69) UNRELEASED; urgency=low
   * meta: Plugin is now enabled by default since the basewiki uses it.
   * txt: Do not encode quotes when filtering the txt, as that broke
     later parsing of any directives on the page.
+  * Fix the link() pagespec to match links that are internally recorded as
+    absolute.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 06 Nov 2008 16:01:00 -0500
 
