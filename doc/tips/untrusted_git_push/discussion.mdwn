@@ -1,0 +1,23 @@
+I've just tried this (commit c1fa07a). Recent changes shows:
+
+<div id="change-c1fa07ad4f165b42c962ba2a310681107f38c4f7" class="metadata">
+<span class="desc"><br />Changed pages:</span>
+<span class="pagelinks">
+
+<a href="http://git.ikiwiki.info/?p=ikiwiki;a=blobdiff;h=8bfa3dd7601a09b11ecbd20026849a777dc4b1b9;hp=c6302616f52ec058de5a8f5956fc512149a2f1a3;hb=1ea66c3d3f0a33bc3f04d073457b525a70380c37;f=doc/users/jondowland.mdwn"><img src="/wikiicons/diff.png" alt="diff" /></a><a href="http://ikiwiki.info/ikiwiki.cgi?page=users%2Fjondowland&amp;do=recentchanges_link">users/jondowland</a>
+
+
+</span>
+<span class="desc"><br />Changed by:</span>
+<span class="committer">
+
+<a href="http://ikiwiki.info/ikiwiki.cgi?page=users%2Fjon&amp;do=recentchanges_link">jon</a>
+
+</span>
+<span class="desc"><br />Commit type:</span>
+<span class="committype">git</span>
+<span class="desc"><br />Date:</span>
+<span class="changedate"><span class="relativedate" title="Mon, 10 Nov 2008 18:24:22 -0500">18:24:22 11/10/08</span>
+</div>
+
+Note that the user for the commit is 'jon', and the link points at cgi to create users/jon. I was wondering if that is configurable for users pushing via git. It would be nice perhaps to specify it in some way, perhaps via a git-config setting (user.name?). I'm not too familiar with exactly what the changeset contains. -- [[JonDowland]]
