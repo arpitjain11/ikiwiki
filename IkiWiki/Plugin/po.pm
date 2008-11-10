@@ -21,7 +21,6 @@ use UNIVERSAL;
 
 my %translations;
 my @origneedsbuild;
-our %filtered;
 
 memoize("_istranslation");
 memoize("percenttranslated");
@@ -359,30 +358,38 @@ sub mybestlink ($$) { #{{{
 	return "";
 } #}}}
 
-sub alreadyfiltered($$) { #{{{
-	my $page=shift;
-	my $destpage=shift;
+# blackbox for %filtered
+{
+	my %filtered;
 
-	return ( exists $filtered{$page}{$destpage}
-		 && $filtered{$page}{$destpage} eq 1 );
-} #}}}
-sub setalreadyfiltered($$) { #{{{
-	my $page=shift;
-	my $destpage=shift;
+	sub alreadyfiltered($$) { #{{{
+		my $page=shift;
+		my $destpage=shift;
 
-	$filtered{$page}{$destpage}=1;
-} #}}}
-sub unsetalreadyfiltered($$) { #{{{
-	my $page=shift;
-	my $destpage=shift;
+		return ( exists $filtered{$page}{$destpage}
+			 && $filtered{$page}{$destpage} eq 1 );
+	} #}}}
 
-	if (exists $filtered{$page}{$destpage}) {
-		delete $filtered{$page}{$destpage};
-	}
-} #}}}
-sub resetalreadyfiltered() { #{{{
-	undef %filtered;
-} #}}}
+	sub setalreadyfiltered($$) { #{{{
+		my $page=shift;
+		my $destpage=shift;
+
+		$filtered{$page}{$destpage}=1;
+	} #}}}
+
+	sub unsetalreadyfiltered($$) { #{{{
+		my $page=shift;
+		my $destpage=shift;
+
+		if (exists $filtered{$page}{$destpage}) {
+			delete $filtered{$page}{$destpage};
+		}
+	} #}}}
+
+	sub resetalreadyfiltered() { #{{{
+		undef %filtered;
+	} #}}}
+}
 
 # We use filter to convert PO to the master page's format,
 # since the rest of ikiwiki should not work on PO files.
