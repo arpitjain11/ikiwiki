@@ -496,7 +496,7 @@ sub pagetemplate (@) { #{{{
 		elsif (istranslation($page)) {
 			add_depends($page, $masterpage);
 			foreach my $translation (values %{$translations{$masterpage}}) {
-				add_depends($page, $translation);
+				add_depends($page, $translation) unless $page eq $translation;
 			}
 		}
 	}
