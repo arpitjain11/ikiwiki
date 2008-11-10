@@ -138,6 +138,24 @@ sub checkconfig () { #{{{
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 } #}}}
 
+sub otherlanguages($) { #{{{
+	my $page=shift;
+
+	my %ret;
+	if (istranslatable($page)) {
+		%ret = %{$translations{$page}};
+	}
+	elsif (istranslation($page)) {
+		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		$ret{$config{po_master_language}{code}} = $masterpage;
+		foreach my $lang (sort keys %{$translations{$masterpage}}) {
+			next if $lang eq $curlang;
+			$ret{$lang} = $translations{$masterpage}{$lang};
+		}
+	}
+	return \%ret;
+} #}}}
+
 sub potfile ($) { #{{{
 	my $masterfile=shift;
 
@@ -222,9 +240,7 @@ sub needsbuild () { #{{{
 
 	# make existing translations depend on the corresponding master page
 	foreach my $master (keys %translations) {
-		foreach my $slave (values %{$translations{$master}}) {
-			add_depends($slave, $master);
-		}
+		map add_depends($_, $master), values %{otherlanguages($master)};
 	}
 } #}}}
 
@@ -466,7 +482,7 @@ sub percenttranslated ($) { #{{{
 	return $percent;
 } #}}}
 
-sub otherlanguages ($) { #{{{
+sub otherlanguagesloop ($) { #{{{
 	my $page=shift;
 
 	my @ret;
@@ -519,18 +535,8 @@ sub pagetemplate (@) { #{{{
 		$template->param(istranslatable => istranslatable($page));
 	}
 	if ($template->query(name => "otherlanguages")) {
-		$template->param(otherlanguages => [otherlanguages($page)]);
-		if (istranslatable($page)) {
-			foreach my $translation (values %{$translations{$page}}) {
-				add_depends($page, $translation);
-			}
-		}
-		elsif (istranslation($page)) {
-			add_depends($page, $masterpage);
-			foreach my $translation (values %{$translations{$masterpage}}) {
-				add_depends($page, $translation) unless $page eq $translation;
-			}
-		}
+		$template->param(otherlanguages => [otherlanguagesloop($page)]);
+		map add_depends($page, $_), (values %{otherlanguages($page)});
 	}
 	# Rely on IkiWiki::Render's genpage() to decide wether
 	# a discussion link should appear on $page; this is not
