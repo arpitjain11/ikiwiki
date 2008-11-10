@@ -9,6 +9,8 @@ ikiwiki (2.69) UNRELEASED; urgency=low
     later parsing of any directives on the page.
   * Fix the link() pagespec to match links that are internally recorded as
     absolute.
+  * Add rel=nofollow to recentchanges_links for the same (weak) reasons it
+    was earlier added to edit links.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 06 Nov 2008 16:01:00 -0500
 
