@@ -517,7 +517,9 @@ sub pagetemplate (@) { #{{{
 							linktext => gettext("Discussion"),
 							));
 	}
-	# remove broken parentlink to ./index.html on home page's translations
+	# Remove broken parentlink to ./index.html on home page's translations.
+	# It works because this hook has the "last" parameter set, to ensure it
+	# runs after parentlinks' own pagetemplate hook.
 	if ($template->param('parentlinks')
 	    && istranslation($page)
 	    && $masterpage eq "index") {
@@ -535,6 +537,9 @@ sub change(@) { #{{{
 		next unless istranslatable($page);
 		my $file=srcfile($pagesources{$page});
 		my $updated_pot_file=0;
+		# Only refresh Pot file if it does not exist, or if
+		# $pagesources{$page} was changed: don't if only the HTML was
+		# refreshed, e.g. because of a dependency.
 		if ((grep { $_ eq $pagesources{$page} } @origneedsbuild)
 		    || ! -e potfile($file)) {
 			refreshpot($file);
