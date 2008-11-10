@@ -403,6 +403,13 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
+	wikistatedir => {
+		type => "internal",
+		default => undef,
+		description => "path to the .ikiwiki directory holding ikiwiki state",
+		safe => 0,
+		rebuild => 0,
+	},
 	setupfile => {
 		type => "internal",
 		default => undef,
@@ -467,7 +474,7 @@ sub checkconfig () { #{{{
 	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
-		unless exists $config{wikistatedir};
+		unless exists $config{wikistatedir} && defined $config{wikistatedir};
 
 	if (defined $config{umask}) {
 		umask(possibly_foolish_untaint($config{umask}));
@@ -1892,6 +1899,10 @@ sub match_link ($$;@) { #{{{
 				if $bestlink eq IkiWiki::bestlink($page, $p);
 		}
 		else {
+			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
+				if match_glob($p, $link, %params);
+			$p=~s/^\///;
+			$link=~s/^\///;
 			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
 				if match_glob($p, $link, %params);
 		}
