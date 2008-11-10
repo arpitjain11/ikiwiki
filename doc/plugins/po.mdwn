@@ -281,14 +281,19 @@ an initial goal, and analysing in detail the possible issues.
 
 ##### Locale::Po4a modules
 
-- the modules we want to use have to be checked, as not all are safe
-  (e.g. the LaTeX module's behaviour is changed by commands included
-  in the content); they may use regexps generated from the content; we
-  currently only use the `Text` module
-- the `Text` module does not run any external program
-- check that no module is loaded by `Chooser.pm`, when we tell it to
-  load the `Text` one
-- `nsgmls` is used by `Sgml.pm`
+The modules we want to use have to be checked, as not all are safe
+(e.g. the LaTeX module's behaviour is changed by commands included in
+the content); they may use regexps generated from the content.
+
+`Chooser.pm` only loads the plugin we tell it too: currently, this
+means the `Text` module only.
+
+`Text` module (I checked the CVS version):
+
+- it does not run any external program
+- only `do_paragraph()` builds regexp's that expand untrusted
+  variables; they seem safe to me, but someone more expert than me
+  will need to check. Joey?
 
 ##### Text::WrapI18N
 
@@ -301,6 +306,13 @@ code, I'm not sure we can prevent this at all, but maybe some symbol
 table manipulation tricks could work; overriding
 `Locale::Po4a::Common::wrapi18n` may be easier. I'm no expert at all
 in this field. Joey? [[--intrigeri]]
+
+> Update: Nicolas François suggests we add an option to po4a to
+> disable it. It would do the trick, but only for people running
+> a brand new po4a (probably too late for Lenny). Anyway, this option
+> would have to take effect in a `BEGIN` / `eval` that I'm not
+> familiar with. I can learn and do it, in case no Perl wizard
+> volunteers to provide the po4a patch. [[--intrigeri]]
 
 ##### Term::ReadKey
 
@@ -323,6 +335,10 @@ be able to guarantee anything wrt. security. Since it is anyway of no
 use in our case, I suggest we define `ENV{COLUMNS}` before loading
 `Locale::Po4a::Common`, just to be on the safe side. Joey?
 [[--intrigeri]]
+
+> Update: adding an option to disable `Text::WrapI18N`, as Nicolas
+> François suggested, would as a bonus disable `Term::ReadKey`
+> as well. [[--intrigeri]]
 
 ### msgmerge
 
