@@ -584,12 +584,9 @@ sub change(@) { #{{{
 			$updated_pot_file=1;
 		}
 		my @pofiles;
-		foreach my $lang (keys %{$config{po_slave_languages}}) {
-			my $pofile=pofile($file, $lang);
-			if ($updated_pot_file || ! -e $pofile) {
-				push @pofiles, $pofile;
-			}
-		}
+		map {
+			push @pofiles, $_ if ($updated_pot_file || ! -e $_);
+		} (pofiles($file));
 		if (@pofiles) {
 			refreshpofiles($file, @pofiles);
 			map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
