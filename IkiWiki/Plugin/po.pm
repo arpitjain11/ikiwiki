@@ -145,10 +145,10 @@ sub otherlanguages($) { #{{{
 		%ret = %{$translations{$page}};
 	}
 	elsif (istranslation($page)) {
-		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		my $masterpage = masterpage($page);
 		$ret{$config{po_master_language}{code}} = $masterpage;
 		foreach my $lang (sort keys %{$translations{$masterpage}}) {
-			next if $lang eq $curlang;
+			next if $lang eq lang($page);
 			$ret{$lang} = $translations{$masterpage}{$lang};
 		}
 	}
@@ -251,7 +251,6 @@ sub scan (@) { #{{{
 	return unless UNIVERSAL::can("IkiWiki::Plugin::link", "import");
 
 	if (istranslation($page)) {
-		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
 		foreach my $destpage (@{$links{$page}}) {
 			if (istranslatable($destpage)) {
 				# replace one occurence of $destpage in $links{$page}
@@ -260,7 +259,7 @@ sub scan (@) { #{{{
 				# there for other reasons)
 				for (my $i=0; $i<@{$links{$page}}; $i++) {
 					if (@{$links{$page}}[$i] eq $destpage) {
-						@{$links{$page}}[$i] = $destpage . '.' . $curlang;
+						@{$links{$page}}[$i] = $destpage . '.' . lang($page);
 						last;
 					}
 				}
@@ -283,7 +282,7 @@ sub mytargetpage ($$) { #{{{
 	my $ext=shift;
 
 	if (istranslation($page)) {
-		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		my ($masterpage, $lang) = (masterpage($page), lang($page));
 		if (! $config{usedirs} || $masterpage eq 'index') {
 			return $masterpage . "." . $lang . "." . $ext;
 		}
@@ -333,8 +332,7 @@ sub myurlto ($$;$) { #{{{
 	    && $config{po_link_to} eq "current"
 	    && istranslation($from)
 	    && istranslatable('index')) {
-		my ($masterpage, $curlang) = ($from =~ /(.*)[.]([a-z]{2})$/);
-		return IkiWiki::beautify_urlpath(IkiWiki::baseurl($from) . "index." . $curlang . ".$config{htmlext}");
+		return IkiWiki::beautify_urlpath(IkiWiki::baseurl($from) . "index." . lang($from) . ".$config{htmlext}");
 	}
 	return $origsubs{'urlto'}->($to,$from,$absolute);
 } #}}}
@@ -348,8 +346,7 @@ sub mybestlink ($$) { #{{{
 		if ($config{po_link_to} eq "current"
 		    && istranslatable($res)
 		    && istranslation($page)) {
-			my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-			return $res . "." . $curlang;
+			return $res . "." . lang($page);
 		}
 		else {
 			return $res;
@@ -426,8 +423,7 @@ sub filter (@) { #{{{
 
 	writefile(basename($infile), File::Spec->tmpdir, $content);
 
-	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	my $masterfile = srcfile($pagesources{$masterpage});
+	my $masterfile = srcfile($pagesources{masterpage($page)});
 	my (@pos,@masters);
 	push @pos,$infile;
 	push @masters,$masterfile;
@@ -458,8 +454,7 @@ sub htmlize (@) { #{{{
 
 	my $page = $params{page};
 	my $content = $params{content};
-	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	my $masterfile = srcfile($pagesources{$masterpage});
+	my $masterfile = srcfile($pagesources{masterpage($page)});
 
 	# force content to be htmlize'd as if it was the same type as the master page
 	return IkiWiki::htmlize($page, $page, pagetype($masterfile), $content);
@@ -468,10 +463,9 @@ sub htmlize (@) { #{{{
 sub percenttranslated ($) { #{{{
 	my $page=shift;
 
-	return gettext("N/A") unless (istranslation($page));
-	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	return gettext("N/A") unless istranslation($page);
 	my $file=srcfile($pagesources{$page});
-	my $masterfile = srcfile($pagesources{$masterpage});
+	my $masterfile = srcfile($pagesources{masterpage($page)});
 	my (@pos,@masters);
 	push @pos,$file;
 	push @masters,$masterfile;
@@ -505,7 +499,7 @@ sub otherlanguagesloop ($) { #{{{
 		}
 	}
 	elsif (istranslation($page)) {
-		my ($masterpage, $curlang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+		my ($masterpage, $curlang) = (masterpage($page), lang($page));
 		push @ret, {
 			url => urlto_with_orig_beautiful_urlpath($masterpage, $page),
 			code => $config{po_master_language}{code},
@@ -530,13 +524,13 @@ sub pagetemplate (@) { #{{{
 	my $destpage=$params{destpage};
 	my $template=$params{template};
 
-	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/) if istranslation($page);
+	my ($masterpage, $lang) = istranslation($page);
 
 	if (istranslation($page) && $template->query(name => "percenttranslated")) {
 		$template->param(percenttranslated => percenttranslated($page));
 	}
 	if ($template->query(name => "istranslation")) {
-		$template->param(istranslation => istranslation($page));
+		$template->param(istranslation => scalar istranslation($page));
 	}
 	if ($template->query(name => "istranslatable")) {
 		$template->param(istranslatable => istranslatable($page));
@@ -664,18 +658,35 @@ sub _istranslation ($) { #{{{
 		return 0;
 	}
 
-	return istranslatable($masterpage);
+	return ($masterpage, $lang) if istranslatable($masterpage);
 } #}}}
 
 sub istranslation ($) { #{{{
 	my $page=shift;
 
-	if (_istranslation($page)) {
-		my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
+	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
-		return 1;
+		return ($masterpage, $lang);
 	}
-	return 0;
+	return;
+} #}}}
+
+sub masterpage ($) { #{{{
+	my $page=shift;
+
+	if ( 1 < (my ($masterpage, $lang) = _istranslation($page))) {
+		return $masterpage;
+	}
+	return $page;
+} #}}}
+
+sub lang ($) { #{{{
+	my $page=shift;
+
+	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
+		return $lang;
+	}
+	return $config{po_master_language}{code};
 } #}}}
 
 package IkiWiki::PageSpec;
