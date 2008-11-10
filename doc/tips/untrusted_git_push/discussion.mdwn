@@ -20,4 +20,12 @@ I've just tried this (commit c1fa07a). Recent changes shows:
 <span class="changedate"><span class="relativedate" title="Mon, 10 Nov 2008 18:24:22 -0500">18:24:22 11/10/08</span>
 </div>
 
-Note that the user for the commit is 'jon', and the link points at cgi to create users/jon. I was wondering if that is configurable for users pushing via git. It would be nice perhaps to specify it in some way, perhaps via a git-config setting (user.name?). I'm not too familiar with exactly what the changeset contains. -- [[JonDowland]]
+Note that the user for the commit is 'jon', and the link points at cgi to
+create users/jon. I was wondering if that is configurable for users pushing
+via git. It would be nice perhaps to specify it in some way, perhaps via a
+git-config setting (user.name?). I'm not too familiar with exactly what the
+changeset contains. -- [[JonDowland]]
+
+> All ikiwiki can do it look at who git has recorded as the author of
+> the change (and it looks at the username part of the email address).
+> You can set `user.email` in `.git/config`. --[[Joey]]
