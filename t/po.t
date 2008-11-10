@@ -122,8 +122,6 @@ is_deeply(\@{$links{'nontranslatable'}}, ['/', 'translatable', 'translatable.fr'
 $config{po_link_to}='current';
 $msgprefix="links (po_link_to=current)";
 refresh_n_scan('index.mdwn', 'translatable.mdwn', 'nontranslatable.mdwn');
-use Data::Dumper;
-print Dumper(%links);
 is_deeply(\@{$links{'index'}}, ['translatable', 'nontranslatable'], "$msgprefix index");
 is_deeply(\@{$links{'index.es'}}, [ map bestlink('index.es', $_), ('translatable.es', 'nontranslatable')], "$msgprefix index.es");
 is_deeply(\@{$links{'index.fr'}}, [ map bestlink('index.fr', $_), ('translatable.fr', 'nontranslatable')], "$msgprefix index.fr");
