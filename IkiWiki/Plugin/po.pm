@@ -494,8 +494,8 @@ sub otherlanguagesloop ($) { #{{{
 
 	my @ret;
 	if (istranslatable($page)) {
-		foreach my $lang (sort keys %{$translations{$page}}) {
-			my $translation = $translations{$page}{$lang};
+		my %otherpages=%{otherlanguages($page)};
+		while (my ($lang, $translation) = each %otherpages) {
 			push @ret, {
 				url => urlto($translation, $page),
 				code => $lang,
