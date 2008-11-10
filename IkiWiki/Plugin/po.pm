@@ -98,8 +98,8 @@ sub getsetup () { #{{{
 } #}}}
 
 sub islanguagecode ($) { #{{{
-    my $code=shift;
-    return ($code =~ /^[a-z]{2}$/);
+	my $code=shift;
+	return ($code =~ /^[a-z]{2}$/);
 } #}}}
 
 sub checkconfig () { #{{{
@@ -483,39 +483,44 @@ sub percenttranslated ($) { #{{{
 	return $percent;
 } #}}}
 
+sub languagename ($) { #{{{
+	my $code=shift;
+
+	return $config{po_master_language}{name}
+		if $code eq $config{po_master_language}{code};
+	return $config{po_slave_languages}{$code}
+		if defined $config{po_slave_languages}{$code};
+	return;
+} #}}}
+
 sub otherlanguagesloop ($) { #{{{
 	my $page=shift;
 
 	my @ret;
-	if (istranslatable($page)) {
-		my %otherpages=%{otherlanguages($page)};
-		while (my ($lang, $translation) = each %otherpages) {
+	my %otherpages=%{otherlanguages($page)};
+	while (my ($lang, $otherpage) = each %otherpages) {
+		if (istranslation($page) && masterpage($page) eq $otherpage) {
 			push @ret, {
-				url => urlto($translation, $page),
+				url => urlto_with_orig_beautiful_urlpath($otherpage, $page),
 				code => $lang,
-				language => $config{po_slave_languages}{$lang},
-				percent => percenttranslated($translation),
+				language => languagename($lang),
+				master => 1,
 			};
 		}
-	}
-	elsif (istranslation($page)) {
-		my ($masterpage, $curlang) = (masterpage($page), lang($page));
-		push @ret, {
-			url => urlto_with_orig_beautiful_urlpath($masterpage, $page),
-			code => $config{po_master_language}{code},
-			language => $config{po_master_language}{name},
-			master => 1,
-		};
-		foreach my $lang (sort keys %{$translations{$masterpage}}) {
+		else {
 			push @ret, {
-				url => urlto($translations{$masterpage}{$lang}, $page),
+				url => urlto($otherpage, $page),
 				code => $lang,
-				language => $config{po_slave_languages}{$lang},
-				percent => percenttranslated($translations{$masterpage}{$lang}),
-			} unless ($lang eq $curlang);
+				language => languagename($lang),
+				percent => percenttranslated($otherpage),
+			}
 		}
 	}
-	return @ret;
+	return sort {
+			return -1 if $a->{code} eq $config{po_master_language}{code};
+			return 1 if $b->{code} eq $config{po_master_language}{code};
+			return $a->{language} cmp $b->{language};
+		} @ret;
 } #}}}
 
 sub pagetemplate (@) { #{{{
