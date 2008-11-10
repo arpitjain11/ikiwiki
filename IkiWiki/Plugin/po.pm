@@ -202,6 +202,15 @@ sub refreshpofiles ($@) { #{{{
 	}
 } #}}}
 
+sub buildtranslationscache() { #{{{
+	# use istranslation's side-effect
+	map istranslation($_), (keys %pagesources);
+} #}}}
+
+sub resettranslationscache() { #{{{
+	undef %translations;
+} #}}}
+
 sub needsbuild () { #{{{
 	my $needsbuild=shift;
 
@@ -209,8 +218,7 @@ sub needsbuild () { #{{{
 	# a given master page was rendered because its source file was changed
 	@origneedsbuild=(@$needsbuild);
 
-	# build %translations, using istranslation's side-effect
-	map istranslation($_), (keys %pagesources);
+	buildtranslationscache();
 
 	# make existing translations depend on the corresponding master page
 	foreach my $master (keys %translations) {
@@ -594,7 +602,7 @@ sub change(@) { #{{{
 		}
 		# Reinitialize module's private variables.
 		resetalreadyfiltered();
-		undef %translations;
+		resettranslationscache();
 		# Trigger a wiki refresh.
 		require IkiWiki::Render;
 		IkiWiki::refresh();
