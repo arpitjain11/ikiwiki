@@ -385,9 +385,9 @@ sub filter (@) { #{{{
 		'file_in_name'	=> \@masters,
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or error("[po/filter:$infile]: failed to translate");
-	$doc->write($outfile) or error("[po/filter:$infile] could not write $outfile");
-	$content = readfile($outfile) or error("[po/filter:$infile] could not read $outfile");
+	) or error("[po/filter:$page]: failed to translate");
+	$doc->write($outfile) or error("[po/filter:$page] could not write $outfile");
+	$content = readfile($outfile) or error("[po/filter:$page] could not read $outfile");
 
 	# Unlinking should happen automatically, thanks to File::Temp,
 	# but it does not work here, probably because of the way writefile()
@@ -429,7 +429,7 @@ sub percenttranslated ($) { #{{{
 		'file_in_name'	=> \@masters,
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or error("[po/percenttranslated:$file]: failed to translate");
+	) or error("[po/percenttranslated:$page]: failed to translate");
 	my ($percent,$hit,$queries) = $doc->stats();
 	return $percent;
 } #}}}
