@@ -335,6 +335,31 @@ sub mybestlink ($$) { #{{{
 	return "";
 } #}}}
 
+sub alreadyfiltered($$) { #{{{
+	my $page=shift;
+	my $destpage=shift;
+
+	return ( exists $filtered{$page}{$destpage}
+		 && $filtered{$page}{$destpage} eq 1 );
+} #}}}
+sub setalreadyfiltered($$) { #{{{
+	my $page=shift;
+	my $destpage=shift;
+
+	$filtered{$page}{$destpage}=1;
+} #}}}
+sub unsetalreadyfiltered($$) { #{{{
+	my $page=shift;
+	my $destpage=shift;
+
+	if (exists $filtered{$page}{$destpage}) {
+		delete $filtered{$page}{$destpage};
+	}
+} #}}}
+sub resetalreadyfiltered() { #{{{
+	undef %filtered;
+} #}}}
+
 # We use filter to convert PO to the master page's format,
 # since the rest of ikiwiki should not work on PO files.
 sub filter (@) { #{{{
@@ -345,8 +370,7 @@ sub filter (@) { #{{{
 	my $content = decode_utf8(encode_utf8($params{content}));
 
 	return $content if ( ! istranslation($page)
-			     || ( exists $filtered{$page}{$destpage}
-				  && $filtered{$page}{$destpage} eq 1 ));
+			     || alreadyfiltered($page, $destpage) );
 
 	# CRLF line terminators make poor Locale::Po4a feel bad
 	$content=~s/\r\n/\n/g;
@@ -394,7 +418,7 @@ sub filter (@) { #{{{
 	# and Locale::Po4a::write() work.
 	unlink $infile, $outfile;
 
-	$filtered{$page}{$destpage}=1;
+	setalreadyfiltered($page, $destpage);
 	return $content;
 } #}}}
 
@@ -569,7 +593,7 @@ sub change(@) { #{{{
 			IkiWiki::rcs_update();
 		}
 		# Reinitialize module's private variables.
-		undef %filtered;
+		resetalreadyfiltered();
 		undef %translations;
 		# Trigger a wiki refresh.
 		require IkiWiki::Render;
@@ -582,9 +606,7 @@ sub editcontent () { #{{{
 	my %params=@_;
 	# as we're previewing or saving a page, the content may have
 	# changed, so tell the next filter() invocation it must not be lazy
-	if (exists $filtered{$params{page}}{$params{page}}) {
-		delete $filtered{$params{page}}{$params{page}};
-	}
+	unsetalreadyfiltered($params{page}, $params{page});
 	return $params{content};
 } #}}}
 
