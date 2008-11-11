@@ -59,7 +59,7 @@ EOF
 		# the benefit of this optimisation.
 		$check_commit_hook=<<"EOF";
 	{
-		int fd=open("$config{wikistatedir}/commitlock", O_CREAT | O_RDWR);
+		int fd=open("$config{wikistatedir}/commitlock", O_CREAT | O_RDWR, 0666);
 		if (fd != -1) {
 			if (flock(fd, LOCK_SH | LOCK_NB) != 0)
 				exit(0);
@@ -75,7 +75,7 @@ EOF
 		# otherwise.
 		$pre_exec=<<"EOF";
 	{
-		int fd=open("$config{wikistatedir}/cgilock", O_CREAT | O_RDWR);
+		int fd=open("$config{wikistatedir}/cgilock", O_CREAT | O_RDWR, 0666);
 		if (fd != -1)
 			flock(fd, LOCK_EX);
 	}
