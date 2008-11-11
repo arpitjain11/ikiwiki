@@ -462,19 +462,32 @@ gettext/po4a rough corners
 Misc. improvements
 ------------------
 
-### page titles
+Page titles in links
+--------------------
 
-Use nice page titles from meta plugin in links, as inline already
-does. This is actually a duplicate for
-[[bugs/pagetitle_function_does_not_respect_meta_titles]], which might
-be fixed by something like [[todo/using_meta_titles_for_parentlinks]].
+To use the page titles set with the [meta](plugins/meta) plugin when
+rendering links would be very much nicer, than the current
+"filename.LL" format. This is actually a duplicate for
+[[bugs/pagetitle_function_does_not_respect_meta_titles]].
 
-### source files format
+Page formats
+------------
 
-Markdown is supported, great, but what about others? The set of file
-formats supported both in ikiwiki and po4a probably is greater than
-`{markdown}`. Warning: the po4a modules are the place where one can
-expect security issues.
+Markdown is well supported, great, but what about others?
+
+The [po](plugins/po) uses `Locale::Po4a::Text` for every page format;
+this can be expected to work out of the box with most other wiki-like
+formats supported by ikiwiki. Some of their ad-hoc syntax might be
+parsed in a strange way, but the worst problems I can imagine would be
+wrapping issues; e.g. there is code in po4a dedicated to prevent
+re-wrapping the underlined Markdown headers.
+
+While it would be easy to better support formats such as [[html]] or
+LaTeX, by using for each one the dedicated po4a module, this can be
+problematic from a security point of view.
+
+**TODO**: test the more popular formats and write proper documentation
+about it.
 
 Translation quality assurance
 -----------------------------
@@ -487,3 +500,15 @@ A new `cansave` type of hook would be needed to implement this.
 
 Note: committing to the underlying repository is a way to bypass
 this check.
+
+Broken links
+------------
+
+See [[contrib/po]].
+
+Documentation
+-------------
+
+Maybe write separate documentation depending on the people it targets:
+translators, wiki administrators, hackers. This plugin is maybe
+complex enough to deserve this.
