@@ -46,8 +46,8 @@ ikiwiki (2.68) unstable; urgency=low
   * inline: Only the last feed link was put on the page, fix this to include
     all feed links. So rss will be included along with atom, and pages with
     multiple feeds will get links added for all feeds.
-  * tag: When tagpage is set, force the links created by tagging to point at
-    the toplevel tagpage, and not closer subpages. The html links already went
+  * tag: When tagbase is set, force the links created by tagging to point at
+    the toplevel tagbase, and not closer subpages. The html links already went
     there, but internally the links were not recorded as absolute, which could
     cause confusing backlinks etc.
   * Add an inject function, that can be used by plugins that want to
