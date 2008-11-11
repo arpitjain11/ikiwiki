@@ -364,10 +364,11 @@ sub change(@) { #{{{
 	}
 } #}}}
 
+# As we're previewing or saving a page, the content may have
+# changed, so tell the next filter() invocation it must not be lazy.
 sub editcontent () { #{{{
 	my %params=@_;
-	# as we're previewing or saving a page, the content may have
-	# changed, so tell the next filter() invocation it must not be lazy
+
 	unsetalreadyfiltered($params{page}, $params{page});
 	return $params{content};
 } #}}}
@@ -377,22 +378,19 @@ sub editcontent () { #{{{
 # | Injected functions
 # `----
 
+# Implement po_link_to=current
 sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
 
 	my $res=$origsubs{'bestlink'}->($page, $link);
-	if (length $res) {
-		if ($config{po_link_to} eq "current"
-		    && istranslatable($res)
-		    && istranslation($page)) {
-			return $res . "." . lang($page);
-		}
-		else {
-			return $res;
-		}
+	if (length $res
+	    && $config{po_link_to} eq "current"
+	    && istranslatable($res)
+	    && istranslation($page)) {
+		return $res . "." . lang($page);
 	}
-	return "";
+	return $res;
 } #}}}
 
 sub mybeautify_urlpath ($) { #{{{
@@ -409,21 +407,13 @@ sub mytargetpage ($$) { #{{{
 	my $page=shift;
 	my $ext=shift;
 
-	if (istranslation($page)) {
+	if (istranslation($page) || istranslatable($page)) {
 		my ($masterpage, $lang) = (masterpage($page), lang($page));
 		if (! $config{usedirs} || $masterpage eq 'index') {
 			return $masterpage . "." . $lang . "." . $ext;
 		}
 		else {
 			return $masterpage . "/index." . $lang . "." . $ext;
-		}
-	}
-	elsif (istranslatable($page)) {
-		if (! $config{usedirs} || $page eq 'index') {
-			return $page . "." . $config{po_master_language}{code} . "." . $ext;
-		}
-		else {
-			return $page . "/index." . $config{po_master_language}{code} . "." . $ext;
 		}
 	}
 	return $origsubs{'targetpage'}->($page, $ext);
@@ -491,11 +481,9 @@ sub istranslatable ($) { #{{{
 
 	my $file=$pagesources{$page};
 
-	if (! defined $file
-	    || (defined pagetype($file) && pagetype($file) eq 'po')
-	    || $file =~ /\.pot$/) {
-		return 0;
-	}
+	return 0 unless defined $file;
+	return 0 if (defined pagetype($file) && pagetype($file) eq 'po');
+	return 0 if $file =~ /\.pot$/;
 	return pagespec_match($page, $config{po_translatable_pages});
 } #}}}
 
@@ -503,24 +491,17 @@ sub _istranslation ($) { #{{{
 	my $page=shift;
 
 	my $file=$pagesources{$page};
-	if (! defined $file) {
-		return IkiWiki::FailReason->new("no file specified");
-	}
 
-	if (! defined $file
-	    || ! defined pagetype($file)
- 	    || ! pagetype($file) eq 'po'
-	    || $file =~ /\.pot$/) {
-		return 0;
-	}
+	return 0 unless (defined $file
+			 && defined pagetype($file)
+			 && pagetype($file) eq 'po');
+	return 0 if $file =~ /\.pot$/;
 
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	if (! defined $masterpage || ! defined $lang
-	    || ! (length($masterpage) > 0) || ! (length($lang) > 0)
-	    || ! defined $pagesources{$masterpage}
-	    || ! defined $config{po_slave_languages}{$lang}) {
-		return 0;
-	}
+	return 0 unless (defined $masterpage && defined $lang
+			 && length $masterpage && length $lang
+			 && defined $pagesources{$masterpage}
+			 && defined $config{po_slave_languages}{$lang});
 
 	return ($masterpage, $lang) if istranslatable($masterpage);
 } #}}}
@@ -555,6 +536,7 @@ sub lang ($) { #{{{
 
 sub islanguagecode ($) { #{{{
 	my $code=shift;
+
 	return ($code =~ /^[a-z]{2}$/);
 } #}}}
 
@@ -595,6 +577,7 @@ sub pofile ($$) { #{{{
 
 sub pofiles ($) { #{{{
 	my $masterfile=shift;
+
 	return map pofile($masterfile, $_), (keys %{$config{po_slave_languages}});
 } #}}}
 
