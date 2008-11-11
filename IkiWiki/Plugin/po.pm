@@ -501,7 +501,6 @@ sub _istranslation ($) { #{{{
 	my $page=shift;
 
 	my $file=$pagesources{$page};
-
 	return 0 unless (defined $file
 			 && defined pagetype($file)
 			 && pagetype($file) eq 'po');
@@ -555,7 +554,7 @@ sub otherlanguages($) { #{{{
 
 	my %ret;
 	if (istranslatable($page)) {
-		%ret = %{$translations{$page}};
+		%ret = %{$translations{$page}} if defined $translations{$page};
 	}
 	elsif (istranslation($page)) {
 		my $masterpage = masterpage($page);
