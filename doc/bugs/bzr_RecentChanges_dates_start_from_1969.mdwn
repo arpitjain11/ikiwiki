@@ -1,0 +1,12 @@
+Using bzr, the dates for changes on the RecentChanges page all start
+slightly before the Unix epoch.
+
+Changing line 249 of bzr.pm from
+
+`                        when       => time - str2time($info->{"timestamp"}),`
+
+to
+
+`                        when       => str2time($info->{"timestamp"}),`
+
+fixed this for me.

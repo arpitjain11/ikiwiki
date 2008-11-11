@@ -93,7 +93,7 @@ Any thoughts on this?
 >>> When a new language is added to `po_slave_languages`, a rebuild is
 >>> triggered, and all missing PO files are created and checked into
 >>> VCS. An unpriviledged wiki user can not add a new language to
->>> `po_slave_languages`, though. One could thing of adding the needed
+>>> `po_slave_languages`, though. One could think of adding the needed
 >>> interface to translate a page into a yet-unsupported slave
 >>> language, and this would automagically add this new language to
 >>> `po_slave_languages`. It would probably be useful in some
@@ -106,6 +106,39 @@ Any thoughts on this?
 >>>> I guess that if the template modification is made, it will list those
 >>>> languages on the page, and if a translation to a language is missing,
 >>>> the link will allow creating it?
+>>>>
+>>>>> Any translation page always exist for every supported slave
+>>>>> language, even if no string at all have been translated yet.
+>>>>> This implies the po plugin is especially friendly to people who
+>>>>> prefer reading in their native language if available, but don't
+>>>>> mind reading in English else.
+>>>>>
+>>>>> While I'm at it, there is a remaining issue that needs to be
+>>>>> sorted out: how painful it could be for non-English speakers
+>>>>> (assuming the master language is English) to be perfectly able
+>>>>> to navigate between translation pages supposed to be written in
+>>>>> their own language, when their translation level is most
+>>>>> often low.
+>>>>>
+>>>>> (It is currently easy to display this status on the translation
+>>>>> page itself, but then it's too late, and how frustrating to load
+>>>>> a page just to realize it's actually not translated enough for
+>>>>> you. The "other languages" loop also allows displaying this
+>>>>> information, but it is generally not the primary
+>>>>> navigation tool.)
+>>>>>
+>>>>> IMHO, this is actually a social problem (i.e. it's no use adding
+>>>>> a language to the supported slave ones if you don't have the
+>>>>> manpower to actually do the translations), that can't be fully
+>>>>> solved by technical solutions, but I can think of some hacks
+>>>>> that would limit the negative impact: a given translation's
+>>>>> status (currently = percent translated) could be displayed next
+>>>>> to the link that leads to it; a color code could as well be used
+>>>>> ("just" a matter of adding a CSS id or class to the links,
+>>>>> depending on this variable). As there is already work to be done
+>>>>> to have the links text generation more customizable through
+>>>>> plugins, I could do both at the same time if we consider this
+>>>>> matter to be important enough. --[[intrigeri]]
 
 >> FWIW, I'm tracking your po branch in ikiwiki master git in the po
 >> branch. One thing I'd like to try in there is setting up a translated
