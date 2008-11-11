@@ -157,6 +157,10 @@ sub needsbuild () { #{{{
 	}
 } #}}}
 
+# Massage the recorded state of internal links so that:
+# - it matches the actually generated links, rather than the links as written
+#   in the pages' source
+# - backlinks are consistent in all cases
 sub scan (@) { #{{{
 	my %params=@_;
 	my $page=$params{page};
@@ -183,9 +187,10 @@ sub scan (@) { #{{{
 	elsif (! istranslatable($page) && ! istranslation($page)) {
 		foreach my $destpage (@{$links{$page}}) {
 			if (istranslatable($destpage)) {
-				map {
-					push @{$links{$page}}, $destpage . '.' . $_;
-				} (keys %{$config{po_slave_languages}});
+				# make sure any destpage's translations has
+				# $page in its backlinks
+				push @{$links{$page}},
+					values %{otherlanguages($destpage)};
 			}
 		}
 	}
