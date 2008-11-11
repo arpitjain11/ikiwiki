@@ -463,13 +463,21 @@ gettext/po4a rough corners
   into the Pot file, and let it propagate; should be fixed in
   `773de05a7a1ee68d2bed173367cf5e716884945a`, time will tell.
 
-Page titles in links
---------------------
+Better links
+------------
+
+### Page title in links
 
 To use the page titles set with the [meta](plugins/meta) plugin when
 rendering links would be very much nicer, than the current
 "filename.LL" format. This is actually a duplicate for
 [[bugs/pagetitle_function_does_not_respect_meta_titles]].
+
+Going to work on this in my `meta` branch.
+
+### Translation status in links
+
+See [[contrib/po]].
 
 Page formats
 ------------
@@ -502,8 +510,8 @@ A new `cansave` type of hook would be needed to implement this.
 Note: committing to the underlying repository is a way to bypass
 this check.
 
-Broken links
-------------
+Creating new pages on the web
+-----------------------------
 
 See [[contrib/po]].
 
@@ -511,5 +519,5 @@ Documentation
 -------------
 
 Maybe write separate documentation depending on the people it targets:
-translators, wiki administrators, hackers. This plugin is maybe
-complex enough to deserve this.
+translators, wiki administrators, hackers. This plugin may be complex
+enough to deserve this.
