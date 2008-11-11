@@ -299,6 +299,8 @@ means the `Text` module only.
   variables; they seem safe to me, but someone more expert than me
   will need to check. Joey?
 
+  > Freaky code, but seems ok due to use of `quotementa`.
+
 ##### Text::WrapI18N
 
 `Text::WrapI18N` can cause DoS (see the
@@ -317,6 +319,34 @@ in this field. Joey? [[--intrigeri]]
 > would have to take effect in a `BEGIN` / `eval` that I'm not
 > familiar with. I can learn and do it, in case no Perl wizard
 > volunteers to provide the po4a patch. [[--intrigeri]]
+
+>> That doesn't really need to be in a BEGIN. This patch moves it to
+>> `import`, and makes this disable wrap18n:
+>> `use Locale::Po4a::Common q{nowrapi18n}` --[[Joey]]
+
+<pre>
+--- /usr/share/perl5/Locale/Po4a/Common.pm	2008-07-21 14:54:52.000000000 -0400
++++ Common.pm	2008-11-11 18:27:34.000000000 -0500
+@@ -30,8 +30,16 @@
+ use strict;
+ use warnings;
+ 
+-BEGIN {
+-    if (eval { require Text::WrapI18N }) {
++sub import {
++    my $class=shift;
++    my $wrapi18n=1;
++    if ($_[0] eq 'nowrapi18n') {
++    	shift;
++	$wrapi18n=0;
++    }
++    $class->export_to_level(1, $class, @_);
++
++    if ($wrapi18n && eval { require Text::WrapI18N }) {
+     
+         # Don't bother determining the wrap column if we cannot wrap.
+         my $col=$ENV{COLUMNS};
+</pre>
 
 ##### Term::ReadKey
 
@@ -403,6 +433,9 @@ and
 
 Perl seems to exit cleanly, and an incomplete PO file is written on
 disk. I not sure whether if this is a bug in Perl or in `Po.pm`.
+
+> It's fairly standard perl behavior when fed malformed utf-8. As long as it doesn't
+> crash ikiwiki, it's probably acceptable. Ikiwiki can do some similar things itself when fed malformed utf-8 (doesn't crash tho) --[[Joey]]
 
 #### po4a-translate
 
