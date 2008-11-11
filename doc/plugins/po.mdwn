@@ -459,8 +459,17 @@ gettext/po4a rough corners
   into the Pot file, and let it propagate; should be fixed in
   `773de05a7a1ee68d2bed173367cf5e716884945a`, time will tell.
 
-Misc. improvements
-------------------
+When committing a translatable page to the repository, msgmerge
+happens and then:
+
+        Use of uninitialized value $page in pattern match (m//) at /usr/local/share/perl/5.10.0/IkiWiki.pm line 624.
+        Use of uninitialized value $p in hash element at /usr/local/share/perl/5.10.0/IkiWiki/Render.pm line 423.
+        Use of uninitialized value $file in string eq at /usr/local/share/perl/5.10.0/IkiWiki/Render.pm line 444.
+        Use of uninitialized value $page in pattern match (m//) at /usr/local/share/perl/5.10.0/IkiWiki.pm line 624.
+
+And then tons of:
+        Use of uninitialized value $page in pattern match (m//) at /usr/local/share/perl/5.10.0/IkiWiki.pm line 1860.
+        Use of uninitialized value $page in concatenation (.) or string at /usr/local/share/perl/5.10.0/IkiWiki.pm line 1869.
 
 Page titles in links
 --------------------
