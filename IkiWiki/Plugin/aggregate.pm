@@ -520,10 +520,10 @@ sub aggregate (@) { #{{{
 		}
 
 		foreach my $entry ($f->entries) {
-			my $content=$content=$entry->content->body;
+			my $c=$entry->content;
 			# atom feeds may have no content, only a summary
-			if (! defined $content && ref $entry->summary) {
-				$content=$entry->summary->body;
+			if (! defined $c && ref $entry->summary) {
+				$c=$entry->summary;
 			}
 
 			add_page(
@@ -531,9 +531,10 @@ sub aggregate (@) { #{{{
 				copyright => $f->copyright,
 				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 				link => $entry->link,
-				content => defined $content ? $content : "",
+				content => defined $c ? $c->body : "",
 				guid => defined $entry->id ? $entry->id : time."_".$feed->{name},
 				ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
+				base => (defined $c && $c->can("base")) ? $c->base : undef,
 			);
 		}
 	}
@@ -605,7 +606,8 @@ sub add_page (@) { #{{{
 	my $template=template($feed->{template}, blind_cache => 1);
 	$template->param(title => $params{title})
 		if defined $params{title} && length($params{title});
-	$template->param(content => htmlescape(htmlabs($params{content}, $feed->{feedurl})));
+	$template->param(content => htmlescape(htmlabs($params{content},
+		defined $params{base} ? $params{base} : $feed->{feedurl})));
 	$template->param(name => $feed->{name});
 	$template->param(url => $feed->{url});
 	$template->param(copyright => $params{copyright})

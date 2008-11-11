@@ -1,0 +1,15 @@
+Is there any way to tell if an htmlize hook have been called from a format directive?
+
+I am currently modifying the [[contrib/highlightcode]] plugin by [[sabr]] and I wanted to have a different behavior depending on the fact that the htmlize hook is called from a format directive or not. For instance, this could disable the raw copy of the highlighted code. Since I have enabled the keepextension option, I tried to rely on the page extension to decide whenever I have to create the raw file or not but this does not seems a reliable approach.
+
+One possible solution is to add an optional parameter to the htmlize hook (and thus to htmlize function in IkiWiki.pm) which could tell if this is the format directive that called the function but I am not sure that is a good way to do this.
+
+> It's (probably) not just the format directive that has a potential problem here.
+> Imagine a syntax highlighted source code file that contains some other
+> directive, such as table or meta. Such a directive calls `htmlize` on the
+> parameters passed to it.
+> 
+> There is one way to detect this ATM. If `%IkiWiki::preprocessing` has
+> anything in it, then ikiwiki is in the middle of handling a preprocessing
+> directive. So you could check that. It's getting into internals, so not
+> ideal.. --[[Joey]]

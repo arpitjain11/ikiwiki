@@ -10,7 +10,6 @@ my @bundle=qw{
 	brokenlinks
 	img
 	map
-	meta
 	more
 	orphans
 	pagecount

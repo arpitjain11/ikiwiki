@@ -1,0 +1,14 @@
+The u32 page is excellent, but I wonder if documenting the procedure here
+would be worthwhile. Who knows, the remote site might disappear. But also
+there are some variations on the approach that might be useful:
+
+ * using a python script and the dom library to extract the page names from
+   Special:Allpages (such as
+   <http://www.staff.ncl.ac.uk/jon.dowland/unix/docs/get_pagenames.py>)
+ * Or, querying the mysql back-end to get the names
+ * using WWW::MediaWiki for importing/exporting pages from the wiki, instead
+   of Special::Export
+
+Also, some detail on converting mediawiki transclusion to ikiwiki inlines...
+
+-- [[JonDowland]]

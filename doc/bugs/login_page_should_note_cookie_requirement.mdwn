@@ -1,0 +1,17 @@
+At the moment, you go through the login shuffle and then are told that cookies are needed, so you lose all your data and login again.  It would be much slicker to note by the edit link, or at least on the login page, that cookies are required.
+
+> Hmm, it seems to me to be fairly obvious, since the vast majority of
+> websites that have a login require cookies. Such warnings used to be
+> common, but few sites bother with them anymore. --[[Joey]]
+
+Even better would be to only display the cookie note as a warning if the login page doesn't receive a session cookie.
+
+> I considered doing this before, but it would require running the cgi once
+> to attempt to set the cookie and then redirecting to the cgi a second
+> time to check if it took, which is both complicated and probably would
+> look bad.
+
+Best of all would be to use URL-based or hidden-field-based session tokens if cookies are not permitted.
+
+> This is not very doable since most of the pages the user browses are
+> static pages in a static location.

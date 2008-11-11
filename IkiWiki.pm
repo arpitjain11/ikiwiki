@@ -120,7 +120,7 @@ sub getsetup () { #{{{
 	},
 	default_plugins => {
 		type => "internal",
-		default => [qw{mdwn link inline htmlscrubber passwordauth
+		default => [qw{mdwn link inline meta htmlscrubber passwordauth
 				openid signinedit lockedit conditional
 				recentchanges parentlinks editpage}],
 		description => "plugins to enable by default",
@@ -403,6 +403,13 @@ sub getsetup () { #{{{
 		safe => 0,
 		rebuild => 0,
 	},
+	wikistatedir => {
+		type => "internal",
+		default => undef,
+		description => "path to the .ikiwiki directory holding ikiwiki state",
+		safe => 0,
+		rebuild => 0,
+	},
 	setupfile => {
 		type => "internal",
 		default => undef,
@@ -467,7 +474,7 @@ sub checkconfig () { #{{{
 	}
 	
 	$config{wikistatedir}="$config{srcdir}/.ikiwiki"
-		unless exists $config{wikistatedir};
+		unless exists $config{wikistatedir} && defined $config{wikistatedir};
 
 	if (defined $config{umask}) {
 		umask(possibly_foolish_untaint($config{umask}));
@@ -1273,8 +1280,7 @@ sub indexlink () { #{{{
 
 my $wikilock;
 
-sub lockwiki (;$) { #{{{
-	my $wait=@_ ? shift : 1;
+sub lockwiki () { #{{{
 	# Take an exclusive lock on the wiki to prevent multiple concurrent
 	# run issues. The lock will be dropped on program exit.
 	if (! -d $config{wikistatedir}) {
@@ -1282,20 +1288,8 @@ sub lockwiki (;$) { #{{{
 	}
 	open($wikilock, '>', "$config{wikistatedir}/lockfile") ||
 		error ("cannot write to $config{wikistatedir}/lockfile: $!");
-	if (! flock($wikilock, 2 | 4)) { # LOCK_EX | LOCK_NB
-		if ($wait) {
-			debug("wiki seems to be locked, waiting for lock");
-			my $wait=600; # arbitrary, but don't hang forever to 
-			              # prevent process pileup
-			for (1..$wait) {
-				return if flock($wikilock, 2 | 4);
-				sleep 1;
-			}
-			error("wiki is locked; waited $wait seconds without lock being freed (possible stuck process or stale lock?)");
-		}
-		else {
-			return 0;
-		}
+	if (! flock($wikilock, 2)) { # LOCK_EX
+		error("failed to get lock");
 	}
 	return 1;
 } #}}}
@@ -1892,6 +1886,10 @@ sub match_link ($$;@) { #{{{
 				if $bestlink eq IkiWiki::bestlink($page, $p);
 		}
 		else {
+			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
+				if match_glob($p, $link, %params);
+			$p=~s/^\///;
+			$link=~s/^\///;
 			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
 				if match_glob($p, $link, %params);
 		}
