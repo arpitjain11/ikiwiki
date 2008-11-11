@@ -285,6 +285,9 @@ sub pagetemplate (@) { #{{{
 	if ($template->query(name => "istranslatable")) {
 		$template->param(istranslatable => istranslatable($page));
 	}
+	if ($template->query(name => "HOMEPAGEURL")) {
+		$template->param(homepageurl => homepageurl($page));
+	}
 	if ($template->query(name => "otherlanguages")) {
 		$template->param(otherlanguages => [otherlanguagesloop($page)]);
 		map add_depends($page, $_), (values %{otherlanguages($page)});
@@ -705,6 +708,11 @@ sub otherlanguagesloop ($) { #{{{
 		} @ret;
 } #}}}
 
+sub homepageurl (;$) { #{{{
+	my $page=shift;
+
+	return urlto('', $page);
+} #}}}
 
 # ,----
 # | PageSpec's

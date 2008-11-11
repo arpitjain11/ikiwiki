@@ -129,6 +129,10 @@ Usage
 Templates
 ---------
 
+When `po_link_to` is not set to `negotiated`, one should replace some
+occurrences of `BASEURL` with `HOMEPAGEURL` to get correct links to
+the wiki homepage.
+
 The `ISTRANSLATION` and `ISTRANSLATABLE` variables can be used to
 display things only on translatable or translation pages.
 
