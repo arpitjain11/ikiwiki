@@ -17,7 +17,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 58;
+use Test::More tests => 59;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -163,7 +163,7 @@ is(bestlink('test1.fr', 'test2'), 'test2.fr', "$msgprefix test1.fr -> test2");
 is(bestlink('test1.fr', 'test2.es'), 'test2.es', "$msgprefix test1.fr -> test2.es");
 $config{po_link_to}='negotiated';
 $msgprefix="bestlink (po_link_to=negotiated)";
-is(bestlink('test1.fr', 'test2'), 'test2', "$msgprefix test1.fr -> test2");
+is(bestlink('test1.fr', 'test2'), 'test2.fr', "$msgprefix test1.fr -> test2");
 is(bestlink('test1.fr', 'test2.es'), 'test2.es', "$msgprefix test1.fr -> test2.es");
 
 ### beautify_urlpath
@@ -173,5 +173,6 @@ is(IkiWiki::beautify_urlpath('test1/index.en.html'), './test1/index.en.html', "$
 is(IkiWiki::beautify_urlpath('test1/index.fr.html'), './test1/index.fr.html', "$msgprefix test1/index.fr.html");
 $config{po_link_to}='negotiated';
 $msgprefix="beautify_urlpath (po_link_to=negotiated)";
+is(IkiWiki::beautify_urlpath('test1/index.html'), './test1/', "$msgprefix test1/index.html");
 is(IkiWiki::beautify_urlpath('test1/index.en.html'), './test1/', "$msgprefix test1/index.en.html");
-is(IkiWiki::beautify_urlpath('test1/index.fr.html'), './test1/index.fr.html', "$msgprefix test1/index.fr.html");
+is(IkiWiki::beautify_urlpath('test1/index.fr.html'), './test1/', "$msgprefix test1/index.fr.html");

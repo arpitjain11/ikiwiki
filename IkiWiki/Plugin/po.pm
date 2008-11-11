@@ -385,14 +385,14 @@ sub editcontent () { #{{{
 # | Injected functions
 # `----
 
-# Implement po_link_to=current
+# Implement po_link_to 'current' and 'negotiated' settings.
 sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
 
 	my $res=$origsubs{'bestlink'}->($page, $link);
 	if (length $res
-	    && $config{po_link_to} eq "current"
+	    && ($config{po_link_to} eq "current" || $config{po_link_to} eq "negotiated")
 	    && istranslatable($res)
 	    && istranslation($page)) {
 		return $res . "." . lang($page);
@@ -407,6 +407,9 @@ sub mybeautify_urlpath ($) { #{{{
 	if ($config{po_link_to} eq "negotiated") {
 		$res =~ s!/\Qindex.$config{po_master_language}{code}.$config{htmlext}\E$!/!;
 		$res =~ s!/\Qindex.$config{htmlext}\E$!/!;
+		map {
+			$res =~ s!/\Qindex.$_.$config{htmlext}\E$!/!;
+		} (keys %{$config{po_slave_languages}});
 	}
 	return $res;
 } #}}}
@@ -699,7 +702,7 @@ sub otherlanguagesloop ($) { #{{{
 		}
 		else {
 			push @ret, {
-				url => urlto($otherpage, $page),
+				url => urlto_with_orig_beautiful_urlpath($otherpage, $page),
 				code => $lang,
 				language => languagename($lang),
 				percent => percenttranslated($otherpage),
