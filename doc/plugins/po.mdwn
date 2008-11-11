@@ -468,7 +468,7 @@ Better links
 
 ### Page title in links
 
-To use the page titles set with the [meta](plugins/meta) plugin when
+To use the page titles set with the [[meta|plugins/meta]] plugin when
 rendering links would be very much nicer, than the current
 "filename.LL" format. This is actually a duplicate for
 [[bugs/pagetitle_function_does_not_respect_meta_titles]].
@@ -488,7 +488,7 @@ Page formats
 
 Markdown is well supported, great, but what about others?
 
-The [po](plugins/po) uses `Locale::Po4a::Text` for every page format;
+The [[po|plugins/po]] uses `Locale::Po4a::Text` for every page format;
 this can be expected to work out of the box with most other wiki-like
 formats supported by ikiwiki. Some of their ad-hoc syntax might be
 parsed in a strange way, but the worst problems I can imagine would be
