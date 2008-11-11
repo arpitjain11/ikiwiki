@@ -44,6 +44,7 @@ sub tagpage ($) { #{{{
 	if ($tag !~ m{^\.?/} &&
 	    defined $config{tagbase}) {
 		$tag="/".$config{tagbase}."/".$tag;
+		$tag=~y#/#/#s; # squash dups
 	}
 
 	return $tag;
@@ -55,13 +56,7 @@ sub taglink ($$$;@) { #{{{
 	my $tag=shift;
 	my %opts=@_;
 
-	my $link=tagpage($tag);
-
-	# Force tag creation links to create the tag under /tagbase,
-	# if there is a tagbase and this tag used it.
-	$link="/".$link if $tag ne $link;
-
-	return htmllink($page, $destpage, $link, %opts);
+	return htmllink($page, $destpage, tagpage($tag), %opts);
 } #}}}
 
 sub preprocess_tag (@) { #{{{

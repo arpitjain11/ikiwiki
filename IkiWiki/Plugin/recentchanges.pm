@@ -131,7 +131,7 @@ sub store ($$$) { #{{{
 						do => "recentchanges_link",
 						page => $_->{page}
 					).
-					"\">".
+					"\" rel=\"nofollow\">".
 					pagetitle($_->{page}).
 					"</a>"
 			}

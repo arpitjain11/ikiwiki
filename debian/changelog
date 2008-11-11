@@ -9,6 +9,10 @@ ikiwiki (2.69) UNRELEASED; urgency=low
     later parsing of any directives on the page.
   * Fix the link() pagespec to match links that are internally recorded as
     absolute.
+  * Add rel=nofollow to recentchanges_links for the same (weak) reasons it
+    was earlier added to edit links.
+  * tag: Normalize tagbase so leading/trailing slashes in it don't break
+    things.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 06 Nov 2008 16:01:00 -0500
 
@@ -42,8 +46,8 @@ ikiwiki (2.68) unstable; urgency=low
   * inline: Only the last feed link was put on the page, fix this to include
     all feed links. So rss will be included along with atom, and pages with
     multiple feeds will get links added for all feeds.
-  * tag: When tagpage is set, force the links created by tagging to point at
-    the toplevel tagpage, and not closer subpages. The html links already went
+  * tag: When tagbase is set, force the links created by tagging to point at
+    the toplevel tagbase, and not closer subpages. The html links already went
     there, but internally the links were not recorded as absolute, which could
     cause confusing backlinks etc.
   * Add an inject function, that can be used by plugins that want to
