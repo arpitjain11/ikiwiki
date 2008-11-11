@@ -17,7 +17,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 52;
+use Test::More tests => 58;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -143,6 +143,17 @@ is(targetpage('test1', 'html'), 'test1/index.en.html', "$msgprefix test1");
 is(targetpage('test1.fr', 'html'), 'test1/index.fr.html', "$msgprefix test1.fr");
 is(targetpage('test3', 'html'), 'test3/index.html', "$msgprefix test3 (non-translatable page)");
 is(targetpage('test3.es', 'html'), 'test3.es/index.html', "$msgprefix test3.es (non-translatable page)");
+
+### urlto -> index
+$config{po_link_to}='current';
+$msgprefix="urlto (po_link_to=current)";
+is(urlto('', 'index'), './index.en.html', "$msgprefix index -> ''");
+is(urlto('', 'nontranslatable'), './../index.en.html', "$msgprefix nontranslatable -> ''");
+is(urlto('', 'translatable.fr'), './../index.fr.html', "$msgprefix translatable.fr -> ''");
+$msgprefix="urlto (po_link_to=negotiated)";
+is(urlto('', 'index'), './index.en.html', "$msgprefix index -> ''");
+is(urlto('', 'nontranslatable'), './../index.en.html', "$msgprefix nontranslatable -> ''");
+is(urlto('', 'translatable.fr'), './../index.fr.html', "$msgprefix translatable.fr -> ''");
 
 ### bestlink
 $config{po_link_to}='current';

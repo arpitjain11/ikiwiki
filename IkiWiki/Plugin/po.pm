@@ -427,7 +427,6 @@ sub myurlto ($$;$) { #{{{
 	# workaround hard-coded /index.$config{htmlext} in IkiWiki::urlto()
 	if (! length $to
 	    && $config{po_link_to} eq "current"
-	    && istranslation($from)
 	    && istranslatable('index')) {
 		return IkiWiki::beautify_urlpath(IkiWiki::baseurl($from) . "index." . lang($from) . ".$config{htmlext}");
 	}
