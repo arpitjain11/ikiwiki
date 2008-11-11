@@ -44,6 +44,7 @@ sub tagpage ($) { #{{{
 	if ($tag !~ m{^\.?/} &&
 	    defined $config{tagbase}) {
 		$tag="/".$config{tagbase}."/".$tag;
+		$tag=~y#/#/#s; # squash dups
 	}
 
 	return $tag;
