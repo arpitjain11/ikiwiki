@@ -246,7 +246,7 @@ sub rcs_recentchanges ($) { #{{{
 			rev        => $info->{"revno"},
 			user       => $user,
 			committype => "bzr",
-			when       => time - str2time($info->{"timestamp"}),
+			when       => str2time($info->{"timestamp"}),
 			message    => [@message],
 			pages      => [@pages],
 		};
