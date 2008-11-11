@@ -362,6 +362,10 @@ sub change(@) { #{{{
 		resettranslationscache();
 		# Trigger a wiki refresh.
 		require IkiWiki::Render;
+		# without preliminary saveindex/loadindex, refresh()
+		# complains about a lot of uninitialized variables
+		IkiWiki::saveindex();
+		IkiWiki::loadindex();
 		IkiWiki::refresh();
 		IkiWiki::saveindex();
 	}
