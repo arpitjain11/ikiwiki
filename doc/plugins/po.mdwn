@@ -358,6 +358,89 @@ a program in order to easily detect some of the most obvious DoS.
 > po4a was not fuzzy-tested, but according to one of its developers,
 > "it would be really appreciated". [[--intrigeri]]
 
+Test conditions:
+
+- a 21M file containing 100 concatenated copies of all the files in my
+  `/usr/share/common-licenses/`; I had no existing PO file or
+  translated versions at hand, which renders these tests
+  quite incomplete.
+- po4a was the Debian 0.34-2 package; the same tests were also run
+  after replacing the `Text` module with the CVS one (the core was not
+  changed in CVS since 0.34-2 was released), without any significant
+  difference in the results.
+- Perl 5.10.0-16
+
+#### po4a-gettextize
+
+`po4a-gettextize` uses more or less the same po4a features as our
+`refreshpot` function.
+
+Without specifying an input charset, zzuf'ed `po4a-gettextize` quickly
+errors out, complaining it was not able to detect the input charset;
+it leaves no incomplete file on disk.
+
+So I had to pretend the input was in UTF-8, as does the po plugin.
+
+Two ways of crashing were revealed by this command-line:
+
+        zzuf -vc -s 0:100 -r 0.1:0.5 \
+          po4a-gettextize -f text -o markdown -M utf-8 -L utf-8 \
+            -m LICENSES >/dev/null
+
+They are:
+
+        Malformed UTF-8 character (UTF-16 surrogate 0xdcc9) in substitution iterator at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
+        Malformed UTF-8 character (fatal) at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
+
+and
+
+        Malformed UTF-8 character (UTF-16 surrogate 0xdcec) in substitution (s///) at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
+        Malformed UTF-8 character (fatal) at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
+
+Perl seems to exit cleanly, and an incomplete PO file is written on
+disk. I not sure whether if this is a bug in Perl or in `Po.pm`.
+
+#### po4a-translate
+
+`po4a-translate` uses more or less the same po4a features as our
+`filter` function.
+
+Without specifying an input charset, same behaviour as
+`po4a-gettextize`, so let's specify UTF-8 as input charset as of now.
+
+        zzuf -cv \
+          po4a-translate -d -f text -o markdown -M utf-8 -L utf-8 \
+            -k 0 -m LICENSES -p LICENSES.fr.po -l test.fr
+
+... prints tons of occurences of the following error, but a complete
+translated document is written (obviously with some weird chars
+inside):
+
+        Use of uninitialized value in string ne at /usr/share/perl5/Locale/Po4a/TransTractor.pm line 854.
+        Use of uninitialized value in string ne at /usr/share/perl5/Locale/Po4a/TransTractor.pm line 840.
+        Use of uninitialized value in pattern match (m//) at /usr/share/perl5/Locale/Po4a/Po.pm line 1002.
+
+While:
+
+        zzuf -cv -s 0:10 -r 0.001:0.3 \
+          po4a-translate -d -f text -o markdown -M utf-8 -L utf-8 \
+            -k 0 -m LICENSES -p LICENSES.fr.po -l test.fr
+
+... seems to lose the fight, at the `readpo(LICENSES.fr.po)` step,
+against some kind of infinite loop, deadlock, or any similar beast.
+It does not seem to eat memory, though.
+
+Whatever format module is used does not change anything. This is thus
+probably a bug in po4a's core or in a lib it depends on.
+
+The sub `read`, in `TransTractor.pm`, seems to be a good debugging
+starting point.
+
+#### msgmerge
+
+`msgmerge` is run in our `refreshpofiles` function. I did not manage
+to crash it with `zzuf`.
+
 gettext/po4a rough corners
 --------------------------
 
