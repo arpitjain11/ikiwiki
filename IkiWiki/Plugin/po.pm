@@ -406,6 +406,7 @@ sub mybeautify_urlpath ($) { #{{{
 	my $res=$origsubs{'beautify_urlpath'}->($url);
 	if ($config{po_link_to} eq "negotiated") {
 		$res =~ s!/\Qindex.$config{po_master_language}{code}.$config{htmlext}\E$!/!;
+		$res =~ s!/\Qindex.$config{htmlext}\E$!/!;
 	}
 	return $res;
 } #}}}
