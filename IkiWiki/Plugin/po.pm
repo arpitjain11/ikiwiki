@@ -522,7 +522,8 @@ sub _istranslation ($) { #{{{
 			 && defined $pagesources{$masterpage}
 			 && defined $config{po_slave_languages}{$lang});
 
-	return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
+	return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang)
+		if istranslatable($masterpage);
 } #}}}
 
 sub istranslation ($) { #{{{
@@ -531,7 +532,8 @@ sub istranslation ($) { #{{{
 	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
 		my $hasleadingslash = ($masterpage=~s#^/##);
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
-		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
+		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang)
+			if istranslatable($masterpage);
 	}
 	return;
 } #}}}
