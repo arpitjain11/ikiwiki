@@ -231,6 +231,9 @@ sub readfile ($;$) { #{{{
 	open (IN, $file) || error("failed to read $file: $!");
 	binmode(IN) if ($binary);
 	my $ret=<IN>;
+	if (! utf8::valid($ret)) {
+		$ret=encode_utf8($ret);
+	}
 	close IN;
 	return $ret;
 } #}}}
