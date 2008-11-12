@@ -72,12 +72,16 @@ EOF
 		# Avoid more than one ikiwiki cgi running at a time by
 		# taking a cgi lock. Since ikiwiki uses several MB of
 		# memory, a pile up of processes could cause thrashing
-		# otherwise.
+		# otherwise. The fd of the lock is stored in
+		# IKIWIKI_CGILOCK_FD so unlockwiki can close it.
 		$pre_exec=<<"EOF";
 	{
 		int fd=open("$config{wikistatedir}/cgilock", O_CREAT | O_RDWR, 0666);
-		if (fd != -1)
-			flock(fd, LOCK_EX);
+		if (fd != -1 && flock(fd, LOCK_EX) == 0) {
+			char *fd_s;
+			asprintf(&fd_s, "%i", fd);
+			setenv("IKIWIKI_CGILOCK_FD", fd_s, 1);
+		}
 	}
 EOF
 	}

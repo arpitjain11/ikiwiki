@@ -1295,6 +1295,7 @@ sub lockwiki () { #{{{
 } #}}}
 
 sub unlockwiki () { #{{{
+	POSIX::close($ENV{IKIWIKI_CGILOCK_FD}) if exists $ENV{IKIWIKI_CGILOCK_FD};
 	return close($wikilock) if $wikilock;
 	return;
 } #}}}
