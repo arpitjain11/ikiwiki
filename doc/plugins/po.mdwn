@@ -599,9 +599,7 @@ Robustness tests
 - removing a master page via RCS
 - removing a translation via RCS: **OK**
 - removing a master page via CGI
-- removing a translation via CGI: **FIXME** the PO file is
-  re-generated as if it wasn't a translation; touch'ing
-  `masterpage.mdwn` + manual refresh fixes it.
+- removing a translation via CGI: **OK**
 
 ### Renaming pages
 
