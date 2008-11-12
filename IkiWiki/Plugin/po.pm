@@ -23,6 +23,7 @@ my %translations;
 my @origneedsbuild;
 my %origsubs;
 
+memoize("istranslatable");
 memoize("_istranslation");
 memoize("percenttranslated");
 
@@ -508,7 +509,8 @@ sub istranslatable ($) { #{{{
 	return 0 unless defined $file;
 	return 0 if (defined pagetype($file) && pagetype($file) eq 'po');
 	return 0 if $file =~ /\.pot$/;
-	return pagespec_match($page, $config{po_translatable_pages});
+	return 1 if  pagespec_match($page, $config{po_translatable_pages});
+	return;
 } #}}}
 
 sub _istranslation ($) { #{{{
@@ -537,8 +539,7 @@ sub istranslation ($) { #{{{
 	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
 		my $hasleadingslash = ($masterpage=~s#^/##);
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
-		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang)
-			if istranslatable($masterpage);
+		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
 	}
 	return;
 } #}}}
@@ -660,6 +661,7 @@ sub resettranslationscache() { #{{{
 } #}}}
 
 sub flushmemoizecache() { #{{{
+	Memoize::flush_cache("istranslatable");
 	Memoize::flush_cache("_istranslation");
 	Memoize::flush_cache("percenttranslated");
 } #}}}
