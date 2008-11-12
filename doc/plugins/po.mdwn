@@ -198,13 +198,17 @@ Also, when the plugin has just been enabled, or when a page has just
 been declared as being translatable, the needed POT and PO files are
 created, and the PO files are checked into version control.
 
-Discussion pages
-----------------
+Discussion pages and other sub-pages
+------------------------------------
 
 Discussion should happen in the language in which the pages are
 written for real, *i.e.* the "master" one. If discussion pages are
 enabled, "slave" pages therefore link to the "master" page's
 discussion page.
+
+Likewise, "slave" pages are not supposed to have sub-pages;
+[[WikiLinks|wikilink]] that appear on a "slave" page therefore link to
+the master page's sub-pages.
 
 Translating
 -----------
@@ -498,11 +502,6 @@ gettext/po4a rough corners
 
 Better links
 ------------
-
-### Subpages
-
-On a translation page, links to subpages should actually be links to
-the master page's subpages. They currently appear as broken links.
 
 ### Page title in links
 

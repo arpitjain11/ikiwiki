@@ -390,7 +390,7 @@ sub mybestlink ($$) { #{{{
 	my $page=shift;
 	my $link=shift;
 
-	my $res=$origsubs{'bestlink'}->($page, $link);
+	my $res=$origsubs{'bestlink'}->(masterpage($page), $link);
 	if (length $res
 	    && ($config{po_link_to} eq "current" || $config{po_link_to} eq "negotiated")
 	    && istranslatable($res)
