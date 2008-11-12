@@ -520,6 +520,12 @@ See [[contrib/po]].
 
 They are not updated when the source page changes (e.g. meta title).
 
+### Redirect after edit
+
+After editing master page, when using `po_link_to=negotiated`, one is
+redirected to the page in her preferred language. Would be slightly
+better to be redirected, in any case, to the just saved page.
+
 Page formats
 ------------
 
@@ -554,17 +560,65 @@ this check.
 Creating new pages on the web
 -----------------------------
 
-See [[contrib/po]].
+See [[contrib/po|contrib/po]].
+
+Deleting/renaming pages
+-----------------------
+
+- When a master page is renamed or deleted, its translations (and the
+  pot file?) must be renamed or deleted accordingly.
+- Renaming a translation should be forbidden.
 
 Robustness tests
 ----------------
 
-- adding and removing pages from `po_translatable_pages`
-- creating and removing pages listed in `po_translatable_pages`
-- enabling the plugin, with and without `po_translatable_pages` set
-- disabling the plugin
-- test with `usedirs` disabled
-- test with `indexpages` enabled
+### Disabling the plugin
+
+- enabling the plugin with `po_translatable_pages` set
+- enabling the plugin without `po_translatable_pages` set: **OK**
+- disabling the plugin: **OK**
+
+### Changing the plugin config
+
+- adding existing pages to `po_translatable_pages`: **OK**
+- removing existing pages from `po_translatable_pages`: **OK**
+- adding a language to `po_slave_languages`: **OK**
+- removing a language from `po_slave_languages`: **OK**
+- changing `po_master_language`: **OK**
+- replacing `po_master_language` with a language previously part of
+  `po_slave_languages`: needs two rebuilds, but **OK** (this is quite
+  a perverse test actually)
+
+### Creating pages
+
+- creating a master page via RCS: **OK**
+- creating a master page via CGI: **FIXME** the new page's
+  translations are rendered as if they weren't translations (i.e.
+  `targetpage=newpage.LL/index.html`, and no de-gettext-isation);
+  touch'ing `newpage.mdwn` + refresh does not fix it, rebuild does.
+
+### Deleting pages
+
+- removing a master page via RCS
+- removing a translation via RCS: **OK**
+- removing a master page via CGI
+- removing a translation via CGI: **FIXME** the PO file is
+  re-generated as if it wasn't a translation; touch'ing
+  `masterpage.mdwn` + manual refresh fixes it.
+
+### Renaming pages
+
+- renaming a master page via RCS 
+- renaming a master page and its translations via RCS
+- renaming a master page via CGI
+- renaming a translation via RCS
+- renaming a translation via CGI
+
+### Misc
+
+- general test with `usedirs` disabled: **OK**
+- general test with `indexpages` enabled
+- general test with `po_link_to=default`
 
 Documentation
 -------------
