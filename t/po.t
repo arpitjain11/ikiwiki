@@ -67,32 +67,21 @@ foreach my $page (keys %pagesources) {
 ### istranslatable/istranslation
 # we run these tests twice because memoization attempts made them
 # succeed once every two tries...
-ok(IkiWiki::Plugin::po::istranslatable('index'), "index is translatable");
+foreach (1, 2) {
 ok(IkiWiki::Plugin::po::istranslatable('index'), "index is translatable");
 ok(IkiWiki::Plugin::po::istranslatable('/index'), "/index is translatable");
-ok(IkiWiki::Plugin::po::istranslatable('/index'), "/index is translatable");
-ok(! IkiWiki::Plugin::po::istranslatable('index.fr'), "index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('index.fr'), "index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('index.es'), "index.es is not translatable");
-ok(! IkiWiki::Plugin::po::istranslatable('index.es'), "index.es is not translatable");
-ok(! IkiWiki::Plugin::po::istranslatable('/index.fr'), "/index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('/index.fr'), "/index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslation('index'), "index is not a translation");
-ok(! IkiWiki::Plugin::po::istranslation('index'), "index is not a translation");
-ok(IkiWiki::Plugin::po::istranslation('index.fr'), "index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslation('index.fr'), "index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslation('index.es'), "index.es is a translation");
-ok(IkiWiki::Plugin::po::istranslation('index.es'), "index.es is a translation");
-ok(IkiWiki::Plugin::po::istranslation('/index.fr'), "/index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslation('/index.fr'), "/index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslatable('test2'), "test2 is translatable");
-ok(IkiWiki::Plugin::po::istranslatable('test2'), "test2 is translatable");
-ok(! IkiWiki::Plugin::po::istranslation('test2'), "test2 is not a translation");
 ok(! IkiWiki::Plugin::po::istranslation('test2'), "test2 is not a translation");
 ok(! IkiWiki::Plugin::po::istranslatable('test3'), "test3 is not translatable");
-ok(! IkiWiki::Plugin::po::istranslatable('test3'), "test3 is not translatable");
 ok(! IkiWiki::Plugin::po::istranslation('test3'), "test3 is not a translation");
-ok(! IkiWiki::Plugin::po::istranslation('test3'), "test3 is not a translation");
+}
 
 ### links
 require IkiWiki::Render;
