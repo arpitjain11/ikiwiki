@@ -17,7 +17,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 59;
+use Test::More tests => 65;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -69,16 +69,22 @@ foreach my $page (keys %pagesources) {
 # succeed once every two tries...
 ok(IkiWiki::Plugin::po::istranslatable('index'), "index is translatable");
 ok(IkiWiki::Plugin::po::istranslatable('index'), "index is translatable");
+ok(IkiWiki::Plugin::po::istranslatable('/index'), "/index is translatable");
+ok(IkiWiki::Plugin::po::istranslatable('/index'), "/index is translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('index.fr'), "index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('index.fr'), "index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('index.es'), "index.es is not translatable");
 ok(! IkiWiki::Plugin::po::istranslatable('index.es'), "index.es is not translatable");
+ok(! IkiWiki::Plugin::po::istranslatable('/index.fr'), "/index.fr is not translatable");
+ok(! IkiWiki::Plugin::po::istranslatable('/index.fr'), "/index.fr is not translatable");
 ok(! IkiWiki::Plugin::po::istranslation('index'), "index is not a translation");
 ok(! IkiWiki::Plugin::po::istranslation('index'), "index is not a translation");
 ok(IkiWiki::Plugin::po::istranslation('index.fr'), "index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslation('index.fr'), "index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslation('index.es'), "index.es is a translation");
 ok(IkiWiki::Plugin::po::istranslation('index.es'), "index.es is a translation");
+ok(IkiWiki::Plugin::po::istranslation('/index.fr'), "/index.fr is a translation");
+ok(IkiWiki::Plugin::po::istranslation('/index.fr'), "/index.fr is a translation");
 ok(IkiWiki::Plugin::po::istranslatable('test2'), "test2 is translatable");
 ok(IkiWiki::Plugin::po::istranslatable('test2'), "test2 is translatable");
 ok(! IkiWiki::Plugin::po::istranslation('test2'), "test2 is not a translation");

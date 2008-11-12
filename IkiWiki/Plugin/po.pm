@@ -391,11 +391,9 @@ sub mybestlink ($$) { #{{{
 	my $link=shift;
 
 	my $res=$origsubs{'bestlink'}->(masterpage($page), $link);
-	my $normres=$res;
-	$normres=~s#^/##;
 	if (length $res
 	    && ($config{po_link_to} eq "current" || $config{po_link_to} eq "negotiated")
-	    && istranslatable($normres)
+	    && istranslatable($res)
 	    && istranslation($page)) {
 		return $res . "." . lang($page);
 	}
@@ -488,9 +486,18 @@ sub myurlto ($$;$) { #{{{
 # | Helper functions
 # `----
 
+sub maybe_add_leading_slash ($;$) { #{{{
+	my $str=shift;
+	my $add=shift;
+	$add=1 unless defined $add;
+	return '/' . $str if $add;
+	return $str;
+} #}}}
+
 sub istranslatable ($) { #{{{
 	my $page=shift;
 
+	$page=~s#^/##;
 	my $file=$pagesources{$page};
 
 	return 0 unless defined $file;
@@ -502,6 +509,7 @@ sub istranslatable ($) { #{{{
 sub _istranslation ($) { #{{{
 	my $page=shift;
 
+	my $hasleadingslash = ($page=~s#^/##);
 	my $file=$pagesources{$page};
 	return 0 unless (defined $file
 			 && defined pagetype($file)
@@ -514,15 +522,16 @@ sub _istranslation ($) { #{{{
 			 && defined $pagesources{$masterpage}
 			 && defined $config{po_slave_languages}{$lang});
 
-	return ($masterpage, $lang) if istranslatable($masterpage);
+	return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
 } #}}}
 
 sub istranslation ($) { #{{{
 	my $page=shift;
 
 	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
+		my $hasleadingslash = ($masterpage=~s#^/##);
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
-		return ($masterpage, $lang);
+		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
 	}
 	return;
 } #}}}
