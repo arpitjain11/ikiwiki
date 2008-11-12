@@ -36,7 +36,7 @@ sub parentlinks ($) { #{{{
 		$depth=$i;
 		$height=($pagedepth - $depth);
 		push @ret, {
-			url => urlto($path, $page),
+			url => urlto(bestlink($page, $path), $page),
 			page => $title,
 			depth => $depth,
 			height => $height,
