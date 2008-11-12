@@ -334,6 +334,10 @@ sub readfile ($;$$) { #{{{
 	binmode($in) if ($binary);
 	return \*$in if $wantfd;
 	my $ret=<$in>;
+	# check for invalid utf-8, and toss it back to avoid crashes
+	if (! utf8::valid($ret)) {
+		$ret=encode_utf8($ret);
+	}
 	close $in || error("failed to read $file: $!");
 	return $ret;
 } #}}}

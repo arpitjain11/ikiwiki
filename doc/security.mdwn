@@ -408,3 +408,12 @@ discovered on 30 May 2008 and fixed the same day. ([[cve CVE-2008-0169]])
 
 I recommend upgrading to 2.48 immediatly if your wiki allows both password
 and openid logins.
+
+## Malformed UTF-8 DOS
+
+Feeding ikiwiki page sources containing certian forms of malformed UTF-8
+can cause it to crash. This can potentially be used for a denial of service
+attack.
+
+intrigeri discovered this problem on 12 Nov 2008 and a patch put in place
+later that day.
