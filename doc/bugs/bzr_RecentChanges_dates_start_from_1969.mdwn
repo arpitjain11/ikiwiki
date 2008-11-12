@@ -1,0 +1,16 @@
+Using bzr, the dates for changes on the RecentChanges page all start
+slightly before the Unix epoch.
+
+Changing line 249 of bzr.pm from
+
+`                        when       => time - str2time($info->{"timestamp"}),`
+
+to
+
+`                        when       => str2time($info->{"timestamp"}),`
+
+fixed this for me.
+
+> Weird, I wonder why it was written to return an absolute time like that
+> in the first place? Can't have ever been right. Fixed, thanks. --[[Joey]]
+> [[done]]

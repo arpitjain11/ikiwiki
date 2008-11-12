@@ -13,6 +13,15 @@ ikiwiki (2.69) UNRELEASED; urgency=low
     was earlier added to edit links.
   * tag: Normalize tagbase so leading/trailing slashes in it don't break
     things.
+  * bzr: Fix dates for recentchanges.
+  * Avoid multiple ikiwiki cgi processes piling up, eating all memory,
+    and thrashing, by making the cgi wrapper wait on a cgilock.
+    If you had to set apache's MaxClients low to avoid ikiwiki thrashing your
+    server, you can now turn it up to a high value.
+  * Stop busy-waiting in lockwiki, as this could delay ikiwiki from waking up
+    for up to one second. The bailout code is no longer needed after above
+    change.
+  * Remove support for unused optional wait parameter from lockwiki.
 
  -- Joey Hess <joeyh@debian.org>  Thu, 06 Nov 2008 16:01:00 -0500
 

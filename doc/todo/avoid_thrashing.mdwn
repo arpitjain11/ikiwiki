@@ -1,0 +1,22 @@
+Problem: Suppose a server has 256 mb ram. Each ikiwiki process needs about
+15 mb, before it's loaded the index. (And maybe 25 after, but only one such
+process runs at any time). That allows for about 16 ikiwiki processes to
+run concurrently on a server, before it starts to swap. Of course, anything
+else that runs on the server and eats memory will affect this.
+
+One could just set `MaxClients 16` in the apache config, but then it's also
+limited to 16 clients serving static pages, which is silly. Also, 16 is
+optimistic -- 8 might be a saner choice. And then, what if something on the
+server decides to eat a lot of memory? Ikiwiki can again overflow memory 
+and thrash.
+
+It occurred to me that the ikiwiki cgi wrapper could instead do locking of
+its own (say of `.ikiwiki/cgilock`). The wrapper only needs a few kb to
+run, and it starts *fast*. So hundreds could be running waiting for a lock
+with no ill effects. Crank `MaxClients` up to 256? No problem..
+
+And there's no real reason to allow more than one ikiwiki cgi to run at a
+time. Since almost all uses of the CGI lock the index, only one can really
+be doing anything at a time. --[[Joey]]
+
+[[done]]
