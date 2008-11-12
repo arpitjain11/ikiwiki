@@ -391,9 +391,11 @@ sub mybestlink ($$) { #{{{
 	my $link=shift;
 
 	my $res=$origsubs{'bestlink'}->(masterpage($page), $link);
+	my $normres=$res;
+	$normres=~s#^/##;
 	if (length $res
 	    && ($config{po_link_to} eq "current" || $config{po_link_to} eq "negotiated")
-	    && istranslatable($res)
+	    && istranslatable($normres)
 	    && istranslation($page)) {
 		return $res . "." . lang($page);
 	}
