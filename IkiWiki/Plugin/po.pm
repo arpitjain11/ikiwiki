@@ -364,6 +364,7 @@ sub change(@) { #{{{
 		# Reinitialize module's private variables.
 		resetalreadyfiltered();
 		resettranslationscache();
+		flushmemoizecache();
 		# Trigger a wiki refresh.
 		require IkiWiki::Render;
 		# without preliminary saveindex/loadindex, refresh()
@@ -656,6 +657,11 @@ sub buildtranslationscache() { #{{{
 
 sub resettranslationscache() { #{{{
 	undef %translations;
+} #}}}
+
+sub flushmemoizecache() { #{{{
+	Memoize::flush_cache("_istranslation");
+	Memoize::flush_cache("percenttranslated");
 } #}}}
 
 sub urlto_with_orig_beautiful_urlpath($$) { #{{{

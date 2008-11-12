@@ -592,10 +592,8 @@ Robustness tests
 ### Creating pages
 
 - creating a master page via RCS: **OK**
-- creating a master page via CGI: **FIXME** the new page's
-  translations are rendered as if they weren't translations (i.e.
-  `targetpage=newpage.LL/index.html`, and no de-gettext-isation);
-  touch'ing `newpage.mdwn` + refresh does not fix it, rebuild does.
+- creating a master page via CGI: **FIXME** the new master page has no
+  `otherlanguages` links until refreshed once more
 
 ### Deleting pages
 
