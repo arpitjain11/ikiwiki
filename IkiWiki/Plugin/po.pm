@@ -150,6 +150,7 @@ sub needsbuild () { #{{{
 	# a given master page was rendered because its source file was changed
 	@origneedsbuild=(@$needsbuild);
 
+	flushmemoizecache();
 	buildtranslationscache();
 
 	# make existing translations depend on the corresponding master page
@@ -568,20 +569,24 @@ sub islanguagecode ($) { #{{{
 	return ($code =~ /^[a-z]{2}$/);
 } #}}}
 
-sub otherlanguages($) { #{{{
+sub otherlanguage ($$) { #{{{
+	my $page=shift;
+	my $code=shift;
+
+	return masterpage($page) if $code eq $config{po_master_language}{code};
+	return masterpage($page) . '.' . $code;
+} #}}}
+
+sub otherlanguages ($) { #{{{
 	my $page=shift;
 
 	my %ret;
-	if (istranslatable($page)) {
-		%ret = %{$translations{$page}} if defined $translations{$page};
-	}
-	elsif (istranslation($page)) {
-		my $masterpage = masterpage($page);
-		$ret{$config{po_master_language}{code}} = $masterpage;
-		foreach my $lang (sort keys %{$translations{$masterpage}}) {
-			next if $lang eq lang($page);
-			$ret{$lang} = $translations{$masterpage}{$lang};
-		}
+	return \%ret unless (istranslation($page) || istranslatable($page));
+	my $curlang=lang($page);
+	foreach my $lang
+		($config{po_master_language}{code}, keys %{$config{po_slave_languages}}) {
+		next if $lang eq $curlang;
+		$ret{$lang}=otherlanguage($page, $lang);
 	}
 	return \%ret;
 } #}}}
