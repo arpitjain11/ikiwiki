@@ -501,16 +501,21 @@ sub maybe_add_leading_slash ($;$) { #{{{
 	return $str;
 } #}}}
 
-sub istranslatable ($) { #{{{
-	my $page=shift;
-
-	$page=~s#^/##;
-	my $file=$pagesources{$page};
+sub istranslatablefile ($) { #{{{
+	my $file=shift;
 
 	return 0 unless defined $file;
 	return 0 if (defined pagetype($file) && pagetype($file) eq 'po');
 	return 0 if $file =~ /\.pot$/;
-	return 1 if  pagespec_match($page, $config{po_translatable_pages});
+	return 1 if pagespec_match(pagename($file), $config{po_translatable_pages});
+	return;
+} #}}}
+
+sub istranslatable ($) { #{{{
+	my $page=shift;
+
+	$page=~s#^/##;
+	return 1 if istranslatablefile($pagesources{$page});
 	return;
 } #}}}
 
