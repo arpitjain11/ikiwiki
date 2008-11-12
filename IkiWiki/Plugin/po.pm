@@ -262,10 +262,14 @@ sub htmlize (@) { #{{{
 
 	my $page = $params{page};
 	my $content = $params{content};
-	my $masterfile = srcfile($pagesources{masterpage($page)});
+
+	# ignore PO files this plugin did not create
+	return $content unless istranslation($page);
 
 	# force content to be htmlize'd as if it was the same type as the master page
-	return IkiWiki::htmlize($page, $page, pagetype($masterfile), $content);
+	return IkiWiki::htmlize($page, $page,
+				pagetype(srcfile($pagesources{masterpage($page)})),
+				$content);
 } #}}}
 
 sub pagetemplate (@) { #{{{
