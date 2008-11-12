@@ -556,6 +556,16 @@ Creating new pages on the web
 
 See [[contrib/po]].
 
+Robustness tests
+----------------
+
+- adding and removing pages from `po_translatable_pages`
+- creating and removing pages listed in `po_translatable_pages`
+- enabling the plugin, with and without `po_translatable_pages` set
+- disabling the plugin
+- test with `usedirs` disabled
+- test with `indexpages` enabled
+
 Documentation
 -------------
 
