@@ -35,6 +35,7 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
+	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
 
@@ -324,6 +325,12 @@ sub pagetemplate (@) { #{{{
 		$template->param('parentlinks' => []);
 	}
 } # }}}
+
+sub mydelete(@) { #{{{
+	my @deleted=@_;
+
+	map { deletetranslations($_) } grep istranslatablefile($_), @deleted;
+} #}}}
 
 sub change(@) { #{{{
 	my @rendered=@_;
@@ -755,6 +762,13 @@ sub homepageurl (;$) { #{{{
 	my $page=shift;
 
 	return urlto('', $page);
+} #}}}
+
+# do *not* implement this until the renamepage hook works
+sub deletetranslations ($) { #{{{
+	my $file=shift;
+
+	debug 'po(deletetranslations): TODO: delete translations of ' . $file;
 } #}}}
 
 # ,----
