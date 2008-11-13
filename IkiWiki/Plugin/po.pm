@@ -331,24 +331,25 @@ sub change(@) { #{{{
 	my $updated_po_files=0;
 
 	# Refresh/create POT and PO files as needed.
-	foreach my $page (map pagename($_), @rendered) {
-		next unless istranslatable($page);
-		my $file=srcfile($pagesources{$page});
+	foreach my $file (@rendered) {
+		next unless istranslatablefile($file);
+		my $page=pagename($file);
+		my $masterfile=srcfile($file);
 		my $updated_pot_file=0;
 		# Only refresh Pot file if it does not exist, or if
 		# $pagesources{$page} was changed: don't if only the HTML was
 		# refreshed, e.g. because of a dependency.
 		if ((grep { $_ eq $pagesources{$page} } @origneedsbuild)
-		    || ! -e potfile($file)) {
-			refreshpot($file);
+		    || ! -e potfile($masterfile)) {
+			refreshpot($masterfile);
 			$updated_pot_file=1;
 		}
 		my @pofiles;
 		map {
 			push @pofiles, $_ if ($updated_pot_file || ! -e $_);
-		} (pofiles($file));
+		} (pofiles($masterfile));
 		if (@pofiles) {
-			refreshpofiles($file, @pofiles);
+			refreshpofiles($masterfile, @pofiles);
 			map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
 			$updated_po_files=1;
 		}
