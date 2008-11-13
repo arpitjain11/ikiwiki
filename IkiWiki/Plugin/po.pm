@@ -363,6 +363,7 @@ sub change(@) { #{{{
 	while (my ($oldpage, $newpage) = $eachrenamed->()) {
 		renametranslations($oldpage, $newpage);
 	}
+	resetrenamed();
 
 	my $updated_po_files=0;
 
@@ -402,7 +403,6 @@ sub change(@) { #{{{
 		}
 		# Reinitialize module's private variables.
 		resetalreadyfiltered();
-		resetrenamed();
 		resettranslationscache();
 		flushmemoizecache();
 		# Trigger a wiki refresh.
