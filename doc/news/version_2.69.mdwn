@@ -1,0 +1,24 @@
+ikiwiki 2.69 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * Avoid multiple ikiwiki cgi processes piling up, eating all memory,
+     and thrashing, by making the cgi wrapper wait on a cgilock.
+     If you had to set apache's MaxClients low to avoid ikiwiki thrashing your
+     server, you can now turn it up to a high value.
+   * Stop busy-waiting in lockwiki, as this could delay ikiwiki from waking up
+     for up to one second. The bailout code is no longer needed after above
+     change.
+   * Remove support for unused optional wait parameter from lockwiki.
+   * aggregate: Try to query XML::Feed for the base url when derelevatising
+     links. Since this needs the just released XML::Feed 0.3, as well
+     as a not yet released XML::RSS, it will fall back to the old method
+     if no xml:base info is available.
+   * meta: Plugin is now enabled by default since the basewiki uses it.
+   * txt: Do not encode quotes when filtering the txt, as that broke
+     later parsing of any directives on the page.
+   * Fix the link() pagespec to match links that are internally recorded as
+     absolute.
+   * Add rel=nofollow to recentchanges\_links for the same (weak) reasons it
+     was earlier added to edit links.
+   * tag: Normalize tagbase so leading/trailing slashes in it don't break
+     things.
+   * bzr: Fix dates for recentchanges."""]]

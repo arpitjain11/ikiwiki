@@ -63,3 +63,28 @@ To remove that user:
 I've not written actual utilities to do this yet because I've only needed
 to do it rarely, and the data I've wanted has been different each time.
 --[[Joey]]
+
+## the session database
+
+`.ikiwiki/sessions.db` is the session database. See the [[cpan CGI::Session]]
+documentation for more details.
+
+## lockfiles
+
+In case you're curious, here's what the various lock files do.
+
+* `.ikiwiki/lockfile` is the master ikiwiki lock file. Ikiwiki takes this 
+  lock before reading/writing state.
+* `.ikiwiki/commitlock` is locked as a semophore, to disable the commit hook
+  from doing anything.
+* `.ikiwiki/cgilock` is locked by the cgi wrapper, to ensure that only 
+  one ikiwiki process is run at a time to handle cgi requests.
+
+## plugin state files
+
+Some plugins create other files to store their state. 
+
+* `.ikiwiki/aggregate` is a plain text database used by the aggregate plugin
+  to record feeds and known posts.
+* `.ikiwiki/xapian/` is created by the search plugin, and contains xapian-omega
+  configuration and the xapian database.

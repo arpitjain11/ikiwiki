@@ -8,5 +8,9 @@ The `IkiWiki::pagetitle` function does not respect title changes via `meta.title
 > - Using <code>inline</code> would avoid the redefinition + code duplication.
 > - A few plugins would need to be upgraded.
 > - It may be necessary to adapt the testsuite in `t/pagetitle.t`, as well.
-
+>
 > --[[intrigeri]]
+>
+>> It was actually more complicated than expected. A working prototype is
+>> now in my `meta` branch, see my userpage for the up-to-date url.
+>> Thus tagging [[patch]]. --[[intrigeri]]

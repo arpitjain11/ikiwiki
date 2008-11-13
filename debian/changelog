@@ -1,5 +1,19 @@
-ikiwiki (2.69) UNRELEASED; urgency=low
+ikiwiki (2.70) unstable; urgency=low
 
+  * Avoid crash on malformed utf-8 discovered by intrigeri.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 12 Nov 2008 17:45:58 -0500
+
+ikiwiki (2.69) unstable; urgency=low
+
+  * Avoid multiple ikiwiki cgi processes piling up, eating all memory,
+    and thrashing, by making the cgi wrapper wait on a cgilock.
+    If you had to set apache's MaxClients low to avoid ikiwiki thrashing your
+    server, you can now turn it up to a high value.
+  * Stop busy-waiting in lockwiki, as this could delay ikiwiki from waking up
+    for up to one second. The bailout code is no longer needed after above
+    change.
+  * Remove support for unused optional wait parameter from lockwiki.
   * aggregate: Try to query XML::Feed for the base url when derelevatising
     links. Since this needs the just released XML::Feed 0.3, as well 
     as a not yet released XML::RSS, it will fall back to the old method
@@ -14,16 +28,8 @@ ikiwiki (2.69) UNRELEASED; urgency=low
   * tag: Normalize tagbase so leading/trailing slashes in it don't break
     things.
   * bzr: Fix dates for recentchanges.
-  * Avoid multiple ikiwiki cgi processes piling up, eating all memory,
-    and thrashing, by making the cgi wrapper wait on a cgilock.
-    If you had to set apache's MaxClients low to avoid ikiwiki thrashing your
-    server, you can now turn it up to a high value.
-  * Stop busy-waiting in lockwiki, as this could delay ikiwiki from waking up
-    for up to one second. The bailout code is no longer needed after above
-    change.
-  * Remove support for unused optional wait parameter from lockwiki.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 06 Nov 2008 16:01:00 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 11 Nov 2008 20:35:55 -0500
 
 ikiwiki (2.68) unstable; urgency=low
 
