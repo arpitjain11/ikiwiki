@@ -35,6 +35,7 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
+	hook(type => "renamepage", id => "po", call => \&renamepage);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -326,14 +327,42 @@ sub pagetemplate (@) { #{{{
 	}
 } # }}}
 
+# Save information about master page rename, so that:
+# - our delete hook can ignore the translations not renamed already
+# - our change hook can rename the translations accordingly.
+#
+# FIXME:
+# This hook is called once per page linking to the old page, which
+# means our delete hook won't know it should not delete a renamed orphan
+# page's translation.
+#
+# Moreover, we can't recognize such pages at delete stage:
+# existing links are fixed in the renaming process, so every
+# renamed page's old location will be an orphan anyway at this time.
+sub renamepage(@) { #{{{
+	my %params=@_;
+	my $oldpage=$params{oldpage};
+	my $newpage=$params{newpage};
+
+	setrenamed($oldpage, $newpage) if istranslatable($oldpage);
+	return $params{content};
+} #}}}
+
 sub mydelete(@) { #{{{
 	my @deleted=@_;
 
-	map { deletetranslations($_) } grep istranslatablefile($_), @deleted;
+	map {
+		deletetranslations($_);
+	} grep { istranslatablefile($_) && ! renamed(pagename($_))} @deleted;
 } #}}}
 
 sub change(@) { #{{{
 	my @rendered=@_;
+
+	my $eachrenamed=eachrenamed();
+	while (my ($oldpage, $newpage) = $eachrenamed->()) {
+		renametranslations($oldpage, $newpage);
+	}
 
 	my $updated_po_files=0;
 
@@ -373,6 +402,7 @@ sub change(@) { #{{{
 		}
 		# Reinitialize module's private variables.
 		resetalreadyfiltered();
+		resetrenamed();
 		resettranslationscache();
 		flushmemoizecache();
 		# Trigger a wiki refresh.
@@ -496,6 +526,34 @@ sub myurlto ($$;$) { #{{{
 	} #}}}
 }
 
+{
+	my %renamed;
+
+	sub renamed ($) { #{{{
+		my $page=shift;
+
+		if (exists $renamed{$page} &&
+		    defined $renamed{$page}) {
+			return $renamed{$page};
+		}
+		return;
+	} #}}}
+
+	sub setrenamed ($$) { #{{{
+		my $oldpage=shift;
+		my $newpage=shift;
+
+		$renamed{$oldpage}=$newpage;
+	} #}}}
+
+	sub resetrenamed () { #{{{
+		undef %renamed;
+	} #}}}
+
+	sub eachrenamed () { #{{{
+		return sub { each %renamed };
+	} #}}}
+}
 
 # ,----
 # | Helper functions
@@ -764,12 +822,21 @@ sub homepageurl (;$) { #{{{
 	return urlto('', $page);
 } #}}}
 
-# do *not* implement this until the renamepage hook works
+# - do *not* implement this until the renamepage hook works
+# - do *not* delete translations of pages that were orphans
+#   before being renamed (see renamepage hook comments above)
 sub deletetranslations ($) { #{{{
-	my $file=shift;
+	my $deletedmasterfile=shift;
 
-	debug 'po(deletetranslations): TODO: delete translations of ' . $file;
+	debug "po(deletetranslations): TODO: delete translations of $deletedmasterfile";
 } #}}}
+
+sub renametranslations (@) { #{{{
+	my ($oldpage, $newpage)=shift;
+
+	debug "po(renametranslations): TODO: rename translations of $oldpage to $newpage";
+} #}}}
+
 
 # ,----
 # | PageSpec's
