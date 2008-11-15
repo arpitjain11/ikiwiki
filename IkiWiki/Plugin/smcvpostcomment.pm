@@ -215,6 +215,8 @@ sub sessioncgi ($$) { #{{{
 	# - this means that if they do, rocks fall and everyone dies
 
 	if ($form->submitted eq PREVIEW) {
+		# $fake is a location that has the same number of slashes
+		# as the eventual location of this comment.
 		my $fake = "$page/_" . PLUGIN . "hypothetical";
 		my $preview = IkiWiki::htmlize($fake, $page, 'mdwn',
 				IkiWiki::linkify($page, $page,
