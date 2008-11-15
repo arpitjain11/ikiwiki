@@ -1,11 +1,7 @@
-<form action="<TMPL_VAR CGIURL>" method="get">
-<div class="smcvpostcommentembed">
-<input type="hidden" name="do" value="smcvpostcomment" />
-<input type="hidden" name="page" value="<TMPL_VAR PAGE>" />
-<input type="submit" name="submit" value="Post a comment"
-  <TMPL_IF NAME=DISABLED>disabled="disabled"</TMPL_IF> />
+<div>
 <TMPL_IF NAME=DISABLED>
-<label for="submit">(<TMPL_VAR NAME=DISABLED>)</label>
+Posting comments disabled: <TMPL_VAR NAME=DISABLED>
+<TMPL_ELSE>
+<a href="<TMPL_VAR CGIURL ESCAPE=HTML>?do=smcvpostcomment&amp;page=<TMPL_VAR PAGE ESCAPE=URL>">Post a comment</a>
 </TMPL_IF>
 </div>
-</form>
