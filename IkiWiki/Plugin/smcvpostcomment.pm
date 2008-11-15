@@ -38,7 +38,8 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 
 	unless (length $config{cgiurl}) {
-		error("this plugin makes no sense if you have no CGI");
+		error(sprintf (gettext("[[!%s plugin requires CGI enabled]]"),
+			PLUGIN));
 	}
 
 	my $formtemplate = IkiWiki::template(PLUGIN . "_embed.tmpl",
@@ -48,15 +49,15 @@ sub preprocess (@) { #{{{
 
 	if ($params{preview}) {
 		$formtemplate->param("disabled" =>
-			'not available during Preview');
+			gettext('not available during Preview'));
 	}
 
-	debug("page $params{page} => destpage $params{page}");
+	debug("page $params{page} => destpage $params{destpage}");
 
 	# I'm reasonably sure that this counts as abuse of [[!inline]]
 	return $formtemplate->output . "\n" .
 		IkiWiki::preprocess_inline(
-			pages => "internal(/$params{page}/comment_*)",
+			pages => "internal($params{page}/_comment_*)",
 			template => PLUGIN . "_display",
 			show => 0,
 			reverse => "yes",
@@ -157,7 +158,7 @@ sub sessioncgi ($$) { #{{{
 	$page = IkiWiki::possibly_foolish_untaint($page);
 	if (!defined $page || !length $page ||
 		IkiWiki::file_pruned($page, $config{srcdir})) {
-		error ("bad page name");
+		error(gettext("bad page name"));
 	}
 
 	# FIXME: is this right? Or should we be using the candidate subpage
@@ -173,7 +174,9 @@ sub sessioncgi ($$) { #{{{
 			linktext => 'FormattingHelp'));
 
 	if (not exists $pagesources{$page}) {
-		error ("page '$page' doesn't exist, so you can't comment");
+		error(sprintf(gettext(
+			"page '%s' doesn't exist, so you can't comment"),
+			$page));
 	}
 
 	if ($form->submitted eq CANCEL) {
@@ -260,11 +263,10 @@ sub sessioncgi ($$) { #{{{
 		my $conflict;
 
 		if ($config{rcs} and $commit_comments) {
-			my $message = "Added a comment";
+			my $message = gettext("Added a comment");
 			if (defined $form->field('subject') &&
 				length $form->field('subject')) {
-				$message = "Added a comment: " .
-					$form->field('subject');
+				$message .= ": ".$form->field('subject');
 			}
 
 			IkiWiki::rcs_add($file);
