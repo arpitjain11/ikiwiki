@@ -189,7 +189,7 @@ sub sessioncgi ($$) { #{{{
 
 	my ($authorurl, $author) = linkuser(getcgiuser($session));
 
-	my $body = $form->field('body');
+	my $body = $form->field('body') || '';
 	$body =~ s/\r\n/\n/g;
 	$body =~ s/\r/\n/g;
 	$body .= "\n" if $body !~ /\n$/;
