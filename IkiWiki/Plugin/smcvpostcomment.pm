@@ -253,7 +253,7 @@ sub sessioncgi ($$) { #{{{
 		my $file;
 		do {
 			$i++;
-			$file = "$page/comment_${i}._" . PLUGIN;
+			$file = "$page/_comment_${i}._" . PLUGIN;
 		} while (-e "$config{srcdir}/$file");
 
 		# FIXME: could probably do some sort of graceful retry
@@ -287,7 +287,7 @@ sub sessioncgi ($$) { #{{{
 		error($conflict) if defined $conflict;
 
 		# Bounce back to where we were, but defeat broken caches
-		my $anticache = "?updated=$page/comment_$i";
+		my $anticache = "?updated=$page/_comment_$i";
 		IkiWiki::redirect($cgi, urlto($page, undef, 1).$anticache);
 	}
 	else {
