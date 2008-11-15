@@ -8,6 +8,7 @@ package IkiWiki::Plugin::smcvpostcomment;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use IkiWiki::Plugin::inline;
 use IkiWiki::Plugin::mdwn;
 use CGI 'escapeHTML';
 
