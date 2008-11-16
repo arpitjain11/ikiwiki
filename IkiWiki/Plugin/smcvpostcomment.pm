@@ -113,7 +113,6 @@ sub sessioncgi ($$) { #{{{
 	return unless $do eq PLUGIN;
 
 	# These are theoretically configurable, but currently hard-coded
-	my $allow_wikilinks = 0;
 	my $allow_directives = 0;
 	my $commit_comments = 1;
 
@@ -187,15 +186,24 @@ sub sessioncgi ($$) { #{{{
 		exit;
 	}
 
+	IkiWiki::check_canedit($page . "[" . PLUGIN . "]", $cgi, $session);
+
 	my ($authorurl, $author) = linkuser(getcgiuser($session));
 
 	my $body = $form->field('body') || '';
 	$body =~ s/\r\n/\n/g;
 	$body =~ s/\r/\n/g;
-	$body .= "\n" if $body !~ /\n$/;
+	$body = "\n" if $body !~ /\n$/;
 
-	$body =~ s/\[\[([^!])/&#91;&#91;$1/g unless $allow_wikilinks;
-	$body =~ s/\[\[!/&#91;&#91;!/g unless $allow_directives;
+	unless ($allow_directives) {
+		# don't allow new-style directives at all
+		$body =~ s/(^|[^\\])\[\[!/$1\\[[!/g;
+
+		# don't allow [[ unless it begins an old-style
+		# wikilink, if prefix_directives is off
+		$body =~ s/(^|[^\\])\[\[(?![^\n\s\]+]\]\])/$1\\[[!/g
+			unless $config{prefix_directives};
+	}
 
 	# In this template, the [[!meta]] directives should stay at the end,
 	# so that they will override anything the user specifies. (For
@@ -300,5 +308,17 @@ sub sessioncgi ($$) { #{{{
 
 	exit;
 } #}}}
+
+package IkiWiki::PageSpec;
+
+sub match_smcvpostcomment ($$;@) {
+	my $page = shift;
+	my $glob = shift;
+
+	unless ($page =~ s/\[smcvpostcomment\]$//) {
+		return IkiWiki::FailReason->new("not posting a comment");
+	}
+	return match_glob($page, $glob);
+}
 
 1
