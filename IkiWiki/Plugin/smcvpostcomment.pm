@@ -149,7 +149,7 @@ sub sessioncgi ($$) { #{{{
 	$form->field(name => 'sid', type => 'hidden', value => $session->id,
 		force => 1);
 	$form->field(name => 'page', type => 'hidden');
-	$form->field(name => 'subject', type => 'text', size => 80);
+	$form->field(name => 'subject', type => 'text', size => 72);
 	$form->field(name => 'body', type => 'textarea', rows => 5,
 		cols => 80);
 
