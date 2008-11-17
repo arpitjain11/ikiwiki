@@ -9,9 +9,9 @@ New users of aggregate should enable the `aggregateinternal => 1` option in the
 .setup file. If you don't do so, you will need to enable the [[html]] plugin
 as well as aggregate itself, since feed entries will be stored as HTML.
 
-The [[meta]] and [[tag]] plugins are also recommended. The
-[[htmltidy]] plugin is suggested, since feeds can easily contain html
-problems, some of which tidy can fix.
+The [[meta]] and [[tag]] plugins are also recommended. Either the
+[[htmltidy]] or [[htmlbalance]] plugin is suggested, since feeds can easily
+contain html problems, some of which these plugins can fix.
 
 You will need to run ikiwiki periodically from a cron job, passing it the
 --aggregate parameter, to make it check for new posts. Here's an example

@@ -7,4 +7,5 @@ emitted by ikiwiki. Besides being nicely formatted, this helps ensure that
 even if users enter suboptimal html, your wiki generates valid html.
 
 Note that since tidy is an external program, that is run each time a page
-is built, this plugin will slow ikiwiki down somewhat.
+is built, this plugin will slow ikiwiki down somewhat. [[plugins/htmlbalance]]
+might provide a faster alternative.
