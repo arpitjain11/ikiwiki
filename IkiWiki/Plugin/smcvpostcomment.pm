@@ -43,6 +43,14 @@ sub preprocess (@) { #{{{
 			PLUGIN));
 	}
 
+	my $page = $params{page};
+	$pagestate{$page}{PLUGIN()}{comments} = 1;
+	$pagestate{$page}{PLUGIN()}{allowhtml} = IkiWiki::yesno($params{allowhtml});
+	$pagestate{$page}{PLUGIN()}{allowdirectives} = IkiWiki::yesno($params{allowdirectives});
+	$pagestate{$page}{PLUGIN()}{commit} = defined $params{commit}
+		? IkiWiki::yesno($params{commit})
+		: 1;
+
 	my $formtemplate = IkiWiki::template(PLUGIN . "_embed.tmpl",
 		blind_cache => 1);
 	$formtemplate->param(cgiurl => $config{cgiurl});
@@ -112,10 +120,6 @@ sub sessioncgi ($$) { #{{{
 	my $do = $cgi->param('do');
 	return unless $do eq PLUGIN;
 
-	# These are theoretically configurable, but currently hard-coded
-	my $allow_directives = 0;
-	my $commit_comments = 1;
-
 	IkiWiki::decode_cgi_utf8($cgi);
 
 	eval q{use CGI::FormBuilder};
@@ -161,6 +165,12 @@ sub sessioncgi ($$) { #{{{
 		error(gettext("bad page name"));
 	}
 
+	my $allow_directives = $pagestate{$page}{PLUGIN()}{allowdirectives};
+	my $allow_html = $pagestate{$page}{PLUGIN()}{allowdirectives};
+	my $commit_comments = defined $pagestate{$page}{PLUGIN()}{commit}
+		? $pagestate{$page}{PLUGIN()}{commit}
+		: 1;
+
 	# FIXME: is this right? Or should we be using the candidate subpage
 	# (whatever that might mean) as the base URL?
 	my $baseurl = urlto($page, undef, 1);
@@ -178,6 +188,11 @@ sub sessioncgi ($$) { #{{{
 	if (not exists $pagesources{$page}) {
 		error(sprintf(gettext(
 			"page '%s' doesn't exist, so you can't comment"),
+			$page));
+	}
+	if (not $pagestate{$page}{PLUGIN()}{comments}) {
+		error(sprintf(gettext(
+			"comments are not enabled on page '%s'"),
 			$page));
 	}
 
