@@ -171,7 +171,9 @@ sub sessioncgi ($$) { #{{{
 	$form->tmpl_param('helponformattinglink',
 		htmllink($page, $page, 'ikiwiki/formatting',
 			noimageinline => 1,
-			linktext => 'FormattingHelp'));
+			linktext => 'FormattingHelp'),
+			allowhtml => $allow_html,
+			allowdirectives => $allow_directives);
 
 	if (not exists $pagesources{$page}) {
 		error(sprintf(gettext(
