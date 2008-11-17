@@ -8,9 +8,6 @@ package IkiWiki::Plugin::smcvpostcomment;
 use warnings;
 use strict;
 use IkiWiki 2.00;
-use IkiWiki::Plugin::inline;
-use IkiWiki::Plugin::mdwn;
-use CGI 'escapeHTML';
 
 use constant PLUGIN => "smcvpostcomment";
 use constant PREVIEW => "Preview";
@@ -24,6 +21,13 @@ sub import { #{{{
 	hook(type => "htmlize", id => "_".PLUGIN,
 		call => \&IkiWiki::Plugin::mdwn::htmlize);
 	IkiWiki::loadplugin("inline");
+	IkiWiki::loadplugin("mdwn");
+} # }}}
+
+sub htmlize { # {{{
+	eval { use IkiWiki::Plugin::mdwn; };
+	error($@) if ($@);
+	return IkiWiki::Plugin::mdwn::htmlize(@_)
 } # }}}
 
 sub getsetup () { #{{{
@@ -65,6 +69,8 @@ sub preprocess (@) { #{{{
 
 	my $posts = '';
 	unless (defined $params{inline} && !IkiWiki::yesno($params{inline})) {
+		eval { use IkiWiki::Plugin::inline; };
+		error($@) if ($@);
 		my @args = (
 			pages => "internal($params{page}/_comment_*)",
 			template => PLUGIN . "_display",
