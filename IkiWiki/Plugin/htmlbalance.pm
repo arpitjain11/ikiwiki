@@ -10,6 +10,8 @@ package IkiWiki::Plugin::htmlbalance;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use HTML::TreeBuilder;
+use XML::Atom::Util qw(encode_xml);
 
 sub import { #{{{
 	hook(type => "getsetup", id => "htmlbalance", call => \&getsetup);
@@ -27,16 +29,6 @@ sub getsetup () { #{{{
 sub sanitize (@) { #{{{
 	my %params=@_;
 	my $ret = '';
-
-	eval {
-		use HTML::TreeBuilder;
-		use XML::Atom::Util qw(encode_xml);
-	};
-
-	if ($@) {
-		error($@);
-		return $params{content};
-	}
 
 	my $tree = HTML::TreeBuilder->new_from_content($params{content});
 	my @nodes = $tree->disembowel();
