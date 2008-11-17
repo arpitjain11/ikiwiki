@@ -205,6 +205,12 @@ sub sessioncgi ($$) { #{{{
 			unless $config{prefix_directives};
 	}
 
+	unless ($allow_html) {
+		$body =~ s/&(\w|#)/&amp;$1/g;
+		$body =~ s/</&lt;/g;
+		$body =~ s/>/&gt;/g;
+	}
+
 	# In this template, the [[!meta]] directives should stay at the end,
 	# so that they will override anything the user specifies. (For
 	# instance, [[!meta author="I can fake the author"]]...)
