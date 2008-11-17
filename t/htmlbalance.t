@@ -5,10 +5,9 @@ use strict;
 BEGIN {
 	eval q{
 		use HTML::TreeBuilder;
-		use XML::Atom::Util qw(encode_xml);
 	};
 	if ($@) {
-		eval q{use Test::More skip_all => "HTML::TreeBuilder or XML::Atom::Util not available"};
+		eval q{use Test::More skip_all => "HTML::TreeBuilder not available"};
 	}
 	else {
 		eval q{use Test::More tests => 7};

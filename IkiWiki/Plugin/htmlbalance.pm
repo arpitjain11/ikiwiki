@@ -11,7 +11,7 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 use HTML::TreeBuilder;
-use XML::Atom::Util qw(encode_xml);
+use HTML::Entities;
 
 sub import { #{{{
 	hook(type => "getsetup", id => "htmlbalance", call => \&getsetup);
@@ -39,7 +39,7 @@ sub sanitize (@) { #{{{
 			$node->delete();
 		}
 		else {
-			$ret .= encode_xml($node);
+			$ret .= encode_entities($node);
 		}
 	}
 	$tree->delete();
