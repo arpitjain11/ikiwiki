@@ -7,13 +7,28 @@ unprivileged (or perhaps even anonymous) users to comment on posts.
 
 Comments are saved as internal pages, so they can never be edited through the CGI,
 only by direct committers. Currently, comments are always in [[ikiwiki/markdown]].
+
+> So, why do it this way, instead of using regular wiki pages in a
+> namespace, such as `$page/comments/*`? Then you could use [[plugins/lockedit]] to
+> limit editing of comments in more powerful ways. --[[Joey]]
+
 Directives and raw HTML are filtered out by default, and comment authorship should
 hopefully be unforgeable by CGI users.
+
+> I'm not sure that raw html should be a problem, as long as the
+> htmlsanitizer and htmlbalanced plugins are enabled. I can see filtering
+> out directives, as a special case. --[[Joey]]
 
 When comments have been enabled generally, you still need to mark which pages
 can have comments, by including the `\[[!postcomment]]` directive in them. By default,
 this directive expands to a "post a comment" link plus an `\[[!inline]]` with
 the comments.
+
+> I don't like this, because it's hard to explain to someone why they have
+> to insert this into every post to their blog. Seems that the model used
+> for discussion pages could work -- if comments are enabled, automatically
+> add the comment posting form and comments to the end of each page.
+> --[[Joey]]
 
 The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
 with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
@@ -53,3 +68,6 @@ Known issues:
   and will be committed but not displayed; to disable comments properly you have to set the
   closed="yes" directive parameter (and refresh the wiki), *then* remove the directive if
   desired
+
+> I haven't done a detailed code review, but I will say I'm pleased you
+> avoided re-implementing inline! --[[Joey]]
