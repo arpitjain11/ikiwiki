@@ -3,13 +3,13 @@
 # Copyright © 2008 Simon McVittie <http://smcv.pseudorandom.co.uk/>
 # Licensed under the GNU GPL, version 2, or any later version published by the
 # Free Software Foundation
-package IkiWiki::Plugin::smcvpostcomment;
+package IkiWiki::Plugin::postcomment;
 
 use warnings;
 use strict;
 use IkiWiki 2.00;
 
-use constant PLUGIN => "smcvpostcomment";
+use constant PLUGIN => "postcomment";
 use constant PREVIEW => "Preview";
 use constant POST_COMMENT => "Post comment";
 use constant CANCEL => "Cancel";
@@ -358,11 +358,11 @@ sub sessioncgi ($$) { #{{{
 
 package IkiWiki::PageSpec;
 
-sub match_smcvpostcomment ($$;@) {
+sub match_postcomment ($$;@) {
 	my $page = shift;
 	my $glob = shift;
 
-	unless ($page =~ s/\[smcvpostcomment\]$//) {
+	unless ($page =~ s/\[postcomment\]$//) {
 		return IkiWiki::FailReason->new("not posting a comment");
 	}
 	return match_glob($page, $glob);
