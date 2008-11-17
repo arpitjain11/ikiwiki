@@ -40,3 +40,14 @@ My proposal is thus:
 
 I'm of course volunteering to implement this, or anything related that
 would solve my problem. Hmmm? --[[intrigeri]]
+
+> I think it would be better to have a different hook that is called for
+> renames, since the two hook actions are very different (unlike the
+> preprocess hook, which does a very similar thing in scan mode).
+> 
+> Just calling it `rename` seems like a reasonable name, by analogy with
+> the `delete` and `change` hooks.
+> 
+> It might make sense to rename `renamepage` to `renamelink` to make it
+> clearer what it does. (I'm not very worried about this breaking things, at
+> this point.) --[[Joey]]
