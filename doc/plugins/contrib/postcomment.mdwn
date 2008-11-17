@@ -1,0 +1,55 @@
+[[!template id=plugin name=postcomment author="[[Simon_McVittie|smcv]]"]]
+[[!tag type=useful]]
+
+This plugin adds "blog-style" comments. The intention is that on a non-wiki site
+(like a blog) you can lock all pages for admin-only access, then allow otherwise
+unprivileged (or perhaps even anonymous) users to comment on posts.
+
+Comments are saved as internal pages, so they can never be edited through the CGI,
+only by direct committers. Currently, comments are always in [[ikiwiki/markdown]].
+Directives and raw HTML are filtered out by default, and comment authorship should
+hopefully be unforgeable by CGI users.
+
+When comments have been enabled generally, you still need to mark which pages
+can have comments, by including the `\[[!postcomment]]` directive in them. By default,
+this directive expands to a "post a comment" link plus an `\[[!inline]]` with
+the comments.
+
+The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
+with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
+the [[plugins/lockedit]] plugin. Typical usage would be something like:
+
+    locked_pages => "!postcomment(*)"
+
+to allow non-admin users to comment on pages, but not edit anything. You can also do
+
+    anonok_pages => "postcomment(*)"
+
+to allow anonymous comments (the IP address will be used as the "author").
+
+Optional parameters to the postcomment directive:
+
+* `commit=no`: by default, comments are committed to version control. Use this to
+  disable commits.
+* `allowhtml=yes`: by default, raw HTML is filtered out. Use this to allow HTML
+  (you should enable [[plugins/htmlscrubber]] and either [[plugins/htmltidy]] or
+  [[plugins/contrib/htmlbalance]] if you do this).
+* `allowdirectives=yes`: by default, IkiWiki directives are filtered out. Use this
+  to allow directives (avoid enabling any [[plugins/type/slow]] directives if you
+  do this).
+* `closed=yes`: use this to prevent new comments while still displaying existing ones.
+* `atom`, `rss`, `feeds`, `feedshow`, `timeformat`, `feedonly`: the same as for [[plugins/inline]]
+
+This plugin aims to close the [[todo]] item "[[todo/supporting_comments_via_disussion_pages]]",
+and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk.
+
+Known issues:
+
+* Needs code review
+* The access control via postcomment() is rather strange
+* There is some common code cargo-culted from other plugins (notably inline and editpage) which
+  should probably be shared
+* If the postcomment directive is removed from a page, comments can still be made on that page,
+  and will be committed but not displayed; to disable comments properly you have to set the
+  closed="yes" directive parameter (and refresh the wiki), *then* remove the directive if
+  desired
