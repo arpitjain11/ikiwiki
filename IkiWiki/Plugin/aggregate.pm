@@ -496,15 +496,19 @@ sub aggregate (@) { #{{{
 			# that contains invalid UTF-8 sequences. Convert
 			# feed to ascii to try to work around.
 			$feed->{message}.=" ".sprintf(gettext("(invalid UTF-8 stripped from feed)"));
-			$content=Encode::decode_utf8($content, 0);
-			$f=eval{XML::Feed->parse(\$content)};
+			$f=eval {
+				$content=Encode::decode_utf8($content, 0);
+				XML::Feed->parse(\$content)
+			};
 		}
 		if ($@) {
 			# Another possibility is badly escaped entities.
 			$feed->{message}.=" ".sprintf(gettext("(feed entities escaped)"));
 			$content=~s/\&(?!amp)(\w+);/&amp;$1;/g;
-			$content=Encode::decode_utf8($content, 0);
-			$f=eval{XML::Feed->parse(\$content)};
+			$f=eval {
+				$content=Encode::decode_utf8($content, 0);
+				XML::Feed->parse(\$content)
+			};
 		}
 		if ($@) {
 			$feed->{message}=gettext("feed crashed XML::Feed!")." ($@)";
