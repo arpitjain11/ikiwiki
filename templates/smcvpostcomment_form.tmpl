@@ -1,3 +1,4 @@
+<div class="smcvpostcomment-form">
 <TMPL_VAR MESSAGE>
 <TMPL_VAR FORM-START>
 <TMPL_VAR FIELD-DO>
@@ -14,9 +15,11 @@ IkiWiki directives ([[!directive]]) are <TMPL_UNLESS NAME="ALLOWDIRECTIVES">not 
 <TMPL_IF NAME="PAGE_PREVIEW">
 <hr />
 <div class="header">
-<span>Page preview:</span>
-</div>
+<span>Comment preview:</span>
+</div><!-- .header -->
 <div id="preview">
 <TMPL_VAR PAGE_PREVIEW>
-</div>
+</div><!-- #preview -->
 </TMPL_IF>
+
+</div><!-- .smcvpostcomment-form -->
