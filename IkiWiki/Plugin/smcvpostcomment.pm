@@ -48,7 +48,9 @@ sub preprocess (@) { #{{{
 	}
 
 	my $page = $params{page};
-	$pagestate{$page}{PLUGIN()}{comments} = 1;
+	$pagestate{$page}{PLUGIN()}{comments} = defined $params{closed}
+		? (not IkiWiki::yesno($params{closed}))
+		: 1;
 	$pagestate{$page}{PLUGIN()}{allowhtml} = IkiWiki::yesno($params{allowhtml});
 	$pagestate{$page}{PLUGIN()}{allowdirectives} = IkiWiki::yesno($params{allowdirectives});
 	$pagestate{$page}{PLUGIN()}{commit} = defined $params{commit}
@@ -60,7 +62,11 @@ sub preprocess (@) { #{{{
 	$formtemplate->param(cgiurl => $config{cgiurl});
 	$formtemplate->param(page => $params{page});
 
-	if ($params{preview}) {
+	if (not $pagestate{$page}{PLUGIN()}{comments}) {
+		$formtemplate->param("disabled" =>
+			gettext('comments are closed'));
+	}
+	elsif ($params{preview}) {
 		$formtemplate->param("disabled" =>
 			gettext('not available during Preview'));
 	}
