@@ -63,16 +63,28 @@ sub preprocess (@) { #{{{
 
 	debug("page $params{page} => destpage $params{destpage}");
 
-	# I'm reasonably sure that this counts as abuse of [[!inline]]
-	return $formtemplate->output . "\n" .
-		IkiWiki::preprocess_inline(
+	my $posts = '';
+	unless (defined $params{inline} && !IkiWiki::yesno($params{inline})) {
+		my @args = (
 			pages => "internal($params{page}/_comment_*)",
 			template => PLUGIN . "_display",
 			show => 0,
 			reverse => "yes",
+			# special stuff passed through
 			page => $params{page},
 			destpage => $params{destpage},
-			preview => $params{preview});
+			preview => $params{preview},
+		);
+		push @args, atom => $params{atom} if defined $params{atom};
+		push @args, rss => $params{rss} if defined $params{rss};
+		push @args, feeds => $params{feeds} if defined $params{feeds};
+		push @args, feedshow => $params{feedshow} if defined $params{feedshow};
+		push @args, timeformat => $params{timeformat} if defined $params{timeformat};
+		push @args, feedonly => $params{feedonly} if defined $params{feedonly};
+		$posts = "\n" . IkiWiki::preprocess_inline(@args);
+	}
+
+	return $formtemplate->output . $posts;
 } # }}}
 
 # FIXME: logic taken from editpage, should be common code?
