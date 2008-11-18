@@ -89,8 +89,8 @@ Optional parameters to the comments directive:
 * `commit=no`: by default, comments are committed to version control. Use this to
   disable commits.
 * `allowhtml=yes`: by default, raw HTML is filtered out. Use this to allow HTML
-  (you should enable [[plugins/htmlscrubber]] and either [[plugins/htmltidy]] or
-  [[plugins/contrib/htmlbalance]] if you do this).
+  (you should enable [[htmlscrubber]] and either [[htmltidy]] or
+  [[htmlbalance]] if you do this).
 * `allowdirectives=yes`: by default, IkiWiki directives are filtered out. Use this
   to allow directives (avoid enabling any [[plugins/type/slow]] directives if you
   do this).
