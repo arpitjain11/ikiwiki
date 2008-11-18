@@ -23,7 +23,7 @@ sub import { #{{{
 } # }}}
 
 sub htmlize { # {{{
-	eval { use IkiWiki::Plugin::mdwn; };
+	eval q{use IkiWiki::Plugin::mdwn};
 	error($@) if ($@);
 	return IkiWiki::Plugin::mdwn::htmlize(@_)
 } # }}}
@@ -72,7 +72,7 @@ sub preprocess (@) { #{{{
 
 	my $posts = '';
 	unless (defined $params{inline} && !IkiWiki::yesno($params{inline})) {
-		eval { use IkiWiki::Plugin::inline; };
+		eval q{use IkiWiki::Plugin::inline};
 		error($@) if ($@);
 		my @args = (
 			pages => "internal($params{page}/_comment_*)",
