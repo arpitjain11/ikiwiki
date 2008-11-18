@@ -30,6 +30,11 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> enough already. Indeed, this very page would accidentally get matched by rules
 >> aiming to control comment-posting... :-) --[[smcv]]
 
+>> The best reason to keep the pages internal seems to me to be that you
+>> don't want the overhead of every comment spawning its own wiki page.
+>> The worst problem with it though is that you have to assume the pages
+>> are mdwn (or `default_pageext`) and not support other formats. --[[Joey]]
+
 When using this plugin, you should also enable [[htmlscrubber]] and either [[htmltidy]]
 or [[htmlbalance]]. Directives are filtered out by default, to avoid commenters slowing
 down the wiki by causing time-consuming processing. As long as the recommended plugins
@@ -49,6 +54,16 @@ are enabled, comment authorship should hopefully be unforgeable by CGI users.
 >> I've rebased the plugin on master, made it sanitize individual posts' content
 >> and removed the option to disallow raw HTML. --[[smcv]]
 
+>> There might be some use cases for other directives, such as img, in
+>> comments.
+>> 
+>> I don't know if meta is "safe" (ie, guaranteed to be inexpensive and not
+>> allow users to do annoying things) or if it will continue to be in the
+>> future. Hard to predict really, all that can be said with certainty is
+>> all directives will contine to be inexpensive and safe enough that it's
+>> sensible to allow users to (ab)use them on open wikis.
+>> --[[Joey]]
+
 When comments have been enabled generally, you still need to mark which pages
 can have comments, by including the `\[[!comments]]` directive in them. By default,
 this directive expands to a "post a comment" link plus an `\[[!inline]]` with
@@ -65,10 +80,15 @@ the comments.
 >> Then control freaks like me could use "link(tags/comments)" and tag pages
 >> as allowing comments.
 >>
+>>> Yes, I think a pagespec is the way to go. --[[Joey]]
+>> 
 >> The model used for discussion pages does require patching the existing
 >> page template, which I was trying to avoid - I'm not convinced that having
 >> every possible feature hard-coded there really scales (and obviously it's
 >> rather annoying while this plugin is on a branch). --[[smcv]]
+
+>>> Using the template would allow customising the html around the comments
+>>> which seems like a good thing?
 
 The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
 with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
