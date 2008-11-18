@@ -39,6 +39,8 @@ sub pagetemplate (@) { #{{{
 			else {
 				$diff=join("", @lines);
 			}
+			# escape html
+			$diff = encode_entities($diff);
 			# escape links and preprocessor stuff
 			$diff = encode_entities($diff, '\[\]');
 			$template->param(diff => $diff);

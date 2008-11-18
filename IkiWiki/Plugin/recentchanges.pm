@@ -160,10 +160,12 @@ sub store ($$$) { #{{{
 		);
 	}
 
-	# escape wikilinks and preprocessor stuff in commit messages
 	if (ref $change->{message}) {
 		foreach my $field (@{$change->{message}}) {
 			if (exists $field->{line}) {
+				# escape html
+				$field->{line} = encode_entities($field->{line});
+				# escape links and preprocessor stuff
 				$field->{line} = encode_entities($field->{line}, '\[\]');
 			}
 		}
