@@ -535,7 +535,7 @@ sub aggregate (@) { #{{{
 				copyright => $f->copyright,
 				title => defined $entry->title ? decode_entities($entry->title) : "untitled",
 				link => $entry->link,
-				content => defined $c ? $c->body : "",
+				content => (defined $c && defined $c->body) ? $c->body : "",
 				guid => defined $entry->id ? $entry->id : time."_".$feed->{name},
 				ctime => $entry->issued ? ($entry->issued->epoch || time) : time,
 				base => (defined $c && $c->can("base")) ? $c->base : undef,
