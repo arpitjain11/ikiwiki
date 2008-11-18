@@ -33,7 +33,13 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> The best reason to keep the pages internal seems to me to be that you
 >> don't want the overhead of every comment spawning its own wiki page.
 >> The worst problem with it though is that you have to assume the pages
->> are mdwn (or `default_pageext`) and not support other formats. --[[Joey]]
+>> are mdwn (or `default_pageext`) and not support other formats.
+
+>> By the way, I think that who can post comments should be controllable by
+>> the existing plugins opendiscussion, anonok, signinedit, and lockedit. Allowing
+>> posting comments w/o any login, while a nice capability, can lead to
+>> spam problems. So, use `check_canedit` as at least a first-level check?
+>> --[[Joey]]
 
 When using this plugin, you should also enable [[htmlscrubber]] and either [[htmltidy]]
 or [[htmlbalance]]. Directives are filtered out by default, to avoid commenters slowing
