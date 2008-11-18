@@ -12,12 +12,32 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 > namespace, such as `$page/comments/*`? Then you could use [[plugins/lockedit]] to
 > limit editing of comments in more powerful ways. --[[Joey]]
 
+>> Er... I suppose so. I'd assumed that these pages ought to only exist as inlines
+>> rather than as individual pages (same reasoning as aggregated posts), though.
+>>
+>> lockedit is actually somewhat insufficient, since `check_canedit()`
+>> doesn't distinguish between creation and editing; I'd have to continue to use
+>> some sort of odd hack to allow creation but not editing.
+>>
+>> I also can't think of any circumstance where you'd want a user other than
+>> admins (~= git committers) and possibly the commenter (who we can't check for
+>> at the moment anyway, I don't think?) to be able to edit comments - I think
+>> user expectations for something that looks like ordinary blog comments are
+>> likely to include "others can't put words into my mouth". --[[smcv]]
+
 Directives and raw HTML are filtered out by default, and comment authorship should
 hopefully be unforgeable by CGI users.
 
 > I'm not sure that raw html should be a problem, as long as the
 > htmlsanitizer and htmlbalanced plugins are enabled. I can see filtering
 > out directives, as a special case. --[[Joey]]
+
+>> Right, if I sanitize each post individually, with htmlscrubber and either htmltidy
+>> or htmlbalance turned on, then there should be no way the user can forge a comment;
+>> I was initially wary of allowing meta directives, but I think those are OK, as long
+>> as the comment template puts the \[[!meta author]] at the *end*. Disallowing
+>> directives is more a way to avoid commenters causing expensive processing than
+>> anything else, at this point. --[[smcv]]
 
 When comments have been enabled generally, you still need to mark which pages
 can have comments, by including the `\[[!postcomment]]` directive in them. By default,
@@ -29,6 +49,16 @@ the comments.
 > for discussion pages could work -- if comments are enabled, automatically
 > add the comment posting form and comments to the end of each page.
 > --[[Joey]]
+
+>> I don't think I'd want comments on *every* page (particularly, not the
+>> front page). Perhaps a pagespec in the setup file, where the default is "*"?
+>> Then control freaks like me could use "link(tags/comments)" and tag pages
+>> as allowing comments.
+>>
+>> The model used for discussion pages does require patching the existing
+>> page template, which I was trying to avoid - I'm not convinced that having
+>> every possible feature hard-coded there really scales (and obviously it's
+>> rather annoying while this plugin is on a branch). --[[smcv]]
 
 The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
 with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
