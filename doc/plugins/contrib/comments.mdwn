@@ -30,8 +30,10 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> enough already. Indeed, this very page would accidentally get matched by rules
 >> aiming to control comment-posting... :-) --[[smcv]]
 
-Directives and raw HTML are filtered out by default, and comment authorship should
-hopefully be unforgeable by CGI users.
+When using this plugin, you should also enable [[htmlscrubber]] and either [[htmltidy]]
+or [[htmlbalance]]. Directives are filtered out by default, to avoid commenters slowing
+down the wiki by causing time-consuming processing. As long as the recommended plugins
+are enabled, comment authorship should hopefully be unforgeable by CGI users.
 
 > I'm not sure that raw html should be a problem, as long as the
 > htmlsanitizer and htmlbalanced plugins are enabled. I can see filtering
@@ -44,9 +46,8 @@ hopefully be unforgeable by CGI users.
 >> directives is more a way to avoid commenters causing expensive processing than
 >> anything else, at this point.
 >>
->> I've rebased the plugin on master and made it sanitize individual posts' content now.
->> Disallowing HTML is still optional and on by default, but it's trivial to remove
->> the code. --[[smcv]]
+>> I've rebased the plugin on master, made it sanitize individual posts' content
+>> and removed the option to disallow raw HTML. --[[smcv]]
 
 When comments have been enabled generally, you still need to mark which pages
 can have comments, by including the `\[[!comments]]` directive in them. By default,
@@ -88,9 +89,6 @@ Optional parameters to the comments directive:
 
 * `commit=no`: by default, comments are committed to version control. Use this to
   disable commits.
-* `allowhtml=yes`: by default, raw HTML is filtered out. Use this to allow HTML
-  (you should enable [[htmlscrubber]] and either [[htmltidy]] or
-  [[htmlbalance]] if you do this).
 * `allowdirectives=yes`: by default, IkiWiki directives are filtered out. Use this
   to allow directives (avoid enabling any [[plugins/type/slow]] directives if you
   do this).
