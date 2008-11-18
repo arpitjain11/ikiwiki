@@ -232,7 +232,7 @@ sub sessioncgi ($$) { #{{{
 	my $body = $form->field('body') || '';
 	$body =~ s/\r\n/\n/g;
 	$body =~ s/\r/\n/g;
-	$body = "\n" if $body !~ /\n$/;
+	$body .= "\n" if $body !~ /\n$/;
 
 	unless ($allow_directives) {
 		# don't allow new-style directives at all
