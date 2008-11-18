@@ -1,4 +1,4 @@
-[[!template id=plugin name=postcomment author="[[Simon_McVittie|smcv]]"]]
+[[!template id=plugin name=comments author="[[Simon_McVittie|smcv]]"]]
 [[!tag type/useful]]
 
 This plugin adds "blog-style" comments. The intention is that on a non-wiki site
@@ -23,7 +23,12 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> admins (~= git committers) and possibly the commenter (who we can't check for
 >> at the moment anyway, I don't think?) to be able to edit comments - I think
 >> user expectations for something that looks like ordinary blog comments are
->> likely to include "others can't put words into my mouth". --[[smcv]]
+>> likely to include "others can't put words into my mouth".
+>>
+>> My other objection to using a namespace is that I'm not particularly happy about
+>> plugins consuming arbitrary pieces of the wiki namespace - /discussion is bad
+>> enough already. Indeed, this very page would accidentally get matched by rules
+>> aiming to control comment-posting... :-) --[[smcv]]
 
 Directives and raw HTML are filtered out by default, and comment authorship should
 hopefully be unforgeable by CGI users.
@@ -37,10 +42,14 @@ hopefully be unforgeable by CGI users.
 >> I was initially wary of allowing meta directives, but I think those are OK, as long
 >> as the comment template puts the \[[!meta author]] at the *end*. Disallowing
 >> directives is more a way to avoid commenters causing expensive processing than
->> anything else, at this point. --[[smcv]]
+>> anything else, at this point.
+>>
+>> I've rebased the plugin on master and made it sanitize individual posts' content now.
+>> Disallowing HTML is still optional and on by default, but it's trivial to remove
+>> the code. --[[smcv]]
 
 When comments have been enabled generally, you still need to mark which pages
-can have comments, by including the `\[[!postcomment]]` directive in them. By default,
+can have comments, by including the `\[[!comments]]` directive in them. By default,
 this directive expands to a "post a comment" link plus an `\[[!inline]]` with
 the comments.
 
@@ -72,7 +81,10 @@ to allow non-admin users to comment on pages, but not edit anything. You can als
 
 to allow anonymous comments (the IP address will be used as the "author").
 
-Optional parameters to the postcomment directive:
+> This is still called postcomment, although I've renamed the rest of the plugin
+> to comments as suggested on #ikiwiki --[[smcv]]
+
+Optional parameters to the comments directive:
 
 * `commit=no`: by default, comments are committed to version control. Use this to
   disable commits.
@@ -86,7 +98,8 @@ Optional parameters to the postcomment directive:
 * `atom`, `rss`, `feeds`, `feedshow`, `timeformat`, `feedonly`: the same as for [[plugins/inline]]
 
 This plugin aims to close the [[todo]] item "[[todo/supporting_comments_via_disussion_pages]]",
-and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk.
+and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk (it's the
+`postcomment` branch).
 
 Known issues:
 
@@ -94,7 +107,7 @@ Known issues:
 * The access control via postcomment() is rather strange
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
-* If the postcomment directive is removed from a page, comments can still be made on that page,
+* If the comments directive is removed from a page, comments can still be made on that page,
   and will be committed but not displayed; to disable comments properly you have to set the
   closed="yes" directive parameter (and refresh the wiki), *then* remove the directive if
   desired
