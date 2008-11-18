@@ -3,6 +3,8 @@ ikiwiki (2.71) UNRELEASED; urgency=low
   * htmlbalance: New plugin contributed by Simon McVittie.
   * Change deb dependencies to list Text::Markdown before markdown (really
     this time).
+  * Improve escaping of wikilinks and preprocessor directives in content
+    produced by aggregate and recentchanges.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 17 Nov 2008 14:02:10 -0500
 

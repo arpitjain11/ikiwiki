@@ -610,7 +610,7 @@ sub add_page (@) { #{{{
 	my $template=template($feed->{template}, blind_cache => 1);
 	$template->param(title => $params{title})
 		if defined $params{title} && length($params{title});
-	$template->param(content => htmlescape(htmlabs($params{content},
+	$template->param(content => wikiescape(htmlabs($params{content},
 		defined $params{base} ? $params{base} : $feed->{feedurl})));
 	$template->param(name => $feed->{name});
 	$template->param(url => $feed->{url});
@@ -637,11 +637,9 @@ sub add_page (@) { #{{{
 	}
 } #}}}
 
-sub htmlescape ($) { #{{{
+sub wikiescape ($) { #{{{
 	# escape accidental wikilinks and preprocessor stuff
-	my $html=shift;
-	$html=~s/(?<!\\)\[\[/\\\[\[/g;
-	return $html;
+	return encode_entities(shift, '\[\]');
 } #}}}
 
 sub urlabs ($$) { #{{{
