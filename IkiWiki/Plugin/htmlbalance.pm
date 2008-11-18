@@ -30,7 +30,15 @@ sub sanitize (@) { #{{{
 	my %params=@_;
 	my $ret = '';
 
-	my $tree = HTML::TreeBuilder->new_from_content($params{content});
+	my $tree = HTML::TreeBuilder->new();
+	$tree->ignore_unknown(0);
+	$tree->ignore_ignorable_whitespace(0);
+	$tree->no_space_compacting(1);
+	$tree->p_strict(1);
+	$tree->store_comments(0);
+	$tree->store_declarations(0);
+	$tree->store_pis(0);
+	$tree->parse_content($params{content});
 	my @nodes = $tree->disembowel();
 	foreach my $node (@nodes) {
 		if (ref $node) {
