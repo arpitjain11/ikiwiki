@@ -250,6 +250,17 @@ sub sessioncgi ($$) { #{{{
 		$body =~ s/>/&gt;/g;
 	}
 
+	IkiWiki::run_hooks(sanitize => sub {
+		# $fake is a possible location for this comment. We don't
+		# know yet what the comment number *actually* is.
+		my $fake = "$page/_comment_1";
+		$body=shift->(
+			page => $fake,
+			destpage => $fake,
+			content => $body,
+		);
+	});
+
 	# In this template, the [[!meta]] directives should stay at the end,
 	# so that they will override anything the user specifies. (For
 	# instance, [[!meta author="I can fake the author"]]...)
@@ -268,9 +279,9 @@ sub sessioncgi ($$) { #{{{
 	# - this means that if they do, rocks fall and everyone dies
 
 	if ($form->submitted eq PREVIEW) {
-		# $fake is a location that has the same number of slashes
-		# as the eventual location of this comment.
-		my $fake = "$page/_comments_hypothetical";
+		# $fake is a possible location for this comment. We don't
+		# know yet what the comment number *actually* is.
+		my $fake = "$page/_comment_1";
 		my $preview = IkiWiki::htmlize($fake, $page, 'mdwn',
 				IkiWiki::linkify($page, $page,
 					IkiWiki::preprocess($page, $page,
