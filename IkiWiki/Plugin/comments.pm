@@ -48,7 +48,6 @@ sub preprocess (@) { #{{{
 	$pagestate{$page}{comments}{comments} = defined $params{closed}
 		? (not IkiWiki::yesno($params{closed}))
 		: 1;
-	$pagestate{$page}{comments}{allowhtml} = IkiWiki::yesno($params{allowhtml});
 	$pagestate{$page}{comments}{allowdirectives} = IkiWiki::yesno($params{allowdirectives});
 	$pagestate{$page}{comments}{commit} = defined $params{commit}
 		? IkiWiki::yesno($params{commit})
@@ -187,7 +186,6 @@ sub sessioncgi ($$) { #{{{
 	}
 
 	my $allow_directives = $pagestate{$page}{comments}{allowdirectives};
-	my $allow_html = $pagestate{$page}{comments}{allowdirectives};
 	my $commit_comments = defined $pagestate{$page}{comments}{commit}
 		? $pagestate{$page}{comments}{commit}
 		: 1;
@@ -203,7 +201,6 @@ sub sessioncgi ($$) { #{{{
 		htmllink($page, $page, 'ikiwiki/formatting',
 			noimageinline => 1,
 			linktext => 'FormattingHelp'),
-			allowhtml => $allow_html,
 			allowdirectives => $allow_directives);
 
 	if (not exists $pagesources{$page}) {
@@ -241,12 +238,6 @@ sub sessioncgi ($$) { #{{{
 		# wikilink, if prefix_directives is off
 		$body =~ s/(^|[^\\])\[\[(?![^\n\s\]+]\]\])/$1\\[[!/g
 			unless $config{prefix_directives};
-	}
-
-	unless ($allow_html) {
-		$body =~ s/&(\w|#)/&amp;$1/g;
-		$body =~ s/</&lt;/g;
-		$body =~ s/>/&gt;/g;
 	}
 
 	IkiWiki::run_hooks(sanitize => sub {
