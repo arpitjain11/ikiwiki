@@ -3,22 +3,21 @@
 # Copyright © 2008 Simon McVittie <http://smcv.pseudorandom.co.uk/>
 # Licensed under the GNU GPL, version 2, or any later version published by the
 # Free Software Foundation
-package IkiWiki::Plugin::postcomment;
+package IkiWiki::Plugin::comments;
 
 use warnings;
 use strict;
 use IkiWiki 2.00;
 
-use constant PLUGIN => "postcomment";
 use constant PREVIEW => "Preview";
 use constant POST_COMMENT => "Post comment";
 use constant CANCEL => "Cancel";
 
 sub import { #{{{
-	hook(type => "getsetup", id => PLUGIN,  call => \&getsetup);
-	hook(type => "preprocess", id => PLUGIN, call => \&preprocess);
-	hook(type => "sessioncgi", id => PLUGIN, call => \&sessioncgi);
-	hook(type => "htmlize", id => "_".PLUGIN,
+	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
+	hook(type => "preprocess", id => 'comments', call => \&preprocess);
+	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
+	hook(type => "htmlize", id => "_comment",
 		call => \&IkiWiki::Plugin::mdwn::htmlize);
 	IkiWiki::loadplugin("inline");
 	IkiWiki::loadplugin("mdwn");
@@ -43,26 +42,25 @@ sub preprocess (@) { #{{{
 	my %params=@_;
 
 	unless (length $config{cgiurl}) {
-		error(sprintf (gettext("[[!%s plugin requires CGI enabled]]"),
-			PLUGIN));
+		error(gettext("[[!comments plugin requires CGI enabled]]"));
 	}
 
 	my $page = $params{page};
-	$pagestate{$page}{PLUGIN()}{comments} = defined $params{closed}
+	$pagestate{$page}{comments}{comments} = defined $params{closed}
 		? (not IkiWiki::yesno($params{closed}))
 		: 1;
-	$pagestate{$page}{PLUGIN()}{allowhtml} = IkiWiki::yesno($params{allowhtml});
-	$pagestate{$page}{PLUGIN()}{allowdirectives} = IkiWiki::yesno($params{allowdirectives});
-	$pagestate{$page}{PLUGIN()}{commit} = defined $params{commit}
+	$pagestate{$page}{comments}{allowhtml} = IkiWiki::yesno($params{allowhtml});
+	$pagestate{$page}{comments}{allowdirectives} = IkiWiki::yesno($params{allowdirectives});
+	$pagestate{$page}{comments}{commit} = defined $params{commit}
 		? IkiWiki::yesno($params{commit})
 		: 1;
 
-	my $formtemplate = IkiWiki::template(PLUGIN . "_embed.tmpl",
+	my $formtemplate = IkiWiki::template("comments_embed.tmpl",
 		blind_cache => 1);
 	$formtemplate->param(cgiurl => $config{cgiurl});
 	$formtemplate->param(page => $params{page});
 
-	if (not $pagestate{$page}{PLUGIN()}{comments}) {
+	if (not $pagestate{$page}{comments}{comments}) {
 		$formtemplate->param("disabled" =>
 			gettext('comments are closed'));
 	}
@@ -79,7 +77,7 @@ sub preprocess (@) { #{{{
 		error($@) if ($@);
 		my @args = (
 			pages => "internal($params{page}/_comment_*)",
-			template => PLUGIN . "_display",
+			template => "comments_display",
 			show => 0,
 			reverse => "yes",
 			# special stuff passed through
@@ -142,7 +140,7 @@ sub sessioncgi ($$) { #{{{
 	my $session=shift;
 
 	my $do = $cgi->param('do');
-	return unless $do eq PLUGIN;
+	return unless $do eq 'comment';
 
 	IkiWiki::decode_cgi_utf8($cgi);
 
@@ -160,14 +158,14 @@ sub sessioncgi ($$) { #{{{
 		action => $config{cgiurl},
 		header => 0,
 		table => 0,
-		template => scalar IkiWiki::template_params(PLUGIN . '_form.tmpl'),
+		template => scalar IkiWiki::template_params('comments_form.tmpl'),
 		# wtf does this do in editpage?
 		wikiname => $config{wikiname},
 	);
 
 	IkiWiki::decode_form_utf8($form);
 	IkiWiki::run_hooks(formbuilder_setup => sub {
-			shift->(title => PLUGIN, form => $form, cgi => $cgi,
+			shift->(title => "comment", form => $form, cgi => $cgi,
 				session => $session, buttons => \@buttons);
 		});
 	IkiWiki::decode_form_utf8($form);
@@ -189,10 +187,10 @@ sub sessioncgi ($$) { #{{{
 		error(gettext("bad page name"));
 	}
 
-	my $allow_directives = $pagestate{$page}{PLUGIN()}{allowdirectives};
-	my $allow_html = $pagestate{$page}{PLUGIN()}{allowdirectives};
-	my $commit_comments = defined $pagestate{$page}{PLUGIN()}{commit}
-		? $pagestate{$page}{PLUGIN()}{commit}
+	my $allow_directives = $pagestate{$page}{comments}{allowdirectives};
+	my $allow_html = $pagestate{$page}{comments}{allowdirectives};
+	my $commit_comments = defined $pagestate{$page}{comments}{commit}
+		? $pagestate{$page}{comments}{commit}
 		: 1;
 
 	# FIXME: is this right? Or should we be using the candidate subpage
@@ -214,7 +212,7 @@ sub sessioncgi ($$) { #{{{
 			"page '%s' doesn't exist, so you can't comment"),
 			$page));
 	}
-	if (not $pagestate{$page}{PLUGIN()}{comments}) {
+	if (not $pagestate{$page}{comments}{comments}) {
 		error(sprintf(gettext(
 			"comments are not enabled on page '%s'"),
 			$page));
@@ -227,7 +225,7 @@ sub sessioncgi ($$) { #{{{
 		exit;
 	}
 
-	IkiWiki::check_canedit($page . "[" . PLUGIN . "]", $cgi, $session);
+	IkiWiki::check_canedit($page . "[postcomment]", $cgi, $session);
 
 	my ($authorurl, $author) = linkuser(getcgiuser($session));
 
@@ -255,7 +253,7 @@ sub sessioncgi ($$) { #{{{
 	# In this template, the [[!meta]] directives should stay at the end,
 	# so that they will override anything the user specifies. (For
 	# instance, [[!meta author="I can fake the author"]]...)
-	my $content_tmpl = template(PLUGIN . '_comment.tmpl');
+	my $content_tmpl = template('comments_comment.tmpl');
 	$content_tmpl->param(author => $author);
 	$content_tmpl->param(authorurl => $authorurl);
 	$content_tmpl->param(subject => $form->field('subject'));
@@ -272,7 +270,7 @@ sub sessioncgi ($$) { #{{{
 	if ($form->submitted eq PREVIEW) {
 		# $fake is a location that has the same number of slashes
 		# as the eventual location of this comment.
-		my $fake = "$page/_" . PLUGIN . "hypothetical";
+		my $fake = "$page/_comments_hypothetical";
 		my $preview = IkiWiki::htmlize($fake, $page, 'mdwn',
 				IkiWiki::linkify($page, $page,
 					IkiWiki::preprocess($page, $page,
@@ -284,7 +282,7 @@ sub sessioncgi ($$) { #{{{
 					content => $preview);
 			});
 
-		my $template = template(PLUGIN . "_display.tmpl");
+		my $template = template("comments_display.tmpl");
 		$template->param(content => $preview);
 		$template->param(title => $form->field('subject'));
 		$template->param(ctime => displaytime(time));
@@ -311,7 +309,7 @@ sub sessioncgi ($$) { #{{{
 		my $file;
 		do {
 			$i++;
-			$file = "$page/_comment_${i}._" . PLUGIN;
+			$file = "$page/_comment_${i}._comment";
 		} while (-e "$config{srcdir}/$file");
 
 		# FIXME: could probably do some sort of graceful retry
