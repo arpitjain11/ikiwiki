@@ -17,8 +17,7 @@ sub import { #{{{
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
 	hook(type => "preprocess", id => 'comments', call => \&preprocess);
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
-	hook(type => "htmlize", id => "_comment",
-		call => \&IkiWiki::Plugin::mdwn::htmlize);
+	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	IkiWiki::loadplugin("inline");
 	IkiWiki::loadplugin("mdwn");
 } # }}}
