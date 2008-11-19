@@ -18,12 +18,16 @@ Even better would be to only display the cookie note as a warning if the login p
 > time to check if it took, which is both complicated and probably would
 > look bad.
 
+>> Might this be possible client-side with javascript? A quick google suggests it is possible:
+>> <http://www.javascriptkit.com/javatutors/cookiedetect.shtml>. MJR, want to try adding
+>> that?  -- [[Will]]
+
 Best of all would be to use URL-based or hidden-field-based session tokens if cookies are not permitted.
 
 > This is not very doable since most of the pages the user browses are
 > static pages in a static location.
 
 >> The pages that lose data without cookies (the edit pages, primarily)
->> don't look static. Are they really? --[MJR](http://mjr.towers.org.uk)a
+>> don't look static. Are they really? --[MJR](http://mjr.towers.org.uk)
 
 >>> As soon as you post an edit page, you are back to a static website.
