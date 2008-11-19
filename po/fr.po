@@ -7,16 +7,15 @@
 # Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: ikiwiki 2.70 \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-31 16:37-0400\n"
-"PO-Revision-Date: 2008-10-11 10:34+0200\n"
-"Last-Translator: Julien Patriarca <patriarcaj@gmail.com>\n"
+"PO-Revision-Date: 2008-11-19 21:53+0100\n"
+"Last-Translator: Philippe Batailler <philippe.batailler@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: ../IkiWiki/CGI.pm:113
 msgid "You need to log in first."
@@ -24,8 +23,7 @@ msgstr "Vous devez d'abord vous identifier."
 
 #: ../IkiWiki/CGI.pm:145
 msgid "login failed, perhaps you need to turn on cookies?"
-msgstr ""
-"Échec de l'identification, vous devriez peut-être autoriser les cookies."
+msgstr "Échec de l'identification, vous devez autoriser les cookies."
 
 #: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:350
 msgid "Your login session has expired."
@@ -57,11 +55,11 @@ msgstr "Erreur"
 
 #: ../IkiWiki/Plugin/aggregate.pm:80
 msgid "Aggregation triggered via web."
-msgstr "Agrégation déclenchée via Internet"
+msgstr "Agrégation déclenchée par le web"
 
 #: ../IkiWiki/Plugin/aggregate.pm:89
 msgid "Nothing to do right now, all feeds are up-to-date!"
-msgstr "Rien à faire pour le moment, tous les flux sont à jour!"
+msgstr "Rien à faire pour le moment, tous les flux sont à jour !"
 
 #: ../IkiWiki/Plugin/aggregate.pm:216
 #, perl-format
@@ -93,7 +91,7 @@ msgstr "Fin de validité de %s"
 #: ../IkiWiki/Plugin/aggregate.pm:463
 #, perl-format
 msgid "last checked %s"
-msgstr ""
+msgstr "dernière vérification : %s"
 
 #: ../IkiWiki/Plugin/aggregate.pm:467
 #, perl-format
@@ -129,9 +127,8 @@ msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:31
-#, fuzzy
 msgid "deleting bucket.."
-msgstr "suppression du compartiment (« bucket »)..."
+msgstr "suppression du compartiment S3 (« bucket »)..."
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
 msgid "done"
@@ -143,17 +140,14 @@ msgid "Must specify %s"
 msgstr "Vous devez spécifier %s"
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:136
-#, fuzzy
 msgid "Failed to create bucket in S3: "
-msgstr "Échec lors de la création du compartiment sur S3 :"
+msgstr "Impossible de créer un compartiment S3 :"
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:221
-#, fuzzy
 msgid "Failed to save file to S3: "
-msgstr "Échec lors de la création du fichier sur S3 :"
+msgstr "Impossible de sauvegarder le fichier dans le compartiment S3 :"
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:243
-#, fuzzy
 msgid "Failed to delete file from S3: "
 msgstr "Échec lors de la suppression du fichier sur S3 :"
 
@@ -163,13 +157,12 @@ msgid "there is already a page named %s"
 msgstr "il existe déjà une page nommée %s"
 
 #: ../IkiWiki/Plugin/attachment.pm:82
-#, fuzzy
 msgid "prohibited by allowed_attachments"
 msgstr "action interdite par allowed_attachments"
 
 #: ../IkiWiki/Plugin/attachment.pm:190
 msgid "bad attachment filename"
-msgstr "Mauvais nom de la pièce jointe"
+msgstr "Nom de la pièce jointe incorrect"
 
 #: ../IkiWiki/Plugin/attachment.pm:232
 msgid "attachment upload"
@@ -212,14 +205,13 @@ msgid "no text was copied in this page with id %s"
 msgstr "Aucun texte n'a été copié dans cette page avec l'identifiant %s"
 
 #: ../IkiWiki/Plugin/editpage.pm:40
-#, fuzzy, perl-format
+#, perl-format
 msgid "removing old preview %s"
 msgstr "Suppression de l'ancienne prévisualisation %s"
 
 #: ../IkiWiki/Plugin/editpage.pm:125
-#, fuzzy
 msgid "bad page name"
-msgstr "Mauvais nom de la pièce jointe"
+msgstr "nom de page incorrect"
 
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
@@ -257,12 +249,12 @@ msgstr "Échec du traitement"
 
 #: ../IkiWiki/Plugin/format.pm:22
 msgid "must specify format and text"
-msgstr ""
+msgstr "le format et le texte doivent être indiqués"
 
 #: ../IkiWiki/Plugin/format.pm:25
-#, fuzzy, perl-format
+#, perl-format
 msgid "unsupported page format %s"
-msgstr "Système de contrôle de version non reconnu"
+msgstr "format de page non reconnu %s"
 
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
@@ -270,32 +262,31 @@ msgstr "Échec du lancement de « fortune »"
 
 #: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
 #: ../IkiWiki/Receive.pm:129
-#, fuzzy, perl-format
+#, perl-format
 msgid "you are not allowed to change %s"
-msgstr "vous n'êtes pas authentifié comme administrateur"
+msgstr "vous n'êtes pas autorisé à modifier %s"
 
 #: ../IkiWiki/Plugin/git.pm:658
 #, perl-format
 msgid "you cannot act on a file with mode %s"
-msgstr ""
+msgstr "Vous ne pouvez utiliser le mode %s pour les fichiers"
 
 #: ../IkiWiki/Plugin/git.pm:662
-#, fuzzy
 msgid "you are not allowed to change file modes"
-msgstr "vous n'êtes pas authentifié comme administrateur"
+msgstr "vous n'êtes pas autorisé à modifier le mode des fichiers"
 
 #: ../IkiWiki/Plugin/google.pm:27
-#, fuzzy, perl-format
+#, perl-format
 msgid "Must specify %s when using the google search plugin"
-msgstr "Vous devez indiquer %s lors de l'utilisation du greffon « search »."
+msgstr "Vous devez indiquer %s lors de l'utilisation du greffon « google »."
 
 #: ../IkiWiki/Plugin/google.pm:31
 msgid "Failed to parse url, cannot determine domain name"
-msgstr ""
+msgstr "Impossible d'analyser l'url, pas de nom de domaine"
 
 #: ../IkiWiki/Plugin/googlecalendar.pm:32
 msgid "failed to find url in html"
-msgstr "Échec dans la recherche d'une URL dans le Code HTML"
+msgstr "Impossible de trouver une URL dans le code HTML"
 
 #: ../IkiWiki/Plugin/graphviz.pm:67
 msgid "failed to run graphviz"
@@ -337,12 +328,10 @@ msgstr ""
 "ou --atom"
 
 #: ../IkiWiki/Plugin/inline.pm:139
-#, fuzzy
 msgid "page editing not allowed"
 msgstr "Modification de page interdite"
 
 #: ../IkiWiki/Plugin/inline.pm:156
-#, fuzzy
 msgid "missing pages parameter"
 msgstr "paramètre « pages » manquant"
 
@@ -358,7 +347,7 @@ msgstr "Ajouter un nouvel article dont le titre est :"
 #: ../IkiWiki/Plugin/inline.pm:301
 #, perl-format
 msgid "nonexistant template %s"
-msgstr "Le modèle (« template ») %s n'existe pas"
+msgstr "Le modèle de page %s n'existe pas"
 
 #: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
 msgid "Discussion"
@@ -430,7 +419,7 @@ msgstr "Toutes les pages sont liées à d'autres pages."
 
 #: ../IkiWiki/Plugin/pagetemplate.pm:30
 msgid "bad or missing template"
-msgstr "Modèle incorrect ou manquant"
+msgstr "Modèle de page incorrect ou manquant"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:247
 msgid "Account creation successful. Now you can Login."
@@ -448,7 +437,7 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/passwordauth.pm:291
 msgid "Failed to send mail"
-msgstr "Échec de l'envoi du courriel"
+msgstr "Impossible d'envoyer un courriel"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:293
 msgid "You have been mailed password reset instructions."
@@ -480,7 +469,7 @@ msgstr "va envoyer un ping à %s"
 #: ../IkiWiki/Plugin/pinger.pm:61
 #, perl-format
 msgid "Ignoring ping directive for wiki %s (this wiki is %s)"
-msgstr "les instructions du wiki %s sont ignorées (ce wiki est %s)"
+msgstr "Les instructions du wiki %s sont ignorées (ce wiki est %s)"
 
 #: ../IkiWiki/Plugin/pinger.pm:77
 msgid "LWP not found, not pinging"
@@ -500,7 +489,7 @@ msgstr "polygen n'est pas installé"
 
 #: ../IkiWiki/Plugin/polygen.pm:60
 msgid "command failed"
-msgstr "Échec lors du lancement de la commande"
+msgstr "Échec de la commande"
 
 #: ../IkiWiki/Plugin/postsparkline.pm:41
 msgid "missing formula"
@@ -548,15 +537,15 @@ msgstr "%A après-midi"
 
 #: ../IkiWiki/Plugin/prettydate.pm:32
 msgid "late %A afternoon"
-msgstr "tard l'après-midi de %A"
+msgstr "tard dans l'après-midi de %A"
 
 #: ../IkiWiki/Plugin/prettydate.pm:33
 msgid "%A evening"
-msgstr "%A soir"
+msgstr "%A en soirée"
 
 #: ../IkiWiki/Plugin/prettydate.pm:35
 msgid "late %A evening"
-msgstr "tard %A soir"
+msgstr "tard %A en soirée"
 
 #: ../IkiWiki/Plugin/prettydate.pm:37
 msgid "%A night"
@@ -575,12 +564,11 @@ msgid "at noon on %A"
 msgstr "%A, à midi"
 
 #: ../IkiWiki/Plugin/progress.pm:34
-#, fuzzy, perl-format
+#, perl-format
 msgid "illegal percent value %s"
 msgstr "pourcentage %s illégal"
 
 #: ../IkiWiki/Plugin/progress.pm:59
-#, fuzzy
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 "L'un des paramètres « percent », « totalpages » ou « donepages » est nécessaire."
@@ -638,7 +626,7 @@ msgstr "Aucun changement dans le nom du fichier n'a été spécifié"
 #: ../IkiWiki/Plugin/rename.pm:68
 #, perl-format
 msgid "illegal name"
-msgstr "appellation non autorisé"
+msgstr "appellation non autorisée"
 
 #: ../IkiWiki/Plugin/rename.pm:73
 #, perl-format
@@ -656,13 +644,12 @@ msgid "rename %s"
 msgstr "%s renommé"
 
 #: ../IkiWiki/Plugin/rename.pm:138
-#, fuzzy
 msgid "Also rename SubPages and attachments"
 msgstr "« SubPages » et attachements renommés."
 
 #: ../IkiWiki/Plugin/rename.pm:224
 msgid "Only one attachment can be renamed at a time."
-msgstr "Seule une pièce jointe peut être renommée à la fois"
+msgstr "Une seule pièce jointe peut être renommée à la fois"
 
 #: ../IkiWiki/Plugin/rename.pm:227
 msgid "Please select the attachment to rename."
@@ -676,7 +663,7 @@ msgstr "renomme %s en %s"
 #: ../IkiWiki/Plugin/rename.pm:490
 #, perl-format
 msgid "update for rename of %s to %s"
-msgstr "du nouveau nom de %s en %s"
+msgstr "mise à jour, suite au changement de %s en %s"
 
 #: ../IkiWiki/Plugin/search.pm:36
 #, perl-format
@@ -754,7 +741,7 @@ msgstr "Format de données inconnu"
 
 #: ../IkiWiki/Plugin/table.pm:81
 msgid "empty data"
-msgstr "Données vides"
+msgstr "Pas de données"
 
 #: ../IkiWiki/Plugin/table.pm:100
 msgid "Direct data download"
@@ -772,7 +759,7 @@ msgstr "Paramètre d'identification manquant"
 #: ../IkiWiki/Plugin/template.pm:35
 #, perl-format
 msgid "template %s not found"
-msgstr "Modèle (« template ») %s introuvable "
+msgstr "Modèle de page %s introuvable"
 
 #: ../IkiWiki/Plugin/template.pm:54
 msgid "failed to process:"
@@ -797,7 +784,7 @@ msgstr "greffon"
 #: ../IkiWiki/Plugin/websetup.pm:108
 #, perl-format
 msgid "enable %s?"
-msgstr "activer %s?"
+msgstr "activer %s ?"
 
 #: ../IkiWiki/Plugin/websetup.pm:236
 msgid "you are not logged in as an admin"
@@ -813,7 +800,7 @@ msgstr "Partie principale"
 
 #: ../IkiWiki/Plugin/websetup.pm:257
 msgid "plugins"
-msgstr "greffons"
+msgstr "Greffons"
 
 #: ../IkiWiki/Plugin/websetup.pm:395
 msgid ""
@@ -833,17 +820,17 @@ msgstr ""
 #: ../IkiWiki/Plugin/websetup.pm:433
 #, perl-format
 msgid "<p class=\"error\">Error: %s exited nonzero (%s)"
-msgstr "<p class=\"erreur\">Erreur: %s a quitté nonzero (%s)"
+msgstr "<p class=\"erreur\">Erreur : %s s'est terminé, valeur de sortie nonzero (%s)"
 
 #: ../IkiWiki/Receive.pm:35
 #, perl-format
 msgid "cannot determine id of untrusted committer %s"
-msgstr ""
+msgstr "Impossible de déterminer l'identifiant de %s, (enregistrement non fiable)"
 
 #: ../IkiWiki/Receive.pm:85
-#, fuzzy, perl-format
+#, perl-format
 msgid "bad file name %s"
-msgstr "Omission du fichier au nom incorrect %s"
+msgstr "nom de fichier incorrect %s"
 
 #: ../IkiWiki/Render.pm:253
 #, perl-format
@@ -860,7 +847,7 @@ msgid "skipping bad filename %s"
 msgstr "Omission du fichier au nom incorrect %s"
 
 #: ../IkiWiki/Render.pm:284
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s has multiple possible source pages"
 msgstr "%s peut être associé à plusieurs pages source."
 
@@ -895,9 +882,9 @@ msgid "rendering %s, to update its backlinks"
 msgstr "Reconstruction de %s, afin de mettre à jour ses rétroliens"
 
 #: ../IkiWiki/Render.pm:498
-#, fuzzy, perl-format
+#, perl-format
 msgid "removing %s, no longer rendered by %s"
-msgstr "Suppression de %s, qui n'est plus affiché par %s"
+msgstr "Suppression de %s, qui n'est plus rendu par %s"
 
 #: ../IkiWiki/Render.pm:522
 #, perl-format
@@ -920,7 +907,7 @@ msgstr ""
 #: ../IkiWiki/Setup/Automator.pm:67
 #, perl-format
 msgid "unsupported revision control system %s"
-msgstr "Système de contrôle de version non reconnu"
+msgstr "Système de contrôle de version non reconnu : %s"
 
 #: ../IkiWiki/Setup/Automator.pm:83
 msgid "failed to set up the repository with ikiwiki-makerepo"
@@ -964,7 +951,6 @@ msgid "usage: ikiwiki [options] source dest"
 msgstr "Syntaxe : ikiwiki [options] source destination"
 
 #: ../ikiwiki.in:14
-#, fuzzy
 msgid "       ikiwiki --setup configfile"
 msgstr "       ikiwiki --setup fichier de configuration"
 
@@ -986,16 +972,14 @@ msgstr "Rafraîchissement du wiki..."
 
 #: ../IkiWiki.pm:466
 msgid "Must specify url to wiki with --url when using --cgi"
-msgstr ""
-"Vous devez indiquer une URL vers le wiki par --url lors de l'utilisation de "
-"--cgi"
+msgstr "Vous devez indiquer l'URL du wiki par --url lors de l'utilisation de --cgi"
 
 #: ../IkiWiki.pm:512
 msgid "cannot use multiple rcs plugins"
 msgstr "impossible d'utiliser plusieurs systèmes de contrôle des versions"
 
 #: ../IkiWiki.pm:541
-#, fuzzy, perl-format
+#, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr "Impossible de charger le greffon externe nécessaire au greffon %s : %s"
 
