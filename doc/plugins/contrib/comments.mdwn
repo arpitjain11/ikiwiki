@@ -30,16 +30,63 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> enough already. Indeed, this very page would accidentally get matched by rules
 >> aiming to control comment-posting... :-) --[[smcv]]
 
+>> Thinking about it, perhaps one way to address this would be to have the suffix
+>> (e.g. whether commenting on Sandbox creates sandbox/comment1 or sandbox/c1 or
+>> what) be configurable by the wiki admin, in the same way that recentchanges has
+>> recentchangespage => 'recentchanges'? I'd like to see fewer hard-coded page
+>> names in general, really - it seems odd to me that shortcuts and smileys
+>> hard-code the name of the page to look at. Perhaps I could add
+>> discussionpage => 'discussion' too? --[[smcv]]
+
 >> The best reason to keep the pages internal seems to me to be that you
 >> don't want the overhead of every comment spawning its own wiki page.
 >> The worst problem with it though is that you have to assume the pages
->> are mdwn (or `default_pageext`) and not support other formats.
+>> are mdwn (or `default_pageext`) and not support other formats. --[[Joey]]
+
+>> Well, you could always have `comment1._mdwn`, `comment2._creole` etc. and
+>> alter the htmlize logic so that the `mdwn` hook is called for both `mdwn`
+>> and `_mdwn` (assuming this is not already the case). I'm not convinced
+>> that multi-format comments are a killer feature, though - part of the point
+>> of this plugin, in my mind, is that it's less flexible than the full power
+>> of ikiwiki and gives users fewer options. This could be construed
+>> to be a feature, for people who don't care how flexible the technology is
+>> and just want a simple way to leave a comment. The FormattingHelp page
+>> assumes you're writing 100% Markdown in any case...
+>>
+>> Internal pages do too many things, perhaps: they suppress generation of
+>> HTML pages, they disable editing over the web, and they have a different
+>> namespace of htmlize hooks. I think the first two of those are useful
+>> for this plugin, and the last is harmless; you seem to think the first
+>> is useful, and the other two are harmful. --[[smcv]]
 
 >> By the way, I think that who can post comments should be controllable by
 >> the existing plugins opendiscussion, anonok, signinedit, and lockedit. Allowing
 >> posting comments w/o any login, while a nice capability, can lead to
 >> spam problems. So, use `check_canedit` as at least a first-level check?
 >> --[[Joey]]
+
+>> This plugin already uses `check_canedit`, but that function doesn't have a concept
+>> of different actions. The hack I use is that when a user comments on, say, sandbox,
+>> I call `check_canedit` for the pseudo-page "sandbox[postcomment]". The
+>> special `postcomment(glob)` [[ikiwiki/pagespec]] returns true if the page ends with
+>> "[postcomment]" and the part before (e.g. sandbox) matches the glob. So, you can
+>> have postcomment(blog/*) or something. (Perhaps instead of taking a glob, postcomment
+>> should take a pagespec, so you can have postcomment(link(tags/commentable))?)
+>>
+>> This is why `anonok_pages => 'postcomment(*)'` and `locked_pages => '!postcomment(*)'`
+>> are necessary to allow anonymous and logged-in editing (respectively).
+>>
+>> This is ugly - one alternative would be to add `check_permission()` that takes a
+>> page and a verb (create, edit, rename, remove and maybe comment are the ones I
+>> can think of so far), use that, and port the plugins you mentioned to use that
+>> API too. This plugin could either call `check_can("$page/comment1", 'create')` or
+>> call `check_can($page, 'comment')`.
+>> 
+>> One odd effect of the code structure I've used is that we check for the ability to
+>> create the page before we actually know what page name we're going to use - when
+>> posting the comment I just increment a number until I reach an unused one - so
+>> either the code needs restructuring, or the permission check for 'create' would
+>> always be for 'comment1' and never 'comment123'. --[[smcv]]
 
 When using this plugin, you should also enable [[htmlscrubber]] and either [[htmltidy]]
 or [[htmlbalance]]. Directives are filtered out by default, to avoid commenters slowing
@@ -58,7 +105,10 @@ are enabled, comment authorship should hopefully be unforgeable by CGI users.
 >> anything else, at this point.
 >>
 >> I've rebased the plugin on master, made it sanitize individual posts' content
->> and removed the option to disallow raw HTML. --[[smcv]]
+>> and removed the option to disallow raw HTML. Sanitizing individual posts before
+>> they've been htmlized required me to preserve whitespace in the htmlbalance
+>> plugin, so I did that. Alternatively, we could htmlize immediately and always
+>> save out raw HTML? --[[smcv]]
 
 >> There might be some use cases for other directives, such as img, in
 >> comments.
@@ -94,7 +144,20 @@ the comments.
 >> rather annoying while this plugin is on a branch). --[[smcv]]
 
 >>> Using the template would allow customising the html around the comments
->>> which seems like a good thing?
+>>> which seems like a good thing? --[[Joey]]
+
+>>> The \[[!comments]] directive is already template-friendly - it expands to
+>>> the contents of the template `comments_embed.tmpl`, possibly with the
+>>> result of an \[[!inline]] appended. I should change `comments_embed.tmpl`
+>>> so it uses a template variable `INLINE` for the inline result rather than
+>>> having the perl code concatenate it, which would allow a bit more
+>>> customization (whether the "post" link was before or after the inline).
+>>> Even if you want comments in page.tmpl, keeping the separate comments_embed.tmpl
+>>> and having a `COMMENTS` variable in page.tmpl might be the way forward,
+>>> since the smaller each templates is, the easier it will be for users
+>>> to maintain a patched set of templates. (I think so, anyway, based on what happens
+>>> with dpkg prompts in Debian packages with monolithic vs split
+>>> conffiles.) --[[smcv]]
 
 The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
 with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
@@ -121,6 +184,8 @@ Optional parameters to the comments directive:
 * `closed=yes`: use this to prevent new comments while still displaying existing ones.
 * `atom`, `rss`, `feeds`, `feedshow`, `timeformat`, `feedonly`: the same as for [[plugins/inline]]
 
+>> I don't think feedonly actually makes sense here, so I'll remove it. --[[smcv]]
+
 This plugin aims to close the [[todo]] item "[[todo/supporting_comments_via_disussion_pages]]",
 and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk (it's the
 `postcomment` branch). A demo wiki with the plugin enabled is running at
@@ -139,3 +204,12 @@ Known issues:
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
+
+Wishlist:
+
+* tbm would like anonymous people to be able to enter their name and possibly email
+  address
+* smcv would like an indication of who you're posting as / the ability to log in
+  as someone else (even if anonymous comments are allowed, it'd be nice to be
+  able to choose to log in with a username or OpenID, like in Livejournal);
+  perhaps editpage needs this too
