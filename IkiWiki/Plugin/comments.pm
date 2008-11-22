@@ -120,18 +120,6 @@ sub linkuser ($) { # {{{
 	}
 } # }}}
 
-# FIXME: taken from IkiWiki::Plugin::editpage, should be common?
-sub checksessionexpiry ($$) { # {{{
-	my $session = shift;
-	my $sid = shift;
-
-	if (defined $session->param("name")) {
-		if (! defined $sid || $sid ne $session->id) {
-			error(gettext("Your login session has expired."));
-		}
-	}
-} # }}}
-
 # Mostly cargo-culted from IkiWiki::plugin::editpage
 sub sessioncgi ($$) { #{{{
 	my $cgi=shift;
@@ -300,7 +288,7 @@ sub sessioncgi ($$) { #{{{
 		# Let's get posting. We don't check_canedit here because
 		# that somewhat defeats the point of this plugin.
 
-		checksessionexpiry($session, $cgi->param('sid'));
+		IkiWiki::checksessionexpiry($session, $cgi->param('sid'));
 
 		# FIXME: check that the wiki is locked right now, because
 		# if it's not, there are mad race conditions!
