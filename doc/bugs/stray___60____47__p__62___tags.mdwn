@@ -1,0 +1,15 @@
+When using the [[plugins/htmltidy]] plugin (and possibly in other circumstances), ikiwiki sometimes creates more `</p>` tags than `<p>` tags, causing unbalanced markup. I've previously noticed unbalanced tags when a `\[[!map]]` matches no pages. This is part of the reason I developed [[plugins/htmlbalance]].
+
+This is particularly noticeable if htmltidy is enabled when building the docwiki: on the 'contrib' plugin pages, the title becomes `foo </p> (third-party plugin)` (with the angle-brackets escaped - it seems the text gets sanitized but is then escaped anyway).
+
+I believe that this snippet in `IkiWiki.pm` might be the reason for the imbalance:
+
+        if ($oneline) {
+                # hack to get rid of enclosing junk added by markdown
+                # and other htmlizers
+                $content=~s/^<p>//i;
+                $content=~s/<\/p>$//i;
+                chomp $content;
+        }
+
+The fact that HTML in a `\[[!meta title]]` is added but then escaped might indicate that some other bug is involved.
