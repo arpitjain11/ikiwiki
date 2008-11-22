@@ -296,6 +296,20 @@ sub cgi_getsession ($) { #{{{
 	return $session;
 } #}}}
 
+# The session id is stored on the form and checked to
+# guard against CSRF. But only if the user is logged in,
+# as anonok can allow anonymous edits.
+sub checksessionexpiry ($$) { # {{{
+	my $session = shift;
+	my $sid = shift;
+
+	if (defined $session->param("name")) {
+		if (! defined $sid || $sid ne $session->id) {
+			error(gettext("Your login session has expired."));
+		}
+	}
+} # }}}
+
 sub cgi_savesession ($) { #{{{
 	my $session=shift;
 

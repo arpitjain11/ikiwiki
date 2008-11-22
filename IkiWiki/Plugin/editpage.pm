@@ -340,16 +340,7 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
-	
-		# The session id is stored on the form and checked to
-		# guard against CSRF. But only if the user is logged in,
-		# as anonok can allow anonymous edits.
-		if (defined $session->param("name")) {
-			my $sid=$q->param('sid');
-			if (! defined $sid || $sid ne $session->id) {
-				error(gettext("Your login session has expired."));
-			}
-		}
+		checksessionexpiry($session, $q->param('sid'));
 
 		my $exists=-e "$config{srcdir}/$file";
 
