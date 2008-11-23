@@ -237,17 +237,6 @@ sub sessioncgi ($$) { #{{{
 			linktext => 'FormattingHelp'),
 			allowdirectives => $allow_directives);
 
-	if (not exists $pagesources{$page}) {
-		error(sprintf(gettext(
-			"page '%s' doesn't exist, so you can't comment"),
-			$page));
-	}
-	if (not $pagestate{$page}{comments}{comments}) {
-		error(sprintf(gettext(
-			"comments are not enabled on page '%s'"),
-			$page));
-	}
-
 	if ($form->submitted eq CANCEL) {
 		# bounce back to the page they wanted to comment on, and exit.
 		# CANCEL need not be considered in future
@@ -255,6 +244,20 @@ sub sessioncgi ($$) { #{{{
 		exit;
 	}
 
+	if (not exists $pagesources{$page}) {
+		error(sprintf(gettext(
+			"page '%s' doesn't exist, so you can't comment"),
+			$page));
+	}
+
+	if (not pagespec_match($page, $config{comments_open_pagespec},
+		location => $page)) {
+		error(sprintf(gettext(
+			"comments on page '%s' are closed"),
+			$page));
+	}
+
+	IkiWiki::checksessionexpiry($session, $cgi->param('sid'));
 	IkiWiki::check_canedit($page . "[postcomment]", $cgi, $session);
 
 	my ($authorurl, $author) = linkuser(getcgiuser($session));
@@ -274,13 +277,24 @@ sub sessioncgi ($$) { #{{{
 			unless $config{prefix_directives};
 	}
 
+	# FIXME: check that the wiki is locked right now, because
+	# if it's not, there are mad race conditions!
+
+	# FIXME: rather a simplistic way to make the comments...
+	my $i = 0;
+	my $file;
+	my $location;
+	do {
+		$i++;
+		$location = "$page/${comments_pagename}${i}";
+	} while (-e "$config{srcdir}/$location._comment");
+
+	my $anchor = "${comments_pagename}${i}";
+
 	IkiWiki::run_hooks(sanitize => sub {
-		# $fake is a possible location for this comment. We don't
-		# know yet what the comment number *actually* is.
-		my $fake = "$page/_comment_1";
 		$body=shift->(
-			page => $fake,
-			destpage => $fake,
+			page => $location,
+			destpage => $location,
 			content => $body,
 		);
 	});
@@ -293,6 +307,8 @@ sub sessioncgi ($$) { #{{{
 	$content_tmpl->param(authorurl => $authorurl);
 	$content_tmpl->param(subject => $form->field('subject'));
 	$content_tmpl->param(body => $body);
+	$content_tmpl->param(anchor => "$anchor");
+	$content_tmpl->param(permalink => "$baseurl#$anchor");
 
 	my $content = $content_tmpl->output;
 
@@ -303,14 +319,11 @@ sub sessioncgi ($$) { #{{{
 	# - this means that if they do, rocks fall and everyone dies
 
 	if ($form->submitted eq PREVIEW) {
-		# $fake is a possible location for this comment. We don't
-		# know yet what the comment number *actually* is.
-		my $fake = "$page/_comment_1";
-		my $preview = IkiWiki::htmlize($fake, $page, 'mdwn',
+		my $preview = IkiWiki::htmlize($location, $page, 'mdwn',
 				IkiWiki::linkify($page, $page,
 					IkiWiki::preprocess($page, $page,
-						IkiWiki::filter($fake, $page,
-							$content),
+						IkiWiki::filter($location,
+							$page, $content),
 						0, 1)));
 		IkiWiki::run_hooks(format => sub {
 				$preview = shift->(page => $page,
@@ -331,24 +344,10 @@ sub sessioncgi ($$) { #{{{
 	}
 
 	if ($form->submitted eq POST_COMMENT && $form->validate) {
-		# Let's get posting. We don't check_canedit here because
-		# that somewhat defeats the point of this plugin.
-
-		IkiWiki::checksessionexpiry($session, $cgi->param('sid'));
-
-		# FIXME: check that the wiki is locked right now, because
-		# if it's not, there are mad race conditions!
-
-		# FIXME: rather a simplistic way to make the comments...
-		my $i = 0;
-		my $file;
-		do {
-			$i++;
-			$file = "$page/_comment_${i}._comment";
-		} while (-e "$config{srcdir}/$file");
+		my $file = "$location._comment";
 
 		# FIXME: could probably do some sort of graceful retry
-		# if I could be bothered
+		# on error? Would require significant unwinding though
 		writefile($file, $config{srcdir}, $content);
 
 		my $conflict;
@@ -357,7 +356,9 @@ sub sessioncgi ($$) { #{{{
 			my $message = gettext("Added a comment");
 			if (defined $form->field('subject') &&
 				length $form->field('subject')) {
-				$message .= ": ".$form->field('subject');
+				$message = sprintf(
+					gettext("Added a comment: %s"),
+					$form->field('subject'));
 			}
 
 			IkiWiki::rcs_add($file);
@@ -378,7 +379,7 @@ sub sessioncgi ($$) { #{{{
 		error($conflict) if defined $conflict;
 
 		# Bounce back to where we were, but defeat broken caches
-		my $anticache = "?updated=$page/_comment_$i";
+		my $anticache = "?updated=$page/${comments_pagename}${i}";
 		IkiWiki::redirect($cgi, urlto($page, undef, 1).$anticache);
 	}
 	else {
