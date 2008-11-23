@@ -1,4 +1,8 @@
 <div class="comments-embed">
+<TMPL_IF NAME=COMMENTS>
+<TMPL_VAR NAME=COMMENTS>
+</TMPL_VAR>
+
 <TMPL_IF NAME=DISABLED>
 [Posting comments disabled: <TMPL_VAR NAME=DISABLED>]
 <TMPL_ELSE>
