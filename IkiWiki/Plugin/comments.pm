@@ -107,6 +107,7 @@ sub getcgiuser ($) { # {{{
 } # }}}
 
 # FIXME: logic adapted from recentchanges, should be common code?
+# returns (author URL, pretty-printed version)
 sub linkuser ($) { # {{{
 	my $user = shift;
 	my $oiduser = eval { IkiWiki::openiduser($user) };
