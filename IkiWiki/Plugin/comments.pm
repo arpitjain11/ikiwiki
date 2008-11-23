@@ -220,10 +220,9 @@ sub sessioncgi ($$) { #{{{
 		error(gettext("bad page name"));
 	}
 
-	my $allow_directives = $pagestate{$page}{comments}{allowdirectives};
-	my $commit_comments = defined $pagestate{$page}{comments}{commit}
-		? $pagestate{$page}{comments}{commit}
-		: 1;
+	my $allow_directives = $config{comments_allowdirectives};
+	my $commit_comments = $config{comments_commit};
+	my $comments_pagename = $config{comments_pagename};
 
 	# FIXME: is this right? Or should we be using the candidate subpage
 	# (whatever that might mean) as the base URL?
