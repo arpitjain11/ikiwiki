@@ -38,6 +38,8 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> hard-code the name of the page to look at. Perhaps I could add
 >> discussionpage => 'discussion' too? --[[smcv]]
 
+>> (I've now implemented this in my branch. --[[smcv]])
+
 >> The best reason to keep the pages internal seems to me to be that you
 >> don't want the overhead of every comment spawning its own wiki page.
 >> The worst problem with it though is that you have to assume the pages
@@ -88,6 +90,11 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >> either the code needs restructuring, or the permission check for 'create' would
 >> always be for 'comment1' and never 'comment123'. --[[smcv]]
 
+>> Another possibility is to just check for permission to edit (e.g.) `sandbox/comment1`.
+>> However, this makes the "comments can only be created, not edited" feature completely
+>> reliant on the fact that internal pages can't be edited. Perhaps there should be a
+>> `editable_pages` pagespec, defaulting to `'*'`?
+
 When using this plugin, you should also enable [[htmlscrubber]] and either [[htmltidy]]
 or [[htmlbalance]]. Directives are filtered out by default, to avoid commenters slowing
 down the wiki by causing time-consuming processing. As long as the recommended plugins
@@ -123,7 +130,7 @@ are enabled, comment authorship should hopefully be unforgeable by CGI users.
 When comments have been enabled generally, you still need to mark which pages
 can have comments, by including the `\[[!comments]]` directive in them. By default,
 this directive expands to a "post a comment" link plus an `\[[!inline]]` with
-the comments.
+the comments. [This requirement has now been removed --[[smcv]]]
 
 > I don't like this, because it's hard to explain to someone why they have
 > to insert this into every post to their blog. Seems that the model used
@@ -137,6 +144,9 @@ the comments.
 >> as allowing comments.
 >>
 >>> Yes, I think a pagespec is the way to go. --[[Joey]]
+
+>>> Implemented --[[smcv]]
+
 >> 
 >> The model used for discussion pages does require patching the existing
 >> page template, which I was trying to avoid - I'm not convinced that having
@@ -159,6 +169,8 @@ the comments.
 >>> with dpkg prompts in Debian packages with monolithic vs split
 >>> conffiles.) --[[smcv]]
 
+>>> I've switched my branch to use page.tmpl instead; see what you think? --[[smcv]]
+
 The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
 with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
 the [[plugins/lockedit]] plugin. Typical usage would be something like:
@@ -174,17 +186,18 @@ to allow anonymous comments (the IP address will be used as the "author").
 > This is still called postcomment, although I've renamed the rest of the plugin
 > to comments as suggested on #ikiwiki --[[smcv]]
 
-Optional parameters to the comments directive:
+There are some global options for the setup file:
 
-* `commit=no`: by default, comments are committed to version control. Use this to
-  disable commits.
-* `allowdirectives=yes`: by default, IkiWiki directives are filtered out. Use this
-  to allow directives (avoid enabling any [[plugins/type/slow]] directives if you
-  do this).
-* `closed=yes`: use this to prevent new comments while still displaying existing ones.
-* `atom`, `rss`, `feeds`, `feedshow`, `timeformat`, `feedonly`: the same as for [[plugins/inline]]
-
->> I don't think feedonly actually makes sense here, so I'll remove it. --[[smcv]]
+* comments_shown_pagespec: pages where comments will be displayed inline, e.g. `blog/*`
+  or `*/discussion`.
+* comments_open_pagespec: pages where new comments can be posted, e.g.
+  `blog/* and created_after(close_old_comments)` or `*/discussion`
+* comments_pagename: if this is e.g. `comment_` (the default), then comments on the
+  [[sandbox]] will be called something like `sandbox/comment_12`
+* comments_allowdirectives: if true (default false), comments may contain IkiWiki
+  directives
+* comments_commit: if true (default true), comments will be committed to the version
+  control system
 
 This plugin aims to close the [[todo]] item "[[todo/supporting_comments_via_disussion_pages]]",
 and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk (it's the
@@ -197,10 +210,6 @@ Known issues:
 * The access control via postcomment() is rather strange
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
-* If the comments directive is removed from a page, comments can still be made on that page,
-  and will be committed but not displayed; to disable comments properly you have to set the
-  closed="yes" directive parameter (and refresh the wiki), *then* remove the directive if
-  desired
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
