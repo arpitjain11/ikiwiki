@@ -41,9 +41,7 @@ sub getsetup () { #{{{
 sub preprocess (@) { #{{{
 	my %params=@_;
 
-	unless (length $config{cgiurl}) {
-		error(gettext("[[!comments plugin requires CGI enabled]]"));
-	}
+	return "";
 
 	my $page = $params{page};
 	$pagestate{$page}{comments}{comments} = defined $params{closed}
