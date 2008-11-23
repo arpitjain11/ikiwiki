@@ -221,11 +221,11 @@ sub sessioncgi ($$) { #{{{
 
 	unless ($allow_directives) {
 		# don't allow new-style directives at all
-		$body =~ s/(^|[^\\])\[\[!/$1\\[[!/g;
+		$body =~ s/(^|[^\\])\[\[!/$1&#91;&#91;!/g;
 
 		# don't allow [[ unless it begins an old-style
 		# wikilink, if prefix_directives is off
-		$body =~ s/(^|[^\\])\[\[(?![^\n\s\]+]\]\])/$1\\[[!/g
+		$body =~ s/(^|[^\\])\[\[(?![^\n\s\]+]\]\])/$1&#91;&#91;!/g
 			unless $config{prefix_directives};
 	}
 
