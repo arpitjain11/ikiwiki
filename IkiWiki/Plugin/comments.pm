@@ -18,6 +18,7 @@ sub import { #{{{
 	hook(type => "preprocess", id => 'comments', call => \&preprocess);
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
+	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
 	IkiWiki::loadplugin("inline");
 	IkiWiki::loadplugin("mdwn");
 } # }}}
@@ -343,6 +344,21 @@ sub sessioncgi ($$) { #{{{
 
 	exit;
 } #}}}
+
+sub pagetemplate (@) { #{{{
+	my %params = @_;
+
+	my $page = $params{page};
+	my $template = $params{template};
+
+	if ($template->query(name => 'comments')) {
+		my $comments = undef;
+
+		if (defined $comments && length $comments) {
+			$template->param(name => $comments);
+		}
+	}
+} # }}}
 
 package IkiWiki::PageSpec;
 
