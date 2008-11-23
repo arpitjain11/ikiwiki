@@ -71,6 +71,16 @@
 <div id="comments">
 <TMPL_VAR COMMENTS>
 </div>
+
+<TMPL_UNLESS COMMENTURL>
+<div class="addcomment">Comments on this page are closed.</div>
+</TMPL_UNLESS>
+</TMPL_IF>
+
+<TMPL_IF COMMENTURL>
+<div class="addcomment">
+<a href="<TMPL_VAR COMMENTURL>">Add a comment</a>
+</div>
 </TMPL_IF>
 
 <div id="footer" class="pagefooter">
