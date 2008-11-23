@@ -20,6 +20,7 @@ sub import { #{{{
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
+	hook(type => "cgi", id => "comments", call => \&linkcgi);
 	IkiWiki::loadplugin("inline");
 	IkiWiki::loadplugin("mdwn");
 } # }}}
@@ -157,7 +158,36 @@ sub getcgiuser ($) { # {{{
 	return $user;
 } # }}}
 
-# FIXME: logic adapted from recentchanges, should be common code?
+# This is exactly the same as recentchanges_link :-(
+sub linkcgi ($) { #{{{
+	my $cgi=shift;
+	if (defined $cgi->param('do') && $cgi->param('do') eq "commenter") {
+
+		my $page=decode_utf8($cgi->param("page"));
+		if (!defined $page) {
+			error("missing page parameter");
+		}
+
+		IkiWiki::loadindex();
+
+		my $link=bestlink("", $page);
+		if (! length $link) {
+			print "Content-type: text/html\n\n";
+			print IkiWiki::misctemplate(gettext(gettext("missing page")),
+				"<p>".
+				sprintf(gettext("The page %s does not exist."),
+					htmllink("", "", $page)).
+				"</p>");
+		}
+		else {
+			IkiWiki::redirect($cgi, urlto($link, undef, 1));
+		}
+
+		exit;
+	}
+}
+
+# FIXME: basically the same logic as recentchanges
 # returns (author URL, pretty-printed version)
 sub linkuser ($) { # {{{
 	my $user = shift;
@@ -166,11 +196,15 @@ sub linkuser ($) { # {{{
 	if (defined $oiduser) {
 		return ($user, $oiduser);
 	}
+	# FIXME: it'd be good to avoid having such a link for anonymous
+	# posts
 	else {
-		my $page = bestlink('', (length $config{userdir}
-				? "$config{userdir}/"
-				: "").$user);
-		return (urlto($page, undef, 1), $user);
+		return (IkiWiki::cgiurl(
+				do => 'commenter',
+				page => (length $config{userdir}
+					? "$config{userdir}/"
+					: "")
+			).$user, $user);
 	}
 } # }}}
 
