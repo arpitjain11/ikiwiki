@@ -315,7 +315,7 @@ sub sessioncgi ($$) { #{{{
 	$content_tmpl->param(body => $body);
 	$content_tmpl->param(anchor => "$anchor");
 	$content_tmpl->param(permalink => "$baseurl#$anchor");
-	$content_tmpl->param(date => formattime(time, "%X %x"));
+	$content_tmpl->param(date => IkiWiki::formattime(time, "%X %x"));
 
 	my $content = $content_tmpl->output;
 
