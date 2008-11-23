@@ -399,8 +399,48 @@ sub pagetemplate (@) { #{{{
 	if ($template->query(name => 'comments')) {
 		my $comments = undef;
 
+		my $comments_pagename = $config{comments_pagename};
+
+		my $open = 0;
+		my $shown = pagespec_match($page,
+			$config{comments_shown_pagespec},
+			location => $page);
+
+		if (pagespec_match($page, "*/${comments_pagename}*",
+				location => $page)) {
+			$shown = 0;
+			$open = 0;
+		}
+
+		if (length $config{cgiurl}) {
+			$open = pagespec_match($page,
+				$config{comments_open_pagespec},
+				location => $page);
+		}
+
+		if ($shown) {
+			eval q{use IkiWiki::Plugin::inline};
+			error($@) if $@;
+
+			my @args = (
+				pages => "internal($page/${comments_pagename}*)",
+				template => 'comments_display',
+				show => 0,
+				reverse => 'yes',
+				page => $page,
+				destpage => $params{destpage},
+			);
+			$comments = IkiWiki::preprocess_inline(@args);
+		}
+
 		if (defined $comments && length $comments) {
-			$template->param(name => $comments);
+			$template->param(comments => $comments);
+		}
+
+		if ($open) {
+			my $commenturl = IkiWiki::cgiurl(do => 'comment',
+				page => $page);
+			$template->param(commenturl => $commenturl);
 		}
 	}
 } # }}}
