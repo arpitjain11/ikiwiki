@@ -69,8 +69,8 @@ sub preprocess (@) { #{{{
 
 	debug("page $params{page} => destpage $params{destpage}");
 
-	my $posts = '';
 	unless (defined $params{inline} && !IkiWiki::yesno($params{inline})) {
+		my $posts = '';
 		eval q{use IkiWiki::Plugin::inline};
 		error($@) if ($@);
 		my @args = (
@@ -89,10 +89,11 @@ sub preprocess (@) { #{{{
 		push @args, feedshow => $params{feedshow} if defined $params{feedshow};
 		push @args, timeformat => $params{timeformat} if defined $params{timeformat};
 		push @args, feedonly => $params{feedonly} if defined $params{feedonly};
-		$posts = "\n" . IkiWiki::preprocess_inline(@args);
+		$posts = IkiWiki::preprocess_inline(@args);
+		$formtemplate->param("comments" => $posts);
 	}
 
-	return $formtemplate->output . $posts;
+	return $formtemplate->output;
 } # }}}
 
 # FIXME: logic taken from editpage, should be common code?
