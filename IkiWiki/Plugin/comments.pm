@@ -14,6 +14,7 @@ use constant POST_COMMENT => "Post comment";
 use constant CANCEL => "Cancel";
 
 sub import { #{{{
+	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
 	hook(type => "preprocess", id => 'comments', call => \&preprocess);
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
@@ -81,6 +82,12 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 0,
 		},
+} #}}}
+
+sub checkconfig () { #{{{
+	$config{comments_commit} = 1 unless defined $config{comments_commit};
+	$config{comments_pagename} = 'comment_'
+		unless defined $config{comments_pagename};
 } #}}}
 
 # Somewhat based on IkiWiki::Plugin::inline blog posting support
