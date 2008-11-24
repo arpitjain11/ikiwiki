@@ -6,4 +6,6 @@ Links with only one underscore are OK.
 
 Update 2008-11-24: The problem only occurs if the CSV data is in an external file. If I load it using data="""...""" then it works fine.
 
+The problem appears to be the call to htmlize inside genrow. If the data is inline, then wikilinks get expanded before they get here, and are OK. If the data is from an external file, the wikilinks aren't expanded, and htmlize will expand \[[single\_track\_lines]] into \[[single&lt;em&gt;track&lt;/em&gt;lines]].
+
 -- Brian May
