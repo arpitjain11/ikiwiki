@@ -277,9 +277,16 @@ sub getsetup () { #{{{
 	},
 	umask => {
 		type => "integer",
-		description => "",
 		example => "022",
 		description => "force ikiwiki to use a particular umask",
+		advanced => 1,
+		safe => 0, # paranoia
+		rebuild => 0,
+	},
+	wrappergroup => {
+		type => "string",
+		example => "ikiwiki",
+		description => "group for wrappers to run in",
 		advanced => 1,
 		safe => 0, # paranoia
 		rebuild => 0,
