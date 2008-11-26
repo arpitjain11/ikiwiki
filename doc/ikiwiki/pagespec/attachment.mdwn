@@ -9,7 +9,7 @@ configuration setting.
 
 For example, to limit arbitrary files to 50 kilobytes, but allow
 larger mp3 files to be uploaded by joey into a specific directory, and
-check all attachments for virii, something like this could be used:
+check all attachments for viruses, something like this could be used:
   
 	virusfree() and ((user(joey) and podcast/*.mp3 and mimetype(audio/mpeg) and maxsize(15mb)) or (!ispage() and maxsize(50kb)))
 
