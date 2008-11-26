@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-31 16:37-0400\n"
-"PO-Revision-Date: 2008-10-22 13:54+0200\n"
+"POT-Creation-Date: 2008-11-11 20:48-0500\n"
+"PO-Revision-Date: 2008-11-26 08:42+0100\n"
 "Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "Las preferencias se han guardado."
 msgid "You are banned."
 msgstr "Ha sido expulsado."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1189
 msgid "Error"
 msgstr "Error"
 
@@ -121,7 +121,7 @@ msgstr "(los caracteres especiales de la fuente de datos están exceptuados)"
 msgid "feed crashed XML::Feed!"
 msgstr "¡ la fuente de datos ha provocado un error fatal en XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:590
+#: ../IkiWiki/Plugin/aggregate.pm:591
 #, perl-format
 msgid "creating new page %s"
 msgstr "creando nueva página %s"
@@ -210,9 +210,8 @@ msgid "removing old preview %s"
 msgstr "eliminando la antigua previsualización %s"
 
 #: ../IkiWiki/Plugin/editpage.pm:125
-#, fuzzy
 msgid "bad page name"
-msgstr "nombre de archivo adjunto erróneo"
+msgstr "nombre de página erróneo"
 
 #: ../IkiWiki/Plugin/editpage.pm:141
 #, perl-format
@@ -248,14 +247,14 @@ msgstr "plantilla de edición %s registrada para %s"
 msgid "failed to process"
 msgstr "fallo en el proceso"
 
-#: ../IkiWiki/Plugin/format.pm:22
+#: ../IkiWiki/Plugin/format.pm:20
 msgid "must specify format and text"
-msgstr ""
+msgstr "se deben especificar tanto el formato como el texto"
 
-#: ../IkiWiki/Plugin/format.pm:25
-#, fuzzy, perl-format
+#: ../IkiWiki/Plugin/format.pm:23
+#, perl-format
 msgid "unsupported page format %s"
-msgstr "el sistema de control de versiones %s no está soportado"
+msgstr "formato de página %s no soportado"
 
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
@@ -263,19 +262,18 @@ msgstr "el programa fortune ha fallado"
 
 #: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
 #: ../IkiWiki/Receive.pm:129
-#, fuzzy, perl-format
+#, perl-format
 msgid "you are not allowed to change %s"
-msgstr "No está registrado como un administrador"
+msgstr "No puede cambiar %s"
 
 #: ../IkiWiki/Plugin/git.pm:658
 #, perl-format
 msgid "you cannot act on a file with mode %s"
-msgstr ""
+msgstr "no puede actuar sobre un archivo con permisos %s"
 
 #: ../IkiWiki/Plugin/git.pm:662
-#, fuzzy
 msgid "you are not allowed to change file modes"
-msgstr "No está registrado como un administrador"
+msgstr "No puede cambiar los permisos de acceso de un archivo"
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, perl-format
@@ -831,12 +829,12 @@ msgstr "<p class=\"error\">Error: %s finaliza con código distinto de cero (%s)"
 #: ../IkiWiki/Receive.pm:35
 #, perl-format
 msgid "cannot determine id of untrusted committer %s"
-msgstr ""
+msgstr "no puedo determinar el identificador de un usuario no fiable como %s"
 
 #: ../IkiWiki/Receive.pm:85
-#, fuzzy, perl-format
+#, perl-format
 msgid "bad file name %s"
-msgstr "ignorando el archivo %s porque su nombre no es correcto"
+msgstr "el nombre de archivo %s es erróneo"
 
 #: ../IkiWiki/Render.pm:253
 #, perl-format
@@ -935,19 +933,19 @@ msgstr "el programa envoltorio no ha sido especificado"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:79
+#: ../IkiWiki/Wrapper.pm:97
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "no puedo escribir en %s: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:135
+#: ../IkiWiki/Wrapper.pm:154
 #, perl-format
 msgid "failed to compile %s"
 msgstr "ha fallado la compilación del programa %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:155
+#: ../IkiWiki/Wrapper.pm:174
 #, perl-format
 msgid "successfully generated %s"
 msgstr "creado con éxito el programa envoltorio %s"
@@ -976,29 +974,29 @@ msgstr "reconstruyendo el wiki.."
 msgid "refreshing wiki.."
 msgstr "actualizando el wiki.."
 
-#: ../IkiWiki.pm:466
+#: ../IkiWiki.pm:473
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Es obligatorio especificar un url al wiki con el parámetro --url si se "
 "utiliza el parámetro --cgi"
 
-#: ../IkiWiki.pm:512
+#: ../IkiWiki.pm:519
 msgid "cannot use multiple rcs plugins"
 msgstr "no puedo emplear varios complementos rcs"
 
-#: ../IkiWiki.pm:541
+#: ../IkiWiki.pm:548
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr "no he podido cargar el complemento externo %s necesario para %s"
 
-#: ../IkiWiki.pm:1165
+#: ../IkiWiki.pm:1172
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 "se ha detectado en la página %s un bucle de preprocesado en la iteración "
 "número %i"
 
-#: ../IkiWiki.pm:1678
+#: ../IkiWiki.pm:1673
 msgid "yes"
 msgstr "si"
 
