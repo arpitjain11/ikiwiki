@@ -124,8 +124,8 @@ ignores the git authorship information, and uses the username of the unix
 user who made the commit. Then tests including the `locked_pages` [[PageSpec]]
 are checked to see if that user can edit the pages in the commit.
 
-You can even set up an anonymous user, to allow anyone to push
-changes in via git rather than using the web interface.
+You can even set up an [[anonymous_user|tips/untrusted_git_push]], to allow
+anyone to push changes in via git rather than using the web interface.
 
 ## Optionally using a local wiki to preview changes
 
