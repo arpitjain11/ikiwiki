@@ -13,3 +13,12 @@ As a side note, the accompanying proxy.py might better be placed into some direc
 
 > If someone can show how to do so without needing a Setup.py and all the
 > pain that using one entails.. --[[Joey]]
+
+>> At the very least I don't think proxy.py should be on the `sys.path`
+>> under its current name. If it was renamed to ikiwiki_proxy or some such,
+>> possibly; but I think it's more appropriate to have it in an
+>> ikiwiki-specific directory (a "private module") since it's not useful for
+>> anything outside ikiwiki, and putting it in the same directory as the
+>> external plugins means it's automatically in their `sys.path` without
+>> needing special configuration. --[[smcv]]
+>> (a mostly-inactive member of Debian's Python modules packaging team)
