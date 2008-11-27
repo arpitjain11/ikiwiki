@@ -10,33 +10,6 @@ or [[htmlbalance]]. Directives are filtered out by default, to avoid commenters 
 down the wiki by causing time-consuming processing. As long as the recommended plugins
 are enabled, comment authorship should hopefully be unforgeable by CGI users.
 
-> I'm not sure that raw html should be a problem, as long as the
-> htmlsanitizer and htmlbalanced plugins are enabled. I can see filtering
-> out directives, as a special case. --[[Joey]]
-
->> Right, if I sanitize each post individually, with htmlscrubber and either htmltidy
->> or htmlbalance turned on, then there should be no way the user can forge a comment;
->> I was initially wary of allowing meta directives, but I think those are OK, as long
->> as the comment template puts the \[[!meta author]] at the *end*. Disallowing
->> directives is more a way to avoid commenters causing expensive processing than
->> anything else, at this point.
->>
->> I've rebased the plugin on master, made it sanitize individual posts' content
->> and removed the option to disallow raw HTML. Sanitizing individual posts before
->> they've been htmlized required me to preserve whitespace in the htmlbalance
->> plugin, so I did that. Alternatively, we could htmlize immediately and always
->> save out raw HTML? --[[smcv]]
-
->> There might be some use cases for other directives, such as img, in
->> comments.
->> 
->> I don't know if meta is "safe" (ie, guaranteed to be inexpensive and not
->> allow users to do annoying things) or if it will continue to be in the
->> future. Hard to predict really, all that can be said with certainty is
->> all directives will contine to be inexpensive and safe enough that it's
->> sensible to allow users to (ab)use them on open wikis.
->> --[[Joey]]
-
 The plugin adds a new [[ikiwiki/PageSpec]] match type, `postcomment`, for use
 with `anonok_pagespec` from the [[plugins/anonok]] plugin or `locked_pages` from
 the [[plugins/lockedit]] plugin. Typical usage would be something like:
@@ -70,9 +43,10 @@ and is currently available from [[smcv]]'s git repository on git.pseudorandom.co
 Known issues:
 
 * Needs code review
-* The access control via postcomment() is rather strange
+* The access control via postcomment() is rather strange (see [[discussion]] for more details)
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
+* Joey doesn't think it should necessarily use internal pages (see [[discussion]])
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
@@ -85,3 +59,9 @@ Wishlist:
   as someone else (even if anonymous comments are allowed, it'd be nice to be
   able to choose to log in with a username or OpenID, like in Livejournal);
   perhaps editpage needs this too
+
+Fixed issues:
+
+* Joey didn't think the `\[[!comments]]` directive was appropriate; comments now appear
+  on pages selected with a [[ikiwiki/pagespec]]
+* Joey thought that raw HTML should always be allowed; it now is
