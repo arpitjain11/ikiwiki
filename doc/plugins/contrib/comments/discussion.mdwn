@@ -1,0 +1,139 @@
+# Why internal pages? (unresolved)
+
+Comments are saved as internal pages, so they can never be edited through the CGI,
+only by direct committers. Currently, comments are always in [[ikiwiki/markdown]].
+
+> So, why do it this way, instead of using regular wiki pages in a
+> namespace, such as `$page/comments/*`? Then you could use [[plugins/lockedit]] to
+> limit editing of comments in more powerful ways. --[[Joey]]
+
+>> Er... I suppose so. I'd assumed that these pages ought to only exist as inlines
+>> rather than as individual pages (same reasoning as aggregated posts), though.
+>>
+>> lockedit is actually somewhat insufficient, since `check_canedit()`
+>> doesn't distinguish between creation and editing; I'd have to continue to use
+>> some sort of odd hack to allow creation but not editing.
+>>
+>> I also can't think of any circumstance where you'd want a user other than
+>> admins (~= git committers) and possibly the commenter (who we can't check for
+>> at the moment anyway, I don't think?) to be able to edit comments - I think
+>> user expectations for something that looks like ordinary blog comments are
+>> likely to include "others can't put words into my mouth".
+>>
+>> My other objection to using a namespace is that I'm not particularly happy about
+>> plugins consuming arbitrary pieces of the wiki namespace - /discussion is bad
+>> enough already. Indeed, this very page would accidentally get matched by rules
+>> aiming to control comment-posting... :-) --[[smcv]]
+
+>>> Thinking about it, perhaps one way to address this would be to have the suffix
+>>> (e.g. whether commenting on Sandbox creates sandbox/comment1 or sandbox/c1 or
+>>> what) be configurable by the wiki admin, in the same way that recentchanges has
+>>> recentchangespage => 'recentchanges'? I'd like to see fewer hard-coded page
+>>> names in general, really - it seems odd to me that shortcuts and smileys
+>>> hard-code the name of the page to look at. Perhaps I could add
+>>> discussionpage => 'discussion' too? --[[smcv]]
+
+>>> (I've now implemented this in my branch. --[[smcv]])
+
+>> The best reason to keep the pages internal seems to me to be that you
+>> don't want the overhead of every comment spawning its own wiki page.
+>> The worst problem with it though is that you have to assume the pages
+>> are mdwn (or `default_pageext`) and not support other formats. --[[Joey]]
+
+>>> Well, you could always have `comment1._mdwn`, `comment2._creole` etc. and
+>>> alter the htmlize logic so that the `mdwn` hook is called for both `mdwn`
+>>> and `_mdwn` (assuming this is not already the case). I'm not convinced
+>>> that multi-format comments are a killer feature, though - part of the point
+>>> of this plugin, in my mind, is that it's less flexible than the full power
+>>> of ikiwiki and gives users fewer options. This could be construed
+>>> to be a feature, for people who don't care how flexible the technology is
+>>> and just want a simple way to leave a comment. The FormattingHelp page
+>>> assumes you're writing 100% Markdown in any case...
+>>>
+>>> Internal pages do too many things, perhaps: they suppress generation of
+>>> HTML pages, they disable editing over the web, and they have a different
+>>> namespace of htmlize hooks. I think the first two of those are useful
+>>> for this plugin, and the last is harmless; you seem to think the first
+>>> is useful, and the other two are harmful. --[[smcv]]
+
+# Access control (unresolved?)
+
+By the way, I think that who can post comments should be controllable by
+the existing plugins opendiscussion, anonok, signinedit, and lockedit. Allowing
+posting comments w/o any login, while a nice capability, can lead to
+spam problems. So, use `check_canedit` as at least a first-level check?
+--[[Joey]]
+
+> This plugin already uses `check_canedit`, but that function doesn't have a concept
+> of different actions. The hack I use is that when a user comments on, say, sandbox,
+> I call `check_canedit` for the pseudo-page "sandbox[postcomment]". The
+> special `postcomment(glob)` [[ikiwiki/pagespec]] returns true if the page ends with
+> "[postcomment]" and the part before (e.g. sandbox) matches the glob. So, you can
+> have postcomment(blog/*) or something. (Perhaps instead of taking a glob, postcomment
+> should take a pagespec, so you can have postcomment(link(tags/commentable))?)
+>
+> This is why `anonok_pages => 'postcomment(*)'` and `locked_pages => '!postcomment(*)'`
+> are necessary to allow anonymous and logged-in editing (respectively).
+>
+> This is ugly - one alternative would be to add `check_permission()` that takes a
+> page and a verb (create, edit, rename, remove and maybe comment are the ones I
+> can think of so far), use that, and port the plugins you mentioned to use that
+> API too. This plugin could either call `check_can("$page/comment1", 'create')` or
+> call `check_can($page, 'comment')`.
+> 
+> One odd effect of the code structure I've used is that we check for the ability to
+> create the page before we actually know what page name we're going to use - when
+> posting the comment I just increment a number until I reach an unused one - so
+> either the code needs restructuring, or the permission check for 'create' would
+> always be for 'comment1' and never 'comment123'.
+
+> Another possibility is to just check for permission to edit (e.g.) `sandbox/comment1`.
+> However, this makes the "comments can only be created, not edited" feature completely
+> reliant on the fact that internal pages can't be edited. Perhaps there should be a
+> `editable_pages` pagespec, defaulting to `'*'`? --[[smcv]]
+
+# comments directive vs global setting (resolved?)
+
+When comments have been enabled generally, you still need to mark which pages
+can have comments, by including the `\[[!comments]]` directive in them. By default,
+this directive expands to a "post a comment" link plus an `\[[!inline]]` with
+the comments. [This requirement has now been removed --[[smcv]]]
+
+> I don't like this, because it's hard to explain to someone why they have
+> to insert this into every post to their blog. Seems that the model used
+> for discussion pages could work -- if comments are enabled, automatically
+> add the comment posting form and comments to the end of each page.
+> --[[Joey]]
+
+>> I don't think I'd want comments on *every* page (particularly, not the
+>> front page). Perhaps a pagespec in the setup file, where the default is "*"?
+>> Then control freaks like me could use "link(tags/comments)" and tag pages
+>> as allowing comments.
+>>
+>>> Yes, I think a pagespec is the way to go. --[[Joey]]
+
+>>>> Implemented --[[smcv]]
+
+>> 
+>> The model used for discussion pages does require patching the existing
+>> page template, which I was trying to avoid - I'm not convinced that having
+>> every possible feature hard-coded there really scales (and obviously it's
+>> rather annoying while this plugin is on a branch). --[[smcv]]
+
+>>> Using the template would allow customising the html around the comments
+>>> which seems like a good thing? --[[Joey]]
+
+>>>> The \[[!comments]] directive is already template-friendly - it expands to
+>>>> the contents of the template `comments_embed.tmpl`, possibly with the
+>>>> result of an \[[!inline]] appended. I should change `comments_embed.tmpl`
+>>>> so it uses a template variable `INLINE` for the inline result rather than
+>>>> having the perl code concatenate it, which would allow a bit more
+>>>> customization (whether the "post" link was before or after the inline).
+>>>> Even if you want comments in page.tmpl, keeping the separate comments_embed.tmpl
+>>>> and having a `COMMENTS` variable in page.tmpl might be the way forward,
+>>>> since the smaller each templates is, the easier it will be for users
+>>>> to maintain a patched set of templates. (I think so, anyway, based on what happens
+>>>> with dpkg prompts in Debian packages with monolithic vs split
+>>>> conffiles.) --[[smcv]]
+
+>>>>> I've switched my branch to use page.tmpl instead; see what you think? --[[smcv]]
