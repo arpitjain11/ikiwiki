@@ -145,3 +145,7 @@ How do I set up cgi editing?  In setup I have:
  * cgi_wrapper => 'edit.cgi'
 
 But I don't get an edit link on my pages?  What am I doing wrong?
+
+> Assuming you don't have the editpage plugin disabled, all you should need
+> to so is re-run `ikiwiki -setup` with the above config and it should
+> rebuild your wiki and add the edit links to pages. --[[Joey]]
