@@ -1,8 +1,8 @@
-I have a directory containing two files. f1 has 
+I have a directory containing two files. f1 (<http://alcopop.org/~jon/repro/src/2008/07/02/debgtd.html>) has 
 
     meta date="2008-07-02 14:13:17"
 
-f2 has
+f2 (<http://alcopop.org/~jon/repro/src/2008/07/02/moving.html>) has
 
     meta date="2008-07-02 21:04:21"
 
@@ -19,10 +19,10 @@ Another page includes them both via inline. The inclusion pagespec is not based 
 
     inline pages="2008/07/*/*" show=5
 
-The resulting page is rendered with f1 above f2, seemingly not using the meta directive information. The italic-footer in the inline pages does use the correct time e.g. <em>Posted Wed 02 Jul 2008 14:13:17 BST</em>.
+The resulting page is rendered with f1 above f2, seemingly not using the meta directive information: <http://alcopop.org/~jon/repro/dest/2008/07/>. The footer in the inline pages does use the correct time e.g. <em>Posted Wed 02 Jul 2008 14:13:17 BST</em>.
 
 If I instead include them using creation_year in the pagespec, they are ordered correctly.
 
-I'm working on importing a blosxom site into ikiwiki. I'll try and reproduce this online.
+<http://alcopop.org/~jon/repro/> contains the src used to reproduce this, the precise ikiwiki invocation (inside Makefile) and the results (dest).
 
 -- [[JonDowland]]
