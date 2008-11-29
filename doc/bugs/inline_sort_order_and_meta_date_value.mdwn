@@ -1,8 +1,8 @@
-I have a directory containing two files. f1 (<http://alcopop.org/~jon/repro/src/2008/07/02/debgtd.html>) has 
+I have a directory containing two files. f1 (<http://alcopop.org/~jon/repro2/src/blog/debgtd.html>) has 
 
     meta date="2008-07-02 14:13:17"
 
-f2 (<http://alcopop.org/~jon/repro/src/2008/07/02/moving.html>) has
+f2 (<http://alcopop.org/~jon/repro2/src/blog/moving.html>) has
 
     meta date="2008-07-02 21:04:21"
 
@@ -15,14 +15,14 @@ They have both been modified recently:
 
 Note that f1 is fractionally newer than f2 in terms of ctime and mtime, but f2 is much newer in terms of the meta information.
 
-Another page includes them both via inline. The inclusion pagespec is not based on date, but on path (and the files are sorted into directories based on their dates)
+Another page includes them both via inline:
 
-    inline pages="2008/07/*/*" show=5
+    inline pages="blog/*" show=5
 
-The resulting page is rendered with f1 above f2, seemingly not using the meta directive information: <http://alcopop.org/~jon/repro/dest/2008/07/>. The footer in the inline pages does use the correct time e.g. <em>Posted Wed 02 Jul 2008 14:13:17 BST</em>.
+The resulting page is rendered with f1 above f2, seemingly not using the meta directive information: <http://alcopop.org/~jon/repro2/dest/blog/>. The footer in the inline pages does use the correct time e.g. <em>Posted Wed 02 Jul 2008 14:13:17 BST</em>.
 
 If I instead include them using creation_year in the pagespec, they are ordered correctly.
 
-<http://alcopop.org/~jon/repro/> contains the src used to reproduce this, the precise ikiwiki invocation (inside Makefile) and the results (dest).
+<http://alcopop.org/~jon/repro2/> contains the src used to reproduce this, the precise ikiwiki invocation (inside Makefile) and the results (dest).
 
 -- [[JonDowland]]
