@@ -9,6 +9,6 @@ The first two complaints happen if textile is not loaded, the third fatal one ha
 
 0x92 is "single quote" in the evil windows default codepage. It would be nice to handle this gracefully and not abort ikiwiki at this point, or alternatively, die fatally but mention which input page caused the error.
 
-Interestingly enough, in my case, the input file has several other bad windows characters (0xFC, u-umlaut) which have not caused ikiwiki to abort. ikiwiki version 2.50. -- [[JonDowland]]
+Interestingly enough, in my case, the input file has several other bad windows characters (0xFC, u-umlaut) which have not caused ikiwiki to abort. ikiwiki version 2.50. -- [[users/Jon]]
 
 > Fixed in git. [[done]] --[[Joey]]
