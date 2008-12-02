@@ -1,0 +1,16 @@
+I've just renamed a page and received the following as a result:
+
+----
+
+<p>
+<b>Successfully renamed users/jondowland.mdwn to users/jon.mdwn.</b>
+</p>
+<p>
+
+The following pages have been automatically modified to update their links to users/jon.mdwn:
+<ul>
+<li><a href="./../../tips/convert_mediawiki_to_ikiwiki/discussion/">discussion</a></li><li><a href="./../../tips/untrusted_git_push/discussion/">discussion</a></li></ul>...
+
+----
+
+In this situation I think the link to pages should be expanded to show the entire path, since there is quite likely to be a lot of things like "discussion". -- [[users/Jon]]
