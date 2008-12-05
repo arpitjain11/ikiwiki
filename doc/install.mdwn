@@ -28,6 +28,12 @@ on Fedora 7:
 	  perl-XML-Simple perl-TimeDate perl-HTML-Template perl-CGI-FormBuilder \
 	  perl-CGI-Session perl-File-MimeInfo perl-gettext perl-Authen-Passphrase
 
+And in Ubuntu Intrepid:
+
+       apt-get install libtext-markdown-perl libhtml-scrubber-perl libxml-simple-perl \
+         libtimedate-perl libhtml-template-perl libcgi-formbuilder-perl libcgi-session-perl \
+         libfile-mimeinfo-perl liblocale-gettext-perl libauthen-passphrase-perl
+
 ### Installing dependencies by hand
 
 If you want to install by hand from the tarball, you should make sure that
