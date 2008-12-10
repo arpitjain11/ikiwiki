@@ -16,7 +16,6 @@ use constant CANCEL => "Cancel";
 sub import { #{{{
 	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
-	hook(type => "preprocess", id => 'comments', call => \&preprocess);
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
@@ -90,64 +89,6 @@ sub checkconfig () { #{{{
 	$config{comments_pagename} = 'comment_'
 		unless defined $config{comments_pagename};
 } #}}}
-
-# Somewhat based on IkiWiki::Plugin::inline blog posting support
-sub preprocess (@) { #{{{
-	my %params=@_;
-
-	return "";
-
-	my $page = $params{page};
-	$pagestate{$page}{comments}{comments} = defined $params{closed}
-		? (not IkiWiki::yesno($params{closed}))
-		: 1;
-	$pagestate{$page}{comments}{allowdirectives} = IkiWiki::yesno($params{allowdirectives});
-	$pagestate{$page}{comments}{commit} = defined $params{commit}
-		? IkiWiki::yesno($params{commit})
-		: 1;
-
-	my $formtemplate = IkiWiki::template("comments_embed.tmpl",
-		blind_cache => 1);
-	$formtemplate->param(cgiurl => $config{cgiurl});
-	$formtemplate->param(page => $params{page});
-
-	if (not $pagestate{$page}{comments}{comments}) {
-		$formtemplate->param("disabled" =>
-			gettext('comments are closed'));
-	}
-	elsif ($params{preview}) {
-		$formtemplate->param("disabled" =>
-			gettext('not available during Preview'));
-	}
-
-	debug("page $params{page} => destpage $params{destpage}");
-
-	unless (defined $params{inline} && !IkiWiki::yesno($params{inline})) {
-		my $posts = '';
-		eval q{use IkiWiki::Plugin::inline};
-		error($@) if ($@);
-		my @args = (
-			pages => "internal($params{page}/_comment_*)",
-			template => "comments_display",
-			show => 0,
-			reverse => "yes",
-			# special stuff passed through
-			page => $params{page},
-			destpage => $params{destpage},
-			preview => $params{preview},
-		);
-		push @args, atom => $params{atom} if defined $params{atom};
-		push @args, rss => $params{rss} if defined $params{rss};
-		push @args, feeds => $params{feeds} if defined $params{feeds};
-		push @args, feedshow => $params{feedshow} if defined $params{feedshow};
-		push @args, timeformat => $params{timeformat} if defined $params{timeformat};
-		push @args, feedonly => $params{feedonly} if defined $params{feedonly};
-		$posts = IkiWiki::preprocess_inline(@args);
-		$formtemplate->param("comments" => $posts);
-	}
-
-	return $formtemplate->output;
-} # }}}
 
 # FIXME: logic taken from editpage, should be common code?
 sub getcgiuser ($) { # {{{
