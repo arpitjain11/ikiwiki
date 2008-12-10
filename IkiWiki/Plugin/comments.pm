@@ -8,6 +8,7 @@ package IkiWiki::Plugin::comments;
 use warnings;
 use strict;
 use IkiWiki 2.00;
+use Encode;
 
 use constant PREVIEW => "Preview";
 use constant POST_COMMENT => "Post comment";
@@ -16,18 +17,96 @@ use constant CANCEL => "Cancel";
 sub import { #{{{
 	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
+	hook(type => "preprocess", id => 'comment', call => \&preprocess);
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
 	hook(type => "cgi", id => "comments", call => \&linkcgi);
-	IkiWiki::loadplugin("inline");
 	IkiWiki::loadplugin("mdwn");
+	IkiWiki::loadplugin("inline");
 } # }}}
 
 sub htmlize { # {{{
-	eval q{use IkiWiki::Plugin::mdwn};
-	error($@) if ($@);
-	return IkiWiki::Plugin::mdwn::htmlize(@_)
+	my %params = @_;
+	return $params{content};
+} # }}}
+
+sub preprocess { # {{{
+	my %params = @_;
+	my $page = $params{page};
+
+	my $format = $params{format};
+	if (defined $format && !exists $IkiWiki::hooks{htmlize}{$format}) {
+		error(sprintf(gettext("unsupported page format %s"), $format));
+	}
+
+	my $content = $params{content};
+	if (!defined $content) {
+		error(gettext("comment must have content"));
+	}
+	$content =~ s/\\"/"/g;
+
+	$content = IkiWiki::filter($page, $params{destpage}, $content);
+
+	if ($config{comments_allowdirectives}) {
+		$content = IkiWiki::preprocess($page, $params{destpage},
+			$content);
+	}
+
+	# no need to bother with htmlize if it's just HTML
+	$content = IkiWiki::htmlize($page, $params{destpage}, $format,
+		$content) if defined $format;
+
+	IkiWiki::run_hooks(sanitize => sub {
+		$content = shift->(
+			page => $page,
+			destpage => $params{destpage},
+			content => $content,
+		);
+	});
+
+	# override any metadata
+
+	if (defined $params{username}) {
+		my ($authorurl, $author) = linkuser($params{username});
+		$pagestate{$page}{meta}{author} = $author;
+		$pagestate{$page}{meta}{authorurl} = $authorurl;
+	}
+	elsif (defined $params{ip}) {
+		$pagestate{$page}{meta}{author} = sprintf(
+			gettext("Anonymous (IP: %s)"),
+			$params{ip});
+		delete $pagestate{$page}{meta}{authorurl};
+	}
+	else {
+		$pagestate{$page}{meta}{author} = gettext("Anonymous");
+		delete $pagestate{$page}{meta}{authorurl};
+	}
+
+	if (defined $params{subject}) {
+		$pagestate{$page}{meta}{title} = $params{subject};
+	}
+	else {
+		delete $pagestate{$page}{meta}{title};
+	}
+
+	my $baseurl = urlto($params{destpage}, undef, 1);
+	my $anchor = "";
+	my $comments_pagename = $config{comments_pagename};
+	if ($params{page} =~ m/\/(\Q${comments_pagename}\E\d+)$/) {
+		$anchor = $1;
+	}
+	$pagestate{$page}{meta}{permalink} = "${baseurl}#${anchor}";
+
+	eval q{use Date::Parse};
+	if (! $@) {
+		my $time = str2time($params{date});
+		$IkiWiki::pagectime{$page} = $time if defined $time;
+	}
+
+	# FIXME: hard-coded HTML (although it's just to set an ID)
+	return "<div id=\"$anchor\">$content</div>" if $anchor;
+	return $content;
 } # }}}
 
 sub getsetup () { #{{{
@@ -143,9 +222,9 @@ sub linkuser ($) { # {{{
 		return (IkiWiki::cgiurl(
 				do => 'commenter',
 				page => (length $config{userdir}
-					? "$config{userdir}/"
-					: "")
-			).$user, $user);
+					? "$config{userdir}/$user"
+					: "$user")
+			), $user);
 	}
 } # }}}
 
@@ -246,17 +325,6 @@ sub sessioncgi ($$) { #{{{
 	my $body = $form->field('body') || '';
 	$body =~ s/\r\n/\n/g;
 	$body =~ s/\r/\n/g;
-	$body .= "\n" if $body !~ /\n$/;
-
-	unless ($allow_directives) {
-		# don't allow new-style directives at all
-		$body =~ s/(^|[^\\])\[\[!/$1&#91;&#91;!/g;
-
-		# don't allow [[ unless it begins an old-style
-		# wikilink, if prefix_directives is off
-		$body =~ s/(^|[^\\])\[\[(?![^\n\s\]+]\]\])/$1&#91;&#91;!/g
-			unless $config{prefix_directives};
-	}
 
 	# FIXME: check that the wiki is locked right now, because
 	# if it's not, there are mad race conditions!
@@ -272,27 +340,29 @@ sub sessioncgi ($$) { #{{{
 
 	my $anchor = "${comments_pagename}${i}";
 
-	IkiWiki::run_hooks(sanitize => sub {
-		$body=shift->(
-			page => $location,
-			destpage => $location,
-			content => $body,
-		);
-	});
+	$body =~ s/"/\\"/g;
+	my $content = "[[!comment format=mdwn\n";
 
-	# In this template, the [[!meta]] directives should stay at the end,
-	# so that they will override anything the user specifies. (For
-	# instance, [[!meta author="I can fake the author"]]...)
-	my $content_tmpl = template('comments_comment.tmpl');
-	$content_tmpl->param(author => $author);
-	$content_tmpl->param(authorurl => $authorurl);
-	$content_tmpl->param(subject => $form->field('subject'));
-	$content_tmpl->param(body => $body);
-	$content_tmpl->param(anchor => "$anchor");
-	$content_tmpl->param(permalink => "$baseurl#$anchor");
-	$content_tmpl->param(date => IkiWiki::formattime(time, "%X %x"));
+	# FIXME: handling of double quotes probably wrong?
+	if (defined $session->param('name')) {
+		my $username = $session->param('name');
+		$username =~ s/"/&quot;/g;
+		$content .= " username=\"$username\"\n";
+	}
+	elsif (defined $ENV{REMOTE_ADDR}) {
+		my $ip = $ENV{REMOTE_ADDR};
+		if ($ip =~ m/^([.0-9]+)$/) {
+			$content .= " ip=\"$1\"\n";
+		}
+	}
 
-	my $content = $content_tmpl->output;
+	my $subject = $form->field('subject');
+	$subject =~ s/"/&quot;/g;
+	$content .= " subject=\"$subject\"\n";
+
+	$content .= " date=\"" . IkiWiki::formattime(time, '%X %x') . "\"\n";
+
+	$content .= " content=\"\"\"\n$body\n\"\"\"]]\n";
 
 	# This is essentially a simplified version of editpage:
 	# - the user does not control the page that's created, only the parent
