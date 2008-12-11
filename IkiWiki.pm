@@ -666,11 +666,15 @@ sub newpagefile ($$) { #{{{
 	}
 } #}}}
 
-sub targetpage ($$) { #{{{
+sub targetpage ($$;$) { #{{{
 	my $page=shift;
 	my $ext=shift;
+	my $filename=shift;
 	
-	if (! $config{usedirs} || $page eq 'index') {
+	if (defined $filename) {
+		return $page."/".$filename.".".$ext;
+	}
+	elsif (! $config{usedirs} || $page eq 'index') {
 		return $page.".".$ext;
 	}
 	else {

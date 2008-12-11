@@ -696,10 +696,14 @@ This can be called when creating a new page, to determine what filename
 to save the page to. It's passed a page name, and its type, and returns
 the name of the file to create, relative to the srcdir.
 
-#### `targetpage($$)`
+#### `targetpage($$;$)`
 
 Passed a page and an extension, returns the filename that page will be
 rendered to.
+
+Optionally, a third parameter can be passed, to specify the preferred
+filename of the page. For example, `targetpage("foo", "rss", "feed")`
+will yield something like `foo/feed.rss`.
 
 ## Miscellaneous
 

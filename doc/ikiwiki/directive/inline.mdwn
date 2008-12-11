@@ -104,6 +104,11 @@ Here are some less often needed parameters:
 * `guid` - If a URI is given here (perhaps a UUID prefixed with `urn:uuid:`),
   the Atom feed will have this as its `<id>`. The default is to use the URL
   of the page containing the `inline` directive.
+* `feedfile` - Can be used to change the name of the file generated for the
+  feed. This is particularly useful if a page contains multiple feeds.
+  For example, set "feedfile=feed" to cause it to generate `page/feed.atom`
+  and/or `page/feed.rss`. This option is not supported if the wiki is
+  configured not to use `usedirs`.
 
 [[!meta robots="noindex, follow"]]
 

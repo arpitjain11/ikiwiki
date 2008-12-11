@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-11 20:48-0500\n"
+"POT-Creation-Date: 2008-12-11 14:46-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1189
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr ""
 
@@ -111,16 +111,16 @@ msgstr ""
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:504
+#: ../IkiWiki/Plugin/aggregate.pm:506
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:510
+#: ../IkiWiki/Plugin/aggregate.pm:514
 msgid "feed crashed XML::Feed!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:591
+#: ../IkiWiki/Plugin/aggregate.pm:595
 #, perl-format
 msgid "creating new page %s"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:208
 msgid "done"
 msgstr ""
 
@@ -172,7 +172,7 @@ msgid "automatic index generation"
 msgstr ""
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:344 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -320,15 +320,15 @@ msgstr ""
 msgid "failed to determine size of image %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:93
+#: ../IkiWiki/Plugin/inline.pm:92
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:139
+#: ../IkiWiki/Plugin/inline.pm:138
 msgid "page editing not allowed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:156
+#: ../IkiWiki/Plugin/inline.pm:155
 msgid "missing pages parameter"
 msgstr ""
 
@@ -337,20 +337,20 @@ msgstr ""
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:285
+#: ../IkiWiki/Plugin/inline.pm:297
 msgid "Add a new post titled:"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:301
+#: ../IkiWiki/Plugin/inline.pm:318
 #, perl-format
 msgid "nonexistant template %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:352 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr ""
 
-#: ../IkiWiki/Plugin/inline.pm:572
+#: ../IkiWiki/Plugin/inline.pm:577
 msgid "RPC::XML::Client not found, not pinging"
 msgstr ""
 
@@ -563,16 +563,16 @@ msgstr ""
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:100
+#: ../IkiWiki/Plugin/recentchanges.pm:101
 msgid "missing page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchanges.pm:102
+#: ../IkiWiki/Plugin/recentchanges.pm:103
 #, perl-format
 msgid "The page %s does not exist."
 msgstr ""
 
-#: ../IkiWiki/Plugin/recentchangesdiff.pm:36
+#: ../IkiWiki/Plugin/recentchangesdiff.pm:37
 msgid "(Diff truncated)"
 msgstr ""
 
@@ -935,41 +935,41 @@ msgstr ""
 msgid "       ikiwiki --setup configfile"
 msgstr ""
 
-#: ../ikiwiki.in:90
+#: ../ikiwiki.in:91
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:138
+#: ../ikiwiki.in:139
 msgid "generating wrappers.."
 msgstr ""
 
-#: ../ikiwiki.in:195
+#: ../ikiwiki.in:197
 msgid "rebuilding wiki.."
 msgstr ""
 
-#: ../ikiwiki.in:198
+#: ../ikiwiki.in:200
 msgid "refreshing wiki.."
 msgstr ""
 
-#: ../IkiWiki.pm:473
+#: ../IkiWiki.pm:480
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 
-#: ../IkiWiki.pm:519
+#: ../IkiWiki.pm:526
 msgid "cannot use multiple rcs plugins"
 msgstr ""
 
-#: ../IkiWiki.pm:548
+#: ../IkiWiki.pm:555
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr ""
 
-#: ../IkiWiki.pm:1172
+#: ../IkiWiki.pm:1187
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1673
+#: ../IkiWiki.pm:1688
 msgid "yes"
 msgstr ""
 

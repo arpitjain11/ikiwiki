@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 2.70\n"
-"Report-Msgid-Bugs-To: ikiwiki@packages.debian.org\n"
-"POT-Creation-Date: 2008-10-31 16:37-0400\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-11 14:46-0500\n"
 "PO-Revision-Date: 2008-11-20 19:58+0100\n"
 "Last-Translator: Kai Wasserbäch <debian@carbon-project.org>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -47,7 +47,7 @@ msgstr "Einstellungen gespeichert."
 msgid "You are banned."
 msgstr "Sie sind ausgeschlossen worden."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1182
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr "Fehler"
 
@@ -110,16 +110,16 @@ msgstr "Feed nicht gefunden"
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(ungültiges UTF-8-Zeichen wurde aus dem Feed entfernt)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:504
+#: ../IkiWiki/Plugin/aggregate.pm:506
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr "(Feed-Entitäten maskiert)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:510
+#: ../IkiWiki/Plugin/aggregate.pm:514
 msgid "feed crashed XML::Feed!"
 msgstr "Feed führte zum Absturz von XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:590
+#: ../IkiWiki/Plugin/aggregate.pm:595
 #, perl-format
 msgid "creating new page %s"
 msgstr "erstelle neue Seite %s"
@@ -128,7 +128,7 @@ msgstr "erstelle neue Seite %s"
 msgid "deleting bucket.."
 msgstr "Lösche Bucket..."
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:206
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:208
 msgid "done"
 msgstr "fertig"
 
@@ -171,7 +171,7 @@ msgid "automatic index generation"
 msgstr "automatische Index-Erstellung"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:327 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/inline.pm:344 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -245,11 +245,11 @@ msgstr "»edittemplate« %s registriert für %s"
 msgid "failed to process"
 msgstr "Bearbeitung fehlgeschlagen"
 
-#: ../IkiWiki/Plugin/format.pm:22
+#: ../IkiWiki/Plugin/format.pm:20
 msgid "must specify format and text"
 msgstr "Format und Text muss spezifiziert werden"
 
-#: ../IkiWiki/Plugin/format.pm:25
+#: ../IkiWiki/Plugin/format.pm:23
 #, perl-format
 msgid "unsupported page format %s"
 msgstr "nicht unterstütztes Seitenformat %s"
@@ -276,7 +276,8 @@ msgstr "Es ist Ihnen nicht erlaubt, Dateizugriffsrechte zu ändern"
 #: ../IkiWiki/Plugin/google.pm:27
 #, perl-format
 msgid "Must specify %s when using the google search plugin"
-msgstr "%s muss angegeben werden, wenn die Google-Sucherweiterung verwandt wird"
+msgstr ""
+"%s muss angegeben werden, wenn die Google-Sucherweiterung verwandt wird"
 
 #: ../IkiWiki/Plugin/google.pm:31
 msgid "Failed to parse url, cannot determine domain name"
@@ -320,17 +321,17 @@ msgstr "Größenänderung fehlgeschlagen: %s"
 msgid "failed to determine size of image %s"
 msgstr "Größe des Bildes %s konnte nicht festgestellt werden."
 
-#: ../IkiWiki/Plugin/inline.pm:93
+#: ../IkiWiki/Plugin/inline.pm:92
 msgid "Must specify url to wiki with --url when using --rss or --atom"
 msgstr ""
 "Die URL zum Wiki muss mit --url angegeben werden, wenn --rss oder --atom "
 "genutzt wird"
 
-#: ../IkiWiki/Plugin/inline.pm:139
+#: ../IkiWiki/Plugin/inline.pm:138
 msgid "page editing not allowed"
 msgstr "Seitenbearbeitungen sind nicht erlaubt"
 
-#: ../IkiWiki/Plugin/inline.pm:156
+#: ../IkiWiki/Plugin/inline.pm:155
 msgid "missing pages parameter"
 msgstr "Fehlender Seitenparameter"
 
@@ -339,20 +340,20 @@ msgstr "Fehlender Seitenparameter"
 msgid "unknown sort type %s"
 msgstr "Unbekannter Sortierungstyp %s"
 
-#: ../IkiWiki/Plugin/inline.pm:285
+#: ../IkiWiki/Plugin/inline.pm:297
 msgid "Add a new post titled:"
 msgstr "Füge einen neuen Beitrag hinzu. Titel:"
 
-#: ../IkiWiki/Plugin/inline.pm:301
+#: ../IkiWiki/Plugin/inline.pm:318
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "nicht-vorhandene Vorlage %s"
 
-#: ../IkiWiki/Plugin/inline.pm:335 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:352 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Diskussion"
 
-#: ../IkiWiki/Plugin/inline.pm:572
+#: ../IkiWiki/Plugin/inline.pm:577
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client nicht gefunden, führe Ping nicht aus"
 
@@ -568,20 +569,18 @@ msgstr "Unzulässiger Prozentwert (%s)"
 
 #: ../IkiWiki/Plugin/progress.pm:59
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
-msgstr ""
-"Benötige entweder »percent«- oder »totalpages«- und "
-"»donepages«-Parameter"
+msgstr "Benötige entweder »percent«- oder »totalpages«- und »donepages«-Parameter"
 
-#: ../IkiWiki/Plugin/recentchanges.pm:100
+#: ../IkiWiki/Plugin/recentchanges.pm:101
 msgid "missing page"
 msgstr "fehlende Seite"
 
-#: ../IkiWiki/Plugin/recentchanges.pm:102
+#: ../IkiWiki/Plugin/recentchanges.pm:103
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "Die Seite %s existiert nicht."
 
-#: ../IkiWiki/Plugin/recentchangesdiff.pm:36
+#: ../IkiWiki/Plugin/recentchangesdiff.pm:37
 msgid "(Diff truncated)"
 msgstr "(Diff beschnitten)"
 
@@ -593,7 +592,8 @@ msgstr "%s existiert nicht"
 #: ../IkiWiki/Plugin/remove.pm:38
 #, perl-format
 msgid "%s is not in the srcdir, so it cannot be deleted"
-msgstr "%s ist nicht im Quellverzeichnis und kann deshalb nicht gelöscht werden"
+msgstr ""
+"%s ist nicht im Quellverzeichnis und kann deshalb nicht gelöscht werden"
 
 #: ../IkiWiki/Plugin/remove.pm:41 ../IkiWiki/Plugin/rename.pm:45
 #, perl-format
@@ -928,19 +928,19 @@ msgstr "Dateiname des Wrappers nicht angegeben"
 
 #. translators: The first parameter is a filename, and the second is
 #. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:79
+#: ../IkiWiki/Wrapper.pm:97
 #, perl-format
 msgid "failed to write %s: %s"
 msgstr "Schreiben von %s fehlgeschlagen: %s"
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:135
+#: ../IkiWiki/Wrapper.pm:154
 #, perl-format
 msgid "failed to compile %s"
 msgstr "Erzeugen von %s fehlgeschlagen"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:155
+#: ../IkiWiki/Wrapper.pm:174
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s wurde erfolgreich erstellt"
@@ -953,43 +953,43 @@ msgstr "Benutzung: ikiwiki [Optionen] Quelle Ziel"
 msgid "       ikiwiki --setup configfile"
 msgstr "       ikiwiki --setup Konfigurationsdatei "
 
-#: ../ikiwiki.in:90
+#: ../ikiwiki.in:91
 msgid "usage: --set var=value"
 msgstr "Benutzung: --set Variable=Wert"
 
-#: ../ikiwiki.in:138
+#: ../ikiwiki.in:139
 msgid "generating wrappers.."
 msgstr "erzeuge Wrapper..."
 
-#: ../ikiwiki.in:195
+#: ../ikiwiki.in:197
 msgid "rebuilding wiki.."
 msgstr "erzeuge Wiki neu..."
 
-#: ../ikiwiki.in:198
+#: ../ikiwiki.in:200
 msgid "refreshing wiki.."
 msgstr "aktualisiere Wiki..."
 
-#: ../IkiWiki.pm:466
+#: ../IkiWiki.pm:480
 msgid "Must specify url to wiki with --url when using --cgi"
 msgstr ""
 "Es muss eine URL zum Wiki mit --url angegeben werden, wenn --cgi verwandt "
 "wird"
 
-#: ../IkiWiki.pm:512
+#: ../IkiWiki.pm:526
 msgid "cannot use multiple rcs plugins"
 msgstr "Kann nicht mehrere Versionskontrollsystem-Erweiterungen verwenden"
 
-#: ../IkiWiki.pm:541
+#: ../IkiWiki.pm:555
 #, perl-format
 msgid "failed to load external plugin needed for %s plugin: %s"
 msgstr "Laden der für %s benötigten externen Erweiterung fehlgeschlagen: %s"
 
-#: ../IkiWiki.pm:1165
+#: ../IkiWiki.pm:1187
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "Präprozessorschleife auf %s in Tiefe %i erkannt"
 
-#: ../IkiWiki.pm:1678
+#: ../IkiWiki.pm:1688
 msgid "yes"
 msgstr "ja"
 

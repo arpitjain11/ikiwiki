@@ -26,8 +26,7 @@ sub import { #{{{
 	# Hook to change to do pinging since it's called late.
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.
-	hook(type => "change", id => "inline", 
-		call => \&IkiWiki::pingurl);
+	hook(type => "change", id => "inline", call => \&IkiWiki::pingurl);
 } # }}}
 
 sub getopt () { #{{{
@@ -238,28 +237,46 @@ sub preprocess_inline (@) { #{{{
 		@feedlist=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @feedlist;
 	}
 
-	my $feednum="";
-
-	my $feedid=join("\0", map { $_."\0".$params{$_} } sort keys %params);
-	if (exists $knownfeeds{$feedid}) {
-		$feednum=$knownfeeds{$feedid};
-	}
-	else {
-		if (exists $page_numfeeds{$params{destpage}}) {
-			if ($feeds) {
-				$feednum=$knownfeeds{$feedid}=++$page_numfeeds{$params{destpage}};
+	my ($feedbase, $feednum);
+	if ($feeds) {
+		# Ensure that multiple feeds on a page go to unique files.
+		
+		# Feedfile can lead to conflicts if usedirs is not enabled,
+		# so avoid supporting it in that case.
+		delete $params{feedfile} if ! $config{usedirs};
+		# Tight limits on legal feedfiles, to avoid security issues
+		# and conflicts.
+		if (defined $params{feedfile}) {
+			if ($params{feedfile} =~ /\// ||
+			    $params{feedfile} !~ /$config{wiki_file_regexp}/) {
+				error("illegal feedfile");
 			}
+			$params{feedfile}=possibly_foolish_untaint($params{feedfile});
+		}
+		$feedbase=targetpage($params{destpage}, "", $params{feedfile});
+
+		my $feedid=join("\0", $feedbase, map { $_."\0".$params{$_} } sort keys %params);
+		if (exists $knownfeeds{$feedid}) {
+			$feednum=$knownfeeds{$feedid};
 		}
 		else {
-			$feednum=$knownfeeds{$feedid}="";
-			if ($feeds) {
-				$page_numfeeds{$params{destpage}}=1;
+			if (exists $page_numfeeds{$params{destpage}}{$feedbase}) {
+				if ($feeds) {
+					$feednum=$knownfeeds{$feedid}=++$page_numfeeds{$params{destpage}}{$feedbase};
+				}
+			}
+			else {
+				$feednum=$knownfeeds{$feedid}="";
+				if ($feeds) {
+					$page_numfeeds{$params{destpage}}{$feedbase}=1;
+				}
 			}
 		}
 	}
 
-	my $rssurl=basename(rsspage($params{destpage}).$feednum) if $feeds && $rss;
-	my $atomurl=basename(atompage($params{destpage}).$feednum) if $feeds && $atom;
+	my $rssurl=basename($feedbase."rss".$feednum) if $feeds && $rss;
+	my $atomurl=basename($feedbase."atom".$feednum) if $feeds && $atom;
+
 	my $ret="";
 
 	if (length $config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
@@ -375,7 +392,7 @@ sub preprocess_inline (@) { #{{{
 	
 	if ($feeds && ! (! $emptyfeeds && ! @feedlist)) {
 		if ($rss) {
-			my $rssp=rsspage($params{destpage}).$feednum;
+			my $rssp=$feedbase."rss".$feednum;
 			will_render($params{destpage}, $rssp);
 			if (! $params{preview}) {
 				writefile($rssp, $config{destdir},
@@ -386,7 +403,7 @@ sub preprocess_inline (@) { #{{{
 			}
 		}
 		if ($atom) {
-			my $atomp=atompage($params{destpage}).$feednum;
+			my $atomp=$feedbase."atom".$feednum;
 			will_render($params{destpage}, $atomp);
 			if (! $params{preview}) {
 				writefile($atomp, $config{destdir},
@@ -473,14 +490,6 @@ sub absolute_urls ($$) { #{{{
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:)(\/[^"]*)"/$1 href="$urltop$2"/mig;
 	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)(\/[^"]*)"/$1 src="$urltop$2"/mig;
 	return $content;
-} #}}}
-
-sub rsspage ($) { #{{{
-	return targetpage(shift, "rss");
-} #}}}
-
-sub atompage ($) { #{{{
-	return targetpage(shift, "atom");
 } #}}}
 
 sub genfeed ($$$$$@) { #{{{
