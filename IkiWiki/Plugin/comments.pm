@@ -558,6 +558,8 @@ sub pagetemplate (@) { #{{{
 				reverse => 'yes',
 				page => $page,
 				destpage => $params{destpage},
+				feedfile => 'comments',
+				emptyfeeds => 'no',
 			);
 			$comments = IkiWiki::preprocess_inline(@args);
 		}
