@@ -434,8 +434,10 @@ sub sessioncgi ($$) { #{{{
 	}
 
 	my $subject = $form->field('subject');
-	$subject =~ s/"/&quot;/g;
-	$content .= " subject=\"$subject\"\n";
+	if (length $subject) {
+		$subject =~ s/"/&quot;/g;
+		$content .= " subject=\"$subject\"\n";
+	}
 
 	$content .= " date=\"" . IkiWiki::formattime(time, '%X %x') . "\"\n";
 
