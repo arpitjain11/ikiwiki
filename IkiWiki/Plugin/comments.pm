@@ -89,12 +89,10 @@ sub preprocess { # {{{
 		($commentauthorurl, $commentauthor) =
 			linkuser($params{username});
 	}
-	elsif (defined $params{ip}) {
-		$commentip = $params{ip};
-		$commentauthor = sprintf(
-			gettext("Anonymous (IP: %s)"), $params{ip});
-	}
 	else {
+		if (defined $params{ip}) {
+			$commentip = $params{ip};
+		}
 		$commentauthor = gettext("Anonymous");
 	}
 
