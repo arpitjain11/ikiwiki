@@ -22,7 +22,6 @@ sub import { #{{{
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
 	hook(type => "cgi", id => "comments", call => \&linkcgi);
-	IkiWiki::loadplugin("mdwn");
 	IkiWiki::loadplugin("inline");
 } # }}}
 
@@ -243,7 +242,7 @@ sub sessioncgi ($$) { #{{{
 
 	my @buttons = (POST_COMMENT, PREVIEW, CANCEL);
 	my $form = CGI::FormBuilder->new(
-		fields => [qw{do sid page subject body}],
+		fields => [qw{do sid page subject body type}],
 		charset => 'utf-8',
 		method => 'POST',
 		required => [qw{body}],
@@ -264,13 +263,26 @@ sub sessioncgi ($$) { #{{{
 		});
 	IkiWiki::decode_form_utf8($form);
 
+	my $type = $form->param('type');
+	if (defined $type && length $type && $IkiWiki::hooks{htmlize}{$type}) {
+		$type = possibly_foolish_untaint($type);
+	}
+	else {
+		$type = $config{default_pageext};
+	}
+	my @page_types;
+	if (exists $IkiWiki::hooks{htmlize}) {
+		@page_types = grep { !/^_/ } keys %{$IkiWiki::hooks{htmlize}};
+	}
+
 	$form->field(name => 'do', type => 'hidden');
 	$form->field(name => 'sid', type => 'hidden', value => $session->id,
 		force => 1);
 	$form->field(name => 'page', type => 'hidden');
 	$form->field(name => 'subject', type => 'text', size => 72);
-	$form->field(name => 'body', type => 'textarea', rows => 5,
-		cols => 80);
+	$form->field(name => 'body', type => 'textarea', rows => 10);
+	$form->field(name => "type", value => $type, force => 1,
+		type => 'select', options => \@page_types);
 
 	# The untaint is OK (as in editpage) because we're about to pass
 	# it to file_pruned anyway
@@ -341,7 +353,7 @@ sub sessioncgi ($$) { #{{{
 	my $anchor = "${comments_pagename}${i}";
 
 	$body =~ s/"/\\"/g;
-	my $content = "[[!comment format=mdwn\n";
+	my $content = "[[!comment format=$type\n";
 
 	# FIXME: handling of double quotes probably wrong?
 	if (defined $session->param('name')) {
@@ -371,7 +383,7 @@ sub sessioncgi ($$) { #{{{
 	# - this means that if they do, rocks fall and everyone dies
 
 	if ($form->submitted eq PREVIEW) {
-		my $preview = IkiWiki::htmlize($location, $page, 'mdwn',
+		my $preview = IkiWiki::htmlize($location, $page, '_comment',
 				IkiWiki::linkify($page, $page,
 					IkiWiki::preprocess($page, $page,
 						IkiWiki::filter($location,
