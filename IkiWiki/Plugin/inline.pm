@@ -232,6 +232,10 @@ sub preprocess_inline (@) { #{{{
 	# that if they are removed or otherwise changed, the inline will be
 	# sure to be updated.
 	add_depends($params{page}, join(" or ", $#list >= $#feedlist ? @list : @feedlist));
+	
+	if ($feeds && exists $params{feedpages}) {
+		@feedlist=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @feedlist;
+	}
 
 	my $feednum="";
 
@@ -364,10 +368,6 @@ sub preprocess_inline (@) { #{{{
 	}
 	
 	if ($feeds) {
-		if (exists $params{feedpages}) {
-			@feedlist=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @feedlist;
-		}
-	
 		if ($rss) {
 			my $rssp=rsspage($params{destpage}).$feednum;
 			will_render($params{destpage}, $rssp);
