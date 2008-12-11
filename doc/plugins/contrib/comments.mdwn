@@ -34,10 +34,28 @@ There are some global options for the setup file:
   directives
 * `comments_commit`: if true (default true), comments will be committed to the version
   control system
+* `comments_allowauthor`: if true (default false), anonymous commenters may specify a
+  name for themselves, and the \[[!meta author]] and \[[!meta authorurl]] directives
+  will not be overridden by the comments plugin
+
+Templates that will display comments (by default that means `comments_display.tmpl`)
+can use the following additional `<TMPL_VAR>`s:
+
+* `COMMENTUSER`: the authenticated/verified user name, or undefined if the user was not signed in
+* `COMMENTIP`: the remote IP address, or undefined if not known (this is not currently recorded
+  for users who are signed in, who are assumed to be vaguely accountable)
+* `COMMENTAUTHOR`: a "prettier" version of the authenticated/verified user name (e.g. OpenIDs are
+  formatted the same way as in [[RecentChanges]]), or the result of localizing "Anonymous" if the
+  user was not signed in
+* `COMMENTAUTHORURL`: if the user was signed in with an OpenID, that URL; if the user was signed
+  in with some other username, a CGI URL that redirects to their user page (if any)
+
+This plugin also adds a `\[[!comment]]` directive which is used when storing comments. This
+directive shouldn't be used on pages that are edited in the usual way.
 
 This plugin aims to close the [[todo]] item "[[todo/supporting_comments_via_disussion_pages]]",
 and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk (it's the
-`postcomment` branch). A demo wiki with the plugin enabled is running at
+`comments-rebase1` branch). A demo wiki with the plugin enabled is running at
 <http://www.pseudorandom.co.uk/2008/ikiwiki/demo/>.
 
 Known issues:
@@ -47,21 +65,19 @@ Known issues:
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
 * Joey doesn't think it should necessarily use internal pages (see [[discussion]])
+* `\[[!comment]]` should perhaps be `\[[!_comment]], or a special filter/htmlize hook rather
+  than being a directive at all
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
-
-Wishlist:
-
-* tbm would like anonymous people to be able to enter their name and possibly email
-  address
-* smcv would like an indication of who you're posting as / the ability to log in
-  as someone else (even if anonymous comments are allowed, it'd be nice to be
-  able to choose to log in with a username or OpenID, like in Livejournal);
-  perhaps editpage needs this too
 
 Fixed issues:
 
 * Joey didn't think the `\[[!comments]]` directive was appropriate; comments now appear
   on pages selected with a [[ikiwiki/pagespec]]
 * Joey thought that raw HTML should always be allowed; it now is
+* tbm wanted anonymous people to be able to enter their name and possibly email
+  address; a name and website can now be supplied
+* There is now an indication of who you're signed in as
+* Each comment is now one big \[[!comment]] directive invocation, avoiding previous
+  issues with unambiguous and un-spoofable metadata
