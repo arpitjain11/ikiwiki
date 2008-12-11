@@ -242,10 +242,10 @@ sub sessioncgi ($$) { #{{{
 
 	my @buttons = (POST_COMMENT, PREVIEW, CANCEL);
 	my $form = CGI::FormBuilder->new(
-		fields => [qw{do sid page subject body type}],
+		fields => [qw{do sid page subject editcontent type}],
 		charset => 'utf-8',
 		method => 'POST',
-		required => [qw{body}],
+		required => [qw{editcontent}],
 		javascript => 0,
 		params => $cgi,
 		action => $config{cgiurl},
@@ -280,7 +280,7 @@ sub sessioncgi ($$) { #{{{
 		force => 1);
 	$form->field(name => 'page', type => 'hidden');
 	$form->field(name => 'subject', type => 'text', size => 72);
-	$form->field(name => 'body', type => 'textarea', rows => 10);
+	$form->field(name => 'editcontent', type => 'textarea', rows => 10);
 	$form->field(name => "type", value => $type, force => 1,
 		type => 'select', options => \@page_types);
 
@@ -334,9 +334,9 @@ sub sessioncgi ($$) { #{{{
 
 	my ($authorurl, $author) = linkuser(getcgiuser($session));
 
-	my $body = $form->field('body') || '';
-	$body =~ s/\r\n/\n/g;
-	$body =~ s/\r/\n/g;
+	my $editcontent = $form->field('editcontent') || '';
+	$editcontent =~ s/\r\n/\n/g;
+	$editcontent =~ s/\r/\n/g;
 
 	# FIXME: check that the wiki is locked right now, because
 	# if it's not, there are mad race conditions!
@@ -352,7 +352,7 @@ sub sessioncgi ($$) { #{{{
 
 	my $anchor = "${comments_pagename}${i}";
 
-	$body =~ s/"/\\"/g;
+	$editcontent =~ s/"/\\"/g;
 	my $content = "[[!comment format=$type\n";
 
 	# FIXME: handling of double quotes probably wrong?
@@ -374,7 +374,7 @@ sub sessioncgi ($$) { #{{{
 
 	$content .= " date=\"" . IkiWiki::formattime(time, '%X %x') . "\"\n";
 
-	$content .= " content=\"\"\"\n$body\n\"\"\"]]\n";
+	$content .= " content=\"\"\"\n$editcontent\n\"\"\"]]\n";
 
 	# This is essentially a simplified version of editpage:
 	# - the user does not control the page that's created, only the parent
