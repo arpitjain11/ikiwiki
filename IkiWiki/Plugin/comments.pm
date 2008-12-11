@@ -30,6 +30,18 @@ sub htmlize { # {{{
 	return $params{content};
 } # }}}
 
+# FIXME: copied verbatim from meta
+sub safeurl ($) { #{{{
+	my $url=shift;
+	if (exists $IkiWiki::Plugin::htmlscrubber::{safe_url_regexp} &&
+	    defined $IkiWiki::Plugin::htmlscrubber::safe_url_regexp) {
+		return $url=~/$IkiWiki::Plugin::htmlscrubber::safe_url_regexp/;
+	}
+	else {
+		return 1;
+	}
+} #}}}
+
 sub preprocess { # {{{
 	my %params = @_;
 	my $page = $params{page};
@@ -64,29 +76,55 @@ sub preprocess { # {{{
 		);
 	});
 
-	# override any metadata
+	# set metadata, possibly overriding [[!meta]] directives from the
+	# comment itself
+
+	my $commentuser;
+	my $commentip;
+	my $commentauthor;
+	my $commentauthorurl;
 
 	if (defined $params{username}) {
-		my ($authorurl, $author) = linkuser($params{username});
-		$pagestate{$page}{meta}{author} = $author;
-		$pagestate{$page}{meta}{authorurl} = $authorurl;
+		$commentuser = $params{username};
+		($commentauthorurl, $commentauthor) =
+			linkuser($params{username});
 	}
 	elsif (defined $params{ip}) {
-		$pagestate{$page}{meta}{author} = sprintf(
-			gettext("Anonymous (IP: %s)"),
-			$params{ip});
-		delete $pagestate{$page}{meta}{authorurl};
+		$commentip = $params{ip};
+		$commentauthor = sprintf(
+			gettext("Anonymous (IP: %s)"), $params{ip});
 	}
 	else {
-		$pagestate{$page}{meta}{author} = gettext("Anonymous");
-		delete $pagestate{$page}{meta}{authorurl};
+		$commentauthor = gettext("Anonymous");
+	}
+
+	$pagestate{$page}{comments}{commentuser} = $commentuser;
+	$pagestate{$page}{comments}{commentip} = $commentip;
+	$pagestate{$page}{comments}{commentauthor} = $commentauthor;
+	$pagestate{$page}{comments}{commentauthorurl} = $commentauthorurl;
+	if (!defined $pagestate{$page}{meta}{author}) {
+		$pagestate{$page}{meta}{author} = $commentauthor;
+	}
+	if (!defined $pagestate{$page}{meta}{authorurl}) {
+		$pagestate{$page}{meta}{authorurl} = $commentauthorurl;
+	}
+
+	if ($config{comments_allowauthor}) {
+		if (defined $params{claimedauthor}) {
+			$pagestate{$page}{meta}{author} = $params{claimedauthor};
+		}
+
+		if (defined $params{url} and safeurl($params{url})) {
+			$pagestate{$page}{meta}{authorurl} = $params{url};
+		}
+	}
+	else {
+		$pagestate{$page}{meta}{author} = $commentauthor;
+		$pagestate{$page}{meta}{authorurl} = $commentauthorurl;
 	}
 
 	if (defined $params{subject}) {
 		$pagestate{$page}{meta}{title} = $params{subject};
-	}
-	else {
-		delete $pagestate{$page}{meta}{title};
 	}
 
 	my $baseurl = urlto($params{destpage}, undef, 1);
@@ -146,7 +184,15 @@ sub getsetup () { #{{{
 			type => 'boolean',
 			default => 0,
 			example => 0,
-			description => 'Allow directives in newly posted comments?',
+			description => 'Interpret directives in comments?',
+			safe => 1,
+			rebuild => 0,
+		},
+		comments_allowauthor => {
+			type => 'boolean',
+			default => 0,
+			example => 0,
+			description => 'Allow anonymous commenters to set an author name?',
 			safe => 1,
 			rebuild => 0,
 		},
@@ -233,7 +279,7 @@ sub sessioncgi ($$) { #{{{
 
 	my @buttons = (POST_COMMENT, PREVIEW, CANCEL);
 	my $form = CGI::FormBuilder->new(
-		fields => [qw{do sid page subject editcontent type}],
+		fields => [qw{do sid page subject editcontent type author url}],
 		charset => 'utf-8',
 		method => 'POST',
 		required => [qw{editcontent}],
@@ -266,6 +312,8 @@ sub sessioncgi ($$) { #{{{
 		@page_types = grep { !/^_/ } keys %{$IkiWiki::hooks{htmlize}};
 	}
 
+	my $allow_author = $config{comments_allowauthor};
+
 	$form->field(name => 'do', type => 'hidden');
 	$form->field(name => 'sid', type => 'hidden', value => $session->id,
 		force => 1);
@@ -274,6 +322,21 @@ sub sessioncgi ($$) { #{{{
 	$form->field(name => 'editcontent', type => 'textarea', rows => 10);
 	$form->field(name => "type", value => $type, force => 1,
 		type => 'select', options => \@page_types);
+
+	$form->tmpl_param(username => $session->param('name'));
+
+	if ($allow_author and !defined $session->param('name')) {
+		$form->tmpl_param(allowauthor => 1);
+		$form->field(name => 'author', type => 'text', size => '40');
+		$form->field(name => 'url', type => 'text', size => '40');
+	}
+	else {
+		$form->tmpl_param(allowauthor => 0);
+		$form->field(name => 'author', type => 'hidden', value => '',
+			force => 1);
+		$form->field(name => 'url', type => 'hidden', value => '',
+			force => 1);
+	}
 
 	# The untaint is OK (as in editpage) because we're about to pass
 	# it to file_pruned anyway
@@ -354,6 +417,19 @@ sub sessioncgi ($$) { #{{{
 		my $ip = $ENV{REMOTE_ADDR};
 		if ($ip =~ m/^([.0-9]+)$/) {
 			$content .= " ip=\"$1\"\n";
+		}
+	}
+
+	if ($allow_author) {
+		my $author = $form->field('author');
+		if (length $author) {
+			$author =~ s/"/&quot;/g;
+			$content .= " claimedauthor=\"$author\"\n";
+		}
+		my $url = $form->field('url');
+		if (length $url) {
+			$url =~ s/"/&quot;/g;
+			$content .= " url=\"$url\"\n";
 		}
 	}
 
@@ -495,6 +571,26 @@ sub pagetemplate (@) { #{{{
 				page => $page);
 			$template->param(commenturl => $commenturl);
 		}
+	}
+
+	if ($template->query(name => 'commentuser')) {
+		$template->param(commentuser =>
+			$pagestate{$page}{comments}{commentuser});
+	}
+
+	if ($template->query(name => 'commentip')) {
+		$template->param(commentip =>
+			$pagestate{$page}{comments}{commentip});
+	}
+
+	if ($template->query(name => 'commentauthor')) {
+		$template->param(commentauthor =>
+			$pagestate{$page}{comments}{commentauthor});
+	}
+
+	if ($template->query(name => 'commentauthorurl')) {
+		$template->param(commentauthorurl =>
+			$pagestate{$page}{comments}{commentauthorurl});
 	}
 } # }}}
 
