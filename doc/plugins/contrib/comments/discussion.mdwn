@@ -1,7 +1,7 @@
 ## Why internal pages? (unresolved)
 
 Comments are saved as internal pages, so they can never be edited through the CGI,
-only by direct committers. Currently, comments are always in [[ikiwiki/markdown]].
+only by direct committers.
 
 > So, why do it this way, instead of using regular wiki pages in a
 > namespace, such as `$page/comments/*`? Then you could use [[plugins/lockedit]] to
@@ -36,25 +36,13 @@ only by direct committers. Currently, comments are always in [[ikiwiki/markdown]
 >>> (I've now implemented this in my branch. --[[smcv]])
 
 >> The best reason to keep the pages internal seems to me to be that you
->> don't want the overhead of every comment spawning its own wiki page.
->> The worst problem with it though is that you have to assume the pages
->> are mdwn (or `default_pageext`) and not support other formats. --[[Joey]]
+>> don't want the overhead of every comment spawning its own wiki page. --[[Joey]]
 
->>> Well, you could always have `comment1._mdwn`, `comment2._creole` etc. and
->>> alter the htmlize logic so that the `mdwn` hook is called for both `mdwn`
->>> and `_mdwn` (assuming this is not already the case). I'm not convinced
->>> that multi-format comments are a killer feature, though - part of the point
->>> of this plugin, in my mind, is that it's less flexible than the full power
->>> of ikiwiki and gives users fewer options. This could be construed
->>> to be a feature, for people who don't care how flexible the technology is
->>> and just want a simple way to leave a comment. The FormattingHelp page
->>> assumes you're writing 100% Markdown in any case...
->>>
->>> Internal pages do too many things, perhaps: they suppress generation of
->>> HTML pages, they disable editing over the web, and they have a different
->>> namespace of htmlize hooks. I think the first two of those are useful
->>> for this plugin, and the last is harmless; you seem to think the first
->>> is useful, and the other two are harmful. --[[smcv]]
+## Formats (resolved)
+
+The plugin now allows multiple comment formats while still using internal
+pages; each comment is saved as a page containing one `\[[!comment]]` directive,
+which has a superset of the functionality of [[ikiwiki/directives/format]].
 
 ## Access control (unresolved?)
 
@@ -85,7 +73,9 @@ spam problems. So, use `check_canedit` as at least a first-level check?
 > create the page before we actually know what page name we're going to use - when
 > posting the comment I just increment a number until I reach an unused one - so
 > either the code needs restructuring, or the permission check for 'create' would
-> always be for 'comment1' and never 'comment123'.
+> always be for 'comment1' and never 'comment123'. --[[smcv]]
+
+>> Now resolved, in fact --[[smcv]]
 
 > Another possibility is to just check for permission to edit (e.g.) `sandbox/comment1`.
 > However, this makes the "comments can only be created, not edited" feature completely
