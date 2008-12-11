@@ -20,9 +20,11 @@ could perhaps change it to `/sandbox-comments.atom` or
 --[[smcv]]
 
 > This is slightly hard to do, because you have to worry about 
-> conflicting pages setting feedname, which would cause ikiwiki to blow up.
+> conflicting pages setting feedname, which could cause ikiwiki to blow up.
 > 
 > Particularly for the non-usedirs case, where a page `sandbox/comments`
-> would produce the same feed as sandbox with `feedname=comments` .
-> I don't think there's a solution in the non-usedirs case, so maybe this
-> option would need to only work for usedirs. --[[Joey]]
+> would produce the same feed as sandbox with `feedname=comments`.
+> 
+> Hmm, looking some more, since inline tracks `%knownfeeds` and uniquifys
+> the names on conflicts, you'd just end up with `sandbox/comments.atom2`
+> if there were a conflict -- acceptable. --[[Joey]]
