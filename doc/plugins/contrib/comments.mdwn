@@ -67,8 +67,11 @@ Known issues:
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
 * Joey doesn't think it should necessarily use internal pages (see [[discussion]])
-* `\[[!comment]]` should perhaps be `\[[!_comment]], or a special filter/htmlize hook rather
+* `\[[!comment]]` should perhaps be `\[[!_comment]]`, or a special filter/htmlize hook rather
   than being a directive at all
+* Previews always say "unknown IP address"
+* [[todo/inline_plugin:_ability_to_override_the_feed_name]]
+* [[todo/inline_plugin:_hide_feed_buttons_if_empty]]
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
