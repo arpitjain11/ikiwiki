@@ -73,6 +73,8 @@ Here are some less often needed parameters:
   configured to `allowatom`, set to "yes" to enable.
 * `feeds` - controls generation of all types of feeds. Set to "no" to
   disable generating any feeds.
+* `emptyfeeds` - Set to "no" to disable generation of empty feeds.
+  Has no effect if `rootpage` or `postform` is set.
 * `template` - Specifies the template to fill out to display each inlined
   page. By default the `inlinepage` template is used, while
   the `archivepage` template is used for archives. Set this parameter to
@@ -97,7 +99,7 @@ Here are some less often needed parameters:
   in the blog. The format string is passed to the strftime(3) function.
 * `feedpages` - A [[PageSpec]] of inlined pages to include in the rss/atom
   feeds. The default is the same as the `pages` value above, and only pages
-  matches by that value are included, but some of those can be excluded by
+  matched by that value are included, but some of those can be excluded by
   specifying a tighter [[PageSpec]] here.
 * `guid` - If a URI is given here (perhaps a UUID prefixed with `urn:uuid:`),
   the Atom feed will have this as its `<id>`. The default is to use the URL

@@ -161,6 +161,7 @@ sub preprocess_inline (@) { #{{{
 	my $atom=(($config{atom} || $config{allowatom}) && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
+	my $emptyfeeds=exists $params{emptyfeeds} ? yesno($params{emptyfeeds}) : 1;
 	my $feedonly=yesno($params{feedonly});
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
@@ -289,8 +290,13 @@ sub preprocess_inline (@) { #{{{
 				gettext("Add a new post titled:"));
 		}
 		$ret.=$formtemplate->output;
+	    	
+		# The post form includes the feed buttons, so
+		# emptyfeeds cannot be hidden.
+		$emptyfeeds=1;
 	}
-	elsif ($feeds && !$params{preview}) {
+	elsif ($feeds && !$params{preview} &&
+	       ! (! $emptyfeeds && ! @feedlist)) {
 		# Add feed buttons.
 		my $linktemplate=template("feedlink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => $rssurl) if $rss;
@@ -367,7 +373,7 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	if ($feeds) {
+	if ($feeds && ! (! $emptyfeeds && ! @feedlist)) {
 		if ($rss) {
 			my $rssp=rsspage($params{destpage}).$feednum;
 			will_render($params{destpage}, $rssp);
