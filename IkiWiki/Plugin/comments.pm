@@ -168,15 +168,6 @@ sub checkconfig () { #{{{
 		unless defined $config{comments_pagename};
 } #}}}
 
-# FIXME: logic taken from editpage, should be common code?
-sub getcgiuser ($) { # {{{
-	my $session = shift;
-	my $user = $session->param('name');
-	$user = $ENV{REMOTE_ADDR} unless defined $user;
-	debug("getcgiuser() -> $user");
-	return $user;
-} # }}}
-
 # This is exactly the same as recentchanges_link :-(
 sub linkcgi ($) { #{{{
 	my $cgi=shift;
@@ -332,8 +323,6 @@ sub sessioncgi ($$) { #{{{
 
 	IkiWiki::check_canedit($page . "[postcomment]", $cgi, $session);
 
-	my ($authorurl, $author) = linkuser(getcgiuser($session));
-
 	my $editcontent = $form->field('editcontent') || '';
 	$editcontent =~ s/\r\n/\n/g;
 	$editcontent =~ s/\r/\n/g;
@@ -398,8 +387,6 @@ sub sessioncgi ($$) { #{{{
 		$template->param(content => $preview);
 		$template->param(title => $form->field('subject'));
 		$template->param(ctime => displaytime(time));
-		$template->param(author => $author);
-		$template->param(authorurl => $authorurl);
 
 		$form->tmpl_param(page_preview => $template->output);
 	}
