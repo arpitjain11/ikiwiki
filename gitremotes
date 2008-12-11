@@ -6,7 +6,7 @@ my $error=0;
 
 open (IN, "doc/git.mdwn") || die "doc/git.mdwn: $!";
 while (<IN>) {
-	if (/^\*\s+\[\[(\w+)\]\]\s+<([^>]+)>/) {
+	if (/^\*\s+\[?\[?(\w+)\]?\]?\s+`([^>]+)`/) {
 		# note that the remote name has to be a simple word (\w)
 		# for security/sanity reasons
 		my $remote=$1;
