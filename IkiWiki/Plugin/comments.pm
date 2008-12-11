@@ -302,7 +302,7 @@ sub sessioncgi ($$) { #{{{
 
 	my $type = $form->param('type');
 	if (defined $type && length $type && $IkiWiki::hooks{htmlize}{$type}) {
-		$type = possibly_foolish_untaint($type);
+		$type = IkiWiki::possibly_foolish_untaint($type);
 	}
 	else {
 		$type = $config{default_pageext};
