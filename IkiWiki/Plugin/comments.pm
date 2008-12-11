@@ -17,7 +17,7 @@ use constant CANCEL => "Cancel";
 sub import { #{{{
 	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
-	hook(type => "preprocess", id => 'comment', call => \&preprocess);
+	hook(type => "preprocess", id => '_comment', call => \&preprocess);
 	hook(type => "sessioncgi", id => 'comment', call => \&sessioncgi);
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
@@ -403,7 +403,7 @@ sub sessioncgi ($$) { #{{{
 	my $anchor = "${comments_pagename}${i}";
 
 	$editcontent =~ s/"/\\"/g;
-	my $content = "[[!comment format=$type\n";
+	my $content = "[[!_comment format=$type\n";
 
 	# FIXME: handling of double quotes probably wrong?
 	if (defined $session->param('name')) {
