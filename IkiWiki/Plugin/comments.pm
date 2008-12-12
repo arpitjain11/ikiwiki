@@ -15,6 +15,8 @@ use constant PREVIEW => "Preview";
 use constant POST_COMMENT => "Post comment";
 use constant CANCEL => "Cancel";
 
+my $postcomment;
+
 sub import { #{{{
 	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
@@ -383,7 +385,11 @@ sub sessioncgi ($$) { #{{{
 			$page));
 	}
 
-	IkiWiki::check_canedit($page . "[postcomment]", $cgi, $session);
+	# Set a flag to indicate that we're posting a comment,
+	# so that postcomment() can tell it should match.
+	$postcomment=1;
+	IkiWiki::check_canedit($page, $cgi, $session);
+	$postcomment=0;
 
 	my $editcontent = $form->field('editcontent') || '';
 	$editcontent =~ s/\r\n/\n/g;
@@ -603,7 +609,7 @@ sub match_postcomment ($$;@) {
 	my $page = shift;
 	my $glob = shift;
 
-	unless ($page =~ s/\[postcomment\]$//) {
+	if (! $postcomment) {
 		return IkiWiki::FailReason->new("not posting a comment");
 	}
 	return match_glob($page, $glob);
