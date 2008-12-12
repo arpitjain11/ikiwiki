@@ -69,6 +69,8 @@ Known issues:
 * Joey doesn't think it should necessarily use internal pages (see [[discussion]])
 * Previews always say "unknown IP address"
 * Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
+* The default template should have a (?) icon next to unauthenticated users (with the IP address
+  as title) and an OpenID icon next to OpenIDs
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
