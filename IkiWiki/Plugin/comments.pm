@@ -558,7 +558,7 @@ sub pagetemplate (@) { #{{{
 			eval q{use IkiWiki::Plugin::inline};
 			error($@) if $@;
 
-			my @args = (
+			$comments = IkiWiki::preprocess_inline(
 				pages => "internal($page/${comments_pagename}*)",
 				template => 'comments_display',
 				show => 0,
@@ -568,7 +568,6 @@ sub pagetemplate (@) { #{{{
 				feedfile => 'comments',
 				emptyfeeds => 'no',
 			);
-			$comments = IkiWiki::preprocess_inline(@args);
 		}
 
 		if (defined $comments && length $comments) {
