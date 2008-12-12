@@ -112,12 +112,12 @@ sub preprocess { # {{{
 	my $page = $params{page};
 
 	my $format = $params{format};
-	if (defined $format && !exists $IkiWiki::hooks{htmlize}{$format}) {
+	if (defined $format && ! exists $IkiWiki::hooks{htmlize}{$format}) {
 		error(sprintf(gettext("unsupported page format %s"), $format));
 	}
 
 	my $content = $params{content};
-	if (!defined $content) {
+	if (! defined $content) {
 		error(gettext("comment must have content"));
 	}
 	$content =~ s/\\"/"/g;
@@ -165,10 +165,10 @@ sub preprocess { # {{{
 	$pagestate{$page}{comments}{commentip} = $commentip;
 	$pagestate{$page}{comments}{commentauthor} = $commentauthor;
 	$pagestate{$page}{comments}{commentauthorurl} = $commentauthorurl;
-	if (!defined $pagestate{$page}{meta}{author}) {
+	if (! defined $pagestate{$page}{meta}{author}) {
 		$pagestate{$page}{meta}{author} = $commentauthor;
 	}
-	if (!defined $pagestate{$page}{meta}{authorurl}) {
+	if (! defined $pagestate{$page}{meta}{authorurl}) {
 		$pagestate{$page}{meta}{authorurl} = $commentauthorurl;
 	}
 
@@ -221,7 +221,7 @@ sub linkcgi ($) { #{{{
 	if (defined $cgi->param('do') && $cgi->param('do') eq "commenter") {
 
 		my $page=decode_utf8($cgi->param("page"));
-		if (!defined $page) {
+		if (! defined $page) {
 			error("missing page parameter");
 		}
 
@@ -310,7 +310,7 @@ sub sessioncgi ($$) { #{{{
 	}
 	my @page_types;
 	if (exists $IkiWiki::hooks{htmlize}) {
-		@page_types = grep { !/^_/ } keys %{$IkiWiki::hooks{htmlize}};
+		@page_types = grep { ! /^_/ } keys %{$IkiWiki::hooks{htmlize}};
 	}
 
 	my $allow_author = $config{comments_allowauthor};
@@ -326,7 +326,7 @@ sub sessioncgi ($$) { #{{{
 
 	$form->tmpl_param(username => $session->param('name'));
 
-	if ($allow_author and !defined $session->param('name')) {
+	if ($allow_author and ! defined $session->param('name')) {
 		$form->tmpl_param(allowauthor => 1);
 		$form->field(name => 'author', type => 'text', size => '40');
 		$form->field(name => 'url', type => 'text', size => '40');
@@ -343,7 +343,7 @@ sub sessioncgi ($$) { #{{{
 	# it to file_pruned anyway
 	my $page = $form->field('page');
 	$page = IkiWiki::possibly_foolish_untaint($page);
-	if (!defined $page || !length $page ||
+	if (! defined $page || ! length $page ||
 		IkiWiki::file_pruned($page, $config{srcdir})) {
 		error(gettext("bad page name"));
 	}
