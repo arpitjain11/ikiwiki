@@ -17,11 +17,11 @@ follow the paste directive that uses its text.  In fact, this is quite useful
 to postpone big blocks of text like long annotations and have a more natural
 flow.  For example:
 
-	\[[!toggleable id="cut" text="\[[!paste id=cutlongdesc]]"]]
-	\[[!toggleable id="copy" text="\[[!paste id=copylongdesc]]"]]
-	\[[!toggleable id="paste" text="\[[!paste id=pastelongdesc]]"]]
+	\[[!toggleable id="cut" text="[[!paste id=cutlongdesc]]"]]
+	\[[!toggleable id="copy" text="[[!paste id=copylongdesc]]"]]
+	\[[!toggleable id="paste" text="[[!paste id=pastelongdesc]]"]]
 
-	\[...some time later...]
+	[...some time later...]
 
 	\[[!cut id=cutlongdesc text="""
 	   blah blah blah
@@ -40,7 +40,7 @@ Since you can paste without using double quotes, copy and paste can be used to
 nest directives that require multiline parameters inside each other:
 
 	\[[!toggleable id=foo text="""
-	  \[[!toggleable id=bar text="\[[!paste id=baz]]"]]
+	  [[!toggleable id=bar text="[[!paste id=baz]]"]]
 	"""]]
 
 	\[[!cut id=baz text="""
