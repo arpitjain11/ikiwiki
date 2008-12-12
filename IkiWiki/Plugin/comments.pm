@@ -555,9 +555,6 @@ sub pagetemplate (@) { #{{{
 		}
 
 		if ($shown) {
-			eval q{use IkiWiki::Plugin::inline};
-			error($@) if $@;
-
 			$comments = IkiWiki::preprocess_inline(
 				pages => "internal($page/${comments_pagename}*)",
 				template => 'comments_display',
