@@ -50,12 +50,12 @@ can use the following additional `<TMPL_VAR>`s:
 * `COMMENTAUTHORURL`: if the user was signed in with an OpenID, that URL; if the user was signed
   in with some other username, a CGI URL that redirects to their user page (if any)
 
-This plugin also adds a `\[[!comment]]` directive which is used when storing comments. This
-directive shouldn't be used on pages that are edited in the usual way.
+This plugin also adds a `\[[!_comment]]` directive which is used when storing comments. This
+directive is for internal use only and shouldn't be used on pages that are edited in the usual way.
 
 This plugin aims to close the [[todo]] item "[[todo/supporting_comments_via_disussion_pages]]",
 and is currently available from [[smcv]]'s git repository on git.pseudorandom.co.uk (it's the
-`comments-rebase1` branch). A demo wiki with the plugin enabled is running at
+`comments-rebase2` branch). A demo wiki with the plugin enabled is running at
 <http://www.pseudorandom.co.uk/2008/ikiwiki/demo/>; the
 [sandbox page](http://www.pseudorandom.co.uk/2008/ikiwiki/demo/sandbox/#comments) has some
 examples of comments.
@@ -67,11 +67,8 @@ Known issues:
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
 * Joey doesn't think it should necessarily use internal pages (see [[discussion]])
-* `\[[!comment]]` should perhaps be `\[[!_comment]]`, or a special filter/htmlize hook rather
-  than being a directive at all
 * Previews always say "unknown IP address"
-* [[todo/inline_plugin:_ability_to_override_the_feed_name]]
-* [[todo/inline_plugin:_hide_feed_buttons_if_empty]]
+* Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
 
 > I haven't done a detailed code review, but I will say I'm pleased you
 > avoided re-implementing inline! --[[Joey]]
@@ -84,5 +81,9 @@ Fixed issues:
 * tbm wanted anonymous people to be able to enter their name and possibly email
   address; a name and website can now be supplied
 * There is now an indication of who you're signed in as
-* Each comment is now one big \[[!comment]] directive invocation, avoiding previous
+* Each comment is now one big \[[!_comment]] directive invocation, avoiding previous
   issues with unambiguous and un-spoofable metadata
+* `\[[!comment]]` should be `\[[!_comment]]`, or a special filter/htmlize hook rather
+  than being a directive at all
+* [[todo/inline_plugin:_ability_to_override_the_feed_name]]
+* [[todo/inline_plugin:_hide_feed_buttons_if_empty]]
