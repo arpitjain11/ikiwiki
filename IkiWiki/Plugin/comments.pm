@@ -391,10 +391,6 @@ sub sessioncgi ($$) { #{{{
 	IkiWiki::check_canedit($page, $cgi, $session);
 	$postcomment=0;
 
-	my $editcontent = $form->field('editcontent') || '';
-	$editcontent =~ s/\r\n/\n/g;
-	$editcontent =~ s/\r/\n/g;
-
 	# FIXME: check that the wiki is locked right now, because
 	# if it's not, there are mad race conditions!
 
@@ -409,7 +405,6 @@ sub sessioncgi ($$) { #{{{
 
 	my $anchor = "${comments_pagename}${i}";
 
-	$editcontent =~ s/"/\\"/g;
 	my $content = "[[!_comment format=$type\n";
 
 	# FIXME: handling of double quotes probably wrong?
@@ -446,6 +441,10 @@ sub sessioncgi ($$) { #{{{
 
 	$content .= " date=\"" . decode_utf8(strftime('%Y-%m-%dT%H:%M:%SZ', gmtime)) . "\"\n";
 
+	my $editcontent = $form->field('editcontent') || '';
+	$editcontent =~ s/\r\n/\n/g;
+	$editcontent =~ s/\r/\n/g;
+	$editcontent =~ s/"/\\"/g;
 	$content .= " content=\"\"\"\n$editcontent\n\"\"\"]]\n";
 
 	# This is essentially a simplified version of editpage:
