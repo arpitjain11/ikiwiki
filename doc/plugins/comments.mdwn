@@ -19,8 +19,7 @@ users can only post comments.
 
 Individual comments are stored as internal-use pages named something like
 `page/comment_1`, `page/comment_2`, etc. These pages internally use a
-`\[[!_comment]]` [[ikiwiki/directive]], and comment pages can be matched
-using a special `postcomment()` [[ikiwiki/PageSpec]].
+`\[[!_comment]]` [[ikiwiki/directive]].
 
 There are some global options for the setup file:
 
