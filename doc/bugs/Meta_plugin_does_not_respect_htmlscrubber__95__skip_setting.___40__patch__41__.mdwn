@@ -1,0 +1,11 @@
+I have been trying to include some meta info using the link setting something like the below
+
+ meta link="http://www.example.com/" rel="command" name="Example"    
+
+This gets removed by the htmlscrubber as you would expect.
+
+Setting htmlscrubber_skip to the pagespec should stop this getting scrubbed but it does not.
+
+Below is a patch to fix that. It seams to work but I am not sure of it is the correct thing to do.
+
+> [[done]], thanks for the patch --[[Joey]]

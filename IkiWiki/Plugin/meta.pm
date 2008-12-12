@@ -38,9 +38,10 @@ sub needsbuild (@) { #{{{
 	}
 }
 
-sub scrub ($) { #{{{
+sub scrub ($$) { #{{{
 	if (IkiWiki::Plugin::htmlscrubber->can("sanitize")) {
-		return IkiWiki::Plugin::htmlscrubber::sanitize(content => shift);
+		return IkiWiki::Plugin::htmlscrubber::sanitize(
+			content => shift, destpage => shift);
 	}
 	else {
 		return shift;
@@ -137,7 +138,7 @@ sub preprocess (@) { #{{{
 	elsif ($key eq 'permalink') {
 		if (safeurl($value)) {
 			$pagestate{$page}{meta}{permalink}=$value;
-			push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
+			push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />', $destpage);
 		}
 	}
 	elsif ($key eq 'stylesheet') {
@@ -206,7 +207,7 @@ sub preprocess (@) { #{{{
 		my $delay=int(exists $params{delay} ? $params{delay} : 0);
 		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\" />";
 		if (! $safe) {
-			$redir=scrub($redir);
+			$redir=scrub($redir, $destpage);
 		}
 		push @{$metaheaders{$page}}, $redir;
 	}
@@ -216,7 +217,7 @@ sub preprocess (@) { #{{{
 				join(" ", map {
 					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
 				} keys %params).
-				" />\n");
+				" />\n", $destpage);
 		}
 	}
 	elsif ($key eq 'robots') {
@@ -225,7 +226,7 @@ sub preprocess (@) { #{{{
 	}
 	else {
 		push @{$metaheaders{$page}}, scrub('<meta name="'.encode_entities($key).
-			'" content="'.encode_entities($value).'" />');
+			'" content="'.encode_entities($value).'" />', $destpage);
 	}
 
 	return "";

@@ -312,8 +312,7 @@ sub preprocess_inline (@) { #{{{
 		# emptyfeeds cannot be hidden.
 		$emptyfeeds=1;
 	}
-	elsif ($feeds && !$params{preview} &&
-	       ! (! $emptyfeeds && ! @feedlist)) {
+	elsif ($feeds && !$params{preview} && ($emptyfeeds || @feedlist)) {
 		# Add feed buttons.
 		my $linktemplate=template("feedlink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => $rssurl) if $rss;
@@ -390,7 +389,7 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	if ($feeds && ! (! $emptyfeeds && ! @feedlist)) {
+	if ($feeds && ($emptyfeeds || @feedlist)) {
 		if ($rss) {
 			my $rssp=$feedbase."rss".$feednum;
 			will_render($params{destpage}, $rssp);
