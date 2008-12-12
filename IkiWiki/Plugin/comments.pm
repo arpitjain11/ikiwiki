@@ -26,6 +26,68 @@ sub import { #{{{
 	IkiWiki::loadplugin("inline");
 } # }}}
 
+sub getsetup () { #{{{
+	return
+		plugin => {
+			safe => 1,
+			rebuild => 1,
+		},
+		# Pages where comments are shown, but new comments are not
+		# allowed, will show "Comments are closed".
+		comments_shown_pagespec => {
+			type => 'pagespec',
+			example => 'blog/*',
+			default => '',
+			description => 'PageSpec for pages where comments will be shown inline',
+			link => 'ikiwiki/PageSpec',
+			safe => 1,
+			rebuild => 1,
+		},
+		comments_open_pagespec => {
+			type => 'pagespec',
+			example => 'blog/* and created_after(close_old_comments)',
+			default => '',
+			description => 'PageSpec for pages where new comments can be posted',
+			link => 'ikiwiki/PageSpec',
+			safe => 1,
+			rebuild => 1,
+		},
+		comments_pagename => {
+			type => 'string',
+			example => 'comment_',
+			default => 'comment_',
+			description => 'Base name for comments, e.g. "comment_" for pages like "sandbox/comment_12"',
+			safe => 0, # manual page moving required
+			rebuild => undef,
+		},
+		comments_allowdirectives => {
+			type => 'boolean',
+			default => 0,
+			example => 0,
+			description => 'Interpret directives in comments?',
+			safe => 1,
+			rebuild => 0,
+		},
+		comments_allowauthor => {
+			type => 'boolean',
+			default => 0,
+			example => 0,
+			description => 'Allow anonymous commenters to set an author name?',
+			safe => 1,
+			rebuild => 0,
+		},
+		comments_commit => {
+			type => 'boolean',
+			example => 1,
+			default => 1,
+			description => 'commit comments to the VCS',
+			# old uncommitted comments are likely to cause
+			# confusion if this is changed
+			safe => 0,
+			rebuild => 0,
+		},
+} #}}}
+
 sub htmlize { # {{{
 	my %params = @_;
 	return $params{content};
@@ -144,68 +206,6 @@ sub preprocess { # {{{
 	return "<div id=\"$anchor\">$content</div>" if $anchor;
 	return $content;
 } # }}}
-
-sub getsetup () { #{{{
-	return
-		plugin => {
-			safe => 1,
-			rebuild => 1,
-		},
-		# Pages where comments are shown, but new comments are not
-		# allowed, will show "Comments are closed".
-		comments_shown_pagespec => {
-			type => 'pagespec',
-			example => 'blog/*',
-			default => '',
-			description => 'PageSpec for pages where comments will be shown inline',
-			link => 'ikiwiki/PageSpec',
-			safe => 1,
-			rebuild => 1,
-		},
-		comments_open_pagespec => {
-			type => 'pagespec',
-			example => 'blog/* and created_after(close_old_comments)',
-			default => '',
-			description => 'PageSpec for pages where new comments can be posted',
-			link => 'ikiwiki/PageSpec',
-			safe => 1,
-			rebuild => 1,
-		},
-		comments_pagename => {
-			type => 'string',
-			example => 'comment_',
-			default => 'comment_',
-			description => 'Base name for comments, e.g. "comment_" for pages like "sandbox/comment_12"',
-			safe => 0, # manual page moving will required
-			rebuild => undef,
-		},
-		comments_allowdirectives => {
-			type => 'boolean',
-			default => 0,
-			example => 0,
-			description => 'Interpret directives in comments?',
-			safe => 1,
-			rebuild => 0,
-		},
-		comments_allowauthor => {
-			type => 'boolean',
-			default => 0,
-			example => 0,
-			description => 'Allow anonymous commenters to set an author name?',
-			safe => 1,
-			rebuild => 0,
-		},
-		comments_commit => {
-			type => 'boolean',
-			example => 1,
-			default => 1,
-			description => 'commit comments to the VCS',
-			# old uncommitted comments are likely to cause
-			# confusion if this is changed
-			safe => 0,
-			rebuild => 0,
-		},
-} #}}}
 
 sub checkconfig () { #{{{
 	$config{comments_commit} = 1 unless defined $config{comments_commit};
