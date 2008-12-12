@@ -192,8 +192,7 @@ sub preprocess { # {{{
 
 	my $baseurl = urlto($params{destpage}, undef, 1);
 	my $anchor = "";
-	my $comments_pagename = $config{comments_pagename};
-	if ($params{page} =~ m/\/(\Q${comments_pagename}\E\d+)$/) {
+	if ($params{page} =~ m/\/(\Q$config{comments_pagename}\E\d+)$/) {
 		$anchor = $1;
 	}
 	$pagestate{$page}{meta}{permalink} = "${baseurl}#${anchor}";
@@ -313,8 +312,6 @@ sub sessioncgi ($$) { #{{{
 		@page_types = grep { ! /^_/ } keys %{$IkiWiki::hooks{htmlize}};
 	}
 
-	my $allow_author = $config{comments_allowauthor};
-
 	$form->field(name => 'do', type => 'hidden');
 	$form->field(name => 'sid', type => 'hidden', value => $session->id,
 		force => 1);
@@ -326,7 +323,8 @@ sub sessioncgi ($$) { #{{{
 
 	$form->tmpl_param(username => $session->param('name'));
 
-	if ($allow_author and ! defined $session->param('name')) {
+	if ($config{comments_allowauthor} and
+	    ! defined $session->param('name')) {
 		$form->tmpl_param(allowauthor => 1);
 		$form->field(name => 'author', type => 'text', size => '40');
 		$form->field(name => 'url', type => 'text', size => '40');
@@ -348,10 +346,6 @@ sub sessioncgi ($$) { #{{{
 		error(gettext("bad page name"));
 	}
 
-	my $allow_directives = $config{comments_allowdirectives};
-	my $commit_comments = $config{comments_commit};
-	my $comments_pagename = $config{comments_pagename};
-
 	# FIXME: is this right? Or should we be using the candidate subpage
 	# (whatever that might mean) as the base URL?
 	my $baseurl = urlto($page, undef, 1);
@@ -363,7 +357,7 @@ sub sessioncgi ($$) { #{{{
 		htmllink($page, $page, 'ikiwiki/formatting',
 			noimageinline => 1,
 			linktext => 'FormattingHelp'),
-			allowdirectives => $allow_directives);
+			allowdirectives => $config{allow_directives});
 
 	if ($form->submitted eq CANCEL) {
 		# bounce back to the page they wanted to comment on, and exit.
@@ -397,7 +391,7 @@ sub sessioncgi ($$) { #{{{
 	my $location;
 	do {
 		$i++;
-		$location = "$page/${comments_pagename}${i}";
+		$location = "$page/$config{comments_pagename}$i";
 	} while (-e "$config{srcdir}/$location._comment");
 
 	my $content = "[[!_comment format=$type\n";
@@ -415,7 +409,7 @@ sub sessioncgi ($$) { #{{{
 		}
 	}
 
-	if ($allow_author) {
+	if ($config{comments_allowauthor}) {
 		my $author = $form->field('author');
 		if (length $author) {
 			$author =~ s/"/&quot;/g;
@@ -482,7 +476,7 @@ sub sessioncgi ($$) { #{{{
 
 		my $conflict;
 
-		if ($config{rcs} and $commit_comments) {
+		if ($config{rcs} and $config{comments_commit}) {
 			my $message = gettext("Added a comment");
 			if (defined $form->field('subject') &&
 				length $form->field('subject')) {
@@ -509,7 +503,7 @@ sub sessioncgi ($$) { #{{{
 		error($conflict) if defined $conflict;
 
 		# Bounce back to where we were, but defeat broken caches
-		my $anticache = "?updated=$page/${comments_pagename}${i}";
+		my $anticache = "?updated=$page/$config{comments_pagename}$i";
 		IkiWiki::redirect($cgi, urlto($page, undef, 1).$anticache);
 	}
 	else {
@@ -529,14 +523,12 @@ sub pagetemplate (@) { #{{{
 	if ($template->query(name => 'comments')) {
 		my $comments = undef;
 
-		my $comments_pagename = $config{comments_pagename};
-
 		my $open = 0;
 		my $shown = pagespec_match($page,
 			$config{comments_shown_pagespec},
 			location => $page);
 
-		if (pagespec_match($page, "*/${comments_pagename}*",
+		if (pagespec_match($page, "*/$config{comments_pagename}*",
 				location => $page)) {
 			$shown = 0;
 			$open = 0;
@@ -550,7 +542,7 @@ sub pagetemplate (@) { #{{{
 
 		if ($shown) {
 			$comments = IkiWiki::preprocess_inline(
-				pages => "internal($page/${comments_pagename}*)",
+				pages => "internal($page/$config{comments_pagename}*)",
 				template => 'comments_display',
 				show => 0,
 				reverse => 'yes',
