@@ -391,9 +391,6 @@ sub sessioncgi ($$) { #{{{
 	IkiWiki::check_canedit($page, $cgi, $session);
 	$postcomment=0;
 
-	# FIXME: check that the wiki is locked right now, because
-	# if it's not, there are mad race conditions!
-
 	# FIXME: rather a simplistic way to make the comments...
 	my $i = 0;
 	my $file;
