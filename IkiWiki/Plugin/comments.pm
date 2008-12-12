@@ -403,8 +403,6 @@ sub sessioncgi ($$) { #{{{
 		$location = "$page/${comments_pagename}${i}";
 	} while (-e "$config{srcdir}/$location._comment");
 
-	my $anchor = "${comments_pagename}${i}";
-
 	my $content = "[[!_comment format=$type\n";
 
 	# FIXME: handling of double quotes probably wrong?
