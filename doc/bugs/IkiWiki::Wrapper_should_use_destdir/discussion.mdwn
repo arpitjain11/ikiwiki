@@ -1,0 +1,4 @@
+Just as a point of information, I do not put my cgi wrapper in the dest
+directory. Instead I configure Apache to relate a specific URI to the cgi via
+ScriptAlias. I would not like things to be changed so that the cgi was put in
+the destdir, so I'd vote instead to comment in the `setup\_file`. -- [[Jon]]
