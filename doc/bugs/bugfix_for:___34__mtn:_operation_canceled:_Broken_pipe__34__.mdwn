@@ -1,4 +1,4 @@
-When using the monotone as revision control system, a "mtn: operation canceled: Broken pipe" message is printed. Reason is that, in a call to mtn, the pipe is closed before mtn has done all its output. This patch fixes the problem.
+When using monotone as revision control system, a "mtn: operation canceled: Broken pipe" message is printed. Reason is that, in a call to mtn, the pipe is closed before mtn has done all its output. This patch fixes the problem.
 
     diff -up ikiwiki/IkiWiki/Plugin/monotone.pm.orig ikiwiki/IkiWiki/Plugin/monotone.pm
     --- ikiwiki/IkiWiki/Plugin/monotone.pm.orig	2008-11-12 23:45:24.000000000 +0100
