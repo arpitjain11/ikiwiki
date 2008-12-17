@@ -37,15 +37,3 @@ There are some global options for the setup file:
   specify a name for themselves, and the \[[!meta author]] and
   \[[!meta authorurl]] directives will not be overridden by the comments
   plugin
-
-Known issues:
-
-* Needs code review
-* The access control via postcomment() is rather strange (see [[discussion]] for more details)
-* There is some common code cargo-culted from other plugins (notably inline and editpage) which
-  should probably be shared
-* Joey doesn't think it should necessarily use internal pages (see [[discussion]])
-* Previews always say "unknown IP address"
-* Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
-* The default template should have a (?) icon next to unauthenticated users (with the IP address
-  as title) and an OpenID icon next to OpenIDs

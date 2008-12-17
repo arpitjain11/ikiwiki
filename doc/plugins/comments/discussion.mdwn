@@ -63,6 +63,9 @@ spam problems. So, use `check_canedit` as at least a first-level check?
 > This is why `anonok_pages => 'postcomment(*)'` and `locked_pages => '!postcomment(*)'`
 > are necessary to allow anonymous and logged-in editing (respectively).
 >
+>> I changed that to move the flag out of the page name, and into a variable that the `match_postcomment`
+>> function checks for. Other ugliness still applies. :-) --[[Joey]] 
+>
 > This is ugly - one alternative would be to add `check_permission()` that takes a
 > page and a verb (create, edit, rename, remove and maybe comment are the ones I
 > can think of so far), use that, and port the plugins you mentioned to use that

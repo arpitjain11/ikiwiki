@@ -1,0 +1,8 @@
+Known issues with the [[plugins/comments]] plugin:
+
+* There is some common code cargo-culted from other plugins (notably inline and editpage) which
+  should probably be shared
+* Previews always say "unknown IP address"
+* Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
+* The default template should have a (?) icon next to unauthenticated users (with the IP address
+  as title) and an OpenID icon next to OpenIDs
