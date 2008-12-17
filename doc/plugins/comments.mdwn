@@ -23,10 +23,12 @@ Individual comments are stored as internal-use pages named something like
 
 There are some global options for the setup file:
 
+* `comments_open_pagespec`: pages where new comments can be posted, e.g.
+  `blog/* and created_after(close_old_comments)` or `!*/discussion`.
+  You need to set this, since the default is to not add comments to any
+  pages.
 * `comments_shown_pagespec`: pages where comments will be displayed inline,
   e.g. `blog/*` or `!*/discussion`.
-* `comments_open_pagespec`: pages where new comments can be posted, e.g.
-  `blog/* and created_after(close_old_comments)` or `!*/discussion`
 * `comments_pagename`: if this is e.g. `comment_` (the default), then
   comment pages will be named something like `page/comment_12`
 * `comments_allowdirectives`: if true (default false), comments may
