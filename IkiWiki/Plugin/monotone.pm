@@ -525,13 +525,12 @@ sub rcs_recentchanges ($) { #{{{
 	my $child = open(MTNLOG, "-|");
 	if (! $child) {
 		exec("mtn", "log", "--root=$config{mtnrootdir}", "--no-graph",
-		     "--brief") || error("mtn log failed to run");
+		     "--brief", "--last=$num") || error("mtn log failed to run");
 	}
 
-	while (($num >= 0) and (my $line = <MTNLOG>)) {
+	while (my $line = <MTNLOG>) {
 		if ($line =~ m/^($sha1_pattern)/) {
 			push @revs, $1;
-			$num -= 1;
 		}
 	}
 	close MTNLOG || debug("mtn log exited $?");
