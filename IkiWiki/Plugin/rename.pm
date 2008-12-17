@@ -111,7 +111,7 @@ sub rename_form ($$$) { #{{{
 	
 	$f->field(name => "do", type => "hidden", value => "rename", force => 1);
 	$f->field(name => "page", type => "hidden", value => $page, force => 1);
-	$f->field(name => "new_name", value => pagetitle($page), size => 60);
+	$f->field(name => "new_name", value => pagetitle($page, 1), size => 60);
 	if (!$q->param("attachment")) {
 		# insert the standard extensions
 		my @page_types;
