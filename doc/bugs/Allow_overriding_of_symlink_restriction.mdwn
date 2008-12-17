@@ -34,9 +34,9 @@ Is there a huge objection to this patch?
     index 990fcaa..0fb78ba 100644
     --- a/IkiWiki/Render.pm
     +++ b/IkiWiki/Render.pm
-    @@ -260,13 +260,15 @@ sub prune ($) { #{{{
+    @@ -260,13 +260,15 @@ sub prune ($) {
      
-     sub refresh () { #{{{
+     sub refresh () {
      	# security check, avoid following symlinks in the srcdir path
     -	my $test=$config{srcdir};
     -	while (length $test) {
@@ -108,7 +108,7 @@ like this being accepted before I bothered.
      use IkiWiki;
     +use File::Spec;
      
-     sub gen_wrapper () { #{{{
+     sub gen_wrapper () {
     -       $config{srcdir}=abs_path($config{srcdir});
     -       $config{destdir}=abs_path($config{destdir});
     -       my $this=abs_path($0);

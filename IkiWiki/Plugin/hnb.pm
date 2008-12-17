@@ -13,20 +13,20 @@ use strict;
 use IkiWiki 2.00;
 use File::Temp qw(:mktemp);
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "hnb", call => \&getsetup);
 	hook(type => "htmlize", id => "hnb", call => \&htmlize);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1, # format plugin
 		},
-} #}}}
+}
 
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params = @_;
 
 	# hnb outputs version number etc. every time to STDOUT, so
@@ -52,6 +52,6 @@ sub htmlize (@) { #{{{
 	$ret =~ s/<body>.*//si;
 
 	return $ret;
-} #}}}
+}
 
 1;

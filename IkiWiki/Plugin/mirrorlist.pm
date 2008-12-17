@@ -5,12 +5,12 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "mirrorlist", call => \&getsetup);
 	hook(type => "pagetemplate", id => "mirrorlist", call => \&pagetemplate);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -23,9 +23,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
         my $template=$params{template};
 	
@@ -34,9 +34,9 @@ sub pagetemplate (@) { #{{{
 		$value.=mirrorlist($params{page});
 		$template->param(extrafooter => $value);
 	}
-} # }}}
+}
 
-sub mirrorlist ($) { #{{{
+sub mirrorlist ($) {
 	my $page=shift;
 	return "<p>".
 		(keys %{$config{mirrorlist}} > 1 ? gettext("Mirrors") : gettext("Mirror")).
@@ -49,6 +49,6 @@ sub mirrorlist ($) { #{{{
 			} keys %{$config{mirrorlist}}
 		).
 		"</p>";
-} # }}}
+}
 
 1

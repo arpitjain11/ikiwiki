@@ -11,12 +11,12 @@ A simple plugin to allow per-page customization of a template by passing paramat
 
     my %tmplvars;
 
-    sub import { #{{{
+    sub import {
 	    hook(type => "preprocess", id => "tmplvars", call => \&preprocess);
 	    hook(type => "pagetemplate", id => "tmplvars", call => \&pagetemplate);
-    } # }}}
+    }
 
-    sub preprocess (@) { #{{{
+    sub preprocess (@) {
 	    my %params=@_;
 
 	    if ($params{page} eq $params{destpage}) {
@@ -34,9 +34,9 @@ A simple plugin to allow per-page customization of a template by passing paramat
 		    }
 	    }
     
-    } # }}}
+    }
     
-    sub pagetemplate (@) { #{{{
+    sub pagetemplate (@) {
             my %params=@_;
             my $template = $params{template};
 
@@ -47,6 +47,6 @@ A simple plugin to allow per-page customization of a template by passing paramat
             }
 
             return undef;
-    } # }}}
+    }
 
     1

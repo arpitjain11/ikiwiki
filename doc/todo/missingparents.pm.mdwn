@@ -82,15 +82,15 @@ Index: IkiWiki/Plugin/missingparents.pm
 +my %ownfiles;
 +my @pagespecs;
 +
-+sub import { #{{{
++sub import {
 +	hook(type => "checkconfig", id => "missingparents", call => \&checkconfig);
 +	hook(type => "needsdelete", id => "missingparents", call => \&needsdelete);
 +	hook(type => "needsbuild", id => "missingparents", call => \&needsbuild);
 +	hook(type => "savestate", id => "missingparents", call => \&savestate);
 +	hook(type => "preprocess", id => "missingparents", call => \&preprocess_missingparents);
-+} # }}}
++}
 +
-+sub checkconfig () { #{{{
++sub checkconfig () {
 +	IkiWiki::preprocess("missingparents", "missingparents",
 +		readfile(srcfile("missingparents.mdwn")));
 +	loadstate();
@@ -99,9 +99,9 @@ Index: IkiWiki/Plugin/missingparents.pm
 +			unlink $config{srcdir}.'/'.$file;
 +		}
 +	}
-+} #}}}
++}
 +
-+sub preprocess_missingparents (@) { #{{{
++sub preprocess_missingparents (@) {
 +	my %params=@_;
 +
 +	if (! defined $params{pages} || ! defined $params{generate}) {
@@ -115,10 +115,10 @@ Index: IkiWiki/Plugin/missingparents.pm
 +	#translators: is text for pages that match that pagespec.
 +	return sprintf(gettext("missingparents in %s will be %s"), 
 +		       '`'.$params{pages}.'`', '`\\'.$params{generate}.'`');
-+} # }}}
++}
 +
 +my $state_loaded=0;
-+sub loadstate() { #{{{
++sub loadstate() {
 +	my $filename = "$config{wikistatedir}/missingparents";
 +	if (-e $filename) {
 +		open (IN, $filename) ||
@@ -132,9 +132,9 @@ Index: IkiWiki/Plugin/missingparents.pm
 +
 +		$state_loaded=1;
 +	}
-+} #}}}
++}
 +
-+sub savestate() { #{{{
++sub savestate() {
 +	my $filename = "$config{wikistatedir}/missingparents.new";
 +	my $cleanup = sub { unlink ($filename) };
 +	open (OUT, ">$filename") || error("open $filename: $!", $cleanup);
@@ -143,9 +143,9 @@ Index: IkiWiki/Plugin/missingparents.pm
 +	}
 +	rename($filename, "$config{wikistatedir}/missingparents") ||
 +		error("rename $filename: $!", $cleanup);
-+} #}}}
++}
 +
-+sub needsdelete (@) { #{{{
++sub needsdelete (@) {
 +	my $files=shift;
 +	
 +	my @mydel;
@@ -167,9 +167,9 @@ Index: IkiWiki/Plugin/missingparents.pm
 +	foreach my $page (@mydel){
 +		push @{$files}, $page;
 +	}
-+} #}}}
++}
 +
-+sub check_matches($) { #{{{
++sub check_matches($) {
 +	my $page = shift;
 +	return if $IkiWiki::pagesources{$page};
 +
@@ -183,9 +183,9 @@ Index: IkiWiki/Plugin/missingparents.pm
 +		return $output;
 +	}
 +	return "";
-+} #}}}
++}
 +
-+sub needsbuild ($) { #{{{
++sub needsbuild ($) {
 +	my $files=shift;
 +	my @new;
 +
@@ -209,7 +209,7 @@ Index: IkiWiki/Plugin/missingparents.pm
 +		$ownfiles{$file} = 1;
 +		push @{$files}, $file;
 +	}
-+} #}}}
++}
 +
 +1
 Index: IkiWiki.pm
@@ -227,18 +227,18 @@ Index: IkiWiki.pm
  our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 @@ -330,6 +336,30 @@
  		error("failed renaming $newfile to $destdir/$file: $!", $cleanup);
- } #}}}
+ }
  
-+sub newpage($$) { #{{{
++sub newpage($$) {
 +	my $file=shift;
 +	my $page=shift;
 +
 +	$pagemtime{$page} = $pagectime{$page} = time;
 +	$pagesources{$page} = $file;
 +	$pagecase{lc $page} = $page;
-+} #}}}
++}
 +
-+sub delpage($) { #{{{
++sub delpage($) {
 +	my $page=shift;
 +	$links{$page}=[];
 +	$renderedfiles{$page}=[];
@@ -251,10 +251,10 @@ Index: IkiWiki.pm
 +			delete $destsources{$_};
 +			}
 +		}
-+} #}}}
++}
 +
  my %cleared;
- sub will_render ($$;$) { #{{{
+ sub will_render ($$;$) {
  	my $page=shift;
 </pre>
 

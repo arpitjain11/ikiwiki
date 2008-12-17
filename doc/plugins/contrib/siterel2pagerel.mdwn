@@ -13,11 +13,11 @@ other format that produces html. The code is available here:
 	use strict;
 	use IkiWiki 2.00;
 
-	sub import { #{{{
+	sub import {
 	        hook(type => "sanitize", id => "siterel2pagerel", call => \&siterel2pagerel);
-	} # }}}
+	}
 
-	sub siterel2pagerel (@) { #{{{
+	sub siterel2pagerel (@) {
 	        my %params=@_;
 	        my $baseurl=IkiWiki::baseurl($params{page});
 	        my $content=$params{content};
@@ -25,6 +25,6 @@ other format that produces html. The code is available here:
 	        $content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"\/([^"]*)"/$1 src="$baseurl$2"/mig;
 	        # FIXME: do <script and everything else that can have URLs in it
 	        return $content;
-	} # }}}
+	}
 
 	1

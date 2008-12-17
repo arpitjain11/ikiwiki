@@ -13,7 +13,7 @@ my %page_numfeeds;
 my @inline;
 my $nested=0;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "inline", call => \&getopt);
 	hook(type => "getsetup", id => "inline", call => \&getsetup);
 	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
@@ -27,9 +27,9 @@ sub import { #{{{
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.
 	hook(type => "change", id => "inline", call => \&IkiWiki::pingurl);
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
 	eval q{use Getopt::Long};
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
@@ -42,9 +42,9 @@ sub getopt () { #{{{
 			push @{$config{pingurl}}, $_[1];
 		},      
 	);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -85,9 +85,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (($config{rss} || $config{atom}) && ! length $config{url}) {
 		error(gettext("Must specify url to wiki with --url when using --rss or --atom"));
 	}
@@ -100,9 +100,9 @@ sub checkconfig () { #{{{
 	if (! exists $config{pingurl}) {
 		$config{pingurl}=[];
 	}
-} #}}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
         my %params=@_;
 
 	# Fill in the inline content generated earlier. This is actually an
@@ -111,9 +111,9 @@ sub format (@) { #{{{
 		delete @inline[$1,]
 	}eg;
 	return $params{content};
-} #}}}
+}
 
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
 	my $q=shift;
 	my $session=shift;
 
@@ -148,7 +148,7 @@ package IkiWiki;
 my %toping;
 my %feedlinks;
 
-sub preprocess_inline (@) { #{{{
+sub preprocess_inline (@) {
 	my %params=@_;
 	
 	if (! exists $params{pages}) {
@@ -416,18 +416,18 @@ sub preprocess_inline (@) { #{{{
 	return $ret if $raw || $nested;
 	push @inline, $ret;
 	return "<div class=\"inline\" id=\"$#inline\"></div>\n\n";
-} #}}}
+}
 
-sub pagetemplate_inline (@) { #{{{
+sub pagetemplate_inline (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $template=$params{template};
 
 	$template->param(feedlinks => $feedlinks{$page})
 		if exists $feedlinks{$page} && $template->query(name => "feedlinks");
-} #}}}
+}
 
-sub get_inline_content ($$) { #{{{
+sub get_inline_content ($$) {
 	my $page=shift;
 	my $destpage=shift;
 	
@@ -446,9 +446,9 @@ sub get_inline_content ($$) { #{{{
 	else {
 		return "";
 	}
-} #}}}
+}
 
-sub date_822 ($) { #{{{
+sub date_822 ($) {
 	my $time=shift;
 
 	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
@@ -456,9 +456,9 @@ sub date_822 ($) { #{{{
 	my $ret=POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
 	return $ret;
-} #}}}
+}
 
-sub date_3339 ($) { #{{{
+sub date_3339 ($) {
 	my $time=shift;
 
 	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
@@ -466,9 +466,9 @@ sub date_3339 ($) { #{{{
 	my $ret=POSIX::strftime("%Y-%m-%dT%H:%M:%SZ", gmtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
 	return $ret;
-} #}}}
+}
 
-sub absolute_urls ($$) { #{{{
+sub absolute_urls ($$) {
 	# sucky sub because rss sucks
 	my $content=shift;
 	my $baseurl=shift;
@@ -489,9 +489,9 @@ sub absolute_urls ($$) { #{{{
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:)(\/[^"]*)"/$1 href="$urltop$2"/mig;
 	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)(\/[^"]*)"/$1 src="$urltop$2"/mig;
 	return $content;
-} #}}}
+}
 
-sub genfeed ($$$$$@) { #{{{
+sub genfeed ($$$$$@) {
 	my $feedtype=shift;
 	my $feedurl=shift;
 	my $feeddesc=shift;
@@ -576,9 +576,9 @@ sub genfeed ($$$$$@) { #{{{
 	});
 	
 	return $template->output;
-} #}}}
+}
 
-sub pingurl (@) { #{{{
+sub pingurl (@) {
 	return unless @{$config{pingurl}} && %toping;
 
 	eval q{require RPC::XML::Client};
@@ -624,6 +624,6 @@ sub pingurl (@) { #{{{
 	}
 
 	exit 0; # daemon done
-} #}}}
+}
 
 1

@@ -37,9 +37,9 @@ my %units=( #{{{	# size in bytes
 	# ikiwiki, if you find you need larger data quantities, either modify
 	# yourself to add them, or travel back in time to 2008 and kill me.
 	#   -- Joey
-); #}}}
+);
 
-sub parsesize ($) { #{{{
+sub parsesize ($) {
 	my $size=shift;
 
 	no warnings;
@@ -51,10 +51,10 @@ sub parsesize ($) { #{{{
 		}
 	}
 	return $base;
-} #}}}
+}
 
 # This is provided for other plugins that want to convert back the other way.
-sub humansize ($) { #{{{
+sub humansize ($) {
 	my $size=shift;
 
 	foreach my $unit (reverse sort { $units{$a} <=> $units{$b} || $b cmp $a } keys %units) {
@@ -63,11 +63,11 @@ sub humansize ($) { #{{{
 		}
 	}
 	return $size; # near zero, or negative
-} #}}}
+}
 
 package IkiWiki::PageSpec;
 
-sub match_maxsize ($$;@) { #{{{
+sub match_maxsize ($$;@) {
 	my $page=shift;
 	my $maxsize=eval{IkiWiki::Plugin::filecheck::parsesize(shift)};
 	if ($@) {
@@ -86,9 +86,9 @@ sub match_maxsize ($$;@) { #{{{
 	else {
 		return IkiWiki::SuccessReason->new("file not too large");
 	}
-} #}}}
+}
 
-sub match_minsize ($$;@) { #{{{
+sub match_minsize ($$;@) {
 	my $page=shift;
 	my $minsize=eval{IkiWiki::Plugin::filecheck::parsesize(shift)};
 	if ($@) {
@@ -107,9 +107,9 @@ sub match_minsize ($$;@) { #{{{
 	else {
 		return IkiWiki::SuccessReason->new("file not too small");
 	}
-} #}}}
+}
 
-sub match_mimetype ($$;@) { #{{{
+sub match_mimetype ($$;@) {
 	my $page=shift;
 	my $wanted=shift;
 
@@ -140,9 +140,9 @@ sub match_mimetype ($$;@) { #{{{
 	else {
 		return IkiWiki::SuccessReason->new("file MIME type is $mimetype");
 	}
-} #}}}
+}
 
-sub match_virusfree ($$;@) { #{{{
+sub match_virusfree ($$;@) {
 	my $page=shift;
 	my $wanted=shift;
 
@@ -182,9 +182,9 @@ sub match_virusfree ($$;@) { #{{{
 	else {
 		return IkiWiki::SuccessReason->new("file seems virusfree ($reason)");
 	}
-} #}}}
+}
 
-sub match_ispage ($$;@) { #{{{
+sub match_ispage ($$;@) {
 	my $filename=shift;
 
 	if (defined IkiWiki::pagetype($filename)) {
@@ -193,4 +193,4 @@ sub match_ispage ($$;@) { #{{{
 	else {
 		return IkiWiki::FailReason->new("file is not a wiki page");
 	}
-} #}}}
+}

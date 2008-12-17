@@ -10,20 +10,20 @@ use IkiWiki::UserInfo;
 use Term::ReadLine;
 use File::Path;
 
-sub ask ($$) { #{{{
+sub ask ($$) {
 	my ($question, $default)=@_;
 
 	my $r=Term::ReadLine->new("ikiwiki");
 	$r->readline($question." ", $default);
-} #}}}
+}
 
-sub prettydir ($) { #{{{
+sub prettydir ($) {
 	my $dir=shift;
 	$dir=~s/^\Q$ENV{HOME}\E\//~\//;
 	return $dir;
-} #}}}
+}
 
-sub import (@) { #{{{
+sub import (@) {
 	my $this=shift;
 	IkiWiki::Setup::merge({@_});
 
@@ -142,6 +142,6 @@ sub import (@) { #{{{
 	print "To modify settings, edit ".prettydir($config{dumpsetup})." and then run:\n";
 	print "	ikiwiki -setup ".prettydir($config{dumpsetup})."\n";
 	exit 0;
-} #}}}
+}
 
 1

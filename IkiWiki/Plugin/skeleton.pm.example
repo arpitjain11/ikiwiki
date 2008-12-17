@@ -8,7 +8,7 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "skeleton",  call => \&getopt);
 	hook(type => "getsetup", id => "skeleton",  call => \&getsetup);
 	hook(type => "checkconfig", id => "skeleton", call => \&checkconfig);
@@ -34,13 +34,13 @@ sub import { #{{{
 	hook(type => "formbuilder_setup", id => "skeleton", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "skeleton", call => \&formbuilder);
 	hook(type => "savestate", id => "skeleton", call => \&savestate);
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
 	debug("skeleton plugin getopt");
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -53,155 +53,155 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	debug("skeleton plugin checkconfig");
-} #}}}
+}
 
-sub refresh () { #{{{
+sub refresh () {
 	debug("skeleton plugin refresh");
-} #}}}
+}
 
-sub needsbuild () { #{{{
+sub needsbuild () {
 	debug("skeleton plugin needsbuild");
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	return "skeleton plugin result";
-} # }}}
+}
 
-sub filter (@) { #{{{
+sub filter (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running as filter");
 
 	return $params{content};
-} # }}}
+}
 
-sub linkify (@) { #{{{
+sub linkify (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running as linkify");
 
 	return $params{content};
-} # }}}
+}
 
 sub scan (@) { #{{{a
 	my %params=@_;
 
 	debug("skeleton plugin running as scan");
-} # }}}
+}
 
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 
 	debug("skeleton plugin running as htmlize");
 
 	return $params{content};
-} # }}}
+}
 
-sub sanitize (@) { #{{{
+sub sanitize (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running as a sanitizer");
 
 	return $params{content};
-} # }}}
+}
 
-sub postscan (@) { #{{{
+sub postscan (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running as postscan");
-} # }}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running as a formatter");
 
 	return $params{content};
-} # }}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $template=$params{template};
 	
 	debug("skeleton plugin running as a pagetemplate hook");
-} # }}}
+}
 
-sub templatefile (@) { #{{{
+sub templatefile (@) {
 	my %params=@_;
 	my $page=$params{page};
 	
 	debug("skeleton plugin running as a templatefile hook");
-} # }}}
+}
 
-sub delete (@) { #{{{
+sub delete (@) {
 	my @files=@_;
 
 	debug("skeleton plugin told that files were deleted: @files");
-} #}}}
+}
 
-sub change (@) { #{{{
+sub change (@) {
 	my @files=@_;
 
 	debug("skeleton plugin told that changed files were rendered: @files");
-} #}}}
+}
 
-sub cgi ($) { #{{{
+sub cgi ($) {
 	my $cgi=shift;
 
 	debug("skeleton plugin running in cgi");
-} #}}}
+}
 
-sub auth ($$) { #{{{
+sub auth ($$) {
 	my $cgi=shift;
 	my $session=shift;
 
 	debug("skeleton plugin running in auth");
-} #}}}
+}
 
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
 	my $cgi=shift;
 	my $session=shift;
 
 	debug("skeleton plugin running in sessioncgi");
-} #}}}
+}
 
-sub canedit ($$$) { #{{{
+sub canedit ($$$) {
 	my $page=shift;
 	my $cgi=shift;
 	my $session=shift;
 
 	debug("skeleton plugin running in canedit");
-} #}}}
+}
 
-sub editcontent ($$$) { #{{{
+sub editcontent ($$$) {
 	my %params=@_;
 
 	debug("skeleton plugin running in editcontent");
 
 	return $params{content};
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running in formbuilder_setup");
-} # }}}
+}
 
-sub formbuilder (@) { #{{{
+sub formbuilder (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running in formbuilder");
-} # }}}
+}
 
-sub savestate () { #{{{
+sub savestate () {
 	debug("skeleton plugin running in savestate");
-} #}}}
+}
 
 1

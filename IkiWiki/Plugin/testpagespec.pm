@@ -5,20 +5,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "testpagespec", call => \&getsetup);
 	hook(type => "preprocess", id => "testpagespec", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	
 	foreach my $param (qw{match pagespec}) {
@@ -37,6 +37,6 @@ sub preprocess (@) { #{{{
 	else {
 		return "no match: $ret";
 	}
-} # }}}
+}
 
 1

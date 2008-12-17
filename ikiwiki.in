@@ -9,12 +9,12 @@ use strict;
 use lib '.'; # For use in nonstandard directory, munged by Makefile.
 use IkiWiki;
 
-sub usage () { #{{{
+sub usage () {
 	die gettext("usage: ikiwiki [options] source dest"), "\n",
 	    gettext("       ikiwiki --setup configfile"), "\n";
-} #}}}
+}
 
-sub getconfig () { #{{{
+sub getconfig () {
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
 		%config=defaultconfig();
 		eval q{use Getopt::Long};
@@ -123,9 +123,9 @@ sub getconfig () { #{{{
 		loadplugins();
 		checkconfig();
 	}
-} #}}}
+}
 
-sub main () { #{{{
+sub main () {
 	getconfig();
 	
 	if ($config{setup}) {
@@ -207,6 +207,6 @@ sub main () { #{{{
 		saveindex();
 		debug(gettext("done"));
 	}
-} #}}}
+}
 
 main;

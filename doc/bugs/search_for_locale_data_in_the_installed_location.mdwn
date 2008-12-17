@@ -2,7 +2,7 @@ It seems like gettext only searches for locale information in /usr/share/locale,
 
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -1057,6 +1057,7 @@ sub gettext { #{{{
+    @@ -1057,6 +1057,7 @@ sub gettext {
                                     $gettext_obj=undef;
                                     return shift;
                             }

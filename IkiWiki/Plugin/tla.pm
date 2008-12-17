@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use IkiWiki;
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => "tla", call => \&checkconfig);
 	hook(type => "getsetup", id => "tla", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
@@ -18,18 +18,18 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (defined $config{tla_wrapper} && length $config{tla_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{tla_wrapper},
 			wrappermode => (defined $config{tla_wrappermode} ? $config{tla_wrappermode} : "06755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
@@ -63,9 +63,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub quiet_system (@) { #{{{
+sub quiet_system (@) {
 	# See Debian bug #385939.
 	open (SAVEOUT, ">&STDOUT");
 	close STDOUT;
@@ -75,17 +75,17 @@ sub quiet_system (@) { #{{{
 	open (STDOUT, ">&SAVEOUT");
 	close SAVEOUT;
 	return $ret;
-} #}}}
+}
 
-sub rcs_update () { #{{{
+sub rcs_update () {
 	if (-d "$config{srcdir}/{arch}") {
 		if (quiet_system("tla", "replay", "-d", $config{srcdir}) != 0) {
 			warn("tla replay failed\n");
 		}
 	}
-} #}}}
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	my $file=shift;
 
 	if (-d "$config{srcdir}/{arch}") {
@@ -94,9 +94,9 @@ sub rcs_prepedit ($) { #{{{
 		my $rev=`tla tree-id $config{srcdir}`;
 		return defined $rev ? $rev : "";
 	}
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	my $file=shift;
 	my $message=shift;
 	my $rcstoken=shift;
@@ -135,7 +135,7 @@ sub rcs_commit ($$$;$$) { #{{{
 		}
 	}
 	return undef # success
-} #}}}
+}
 
 sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
@@ -145,7 +145,7 @@ sub rcs_commit_staged ($$$) {
 	error("rcs_commit_staged not implemented for tla"); # TODO
 }
 
-sub rcs_add ($) { #{{{
+sub rcs_add ($) {
 	my $file=shift;
 
 	if (-d "$config{srcdir}/{arch}") {
@@ -153,19 +153,19 @@ sub rcs_add ($) { #{{{
 			warn("tla add failed\n");
 		}
 	}
-} #}}}
+}
 
-sub rcs_remove ($) { # {{{
+sub rcs_remove ($) {
 	my $file = shift;
 
 	error("rcs_remove not implemented for tla"); # TODO
-} #}}}
+}
 
 sub rcs_rename ($$) { # {{{a
 	my ($src, $dest) = @_;
 
 	error("rcs_rename not implemented for tla"); # TODO
-} #}}}
+}
 
 sub rcs_recentchanges ($) {
 	my $num=shift;
@@ -239,7 +239,7 @@ sub rcs_recentchanges ($) {
 	return @ret;
 }
 
-sub rcs_diff ($) { #{{{
+sub rcs_diff ($) {
 	my $rev=shift;
 	my $logs = `tla logs -d $config{srcdir}`;
 	my @changesets = reverse split(/\n/, $logs);
@@ -251,9 +251,9 @@ sub rcs_diff ($) { #{{{
 
 	my $revminusone = $changesets[$i+1];
 	return `tla diff -d $config{srcdir} $revminusone`;
-} #}}}
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	my $file=shift;
 	eval q{use Date::Parse};
 	error($@) if $@;
@@ -281,6 +281,6 @@ sub rcs_getctime ($) { #{{{
 	my $date=str2time($sdate, 'UTC');
 	debug("found ctime ".localtime($date)." for $file");
 	return $date;
-} #}}}
+}
 
 1

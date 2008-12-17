@@ -6,15 +6,15 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	add_underlay("directives");
 	hook(type => "getsetup", id => "listdirectives", call => \&getsetup);
 	hook(type => "checkconfig", id => "listdirectives", call => \&checkconfig);
 	hook(type => "needsbuild", id => "listdirectives", call => \&needsbuild);
 	hook(type => "preprocess", id => "listdirectives", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -27,22 +27,22 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
 my @fulllist;
 my @shortlist;
 my $pluginstring;
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (! defined $config{directive_description_dir}) {
 		$config{directive_description_dir} = "ikiwiki/directive";
 	}
 	else {
 		$config{directive_description_dir} =~ s/\/+$//;
 	}
-} #}}}
+}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 
 	@fulllist = sort keys %{$IkiWiki::hooks{preprocess}};
@@ -63,9 +63,9 @@ sub needsbuild (@) { #{{{
 			}
 		}
 	}
-} # }}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	
 	$pagestate{$params{destpage}}{listdirectives}{shown}=$pluginstring;
@@ -92,6 +92,6 @@ sub preprocess (@) { #{{{
 	$result .= "</ul>";
 
 	return $result;
-} # }}}
+}
 
 1

@@ -24,19 +24,19 @@ my @bundle=qw{
 	toggle
 };
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "goodstuff", call => \&getsetup);
 	foreach my $plugin (@bundle) {
 		IkiWiki::loadplugin($plugin);
 	}
-} # }}}
+}
 
-sub getsetup { #{{{
+sub getsetup {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
 1

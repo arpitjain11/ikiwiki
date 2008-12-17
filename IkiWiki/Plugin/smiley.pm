@@ -8,13 +8,13 @@ use IkiWiki 2.00;
 my %smileys;
 my $smiley_regexp;
 
-sub import { #{{{
+sub import {
 	add_underlay("smiley");
 	hook(type => "getsetup", id => "smiley", call => \&getsetup);
 	hook(type => "sanitize", id => "smiley", call => \&sanitize);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -22,9 +22,9 @@ sub getsetup () { #{{{
 			# removes the smileys, which would break links
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub build_regexp () { #{{{
+sub build_regexp () {
 	my $list=readfile(srcfile("smileys.mdwn"));
 	while ($list =~ m/^\s*\*\s+\\\\([^\s]+)\s+\[\[([^]]+)\]\]/mg) {
 		my $smiley=$1;
@@ -50,9 +50,9 @@ sub build_regexp () { #{{{
 	$smiley_regexp='('.join('|', map { quotemeta }
 		reverse sort keys %smileys).')';
 	#debug($smiley_regexp);
-} #}}}
+}
 
-sub sanitize (@) { #{{{
+sub sanitize (@) {
 	my %params=@_;
 
 	build_regexp() unless defined $smiley_regexp;
@@ -95,6 +95,6 @@ MATCH:	while (m{(?:^|(?<=\s|>))(\\?)$smiley_regexp(?:(?=\s|<)|$)}g) {
 	}
 
 	return $_;
-} # }}}
+}
 
 1

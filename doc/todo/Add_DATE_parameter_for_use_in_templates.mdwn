@@ -44,7 +44,7 @@ regenerate this one against that).
 			  %config %links %renderedfiles %pagesources %destsources);
 	 our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
 	 our $version="2.1";my $installdir="/usr";
-	@@ -70,6 +70,7 @@ sub defaultconfig () { #{{{
+	@@ -70,6 +70,7 @@ sub defaultconfig () {
 		plugin => [qw{mdwn inline htmlscrubber passwordauth openid signinedit
 			      lockedit conditional}],
 		timeformat => '%c',
@@ -52,27 +52,27 @@ regenerate this one against that).
 		locale => undef,
 		sslcookie => 0,
 		httpauth => 0,
-	@@ -447,6 +448,15 @@ sub displaytime ($) { #{{{
+	@@ -447,6 +448,15 @@ sub displaytime ($) {
 				$config{timeformat}, localtime($time)));
-	 } #}}}
+	 }
 
-	+sub displaydate ($) { #{{{
+	+sub displaydate ($) {
 	+	my $time=shift;
 	+
 	+	# strftime doesn't know about encodings, so make sure
 	+	# its output is properly treated as utf8
 	+	return decode_utf8(POSIX::strftime(
 	+			$config{dateformat}, localtime($time)));
-	+} #}}}
+	+}
 	+
-	 sub beautify_url ($) { #{{{
+	 sub beautify_url ($) {
 		my $url=shift;
 
 	diff --git a/Plugin/inline.pm b/Plugin/inline.pm
 	index 8f6ab51..7bd6147 100644
 	--- a/Plugin/inline.pm
 	+++ b/Plugin/inline.pm
-	@@ -148,6 +148,7 @@ sub preprocess_inline (@) { #{{{
+	@@ -148,6 +148,7 @@ sub preprocess_inline (@) {
 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
 				$template->param(title => pagetitle(basename($page)));
 				$template->param(ctime => displaytime($pagectime{$page}));

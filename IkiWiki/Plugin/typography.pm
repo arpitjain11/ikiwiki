@@ -6,20 +6,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "typography", call => \&getopt);
 	hook(type => "getsetup", id => "typography", call => \&getsetup);
 	IkiWiki::hook(type => "sanitize", id => "typography", call => \&sanitize);
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
 	eval q{use Getopt::Long};
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
 	GetOptions("typographyattributes=s" => \$config{typographyattributes});
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	eval q{use Text::Typography};
 	error($@) if $@;
 
@@ -36,9 +36,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub sanitize (@) { #{{{
+sub sanitize (@) {
 	my %params=@_;
 
 	eval q{use Text::Typography};
@@ -46,6 +46,6 @@ sub sanitize (@) { #{{{
 
 	my $attributes=defined $config{typographyattributes} ? $config{typographyattributes} : '3';
 	return Text::Typography::typography($params{content}, $attributes);
-} # }}}
+}
 
 1

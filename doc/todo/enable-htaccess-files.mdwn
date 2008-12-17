@@ -5,7 +5,7 @@
     @@ -26,7 +26,7 @@
      memoize("file_pruned");
      
-     sub defaultconfig () { #{{{
+     sub defaultconfig () {
     -       wiki_file_prune_regexps => [qr/\.\./, qr/^\./, qr/\/\./,
     +       wiki_file_prune_regexps => [qr/\.\./, qr/^\.(?!htaccess)/, qr/\/\.(?!htaccess)/,
                     qr/\.x?html?$/, qr/\.ikiwiki-new$/,

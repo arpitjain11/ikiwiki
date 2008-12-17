@@ -8,22 +8,22 @@ use HTML::Entities;
 
 my $maxlines=200;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "recentchangesdiff",
 		call => \&getsetup);
 	hook(type => "pagetemplate", id => "recentchangesdiff",
 		call => \&pagetemplate);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $template=$params{template};
 	if ($config{rcs} && exists $params{rev} && length $params{rev} &&
@@ -46,6 +46,6 @@ sub pagetemplate (@) { #{{{
 			$template->param(diff => $diff);
 		}
 	}
-} #}}}
+}
 
 1

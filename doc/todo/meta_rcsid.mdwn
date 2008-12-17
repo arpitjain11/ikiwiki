@@ -26,7 +26,7 @@ of CVS/SVN-style keywords (like '$Id$', etc.) from the source file in the page t
      my %copyright;
     +my %rcsid;
  
-     sub import { #{{{
+     sub import {
         hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
     @@ -110,6 +111,9 @@
             $meta{$page}.="<link rel=\"copyright\" href=\"#page_copyright\" />\n";

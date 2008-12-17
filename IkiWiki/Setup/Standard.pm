@@ -9,11 +9,11 @@ use warnings;
 use strict;
 use IkiWiki;
 
-sub import { #{{{
+sub import {
 	IkiWiki::Setup::merge($_[1]);
-} #}}}
+}
 
-sub dumpline ($$$$) { #{{{
+sub dumpline ($$$$) {
 	my $key=shift;
 	my $value=shift;
 	my $type=shift;
@@ -55,9 +55,9 @@ sub dumpline ($$$$) { #{{{
 	}
 	
 	return "\t$prefix$key => $dumpedvalue,";
-} #}}}
+}
 
-sub dumpvalues ($@) { #{{{
+sub dumpvalues ($@) {
 	my $setup=shift;
 	my @ret;
 	while (@_) {
@@ -80,9 +80,9 @@ sub dumpvalues ($@) { #{{{
 		}
 	}
 	return @ret;
-} #}}}
+}
 
-sub gendump ($) { #{{{
+sub gendump ($) {
 	my $description=shift;
 	my %setup=(%config);
 	my @ret;
@@ -112,6 +112,6 @@ sub gendump ($) { #{{{
 	push @ret, "}";
 
 	return @ret;
-} #}}}
+}
 
 1

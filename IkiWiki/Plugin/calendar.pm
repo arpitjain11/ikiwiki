@@ -29,13 +29,13 @@ my %linkcache;
 my $time=time;
 my @now=localtime($time);
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "calendar", call => \&getsetup);
 	hook(type => "needsbuild", id => "calendar", call => \&needsbuild);
 	hook(type => "preprocess", id => "calendar", call => \&preprocess);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -48,23 +48,23 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub is_leap_year (@) { #{{{
+sub is_leap_year (@) {
 	my %params=@_;
 	return ($params{year} % 4 == 0 && (($params{year} % 100 != 0) || $params{year} % 400 == 0));
-} #}}}
+}
 
-sub month_days { #{{{
+sub month_days {
 	my %params=@_;
 	my $days_in_month = (31,28,31,30,31,30,31,31,30,31,30,31)[$params{month}-1];
 	if ($params{month} == 2 && is_leap_year(%params)) {
 		$days_in_month++;
 	}
 	return $days_in_month;
-} #}}}
+}
 
-sub format_month (@) { #{{{
+sub format_month (@) {
 	my %params=@_;
 
 	my $pagespec = $params{pages};
@@ -215,9 +215,9 @@ EOF
         add_depends($params{page}, join(" or ", @list));
 
 	return $calendar;
-} #}}}
+}
 
-sub format_year (@) { #{{{
+sub format_year (@) {
 	my %params=@_;
 
 	my $pagespec = $params{pages};
@@ -318,9 +318,9 @@ EOF
 EOF
 
 	return $calendar;
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	$params{pages} = "*"            unless defined $params{pages};
 	$params{type}  = "month"        unless defined $params{type};
@@ -397,7 +397,7 @@ sub preprocess (@) { #{{{
 	return "\n<div><div class=\"calendar\">$calendar</div></div>\n";
 } #}}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{calendar}{nextchange}) {
@@ -415,6 +415,6 @@ sub needsbuild (@) { #{{{
 			}
 		}
 	}
-} # }}}
+}
 
 1

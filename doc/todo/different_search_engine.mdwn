@@ -126,7 +126,7 @@ Index: IkiWiki/Plugin/search.pm
 +  $PLUCENE_DIR = $config{wikistatedir}.'/plucene';  
 +}
 +
- sub import { #{{{
+ sub import {
 -       hook(type => "getopt", id => "hyperestraier",
 -               call => \&amp;getopt);
 -       hook(type => "checkconfig", id => "hyperestraier",
@@ -142,14 +142,14 @@ Index: IkiWiki/Plugin/search.pm
                 call => \&amp;change);
 -       hook(type => "cgi", id => "hyperestraier",
 -               call => \&amp;cgi);
- } # }}}
+ }
  
--sub getopt () { #{{{
+-sub getopt () {
 -        eval q{use Getopt::Long};
 -       error($@) if $@;
 -        Getopt::Long::Configure('pass_through');
 -        GetOptions("estseek=s" => \$config{estseek});
--} #}}}
+-}
  
 +sub writer {
 +  init();
@@ -165,20 +165,20 @@ Index: IkiWiki/Plugin/search.pm
 +    grep { defined pagetype($_) } @_;
 +}
 +
- sub checkconfig () { #{{{
+ sub checkconfig () {
         foreach my $required (qw(url cgiurl)) {
                 if (! length $config{$required}) {
 @@ -36,112 +58,55 @@
         }
- } #}}}
+ }
  
 -my $form;
--sub pagetemplate (@) { #{{{
+-sub pagetemplate (@) {
 -       my %params=@_;
 -       my $page=$params{page};
 -       my $template=$params{template};
 +#my $form;
-+#sub pagetemplate (@) { #{{{
++#sub pagetemplate (@) {
 +#      my %params=@_;
 +#      my $page=$params{page};
 +#      my $template=$params{template};
@@ -193,7 +193,7 @@ Index: IkiWiki/Plugin/search.pm
 +#
 +#              $template->param(searchform => $form);
 +#      }
-+#} #}}}
++#}
  
 -       # Add search box to page header.
 -       if ($template->query(name => "searchform")) {
@@ -205,9 +205,9 @@ Index: IkiWiki/Plugin/search.pm
 -
 -               $template->param(searchform => $form);
 -       }
--} #}}}
+-}
 -
- sub delete (@) { #{{{
+ sub delete (@) {
 -       debug(gettext("cleaning hyperestraier search index"));
 -       estcmd("purge -cl");
 -       estcfg();
@@ -219,9 +219,9 @@ Index: IkiWiki/Plugin/search.pm
 +    $reader->delete_term( Plucene::Index::Term->new({ field => "id", text => $_ }));
 +  }
 +  $reader->close;
- } #}}}
+ }
  
- sub change (@) { #{{{
+ sub change (@) {
 -       debug(gettext("updating hyperestraier search index"));
 -       estcmd("gather -cm -bc -cl -sd",
 -               map {
@@ -250,9 +250,9 @@ Index: IkiWiki/Plugin/search.pm
 +    $doc->add(Plucene::Document::Field->UnStored('text' => $data));
 +    $writer->add_document($doc);
 +  }
- } #}}}
+ }
 -
--sub cgi ($) { #{{{
+-sub cgi ($) {
 -       my $cgi=shift;
 -
 -       if (defined $cgi->param('phrase') || defined $cgi->param("navi")) {
@@ -260,10 +260,10 @@ Index: IkiWiki/Plugin/search.pm
 -               chdir("$config{wikistatedir}/hyperestraier") || error("chdir: $!");
 -               exec("./".IkiWiki::basename($config{cgiurl})) || error("estseek.cgi failed");
 -       }
--} #}}}
+-}
 -
 -my $configured=0;
--sub estcfg () { #{{{
+-sub estcfg () {
 -       return if $configured;
 -       $configured=1;
 -
@@ -301,9 +301,9 @@ Index: IkiWiki/Plugin/search.pm
 -       unlink($cgi);
 -       my $estseek = defined $config{estseek} ? $config{estseek} : '/usr/lib/estraier/estseek.cgi';
 -       symlink($estseek, $cgi) || error("symlink $estseek $cgi: $!");
--} # }}}
+-}
 -
--sub estcmd ($;@) { #{{{
+-sub estcmd ($;@) {
 -       my @params=split(' ', shift);
 -       push @params, "-cl", "$config{wikistatedir}/hyperestraier";
 -       if (@_) {
@@ -323,7 +323,7 @@ Index: IkiWiki/Plugin/search.pm
 -               open(STDOUT, "/dev/null"); # shut it up (closing won't work)
 -               exec("estcmd", @params) || error("can't run estcmd");
 -       }
--} #}}}
+-}
 -
 -1
 +1;

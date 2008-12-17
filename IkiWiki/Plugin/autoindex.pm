@@ -6,20 +6,20 @@ use strict;
 use IkiWiki 2.00;
 use Encode;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "autoindex", call => \&getsetup);
 	hook(type => "refresh", id => "autoindex", call => \&refresh);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub genindex ($) { #{{{
+sub genindex ($) {
 	my $page=shift;
 	my $file=newpagefile($page, $config{default_pageext});
 	my $template=template("autoindex.tmpl");
@@ -28,9 +28,9 @@ sub genindex ($) { #{{{
 	if ($config{rcs}) {
 		IkiWiki::rcs_add($file);
 	}
-} #}}}
+}
 
-sub refresh () { #{{{
+sub refresh () {
 	eval q{use File::Find};
 	error($@) if $@;
 
@@ -107,6 +107,6 @@ sub refresh () { #{{{
 			IkiWiki::enable_commit_hook();
 		}
 	}
-} #}}}
+}
 
 1

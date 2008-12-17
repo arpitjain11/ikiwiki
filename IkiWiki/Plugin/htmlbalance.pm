@@ -13,20 +13,20 @@ use IkiWiki 2.00;
 use HTML::TreeBuilder;
 use HTML::Entities;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "htmlbalance", call => \&getsetup);
 	hook(type => "sanitize", id => "htmlbalance", call => \&sanitize);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub sanitize (@) { #{{{
+sub sanitize (@) {
 	my %params=@_;
 	my $ret = '';
 
@@ -52,6 +52,6 @@ sub sanitize (@) { #{{{
 	}
 	$tree->delete();
 	return $ret;
-} # }}}
+}
 
 1

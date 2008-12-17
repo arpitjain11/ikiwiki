@@ -7,12 +7,12 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "preprocess", id => "color", call => \&preprocess);
 	hook(type => "format",     id => "color", call => \&format);
-} #}}}
+}
 
-sub preserve_style ($$$) { #{{{
+sub preserve_style ($$$) {
 	my $foreground = shift;
 	my $background = shift;
 	my $text       = shift;
@@ -37,18 +37,18 @@ sub preserve_style ($$$) { #{{{
 	
 	return $preserved;
 
-} #}}}
+}
 
-sub replace_preserved_style ($) { #{{{
+sub replace_preserved_style ($) {
 	my $content = shift;
 
 	$content =~ s!<span class="color">((color: ([a-z]+|\#[0-9a-f]{3,6})?)?((; )?(background-color: ([a-z]+|\#[0-9a-f]{3,6})?)?)?)</span>!<span class="color" style="$1">!g;
 	$content =~ s!<span class="colorend">!!g;
 
 	return $content;
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params = @_;
 
 	# Preprocess the text to expand any preprocessor directives
@@ -57,13 +57,13 @@ sub preprocess (@) { #{{{
 				IkiWiki::filter($params{page}, $params{destpage}, $params{text}));
 
 	return preserve_style($params{foreground}, $params{background}, $params{text});
-} #}}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
 	my %params = @_;
 
 	$params{content} = replace_preserved_style($params{content});
 	return $params{content};	
-} #}}}
+}
 
 1

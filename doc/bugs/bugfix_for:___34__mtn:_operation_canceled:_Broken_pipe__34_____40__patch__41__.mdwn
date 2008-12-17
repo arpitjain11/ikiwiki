@@ -3,7 +3,7 @@ When using monotone as revision control system, a "mtn: operation canceled: Brok
     diff -up ikiwiki/IkiWiki/Plugin/monotone.pm.orig ikiwiki/IkiWiki/Plugin/monotone.pm
     --- ikiwiki/IkiWiki/Plugin/monotone.pm.orig	2008-11-12 23:45:24.000000000 +0100
     +++ ikiwiki/IkiWiki/Plugin/monotone.pm	2008-12-16 12:41:38.000000000 +0100
-    @@ -525,13 +525,12 @@ sub rcs_recentchanges ($) { #{{{
+    @@ -525,13 +525,12 @@ sub rcs_recentchanges ($) {
      	my $child = open(MTNLOG, "-|");
      	if (! $child) {
      		exec("mtn", "log", "--root=$config{mtnrootdir}", "--no-graph",

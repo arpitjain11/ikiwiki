@@ -8,24 +8,24 @@ use strict;
 use IkiWiki 2.00;
 use IPC::Open2;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "graphviz", call => \&getsetup);
 	hook(type => "preprocess", id => "graph", call => \&graph);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
 my %graphviz_programs = (
 	"dot" => 1, "neato" => 1, "fdp" => 1, "twopi" => 1, "circo" => 1
 );
 
-sub render_graph (\%) { #{{{
+sub render_graph (\%) {
 	my %params = %{(shift)};
 
 	my $src = "$params{type} g {\n";
@@ -84,9 +84,9 @@ sub render_graph (\%) { #{{{
 	else {
 		return "<img src=\"".urlto($dest, $params{destpage})."\" />\n";
 	}
-} #}}}
+}
 
-sub graph (@) { #{{{
+sub graph (@) {
 	my %params=@_;
 	$params{src} = "" unless defined $params{src};
 	$params{type} = "digraph" unless defined $params{type};
@@ -94,6 +94,6 @@ sub graph (@) { #{{{
 	error gettext("prog not a valid graphviz program") unless $graphviz_programs{$params{prog}};
 
 	return render_graph(%params);
-} # }}}
+}
 
 1

@@ -6,14 +6,14 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "passwordauth", "call" => \&getsetup);
         hook(type => "formbuilder_setup", id => "passwordauth", call => \&formbuilder_setup);
         hook(type => "formbuilder", id => "passwordauth", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "passwordauth", call => \&sessioncgi);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -33,10 +33,10 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
 # Checks if a string matches a user's password, and returns true or false.
-sub checkpassword ($$;$) { #{{{
+sub checkpassword ($$;$) {
 	my $user=shift;
 	my $password=shift;
 	my $field=shift || "password";
@@ -74,9 +74,9 @@ sub checkpassword ($$;$) { #{{{
 	}
 
 	return $ret;
-} #}}}
+}
 
-sub setpassword ($$;$) { #{{{
+sub setpassword ($$;$) {
 	my $user=shift;
 	my $password=shift;
 	my $field=shift || "password";
@@ -94,9 +94,9 @@ sub setpassword ($$;$) { #{{{
 	else {
 		IkiWiki::userinfo_set($user, $field, $password);
 	}
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 
 	my $form=$params{form};
@@ -222,7 +222,7 @@ sub formbuilder_setup (@) { #{{{
 	}
 }
 
-sub formbuilder (@) { #{{{
+sub formbuilder (@) {
 	my %params=@_;
 
 	my $form=$params{form};
@@ -313,9 +313,9 @@ sub formbuilder (@) { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
 	my $q=shift;
 	my $session=shift;
 
@@ -335,6 +335,6 @@ sub sessioncgi ($$) { #{{{
 		IkiWiki::cgi_prefs($q, $session);
 		exit;
 	}
-} #}}}
+}
 
 1

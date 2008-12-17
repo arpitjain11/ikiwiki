@@ -19,7 +19,7 @@ Cheers,
 	index 59eabb6..82913ba 100644
 	--- a/IkiWiki/Plugin/inline.pm
 	+++ b/IkiWiki/Plugin/inline.pm
-	@@ -229,6 +229,7 @@ sub preprocess_inline (@) { #{{{
+	@@ -229,6 +229,7 @@ sub preprocess_inline (@) {
 	 					$template->param(content => $content);
 	 				}
 	 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));

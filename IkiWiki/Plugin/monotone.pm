@@ -10,7 +10,7 @@ use Date::Format qw(time2str);
 
 my $sha1_pattern = qr/[0-9a-fA-F]{40}/; # pattern to validate sha1sums
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => "monotone", call => \&checkconfig);
 	hook(type => "getsetup", id => "monotone", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
@@ -23,9 +23,9 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (!defined($config{mtnrootdir})) {
 		$config{mtnrootdir} = $config{srcdir};
 	}
@@ -61,9 +61,9 @@ sub checkconfig () { #{{{
 			wrappermode => (defined $config{mtn_wrappermode} ? $config{mtn_wrappermode} : "06755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
@@ -117,9 +117,9 @@ sub getsetup () { #{{{
 			safe => 0, # path
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub get_rev () { #{{{
+sub get_rev () {
 	my $sha1 = `mtn --root=$config{mtnrootdir} automate get_base_revision_id`;
 
 	($sha1) = $sha1 =~ m/($sha1_pattern)/; # sha1 is untainted now
@@ -128,9 +128,9 @@ sub get_rev () { #{{{
 	}
 
 	return $sha1;
-} #}}}
+}
 
-sub get_rev_auto ($) { #{{{
+sub get_rev_auto ($) {
 	my $automator=shift;
 
 	my @results = $automator->call("get_base_revision_id");
@@ -142,9 +142,9 @@ sub get_rev_auto ($) { #{{{
 	}
 
 	return $sha1;
-} #}}}
+}
 
-sub mtn_merge ($$$$) { #{{{
+sub mtn_merge ($$$$) {
 	my $leftRev=shift;
 	my $rightRev=shift;
 	my $branch=shift;
@@ -172,9 +172,9 @@ sub mtn_merge ($$$$) { #{{{
 	debug("merged $leftRev, $rightRev to make $mergeRev");
 
 	return $mergeRev;
-} #}}}
+}
 
-sub commit_file_to_new_rev ($$$$$$$$) { #{{{
+sub commit_file_to_new_rev ($$$$$$$$) {
 	my $automator=shift;
 	my $wsfilename=shift;
 	my $oldFileID=shift;
@@ -219,9 +219,9 @@ sub commit_file_to_new_rev ($$$$$$$$) { #{{{
 	
 	debug("Added certs for rev: $newRevID");
 	return $newRevID;
-} #}}}
+}
 
-sub read_certs ($$) { #{{{
+sub read_certs ($$) {
 	my $automator=shift;
 	my $rev=shift;
 	my @results = $automator->call("certs", $rev);
@@ -239,9 +239,9 @@ sub read_certs ($$) { #{{{
 	}
 
 	return @ret;
-} #}}}
+}
 
-sub get_changed_files ($$) { #{{{
+sub get_changed_files ($$) {
 	my $automator=shift;
 	my $rev=shift;
 	
@@ -261,9 +261,9 @@ sub get_changed_files ($$) { #{{{
 	}
 	
 	return @ret;
-} #}}}
+}
 
-sub rcs_update () { #{{{
+sub rcs_update () {
 	chdir $config{srcdir}
 	    or error("Cannot chdir to $config{srcdir}: $!");
 
@@ -278,9 +278,9 @@ sub rcs_update () { #{{{
 	if (system("mtn", "--root=$config{mtnrootdir}", "update", "--quiet") != 0) {
 		debug("monotone update failed");
 	}
-} #}}}
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	my $file=shift;
 
 	chdir $config{srcdir}
@@ -289,9 +289,9 @@ sub rcs_prepedit ($) { #{{{
 	# For monotone, return the revision of the file when
 	# editing begins.
 	return get_rev();
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	# Tries to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on failure.
 	# The file is relative to the srcdir.
@@ -434,7 +434,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	}
 
 	return undef # success
-} #}}}
+}
 
 sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
@@ -466,7 +466,7 @@ sub rcs_commit_staged ($$$) {
 	}
 }
 
-sub rcs_add ($) { #{{{
+sub rcs_add ($) {
 	my $file=shift;
 
 	chdir $config{srcdir}
@@ -476,9 +476,9 @@ sub rcs_add ($) { #{{{
 	           $file) != 0) {
 		error("Monotone add failed");
 	}
-} #}}}
+}
 
-sub rcs_remove ($) { # {{{
+sub rcs_remove ($) {
 	my $file = shift;
 
 	chdir $config{srcdir}
@@ -495,9 +495,9 @@ sub rcs_remove ($) { # {{{
 	           $file) != 0) {
 		error("Monotone remove failed");
 	}
-} #}}}
+}
 
-sub rcs_rename ($$) { # {{{
+sub rcs_rename ($$) {
 	my ($src, $dest) = @_;
 
 	chdir $config{srcdir}
@@ -507,9 +507,9 @@ sub rcs_rename ($$) { # {{{
 	           $src, $dest) != 0) {
 		error("Monotone rename failed");
 	}
-} #}}}
+}
 
-sub rcs_recentchanges ($) { #{{{
+sub rcs_recentchanges ($) {
 	my $num=shift;
 	my @ret;
 
@@ -614,9 +614,9 @@ sub rcs_recentchanges ($) { #{{{
 	$automator->close();
 
 	return @ret;
-} #}}}
+}
 
-sub rcs_diff ($) { #{{{
+sub rcs_diff ($) {
 	my $rev=shift;
 	my ($sha1) = $rev =~ /^($sha1_pattern)$/; # untaint
 	
@@ -638,9 +638,9 @@ sub rcs_diff ($) { #{{{
 	else {
 		return join("", @lines);
 	}
-} #}}}
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	my $file=shift;
 
 	chdir $config{srcdir}
@@ -690,6 +690,6 @@ sub rcs_getctime ($) { #{{{
 	$date=str2time($date, 'UTC');
 	debug("found ctime ".localtime($date)." for $file");
 	return $date;
-} #}}}
+}
 
 1

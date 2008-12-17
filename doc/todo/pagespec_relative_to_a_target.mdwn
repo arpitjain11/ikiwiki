@@ -57,7 +57,7 @@ diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/relative.pm ikidev/IkiWiki/Plugin/r
 +
 +package IkiWiki::PageSpec;
 +
-+sub match_relative($$;@) { #{{{
++sub match_relative($$;@) {
 +	my $parent = shift;
 +	my $spec = shift;
 +	my %params = @_;
@@ -69,21 +69,21 @@ diff -urNX ignorepats ikiwiki/IkiWiki/Plugin/relative.pm ikidev/IkiWiki/Plugin/r
 +		}
 +	}
 +	return IkiWiki::FailReason->new("$parent can't match $spec against anything");
-+} #}}}
++}
 +
-+sub match_has_child($$;@) { #{{{
++sub match_has_child($$;@) {
 +	my $page = shift;
 +	my $childname = shift;
 +	my $spec;
-+	if ($childname) { #{{{
++	if ($childname) {
 +		$spec = "$page/$childname or $page/*/$childname";
-+	} #}}}
-+	else { #{{{
++	}
++	else {
 +		$spec = "$page/*";
-+	} #}}}
++	}
 +
 +	return match_relative($page, $spec, @_);
-+} #}}}
++}
 +
 +1
 </pre>

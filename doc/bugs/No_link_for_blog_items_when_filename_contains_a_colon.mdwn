@@ -38,19 +38,19 @@ At the moment I see two possible solutions:
         +++ IkiWiki.pm  2008-07-21 20:41:35.000000000 +0200
         @@ -477,13 +477,13 @@
 
-         sub titlepage ($) { #{{{
+         sub titlepage ($) {
                 my $title=shift;
         -       $title=~s/([^-[:alnum:]:+\/.])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
         +       $title=~s/([^-[:alnum:]+\/.])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
                 return $title;
-         } #}}}
+         }
 
-         sub linkpage ($) { #{{{
+         sub linkpage ($) {
                 my $link=shift;
         -       $link=~s/([^-[:alnum:]:+\/._])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
         +       $link=~s/([^-[:alnum:]+\/._])/$1 eq ' ' ? '_' : "__".ord($1)."__"/eg;
                 return $link;
-         } #}}}
+         }
 
 What do you think about that? Does the patch have any side-effects I didn't see?
 

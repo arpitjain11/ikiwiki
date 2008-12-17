@@ -8,20 +8,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "sidebar", call => \&getsetup);
 	hook(type => "pagetemplate", id => "sidebar", call => \&pagetemplate);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub sidebar_content ($) { #{{{
+sub sidebar_content ($) {
 	my $page=shift;
 	
 	my $sidebar_page=bestlink($page, "sidebar") || return;
@@ -42,9 +42,9 @@ sub sidebar_content ($) { #{{{
 		       IkiWiki::filter($sidebar_page, $page, $content))));
 	}
 
-} # }}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 
 	my $page=$params{page};
@@ -56,6 +56,6 @@ sub pagetemplate (@) { #{{{
 		        $template->param(sidebar => $content);
 		}
 	}
-} # }}}
+}
 
 1

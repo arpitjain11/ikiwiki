@@ -5,15 +5,15 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "websetup", call => \&getsetup);
 	hook(type => "checkconfig", id => "websetup", call => \&checkconfig);
 	hook(type => "sessioncgi", id => "websetup", call => \&sessioncgi);
 	hook(type => "formbuilder_setup", id => "websetup", 
 	     call => \&formbuilder_setup);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -33,15 +33,15 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (! exists $config{websetup_show_unsafe}) {
 		$config{websetup_show_unsafe}=1;
 	}
-} #}}}
+}
 
-sub formatexample ($$) { #{{{
+sub formatexample ($$) {
 	my $example=shift;
 	my $value=shift;
 
@@ -54,9 +54,9 @@ sub formatexample ($$) { #{{{
 	else {
 		return "";
 	}
-} #}}}
+}
 
-sub showfields ($$$@) { #{{{
+sub showfields ($$$@) {
 	my $form=shift;
 	my $plugin=shift;
 	my $enabled=shift;
@@ -207,16 +207,16 @@ sub showfields ($$$@) { #{{{
 	}
 
 	return %enabledfields;
-} #}}}
+}
 
-sub enable_plugin ($) { #{{{
+sub enable_plugin ($) {
 	my $plugin=shift;
 
 	$config{disable_plugins}=[grep { $_ ne $plugin } @{$config{disable_plugins}}];
 	push @{$config{add_plugins}}, $plugin;
 }
 
-sub disable_plugin ($) { #{{{
+sub disable_plugin ($) {
 	my $plugin=shift;
 
 	if (grep { $_ eq $plugin } @{$config{add_plugins}}) {
@@ -227,7 +227,7 @@ sub disable_plugin ($) { #{{{
 	}
 }
 
-sub showform ($$) { #{{{
+sub showform ($$) {
 	my $cgi=shift;
 	my $session=shift;
 
@@ -441,9 +441,9 @@ sub showform ($$) { #{{{
 	}
 
 	IkiWiki::showform($form, $buttons, $session, $cgi);
-} #}}}
+}
 
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
 	my $cgi=shift;
 	my $session=shift;
 
@@ -451,9 +451,9 @@ sub sessioncgi ($$) { #{{{
 		showform($cgi, $session);
 		exit;
 	}
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 
 	my $form=$params{form};
@@ -464,6 +464,6 @@ sub formbuilder_setup (@) { #{{{
 			exit;
 		}
 	}
-} #}}}
+}
 
 1

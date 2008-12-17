@@ -9,7 +9,7 @@ Here is a patch for toc.pm for producing non-empty 'a' elements.
 
     --- IkiWiki/Plugin/toc.pm.orig	Thu Jun  7 11:53:53 2007
     +++ IkiWiki/Plugin/toc.pm	Thu Jun  7 13:00:00 2007
-    @@ -47,7 +47,7 @@ sub format (@) { #{{{
+    @@ -47,7 +47,7 @@ sub format (@) {
      		if ($tagname =~ /^h(\d+)$/i) {
      			my $level=$1;
      			my $anchor="index".++$anchors{$level}."h$level";
@@ -18,7 +18,7 @@ Here is a patch for toc.pm for producing non-empty 'a' elements.
      	
      			# Take the first header level seen as the topmost level,
      			# even if there are higher levels seen later on.
-    @@ -90,6 +90,16 @@ sub format (@) { #{{{
+    @@ -90,6 +90,16 @@ sub format (@) {
      					"</a>\n";
      				$p->handler(text => undef);
      			}, "dtext");

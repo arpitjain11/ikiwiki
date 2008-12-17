@@ -7,16 +7,16 @@ use IkiWiki 2.00;
 use Encode;
 use HTML::Entities;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "recentchanges", call => \&getsetup);
 	hook(type => "checkconfig", id => "recentchanges", call => \&checkconfig);
 	hook(type => "refresh", id => "recentchanges", call => \&refresh);
 	hook(type => "pagetemplate", id => "recentchanges", call => \&pagetemplate);
 	hook(type => "htmlize", id => "_change", call => \&htmlize);
 	hook(type => "cgi", id => "recentchanges", call => \&cgi);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -36,14 +36,14 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	$config{recentchangespage}='recentchanges' unless defined $config{recentchangespage};
 	$config{recentchangesnum}=100 unless defined $config{recentchangesnum};
-} #}}}
+}
 
-sub refresh ($) { #{{{
+sub refresh ($) {
 	my %seen;
 
 	# add new changes
@@ -57,10 +57,10 @@ sub refresh ($) { #{{{
 			unlink($config{srcdir}.'/'.$pagesources{$page});
 		}
 	}
-} #}}}
+}
 
 # Enable the recentchanges link on wiki pages.
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $template=$params{template};
 	my $page=$params{page};
@@ -71,15 +71,15 @@ sub pagetemplate (@) { #{{{
 		$template->param(recentchangesurl => urlto($config{recentchangespage}, $page));
 		$template->param(have_actions => 1);
 	}
-} #}}}
+}
 
 # Pages with extension _change have plain html markup, pass through.
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 	return $params{content};
-} #}}}
+}
 
-sub cgi ($) { #{{{
+sub cgi ($) {
 	my $cgi=shift;
 	if (defined $cgi->param('do') && $cgi->param('do') eq "recentchanges_link") {
 		# This is a link from a change page to some
@@ -112,7 +112,7 @@ sub cgi ($) { #{{{
 	}
 }
 
-sub store ($$$) { #{{{
+sub store ($$$) {
 	my $change=shift;
 
 	my $page="$config{recentchangespage}/change_".titlepage($change->{rev});
@@ -192,6 +192,6 @@ sub store ($$$) { #{{{
 	utime $change->{when}, $change->{when}, "$config{srcdir}/$file";
 
 	return $page;
-} #}}}
+}
 
 1

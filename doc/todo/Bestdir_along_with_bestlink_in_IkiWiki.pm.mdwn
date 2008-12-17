@@ -8,9 +8,9 @@ This patch adds function bestdir() which returns best directory from the directo
     +++ IkiWiki.pm  (working copy)
     @@ -391,6 +391,35 @@
             return "";
-     } #}}}
+     }
     
-    +sub bestdir ($$) { #{{{
+    +sub bestdir ($$) {
     +    my $page=shift;
     +       my $link=shift;
     +       my $cwd=$page;
@@ -37,9 +37,9 @@ This patch adds function bestdir() which returns best directory from the directo
     +       }
     +
     +       return "";
-    +} #}}}
+    +}
     +
-     sub isinlinableimage ($) { #{{{
+     sub isinlinableimage ($) {
             my $file=shift;
     
 ---- 

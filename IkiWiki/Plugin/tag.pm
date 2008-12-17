@@ -8,22 +8,22 @@ use IkiWiki 2.00;
 
 my %tags;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "tag", call => \&getopt);
 	hook(type => "getsetup", id => "tag", call => \&getsetup);
 	hook(type => "preprocess", id => "tag", call => \&preprocess_tag, scan => 1);
 	hook(type => "preprocess", id => "taglink", call => \&preprocess_taglink, scan => 1);
 	hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
 	eval q{use Getopt::Long};
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
 	GetOptions("tagbase=s" => \$config{tagbase});
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -36,9 +36,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub tagpage ($) { #{{{
+sub tagpage ($) {
 	my $tag=shift;
 			
 	if ($tag !~ m{^\.?/} &&
@@ -48,18 +48,18 @@ sub tagpage ($) { #{{{
 	}
 
 	return $tag;
-} #}}}
+}
 
-sub taglink ($$$;@) { #{{{
+sub taglink ($$$;@) {
 	my $page=shift;
 	my $destpage=shift;
 	my $tag=shift;
 	my %opts=@_;
 
 	return htmllink($page, $destpage, tagpage($tag), %opts);
-} #}}}
+}
 
-sub preprocess_tag (@) { #{{{
+sub preprocess_tag (@) {
 	if (! @_) {
 		return "";
 	}
@@ -77,9 +77,9 @@ sub preprocess_tag (@) { #{{{
 	}
 		
 	return "";
-} # }}}
+}
 
-sub preprocess_taglink (@) { #{{{
+sub preprocess_taglink (@) {
 	if (! @_) {
 		return "";
 	}
@@ -102,9 +102,9 @@ sub preprocess_taglink (@) { #{{{
 	grep {
 		$_ ne 'page' && $_ ne 'destpage' && $_ ne 'preview'
 	} keys %params);
-} # }}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $destpage=$params{destpage};
@@ -123,6 +123,6 @@ sub pagetemplate (@) { #{{{
 				sort keys %{$tags{$page}}]);
 		}
 	}
-} # }}}
+}
 
 1

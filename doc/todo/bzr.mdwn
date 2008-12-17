@@ -56,15 +56,15 @@ and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
             return @ret;
     }
     
-    sub rcs_update () { #{{{
+    sub rcs_update () {
             # Not needed.
-    } #}}}
+    }
     
-    sub rcs_prepedit ($) { #{{{
+    sub rcs_prepedit ($) {
             return "";
-    } #}}}
+    }
     
-    sub rcs_commit ($$$;$$) { #{{{
+    sub rcs_commit ($$$;$$) {
             my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
     
             if (defined $user) {
@@ -95,18 +95,18 @@ and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
             system("bzr","whoami",$olduser);
     
             return undef; # success
-    } #}}}
+    }
     
-    sub rcs_add ($) { # {{{
+    sub rcs_add ($) {
             my ($file) = @_;
     
             my @cmdline = ("bzr", "add", "--quiet", "$config{srcdir}/$file");
             if (system(@cmdline) != 0) {
                     warn "'@cmdline' failed: $!";
             }
-    } #}}}
+    }
     
-    sub rcs_recentchanges ($) { #{{{
+    sub rcs_recentchanges ($) {
             my ($num) = @_;
     
             eval q{use CGI 'escapeHTML'};
@@ -153,15 +153,15 @@ and rcs_getctime and rcs_notify aren't written at all. --[[bma]]
             }
     
             return @ret;
-    } #}}}
+    }
     
-    sub rcs_notify () { #{{{
+    sub rcs_notify () {
             # TODO
-    } #}}}
+    }
     
-    sub rcs_getctime ($) { #{{{
+    sub rcs_getctime ($) {
             # TODO
-    } #}}}
+    }
     
     1
 

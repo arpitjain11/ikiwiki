@@ -12,20 +12,20 @@ use strict;
 use IkiWiki 2.00;
 use IPC::Open2;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "tidy", call => \&getsetup);
 	hook(type => "sanitize", id => "tidy", call => \&sanitize);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub sanitize (@) { #{{{
+sub sanitize (@) {
 	my %params=@_;
 
 	my $pid;
@@ -49,6 +49,6 @@ sub sanitize (@) { #{{{
 	return "" if $sigpipe || ! defined $ret;
 
 	return $ret;
-} # }}}
+}
 
 1

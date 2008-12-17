@@ -22,7 +22,7 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
 
     --- Wrapper.pm.orig 2008-07-29 00:09:10.000000000 -0400
     +++ Wrapper.pm
-    @@ -28,7 +28,7 @@ sub gen_wrapper () { #{{{
+    @@ -28,7 +28,7 @@ sub gen_wrapper () {
         my @envsave;
         push @envsave, qw{REMOTE_ADDR QUERY_STRING REQUEST_METHOD REQUEST_URI
                        CONTENT_TYPE CONTENT_LENGTH GATEWAY_INTERFACE
@@ -46,16 +46,16 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
     use strict;
     use IkiWiki 2.00;
     
-    sub import { #{{{
+    sub import {
         hook(type => "getsetup", id => "unixauth", call => \&getsetup);
             hook(type => "formbuilder_setup", id => "unixauth",
                 call => \&formbuilder_setup);
             hook(type => "formbuilder", id => "unixauth",
                 call => \&formbuilder);
         hook(type => "sessioncgi", id => "unixauth", call => \&sessioncgi);
-    } # }}}
+    }
     
-    sub getsetup () { #{{{
+    sub getsetup () {
         return
         unixauth_type => {
                 type => "string",
@@ -83,10 +83,10 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
                 safe => 0,
                 rebuild => 1,
         },
-    } #}}}
+    }
     
     # Checks if a string matches a user's password, and returns true or false.
-    sub checkpassword ($$;$) { #{{{
+    sub checkpassword ($$;$) {
         my $user=shift;
         my $password=shift;
         my $field=shift || "password";
@@ -131,9 +131,9 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
         }
     
         return $ret;
-    } #}}}
+    }
     
-    sub formbuilder_setup (@) { #{{{
+    sub formbuilder_setup (@) {
         my %params=@_;
     
         my $form=$params{form};
@@ -204,7 +204,7 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
         }
     }
     
-    sub formbuilder (@) { #{{{
+    sub formbuilder (@) {
         my %params=@_;
     
         my $form=$params{form};
@@ -225,12 +225,12 @@ __Security__: [As with passwordauth](/security/#index14h2), be wary of sending u
                         my $user_name=$form->field('name');
                 }
         }
-    } #}}}
+    }
     
-    sub sessioncgi ($$) { #{{{
+    sub sessioncgi ($$) {
         my $q=shift;
         my $session=shift;
-    } #}}}
+    }
     
     1
 

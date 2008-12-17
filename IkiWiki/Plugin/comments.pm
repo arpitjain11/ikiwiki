@@ -17,7 +17,7 @@ use constant CANCEL => "Cancel";
 
 my $postcomment;
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
 	hook(type => "getsetup", id => 'comments',  call => \&getsetup);
 	hook(type => "preprocess", id => '_comment', call => \&preprocess);
@@ -26,9 +26,9 @@ sub import { #{{{
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
 	hook(type => "cgi", id => "comments", call => \&linkcgi);
 	IkiWiki::loadplugin("inline");
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -88,15 +88,15 @@ sub getsetup () { #{{{
 			safe => 0,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub htmlize { # {{{
+sub htmlize {
 	my %params = @_;
 	return $params{content};
-} # }}}
+}
 
 # FIXME: copied verbatim from meta
-sub safeurl ($) { #{{{
+sub safeurl ($) {
 	my $url=shift;
 	if (exists $IkiWiki::Plugin::htmlscrubber::{safe_url_regexp} &&
 	    defined $IkiWiki::Plugin::htmlscrubber::safe_url_regexp) {
@@ -105,9 +105,9 @@ sub safeurl ($) { #{{{
 	else {
 		return 1;
 	}
-} #}}}
+}
 
-sub preprocess { # {{{
+sub preprocess {
 	my %params = @_;
 	my $page = $params{page};
 
@@ -206,16 +206,16 @@ sub preprocess { # {{{
 	# FIXME: hard-coded HTML (although it's just to set an ID)
 	return "<div id=\"$anchor\">$content</div>" if $anchor;
 	return $content;
-} # }}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	$config{comments_commit} = 1 unless defined $config{comments_commit};
 	$config{comments_pagename} = 'comment_'
 		unless defined $config{comments_pagename};
-} #}}}
+}
 
 # This is exactly the same as recentchanges_link :-(
-sub linkcgi ($) { #{{{
+sub linkcgi ($) {
 	my $cgi=shift;
 	if (defined $cgi->param('do') && $cgi->param('do') eq "commenter") {
 
@@ -245,7 +245,7 @@ sub linkcgi ($) { #{{{
 
 # FIXME: basically the same logic as recentchanges
 # returns (author URL, pretty-printed version)
-sub linkuser ($) { # {{{
+sub linkuser ($) {
 	my $user = shift;
 	my $oiduser = eval { IkiWiki::openiduser($user) };
 
@@ -262,10 +262,10 @@ sub linkuser ($) { # {{{
 					: "$user")
 			), $user);
 	}
-} # }}}
+}
 
 # Mostly cargo-culted from IkiWiki::plugin::editpage
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
 	my $cgi=shift;
 	my $session=shift;
 
@@ -512,9 +512,9 @@ sub sessioncgi ($$) { #{{{
 	}
 
 	exit;
-} #}}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params = @_;
 
 	my $page = $params{page};
@@ -583,7 +583,7 @@ sub pagetemplate (@) { #{{{
 		$template->param(commentauthorurl =>
 			$pagestate{$page}{comments}{commentauthorurl});
 	}
-} # }}}
+}
 
 package IkiWiki::PageSpec;
 

@@ -20,7 +20,7 @@ That doesn't work in ikiwiki 2.1, but I have it
 	index 38aa46a..cd42e8d 100644
 	--- a/IkiWiki.pm
 	+++ b/IkiWiki.pm
-	@@ -1082,10 +1082,15 @@ sub match_link ($$;@) { #{{{
+	@@ -1082,10 +1082,15 @@ sub match_link ($$;@) {
 	 	my $links = $IkiWiki::links{$page} or return undef;
 	 	return IkiWiki::FailReason->new("$page has no links") unless @$links;
 	 	my $bestlink = IkiWiki::bestlink($from, $link);
@@ -38,7 +38,7 @@ That doesn't work in ikiwiki 2.1, but I have it
 	+		}
 	 	}
 	 	return IkiWiki::FailReason->new("$page does not link to $link");
-	 } #}}}
+	 }
 	-- 
 	1.5.1.1.g6aead
 

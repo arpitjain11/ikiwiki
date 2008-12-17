@@ -6,12 +6,12 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "mdwn", call => \&getsetup);
 	hook(type => "htmlize", id => "mdwn", call => \&htmlize);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -24,10 +24,10 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
 my $markdown_sub;
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 	my $content = $params{content};
 
@@ -83,6 +83,6 @@ sub htmlize (@) { #{{{
 	$content=Encode::decode_utf8($content);
 
 	return $content;
-} # }}}
+}
 
 1

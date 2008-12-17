@@ -6,7 +6,7 @@ Here is a patch that's seems to work, although I'm not quite sure what's wrong w
     --- mercurial.pm        2007-03-24 16:14:35.000000000 +0100
     +++ /home/hbernard/mercurial.pm 2007-04-19 19:05:47.000000000 +0200
     @@ -95,7 +95,7 @@
-     sub rcs_add ($) { # {{{
+     sub rcs_add ($) {
             my ($file) = @_;
      
     -       my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$file");

@@ -7,21 +7,21 @@ use IkiWiki 2.00;
 
 my $percentage_pattern = qr/[0-9]+\%?/; # pattern to validate percentages
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "progress", call => \&getsetup);
 	hook(type => "preprocess", id => "progress", call => \&preprocess);
 	hook(type => "format",     id => "progress", call => \&format);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	
 	my $fill;
@@ -64,9 +64,9 @@ sub preprocess (@) { #{{{
   <div class="progress-done" style="width: $fill">$fill</div>
 </div>
 EODIV
-} # }}}
+}
 
-sub format(@) { #{{{
+sub format(@) {
 	my %params = @_;
 
 	# If HTMLScrubber has removed the style attribute, then bring it back
@@ -74,6 +74,6 @@ sub format(@) { #{{{
 	$params{content} =~ s!<div class="progress-done">($percentage_pattern)</div>!<div class="progress-done" style="width: $1">$1</div>!g;
 
 	return $params{content};    
-} #}}}
+}
 
 1

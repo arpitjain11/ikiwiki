@@ -14,7 +14,7 @@ use open qw{:utf8 :std};
 my %feeds;
 my %guids;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "aggregate", call => \&getopt);
 	hook(type => "getsetup", id => "aggregate", call => \&getsetup);
 	hook(type => "checkconfig", id => "aggregate", call => \&checkconfig);
@@ -26,9 +26,9 @@ sub import { #{{{
 	if (exists $config{aggregate_webtrigger} && $config{aggregate_webtrigger}) {
 		hook(type => "cgi", id => "aggregate", call => \&cgi);
 	}
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
         eval q{use Getopt::Long};
 	error($@) if $@;
         Getopt::Long::Configure('pass_through');
@@ -36,9 +36,9 @@ sub getopt () { #{{{
 		"aggregate" => \$config{aggregate},
 		"aggregateinternal!" => \$config{aggregateinternal},
 	);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -58,16 +58,16 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if ($config{aggregate} && ! ($config{post_commit} && 
 	                             IkiWiki::commit_hook_enabled())) {
 		launchaggregation();
 	}
-} #}}}
+}
 
-sub cgi ($) { #{{{
+sub cgi ($) {
 	my $cgi=shift;
 
 	if (defined $cgi->param('do') &&
@@ -90,9 +90,9 @@ sub cgi ($) { #{{{
 		}
 		exit 0;
 	}
-} #}}}
+}
 
-sub launchaggregation () { #{{{
+sub launchaggregation () {
 	# See if any feeds need aggregation.
 	loadstate();
 	my @feeds=needsaggregate();
@@ -135,16 +135,16 @@ sub launchaggregation () { #{{{
 	unlockaggregate();
 
 	return 1;
-} #}}}
+}
 
 #  Pages with extension _aggregated have plain html markup, pass through.
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 	return $params{content};
-} #}}}
+}
 
 # Used by ikiwiki-transition aggregateinternal.
-sub migrate_to_internal { #{{{
+sub migrate_to_internal {
 	if (! lockaggregate()) {
 		error("an aggregation process is currently running");
 	}
@@ -190,9 +190,9 @@ sub migrate_to_internal { #{{{
 	IkiWiki::unlockwiki;
 	
 	unlockaggregate();
-} #}}}
+}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 	
 	loadstate();
@@ -206,9 +206,9 @@ sub needsbuild (@) { #{{{
 			markunseen($feed->{sourcepage});
 		}
 	}
-} # }}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	foreach my $required (qw{name url}) {
@@ -265,9 +265,9 @@ sub preprocess (@) { #{{{
 	       ($feed->{newposts} ? "; ".$feed->{newposts}.
 	                            " ".gettext("new") : "").
 	       ")";
-} # }}}
+}
 
-sub delete (@) { #{{{
+sub delete (@) {
 	my @files=@_;
 
 	# Remove feed data for removed pages.
@@ -275,9 +275,9 @@ sub delete (@) { #{{{
 		my $page=pagename($file);
 		markunseen($page);
 	}
-} #}}}
+}
 
-sub markunseen ($) { #{{{
+sub markunseen ($) {
 	my $page=shift;
 
 	foreach my $id (keys %feeds) {
@@ -285,11 +285,11 @@ sub markunseen ($) { #{{{
 			$feeds{$id}->{unseen}=1;
 		}
 	}
-} #}}}
+}
 
 my $state_loaded=0;
 
-sub loadstate () { #{{{
+sub loadstate () {
 	return if $state_loaded;
 	$state_loaded=1;
 	if (-e "$config{wikistatedir}/aggregate") {
@@ -323,9 +323,9 @@ sub loadstate () { #{{{
 
 		close IN;
 	}
-} #}}}
+}
 
-sub savestate () { #{{{
+sub savestate () {
 	return unless $state_loaded;
 	garbage_collect();
 	my $newfile="$config{wikistatedir}/aggregate.new";
@@ -350,9 +350,9 @@ sub savestate () { #{{{
 	close OUT || error("save $newfile: $!", $cleanup);
 	rename($newfile, "$config{wikistatedir}/aggregate") ||
 		error("rename $newfile: $!", $cleanup);
-} #}}}
+}
 
-sub garbage_collect () { #{{{
+sub garbage_collect () {
 	foreach my $name (keys %feeds) {
 		# remove any feeds that were not seen while building the pages
 		# that used to contain them
@@ -375,9 +375,9 @@ sub garbage_collect () { #{{{
 			delete $guid->{md5};
 		}
 	}
-} #}}}
+}
 
-sub mergestate () { #{{{
+sub mergestate () {
 	# Load the current state in from disk, and merge into it
 	# values from the state in memory that might have changed
 	# during aggregation.
@@ -407,15 +407,15 @@ sub mergestate () { #{{{
 			$guids{$guid}=$myguids{$guid};
 		}
 	}
-} #}}}
+}
 
-sub clearstate () { #{{{
+sub clearstate () {
 	%feeds=();
 	%guids=();
 	$state_loaded=0;
-} #}}}
+}
 
-sub expire () { #{{{
+sub expire () {
 	foreach my $feed (values %feeds) {
 		next unless $feed->{expireage} || $feed->{expirecount};
 		my $count=0;
@@ -444,14 +444,14 @@ sub expire () { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
-sub needsaggregate () { #{{{
+sub needsaggregate () {
 	return values %feeds if $config{rebuild};
 	return grep { time - $_->{lastupdate} >= $_->{updateinterval} } values %feeds;
-} #}}}
+}
 
-sub aggregate (@) { #{{{
+sub aggregate (@) {
 	eval q{use XML::Feed};
 	error($@) if $@;
 	eval q{use URI::Fetch};
@@ -542,9 +542,9 @@ sub aggregate (@) { #{{{
 			);
 		}
 	}
-} #}}}
+}
 
-sub add_page (@) { #{{{
+sub add_page (@) {
 	my %params=@_;
 	
 	my $feed=$params{feed};
@@ -635,21 +635,21 @@ sub add_page (@) { #{{{
 		# Dummy value for expiry code.
 		$IkiWiki::pagectime{$guid->{page}}=time;
 	}
-} #}}}
+}
 
-sub wikiescape ($) { #{{{
+sub wikiescape ($) {
 	# escape accidental wikilinks and preprocessor stuff
 	return encode_entities(shift, '\[\]');
-} #}}}
+}
 
-sub urlabs ($$) { #{{{
+sub urlabs ($$) {
 	my $url=shift;
 	my $urlbase=shift;
 
 	URI->new_abs($url, $urlbase)->as_string;
-} #}}}
+}
 
-sub htmlabs ($$) { #{{{
+sub htmlabs ($$) {
 	# Convert links in html from relative to absolute.
 	# Note that this is a heuristic, which is not specified by the rss
 	# spec and may not be right for all feeds. Also, see Debian
@@ -685,15 +685,15 @@ sub htmlabs ($$) { #{{{
 	$p->eof;
 
 	return $ret;
-} #}}}
+}
 
-sub htmlfn ($) { #{{{
+sub htmlfn ($) {
 	return shift().".".($config{aggregateinternal} ? "_aggregated" : $config{htmlext});
-} #}}}
+}
 
 my $aggregatelock;
 
-sub lockaggregate () { #{{{
+sub lockaggregate () {
 	# Take an exclusive lock to prevent multiple concurrent aggregators.
 	# Returns true if the lock was aquired.
 	if (! -d $config{wikistatedir}) {
@@ -706,11 +706,11 @@ sub lockaggregate () { #{{{
 		return 0;
 	}
 	return 1;
-} #}}}
+}
 
-sub unlockaggregate () { #{{{
+sub unlockaggregate () {
 	return close($aggregatelock) if $aggregatelock;
 	return;
-} #}}}
+}
 
 1

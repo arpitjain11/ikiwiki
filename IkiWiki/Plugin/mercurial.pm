@@ -7,7 +7,7 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => "mercurial", call => \&checkconfig);
 	hook(type => "getsetup", id => "mercurial", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
@@ -20,18 +20,18 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (exists $config{mercurial_wrapper} && length $config{mercurial_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{mercurial_wrapper},
 			wrappermode => (defined $config{mercurial_wrappermode} ? $config{mercurial_wrappermode} : "06755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
@@ -65,9 +65,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub mercurial_log ($) { #{{{
+sub mercurial_log ($) {
 	my $out = shift;
 	my @infos;
 
@@ -111,20 +111,20 @@ sub mercurial_log ($) { #{{{
 	close $out;
 
 	return @infos;
-} #}}}
+}
 
-sub rcs_update () { #{{{
+sub rcs_update () {
 	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "update");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
-} #}}}
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	return "";
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
 	if (defined $user) {
@@ -149,7 +149,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	}
 
 	return undef; # success
-} #}}}
+}
 
 sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
@@ -159,28 +159,28 @@ sub rcs_commit_staged ($$$) {
 	error("rcs_commit_staged not implemented for mercurial"); # TODO
 }
 
-sub rcs_add ($) { # {{{
+sub rcs_add ($) {
 	my ($file) = @_;
 
 	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "add", "$config{srcdir}/$file");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
-} #}}}
+}
 
-sub rcs_remove ($) { # {{{
+sub rcs_remove ($) {
 	my ($file) = @_;
 
 	error("rcs_remove not implemented for mercurial"); # TODO
-} #}}}
+}
 
-sub rcs_rename ($$) { # {{{
+sub rcs_rename ($$) {
 	my ($src, $dest) = @_;
 
 	error("rcs_rename not implemented for mercurial"); # TODO
-} #}}}
+}
 
-sub rcs_recentchanges ($) { #{{{
+sub rcs_recentchanges ($) {
 	my ($num) = @_;
 
 	my @cmdline = ("hg", "-R", $config{srcdir}, "log", "-v", "-l", $num,
@@ -225,13 +225,13 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @ret;
-} #}}}
+}
 
-sub rcs_diff ($) { #{{{
+sub rcs_diff ($) {
 	# TODO
-} #}}}
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	my ($file) = @_;
 
 	# XXX filename passes through the shell here, should try to avoid
@@ -251,6 +251,6 @@ sub rcs_getctime ($) { #{{{
 	
 	my $ctime = str2time($log[0]->{"date"});
 	return $ctime;
-} #}}}
+}
 
 1

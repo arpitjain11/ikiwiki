@@ -8,7 +8,7 @@ I think this (untested) patch might just do the trick:
 
     --- a/IkiWiki/Plugin/edittemplate.pm
     +++ b/IkiWiki/Plugin/edittemplate.pm
-    @@ -46,8 +46,13 @@ sub preprocess (@) { #{{{
+    @@ -46,8 +46,13 @@ sub preprocess (@) {
 
       $pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
 
@@ -21,9 +21,9 @@ I think this (untested) patch might just do the trick:
     +       else {
     +               return '';
     +       }
-    } # }}}
+    }
 
-    sub formbuilder (@) { #{{{
+    sub formbuilder (@) {
 
 --[[madduck]]
 

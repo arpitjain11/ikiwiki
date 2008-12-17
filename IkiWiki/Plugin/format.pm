@@ -5,11 +5,11 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "preprocess", id => "format", call => \&preprocess);
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my $format=$_[0];
 	shift; shift;
 	my $text=$_[0];
@@ -25,6 +25,6 @@ sub preprocess (@) { #{{{
 
 	return IkiWiki::htmlize($params{page}, $params{destpage}, $format,
 		IkiWiki::preprocess($params{page}, $params{destpage}, $text));
-} #}}}
+}
 
 1

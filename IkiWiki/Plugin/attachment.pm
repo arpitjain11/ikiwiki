@@ -5,16 +5,16 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	add_underlay("javascript");
 	hook(type => "getsetup", id => "attachment", call => \&getsetup);
 	hook(type => "checkconfig", id => "attachment", call => \&checkconfig);
 	hook(type => "formbuilder_setup", id => "attachment", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "attachment", call => \&formbuilder);
 	IkiWiki::loadplugin("filecheck");
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -35,9 +35,9 @@ sub getsetup () { #{{{
 			safe => 0, # executed
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub check_canattach ($$;$) { #{{{
+sub check_canattach ($$;$) {
 	my $session=shift;
 	my $dest=shift; # where it's going to be put, under the srcdir
 	my $file=shift; # the path to the attachment currently
@@ -84,13 +84,13 @@ sub check_canattach ($$;$) { #{{{
 	else {
 		return 1;
 	}
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	$config{cgi_disable_uploads}=0;
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 	my $form=$params{form};
 	my $q=$params{cgi};
@@ -153,9 +153,9 @@ sub formbuilder_setup (@) { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
-sub formbuilder (@) { #{{{
+sub formbuilder (@) {
 	my %params=@_;
 	my $form=$params{form};
 	my $q=$params{cgi};
@@ -253,9 +253,9 @@ sub formbuilder (@) { #{{{
 	# Generate the attachment list only after having added any new
 	# attachments.
 	$form->tmpl_param("attachment_list" => [attachment_list($form->field('page'))]);
-} # }}}
+}
 
-sub attachment_location ($) { #{{{
+sub attachment_location ($) {
 	my $page=shift;
 	
 	# Put the attachment in a subdir of the page it's attached
@@ -264,9 +264,9 @@ sub attachment_location ($) { #{{{
 	$page.="/" if length $page;
 	
 	return $page;
-} #}}}
+}
 
-sub attachment_list ($) { #{{{
+sub attachment_list ($) {
 	my $page=shift;
 	my $loc=attachment_location($page);
 
@@ -287,6 +287,6 @@ sub attachment_list ($) { #{{{
 	# Sort newer attachments to the top of the list, so a newly-added
 	# attachment appears just before the form used to add it.
 	return sort { $b->{mtime_raw} <=> $a->{mtime_raw} || $a->{link} cmp $b->{link} } @ret;
-} #}}}
+}
 
 1

@@ -5,20 +5,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "opendiscussion", call => \&getsetup);
 	hook(type => "canedit", id => "opendiscussion", call => \&canedit);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub canedit ($$) { #{{{
+sub canedit ($$) {
 	my $page=shift;
 	my $cgi=shift;
 	my $session=shift;
@@ -26,6 +26,6 @@ sub canedit ($$) { #{{{
 	my $discussion=gettext("discussion");
 	return "" if $page=~/(\/|^)\Q$discussion\E$/;
 	return undef;
-} #}}}
+}
 
 1

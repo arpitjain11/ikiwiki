@@ -6,24 +6,24 @@ use strict;
 use IkiWiki 2.00;
 use IPC::Open2;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "linkmap", call => \&getsetup);
 	hook(type => "preprocess", id => "linkmap", call => \&preprocess);
 	hook(type => "format", id => "linkmap", call => \&format);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
 my $mapnum=0;
 my %maps;
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	$params{pages}="*" unless defined $params{pages};
@@ -39,17 +39,17 @@ sub preprocess (@) { #{{{
 	$mapnum++;
 	$maps{$mapnum}=\%params;
 	return "<div class=\"linkmap$mapnum\"></div>";
-} # }}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
         my %params=@_;
 
 	$params{content}=~s/<div class=\"linkmap(\d+)"><\/div>/genmap($1)/eg;
 
         return $params{content};
-} # }}}
+}
 
-sub genmap ($) { #{{{
+sub genmap ($) {
 	my $mapnum=shift;
 	return "" unless exists $maps{$mapnum};
 	my %params=%{$maps{$mapnum}};
@@ -106,6 +106,6 @@ sub genmap ($) { #{{{
 	error gettext("failed to run dot") if $sigpipe;
 
 	return $ret;
-} #}}}
+}
 
 1

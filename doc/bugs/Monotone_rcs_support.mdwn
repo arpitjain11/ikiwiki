@@ -11,7 +11,7 @@ diff --git a/IkiWiki/Rcs/monotone.pm b/IkiWiki/Rcs/monotone.pm
 index cde6029..34f8f96 100644
 --- a/IkiWiki/Rcs/monotone.pm
 +++ b/IkiWiki/Rcs/monotone.pm
-@@ -186,8 +186,9 @@ sub rcs_update () { #{{{
+@@ -186,8 +186,9 @@ sub rcs_update () {
  	check_config();
  
  	if (defined($config{mtnsync}) && $config{mtnsync}) {

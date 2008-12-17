@@ -6,19 +6,19 @@ use strict;
 use IkiWiki;
 use open qw{:utf8 :std};
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "editpage", call => \&getsetup);
 	hook(type => "refresh", id => "editpage", call => \&refresh);
         hook(type => "sessioncgi", id => "editpage", call => \&IkiWiki::cgi_editpage);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
 sub refresh () {
 	if (exists $wikistate{editpage} && exists $wikistate{editpage}{previews}) {
@@ -54,7 +54,7 @@ sub refresh () {
 # and other plugins use the functions below.
 package IkiWiki;
 
-sub check_canedit ($$$;$) { #{{{
+sub check_canedit ($$$;$) {
 	my $page=shift;
 	my $q=shift;
 	my $session=shift;
@@ -79,9 +79,9 @@ sub check_canedit ($$$;$) { #{{{
 		}
 	});
 	return $canedit;
-} #}}}
+}
 
-sub cgi_editpage ($$) { #{{{
+sub cgi_editpage ($$) {
 	my $q=shift;
 	my $session=shift;
 	
@@ -453,6 +453,6 @@ sub cgi_editpage ($$) { #{{{
 	}
 
 	exit;
-} #}}}
+}
 
 1

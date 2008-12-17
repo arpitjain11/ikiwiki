@@ -6,7 +6,7 @@ Ikiwiki's git handling is sending a bunch of output to stderr.  The following pa
     index 425536f..5734bb2 100644
     --- a/IkiWiki/Rcs/git.pm
     +++ b/IkiWiki/Rcs/git.pm
-    @@ -24,6 +24,7 @@ sub _safe_git (&@) { #{{{
+    @@ -24,6 +24,7 @@ sub _safe_git (&@) {
             if (!$pid) {
                     # In child.
                     # Git commands want to be in wc.

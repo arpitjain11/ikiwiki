@@ -90,7 +90,7 @@ like this:
     index 8d728c9..1bd46a9 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -618,6 +618,8 @@ sub pagetype ($) { #{{{
+    @@ -618,6 +618,8 @@ sub pagetype ($) {
      	
      	if ($page =~ /\.([^.]+)$/) {
      		return $1 if exists $hooks{htmlize}{$1};
@@ -98,7 +98,7 @@ like this:
     +		return $page;
      	}
      	return;
-     } #}}}
+     }
 
 ## format directive
 

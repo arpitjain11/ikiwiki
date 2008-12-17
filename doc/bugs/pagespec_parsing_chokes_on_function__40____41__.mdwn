@@ -54,7 +54,7 @@ case the user is given to rebuilding the wiki by hand. --Ethan
 +	}
  	return IkiWiki::FailReason->new("syntax error") if $@;
  	return $ret;
- } #}}}
+ }
 </pre>
 
 > Thanks, [[done]] --[[Joey]]

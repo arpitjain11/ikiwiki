@@ -8,15 +8,15 @@ use IkiWiki 2.00;
 my %pages;
 my $pinged=0;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "pinger", call => \&getsetup);
 	hook(type => "needsbuild", id => "pinger", call => \&needsbuild);
 	hook(type => "preprocess", id => "ping", call => \&preprocess);
 	hook(type => "delete", id => "pinger", call => \&ping);
 	hook(type => "change", id => "pinger", call => \&ping);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -29,9 +29,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{pinger}) {
@@ -45,9 +45,9 @@ sub needsbuild (@) { #{{{
 			}
 		}
 	}
-} # }}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	if (! exists $params{from} || ! exists $params{to}) {
 		error gettext("requires 'from' and 'to' parameters");
@@ -60,7 +60,7 @@ sub preprocess (@) { #{{{
 	else {
 		return sprintf(gettext("Ignoring ping directive for wiki %s (this wiki is %s)"), $params{from}, $config{url});
 	}
-} # }}}
+}
 
 sub ping {
 	if (! $pinged && %pages) {

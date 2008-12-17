@@ -40,15 +40,15 @@ defined them:  --[[Joey]]
     index e476521..afe982a 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -493,6 +493,7 @@ sub loadplugins () { #{{{
+    @@ -493,6 +493,7 @@ sub loadplugins () {
      	return 1;
-     } #}}}
+     }
      
     +my $loading_plugin;
-     sub loadplugin ($) { #{{{
+     sub loadplugin ($) {
      	my $plugin=shift;
      
-    @@ -502,14 +503,18 @@ sub loadplugin ($) { #{{{
+    @@ -502,14 +503,18 @@ sub loadplugin ($) {
      	                 "$installdir/lib/ikiwiki") {
      		if (defined $dir && -x "$dir/plugins/$plugin") {
      			require IkiWiki::Plugin::external;
@@ -67,7 +67,7 @@ defined them:  --[[Joey]]
      	if ($@) {
      		error("Failed to load plugin $mod: $@");
      	}
-    @@ -1429,6 +1434,9 @@ sub hook (@) { # {{{
+    @@ -1429,6 +1434,9 @@ sub hook (@) {
      
      	return if $param{no_override} && exists $hooks{$param{type}}{$param{id}};
      	
@@ -76,4 +76,4 @@ defined them:  --[[Joey]]
     +
      	$hooks{$param{type}}{$param{id}}=\%param;
      	return 1;
-     } # }}}
+     }

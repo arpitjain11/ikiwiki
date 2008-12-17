@@ -8,21 +8,21 @@ use URI;
 
 my $host;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "google", call => \&getsetup);
 	hook(type => "checkconfig", id => "google", call => \&checkconfig);
 	hook(type => "pagetemplate", id => "google", call => \&pagetemplate);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (! length $config{url}) {
 		error(sprintf(gettext("Must specify %s when using the google search plugin"), "url"));
 	}
@@ -31,10 +31,10 @@ sub checkconfig () { #{{{
 		error(gettext("Failed to parse url, cannot determine domain name"));
 	}
 	$host=$uri->host;
-} #}}}
+}
 
 my $form;
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $template=$params{template};
@@ -49,6 +49,6 @@ sub pagetemplate (@) { #{{{
 
 		$template->param(searchform => $form);
 	}
-} #}}}
+}
 
 1

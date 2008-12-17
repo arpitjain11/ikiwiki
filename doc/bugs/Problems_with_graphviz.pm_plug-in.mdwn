@@ -15,7 +15,7 @@ It also generates image URLs relative to the page being rendered, which means th
 
     --- IkiWiki/Plugin/graphviz.pm.orig	2007-07-27 11:35:05.000000000 +0200
     +++ IkiWiki/Plugin/graphviz.pm	2007-07-27 11:36:02.000000000 +0200
-    @@ -69,7 +69,12 @@ sub render_graph (\%) { #{{{
+    @@ -69,7 +69,12 @@ sub render_graph (\%) {
      		}
      	}
      
@@ -26,9 +26,9 @@ It also generates image URLs relative to the page being rendered, which means th
     +	else {
     +		return "<img src=\"".urlto($dest, $params{page})."\" />\n";
     +	}
-     } #}}}
+     }
      
-     sub graph (@) { #{{{
+     sub graph (@) {
 
 
 >> --[[HenrikBrixAndersen]]
@@ -38,7 +38,7 @@ The patch below fixes these two issues.
 
     --- graphviz.pm.orig	Thu Jun  7 15:45:16 2007
     +++ graphviz.pm	Fri Jun  8 12:03:38 2007
-    @@ -41,7 +41,6 @@ sub render_graph (\%) { #{{{
+    @@ -41,7 +41,6 @@ sub render_graph (\%) {
      		$pid=open2(*IN, *OUT, "$params{prog} -Tpng");
      
      		# open2 doesn't respect "use open ':utf8'"
@@ -46,7 +46,7 @@ The patch below fixes these two issues.
      		binmode (OUT, ':utf8');
      
      		print OUT $src;
-    @@ -70,7 +69,12 @@ sub render_graph (\%) { #{{{
+    @@ -70,7 +69,12 @@ sub render_graph (\%) {
      		}
      	}
      
@@ -57,6 +57,6 @@ The patch below fixes these two issues.
     +	else {
     +		return "<img src=\"".urlto($dest, $params{page})."\" />\n";
     +	}
-     } #}}}
+     }
      
-     sub graph (@) { #{{{
+     sub graph (@) {

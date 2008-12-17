@@ -28,14 +28,14 @@ Suggestions welcome.
     index 4e4da11..853f905 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -618,7 +618,7 @@ sub pagename ($) { #{{{
+    @@ -618,7 +618,7 @@ sub pagename ($) {
      
      	my $type=pagetype($file);
      	my $page=$file;
     -	$page=~s/\Q.$type\E*$// if defined $type;
     +	$page=~s/\Q.$type\E*$// if defined $type && !$hooks{htmlize}{$type}{leavesuffix};
      	return $page;
-     } #}}}
+     }
      
     diff --git a/t/pagename.t b/t/pagename.t
     index 96e6a87..58811b9 100755
@@ -61,7 +61,7 @@ I wonder if this patch will also be useful:
     index 752d176..3f1b67b 100644
     --- a/IkiWiki/Render.pm
     +++ b/IkiWiki/Render.pm
-    @@ -279,7 +279,11 @@ sub refresh () { #{{{
+    @@ -279,7 +279,11 @@ sub refresh () {
      				else {
      					$f=~s/^\Q$config{srcdir}\E\/?//;
      					push @files, $f;

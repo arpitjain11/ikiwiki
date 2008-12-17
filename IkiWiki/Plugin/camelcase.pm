@@ -22,21 +22,21 @@ my $link_regexp=qr{
 	)
 }x;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "camelcase", call => \&getsetup);
 	hook(type => "linkify", id => "camelcase", call => \&linkify);
 	hook(type => "scan", id => "camelcase", call => \&scan);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		};
-} #}}}
+}
 
-sub linkify (@) { #{{{
+sub linkify (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $destpage=$params{destpage};
@@ -46,9 +46,9 @@ sub linkify (@) { #{{{
 	}eg;
 
 	return $params{content};
-} #}}}
+}
 
-sub scan (@) { #{{{
+sub scan (@) {
         my %params=@_;
         my $page=$params{page};
         my $content=$params{content};

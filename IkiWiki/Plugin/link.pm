@@ -7,23 +7,23 @@ use IkiWiki 2.00;
 
 my $link_regexp;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "link", call => \&getsetup);
 	hook(type => "checkconfig", id => "link", call => \&checkconfig);
 	hook(type => "linkify", id => "link", call => \&linkify);
 	hook(type => "scan", id => "link", call => \&scan);
 	hook(type => "renamepage", id => "link", call => \&renamepage);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if ($config{prefix_directives}) {
 		$link_regexp = qr{
 			\[\[(?=[^!])            # beginning of link
@@ -58,9 +58,9 @@ sub checkconfig () { #{{{
 			\]\]                    # end of link
 		}x,
 	}
-} #}}}
+}
 
-sub linkify (@) { #{{{
+sub linkify (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $destpage=$params{destpage};
@@ -78,9 +78,9 @@ sub linkify (@) { #{{{
 	}eg;
 	
 	return $params{content};
-} #}}}
+}
 
-sub scan (@) { #{{{
+sub scan (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $content=$params{content};
@@ -88,9 +88,9 @@ sub scan (@) { #{{{
 	while ($content =~ /(?<!\\)$link_regexp/g) {
 		push @{$links{$page}}, linkpage($2);
 	}
-} # }}}
+}
 
-sub renamepage (@) { #{{{
+sub renamepage (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $old=$params{oldpage};
@@ -118,6 +118,6 @@ sub renamepage (@) { #{{{
 	}eg;
 
 	return $params{content};
-} #}}}
+}
 
 1

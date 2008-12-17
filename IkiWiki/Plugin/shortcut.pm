@@ -5,21 +5,21 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "shortcut", call => \&getsetup);
 	hook(type => "checkconfig", id => "shortcut", call => \&checkconfig);
 	hook(type => "preprocess", id => "shortcut", call => \&preprocess_shortcut);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (defined $config{srcdir}) {
 		# Preprocess the shortcuts page to get all the available shortcuts
 		# defined before other pages are rendered.
@@ -29,9 +29,9 @@ sub checkconfig () { #{{{
 		}
 		IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
 	}
-} # }}}
+}
 
-sub preprocess_shortcut (@) { #{{{
+sub preprocess_shortcut (@) {
 	my %params=@_;
 
 	if (! defined $params{name} || ! defined $params{url}) {
@@ -46,9 +46,9 @@ sub preprocess_shortcut (@) { #{{{
 	#translators: First parameter is the name of the shortcut, the second
 	#translators: is an URL.
 	return sprintf(gettext("shortcut %s points to <i>%s</i>"), $params{name}, $params{url});
-} # }}}
+}
 
-sub shortcut_expand ($$@) { #{{{
+sub shortcut_expand ($$@) {
 	my $url=shift;
 	my $desc=shift;
 	my %params=@_;
@@ -85,6 +85,6 @@ sub shortcut_expand ($$@) { #{{{
 	}
 
 	return "<a href=\"$url\">$desc</a>";
-} #}}}
+}
 
 1

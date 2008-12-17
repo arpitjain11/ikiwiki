@@ -6,7 +6,7 @@ use strict;
 use IkiWiki;
 use POSIX qw(setlocale LC_CTYPE);
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => "svn", call => \&checkconfig);
 	hook(type => "getsetup", id => "svn", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
@@ -19,9 +19,9 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (! defined $config{svnpath}) {
 		$config{svnpath}="trunk";
 	}
@@ -37,9 +37,9 @@ sub checkconfig () { #{{{
 			wrappermode => (defined $config{svn_wrappermode} ? $config{svn_wrappermode} : "04755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
@@ -87,7 +87,7 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
 # svn needs LC_CTYPE set to a UTF-8 locale, so try to find one. Any will do.
 sub find_lc_ctype() {
@@ -107,27 +107,27 @@ sub find_lc_ctype() {
 
 	# fallback to the current locale
 	return $current;
-} # }}}
+}
 $ENV{LC_CTYPE} = $ENV{LC_CTYPE} || find_lc_ctype();
 
-sub svn_info ($$) { #{{{
+sub svn_info ($$) {
 	my $field=shift;
 	my $file=shift;
 
 	my $info=`LANG=C svn info $file`;
 	my ($ret)=$info=~/^$field: (.*)$/m;
 	return $ret;
-} #}}}
+}
 
-sub rcs_update () { #{{{
+sub rcs_update () {
 	if (-d "$config{srcdir}/.svn") {
 		if (system("svn", "update", "--quiet", $config{srcdir}) != 0) {
 			warn("svn update failed\n");
 		}
 	}
-} #}}}
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	# Prepares to edit a file under revision control. Returns a token
 	# that must be passed into rcs_commit when the file is ready
 	# for committing.
@@ -140,9 +140,9 @@ sub rcs_prepedit ($) { #{{{
 		my $rev=svn_info("Revision", "$config{srcdir}/$file");
 		return defined $rev ? $rev : "";
 	}
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	# Tries to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on failure.
 	# The file is relative to the srcdir.
@@ -185,7 +185,7 @@ sub rcs_commit ($$$;$$) { #{{{
 		}
 	}
 	return undef # success
-} #}}}
+}
 
 sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
@@ -209,7 +209,7 @@ sub rcs_commit_staged ($$$) {
 	return undef # success
 }
 
-sub rcs_add ($) { #{{{
+sub rcs_add ($) {
 	# filename is relative to the root of the srcdir
 	my $file=shift;
 
@@ -224,9 +224,9 @@ sub rcs_add ($) { #{{{
 			warn("svn add failed\n");
 		}
 	}
-} #}}}
+}
 
-sub rcs_remove ($) { #{{{
+sub rcs_remove ($) {
 	# filename is relative to the root of the srcdir
 	my $file=shift;
 
@@ -235,9 +235,9 @@ sub rcs_remove ($) { #{{{
 			warn("svn rm failed\n");
 		}
 	}
-} #}}}
+}
 
-sub rcs_rename ($$) { #{{{
+sub rcs_rename ($$) {
 	# filenames relative to the root of the srcdir
 	my ($src, $dest)=@_;
 	
@@ -258,9 +258,9 @@ sub rcs_rename ($$) { #{{{
 			warn("svn rename failed\n");
 		}
 	}
-} #}}}
+}
 
-sub rcs_recentchanges ($) { #{{{
+sub rcs_recentchanges ($) {
 	my $num=shift;
 	my @ret;
 	
@@ -341,14 +341,14 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @ret;
-} #}}}
+}
 
-sub rcs_diff ($) { #{{{
+sub rcs_diff ($) {
 	my $rev=IkiWiki::possibly_foolish_untaint(int(shift));
 	return `svnlook diff $config{svnrepo} -r$rev --no-diff-deleted`;
-} #}}}
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	my $file=shift;
 
 	my $svn_log_infoline=qr/^r\d+\s+\|\s+[^\s]+\s+\|\s+(\d+-\d+-\d+\s+\d+:\d+:\d+\s+[-+]?\d+).*/;
@@ -376,6 +376,6 @@ sub rcs_getctime ($) { #{{{
 	$date=str2time($date);
 	debug("found ctime ".localtime($date)." for $file");
 	return $date;
-} #}}}
+}
 
 1

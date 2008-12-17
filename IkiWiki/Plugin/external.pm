@@ -14,7 +14,7 @@ use IO::Handle;
 
 my %plugins;
 
-sub import { #{{{
+sub import {
 	my $self=shift;
 	my $plugin=shift;
 	return unless defined $plugin;
@@ -32,17 +32,17 @@ sub import { #{{{
 	$RPC::XML::ENCODING="utf-8";
 
 	rpc_call($plugins{$plugin}, "import");
-} #}}}
+}
 
-sub rpc_write ($$) { #{{{
+sub rpc_write ($$) {
 	my $fh=shift;
 	my $string=shift;
 
 	$fh->print($string."\n");
 	$fh->flush;
-} #}}}
+}
 
-sub rpc_call ($$;@) { #{{{
+sub rpc_call ($$;@) {
 	my $plugin=shift;
 	my $command=shift;
 
@@ -131,12 +131,12 @@ sub rpc_call ($$;@) { #{{{
 	}
 
 	return undef;
-} #}}}
+}
 
 package IkiWiki::RPC::XML;
 use Memoize;
 
-sub getvar ($$$) { #{{{
+sub getvar ($$$) {
 	my $plugin=shift;
 	my $varname="IkiWiki::".shift;
 	my $key=shift;
@@ -145,9 +145,9 @@ sub getvar ($$$) { #{{{
 	my $ret=$varname->{$key};
 	use strict 'refs';
 	return $ret;
-} #}}}
+}
 
-sub setvar ($$$;@) { #{{{
+sub setvar ($$$;@) {
 	my $plugin=shift;
 	my $varname="IkiWiki::".shift;
 	my $key=shift;
@@ -157,18 +157,18 @@ sub setvar ($$$;@) { #{{{
 	my $ret=$varname->{$key}=$value;
 	use strict 'refs';
 	return $ret;
-} #}}}
+}
 
-sub getstate ($$$$) { #{{{
+sub getstate ($$$$) {
 	my $plugin=shift;
 	my $page=shift;
 	my $id=shift;
 	my $key=shift;
 
 	return $IkiWiki::pagestate{$page}{$id}{$key};
-} #}}}
+}
 
-sub setstate ($$$$;@) { #{{{
+sub setstate ($$$$;@) {
 	my $plugin=shift;
 	my $page=shift;
 	my $id=shift;
@@ -176,22 +176,22 @@ sub setstate ($$$$;@) { #{{{
 	my $value=shift;
 
 	return $IkiWiki::pagestate{$page}{$id}{$key}=$value;
-} #}}}
+}
 
-sub getargv ($) { #{{{
+sub getargv ($) {
 	my $plugin=shift;
 
 	return \@ARGV;
-} #}}}
+}
 
-sub setargv ($@) { #{{{
+sub setargv ($@) {
 	my $plugin=shift;
 	my $array=shift;
 
 	@ARGV=@$array;
-} #}}}
+}
 
-sub inject ($@) { #{{{
+sub inject ($@) {
 	# Bind a given perl function name to a particular RPC request.
 	my $plugin=shift;
 	my %params=@_;
@@ -213,9 +213,9 @@ sub inject ($@) { #{{{
 	# the injected version.
 	IkiWiki::inject(name => $params{name}, call => $sub);
 	return 1;
-} #}}}
+}
 
-sub hook ($@) { #{{{
+sub hook ($@) {
 	# the call parameter is a function name to call, since XML RPC
 	# cannot pass a function reference
 	my $plugin=shift;
@@ -227,13 +227,13 @@ sub hook ($@) { #{{{
 	IkiWiki::hook(%params, call => sub {
 		IkiWiki::Plugin::external::rpc_call($plugin, $callback, @_);
 	});
-} #}}}
+}
 
-sub pagespec_match ($@) { #{{{
+sub pagespec_match ($@) {
 	# convert pagespec_match's return object into a XML RPC boolean
 	my $plugin=shift;
 
 	return RPC::XML::boolean->new(0 + IkiWiki::pagespec_march(@_));
-} #}}}
+}
 
 1

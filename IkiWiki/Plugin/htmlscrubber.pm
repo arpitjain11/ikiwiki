@@ -9,7 +9,7 @@ use IkiWiki 2.00;
 # Feel free to use it from other plugins.
 our $safe_url_regexp;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "htmlscrubber", call => \&getsetup);
 	hook(type => "sanitize", id => "htmlscrubber", call => \&sanitize);
 
@@ -33,9 +33,9 @@ sub import { #{{{
 	# data is a special case. Allow data:image/*, but
 	# disallow data:text/javascript and everything else.
 	$safe_url_regexp=qr/^(?:(?:$uri_schemes):|data:image\/|[^:]+(?:$|\/))/i;
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -49,9 +49,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub sanitize (@) { #{{{
+sub sanitize (@) {
 	my %params=@_;
 
 	if (exists $config{htmlscrubber_skip} &&
@@ -62,10 +62,10 @@ sub sanitize (@) { #{{{
 	}
 
 	return scrubber()->scrub($params{content});
-} # }}}
+}
 
 my $_scrubber;
-sub scrubber { #{{{
+sub scrubber {
 	return $_scrubber if defined $_scrubber;
 
 	eval q{use HTML::Scrubber};
@@ -111,6 +111,6 @@ sub scrubber { #{{{
 		}],
 	);
 	return $_scrubber;
-} # }}}
+}
 
 1

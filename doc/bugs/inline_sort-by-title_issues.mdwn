@@ -23,7 +23,7 @@ And here is a [[patch]] for this.  It makes `sort=title` actually sort on the ti
     index 9c336e7..99f6de3 100644
     --- a/IkiWiki/Plugin/inline.pm
     +++ b/IkiWiki/Plugin/inline.pm
-    @@ -185,9 +185,12 @@ sub preprocess_inline (@) { #{{{
+    @@ -185,9 +185,12 @@ sub preprocess_inline (@) {
      		}
      	}
      

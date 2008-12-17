@@ -53,7 +53,7 @@ I didn't apply your following old patch against `Ikiwiki.pm` file:
     +   }
     +
     +   return eval $newpagespec;
-     } #}}}
+     }
  
      package IkiWiki::PageSpec;
 
@@ -83,7 +83,7 @@ to break the code I distribute in my backport ;)
 	+	my $ret=eval possibly_foolish_untaint(pagespec_translate($spec));
 	 	return IkiWiki::FailReason->new("syntax error") if $@;
 	 	return $ret;
-	 } #}}}
+	 }
 
 >> Thanks a lot, Joey! It works :)
 >>

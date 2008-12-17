@@ -6,21 +6,21 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "version", call => \&getsetup);
 	hook(type => "needsbuild", id => "version", call => \&needsbuild);
 	hook(type => "preprocess", id => "version", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{version}{shown}) {
@@ -36,11 +36,11 @@ sub needsbuild (@) { #{{{
 			}
 		}
 	}
-} # }}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	$pagestate{$params{destpage}}{version}{shown}=$IkiWiki::version;
-} # }}}
+}
 
 1

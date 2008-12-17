@@ -10,7 +10,7 @@ use Encode;
 my %backlinks;
 my $backlinks_calculated=0;
 
-sub calculate_backlinks () { #{{{
+sub calculate_backlinks () {
 	return if $backlinks_calculated;
 	%backlinks=();
 	foreach my $page (keys %links) {
@@ -22,9 +22,9 @@ sub calculate_backlinks () { #{{{
 		}
 	}
 	$backlinks_calculated=1;
-} #}}}
+}
 
-sub backlinks ($) { #{{{
+sub backlinks ($) {
 	my $page=shift;
 
 	calculate_backlinks();
@@ -45,9 +45,9 @@ sub backlinks ($) { #{{{
 		push @links, { url => $href, page => pagetitle($p_trimmed) };
 	}
 	return @links;
-} #}}}
+}
 
-sub genpage ($$) { #{{{
+sub genpage ($$) {
 	my $page=shift;
 	my $content=shift;
 
@@ -131,9 +131,9 @@ sub genpage ($$) { #{{{
 	});
 
 	return $content;
-} #}}}
+}
 
-sub scan ($) { #{{{
+sub scan ($) {
 	my $file=shift;
 
 	my $type=pagetype($file);
@@ -165,9 +165,9 @@ sub scan ($) { #{{{
 	else {
 		will_render($file, $file, 1);
 	}
-} #}}}
+}
 
-sub fast_file_copy (@) { #{{{
+sub fast_file_copy (@) {
 	my $srcfile=shift;
 	my $destfile=shift;
 	my $srcfd=shift;
@@ -191,7 +191,7 @@ sub fast_file_copy (@) { #{{{
 	}
 }
 
-sub render ($) { #{{{
+sub render ($) {
 	my $file=shift;
 	
 	my $type=pagetype($file);
@@ -233,9 +233,9 @@ sub render ($) { #{{{
 			fast_file_copy($srcfile, $file, $srcfd, @_);
 		});
 	}
-} #}}}
+}
 
-sub prune ($) { #{{{
+sub prune ($) {
 	my $file=shift;
 
 	unlink($file);
@@ -243,9 +243,9 @@ sub prune ($) { #{{{
 	while (rmdir($dir)) {
 		$dir=dirname($dir);
 	}
-} #}}}
+}
 
-sub refresh () { #{{{
+sub refresh () {
 	# security check, avoid following symlinks in the srcdir path by default
 	my $test=$config{srcdir};
 	while (length $test) {
@@ -507,9 +507,9 @@ sub refresh () { #{{{
 	if (%rendered) {
 		run_hooks(change => sub { shift->(keys %rendered) });
 	}
-} #}}}
+}
 
-sub commandline_render () { #{{{
+sub commandline_render () {
 	lockwiki();
 	loadindex();
 	unlockwiki();
@@ -532,6 +532,6 @@ sub commandline_render () { #{{{
 
 	print genpage($page, $content);
 	exit 0;
-} #}}}
+}
 
 1

@@ -54,7 +54,7 @@ This may be useful for sites with a few pages in different languages, but no ful
  my %authorurl;
 +my %lang;
  
- sub import { #{{{
+ sub import {
         hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
 @@ -100,6 +101,11 @@
                 $meta{$page}.='<link href="'.encode_entities($value).
@@ -75,7 +75,7 @@ This may be useful for sites with a few pages in different languages, but no ful
 +       $template->param(lang => $lang{$page})
 +               if exists $lang{$page} && $template->query(name => "lang");
  
- } # }}}
+ }
 </pre>
 
 > Please resolve lang somewhere reusable rather than within meta plugin: It is certainly usable outside

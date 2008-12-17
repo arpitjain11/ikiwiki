@@ -4,7 +4,7 @@ A quick [[patch]] to silence a [[rcs/monotone]] warning I started seeing:
     index 4b9be31..9d4e280 100644
     --- a/IkiWiki/Plugin/monotone.pm
     +++ b/IkiWiki/Plugin/monotone.pm
-    @@ -55,7 +55,7 @@ sub checkconfig () { #{{{
+    @@ -55,7 +55,7 @@ sub checkconfig () {
      		error("Monotone version too old, is $version but required 0.38");
      	}
      

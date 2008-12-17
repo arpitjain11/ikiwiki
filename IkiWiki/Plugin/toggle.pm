@@ -5,7 +5,7 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	add_underlay("javascript");
 	hook(type => "getsetup", id => "toggle", call => \&getsetup);
 	hook(type => "preprocess", id => "toggle",
@@ -13,17 +13,17 @@ sub import { #{{{
 	hook(type => "preprocess", id => "toggleable",
 		call => \&preprocess_toggleable);
 	hook(type => "format", id => "toggle", call => \&format);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub genid ($$) { #{{{
+sub genid ($$) {
 	my $page=shift;
 	my $id=shift;
 
@@ -35,16 +35,16 @@ sub genid ($$) { #{{{
 		$id="id$id";
 	}
 	return $id;
-} #}}}
+}
 
-sub preprocess_toggle (@) { #{{{
+sub preprocess_toggle (@) {
 	my %params=(id => "default", text => "more", @_);
 
 	my $id=genid($params{page}, $params{id});
 	return "<a class=\"toggle\" href=\"#$id\">$params{text}</a>";
-} # }}}
+}
 
-sub preprocess_toggleable (@) { #{{{
+sub preprocess_toggleable (@) {
 	my %params=(id => "default", text => "", open => "no", @_);
 
 	# Preprocess the text to expand any preprocessor directives
@@ -61,9 +61,9 @@ sub preprocess_toggleable (@) { #{{{
 	my ($indent)=$params{text}=~/( +)$/;
 	$indent="" unless defined $indent;
 	return "<div class=\"$class\" id=\"$id\"></div>\n\n$params{text}\n$indent<div class=\"toggleableend\"></div>";
-} # }}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
         my %params=@_;
 
 	if ($params{content}=~s!(<div class="toggleable(?:-open)?" id="[^"]+">\s*)</div>!$1!g) {
@@ -74,9 +74,9 @@ sub format (@) { #{{{
 		}
 	}
 	return $params{content};
-} # }}}
+}
 
-sub include_javascript ($;$) { #{{{
+sub include_javascript ($;$) {
 	my $page=shift;
 	my $absolute=shift;
 	
@@ -84,6 +84,6 @@ sub include_javascript ($;$) { #{{{
 		'" type="text/javascript" charset="utf-8"></script>'."\n".
 		'<script src="'.urlto("toggle.js", $page, $absolute).
 		'" type="text/javascript" charset="utf-8"></script>';
-} #}}}
+}
 
 1
