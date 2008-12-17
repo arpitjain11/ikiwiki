@@ -36,7 +36,7 @@ sub showform ($$$$;@) { #{{{
 
 	printheader($session);
 	print misctemplate($form->title, $form->render(submit => $buttons), @_);
-}
+} #}}}
 
 sub redirect ($$) { #{{{
 	my $q=shift;
@@ -273,7 +273,7 @@ sub check_banned ($$) { #{{{
 			exit;
 		}
 	}
-}
+} #}}}
 
 sub cgi_getsession ($) { #{{{
 	my $q=shift;
@@ -296,14 +296,16 @@ sub cgi_getsession ($) { #{{{
 	return $session;
 } #}}}
 
-# The session id is stored on the form and checked to
-# guard against CSRF. But only if the user is logged in,
-# as anonok can allow anonymous edits.
+# To guard against CSRF, the user's session id (sid)
+# can be stored on a form. This function will check
+# (for logged in users) that the sid on the form matches
+# the session id in the cookie.
 sub checksessionexpiry ($$) { # {{{
+	my $q=shift;
 	my $session = shift;
-	my $sid = shift;
 
 	if (defined $session->param("name")) {
+		my $sid=$q->param('sid');
 		if (! defined $sid || $sid ne $session->id) {
 			error(gettext("Your login session has expired."));
 		}

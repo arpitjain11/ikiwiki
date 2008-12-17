@@ -340,7 +340,7 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
-		checksessionexpiry($session, $q->param('sid'));
+		checksessionexpiry($q, $session, $q->param('sid'));
 
 		my $exists=-e "$config{srcdir}/$file";
 
