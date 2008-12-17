@@ -34,20 +34,18 @@ sub getsetup () {
 			safe => 1,
 			rebuild => 1,
 		},
-		# Pages where comments are shown, but new comments are not
-		# allowed, will show "Comments are closed".
-		comments_shown_pagespec => {
+		comments_pagespec => {
 			type => 'pagespec',
-			example => 'blog/*',
-			description => 'PageSpec for pages where comments will be shown inline',
+			example => 'blog/* and *!/Discussion',
+			description => 'PageSpec of pages where comments are allowed',
 			link => 'ikiwiki/PageSpec',
 			safe => 1,
 			rebuild => 1,
 		},
-		comments_open_pagespec => {
+		comments_closed_pagespec => {
 			type => 'pagespec',
-			example => 'blog/* and created_after(close_old_comments)',
-			description => 'PageSpec for pages where new comments can be posted',
+			example => 'blog/controversial or blog/flamewar',
+			description => 'PageSpec of pages where posting new comments is not allowed',
 			link => 'ikiwiki/PageSpec',
 			safe => 1,
 			rebuild => 1,
@@ -87,10 +85,10 @@ sub getsetup () {
 sub checkconfig () {
 	$config{comments_commit} = 1
 		unless defined $config{comments_commit};
-	$config{comments_shown_pagespec} = ''
-		unless defined $config{comments_shown_pagespec};
-	$config{comments_open_pagespec} = ''
-		unless defined $config{comments_open_pagespec};
+	$config{comments_pagespec} = ''
+		unless defined $config{comments_pagespec};
+	$config{comments_closed_pagespec} = ''
+		unless defined $config{comments_closed_pagespec};
 	$config{comments_pagename} = 'comment_'
 		unless defined $config{comments_pagename};
 }
@@ -371,7 +369,7 @@ sub sessioncgi ($$) {
 			$page));
 	}
 
-	if (not pagespec_match($page, $config{comments_open_pagespec},
+	if (pagespec_match($page, $config{comments_closed_pagespec},
 		location => $page)) {
 		error(sprintf(gettext(
 			"comments on page '%s' are closed"),
@@ -523,20 +521,19 @@ sub pagetemplate (@) {
 		my $comments = undef;
 
 		my $open = 0;
-		my $shown = pagespec_match($page,
-			$config{comments_shown_pagespec},
-			location => $page);
+		my $shown = 0;
+		if (pagespec_match($page,
+				$config{comments_pagespec},
+				location => $page)) {
+			$shown = 1;
+			$open = length $config{cgiurl} > 0;
+		}
 
-		if (pagespec_match($page, "*/$config{comments_pagename}*",
+		if (pagespec_match($page,
+				"$config{comments_closed_pagespec} or */$config{comments_pagename}*",
 				location => $page)) {
 			$shown = 0;
 			$open = 0;
-		}
-
-		if (length $config{cgiurl}) {
-			$open = pagespec_match($page,
-				$config{comments_open_pagespec},
-				location => $page);
 		}
 
 		if ($shown) {
