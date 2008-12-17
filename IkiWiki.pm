@@ -1797,7 +1797,8 @@ sub pagespec_match ($$;@) {
 	}
 
 	my $sub=pagespec_translate($spec);
-	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"") if $@;
+	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"")
+		if $@ || ! defined $sub;
 	return $sub->($page, @params);
 }
 
