@@ -2,27 +2,44 @@
 
 <div class="comment-header">
 Posted by
+
 <TMPL_IF NAME="COMMENTUSER">
 <span class="author">
+<TMPL_IF NAME="COMMENTOPENID">
+
+<img src="/smileys/star_off.png" width="20" height="15" alt="[OpenID]"
+    title="Signed in with OpenID" />
+<a href="<TMPL_VAR NAME=COMMENTOPENID>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
+
+<TMPL_ELSE>
+
+<img src="/smileys/star_on.png" width="15" height="15" alt="[Signed in]"
+    title="Signed in directly" />
 <TMPL_IF NAME="COMMENTAUTHORURL">
 <a href="<TMPL_VAR NAME=COMMENTAUTHORURL>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
+<TMPL_ELSE>
+<TMPL_VAR NAME=COMMENTAUTHOR>
+</TMPL_IF>
+
+</TMPL_IF>
+</span>
+
+<TMPL_ELSE><!-- !COMMENTUSER -->
+
+<TMPL_IF NAME=COMMENTIP>
+<span class="author" title="Unauthenticated, from <TMPL_VAR NAME=COMMENTIP>">
+<TMPL_ELSE><!-- !COMMENTIP -->
+<span class="author" title="Unauthenticated, from unknown IP address">
+</TMPL_IF>
+<img src="/smileys/question.png" width="15" height="15" alt="[Unauthenticated]" />
+<TMPL_IF NAME="AUTHORURL">
+<a href="<TMPL_VAR NAME=AUTHORURL>"><TMPL_VAR NAME=AUTHOR></a>
 <TMPL_ELSE>
 <TMPL_VAR NAME=AUTHOR>
 </TMPL_IF>
 </span>
-<TMPL_ELSE>
-<TMPL_IF NAME=COMMENTIP>
-<span class="author">
-<TMPL_VAR NAME=COMMENTIP>
-</span>
-<TMPL_ELSE>
-unknown IP address
-</TMPL_IF>
 
-<TMPL_IF NAME=AUTHOR>
-(<span class="claimedauthor"><TMPL_IF NAME="AUTHORURL"><a href="<TMPL_VAR NAME=AUTHORURL>"><TMPL_VAR NAME=AUTHOR></a><TMPL_ELSE><TMPL_VAR NAME=AUTHOR></TMPL_IF></span>)
-</TMPL_IF>
-</TMPL_IF>
+</TMPL_IF><!-- !COMMENTUSER -->
 
 (<TMPL_VAR CTIME>)
 </div>
