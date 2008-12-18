@@ -20,6 +20,9 @@ ikiwiki (2.71) UNRELEASED; urgency=low
   * monotone: When getting the log, tell monotone how many entries
     we want, rather than closing the pipe, which it dislikes. (thm)
   * Coding style change: Remove explcit vim folding markers.
+  * aggregate: If a feed fails to be downloaded, try again immediatly
+    next time aggregation is run, even if the usual time has not passed.
+    Closes: #508622 (Michael Gold)
 
  -- Joey Hess <joeyh@debian.org>  Mon, 17 Nov 2008 14:02:10 -0500
 

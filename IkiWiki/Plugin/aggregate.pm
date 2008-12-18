@@ -245,6 +245,7 @@ sub preprocess (@) {
 	$feed->{template}=$params{template} . ".tmpl";
 	delete $feed->{unseen};
 	$feed->{lastupdate}=0 unless defined $feed->{lastupdate};
+	$feed->{lasttry}=$feed->{lastupdate} unless defined $feed->{lasttry};
 	$feed->{numposts}=0 unless defined $feed->{numposts};
 	$feed->{newposts}=0 unless defined $feed->{newposts};
 	$feed->{message}=gettext("new feed") unless defined $feed->{message};
@@ -390,8 +391,8 @@ sub mergestate () {
 	# fields.
 	foreach my $name (keys %myfeeds) {
 		if (exists $feeds{$name}) {
-			foreach my $field (qw{message lastupdate numposts
-			                      newposts error}) {
+			foreach my $field (qw{message lastupdate lasttry
+			                      numposts newposts error}) {
 				$feeds{$name}->{$field}=$myfeeds{$name}->{$field};
 			}
 		}
@@ -458,10 +459,10 @@ sub aggregate (@) {
 	error($@) if $@;
 
 	foreach my $feed (@_) {
-		$feed->{lastupdate}=time;
+		$feed->{lasttry}=time;
 		$feed->{newposts}=0;
 		$feed->{message}=sprintf(gettext("last checked %s"),
-			displaytime($feed->{lastupdate}));
+			displaytime($feed->{lasttry}));
 		$feed->{error}=0;
 
 		debug(sprintf(gettext("checking feed %s ..."), $feed->{name}));
@@ -483,6 +484,10 @@ sub aggregate (@) {
 			debug($feed->{message});
 			next;
 		}
+
+		# lastupdate is only set if we were able to contact the server
+		$feed->{lastupdate}=$feed->{lasttry};
+
 		if ($res->status == URI::Fetch::URI_GONE()) {
 			$feed->{message}=gettext("feed not found");
 			$feed->{error}=1;
