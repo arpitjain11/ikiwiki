@@ -511,6 +511,24 @@ sub sessioncgi ($$) {
 	exit;
 }
 
+sub commentsshown ($) {
+	my $page=shift;
+
+	return ! pagespec_match($page, "*/$config{comments_pagename}*",
+	                        location => $page) &&
+	       pagespec_match($page, $config{comments_pagespec},
+	                      location => $page);
+}
+
+sub commentsopen ($) {
+	my $page = shift;
+
+	return length $config{cgiurl} > 0 &&
+	       (! length $config{comments_closed_pagespec} ||
+	        ! pagespec_match($page, $config{comments_closed_pagespec},
+	                         location => $page));
+}
+
 sub pagetemplate (@) {
 	my %params = @_;
 
@@ -518,29 +536,9 @@ sub pagetemplate (@) {
 	my $template = $params{template};
 
 	if ($template->query(name => 'comments')) {
+		my $shown = commentsshown($page);
+
 		my $comments = undef;
-
-		my $open = 0;
-		my $shown = 0;
-		if (pagespec_match($page,
-				$config{comments_pagespec},
-				location => $page)) {
-			$shown = 1;
-			$open = length $config{cgiurl} > 0;
-		}
-
-		if (pagespec_match($page, "*/$config{comments_pagename}*",
-				location => $page)) {
-			$shown = 0;
-			$open = 0;
-		}
-		if (length $config{comments_closed_pagespec} &&
-		    pagespec_match($page, $config{comments_closed_pagespec},
-				location => $page)) {
-			$shown = 0;
-			$open = 0;
-		}
-
 		if ($shown) {
 			$comments = IkiWiki::preprocess_inline(
 				pages => "internal($page/$config{comments_pagename}*)",
@@ -558,10 +556,24 @@ sub pagetemplate (@) {
 			$template->param(comments => $comments);
 		}
 
-		if ($open) {
+		if ($shown && commentsopen($page)) {
 			my $commenturl = IkiWiki::cgiurl(do => 'comment',
 				page => $page);
 			$template->param(commenturl => $commenturl);
+		}
+	}
+
+	if ($template->query(name => 'commentslink')) {
+		# XXX Would be nice to say how many comments there are in
+		# the link. But, to update the number, blog pages
+		# would have to update whenever comments of any inlines
+		# page are added, which is not currently done.
+		if (commentsshown($page)) {
+			$template->param(commentslink =>
+				htmllink($page, $params{destpage}, $page,
+					linktext => gettext("Comments"),
+					anchor => "comments",
+					noimageinline => 1));
 		}
 	}
 

@@ -58,8 +58,12 @@ License: <TMPL_VAR LICENSE>
 <TMPL_IF NAME="EDITURL">
 <li><a href="<TMPL_VAR EDITURL>" rel="nofollow">Edit</a></li>
 </TMPL_IF>
+<TMPL_IF NAME="COMMENTSLINK">
+<li><TMPL_VAR COMMENTSLINK></li>
+<TMPL_ELSE>
 <TMPL_IF NAME="DISCUSSIONLINK">
 <li><TMPL_VAR DISCUSSIONLINK></li>
+</TMPL_IF>
 </TMPL_IF>
 </ul>
 </div><!--.actions-->
