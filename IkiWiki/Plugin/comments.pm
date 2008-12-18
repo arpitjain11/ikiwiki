@@ -529,8 +529,13 @@ sub pagetemplate (@) {
 			$open = length $config{cgiurl} > 0;
 		}
 
-		if (pagespec_match($page,
-				"$config{comments_closed_pagespec} or */$config{comments_pagename}*",
+		if (pagespec_match($page, "*/$config{comments_pagename}*",
+				location => $page)) {
+			$shown = 0;
+			$open = 0;
+		}
+		if (length $config{comments_closed_pagespec} &&
+		    pagespec_match($page, $config{comments_closed_pagespec},
 				location => $page)) {
 			$shown = 0;
 			$open = 0;
