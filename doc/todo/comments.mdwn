@@ -15,3 +15,10 @@ Known issues with the [[plugins/comments]] plugin:
   up via the web. Would be nice to have some kind of link on the comment
   that allows trusted users to remove it (using the remove plugin of
   course).
+* One can use inline to set up a feed of all comments posted to any page.
+  Using template=comments_display they are displayed right. Only problem
+  is there is no indication in that template of what page each comment in the
+  feed is a comment on. So, if a comment is inlined into a different page,
+  I think it should show a link back to the page commented on.
+  (BTW, the rss feed in this situation seems ok; there the link element
+  points back to the parent page.
