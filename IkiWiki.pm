@@ -100,7 +100,7 @@ sub getsetup () {
 		type => "string",
 		default => '',
 		example => "/var/www/wiki/ikiwiki.cgi",
-		description => "cgi wrapper to generate",
+		description => "filename of cgi wrapper to generate",
 		safe => 0, # file
 		rebuild => 0,
 	},
