@@ -36,7 +36,7 @@ sub getsetup () {
 		},
 		comments_pagespec => {
 			type => 'pagespec',
-			example => 'blog/* and *!/Discussion',
+			example => 'blog/* and !*/Discussion',
 			description => 'PageSpec of pages where comments are allowed',
 			link => 'ikiwiki/PageSpec',
 			safe => 1,
