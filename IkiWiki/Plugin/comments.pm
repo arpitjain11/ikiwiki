@@ -254,27 +254,6 @@ sub linkcgi ($) {
 	}
 }
 
-# FIXME: basically the same logic as recentchanges
-# returns (author URL, pretty-printed version)
-sub linkuser ($) {
-	my $user = shift;
-	my $oiduser = eval { IkiWiki::openiduser($user) };
-
-	if (defined $oiduser) {
-		return ($user, $oiduser);
-	}
-	# FIXME: it'd be good to avoid having such a link for anonymous
-	# posts
-	else {
-		return (IkiWiki::cgiurl(
-				do => 'commenter',
-				page => (length $config{userdir}
-					? "$config{userdir}/$user"
-					: "$user")
-			), $user);
-	}
-}
-
 # Mostly cargo-culted from IkiWiki::plugin::editpage
 sub sessioncgi ($$) {
 	my $cgi=shift;
