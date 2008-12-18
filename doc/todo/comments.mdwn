@@ -22,3 +22,8 @@ Known issues with the [[plugins/comments]] plugin:
   I think it should show a link back to the page commented on.
   (BTW, the rss feed in this situation seems ok; there the link element
   points back to the parent page.
+* It would be useful to have a pagespec that always matches all comments on 
+  pages matching a glob. Something like `comment(blog/*)`.
+  Perhaps postcomment could also be folded into this? Then the pagespec
+  would match both existing comments, as well as new comments that are
+  being posted.
