@@ -548,9 +548,9 @@ sub pagetemplate (@) {
 		}
 
 		if ($shown && commentsopen($page)) {
-			my $commenturl = IkiWiki::cgiurl(do => 'comment',
+			my $addcommenturl = IkiWiki::cgiurl(do => 'comment',
 				page => $page);
-			$template->param(commenturl => $commenturl);
+			$template->param(addcommenturl => $addcommenturl);
 		}
 	}
 
