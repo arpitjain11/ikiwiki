@@ -573,6 +573,11 @@ sub pagetemplate (@) {
 			$pagestate{$page}{comments}{commentuser});
 	}
 
+	if ($template->query(name => 'commentopenid')) {
+		$template->param(commentopenid =>
+			$pagestate{$page}{comments}{commentopenid});
+	}
+
 	if ($template->query(name => 'commentip')) {
 		$template->param(commentip =>
 			$pagestate{$page}{comments}{commentip});
