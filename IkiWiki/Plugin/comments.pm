@@ -151,11 +151,28 @@ sub preprocess {
 	my $commentip;
 	my $commentauthor;
 	my $commentauthorurl;
+	my $commentopenid;
 
 	if (defined $params{username}) {
 		$commentuser = $params{username};
-		($commentauthorurl, $commentauthor) =
-			linkuser($params{username});
+
+		my $oiduser = eval { IkiWiki::openiduser($commentuser) };
+
+		if (defined $oiduser) {
+			# looks like an OpenID
+			$commentauthorurl = $commentuser;
+			$commentauthor = $oiduser;
+			$commentopenid = $commentuser;
+		}
+		else {
+			$commentauthorurl = IkiWiki::cgiurl(
+				do => 'commenter',
+				page => (length $config{userdir}
+					? "$config{userdir}/$commentuser"
+					: "$commentuser"));
+
+			$commentauthor = $commentuser;
+		}
 	}
 	else {
 		if (defined $params{ip}) {
@@ -165,6 +182,7 @@ sub preprocess {
 	}
 
 	$pagestate{$page}{comments}{commentuser} = $commentuser;
+	$pagestate{$page}{comments}{commentopenid} = $commentopenid;
 	$pagestate{$page}{comments}{commentip} = $commentip;
 	$pagestate{$page}{comments}{commentauthor} = $commentauthor;
 	$pagestate{$page}{comments}{commentauthorurl} = $commentauthorurl;
