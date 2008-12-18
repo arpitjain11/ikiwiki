@@ -500,7 +500,8 @@ sub sessioncgi ($$) {
 		error($conflict) if defined $conflict;
 
 		# Bounce back to where we were, but defeat broken caches
-		my $anticache = "?updated=$page/$config{comments_pagename}$i";
+		# and jump to the comments anchor.
+		my $anticache = "?updated=$page/$config{comments_pagename}$i#comments";
 		IkiWiki::redirect($cgi, urlto($page, undef, 1).$anticache);
 	}
 	else {
