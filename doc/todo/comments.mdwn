@@ -2,19 +2,47 @@ Known issues with the [[plugins/comments]] plugin:
 
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
+
+  > Actually, there's less of this now than there used to be - a lot of simple
+  > things that were shared have become unshareable as they became more
+  > complex. --[[smcv]]
+
 * Previews always say "unknown IP address"
+
 * Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
+
+  > Done in my comments git branch --[[smcv]]
+
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
   as title) and an OpenID icon next to OpenIDs
+
+  > Done in my comments git branch, at least as a mockup (using the (?),
+  > {x} and {*} smileys for anonymous, OpenID and login respectively).
+  > --[[smcv]]
+
 * Should the comments be visually set off more from the page above?
   Rather than just a horizontal rule, I'm thinking put the comments
   in a box like is used for inlined pages.
+
+  > I did put them in a box in the CSS... I agree the default template
+  > could do with visual improvement though. --[[smcv]]
+
 * Instead of just a link to add a comment, it could have a form to enter
   the title, similar to the form for adding a new blog post.
+
+  > I'm not sure this is so useful? On Livejournal titles are allowed on
+  > comments, but very rarely used (and indeed usually not very useful);
+  > it's hard enough to get some people to title their blog posts :-)
+  > --[[smcv]]
+
 * If a spammer posts a comment, it is either impossible or hard to clean
   up via the web. Would be nice to have some kind of link on the comment
   that allows trusted users to remove it (using the remove plugin of
   course).
+
+  > Won't the remove plugin refuse to remove internal pages? This would be
+  > a good feature to have, though. --[[smcv]]
+
 * One can use inline to set up a feed of all comments posted to any page.
   Using template=comments_display they are displayed right. Only problem
   is there is no indication in that template of what page each comment in the
@@ -22,8 +50,30 @@ Known issues with the [[plugins/comments]] plugin:
   I think it should show a link back to the page commented on.
   (BTW, the rss feed in this situation seems ok; there the link element
   points back to the parent page.
+
 * It would be useful to have a pagespec that always matches all comments on 
   pages matching a glob. Something like `comment(blog/*)`.
   Perhaps postcomment could also be folded into this? Then the pagespec
   would match both existing comments, as well as new comments that are
   being posted.
+
+  > Please see [[plugins/comment/discussion]]. If I've convinced you that
+  > internal pages are the way forward, then sure, we can do that, because
+  > people who can comment still won't be able to edit others' comments
+  > (one of my goals is that commenters can't put words into each other's
+  > mouths :-) )
+  >
+  > On the other hand, if you still want me to switch this plugin to "real"
+  > pages, or if internal pages might become editable in future, then
+  > configuring lockedit/anonok so a user X can add comments to blog pages
+  > would also let X edit/delete comments on blog pages (including those
+  > written by others) in arbitrary ways, which doesn't seem good. --[[smcv]]
+
+* One of Joey's commit messages says "Not ideal, it would be nicer to jump to
+  the actual comment posted, but no anchor is available". In fact there is
+  an anchor - the `\[[_comment]]` preprocessing wraps the comment in a <div>
+  with id="comment_123" or something. I'll fix this, unless Joey gets there
+  first. --[[smcv]]
+
+* Now that inline has some comments-specific functionality anyway, it would
+  be good to output <link rel="comments"> in Atom and the equivalent in RSS.
