@@ -9,13 +9,10 @@
 Name: <TMPL_VAR NAME=FIELD-AUTHOR> (optional)<br />
 Website: <TMPL_VAR NAME=FIELD-URL> (optional)<br />
 </TMPL_IF>
-</TMPL_IF>
+</TMPL_UNLESS>
 Subject: <TMPL_VAR FIELD-SUBJECT><br />
 <TMPL_VAR FIELD-EDITCONTENT><br />
-Page type: <TMPL_VAR FIELD-TYPE><br />
-<TMPL_VAR FORM-SUBMIT><br />
-<TMPL_VAR HELPONFORMATTINGLINK><br />
-A subset of HTML is allowed.<br />
+<TMPL_VAR FORM-SUBMIT> <TMPL_VAR FIELD-TYPE> <TMPL_VAR HELPONFORMATTINGLINK><br />
 IkiWiki directives ([[!directive]]) are <TMPL_UNLESS NAME="ALLOWDIRECTIVES">not </TMPL_UNLESS>allowed in comments on this wiki.<br />
 <TMPL_VAR NAME="FORM-END">
 
