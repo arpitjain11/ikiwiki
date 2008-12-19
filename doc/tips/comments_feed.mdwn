@@ -3,7 +3,7 @@ blog can have comments added to them. Pages with comments even have special
 feeds that can be used to subscribe to those comments. But you'd like to
 add a feed that contains all the comments posted to any page. Here's how:
 
-	\[[!inline pages="internal(*/comment_*)" template=comments_display]]
+	\[[!inline pages="internal(*/comment_*)" template=comment]]
 
 The special [[ikiwiki/PageSpec]] matches all comments. The
 [[template|wikitemplates]] causes the comments to be displayed formatted

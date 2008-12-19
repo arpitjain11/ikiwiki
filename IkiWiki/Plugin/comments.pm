@@ -447,7 +447,7 @@ sub sessioncgi ($$) {
 					content => $preview);
 			});
 
-		my $template = template("comments_display.tmpl");
+		my $template = template("comment.tmpl");
 		$template->param(content => $preview);
 		$template->param(title => $form->field('subject'));
 		$template->param(ctime => displaytime(time));
@@ -538,7 +538,7 @@ sub pagetemplate (@) {
 		if ($shown) {
 			$comments = IkiWiki::preprocess_inline(
 				pages => "internal($page/$config{comments_pagename}*)",
-				template => 'comments_display',
+				template => 'comment',
 				show => 0,
 				reverse => 'yes',
 				page => $page,
