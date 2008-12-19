@@ -343,7 +343,8 @@ sub savestate () {
 				push @line, "tag=$_" foreach @{$data->{tags}};
 			}
 			else {
-				push @line, "$field=".$data->{$field};
+				push @line, "$field=".$data->{$field}
+					if defined $data->{$field};
 			}
 		}
 		print OUT join(" ", @line)."\n" || error("write $newfile: $!", $cleanup);
