@@ -281,7 +281,7 @@ sub sessioncgi ($$) {
 		action => $config{cgiurl},
 		header => 0,
 		table => 0,
-		template => scalar IkiWiki::template_params('comments_form.tmpl'),
+		template => scalar IkiWiki::template_params('editcomment.tmpl'),
 		# wtf does this do in editpage?
 		wikiname => $config{wikiname},
 	);
