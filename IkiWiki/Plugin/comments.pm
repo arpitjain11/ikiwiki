@@ -193,12 +193,10 @@ sub preprocess {
 		$pagestate{$page}{meta}{title} = $params{subject};
 	}
 
-	my $baseurl = urlto($params{destpage}, undef, 1);
-	my $anchor = "";
 	if ($params{page} =~ m/\/(\Q$config{comments_pagename}\E\d+)$/) {
-		$anchor = $1;
+		$pagestate{$page}{meta}{permalink} = urlto($params{destpage}, undef, 1).
+			"#".$params{page};
 	}
-	$pagestate{$page}{meta}{permalink} = "${baseurl}#${anchor}";
 
 	eval q{use Date::Parse};
 	if (! $@) {
@@ -206,8 +204,6 @@ sub preprocess {
 		$IkiWiki::pagectime{$page} = $time if defined $time;
 	}
 
-	# FIXME: hard-coded HTML (although it's just to set an ID)
-	return "<div id=\"$anchor\">$content</div>" if $anchor;
 	return $content;
 }
 
@@ -499,10 +495,8 @@ sub sessioncgi ($$) {
 		# breaks it or something
 		error($conflict) if defined $conflict;
 
-		# Bounce back to where we were, but defeat broken caches
-		# and jump to the comments anchor.
-		my $anticache = "?updated=$page/$config{comments_pagename}$i#comments";
-		IkiWiki::redirect($cgi, urlto($page, undef, 1).$anticache);
+		# Jump to the new comment on the page.
+		IkiWiki::redirect($cgi, urlto($page, undef, 1)."#$location");
 	}
 	else {
 		IkiWiki::showform ($form, \@buttons, $session, $cgi,
