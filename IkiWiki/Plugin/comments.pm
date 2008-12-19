@@ -529,10 +529,11 @@ sub pagetemplate (@) {
 
 	my $page = $params{page};
 	my $template = $params{template};
+	my $shown = ($template->query(name => 'commentslink') ||
+	             $template->query(name => 'comments')) &&
+	            commentsshown($page);
 
 	if ($template->query(name => 'comments')) {
-		my $shown = commentsshown($page);
-
 		my $comments = undef;
 		if ($shown) {
 			$comments = IkiWiki::preprocess_inline(
@@ -563,7 +564,7 @@ sub pagetemplate (@) {
 		# the link. But, to update the number, blog pages
 		# would have to update whenever comments of any inlines
 		# page are added, which is not currently done.
-		if (commentsshown($page)) {
+		if ($shown) {
 			$template->param(commentslink =>
 				htmllink($page, $params{destpage}, $page,
 					linktext => gettext("Comments"),
