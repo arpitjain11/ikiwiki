@@ -194,7 +194,7 @@ sub preprocess {
 	}
 
 	if ($params{page} =~ m/\/(\Q$config{comments_pagename}\E\d+)$/) {
-		$pagestate{$page}{meta}{permalink} = urlto($params{destpage}, undef, 1).
+		$pagestate{$page}{meta}{permalink} = urlto(IkiWiki::dirname($params{page}), undef, 1).
 			"#".$params{page};
 	}
 
