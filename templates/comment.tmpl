@@ -1,6 +1,6 @@
-<div class="comments-display" id="<TMPL_VAR NAME=INLINEPAGE>">
+<div class="comment" id="<TMPL_VAR NAME=INLINEPAGE>">
 
-<div class="comments-header">
+<div class="comment-header">
 Posted by
 <TMPL_IF NAME="COMMENTUSER">
 <span class="author">
@@ -27,10 +27,10 @@ unknown IP address
 (<TMPL_VAR CTIME>)
 </div>
 
-<div class="comments-subject"><TMPL_VAR TITLE></div>
+<div class="comment-subject"><TMPL_VAR TITLE></div>
 
 <div class="inlinecontent">
 <TMPL_VAR CONTENT>
 </div>
 
-</div><!--.comments-display-->
+</div><!--.comment-->
