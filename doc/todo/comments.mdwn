@@ -53,7 +53,9 @@ Known issues with the [[plugins/comments]] plugin:
   (BTW, the rss feed in this situation seems ok; there the link element
   points back to the parent page.
 
-  > done --[[Joey]] 
+  > done
+  > Er, no, I added a link but it does not go back to the parent page of a
+  > comment if the comment is inlined elsewhere. --[[Joey]] 
 
 * It would be useful to have a pagespec that always matches all comments on 
   pages matching a glob. Something like `comment(blog/*)`.
