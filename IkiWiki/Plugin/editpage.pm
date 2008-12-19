@@ -105,7 +105,6 @@ sub cgi_editpage ($$) {
 		header => 0,
 		table => 0,
 		template => scalar template_params("editpage.tmpl"),
-		wikiname => $config{wikiname},
 	);
 	
 	decode_form_utf8($form);

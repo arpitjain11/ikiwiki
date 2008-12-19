@@ -282,8 +282,6 @@ sub sessioncgi ($$) {
 		header => 0,
 		table => 0,
 		template => scalar IkiWiki::template_params('editcomment.tmpl'),
-		# wtf does this do in editpage?
-		wikiname => $config{wikiname},
 	);
 
 	IkiWiki::decode_form_utf8($form);
