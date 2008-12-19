@@ -13,6 +13,8 @@ Known issues with the [[plugins/comments]] plugin:
 
   > Done in my comments git branch --[[smcv]]
 
+  > Not seeing it there, which branch? --[[Joey]] 
+
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
   as title) and an OpenID icon next to OpenIDs
 
@@ -68,6 +70,10 @@ Known issues with the [[plugins/comments]] plugin:
   > configuring lockedit/anonok so a user X can add comments to blog pages
   > would also let X edit/delete comments on blog pages (including those
   > written by others) in arbitrary ways, which doesn't seem good. --[[smcv]]
+
+  > I had a look at implementing comment() and fell afoul of 
+  > some optimisations that assume only internal() will be used to match
+  > internal pages. So probably this isn't worth doing. --[[Joey]] 
 
 * One of Joey's commit messages says "Not ideal, it would be nicer to jump to
   the actual comment posted, but no anchor is available". In fact there is
