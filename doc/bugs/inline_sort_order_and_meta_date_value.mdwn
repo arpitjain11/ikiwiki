@@ -26,3 +26,17 @@ If I instead include them using creation_year in the pagespec, they are ordered 
 <http://alcopop.org/~jon/repro2/> contains the src used to reproduce this, the precise ikiwiki invocation (inside Makefile) and the results (dest).
 
 -- [[users/Jon]]
+
+
+> On Ikiwiki 2.53.3 (Debian Lenny), my inlines are also sorted using mtime
+> by default -- despite what the [[documentation|/ikiwiki/directive/inline]]
+> says -- but setting the supposed default sort order manually produces the
+> correct results.  For example, the following inline sorts my blog
+> entires using their meta date or ctime:
+> 
+>     inline pages="blog/*" show="10" sort="age"
+> 
+> I'll try to look at the code this weekend and see if age is really the
+> default sort order.
+> 
+> -- [David A. Harding](http://dtrt.org), 2008-12-20
