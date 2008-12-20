@@ -373,7 +373,16 @@ span.color {
 	padding: 2px;
 }
 
-.comment .author { font-weight: bold; }
-.comment { border: 1px inset #999; margin: 3px; padding: 3px; }
-.comment-header { font-style: italic; }
-.comment-subject { font-weight: bold; border-bottom: 1px solid #999; }
+.comment-header {
+	font-style: italic;
+}
+.comment .author {
+	font-weight: bold;
+}
+.comment-subject {
+	font-weight: bold;
+}
+.comment {
+	border: 1px solid #aaa;
+	padding: 3px;
+}
