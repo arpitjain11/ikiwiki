@@ -7,13 +7,13 @@ Posted by
 <span class="author">
 <TMPL_IF NAME="COMMENTOPENID">
 
-<img src="/smileys/star_off.png" width="20" height="15" alt="[OpenID]"
+<img src="/wikiicons/openid.png" width="20" height="15" alt="[OpenID]"
     title="Signed in with OpenID" />
 <a href="<TMPL_VAR NAME=COMMENTOPENID>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
 
 <TMPL_ELSE>
 
-<img src="/smileys/star_on.png" width="15" height="15" alt="[Signed in]"
+<img src="/wikiicons/signedin.png" width="15" height="15" alt="[Signed in]"
     title="Signed in directly" />
 <TMPL_IF NAME="COMMENTAUTHORURL">
 <a href="<TMPL_VAR NAME=COMMENTAUTHORURL>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
@@ -31,7 +31,7 @@ Posted by
 <TMPL_ELSE><!-- !COMMENTIP -->
 <span class="author" title="Unauthenticated, from unknown IP address">
 </TMPL_IF>
-<img src="/smileys/question.png" width="15" height="15" alt="[Unauthenticated]" />
+<img src="/wikiicons/anonymous.png" width="15" height="15" alt="[Unauthenticated]" />
 <TMPL_IF NAME="AUTHORURL">
 <a href="<TMPL_VAR NAME=AUTHORURL>"><TMPL_VAR NAME=AUTHOR></a>
 <TMPL_ELSE>
