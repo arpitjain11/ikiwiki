@@ -28,6 +28,9 @@ Known issues with the [[plugins/comments]] plugin:
   >> I've improved this to use independent icons from the wikiicons
   >> directory (untested!) --[[smcv]]
 
+  >>> The new code produces links like /wikiisons/openid.png, which
+  >>> fail if ikiwiki is not at the root of the web server. --[[Joey]] 
+
 * Should the comments be visually set off more from the page above?
   Rather than just a horizontal rule, I'm thinking put the comments
   in a box like is used for inlined pages.
