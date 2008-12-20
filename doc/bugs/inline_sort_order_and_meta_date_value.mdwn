@@ -40,3 +40,20 @@ If I instead include them using creation_year in the pagespec, they are ordered 
 > default sort order.
 > 
 > -- [David A. Harding](http://dtrt.org), 2008-12-20
+
+Here is the code. As you can see, sort="age" is equivilant to leaving
+out the sort option. --[[Joey]] 
+
+	if (exists $params{sort} && $params{sort} eq 'title') {
+	        @list=sort { pagetitle(basename($a)) cmp pagetitle(basename($b)) } @list;
+	}
+	elsif (exists $params{sort} && $params{sort} eq 'mtime') {
+	        @list=sort { $pagemtime{$b} <=> $pagemtime{$a} } @list;
+	}
+	elsif (! exists $params{sort} || $params{sort} eq 'age') {
+	        @list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+	}
+	else {
+	        return sprintf(gettext("unknown sort type %s"), $params{sort});
+	}
+

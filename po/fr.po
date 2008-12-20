@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 2.70 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-11 14:46-0500\n"
+"POT-Creation-Date: 2008-12-20 18:07-0500\n"
 "PO-Revision-Date: 2008-11-19 21:53+0100\n"
 "Last-Translator: Philippe Batailler <philippe.batailler@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -25,7 +25,7 @@ msgstr "Vous devez d'abord vous identifier."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "Échec de l'identification, vous devez autoriser les cookies."
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/Plugin/editpage.pm:350
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:310
 msgid "Your login session has expired."
 msgstr "Session d'authentification expirée."
 
@@ -49,7 +49,7 @@ msgstr "Les préférences ont été enregistrées."
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1204
+#: ../IkiWiki/CGI.pm:401 ../IkiWiki/CGI.pm:402 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr "Erreur"
 
@@ -66,62 +66,62 @@ msgstr "Rien à faire pour le moment, tous les flux sont à jour !"
 msgid "missing %s parameter"
 msgstr "Paramètre %s manquant"
 
-#: ../IkiWiki/Plugin/aggregate.pm:250
+#: ../IkiWiki/Plugin/aggregate.pm:251
 msgid "new feed"
 msgstr "Nouveau flux"
 
-#: ../IkiWiki/Plugin/aggregate.pm:264
+#: ../IkiWiki/Plugin/aggregate.pm:265
 msgid "posts"
 msgstr "Articles"
 
-#: ../IkiWiki/Plugin/aggregate.pm:266
+#: ../IkiWiki/Plugin/aggregate.pm:267
 msgid "new"
 msgstr "Nouveau"
 
-#: ../IkiWiki/Plugin/aggregate.pm:429
+#: ../IkiWiki/Plugin/aggregate.pm:431
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "Fin de validité de %s (date de %s jours)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:436
+#: ../IkiWiki/Plugin/aggregate.pm:438
 #, perl-format
 msgid "expiring %s"
 msgstr "Fin de validité de %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:463
+#: ../IkiWiki/Plugin/aggregate.pm:465
 #, perl-format
 msgid "last checked %s"
 msgstr "dernière vérification : %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:467
+#: ../IkiWiki/Plugin/aggregate.pm:469
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "Vérification du flux %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:472
+#: ../IkiWiki/Plugin/aggregate.pm:474
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "Impossible de trouver de flux à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:487
+#: ../IkiWiki/Plugin/aggregate.pm:493
 msgid "feed not found"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/aggregate.pm:498
+#: ../IkiWiki/Plugin/aggregate.pm:504
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(chaîne UTF-8 non valable supprimée du flux)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:506
+#: ../IkiWiki/Plugin/aggregate.pm:512
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr "(échappement des entités de flux)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:514
+#: ../IkiWiki/Plugin/aggregate.pm:520
 msgid "feed crashed XML::Feed!"
 msgstr "Plantage du flux XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:595
+#: ../IkiWiki/Plugin/aggregate.pm:601
 #, perl-format
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
@@ -172,8 +172,8 @@ msgstr "envoi de la pièce jointe"
 msgid "automatic index generation"
 msgstr "génération de l'index automatique"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:261
-#: ../IkiWiki/Plugin/inline.pm:344 ../IkiWiki/Plugin/opendiscussion.pm:26
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:260
+#: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
 msgid "discussion"
@@ -187,6 +187,60 @@ msgstr "%s sur %s"
 #: ../IkiWiki/Plugin/brokenlinks.pm:56
 msgid "There are no broken links!"
 msgstr "Il n'existe pas de lien cassé !"
+
+#: ../IkiWiki/Plugin/comments.pm:119 ../IkiWiki/Plugin/format.pm:23
+#, perl-format
+msgid "unsupported page format %s"
+msgstr "format de page non reconnu %s"
+
+#: ../IkiWiki/Plugin/comments.pm:124
+msgid "comment must have content"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:181
+msgid "Anonymous"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:243 ../IkiWiki/Plugin/recentchanges.pm:101
+msgid "missing page"
+msgstr "Page manquante"
+
+#: ../IkiWiki/Plugin/comments.pm:245 ../IkiWiki/Plugin/recentchanges.pm:103
+#, perl-format
+msgid "The page %s does not exist."
+msgstr "La page %s n'existe pas."
+
+#: ../IkiWiki/Plugin/comments.pm:334 ../IkiWiki/Plugin/editpage.pm:124
+msgid "bad page name"
+msgstr "nom de page incorrect"
+
+#: ../IkiWiki/Plugin/comments.pm:341
+#, fuzzy, perl-format
+msgid "commenting on %s"
+msgstr "Création de %s"
+
+#: ../IkiWiki/Plugin/comments.pm:359
+#, perl-format
+msgid "page '%s' doesn't exist, so you can't comment"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:366
+#, perl-format
+msgid "comments on page '%s' are closed"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:468
+msgid "Added a comment"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:472
+#, perl-format
+msgid "Added a comment: %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:565
+msgid "Comments"
+msgstr ""
 
 #: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:30
 #: ../IkiWiki/Plugin/cutpaste.pm:45 ../IkiWiki/Plugin/cutpaste.pm:61
@@ -209,23 +263,19 @@ msgstr "Aucun texte n'a été copié dans cette page avec l'identifiant %s"
 msgid "removing old preview %s"
 msgstr "Suppression de l'ancienne prévisualisation %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:125
-msgid "bad page name"
-msgstr "nom de page incorrect"
-
-#: ../IkiWiki/Plugin/editpage.pm:141
+#: ../IkiWiki/Plugin/editpage.pm:140
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s n'est pas une page éditable"
 
-#: ../IkiWiki/Plugin/editpage.pm:317
+#: ../IkiWiki/Plugin/editpage.pm:316
 #, perl-format
 msgid "creating %s"
 msgstr "Création de %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:335 ../IkiWiki/Plugin/editpage.pm:363
-#: ../IkiWiki/Plugin/editpage.pm:373 ../IkiWiki/Plugin/editpage.pm:408
-#: ../IkiWiki/Plugin/editpage.pm:453
+#: ../IkiWiki/Plugin/editpage.pm:334 ../IkiWiki/Plugin/editpage.pm:353
+#: ../IkiWiki/Plugin/editpage.pm:363 ../IkiWiki/Plugin/editpage.pm:398
+#: ../IkiWiki/Plugin/editpage.pm:443
 #, perl-format
 msgid "editing %s"
 msgstr "Édition de %s"
@@ -250,11 +300,6 @@ msgstr "Échec du traitement"
 #: ../IkiWiki/Plugin/format.pm:20
 msgid "must specify format and text"
 msgstr "le format et le texte doivent être indiqués"
-
-#: ../IkiWiki/Plugin/format.pm:23
-#, perl-format
-msgid "unsupported page format %s"
-msgstr "format de page non reconnu %s"
 
 #: ../IkiWiki/Plugin/fortune.pm:27
 msgid "fortune failed"
@@ -340,20 +385,20 @@ msgstr "paramètre « pages » manquant"
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki/Plugin/inline.pm:297
+#: ../IkiWiki/Plugin/inline.pm:307
 msgid "Add a new post titled:"
 msgstr "Ajouter un nouvel article dont le titre est :"
 
-#: ../IkiWiki/Plugin/inline.pm:318
+#: ../IkiWiki/Plugin/inline.pm:327
 #, perl-format
 msgid "nonexistant template %s"
 msgstr "Le modèle de page %s n'existe pas"
 
-#: ../IkiWiki/Plugin/inline.pm:352 ../IkiWiki/Render.pm:83
+#: ../IkiWiki/Plugin/inline.pm:362 ../IkiWiki/Render.pm:83
 msgid "Discussion"
 msgstr "Discussion"
 
-#: ../IkiWiki/Plugin/inline.pm:577
+#: ../IkiWiki/Plugin/inline.pm:587
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 
@@ -377,15 +422,15 @@ msgstr ""
 "Échec du chargement du module Perl Markdown.pm (%s) ou de /usr/bin/markdown "
 "(%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:150
+#: ../IkiWiki/Plugin/meta.pm:151
 msgid "stylesheet not found"
 msgstr "Feuille de style introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:184
+#: ../IkiWiki/Plugin/meta.pm:185
 msgid "redir page not found"
 msgstr "Page de redirection introuvable"
 
-#: ../IkiWiki/Plugin/meta.pm:197
+#: ../IkiWiki/Plugin/meta.pm:198
 msgid "redir cycle is not allowed"
 msgstr "Redirection cyclique non autorisée"
 
@@ -572,15 +617,6 @@ msgstr "pourcentage %s illégal"
 msgid "need either `percent` or `totalpages` and `donepages` parameters"
 msgstr ""
 "L'un des paramètres « percent », « totalpages » ou « donepages » est nécessaire."
-
-#: ../IkiWiki/Plugin/recentchanges.pm:101
-msgid "missing page"
-msgstr "Page manquante"
-
-#: ../IkiWiki/Plugin/recentchanges.pm:103
-#, perl-format
-msgid "The page %s does not exist."
-msgstr "La page %s n'existe pas."
 
 #: ../IkiWiki/Plugin/recentchangesdiff.pm:37
 msgid "(Diff truncated)"
