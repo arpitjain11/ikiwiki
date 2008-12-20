@@ -13,7 +13,10 @@ Known issues with the [[plugins/comments]] plugin:
 
   > Done in my comments git branch --[[smcv]]
 
-  > Not seeing it there, which branch? --[[Joey]] 
+  > Not seeing it there, which branch? --[[Joey]]
+
+  >> Bah, git push --all is not the default... 'comments' branch now (I've also rebased it).
+  >> Sorry, I'm on mobile Internet at the moment... --[[smcv]]
 
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
   as title) and an OpenID icon next to OpenIDs
@@ -21,6 +24,9 @@ Known issues with the [[plugins/comments]] plugin:
   > Done in my comments git branch, at least as a mockup (using the (?),
   > {x} and {*} smileys for anonymous, OpenID and login respectively).
   > --[[smcv]]
+
+  >> I've improved this to use independent icons from the wikiicons
+  >> directory (untested!) --[[smcv]]
 
 * Should the comments be visually set off more from the page above?
   Rather than just a horizontal rule, I'm thinking put the comments
