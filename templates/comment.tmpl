@@ -1,25 +1,25 @@
 <div class="comment" id="<TMPL_VAR NAME=INLINEPAGE>">
 
 <div class="comment-header">
-Posted by
+By
 
 <TMPL_IF NAME="COMMENTUSER">
 <span class="author">
 <TMPL_IF NAME="COMMENTOPENID">
 
+<a href="<TMPL_VAR NAME=COMMENTOPENID>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
 <img src="/wikiicons/openid.png" width="20" height="15" alt="[OpenID]"
     title="Signed in with OpenID" />
-<a href="<TMPL_VAR NAME=COMMENTOPENID>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
 
 <TMPL_ELSE>
 
-<img src="/wikiicons/signedin.png" width="15" height="15" alt="[Signed in]"
-    title="Signed in directly" />
 <TMPL_IF NAME="COMMENTAUTHORURL">
 <a href="<TMPL_VAR NAME=COMMENTAUTHORURL>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
 <TMPL_ELSE>
 <TMPL_VAR NAME=COMMENTAUTHOR>
 </TMPL_IF>
+<img src="/wikiicons/signedin.png" width="15" height="15" alt="[Signed in]"
+    title="Signed in directly" />
 
 </TMPL_IF>
 </span>
@@ -31,12 +31,12 @@ Posted by
 <TMPL_ELSE><!-- !COMMENTIP -->
 <span class="author" title="Unauthenticated, from unknown IP address">
 </TMPL_IF>
-<img src="/wikiicons/anonymous.png" width="15" height="15" alt="[Unauthenticated]" />
 <TMPL_IF NAME="AUTHORURL">
 <a href="<TMPL_VAR NAME=AUTHORURL>"><TMPL_VAR NAME=AUTHOR></a>
 <TMPL_ELSE>
 <TMPL_VAR NAME=AUTHOR>
 </TMPL_IF>
+<img src="/wikiicons/anonymous.png" width="15" height="15" alt="[Unauthenticated]" />
 </span>
 
 </TMPL_IF><!-- !COMMENTUSER -->
