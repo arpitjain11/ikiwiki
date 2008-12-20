@@ -74,13 +74,12 @@
 <TMPL_IF COMMENTS>
 <div id="comments">
 <TMPL_VAR COMMENTS>
-<TMPL_UNLESS COMMENTURL>
-<div class="addcomment">Comments on this page are closed.</div>
-</TMPL_UNLESS>
-<TMPL_IF COMMENTURL>
+<TMPL_IF ADDCOMMENTURL>
 <div class="addcomment">
-<a href="<TMPL_VAR COMMENTURL>">Add a comment</a>
+<a href="<TMPL_VAR ADDCOMMENTURL>">Add a comment</a>
 </div>
+<TMPL_ELSE>
+<div class="addcomment">Comments on this page are closed.</div>
 </TMPL_IF>
 </div>
 </TMPL_IF>

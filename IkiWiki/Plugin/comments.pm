@@ -151,11 +151,28 @@ sub preprocess {
 	my $commentip;
 	my $commentauthor;
 	my $commentauthorurl;
+	my $commentopenid;
 
 	if (defined $params{username}) {
 		$commentuser = $params{username};
-		($commentauthorurl, $commentauthor) =
-			linkuser($params{username});
+
+		my $oiduser = eval { IkiWiki::openiduser($commentuser) };
+
+		if (defined $oiduser) {
+			# looks like an OpenID
+			$commentauthorurl = $commentuser;
+			$commentauthor = $oiduser;
+			$commentopenid = $commentuser;
+		}
+		else {
+			$commentauthorurl = IkiWiki::cgiurl(
+				do => 'commenter',
+				page => (length $config{userdir}
+					? "$config{userdir}/$commentuser"
+					: "$commentuser"));
+
+			$commentauthor = $commentuser;
+		}
 	}
 	else {
 		if (defined $params{ip}) {
@@ -165,6 +182,7 @@ sub preprocess {
 	}
 
 	$pagestate{$page}{comments}{commentuser} = $commentuser;
+	$pagestate{$page}{comments}{commentopenid} = $commentopenid;
 	$pagestate{$page}{comments}{commentip} = $commentip;
 	$pagestate{$page}{comments}{commentauthor} = $commentauthor;
 	$pagestate{$page}{comments}{commentauthorurl} = $commentauthorurl;
@@ -233,27 +251,6 @@ sub linkcgi ($) {
 		}
 
 		exit;
-	}
-}
-
-# FIXME: basically the same logic as recentchanges
-# returns (author URL, pretty-printed version)
-sub linkuser ($) {
-	my $user = shift;
-	my $oiduser = eval { IkiWiki::openiduser($user) };
-
-	if (defined $oiduser) {
-		return ($user, $oiduser);
-	}
-	# FIXME: it'd be good to avoid having such a link for anonymous
-	# posts
-	else {
-		return (IkiWiki::cgiurl(
-				do => 'commenter',
-				page => (length $config{userdir}
-					? "$config{userdir}/$user"
-					: "$user")
-			), $user);
 	}
 }
 
@@ -551,9 +548,9 @@ sub pagetemplate (@) {
 		}
 
 		if ($shown && commentsopen($page)) {
-			my $commenturl = IkiWiki::cgiurl(do => 'comment',
+			my $addcommenturl = IkiWiki::cgiurl(do => 'comment',
 				page => $page);
-			$template->param(commenturl => $commenturl);
+			$template->param(addcommenturl => $addcommenturl);
 		}
 	}
 
@@ -574,6 +571,11 @@ sub pagetemplate (@) {
 	if ($template->query(name => 'commentuser')) {
 		$template->param(commentuser =>
 			$pagestate{$page}{comments}{commentuser});
+	}
+
+	if ($template->query(name => 'commentopenid')) {
+		$template->param(commentopenid =>
+			$pagestate{$page}{comments}{commentopenid});
 	}
 
 	if ($template->query(name => 'commentip')) {
