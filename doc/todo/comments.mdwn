@@ -1,66 +1,8 @@
-Known issues with the [[plugins/comments]] plugin:
+# Known issues with the [[plugins/comments]] plugin
 
-* There is some common code cargo-culted from other plugins (notably inline and editpage) which
-  should probably be shared
-
-  > Actually, there's less of this now than there used to be - a lot of simple
-  > things that were shared have become unshareable as they became more
-  > complex. --[[smcv]]
+## Unimplemented
 
 * Previews always say "unknown IP address"
-
-* Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
-
-  > Done in my comments git branch --[[smcv]]
-
-  > Not seeing it there, which branch? --[[Joey]]
-
-  >> Bah, git push --all is not the default... 'comments' branch now (I've also rebased it).
-  >> Sorry, I'm on mobile Internet at the moment... --[[smcv]]
-
-  >>> merged by [[Joey]] in commit 0f03af38 --[[smcv]]
-
-* The default template should have a (?) icon next to unauthenticated users (with the IP address
-  as title) and an OpenID icon next to OpenIDs
-
-  > Done in my comments git branch, at least as a mockup (using the (?),
-  > {x} and {*} smileys for anonymous, OpenID and login respectively).
-  > --[[smcv]]
-
-  >> I've improved this to use independent icons from the wikiicons
-  >> directory (untested!) --[[smcv]]
-
-  >>> The new code produces links like /wikiisons/openid.png, which
-  >>> fail if ikiwiki is not at the root of the web server. --[[Joey]]
-
-  >>>> Sorry, I should have spotted that (the assumption failed on my demo
-  >>>> site, but the push to that site was when I was on the way out, so I
-  >>>> didn't have time to investigate). As a note for other ikiwiki hackers,
-  >>>> I should have used 
-  >>>> `<img src="<TMPL_VAR NAME=BASEURL>wikiicons/openid.png" />`. --[[smcv]]
-
-  >>> I got to wondering if the icons are needed. On my comments branch
-  >>> (not master), I've dropped the icons and info can be seen by hovering
-  >>> over the author's name. Idea being that you probably don't care how
-  >>> they authenticated unless something is weird, and in that case you
-  >>> can hover to check. Does that make sense, should I merge it?
-  >>> --[[Joey]]
-
-  >>>> Yeah, go ahead. I preferred my layout with the author before the
-  >>>> comment - perhaps that's Livejournal's influence :-) - but I can always
-  >>>> edit the templates for my own site. As long as the default is something
-  >>>> reasonable and both layouts are possible, I don't really mind.
-  >>>> Minimizing the number of "resource" files in the basewiki also seems
-  >>>> a good goal. --[[smcv]]
-
-* Should the comments be visually set off more from the page above?
-  Rather than just a horizontal rule, I'm thinking put the comments
-  in a box like is used for inlined pages.
-
-  > I did put them in a box in the CSS... I agree the default template
-  > could do with visual improvement though. --[[smcv]]
-
-  >> I'll consider this solved by [[Joey]]'s changes. --[[smcv]]
 
 * Instead of just a link to add a comment, it could have a form to enter
   the title, similar to the form for adding a new blog post.
@@ -78,17 +20,54 @@ Known issues with the [[plugins/comments]] plugin:
   > Won't the remove plugin refuse to remove internal pages? This would be
   > a good feature to have, though. --[[smcv]]
 
-* One can use inline to set up a feed of all comments posted to any page.
-  Using template=comment they are displayed right. Only problem
-  is there is no indication in that template of what page each comment in the
-  feed is a comment on. So, if a comment is inlined into a different page,
-  I think it should show a link back to the page commented on.
-  (BTW, the rss feed in this situation seems ok; there the link element
-  points back to the parent page.
+* Now that inline has some comments-specific functionality anyway, it would
+  be good to output `<link rel="comments">` in Atom and the equivalent in RSS.
 
-  > done --[[Joey]] 
+## Patches pending merge
 
-* It would be useful to have a pagespec that always matches all comments on 
+* The default template should have a (?) icon next to unauthenticated users (with the IP address
+  as title) and an OpenID icon next to OpenIDs
+
+  > Done in my comments git branch, at least as a mockup (using the (?),
+  > {x} and {*} smileys for anonymous, OpenID and login respectively).
+  > --[[smcv]]
+
+  >> I've improved this to use independent icons from the wikiicons
+  >> directory (untested!) --[[smcv]]
+
+  >>> The new code produces links like /wikiisons/openid.png, which
+  >>> fail if ikiwiki is not at the root of the web server. --[[Joey]]
+
+  >>>> Sorry, I should have spotted that (the assumption failed on my demo
+  >>>> site, but the push to that site was when I was on the way out, so I
+  >>>> didn't have time to investigate). As a note for other ikiwiki hackers,
+  >>>> I should have used
+  >>>> `<img src="<TMPL_VAR NAME=BASEURL>wikiicons/openid.png" />`. --[[smcv]]
+
+  >>> I got to wondering if the icons are needed. On my comments branch
+  >>> (not master), I've dropped the icons and info can be seen by hovering
+  >>> over the author's name. Idea being that you probably don't care how
+  >>> they authenticated unless something is weird, and in that case you
+  >>> can hover to check. Does that make sense, should I merge it?
+  >>> --[[Joey]]
+
+  >>>> Yeah, go ahead. I preferred my layout with the author before the
+  >>>> comment - perhaps that's Livejournal's influence :-) - but I can always
+  >>>> edit the templates for my own site. As long as the default is something
+  >>>> reasonable and both layouts are possible, I don't really mind.
+  >>>> Minimizing the number of "resource" files in the basewiki also seems
+  >>>> a good goal. --[[smcv]]
+
+## Won't fix
+
+* There is some common code cargo-culted from other plugins (notably inline and editpage) which
+  should probably be shared
+
+  > Actually, there's less of this now than there used to be - a lot of simple
+  > things that were shared have become unshareable as they became more
+  > complex. --[[smcv]]
+
+* It would be useful to have a pagespec that always matches all comments on
   pages matching a glob. Something like `comment(blog/*)`.
   Perhaps postcomment could also be folded into this? Then the pagespec
   would match both existing comments, as well as new comments that are
@@ -106,9 +85,41 @@ Known issues with the [[plugins/comments]] plugin:
   > would also let X edit/delete comments on blog pages (including those
   > written by others) in arbitrary ways, which doesn't seem good. --[[smcv]]
 
-  > I had a look at implementing comment() and fell afoul of 
+  > I had a look at implementing comment() and fell afoul of
   > some optimisations that assume only internal() will be used to match
-  > internal pages. So probably this isn't worth doing. --[[Joey]] 
+  > internal pages. So probably this isn't worth doing. --[[Joey]]
+
+## Done
+
+* Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
+
+  > Done in my comments git branch --[[smcv]]
+
+  > Not seeing it there, which branch? --[[Joey]]
+
+  >> Bah, git push --all is not the default... 'comments' branch now (I've also rebased it).
+  >> Sorry, I'm on mobile Internet at the moment... --[[smcv]]
+
+  >>> merged by [[Joey]] in commit 0f03af38 --[[smcv]]
+
+* Should the comments be visually set off more from the page above?
+  Rather than just a horizontal rule, I'm thinking put the comments
+  in a box like is used for inlined pages.
+
+  > I did put them in a box in the CSS... I agree the default template
+  > could do with visual improvement though. --[[smcv]]
+
+  >> I'll consider this solved by [[Joey]]'s changes. --[[smcv]]
+
+* One can use inline to set up a feed of all comments posted to any page.
+  Using template=comment they are displayed right. Only problem
+  is there is no indication in that template of what page each comment in the
+  feed is a comment on. So, if a comment is inlined into a different page,
+  I think it should show a link back to the page commented on.
+  (BTW, the rss feed in this situation seems ok; there the link element
+  points back to the parent page.
+
+  > done --[[Joey]]
 
 * One of Joey's commit messages says "Not ideal, it would be nicer to jump to
   the actual comment posted, but no anchor is available". In fact there is
@@ -116,7 +127,4 @@ Known issues with the [[plugins/comments]] plugin:
   with id="comment_123" or something. I'll fix this, unless Joey gets there
   first. --[[smcv]]
 
-  > done --[[Joey]] 
-
-* Now that inline has some comments-specific functionality anyway, it would
-  be good to output `<link rel="comments">` in Atom and the equivalent in RSS.
+  > done --[[Joey]]
