@@ -197,8 +197,9 @@ sub openiduser ($) {
 			$display=~s/^([-a-zA-Z0-9]+?)\.([-.a-zA-Z0-9]+\.[a-z]+)$/$1 [$2]/;
 		}
 		# Convert "http://somehost.com/user" to "user [somehost.com]".
+		# (also "https://somehost.com/user/")
 		if ($display !~ /\[/) {
-			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
+			$display=~s/^https?:\/\/(.+)\/([^\/]+)\/?$/$2 [$1]/;
 		}
 		$display=~s!^https?://!!; # make sure this is removed
 		eval q{use CGI 'escapeHTML'};
