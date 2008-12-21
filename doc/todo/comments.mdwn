@@ -20,6 +20,41 @@
 
 ## Patches pending merge
 
+* There is some common code cargo-culted from other plugins (notably inline and editpage) which
+  should probably be shared
+
+  > Actually, there's less of this now than there used to be - a lot of simple
+  > things that were shared have become unshareable as they became more
+  > complex. --[[smcv]]
+
+  > There's still goto. You have a branch for that. --[[Joey]] 
+
+## Won't fix
+
+* It would be useful to have a pagespec that always matches all comments on
+  pages matching a glob. Something like `comment(blog/*)`.
+  Perhaps postcomment could also be folded into this? Then the pagespec
+  would match both existing comments, as well as new comments that are
+  being posted.
+
+  > Please see [[plugins/comments/discussion]]. If I've convinced you that
+  > internal pages are the way forward, then sure, we can do that, because
+  > people who can comment still won't be able to edit others' comments
+  > (one of my goals is that commenters can't put words into each other's
+  > mouths :-) )
+  >
+  > On the other hand, if you still want me to switch this plugin to "real"
+  > pages, or if internal pages might become editable in future, then
+  > configuring lockedit/anonok so a user X can add comments to blog pages
+  > would also let X edit/delete comments on blog pages (including those
+  > written by others) in arbitrary ways, which doesn't seem good. --[[smcv]]
+
+  > I had a look at implementing comment() and fell afoul of
+  > some optimisations that assume only internal() will be used to match
+  > internal pages. So probably this isn't worth doing. --[[Joey]]
+
+## Done
+
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
   as title) and an OpenID icon next to OpenIDs
 
@@ -69,38 +104,6 @@
 
   > Fixed in my comments branch by d0d598e4, 3feebe31, 9e5f504e --[[smcv]]
 
-## Won't fix
-
-* There is some common code cargo-culted from other plugins (notably inline and editpage) which
-  should probably be shared
-
-  > Actually, there's less of this now than there used to be - a lot of simple
-  > things that were shared have become unshareable as they became more
-  > complex. --[[smcv]]
-
-* It would be useful to have a pagespec that always matches all comments on
-  pages matching a glob. Something like `comment(blog/*)`.
-  Perhaps postcomment could also be folded into this? Then the pagespec
-  would match both existing comments, as well as new comments that are
-  being posted.
-
-  > Please see [[plugins/comments/discussion]]. If I've convinced you that
-  > internal pages are the way forward, then sure, we can do that, because
-  > people who can comment still won't be able to edit others' comments
-  > (one of my goals is that commenters can't put words into each other's
-  > mouths :-) )
-  >
-  > On the other hand, if you still want me to switch this plugin to "real"
-  > pages, or if internal pages might become editable in future, then
-  > configuring lockedit/anonok so a user X can add comments to blog pages
-  > would also let X edit/delete comments on blog pages (including those
-  > written by others) in arbitrary ways, which doesn't seem good. --[[smcv]]
-
-  > I had a look at implementing comment() and fell afoul of
-  > some optimisations that assume only internal() will be used to match
-  > internal pages. So probably this isn't worth doing. --[[Joey]]
-
-## Done
 
 * Add `COMMENTOPENID`: the authenticated/verified user name, if and only if it was an OpenID
 
