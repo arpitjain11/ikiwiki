@@ -17,7 +17,14 @@ BEGIN {
 
 # Some typical examples:
 
+# This test, when run by Test::Harness using perl -w, exposes a warning in
+# Net::OpenID::VerifiedIdentity. Normally that warning is not displayed, as
+# that module does not use warnings. To avoid cluttering the test output,
+# disable the -w switch temporarily.
+$^W=0;
 is(IkiWiki::openiduser('http://josephturian.blogspot.com'), 'josephturian [blogspot.com]');
+$^W=1;
+
 is(IkiWiki::openiduser('http://yam655.livejournal.com/'), 'yam655 [livejournal.com]');
 is(IkiWiki::openiduser('http://id.mayfirst.org/jamie/'), 'jamie [id.mayfirst.org]');
 
