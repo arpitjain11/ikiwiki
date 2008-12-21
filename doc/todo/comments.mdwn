@@ -2,8 +2,6 @@
 
 ## Unimplemented
 
-* Previews always say "unknown IP address"
-
 * Instead of just a link to add a comment, it could have a form to enter
   the title, similar to the form for adding a new blog post.
 
@@ -57,6 +55,17 @@
   >>>> reasonable and both layouts are possible, I don't really mind.
   >>>> Minimizing the number of "resource" files in the basewiki also seems
   >>>> a good goal. --[[smcv]]
+
+* Previews always say "unknown IP address"
+
+  > Fixed in my comments branch by commits bc66a00b and 95b3bbbf --[[smcv]]
+
+* The Comments link in the "toolbar" is to `index.html#comments`, not the
+  desired `./#comments`
+
+  > Fixed in my comments branch by commit 0844bd0b; commits 5b1cf21a
+  > and c42f174e fix another `beautify_urlpath` bug and add a regression test
+  > --[[smcv]]
 
 ## Won't fix
 
