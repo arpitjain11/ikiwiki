@@ -18,6 +18,8 @@ Known issues with the [[plugins/comments]] plugin:
   >> Bah, git push --all is not the default... 'comments' branch now (I've also rebased it).
   >> Sorry, I'm on mobile Internet at the moment... --[[smcv]]
 
+  >>> merged by [[Joey]] in commit 0f03af38 --[[smcv]]
+
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
   as title) and an OpenID icon next to OpenIDs
 
@@ -29,14 +31,27 @@ Known issues with the [[plugins/comments]] plugin:
   >> directory (untested!) --[[smcv]]
 
   >>> The new code produces links like /wikiisons/openid.png, which
-  >>> fail if ikiwiki is not at the root of the web server. --[[Joey]] 
+  >>> fail if ikiwiki is not at the root of the web server. --[[Joey]]
+
+  >>>> Sorry, I should have spotted that (the assumption failed on my demo
+  >>>> site, but the push to that site was when I was on the way out, so I
+  >>>> didn't have time to investigate). As a note for other ikiwiki hackers,
+  >>>> I should have used 
+  >>>> `<img src="<TMPL_VAR NAME=BASEURL>wikiicons/openid.png" />`. --[[smcv]]
 
   >>> I got to wondering if the icons are needed. On my comments branch
   >>> (not master), I've dropped the icons and info can be seen by hovering
   >>> over the author's name. Idea being that you probably don't care how
   >>> they authenticated unless something is weird, and in that case you
   >>> can hover to check. Does that make sense, should I merge it?
-  >>> --[[Joey]] 
+  >>> --[[Joey]]
+
+  >>>> Yeah, go ahead. I preferred my layout with the author before the
+  >>>> comment - perhaps that's Livejournal's influence :-) - but I can always
+  >>>> edit the templates for my own site. As long as the default is something
+  >>>> reasonable and both layouts are possible, I don't really mind.
+  >>>> Minimizing the number of "resource" files in the basewiki also seems
+  >>>> a good goal. --[[smcv]]
 
 * Should the comments be visually set off more from the page above?
   Rather than just a horizontal rule, I'm thinking put the comments
@@ -44,6 +59,8 @@ Known issues with the [[plugins/comments]] plugin:
 
   > I did put them in a box in the CSS... I agree the default template
   > could do with visual improvement though. --[[smcv]]
+
+  >> I'll consider this solved by [[Joey]]'s changes. --[[smcv]]
 
 * Instead of just a link to add a comment, it could have a form to enter
   the title, similar to the form for adding a new blog post.
