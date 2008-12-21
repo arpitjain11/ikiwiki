@@ -300,3 +300,13 @@ mtime and ctime" are not ones that I know how to follow (given that touch sets
 >         }
 >
 > --[David A. Harding](http://dtrt.org/), 2008-12-20
+
+Thank you for a textbook excellent reproduction recipe.
+
+What appears to be going on here is that meta directives are not processed
+until the leaf pages are rendered, and thus the ctime setting is not
+available at the time that they are inlined, and the newer unix ctime is
+used. On the second build, the meta data has already been recorded.
+
+This can probably be avoided by processing meta date at scan time.
+--[[Joey]] 
