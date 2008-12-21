@@ -121,6 +121,13 @@ sub preprocess (@) {
 		$pagestate{$page}{meta}{authorurl}=$value if safeurl($value);
 		# fallthrough
 	}
+	elsif ($key eq 'date') {
+		eval q{use Date::Parse};
+		if (! $@) {
+			my $time = str2time($value);
+			$IkiWiki::pagectime{$page}=$time if defined $time;
+		}
+	}
 
 	if (! defined wantarray) {
 		# avoid collecting duplicate data during scan pass
@@ -128,14 +135,7 @@ sub preprocess (@) {
 	}
 
 	# Metadata collection that happens only during preprocessing pass.
-	if ($key eq 'date') {
-		eval q{use Date::Parse};
-		if (! $@) {
-			my $time = str2time($value);
-			$IkiWiki::pagectime{$page}=$time if defined $time;
-		}
-	}
-	elsif ($key eq 'permalink') {
+	if ($key eq 'permalink') {
 		if (safeurl($value)) {
 			$pagestate{$page}{meta}{permalink}=$value;
 			push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />', $destpage);

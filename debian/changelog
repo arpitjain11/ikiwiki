@@ -23,6 +23,8 @@ ikiwiki (2.71) UNRELEASED; urgency=low
   * aggregate: If a feed fails to be downloaded, try again immediatly
     next time aggregation is run, even if the usual time has not passed.
     Closes: #508622 (Michael Gold)
+  * meta: Process meta date during scan pass so that the date will always
+    affect sorting in inlines.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 17 Nov 2008 14:02:10 -0500
 
