@@ -432,8 +432,8 @@ sub sessioncgi ($$) {
 
 	if ($form->submitted eq PREVIEW) {
 		my $preview = IkiWiki::htmlize($location, $page, '_comment',
-				IkiWiki::linkify($page, $page,
-					IkiWiki::preprocess($page, $page,
+				IkiWiki::linkify($location, $page,
+					IkiWiki::preprocess($location, $page,
 						IkiWiki::filter($location,
 							$page, $content),
 						0, 1)));
