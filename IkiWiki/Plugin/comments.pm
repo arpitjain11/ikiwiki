@@ -447,6 +447,12 @@ sub sessioncgi ($$) {
 		$template->param(title => $form->field('subject'));
 		$template->param(ctime => displaytime(time));
 
+		IkiWiki::run_hooks(pagetemplate => sub {
+			shift->(page => $location,
+				destpage => $page,
+				template => $template);
+		});
+
 		$form->tmpl_param(page_preview => $template->output);
 	}
 	else {
