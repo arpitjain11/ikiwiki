@@ -531,6 +531,8 @@ sub pagetemplate (@) {
 	my $page = $params{page};
 	my $template = $params{template};
 	my $shown = ($template->query(name => 'commentslink') ||
+	             $template->query(name => 'commentsurl') ||
+	             $template->query(name => 'atomcommentsurl') ||
 	             $template->query(name => 'comments')) &&
 	            commentsshown($page);
 
@@ -557,6 +559,22 @@ sub pagetemplate (@) {
 			my $addcommenturl = IkiWiki::cgiurl(do => 'comment',
 				page => $page);
 			$template->param(addcommenturl => $addcommenturl);
+		}
+	}
+
+	if ($template->query(name => 'commentsurl')) {
+		if ($shown) {
+			$template->param(commentsurl =>
+				urlto($page, undef, 1).'#comments');
+		}
+	}
+
+	if ($template->query(name => 'atomcommentsurl') && $config{usedirs}) {
+		if ($shown) {
+			# This will 404 until there are some comments, but I
+			# think that's probably OK...
+			$template->param(atomcommentsurl =>
+				urlto($page, undef, 1).'comments.atom');
 		}
 	}
 
