@@ -39,4 +39,10 @@
 	  <TMPL_VAR CONTENT ESCAPE=HTML>
 	 </content>
 	</TMPL_IF>
+	<TMPL_IF NAME="COMMENTSURL">
+	<link rel="comments" href="<TMPL_VAR NAME="COMMENTSURL">" type="text/html" />
+	</TMPL_IF>
+	<TMPL_IF NAME="ATOMCOMMENTSURL">
+	<link rel="comments" href="<TMPL_VAR NAME="ATOMCOMMENTSURL">" type="application/atom+xml" />
+	</TMPL_IF>
 </entry>
