@@ -949,14 +949,14 @@ sub formattime ($;$) {
 sub beautify_urlpath ($) {
 	my $url=shift;
 
-	if ($config{usedirs}) {
-		$url =~ s!/index.$config{htmlext}$!/!;
-	}
-
 	# Ensure url is not an empty link, and if necessary,
 	# add ./ to avoid colon confusion.
-	if ($url !~ /^\// && $url !~ /^\.\.\//) {
+	if ($url !~ /^\// && $url !~ /^\.\.?\//) {
 		$url="./$url";
+	}
+
+	if ($config{usedirs}) {
+		$url =~ s!/index.$config{htmlext}$!/!;
 	}
 
 	return $url;

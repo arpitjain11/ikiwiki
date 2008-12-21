@@ -432,8 +432,8 @@ sub sessioncgi ($$) {
 
 	if ($form->submitted eq PREVIEW) {
 		my $preview = IkiWiki::htmlize($location, $page, '_comment',
-				IkiWiki::linkify($page, $page,
-					IkiWiki::preprocess($page, $page,
+				IkiWiki::linkify($location, $page,
+					IkiWiki::preprocess($location, $page,
 						IkiWiki::filter($location,
 							$page, $content),
 						0, 1)));
@@ -446,6 +446,12 @@ sub sessioncgi ($$) {
 		$template->param(content => $preview);
 		$template->param(title => $form->field('subject'));
 		$template->param(ctime => displaytime(time));
+
+		IkiWiki::run_hooks(pagetemplate => sub {
+			shift->(page => $location,
+				destpage => $page,
+				template => $template);
+		});
 
 		$form->tmpl_param(page_preview => $template->output);
 	}
@@ -525,6 +531,8 @@ sub pagetemplate (@) {
 	my $page = $params{page};
 	my $template = $params{template};
 	my $shown = ($template->query(name => 'commentslink') ||
+	             $template->query(name => 'commentsurl') ||
+	             $template->query(name => 'atomcommentsurl') ||
 	             $template->query(name => 'comments')) &&
 	            commentsshown($page);
 
@@ -551,6 +559,22 @@ sub pagetemplate (@) {
 			my $addcommenturl = IkiWiki::cgiurl(do => 'comment',
 				page => $page);
 			$template->param(addcommenturl => $addcommenturl);
+		}
+	}
+
+	if ($template->query(name => 'commentsurl')) {
+		if ($shown) {
+			$template->param(commentsurl =>
+				urlto($page, undef, 1).'#comments');
+		}
+	}
+
+	if ($template->query(name => 'atomcommentsurl') && $config{usedirs}) {
+		if ($shown) {
+			# This will 404 until there are some comments, but I
+			# think that's probably OK...
+			$template->param(atomcommentsurl =>
+				urlto($page, undef, 1).'comments.atom');
 		}
 	}
 
