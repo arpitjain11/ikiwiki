@@ -191,9 +191,10 @@ sub openiduser ($) {
 	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
 		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
 		my $display=$oid->display;
-		# Convert "user.somehost.com" to "user [somehost.com]".
+		# Convert "user.somehost.com" to "user [somehost.com]"
+		# (also "user.somehost.co.uk")
 		if ($display !~ /\[/) {
-			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
+			$display=~s/^([-a-zA-Z0-9]+?)\.([-.a-zA-Z0-9]+\.[a-z]+)$/$1 [$2]/;
 		}
 		# Convert "http://somehost.com/user" to "user [somehost.com]".
 		if ($display !~ /\[/) {
