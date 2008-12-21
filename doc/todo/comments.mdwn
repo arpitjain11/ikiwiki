@@ -18,9 +18,6 @@
   > Won't the remove plugin refuse to remove internal pages? This would be
   > a good feature to have, though. --[[smcv]]
 
-* Now that inline has some comments-specific functionality anyway, it would
-  be good to output `<link rel="comments">` in Atom and the equivalent in RSS.
-
 ## Patches pending merge
 
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
@@ -66,6 +63,11 @@
   > Fixed in my comments branch by commit 0844bd0b; commits 5b1cf21a
   > and c42f174e fix another `beautify_urlpath` bug and add a regression test
   > --[[smcv]]
+
+* Now that inline has some comments-specific functionality anyway, it would
+  be good to output `<link rel="comments">` in Atom and the equivalent in RSS.
+
+  > Fixed in my comments branch by d0d598e4, 3feebe31, 9e5f504e --[[smcv]]
 
 ## Won't fix
 
