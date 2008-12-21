@@ -25,7 +25,8 @@ There are some global options for the setup file:
 
 * `comments_pagespec`: [[ikiwiki/PageSpec]] of pages where comments are
   allowed. The default is not to allow comments on any pages. To allow
-  comments to all posts to a blog, you could use `blog/* and !*/Discussion`.
+  comments to all posts to a blog, you could use
+  `blog/posts/* and !*/Discussion`.
 * `comments_closed_pagespec`: [[ikiwiki/PageSpec]] of pages where
   posting of new comments is closed, but any existing comments will still
   be displayed. Often you will list a set of individual pages here.
