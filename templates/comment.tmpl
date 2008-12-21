@@ -1,31 +1,29 @@
 <div class="comment" id="<TMPL_VAR NAME=INLINEPAGE>">
 
+<div class="comment-subject"><a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a></div>
+
+<div class="inlinecontent">
+<TMPL_VAR CONTENT>
+</div>
+
 <div class="comment-header">
-By
+Comment by
 
 <TMPL_IF NAME="COMMENTUSER">
-<span class="author">
 <TMPL_IF NAME="COMMENTOPENID">
-
+<span class="author" title="OpenID">
 <a href="<TMPL_VAR NAME=COMMENTOPENID>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
-<img src="/wikiicons/openid.png" width="20" height="15" alt="[OpenID]"
-    title="Signed in with OpenID" />
-
+</span>
 <TMPL_ELSE>
-
+<span class="author" title="Signed in">
 <TMPL_IF NAME="COMMENTAUTHORURL">
 <a href="<TMPL_VAR NAME=COMMENTAUTHORURL>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
 <TMPL_ELSE>
 <TMPL_VAR NAME=COMMENTAUTHOR>
 </TMPL_IF>
-<img src="/wikiicons/signedin.png" width="15" height="15" alt="[Signed in]"
-    title="Signed in directly" />
-
-</TMPL_IF>
 </span>
-
+</TMPL_IF>
 <TMPL_ELSE><!-- !COMMENTUSER -->
-
 <TMPL_IF NAME=COMMENTIP>
 <span class="author" title="Unauthenticated, from <TMPL_VAR NAME=COMMENTIP>">
 <TMPL_ELSE><!-- !COMMENTIP -->
@@ -36,18 +34,9 @@ By
 <TMPL_ELSE>
 <TMPL_VAR NAME=AUTHOR>
 </TMPL_IF>
-<img src="/wikiicons/anonymous.png" width="15" height="15" alt="[Unauthenticated]" />
 </span>
-
 </TMPL_IF><!-- !COMMENTUSER -->
 
-(<TMPL_VAR CTIME>)
+&mdash; <TMPL_VAR CTIME>
 </div>
-
-<div class="comment-subject"><a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a></div>
-
-<div class="inlinecontent">
-<TMPL_VAR CONTENT>
-</div>
-
 </div><!--.comment-->
