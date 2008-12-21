@@ -1,7 +1,13 @@
 <div class="comment" id="<TMPL_VAR NAME=INLINEPAGE>">
 
+<div class="comment-subject"><a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a></div>
+
+<div class="inlinecontent">
+<TMPL_VAR CONTENT>
+</div>
+
 <div class="comment-header">
-By
+Comment by
 
 <TMPL_IF NAME="COMMENTUSER">
 <TMPL_IF NAME="COMMENTOPENID">
@@ -31,13 +37,6 @@ By
 </span>
 </TMPL_IF><!-- !COMMENTUSER -->
 
-(<TMPL_VAR CTIME>)
+&mdash; <TMPL_VAR CTIME>
 </div>
-
-<div class="comment-subject"><a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a></div>
-
-<div class="inlinecontent">
-<TMPL_VAR CONTENT>
-</div>
-
 </div><!--.comment-->
