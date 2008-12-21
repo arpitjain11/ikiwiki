@@ -57,3 +57,45 @@ out the sort option. --[[Joey]]
 	        return sprintf(gettext("unknown sort type %s"), $params{sort});
 	}
 
+> On further testing, I find that the bug is limited to the first time
+> creation time should be used and has nothing to do with setting the sort
+> parameter. Revised steps to reproduce: --[David A.  Harding](http://dtrt.org), 2008-12-20
+> 
+> 1. Create pages that sort different by mtime and ctime
+> 
+> 2. inline pages="somepages/*"
+> 
+> 3. ikiwiki --setup setup_file
+> 
+> 4. Pages are output incorrectly in mtime order
+> 
+> 5. ikiwiki --setup setup_file
+> 
+> 6. Pages are output correctly in ctime order
+> 
+> 7. Create new page in somepages/, set its ctime to earlier than another
+>    page in sompages/
+> 
+> 8. ikiwiki --setup setup_file
+> 
+> 9. All previously sorted pages output correctly in ctime order but new
+>    page is output incorrectly at the top as if its mtime was its ctime
+> 
+> 10. ikiwiki --setup setup_file
+> 
+> 11. All pages, including new page, are output correctly in ctime order
+
+You're confusing ctime and creation time. This is perhaps not suprising, as
+ikiwiki uses the term 'ctime' to refer to creation time. However, the unix
+ctime value is not the same thing. Unix ctime can change if a file changes
+owner, or in some cases, permissions. Unix ctime also always changes
+when the file is modified. Ikiwiki wants a first creation date of the file,
+and it accomplishes this by recording the initial ctime of a file the first
+time it processes it, and *preserving* that creation time forever, ignoring
+later ctime changes.
+
+I suspect that this, coupled with the fact that ikiwiki sorts newest pages
+first, explains everything you describe. If not, please send me a shell script
+test case I can run, as instructions like "Create pages that sort different by
+mtime and ctime" are not ones that I know how to follow (given that touch sets
+*both*). --[[Joey]] 

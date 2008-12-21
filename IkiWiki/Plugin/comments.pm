@@ -16,6 +16,7 @@ use constant POST_COMMENT => "Post comment";
 use constant CANCEL => "Cancel";
 
 my $postcomment;
+my %commentstate;
 
 sub import {
 	hook(type => "checkconfig", id => 'comments',  call => \&checkconfig);
@@ -152,7 +153,6 @@ sub preprocess {
 	my $commentauthor;
 	my $commentauthorurl;
 	my $commentopenid;
-
 	if (defined $params{username}) {
 		$commentuser = $params{username};
 
@@ -181,11 +181,11 @@ sub preprocess {
 		$commentauthor = gettext("Anonymous");
 	}
 
-	$pagestate{$page}{comments}{commentuser} = $commentuser;
-	$pagestate{$page}{comments}{commentopenid} = $commentopenid;
-	$pagestate{$page}{comments}{commentip} = $commentip;
-	$pagestate{$page}{comments}{commentauthor} = $commentauthor;
-	$pagestate{$page}{comments}{commentauthorurl} = $commentauthorurl;
+	$commentstate{$page}{commentuser} = $commentuser;
+	$commentstate{$page}{commentopenid} = $commentopenid;
+	$commentstate{$page}{commentip} = $commentip;
+	$commentstate{$page}{commentauthor} = $commentauthor;
+	$commentstate{$page}{commentauthorurl} = $commentauthorurl;
 	if (! defined $pagestate{$page}{meta}{author}) {
 		$pagestate{$page}{meta}{author} = $commentauthor;
 	}
@@ -570,27 +570,27 @@ sub pagetemplate (@) {
 
 	if ($template->query(name => 'commentuser')) {
 		$template->param(commentuser =>
-			$pagestate{$page}{comments}{commentuser});
+			$commentstate{$page}{commentuser});
 	}
 
 	if ($template->query(name => 'commentopenid')) {
 		$template->param(commentopenid =>
-			$pagestate{$page}{comments}{commentopenid});
+			$commentstate{$page}{commentopenid});
 	}
 
 	if ($template->query(name => 'commentip')) {
 		$template->param(commentip =>
-			$pagestate{$page}{comments}{commentip});
+			$commentstate{$page}{commentip});
 	}
 
 	if ($template->query(name => 'commentauthor')) {
 		$template->param(commentauthor =>
-			$pagestate{$page}{comments}{commentauthor});
+			$commentstate{$page}{commentauthor});
 	}
 
 	if ($template->query(name => 'commentauthorurl')) {
 		$template->param(commentauthorurl =>
-			$pagestate{$page}{comments}{commentauthorurl});
+			$commentstate{$page}{commentauthorurl});
 	}
 }
 

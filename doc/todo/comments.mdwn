@@ -31,6 +31,13 @@ Known issues with the [[plugins/comments]] plugin:
   >>> The new code produces links like /wikiisons/openid.png, which
   >>> fail if ikiwiki is not at the root of the web server. --[[Joey]] 
 
+  >>> I got to wondering if the icons are needed. On my comments branch
+  >>> (not master), I've dropped the icons and info can be seen by hovering
+  >>> over the author's name. Idea being that you probably don't care how
+  >>> they authenticated unless something is weird, and in that case you
+  >>> can hover to check. Does that make sense, should I merge it?
+  >>> --[[Joey]] 
+
 * Should the comments be visually set off more from the page above?
   Rather than just a horizontal rule, I'm thinking put the comments
   in a box like is used for inlined pages.
