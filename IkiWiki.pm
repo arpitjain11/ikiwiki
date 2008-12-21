@@ -951,7 +951,7 @@ sub beautify_urlpath ($) {
 
 	# Ensure url is not an empty link, and if necessary,
 	# add ./ to avoid colon confusion.
-	if ($url !~ /^\// && $url !~ /^\.\.\//) {
+	if ($url !~ /^\// && $url !~ /^\.\.?\//) {
 		$url="./$url";
 	}
 
