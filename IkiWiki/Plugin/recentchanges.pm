@@ -95,6 +95,15 @@ sub cgi ($) {
 
 		IkiWiki::loadindex();
 
+		# If the page is internal (like a comment), see if it has a
+		# permalink. Comments do.
+		if (IkiWiki::isinternal($page) &&
+		    defined $pagestate{$page}{meta}{permalink}) {
+			IkiWiki::redirect($cgi,
+			                  $pagestate{$page}{meta}{permalink});
+			exit;
+		}
+
 		my $link=bestlink("", $page);
 		if (! length $link) {
 			print "Content-type: text/html\n\n";
