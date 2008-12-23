@@ -1,0 +1,72 @@
+Version 3.0 of ikiwiki makes some significant configuration changes, which
+you will need to deal with when upgrading from ikiwiki 2.x.
+
+[[!toc ]]
+
+# moving settings from Preferences page
+
+The admin preferences page used to have settings for allowed attachments,
+locked pages, and banned users. These three settings have moved to the
+setup file:
+
+	allowed_attachments => "",
+	locked_pages => "",
+	banned_users => "",
+
+If you have not yet upgraded to ikiwiki 3.0, you can look at the admin
+preferences page to see if any of these values is shown there, and copy
+them into the setup file.
+
+## setup file format change
+
+The layout of the setup file changed in a significant way in version 2.60
+of ikiwiki. If you have not changed yours to the new format, now would be a
+good time to do so. Some new features, like the [[plugins/websetup]] interface,
+need the new format setup file.
+  
+You can convert old setup files into the new format by running
+`ikiwiki-transition setupformat your.setup`
+
+## prefix directives
+
+In 3.0, the syntax ikiwiki uses for [[directives|ikiwiki/directive]] has
+changed, requiring that the directive start with a bang: 
+
+	\[[!directive ...]]
+
+If you would like to keep the old syntax, it is still supported, add the
+following to your setup file:
+	
+	prefix_directives => 0,
+
+But it's not hard to convert your wiki to the new syntax. You can use
+[[ikiwiki-transition]]. It will convert preprocessor directives in all
+files given on the command line. To convert an entire wiki:
+
+	find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-transition prefix_directives
+
+Be sure to modify the find to list all pages in the wiki if you're using
+other markup than markdown. You will probably want to commit the changes
+when you're done too.
+
+## aggregateinternal
+
+If your wiki uses the [[aggregate|plugins/aggregate]] plugin, it will start
+to aggregate feeds to special "internal" pages. 
+
+If you don't want this change, you can add the following to your setup
+file:
+
+	aggregateinternal => 0,
+
+Otherwise, follow this procedure to upgrade a wiki using the aggregate plugin:
+
+1. Update all [[PageSpecs|ikiwiki/PageSpec]] that refer to the aggregated
+   pages -- such as those in inlines. Put "internal()" around globs
+   in those PageSpecs. For example, if the PageSpec was `foo/*`, it should
+   be changed to `internal(foo/*)`. This has to be done because internal
+   pages are not matched by regular globs.
+2. Use [[ikiwiki-transition]] to rename all existing aggregated `.html`
+   files in the srcdir. The command to run is
+   `ikiwiki-transition aggregateinternal your.setup`,
+3. Refresh the wiki. (`ikiwiki -setup your.setup -refresh`)

@@ -7,10 +7,7 @@ This is the roadmap for ikiwiki development.
 
 Released 29 April 2006.
 
-The 1.x series changed a great deal over the more than 50 releases in its
-lifetime. It is now in maintenance mode, only security issues or really bad
-bugs will be fixed in 1.x going forward. 1.x will stop being supported with
-the release of 3.0.
+The 1.x series is no longer supported.
 
 ----
 
@@ -32,20 +29,18 @@ the release of 3.0.
 
 Released 30 April 2007.
 
-The 2.x series is expected to undergo continuing development for some time,
-adding improvements and new features, but avoiding changes that break
-backwards compatability.
+The 2.x series is now in maintenance mode. Only security fixes and fixes for
+really bad bugs will be applied going forward.
 
 ----
 
 # 3.0
 
-Version 3.0 will be an opportunity to make significant transitions.
+Version 3.0 is an opportunity to make significant transitions, and also adds
+many new features.
 
-* Default to using `prefix_directives`.
-* Default to using `aggregateinternal`.
-* Remove deprecated prefs form settings for `allowed_attachments` and
-  `locked_pages`.
+* See [[tips/upgrade_to_3.0]] for the steps you will need to follow
+  when upgrading to this version.
 * Finalise a new version of the plugin API, exporting additional commonly
   used functions from IkiWiki.pm. See [[todo/firm_up_plugin_interface]]
 
@@ -53,6 +48,10 @@ It will include a vast number of new features, bugfixes, and other
 improvements, far too many to list here.
 
 Release is planned for fall^Wlate, 2008.
+
+The 3.x series is expected to undergo continuing development for some time,
+adding improvements and new features, but avoiding changes that break
+backwards compatability.
 
 ----
 
