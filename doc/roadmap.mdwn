@@ -56,8 +56,8 @@ The highlights of the changes in version 3.0 include:
 * Support for [[tips/trusted_git_push]].
 * The RecentChanges page is compiled statically, not generated the the CGI.
 * A new version (3.00) of the plugin API, exporting additional
-  commonly used functions from IkiWiki.pm.
-  See [[todo/firm_up_plugin_interface]]
+  commonly used functions from IkiWiki.pm. Nearly everything in ikiwiki is
+  now a plugin, from WikiLinks to page editing, to RecentChanges.
 * Far too many bug fixes, features, and enhancements to list here.
 
 Release is planned for fall^Wlate, 2008.
