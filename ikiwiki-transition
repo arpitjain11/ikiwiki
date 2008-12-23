@@ -113,8 +113,6 @@ sub aggregateinternal {
 	IkiWiki::checkconfig();
 
 	IkiWiki::Plugin::aggregate::migrate_to_internal();
-
-	print "... now add aggregateinternal => 1 to your .setup file\n";
 }
 
 sub setupformat {

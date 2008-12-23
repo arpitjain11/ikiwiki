@@ -46,7 +46,7 @@ sub getsetup () {
 		},
 		aggregateinternal => {
 			type => "boolean",
-			example => 0,
+			example => 1,
 			description => "enable aggregation to internal pages?",
 			safe => 0, # enabling needs manual transition
 			rebuild => 0,
@@ -61,6 +61,10 @@ sub getsetup () {
 }
 
 sub checkconfig () {
+	if (! defined $config{aggregateinternal}) {
+		$config{aggregateinternal}=1;
+	}
+
 	if ($config{aggregate} && ! ($config{post_commit} && 
 	                             IkiWiki::commit_hook_enabled())) {
 		launchaggregation();
