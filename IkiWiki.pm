@@ -194,7 +194,7 @@ sub getsetup () {
 	},
 	prefix_directives => {
 		type => "boolean",
-		default => 0,
+		default => 1,
 		description => "use '!'-prefixed preprocessor directives?",
 		safe => 0, # changing requires manual transition
 		rebuild => 1,
