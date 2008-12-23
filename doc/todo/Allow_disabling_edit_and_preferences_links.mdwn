@@ -38,3 +38,11 @@ Patch:
 > really want to disable the editpage plugin in the setup file for the
 > public, static wiki. Sounds like you might also want to turn off cgi
 > entirely for that build. --[[Joey]] 
+
+>> I want to retain the same page.tmpl for both sites (different templates
+>> will just increase the maintenance hell), so disabling the links in the
+>> config for one public site works better in my case.
+>>
+>> I do have the editpage plugin disabled for the public static wiki, but
+>> the link still appears on the site.  I want to keep the cgi on, so that
+>> the site is still searchable. --[[puck]]
