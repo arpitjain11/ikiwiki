@@ -24,7 +24,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
 		 inject
                  %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
-our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
+our $VERSION = 3.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 

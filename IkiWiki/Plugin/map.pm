@@ -9,7 +9,7 @@ package IkiWiki::Plugin::map;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 sub import {
 	hook(type => "getsetup", id => "map", call => \&getsetup);

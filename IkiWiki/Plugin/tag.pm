@@ -4,7 +4,7 @@ package IkiWiki::Plugin::tag;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 my %tags;
 

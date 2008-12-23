@@ -3,7 +3,7 @@ package IkiWiki::Plugin::format;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 sub import {
 	hook(type => "preprocess", id => "format", call => \&preprocess);

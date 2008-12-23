@@ -7,7 +7,7 @@ package IkiWiki::Plugin::comments;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use Encode;
 use POSIX qw(strftime);
 

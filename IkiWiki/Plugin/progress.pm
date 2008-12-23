@@ -3,7 +3,7 @@ package IkiWiki::Plugin::progress;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 my $percentage_pattern = qr/[0-9]+\%?/; # pattern to validate percentages
 
