@@ -1597,8 +1597,6 @@ sub rcs_receive () {
 }
 
 sub globlist_to_pagespec ($) {
-	print STDERR "warning: deprecated GlobList style PageSpec \"$_[0]\" will stop working in ikiwiki version 3.0\n";
-
 	my @globlist=split(' ', shift);
 
 	my (@spec, @skip);
@@ -1626,7 +1624,10 @@ sub globlist_to_pagespec ($) {
 
 sub is_globlist ($) {
 	my $s=shift;
-	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
+	my $ret= ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
+	print STDERR "warning: deprecated GlobList style PageSpec \"$s\" will stop working in ikiwiki version 3.0\n"
+		if $ret && $s !~ /TMPL_VAR/; # hack alert
+	return $ret;
 }
 
 sub safequote ($) {
