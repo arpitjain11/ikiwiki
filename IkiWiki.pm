@@ -1596,37 +1596,6 @@ sub rcs_receive () {
 	$hooks{rcs}{rcs_receive}{call}->();
 }
 
-sub globlist_to_pagespec ($) {
-	my @globlist=split(' ', shift);
-
-	my (@spec, @skip);
-	foreach my $glob (@globlist) {
-		if ($glob=~/^!(.*)/) {
-			push @skip, $glob;
-		}
-		else {
-			push @spec, $glob;
-		}
-	}
-
-	my $spec=join(' or ', @spec);
-	if (@skip) {
-		my $skip=join(' and ', @skip);
-		if (length $spec) {
-			$spec="$skip and ($spec)";
-		}
-		else {
-			$spec=$skip;
-		}
-	}
-	return $spec;
-}
-
-sub is_globlist ($) {
-	my $s=shift;
-	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
-}
-
 sub safequote ($) {
 	my $s=shift;
 	$s=~s/[{}]//g;
@@ -1718,25 +1687,11 @@ sub pagespec_merge ($$) {
 	my $b=shift;
 
 	return $a if $a eq $b;
-
-        # Support for old-style GlobLists.
-        if (is_globlist($a)) {
-                $a=globlist_to_pagespec($a);
-        }
-        if (is_globlist($b)) {
-                $b=globlist_to_pagespec($b);
-        }
-
 	return "($a) or ($b)";
 }
 
 sub pagespec_translate ($) {
 	my $spec=shift;
-
-	# Support for old-style GlobLists.
-	if (is_globlist($spec)) {
-		$spec=globlist_to_pagespec($spec);
-	}
 
 	# Convert spec to perl code.
 	my $code="";

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 58;
+use Test::More tests => 51;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -77,12 +77,3 @@ ok(! pagespec_match("foo", "no_such_function(foo)"), "foo");
 my $ret=pagespec_match("foo", "(invalid");
 ok(! $ret, "syntax error");
 ok($ret =~ /syntax error/, "error message");
-
-# old style globlists
-ok(pagespec_match("foo", "foo bar"), "simple list");
-ok(pagespec_match("bar", "foo bar"), "simple list 2");
-ok(pagespec_match("foo", "f?? !foz"));
-ok(! pagespec_match("foo", "f?? !foo"));
-ok(! pagespec_match("foo", "* !foo"));
-ok(! pagespec_match("foo", "foo !foo"));
-ok(! pagespec_match("foo.png", "* !*.*"));

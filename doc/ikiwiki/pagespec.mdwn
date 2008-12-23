@@ -72,22 +72,3 @@ filenames of the pages in the wiki, so a pagespec "foo" used on page
 "a/b" will not match a page named "a/foo" or "a/b/foo". To match
 relative to the directory of the page containing the pagespec, you can
 use "./". For example, "./foo" on page "a/b" matches page "a/foo".
-
-## Old syntax
-
-The old PageSpec syntax was called a "GlobList", and worked differently in
-two ways:
-
-1. "and" and "or" were not used; any page matching any item from the list
-   matched.
-2. If an item was prefixed with "`!`", then no page matching that item
-   matched, even if it matched an earlier list item.
-
-For example, here is the old way to match all pages except for the SandBox
-and Discussion pages:
-
-	* !SandBox !*/Discussion
-
-Using this old syntax is still supported. However, the old syntax is
-deprecated and will be removed at some point, and using the new syntax is
-recommended.

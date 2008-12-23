@@ -49,6 +49,23 @@ Be sure to modify the find to list all pages in the wiki if you're using
 other markup than markdown. You will probably want to commit the changes
 when you're done too.
 
+## GlobLists
+
+In 3.0, the old "GlobList" syntax for [[PageSpecs|ikiwiki/PageSpec]] is no
+longer supported. A GlobList contains multiple term, but does not separate
+them with "and" or "or":
+
+	sandbox !*/Discussion
+
+To convert this to a modern PageSpec, simply add "and" or "or" as
+appropriate between terms:
+	
+	sandbox and !*/Discussion
+
+GlobLists have been deprecated for more than two years. If your wiki dates
+to the ikiwiki 1.0 era, you should check it for any that might have lurked
+unnoticed in it since back then.
+
 ## aggregateinternal
 
 If your wiki uses the [[aggregate|plugins/aggregate]] plugin, it will start
