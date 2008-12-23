@@ -25,3 +25,16 @@ Patch:
         }
 
 </pre>
+
+> On irc, you said, "That was to allow the hack to of using wikistatedir to
+> allow me to generate two websites, one with inline editting, the other a
+> static page for public consumption."
+> 
+> The edit and preferences links can already be disabled by editing
+> `page.tmpl`. (Look for PREFSURL and EDITURL).
+> 
+> More to the point though, disabling those links does not disable anyone
+> consticting the urls by hand and logging in and editing a page. So you'd
+> really want to disable the editpage plugin in the setup file for the
+> public, static wiki. Sounds like you might also want to turn off cgi
+> entirely for that build. --[[Joey]] 
