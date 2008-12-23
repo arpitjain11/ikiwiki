@@ -42,12 +42,23 @@ follow when upgrading your wiki to this version.
 
 The highlights of the changes in version 3.0 include:
 
-
-* A new version of the plugin API, exporting additional commonly
-  used functions from IkiWiki.pm. See [[todo/firm_up_plugin_interface]]
-
-It will include a vast number of new features, bugfixes, and other
-improvements, far too many to list here.
+* Blog-style [[plugins/comments]] as an alternative to Discussion pages.
+* Support for uploading [[attachments|plugins/attachment]].
+* Can [[plugins/rename]] and [[plugins/remove]] pages and files via the web.
+* [[Web_based_setup|plugins/websetup]].
+* Many new plugins including [[plugins/htmlbalance]], [[plugins/format]],
+  [[plugins/progress]], [[plugins/color]], [[plugins/autoindex]],
+  [[plugins/cutpaste]], [[plugins/hnb]], [[plugins/creole]], [[plugins/txt]],
+  [[plugins/amazon_s3]], [[plugins/pinger]], [[plugins/pingee]],
+  [[plugins/edittemplate]]
+* Support for additional revision control systems: [[rcs/bzr]],
+  [[rcs/monotone]]
+* Support for [[tips/trusted_git_push]].
+* The RecentChanges page is compiled statically, not generated the the CGI.
+* A new version (3.00) of the plugin API, exporting additional
+  commonly used functions from IkiWiki.pm.
+  See [[todo/firm_up_plugin_interface]]
+* Far too many bug fixes, features, and enhancements to list here.
 
 Release is planned for fall^Wlate, 2008.
 
