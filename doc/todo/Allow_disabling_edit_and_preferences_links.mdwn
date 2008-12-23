@@ -1,0 +1,27 @@
+This patch allows disabling the edit and preferences link in the config file.  It is backwards compatible (so peoples edit and preferences links won't suddenly vanish).
+
+To disable edit or prefs respectively, add the following to the config file:
+
+<pre>
+  'edit' => 0,
+  'prefs' => 0, 
+</pre>
+
+Patch:
+<pre>
+--- /usr/share/perl5/IkiWiki/Render.pm.orig     2008-12-23 16:49:00.000000000 +1300
++++ /usr/share/perl5/IkiWiki/Render.pm  2008-12-23 16:55:40.000000000 +1300
+@@ -80,8 +80,10 @@
+        my $actions=0;
+ 
+        if (length $config{cgiurl}) {
+-               $template->param(editurl => cgiurl(do => "edit", page => $page));
+-               $template->param(prefsurl => cgiurl(do => "prefs"));
++               $template->param(editurl => cgiurl(do => "edit", page => $page))
++                       if ! defined $config{edit} || (defined $config{edit} && $config{edit} == 1);
++               $template->param(prefsurl => cgiurl(do => "prefs"))
++                       if ! defined $config{prefs} || (defined $config{prefs} && $config{prefs} == 1);
+                $actions++;
+        }
+
+</pre>
