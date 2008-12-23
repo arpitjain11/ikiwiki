@@ -1597,6 +1597,8 @@ sub rcs_receive () {
 }
 
 sub globlist_to_pagespec ($) {
+	print STDERR "warning: deprecated GlobList style PageSpec \"$_[0]\" will stop working in ikiwiki version 3.0\n";
+
 	my @globlist=split(' ', shift);
 
 	my (@spec, @skip);
