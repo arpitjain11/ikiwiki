@@ -33,7 +33,14 @@ sub getsetup () {
 		plugin => {
 			safe => 1,
 			rebuild => undef,
-		};
+		},
+		camelcase_ignore => {
+			type => "string",
+			example => [],
+			description => "list of words to not turn into links",
+			safe => 1,
+			rebuild => undef, # might change links
+		},
 }
 
 sub linkify (@) {
@@ -42,7 +49,7 @@ sub linkify (@) {
 	my $destpage=$params{destpage};
 
 	$params{content}=~s{$link_regexp}{
-		htmllink($page, $destpage, linkpage($1))
+		ignored($1) ? $1 : htmllink($page, $destpage, linkpage($1))
 	}eg;
 
 	return $params{content};
@@ -54,8 +61,13 @@ sub scan (@) {
         my $content=$params{content};
 
 	while ($content =~ /$link_regexp/g) {
-		push @{$links{$page}}, linkpage($1);
+		push @{$links{$page}}, linkpage($1) unless ignored($1)
 	}
+}
+
+sub ignored ($) {
+	my $word=lc shift;
+	grep { $word eq lc $_ } @{$config{'camelcase_ignore'}}
 }
 
 1
