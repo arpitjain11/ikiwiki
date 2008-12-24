@@ -1,31 +1,29 @@
-Version 3.0 of ikiwiki makes some significant configuration changes, which
+Version 3.0 of ikiwiki makes some significant changes, which
 you will need to deal with when upgrading from ikiwiki 2.x.
 
 [[!toc ]]
-
-# moving settings from Preferences page
-
-The admin preferences page used to have settings for allowed attachments,
-locked pages, and banned users. These three settings have moved to the
-setup file:
-
-	allowed_attachments => "",
-	locked_pages => "",
-	banned_users => "",
-
-If you have not yet upgraded to ikiwiki 3.0, you can look at the admin
-preferences page to see if any of these values is shown there, and copy
-them into the setup file.
 
 ## setup file format change
 
 The layout of the setup file changed in a significant way in version 2.60
 of ikiwiki. If you have not changed yours to the new format, now would be a
-good time to do so. Some new features, like the [[plugins/websetup]] interface,
-need the new format setup file.
+good time to do so. Some new features, like the [[plugins/websetup]]
+interface, need the new format setup file.
   
 You can convert old setup files into the new format by running
 `ikiwiki-transition setupformat your.setup`
+
+# moving settings from Preferences page
+
+The admin preferences page used to have settings for allowed attachments,
+locked pages, and banned users. These three settings have moved to the
+setup file, and will no longer appear on the admin preferences page once
+your wiki is upgraded to 3.0.
+
+You can move these preferences into the setup file by running
+`ikiwiki-transition moveprefs your.setup`
+
+(Make sure you have converted the setuop file to the new format first.)
 
 ## prefix directives
 
@@ -70,7 +68,7 @@ about any GlobLists it sees.
 ## aggregateinternal
 
 If your wiki uses the [[aggregate|plugins/aggregate]] plugin, it will start
-to aggregate feeds to special "internal" pages. 
+to aggregate feeds to special "internal" pages.
 
 If you don't want this change, you can add the following to your setup
 file:

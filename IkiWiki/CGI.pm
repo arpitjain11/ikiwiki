@@ -203,25 +203,9 @@ sub cgi_prefs ($$) {
 	
 	my $user_name=$session->param("name");
 
-	# XXX deprecated, should be removed eventually
-	$form->field(name => "banned_users", size => 50, fieldset => "admin");
-	if (! is_admin($user_name)) {
-		$form->field(name => "banned_users", type => "hidden");
-	}
 	if (! $form->submitted) {
 		$form->field(name => "email", force => 1,
 			value => userinfo_get($user_name, "email"));
-		if (is_admin($user_name)) {
-			my $value=join(" ", get_banned_users());
-			if (length $value) {
-				$form->field(name => "banned_users", force => 1,
-					value => join(" ", get_banned_users()),
-					comment => "deprecated; please move to banned_users in setup file");
-			}
-			else {
-				$form->field(name => "banned_users", type => "hidden");
-			}
-		}
 	}
 	
 	if ($form->submitted eq 'Logout') {
@@ -239,17 +223,6 @@ sub cgi_prefs ($$) {
 				error("failed to set email");
 		}
 
-		# XXX deprecated, should be removed eventually
-		if (is_admin($user_name)) {
-			set_banned_users(grep { ! is_admin($_) }
-					split(' ',
-						$form->field("banned_users"))) ||
-				error("failed saving changes");
-			if (! length $form->field("banned_users")) {
-				$form->field(name => "banned_users", type => "hidden");
-			}
-		}
-
 		$form->text(gettext("Preferences saved."));
 	}
 	
@@ -262,10 +235,7 @@ sub check_banned ($$) {
 
 	my $name=$session->param("name");
 	if (defined $name) {
-		# XXX banned in userinfo is deprecated, should be removed
-		# eventually, and only banned_users be checked.
-		if (userinfo_get($session->param("name"), "banned") ||
-		    grep { $name eq $_ } @{$config{banned_users}}) {
+		if (grep { $name eq $_ } @{$config{banned_users}}) {
 			print $q->header(-status => "403 Forbidden");
 			$session->delete();
 			print gettext("You are banned.");
