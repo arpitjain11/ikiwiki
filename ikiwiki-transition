@@ -1,4 +1,4 @@
-#!/usr/bin/perl -i
+#!/usr/bin/perl
 use warnings;
 use strict;
 use IkiWiki;
@@ -42,11 +42,33 @@ sub handle_directive {
 }
 
 sub prefix_directives {
-	$/=undef; # process whole files at once
-	
-	while (<>) {
-		s{$regex}{handle_directive($1, $2, $3, $4)}eg;
-		print;
+	my $setup=shift;
+	if (! defined $setup) {
+		usage();
+	}
+
+	require IkiWiki::Setup;
+	require IkiWiki::Plugin::aggregate;
+
+	%config = IkiWiki::defaultconfig();
+	IkiWiki::Setup::load($setup);
+	IkiWiki::loadplugins();
+	IkiWiki::checkconfig();
+	IkiWiki::loadindex();
+
+	if (! %pagesources) {
+		error "ikiwiki has not built this wiki yet, cannot transition";
+	}
+
+	foreach my $page (values %pagesources) {
+		next unless defined pagetype($page) &&
+		            -f $config{srcdir}."/".$page;
+		my $content=readfile($config{srcdir}."/".$page);
+		my $oldcontent=$content;
+		$content=~s{$regex}{handle_directive($1, $2, $3, $4)}eg;
+		if ($oldcontent ne $content) {
+			writefile($page, $config{srcdir}, $content);
+		}
 	}
 }
 
@@ -109,7 +131,7 @@ sub aggregateinternal {
 	require IkiWiki::Plugin::aggregate;
 
 	%config = IkiWiki::defaultconfig();
-	IkiWiki::Setup::load();
+	IkiWiki::Setup::load($setup);
 	IkiWiki::checkconfig();
 
 	IkiWiki::Plugin::aggregate::migrate_to_internal();
@@ -196,12 +218,12 @@ sub moveprefs {
 sub usage {
 	print STDERR "Usage: ikiwiki-transition type ...\n";
 	print STDERR "Currently supported transition subcommands:\n";
-	print STDERR "\tprefix_directives file ...\n";
-	print STDERR "\tindexdb srcdir\n";
-	print STDERR "\thashpassword srcdir\n";
+	print STDERR "\tprefix_directives setupfile ...\n";
 	print STDERR "\taggregateinternal setupfile\n";
 	print STDERR "\tsetupformat setupfile\n";
 	print STDERR "\tmoveprefs setupfile\n";
+	print STDERR "\thashpassword srcdir\n";
+	print STDERR "\tindexdb srcdir\n";
 	exit 1;
 }
 

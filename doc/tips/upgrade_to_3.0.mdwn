@@ -23,7 +23,7 @@ your wiki is upgraded to 3.0.
 You can move these preferences into the setup file by running
 `ikiwiki-transition moveprefs your.setup`
 
-(Make sure you have converted the setuop file to the new format first.)
+(Make sure you have converted the setup file to the new format first.)
 
 ## prefix directives
 
@@ -37,15 +37,10 @@ following to your setup file:
 	
 	prefix_directives => 0,
 
-But it's not hard to convert your wiki to the new syntax. You can use
-[[ikiwiki-transition]]. It will convert preprocessor directives in all
-files given on the command line. To convert an entire wiki:
+To convert to the new syntax, run 
+`ikiwiki-transition prefix_directives your.setup`
 
-	find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-transition prefix_directives
-
-Be sure to modify the find to list all pages in the wiki if you're using
-other markup than markdown. You will probably want to commit the changes
-when you're done too.
+(And then commit the changes it makes to pages in your srcdir.)
 
 ## GlobLists
 
