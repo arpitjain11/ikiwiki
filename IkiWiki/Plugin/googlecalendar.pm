@@ -5,6 +5,8 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
+print STDERR "warning: the googlecalendar plugin is deprecated and will be removed in ikiwiki 3.0 (use the embed plugin instead)\n";
+
 sub import {
 	hook(type => "getsetup", id => "googlecalendar",
 		call => \&getsetup);
