@@ -51,10 +51,10 @@ The highlights of the changes in version 3.0 include:
   [[plugins/cutpaste]], [[plugins/hnb]], [[plugins/creole]], [[plugins/txt]],
   [[plugins/amazon_s3]], [[plugins/pinger]], [[plugins/pingee]],
   [[plugins/edittemplate]]
+* The RecentChanges page is compiled statically, not generated from the CGI.
 * Support for additional revision control systems: [[rcs/bzr]],
   [[rcs/monotone]]
 * Support for [[tips/trusted_git_push]].
-* The RecentChanges page is compiled statically, not generated from the CGI.
 * A new version (3.00) of the plugin API, exporting additional
   commonly used functions from `IkiWiki.pm`. Nearly everything in ikiwiki is
   now a plugin, from WikiLinks to page editing, to RecentChanges.

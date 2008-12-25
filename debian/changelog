@@ -1,9 +1,24 @@
-ikiwiki (2.72) UNRELEASED; urgency=low
+ikiwiki (3.00) UNRELEASED; urgency=low
+
+  * Remove support for GlobLists.
+  * Remove support for configuring allowed attachments, locked pages,
+    and banned users from the admin preferences page. These can only be
+    controlled via the setup file now.
+  * ikiwiki-transition moveprefs can be used to move the above
+    admin preferences into a setup file.
+  * prefix_directives and aggregate_internal are now turned on by default.
+  * ikiwiki-transition prefix_directives syntax changed
+  * googlecalendar: removed this deprecated plugin. Use embed instead.
+  * Version 3.00 of the plugin API.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 24 Dec 2008 19:49:36 -0500
+
+ikiwiki (2.72) unstable; urgency=low
 
   * Avoid comments in recentchanges being broken links (smcv)
   * Add deprecation warning for GlobLists, which will stop working in 3.0.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 22 Dec 2008 19:02:16 -0500
+ -- Joey Hess <joeyh@debian.org>  Wed, 24 Dec 2008 19:49:32 -0500
 
 ikiwiki (2.71) unstable; urgency=low
 
