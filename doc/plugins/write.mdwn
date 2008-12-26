@@ -55,8 +55,8 @@ plugin, and a "call" parameter, which tells what function to call for the
 hook.
 
 An optional "last" parameter, if set to a true value, makes the hook run
-after all other hooks of its type. Useful if the hook depends on some other
-hook being run first.
+after all other hooks of its type, and an optional "first" parameter makes
+it run first. Useful if the hook depends on some other hook being run first.
 
 ## Types of hooks
 

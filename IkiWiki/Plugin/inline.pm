@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+!/usr/bin/perl
 # Page inlining and blogging.
 package IkiWiki::Plugin::inline;
 
@@ -22,7 +22,7 @@ sub import {
 		call => \&IkiWiki::preprocess_inline);
 	hook(type => "pagetemplate", id => "inline",
 		call => \&IkiWiki::pagetemplate_inline);
-	hook(type => "format", id => "inline", call => \&format);
+	hook(type => "format", id => "inline", call => \&format, first => 1);
 	# Hook to change to do pinging since it's called late.
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.

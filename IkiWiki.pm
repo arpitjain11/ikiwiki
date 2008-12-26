@@ -1536,15 +1536,19 @@ sub run_hooks ($$) {
 	my $sub=shift;
 
 	if (exists $hooks{$type}) {
-		my @deferred;
+		my (@first, @middle, @last);
 		foreach my $id (keys %{$hooks{$type}}) {
-			if ($hooks{$type}{$id}{last}) {
-				push @deferred, $id;
-				next;
+			if ($hooks{$type}{$id}{first}) {
+				push @first, $id;
 			}
-			$sub->($hooks{$type}{$id}{call});
+			elsif ($hooks{$type}{$id}{last}) {
+				push @last, $id;
+			}
+			else {
+				push @middle, $id;
+			}
 		}
-		foreach my $id (@deferred) {
+		foreach my $id (@first, @middle, @last) {
 			$sub->($hooks{$type}{$id}{call});
 		}
 	}
