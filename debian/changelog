@@ -8,7 +8,10 @@ ikiwiki (3.00) UNRELEASED; urgency=low
     admin preferences into a setup file.
   * prefix_directives and aggregate_internal are now turned on by default.
   * ikiwiki-transition prefix_directives syntax changed
-  * googlecalendar: removed this deprecated plugin. Use embed instead.
+  * googlecalendar: removed this deprecated plugin. Use htmlscrubber_skip
+    instead.
+  * embed: This plugin is deprecated, use htmlscrubber_skip instead.
+    Closes: ##462970.
   * Version 3.00 of the plugin API.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 24 Dec 2008 19:49:36 -0500

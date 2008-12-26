@@ -82,7 +82,14 @@ Otherwise, follow this procedure to upgrade a wiki using the aggregate plugin:
    `ikiwiki-transition aggregateinternal your.setup`,
 3. Refresh the wiki. (`ikiwiki -setup your.setup -refresh`)
 
-## googlecalendar
+## embed / googlecalendar
 
-This plugin has been deprecated for a long time, and is removed in 3.0. If
-your wiki used it, you should enable the [[plugins/embed]] plugin, instead.
+The googlecalendar plugin has been deprecated for a long time, and is
+removed in 3.0.
+
+The embed plugin is also now deprecated, though not yet removed.
+
+If you use either plugin to embed content from google, youtube, etc,
+into your wiki, you should instead configure the [[plugins/htmlscrubber]]
+to skip sanitising some pages, via the `htmlscrubber_skip` setting.
+See [[embedding_content]] for examples.
