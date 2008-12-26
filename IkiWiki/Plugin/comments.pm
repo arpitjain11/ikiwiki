@@ -198,8 +198,17 @@ sub preprocess {
 			$pagestate{$page}{meta}{author} = $params{claimedauthor};
 		}
 
-		if (defined $params{url} and safeurl($params{url})) {
-			$pagestate{$page}{meta}{authorurl} = $params{url};
+		if (defined $params{url}) {
+			my $url=$params{url};
+
+			eval q{use URI::Heuristic}; 
+		  	if (! $@) {
+				$url=URI::Heuristic::uf_uristr($url);
+			}
+
+			if (safeurl($url)) {
+				$pagestate{$page}{meta}{authorurl} = $url;
+			}
 		}
 	}
 	else {
