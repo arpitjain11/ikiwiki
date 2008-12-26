@@ -4,7 +4,7 @@
 This plugin allows the administrator of a wiki to lock some pages, limiting
 who can edit them using the online interface. This doesn't prevent anyone
 who can commit to the underlying revision control system from editing the
-pages, however.
+pages, however. (Unless you set up [[tips/untrusted_git_push]].)
 
 The `locked_pages` setting configures what pages are locked. It is a
 [[ikiwiki/PageSpec]], so you have lots of control over what kind of pages
