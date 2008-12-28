@@ -1,4 +1,4 @@
-!/usr/bin/perl
+#!/usr/bin/perl
 # Page inlining and blogging.
 package IkiWiki::Plugin::inline;
 
