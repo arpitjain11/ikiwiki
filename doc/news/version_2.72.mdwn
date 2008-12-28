@@ -1,0 +1,9 @@
+ikiwiki 2.72 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * Avoid comments in recentchanges being broken links (smcv)
+   * Add deprecation warning for GlobLists, which will stop working in 3.0.
+   * camelcase: Add camelcase\_ignore setting.
+   * googlecalendar: Add runtime deprecation warning.
+   * comments: Deal with users entering unqualified or partial urls.
+   * inline: Run format hook first, to ensure other format hooks can affect
+     inlined content.  Closes: #[509710](http://bugs.debian.org/509710)"""]]
