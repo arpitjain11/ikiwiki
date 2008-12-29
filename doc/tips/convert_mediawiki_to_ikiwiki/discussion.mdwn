@@ -15,3 +15,51 @@ Also, some detail on converting mediawiki transclusion to ikiwiki inlines...
 
 > "Who knows, the remote site might disappear.". Right now, it appears to
 > have done just that. -- [[users/Jon]]
+
+
+The iki-fast-load ruby script from the u32 page is given below:
+
+        #!/usr/bin/env ruby
+
+        # This script is called on the final sorted, de-spammed revision
+        # XML file.
+        #
+        # It doesn't currently check for no-op revisions...  I believe
+        # that git-fast-load will dutifully load them even though nothing
+        # happened.  I don't care to solve this by adding a file cache
+        # to this script.  You can run iki-diff-next.rb to highlight any
+        # empty revisions that need to be removed.
+        #
+        # This turns each node into an equivalent file.
+        #    It does not convert spaces to underscores in file names.
+        #       This would break wikilinks.
+        #       I suppose you could fix this with mod_speling or mod_rewrite.
+        #
+        # It replaces nodes in the Image: namespace with the files themselves.
+
+
+        require 'rubygems'
+        require 'node-callback'
+        require 'time'
+        require 'ostruct'
+
+
+        # pipe is the stream to receive the git-fast-import commands
+        # putfrom is true if this branch has existing commits on it, false if not.
+        def format_git_commit(pipe, f)
+           # Need to escape backslashes and double-quotes for git?
+           # No, git breaks when I do this. 
+           # For the filename "path with \\", git sez: bad default revision 'HEAD'
+           # filename = '"' + filename.gsub('\\', '\\\\\\\\').gsub('"', '\\"') + '"'
+
+           # In the calls below, length must be the size in bytes!!
+           # TODO: I haven't figured out how this works in the land of UTF8 and Ruby 1.9.
+           pipe.puts "commit #{f.branch}"
+           pipe.puts "committer #{f.username} <#{f.email}> #{f.timestamp.rfc2822}"
+           pipe.puts "data #{f.message.length}\n#{f.message}\n"
+           pipe.puts "from #{f.branch}^0" if f.putfrom
+           pipe.puts "M 644 inline #{f.filename}"
+           pipe.puts "data #{f.content.length}\n#{f.content}\n"
+           pipe.puts
+        end
+
