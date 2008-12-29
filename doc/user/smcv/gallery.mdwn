@@ -1,0 +1,266 @@
+[[!template id=plugin name=smcvgallery author="[[Simon_McVittie|smcv]]"]]
+[[!tag type/chrome]]
+
+This plugin has not yet been written; this page is an experiment in
+design-by-documentation :-)
+
+## Requirements
+
+This plugin formats a collection of images into a photo gallery,
+in the same way as many websites: good examples include the
+PHP application [Gallery](http://gallery.menalto.com/), Flickr,
+and Facebook's Photos "application".
+
+The web UI I'm trying to achieve consists of one
+[HTML page of thumbnails](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/)
+as an entry point to the gallery, where each thumbnail
+links to
+[a "viewer" HTML page](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/img_0068/)
+with a full size image, next/previous thumbnail links, and [[plugins/comments]].
+
+(The Summer of Code [[plugins/contrib/gallery]] plugin does the
+next/previous UI in Javascript using Lightbox, which means that
+individual photos can't be bookmarked in a meaningful way, and
+the best it can do as a fallback for non-Javascript browsers
+is to provide a direct link to the image.)
+
+Other features that would be good to have:
+
+* minimizing the number of separate operations needed to make a gallery -
+  editing one source file per gallery is acceptable, editing one
+  source file per photo is not
+
+* keeping photos outside source code control, for instance in an
+  underlay
+
+* assigning [[tags|ikiwiki/directive/tag]] to photos, providing a
+  superset of Facebook's "show tagged photos of this person" functionality
+
+* constructing galleries entirely via the web by uploading attachments
+
+* inserting grouping (section headings) within a gallery; as in the example
+  linked above, I'd like this to split up the thumbnails but not the
+  next/previous trail
+
+* rendering an `<object>/<embed>` arrangement to display videos, and possibly
+  thumbnailing them in the same way as totem-video-thumbnailer
+  (my camera can record short videos, so some of my web photo galleries contain
+  them)
+
+My plan is to have these directives:
+
+* \[[!gallery]] registers the page it's on as a gallery, and displays all photos
+  that are part of this gallery but not part of a \[[!gallerysection]] (below).
+
+  All images (i.e. `*.png *.jpg *.gif`) that are attachments to the gallery page
+  or its subpages are considered to be part of the gallery.
+
+  Optional arguments:
+
+  * filter="[[ikiwiki/PageSpec]]": only consider images to be part of the
+    gallery if they also match this filter
+
+  * sort="date|filename": order in which to sort the images
+
+* \[[!gallerysection filter="[[ikiwiki/PageSpec]]"]] displays all photos in the
+  gallery that match the filter
+
+So, [the gallery I'm using as an example](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/)
+could look something like this:
+
+    \[[!gallery]]
+    <!-- replaced with one uncategorized photo -->
+
+    # Gamarra
+
+    \[[!gallerysection filter="link(sometag)"]]
+    <!-- all the Gamarra photos -->
+
+    # Smokescreen
+
+    \[[!gallerysection filter="link(someothertag)"]]
+    <!-- all the Smokescreen photos -->
+
+    <!-- ... -->
+
+## Implementation ideas
+
+The photo galleries I have at the moment, like the Panic Cell example above,
+are made by using an external script to parse XML gallery descriptions (lists
+of image filenames, with metadata such as titles), and using this to write IkiWiki
+markup into a directory which is then used as an underlay. This is a hack, but it
+works. The use of XML is left over from a previous attempt at solving the same
+problem using Django.
+
+The next/previous part this plugin overlaps with [[todo/wikitrails]].
+
+A \[[!galleryimg]] directive to assign metadata to images is probably necessary, so
+the gallery page can contain something like:
+
+    \[[!galleryimg p1010001.jpg title="..." caption="..." tags="foo"]]
+    \[[!galleryimg p1010002.jpg title="..." caption="..." tags="foo bar"]]
+
+Making the viewer pages could be rather tricky.
+
+One possibility is to write out the viewer pages as a side-effect of preprocessing
+the \[[!gallery]] directive. The proof-of-concept implementation below does this.
+However, this does mean the viewer pages can't have tags or metadata of their own
+and can't be matched by [[pagespecs|ikiwiki/pagespec]] or
+[[wikilinks|ikiwiki/wikilink]]. It might be possible to implement tagging by
+using \[[!galleryimg]] to assign the metadata to the *images* instead of their
+viewers, 
+
+Another is to synthesize source pages for the viewers. This means they can have
+tags and metadata, but trying to arrange for them to be scanned etc. correctly
+without needing another refresh run is somewhat terrifying.
+[[plugins/autoindex]] can safely create source pages because it runs in
+the refresh hook, but I don't really like the idea of a refresh hook that scans
+all source pages to see if they contain \[[!gallery]]...
+
+Making the image be the source page (and generate HTML itself) would be possible,
+but I wouldn't want to generate a HTML viewer for every `.jpg` on a site, so
+either the images would have to have a special extension (awkward for uploads from
+Windows users) or the plugin would have to be able to change whether HTML was
+generated in some way (not currently possible).
+
+## Proof-of-concept
+
+    #!/usr/bin/perl
+    package IkiWiki::Plugin::gallery;
+    
+    use warnings;
+    use strict;
+    use IkiWiki 2.00;
+    
+    sub import {
+    	hook(type => "getsetup", id => "gallery",  call => \&getsetup);
+    	hook(type => "checkconfig", id => "gallery", call => \&checkconfig);
+    	hook(type => "preprocess", id => "gallery",
+    		call => \&preprocess_gallery, scan => 1);
+    	hook(type => "preprocess", id => "gallerysection",
+    		call => \&preprocess_gallerysection, scan => 1);
+    	hook(type => "preprocess", id => "galleryimg",
+    		call => \&preprocess_galleryimg, scan => 1);
+    }
+    
+    sub getsetup () {
+    	return
+    		plugin => {
+    			safe => 1,
+    			rebuild => undef,
+    		},
+    }
+    
+    sub checkconfig () {
+    }
+    
+    # page that is a gallery => array of images
+    my %galleries;
+    # page that is a gallery => array of filters
+    my %sections;
+    # page that is an image => page name of generated "viewer"
+    my %viewers;
+    
+    sub preprocess_gallery {
+    	# \[[!gallery filter="!*/cover.jpg"]]
+    	my %params=@_;
+    
+    	my $subpage = qr/^\Q$params{page}\E\//;
+    
+    	my @images;
+    
+    	foreach my $page (keys %pagesources) {
+    		# Reject anything not a subpage or attachment of this page
+    		next unless $page =~ $subpage;
+    
+    		# Reject non-images
+    		# FIXME: hard-coded list of extensions
+    		next unless $page =~ /\.(jpg|gif|png|mov)$/;
+    
+    		# Reject according to the filter, if any
+    		next if (exists $params{filter} &&
+    			!pagespec_match($page, $params{filter},
+    				location => $params{page}));
+    
+    		# OK, we'll have that one
+    		push @images, $page;
+    
+    		my $viewername = $page;
+    		$viewername =~ s/\.[^.]+$//;
+    		$viewers{$page} = $viewername;
+    
+    		my $filename = htmlpage($viewername);
+    		will_render($params{page}, $filename);
+    	}
+    
+    	$galleries{$params{page}} = \@images;
+    
+    	# If we're just scanning, don't bother producing output
+    	return unless defined wantarray;
+    
+    	# actually render the viewers
+    	foreach my $img (@images) {
+    		my $filename = htmlpage($viewers{$img});
+    		debug("rendering image viewer $filename for $img");
+    		writefile($filename, $config{destdir}, "# placeholder");
+    	}
+    
+    	# display a list of "loose" images (those that are in no section);
+    	# this works because we collected the sections' filters during the
+    	# scan stage
+    
+    	my @loose = @images;
+    
+    	foreach my $filter (@{$sections{$params{page}}}) {
+    		my $_;
+    		@loose = grep { !pagespec_match($_, $filter,
+    				location => $params{page}) } @loose;
+    	}
+    
+    	my $_;
+    	my $ret = "<ul>\n";
+    	foreach my $img (@loose) {
+    		$ret .= "<li>";
+    		$ret .= "<a href=\"" . urlto($viewers{$img}, $params{page});
+    		$ret .= "\">$img</a></li>\n"
+    	}
+    	return "$ret</ul>\n";
+    }
+    
+    sub preprocess_gallerysection {
+    	# \[[!gallerysection filter="friday/*"]]
+    	my %params=@_;
+    
+    	# remember the filter for this section so the "loose images" section
+    	# won't include these images
+    	push @{$sections{$params{page}}}, $params{filter};
+    
+    	# If we're just scanning, don't bother producing output
+    	return unless defined wantarray;
+    
+    	# this relies on the fact that we ran preprocess_gallery once
+    	# already, during the scan stage
+    	my @images = @{$galleries{$params{page}}};
+    	@images = grep { pagespec_match($_, $params{filter},
+    			location => $params{page}) } @images;
+    
+    	my $_;
+    	my $ret = "<ul>\n";
+    	foreach my $img (@images) {
+    		$ret .= "<li>";
+    		$ret .= htmllink($params{page}, $params{destpage},
+    			$viewers{$img});
+    		$ret .= "</li>";
+    	}
+    	return "$ret</ul>\n";
+    }
+    
+    sub preprocess_galleryimg {
+    	# \[[!galleryimg p1010001.jpg title="" caption="" tags=""]]
+    	my $file = $_[0];
+    	my %params=@_;
+    
+    	return "";
+    }
+    
+    1
