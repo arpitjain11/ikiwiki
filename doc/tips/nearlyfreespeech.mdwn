@@ -81,7 +81,8 @@ Here is an example of how I set up a wiki:
 	nano ikiwiki.setup
 	# Set destdir to /home/htdocs
 	# Set srcdir to /home/private/wiki
-	# Set url to http://yoursite.nfshost.com/ , set cgiurl likewise
+	# Set url to http://yoursite.nfshost.com/
+	# Set cgiurl to http://yoursite.nfshost.com/ikiwiki.cgi
 	# Uncomment the `rcs => "git"` line.
 	# Set the cgi_wrapper path to /home/htdocs/ikiwiki.cgi
 	# Set the git_wrapper path to /home/private/wiki.git/hooks/post-update
