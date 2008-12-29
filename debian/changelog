@@ -17,6 +17,8 @@ ikiwiki (3.00) UNRELEASED; urgency=low
     logo developed by Anna Hess. The official logo does not seem destined to
     be free.
   * comments: Add cache avoidance.
+  * htmlbalance: Demand-load HTML::TreeBuilder to avoid failing test suite
+    if it is not present.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 24 Dec 2008 19:49:36 -0500
 
