@@ -1,0 +1,67 @@
+Here's how to set up a static wiki or blog using ikiwiki with no hosting
+feeds. Everything is hosted on github, both the git repository and the web
+site. Your laptop is used to generate and publish changes to it.
+
+This is possible because github now supports
+[github pages](http://github.com/blog/272-github-pages).
+
+Note that github limits free accounts to 100 mb of git storage. It's
+unlikely that a small wiki or blog will outgrow this, but we are keeping
+two copies of the website in git (source and the compiled site), and all
+historical versions too. So it could happen. If it does, you can pay github
+for more space, or you can migrate your site elsewhere.
+
+## github setup
+
+* Go to [github](http://github.com/) and sign up for an account, if you
+  haven't already. 
+* Be sure to add your laptop's ssh key to it so you can push
+  to github.
+* Create a repository on githib named `$YOU.github.com`, substituting your
+  username. This repository will be used to publish your compiled website.
+* Create a repository on github named `$YOU` (or anything else you like).
+  This repository will be used to publish the source of your website.
+  This is actually optional.
+
+## local setup
+
+* On your laptop, create two empty git repositories to correspond to the
+  github repositories:
+	YOU=# your github username here
+	mkdir ~/$YOU.github.com
+	cd ~/$YOU.github.com
+	git init
+	git remote add origin git@github.com:$YOU/$YOU.github.com.git
+	mkdir ~/$YOU
+	cd ~/$YOU
+	git init
+	git remote add origin git@github.com:$YOU/$YOU.git
+* Add some wiki pages, such as an `index.mdwn`, to `~/$YOU`, and check them
+  in and commit them to git. You need something to push to github. Run
+  `git push origin master` to push the source pages to github.
+
+## publishing to github
+
+* Now build your wiki with a command such as:
+	ikiwiki ~/$YOU ~/$YOU.github.com --refresh
+* Each time you build the wiki you will need to commit the changes
+  to git, and push the compiled pages to github:
+	cd ~/YOU.github.com
+	git add .
+	git commit -a -m update
+	git push origin master
+
+Your wiki will show up at `http://$YOU.github.com/` within ten
+minutes after the first push, and changes you push to it from then on
+should show up immediatly.
+
+## enhancements
+
+You can follow the instructions in [[laptop_wiki_with_git]] to set up an
+editable version of your wiki on your laptop. Then you can use the web
+interface for editing. You'll still need to follow the instructions above
+to publish your changes to github.
+
+It would also be possible to teach ikiwiki to push compiled pages to github
+itself via a plugin, as was done with the [[plugins/amazon_s3]] plugin. Not
+done yet!
