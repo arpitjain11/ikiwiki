@@ -7,21 +7,21 @@ use IkiWiki 2.00;
 
 my %templates;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "pagetemplate", call => \&getsetup);
 	hook(type => "preprocess", id => "pagetemplate", call => \&preprocess);
 	hook(type => "templatefile", id => "pagetemplate", call => \&templatefile);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	if (! exists $params{template} ||
@@ -35,9 +35,9 @@ sub preprocess (@) { #{{{
 	}
 
 	return "";
-} # }}}
+}
 
-sub templatefile (@) { #{{{
+sub templatefile (@) {
 	my %params=@_;
 
 	if (exists $templates{$params{page}}) {
@@ -45,6 +45,6 @@ sub templatefile (@) { #{{{
 	}
 	
 	return undef;
-} # }}}
+}
 
 1

@@ -1,0 +1,23 @@
+Camelcase currently looks for any and call camelcase words and turns them into wiki links.  This patch adds a config item called <code>camelcase_ignore</code> which is an array of camelcase words to ignore.
+
+<pre>
+--- /usr/share/perl5/IkiWiki/Plugin/camelcase.pm.orig   2008-12-24 11:49:14.000000000 +1300
++++ /usr/share/perl5/IkiWiki/Plugin/camelcase.pm        2008-12-24 12:02:21.000000000 +1300
+@@ -33,7 +33,11 @@
+        my $destpage=$params{destpage};
+ 
+        $params{content}=~s{$link_regexp}{
+-               htmllink($page, $destpage, IkiWiki::linkpage($1))
++                if (grep {/$1/} @{ $config{'camelcase_ignore'} }) {
++                  $1
++                } else {
++                 htmllink($page, $destpage, IkiWiki::linkpage($1)) 
++                }
+        }eg;
+ 
+        return $params{content};
+</pre>
+
+--[[puck]]
+
+[[done]]

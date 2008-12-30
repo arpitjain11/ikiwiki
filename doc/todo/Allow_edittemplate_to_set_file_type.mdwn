@@ -14,7 +14,7 @@ edittemplate there. --[[Joey]]
     index 98308de..c381940 100644
     --- a/IkiWiki/Plugin/edittemplate.pm
     +++ b/IkiWiki/Plugin/edittemplate.pm
-    @@ -56,8 +56,14 @@ sub preprocess (@) { #{{{
+    @@ -56,8 +56,14 @@ sub preprocess (@) {
      
      	$pagestate{$params{page}}{edittemplate}{$params{match}}=$params{template};
      
@@ -28,10 +28,10 @@ edittemplate there. --[[Joey]]
     +
     +	return sprintf(gettext("edittemplate: %s registered for %s"),
     +		$linkHTML, $params{match});
-     } # }}}
+     }
      
-     sub formbuilder (@) { #{{{
-    @@ -89,6 +95,9 @@ sub formbuilder (@) { #{{{
+     sub formbuilder (@) {
+    @@ -89,6 +95,9 @@ sub formbuilder (@) {
      					if (pagespec_match($p, $pagespec, location => $registering_page)) {
      						$form->field(name => "editcontent",
      							 value => filltemplate($pagestate{$registering_page}{edittemplate}{$pagespec}, $page));

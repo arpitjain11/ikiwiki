@@ -1,0 +1,43 @@
+[[!template id=plugin name=comments author="[[Simon_McVittie|smcv]]"]]
+[[!tag type/useful]]
+
+This plugin adds "blog-style" comments. Unlike the wiki-style freeform 
+Discussion pages, these comments are posted by a simple form, cannot later
+be edited, and rss/atom feeds are provided of each page's comments.
+
+When using this plugin, you should also enable [[htmlscrubber]] and either
+[[htmltidy]] or [[htmlbalance]]. Directives are filtered out by default, to
+avoid commenters slowing down the wiki by causing time-consuming
+processing. As long as the recommended plugins are enabled, comment
+authorship should hopefully be unforgeable by CGI users.
+
+The intention is that on a non-wiki site (like a blog) you can lock all
+pages for admin-only access, then allow otherwise unprivileged (or perhaps
+even anonymous) users to comment on posts. See the documentation of the
+[[lockedit]] and [[anonok]] pages for details on locking down a wiki so
+users can only post comments.
+
+Individual comments are stored as internal-use pages named something like
+`page/comment_1`, `page/comment_2`, etc. These pages internally use a
+`\[[!_comment]]` [[ikiwiki/directive]].
+
+There are some global options for the setup file:
+
+* `comments_pagespec`: [[ikiwiki/PageSpec]] of pages where comments are
+  allowed. The default is not to allow comments on any pages. To allow
+  comments to all posts to a blog, you could use
+  `blog/posts/* and !*/Discussion`.
+* `comments_closed_pagespec`: [[ikiwiki/PageSpec]] of pages where
+  posting of new comments is closed, but any existing comments will still
+  be displayed. Often you will list a set of individual pages here.
+  For example: `blog/controversial or blog/flamewar`
+* `comments_pagename`: if this is e.g. `comment_` (the default), then
+  comment pages will be named something like `page/comment_12`
+* `comments_allowdirectives`: if true (default false), comments may
+  contain IkiWiki [[directives|ikiwiki/directive]]
+* `comments_commit`: if true (default true), comments will be committed to
+  the version control system
+* `comments_allowauthor`: if true (default false), anonymous commenters may
+  specify a name for themselves, and the \[[!meta author]] and
+  \[[!meta authorurl]] directives will not be overridden by the comments
+  plugin

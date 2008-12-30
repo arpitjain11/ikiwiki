@@ -1,0 +1,10 @@
+Would it be possible to use [[!cpan HTML::Entities]] rather than
+`XML::Atom::Util` for encoding entities? The former is already an ikiwiki
+dependency (via [[!cpan HTML::Parser]]).
+
+> Now switched to HTML::Entities --[[Joey]]
+
+I also wonder if there's any benefit to using this plugin aside from with
+aggregate. Perhaps a small one but aggregate seems like the main case..
+wondering if it would be better to just have aggregate balanace the html
+automatically and do away with the separate plugin. --[[Joey]]

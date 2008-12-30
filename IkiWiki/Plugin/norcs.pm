@@ -6,7 +6,7 @@ use warnings;
 use strict;
 use IkiWiki;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "norcs", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
 	hook(type => "rcs", id => "rcs_prepedit", call => \&rcs_prepedit);
@@ -18,51 +18,51 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
 			rebuild => 0,
 		},
-} #}}}
+}
 
 
-sub rcs_update () { #{{{
-} #}}}
+sub rcs_update () {
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	return ""
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 	return undef # success
-} #}}}
+}
 
-sub rcs_commit_staged ($$$) { #{{{
+sub rcs_commit_staged ($$$) {
 	my ($message, $user, $ipaddr)=@_;
 	return undef # success
-} #}}}
+}
 
-sub rcs_add ($) { #{{{
-} #}}}
+sub rcs_add ($) {
+}
 
-sub rcs_remove ($) { #{{{
-} #}}}
+sub rcs_remove ($) {
+}
 
-sub rcs_rename ($$) { #{{{
-} #}}}
+sub rcs_rename ($$) {
+}
 
-sub rcs_recentchanges ($) { #{{{
-} #}}}
+sub rcs_recentchanges ($) {
+}
 
-sub rcs_diff ($) { #{{{
-} #}}}
+sub rcs_diff ($) {
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	error gettext("getctime not implemented");
-} #}}}
+}
 
 1

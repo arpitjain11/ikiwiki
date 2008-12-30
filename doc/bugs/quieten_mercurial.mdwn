@@ -6,7 +6,7 @@ messages which are then taken for CGI output, causing errors and general trouble
     @@ -55,7 +55,7 @@
      }
  
-     sub rcs_update () { #{{{
+     sub rcs_update () {
     -	my @cmdline = ("hg", "-R", "$config{srcdir}", "update");
     +	my @cmdline = ("hg", "-q", "-R", "$config{srcdir}", "update");
      	if (system(@cmdline) != 0) {
@@ -22,7 +22,7 @@ messages which are then taken for CGI output, causing errors and general trouble
      	if (system(@cmdline) != 0) {
      		warn "'@cmdline' failed: $!";
     @@ -92,7 +92,7 @@
-     sub rcs_add ($) { # {{{
+     sub rcs_add ($) {
      	my ($file) = @_;
      
     -	my @cmdline = ("hg", "-R", "$config{srcdir}", "add", "$file");

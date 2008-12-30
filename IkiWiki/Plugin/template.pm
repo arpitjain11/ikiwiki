@@ -8,20 +8,20 @@ use IkiWiki 2.00;
 use HTML::Template;
 use Encode;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "template", call => \&getsetup);
 	hook(type => "preprocess", id => "template", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	if (! exists $params{id}) {
@@ -71,6 +71,6 @@ sub preprocess (@) { #{{{
 	return IkiWiki::preprocess($params{page}, $params{destpage},
 		IkiWiki::filter($params{page}, $params{destpage},
 		$template->output));
-} # }}}
+}
 
 1

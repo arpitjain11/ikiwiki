@@ -7,20 +7,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "favicon", call => \&getsetup);
 	hook(type => "pagetemplate", id => "favicon", call => \&pagetemplate);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 
 	my $template=$params{template};
@@ -28,6 +28,6 @@ sub pagetemplate (@) { #{{{
 	if ($template->query(name => "favicon")) {
 		$template->param(favicon => "favicon.ico");
 	}
-} # }}}
+}
 
 1

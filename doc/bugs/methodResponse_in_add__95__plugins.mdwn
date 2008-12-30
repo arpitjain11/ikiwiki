@@ -26,7 +26,7 @@
     index e476521..d43abd4 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -471,7 +471,11 @@ sub loadplugins () { #{{{
+    @@ -471,7 +471,11 @@ sub loadplugins () {
                     unshift @INC, possibly_foolish_untaint($config{libdir});
             }
      

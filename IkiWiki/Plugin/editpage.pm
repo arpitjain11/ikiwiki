@@ -6,19 +6,19 @@ use strict;
 use IkiWiki;
 use open qw{:utf8 :std};
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "editpage", call => \&getsetup);
 	hook(type => "refresh", id => "editpage", call => \&refresh);
         hook(type => "sessioncgi", id => "editpage", call => \&IkiWiki::cgi_editpage);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
 sub refresh () {
 	if (exists $wikistate{editpage} && exists $wikistate{editpage}{previews}) {
@@ -54,7 +54,7 @@ sub refresh () {
 # and other plugins use the functions below.
 package IkiWiki;
 
-sub check_canedit ($$$;$) { #{{{
+sub check_canedit ($$$;$) {
 	my $page=shift;
 	my $q=shift;
 	my $session=shift;
@@ -79,9 +79,9 @@ sub check_canedit ($$$;$) { #{{{
 		}
 	});
 	return $canedit;
-} #}}}
+}
 
-sub cgi_editpage ($$) { #{{{
+sub cgi_editpage ($$) {
 	my $q=shift;
 	my $session=shift;
 	
@@ -105,7 +105,6 @@ sub cgi_editpage ($$) { #{{{
 		header => 0,
 		table => 0,
 		template => scalar template_params("editpage.tmpl"),
-		wikiname => $config{wikiname},
 	);
 	
 	decode_form_utf8($form);
@@ -340,16 +339,7 @@ sub cgi_editpage ($$) { #{{{
 	else {
 		# save page
 		check_canedit($page, $q, $session);
-	
-		# The session id is stored on the form and checked to
-		# guard against CSRF. But only if the user is logged in,
-		# as anonok can allow anonymous edits.
-		if (defined $session->param("name")) {
-			my $sid=$q->param('sid');
-			if (! defined $sid || $sid ne $session->id) {
-				error(gettext("Your login session has expired."));
-			}
-		}
+		checksessionexpiry($q, $session, $q->param('sid'));
 
 		my $exists=-e "$config{srcdir}/$file";
 
@@ -462,6 +452,6 @@ sub cgi_editpage ($$) { #{{{
 	}
 
 	exit;
-} #}}}
+}
 
 1

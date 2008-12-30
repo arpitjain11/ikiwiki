@@ -8,22 +8,22 @@ use IkiWiki 2.00;
 
 my %metaheaders;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "meta", call => \&getsetup);
 	hook(type => "needsbuild", id => "meta", call => \&needsbuild);
 	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
 	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 	foreach my $page (keys %pagestate) {
 		if (exists $pagestate{$page}{meta}) {
@@ -38,16 +38,17 @@ sub needsbuild (@) { #{{{
 	}
 }
 
-sub scrub ($) { #{{{
+sub scrub ($$) {
 	if (IkiWiki::Plugin::htmlscrubber->can("sanitize")) {
-		return IkiWiki::Plugin::htmlscrubber::sanitize(content => shift);
+		return IkiWiki::Plugin::htmlscrubber::sanitize(
+			content => shift, destpage => shift);
 	}
 	else {
 		return shift;
 	}
-} #}}}
+}
 
-sub safeurl ($) { #{{{
+sub safeurl ($) {
 	my $url=shift;
 	if (exists $IkiWiki::Plugin::htmlscrubber::{safe_url_regexp} &&
 	    defined $IkiWiki::Plugin::htmlscrubber::safe_url_regexp) {
@@ -56,9 +57,9 @@ sub safeurl ($) { #{{{
 	else {
 		return 1;
 	}
-} #}}}
+}
 
-sub htmlize ($$$) { #{{{
+sub htmlize ($$$) {
 	my $page = shift;
 	my $destpage = shift;
 
@@ -67,7 +68,7 @@ sub htmlize ($$$) { #{{{
 		IkiWiki::preprocess($page, $destpage, shift)));
 }
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	return "" unless @_;
 	my %params=@_;
 	my $key=shift;
@@ -120,6 +121,13 @@ sub preprocess (@) { #{{{
 		$pagestate{$page}{meta}{authorurl}=$value if safeurl($value);
 		# fallthrough
 	}
+	elsif ($key eq 'date') {
+		eval q{use Date::Parse};
+		if (! $@) {
+			my $time = str2time($value);
+			$IkiWiki::pagectime{$page}=$time if defined $time;
+		}
+	}
 
 	if (! defined wantarray) {
 		# avoid collecting duplicate data during scan pass
@@ -127,17 +135,10 @@ sub preprocess (@) { #{{{
 	}
 
 	# Metadata collection that happens only during preprocessing pass.
-	if ($key eq 'date') {
-		eval q{use Date::Parse};
-		if (! $@) {
-			my $time = str2time($value);
-			$IkiWiki::pagectime{$page}=$time if defined $time;
-		}
-	}
-	elsif ($key eq 'permalink') {
+	if ($key eq 'permalink') {
 		if (safeurl($value)) {
 			$pagestate{$page}{meta}{permalink}=$value;
-			push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />');
+			push @{$metaheaders{$page}}, scrub('<link rel="bookmark" href="'.encode_entities($value).'" />', $destpage);
 		}
 	}
 	elsif ($key eq 'stylesheet') {
@@ -206,7 +207,7 @@ sub preprocess (@) { #{{{
 		my $delay=int(exists $params{delay} ? $params{delay} : 0);
 		my $redir="<meta http-equiv=\"refresh\" content=\"$delay; URL=$value\" />";
 		if (! $safe) {
-			$redir=scrub($redir);
+			$redir=scrub($redir, $destpage);
 		}
 		push @{$metaheaders{$page}}, $redir;
 	}
@@ -216,7 +217,7 @@ sub preprocess (@) { #{{{
 				join(" ", map {
 					encode_entities($_)."=\"".encode_entities(decode_entities($params{$_}))."\""
 				} keys %params).
-				" />\n");
+				" />\n", $destpage);
 		}
 	}
 	elsif ($key eq 'robots') {
@@ -225,13 +226,13 @@ sub preprocess (@) { #{{{
 	}
 	else {
 		push @{$metaheaders{$page}}, scrub('<meta name="'.encode_entities($key).
-			'" content="'.encode_entities($value).'" />');
+			'" content="'.encode_entities($value).'" />', $destpage);
 	}
 
 	return "";
-} # }}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
         my $page=$params{page};
         my $destpage=$params{destpage};
@@ -259,9 +260,9 @@ sub pagetemplate (@) { #{{{
 			$template->param($field => htmlize($page, $destpage, $pagestate{$page}{meta}{$field}));
 		}
 	}
-} # }}}
+}
 
-sub match { #{{{
+sub match {
 	my $field=shift;
 	my $page=shift;
 	
@@ -287,28 +288,28 @@ sub match { #{{{
 	else {
 		return IkiWiki::FailReason->new("$page does not have a $field");
 	}
-} #}}}
+}
 
 package IkiWiki::PageSpec;
 
-sub match_title ($$;@) { #{{{
+sub match_title ($$;@) {
 	IkiWiki::Plugin::meta::match("title", @_);	
-} #}}}
+}
 
-sub match_author ($$;@) { #{{{
+sub match_author ($$;@) {
 	IkiWiki::Plugin::meta::match("author", @_);
-} #}}}
+}
 
-sub match_authorurl ($$;@) { #{{{
+sub match_authorurl ($$;@) {
 	IkiWiki::Plugin::meta::match("authorurl", @_);
-} #}}}
+}
 
-sub match_license ($$;@) { #{{{
+sub match_license ($$;@) {
 	IkiWiki::Plugin::meta::match("license", @_);
-} #}}}
+}
 
-sub match_copyright ($$;@) { #{{{
+sub match_copyright ($$;@) {
 	IkiWiki::Plugin::meta::match("copyright", @_);
-} #}}}
+}
 
 1

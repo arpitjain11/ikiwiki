@@ -5,21 +5,21 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	IkiWiki::loadplugin('sparkline');
 	hook(type => "getsetup", id => "postsparkline", call => \&getsetup);
 	hook(type => "preprocess", id => "postsparkline", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	if (! exists $params{max}) {
@@ -78,7 +78,7 @@ sub preprocess (@) { #{{{
 	delete $params{color};
 	return IkiWiki::Plugin::sparkline::preprocess(%params, 
 		map { $_.$color => "" } reverse @data);
-} # }}}
+}
 
 sub perfoo ($@) {
 	my $sub=shift;

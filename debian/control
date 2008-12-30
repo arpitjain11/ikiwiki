@@ -12,9 +12,9 @@ Vcs-Browser: http://git.ikiwiki.info/?p=ikiwiki
 
 Package: ikiwiki
 Architecture: all
-Depends: ${perl:Depends}, markdown | libtext-markdown-perl, libhtml-scrubber-perl, libhtml-template-perl, libhtml-parser-perl, liburi-perl
+Depends: ${perl:Depends}, libtext-markdown-perl | markdown, libhtml-scrubber-perl, libhtml-template-perl, libhtml-parser-perl, liburi-perl
 Recommends: gcc | c-compiler, libc6-dev | libc-dev, subversion | git-core (>= 1:1.5.0) | tla | bzr (>= 0.91) | mercurial | monotone (>= 0.38), libxml-simple-perl, libnet-openid-consumer-perl, liblwpx-paranoidagent-perl, libtimedate-perl, libcgi-formbuilder-perl (>= 3.05), libcgi-session-perl (>= 4.14-1), libmail-sendmail-perl, libauthen-passphrase-perl
-Suggests: viewvc | gitweb | viewcvs, libsearch-xapian-perl, xapian-omega (>= 1.0.5), librpc-xml-perl, libtext-wikiformat-perl, python, python-docutils, polygen, tidy, libxml-feed-perl, libmailtools-perl, perlmagick, libfile-mimeinfo-perl, libcrypt-ssleay-perl, liblocale-gettext-perl (>= 1.05-1), libtext-typography-perl, libtext-csv-perl, libdigest-sha1-perl, graphviz, libnet-amazon-s3-perl, sparkline-php, texlive, dvipng, po4a
+Suggests: viewvc | gitweb | viewcvs, libsearch-xapian-perl, xapian-omega (>= 1.0.5), librpc-xml-perl, libtext-wikiformat-perl, python, python-docutils, polygen, tidy, libhtml-tree-perl, libxml-feed-perl, libmailtools-perl, perlmagick, libfile-mimeinfo-perl, libcrypt-ssleay-perl, liblocale-gettext-perl (>= 1.05-1), libtext-typography-perl, libtext-csv-perl, libdigest-sha1-perl, graphviz, libnet-amazon-s3-perl, sparkline-php, texlive, dvipng, po4a
 Conflicts: ikiwiki-plugin-table
 Replaces: ikiwiki-plugin-table
 Provides: ikiwiki-plugin-table

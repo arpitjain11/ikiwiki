@@ -12,7 +12,7 @@ This patch allows IkiWiki to work with either of the two:
 
     --- IkiWiki/Plugin/mdwn.pm.orig	2008-03-08 11:33:50.000000000 +0100
     +++ IkiWiki/Plugin/mdwn.pm	2008-03-08 13:37:21.000000000 +0100
-    @@ -28,14 +28,20 @@ sub htmlize (@) { #{{{
+    @@ -28,14 +28,20 @@ sub htmlize (@) {
      			$markdown_sub=\&Markdown::Markdown;
      		}
      		else {

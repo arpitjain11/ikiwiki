@@ -11,7 +11,7 @@ my $sha1_pattern     = qr/[0-9a-fA-F]{40}/; # pattern to validate Git sha1sums
 my $dummy_commit_msg = 'dummy commit';      # message to skip in recent changes
 my $no_chdir=0;
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => "git", call => \&checkconfig);
 	hook(type => "getsetup", id => "git", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
@@ -25,9 +25,9 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
 	hook(type => "rcs", id => "rcs_receive", call => \&rcs_receive);
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (! defined $config{gitorigin_branch}) {
 		$config{gitorigin_branch}="origin";
 	}
@@ -49,9 +49,9 @@ sub checkconfig () { #{{{
 			wrappermode => (defined $config{git_wrappermode} ? $config{git_wrappermode} : "06755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
@@ -113,9 +113,9 @@ sub getsetup () { #{{{
 			safe => 0, # paranoia
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub safe_git (&@) { #{{{
+sub safe_git (&@) {
 	# Start a child process safely without resorting /bin/sh.
 	# Return command output or success state (in scalar context).
 
@@ -152,9 +152,9 @@ sub safe_git (&@) { #{{{
 sub run_or_die ($@) { safe_git(\&error, @_) }
 sub run_or_cry ($@) { safe_git(sub { warn @_ },  @_) }
 sub run_or_non ($@) { safe_git(undef,            @_) }
-#}}}
 
-sub merge_past ($$$) { #{{{
+
+sub merge_past ($$$) {
 	# Unlike with Subversion, Git cannot make a 'svn merge -rN:M file'.
 	# Git merge commands work with the committed changes, except in the
 	# implicit case of '-m' of git checkout(1).  So we should invent a
@@ -246,9 +246,9 @@ sub merge_past ($$$) { #{{{
 	error("Git merge failed!\n$failure\n") if $failure;
 
 	return $conflict;
-} #}}}
+}
 
-sub parse_diff_tree ($@) { #{{{
+sub parse_diff_tree ($@) {
 	# Parse the raw diff tree chunk and return the info hash.
 	# See git-diff-tree(1) for the syntax.
 
@@ -358,9 +358,9 @@ sub parse_diff_tree ($@) { #{{{
 	}
 
 	return \%ci;
-} #}}}
+}
 
-sub git_commit_info ($;$) { #{{{
+sub git_commit_info ($;$) {
 	# Return an array of commit info hashes of num commits
 	# starting from the given sha1sum.
 	my ($sha1, $num) = @_;
@@ -381,9 +381,9 @@ sub git_commit_info ($;$) { #{{{
 	warn "Cannot parse commit info for '$sha1' commit" if !@ci;
 
 	return wantarray ? @ci : $ci[0];
-} #}}}
+}
 
-sub git_sha1 (;$) { #{{{
+sub git_sha1 (;$) {
 	# Return head sha1sum (of given file).
 	my $file = shift || q{--};
 
@@ -394,25 +394,25 @@ sub git_sha1 (;$) { #{{{
 		($sha1) = $sha1 =~ m/($sha1_pattern)/; # sha1 is untainted now
 	} else { debug("Empty sha1sum for '$file'.") }
 	return defined $sha1 ? $sha1 : q{};
-} #}}}
+}
 
-sub rcs_update () { #{{{
+sub rcs_update () {
 	# Update working directory.
 
 	if (length $config{gitorigin_branch}) {
 		run_or_cry('git', 'pull', $config{gitorigin_branch});
 	}
-} #}}}
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	# Return the commit sha1sum of the file when editing begins.
 	# This will be later used in rcs_commit if a merge is required.
 	my ($file) = @_;
 
 	return git_sha1($file);
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	# Try to commit the page; returns undef on _success_ and
 	# a version of the page with the rcs's conflict markers on
 	# failure.
@@ -431,7 +431,7 @@ sub rcs_commit ($$$;$$) { #{{{
 
 	rcs_add($file);	
 	return rcs_commit_staged($message, $user, $ipaddr);
-} #}}}
+}
 
 sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
@@ -472,29 +472,29 @@ sub rcs_commit_staged ($$$) {
 	return undef; # success
 }
 
-sub rcs_add ($) { # {{{
+sub rcs_add ($) {
 	# Add file to archive.
 
 	my ($file) = @_;
 
 	run_or_cry('git', 'add', $file);
-} #}}}
+}
 
-sub rcs_remove ($) { # {{{
+sub rcs_remove ($) {
 	# Remove file from archive.
 
 	my ($file) = @_;
 
 	run_or_cry('git', 'rm', '-f', $file);
-} #}}}
+}
 
-sub rcs_rename ($$) { # {{{
+sub rcs_rename ($$) {
 	my ($src, $dest) = @_;
 
 	run_or_cry('git', 'mv', '-f', $src, $dest);
-} #}}}
+}
 
-sub rcs_recentchanges ($) { #{{{
+sub rcs_recentchanges ($) {
 	# List of recent changes.
 
 	my ($num) = @_;
@@ -562,9 +562,9 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @rets;
-} #}}}
+}
 
-sub rcs_diff ($) { #{{{
+sub rcs_diff ($) {
 	my $rev=shift;
 	my ($sha1) = $rev =~ /^($sha1_pattern)$/; # untaint
 	my @lines;
@@ -579,9 +579,9 @@ sub rcs_diff ($) { #{{{
 	else {
 		return join("", @lines);
 	}
-} #}}}
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	my $file=shift;
 	# Remove srcdir prefix
 	$file =~ s/^\Q$config{srcdir}\E\/?//;
@@ -592,9 +592,9 @@ sub rcs_getctime ($) { #{{{
 	debug("ctime for '$file': ". localtime($ctime));
 
 	return $ctime;
-} #}}}
+}
 
-sub rcs_receive () { #{{{
+sub rcs_receive () {
 	# The wiki may not be the only thing in the git repo.
 	# Determine if it is in a subdirectory by examining the srcdir,
 	# and its parents, looking for the .git directory.
@@ -685,6 +685,6 @@ sub rcs_receive () { #{{{
 	}
 
 	return reverse @rets;
-} #}}}
+}
 
 1

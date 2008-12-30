@@ -11,20 +11,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "map", call => \&getsetup);
 	hook(type => "preprocess", id => "map", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	$params{pages}="*" unless defined $params{pages};
 	
@@ -144,6 +144,6 @@ sub preprocess (@) { #{{{
 	}
 	$map .= "</div>\n";
 	return $map;
-} # }}}
+}
 
 1

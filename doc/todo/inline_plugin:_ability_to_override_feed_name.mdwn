@@ -1,0 +1,29 @@
+If RSS and Atom are enabled by default, the [[plugins/contrib/comments]]
+plugin generates a feed, perhaps `/sandbox/index.atom` for comments on the
+sandbox. If a blog is added to the page, the blog will steal the name
+`/sandbox/index.atom` and the comments plugin's feed will change to
+`/sandbox/index.atom2`.
+
+If `\[[!inline]]` gained a parameter `feedname` or something, the comments
+plugin could use `feedname=comments` to produce `/sandbox/comments.atom`
+instead (this would just require minor enhancements to rsspage(),
+atompage() and targetpage()).
+
+As a side benefit, [my blog](http://smcv.pseudorandom.co.uk/) could go back
+to its historical Atom feed URL of `.../feed.atom` (which is currently a
+symlink to `index.atom` :-) )
+
+On sites not using `usedirs` the current feed is `/sandbox.atom`, and we
+could perhaps change it to `/sandbox-comments.atom` or
+`/sandbox/comments.atom` if `feedname=comments` is given.
+
+--[[smcv]]
+
+> This is slightly hard to do, because you have to worry about 
+> conflicting pages setting feedname, which could cause ikiwiki to blow up.
+> 
+> Particularly for the non-usedirs case, where a page `sandbox/comments`
+> would produce the same feed as sandbox with `feedname=comments`.
+> --[[Joey]]
+
+> [[done]] as feedfile option --[[Joey]]

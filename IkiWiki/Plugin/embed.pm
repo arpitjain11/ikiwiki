@@ -43,35 +43,35 @@ my $safehtml=qr{(
 
 my @embedded;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "embed", call => \&getsetup);
 	hook(type => "filter", id => "embed", call => \&filter);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub embed ($) { #{{{
+sub embed ($) {
 	hook(type => "format", id => "embed", call => \&format) unless @embedded;
 	push @embedded, shift;
 	return "<div class=\"embed$#embedded\"></div>";
-} #}}}
+}
 
-sub filter (@) { #{{{
+sub filter (@) {
 	my %params=@_;
 	$params{content} =~ s/$safehtml/embed($1)/eg;
 	return $params{content};
-} # }}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
         my %params=@_;
 	$params{content} =~ s/<div class="embed(\d+)"><\/div>/$embedded[$1]/eg;
         return $params{content};
-} # }}}
+}
 
 1

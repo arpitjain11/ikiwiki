@@ -1,0 +1,3 @@
+Calling ikiwiki with a bunch of options, including the --dumpsetup somefile.setup option creates somefile.setup for later reuse with the --setup option. The destination dir however is not saved in the setup file, it has destdir => ''.
+
+> that broke in version 2.64 .. fixed [[done]] --[[Joey]]

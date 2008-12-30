@@ -1,0 +1,314 @@
+I have a directory containing two files. f1 (<http://alcopop.org/~jon/repro2/src/blog/debgtd.html>) has 
+
+    meta date="2008-07-02 14:13:17"
+
+f2 (<http://alcopop.org/~jon/repro2/src/blog/moving.html>) has
+
+    meta date="2008-07-02 21:04:21"
+
+They have both been modified recently:
+
+    >>> stat(f1)
+    (33188, 459250L, 65027L, 1, 1000, 1000, 1686L, 1227967177, 1227966706, 1227966706)
+    >>> stat(f2)
+    (33188, 458868L, 65027L, 1, 1000, 1000, 938L, 1227967187, 1227966705, 1227966705)
+
+Note that f1 is fractionally newer than f2 in terms of ctime and mtime, but f2 is much newer in terms of the meta information.
+
+Another page includes them both via inline:
+
+    inline pages="blog/*" show=5
+
+The resulting page is rendered with f1 above f2, seemingly not using the meta directive information: <http://alcopop.org/~jon/repro2/dest/blog/>. The footer in the inline pages does use the correct time e.g. <em>Posted Wed 02 Jul 2008 14:13:17 BST</em>.
+
+If I instead include them using creation_year in the pagespec, they are ordered correctly.
+
+<http://alcopop.org/~jon/repro2/> contains the src used to reproduce this, the precise ikiwiki invocation (inside Makefile) and the results (dest).
+
+-- [[users/Jon]]
+
+
+> On Ikiwiki 2.53.3 (Debian Lenny), my inlines are also sorted using mtime
+> by default -- despite what the [[documentation|/ikiwiki/directive/inline]]
+> says -- but setting the supposed default sort order manually produces the
+> correct results.  For example, the following inline sorts my blog
+> entires using their meta date or ctime:
+> 
+>     inline pages="blog/*" show="10" sort="age"
+> 
+> I'll try to look at the code this weekend and see if age is really the
+> default sort order.
+> 
+> -- [David A. Harding](http://dtrt.org), 2008-12-20
+
+Here is the code. As you can see, sort="age" is equivilant to leaving
+out the sort option. --[[Joey]] 
+
+	if (exists $params{sort} && $params{sort} eq 'title') {
+	        @list=sort { pagetitle(basename($a)) cmp pagetitle(basename($b)) } @list;
+	}
+	elsif (exists $params{sort} && $params{sort} eq 'mtime') {
+	        @list=sort { $pagemtime{$b} <=> $pagemtime{$a} } @list;
+	}
+	elsif (! exists $params{sort} || $params{sort} eq 'age') {
+	        @list=sort { $pagectime{$b} <=> $pagectime{$a} } @list;
+	}
+	else {
+	        return sprintf(gettext("unknown sort type %s"), $params{sort});
+	}
+
+> On further testing, I find that the bug is limited to the first time
+> creation time should be used and has nothing to do with setting the sort
+> parameter. Revised steps to reproduce: --[David A.  Harding](http://dtrt.org), 2008-12-20
+> 
+> 1. Create pages that sort different by mtime and ctime
+> 
+> 2. inline pages="somepages/*"
+> 
+> 3. ikiwiki --setup setup_file
+> 
+> 4. Pages are output incorrectly in mtime order
+> 
+> 5. ikiwiki --setup setup_file
+> 
+> 6. Pages are output correctly in ctime order
+> 
+> 7. Create new page in somepages/, set its ctime to earlier than another
+>    page in sompages/
+> 
+> 8. ikiwiki --setup setup_file
+> 
+> 9. All previously sorted pages output correctly in ctime order but new
+>    page is output incorrectly at the top as if its mtime was its ctime
+> 
+> 10. ikiwiki --setup setup_file
+> 
+> 11. All pages, including new page, are output correctly in ctime order
+
+You're confusing ctime and creation time. This is perhaps not suprising, as
+ikiwiki uses the term 'ctime' to refer to creation time. However, the unix
+ctime value is not the same thing. Unix ctime can change if a file changes
+owner, or in some cases, permissions. Unix ctime also always changes
+when the file is modified. Ikiwiki wants a first creation date of the file,
+and it accomplishes this by recording the initial ctime of a file the first
+time it processes it, and *preserving* that creation time forever, ignoring
+later ctime changes.
+
+I suspect that this, coupled with the fact that ikiwiki sorts newest pages
+first, explains everything you describe. If not, please send me a shell script
+test case I can run, as instructions like "Create pages that sort different by
+mtime and ctime" are not ones that I know how to follow (given that touch sets
+*both*). --[[Joey]] 
+
+> Sorry. I conflated Unix ctime and ikiwiki's creation time because I
+> didn't think the difference was important to this case. I'm a writer,
+> and I should have known better -- I appologize. Revised steps to
+> reproduce are below; feel free to delete this whole misunderstanding
+> to make the bug report more concise.
+>
+> 1. Create pages in the srcdir that should sort in one order by
+>    last-modification time and in a diffent order by original creation
+>    time.  For example:
+> 
+>         $ echo -e '\[[!meta date="2007-01-01"]]\nNew.' > test/new.mdwn
+>         $ echo -e '\[[!meta date="2006-01-01"]]\nOld.' > test/old.mdwn
+> 
+> 2. Create a page that includes the files.  For example:
+> 
+>
+>         $ echo '\[[!inline pages="test/*"]]' > sort-test.mdwn
+> 
+> 3. Run ikiwiki.  For example `ikiwiki --setup setup_file`
+> 
+> 4. Pages are output incorrectly in modification time order. For example,
+>    actual partial HTML of the sort-test/index.html from commands used
+>    above (whitespace-only lines removed; one whitespace-only line
+>    added):
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/old/">old</a>
+>         </span>
+>         <p>Old.</p>
+>         <span class="pagedate">
+>         Posted Sun 01 Jan 2006 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/new/">new</a>
+>         </span>
+>         <p>New.</p>
+>         <span class="pagedate">
+>         Posted Mon 01 Jan 2007 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+> 5. Run ikiwiki again with the same command line.  For example: `ikiwiki --setup setup_file`
+> 
+> 6. Pages are output correctly in creation time order. For example,
+>    actual partial HTML of the sort-test/index.html from commands used
+>    above (whitespace-only lines removed; one whitespace-only line
+>    added):
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/new/">new</a>
+>         </span>
+>         <p>New.</p>
+>         <span class="pagedate">
+>         Posted Mon 01 Jan 2007 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/old/">old</a>
+>         </span>
+>         <p>Old.</p>
+>         <span class="pagedate">
+>         Posted Sun 01 Jan 2006 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+> 7. Create a new page with the current Unix mtime and Unix ctime, but a
+>    !meta date before the most recent creation date of another page.
+>    For example:
+> 
+>         $ echo -e '\[[!meta date="2005-01-01"]]\nOlder.' > test/older.mdwn
+> 
+> 8. Run ikiwiki again with the same command line.  For example: `ikiwiki --setup setup_file`
+> 
+> 9. All previously sorted pages output correctly in order of their
+>    creation time, but the new page is output incorrectly at the top as
+>    if its modification time was its creation time.  For example,
+>    actual partial HTML of the sort-test/index.html from commands used
+>    above (whitespace-only lines removed; two whitespace-only
+>    lines added):
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/older/">older</a>
+>         </span>
+>         <p>Older.</p>
+>         <span class="pagedate">
+>         Posted Sat 01 Jan 2005 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/new/">new</a>
+>         </span>
+>         <p>New.</p>
+>         <span class="pagedate">
+>         Posted Mon 01 Jan 2007 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/old/">old</a>
+>         </span>
+>         <p>Old.</p>
+>         <span class="pagedate">
+>         Posted Sun 01 Jan 2006 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+> 10. Run ikiwiki again with the same command line.  For example: `ikiwiki --setup setup_file`
+> 
+> 11. All pages, including new page, are output correctly in creation time
+>     order. For example, actual partial HTML of the sort-test/index.html
+>     from commands used above (whitespace-only lines removed; two
+>     whitespace-only lines added): 
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/new/">new</a>
+>         </span>
+>         <p>New.</p>
+>         <span class="pagedate">
+>         Posted Mon 01 Jan 2007 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/old/">old</a>
+>         </span>
+>         <p>Old.</p>
+>         <span class="pagedate">
+>         Posted Sun 01 Jan 2006 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+>         <div class="inlinepage">
+>         <span class="header">
+>         <a href="./../test/older/">older</a>
+>         </span>
+>         <p>Older.</p>
+>         <span class="pagedate">
+>         Posted Sat 01 Jan 2005 12:00:00 AM EST
+>         </span>
+>         </div>
+> 
+> File status after all the above actions:
+> 
+>         $ stat test/*
+>           File: `test/new.mdwn'
+>           Size: 33              Blocks: 8          IO Block: 4096   regular file
+>         Device: ca20h/51744d    Inode: 684160      Links: 1
+>         Access: (0644/-rw-r--r--)  Uid: ( 1000/ harding)   Gid: ( 1000/ harding)
+>         Access: 2008-12-20 21:48:32.000000000 -0500
+>         Modify: 2008-12-20 21:27:03.000000000 -0500
+>         Change: 2008-12-20 21:27:03.000000000 -0500
+>           File: `test/older.mdwn'
+>           Size: 35              Blocks: 8          IO Block: 4096   regular file
+>         Device: ca20h/51744d    Inode: 684407      Links: 1
+>         Access: (0644/-rw-r--r--)  Uid: ( 1000/ harding)   Gid: ( 1000/ harding)
+>         Access: 2008-12-20 21:48:32.000000000 -0500
+>         Modify: 2008-12-20 21:42:10.000000000 -0500
+>         Change: 2008-12-20 21:42:10.000000000 -0500
+>           File: `test/old.mdwn'
+>           Size: 33              Blocks: 8          IO Block: 4096   regular file
+>         Device: ca20h/51744d    Inode: 684161      Links: 1
+>         Access: (0644/-rw-r--r--)  Uid: ( 1000/ harding)   Gid: ( 1000/ harding)
+>         Access: 2008-12-20 21:48:32.000000000 -0500
+>         Modify: 2008-12-20 21:27:09.000000000 -0500
+>         Change: 2008-12-20 21:27:09.000000000 -0500
+> 
+> My ikiwiki configuration file (being used to port a blog from pyblosxom
+> to ikiwiki):
+> 
+>         harding@mail:~$ sed 's/#.*//; /^[       ]*$/d' .ikiwiki/gnuisance.setup 
+>         use IkiWiki::Setup::Standard {
+>               wikiname => "HardingBlog",
+>               adminemail => 'dave@dtrt.org',
+>               srcdir => "/srv/backup/git/gnuisance.net",
+>               destdir => "/srv/test.dtrt.org",
+>               url => "http://srv.dtrt.org",
+>               wrappers => [
+>               ],
+>               atom => 1,
+>               syslog => 0,
+>               prefix_directives => 1,
+>               add_plugins => [qw{goodstuff tag}],
+>               disable_plugins => [qw{passwordauth}],
+>               tagbase => "tag",
+>         }
+>
+> --[David A. Harding](http://dtrt.org/), 2008-12-20
+
+Thank you for a textbook excellent reproduction recipe.
+
+What appears to be going on here is that meta directives are not processed
+until the leaf pages are rendered, and thus the ctime setting is not
+available at the time that they are inlined, and the newer unix ctime is
+used. On the second build, the meta data has already been recorded.
+
+This can probably be avoided by processing meta date at scan time.
+
+Verified, fix works. [[done]]
+--[[Joey]] 

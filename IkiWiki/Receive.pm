@@ -6,21 +6,21 @@ use warnings;
 use strict;
 use IkiWiki;
 
-sub getuser () { #{{{
+sub getuser () {
 	my $user=(getpwuid(exists $ENV{CALLER_UID} ? $ENV{CALLER_UID} : $<))[0];
 	if (! defined $user) {
 		error("cannot determine username for $<");
 	}
 	return $user;
-} #}}}
+}
 
-sub trusted () { #{{{
+sub trusted () {
 	my $user=getuser();
 	return ! ref $config{untrusted_committers} ||
 		! grep { $_ eq $user } @{$config{untrusted_committers}};
-} #}}}
+}
 
-sub gen_wrapper () { #{{{
+sub gen_wrapper () {
 	# Test for commits from untrusted committers in the wrapper, to
 	# avoid loading ikiwiki at all for trusted commits.
 
@@ -43,9 +43,9 @@ EOF
 	}
 EOF
 	return $ret;
-} #}}}
+}
 
-sub test () { #{{{
+sub test () {
 	exit 0 if trusted();
 	
 	IkiWiki::lockwiki();
@@ -130,6 +130,6 @@ sub test () { #{{{
 	}
 
 	exit 0;
-} #}}}
+}
 
 1

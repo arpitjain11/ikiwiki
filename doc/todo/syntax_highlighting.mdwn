@@ -7,16 +7,16 @@ pages, as well as doing syntax highlighting as a preprocessor directive
 
 ## The big list of possibilities
 
-* [[plugins/contrib/highlightcode]] uses [[cpan Syntax::Highlight::Engine::Kate]],
+* [[plugins/contrib/highlightcode]] uses [[!cpan Syntax::Highlight::Engine::Kate]],
   operates on whole source files only, has a few bugs (see
   [here](http://u32.net/Highlight_Code_Plugin/), and needs to be updated to
   support [[bugs/multiple_pages_with_same_name]].
-* [[cpan IkiWiki-Plugin-syntax]] only operates as a directive.
+* [[!cpan IkiWiki-Plugin-syntax]] only operates as a directive.
   Interestingly, it supports multiple highlighting backends, including Kate
   and Vim.
 * [[plugins/contrib/syntax]] only operates as a directive
   ([[not_on_source_code_files|automatic_use_of_syntax_plugin_on_source_code_files]]),
-  and uses [[cpan Text::VimColor]].
+  and uses [[!cpan Text::VimColor]].
 * [[plugins/contrib/sourcehighlight]] uses src-highlight, and operates on
   whole source files only. Needs to be updated to
   support [[bugs/multiple_pages_with_same_name]].
@@ -43,7 +43,7 @@ pages, as well as doing syntax highlighting as a preprocessor directive
   inside source files. Doing this probably means post-processing the 
   results of the highlighting engine, to find places where it's highlighted
   comments, and then running them through the ikiwiki rendering pipeline.
-  This seems fairly doable with [[cpan Syntax::Highlight::Engine::Kate]],
+  This seems fairly doable with [[!cpan Syntax::Highlight::Engine::Kate]],
   at least.
 * The whole-file plugins tend to have a problem that things that look like
   wikilinks in the source code get munged into links by ikiwiki, which can
@@ -90,7 +90,7 @@ like this:
     index 8d728c9..1bd46a9 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -618,6 +618,8 @@ sub pagetype ($) { #{{{
+    @@ -618,6 +618,8 @@ sub pagetype ($) {
      	
      	if ($page =~ /\.([^.]+)$/) {
      		return $1 if exists $hooks{htmlize}{$1};
@@ -98,7 +98,7 @@ like this:
     +		return $page;
      	}
      	return;
-     } #}}}
+     }
 
 ## format directive
 

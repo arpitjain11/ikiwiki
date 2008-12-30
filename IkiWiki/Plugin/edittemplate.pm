@@ -7,7 +7,7 @@ use IkiWiki 2.00;
 use HTML::Template;
 use Encode;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "edittemplate",
 		call => \&getsetup);
 	hook(type => "needsbuild", id => "edittemplate",
@@ -16,17 +16,17 @@ sub import { #{{{
 		call => \&preprocess);
 	hook(type => "formbuilder", id => "edittemplate",
 		call => \&formbuilder);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub needsbuild (@) { #{{{
+sub needsbuild (@) {
 	my $needsbuild=shift;
 
 	foreach my $page (keys %pagestate) {
@@ -40,9 +40,9 @@ sub needsbuild (@) { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
         my %params=@_;
 
 	return "" if $params{page} ne $params{destpage};
@@ -62,9 +62,9 @@ sub preprocess (@) { #{{{
 	return sprintf(gettext("edittemplate %s registered for %s"),
 		htmllink($params{page}, $params{destpage}, $link),
 	       	$params{match});
-} # }}}
+}
 
-sub formbuilder (@) { #{{{
+sub formbuilder (@) {
 	my %params=@_;
 	my $form=$params{form};
 
@@ -103,9 +103,9 @@ sub formbuilder (@) { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
-sub filltemplate ($$) { #{{{
+sub filltemplate ($$) {
 	my $template_page=shift;
 	my $page=shift;
 
@@ -136,6 +136,6 @@ sub filltemplate ($$) { #{{{
 	$template->param(name => $page);
 
 	return $template->output;
-} #}}}
+}
 
 1

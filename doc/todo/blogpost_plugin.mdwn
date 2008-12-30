@@ -51,13 +51,13 @@ Index: IkiWiki/Plugin/blogpost.pm
 +use POSIX;
 +use IkiWiki 2.00;
 +
-+sub import { #{{{
++sub import {
 +	hook(type => "checkconfig", id => "blogpost", call => \&checkconfig);
 +	hook(type => "authcgi", id => "blogpost", call => \&authcgi);
 +	hook(type => "canedit", id => "blogpost", call => \&canedit);
-+} # }}}
++}
 +
-+sub checkconfig () { #{{{
++sub checkconfig () {
 +	if (! defined $config{blogformat}){
 +		$config{blogformat} = 'posts/%Y/%m/%d/$title';
 +	}
@@ -72,9 +72,9 @@ Index: IkiWiki/Plugin/blogpost.pm
 +	if (! defined $config{blogusers}) {
 +		$config{blogusers} = (); # disallow all posting by default
 +	}
-+} #}}}
++}
 +
-+sub authcgi ($$) { #{{{
++sub authcgi ($$) {
 +	my $cgi=shift;
 +	my $session=shift;
 +
@@ -115,16 +115,16 @@ Index: IkiWiki/Plugin/blogpost.pm
 +		$cgi->param("page", $page);
 +	}
 +
-+} #}}}
++}
 +
-+sub blogpage ($) { #{{{
++sub blogpage ($) {
 +	my $title=shift;
 +	my $page=POSIX::strftime $config{blogformat}, localtime;
 +	$page =~ s/\$title/$title/;
 +	return $page;
-+} #}}}
++}
 +
-+sub canedit ($$$) { #{{{
++sub canedit ($$$) {
 +	my $page=shift;
 +	my $cgi=shift;
 +	my $session=shift;
@@ -136,7 +136,7 @@ Index: IkiWiki/Plugin/blogpost.pm
 +	return "" if ($config{blogusers} eq "*" ||
 +		      grep {$_ eq $user} $config{blogusers});
 +	return ("not allowed to blog, $user");
-+} #}}}
++}
 +
 +1
 Index: IkiWiki.pm

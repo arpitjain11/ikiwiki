@@ -13,7 +13,7 @@ I can not see why this check is needed in the first place, so here's a patch for
     diff -upr ikiwiki-1.49.orig/IkiWiki/Rcs/svn.pm ikiwiki-1.49/IkiWiki/Rcs/svn.pm
     --- ikiwiki-1.49.orig/IkiWiki/Rcs/svn.pm	Mon Apr 16 15:15:09 2007
     +++ ikiwiki-1.49/IkiWiki/Rcs/svn.pm	Mon Apr 16 15:15:47 2007
-    @@ -176,7 +176,6 @@ sub rcs_recentchanges ($) { #{{{
+    @@ -176,7 +176,6 @@ sub rcs_recentchanges ($) {
      		}
      
      		foreach (keys %{$logentry->{paths}}) {

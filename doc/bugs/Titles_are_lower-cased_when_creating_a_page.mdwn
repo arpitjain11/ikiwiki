@@ -6,7 +6,7 @@ If I click on "Czars in Russia", I'd like Ikiwiki to create "Czars\_in\_Russia.m
 
 > --- a/IkiWiki.pm
 > +++ b/IkiWiki.pm
-> @@ -584,7 +584,7 @@ sub htmllink ($$$;@) { #{{{
+> @@ -584,7 +584,7 @@ sub htmllink ($$$;@) {
 >  			return "<span class=\"createlink\"><a href=\"".
 >  				cgiurl(
 >  					do => "create",

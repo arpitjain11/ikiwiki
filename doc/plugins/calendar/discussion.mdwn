@@ -2,3 +2,5 @@ It would be nice if the "month" type calendar could collect all of the
 matching pages on a given date in some inline type way. --[[DavidBremner]]
 
 Is it possible to get the calendar to link to pages based not on their timestamp (as I understand that it does now, or have I misunderstood this?) and instead on for example their location in a directory hierarchy. That way the calendar could be used as a planning / timeline device which I think would be great. --[[Alexander]]
+
+I would like the ability to specify relative previous months. This way I could have a sidebar with the last three months by specifying no month, then 'month="-1"' and 'month="-2"'. Negative numbers for the month would otherwise be invalid, so this shouldn't produce any conflicts with expected behavior. (Right?) -- [[StevenBlack]]

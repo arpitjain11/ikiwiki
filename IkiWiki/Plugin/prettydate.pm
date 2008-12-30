@@ -39,12 +39,12 @@ sub default_timetable {
 	];
 }
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "prettydate", call => \&getsetup);
 	hook(type => "checkconfig", id => "prettydate", call => \&checkconfig);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -64,9 +64,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (! defined $config{prettydateformat} ||
 	    $config{prettydateformat} eq '%c') {
 	    	$config{prettydateformat}='%X, %B %o, %Y';
@@ -82,9 +82,9 @@ sub checkconfig () { #{{{
 			$config{timetable}[$h] = $config{timetable}[$h - 1];
 		}
 	}
-} #}}}
+}
 
-sub IkiWiki::formattime ($;$) { #{{{
+sub IkiWiki::formattime ($;$) {
 	my $time=shift;
 	my $format=shift;
 	if (! defined $format) {
@@ -122,6 +122,6 @@ sub IkiWiki::formattime ($;$) { #{{{
 
 	$format=~s/\%X/$t/g;
 	return strftime($format, \@t);
-} #}}}
+}
 
 1

@@ -82,9 +82,9 @@ diff -c /usr/share/perl5/IkiWiki/Plugin/meta.pm.distrib /usr/share/perl5/IkiWiki
 *** 289,294 ****
 --- 290,319 ----
         }
-  } #}}}
+  }
   
-+ sub IkiWiki::pagetitle ($;$) { #{{{
++ sub IkiWiki::pagetitle ($;$) {
 +       my $page=shift;
 +       my $unescaped=shift;
 + 
@@ -106,11 +106,11 @@ diff -c /usr/share/perl5/IkiWiki/Plugin/meta.pm.distrib /usr/share/perl5/IkiWiki
 +       }
 + 
 +       return $page;
-+ } #}}}
++ }
 + 
   package IkiWiki::PageSpec;
   
-  sub match_title ($$;@) { #{{{
+  sub match_title ($$;@) {
 
 
 </pre>

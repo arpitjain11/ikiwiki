@@ -5,14 +5,14 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "lockedit", call => \&getsetup);
 	hook(type => "canedit", id => "lockedit", call => \&canedit);
 	hook(type => "formbuilder_setup", id => "lockedit",
 	     call => \&formbuilder_setup);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -26,9 +26,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub canedit ($$) { #{{{
+sub canedit ($$) {
 	my $page=shift;
 	my $cgi=shift;
 	my $session=shift;
@@ -70,9 +70,9 @@ sub canedit ($$) { #{{{
 	}
 
 	return undef;
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 
 	# XXX deprecated, should be removed eventually	
@@ -109,6 +109,6 @@ sub formbuilder_setup (@) { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
 1

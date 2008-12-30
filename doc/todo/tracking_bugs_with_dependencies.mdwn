@@ -194,9 +194,9 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
     index 4e4da11..8b3cdfe 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -1550,7 +1550,16 @@ sub globlist_to_pagespec ($) { #{{{
+    @@ -1550,7 +1550,16 @@ sub globlist_to_pagespec ($) {
      
-     sub is_globlist ($) { #{{{
+     sub is_globlist ($) {
      	my $s=shift;
     -	return ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
     +	return ! ($s =~ /
@@ -209,19 +209,19 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
     +			) |
     +				(\s and \s) | (\s or \s)	# or we find 'and' or 'or' somewhere
     +			/xs);
-     } #}}}
+     }
      
-     sub safequote ($) { #{{{
-    @@ -1631,7 +1640,7 @@ sub pagespec_merge ($$) { #{{{
+     sub safequote ($) {
+    @@ -1631,7 +1640,7 @@ sub pagespec_merge ($$) {
      	return "($a) or ($b)";
-     } #}}}
+     }
      
-    -sub pagespec_translate ($) { #{{{
-    +sub pagespec_makeperl ($) { #{{{
+    -sub pagespec_translate ($) {
+    +sub pagespec_makeperl ($) {
      	my $spec=shift;
      
      	# Support for old-style GlobLists.
-    @@ -1650,12 +1659,14 @@ sub pagespec_translate ($) { #{{{
+    @@ -1650,12 +1659,14 @@ sub pagespec_translate ($) {
      		|
      			\)		# )
      		|
@@ -238,7 +238,7 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      		my $word=$1;
      		if (lc $word eq 'and') {
      			$code.=' &&';
-    @@ -1666,16 +1677,23 @@ sub pagespec_translate ($) { #{{{
+    @@ -1666,16 +1677,23 @@ sub pagespec_translate ($) {
      		elsif ($word eq "(" || $word eq ")" || $word eq "!") {
      			$code.=' '.$word;
      		}
@@ -265,14 +265,14 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      		}
      	}
      
-    @@ -1683,8 +1701,18 @@ sub pagespec_translate ($) { #{{{
+    @@ -1683,8 +1701,18 @@ sub pagespec_translate ($) {
      		$code=0;
      	}
      
     +	return 'sub { my $page=shift; my %params = @_; '.$code.' }';
-    +} #}}}
+    +}
     +
-    +sub pagespec_translate ($) { #{{{
+    +sub pagespec_translate ($) {
     +	my $spec=shift;
     +
     +	my $code = pagespec_makeperl($spec);
@@ -282,19 +282,19 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      	no warnings;
     -	return eval 'sub { my $page=shift; '.$code.' }';
     +	return eval $code;
-     } #}}}
+     }
      
-     sub pagespec_match ($$;@) { #{{{
-    @@ -1699,7 +1727,7 @@ sub pagespec_match ($$;@) { #{{{
+     sub pagespec_match ($$;@) {
+    @@ -1699,7 +1727,7 @@ sub pagespec_match ($$;@) {
      
      	my $sub=pagespec_translate($spec);
      	return IkiWiki::FailReason->new("syntax error in pagespec \"$spec\"") if $@;
     -	return $sub->($page, @params);
     +	return $sub->($page, @params, specFuncs => {});
-     } #}}}
+     }
      
-     sub pagespec_valid ($) { #{{{
-    @@ -1748,11 +1776,78 @@ sub new { #{{{
+     sub pagespec_valid ($) {
+    @@ -1748,11 +1776,78 @@ sub new {
      
      package IkiWiki::PageSpec;
      
@@ -361,7 +361,7 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
     +	}
     +}
     +
-     sub match_glob ($$;@) { #{{{
+     sub match_glob ($$;@) {
      	my $page=shift;
      	my $glob=shift;
      	my %params=@_;
@@ -373,9 +373,9 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      	my $from=exists $params{location} ? $params{location} : '';
      	
      	# relative matching
-    @@ -1782,11 +1877,12 @@ sub match_internal ($$;@) { #{{{
+    @@ -1782,11 +1877,12 @@ sub match_internal ($$;@) {
      
-     sub match_link ($$;@) { #{{{
+     sub match_link ($$;@) {
      	my $page=shift;
     -	my $link=lc(shift);
     +	my $fulllink=shift;
@@ -388,7 +388,7 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      	# relative matching
      	if ($link =~ m!^\.! && defined $from) {
      		$from=~s#/?[^/]+$##;
-    @@ -1804,19 +1900,32 @@ sub match_link ($$;@) { #{{{
+    @@ -1804,19 +1900,32 @@ sub match_link ($$;@) {
      		}
      		else {
      			return IkiWiki::SuccessReason->new("$page links to page $p matching $link")
@@ -397,9 +397,9 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      		}
      	}
      	return IkiWiki::FailReason->new("$page does not link to $link");
-     } #}}}
+     }
      
-     sub match_backlink ($$;@) { #{{{
+     sub match_backlink ($$;@) {
     -	return match_link($_[1], $_[0], @_);
     +	my $page=shift;
     +	my $backlink=shift;
@@ -410,9 +410,9 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
     +	}
     +
     +	return match_link($backlink, $page, @params);
-     } #}}}
+     }
      
-     sub match_created_before ($$;@) { #{{{
+     sub match_created_before ($$;@) {
      	my $page=shift;
      	my $testpage=shift;
     +	my @params=@_;
@@ -423,8 +423,8 @@ account all comments above (which doesn't mean it is above reproach :) ).  --[[W
      
      	if (exists $IkiWiki::pagectime{$testpage}) {
      		if ($IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage}) {
-    @@ -1834,6 +1943,11 @@ sub match_created_before ($$;@) { #{{{
-     sub match_created_after ($$;@) { #{{{
+    @@ -1834,6 +1943,11 @@ sub match_created_before ($$;@) {
+     sub match_created_after ($$;@) {
      	my $page=shift;
      	my $testpage=shift;
     +	my @params=@_;

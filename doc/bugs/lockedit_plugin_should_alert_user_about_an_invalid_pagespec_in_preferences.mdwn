@@ -1,4 +1,4 @@
-[[plugins/lockedit]] adds the form fields for a [[pagespec]] to preferences. This pagespec should be supplied "raw"; i.e., without quotes around it. Inexperienced users (such as [[myself|jondowland]]) may provide an invalid pagespec, such as one with quotes on it. This will be merrily accepted by the form, but will cause no locking to take place.
+[[plugins/lockedit]] adds the form fields for a [[pagespec]] to preferences. This pagespec should be supplied "raw"; i.e., without quotes around it. Inexperienced users (such as [[myself|users/jon]]) may provide an invalid pagespec, such as one with quotes on it. This will be merrily accepted by the form, but will cause no locking to take place.
 
 Perhaps some validation should be performed on the pagespec and the form-submission return include "warning: this pagespec is invalid" or "warning: this pagespec does not match any existing pages" or similar.
 
@@ -15,3 +15,7 @@ Perhaps some validation should be performed on the pagespec and the form-submiss
 > There are small classes of invalid pagespecs. For example, `(foo or bar`
 > is invalid due to having unbalanced parens, while `foo or and bar` 
 > has invalid syntax. It's possible to detect these, I guess ... --[[Joey]]
+
+>> Having moved it to the .setup file makes things more obvious I think.
+>> Anyway I consider this [[done]], please de-done this if you disagree.
+>> --[[Jon]]

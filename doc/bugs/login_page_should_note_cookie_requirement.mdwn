@@ -4,6 +4,13 @@ At the moment, you go through the login shuffle and then are told that cookies a
 > websites that have a login require cookies. Such warnings used to be
 > common, but few sites bother with them anymore. --[[Joey]]
 
+>> Very few websites break without cookies.  Even fewer lose data.
+>> Can ikiwiki avoid being below average by default? --[MJR](http://mjr.towers.org.uk)
+
+>>> Can we avoid engaging in hyperbole? (Hint: Your browser probably has a
+>>> back button. Hint 2: A username/password does not count as "lost data".
+>>>  Hint 3: Now we're arguing, which is pointless.) --[[Joey]]
+
 Even better would be to only display the cookie note as a warning if the login page doesn't receive a session cookie.
 
 > I considered doing this before, but it would require running the cgi once
@@ -11,7 +18,16 @@ Even better would be to only display the cookie note as a warning if the login p
 > time to check if it took, which is both complicated and probably would
 > look bad.
 
+>> Might this be possible client-side with javascript? A quick google suggests it is possible:
+>> <http://www.javascriptkit.com/javatutors/cookiedetect.shtml>. MJR, want to try adding
+>> that?  -- [[Will]]
+
 Best of all would be to use URL-based or hidden-field-based session tokens if cookies are not permitted.
 
 > This is not very doable since most of the pages the user browses are
 > static pages in a static location.
+
+>> The pages that lose data without cookies (the edit pages, primarily)
+>> don't look static. Are they really? --[MJR](http://mjr.towers.org.uk)
+
+>>> As soon as you post an edit page, you are back to a static website.

@@ -150,6 +150,8 @@ Next, add your installed Perl module directory to the *libdir* parameter.  It sh
         libdir => "/home/.server/user/site/perl/lib/perl5/",
 
 # CGI Wrapper
+The CGI wrapper file will be created automatically by "ikiwiki --setup path/to/setup", as long as you have inserted a valid filename to be created into the setup file.  On DreamHost, be careful not to put the ikiwiki.cgi file in a directory that has different owner/group than the file itself (such as the main site.domain.tld/ directory): this will cause suexec to fail.
+
 The wrapper mode of "06755" doesn't seem to work.  "755" appears to.  However, this may be completely insecure and/or buggy, so if you know better than I, edit this doc and add it here.
 
 # Pre-created SVN repository

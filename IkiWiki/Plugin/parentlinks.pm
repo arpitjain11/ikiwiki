@@ -6,20 +6,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "parentlinks", id => "parentlinks", call => \&parentlinks);
 	hook(type => "pagetemplate", id => "parentlinks", call => \&pagetemplate);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub parentlinks ($) { #{{{
+sub parentlinks ($) {
 	my $page=shift;
 
 	my @ret;
@@ -48,9 +48,9 @@ sub parentlinks ($) { #{{{
 		$i++;
 	}
 	return @ret;
-} #}}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
         my $page=$params{page};
         my $template=$params{template};
@@ -58,6 +58,6 @@ sub pagetemplate (@) { #{{{
 	if ($template->query(name => "parentlinks")) {
 		$template->param(parentlinks => [parentlinks($page)]);
 	}
-} # }}}
+}
 
 1

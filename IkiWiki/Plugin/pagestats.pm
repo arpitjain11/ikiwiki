@@ -17,20 +17,20 @@ use IkiWiki 2.00;
 # Names of the HTML classes to use for the tag cloud
 our @classes = ('smallestPC', 'smallPC', 'normalPC', 'bigPC', 'biggestPC' );
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "pagestats", call => \&getsetup);
 	hook(type => "preprocess", id => "pagestats", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	$params{pages}="*" unless defined $params{pages};
 	my $style = ($params{style} or 'cloud');
@@ -73,6 +73,6 @@ sub preprocess (@) { #{{{
 
 		return $res;
 	}
-} # }}}
+}
 
 1

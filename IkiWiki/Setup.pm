@@ -10,7 +10,7 @@ use IkiWiki;
 use open qw{:utf8 :std};
 use File::Spec;
 
-sub load ($) { # {{{
+sub load ($) {
 	my $setup=IkiWiki::possibly_foolish_untaint(shift);
 	$config{setupfile}=File::Spec->rel2abs($setup);
 
@@ -27,7 +27,7 @@ sub load ($) { # {{{
 
 	eval $code;
 	error("$setup: ".$@) if $@;
-} #}}}
+}
 
 sub merge ($) {
 	# Merge setup into existing config and untaint.
@@ -71,9 +71,9 @@ sub merge ($) {
 			wrappermode => (defined $config{cgi_wrappermode} ? $config{cgi_wrappermode} : "06755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	# Gets all available setup data from all plugins. Returns an
 	# ordered list of [plugin, setup] pairs.
 	my @ret;
@@ -105,9 +105,9 @@ sub getsetup () { #{{{
         $config{syslog}=$syslog;
 
 	return @ret;
-} #}}}
+}
 
-sub dump ($) { #{{{
+sub dump ($) {
 	my $file=IkiWiki::possibly_foolish_untaint(shift);
 	
 	require IkiWiki::Setup::Standard;

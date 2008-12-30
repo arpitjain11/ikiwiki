@@ -7,20 +7,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "creole", call => \&getsetup);
 	hook(type => "htmlize", id => "creole", call => \&htmlize);
-} # }}}
+}
 
-sub getsetup { #{{{
+sub getsetup {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1, # format plugin
 		},
-} #}}}
+}
 
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 	my $content = $params{content};
 
@@ -32,6 +32,6 @@ sub htmlize (@) { #{{{
 	creole_custombarelinks();
 
 	return creole_parse($content);
-} # }}}
+}
 
 1

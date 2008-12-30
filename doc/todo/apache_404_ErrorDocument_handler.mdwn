@@ -1,0 +1,18 @@
+Apache's ErrorDocument directive lets you write a CGI script that will be invoked for all 404s.
+IkiWiki could offer one as an optional wrapper; it would do much the same thing that the
+existing recentchanges_link (or [[generic___39__do__61__goto__39___for_CGI]]) does when
+encountering a nonexistent page.
+
+I think it'd probably have to be a separate CGI script because the environment with which
+404 handlers are invoked is somewhat odd, and because it needs to return a 404 status
+(having said that, it might make sense for `recentchanges_link` to return 404 rather than
+200 anyway if the page doesn't exist).
+
+This would give IkiWiki the behaviour of many other wikis, where visiting a page that
+does not yet exist prompts you to create it, without having to invoke the CGI for
+successful requests.
+
+Due to [a well-known MSIE misfeature](http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807),
+error output needs to be at least 512 bytes long, so some padding might also be required.
+
+I'm happy to write such a script if there is interest. --[[smcv]]

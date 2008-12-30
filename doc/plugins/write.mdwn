@@ -55,8 +55,8 @@ plugin, and a "call" parameter, which tells what function to call for the
 hook.
 
 An optional "last" parameter, if set to a true value, makes the hook run
-after all other hooks of its type. Useful if the hook depends on some other
-hook being run first.
+after all other hooks of its type, and an optional "first" parameter makes
+it run first. Useful if the hook depends on some other hook being run first.
 
 ## Types of hooks
 
@@ -696,10 +696,14 @@ This can be called when creating a new page, to determine what filename
 to save the page to. It's passed a page name, and its type, and returns
 the name of the file to create, relative to the srcdir.
 
-#### `targetpage($$)`
+#### `targetpage($$;$)`
 
 Passed a page and an extension, returns the filename that page will be
 rendered to.
+
+Optionally, a third parameter can be passed, to specify the preferred
+filename of the page. For example, `targetpage("foo", "rss", "feed")`
+will yield something like `foo/feed.rss`.
 
 ## Miscellaneous
 

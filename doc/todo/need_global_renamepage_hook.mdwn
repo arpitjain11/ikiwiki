@@ -1,0 +1,53 @@
+As documented in [[plugins/write]], the current `renamepage` hook is
+heavily oriented towards updating links in pages' content:  it is run
+once per page linking to the renamed page.
+
+That's fine, but it can't be used to trigger more general actions on
+page rename. E.g. it won't be run at all if the page being renamed is
+an orphan one.
+
+This is a real issue for the [[plugins/contrib/po]] development: what
+I'm about to achieve is:
+
+- when a master page is renamed, the plugin takes notice of it (using
+  the `rename` hook), and later renames the translation pages
+  accordingly (in the `change` hook)
+- when a master page is deleted, the plugin deletes its translations
+  (using the `delete` hook)
+
+With the current `renamepage` hook behavior, combining these two goals
+has an annoying drawback: a plugin can't notice an orphan master page
+has been renamed, so instead of renaming (and preserving) its
+translations, it considers the oldpage as deleted, and deletes its
+translations. Game over.
+
+It may seem like a corner case, but I want to be very careful when
+deleting files automatically in `srcdir`, which is not always under
+version control.
+
+As an sad workaround, I can still disable any deletion in `srcdir`
+when it is not under version control. But I think ikiwiki deserves
+a global `renamepage` hook that would be run once per rename
+operation.
+
+My proposal is thus:
+
+- keep the documented `renamepage` hook as it is
+- use something inspired by the trick `preprocess` uses: when `hook`
+  is passed an optional "global" parameter, set to a true value, the
+  declared `renamepage` hook is run once per rename operation, and is
+  passed named parameters: `src`, `srcfile`, `dest` and `destfile`.
+
+I'm of course volunteering to implement this, or anything related that
+would solve my problem. Hmmm? --[[intrigeri]]
+
+> I think it would be better to have a different hook that is called for
+> renames, since the two hook actions are very different (unlike the
+> preprocess hook, which does a very similar thing in scan mode).
+> 
+> Just calling it `rename` seems like a reasonable name, by analogy with
+> the `delete` and `change` hooks.
+> 
+> It might make sense to rename `renamepage` to `renamelink` to make it
+> clearer what it does. (I'm not very worried about this breaking things, at
+> this point.) --[[Joey]]

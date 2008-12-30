@@ -9,12 +9,12 @@ use strict;
 use lib '.'; # For use in nonstandard directory, munged by Makefile.
 use IkiWiki;
 
-sub usage () { #{{{
+sub usage () {
 	die gettext("usage: ikiwiki [options] source dest"), "\n",
 	    gettext("       ikiwiki --setup configfile"), "\n";
-} #}}}
+}
 
-sub getconfig () { #{{{
+sub getconfig () {
 	if (! exists $ENV{WRAPPED_OPTIONS}) {
 		%config=defaultconfig();
 		eval q{use Getopt::Long};
@@ -40,6 +40,7 @@ sub getconfig () { #{{{
 			"post-commit" => \$config{post_commit},
 			"render=s" => \$config{render},
 			"wrappers!" => \$config{genwrappers},
+			"wrappergroup=s" => \$config{wrappergroup},
 			"usedirs!" => \$config{usedirs},
 			"prefix-directives!" => \$config{prefix_directives},
 			"getctime" => \$config{getctime},
@@ -122,9 +123,9 @@ sub getconfig () { #{{{
 		loadplugins();
 		checkconfig();
 	}
-} #}}}
+}
 
-sub main () { #{{{
+sub main () {
 	getconfig();
 	
 	if ($config{setup}) {
@@ -162,7 +163,8 @@ sub main () { #{{{
 	}
 
 	if ($config{dumpsetup}) {
-		$config{srdir}=$config{destdir}="";
+		$config{srcdir}="" if ! defined $config{srcdir};
+		$config{destdir}="" if ! defined $config{destdir};
 		$config{syslog}=1 if $config{setupsyslog};
 		require IkiWiki::Setup;
 		IkiWiki::Setup::dump($config{dumpsetup});
@@ -205,6 +207,6 @@ sub main () { #{{{
 		saveindex();
 		debug(gettext("done"));
 	}
-} #}}}
+}
 
 main;

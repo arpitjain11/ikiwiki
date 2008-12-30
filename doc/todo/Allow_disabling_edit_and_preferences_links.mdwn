@@ -1,0 +1,48 @@
+This patch allows disabling the edit and preferences link in the config file.  It is backwards compatible (so peoples edit and preferences links won't suddenly vanish).
+
+To disable edit or prefs respectively, add the following to the config file:
+
+<pre>
+  'edit' => 0,
+  'prefs' => 0, 
+</pre>
+
+Patch:
+<pre>
+--- /usr/share/perl5/IkiWiki/Render.pm.orig     2008-12-23 16:49:00.000000000 +1300
++++ /usr/share/perl5/IkiWiki/Render.pm  2008-12-23 16:55:40.000000000 +1300
+@@ -80,8 +80,10 @@
+        my $actions=0;
+ 
+        if (length $config{cgiurl}) {
+-               $template->param(editurl => cgiurl(do => "edit", page => $page));
+-               $template->param(prefsurl => cgiurl(do => "prefs"));
++               $template->param(editurl => cgiurl(do => "edit", page => $page))
++                       if ! defined $config{edit} || (defined $config{edit} && $config{edit} == 1);
++               $template->param(prefsurl => cgiurl(do => "prefs"))
++                       if ! defined $config{prefs} || (defined $config{prefs} && $config{prefs} == 1);
+                $actions++;
+        }
+
+</pre>
+
+> On irc, you said, "That was to allow the hack to of using wikistatedir to
+> allow me to generate two websites, one with inline editting, the other a
+> static page for public consumption."
+> 
+> The edit and preferences links can already be disabled by editing
+> `page.tmpl`. (Look for PREFSURL and EDITURL).
+> 
+> More to the point though, disabling those links does not disable anyone
+> consticting the urls by hand and logging in and editing a page. So you'd
+> really want to disable the editpage plugin in the setup file for the
+> public, static wiki. Sounds like you might also want to turn off cgi
+> entirely for that build. --[[Joey]] 
+
+>> I want to retain the same page.tmpl for both sites (different templates
+>> will just increase the maintenance hell), so disabling the links in the
+>> config for one public site works better in my case.
+>>
+>> I do have the editpage plugin disabled for the public static wiki, but
+>> the link still appears on the site.  I want to keep the cgi on, so that
+>> the site is still searchable. --[[puck]]

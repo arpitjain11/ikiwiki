@@ -16,13 +16,13 @@ BEGIN {
 	}
 };
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "amazon_s3", call => \&getopt);
 	hook(type => "getsetup", id => "amazon_s3", call => \&getsetup);
 	hook(type => "checkconfig", id => "amazon_s3", call => \&checkconfig);
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
         eval q{use Getopt::Long};
         error($@) if $@;
         Getopt::Long::Configure('pass_through');
@@ -38,9 +38,9 @@ sub getopt () { #{{{
 		debug(gettext("done"));
 		exit(0);
 	});
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0,
@@ -88,9 +88,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub checkconfig { #{{{
+sub checkconfig {
 	foreach my $field (qw{amazon_s3_key_id amazon_s3_key_file
 	                      amazon_s3_bucket}) {
 		if (! exists $config{$field} || ! defined $config{$field}) {
@@ -101,11 +101,11 @@ sub checkconfig { #{{{
 	    ! defined $config{amazon_s3_prefix}) {
 	    $config{amazon_s3_prefix}="wiki/";
 	}
-} #}}}
+}
 
 {
 my $bucket;
-sub getbucket { #{{{
+sub getbucket {
 	return $bucket if defined $bucket;
 	
 	open(IN, "<", $config{amazon_s3_key_file}) || error($config{amazon_s3_key_file}.": ".$!);
@@ -138,11 +138,11 @@ sub getbucket { #{{{
 	}
 
 	return $bucket;
-} #}}}
+}
 }
 
 # Given a file, return any S3 keys associated with it.
-sub file2keys ($) { #{{{
+sub file2keys ($) {
 	my $file=shift;
 
 	my @keys;
@@ -162,14 +162,14 @@ sub file2keys ($) { #{{{
 		}
 	}
 	return @keys;
-} #}}}
+}
 
 package IkiWiki;
 use File::MimeInfo;
 use Encode;
 
 # This is a wrapper around the real writefile.
-sub writefile ($$$;$$) { #{{{
+sub writefile ($$$;$$) {
         my $file=shift;
         my $destdir=shift;
         my $content=shift;
@@ -225,10 +225,10 @@ sub writefile ($$$;$$) { #{{{
 	}
 
 	return $ret;
-} #}}}
+}
 
 # This is a wrapper around the real prune.
-sub prune ($) { #{{{
+sub prune ($) {
 	my $file=shift;
 
 	my @keys=IkiWiki::Plugin::amazon_s3::file2keys($file);
@@ -247,6 +247,6 @@ sub prune ($) { #{{{
 	}
 
 	return $IkiWiki::Plugin::amazon_s3::subs{'IkiWiki::prune'}->($file);
-} #}}}
+}
 
 1

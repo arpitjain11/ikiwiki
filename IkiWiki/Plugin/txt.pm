@@ -24,13 +24,13 @@ sub import {
 	}
 }
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 1, # format plugin
 		},
-} #}}}
+}
 
 # We use filter to convert raw text to HTML
 # (htmlize is called after other plugins insert HTML)

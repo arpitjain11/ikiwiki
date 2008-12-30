@@ -26,7 +26,7 @@ And here's a patch to implement it. Will this survive markdown munging? It seems
     index 7226231..3eb1ae7 100644
     --- a/Plugin/img.pm
     +++ b/Plugin/img.pm
-    @@ -93,9 +93,15 @@ sub preprocess (@) { #{{{
+    @@ -93,9 +93,15 @@ sub preprocess (@) {
                     $imgurl="$config{url}/$imglink";
             }
      
@@ -42,7 +42,7 @@ And here's a patch to implement it. Will this survive markdown munging? It seems
     +        $result .= '/></a>';
     +
     +        return $result;
-     } #}}}
+     }
      
      1
     -- 

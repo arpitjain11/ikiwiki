@@ -10,7 +10,7 @@ diffurls of the following form:
     index 5bef928..164210d 100644
     --- a/IkiWiki/Plugin/git.pm
     +++ b/IkiWiki/Plugin/git.pm
-    @@ -518,6 +518,7 @@ sub rcs_recentchanges ($) { #{{{
+    @@ -518,6 +518,7 @@ sub rcs_recentchanges ($) {
      
      			my $diffurl = defined $config{'diffurl'} ? $config{'diffurl'} : "";
      			$diffurl =~ s/\[\[file\]\]/$file/go;

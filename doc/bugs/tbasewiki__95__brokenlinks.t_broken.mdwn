@@ -25,12 +25,12 @@ After some digging I found that HTML::Template is being required after the new s
                     filter => sub {
                             my $text_ref = shift;
     @@ -857,6 +856,7 @@
-     } #}}}
+     }
 
-     sub template ($;@) { #{{{
+     sub template ($;@) {
     +       require HTML::Template;
             HTML::Template->new(template_params(@_));
-     } #}}}
+     }
 
 **That** gave me:
 

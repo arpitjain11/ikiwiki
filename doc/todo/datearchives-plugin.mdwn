@@ -17,11 +17,11 @@ Index: IkiWiki/Plugin/datearchives.pm
 +use strict;
 +use IkiWiki;
 +
-+sub import { #{{{
++sub import {
 +    hook(type => "pagetemplate", id => "datearchives", call => \&pagetemplate, scan => 1);
-+} # }}}
++}
 +
-+sub pagetemplate (@) { #{{{
++sub pagetemplate (@) {
 +    my %args = @_;
 +    my $dt;
 +    eval {
@@ -37,7 +37,7 @@ Index: IkiWiki/Plugin/datearchives.pm
 +        $template->param(ctime => htmllink( $args{page}, $args{destpage}, $link, 0, 0,
 +                                            $template->param('ctime')));
 +       }
-+} # }}}
++}
 +
 +1
 </pre>

@@ -15,7 +15,7 @@ Inline below is a [[patch]] that implements this:
     index bb21ed2..10c985c 100644
     --- a/IkiWiki/Plugin/editpage.pm
     +++ b/IkiWiki/Plugin/editpage.pm
-    @@ -60,7 +60,7 @@ sub cgi_editpage ($$) { #{{{
+    @@ -60,7 +60,7 @@ sub cgi_editpage ($$) {
      
      	decode_cgi_utf8($q);
      
@@ -24,7 +24,7 @@ Inline below is a [[patch]] that implements this:
      	my @buttons=("Save Page", "Preview", "Cancel");
      	eval q{use CGI::FormBuilder};
      	error($@) if $@;
-    @@ -117,9 +117,20 @@ sub cgi_editpage ($$) { #{{{
+    @@ -117,9 +117,20 @@ sub cgi_editpage ($$) {
      	}
      	else {
      		$type=$form->param('type');
@@ -45,7 +45,7 @@ Inline below is a [[patch]] that implements this:
      		elsif (defined $from && exists $pagesources{$from}) {
      			# favor the type of linking page
      			$type=pagetype($pagesources{$from});
-    @@ -129,7 +140,7 @@ sub cgi_editpage ($$) { #{{{
+    @@ -129,7 +140,7 @@ sub cgi_editpage ($$) {
      		if (! $form->submitted) {
      			$form->field(name => "rcsinfo", value => "", force => 1);
      		}
@@ -58,7 +58,7 @@ Inline below is a [[patch]] that implements this:
     index 8efef3f..075d7d8 100644
     --- a/IkiWiki/Plugin/inline.pm
     +++ b/IkiWiki/Plugin/inline.pm
-    @@ -271,6 +271,7 @@ sub preprocess_inline (@) { #{{{
+    @@ -271,6 +271,7 @@ sub preprocess_inline (@) {
      			$rootpage=$params{page};
      		}
      		$formtemplate->param(rootpage => $rootpage);

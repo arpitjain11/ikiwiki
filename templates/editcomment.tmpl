@@ -1,0 +1,29 @@
+<div class="editcomment">
+<TMPL_VAR MESSAGE>
+<TMPL_VAR FORM-START>
+<TMPL_VAR FIELD-DO>
+<TMPL_VAR FIELD-SID>
+<TMPL_VAR FIELD-PAGE>
+<TMPL_UNLESS NAME=USERNAME>
+<TMPL_IF NAME=ALLOWAUTHOR>
+Name: <TMPL_VAR NAME=FIELD-AUTHOR> (optional)<br />
+Website: <TMPL_VAR NAME=FIELD-URL> (optional)<br />
+</TMPL_IF>
+</TMPL_UNLESS>
+Subject: <TMPL_VAR FIELD-SUBJECT><br />
+<TMPL_VAR FIELD-EDITCONTENT><br />
+<TMPL_VAR FORM-SUBMIT> <TMPL_VAR FIELD-TYPE> <TMPL_VAR HELPONFORMATTINGLINK><br />
+IkiWiki directives ([[!directive]]) are <TMPL_UNLESS NAME="ALLOWDIRECTIVES">not </TMPL_UNLESS>allowed in comments on this wiki.<br />
+<TMPL_VAR NAME="FORM-END">
+
+<TMPL_IF NAME="PAGE_PREVIEW">
+<hr />
+<div class="header">
+<span>Comment preview:</span>
+</div><!-- .header -->
+<div id="preview">
+<TMPL_VAR PAGE_PREVIEW>
+</div><!-- #preview -->
+</TMPL_IF>
+
+</div><!-- .editcomment -->

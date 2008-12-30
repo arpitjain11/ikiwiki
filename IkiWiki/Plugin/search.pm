@@ -6,16 +6,16 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "search", call => \&getsetup);
 	hook(type => "checkconfig", id => "search", call => \&checkconfig);
 	hook(type => "pagetemplate", id => "search", call => \&pagetemplate);
 	hook(type => "postscan", id => "search", call => \&index);
 	hook(type => "delete", id => "search", call => \&delete);
 	hook(type => "cgi", id => "search", call => \&cgi);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -28,9 +28,9 @@ sub getsetup () { #{{{
 			safe => 0, # external program
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	foreach my $required (qw(url cgiurl)) {
 		if (! length $config{$required}) {
 			error(sprintf(gettext("Must specify %s when using the search plugin"), $required));
@@ -40,10 +40,10 @@ sub checkconfig () { #{{{
 	if (! defined $config{omega_cgi}) {
 		$config{omega_cgi}="/usr/lib/cgi-bin/omega/omega";
 	}
-} #}}}
+}
 
 my $form;
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $template=$params{template};
@@ -58,11 +58,11 @@ sub pagetemplate (@) { #{{{
 
 		$template->param(searchform => $form);
 	}
-} #}}}
+}
 
 my $scrubber;
 my $stemmer;
-sub index (@) { #{{{
+sub index (@) {
 	my %params=@_;
 
 	setupfiles();
@@ -146,17 +146,17 @@ sub index (@) { #{{{
 
 	$doc->add_term($pageterm);
 	$db->replace_document_by_term($pageterm, $doc);
-} #}}}
+}
 
-sub delete (@) { #{{{
+sub delete (@) {
 	my $db=xapiandb();
 	foreach my $page (@_) {
 		my $pageterm=pageterm(pagename($page));
 		$db->delete_document_by_term($pageterm) if defined $pageterm;
 	}
-} #}}}
+}
 
-sub cgi ($) { #{{{
+sub cgi ($) {
 	my $cgi=shift;
 
 	if (defined $cgi->param('P')) {
@@ -169,9 +169,9 @@ sub cgi ($) { #{{{
 			noimageinline => 1, linktext => "Help");
 		exec($config{omega_cgi}) || error("$config{omega_cgi} failed: $!");
 	}
-} #}}}
+}
 
-sub pageterm ($) { #{{{
+sub pageterm ($) {
 	my $page=shift;
 
 	# 240 is the number used by omindex to decide when to hash an
@@ -190,10 +190,10 @@ sub pageterm ($) { #{{{
 	else {
 		return "U:".$page;
 	}
-} #}}}
+}
 
 my $db;
-sub xapiandb () { #{{{
+sub xapiandb () {
 	if (! defined $db) {
 		eval q{
 			use Search::Xapian;
@@ -204,11 +204,11 @@ sub xapiandb () { #{{{
 			Search::Xapian::DB_CREATE_OR_OPEN());
 	}
 	return $db;
-} #}}}
+}
 
 {
 my $setup=0;
-sub setupfiles () { #{{{
+sub setupfiles () {
 	if (! $setup and (! -e $config{wikistatedir}."/xapian" || $config{rebuild})) {
 		writefile("omega.conf", $config{wikistatedir}."/xapian",
 			"database_dir .\n".
@@ -218,7 +218,7 @@ sub setupfiles () { #{{{
 				readfile(IkiWiki::template_file("searchquery.tmpl"))));
 		$setup=1;
 	}
-} #}}}
+}
 }
 
 1

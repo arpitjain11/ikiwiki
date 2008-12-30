@@ -10,7 +10,7 @@ My solution is to allow plugins to provide a hook that sets the pagename. --[[/u
     +++ /usr/share/perl5/IkiWiki.pm 2008-10-07 11:57:26.000000000 -0400
     @@ -196,11 +196,32 @@
 
-     sub pagename ($) { #{{{
+     sub pagename ($) {
             my $file=shift;
 
             my $type=pagetype($file);
@@ -27,7 +27,7 @@ My solution is to allow plugins to provide a hook that sets the pagename. --[[/u
             $page=~s/\Q.$type\E*$// if defined $type;
             return $page;
     +   }
-     } #}}}
+     }
 
-     sub htmlpage ($) { #{{{
+     sub htmlpage ($) {
 

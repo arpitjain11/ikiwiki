@@ -6,7 +6,7 @@ In `IkiWiki::preprocess`, the last capturing group in the regex used to parse di
     index 241a7c0..d2c35a2 100644
     --- a/IkiWiki.pm
     +++ b/IkiWiki.pm
-    @@ -1167,7 +1167,8 @@ sub preprocess ($$$;$$) { #{{{
+    @@ -1167,7 +1167,8 @@ sub preprocess ($$$;$$) {
                     }sx;
             }
      
@@ -14,6 +14,6 @@ In `IkiWiki::preprocess`, the last capturing group in the regex used to parse di
     +       # $4 can be undef if the directive was \[[!foo]]
     +       $content =~ s{$regex}{$handle->($1, $2, $3, ($4 or ""))}eg;
             return $content;
-     } #}}}
+     }
  
 [[cherry-picked|done]] --[[Joey]]

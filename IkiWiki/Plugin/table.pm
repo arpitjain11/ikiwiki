@@ -6,20 +6,20 @@ use strict;
 use Encode;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "table", call => \&getsetup);
 	hook(type => "preprocess", id => "table", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params =(
 		format	=> 'auto',
 		header	=> 'row',
@@ -102,16 +102,16 @@ sub preprocess (@) { #{{{
 	else {  
 		return $html;
 	}            
-} #}}}
+}
 
-sub is_dsv_data ($) { #{{{
+sub is_dsv_data ($) {
 	my $text = shift;
 
 	my ($line) = split(/\n/, $text);
 	return $line =~ m{.+\|};
 }
 
-sub split_csv ($$) { #{{{
+sub split_csv ($$) {
 	my @text_lines = split(/\n/, shift);
 	my $delimiter = shift;
 
@@ -137,9 +137,9 @@ sub split_csv ($$) { #{{{
 	}
 
 	return @data;
-} #}}}
+}
 
-sub split_dsv ($$) { #{{{
+sub split_dsv ($$) {
 	my @text_lines = split(/\n/, shift);
 	my $delimiter = shift;
 	$delimiter="|" unless defined $delimiter;
@@ -150,9 +150,9 @@ sub split_dsv ($$) { #{{{
 	}
     
 	return @data;
-} #}}}
+}
 
-sub genrow ($@) { #{{{
+sub genrow ($@) {
 	my %params=%{shift()};
 	my $elt = shift;
 	my @data = @_;
@@ -190,6 +190,6 @@ sub genrow ($@) { #{{{
 	push @ret, "\t\t</tr>";
 
 	return @ret;
-} #}}}
+}
 
 1

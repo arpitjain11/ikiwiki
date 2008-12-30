@@ -11,7 +11,7 @@ I've no idea what's happening (hey, I'm a C programmer), but I've hacked prune()
 <pre>
 use Scalar::Util qw(tainted);
 
-sub prune ($) { #{{{
+sub prune ($) {
         my $file=shift;
 
         unlink($file);
@@ -25,7 +25,7 @@ sub prune ($) { #{{{
                         $dir = $1;
                 }
         }
-} #}}}
+}
 </pre>
 
 > Old versions of perl are known to have bugs with taint checking.

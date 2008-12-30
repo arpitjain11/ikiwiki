@@ -1,0 +1,17 @@
+If a link inside a CSV file contains two or more underscores (\_), then it will get mis-parsed by the table plugin.
+
+e.g. \[[single\_track\_lines]] becomes "em>lines".
+
+Links with only one underscore are OK.
+
+Update 2008-11-24: The problem only occurs if the CSV data is in an external file. If I load it using data="""...""" then it works fine.
+
+The problem appears to be the call to htmlize inside genrow. If the data is inline, then wikilinks get expanded before they get here, and are OK. If the data is from an external file, the wikilinks aren't expanded, and htmlize will expand \[[single\_track\_lines]] into \[[single&lt;em&gt;track&lt;/em&gt;lines]].
+
+Oh, wait, I see the problem. IkiWiki::linkify is only called if the external file doesn't exist. If I remove this check and always call IkiWiki::linkify, then the problem is solved.
+
+(this is inside /usr/share/perl5/IkiWiki/Plugin/table.pm).
+
+I am rather confused what this check does, and the fact the comments are very different for CSV and DSV when the code is the same doesn't seem to help.
+
+-- Brian May

@@ -43,11 +43,11 @@ follows) ?
 > the use of it: `eval q{use AuthCAS}; error $@ if $@`
 
     +
-    +sub import { #{{{
+    +sub import {
     +    hook(type => "getopt", id => "cas", call => \&getopt);
     +    hook(type => "auth", id => "cas", call => \&auth);
     +    hook(type => "formbuilder_setup", id => "cas", call => \&formbuilder_setup);
-    +} # }}}
+    +}
 
 > Could you please use tabs for indentation of program flow?
 
@@ -61,15 +61,15 @@ follows) ?
 > Why would you want to make other auth plugins not work? Could a site not
 > legitimatly chose to use this and another auth method?
 
-    +sub getopt () { #{{{
+    +sub getopt () {
     +    eval q{use Getopt::Long};
     +    error($@) if $@;
     +    Getopt::Long::Configure('pass_through');
     +    GetOptions("cas_url=s" => \$config{cas_url});
     +    GetOptions("ca_file=s" => \$config{ca_file});
-    +} #}}}
+    +}
     +
-    +sub auth ($$) { #{{{
+    +sub auth ($$) {
     +    my $q=shift;
     +    my $session=shift;
     +
@@ -98,11 +98,11 @@ follows) ?
     +            error("CAS failure: ".&AuthCAS::get_errors());
     +        }
     +    }
-    +} #}}}
+    +}
     +
     +# I use formbuilder_setup and not formbuilder type in order to bypass the
     +# Logout processing done in IkiWiki::CGI::cgi_prefs()
-    +sub formbuilder_setup (@) { #{{{
+    +sub formbuilder_setup (@) {
     +    my %params=@_;
     +    
     +    my $form=$params{form};

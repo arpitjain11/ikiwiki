@@ -219,14 +219,14 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 	
 	package IkiWiki;
 	
-	sub rcs_update () { #{{{
+	sub rcs_update () {
 		# Do nothing - there's nowhere to update *from*.
-	} #}}}
+	}
 	
-	sub rcs_prepedit ($) { #{{{
-	} #}}}
+	sub rcs_prepedit ($) {
+	}
 	
-	sub rcs_commit ($$$;$$) { #{{{
+	sub rcs_commit ($$$;$$) {
 		my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 	
 		# $user should probably be a name and an email address, by darcs
@@ -257,16 +257,16 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 	
 		return undef; # success
 		
-	sub rcs_add ($) { # {{{
+	sub rcs_add ($) {
 		my ($file) = @_;
 	
 		my @cmdline = ("darcs", "add", "--repodir", "$config{srcdir}", "-a", "-q", "$file");
 		if (system(@cmdline) != 0) {
 			warn "'@cmdline' failed: $!";
 		}
-	} #}}}
+	}
 	
-	sub rcs_recentchanges ($) { #{{{
+	sub rcs_recentchanges ($) {
 		# TODO: This is horrible code. It doesn't work perfectly, and uses regexes
 		# rather than parsing Darcs' XML output.
 		my $num=shift;
@@ -314,15 +314,15 @@ This is my ([bma](bma@bmalee.eu)) darcs.pm - it's messy (my Perl isn't up to muc
 				}
 		}
 		return @ret;
-	} #}}}
+	}
 	
-	sub rcs_notify () { #{{{
+	sub rcs_notify () {
 		# TODO
-	} #}}}
+	}
 	
-	sub rcs_getctime ($) { #{{{
+	sub rcs_getctime ($) {
 		error gettext("getctime not implemented");
-	} #}}}
+	}
 	
 	1
 

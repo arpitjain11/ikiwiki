@@ -157,9 +157,9 @@ ManojSrivastava
 +=cut
 +
 +
-+sub import { #{{{
++sub import {
 +	hook(type => "pagetemplate", id => "varioki", call => \&pagetemplate);
-+} # }}}
++}
 +
 +
 +=pod
@@ -175,7 +175,7 @@ ManojSrivastava
 +
 +=cut
 +
-+sub pagetemplate (@) { #{{{
++sub pagetemplate (@) {
 +	my %params=@_;
 +	my $page=$params{page};
 +	my $template=$params{template};
@@ -207,7 +207,7 @@ ManojSrivastava
 +             $template->param("$var" =>"$value");
 +           }
 +        }
-+} # }}}
++}
 +
 +1;
 +

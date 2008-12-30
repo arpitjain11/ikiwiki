@@ -12,7 +12,7 @@ I was hoping that the [[plugins/rename]] plugin would allow web uses to change t
     index 527ee88..123b772 100644
     --- a/IkiWiki/Plugin/rename.pm
     +++ b/IkiWiki/Plugin/rename.pm
-    @@ -43,7 +43,7 @@ sub check_canrename ($$$$$$$) { #{{{
+    @@ -43,7 +43,7 @@ sub check_canrename ($$$$$$$) {
      	
      	# Dest checks can be omitted by passing undef.
      	if (defined $dest) {
@@ -21,7 +21,7 @@ I was hoping that the [[plugins/rename]] plugin would allow web uses to change t
      			error(gettext("no change to the file name was specified"));
      		}
      
-    @@ -54,7 +54,7 @@ sub check_canrename ($$$$$$$) { #{{{
+    @@ -54,7 +54,7 @@ sub check_canrename ($$$$$$$) {
      		}
      
      		# Must not be a known source file.
@@ -30,7 +30,7 @@ I was hoping that the [[plugins/rename]] plugin would allow web uses to change t
      			error(sprintf(gettext("%s already exists"),
      				htmllink("", "", $dest, noimageinline => 1)));
      		}
-    @@ -97,6 +97,24 @@ sub rename_form ($$$) { #{{{
+    @@ -97,6 +97,24 @@ sub rename_form ($$$) {
      	$f->field(name => "do", type => "hidden", value => "rename", force => 1);
      	$f->field(name => "page", type => "hidden", value => $page, force => 1);
      	$f->field(name => "new_name", value => IkiWiki::pagetitle($page), size => 60);
@@ -55,7 +55,7 @@ I was hoping that the [[plugins/rename]] plugin would allow web uses to change t
      	$f->field(name => "attachment", type => "hidden");
      
      	return $f, ["Rename", "Cancel"];
-    @@ -223,12 +241,19 @@ sub sessioncgi ($$) { #{{{
+    @@ -223,12 +241,19 @@ sub sessioncgi ($$) {
      			my $dest=IkiWiki::possibly_foolish_untaint(IkiWiki::titlepage($q->param("new_name")));
      
      			# The extension of dest is the same as src if it's

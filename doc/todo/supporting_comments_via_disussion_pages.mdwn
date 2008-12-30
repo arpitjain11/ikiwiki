@@ -91,14 +91,14 @@ Each comment is processed to something like this:
     use strict;
     use IkiWiki '1.02';
 
-    sub import { #{{{
+    sub import {
         hook(type => "formbuilder_setup", id => "comments",
             call => \&formbuilder_setup);
         hook(type => "preprocess", id => "blogcomment",
             call => \&preprocess);  
-    } # }}}
+    }
 
-    sub formbuilder_setup (@) { #{{{
+    sub formbuilder_setup (@) {
         my %params=@_;
         my $cgi = $params{cgi};
         my $form = $params{form};   
@@ -138,9 +138,9 @@ Each comment is processed to something like this:
         $content.=qq{[[!blogcomment from="""$name""" timestamp="""$timestamp""" subject="""$subject""" text="""$comment"""]]\n\n};
         $content=~s/\n/\r\n/g;
         $form->field(name => "editcontent", value => $content, force => 1);
-    } # }}}
+    }
 
-    sub preprocess (@) { #{{{
+    sub preprocess (@) {
         my %params=@_;
 
         my ($text, $date, $from, $subject, $r);
@@ -159,7 +159,7 @@ Each comment is processed to something like this:
         $r .= "</dl>\n" . $text . "</div>\n";
 
         return $r;
-    } # }}}
+    }
     
     1;
 
@@ -213,3 +213,8 @@ do you think so far? Known issues include:
   un-wikiish).
 
 --[[smcv]]
+
+I've updated smcvpostcomment and publicised it as [[plugins/contrib/comments]]. --[[smcv]]
+
+> While there is still room for improvement and entirely other approaches,
+> I am calling this done since smcv's comments plugin is ready. --[[Joey]] 

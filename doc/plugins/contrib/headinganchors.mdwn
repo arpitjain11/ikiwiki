@@ -12,9 +12,9 @@ rst and any other format that produces html. The code is available here:
 	use strict;
 	use IkiWiki 2.00;
 
-	sub import { #{{{
+	sub import {
 	        hook(type => "sanitize", id => "headinganchors", call => \&headinganchors);
-	} # }}}
+	}
 
 	sub text_to_anchor {
 	        my $str = shift;
@@ -26,11 +26,11 @@ rst and any other format that produces html. The code is available here:
 	        return $str;
 	}
 
-	sub headinganchors (@) { #{{{
+	sub headinganchors (@) {
 	        my %params=@_;
 	        my $content=$params{content};
 	        $content=~s{<h([0-9])>([^>]*)</h([0-9])>}{'<h'.$1.' id="'.text_to_anchor($2).'">'.$2.'</h'.$3.'>'}gie;
 	        return $content;
-	} # }}}
+	}
 
 	1

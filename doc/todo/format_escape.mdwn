@@ -141,13 +141,13 @@ Index: IkiWiki/Plugin/rst.pm
  print html[html.find('<body>')+6:html.find('</body>')].strip();
  ";
  
- sub import { #{{{
+ sub import {
  	hook(type => "htmlize", id => "rst", call => \&htmlize);
 +	hook(type => "htmlescape", id => "rst", call => \&htmlescape);
 +	hook(type => "htmlescapelink", id => "rst", call => \&htmlescapelink);
- } # }}}
+ }
  
-+sub htmlescapelink ($$;@) { #{{{
++sub htmlescapelink ($$;@) {
 +	my $url = shift;
 +	my $text = shift;
 +	my %params = @_;
@@ -158,15 +158,15 @@ Index: IkiWiki/Plugin/rst.pm
 +	else {
 +		return "`$text <$url>`_";
 +	}
-+} # }}}
++}
 +
-+sub htmlescape ($) { #{{{
++sub htmlescape ($) {
 +	my $html=shift;
 +	$html=~s/^/  /mg;
 +	return ".. raw:: html\n\n".$html;
-+} # }}}
++}
 +
- sub htmlize (@) { #{{{
+ sub htmlize (@) {
  	my %params=@_;
  	my $content=$params{content};
 Index: doc/plugins/write.mdwn
@@ -272,7 +272,7 @@ Index: IkiWiki.pm
 +	  return $hooks{htmlescapelink}{$type}{call}->($bestlink, $linktext);
 +	}
  	return "<a href=\"$bestlink\">$linktext</a>";
- } #}}}
+ }
  
 @@ -628,6 +640,14 @@
  				preview => $preprocess_preview,

@@ -7,23 +7,23 @@ use strict;
 use IkiWiki 2.00;
 use HTML::Parser;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "toc", call => \&getsetup);
 	hook(type => "preprocess", id => "toc", call => \&preprocess);
 	hook(type => "format", id => "toc", call => \&format);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
 my %tocpages;
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	if ($params{page} eq $params{destpage}) {
@@ -40,9 +40,9 @@ sub preprocess (@) { #{{{
 		# right.
 		return "";
 	}
-} # }}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
 	my %params=@_;
 	my $content=$params{content};
 	

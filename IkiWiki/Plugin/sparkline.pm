@@ -14,20 +14,20 @@ my %locmap=(
 	left => 'TEXT_LEFT',
 );
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "sparkline", call => \&getsetup);
 	hook(type => "preprocess", id => "sparkline", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 
 	my $php;
@@ -166,6 +166,6 @@ sub preprocess (@) { #{{{
 	}
 
 	return '<img src="'.urlto($fn, $params{destpage}).'" alt="graph" />';
-} # }}}
+}
 
 1

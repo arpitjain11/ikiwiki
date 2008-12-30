@@ -71,10 +71,10 @@ Happy TeXing.
     +
     +my $default_postfix = '\\end{document}';
     +
-     sub import { #{{{
+     sub import {
      	hook(type => "getsetup", id => "teximg", call => \&getsetup);
      	hook(type => "preprocess", id => "teximg", call => \&preprocess);
-    @@ -21,6 +33,26 @@ sub getsetup () { #{{{
+    @@ -21,6 +33,26 @@ sub getsetup () {
      			safe => 1,
      			rebuild => undef,
      		},
@@ -98,10 +98,10 @@ Happy TeXing.
     +			safe => 0, # Not sure how secure LaTeX is...
     +			rebuild => 1,
     +		},
-     } #}}}
+     }
      
-     sub preprocess (@) { #{{{
-    @@ -105,25 +137,35 @@ sub gen_image ($$$$) { #{{{
+     sub preprocess (@) {
+    @@ -105,25 +137,35 @@ sub gen_image ($$$$) {
      	my $digest = shift;
      	my $imagedir = shift;
      

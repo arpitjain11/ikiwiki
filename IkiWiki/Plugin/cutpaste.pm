@@ -7,22 +7,22 @@ use IkiWiki 2.00;
 
 my %savedtext;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "cutpaste", call => \&getsetup);
 	hook(type => "preprocess", id => "cut", call => \&preprocess_cut, scan => 1);
 	hook(type => "preprocess", id => "copy", call => \&preprocess_copy, scan => 1);
 	hook(type => "preprocess", id => "paste", call => \&preprocess_paste);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess_cut (@) { #{{{
+sub preprocess_cut (@) {
 	my %params=@_;
 
 	foreach my $param (qw{id text}) {
@@ -35,9 +35,9 @@ sub preprocess_cut (@) { #{{{
 	$savedtext{$params{page}}->{$params{id}} = $params{text};
 
 	return "" if defined wantarray;
-} # }}}
+}
 
-sub preprocess_copy (@) { #{{{
+sub preprocess_copy (@) {
 	my %params=@_;
 
 	foreach my $param (qw{id text}) {
@@ -51,9 +51,9 @@ sub preprocess_copy (@) { #{{{
 
 	return IkiWiki::preprocess($params{page}, $params{destpage}, 
 		IkiWiki::filter($params{page}, $params{destpage}, $params{text})) if defined wantarray;
-} # }}}
+}
 
-sub preprocess_paste (@) { #{{{
+sub preprocess_paste (@) {
 	my %params=@_;
 
 	foreach my $param (qw{id}) {
@@ -71,6 +71,6 @@ sub preprocess_paste (@) { #{{{
 
 	return IkiWiki::preprocess($params{page}, $params{destpage}, 
 		IkiWiki::filter($params{page}, $params{destpage}, $savedtext{$params{page}}->{$params{id}}));
-} # }}}
+}
 
 1;

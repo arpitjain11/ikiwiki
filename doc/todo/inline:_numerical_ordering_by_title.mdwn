@@ -155,11 +155,11 @@ Joey, have you forgotten about that request? ;) --[[Paweł|ptecza]]
                       %config %links %pagestate %renderedfiles
                       %pagesources %destsources);
      our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
-    @@ -835,6 +835,42 @@ sub titlepage ($) { #{{{
+    @@ -835,6 +835,42 @@ sub titlepage ($) {
      	return $title;
-     } #}}}
+     }
      
-    +sub titlecmp ($$) { #{{{
+    +sub titlecmp ($$) {
     +	my $titleA=shift;
     +	my $titleB=shift;
     +	
@@ -193,29 +193,29 @@ Joey, have you forgotten about that request? ;) --[[Paweł|ptecza]]
     +	return -1 if (@listB);
     +	
     +	return 0;
-    +} #}}}
+    +}
     +
-     sub linkpage ($) { #{{{
+     sub linkpage ($) {
      	my $link=shift;
      	my $chars = defined $config{wiki_file_chars} ? $config{wiki_file_chars} : "-[:alnum:]+/.:_";
     diff --git a/IkiWiki/Plugin/brokenlinks.pm b/IkiWiki/Plugin/brokenlinks.pm
     index 37752dd..ccaa399 100644
     --- a/IkiWiki/Plugin/brokenlinks.pm
     +++ b/IkiWiki/Plugin/brokenlinks.pm
-    @@ -59,7 +59,7 @@ sub preprocess (@) { #{{{
+    @@ -59,7 +59,7 @@ sub preprocess (@) {
      			map {
      				"<li>$_</li>"
      			}
     -			sort @broken)
     +			sort titlecmp @broken)
      		."</ul>\n";
-     } # }}}
+     }
      
     diff --git a/IkiWiki/Plugin/inline.pm b/IkiWiki/Plugin/inline.pm
     index 8efef3f..263e7a6 100644
     --- a/IkiWiki/Plugin/inline.pm
     +++ b/IkiWiki/Plugin/inline.pm
-    @@ -192,7 +192,7 @@ sub preprocess_inline (@) { #{{{
+    @@ -192,7 +192,7 @@ sub preprocess_inline (@) {
      	}
      
      	if (exists $params{sort} && $params{sort} eq 'title') {
@@ -228,20 +228,20 @@ Joey, have you forgotten about that request? ;) --[[Paweł|ptecza]]
     index b910758..10a1d87 100644
     --- a/IkiWiki/Plugin/orphans.pm
     +++ b/IkiWiki/Plugin/orphans.pm
-    @@ -56,7 +56,7 @@ sub preprocess (@) { #{{{
+    @@ -56,7 +56,7 @@ sub preprocess (@) {
      				htmllink($params{page}, $params{destpage}, $_,
      					 noimageinline => 1).
      				"</li>"
     -			} sort @orphans).
     +			} sort titlecmp @orphans).
      		"</ul>\n";
-     } # }}}
+     }
      
     diff --git a/IkiWiki/Render.pm b/IkiWiki/Render.pm
     index ceb7c84..00798e1 100644
     --- a/IkiWiki/Render.pm
     +++ b/IkiWiki/Render.pm
-    @@ -89,7 +89,7 @@ sub genpage ($$) { #{{{
+    @@ -89,7 +89,7 @@ sub genpage ($$) {
      		$template->param(have_actions => 1);
      	}
      

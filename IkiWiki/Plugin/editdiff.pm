@@ -8,21 +8,21 @@ use IkiWiki 2.00;
 use HTML::Entities;
 use IPC::Open2;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "editdiff", call => \&getsetup);
 	hook(type => "formbuilder_setup", id => "editdiff",
 		call => \&formbuilder_setup);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub diff ($$) { #{{{
+sub diff ($$) {
 	my $orig=shift;
 	my $content=shift;
 
@@ -50,9 +50,9 @@ sub diff ($$) { #{{{
 	return "couldn't run diff\n" if $sigpipe;
 
 	return "<pre>".encode_entities($ret)."</pre>";
-} #}}}
+}
 
-sub formbuilder_setup { #{{{
+sub formbuilder_setup {
 	my %params=@_;
 	my $form=$params{form};
 
@@ -72,6 +72,6 @@ sub formbuilder_setup { #{{{
 		my $diff = diff(srcfile($pagesources{$page}), $content);
 		$form->tmpl_param("page_preview", $diff);
 	}
-} #}}}
+}
 
 1

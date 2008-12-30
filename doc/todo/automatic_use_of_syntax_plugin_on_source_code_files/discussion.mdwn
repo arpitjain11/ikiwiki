@@ -17,13 +17,13 @@ Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
     
     my %metaheaders;
     
-    sub import { #{{{
+    sub import {
     	hook(type => "getsetup", id => "sourcecode", call => \&getsetup);
     	hook(type => "checkconfig", id => "sourcecode", call => \&checkconfig);
     	hook(type => "pagetemplate", id => "sourcecode", call => \&pagetemplate);
-    } # }}}
+    }
     
-    sub getsetup () { #{{{
+    sub getsetup () {
     	return 
     		plugin => {
     			safe => 1,
@@ -57,9 +57,9 @@ Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
     			safe => 1,
     			rebuild => 1,
     		},
-    } #}}}
+    }
     
-    sub checkconfig () { #{{{
+    sub checkconfig () {
     	if (! $config{sourcecode_lang}) {
     		error("The sourcecode plugin requires a list of suffixes in the 'sourcecode_lang' config option");
     	}
@@ -97,9 +97,9 @@ Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
     			error("Your installation of source-highlight cannot handle sourcecode language $lang!");
     		}
     	}
-    } #}}}
+    }
     
-    sub htmlize (@) { #{{{
+    sub htmlize (@) {
     	my %params=@_;
     
     	my $page = $params{page};
@@ -141,9 +141,9 @@ Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
     	}
     
     	return '<div id="sourcecode">'."\r\n".join("\r\n",@html)."\r\n</div>\n";
-    } # }}}
+    }
     
-    sub pagetemplate (@) { #{{{
+    sub pagetemplate (@) {
     	my %params=@_;
     
     	my $page=$params{page};
@@ -154,6 +154,6 @@ Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
     		my %seen;
     		$template->param(meta => join("\n", grep { (! $seen{$_}) && ($seen{$_}=1) } @{$metaheaders{$page}}));
     	}
-    } # }}}
+    }
     
     1

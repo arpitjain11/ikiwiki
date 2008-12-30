@@ -1,0 +1,23 @@
+In IkiWiki/Wrapper.pm, the gen_wrapper function finds out what srcdir and
+destdir are set to in the config, but does not use them.
+
+Later in the sub, when a new wiki.cgi wrapper is being created when calling
+ikiwiki --setup /path/to/setup, it will only work if cgi\_wrapper in the
+config file is set to the full path. Otherwise, it creates wiki.cgi in the
+current working directory.  It works with the other wrapper it sets up in
+my config - post\_update (using git), as that shows in the config with a
+full path.
+
+One workaround would be to mention in the setup file that cgi_wrapper has
+to be the full path, not just the file name, but that seems silly when
+destdir is also specified in that file and that's where it should go, and
+$config{destdir} is a known value in the Wrapper.pm file.
+
+> Nowhere in any documentation does
+> it say that cgi\_wrapper is relative to the destdir. 
+> As noted in [[discussion]], there are web server setups
+> that require the cgi be located elsewhere.
+> [[done]] --[[Joey]] 
+
+>> A comment in the generated setup file that all paths should be full
+>> would prevent my (admittedly dumb) error without any drawbacks.

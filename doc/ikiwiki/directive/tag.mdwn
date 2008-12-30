@@ -21,6 +21,10 @@ located under a base directory, such as "tags/". This is a useful way to
 avoid having to write the full path to tags, if you want to keep them
 grouped together out of the way.
 
+Bear in mind that specifying a tagbase means you will need to incorporate it
+into the `link()` [[ikiwiki/PageSpec]] you use: e.g., if your tagbase is
+`tag`, you would match pages tagged "foo" with `link(tag/foo)`.
+
 If you want to override the tagbase for a particular tag, you can use
 something like this:
 

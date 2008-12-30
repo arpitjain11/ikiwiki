@@ -5,23 +5,23 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "remove", call => \&getsetup);
 	hook(type => "formbuilder_setup", id => "remove", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "remove", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "remove", call => \&sessioncgi);
 
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub check_canremove ($$$) { #{{{
+sub check_canremove ($$$) {
 	my $page=shift;
 	my $q=shift;
 	my $session=shift;
@@ -54,9 +54,9 @@ sub check_canremove ($$$) { #{{{
 			error("renaming of attachments is not allowed");
 		}
 	}
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 	my $form=$params{form};
 	my $q=$params{cgi};
@@ -67,9 +67,9 @@ sub formbuilder_setup (@) { #{{{
 		push @{$params{buttons}}, "Remove" if $form->field("do") eq "edit";
 		$form->tmpl_param("field-remove" => '<input name="_submit" type="submit" value="Remove Attachments" />');
 	}
-} #}}}
+}
 
-sub confirmation_form ($$) { #{{{ 
+sub confirmation_form ($$) {
 	my $q=shift;
 	my $session=shift;
 
@@ -90,9 +90,9 @@ sub confirmation_form ($$) { #{{{
 	$f->field(name => "do", type => "hidden", value => "remove", force => 1);
 
 	return $f, ["Remove", "Cancel"];
-} #}}}
+}
 
-sub removal_confirm ($$@) { #{{{
+sub removal_confirm ($$@) {
 	my $q=shift;
 	my $session=shift;
 	my $attachment=shift;
@@ -122,9 +122,9 @@ sub removal_confirm ($$@) { #{{{
 
 	IkiWiki::showform($f, $buttons, $session, $q);
 	exit 0;
-} #}}}
+}
 
-sub postremove ($) { #{{{
+sub postremove ($) {
 	my $session=shift;
 
 	# Load saved form state and return to edit form.
@@ -132,9 +132,9 @@ sub postremove ($) { #{{{
 	$session->clear("postremove");
 	IkiWiki::cgi_savesession($session);
 	IkiWiki::cgi($postremove, $session);
-} #}}}
+}
 
-sub formbuilder (@) { #{{{
+sub formbuilder (@) {
 	my %params=@_;
 	my $form=$params{form};
 
@@ -154,9 +154,9 @@ sub formbuilder (@) { #{{{
 			removal_confirm($q, $session, 1, @selected);
 		}
 	}
-} #}}}
+}
 
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
         my $q=shift;
 
 	if ($q->param("do") eq 'remove') {

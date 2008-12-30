@@ -42,13 +42,13 @@ Longer term plans:
 		 my %cache;
 		 my %linkcache;
 		@@ -32,6 +34,7 @@
-		 sub import { #{{{
+		 sub import {
 			hook(type => "needsbuild", id => "version", call => \&needsbuild);
 			hook(type => "preprocess", id => "calendar", call => \&preprocess);
 		+	hook(type => "preprocess", id => "event", call => \&preprocess_event);
-		 } #}}}
+		 }
 		 
-		 sub is_leap_year (@) { #{{{
+		 sub is_leap_year (@) {
 		@@ -58,6 +61,7 @@
 			my $nmonth   = $params{nmonth};
 			my $pyear    = $params{pyear};
@@ -137,9 +137,9 @@ Longer term plans:
 			# finish off the week
 		@@ -304,6 +333,18 @@
 			return $calendar;
-		 } #}}}
+		 }
 		 
-		+sub preprocess_event (@) { #{{{
+		+sub preprocess_event (@) {
 		+	my %params=@_;
 		+	# if now time is given, use now
 		+	$params{begin} = localtime($time)            unless defined $params{begin};
@@ -151,7 +151,7 @@ Longer term plans:
 		+	return "<!-- $params{begin} -->";
 		+} #}}
 		+
-		 sub preprocess (@) { #{{{
+		 sub preprocess (@) {
 			my %params=@_;
 			$params{pages} = "*"            unless defined $params{pages};
 		@@ -311,6 +352,8 @@

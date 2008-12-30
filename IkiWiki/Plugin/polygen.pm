@@ -10,20 +10,20 @@ use strict;
 use IkiWiki 2.00;
 use File::Find;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "polygen", call => \&getsetup);
 	hook(type => "preprocess", id => "polygen", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params=@_;
 	my $grammar = ($params{grammar} or 'polygen');
 	my $symbol = ($params{symbol} or undef);
@@ -64,6 +64,6 @@ sub preprocess (@) { #{{{
 	# markdown text
 	$res =~ s/\s*$//;
 	return $res;
-} # }}}
+}
 
 1

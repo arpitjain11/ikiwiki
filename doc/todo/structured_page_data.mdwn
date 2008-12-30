@@ -257,21 +257,21 @@ in a large number of other cases.
     use CGI::FormBuilder;
     use IkiWiki 2.00;
     
-    sub import { #{{{
+    sub import {
     	hook(type => "getsetup", id => "form", call => \&getsetup);
     	hook(type => "htmlize", id => "form", call => \&htmlize);
     	hook(type => "sessioncgi", id => "form", call => \&cgi_submit);
-    } # }}}
+    }
     
-    sub getsetup () { #{{{
+    sub getsetup () {
     	return
     		plugin => {
     			safe => 1,
     			rebuild => 1, # format plugin
     		},
-    } #}}}
+    }
     
-    sub makeFormFromYAML ($$$) { #{{{
+    sub makeFormFromYAML ($$$) {
     	my $page = shift;
     	my $YAMLString = shift;
     	my $q = shift;
@@ -350,9 +350,9 @@ in a large number of other cases.
     	# IkiWiki::decode_form_utf8($form);
     	
     	return $form;
-    } #}}}
+    }
     
-    sub htmlize (@) { #{{{
+    sub htmlize (@) {
     	my %params=@_;
     	my $content = $params{content};
     	my $page = $params{page};
@@ -360,9 +360,9 @@ in a large number of other cases.
     	my $form = makeFormFromYAML($page, $content, undef);
     
     	return $form->render(submit => 'Update Form');
-    } # }}}
+    }
     
-    sub cgi_submit ($$) { #{{{
+    sub cgi_submit ($$) {
     	my $q=shift;
     	my $session=shift;
     	
@@ -425,11 +425,11 @@ in a large number of other cases.
     	}
     
     	exit;
-    } #}}}
+    }
     
     package IkiWiki::PageSpec;
     
-    sub match_form_eq ($$;@) { #{{{
+    sub match_form_eq ($$;@) {
     	my $page=shift;
     	my $argSet=shift;
     	my @args=split(/,/, $argSet);
@@ -460,7 +460,7 @@ in a large number of other cases.
     	} else {
     		return IkiWiki::FailReason->new("field value does not match");
     	}
-    } #}}}
+    }
     
     1
 
@@ -476,22 +476,22 @@ in a large number of other cases.
     
     my $inTable = 0;
     
-    sub import { #{{{
+    sub import {
     	hook(type => "getsetup", id => "data", call => \&getsetup);
     	hook(type => "needsbuild", id => "data", call => \&needsbuild);
     	hook(type => "preprocess", id => "data", call => \&preprocess, scan => 1);
     	hook(type => "preprocess", id => "datatable", call => \&preprocess_table, scan => 1);	# does this need scan?
-    } # }}}
+    }
     
-    sub getsetup () { #{{{
+    sub getsetup () {
     	return
     		plugin => {
     			safe => 1,
     			rebuild => 1, # format plugin
     		},
-    } #}}}
+    }
     
-    sub needsbuild (@) { #{{{
+    sub needsbuild (@) {
     	my $needsbuild=shift;
     	foreach my $page (keys %pagestate) {
     		if (exists $pagestate{$page}{data}) {
@@ -506,7 +506,7 @@ in a large number of other cases.
     	}
     }
     
-    sub preprocess (@) { #{{{
+    sub preprocess (@) {
     	my @argslist = @_;
     	my %params=@argslist;
     	
@@ -546,9 +546,9 @@ in a large number of other cases.
     	}
     	
     	return $html;
-    } # }}}
+    }
     
-    sub preprocess_table (@) { #{{{
+    sub preprocess_table (@) {
     	my %params=@_;
     
     	my @lines;
@@ -568,11 +568,11 @@ in a large number of other cases.
     	push @lines, '</table>';
     
     	return join("\n", @lines);
-    } #}}}
+    }
     
     package IkiWiki::PageSpec;
     
-    sub match_data_eq ($$;@) { #{{{
+    sub match_data_eq ($$;@) {
     	my $page=shift;
     	my $argSet=shift;
     	my @args=split(/,/, $argSet);
@@ -592,9 +592,9 @@ in a large number of other cases.
     	} else {
     		return IkiWiki::FailReason->new("value does not match");
     	}
-    } #}}}
+    }
     
-    sub match_data_link ($$;@) { #{{{
+    sub match_data_link ($$;@) {
     	my $page=shift;
     	my $argSet=shift;
     	my @params=@_;
@@ -618,6 +618,6 @@ in a large number of other cases.
     	}
     
     	return IkiWiki::FailReason->new("No data link on page $page with key $key matches glob $value");
-    } #}}}
+    }
     
     1

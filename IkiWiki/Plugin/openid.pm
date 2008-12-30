@@ -6,22 +6,22 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "openid", call => \&getopt);
 	hook(type => "getsetup", id => "openid", call => \&getsetup);
 	hook(type => "auth", id => "openid", call => \&auth);
 	hook(type => "formbuilder_setup", id => "openid",
 		call => \&formbuilder_setup, last => 1);
-} # }}}
+}
 
-sub getopt () { #{{{
+sub getopt () {
 	eval q{use Getopt::Long};
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
 	GetOptions("openidsignup=s" => \$config{openidsignup});
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -34,9 +34,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub formbuilder_setup (@) { #{{{
+sub formbuilder_setup (@) {
 	my %params=@_;
 
 	my $form=$params{form};
@@ -92,7 +92,7 @@ sub formbuilder_setup (@) { #{{{
 	}
 }
 
-sub validate ($$$;$) { #{{{
+sub validate ($$$;$) {
 	my $q=shift;
 	my $session=shift;
 	my $openid_url=shift;
@@ -121,9 +121,9 @@ sub validate ($$$;$) { #{{{
 	# eventually bounce them back to auth()
 	IkiWiki::redirect($q, $check_url);
 	exit 0;
-} #}}}
+}
 
-sub auth ($$) { #{{{
+sub auth ($$) {
 	my $q=shift;
 	my $session=shift;
 
@@ -147,9 +147,9 @@ sub auth ($$) { #{{{
 		# myopenid.com affiliate support
 		validate($q, $session, $q->param('openid_identifier'));
 	}
-} #}}}
+}
 
-sub getobj ($$) { #{{{
+sub getobj ($$) {
 	my $q=shift;
 	my $session=shift;
 
@@ -178,26 +178,28 @@ sub getobj ($$) { #{{{
 		consumer_secret => sub { return shift()+$secret },
 		required_root => $config{cgiurl},
 	);
-} #}}}
+}
 
 package IkiWiki;
 
 # This is not used by this plugin, but this seems the best place to put it.
 # Used elsewhere to pretty-display the name of an openid user.
-sub openiduser ($) { #{{{
+sub openiduser ($) {
 	my $user=shift;
 
 	if ($user =~ m!^https?://! &&
 	    eval q{use Net::OpenID::VerifiedIdentity; 1} && !$@) {
 		my $oid=Net::OpenID::VerifiedIdentity->new(identity => $user);
 		my $display=$oid->display;
-		# Convert "user.somehost.com" to "user [somehost.com]".
+		# Convert "user.somehost.com" to "user [somehost.com]"
+		# (also "user.somehost.co.uk")
 		if ($display !~ /\[/) {
-			$display=~s/^(.*?)\.([^.]+\.[a-z]+)$/$1 [$2]/;
+			$display=~s/^([-a-zA-Z0-9]+?)\.([-.a-zA-Z0-9]+\.[a-z]+)$/$1 [$2]/;
 		}
 		# Convert "http://somehost.com/user" to "user [somehost.com]".
+		# (also "https://somehost.com/user/")
 		if ($display !~ /\[/) {
-			$display=~s/^https?:\/\/(.+)\/([^\/]+)$/$2 [$1]/;
+			$display=~s/^https?:\/\/(.+)\/([^\/]+)\/?$/$2 [$1]/;
 		}
 		$display=~s!^https?://!!; # make sure this is removed
 		eval q{use CGI 'escapeHTML'};

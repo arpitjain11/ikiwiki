@@ -7,7 +7,7 @@ use IkiWiki;
 use Encode;
 use open qw{:utf8 :std};
 
-sub import { #{{{
+sub import {
 	hook(type => "checkconfig", id => "bzr", call => \&checkconfig);
 	hook(type => "getsetup", id => "bzr", call => \&getsetup);
 	hook(type => "rcs", id => "rcs_update", call => \&rcs_update);
@@ -20,18 +20,18 @@ sub import { #{{{
 	hook(type => "rcs", id => "rcs_recentchanges", call => \&rcs_recentchanges);
 	hook(type => "rcs", id => "rcs_diff", call => \&rcs_diff);
 	hook(type => "rcs", id => "rcs_getctime", call => \&rcs_getctime);
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (defined $config{bzr_wrapper} && length $config{bzr_wrapper}) {
 		push @{$config{wrappers}}, {
 			wrapper => $config{bzr_wrapper},
 			wrappermode => (defined $config{bzr_wrappermode} ? $config{bzr_wrappermode} : "06755"),
 		};
 	}
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0, # rcs plugin
@@ -65,9 +65,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub bzr_log ($) { #{{{
+sub bzr_log ($) {
 	my $out = shift;
 	my @infos = ();
 	my $key = undef;
@@ -99,20 +99,20 @@ sub bzr_log ($) { #{{{
 	close $out;
 
 	return @infos;
-} #}}}
+}
 
-sub rcs_update () { #{{{
+sub rcs_update () {
 	my @cmdline = ("bzr", "update", "--quiet", $config{srcdir});
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
-} #}}}
+}
 
-sub rcs_prepedit ($) { #{{{
+sub rcs_prepedit ($) {
 	return "";
-} #}}}
+}
 
-sub bzr_author ($$) { #{{{
+sub bzr_author ($$) {
 	my ($user, $ipaddr) = @_;
 
 	if (defined $user) {
@@ -124,9 +124,9 @@ sub bzr_author ($$) { #{{{
 	else {
 		return "Anonymous";
 	}
-} #}}}
+}
 
-sub rcs_commit ($$$;$$) { #{{{
+sub rcs_commit ($$$;$$) {
 	my ($file, $message, $rcstoken, $user, $ipaddr) = @_;
 
 	$user = bzr_author($user, $ipaddr);
@@ -143,7 +143,7 @@ sub rcs_commit ($$$;$$) { #{{{
 	}
 
 	return undef; # success
-} #}}}
+}
 
 sub rcs_commit_staged ($$$) {
 	# Commits all staged changes. Changes can be staged using rcs_add,
@@ -164,27 +164,27 @@ sub rcs_commit_staged ($$$) {
 	}
 
 	return undef; # success
-} #}}}
+}
 
-sub rcs_add ($) { # {{{
+sub rcs_add ($) {
 	my ($file) = @_;
 
 	my @cmdline = ("bzr", "add", "--quiet", "$config{srcdir}/$file");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
-} #}}}
+}
 
-sub rcs_remove ($) { # {{{
+sub rcs_remove ($) {
 	my ($file) = @_;
 
 	my @cmdline = ("bzr", "rm", "--force", "--quiet", "$config{srcdir}/$file");
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
-} #}}}
+}
 
-sub rcs_rename ($$) { # {{{
+sub rcs_rename ($$) {
 	my ($src, $dest) = @_;
 
 	my $parent = IkiWiki::dirname($dest);
@@ -196,9 +196,9 @@ sub rcs_rename ($$) { # {{{
 	if (system(@cmdline) != 0) {
 		warn "'@cmdline' failed: $!";
 	}
-} #}}}
+}
 
-sub rcs_recentchanges ($) { #{{{
+sub rcs_recentchanges ($) {
 	my ($num) = @_;
 
 	my @cmdline = ("bzr", "log", "-v", "--show-ids", "--limit", $num, 
@@ -253,9 +253,9 @@ sub rcs_recentchanges ($) { #{{{
 	}
 
 	return @ret;
-} #}}}
+}
 
-sub rcs_getctime ($) { #{{{
+sub rcs_getctime ($) {
 	my ($file) = @_;
 
 	# XXX filename passes through the shell here, should try to avoid
@@ -274,6 +274,6 @@ sub rcs_getctime ($) { #{{{
 	
 	my $ctime = str2time($log[0]->{"timestamp"});
 	return $ctime;
-} #}}}
+}
 
 1

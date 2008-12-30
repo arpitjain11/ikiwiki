@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+# Parses list of remotes in doc/git.mdwn, configures git to use them
+# all, and fetches updates from them.
+
+my $error=0;
+
+open (IN, "doc/git.mdwn") || die "doc/git.mdwn: $!";
+while (<IN>) {
+	if (/^\*\s+\[?\[?(\w+)\]?\]?\s+`([^>]+)`/) {
+		# note that the remote name has to be a simple word (\w)
+		# for security/sanity reasons
+		my $remote=$1;
+		my $url=$2;
+
+		# check configured url to deal with it changing
+		my $info=`git remote show -n $remote`;
+		my ($oldurl)=$info=~/URL: (.*)/m;
+		if ($oldurl ne $url) {
+			system("git remote rm $remote 2>/dev/null");
+			$error |= system("git", "remote", "add", "-f", $remote, $url);
+		}
+		else {
+			$error |= system("git", "fetch", $remote);
+		}
+	}
+}
+close IN;
+
+exit $error;

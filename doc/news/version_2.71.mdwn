@@ -1,0 +1,28 @@
+ikiwiki 2.71 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * comments: Blog-style comment support, contributed by Simon McVittie.
+   * htmlbalance: New plugin contributed by Simon McVittie.
+   * Change deb dependencies to list Text::Markdown before markdown (really
+     this time).
+   * Improve escaping of wikilinks and preprocessor directives in content
+     produced by aggregate and recentchanges.
+   * French translation update from Philippe Batailler. Closes: #[506250](http://bugs.debian.org/506250)
+   * Spanish translation update from Victor Moral.
+   * Fix handling of wrappergroup option.
+   * Correct --dumpsetup to include the srcdir in the setup file.
+   * German translation update from Kai Wasserbäch. Closes: #[507056](http://bugs.debian.org/507056)
+   * inline: Support emptyfeeds=no option to skip generating empty feeds.
+   * inline: Support feedfile option to change the filename of the feed
+     generated.
+   * meta: Pass info to htmlscrubber so htmlscrubber\_skip can take effect.
+   * htmlbalance: don't compact whitespace, and set misc other options (smcv)
+   * rename: Fix double-escaping of page name in edit box.
+   * monotone: When getting the log, tell monotone how many entries
+     we want, rather than closing the pipe, which it dislikes. (thm)
+   * Coding style change: Remove explcit vim folding markers.
+   * aggregate: If a feed fails to be downloaded, try again immediatly
+     next time aggregation is run, even if the usual time has not passed.
+     Closes: #[508622](http://bugs.debian.org/508622) (Michael Gold)
+   * meta: Process meta date during scan pass so that the date will always
+     affect sorting in inlines.
+   * Improve display of some openids (smcv)"""]]

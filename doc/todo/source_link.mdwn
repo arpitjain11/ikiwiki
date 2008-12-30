@@ -1,6 +1,6 @@
 How about a direct link from the page header to the source of the latest version, to avoid the need to either use edit or navigate to the current version via the history link?
 
- I'd like this too (and might try to implement it). -- [[jondowland]]
+ I'd like this too (and might try to implement it). -- [[users/jon]]
 
 I just implemented this.  There is one [[patch]] to the default page template, and a new plugin.  -- [[Will]]
 
@@ -31,13 +31,13 @@ I just implemented this.  There is one [[patch]] to the default page template, a
     use IkiWiki;
     use open qw{:utf8 :std};
     
-    sub import { #{{{
+    sub import {
     	hook(type => "getsetup", id => "getsource", call => \&getsetup);
     	hook(type => "pagetemplate", id => "getsource", call => \&pagetemplate);
     	hook(type => "sessioncgi", id => "getsource", call => \&cgi_getsource);
-    } # }}}
+    }
     
-    sub getsetup () { #{{{
+    sub getsetup () {
     	return
     		plugin => {
     			safe => 1,
@@ -50,9 +50,9 @@ I just implemented this.  There is one [[patch]] to the default page template, a
     			safe => 1,
     			rebuild => 0,
     		},
-    } #}}}
+    }
     
-    sub pagetemplate (@) { #{{{
+    sub pagetemplate (@) {
     	my %params=@_;
     
     	my $page=$params{page};
@@ -62,9 +62,9 @@ I just implemented this.  There is one [[patch]] to the default page template, a
     		$template->param(getsourceurl => IkiWiki::cgiurl(do => "getsource", page => $page));
     		$template->param(have_actions => 1);
     	}
-    } # }}}
+    }
     
-    sub cgi_getsource ($$) { #{{{
+    sub cgi_getsource ($$) {
     	my $cgi=shift;
     	my $session=shift;
     

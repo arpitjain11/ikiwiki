@@ -9,20 +9,20 @@ use IkiWiki 2.00;
 
 my %imgdefaults;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "img", call => \&getsetup);
 	hook(type => "preprocess", id => "img", call => \&preprocess, scan => 1);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my ($image) = $_[0] =~ /$config{wiki_file_regexp}/; # untaint
 	my %params=@_;
 
@@ -149,6 +149,6 @@ sub preprocess (@) { #{{{
 	else {
 		return $imgtag;
 	}
-} #}}}
+}
 
 1

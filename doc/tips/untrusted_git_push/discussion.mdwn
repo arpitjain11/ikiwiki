@@ -24,10 +24,10 @@ Note that the user for the commit is 'jon', and the link points at cgi to
 create users/jon. I was wondering if that is configurable for users pushing
 via git. It would be nice perhaps to specify it in some way, perhaps via a
 git-config setting (user.name?). I'm not too familiar with exactly what the
-changeset contains. -- [[JonDowland]]
+changeset contains. -- [[users/Jon]]
 
 > All ikiwiki can do it look at who git has recorded as the author of
 > the change (and it looks at the username part of the email address).
 > You can set `user.email` in `.git/config`. --[[Joey]]
 
-> > Ah, excellent. In which case this *should* DTRT... -- [[JonDowland]]
+> > Ah, excellent. In which case this *should* DTRT... -- [[users/Jon]]

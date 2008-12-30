@@ -13,12 +13,12 @@ Second, the untainting of $configstring should allow newlines.
     +++ wiki-meta/perl/IkiWiki.pm Mon Jun 11 10:52:07 2007
     @@ -205,7 +205,7 @@
      
-     sub possibly_foolish_untaint ($) { #{{{
+     sub possibly_foolish_untaint ($) {
       my $tainted=shift;
     - my ($untainted)=$tainted=~/(.*)/;
     + my ($untainted)=$tainted=~/(.*)/s;
       return $untainted;
-     } #}}}
+     }
      
     
     Modified: wiki-meta/perl/IkiWiki/Wrapper.pm

@@ -1,0 +1,42 @@
+<div class="comment" id="<TMPL_VAR NAME=INLINEPAGE>">
+
+<div class="comment-subject"><a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a></div>
+
+<div class="inlinecontent">
+<TMPL_VAR CONTENT>
+</div>
+
+<div class="comment-header">
+Comment by
+
+<TMPL_IF NAME="COMMENTUSER">
+<TMPL_IF NAME="COMMENTOPENID">
+<span class="author" title="OpenID">
+<a href="<TMPL_VAR NAME=COMMENTOPENID>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
+</span>
+<TMPL_ELSE>
+<span class="author" title="Signed in">
+<TMPL_IF NAME="COMMENTAUTHORURL">
+<a href="<TMPL_VAR NAME=COMMENTAUTHORURL>"><TMPL_VAR NAME=COMMENTAUTHOR></a>
+<TMPL_ELSE>
+<TMPL_VAR NAME=COMMENTAUTHOR>
+</TMPL_IF>
+</span>
+</TMPL_IF>
+<TMPL_ELSE><!-- !COMMENTUSER -->
+<TMPL_IF NAME=COMMENTIP>
+<span class="author" title="Unauthenticated, from <TMPL_VAR NAME=COMMENTIP>">
+<TMPL_ELSE><!-- !COMMENTIP -->
+<span class="author" title="Unauthenticated, from unknown IP address">
+</TMPL_IF>
+<TMPL_IF NAME="AUTHORURL">
+<a href="<TMPL_VAR NAME=AUTHORURL>"><TMPL_VAR NAME=AUTHOR></a>
+<TMPL_ELSE>
+<TMPL_VAR NAME=AUTHOR>
+</TMPL_IF>
+</span>
+</TMPL_IF><!-- !COMMENTUSER -->
+
+&mdash; <TMPL_VAR CTIME>
+</div>
+</div><!--.comment-->

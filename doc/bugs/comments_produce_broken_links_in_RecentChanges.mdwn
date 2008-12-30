@@ -1,0 +1,9 @@
+Comments produce links like `sandbox/comment_1` in [[RecentChanges]], which,
+when clicked, redirect to a page that does not exist.
+
+The `recentchanges` branch in my repository contains one possible [[patch]],
+which causes the CGI to go to the [[ikiwiki/directive/meta]] `permalink`, if
+any, if the page is internal (comments do have a permalink).
+
+> [[done]].. I I had thought about not showing internal page changes at
+> all, but I like your approach better --[[Joey]] 

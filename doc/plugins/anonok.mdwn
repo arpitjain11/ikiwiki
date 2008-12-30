@@ -5,5 +5,10 @@ By default, anonymous users cannot edit the wiki. This plugin allows
 anonymous web users, who have not signed in, to edit any page in the wiki
 by default.
 
-The plugin also has a configuration setting, `anonok_pagespec`. This
+The plugin also has a configuration setting, `anonok_pages`. This
 [[PageSpec]] can be used to allow anonymous editing of matching pages.
+
+If you're using the [[comments]] plugin, you can allow anonymous comments
+to be posted by setting:
+
+	anonok_pages => "postcomment(*)"

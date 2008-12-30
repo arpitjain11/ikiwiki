@@ -16,17 +16,29 @@ Or like this if your firewall only passes http traffic (slow):
 
 The gitweb is [here](http://git.ikiwiki.info/?p=ikiwiki).
 
-There is also a mirror [on github](http://github.com/joeyh/ikiwiki/tree/master).
-
 Commits to this git repository are fed into [CIA](http://cia.vc), and can
 be browsed, subscribed to etc on its
 [project page](http://cia.vc/stats/project/ikiwiki). They're also fed into
 [twitter](http://twitter.com/ikiwiki).
 
-## branches
+## personal git repositories
 
 You are of course free to set up your own ikiwiki git repository with your
-own [[patches|patch]].
+own [[patches|patch]]. If you list it here, the `gitremotes` script will
+automatically add it to git remotes. Your repo will automatically be pulled
+into [[Joey]]'s working tree. This is recommended. :-)
+
+<!-- Machine-parsed format: * wikilink <git:url> -->
+
+* github `git://github.com/joeyh/ikiwiki.git`
+  ([browse](http://github.com/joeyh/ikiwiki/tree/master))  
+  A mirror of the main repo, automatically updated.
+* [[smcv]] `git://git.pseudorandom.co.uk/git/smcv/ikiwiki.git`
+* [[intrigeri]] `git://gaffer.ptitcanardnoir.org/ikiwiki.git`
+* [[gmcmanus]] `git://github.com/gmcmanus/ikiwiki.git`
+* [[jelmer]] `git://git.samba.org/jelmer/ikiwiki.git`
+
+## branches
 
 Some of the branches included in the main repository include:
 
@@ -38,9 +50,9 @@ Some of the branches included in the main repository include:
 * `wikiwyg` adds [[todo/wikiwyg]] support. It is unmerged pending some
   changes.
 * `darcs` is being used to add darcs support.
-* `pristine-tar` contains deltas that
-  [pristine-tar](http://kitenet.net/~joey/code/pristine-tar)
-  can use to recreate released tarballs of ikiwiki
 * `debian-stable` is used for updates to the old version included in
   Debian's stable release, and `debian-testing` is used for updates to
   Debian's testing release.
+* `pristine-tar` contains deltas that
+  [pristine-tar](http://kitenet.net/~joey/code/pristine-tar)
+  can use to recreate released tarballs of ikiwiki

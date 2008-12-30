@@ -21,12 +21,12 @@ EOPREFIX
 
 my $default_postfix = '\\end{document}';
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "teximg", call => \&getsetup);
 	hook(type => "preprocess", id => "teximg", call => \&preprocess);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -52,9 +52,9 @@ sub getsetup () { #{{{
 			safe => 0, # Not sure how secure LaTeX is...
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	my %params = @_;
 	
 	my $height = $params{height};
@@ -76,9 +76,9 @@ sub preprocess (@) { #{{{
 	else {
 		error gettext("code includes disallowed latex commands")
 	}
-} #}}}
+}
 
-sub check_height ($) { #{{{
+sub check_height ($) {
 	# Since latex doesn't support unlimited scaling this function
 	# returns the closest supported size.
 	my $height =shift;
@@ -95,9 +95,9 @@ sub check_height ($) { #{{{
 		}
 	}
 	return $ret;
-} #}}}
+}
 
-sub create ($$$) { #{{{
+sub create ($$$) {
 	# This function calls the image generating function and returns
 	# the <img .. /> for the generated image.
 	my $code = shift;
@@ -127,9 +127,9 @@ sub create ($$$) { #{{{
 	else {
 		error qq{<a href="$logurl">}.gettext("failed to generate image from code")."</a>";
 	}
-} #}}}
+}
 
-sub gen_image ($$$$) { #{{{
+sub gen_image ($$$$) {
 	# Actually creates the image.
 	my $code = shift;
 	my $height = shift;
@@ -180,18 +180,18 @@ sub gen_image ($$$$) { #{{{
 
 		return 0;
 	}
-} #}}}
+}
 
-sub create_tmp_dir ($) { #{{{
+sub create_tmp_dir ($) {
 	# Create a temp directory, it will be removed when ikiwiki exits.
 	my $base = shift;
 
 	my $template = $base.".XXXXXXXXXX";
 	my $tmpdir = tempdir($template, TMPDIR => 1, CLEANUP => 1);
 	return $tmpdir;
-} #}}}
+}
 
-sub check ($) { #{{{
+sub check ($) {
 	# Check if the code is ok
 	my $code = shift;
 
@@ -219,6 +219,6 @@ sub check ($) { #{{{
 		}
 	}
 	return 1;
-} #}}}
+}
 
 1

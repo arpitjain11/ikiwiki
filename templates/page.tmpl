@@ -49,8 +49,12 @@
 <TMPL_IF NAME="PREFSURL">
 <li><a href="<TMPL_VAR PREFSURL>">Preferences</a></li>
 </TMPL_IF>
+<TMPL_IF NAME="COMMENTSLINK">
+<li><TMPL_VAR COMMENTSLINK><br /></li>
+<TMPL_ELSE>
 <TMPL_IF NAME="DISCUSSIONLINK">
 <li><TMPL_VAR DISCUSSIONLINK><br /></li>
+</TMPL_IF>
 </TMPL_IF>
 </ul>
 </div>
@@ -66,6 +70,19 @@
 <div id="content">
 <TMPL_VAR CONTENT>
 </div>
+
+<TMPL_IF COMMENTS>
+<div id="comments">
+<TMPL_VAR COMMENTS>
+<TMPL_IF ADDCOMMENTURL>
+<div class="addcomment">
+<a href="<TMPL_VAR ADDCOMMENTURL>">Add a comment</a>
+</div>
+<TMPL_ELSE>
+<div class="addcomment">Comments on this page are closed.</div>
+</TMPL_IF>
+</div>
+</TMPL_IF>
 
 <div id="footer" class="pagefooter">
 <div id="pageinfo">

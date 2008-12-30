@@ -14,9 +14,9 @@
      package IkiWiki::Plugin::fortune;
 
      use warnings;
-    @@ -12,7 +18,13 @@ sub import { #{{{
+    @@ -12,7 +18,13 @@ sub import {
 
-     sub preprocess (@) { #{{{
+     sub preprocess (@) {
             $ENV{PATH}="$ENV{PATH}:/usr/games:/usr/local/games";
     -       my $f = `fortune 2>/dev/null`;
     +       my $f;

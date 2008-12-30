@@ -33,7 +33,7 @@ This type of page name (with leading slash) also gets created by the aggregate p
 	index 99cead6..23d9616 100644
 	--- a/IkiWiki/CGI.pm
 	+++ b/IkiWiki/CGI.pm
-	@@ -305,9 +305,11 @@ sub cgi_editpage ($$) { #{{{
+	@@ -305,9 +305,11 @@ sub cgi_editpage ($$) {
 	 	my $page=$form->field('page');
 	 	$page=possibly_foolish_untaint($page);
 	 	if (! defined $page || ! length $page ||
@@ -46,7 +46,7 @@ This type of page name (with leading slash) also gets created by the aggregate p
 	 
 	 	my $baseurl=$config{url}."/".htmlpage($page);
 	 	
-	@@ -425,6 +427,7 @@ sub cgi_editpage ($$) { #{{{
+	@@ -425,6 +427,7 @@ sub cgi_editpage ($$) {
 	 			    $from ne $form->field('from') ||
 	 			    file_pruned($from, $config{srcdir}) ||
 	 			    $from=~/^\// ||

@@ -8,7 +8,7 @@ use File::Spec;
 use Data::Dumper;
 use IkiWiki;
 
-sub gen_wrapper () { #{{{
+sub gen_wrapper () {
 	$config{srcdir}=File::Spec->rel2abs($config{srcdir});
 	$config{destdir}=File::Spec->rel2abs($config{destdir});
 	my $this=File::Spec->rel2abs($0);
@@ -173,6 +173,6 @@ EOF
 	#translators: The parameter is a filename.
 	printf(gettext("successfully generated %s"), $wrapper);
 	print "\n";
-} #}}}
+}
 
 1

@@ -6,20 +6,20 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "fortune", call => \&getsetup);
 	hook(type => "preprocess", id => "fortune", call => \&preprocess);
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 		},
-} #}}}
+}
 
-sub preprocess (@) { #{{{
+sub preprocess (@) {
 	$ENV{PATH}="$ENV{PATH}:/usr/games:/usr/local/games";
 	my $f = `fortune 2>/dev/null`;
 
@@ -29,6 +29,6 @@ sub preprocess (@) { #{{{
 	else {
 		return "<pre>$f</pre>\n";
 	}
-} # }}}
+}
 
 1

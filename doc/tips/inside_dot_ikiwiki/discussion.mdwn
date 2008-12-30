@@ -16,3 +16,50 @@ No idea how this happened.  I've blown it away and recreated it but, for future 
 >>> --getctime does. --[[Joey]]
 
 >> Alas, I seem to have lost the bad index file to periodic /tmp wiping; I'll send it to you if it happens again.  --[[sabr]]
+
+<!-- Add by Blanko -->
+
+## Lost password for an user
+
+This morning, a person has lost its password. I was able to do something to make another password. This is the way I take : 
+
+> You can certianly do that, but do note that ikiwiki will offer to mail a
+> user a password reset link if they lost their password. --[[Joey]]
+
+### Locate the user database
+
+As tips show us, the user database is in the source file, for an example : 
+
+    src/.ikiwiki/userdb
+
+### See which user to modify
+
+Because I don't know the real login of the user, I have to read all the database : 
+
+    perl -le 'use Storable; my $index=Storable::retrieve("userdb"); use Data::Dumper; print Dumper $index'
+
+Then I was able to find this : 
+
+    'Utilisateur' => {
+                 'email' => 'user@pl.fr',
+                 'cryptresettoken' => '$2a$10$cfVeOoVbFw9VzMlgEbPMsu34pwHIFP84mWlkrs2RCKknZYPZkPffm',
+                 'password' => '',
+                 'resettoken' => '',
+                 'cryptpassword' => '$2a$10$H8bYq.dlb68wpnfJgVZQhOdsF9JQ06cteRfhPQPB5eHKnD5Y3u7au',
+                 'regdate' => '1226574052'
+               },
+
+Let's have a look to modify lines.
+
+### Modify the line
+
+When you have found the line to modify, take the user name, and change its password to **sc** (for an example) :
+
+    perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); $userinfo->{"Utilisateur"}->{cryptpassword}=q{$2a$10$7viOHCrUkdAVL135Kr6one1mpZQ/FWYC773G1yZ0EtQciI11sSDRS}; Storable::lock_nstore($userinfo, "userdb")'
+    perl -le 'use Storable; my $userinfo=Storable::retrieve("userdb"); $userinfo->{"Utilisateur"}->{cryptresettoken}=q{}; Storable::lock_nstore($userinfo, "userdb")'
+
+Because I don't know how suppress cryptresettoken and resettoken fields, I change their content with *null*.
+
+After all these modifications, the user *Utilisateur* could connect to its account with the password **sc**, and go to Preferences, then change its password.
+
+<!-- End of Blanko's modifications -->

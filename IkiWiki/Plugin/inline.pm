@@ -13,7 +13,7 @@ my %page_numfeeds;
 my @inline;
 my $nested=0;
 
-sub import { #{{{
+sub import {
 	hook(type => "getopt", id => "inline", call => \&getopt);
 	hook(type => "getsetup", id => "inline", call => \&getsetup);
 	hook(type => "checkconfig", id => "inline", call => \&checkconfig);
@@ -22,15 +22,14 @@ sub import { #{{{
 		call => \&IkiWiki::preprocess_inline);
 	hook(type => "pagetemplate", id => "inline",
 		call => \&IkiWiki::pagetemplate_inline);
-	hook(type => "format", id => "inline", call => \&format);
+	hook(type => "format", id => "inline", call => \&format, first => 1);
 	# Hook to change to do pinging since it's called late.
 	# This ensures each page only pings once and prevents slow
 	# pings interrupting page builds.
-	hook(type => "change", id => "inline", 
-		call => \&IkiWiki::pingurl);
-} # }}}
+	hook(type => "change", id => "inline", call => \&IkiWiki::pingurl);
+}
 
-sub getopt () { #{{{
+sub getopt () {
 	eval q{use Getopt::Long};
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
@@ -43,9 +42,9 @@ sub getopt () { #{{{
 			push @{$config{pingurl}}, $_[1];
 		},      
 	);
-} #}}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 1,
@@ -86,9 +85,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 0,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	if (($config{rss} || $config{atom}) && ! length $config{url}) {
 		error(gettext("Must specify url to wiki with --url when using --rss or --atom"));
 	}
@@ -101,9 +100,9 @@ sub checkconfig () { #{{{
 	if (! exists $config{pingurl}) {
 		$config{pingurl}=[];
 	}
-} #}}}
+}
 
-sub format (@) { #{{{
+sub format (@) {
         my %params=@_;
 
 	# Fill in the inline content generated earlier. This is actually an
@@ -112,9 +111,9 @@ sub format (@) { #{{{
 		delete @inline[$1,]
 	}eg;
 	return $params{content};
-} #}}}
+}
 
-sub sessioncgi ($$) { #{{{
+sub sessioncgi ($$) {
 	my $q=shift;
 	my $session=shift;
 
@@ -149,7 +148,7 @@ package IkiWiki;
 my %toping;
 my %feedlinks;
 
-sub preprocess_inline (@) { #{{{
+sub preprocess_inline (@) {
 	my %params=@_;
 	
 	if (! exists $params{pages}) {
@@ -161,6 +160,7 @@ sub preprocess_inline (@) { #{{{
 	my $atom=(($config{atom} || $config{allowatom}) && exists $params{atom}) ? yesno($params{atom}) : $config{atom};
 	my $quick=exists $params{quick} ? yesno($params{quick}) : 0;
 	my $feeds=exists $params{feeds} ? yesno($params{feeds}) : !$quick;
+	my $emptyfeeds=exists $params{emptyfeeds} ? yesno($params{emptyfeeds}) : 1;
 	my $feedonly=yesno($params{feedonly});
 	if (! exists $params{show} && ! $archive) {
 		$params{show}=10;
@@ -232,29 +232,51 @@ sub preprocess_inline (@) { #{{{
 	# that if they are removed or otherwise changed, the inline will be
 	# sure to be updated.
 	add_depends($params{page}, join(" or ", $#list >= $#feedlist ? @list : @feedlist));
-
-	my $feednum="";
-
-	my $feedid=join("\0", map { $_."\0".$params{$_} } sort keys %params);
-	if (exists $knownfeeds{$feedid}) {
-		$feednum=$knownfeeds{$feedid};
+	
+	if ($feeds && exists $params{feedpages}) {
+		@feedlist=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @feedlist;
 	}
-	else {
-		if (exists $page_numfeeds{$params{destpage}}) {
-			if ($feeds) {
-				$feednum=$knownfeeds{$feedid}=++$page_numfeeds{$params{destpage}};
+
+	my ($feedbase, $feednum);
+	if ($feeds) {
+		# Ensure that multiple feeds on a page go to unique files.
+		
+		# Feedfile can lead to conflicts if usedirs is not enabled,
+		# so avoid supporting it in that case.
+		delete $params{feedfile} if ! $config{usedirs};
+		# Tight limits on legal feedfiles, to avoid security issues
+		# and conflicts.
+		if (defined $params{feedfile}) {
+			if ($params{feedfile} =~ /\// ||
+			    $params{feedfile} !~ /$config{wiki_file_regexp}/) {
+				error("illegal feedfile");
 			}
+			$params{feedfile}=possibly_foolish_untaint($params{feedfile});
+		}
+		$feedbase=targetpage($params{destpage}, "", $params{feedfile});
+
+		my $feedid=join("\0", $feedbase, map { $_."\0".$params{$_} } sort keys %params);
+		if (exists $knownfeeds{$feedid}) {
+			$feednum=$knownfeeds{$feedid};
 		}
 		else {
-			$feednum=$knownfeeds{$feedid}="";
-			if ($feeds) {
-				$page_numfeeds{$params{destpage}}=1;
+			if (exists $page_numfeeds{$params{destpage}}{$feedbase}) {
+				if ($feeds) {
+					$feednum=$knownfeeds{$feedid}=++$page_numfeeds{$params{destpage}}{$feedbase};
+				}
+			}
+			else {
+				$feednum=$knownfeeds{$feedid}="";
+				if ($feeds) {
+					$page_numfeeds{$params{destpage}}{$feedbase}=1;
+				}
 			}
 		}
 	}
 
-	my $rssurl=basename(rsspage($params{destpage}).$feednum) if $feeds && $rss;
-	my $atomurl=basename(atompage($params{destpage}).$feednum) if $feeds && $atom;
+	my $rssurl=basename($feedbase."rss".$feednum) if $feeds && $rss;
+	my $atomurl=basename($feedbase."atom".$feednum) if $feeds && $atom;
+
 	my $ret="";
 
 	if (length $config{cgiurl} && ! $params{preview} && (exists $params{rootpage} ||
@@ -285,8 +307,12 @@ sub preprocess_inline (@) { #{{{
 				gettext("Add a new post titled:"));
 		}
 		$ret.=$formtemplate->output;
+	    	
+		# The post form includes the feed buttons, so
+		# emptyfeeds cannot be hidden.
+		$emptyfeeds=1;
 	}
-	elsif ($feeds && !$params{preview}) {
+	elsif ($feeds && !$params{preview} && ($emptyfeeds || @feedlist)) {
 		# Add feed buttons.
 		my $linktemplate=template("feedlink.tmpl", blind_cache => 1);
 		$linktemplate->param(rssurl => $rssurl) if $rss;
@@ -314,6 +340,7 @@ sub preprocess_inline (@) { #{{{
 					$template->param(content => $content);
 				}
 				$template->param(pageurl => urlto(bestlink($params{page}, $page), $params{destpage}));
+				$template->param(inlinepage => $page);
 				$template->param(title => pagetitle(basename($page)));
 				$template->param(ctime => displaytime($pagectime{$page}, $params{timeformat}));
 				$template->param(mtime => displaytime($pagemtime{$page}, $params{timeformat}));
@@ -363,13 +390,9 @@ sub preprocess_inline (@) { #{{{
 		}
 	}
 	
-	if ($feeds) {
-		if (exists $params{feedpages}) {
-			@feedlist=grep { pagespec_match($_, $params{feedpages}, location => $params{page}) } @feedlist;
-		}
-	
+	if ($feeds && ($emptyfeeds || @feedlist)) {
 		if ($rss) {
-			my $rssp=rsspage($params{destpage}).$feednum;
+			my $rssp=$feedbase."rss".$feednum;
 			will_render($params{destpage}, $rssp);
 			if (! $params{preview}) {
 				writefile($rssp, $config{destdir},
@@ -380,7 +403,7 @@ sub preprocess_inline (@) { #{{{
 			}
 		}
 		if ($atom) {
-			my $atomp=atompage($params{destpage}).$feednum;
+			my $atomp=$feedbase."atom".$feednum;
 			will_render($params{destpage}, $atomp);
 			if (! $params{preview}) {
 				writefile($atomp, $config{destdir},
@@ -394,18 +417,18 @@ sub preprocess_inline (@) { #{{{
 	return $ret if $raw || $nested;
 	push @inline, $ret;
 	return "<div class=\"inline\" id=\"$#inline\"></div>\n\n";
-} #}}}
+}
 
-sub pagetemplate_inline (@) { #{{{
+sub pagetemplate_inline (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $template=$params{template};
 
 	$template->param(feedlinks => $feedlinks{$page})
 		if exists $feedlinks{$page} && $template->query(name => "feedlinks");
-} #}}}
+}
 
-sub get_inline_content ($$) { #{{{
+sub get_inline_content ($$) {
 	my $page=shift;
 	my $destpage=shift;
 	
@@ -424,9 +447,9 @@ sub get_inline_content ($$) { #{{{
 	else {
 		return "";
 	}
-} #}}}
+}
 
-sub date_822 ($) { #{{{
+sub date_822 ($) {
 	my $time=shift;
 
 	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
@@ -434,9 +457,9 @@ sub date_822 ($) { #{{{
 	my $ret=POSIX::strftime("%a, %d %b %Y %H:%M:%S %z", localtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
 	return $ret;
-} #}}}
+}
 
-sub date_3339 ($) { #{{{
+sub date_3339 ($) {
 	my $time=shift;
 
 	my $lc_time=POSIX::setlocale(&POSIX::LC_TIME);
@@ -444,9 +467,9 @@ sub date_3339 ($) { #{{{
 	my $ret=POSIX::strftime("%Y-%m-%dT%H:%M:%SZ", gmtime($time));
 	POSIX::setlocale(&POSIX::LC_TIME, $lc_time);
 	return $ret;
-} #}}}
+}
 
-sub absolute_urls ($$) { #{{{
+sub absolute_urls ($$) {
 	# sucky sub because rss sucks
 	my $content=shift;
 	my $baseurl=shift;
@@ -467,17 +490,9 @@ sub absolute_urls ($$) { #{{{
 	$content=~s/(<a(?:\s+(?:class|id)\s*="?\w+"?)?)\s+href=\s*"(?!\w+:)(\/[^"]*)"/$1 href="$urltop$2"/mig;
 	$content=~s/(<img(?:\s+(?:class|id|width|height)\s*="?\w+"?)*)\s+src=\s*"(?!\w+:)(\/[^"]*)"/$1 src="$urltop$2"/mig;
 	return $content;
-} #}}}
+}
 
-sub rsspage ($) { #{{{
-	return targetpage(shift, "rss");
-} #}}}
-
-sub atompage ($) { #{{{
-	return targetpage(shift, "atom");
-} #}}}
-
-sub genfeed ($$$$$@) { #{{{
+sub genfeed ($$$$$@) {
 	my $feedtype=shift;
 	my $feedurl=shift;
 	my $feeddesc=shift;
@@ -562,9 +577,9 @@ sub genfeed ($$$$$@) { #{{{
 	});
 	
 	return $template->output;
-} #}}}
+}
 
-sub pingurl (@) { #{{{
+sub pingurl (@) {
 	return unless @{$config{pingurl}} && %toping;
 
 	eval q{require RPC::XML::Client};
@@ -610,6 +625,6 @@ sub pingurl (@) { #{{{
 	}
 
 	exit 0; # daemon done
-} #}}}
+}
 
 1

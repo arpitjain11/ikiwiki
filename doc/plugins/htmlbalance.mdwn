@@ -1,0 +1,9 @@
+[[!template id=plugin name=htmlbalance author="[[Simon_McVittie|smcv]]"]]
+[[!tag type/html]]
+
+This plugin ensures that the HTML emitted by ikiwiki contains well-balanced
+HTML tags, by parsing it with [[!cpan HTML::TreeBuilder]] and re-serializing it. This
+acts as a lighter-weight alternative to [[plugins/htmltidy]]; it doesn't
+ensure validity, but it does at least ensure that formatting from a
+blog post pulled in by the [[ikiwiki/directive/inline]] directive doesn't
+leak into the rest of the page.

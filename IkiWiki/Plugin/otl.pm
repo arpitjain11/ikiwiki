@@ -7,22 +7,22 @@ use strict;
 use IkiWiki 2.00;
 use open qw{:utf8 :std};
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "otl", call => \&getsetup);
 	hook(type => "filter", id => "otl", call => \&filter);
 	hook(type => "htmlize", id => "otl", call => \&htmlize);
 
-} # }}}
+}
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
 			rebuild => 1, # format plugin
 		},
-} #}}}
+}
 
-sub filter (@) { #{{{
+sub filter (@) {
 	my %params=@_;
         
 	# Munge up check boxes to look a little bit better. This is a hack.
@@ -34,9 +34,9 @@ sub filter (@) { #{{{
 	$params{content}=~s/^(\s*)\[_\]\s/${1}$unchecked /mg;
         
 	return $params{content};
-} # }}}
+}
 
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 
 	# Can't use open2 since otl2html doesn't play nice with buffering.
@@ -95,6 +95,6 @@ sub htmlize (@) { #{{{
 	$ret=~s/<body>.*//s;
 	$ret=~s/<div class="Footer">.*//s;
 	return $ret;
-} # }}}
+}
 
 1

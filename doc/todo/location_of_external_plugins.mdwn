@@ -1,0 +1,24 @@
+Would it be possible to make the installation location for the external
+plugins (those talked to via xmlrpc) configurable? Currently, they are
+installed into (and later expected to be in) /usr/lib/ikiwiki/plugins. For
+the Fedora package (which I maintain), I move them to
+/usr/libexec/ikiwiki/plugins. While not covered by the FHS, this seems to
+be a more appropriate place, see:
+https://fedoraproject.org/wiki/Packaging/Guidelines#Libexecdir.
+
+> This would need to be a build time configuration setting so the directory
+> is built into ikiwiki for use at runtime. --[[Joey]]
+
+As a side note, the accompanying proxy.py might better be placed into some directory on the python path.
+
+> If someone can show how to do so without needing a Setup.py and all the
+> pain that using one entails.. --[[Joey]]
+
+>> At the very least I don't think proxy.py should be on the `sys.path`
+>> under its current name. If it was renamed to ikiwiki_proxy or some such,
+>> possibly; but I think it's more appropriate to have it in an
+>> ikiwiki-specific directory (a "private module") since it's not useful for
+>> anything outside ikiwiki, and putting it in the same directory as the
+>> external plugins means it's automatically in their `sys.path` without
+>> needing special configuration. --[[smcv]]
+>> (a mostly-inactive member of Debian's Python modules packaging team)
