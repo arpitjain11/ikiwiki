@@ -373,11 +373,12 @@ new page.
 
 ### rename
 
-	hook(type => "rename", id => "foo", call => \&renamepage);
+	hook(type => "rename", id => "foo", call => \&renamepages);
 
 When a page or set of pages is renamed, the referenced function is
-called once per renamed page, and passed named parameters: `oldpage`,
-`newpage`.
+called, and passed a reference to an array of hashes with keys:
+`src`, `srcfile`, `dest`, `destfile`, `required`. It can modify
+the array.
 
 ### getsetup
 

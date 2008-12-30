@@ -291,6 +291,8 @@ sub sessioncgi ($$) {
 				required => 1,
 			};
 
+			IkiWiki::run_hooks(rename => sub { shift->(\@torename); });
+
 			# See if any subpages need to be renamed.
 			if ($q->param("subpages") && $src ne $dest) {
 				foreach my $p (keys %pagesources) {
@@ -338,16 +340,10 @@ sub sessioncgi ($$) {
 				sprintf(gettext("rename %s to %s"), $srcfile, $destfile),
 				$session->param("name"), $ENV{REMOTE_ADDR}) if $config{rcs};
 
+			# Then link fixups.
 			foreach my $rename (@torename) {
 				next if $rename->{src} eq $rename->{dest};
 				next if $rename->{error};
-				IkiWiki::run_hooks(rename => sub {
-					shift->(
-						oldpage => $src,
-						newpage => $dest,
-					);
-				});
-				# Then link fixups.
 				foreach my $p (fixlinks($rename, $session)) {
 					# map old page names to new
 					foreach my $r (@torename) {

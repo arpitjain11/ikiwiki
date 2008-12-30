@@ -35,7 +35,7 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
-	hook(type => "rename", id => "po", call => \&renamepage);
+	hook(type => "rename", id => "po", call => \&renamepages);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -327,15 +327,30 @@ sub pagetemplate (@) { #{{{
 	}
 } # }}}
 
+# Add the renamed page translations to the list of to-be-renamed pages.
 # Save information about master page rename, so that:
 # - our delete hook can ignore the translations not renamed already
 # - our change hook can rename the translations accordingly.
-sub renamepage(@) { #{{{
-	my %params=@_;
-	my $oldpage=$params{oldpage};
-	my $newpage=$params{newpage};
+sub renamepages() { #{{{
+	my $torename=shift;
+	my @torename=@{$torename};
 
-	setrenamed($oldpage, $newpage) if istranslatable($oldpage);
+	foreach my $rename (@torename) {
+		next unless istranslatable($rename->{src});
+		setrenamed($rename->{src}, $rename->{dest});
+		my %otherpages=%{otherlanguages($rename->{src})};
+		debug "bla".$rename->{src};
+		while (my ($lang, $otherpage) = each %otherpages) {
+			push @{$torename}, {
+				src => $otherpage,
+				srcfile => $pagesources{$otherpage},
+				dest => otherlanguage($rename->{dest}, $lang),
+				destfile => $rename->{dest}.".".$lang.".po",
+				required => 0,
+			};
+			debug "po(renamepages): pushed src=$otherpage, dest=".otherlanguage($rename->{dest}, $lang);
+		}
+	}
 } #}}}
 
 sub mydelete(@) { #{{{
@@ -821,7 +836,8 @@ sub deletetranslations ($) { #{{{
 sub renametranslations (@) { #{{{
 	my ($oldpage, $newpage)=(shift, shift);
 
-	debug "po(renametranslations): TODO: rename translations of $oldpage to $newpage";
+	# FIXME - not needed anymore : debug "po(renametranslations): TODO: rename translations of $oldpage to $newpage";
+	
 } #}}}
 
 
