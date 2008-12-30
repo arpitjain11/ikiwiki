@@ -11,7 +11,7 @@ BEGIN { use_ok("IkiWiki::Plugin::link"); }
 $config{srcdir}=$config{destdir}="/dev/null";
 IkiWiki::checkconfig();
 
-# tests of the link plugin's renamepage function
+# tests of the link plugin's renamelink function
 sub try {
 	my ($page, $oldpage, $newpage, $content)=@_;
 
@@ -23,7 +23,7 @@ sub try {
 		$links{$page}=[];
 	}
 
-	IkiWiki::Plugin::link::renamepage(
+	IkiWiki::Plugin::link::renamelink(
 			page => $page, 
 			oldpage => $oldpage,
 			newpage => $newpage,

@@ -35,7 +35,7 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
-	hook(type => "renamepage", id => "po", call => \&renamepage);
+	hook(type => "rename", id => "po", call => \&renamepage);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -330,22 +330,12 @@ sub pagetemplate (@) { #{{{
 # Save information about master page rename, so that:
 # - our delete hook can ignore the translations not renamed already
 # - our change hook can rename the translations accordingly.
-#
-# FIXME:
-# This hook is called once per page linking to the old page, which
-# means our delete hook won't know it should not delete a renamed orphan
-# page's translation.
-#
-# Moreover, we can't recognize such pages at delete stage:
-# existing links are fixed in the renaming process, so every
-# renamed page's old location will be an orphan anyway at this time.
 sub renamepage(@) { #{{{
 	my %params=@_;
 	my $oldpage=$params{oldpage};
 	my $newpage=$params{newpage};
 
 	setrenamed($oldpage, $newpage) if istranslatable($oldpage);
-	return $params{content};
 } #}}}
 
 sub mydelete(@) { #{{{
@@ -822,9 +812,6 @@ sub homepageurl (;$) { #{{{
 	return urlto('', $page);
 } #}}}
 
-# - do *not* implement this until the renamepage hook works
-# - do *not* delete translations of pages that were orphans
-#   before being renamed (see renamepage hook comments above)
 sub deletetranslations ($) { #{{{
 	my $deletedmasterfile=shift;
 
@@ -832,7 +819,7 @@ sub deletetranslations ($) { #{{{
 } #}}}
 
 sub renametranslations (@) { #{{{
-	my ($oldpage, $newpage)=shift;
+	my ($oldpage, $newpage)=(shift, shift);
 
 	debug "po(renametranslations): TODO: rename translations of $oldpage to $newpage";
 } #}}}

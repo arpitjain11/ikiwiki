@@ -12,7 +12,7 @@ sub import {
 	hook(type => "checkconfig", id => "link", call => \&checkconfig);
 	hook(type => "linkify", id => "link", call => \&linkify);
 	hook(type => "scan", id => "link", call => \&scan);
-	hook(type => "renamepage", id => "link", call => \&renamepage);
+	hook(type => "renamelink", id => "link", call => \&renamelink);
 }
 
 sub getsetup () {
@@ -90,7 +90,7 @@ sub scan (@) {
 	}
 }
 
-sub renamepage (@) {
+sub renamelink (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $old=$params{oldpage};
