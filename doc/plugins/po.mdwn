@@ -562,11 +562,9 @@ Creating new pages on the web
 
 See [[contrib/po|contrib/po]].
 
-Deleting/renaming pages
------------------------
+Renaming pages
+--------------
 
-- When a master page is renamed or deleted, its translations (and the
-  pot file?) must be renamed or deleted accordingly.
 - Renaming a translation should be forbidden.
 
 Robustness tests
@@ -596,16 +594,17 @@ Robustness tests
 
 ### Deleting pages
 
-- removing a master page via RCS
+- removing a master page via RCS: **OK**
 - removing a translation via RCS: **OK**
-- removing a master page via CGI
+- removing a master page via CGI: **OK**
 - removing a translation via CGI: **OK**
 
 ### Renaming pages
 
-- renaming a master page via RCS 
-- renaming a master page and its translations via RCS
-- renaming a master page via CGI
+- renaming a master page via RCS: **OK** (but the old translations
+  are lost, because not all RCS track file renaming)
+- renaming a master page and its translations via RCS: **OK**
+- renaming a master page via CGI: **OK**
 - renaming a translation via RCS
 - renaming a translation via CGI
 

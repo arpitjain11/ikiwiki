@@ -389,26 +389,9 @@ sub change(@) { #{{{
 	}
 
 	if ($updated_po_files) {
-		# Check staged changes in.
-		if ($config{rcs}) {
-			IkiWiki::disable_commit_hook();
-			IkiWiki::rcs_commit_staged(gettext("updated PO files"),
-				"IkiWiki::Plugin::po::change", "127.0.0.1");
-			IkiWiki::enable_commit_hook();
-			IkiWiki::rcs_update();
-		}
-		# Reinitialize module's private variables.
-		resetalreadyfiltered();
-		resettranslationscache();
-		flushmemoizecache();
-		# Trigger a wiki refresh.
-		require IkiWiki::Render;
-		# without preliminary saveindex/loadindex, refresh()
-		# complains about a lot of uninitialized variables
-		IkiWiki::saveindex();
-		IkiWiki::loadindex();
-		IkiWiki::refresh();
-		IkiWiki::saveindex();
+		commit_and_refresh(
+			gettext("updated PO files"),
+			"IkiWiki::Plugin::po::change");
 	}
 } #}}}
 
@@ -792,7 +775,53 @@ sub homepageurl (;$) { #{{{
 sub deletetranslations ($) { #{{{
 	my $deletedmasterfile=shift;
 
-	debug "po(deletetranslations): TODO: delete translations of $deletedmasterfile";
+	my $deletedmasterpage=pagename($deletedmasterfile);
+	my @todelete;
+	map {
+		my $file = newpagefile($deletedmasterpage.'.'.$_, 'po');
+		my $absfile = "$config{srcdir}/$file";
+		if (-e $absfile && ! -l $absfile && ! -d $absfile) {
+			push @todelete, $file;
+		}
+	} keys %{$config{po_slave_languages}};
+
+	map {
+		if ($config{rcs}) {
+			IkiWiki::rcs_remove($_);
+		}
+		else {
+			IkiWiki::prune("$config{srcdir}/$_");
+		}
+	} @todelete;
+
+	if (scalar @todelete) {
+		commit_and_refresh(
+			gettext("removed obsolete PO files"),
+			"IkiWiki::Plugin::po::deletetranslations");
+	}
+} #}}}
+
+sub commit_and_refresh ($$) { #{{{
+	my ($msg, $author) = (shift, shift);
+
+	if ($config{rcs}) {
+		IkiWiki::disable_commit_hook();
+		IkiWiki::rcs_commit_staged($msg, $author, "127.0.0.1");
+		IkiWiki::enable_commit_hook();
+		IkiWiki::rcs_update();
+	}
+	# Reinitialize module's private variables.
+	resetalreadyfiltered();
+	resettranslationscache();
+	flushmemoizecache();
+	# Trigger a wiki refresh.
+	require IkiWiki::Render;
+	# without preliminary saveindex/loadindex, refresh()
+	# complains about a lot of uninitialized variables
+	IkiWiki::saveindex();
+	IkiWiki::loadindex();
+	IkiWiki::refresh();
+	IkiWiki::saveindex();
 } #}}}
 
 # ,----
