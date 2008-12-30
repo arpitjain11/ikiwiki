@@ -143,13 +143,13 @@ is(targetpage('test3.es', 'html'), 'test3.es/index.html', "$msgprefix test3.es (
 $config{po_link_to}='current';
 $msgprefix="urlto (po_link_to=current)";
 is(urlto('', 'index'), './index.en.html', "$msgprefix index -> ''");
-is(urlto('', 'nontranslatable'), './../index.en.html', "$msgprefix nontranslatable -> ''");
-is(urlto('', 'translatable.fr'), './../index.fr.html', "$msgprefix translatable.fr -> ''");
+is(urlto('', 'nontranslatable'), '../index.en.html', "$msgprefix nontranslatable -> ''");
+is(urlto('', 'translatable.fr'), '../index.fr.html', "$msgprefix translatable.fr -> ''");
 $config{po_link_to}='negotiated';
 $msgprefix="urlto (po_link_to=negotiated)";
 is(urlto('', 'index'), './', "$msgprefix index -> ''");
-is(urlto('', 'nontranslatable'), './../', "$msgprefix nontranslatable -> ''");
-is(urlto('', 'translatable.fr'), './../', "$msgprefix translatable.fr -> ''");
+is(urlto('', 'nontranslatable'), '../', "$msgprefix nontranslatable -> ''");
+is(urlto('', 'translatable.fr'), '../', "$msgprefix translatable.fr -> ''");
 
 ### bestlink
 $config{po_link_to}='current';
