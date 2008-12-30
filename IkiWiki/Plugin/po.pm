@@ -338,7 +338,6 @@ sub renamepages() { #{{{
 	foreach my $rename (@torename) {
 		next unless istranslatable($rename->{src});
 		my %otherpages=%{otherlanguages($rename->{src})};
-		debug "bla".$rename->{src};
 		while (my ($lang, $otherpage) = each %otherpages) {
 			push @{$torename}, {
 				src => $otherpage,
@@ -347,7 +346,6 @@ sub renamepages() { #{{{
 				destfile => $rename->{dest}.".".$lang.".po",
 				required => 0,
 			};
-			debug "po(renamepages): pushed src=$otherpage, dest=".otherlanguage($rename->{dest}, $lang);
 		}
 	}
 } #}}}
