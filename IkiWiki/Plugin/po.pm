@@ -337,7 +337,6 @@ sub renamepages() { #{{{
 
 	foreach my $rename (@torename) {
 		next unless istranslatable($rename->{src});
-		setrenamed($rename->{src}, $rename->{dest});
 		my %otherpages=%{otherlanguages($rename->{src})};
 		debug "bla".$rename->{src};
 		while (my ($lang, $otherpage) = each %otherpages) {
@@ -358,17 +357,11 @@ sub mydelete(@) { #{{{
 
 	map {
 		deletetranslations($_);
-	} grep { istranslatablefile($_) && ! renamed(pagename($_))} @deleted;
+	} grep { istranslatablefile($_) } @deleted;
 } #}}}
 
 sub change(@) { #{{{
 	my @rendered=@_;
-
-	my $eachrenamed=eachrenamed();
-	while (my ($oldpage, $newpage) = $eachrenamed->()) {
-		renametranslations($oldpage, $newpage);
-	}
-	resetrenamed();
 
 	my $updated_po_files=0;
 
@@ -528,35 +521,6 @@ sub myurlto ($$;$) { #{{{
 
 	sub resetalreadyfiltered() { #{{{
 		undef %filtered;
-	} #}}}
-}
-
-{
-	my %renamed;
-
-	sub renamed ($) { #{{{
-		my $page=shift;
-
-		if (exists $renamed{$page} &&
-		    defined $renamed{$page}) {
-			return $renamed{$page};
-		}
-		return;
-	} #}}}
-
-	sub setrenamed ($$) { #{{{
-		my $oldpage=shift;
-		my $newpage=shift;
-
-		$renamed{$oldpage}=$newpage;
-	} #}}}
-
-	sub resetrenamed () { #{{{
-		undef %renamed;
-	} #}}}
-
-	sub eachrenamed () { #{{{
-		return sub { each %renamed };
 	} #}}}
 }
 
@@ -832,14 +796,6 @@ sub deletetranslations ($) { #{{{
 
 	debug "po(deletetranslations): TODO: delete translations of $deletedmasterfile";
 } #}}}
-
-sub renametranslations (@) { #{{{
-	my ($oldpage, $newpage)=(shift, shift);
-
-	# FIXME - not needed anymore : debug "po(renametranslations): TODO: rename translations of $oldpage to $newpage";
-	
-} #}}}
-
 
 # ,----
 # | PageSpec's
