@@ -3,7 +3,7 @@ package IkiWiki::Plugin::htmlscrubber;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 # This regexp matches urls that are in a known safe scheme.
 # Feel free to use it from other plugins.

@@ -24,7 +24,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
 		 inject
                  %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
-our $VERSION = 2.00; # plugin interface version, next is ikiwiki version
+our $VERSION = 3.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
 my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
@@ -194,7 +194,7 @@ sub getsetup () {
 	},
 	prefix_directives => {
 		type => "boolean",
-		default => 0,
+		default => 1,
 		description => "use '!'-prefixed preprocessor directives?",
 		safe => 0, # changing requires manual transition
 		rebuild => 1,
@@ -1600,40 +1600,6 @@ sub rcs_receive () {
 	$hooks{rcs}{rcs_receive}{call}->();
 }
 
-sub globlist_to_pagespec ($) {
-	my @globlist=split(' ', shift);
-
-	my (@spec, @skip);
-	foreach my $glob (@globlist) {
-		if ($glob=~/^!(.*)/) {
-			push @skip, $glob;
-		}
-		else {
-			push @spec, $glob;
-		}
-	}
-
-	my $spec=join(' or ', @spec);
-	if (@skip) {
-		my $skip=join(' and ', @skip);
-		if (length $spec) {
-			$spec="$skip and ($spec)";
-		}
-		else {
-			$spec=$skip;
-		}
-	}
-	return $spec;
-}
-
-sub is_globlist ($) {
-	my $s=shift;
-	my $ret= ( $s =~ /[^\s]+\s+([^\s]+)/ && $1 ne "and" && $1 ne "or" );
-	print STDERR "warning: deprecated GlobList style PageSpec \"$s\" will stop working in ikiwiki version 3.0\n"
-		if $ret && $s !~ /TMPL_VAR/; # hack alert
-	return $ret;
-}
-
 sub safequote ($) {
 	my $s=shift;
 	$s=~s/[{}]//g;
@@ -1725,25 +1691,11 @@ sub pagespec_merge ($$) {
 	my $b=shift;
 
 	return $a if $a eq $b;
-
-        # Support for old-style GlobLists.
-        if (is_globlist($a)) {
-                $a=globlist_to_pagespec($a);
-        }
-        if (is_globlist($b)) {
-                $b=globlist_to_pagespec($b);
-        }
-
 	return "($a) or ($b)";
 }
 
 sub pagespec_translate ($) {
 	my $spec=shift;
-
-	# Support for old-style GlobLists.
-	if (is_globlist($spec)) {
-		$spec=globlist_to_pagespec($spec);
-	}
 
 	# Convert spec to perl code.
 	my $code="";

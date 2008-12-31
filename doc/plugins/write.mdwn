@@ -19,7 +19,7 @@ that can be fleshed out to make a useful plugin.
 `IkiWiki::Plugin::pagecount` is another simple example. All perl plugins
 should `use IkiWiki` to import the ikiwiki plugin interface. It's a good
 idea to include the version number of the plugin interface that your plugin
-expects: `use IkiWiki 2.00`.
+expects: `use IkiWiki 3.00`.
 
 An external plugin is an executable program. It can be written in any
 language. Its interface to ikiwiki is via XML RPC, which it reads from
@@ -431,7 +431,7 @@ describes the plugin as a whole. For example:
 
 To import the ikiwiki plugin interface:
 
-	use IkiWiki '2.00';
+	use IkiWiki '3.00';
 
 This will import several variables and functions into your plugin's
 namespace. These variables and functions are the ones most plugins need,
@@ -486,7 +486,7 @@ use the following hashes, using a page name as the key:
   destination file.
 * `%pagesources` contains the name of the source file for each page.
 
-Also, the %IkiWiki::version variable contains the version number for the
+Also, the `%IkiWiki::version` variable contains the version number for the
 ikiwiki program.
 
 ### Library functions

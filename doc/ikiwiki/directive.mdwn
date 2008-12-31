@@ -28,15 +28,13 @@ of text with triple-quotes:
 	3. "baz"
 	"""]]
 
-ikiwiki also has an older syntax for directives, which requires a
-space in directives to distinguish them from [[wikilinks|ikiwiki/wikilink]].
-This syntax has several disadvantages: it requires a space after directives
-with no parameters (such as `\[[pagecount ]]`), and it prohibits spaces in
-[[wikilinks|ikiwiki/wikilink]].  ikiwiki now provides the `!`-prefixed syntax
-shown above as the preferred alternative.  However, ikiwiki still supports
-wikis using the older syntax, if the `prefix_directives` option is not enabled.
-For backward compatibility with existing wikis, this option currently
-defaults to off, so ikiwiki supports the old syntax.
+ikiwiki also has an older syntax for directives, which requires a space in
+directives to distinguish them from [[wikilinks|ikiwiki/wikilink]]. This
+syntax has several disadvantages: it requires a space after directives with
+no parameters (such as `\[[pagecount ]]`), and it prohibits spaces in
+[[wikilinks|ikiwiki/wikilink]].  ikiwiki now provides the `!`-prefixed
+syntax shown above as default.  However, ikiwiki still supports wikis using
+the older syntax, if the `prefix_directives` option is disabled.
 
 [[!if test="enabled(listdirectives)" then="""
 Here is a list of currently available directives in this wiki:

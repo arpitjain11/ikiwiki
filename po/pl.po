@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 1.51\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-20 18:07-0500\n"
+"POT-Creation-Date: 2008-12-26 21:41-0500\n"
 "PO-Revision-Date: 2007-04-27 22:05+0200\n"
 "Last-Translator: Pawel Tecza <ptecza@net.icm.edu.pl>\n"
 "Language-Team: Debian L10n Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Nieudane logowanie. Proszę sprawdzić czy w przeglądarce włączone są "
 "ciasteczka (ang. cookies)"
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:310
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:280
 msgid "Your login session has expired."
 msgstr ""
 
@@ -43,88 +43,88 @@ msgstr "Preferencje zapisane."
 msgid "Admin"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:253
+#: ../IkiWiki/CGI.pm:226
 msgid "Preferences saved."
 msgstr "Preferencje zapisane."
 
-#: ../IkiWiki/CGI.pm:271
+#: ../IkiWiki/CGI.pm:241
 msgid "You are banned."
 msgstr "Twój dostęp został zabroniony przez administratora."
 
-#: ../IkiWiki/CGI.pm:401 ../IkiWiki/CGI.pm:402 ../IkiWiki.pm:1204
+#: ../IkiWiki/CGI.pm:371 ../IkiWiki/CGI.pm:372 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr "Błąd"
 
-#: ../IkiWiki/Plugin/aggregate.pm:80
+#: ../IkiWiki/Plugin/aggregate.pm:84
 msgid "Aggregation triggered via web."
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:93
 msgid "Nothing to do right now, all feeds are up-to-date!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:216
+#: ../IkiWiki/Plugin/aggregate.pm:220
 #, fuzzy, perl-format
 msgid "missing %s parameter"
 msgstr "brakujący parametr %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:251
+#: ../IkiWiki/Plugin/aggregate.pm:255
 msgid "new feed"
 msgstr "nowy kanał RSS"
 
-#: ../IkiWiki/Plugin/aggregate.pm:265
+#: ../IkiWiki/Plugin/aggregate.pm:269
 msgid "posts"
 msgstr "wpisy"
 
-#: ../IkiWiki/Plugin/aggregate.pm:267
+#: ../IkiWiki/Plugin/aggregate.pm:271
 msgid "new"
 msgstr "nowy wpis"
 
-#: ../IkiWiki/Plugin/aggregate.pm:431
+#: ../IkiWiki/Plugin/aggregate.pm:435
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "wygasający wpis %s (ma już %s dni)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:438
+#: ../IkiWiki/Plugin/aggregate.pm:442
 #, perl-format
 msgid "expiring %s"
 msgstr "wygasający wpis %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:465
+#: ../IkiWiki/Plugin/aggregate.pm:469
 #, perl-format
 msgid "last checked %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:469
+#: ../IkiWiki/Plugin/aggregate.pm:473
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "sprawdzanie kanału RSS %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:474
+#: ../IkiWiki/Plugin/aggregate.pm:478
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "nie znaleziono kanału RSS pod adresem %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:493
+#: ../IkiWiki/Plugin/aggregate.pm:497
 #, fuzzy
 msgid "feed not found"
 msgstr "nieznaleziony kanał RSS"
 
-#: ../IkiWiki/Plugin/aggregate.pm:504
+#: ../IkiWiki/Plugin/aggregate.pm:508
 #, fuzzy, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "Nieprawidłowe kodowanie UTF-8 usunięte z kanału RSS"
 
-#: ../IkiWiki/Plugin/aggregate.pm:512
+#: ../IkiWiki/Plugin/aggregate.pm:516
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:520
+#: ../IkiWiki/Plugin/aggregate.pm:524
 msgid "feed crashed XML::Feed!"
 msgstr "awaria kanału RSS w module XML::Feed!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:601
+#: ../IkiWiki/Plugin/aggregate.pm:605
 #, perl-format
 msgid "creating new page %s"
 msgstr "tworzenie nowej strony %s"
@@ -161,15 +161,15 @@ msgstr "awaria w trakcie zmiany rozmiaru: %s"
 msgid "there is already a page named %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:82
+#: ../IkiWiki/Plugin/attachment.pm:65
 msgid "prohibited by allowed_attachments"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:190
+#: ../IkiWiki/Plugin/attachment.pm:140
 msgid "bad attachment filename"
 msgstr ""
 
-#: ../IkiWiki/Plugin/attachment.pm:232
+#: ../IkiWiki/Plugin/attachment.pm:182
 msgid "attachment upload"
 msgstr ""
 
@@ -193,12 +193,12 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr "Wszystkie odnośniki są aktualne!"
 
-#: ../IkiWiki/Plugin/comments.pm:119 ../IkiWiki/Plugin/format.pm:23
+#: ../IkiWiki/Plugin/comments.pm:120 ../IkiWiki/Plugin/format.pm:23
 #, perl-format
 msgid "unsupported page format %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:124
+#: ../IkiWiki/Plugin/comments.pm:125
 msgid "comment must have content"
 msgstr ""
 
@@ -206,45 +206,45 @@ msgstr ""
 msgid "Anonymous"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:243 ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/comments.pm:252 ../IkiWiki/Plugin/recentchanges.pm:110
 #, fuzzy
 msgid "missing page"
 msgstr "brakujące wartości"
 
-#: ../IkiWiki/Plugin/comments.pm:245 ../IkiWiki/Plugin/recentchanges.pm:103
+#: ../IkiWiki/Plugin/comments.pm:254 ../IkiWiki/Plugin/recentchanges.pm:112
 #, perl-format
 msgid "The page %s does not exist."
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:334 ../IkiWiki/Plugin/editpage.pm:124
+#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:124
 msgid "bad page name"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:341
+#: ../IkiWiki/Plugin/comments.pm:350
 #, fuzzy, perl-format
 msgid "commenting on %s"
 msgstr "tworzenie %s"
 
-#: ../IkiWiki/Plugin/comments.pm:359
+#: ../IkiWiki/Plugin/comments.pm:368
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:366
+#: ../IkiWiki/Plugin/comments.pm:375
 #, perl-format
 msgid "comments on page '%s' are closed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:468
+#: ../IkiWiki/Plugin/comments.pm:483
 msgid "Added a comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:472
+#: ../IkiWiki/Plugin/comments.pm:487
 #, perl-format
 msgid "Added a comment: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:565
+#: ../IkiWiki/Plugin/comments.pm:598
 msgid "Comments"
 msgstr ""
 
@@ -338,11 +338,6 @@ msgstr "Wtyczka do wyszukiwarka wymaga podania %s"
 msgid "Failed to parse url, cannot determine domain name"
 msgstr ""
 
-#: ../IkiWiki/Plugin/googlecalendar.pm:32
-#, fuzzy
-msgid "failed to find url in html"
-msgstr "awaria w trakcie wyszukiwania adresu URL na stronie HTML"
-
 #: ../IkiWiki/Plugin/graphviz.pm:67
 #, fuzzy
 msgid "failed to run graphviz"
@@ -421,7 +416,7 @@ msgstr "Nieznaleziony moduł RPC::XML::Client, brak możliwości pingowania"
 msgid "failed to run dot"
 msgstr "awaria w trakcie uruchamiania dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
+#: ../IkiWiki/Plugin/lockedit.pm:47
 #, fuzzy, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr ""
@@ -1049,7 +1044,7 @@ msgstr ""
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "polecenie preprocesora %s wykryte w %s na głębokości %i"
 
-#: ../IkiWiki.pm:1688
+#: ../IkiWiki.pm:1661
 msgid "yes"
 msgstr ""
 
@@ -1072,6 +1067,10 @@ msgstr ""
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr ""
+
+#, fuzzy
+#~ msgid "failed to find url in html"
+#~ msgstr "awaria w trakcie wyszukiwania adresu URL na stronie HTML"
 
 #~ msgid "processed ok at %s"
 #~ msgstr "kanał RSS przetworzony w dniu %s"

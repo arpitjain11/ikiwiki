@@ -4,7 +4,7 @@ package IkiWiki::Plugin::httpauth;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 sub import {
 	hook(type => "getsetup", id => "httpauth", call => \&getsetup);

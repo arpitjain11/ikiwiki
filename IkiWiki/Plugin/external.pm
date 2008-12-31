@@ -6,7 +6,7 @@ package IkiWiki::Plugin::external;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use RPC::XML;
 use RPC::XML::Parser;
 use IPC::Open2;

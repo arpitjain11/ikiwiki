@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-20 18:07-0500\n"
+"POT-Creation-Date: 2008-12-26 21:41-0500\n"
 "PO-Revision-Date: 2008-10-22 19:13+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: None\n"
@@ -27,7 +27,7 @@ msgstr "Du skal først logge på."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "Pålogning mislykkedes, måske skal du tillade infokager (cookies)?"
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:310
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:280
 msgid "Your login session has expired."
 msgstr "Din kørsel (login session) er udløbet"
 
@@ -43,87 +43,87 @@ msgstr "Indstillinger"
 msgid "Admin"
 msgstr "Admin"
 
-#: ../IkiWiki/CGI.pm:253
+#: ../IkiWiki/CGI.pm:226
 msgid "Preferences saved."
 msgstr "Indstillinger gemt"
 
-#: ../IkiWiki/CGI.pm:271
+#: ../IkiWiki/CGI.pm:241
 msgid "You are banned."
 msgstr "Du er banlyst."
 
-#: ../IkiWiki/CGI.pm:401 ../IkiWiki/CGI.pm:402 ../IkiWiki.pm:1204
+#: ../IkiWiki/CGI.pm:371 ../IkiWiki/CGI.pm:372 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr "Fejl"
 
-#: ../IkiWiki/Plugin/aggregate.pm:80
+#: ../IkiWiki/Plugin/aggregate.pm:84
 msgid "Aggregation triggered via web."
 msgstr "Indsamling udløst via web."
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:93
 msgid "Nothing to do right now, all feeds are up-to-date!"
 msgstr "Intet at gøre lige nu, alle fødninger er tidssvarende!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:216
+#: ../IkiWiki/Plugin/aggregate.pm:220
 #, perl-format
 msgid "missing %s parameter"
 msgstr "mangler parametren %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:251
+#: ../IkiWiki/Plugin/aggregate.pm:255
 msgid "new feed"
 msgstr "ny fødning"
 
-#: ../IkiWiki/Plugin/aggregate.pm:265
+#: ../IkiWiki/Plugin/aggregate.pm:269
 msgid "posts"
 msgstr "indlæg"
 
-#: ../IkiWiki/Plugin/aggregate.pm:267
+#: ../IkiWiki/Plugin/aggregate.pm:271
 msgid "new"
 msgstr "nyt"
 
-#: ../IkiWiki/Plugin/aggregate.pm:431
+#: ../IkiWiki/Plugin/aggregate.pm:435
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "udløber %s (%s dage gammel)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:438
+#: ../IkiWiki/Plugin/aggregate.pm:442
 #, perl-format
 msgid "expiring %s"
 msgstr "udløber %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:465
+#: ../IkiWiki/Plugin/aggregate.pm:469
 #, perl-format
 msgid "last checked %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:469
+#: ../IkiWiki/Plugin/aggregate.pm:473
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "undersøger fødning %s ..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:474
+#: ../IkiWiki/Plugin/aggregate.pm:478
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "kunne ikke finde fødning ved %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:493
+#: ../IkiWiki/Plugin/aggregate.pm:497
 msgid "feed not found"
 msgstr "fødning ikke fundet"
 
-#: ../IkiWiki/Plugin/aggregate.pm:504
+#: ../IkiWiki/Plugin/aggregate.pm:508
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(defekt UTF-8 fjernet fra fødning)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:512
+#: ../IkiWiki/Plugin/aggregate.pm:516
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr "(fødningselementer omgået (escaped))"
 
-#: ../IkiWiki/Plugin/aggregate.pm:520
+#: ../IkiWiki/Plugin/aggregate.pm:524
 msgid "feed crashed XML::Feed!"
 msgstr "fødning fik XML::Feed til at bryde sammen!"
 
-#: ../IkiWiki/Plugin/aggregate.pm:601
+#: ../IkiWiki/Plugin/aggregate.pm:605
 #, perl-format
 msgid "creating new page %s"
 msgstr "opretter ny side %s"
@@ -158,15 +158,15 @@ msgstr "Sletning af fil fra S3 mislykkedes: "
 msgid "there is already a page named %s"
 msgstr "der er allerede en side ved navn %s"
 
-#: ../IkiWiki/Plugin/attachment.pm:82
+#: ../IkiWiki/Plugin/attachment.pm:65
 msgid "prohibited by allowed_attachments"
 msgstr "forhindret af allowed_attachments"
 
-#: ../IkiWiki/Plugin/attachment.pm:190
+#: ../IkiWiki/Plugin/attachment.pm:140
 msgid "bad attachment filename"
 msgstr "dårligt vedhæftningsfilnavn"
 
-#: ../IkiWiki/Plugin/attachment.pm:232
+#: ../IkiWiki/Plugin/attachment.pm:182
 msgid "attachment upload"
 msgstr "vedhæftningsoplægning"
 
@@ -190,12 +190,12 @@ msgstr "%s fra %s"
 msgid "There are no broken links!"
 msgstr "Ingen henvisninger der ikker fungerer!"
 
-#: ../IkiWiki/Plugin/comments.pm:119 ../IkiWiki/Plugin/format.pm:23
+#: ../IkiWiki/Plugin/comments.pm:120 ../IkiWiki/Plugin/format.pm:23
 #, fuzzy, perl-format
 msgid "unsupported page format %s"
 msgstr "revisionskontrolsystem %s ikke understøttet"
 
-#: ../IkiWiki/Plugin/comments.pm:124
+#: ../IkiWiki/Plugin/comments.pm:125
 msgid "comment must have content"
 msgstr ""
 
@@ -203,45 +203,45 @@ msgstr ""
 msgid "Anonymous"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:243 ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/comments.pm:252 ../IkiWiki/Plugin/recentchanges.pm:110
 msgid "missing page"
 msgstr "manglende side"
 
-#: ../IkiWiki/Plugin/comments.pm:245 ../IkiWiki/Plugin/recentchanges.pm:103
+#: ../IkiWiki/Plugin/comments.pm:254 ../IkiWiki/Plugin/recentchanges.pm:112
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "Siden %s eksisterer ikke."
 
-#: ../IkiWiki/Plugin/comments.pm:334 ../IkiWiki/Plugin/editpage.pm:124
+#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:124
 #, fuzzy
 msgid "bad page name"
 msgstr "dårligt vedhæftningsfilnavn"
 
-#: ../IkiWiki/Plugin/comments.pm:341
+#: ../IkiWiki/Plugin/comments.pm:350
 #, fuzzy, perl-format
 msgid "commenting on %s"
 msgstr "opretter %s"
 
-#: ../IkiWiki/Plugin/comments.pm:359
+#: ../IkiWiki/Plugin/comments.pm:368
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:366
+#: ../IkiWiki/Plugin/comments.pm:375
 #, perl-format
 msgid "comments on page '%s' are closed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:468
+#: ../IkiWiki/Plugin/comments.pm:483
 msgid "Added a comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:472
+#: ../IkiWiki/Plugin/comments.pm:487
 #, perl-format
 msgid "Added a comment: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:565
+#: ../IkiWiki/Plugin/comments.pm:598
 msgid "Comments"
 msgstr ""
 
@@ -333,10 +333,6 @@ msgstr "Skal angive %s når google søgeudvidelsen bruges"
 msgid "Failed to parse url, cannot determine domain name"
 msgstr "Tolkning af URL mislykkedes, kan ikke afgøre domænenavn"
 
-#: ../IkiWiki/Plugin/googlecalendar.pm:32
-msgid "failed to find url in html"
-msgstr "lokalisering af url i html mislykkedes"
-
 #: ../IkiWiki/Plugin/graphviz.pm:67
 msgid "failed to run graphviz"
 msgstr "graphviz-kørsel mislykkedes"
@@ -408,7 +404,7 @@ msgstr "RPC::XML::Client ikke fundet, pinger ikke"
 msgid "failed to run dot"
 msgstr "dot-kørsel mislykkedes"
 
-#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
+#: ../IkiWiki/Plugin/lockedit.pm:47
 #, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr "%s er låst og kan ikke redigeres"
@@ -1021,7 +1017,7 @@ msgstr ""
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "forudberegningssløkke fundet på %s ved dybde %i"
 
-#: ../IkiWiki.pm:1688
+#: ../IkiWiki.pm:1661
 msgid "yes"
 msgstr "ja"
 
@@ -1044,6 +1040,9 @@ msgstr "Hvilken wiki bruger (eller openid) skal være administrator?"
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr "Hvad er domænenavnet på webserveren?"
+
+#~ msgid "failed to find url in html"
+#~ msgstr "lokalisering af url i html mislykkedes"
 
 #~ msgid "processed ok at %s"
 #~ msgstr "korrekt dannet ved %s"

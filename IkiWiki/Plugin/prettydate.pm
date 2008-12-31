@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 package IkiWiki::Plugin::prettydate;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use warnings;
 no warnings 'redefine';
 use strict;

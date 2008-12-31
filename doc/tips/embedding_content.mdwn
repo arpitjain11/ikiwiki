@@ -1,0 +1,35 @@
+Content from sites such as YouTube can be embedded into a web page. Maybe
+you want to do this. But you'll find that the [[plugins/htmlscrubber]]
+doesn't let you. It blocks the tags used to embed such content, because
+they can be abused in many evil ways.
+
+Some plugins have been written to try to work around this problem, by
+whitelisting the html needed to embed things from a few sites like Google
+maps, calendar, videos, and YouTube. The problem with these plugins is that
+they have to be kept up to date to add new sites, and follow changes to the
+html such sites use for embedding.
+
+(Digression: The real problem with the plugins is that they hide the
+underlying trust relationship. If you decide to embed html from a site,
+you'd better trust that site. And if ikiwiki lets you enter such html, it
+needs to trust you.)
+
+The [[plugins/htmlscrubber]] offers a different way around this problem.
+You can configure it to skip scrubbing certian pages, so that content from
+elsewhere can be embedded on those pages. Then use [[plugins/lockedit]]
+to limit who can edit those unscrubbed pages.
+
+For example, suppose your blog is all under `blog/*`, and you want
+only yourself to be able to post there, and you'd like to be able to embed
+youtube videos etc in your blog. Other users can edit some pages in the
+wiki (Discussion pages, say), but not your blog posts. Then you could configure
+ikiwiki as follows:
+
+	htmlscrubber_skip => 'blog/* and !*/Discussion',
+	locked_pages => '!*/Discussion',
+
+More simply, you might want to allow yourself to embed content anywhere
+on the wiki, but scrub content written on Discussion pages:
+	
+	htmlscrubber_skip => '!*/Discussion',
+	locked_pages => '!*/Discussion',

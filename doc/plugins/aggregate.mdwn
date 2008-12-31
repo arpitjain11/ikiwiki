@@ -5,10 +5,6 @@ This plugin allows content from other feeds to be aggregated into the
 wiki. To specify feeds to aggregate, use the
 [[ikiwiki/directive/aggregate]] [[ikiwiki/directive]].
 
-New users of aggregate should enable the `aggregateinternal => 1` option in the
-.setup file. If you don't do so, you will need to enable the [[html]] plugin
-as well as aggregate itself, since feed entries will be stored as HTML.
-
 The [[meta]] and [[tag]] plugins are also recommended. Either the
 [[htmltidy]] or [[htmlbalance]] plugin is suggested, since feeds can easily
 contain html problems, some of which these plugins can fix.
@@ -27,37 +23,19 @@ visit is `http://whatever/ikiwiki.cgi?do=aggregate_webtrigger`. Anyone
 can visit the url to trigger an aggregation run, but it will only check
 each feed if its `updateinterval` has passed.
 
-## internal pages and `aggregateinternal`
+## aggregated pages
 
 This plugin creates a page for each aggregated item. 
 
 If the `aggregateinternal` option is enabled in the setup file (which is
-recommended), aggregated pages are stored in the source directory with a
+the default), aggregated pages are stored in the source directory with a
 "._aggregated" extension. These pages cannot be edited by web users, and
 do not generate first-class wiki pages. They can still be inlined into a
 blog, but you have to use `internal` in [[PageSpecs|IkiWiki/PageSpec]],
 like `internal(blog/*)`.
 
-For backward compatibility, the default is that these pages have the
-".html" extension, and are first-class wiki pages -- each one generates
-a separate HTML page in the output, and they can even be edited.
-
-That turns out to not be ideal for aggregated content, because publishing
-files for each of those pages is a waste of disk space and CPU, and you
-probably don't want to allow them to be edited. So, there is an alternative
-method that can be used (and is recommended), turned on by the
-`aggregateinternal` option in the setup file.
-
-If you are already using aggregate and want to enable `aggregateinternal`,
-you should follow this process:
-
-1. Update all [[PageSpecs|ikiwiki/PageSpec]] that refer to the aggregated
-   pages -- such as those in inlines. Put "internal()" around globs 
-   in those PageSpecs. For example, if the PageSpec was `foo/*`, it should
-   be changed to `internal(foo/*)`. This has to be done because internal
-   pages are not matched by regular globs.
-2. Turn on `aggregateinternal` in the setup file.
-3. Use [[ikiwiki-transition]] to rename all existing aggregated `.html`
-   files in the srcdir. The command to run is
-   `ikiwiki-transition aggregateinternal $setupfile`,
-4. Refresh the wiki. (`ikiwiki -setup your.setup -refresh`)
+If `aggregateinternal` is disabled, you will need to enable the [[html]]
+plugin as well as aggregate itself, since feed entries will be stored as
+HTML, and as first-class wiki pages -- each one generates
+a separate HTML page in the output, and they can even be edited. This
+option is provided only for backwards compatability.

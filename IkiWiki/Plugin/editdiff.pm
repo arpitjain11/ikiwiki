@@ -4,7 +4,7 @@ package IkiWiki::Plugin::editdiff;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use HTML::Entities;
 use IPC::Open2;
 

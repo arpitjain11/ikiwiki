@@ -7,7 +7,7 @@ package IkiWiki::Plugin::comments;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use Encode;
 use POSIX qw(strftime);
 
@@ -506,7 +506,10 @@ sub sessioncgi ($$) {
 		error($conflict) if defined $conflict;
 
 		# Jump to the new comment on the page.
-		IkiWiki::redirect($cgi, urlto($page, undef, 1)."#$location");
+		# The trailing question mark tries to avoid broken
+		# caches and get the most recent version of the page.
+		IkiWiki::redirect($cgi, urlto($page, undef, 1)."#$location?updated");
+
 	}
 	else {
 		IkiWiki::showform ($form, \@buttons, $session, $cgi,

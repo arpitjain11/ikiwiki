@@ -7,10 +7,7 @@ This is the roadmap for ikiwiki development.
 
 Released 29 April 2006.
 
-The 1.x series changed a great deal over the more than 50 releases in its
-lifetime. It is now in maintenance mode, only security issues or really bad
-bugs will be fixed in 1.x going forward. 1.x will stop being supported with
-the release of 3.0.
+The 1.x series is no longer supported.
 
 ----
 
@@ -32,27 +29,42 @@ the release of 3.0.
 
 Released 30 April 2007.
 
-The 2.x series is expected to undergo continuing development for some time,
-adding improvements and new features, but avoiding changes that break
-backwards compatability.
+The 2.x series is now in maintenance mode. Only security fixes and fixes for
+really bad bugs will be applied going forward.
 
 ----
 
 # 3.0
 
-Version 3.0 will be an opportunity to make significant transitions.
+Version 3.0 is an opportunity to make significant transitions.
+Read [[tips/upgrade_to_3.0]] for the steps you will need to
+follow when upgrading your wiki to this version.
 
-* Default to using `prefix_directives`.
-* Default to using `aggregateinternal`.
-* Remove deprecated prefs form settings for `allowed_attachments` and
-  `locked_pages`.
-* Finalise a new version of the plugin API, exporting additional commonly
-  used functions from IkiWiki.pm. See [[todo/firm_up_plugin_interface]]
+The highlights of the changes in version 3.0 include:
 
-It will include a vast number of new features, bugfixes, and other
-improvements, far too many to list here.
+* Support for uploading [[attachments|plugins/attachment]].
+* Can [[plugins/rename]] and [[plugins/remove]] pages and files via the web.
+* [[Web_based_setup|plugins/websetup]].
+* Blog-style [[plugins/comments]] as an alternative to Discussion pages.
+* Many other new plugins including [[plugins/htmlbalance]], [[plugins/format]],
+  [[plugins/progress]], [[plugins/color]], [[plugins/autoindex]],
+  [[plugins/cutpaste]], [[plugins/hnb]], [[plugins/creole]], [[plugins/txt]],
+  [[plugins/amazon_s3]], [[plugins/pinger]], [[plugins/pingee]],
+  [[plugins/edittemplate]]
+* The RecentChanges page is compiled statically, not generated from the CGI.
+* Support for additional revision control systems: [[rcs/bzr]],
+  [[rcs/monotone]]
+* Support for [[tips/trusted_git_push]].
+* A new version (3.00) of the plugin API, exporting additional
+  commonly used functions from `IkiWiki.pm`. Nearly everything in ikiwiki is
+  now a plugin, from WikiLinks to page editing, to RecentChanges.
+* Far too many bug fixes, features, and enhancements to list here.
 
-Release is planned for fall^Wlate, 2008.
+Released 31 December, 2008.
+
+The 3.x series is expected to undergo continuing development for some time,
+adding improvements and new features, but avoiding changes that break
+backwards compatability.
 
 ----
 

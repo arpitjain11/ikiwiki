@@ -5,7 +5,7 @@ package IkiWiki::Plugin::inline;
 use warnings;
 use strict;
 use Encode;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use URI;
 
 my %knownfeeds;

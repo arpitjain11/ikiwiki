@@ -12,7 +12,7 @@ package IkiWiki::Plugin::pagestats;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 # Names of the HTML classes to use for the tag cloud
 our @classes = ('smallestPC', 'smallPC', 'normalPC', 'bigPC', 'biggestPC' );

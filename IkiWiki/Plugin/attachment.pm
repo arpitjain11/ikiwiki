@@ -3,7 +3,7 @@ package IkiWiki::Plugin::attachment;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 sub import {
 	add_underlay("javascript");
@@ -61,23 +61,6 @@ sub check_canattach ($$;$) {
 		);
 	}
 
-	# XXX deprecated, should be removed eventually
-	if ($allowed) {
-		foreach my $admin (@{$config{adminuser}}) {
-			my $allowed_attachments=IkiWiki::userinfo_get($admin, "allowed_attachments");
-			if (defined $allowed_attachments &&
-			    length $allowed_attachments) {
-				$allowed=pagespec_match($dest,
-					$allowed_attachments,
-					file => $file,
-					user => $session->param("name"),
-					ip => $ENV{REMOTE_ADDR},
-				);
-				last if $allowed;
-			}
-		}
-	}
-
 	if (! $allowed) {
 		error(gettext("prohibited by allowed_attachments")." ($allowed)");
 	}
@@ -118,39 +101,6 @@ sub formbuilder_setup (@) {
 		}
 		else {
 			$form->tmpl_param("attachments-class" => "toggleable-open");
-		}
-	}
-	elsif ($form->title eq "preferences") {
-		# XXX deprecated, should remove eventually
-		my $session=$params{session};
-		my $user_name=$session->param("name");
-
-		$form->field(name => "allowed_attachments", size => 50,
-			fieldset => "admin",
-			comment => "deprecated; please move to allowed_attachments in setup file",
-		);
-		if (! IkiWiki::is_admin($user_name)) {
-			$form->field(name => "allowed_attachments", type => "hidden");
-		}
-                if (! $form->submitted) {
-			my $value=IkiWiki::userinfo_get($user_name, "allowed_attachments");
-			if (length $value) {
-				$form->field(name => "allowed_attachments", force => 1,
-					value => IkiWiki::userinfo_get($user_name, "allowed_attachments"));
-			}
-			else {
-				$form->field(name => "allowed_attachments", type => "hidden");
-			}
-                }
-		if ($form->submitted && $form->submitted eq 'Save Preferences') {
-			if (defined $form->field("allowed_attachments")) {
-				IkiWiki::userinfo_set($user_name, "allowed_attachments",
-				$form->field("allowed_attachments")) ||
-					error("failed to set allowed_attachments");
-				if (! length $form->field("allowed_attachments")) {
-					$form->field(name => "allowed_attachments", type => "hidden");
-				}
-			}
 		}
 	}
 }
