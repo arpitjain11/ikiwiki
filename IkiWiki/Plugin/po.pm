@@ -732,6 +732,7 @@ sub urlto_with_orig_beautiful_urlpath($$) { #{{{
 sub percenttranslated ($) { #{{{
 	my $page=shift;
 
+	$page=~s/^\///;
 	return gettext("N/A") unless istranslation($page);
 	my $file=srcfile($pagesources{$page});
 	my $masterfile = srcfile($pagesources{masterpage($page)});
