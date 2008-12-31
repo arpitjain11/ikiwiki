@@ -1,0 +1,31 @@
+News for ikiwiki 3.00:
+
+   The 3.0 release of ikiwiki changes several defaults and finishes
+   some transitions. You will need to modify your wikis to work with
+   ikiwiki 3.0. A document explaining the process is available
+   in &lt;/usr/share/doc/ikiwiki/html/tips/upgrade\_to\_3.0.html&gt;
+
+ikiwiki 3.00 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * Remove support for GlobLists.
+   * Remove support for configuring allowed attachments, locked pages,
+     and banned users from the admin preferences page. These can only be
+     controlled via the setup file now.
+   * ikiwiki-transition moveprefs can be used to move the above
+     admin preferences into a setup file.
+   * prefix\_directives and aggregate\_internal are now turned on by default.
+   * ikiwiki-transition prefix\_directives syntax changed
+   * googlecalendar: removed this deprecated plugin. Use htmlscrubber\_skip
+     instead.
+   * embed: This plugin is deprecated, use htmlscrubber\_skip instead.
+     Closes: ##462970.
+   * Version 3.00 of the plugin API.
+   * Replace blank OpenID placeholder logo with an unofficial OpenID
+     logo developed by Anna Hess. The official logo does not seem destined to
+     be free.
+   * comments: Add cache avoidance.
+   * htmlbalance: Demand-load HTML::TreeBuilder to avoid failing test suite
+     if it is not present.
+   * French translation update from Philippe Batailler. Closes: #[510216](http://bugs.debian.org/510216)
+   * websetup: Avoid a crash when a new array setup item has been added in
+     a new ikiwiki release, and is thus not present in the setup file yet."""]]
