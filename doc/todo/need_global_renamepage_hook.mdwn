@@ -25,7 +25,7 @@ It may seem like a corner case, but I want to be very careful when
 deleting files automatically in `srcdir`, which is not always under
 version control.
 
-As an sad workaround, I can still disable any deletion in `srcdir`
+As a sad workaround, I can still disable any deletion in `srcdir`
 when it is not under version control. But I think ikiwiki deserves
 a global `renamepage` hook that would be run once per rename
 operation.
@@ -51,3 +51,7 @@ would solve my problem. Hmmm? --[[intrigeri]]
 > It might make sense to rename `renamepage` to `renamelink` to make it
 > clearer what it does. (I'm not very worried about this breaking things, at
 > this point.) --[[Joey]]
+
+>> In my `po` branch, I renamed `renamepage` to `renamelink`, and
+>> created a `rename` hook that is passed a reference to `@torename`.
+>> --[[intrigeri]]
