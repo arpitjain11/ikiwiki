@@ -27,7 +27,7 @@ memoize("istranslatable");
 memoize("_istranslation");
 memoize("percenttranslated");
 
-sub import { #{{{
+sub import {
 	hook(type => "getsetup", id => "po", call => \&getsetup);
 	hook(type => "checkconfig", id => "po", call => \&checkconfig);
 	hook(type => "needsbuild", id => "po", call => \&needsbuild);
@@ -51,7 +51,7 @@ sub import { #{{{
 	inject(name => "IkiWiki::urlto", call => \&myurlto);
 	$origsubs{'nicepagetitle'}=\&IkiWiki::nicepagetitle;
 	inject(name => "IkiWiki::nicepagetitle", call => \&mynicepagetitle);
-} #}}}
+}
 
 
 # ,----
@@ -69,7 +69,7 @@ sub import { #{{{
 # | Hooks
 # `----
 
-sub getsetup () { #{{{
+sub getsetup () {
 	return
 		plugin => {
 			safe => 0,
@@ -118,9 +118,9 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
-} #}}}
+}
 
-sub checkconfig () { #{{{
+sub checkconfig () {
 	foreach my $field (qw{po_master_language po_slave_languages}) {
 		if (! exists $config{$field} || ! defined $config{$field}) {
 			error(sprintf(gettext("Must specify %s"), $field));
@@ -157,9 +157,9 @@ sub checkconfig () { #{{{
 		$config{po_translation_status_in_links}=1;
 	}
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
-} #}}}
+}
 
-sub needsbuild () { #{{{
+sub needsbuild () {
 	my $needsbuild=shift;
 
 	# backup @needsbuild content so that change() can know whether
@@ -173,13 +173,13 @@ sub needsbuild () { #{{{
 	foreach my $master (keys %translations) {
 		map add_depends($_, $master), values %{otherlanguages($master)};
 	}
-} #}}}
+}
 
 # Massage the recorded state of internal links so that:
 # - it matches the actually generated links, rather than the links as written
 #   in the pages' source
 # - backlinks are consistent in all cases
-sub scan (@) { #{{{
+sub scan (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $content=$params{content};
@@ -212,11 +212,11 @@ sub scan (@) { #{{{
 			}
 		}
 	}
-} #}}}
+}
 
 # We use filter to convert PO to the master page's format,
 # since the rest of ikiwiki should not work on PO files.
-sub filter (@) { #{{{
+sub filter (@) {
 	my %params = @_;
 
 	my $page = $params{page};
@@ -273,9 +273,9 @@ sub filter (@) { #{{{
 
 	setalreadyfiltered($page, $destpage);
 	return $content;
-} #}}}
+}
 
-sub htmlize (@) { #{{{
+sub htmlize (@) {
 	my %params=@_;
 
 	my $page = $params{page};
@@ -288,9 +288,9 @@ sub htmlize (@) { #{{{
 	return IkiWiki::htmlize($page, $page,
 				pagetype(srcfile($pagesources{masterpage($page)})),
 				$content);
-} #}}}
+}
 
-sub pagetemplate (@) { #{{{
+sub pagetemplate (@) {
 	my %params=@_;
 	my $page=$params{page};
 	my $destpage=$params{destpage};
@@ -355,7 +355,7 @@ sub postscan (@) {
 # Save information about master page rename, so that:
 # - our delete hook can ignore the translations not renamed already
 # - our change hook can rename the translations accordingly.
-sub renamepages() { #{{{
+sub renamepages() {
 	my $torename=shift;
 	my @torename=@{$torename};
 
@@ -372,17 +372,17 @@ sub renamepages() { #{{{
 			};
 		}
 	}
-} #}}}
+}
 
-sub mydelete(@) { #{{{
+sub mydelete(@) {
 	my @deleted=@_;
 
 	map {
 		deletetranslations($_);
 	} grep { istranslatablefile($_) } @deleted;
-} #}}}
+}
 
-sub change(@) { #{{{
+sub change(@) {
 	my @rendered=@_;
 
 	my $updated_po_files=0;
@@ -417,16 +417,16 @@ sub change(@) { #{{{
 			gettext("updated PO files"),
 			"IkiWiki::Plugin::po::change");
 	}
-} #}}}
+}
 
 # As we're previewing or saving a page, the content may have
 # changed, so tell the next filter() invocation it must not be lazy.
-sub editcontent () { #{{{
+sub editcontent () {
 	my %params=@_;
 
 	unsetalreadyfiltered($params{page}, $params{page});
 	return $params{content};
-} #}}}
+}
 
 
 # ,----
@@ -434,7 +434,7 @@ sub editcontent () { #{{{
 # `----
 
 # Implement po_link_to 'current' and 'negotiated' settings.
-sub mybestlink ($$) { #{{{
+sub mybestlink ($$) {
 	my $page=shift;
 	my $link=shift;
 
@@ -446,9 +446,9 @@ sub mybestlink ($$) { #{{{
 		return $res . "." . lang($page);
 	}
 	return $res;
-} #}}}
+}
 
-sub mybeautify_urlpath ($) { #{{{
+sub mybeautify_urlpath ($) {
 	my $url=shift;
 
 	my $res=$origsubs{'beautify_urlpath'}->($url);
@@ -460,9 +460,9 @@ sub mybeautify_urlpath ($) { #{{{
 		} (keys %{$config{po_slave_languages}});
 	}
 	return $res;
-} #}}}
+}
 
-sub mytargetpage ($$) { #{{{
+sub mytargetpage ($$) {
 	my $page=shift;
 	my $ext=shift;
 
@@ -476,9 +476,9 @@ sub mytargetpage ($$) { #{{{
 		}
 	}
 	return $origsubs{'targetpage'}->($page, $ext);
-} #}}}
+}
 
-sub myurlto ($$;$) { #{{{
+sub myurlto ($$;$) {
 	my $to=shift;
 	my $from=shift;
 	my $absolute=shift;
@@ -507,16 +507,16 @@ sub myurlto ($$;$) { #{{{
 	else {
 		return $origsubs{'urlto'}->($to,$from,$absolute)
 	}
-} #}}}
+}
 
-sub mynicepagetitle ($;$) { #{{{
+sub mynicepagetitle ($;$) {
 	my ($page, $unescaped) = (shift, shift);
 
 	my $res = $origsubs{'nicepagetitle'}->($page, $unescaped);
 	return $res unless istranslation($page);
 	return $res unless $config{po_translation_status_in_links};
 	return $res.' ('.percenttranslated($page).' %)';
-} #}}}
+}
 
 # ,----
 # | Blackboxes for private data
@@ -525,48 +525,48 @@ sub mynicepagetitle ($;$) { #{{{
 {
 	my %filtered;
 
-	sub alreadyfiltered($$) { #{{{
+	sub alreadyfiltered($$) {
 		my $page=shift;
 		my $destpage=shift;
 
 		return ( exists $filtered{$page}{$destpage}
 			 && $filtered{$page}{$destpage} eq 1 );
-	} #}}}
+	}
 
-	sub setalreadyfiltered($$) { #{{{
+	sub setalreadyfiltered($$) {
 		my $page=shift;
 		my $destpage=shift;
 
 		$filtered{$page}{$destpage}=1;
-	} #}}}
+	}
 
-	sub unsetalreadyfiltered($$) { #{{{
+	sub unsetalreadyfiltered($$) {
 		my $page=shift;
 		my $destpage=shift;
 
 		if (exists $filtered{$page}{$destpage}) {
 			delete $filtered{$page}{$destpage};
 		}
-	} #}}}
+	}
 
-	sub resetalreadyfiltered() { #{{{
+	sub resetalreadyfiltered() {
 		undef %filtered;
-	} #}}}
+	}
 }
 
 # ,----
 # | Helper functions
 # `----
 
-sub maybe_add_leading_slash ($;$) { #{{{
+sub maybe_add_leading_slash ($;$) {
 	my $str=shift;
 	my $add=shift;
 	$add=1 unless defined $add;
 	return '/' . $str if $add;
 	return $str;
-} #}}}
+}
 
-sub istranslatablefile ($) { #{{{
+sub istranslatablefile ($) {
 	my $file=shift;
 
 	return 0 unless defined $file;
@@ -574,17 +574,17 @@ sub istranslatablefile ($) { #{{{
 	return 0 if $file =~ /\.pot$/;
 	return 1 if pagespec_match(pagename($file), $config{po_translatable_pages});
 	return;
-} #}}}
+}
 
-sub istranslatable ($) { #{{{
+sub istranslatable ($) {
 	my $page=shift;
 
 	$page=~s#^/##;
 	return 1 if istranslatablefile($pagesources{$page});
 	return;
-} #}}}
+}
 
-sub _istranslation ($) { #{{{
+sub _istranslation ($) {
 	my $page=shift;
 
 	my $hasleadingslash = ($page=~s#^/##);
@@ -602,9 +602,9 @@ sub _istranslation ($) { #{{{
 
 	return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang)
 		if istranslatable($masterpage);
-} #}}}
+}
 
-sub istranslation ($) { #{{{
+sub istranslation ($) {
 	my $page=shift;
 
 	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
@@ -613,41 +613,41 @@ sub istranslation ($) { #{{{
 		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
 	}
 	return;
-} #}}}
+}
 
-sub masterpage ($) { #{{{
+sub masterpage ($) {
 	my $page=shift;
 
 	if ( 1 < (my ($masterpage, $lang) = _istranslation($page))) {
 		return $masterpage;
 	}
 	return $page;
-} #}}}
+}
 
-sub lang ($) { #{{{
+sub lang ($) {
 	my $page=shift;
 
 	if (1 < (my ($masterpage, $lang) = _istranslation($page))) {
 		return $lang;
 	}
 	return $config{po_master_language}{code};
-} #}}}
+}
 
-sub islanguagecode ($) { #{{{
+sub islanguagecode ($) {
 	my $code=shift;
 
 	return ($code =~ /^[a-z]{2}$/);
-} #}}}
+}
 
-sub otherlanguage ($$) { #{{{
+sub otherlanguage ($$) {
 	my $page=shift;
 	my $code=shift;
 
 	return masterpage($page) if $code eq $config{po_master_language}{code};
 	return masterpage($page) . '.' . $code;
-} #}}}
+}
 
-sub otherlanguages ($) { #{{{
+sub otherlanguages ($) {
 	my $page=shift;
 
 	my %ret;
@@ -659,32 +659,32 @@ sub otherlanguages ($) { #{{{
 		$ret{$lang}=otherlanguage($page, $lang);
 	}
 	return \%ret;
-} #}}}
+}
 
-sub potfile ($) { #{{{
+sub potfile ($) {
 	my $masterfile=shift;
 
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
 	$dir='' if $dir eq './';
 	return File::Spec->catpath('', $dir, $name . ".pot");
-} #}}}
+}
 
-sub pofile ($$) { #{{{
+sub pofile ($$) {
 	my $masterfile=shift;
 	my $lang=shift;
 
 	(my $name, my $dir, my $suffix) = fileparse($masterfile, qr/\.[^.]*/);
 	$dir='' if $dir eq './';
 	return File::Spec->catpath('', $dir, $name . "." . $lang . ".po");
-} #}}}
+}
 
-sub pofiles ($) { #{{{
+sub pofiles ($) {
 	my $masterfile=shift;
 
 	return map pofile($masterfile, $_), (keys %{$config{po_slave_languages}});
-} #}}}
+}
 
-sub refreshpot ($) { #{{{
+sub refreshpot ($) {
 	my $masterfile=shift;
 
 	my $potfile=potfile($masterfile);
@@ -704,9 +704,9 @@ sub refreshpot ($) { #{{{
 	$doc->parse;
 	IkiWiki::prep_writefile(basename($potfile),dirname($potfile));
 	$doc->writepo($potfile);
-} #}}}
+}
 
-sub refreshpofiles ($@) { #{{{
+sub refreshpofiles ($@) {
 	my $masterfile=shift;
 	my @pofiles=@_;
 
@@ -724,24 +724,24 @@ sub refreshpofiles ($@) { #{{{
 				or error("[po/refreshpofiles:$pofile] failed to copy the POT file");
 		}
 	}
-} #}}}
+}
 
-sub buildtranslationscache() { #{{{
+sub buildtranslationscache() {
 	# use istranslation's side-effect
 	map istranslation($_), (keys %pagesources);
-} #}}}
+}
 
-sub resettranslationscache() { #{{{
+sub resettranslationscache() {
 	undef %translations;
-} #}}}
+}
 
-sub flushmemoizecache() { #{{{
+sub flushmemoizecache() {
 	Memoize::flush_cache("istranslatable");
 	Memoize::flush_cache("_istranslation");
 	Memoize::flush_cache("percenttranslated");
-} #}}}
+}
 
-sub urlto_with_orig_beautiful_urlpath($$) { #{{{
+sub urlto_with_orig_beautiful_urlpath($$) {
 	my $to=shift;
 	my $from=shift;
 
@@ -750,9 +750,9 @@ sub urlto_with_orig_beautiful_urlpath($$) { #{{{
 	inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath);
 
 	return $res;
-} #}}}
+}
 
-sub percenttranslated ($) { #{{{
+sub percenttranslated ($) {
 	my $page=shift;
 
 	$page=~s/^\///;
@@ -774,9 +774,9 @@ sub percenttranslated ($) { #{{{
 	) or error("[po/percenttranslated:$page]: failed to translate");
 	my ($percent,$hit,$queries) = $doc->stats();
 	return $percent;
-} #}}}
+}
 
-sub languagename ($) { #{{{
+sub languagename ($) {
 	my $code=shift;
 
 	return $config{po_master_language}{name}
@@ -784,9 +784,9 @@ sub languagename ($) { #{{{
 	return $config{po_slave_languages}{$code}
 		if defined $config{po_slave_languages}{$code};
 	return;
-} #}}}
+}
 
-sub otherlanguagesloop ($) { #{{{
+sub otherlanguagesloop ($) {
 	my $page=shift;
 
 	my @ret;
@@ -814,15 +814,15 @@ sub otherlanguagesloop ($) { #{{{
 			return 1 if $b->{code} eq $config{po_master_language}{code};
 			return $a->{language} cmp $b->{language};
 		} @ret;
-} #}}}
+}
 
-sub homepageurl (;$) { #{{{
+sub homepageurl (;$) {
 	my $page=shift;
 
 	return urlto('', $page);
-} #}}}
+}
 
-sub deletetranslations ($) { #{{{
+sub deletetranslations ($) {
 	my $deletedmasterfile=shift;
 
 	my $deletedmasterpage=pagename($deletedmasterfile);
@@ -849,9 +849,9 @@ sub deletetranslations ($) { #{{{
 			gettext("removed obsolete PO files"),
 			"IkiWiki::Plugin::po::deletetranslations");
 	}
-} #}}}
+}
 
-sub commit_and_refresh ($$) { #{{{
+sub commit_and_refresh ($$) {
 	my ($msg, $author) = (shift, shift);
 
 	if ($config{rcs}) {
@@ -872,7 +872,7 @@ sub commit_and_refresh ($$) { #{{{
 	IkiWiki::loadindex();
 	IkiWiki::refresh();
 	IkiWiki::saveindex();
-} #}}}
+}
 
 # ,----
 # | PageSpec's
@@ -883,7 +883,7 @@ use warnings;
 use strict;
 use IkiWiki 2.00;
 
-sub match_istranslation ($;@) { #{{{
+sub match_istranslation ($;@) {
 	my $page=shift;
 
 	if (IkiWiki::Plugin::po::istranslation($page)) {
@@ -892,9 +892,9 @@ sub match_istranslation ($;@) { #{{{
 	else {
 		return IkiWiki::FailReason->new("is not a translation page");
 	}
-} #}}}
+}
 
-sub match_istranslatable ($;@) { #{{{
+sub match_istranslatable ($;@) {
 	my $page=shift;
 
 	if (IkiWiki::Plugin::po::istranslatable($page)) {
@@ -903,9 +903,9 @@ sub match_istranslatable ($;@) { #{{{
 	else {
 		return IkiWiki::FailReason->new("is not set as translatable in po_translatable_pages");
 	}
-} #}}}
+}
 
-sub match_lang ($$;@) { #{{{
+sub match_lang ($$;@) {
 	my $page=shift;
 	my $wanted=shift;
 
@@ -917,9 +917,9 @@ sub match_lang ($$;@) { #{{{
 	else {
 		return IkiWiki::SuccessReason->new("file language is $wanted");
 	}
-} #}}}
+}
 
-sub match_currentlang ($$;@) { #{{{
+sub match_currentlang ($$;@) {
 	my $page=shift;
 	shift;
 	my %params=@_;
@@ -935,6 +935,6 @@ sub match_currentlang ($$;@) { #{{{
 	else {
 		return IkiWiki::FailReason->new("file language is $lang, whereas current language is $currentlang");
 	}
-} #}}}
+}
 
 1
