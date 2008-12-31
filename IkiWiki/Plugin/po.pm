@@ -229,17 +229,13 @@ sub filter (@) {
 	# CRLF line terminators make poor Locale::Po4a feel bad
 	$content=~s/\r\n/\n/g;
 
-	# Implementation notes
-	#
-	# 1. Locale::Po4a reads/writes from/to files, and I'm too lazy
-	#    to learn how to disguise a variable as a file.
-	# 2. There are incompatibilities between some File::Temp versions
-	#    (including 0.18, bundled with Lenny's perl-modules package)
-	#    and others (e.g. 0.20, previously present in the archive as
-	#    a standalone package): under certain circumstances, some
-	#    return a relative filename, whereas others return an absolute one;
-	#    we here use this module in a way that is at least compatible
-	#    with 0.18 and 0.20. Beware, hit'n'run refactorers!
+	# There are incompatibilities between some File::Temp versions
+	# (including 0.18, bundled with Lenny's perl-modules package)
+	# and others (e.g. 0.20, previously present in the archive as
+	# a standalone package): under certain circumstances, some
+	# return a relative filename, whereas others return an absolute one;
+	# we here use this module in a way that is at least compatible
+	# with 0.18 and 0.20. Beware, hit'n'run refactorers!
 	my $infile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-in.XXXXXXXXXX",
 				    DIR => File::Spec->tmpdir,
 				    UNLINK => 1)->filename;
@@ -250,16 +246,13 @@ sub filter (@) {
 	writefile(basename($infile), File::Spec->tmpdir, $content);
 
 	my $masterfile = srcfile($pagesources{masterpage($page)});
-	my (@pos,@masters);
-	push @pos,$infile;
-	push @masters,$masterfile;
 	my %options = (
 		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
 	);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->process(
-		'po_in_name'	=> \@pos,
-		'file_in_name'	=> \@masters,
+		'po_in_name'	=> [ $infile ],
+		'file_in_name'	=> [ $masterfile ],
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
 	) or error("[po/filter:$page]: failed to translate");
@@ -352,9 +345,6 @@ sub postscan (@) {
 }
 
 # Add the renamed page translations to the list of to-be-renamed pages.
-# Save information about master page rename, so that:
-# - our delete hook can ignore the translations not renamed already
-# - our change hook can rename the translations accordingly.
 sub renamepages() {
 	my $torename=shift;
 	my @torename=@{$torename};
@@ -377,9 +367,7 @@ sub renamepages() {
 sub mydelete(@) {
 	my @deleted=@_;
 
-	map {
-		deletetranslations($_);
-	} grep { istranslatablefile($_) } @deleted;
+	map { deletetranslations($_) } grep istranslatablefile($_), @deleted;
 }
 
 sub change(@) {
@@ -388,8 +376,7 @@ sub change(@) {
 	my $updated_po_files=0;
 
 	# Refresh/create POT and PO files as needed.
-	foreach my $file (@rendered) {
-		next unless istranslatablefile($file);
+	foreach my $file (grep {istranslatablefile($_)} @rendered) {
 		my $page=pagename($file);
 		my $masterfile=srcfile($file);
 		my $updated_pot_file=0;
@@ -407,7 +394,7 @@ sub change(@) {
 		} (pofiles($masterfile));
 		if (@pofiles) {
 			refreshpofiles($masterfile, @pofiles);
-			map { IkiWiki::rcs_add($_); } @pofiles if ($config{rcs});
+			map { IkiWiki::rcs_add($_) } @pofiles if $config{rcs};
 			$updated_po_files=1;
 		}
 	}
@@ -697,8 +684,7 @@ sub refreshpot ($) {
 	# let's cheat a bit to force porefs option to be passed to Locale::Po4a::Po;
 	# this is undocument use of internal Locale::Po4a::TransTractor's data,
 	# compulsory since this module prevents us from using the porefs option.
-	my %po_options = ('porefs' => 'none');
-	$doc->{TT}{po_out}=Locale::Po4a::Po->new(\%po_options);
+	$doc->{TT}{po_out}=Locale::Po4a::Po->new({ 'porefs' => 'none' });
 	$doc->{TT}{po_out}->set_charset('utf-8');
 	# do the actual work
 	$doc->parse;
@@ -759,16 +745,13 @@ sub percenttranslated ($) {
 	return gettext("N/A") unless istranslation($page);
 	my $file=srcfile($pagesources{$page});
 	my $masterfile = srcfile($pagesources{masterpage($page)});
-	my (@pos,@masters);
-	push @pos,$file;
-	push @masters,$masterfile;
 	my %options = (
 		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
 	);
 	my $doc=Locale::Po4a::Chooser::new('text',%options);
 	$doc->process(
-		'po_in_name'	=> \@pos,
-		'file_in_name'	=> \@masters,
+		'po_in_name'	=> [ $file ],
+		'file_in_name'	=> [ $masterfile ],
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
 	) or error("[po/percenttranslated:$page]: failed to translate");
