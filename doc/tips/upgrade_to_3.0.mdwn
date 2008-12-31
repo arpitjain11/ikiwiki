@@ -21,7 +21,7 @@ setup file, and will no longer appear on the admin preferences page once
 your wiki is upgraded to 3.0.
 
 You can move these preferences into the setup file by running
-`ikiwiki-transition moveprefs your.setup`
+`ikiwiki-transition moveprefs your.setup; ikiwiki -setup your.setup -refresh -wrappers`
 
 (Make sure you have converted the setup file to the new format first.)
 

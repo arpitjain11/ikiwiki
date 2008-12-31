@@ -201,10 +201,15 @@ sub moveprefs {
 		foreach my $admin (@{$config{adminuser}}) {
 			my $a=IkiWiki::userinfo_get($admin, $field);
 			if (defined $a && length $a &&
-			    $a ne $orig && # might already have been moved
-			    defined $config{$field} &&
-			    length $config{$field}) {
-				 $config{$field}=IkiWiki::pagespec_merge($config{$field}, $a);
+			    # might already have been moved
+			    (! defined $orig || $a ne $orig)) {
+			    	if (defined $config{$field} &&
+				    length $config{$field}) {
+					$config{$field}=IkiWiki::pagespec_merge($config{$field}, $a);
+				}
+				else {
+					$config{$field}=$a;
+				}
 			}
 		}
 	}
