@@ -20,6 +20,8 @@ ikiwiki (3.00) UNRELEASED; urgency=low
   * htmlbalance: Demand-load HTML::TreeBuilder to avoid failing test suite
     if it is not present.
   * French translation update from Philippe Batailler. Closes: #510216
+  * websetup: Avoid a crash when a new array setup item has been added in 
+    a new ikiwiki release, and is thus not present in the setup file yet.
 
  -- Joey Hess <joeyh@debian.org>  Wed, 24 Dec 2008 19:49:36 -0500
 

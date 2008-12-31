@@ -138,9 +138,8 @@ sub showfields ($$$@) {
 
 		my $value=$config{$key};
 
-		if ($info{safe} && defined $value &&
-		    (ref $value eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
-			$value=[@{$value}, "", ""]; # blank items for expansion
+		if ($info{safe} && (ref $value eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
+			$value=[(ref $value eq 'ARRAY' ? @{$value} : ""), "", ""]; # blank items for expansion
 		}
 
 		if ($info{type} eq "string") {
