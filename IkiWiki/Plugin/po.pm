@@ -110,6 +110,13 @@ sub getsetup () { #{{{
 			safe => 1,
 			rebuild => 1,
 		},
+		po_translation_status_in_links => {
+			type => "boolean",
+			example => 1,
+			description => "display translation status in links to translations",
+			safe => 1,
+			rebuild => 1,
+		},
 } #}}}
 
 sub checkconfig () { #{{{
@@ -143,6 +150,10 @@ sub checkconfig () { #{{{
 	elsif ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
 		warn(gettext('po_link_to=negotiated requires usedirs to be enabled, falling back to po_link_to=default'));
 		$config{po_link_to}='default';
+	}
+	if (! exists $config{po_translation_status_in_links} ||
+	    ! defined $config{po_translation_status_in_links}) {
+		$config{po_translation_status_in_links}=1;
 	}
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 } #}}}
@@ -492,6 +503,7 @@ sub mynicepagetitle ($;$) { #{{{
 
 	my $res = $origsubs{'nicepagetitle'}->($page, $unescaped);
 	return $res unless istranslation($page);
+	return $res unless $config{po_translation_status_in_links};
 	return $res.' ('.percenttranslated($page).' %)';
 } #}}}
 
