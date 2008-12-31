@@ -465,7 +465,24 @@ sub myurlto ($$;$) { #{{{
 	    && istranslatable('index')) {
 		return IkiWiki::beautify_urlpath(IkiWiki::baseurl($from) . "index." . lang($from) . ".$config{htmlext}");
 	}
-	return $origsubs{'urlto'}->($to,$from,$absolute);
+	# avoid using our injected beautify_urlpath if run by cgi_editpage,
+	# so that one is redirected to the just-edited page rather than to the
+	# negociated translation; to prevent unnecessary fiddling with caller/inject,
+	# we only do so when our beautify_urlpath would actually do what we want to
+	# avoid, i.e. when po_link_to = negotiated
+	if ($config{po_link_to} eq "negotiated") {
+		my @caller = caller(1);
+		my $run_by_editpage = ($caller[3] eq "IkiWiki::cgi_editpage");
+		inject(name => "IkiWiki::beautify_urlpath", call => $origsubs{'beautify_urlpath'})
+			if $run_by_editpage;
+		my $res = $origsubs{'urlto'}->($to,$from,$absolute);
+		inject(name => "IkiWiki::beautify_urlpath", call => \&mybeautify_urlpath)
+			if $run_by_editpage;
+		return $res;
+	}
+	else {
+		return $origsubs{'urlto'}->($to,$from,$absolute)
+	}
 } #}}}
 
 
