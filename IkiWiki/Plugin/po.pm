@@ -492,7 +492,7 @@ sub mynicepagetitle ($;$) { #{{{
 
 	my $res = $origsubs{'nicepagetitle'}->($page, $unescaped);
 	return $res unless istranslation($page);
-	return $res." (".percenttranslated($page).")";
+	return $res.' ('.percenttranslated($page).' %)';
 } #}}}
 
 # ,----
