@@ -490,7 +490,9 @@ sub myurlto ($$;$) { #{{{
 sub mynicepagetitle ($;$) { #{{{
 	my ($page, $unescaped) = (shift, shift);
 
-	return $origsubs{'nicepagetitle'}->($page, $unescaped);
+	my $res = $origsubs{'nicepagetitle'}->($page, $unescaped);
+	return $res unless istranslation($page);
+	return $res." (".percenttranslated($page).")";
 } #}}}
 
 # ,----
