@@ -35,6 +35,7 @@ sub import { #{{{
 	hook(type => "filter", id => "po", call => \&filter);
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
+	hook(type => "postscan", id => "po", call => \&postscan);
 	hook(type => "rename", id => "po", call => \&renamepages);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
@@ -339,6 +340,16 @@ sub pagetemplate (@) { #{{{
 		$template->param('parentlinks' => []);
 	}
 } # }}}
+
+sub postscan (@) {
+	my %params = @_;
+	my $page = $params{page};
+
+	# backlinks involve back-dependencies, so that nicepagetitle effects,
+	# such as translation status displayed in links, are updated
+	use IkiWiki::Render;
+	map add_depends($page, $_), keys %{$IkiWiki::backlinks{$page}};
+}
 
 # Add the renamed page translations to the list of to-be-renamed pages.
 # Save information about master page rename, so that:
