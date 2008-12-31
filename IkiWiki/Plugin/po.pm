@@ -48,6 +48,8 @@ sub import { #{{{
 	inject(name => "IkiWiki::targetpage", call => \&mytargetpage);
 	$origsubs{'urlto'}=\&IkiWiki::urlto;
 	inject(name => "IkiWiki::urlto", call => \&myurlto);
+	$origsubs{'nicepagetitle'}=\&IkiWiki::nicepagetitle;
+	inject(name => "IkiWiki::nicepagetitle", call => \&mynicepagetitle);
 } #}}}
 
 
@@ -485,6 +487,11 @@ sub myurlto ($$;$) { #{{{
 	}
 } #}}}
 
+sub mynicepagetitle ($;$) { #{{{
+	my ($page, $unescaped) = (shift, shift);
+
+	return $origsubs{'nicepagetitle'}->($page, $unescaped);
+} #}}}
 
 # ,----
 # | Blackboxes for private data
