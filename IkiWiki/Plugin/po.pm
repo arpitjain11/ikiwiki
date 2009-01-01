@@ -39,6 +39,7 @@ sub import {
 	hook(type => "rename", id => "po", call => \&renamepages, first => 1);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
+	hook(type => "cansave", id => "po", call => \&cansave);
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -420,6 +421,12 @@ sub change(@) {
 			gettext("updated PO files"),
 			"IkiWiki::Plugin::po::change");
 	}
+}
+
+sub cansave ($$$$) {
+	my ($page, $content, $cgi, $session) = (shift, shift, shift, shift);
+
+	debug("po plugin running in cansave")
 }
 
 sub canremove ($$$) {
