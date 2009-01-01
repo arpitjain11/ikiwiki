@@ -388,11 +388,12 @@ sub cansave ($$$$) {
 	my ($page, $content, $cgi, $session) = (shift, shift, shift, shift);
 
 	if (istranslation($page)) {
-		if (defined po_to_markup($page, $content, "nonfatal")) {
+		my $res = isvalidpo($content);
+		if ($res) {
 			return undef;
 		}
 		else {
-			return "Could not parse this page's content; is this valid gettext?";
+			return "$res";
 		}
 	}
 	return undef;
@@ -940,6 +941,48 @@ sub po_to_markup ($$;$) {
 	unlink $infile, $outfile;
 
 	return $content;
+}
+
+# returns a SuccessReason or FailReason object
+sub isvalidpo ($) {
+	my $content = shift;
+
+	# NB: we don't use po_to_markup here, since Po4a parser does
+	# not mind invalid PO content
+	$content = '' unless defined $content;
+	$content = decode_utf8(encode_utf8($content));
+
+	# There are incompatibilities between some File::Temp versions
+	# (including 0.18, bundled with Lenny's perl-modules package)
+	# and others (e.g. 0.20, previously present in the archive as
+	# a standalone package): under certain circumstances, some
+	# return a relative filename, whereas others return an absolute one;
+	# we here use this module in a way that is at least compatible
+	# with 0.18 and 0.20. Beware, hit'n'run refactorers!
+	my $infile = new File::Temp(TEMPLATE => "ikiwiki-po-isvalidpo.XXXXXXXXXX",
+				    DIR => File::Spec->tmpdir,
+				    UNLINK => 1)->filename;
+
+	sub failure ($) {
+		my $msg = '[po/isvalidpo:'.$page.'] ' . shift;
+		unlink $infile;
+		return IkiWiki::FailReason->new("$msg");
+	}
+
+	writefile(basename($infile), File::Spec->tmpdir, $content)
+		or return failure("failed to write $infile");
+
+	my $res = (system("msgfmt", "--check", $infile) == 0);
+
+	# Unlinking should happen automatically, thanks to File::Temp,
+	# but it does not work here, probably because of the way writefile()
+	# and Locale::Po4a::write() work.
+	unlink $infile;
+
+	if ($res) {
+	    return IkiWiki::SuccessReason->new("valid gettext data");
+	}
+	return IkiWiki::FailReason->new("invalid gettext data");
 }
 
 # ,----

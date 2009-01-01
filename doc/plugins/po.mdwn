@@ -399,6 +399,10 @@ use in our case, I suggest we define `ENV{COLUMNS}` before loading
 `refreshpofiles()` runs this external program. A po4a developer
 answered he does "not expect any security issues from it".
 
+### msgfmt
+
+`isvalidpo()` runs this external program. Its security should be checked.
+
 ### Fuzzing input
 
 I was not able to find any public information about gettext or po4a
