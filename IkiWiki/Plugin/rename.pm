@@ -311,7 +311,7 @@ sub sessioncgi ($$) {
 				required => 1,
 			};
 
-			IkiWiki::run_hooks(rename => sub { shift->(\@torename); });
+			IkiWiki::run_hooks(rename => sub { shift->(\@torename, $q, $session); });
 
 			# See if any subpages need to be renamed.
 			if ($q->param("subpages") && $src ne $dest) {

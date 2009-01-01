@@ -392,9 +392,13 @@ new page.
 	hook(type => "rename", id => "foo", call => \&renamepages);
 
 When a page or set of pages is renamed, the referenced function is
-called, and passed a reference to an array of hashes with keys:
-`src`, `srcfile`, `dest`, `destfile`, `required`. It can modify
-the array.
+called, and is passed:
+
+* a reference to an array of hashes with keys: `src`, `srcfile`,
+  `dest`, `destfile`, `required`. Such a hook function can modify
+  the array.
+* a CGI object
+* a session object
 
 ### getsetup
 
