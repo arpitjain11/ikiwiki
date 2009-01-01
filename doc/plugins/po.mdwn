@@ -534,11 +534,9 @@ be merged upstream, though.
 Translation quality assurance
 -----------------------------
 
-Modifying a PO file via the CGI must be forbidden if the new version
-is not a valid PO file. As a bonus, check that it provides a more
-complete translation than the existing one.
-
-A new `cansave` type of hook would be needed to implement this.
+Modifying a PO file via the CGI is already forbidden if the new
+version is not a valid PO file. As a bonus, check that it provides
+a more complete translation than the existing one.
 
 Note: committing to the underlying repository is a way to bypass
 this check.
