@@ -54,6 +54,26 @@ sub check_canremove ($$$) {
 			error("renaming of attachments is not allowed");
 		}
 	}
+
+	my $canremove;
+	IkiWiki::run_hooks(canremove => sub {
+		return if defined $canremove;
+		my $ret=shift->($page, $q, $session);
+		if (defined $ret) {
+			if ($ret eq "") {
+				$canremove=1;
+			}
+			elsif (ref $ret eq 'CODE') {
+				$ret->();
+				$canremove=0;
+			}
+			elsif (defined $ret) {
+				error($ret);
+				$canremove=0;
+			}
+		}
+	});
+	return $canremove;
 }
 
 sub formbuilder_setup (@) {

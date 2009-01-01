@@ -321,6 +321,14 @@ This hook should avoid directly redirecting the user to a signin page,
 since it's sometimes used to test to see which pages in a set of pages a
 user can edit.
 
+### canremove
+
+	hook(type => "canremove", id => "foo", call => \&canremove);
+
+This hook can be used to implement arbitrary access methods to control when
+a page can be removed using the web interface (commits from revision control
+bypass it). It works exactly like the `canedit` hook.
+
 ### editcontent
 
 	hook(type => "editcontent", id => "foo", call => \&editcontent);
