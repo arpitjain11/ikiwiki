@@ -387,7 +387,15 @@ sub change(@) {
 sub cansave ($$$$) {
 	my ($page, $content, $cgi, $session) = (shift, shift, shift, shift);
 
-	debug("po plugin running in cansave")
+	if (istranslation($page)) {
+		if (defined po_to_markup($page, $content, "nonfatal")) {
+			return undef;
+		}
+		else {
+			return "Could not parse this page's content; is this valid gettext?";
+		}
+	}
+	return undef;
 }
 
 sub canremove ($$$) {
