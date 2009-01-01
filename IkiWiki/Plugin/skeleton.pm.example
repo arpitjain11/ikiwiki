@@ -187,7 +187,23 @@ sub cansave ($$$$) {
 	my $cgi=shift;
 	my $session=shift;
 
-	debug("skeleton plugin running in cansave")
+	debug("skeleton plugin running in cansave");
+}
+
+sub canremove ($$$) {
+	my $page=shift;
+	my $cgi=shift;
+	my $session=shift;
+
+	debug("skeleton plugin running in canremove");
+}
+
+sub canrename ($$$) {
+	my $page=shift;
+	my $cgi=shift;
+	my $session=shift;
+
+	debug("skeleton plugin running in canrename");
 }
 
 sub editcontent ($$$) {
