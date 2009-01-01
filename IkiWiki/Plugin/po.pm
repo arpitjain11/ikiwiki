@@ -432,11 +432,12 @@ sub canremove ($$$) {
 	return undef;
 }
 
-sub canrename ($$$) {
-	my ($page, $cgi, $session) = (shift, shift, shift);
+sub canrename ($$@) {
+	my ($cgi, $session) = (shift, shift);
+	my %params = @_;
 
-	if (istranslation($page)) {
-		my $masterpage = masterpage($page);
+	if (istranslation($params{src})) {
+		my $masterpage = masterpage($params{src});
 		# Tell the difference between:
 		#  - a translation being renamed as a consequence of its master page
 		#    being renamed, which is allowed

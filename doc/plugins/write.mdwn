@@ -335,7 +335,11 @@ bypass it). It works exactly like the `canedit` hook.
 
 This hook can be used to implement arbitrary access methods to control when
 a page can be renamed using the web interface (commits from revision control
-bypass it). It works exactly like the `canedit` hook.
+bypass it). It works exactly like the `canedit` and `canremove` hook,
+but is passed:
+* a CGI object
+* a session object
+* the named parameters `src`, `srcfile`, `dest` and `destfile`.
 
 ### editcontent
 

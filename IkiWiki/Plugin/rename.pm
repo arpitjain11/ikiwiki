@@ -91,7 +91,8 @@ sub check_canrename ($$$$$$) {
 	my $canrename;
 	IkiWiki::run_hooks(canrename => sub {
 		return if defined $canrename;
-		my $ret=shift->($src, $q, $session);
+		my $ret=shift->($q, $session, src => $src, srcfile => $srcfile,
+				dest => $dest, destfile => $destfile);
 		if (defined $ret) {
 			if ($ret eq "") {
 				$canrename=1;
