@@ -972,7 +972,7 @@ sub isvalidpo ($) {
 	writefile(basename($infile), File::Spec->tmpdir, $content)
 		or return failure("failed to write $infile");
 
-	my $res = (system("msgfmt", "--check", $infile) == 0);
+	my $res = (system("msgfmt", "--check", $infile, "-o", "/dev/null") == 0);
 
 	# Unlinking should happen automatically, thanks to File::Temp,
 	# but it does not work here, probably because of the way writefile()
