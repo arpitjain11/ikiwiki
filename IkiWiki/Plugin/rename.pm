@@ -87,6 +87,26 @@ sub check_canrename ($$$$$$) {
 			IkiWiki::Plugin::attachment::check_canattach($session, $dest, $srcfile);
 		}
 	}
+
+	my $canrename;
+	IkiWiki::run_hooks(canrename => sub {
+		return if defined $canrename;
+		my $ret=shift->($src, $q, $session);
+		if (defined $ret) {
+			if ($ret eq "") {
+				$canrename=1;
+			}
+			elsif (ref $ret eq 'CODE') {
+				$ret->();
+				$canrename=0;
+			}
+			elsif (defined $ret) {
+				error($ret);
+				$canrename=0;
+			}
+		}
+	});
+	return $canrename;
 }
 
 sub rename_form ($$$) {

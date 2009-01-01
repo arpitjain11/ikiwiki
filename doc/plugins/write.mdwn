@@ -329,6 +329,14 @@ This hook can be used to implement arbitrary access methods to control when
 a page can be removed using the web interface (commits from revision control
 bypass it). It works exactly like the `canedit` hook.
 
+### canrename
+
+	hook(type => "canrename", id => "foo", call => \&canrename);
+
+This hook can be used to implement arbitrary access methods to control when
+a page can be renamed using the web interface (commits from revision control
+bypass it). It works exactly like the `canedit` hook.
+
 ### editcontent
 
 	hook(type => "editcontent", id => "foo", call => \&editcontent);
