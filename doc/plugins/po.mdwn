@@ -544,13 +544,6 @@ Creating new pages on the web
 
 See [[contrib/po|contrib/po]].
 
-Renaming/deleting pages
------------------------
-
-Renaming or deleting a translation in the CGI should be forbidden.
-Implementing this requires two new hooks: `canrename` and `canremove`,
-that would be run respectively by the `rename` and the `remove` plugins.
-
 Robustness tests
 ----------------
 

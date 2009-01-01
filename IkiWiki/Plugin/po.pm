@@ -40,6 +40,7 @@ sub import {
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
 	hook(type => "canremove", id => "po", call => \&canremove);
+	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
 
 	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
@@ -413,6 +414,16 @@ sub canremove ($$$) {
 	if (istranslation($page)) {
 		return gettext("Can not remove a translation. Removing the master page,".
 			       "though, removes its translations as well.");
+	}
+	return undef;
+}
+
+sub canrename ($$$) {
+	my ($page, $cgi, $session) = (shift, shift, shift);
+
+	if (istranslation($page)) {
+		return gettext("Can not rename a translation. Renaming the master page,".
+			       "though, renames its translations as well.");
 	}
 	return undef;
 }
