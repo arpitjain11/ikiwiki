@@ -8,7 +8,7 @@ package IkiWiki::Plugin::txt;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use HTML::Entities;
 
 my $findurl=0;

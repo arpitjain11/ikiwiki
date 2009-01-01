@@ -9,8 +9,7 @@ package IkiWiki::Plugin::htmlbalance;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
-use HTML::TreeBuilder;
+use IkiWiki 3.00;
 use HTML::Entities;
 
 sub import {
@@ -30,6 +29,8 @@ sub sanitize (@) {
 	my %params=@_;
 	my $ret = '';
 
+	eval q{use HTML::TreeBuilder};
+	error $@ if $@;
 	my $tree = HTML::TreeBuilder->new();
 	$tree->ignore_unknown(0);
 	$tree->ignore_ignorable_whitespace(0);

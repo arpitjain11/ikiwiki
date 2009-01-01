@@ -4,7 +4,7 @@ package IkiWiki::Plugin::aggregate;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use HTML::Parser;
 use HTML::Tagset;
 use HTML::Entities;
@@ -46,7 +46,7 @@ sub getsetup () {
 		},
 		aggregateinternal => {
 			type => "boolean",
-			example => 0,
+			example => 1,
 			description => "enable aggregation to internal pages?",
 			safe => 0, # enabling needs manual transition
 			rebuild => 0,
@@ -61,6 +61,10 @@ sub getsetup () {
 }
 
 sub checkconfig () {
+	if (! defined $config{aggregateinternal}) {
+		$config{aggregateinternal}=1;
+	}
+
 	if ($config{aggregate} && ! ($config{post_commit} && 
 	                             IkiWiki::commit_hook_enabled())) {
 		launchaggregation();

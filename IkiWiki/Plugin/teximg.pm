@@ -8,7 +8,7 @@ use strict;
 use Digest::MD5 qw(md5_hex);
 use File::Temp qw(tempdir);
 use HTML::Entities;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 my $default_prefix = <<EOPREFIX;
 \\documentclass{article}

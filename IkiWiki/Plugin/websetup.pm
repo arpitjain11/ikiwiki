@@ -3,7 +3,7 @@ package IkiWiki::Plugin::websetup;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 
 sub import {
 	hook(type => "getsetup", id => "websetup", call => \&getsetup);
@@ -139,7 +139,7 @@ sub showfields ($$$@) {
 		my $value=$config{$key};
 
 		if ($info{safe} && (ref $value eq 'ARRAY' || ref $info{example} eq 'ARRAY')) {
-			$value=[@{$value}, "", ""]; # blank items for expansion
+			$value=[(ref $value eq 'ARRAY' ? @{$value} : ""), "", ""]; # blank items for expansion
 		}
 
 		if ($info{type} eq "string") {

@@ -74,24 +74,4 @@ sub is_admin ($) {
 	return grep { $_ eq $user_name } @{$config{adminuser}};
 }
 
-# XXX deprecated, should be removed eventually
-sub get_banned_users () {
-	my @ret;
-	my $userinfo=userinfo_retrieve();
-	foreach my $user (keys %{$userinfo}) {
-		push @ret, $user if $userinfo->{$user}->{banned};
-	}
-	return @ret;
-}
-
-# XXX deprecated, should be removed eventually
-sub set_banned_users (@) {
-	my %banned=map { $_ => 1 } @_;
-	my $userinfo=userinfo_retrieve();
-	foreach my $user (keys %{$userinfo}) {
-		$userinfo->{$user}->{banned} = $banned{$user};
-	}
-	return userinfo_store($userinfo);
-}
-
 1

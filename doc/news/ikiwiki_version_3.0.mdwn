@@ -1,0 +1,42 @@
+Ikiwiki has reached version 3.0 and entered a new phase in its
+[[development_cycle|roadmap]].
+
+The 3.0 release of ikiwiki changes several defaults and finishes
+some transitions. You will need to modify your wikis to work with
+ikiwiki 3.0. A document explaining the process is available
+in [[tips/upgrade_to_3.0]].
+
+The highlights of the changes in version 3.0 include:
+
+* Support for uploading [[attachments|plugins/attachment]].
+* Can [[plugins/rename]] and [[plugins/remove]] pages and files via the web.
+* [[Web_based_setup|plugins/websetup]].
+* Blog-style [[plugins/comments]] as an alternative to Discussion pages.
+* Many other new plugins including [[plugins/htmlbalance]], [[plugins/format]],
+  [[plugins/progress]], [[plugins/color]], [[plugins/autoindex]],
+  [[plugins/cutpaste]], [[plugins/hnb]], [[plugins/creole]], [[plugins/txt]],
+  [[plugins/amazon_s3]], [[plugins/pinger]], [[plugins/pingee]],
+  [[plugins/edittemplate]]
+* The RecentChanges page is compiled statically, not generated from the CGI.
+* Support for additional revision control systems: [[rcs/bzr]],
+  [[rcs/monotone]]
+* Support for [[tips/untrusted_git_push]].
+* A new version (3.00) of the plugin API, exporting additional
+  commonly used functions from `IkiWiki.pm`.
+* Nearly everything in ikiwiki is now a plugin, from WikiLinks to
+  page editing, to RecentChanges.
+* Far too many bug fixes, features, and enhancements to list here.
+
+Thanks to the many contributors to ikiwiki 3.0, including:
+
+  Jelmer Vernooij, Recai Oktaş, William Uther, Simon McVittie, Axel Beckert,
+  Bernd Zeimetz, Gabriel McManus, Paweł Tęcza, Peter Simons, Manoj
+  Srivastava, Patrick Winnertz, Jeremie Koenig, Josh Triplett, thm, Michael
+  Gold, Jason Blevins, Alexandre Dupas, Henrik Brix Andersen, Thomas Keller,
+  Enrico Zini, intrigeri, Scott Bronson, Brian May, Adeodato Simó, Brian
+  Downing, Nis Martensen. (And anyone I missed.)
+
+Also, thanks to the users, bug submitters, and documentation wiki editors.
+Without you, ikiwiki would just be a little thing I use for my home page.
+
+--[[Joey]]

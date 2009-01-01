@@ -1,0 +1,95 @@
+Version 3.0 of ikiwiki makes some significant changes, which
+you will need to deal with when upgrading from ikiwiki 2.x.
+
+[[!toc ]]
+
+## setup file format change
+
+The layout of the setup file changed in a significant way in version 2.60
+of ikiwiki. If you have not changed yours to the new format, now would be a
+good time to do so. Some new features, like the [[plugins/websetup]]
+interface, need the new format setup file.
+  
+You can convert old setup files into the new format by running
+`ikiwiki-transition setupformat your.setup`
+
+## moving settings from Preferences page
+
+The admin preferences page used to have settings for allowed attachments,
+locked pages, and banned users. These three settings have moved to the
+setup file, and will no longer appear on the admin preferences page once
+your wiki is upgraded to 3.0.
+
+You can move these preferences into the setup file by running
+`ikiwiki-transition moveprefs your.setup; ikiwiki -setup your.setup -refresh -wrappers`
+
+(Make sure you have converted the setup file to the new format first.)
+
+## prefix directives
+
+In 3.0, the syntax ikiwiki uses for [[directives|ikiwiki/directive]] has
+changed, requiring that the directive start with a bang: 
+
+	\[[!directive ...]]
+
+If you would like to keep the old syntax, it is still supported, add the
+following to your setup file:
+	
+	prefix_directives => 0,
+
+To convert to the new syntax, run 
+`ikiwiki-transition prefix_directives your.setup`
+
+(And then commit the changes it makes to pages in your srcdir.)
+
+## GlobLists
+
+In 3.0, the old "GlobList" syntax for [[PageSpecs|ikiwiki/PageSpec]] is no
+longer supported. A GlobList contains multiple term, but does not separate
+them with "and" or "or":
+
+	sandbox !*/Discussion
+
+To convert this to a modern PageSpec, simply add "and" or "or" as
+appropriate between terms:
+	
+	sandbox and !*/Discussion
+
+GlobLists have been deprecated for more than two years. If your wiki dates
+to the ikiwiki 1.0 era, you should check it for any that might have lurked
+unnoticed in it since back then. Ikiwiki version 2.72 will print warnings
+about any GlobLists it sees.
+
+## aggregateinternal
+
+If your wiki uses the [[aggregate|plugins/aggregate]] plugin, it will start
+to aggregate feeds to special "internal" pages.
+
+If you don't want this change, you can add the following to your setup
+file:
+
+	aggregateinternal => 0,
+
+Otherwise, follow this procedure to upgrade a wiki using the aggregate plugin:
+
+1. Update all [[PageSpecs|ikiwiki/PageSpec]] that refer to the aggregated
+   pages -- such as those in inlines. Put "internal()" around globs
+   in those PageSpecs. For example, if the PageSpec was `foo/*`, it should
+   be changed to `internal(foo/*)`. This has to be done because internal
+   pages are not matched by regular globs.
+2. Use [[ikiwiki-transition]] to rename all existing aggregated `.html`
+   files in the srcdir. The command to run is
+   `ikiwiki-transition aggregateinternal your.setup`,
+3. Refresh the wiki. (`ikiwiki -setup your.setup -refresh`)
+
+## embed / googlecalendar
+
+The googlecalendar plugin has been deprecated for a long time, and is
+removed in 3.0.
+
+The embed plugin is also now deprecated, though not yet removed.
+
+If you use either plugin to embed content from google, youtube, etc,
+into your wiki, you should instead configure the [[plugins/htmlscrubber]]
+to skip sanitising some pages, via the `htmlscrubber_skip` setting.
+See [[embedding_content]] for examples.

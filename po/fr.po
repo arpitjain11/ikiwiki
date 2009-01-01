@@ -7,10 +7,10 @@
 # Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: ikiwiki 2.70 \n"
+"Project-Id-Version: ikiwiki 2.71 \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-20 18:07-0500\n"
-"PO-Revision-Date: 2008-11-19 21:53+0100\n"
+"PO-Revision-Date: 2008-12-29 17:57+0100\n"
 "Last-Translator: Philippe Batailler <philippe.batailler@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr "Création de la nouvelle page %s"
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:31
 msgid "deleting bucket.."
-msgstr "suppression du compartiment S3 (« bucket »)..."
+msgstr "Suppression du compartiment S3 (« bucket »)..."
 
 #: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:208
 msgid "done"
@@ -154,11 +154,11 @@ msgstr "Échec lors de la suppression du fichier sur S3 :"
 #: ../IkiWiki/Plugin/attachment.pm:49
 #, perl-format
 msgid "there is already a page named %s"
-msgstr "il existe déjà une page nommée %s"
+msgstr "Il existe déjà une page nommée %s"
 
 #: ../IkiWiki/Plugin/attachment.pm:82
 msgid "prohibited by allowed_attachments"
-msgstr "action interdite par allowed_attachments"
+msgstr "Action interdite par allowed_attachments"
 
 #: ../IkiWiki/Plugin/attachment.pm:190
 msgid "bad attachment filename"
@@ -166,11 +166,11 @@ msgstr "Nom de la pièce jointe incorrect"
 
 #: ../IkiWiki/Plugin/attachment.pm:232
 msgid "attachment upload"
-msgstr "envoi de la pièce jointe"
+msgstr "Envoi de la pièce jointe"
 
 #: ../IkiWiki/Plugin/autoindex.pm:105
 msgid "automatic index generation"
-msgstr "génération de l'index automatique"
+msgstr "Génération de l'index automatique"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:260
 #: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
@@ -186,20 +186,20 @@ msgstr "%s sur %s"
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:56
 msgid "There are no broken links!"
-msgstr "Il n'existe pas de lien cassé !"
+msgstr "Aucun lien cassé !"
 
 #: ../IkiWiki/Plugin/comments.pm:119 ../IkiWiki/Plugin/format.pm:23
 #, perl-format
 msgid "unsupported page format %s"
-msgstr "format de page non reconnu %s"
+msgstr "Format de page non reconnu %s"
 
 #: ../IkiWiki/Plugin/comments.pm:124
 msgid "comment must have content"
-msgstr ""
+msgstr "Un commentaire doit avoir un contenu."
 
 #: ../IkiWiki/Plugin/comments.pm:181
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonyme"
 
 #: ../IkiWiki/Plugin/comments.pm:243 ../IkiWiki/Plugin/recentchanges.pm:101
 msgid "missing page"
@@ -212,46 +212,46 @@ msgstr "La page %s n'existe pas."
 
 #: ../IkiWiki/Plugin/comments.pm:334 ../IkiWiki/Plugin/editpage.pm:124
 msgid "bad page name"
-msgstr "nom de page incorrect"
+msgstr "Nom de page incorrect"
 
 #: ../IkiWiki/Plugin/comments.pm:341
-#, fuzzy, perl-format
+#, perl-format
 msgid "commenting on %s"
-msgstr "Création de %s"
+msgstr "Faire un commentaire sur %s"
 
 #: ../IkiWiki/Plugin/comments.pm:359
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
-msgstr ""
+msgstr "La page '%s' n'existe pas, commentaire impossible."
 
 #: ../IkiWiki/Plugin/comments.pm:366
 #, perl-format
 msgid "comments on page '%s' are closed"
-msgstr ""
+msgstr "Le commentaire pour la page '%s' est terminé."
 
 #: ../IkiWiki/Plugin/comments.pm:468
 msgid "Added a comment"
-msgstr ""
+msgstr "Commentaire ajouté"
 
 #: ../IkiWiki/Plugin/comments.pm:472
 #, perl-format
 msgid "Added a comment: %s"
-msgstr ""
+msgstr "Commentaire ajouté : %s"
 
 #: ../IkiWiki/Plugin/comments.pm:565
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #: ../IkiWiki/Plugin/conditional.pm:27 ../IkiWiki/Plugin/cutpaste.pm:30
 #: ../IkiWiki/Plugin/cutpaste.pm:45 ../IkiWiki/Plugin/cutpaste.pm:61
 #: ../IkiWiki/Plugin/testpagespec.pm:26
 #, perl-format
 msgid "%s parameter is required"
-msgstr "le paramètre %s est obligatoire"
+msgstr "Le paramètre %s est obligatoire"
 
 #: ../IkiWiki/Plugin/cutpaste.pm:66
 msgid "no text was copied in this page"
-msgstr "aucun texte n'a été copié dans cette page"
+msgstr "Aucun texte n'a été copié dans cette page"
 
 #: ../IkiWiki/Plugin/cutpaste.pm:69
 #, perl-format
@@ -309,7 +309,7 @@ msgstr "Échec du lancement de « fortune »"
 #: ../IkiWiki/Receive.pm:129
 #, perl-format
 msgid "you are not allowed to change %s"
-msgstr "vous n'êtes pas autorisé à modifier %s"
+msgstr "Vous n'êtes pas autorisé à modifier %s"
 
 #: ../IkiWiki/Plugin/git.pm:658
 #, perl-format
@@ -318,7 +318,7 @@ msgstr "Vous ne pouvez utiliser le mode %s pour les fichiers"
 
 #: ../IkiWiki/Plugin/git.pm:662
 msgid "you are not allowed to change file modes"
-msgstr "vous n'êtes pas autorisé à modifier le mode des fichiers"
+msgstr "Vous n'êtes pas autorisé à modifier le mode des fichiers"
 
 #: ../IkiWiki/Plugin/google.pm:27
 #, perl-format
@@ -378,7 +378,7 @@ msgstr "Modification de page interdite"
 
 #: ../IkiWiki/Plugin/inline.pm:155
 msgid "missing pages parameter"
-msgstr "paramètre « pages » manquant"
+msgstr "Paramètre « pages » manquant"
 
 #: ../IkiWiki/Plugin/inline.pm:204
 #, perl-format
@@ -662,7 +662,7 @@ msgstr "Aucun changement dans le nom du fichier n'a été spécifié"
 #: ../IkiWiki/Plugin/rename.pm:68
 #, perl-format
 msgid "illegal name"
-msgstr "appellation non autorisée"
+msgstr "Appellation non autorisée"
 
 #: ../IkiWiki/Plugin/rename.pm:73
 #, perl-format
@@ -694,7 +694,7 @@ msgstr "Veuillez sélectionner la pièce jointe à renommer"
 #: ../IkiWiki/Plugin/rename.pm:338
 #, perl-format
 msgid "rename %s to %s"
-msgstr "renomme %s en %s"
+msgstr "Renomme %s en %s"
 
 #: ../IkiWiki/Plugin/rename.pm:490
 #, perl-format
@@ -824,11 +824,11 @@ msgstr "activer %s ?"
 
 #: ../IkiWiki/Plugin/websetup.pm:236
 msgid "you are not logged in as an admin"
-msgstr "vous n'êtes pas authentifié comme administrateur"
+msgstr "Vous n'êtes pas authentifié comme administrateur"
 
 #: ../IkiWiki/Plugin/websetup.pm:240
 msgid "setup file for this wiki is not known"
-msgstr "le fichier de configuration de ce wiki n'est pas connu"
+msgstr "Le fichier de configuration de ce wiki n'est pas connu"
 
 #: ../IkiWiki/Plugin/websetup.pm:256
 msgid "main"
@@ -842,7 +842,7 @@ msgstr "Greffons"
 msgid ""
 "The configuration changes shown below require a wiki rebuild to take effect."
 msgstr ""
-"les changements de configuration ci-dessous nécessitent une recompilation du "
+"Les changements de configuration ci-dessous nécessitent une recompilation du "
 "wiki pour prendre effet"
 
 #: ../IkiWiki/Plugin/websetup.pm:399
@@ -868,7 +868,7 @@ msgstr ""
 #: ../IkiWiki/Receive.pm:85
 #, perl-format
 msgid "bad file name %s"
-msgstr "nom de fichier incorrect %s"
+msgstr "Nom de fichier incorrect %s"
 
 #: ../IkiWiki/Render.pm:253
 #, perl-format
@@ -876,7 +876,7 @@ msgid ""
 "symlink found in srcdir path (%s) -- set allow_symlinks_before_srcdir to "
 "allow this"
 msgstr ""
-"lien symbolique trouvé dans l'adresse de srcdir (%s) -- pour l'autoriser, "
+"Lien symbolique trouvé dans l'adresse de srcdir (%s) -- pour l'autoriser, "
 "activez le paramètre « allow_symlinks_before_srcdir »."
 
 #: ../IkiWiki/Render.pm:277 ../IkiWiki/Render.pm:302
@@ -897,7 +897,7 @@ msgstr "Suppression de l'ancienne page %s"
 #: ../IkiWiki/Render.pm:400
 #, perl-format
 msgid "scanning %s"
-msgstr "Parcours de %s"
+msgstr "Examen de %s"
 
 #: ../IkiWiki/Render.pm:405
 #, perl-format
@@ -1015,7 +1015,7 @@ msgstr ""
 
 #: ../IkiWiki.pm:526
 msgid "cannot use multiple rcs plugins"
-msgstr "impossible d'utiliser plusieurs systèmes de contrôle des versions"
+msgstr "Impossible d'utiliser plusieurs systèmes de contrôle des versions"
 
 #: ../IkiWiki.pm:555
 #, perl-format
@@ -1025,7 +1025,7 @@ msgstr "Impossible de charger le greffon externe nécessaire au greffon %s : %s
 #: ../IkiWiki.pm:1187
 #, perl-format
 msgid "preprocessing loop detected on %s at depth %i"
-msgstr "une boucle de pré traitement a été détectée sur %s à hauteur de %i"
+msgstr "Une boucle de pré traitement a été détectée sur %s à hauteur de %i"
 
 #: ../IkiWiki.pm:1688
 msgid "yes"

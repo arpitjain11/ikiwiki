@@ -4,7 +4,7 @@ package IkiWiki::Plugin::amazon_s3;
 use warnings;
 no warnings 'redefine';
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use IkiWiki::Render;
 use Net::Amazon::S3;
 

@@ -6,7 +6,7 @@ package IkiWiki::Plugin::textile;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use Encode;
 
 sub import {

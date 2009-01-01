@@ -1,4 +1,4 @@
-#!/usr/bin/perl -i
+#!/usr/bin/perl
 use warnings;
 use strict;
 use IkiWiki;
@@ -42,11 +42,33 @@ sub handle_directive {
 }
 
 sub prefix_directives {
-	$/=undef; # process whole files at once
-	
-	while (<>) {
-		s{$regex}{handle_directive($1, $2, $3, $4)}eg;
-		print;
+	my $setup=shift;
+	if (! defined $setup) {
+		usage();
+	}
+
+	require IkiWiki::Setup;
+	require IkiWiki::Plugin::aggregate;
+
+	%config = IkiWiki::defaultconfig();
+	IkiWiki::Setup::load($setup);
+	IkiWiki::loadplugins();
+	IkiWiki::checkconfig();
+	IkiWiki::loadindex();
+
+	if (! %pagesources) {
+		error "ikiwiki has not built this wiki yet, cannot transition";
+	}
+
+	foreach my $page (values %pagesources) {
+		next unless defined pagetype($page) &&
+		            -f $config{srcdir}."/".$page;
+		my $content=readfile($config{srcdir}."/".$page);
+		my $oldcontent=$content;
+		$content=~s{$regex}{handle_directive($1, $2, $3, $4)}eg;
+		if ($oldcontent ne $content) {
+			writefile($page, $config{srcdir}, $content);
+		}
 	}
 }
 
@@ -109,12 +131,10 @@ sub aggregateinternal {
 	require IkiWiki::Plugin::aggregate;
 
 	%config = IkiWiki::defaultconfig();
-	IkiWiki::Setup::load();
+	IkiWiki::Setup::load($setup);
 	IkiWiki::checkconfig();
 
 	IkiWiki::Plugin::aggregate::migrate_to_internal();
-
-	print "... now add aggregateinternal => 1 to your .setup file\n";
 }
 
 sub setupformat {
@@ -161,14 +181,54 @@ sub setupformat {
 	IkiWiki::Setup::dump($setup);
 }
 
+sub moveprefs {
+	my $setup=shift;
+	if (! defined $setup) {
+		usage();
+	}
+
+	require IkiWiki::Setup;
+
+	%config = IkiWiki::defaultconfig();
+	IkiWiki::Setup::load($setup);
+	IkiWiki::checkconfig();
+
+	eval q{use IkiWiki::UserInfo};
+	error $@ if $@;
+
+	foreach my $field (qw{allowed_attachments locked_pages}) {
+		my $orig=$config{$field};
+		foreach my $admin (@{$config{adminuser}}) {
+			my $a=IkiWiki::userinfo_get($admin, $field);
+			if (defined $a && length $a &&
+			    # might already have been moved
+			    (! defined $orig || $a ne $orig)) {
+			    	if (defined $config{$field} &&
+				    length $config{$field}) {
+					$config{$field}=IkiWiki::pagespec_merge($config{$field}, $a);
+				}
+				else {
+					$config{$field}=$a;
+				}
+			}
+		}
+	}
+
+	my %banned=map { $_ => 1 } @{$config{banned_users}}, IkiWiki::get_banned_users();
+	$config{banned_users}=[sort keys %banned];
+
+	IkiWiki::Setup::dump($setup);
+}
+
 sub usage {
 	print STDERR "Usage: ikiwiki-transition type ...\n";
 	print STDERR "Currently supported transition subcommands:\n";
-	print STDERR "\tprefix_directives file\n";
-	print STDERR "\tindexdb srcdir\n";
-	print STDERR "\thashpassword srcdir\n";
+	print STDERR "\tprefix_directives setupfile ...\n";
 	print STDERR "\taggregateinternal setupfile\n";
 	print STDERR "\tsetupformat setupfile\n";
+	print STDERR "\tmoveprefs setupfile\n";
+	print STDERR "\thashpassword srcdir\n";
+	print STDERR "\tindexdb srcdir\n";
 	exit 1;
 }
 
@@ -189,6 +249,9 @@ elsif ($mode eq 'aggregateinternal') {
 }
 elsif ($mode eq 'setupformat') {
 	setupformat(@ARGV);
+}
+elsif ($mode eq 'moveprefs') {
+	moveprefs(@ARGV);
 }
 else {
 	usage();
@@ -247,3 +310,15 @@ sub oldloadindex {
 	
 	return close($in);
 }
+
+# Used to be in IkiWiki/UserInfo, but only used here now.
+sub get_banned_users () {
+	my @ret;
+	my $userinfo=userinfo_retrieve();
+	foreach my $user (keys %{$userinfo}) {
+		push @ret, $user if $userinfo->{$user}->{banned};
+	}
+	return @ret;
+}
+
+1

@@ -3,7 +3,7 @@ package IkiWiki::Plugin::linkmap;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use IPC::Open2;
 
 sub import {

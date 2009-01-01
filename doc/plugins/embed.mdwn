@@ -13,6 +13,14 @@ In the examples below, the parts of the html that you can change are denoted
 with "XXX"; everything else must appear exactly as shown to be accepted by the
 plugin.
 
+**This plugin is deprecated.** Rather than relying on these complex lists
+of safe content, which constantly fall out of date, you're recommended to
+configure the [[htmlscrubber]] to not scrub some pages, which only trusted
+users can edit. Then you can embed anything from anywhere on those pages.
+See [[tips/embedding_content]] for details and examples.
+This plugin's lists of safe embedded content will not be maintained, and 
+the plugin will be removed in a future  release.
+
 ## google maps
 
 Use html like this to embed a map:

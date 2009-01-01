@@ -2,7 +2,7 @@
 # Discordian date support fnord ikiwiki.
 package IkiWiki::Plugin::ddate;
 
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 no warnings;
 
 sub import {

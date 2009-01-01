@@ -1,3 +1,12 @@
+ikiwiki (3.00) unstable; urgency=low
+
+  The 3.0 release of ikiwiki changes several defaults and finishes
+  some transitions. You will need to modify your wikis to work with
+  ikiwiki 3.0. A document explaining the process is available
+  in </usr/share/doc/ikiwiki/html/tips/upgrade_to_3.0.html>
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 23 Dec 2008 16:14:18 -0500
+
 ikiwiki (2.62) unstable; urgency=low
 
   TexImg standard preamble changed
@@ -101,10 +110,7 @@ ikiwiki (2.40) unstable; urgency=low
   in their setup files.
 
   To convert your wiki to the new syntax, ikiwiki provides a new script
-  ikiwiki-transition.  It will convert preprocessor directives in
-  all files given on the command line.  To convert an entire wiki:
-
-  find wikidir/ -type f -name '*.mdwn' -print0 | xargs -0 ikiwiki-transition prefix_directives
+  ikiwiki-transition.
 
   Even with prefix_directives disabled, ikiwiki now allows an optional '!'
   prefix on preprocessor directives (but still requires a space).  Thus, a
