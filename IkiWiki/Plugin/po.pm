@@ -36,7 +36,7 @@ sub import {
 	hook(type => "htmlize", id => "po", call => \&htmlize);
 	hook(type => "pagetemplate", id => "po", call => \&pagetemplate, last => 1);
 	hook(type => "postscan", id => "po", call => \&postscan);
-	hook(type => "rename", id => "po", call => \&renamepages);
+	hook(type => "rename", id => "po", call => \&renamepages, first => 1);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
 	hook(type => "canremove", id => "po", call => \&canremove);
@@ -347,9 +347,23 @@ sub postscan (@) {
 }
 
 # Add the renamed page translations to the list of to-be-renamed pages.
-sub renamepages() {
-	my $torename=shift;
+sub renamepages($$$) {
+	my ($torename, $cgi, $session) = shift;
+
+	# copy the initial array, so that we can iterate on it AND
+	# modify it at the same time, without iterating on the items we
+	# pushed on it ourselves
 	my @torename=@{$torename};
+
+	# Save the page(s) the user asked to rename, so that our
+	# canrename hook can tell the difference between:
+	#  - a translation being renamed as a consequence of its master page
+	#    being renamed
+	#  - a user trying to directly rename a translation
+	# This is why this hook has to be run first, before @torename is modified
+	# by other plugins.
+	$session->param(po_orig_torename => [ @torename ]);
+	IkiWiki::cgi_savesession($session);
 
 	foreach my $rename (@torename) {
 		next unless istranslatable($rename->{src});
@@ -422,8 +436,18 @@ sub canrename ($$$) {
 	my ($page, $cgi, $session) = (shift, shift, shift);
 
 	if (istranslation($page)) {
-		return gettext("Can not rename a translation. Renaming the master page,".
-			       "though, renames its translations as well.");
+		my $masterpage = masterpage($page);
+		# Tell the difference between:
+		#  - a translation being renamed as a consequence of its master page
+		#    being renamed, which is allowed
+		#  - a user trying to directly rename a translation, which is forbidden
+		# by looking for the master page in the list of to-be-renamed pages we
+		# saved early in the renaming process.
+		my $orig_torename = $session->param("po_orig_torename");
+		unless (scalar grep { $_->{src} eq $masterpage } @{$orig_torename}) {
+			return gettext("Can not rename a translation. Renaming the master page,".
+				       "though, renames its translations as well.");
+		}
 	}
 	return undef;
 }
