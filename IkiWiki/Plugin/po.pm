@@ -224,50 +224,11 @@ sub filter (@) {
 
 	my $page = $params{page};
 	my $destpage = $params{destpage};
-	my $content = decode_utf8(encode_utf8($params{content}));
-
-	return $content if ( ! istranslation($page)
-			     || alreadyfiltered($page, $destpage) );
-
-	# CRLF line terminators make poor Locale::Po4a feel bad
-	$content=~s/\r\n/\n/g;
-
-	# There are incompatibilities between some File::Temp versions
-	# (including 0.18, bundled with Lenny's perl-modules package)
-	# and others (e.g. 0.20, previously present in the archive as
-	# a standalone package): under certain circumstances, some
-	# return a relative filename, whereas others return an absolute one;
-	# we here use this module in a way that is at least compatible
-	# with 0.18 and 0.20. Beware, hit'n'run refactorers!
-	my $infile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-in.XXXXXXXXXX",
-				    DIR => File::Spec->tmpdir,
-				    UNLINK => 1)->filename;
-	my $outfile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-out.XXXXXXXXXX",
-				     DIR => File::Spec->tmpdir,
-				     UNLINK => 1)->filename;
-
-	writefile(basename($infile), File::Spec->tmpdir, $content);
-
-	my $masterfile = srcfile($pagesources{masterpage($page)});
-	my %options = (
-		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
-	);
-	my $doc=Locale::Po4a::Chooser::new('text',%options);
-	$doc->process(
-		'po_in_name'	=> [ $infile ],
-		'file_in_name'	=> [ $masterfile ],
-		'file_in_charset'  => 'utf-8',
-		'file_out_charset' => 'utf-8',
-	) or error("[po/filter:$page]: failed to translate");
-	$doc->write($outfile) or error("[po/filter:$page] could not write $outfile");
-	$content = readfile($outfile) or error("[po/filter:$page] could not read $outfile");
-
-	# Unlinking should happen automatically, thanks to File::Temp,
-	# but it does not work here, probably because of the way writefile()
-	# and Locale::Po4a::write() work.
-	unlink $infile, $outfile;
-
-	setalreadyfiltered($page, $destpage);
+	my $content = $params{content};
+	if (istranslation($page) && ! alreadyfiltered($page, $destpage)) {
+		$content = po_to_markup($page, $content);
+		setalreadyfiltered($page, $destpage);
+	}
 	return $content;
 }
 
@@ -911,6 +872,66 @@ sub commit_and_refresh ($$) {
 	IkiWiki::loadindex();
 	IkiWiki::refresh();
 	IkiWiki::saveindex();
+}
+
+# on success, returns the filtered content.
+# on error, if $nonfatal, warn and return undef; else, error out.
+sub po_to_markup ($$;$) {
+	my ($page, $content) = (shift, shift);
+	my $nonfatal = shift;
+
+	$content = '' unless defined $content;
+	$content = decode_utf8(encode_utf8($content));
+	# CRLF line terminators make poor Locale::Po4a feel bad
+	$content=~s/\r\n/\n/g;
+
+	# There are incompatibilities between some File::Temp versions
+	# (including 0.18, bundled with Lenny's perl-modules package)
+	# and others (e.g. 0.20, previously present in the archive as
+	# a standalone package): under certain circumstances, some
+	# return a relative filename, whereas others return an absolute one;
+	# we here use this module in a way that is at least compatible
+	# with 0.18 and 0.20. Beware, hit'n'run refactorers!
+	my $infile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-in.XXXXXXXXXX",
+				    DIR => File::Spec->tmpdir,
+				    UNLINK => 1)->filename;
+	my $outfile = new File::Temp(TEMPLATE => "ikiwiki-po-filter-out.XXXXXXXXXX",
+				     DIR => File::Spec->tmpdir,
+				     UNLINK => 1)->filename;
+
+	sub failure ($) {
+		my $msg = '[po/filter:'.$page.'] ' . shift;
+		if ($nonfatal) {
+			warn $msg;
+			return undef;
+		}
+		error($msg, sub { unlink $infile, $outfile});
+	}
+
+	writefile(basename($infile), File::Spec->tmpdir, $content)
+		or return failure("failed to write $infile");
+
+	my $masterfile = srcfile($pagesources{masterpage($page)});
+	my %options = (
+		"markdown" => (pagetype($masterfile) eq 'mdwn') ? 1 : 0,
+	);
+	my $doc=Locale::Po4a::Chooser::new('text',%options);
+	$doc->process(
+		'po_in_name'	=> [ $infile ],
+		'file_in_name'	=> [ $masterfile ],
+		'file_in_charset'  => 'utf-8',
+		'file_out_charset' => 'utf-8',
+	) or return failure("failed to translate");
+	$doc->write($outfile) or return failure("could not write $outfile");
+
+	$content = readfile($outfile) or return failure("could not read $outfile");
+
+	# Unlinking should happen automatically, thanks to File::Temp,
+	# but it does not work here, probably because of the way writefile()
+	# and Locale::Po4a::write() work.
+	unlink $infile, $outfile;
+
+	return $content;
 }
 
 # ,----
