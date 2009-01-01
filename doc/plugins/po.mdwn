@@ -219,6 +219,22 @@ interface could also be implemented at some point).
 If [[tips/untrusted_git_push]] is setup, one can edit the PO files in one's
 preferred `$EDITOR`, without needing to be online.
 
+Markup languages support
+------------------------
+
+Markdown is well supported. Some other markup languages supported by
+ikiwiki mostly work, but some pieces of syntax are not rendered
+correctly on the slave pages:
+
+* [[reStructuredText|rst]]: anonymous hyperlinks and internal
+  cross-references
+* [[wikitext]]: conversion of newlines to paragraphs
+* [[creole]]: verbatim text is wrapped, tables are broken
+* [[html]] and LaTeX: not supported yet; the dedicated po4a modules
+  could be used to support them, but they would need a security audit
+* other markup languages have not been tested.
+
+
 TODO
 ====
 
@@ -507,28 +523,9 @@ Better links
 
 Using the fix to
 [[bugs/pagetitle_function_does_not_respect_meta_titles]] from
-intrigeri's `meta` branch, the generated links' text is based on the
-page titles set with the [[meta|plugins/meta]] plugin. This has to be
-merged upstream, though.
-
-Page formats
-------------
-
-Markdown is well supported, great, but what about others?
-
-The [[po|plugins/po]] uses `Locale::Po4a::Text` for every page format;
-this can be expected to work out of the box with most other wiki-like
-formats supported by ikiwiki. Some of their ad-hoc syntax might be
-parsed in a strange way, but the worst problems I can imagine would be
-wrapping issues; e.g. there is code in po4a dedicated to prevent
-re-wrapping the underlined Markdown headers.
-
-While it would be easy to better support formats such as [[html]] or
-LaTeX, by using for each one the dedicated po4a module, this can be
-problematic from a security point of view.
-
-**TODO**: test the more popular formats and write proper documentation
-about it.
+[[intrigeri]]'s `meta` branch, the generated links' text is based on
+the page titles set with the [[meta|plugins/meta]] plugin. This has to
+be merged upstream, though.
 
 Translation quality assurance
 -----------------------------
@@ -547,10 +544,12 @@ Creating new pages on the web
 
 See [[contrib/po|contrib/po]].
 
-Renaming pages
---------------
+Renaming/deleting pages
+-----------------------
 
-- Renaming a translation should be forbidden.
+Renaming or deleting a translation in the CGI should be forbidden.
+Implementing this requires two new hooks: `canrename` and `canremove`,
+that would be run respectively by the `rename` and the `remove` plugins.
 
 Robustness tests
 ----------------
