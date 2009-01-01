@@ -483,7 +483,9 @@ sub myurlto ($$;$) {
 	# avoid, i.e. when po_link_to = negotiated
 	if ($config{po_link_to} eq "negotiated") {
 		my @caller = caller(1);
-		my $run_by_editpage = ($caller[3] eq "IkiWiki::cgi_editpage");
+		my $run_by_editpage = 0;
+		$run_by_editpage = 1 if (exists $caller[3] && defined $caller[3]
+					 && $caller[3] eq "IkiWiki::cgi_editpage");
 		inject(name => "IkiWiki::beautify_urlpath", call => $origsubs{'beautify_urlpath'})
 			if $run_by_editpage;
 		my $res = $origsubs{'urlto'}->($to,$from,$absolute);
