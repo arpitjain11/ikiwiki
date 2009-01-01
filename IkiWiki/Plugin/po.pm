@@ -909,7 +909,7 @@ sub po_to_markup ($$;$) {
 				     UNLINK => 1)->filename;
 
 	sub failure ($) {
-		my $msg = '[po/filter:'.$page.'] ' . shift;
+		my $msg = '[po/po_to_markup:'.$page.'] ' . shift;
 		if ($nonfatal) {
 			warn $msg;
 			return undef;
@@ -964,7 +964,7 @@ sub isvalidpo ($) {
 				    UNLINK => 1)->filename;
 
 	sub failure ($) {
-		my $msg = '[po/isvalidpo:'.$page.'] ' . shift;
+		my $msg = '[po/isvalidpo] ' . shift;
 		unlink $infile;
 		return IkiWiki::FailReason->new("$msg");
 	}
