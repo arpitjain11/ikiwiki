@@ -348,7 +348,7 @@ sub postscan (@) {
 
 # Add the renamed page translations to the list of to-be-renamed pages.
 sub renamepages($$$) {
-	my ($torename, $cgi, $session) = shift;
+	my ($torename, $cgi, $session) = (shift, shift, shift);
 
 	# copy the initial array, so that we can iterate on it AND
 	# modify it at the same time, without iterating on the items we
@@ -426,7 +426,7 @@ sub canremove ($$$) {
 	my ($page, $cgi, $session) = (shift, shift, shift);
 
 	if (istranslation($page)) {
-		return gettext("Can not remove a translation. Removing the master page,".
+		return gettext("Can not remove a translation. Removing the master page, ".
 			       "though, removes its translations as well.");
 	}
 	return undef;
@@ -445,7 +445,7 @@ sub canrename ($$$) {
 		# saved early in the renaming process.
 		my $orig_torename = $session->param("po_orig_torename");
 		unless (scalar grep { $_->{src} eq $masterpage } @{$orig_torename}) {
-			return gettext("Can not rename a translation. Renaming the master page,".
+			return gettext("Can not rename a translation. Renaming the master page, ".
 				       "though, renames its translations as well.");
 		}
 	}
