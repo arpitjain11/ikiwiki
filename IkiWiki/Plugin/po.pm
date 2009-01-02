@@ -39,7 +39,7 @@ sub import {
 	hook(type => "rename", id => "po", call => \&renamepages, first => 1);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
-	hook(type => "cansave", id => "po", call => \&cansave);
+	# hook(type => "cansave", id => "po", call => \&cansave);
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -475,28 +475,41 @@ sub formbuilder_setup (@) {
 	}
 }
 
-# Do not allow to create pages of type po: they are automatically created.
-# The main reason to do so is to bypass the "favor the type of linking page
-# on page creation" logic, which is unsuitable when a broken link is clicked
-# on a slave (PO) page.
 sub formbuilder (@) {
 	my %params=@_;
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	return unless (defined $form->field("do") && $form->field("do") eq "create");
+	return unless defined $form->field("do");
 
-        for my $field ($form->field) {
-		next unless "$field" eq "type";
-		if ($field->type eq 'select') {
-			# remove po from the types list
-			my @types = grep { $_ ne 'po' } $field->options;
-			$field->options(\@types) if scalar @types;
+	# Do not allow to create pages of type po: they are automatically created.
+	# The main reason to do so is to bypass the "favor the type of linking page
+	# on page creation" logic, which is unsuitable when a broken link is clicked
+	# on a slave (PO) page.
+	# This cannot be done in the formbuilder_setup hook as the list of types is
+	# computed later.
+	if ($form->field("do") eq "create") {
+	        for my $field ($form->field) {
+			next unless "$field" eq "type";
+			if ($field->type eq 'select') {
+				# remove po from the list of types
+				my @types = grep { $_ ne 'po' } $field->options;
+				$field->options(\@types) if scalar @types;
+			}
+			else {
+				# make sure the default value is not po;
+				# does this case actually happen?
+				debug "po(formbuilder) ".gettext("type field is not select - not implemented yet");
+			}
 		}
-		else {
-			# make sure the default value is not po;
-			# does this case actually happen?
-			debug "po(formbuilder) ".gettext("type field is not select - not implemented yet");
+	}
+
+	# Prevent invalid PO content to be saved.
+	# This cannot be done in the formbuilder_setup hook as the editpage plugin
+	# unconditionally sets the editcontent field's validate code later.
+	elsif ($form->field("do") eq "edit") {
+		if (istranslation($form->field("page"))) {
+			$form->field(name => "editcontent", validate => \&isvalidpo);
 		}
 	}
 }
