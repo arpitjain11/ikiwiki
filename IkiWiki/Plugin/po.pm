@@ -447,11 +447,9 @@ sub formbuilder_setup (@) {
 
 	return unless (defined $form->field("do") && $form->field("do") eq "create");
 
-	$form->tmpl_param(
-		message => sprintf(
-				gettext('**WARNING: this page must be written in %s**'),
-				$config{po_master_language}{name})
-	);
+	my $template=template("pocreatepage.tmpl");
+	$template->param(LANG => $config{po_master_language}{name});
+	$form->tmpl_param(message => $template->output);
 }
 
 
