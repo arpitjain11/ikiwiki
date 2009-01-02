@@ -39,7 +39,7 @@ sub import {
 	hook(type => "rename", id => "po", call => \&renamepages, first => 1);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
-	# hook(type => "cansave", id => "po", call => \&cansave);
+	hook(type => "cansave", id => "po", call => \&cansave);
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -501,15 +501,6 @@ sub formbuilder (@) {
 				# does this case actually happen?
 				debug "po(formbuilder) ".gettext("type field is not select - not implemented yet");
 			}
-		}
-	}
-
-	# Prevent invalid PO content to be saved.
-	# This cannot be done in the formbuilder_setup hook as the editpage plugin
-	# unconditionally sets the editcontent field's validate code later.
-	elsif ($form->field("do") eq "edit") {
-		if (istranslation($form->field("page"))) {
-			$form->field(name => "editcontent", validate => \&isvalidpo);
 		}
 	}
 }
