@@ -541,7 +541,7 @@ sub mynicepagetitle ($;$) {
 	my $res = $origsubs{'nicepagetitle'}->($page, $unescaped);
 	return $res unless istranslation($page);
 	return $res unless $config{po_translation_status_in_links};
-	return $res.' ('.percenttranslated($page).' %)';
+	return $res.' ('.percenttranslated($page).'&nbsp;%)';
 }
 
 # ,----
@@ -795,6 +795,7 @@ sub percenttranslated ($) {
 		'file_out_charset' => 'utf-8',
 	) or error("[po/percenttranslated:$page]: failed to translate");
 	my ($percent,$hit,$queries) = $doc->stats();
+	$percent =~ s/\.[0-9]+$//;
 	return $percent;
 }
 
