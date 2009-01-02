@@ -954,17 +954,17 @@ sub po_to_markup ($$;$) {
 				     DIR => File::Spec->tmpdir,
 				     UNLINK => 1)->filename;
 
-	sub failure ($) {
+	my $fail = sub ($) {
 		my $msg = "po(po_to_markup) - $page : " . shift;
 		if ($nonfatal) {
 			warn $msg;
 			return undef;
 		}
 		error($msg, sub { unlink $infile, $outfile});
-	}
+	};
 
 	writefile(basename($infile), File::Spec->tmpdir, $content)
-		or return failure(sprintf(gettext("failed to write %s"), $infile));
+		or return $fail->(sprintf(gettext("failed to write %s"), $infile));
 
 	my $masterfile = srcfile($pagesources{masterpage($page)});
 	my %options = (
@@ -976,12 +976,12 @@ sub po_to_markup ($$;$) {
 		'file_in_name'	=> [ $masterfile ],
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or return failure(gettext("failed to translate"));
+	) or return $fail->(gettext("failed to translate"));
 	$doc->write($outfile)
-		or return failure(sprintf(gettext("failed to write %s"), $outfile));
+		or return $fail->(sprintf(gettext("failed to write %s"), $outfile));
 
 	$content = readfile($outfile)
-		or return failure(sprintf(gettext("failed to read %s"), $outfile));
+		or return $fail->(sprintf(gettext("failed to read %s"), $outfile));
 
 	# Unlinking should happen automatically, thanks to File::Temp,
 	# but it does not work here, probably because of the way writefile()
@@ -1011,14 +1011,14 @@ sub isvalidpo ($) {
 				    DIR => File::Spec->tmpdir,
 				    UNLINK => 1)->filename;
 
-	sub failure ($) {
+	my $fail = sub ($) {
 		my $msg = '[po/isvalidpo] ' . shift;
 		unlink $infile;
 		return IkiWiki::FailReason->new("$msg");
-	}
+	};
 
 	writefile(basename($infile), File::Spec->tmpdir, $content)
-		or return failure(sprintf(gettext("failed to write %s"), $infile));
+		or return $fail->(sprintf(gettext("failed to write %s"), $infile));
 
 	my $res = (system("msgfmt", "--check", $infile, "-o", "/dev/null") == 0);
 
