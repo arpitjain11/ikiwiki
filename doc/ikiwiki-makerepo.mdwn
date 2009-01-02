@@ -6,19 +6,20 @@ ikiwiki-makerepo - check an ikiwiki srcdir into revision control
 
 ikiwiki-makerepo svn|git|monotone srcdir repository
 
-ikiwiki-makerepo mercurial srcdir
+ikiwiki-makerepo bzr|mercurial srcdir
 
 # DESCRIPTION
 
 `ikiwiki-makerepo` injects a `srcdir` directory, containing an ikiwiki wiki,
-into a `repository` that it creates. The repository can be a svn, git, or
-mercurial repository.
+into a `repository` that it creates. The repository can be created using
+any of a variety of revision control systems.
 
-Note that for mercurial, the srcdir is converted into a mercurial
-repository. There is no need to have a separate repository with mercurial.
+Note that for mercurial and bzr, the srcdir is converted into a
+repository. There is no need to have a separate repository with mercurial
+or bzr.
 
-Note that for monotone, you are assumed to already have run "mtn genkey" to generate
-key.
+Note that for monotone, you are assumed to already have run "mtn genkey"
+to generate a key.
 
 # AUTHOR
 
