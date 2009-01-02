@@ -8,7 +8,7 @@ package IkiWiki::Plugin::po;
 
 use warnings;
 use strict;
-use IkiWiki 2.00;
+use IkiWiki 3.00;
 use Encode;
 use Locale::Po4a::Chooser;
 use Locale::Po4a::Po;
