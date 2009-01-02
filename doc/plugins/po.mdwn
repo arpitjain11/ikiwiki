@@ -531,20 +531,10 @@ Using the fix to
 the page titles set with the [[meta|plugins/meta]] plugin. This has to
 be merged upstream, though.
 
-Translation quality assurance
------------------------------
-
-Modifying a PO file via the CGI is already forbidden if the new
-version is not a valid PO file. As a bonus, check that it provides
-a more complete translation than the existing one.
-
-Note: committing to the underlying repository is a way to bypass
-this check.
-
 Robustness tests
 ----------------
 
-### Disabling the plugin
+### Enabling/disabling the plugin
 
 - enabling the plugin with `po_translatable_pages` set
 - enabling the plugin without `po_translatable_pages` set: **OK**
@@ -561,26 +551,10 @@ Robustness tests
   `po_slave_languages`: needs two rebuilds, but **OK** (this is quite
   a perverse test actually)
 
-### Creating pages
+### Creating/deleting/renaming pages
 
-- creating a master page via RCS: **OK**
-- creating a master page via CGI: **OK**
-
-### Deleting pages
-
-- removing a master page via RCS: **OK**
-- removing a translation via RCS: **OK**
-- removing a master page via CGI: **OK**
-- removing a translation via CGI: **OK**
-
-### Renaming pages
-
-- renaming a master page via RCS: **OK** (but the old translations
-  are lost, because not all RCS track file renaming)
-- renaming a master page and its translations via RCS: **OK**
-- renaming a master page via CGI: **OK**
-- renaming a translation via RCS
-- renaming a translation via CGI
+All cases of page creation/deletion/rename, both via RCS and via CGI,
+have been tested.
 
 ### Misc
 
@@ -602,3 +576,6 @@ Misc
 
 * Can the form validation system be used instead of creating the
   `cansave` hook?
+* Use the formbuilder_setup hook to remove the rename/remove buttons
+  on slave edit pages. The canrename/canremove hook ensure this is
+  forbidden at the backend level, and this change would improve the UI.
