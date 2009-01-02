@@ -43,6 +43,7 @@ sub import {
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
+	hook(type => "formbuilder_setup", id => "po", call => \&formbuilder_setup);
 
 	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
@@ -437,6 +438,20 @@ sub editcontent () {
 
 	unsetalreadyfiltered($params{page}, $params{page});
 	return $params{content};
+}
+
+sub formbuilder_setup (@) {
+	my %params=@_;
+	my $form=$params{form};
+	my $q=$params{cgi};
+
+	return unless (defined $form->field("do") && $form->field("do") eq "create");
+
+	$form->tmpl_param(
+		message => sprintf(
+				gettext('**WARNING: this page must be written in %s**'),
+				$config{po_master_language}{name})
+	);
 }
 
 
