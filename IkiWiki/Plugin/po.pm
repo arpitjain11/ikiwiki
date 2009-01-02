@@ -44,6 +44,7 @@ sub import {
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
 	hook(type => "formbuilder_setup", id => "po", call => \&formbuilder_setup);
+	hook(type => "formbuilder", id => "po", call => \&formbuilder);
 
 	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
 	inject(name => "IkiWiki::bestlink", call => \&mybestlink);
@@ -452,6 +453,31 @@ sub formbuilder_setup (@) {
 	$form->tmpl_param(message => $template->output);
 }
 
+# Do not allow to create pages of type po: they are automatically created.
+# The main reason to do so is to bypass the "favor the type of linking page
+# on page creation" logic, which is unsuitable when a broken link is clicked
+# on a slave (PO) page.
+sub formbuilder (@) {
+	my %params=@_;
+	my $form=$params{form};
+	my $q=$params{cgi};
+
+	return unless (defined $form->field("do") && $form->field("do") eq "create");
+
+        for my $field ($form->field) {
+		next unless "$field" eq "type";
+		if ($field->type eq 'select') {
+			# remove po from the types list
+			my @types = grep { $_ ne 'po' } $field->options;
+			$field->options(\@types) if scalar @types;
+		}
+		else {
+			# make sure the default value is not po;
+			# does this case actually happen?
+			debug "po(formbuilder) type field is not select - not implemented yet";
+		}
+	}
+}
 
 # ,----
 # | Injected functions
