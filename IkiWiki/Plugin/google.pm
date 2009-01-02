@@ -24,7 +24,7 @@ sub getsetup () {
 
 sub checkconfig () {
 	if (! length $config{url}) {
-		error(sprintf(gettext("Must specify %s when using the google search plugin"), "url"));
+		error(sprintf(gettext("Must specify %s when using the %s plugin"), "url", 'google search'));
 	}
 	my $uri=URI->new($config{url});
 	if (! $uri || ! defined $uri->host) {

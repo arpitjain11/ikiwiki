@@ -33,7 +33,7 @@ sub getsetup () {
 sub checkconfig () {
 	foreach my $required (qw(url cgiurl)) {
 		if (! length $config{$required}) {
-			error(sprintf(gettext("Must specify %s when using the search plugin"), $required));
+			error(sprintf(gettext("Must specify %s when using the %s plugin"), $required, 'search'));
 		}
 	}
 	

@@ -128,11 +128,12 @@ sub getsetup () {
 sub checkconfig () {
 	foreach my $field (qw{po_master_language po_slave_languages}) {
 		if (! exists $config{$field} || ! defined $config{$field}) {
-			error(sprintf(gettext("Must specify %s"), $field));
+			error(sprintf(gettext("Must specify %s when using the %s plugin"), $field, 'po'));
 		}
 	}
 	if (! (keys %{$config{po_slave_languages}})) {
-		error(gettext("At least one slave language must be defined in po_slave_languages"));
+		error(gettext("At least one slave language must be defined ".
+			      "in po_slave_languages when using the po plugin"));
 	}
 	map {
 		islanguagecode($_)
@@ -474,7 +475,7 @@ sub formbuilder (@) {
 		else {
 			# make sure the default value is not po;
 			# does this case actually happen?
-			debug "po(formbuilder) type field is not select - not implemented yet";
+			debug sprintf("po(formbuilder) type field is not select - not implemented yet");
 		}
 	}
 }
@@ -762,17 +763,21 @@ sub refreshpofiles ($@) {
 	my @pofiles=@_;
 
 	my $potfile=potfile($masterfile);
-	error("[po/refreshpofiles] POT file ($potfile) does not exist") unless (-e $potfile);
+	(-e $potfile)
+		or error(sprintf(gettext("po(refreshpofiles) POT file (%s) does not exist"),
+				 $potfile));
 
 	foreach my $pofile (@pofiles) {
 		IkiWiki::prep_writefile(basename($pofile),dirname($pofile));
 		if (-e $pofile) {
 			system("msgmerge", "-U", "--backup=none", $pofile, $potfile) == 0
-				or error("[po/refreshpofiles:$pofile] failed to update");
+				or error(sprintf(gettext("po(refreshpofiles) failed to update %s"),
+						 $pofile));
 		}
 		else {
 			File::Copy::syscopy($potfile,$pofile)
-				or error("[po/refreshpofiles:$pofile] failed to copy the POT file");
+				or error(sprintf(gettext("po(refreshpofiles) failed to copy the POT file to %s"),
+						 $pofile));
 		}
 	}
 }
@@ -819,7 +824,8 @@ sub percenttranslated ($) {
 		'file_in_name'	=> [ $masterfile ],
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or error("[po/percenttranslated:$page]: failed to translate");
+	) or error(sprintf(gettext("po(percenttranslated) failed to translate %s"),
+			   $page));
 	my ($percent,$hit,$queries) = $doc->stats();
 	$percent =~ s/\.[0-9]+$//;
 	return $percent;
@@ -949,7 +955,7 @@ sub po_to_markup ($$;$) {
 				     UNLINK => 1)->filename;
 
 	sub failure ($) {
-		my $msg = '[po/po_to_markup:'.$page.'] ' . shift;
+		my $msg = "po(po_to_markup) - $page : " . shift;
 		if ($nonfatal) {
 			warn $msg;
 			return undef;
@@ -958,7 +964,7 @@ sub po_to_markup ($$;$) {
 	}
 
 	writefile(basename($infile), File::Spec->tmpdir, $content)
-		or return failure("failed to write $infile");
+		or return failure(sprintf(gettext("failed to write %s"), $infile));
 
 	my $masterfile = srcfile($pagesources{masterpage($page)});
 	my %options = (
@@ -970,10 +976,12 @@ sub po_to_markup ($$;$) {
 		'file_in_name'	=> [ $masterfile ],
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or return failure("failed to translate");
-	$doc->write($outfile) or return failure("could not write $outfile");
+	) or return failure(gettext("failed to translate"));
+	$doc->write($outfile)
+		or return failure(sprintf(gettext("failed to write %s"), $outfile));
 
-	$content = readfile($outfile) or return failure("could not read $outfile");
+	$content = readfile($outfile)
+		or return failure(sprintf(gettext("failed to read %s"), $outfile));
 
 	# Unlinking should happen automatically, thanks to File::Temp,
 	# but it does not work here, probably because of the way writefile()
@@ -1010,7 +1018,7 @@ sub isvalidpo ($) {
 	}
 
 	writefile(basename($infile), File::Spec->tmpdir, $content)
-		or return failure("failed to write $infile");
+		or return failure(sprintf(gettext("failed to write %s"), $infile));
 
 	my $res = (system("msgfmt", "--check", $infile, "-o", "/dev/null") == 0);
 
