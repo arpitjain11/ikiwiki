@@ -576,6 +576,3 @@ Misc
 
 * Can the form validation system be used instead of creating the
   `cansave` hook?
-* Use the formbuilder_setup hook to remove the rename/remove buttons
-  on slave edit pages. The canrename/canremove hook ensure this is
-  forbidden at the backend level, and this change would improve the UI.

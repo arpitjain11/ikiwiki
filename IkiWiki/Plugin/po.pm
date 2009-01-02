@@ -43,7 +43,7 @@ sub import {
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
-	hook(type => "formbuilder_setup", id => "po", call => \&formbuilder_setup);
+	hook(type => "formbuilder_setup", id => "po", call => \&formbuilder_setup, last => 1);
 	hook(type => "formbuilder", id => "po", call => \&formbuilder);
 
 	$origsubs{'bestlink'}=\&IkiWiki::bestlink;
@@ -447,11 +447,31 @@ sub formbuilder_setup (@) {
 	my $form=$params{form};
 	my $q=$params{cgi};
 
-	return unless (defined $form->field("do") && $form->field("do") eq "create");
+	return unless defined $form->field("do");
 
-	my $template=template("pocreatepage.tmpl");
-	$template->param(LANG => $config{po_master_language}{name});
-	$form->tmpl_param(message => $template->output);
+	if ($form->field("do") eq "create") {
+		# Warn the user: new pages must be written in master language.
+		my $template=template("pocreatepage.tmpl");
+		$template->param(LANG => $config{po_master_language}{name});
+		$form->tmpl_param(message => $template->output);
+	}
+	elsif ($form->field("do") eq "edit") {
+		# Remove the rename/remove buttons on slave pages.
+		# This has to be done after the rename/remove plugins have added
+		# their buttons, which is why this hook must be run last.
+		# The canrename/canremove hooks already ensure this is forbidden
+		# at the backend level, so this is only UI sugar.
+		if (istranslation($form->field("page"))) {
+			map {
+				for (my $i = 0; $i < @{$params{buttons}}; $i++) {
+					if (@{$params{buttons}}[$i] eq $_) {
+						delete  @{$params{buttons}}[$i];
+						last;
+					}
+				}
+			} qw(Rename Remove);
+		}
+	}
 }
 
 # Do not allow to create pages of type po: they are automatically created.
