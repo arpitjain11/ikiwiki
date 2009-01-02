@@ -128,7 +128,8 @@ sub getsetup () {
 sub checkconfig () {
 	foreach my $field (qw{po_master_language po_slave_languages}) {
 		if (! exists $config{$field} || ! defined $config{$field}) {
-			error(sprintf(gettext("Must specify %s when using the %s plugin"), $field, 'po'));
+			error(sprintf(gettext("Must specify %s when using the %s plugin"),
+				      $field, 'po'));
 		}
 	}
 	if (! (keys %{$config{po_slave_languages}})) {
@@ -150,8 +151,8 @@ sub checkconfig () {
 	elsif (! grep {
 			$config{po_link_to} eq $_
 		} ('default', 'current', 'negotiated')) {
-		warn(sprintf(gettext('po_link_to=%s is not a valid setting, falling back to po_link_to=default'),
-				$config{po_link_to}));
+		warn(sprintf(gettext('%s is not a valid value for po_link_to, falling back to po_link_to=default'),
+			     $config{po_link_to}));
 		$config{po_link_to}='default';
 	}
 	elsif ($config{po_link_to} eq "negotiated" && ! $config{usedirs}) {
@@ -495,7 +496,7 @@ sub formbuilder (@) {
 		else {
 			# make sure the default value is not po;
 			# does this case actually happen?
-			debug sprintf("po(formbuilder) type field is not select - not implemented yet");
+			debug "po(formbuilder) ".gettext("type field is not select - not implemented yet");
 		}
 	}
 }
@@ -784,19 +785,21 @@ sub refreshpofiles ($@) {
 
 	my $potfile=potfile($masterfile);
 	(-e $potfile)
-		or error(sprintf(gettext("po(refreshpofiles) POT file (%s) does not exist"),
-				 $potfile));
+		or error("po(refreshpofiles) ".sprintf(gettext("POT file (%s) does not exist"),
+						       $potfile));
 
 	foreach my $pofile (@pofiles) {
 		IkiWiki::prep_writefile(basename($pofile),dirname($pofile));
 		if (-e $pofile) {
 			system("msgmerge", "-U", "--backup=none", $pofile, $potfile) == 0
-				or error(sprintf(gettext("po(refreshpofiles) failed to update %s"),
+				or error("po(refreshpofiles) ".
+					 sprintf(gettext("failed to update %s"),
 						 $pofile));
 		}
 		else {
 			File::Copy::syscopy($potfile,$pofile)
-				or error(sprintf(gettext("po(refreshpofiles) failed to copy the POT file to %s"),
+				or error("po(refreshpofiles) ".
+					 sprintf(gettext("failed to copy the POT file to %s"),
 						 $pofile));
 		}
 	}
@@ -844,8 +847,8 @@ sub percenttranslated ($) {
 		'file_in_name'	=> [ $masterfile ],
 		'file_in_charset'  => 'utf-8',
 		'file_out_charset' => 'utf-8',
-	) or error(sprintf(gettext("po(percenttranslated) failed to translate %s"),
-			   $page));
+	) or error("po(percenttranslated) ".
+		   sprintf(gettext("failed to translate %s"), $page));
 	my ($percent,$hit,$queries) = $doc->stats();
 	$percent =~ s/\.[0-9]+$//;
 	return $percent;
