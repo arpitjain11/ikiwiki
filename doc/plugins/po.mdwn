@@ -546,7 +546,7 @@ Creating new pages on the web
 
 * Page creation initiated by clicking a broken link on a translation
   page defaults to po as new page type. It must default to the master
-  page's type.
+  page's type instead.
 
 Robustness tests
 ----------------
@@ -603,3 +603,12 @@ translators, wiki administrators, hackers. This plugin may be complex
 enough to deserve this.
 
 Gettext-ize the plugin code.
+
+Misc
+----
+
+* Can the form validation system be used instead of creating the
+  `cansave` hook?
+* Instead of adding the `canrename` and `canremove` hooks, the
+  `formbuilder_setup` hook could be used to remove the rename/remove
+  buttons on slave pages.
