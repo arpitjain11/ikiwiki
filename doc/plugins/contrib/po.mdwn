@@ -86,6 +86,9 @@ Any thoughts on this?
 >>> to avoid breaking existing functionality, it implies to hack a bit
 >>> [[plugins/edittemplate]] so that multiple templates can be
 >>> inserted at page creation time. [[--intrigeri]]
+>>>
+>>>> I implemented such a warning using the formbuilder_setup hook.
+>>>> --[[intrigeri]]
 >>
 >> And also, is there any way to start a translation of a page into a new
 >> lanauge using the web interface?
@@ -139,6 +142,11 @@ Any thoughts on this?
 >>>>> to have the links text generation more customizable through
 >>>>> plugins, I could do both at the same time if we consider this
 >>>>> matter to be important enough. --[[intrigeri]]
+>>>>>
+>>>>>> The translation status in links is now implemented in my
+>>>>>> `po`branch. It requires my `meta` branch changes to
+>>>>>> work, though. I consider the latter to be mature enough to
+>>>>>> be merged. --[[intrigeri]]
 
 >> FWIW, I'm tracking your po branch in ikiwiki master git in the po
 >> branch. One thing I'd like to try in there is setting up a translated
