@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # .po as a wiki page type
 # Licensed under GPL v2 or greater
-# Copyright (C) 2008 intrigeri <intrigeri@boum.org>
+# Copyright (C) 2008-2009 intrigeri <intrigeri@boum.org>
 # inspired by the GPL'd po4a-translate,
 # which is Copyright 2002, 2003, 2004 by Martin Quinson (mquinson#debian.org)
 package IkiWiki::Plugin::po;
