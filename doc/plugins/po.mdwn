@@ -553,8 +553,8 @@ Robustness tests
 
 ### Creating/deleting/renaming pages
 
-All cases of page creation/deletion/rename, both via RCS and via CGI,
-have been tested.
+All cases of master/slave page creation/deletion/rename, both via RCS
+and via CGI, have been tested.
 
 ### Misc
 
@@ -568,8 +568,6 @@ Documentation
 Maybe write separate documentation depending on the people it targets:
 translators, wiki administrators, hackers. This plugin may be complex
 enough to deserve this.
-
-Gettext-ize the plugin code.
 
 Misc
 ----
