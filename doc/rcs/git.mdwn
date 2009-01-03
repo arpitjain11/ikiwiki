@@ -20,9 +20,9 @@ working clones (with working directories) as leaf nodes.  The root
 working clones.
 
 One of the leaf node clone repositories is special; it has working
-directory which is used to compile the wiki from, and is also used by the
+directory which is used to compile the wiki, and is also used by the
 [[cgi]] to commit changes made via the web interface. It is special
-since the `post-commit` hook for the bare root repository is used to
+since the `post-update` hook for the bare root repository is used to
 trigger an update of this repository, and then an ikiwiki refresh
 updates the published  wiki itself.
 
@@ -43,9 +43,9 @@ repositories:
   repositories will push to/pull from.  It is a bare repository, since
   there are problems pushing to a repository that has a working
   directory. This is called _repository_ in [[ikiwiki-makerepo]]'s
-  manual page. Nominally, this bare repository has a `post-commit` hook
+  manual page. Nominally, this bare repository has a `post-update` hook
   that either is or calls ikiwiki's git wrapper, which changes to the
-  working directory for ikiwiki, does a _git pull_, and refreshes ikiwiki
+  working directory for ikiwiki, does a `git pull`, and refreshes ikiwiki
   to regenerate the wiki with any new content. The [[setup]] page describes
   how to do this.
 
@@ -64,7 +64,7 @@ repositories:
   hack on your wiki. you can commit local changes to the version on
   the laptop, perhaps while offline. Any new content should be pushed to the
   bare master repository when you are ready to publish it, and then
-  the post-commit hook of the bare repository will ensure that the
+  the post-update hook of the bare repository will ensure that the
   ikiwiki's source directory is updated, and the ikiwiki refreshed
   with the new content.
 
@@ -79,7 +79,7 @@ It is **paramount** that you **never** push to the non-bare repository
 Instead, clone the bare repository as mentioned above, and push
 **only** to the bare repository.
 
-The ikiwiki `post-commit` hook should be put in the bare repository.
+The ikiwiki `post-update` hook should be put in the bare repository.
 
 ## git repository with multiple committers
 
@@ -147,7 +147,7 @@ is the normal behaviour of ikiwiki, set the configuration of the local wiki:
 
       gitorigin_branch => "",
       ## git post-commit wrapper
-      wrapper => "/working/dir/.git/hooks/post-commit",
+      git_wrapper => "/working/dir/.git/hooks/post-commit",
 
 Then just committing should refresh the private ikiwiki on the local
 host.  Now just run `ikiwiki -setup localwiki.setup -getctime` and
