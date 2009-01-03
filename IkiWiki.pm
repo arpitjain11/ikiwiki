@@ -1658,7 +1658,7 @@ sub gettext {
 sub yesno ($) {
 	my $val=shift;
 
-	return (defined $val && lc($val) eq gettext("yes"));
+	return (defined $val && (lc($val) eq gettext("yes") || lc($val) eq "yes" || $val eq "1"));
 }
 
 sub inject {
