@@ -37,3 +37,8 @@ Whilst trying to edit http://hugh.vm.bytemark.co.uk/ikiwiki.cgi via OpenID. Any 
 > (BTW, shouldn't you enable the meta plugin so RecentChanges displays
 > better?)
 > --[[joey]]
+
+
+Thanks for you excellent analysis. The bug was due to old pre-3.0 **templates** laying about. After deleting them, ikiwiki defaults to its own templates. Clever. :-)
+
+[[bugs/done]]
