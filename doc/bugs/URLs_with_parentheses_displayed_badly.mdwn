@@ -1,0 +1,10 @@
+I've noticed that Ikiwiki displays URLs with parentheses badly. The problem occurs
+in the latest version 3.00 and older versions. Please look at the link to following
+Polish entry about C programming language at Wikipedia (it seems that URLs with
+parentheses are popular there):
+
+[Język programowania C](http://pl.wikipedia.org/wiki/C_(j%C4%99zyk_programowania))
+
+I need to escape a closing parenthesis of the URL to fix the problem.
+
+[Język programowania C](http://pl.wikipedia.org/wiki/C_(j%C4%99zyk_programowania\))
