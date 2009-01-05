@@ -5,6 +5,8 @@ ikiwiki (3.01) UNRELEASED; urgency=low
   * Fix documentation about git hook to use right name. Closes: #510393
   * yesno: Always accept English even when localised.
   * yesno: Also accept 1 and 0 as input.
+  * A recent change to gitweb removed support for the form of diffurl 
+    that many ikiwiki setups use. Document how to use the new url form.
 
  -- Joey Hess <joeyh@debian.org>  Fri, 02 Jan 2009 14:12:16 -0500
 
