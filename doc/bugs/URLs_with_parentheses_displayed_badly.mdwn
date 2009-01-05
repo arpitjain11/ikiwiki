@@ -9,5 +9,11 @@ I need to escape a closing parenthesis of the URL to fix the problem.
 
 [Język programowania C](http://pl.wikipedia.org/wiki/C_(j%C4%99zyk_programowania\))
 
+--[[Paweł|users/ptecza]]
+
 > This is a bug in markdown version 1. It is fixed in [[!cpan Text::Markdown]],
 > which ikiwiki will use if it's installed. [[done]] --[[Joey]] 
+
+>> Thanks a lot for the hint, Joey! I've installed `libtext-markdown-perl` package
+>> (Aptitude has removed `markdown` package to satisfy dependencies) and now
+>> I don't need to escape Wikipedia URLs with parentheses :) --[[Paweł|users/ptecza]]
