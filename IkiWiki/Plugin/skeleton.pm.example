@@ -89,7 +89,7 @@ sub linkify (@) {
 	return $params{content};
 }
 
-sub scan (@) { #{{{a
+sub scan (@) {
 	my %params=@_;
 
 	debug("skeleton plugin running as scan");
