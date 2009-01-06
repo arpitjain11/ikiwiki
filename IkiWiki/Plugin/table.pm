@@ -50,22 +50,18 @@ sub preprocess (@) {
 			defined $params{delimiter} ? $params{delimiter} : ",",);
 		# linkify after parsing since html link quoting can
 		# confuse CSV parsing
-		if (! exists $params{file}) {
-			@data=map {
-				[ map {
-					IkiWiki::linkify($params{page},
-						$params{destpage}, $_);
-				} @$_ ]
-			} @data;
-		}
+		@data=map {
+			[ map {
+				IkiWiki::linkify($params{page},
+					$params{destpage}, $_);
+			} @$_ ]
+		} @data;
 	}
 	elsif (lc $params{format} eq 'dsv') {
 		# linkify before parsing since wikilinks can contain the
 		# delimiter
-		if (! exists $params{file}) {
-			$params{data} = IkiWiki::linkify($params{page},
-				$params{destpage}, $params{data});
-		}
+		$params{data} = IkiWiki::linkify($params{page},
+			$params{destpage}, $params{data});
 		@data=split_dsv($params{data},
 			defined $params{delimiter} ? $params{delimiter} : "|",);
 	}
