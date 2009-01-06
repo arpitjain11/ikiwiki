@@ -4,7 +4,9 @@ News for ikiwiki 3.01:
    its setup file, you should be aware that gitweb has stopped
    supporting the url form commonly used for the `diffurl`.
    You can change your setup to use the newer gitweb url form:
-     http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;f=[[file]];h=[[sha1\_to]];hp=[[sha1\_from]];hb=[[sha1\_commit]];hpb=[[sha1\_parent]]
+
+ 	http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;f=\[[file]];h=\[[sha1\_to]];hp=\[[sha1\_from]];hb=\[[sha1\_commit]];hpb=\[[sha1\_parent]]
+
    The changes from the old form are the addition of the `hpb` parameter,
    and the change to the value used for the `hb` parameter.
 
