@@ -15,5 +15,7 @@ use IkiWiki::Setup::Standard {
 	userdir => "users",
 	usedirs => 0,
 	prefix_directives => 1,
+	cgiurl => "http://me",
+	url => "http://me",
 	add_plugins => [qw{goodstuff version haiku polygen fortune}],
 }
