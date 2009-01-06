@@ -2,7 +2,7 @@ This patch allows disabling the backlinks in the config file by setting nobackli
 
 It is backwards compatible, and by default enables backlinks in the generated pages.
 
-<code>
+<pre>
 --- IkiWiki/Render.pm.orig2	2009-01-06 14:54:01.000000000 +1300
 +++ IkiWiki/Render.pm	2009-01-06 14:55:08.000000000 +1300
 @@ -107,7 +107,8 @@
@@ -15,4 +15,4 @@ It is backwards compatible, and by default enables backlinks in the generated pa
  	my ($backlinks, $more_backlinks);
  	if (@backlinks <= $config{numbacklinks} || ! $config{numbacklinks}) {
  		$backlinks=\@backlinks;
-</code>
+</pre>
