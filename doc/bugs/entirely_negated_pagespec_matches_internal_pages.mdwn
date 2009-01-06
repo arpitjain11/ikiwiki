@@ -3,8 +3,8 @@ matches all other pages, including all internal pages. This can lead to
 unexpected results, since it will match a bunch of recentchanges pages,
 etc.
 
-Recall that internal-use pages are not matched by a glob. So "*" doesn't
-match them. So if the pagespec is "* and !foo and !bar", it won't match
+Recall that internal-use pages are not matched by a glob. So "\*" doesn't
+match them. So if the pagespec is "\* and !foo and !bar", it won't match
 them. This is the much more common style.
 
 There's an odd inconsistency with entirely negated pagespecs. If "!foo"
