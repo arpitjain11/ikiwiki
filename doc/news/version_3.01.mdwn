@@ -1,0 +1,19 @@
+News for ikiwiki 3.01:
+
+   If your wiki uses git, and you have a `diffurl` configured in
+   its setup file, you should be aware that gitweb has stopped
+   supporting the url form commonly used for the `diffurl`.
+   You can change your setup to use the newer gitweb url form:
+     http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;f=[[file]];h=[[sha1\_to]];hp=[[sha1\_from]];hb=[[sha1\_commit]];hpb=[[sha1\_parent]]
+   The changes from the old form are the addition of the `hpb` parameter,
+   and the change to the value used for the `hb` parameter.
+
+ikiwiki 3.01 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * ikiwiki-makerepo: Fix injecting of empty mercurial and bzr repositories.
+     Closes: #[510518](http://bugs.debian.org/510518)
+   * Fix documentation about git hook to use right name. Closes: #[510393](http://bugs.debian.org/510393)
+   * yesno: Always accept English even when localised.
+   * yesno: Also accept 1 and 0 as input.
+   * A recent change to gitweb removed support for the form of diffurl
+     that many ikiwiki setups use. Document how to use the new url form."""]]
