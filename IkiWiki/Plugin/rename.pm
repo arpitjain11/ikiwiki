@@ -390,22 +390,8 @@ sub sessioncgi ($$) {
 				$template->param(error => $rename->{error});
 				if ($rename->{src} ne $rename->{dest}) {
 					$template->param(brokenlinks_checked => 1);
-					$template->param(brokenlinks => [
-						map {
-							{
-								page => htmllink($rename->{dest}, $rename->{dest}, $_,
-										noimageinline => 1)
-							}
-						} @{$rename->{brokenlinks}}
-					]);
-					$template->param(fixedlinks => [
-						map {
-							{
-								page => htmllink($rename->{dest}, $rename->{dest}, $_,
-										noimageinline => 1)
-							}
-						} @{$rename->{fixedlinks}}
-					]);
+					$template->param(brokenlinks => linklist($rename->{dest}, $rename->{brokenlinks}));
+					$template->param(fixedlinks => linklist($rename->{dest}, $rename->{fixedlinks}));
 				}
 				$renamesummary.=$template->output;
 			}
@@ -418,6 +404,22 @@ sub sessioncgi ($$) {
 
 		exit 0;
 	}
+}
+						
+sub linklist {
+	# generates a list of links in a form suitable for FormBuilder
+	my $dest=shift;
+	my $list=shift;
+	# converts a list of pages into a list of links
+	# in a form suitable for FormBuilder.
+
+	[map {
+		{
+			page => htmllink($dest, $dest, $_,
+					noimageinline => 1,
+				)
+		}
+	} @{$list}]
 }
 
 sub renamepage_hook ($$$$) {
