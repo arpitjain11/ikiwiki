@@ -417,6 +417,7 @@ sub linklist {
 		{
 			page => htmllink($dest, $dest, $_,
 					noimageinline => 1,
+					linktext => pagetitle($_),
 				)
 		}
 	} @{$list}]
