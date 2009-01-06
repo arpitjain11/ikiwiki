@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 2.71 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-20 18:07-0500\n"
+"POT-Creation-Date: 2009-01-05 18:53-0500\n"
 "PO-Revision-Date: 2008-12-29 17:57+0100\n"
 "Last-Translator: Philippe Batailler <philippe.batailler@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -25,7 +25,7 @@ msgstr "Vous devez d'abord vous identifier."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr "Échec de l'identification, vous devez autoriser les cookies."
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:310
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:280
 msgid "Your login session has expired."
 msgstr "Session d'authentification expirée."
 
@@ -41,87 +41,87 @@ msgstr "Préférences"
 msgid "Admin"
 msgstr "Administrateur"
 
-#: ../IkiWiki/CGI.pm:253
+#: ../IkiWiki/CGI.pm:226
 msgid "Preferences saved."
 msgstr "Les préférences ont été enregistrées."
 
-#: ../IkiWiki/CGI.pm:271
+#: ../IkiWiki/CGI.pm:241
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:401 ../IkiWiki/CGI.pm:402 ../IkiWiki.pm:1204
+#: ../IkiWiki/CGI.pm:371 ../IkiWiki/CGI.pm:372 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr "Erreur"
 
-#: ../IkiWiki/Plugin/aggregate.pm:80
+#: ../IkiWiki/Plugin/aggregate.pm:84
 msgid "Aggregation triggered via web."
 msgstr "Agrégation déclenchée par le web"
 
-#: ../IkiWiki/Plugin/aggregate.pm:89
+#: ../IkiWiki/Plugin/aggregate.pm:93
 msgid "Nothing to do right now, all feeds are up-to-date!"
 msgstr "Rien à faire pour le moment, tous les flux sont à jour !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:216
+#: ../IkiWiki/Plugin/aggregate.pm:220
 #, perl-format
 msgid "missing %s parameter"
 msgstr "Paramètre %s manquant"
 
-#: ../IkiWiki/Plugin/aggregate.pm:251
+#: ../IkiWiki/Plugin/aggregate.pm:255
 msgid "new feed"
 msgstr "Nouveau flux"
 
-#: ../IkiWiki/Plugin/aggregate.pm:265
+#: ../IkiWiki/Plugin/aggregate.pm:269
 msgid "posts"
 msgstr "Articles"
 
-#: ../IkiWiki/Plugin/aggregate.pm:267
+#: ../IkiWiki/Plugin/aggregate.pm:271
 msgid "new"
 msgstr "Nouveau"
 
-#: ../IkiWiki/Plugin/aggregate.pm:431
+#: ../IkiWiki/Plugin/aggregate.pm:435
 #, perl-format
 msgid "expiring %s (%s days old)"
 msgstr "Fin de validité de %s (date de %s jours)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:438
+#: ../IkiWiki/Plugin/aggregate.pm:442
 #, perl-format
 msgid "expiring %s"
 msgstr "Fin de validité de %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:465
+#: ../IkiWiki/Plugin/aggregate.pm:469
 #, perl-format
 msgid "last checked %s"
 msgstr "dernière vérification : %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:469
+#: ../IkiWiki/Plugin/aggregate.pm:473
 #, perl-format
 msgid "checking feed %s ..."
 msgstr "Vérification du flux %s..."
 
-#: ../IkiWiki/Plugin/aggregate.pm:474
+#: ../IkiWiki/Plugin/aggregate.pm:478
 #, perl-format
 msgid "could not find feed at %s"
 msgstr "Impossible de trouver de flux à %s"
 
-#: ../IkiWiki/Plugin/aggregate.pm:493
+#: ../IkiWiki/Plugin/aggregate.pm:497
 msgid "feed not found"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/aggregate.pm:504
+#: ../IkiWiki/Plugin/aggregate.pm:508
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr "(chaîne UTF-8 non valable supprimée du flux)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:512
+#: ../IkiWiki/Plugin/aggregate.pm:516
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr "(échappement des entités de flux)"
 
-#: ../IkiWiki/Plugin/aggregate.pm:520
+#: ../IkiWiki/Plugin/aggregate.pm:524
 msgid "feed crashed XML::Feed!"
 msgstr "Plantage du flux XML::Feed !"
 
-#: ../IkiWiki/Plugin/aggregate.pm:601
+#: ../IkiWiki/Plugin/aggregate.pm:605
 #, perl-format
 msgid "creating new page %s"
 msgstr "Création de la nouvelle page %s"
@@ -156,15 +156,15 @@ msgstr "Échec lors de la suppression du fichier sur S3 :"
 msgid "there is already a page named %s"
 msgstr "Il existe déjà une page nommée %s"
 
-#: ../IkiWiki/Plugin/attachment.pm:82
+#: ../IkiWiki/Plugin/attachment.pm:65
 msgid "prohibited by allowed_attachments"
 msgstr "Action interdite par allowed_attachments"
 
-#: ../IkiWiki/Plugin/attachment.pm:190
+#: ../IkiWiki/Plugin/attachment.pm:140
 msgid "bad attachment filename"
 msgstr "Nom de la pièce jointe incorrect"
 
-#: ../IkiWiki/Plugin/attachment.pm:232
+#: ../IkiWiki/Plugin/attachment.pm:182
 msgid "attachment upload"
 msgstr "Envoi de la pièce jointe"
 
@@ -188,12 +188,12 @@ msgstr "%s sur %s"
 msgid "There are no broken links!"
 msgstr "Aucun lien cassé !"
 
-#: ../IkiWiki/Plugin/comments.pm:119 ../IkiWiki/Plugin/format.pm:23
+#: ../IkiWiki/Plugin/comments.pm:120 ../IkiWiki/Plugin/format.pm:23
 #, perl-format
 msgid "unsupported page format %s"
 msgstr "Format de page non reconnu %s"
 
-#: ../IkiWiki/Plugin/comments.pm:124
+#: ../IkiWiki/Plugin/comments.pm:125
 msgid "comment must have content"
 msgstr "Un commentaire doit avoir un contenu."
 
@@ -201,44 +201,44 @@ msgstr "Un commentaire doit avoir un contenu."
 msgid "Anonymous"
 msgstr "Anonyme"
 
-#: ../IkiWiki/Plugin/comments.pm:243 ../IkiWiki/Plugin/recentchanges.pm:101
+#: ../IkiWiki/Plugin/comments.pm:252 ../IkiWiki/Plugin/recentchanges.pm:110
 msgid "missing page"
 msgstr "Page manquante"
 
-#: ../IkiWiki/Plugin/comments.pm:245 ../IkiWiki/Plugin/recentchanges.pm:103
+#: ../IkiWiki/Plugin/comments.pm:254 ../IkiWiki/Plugin/recentchanges.pm:112
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "La page %s n'existe pas."
 
-#: ../IkiWiki/Plugin/comments.pm:334 ../IkiWiki/Plugin/editpage.pm:124
+#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:124
 msgid "bad page name"
 msgstr "Nom de page incorrect"
 
-#: ../IkiWiki/Plugin/comments.pm:341
+#: ../IkiWiki/Plugin/comments.pm:350
 #, perl-format
 msgid "commenting on %s"
 msgstr "Faire un commentaire sur %s"
 
-#: ../IkiWiki/Plugin/comments.pm:359
+#: ../IkiWiki/Plugin/comments.pm:368
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr "La page '%s' n'existe pas, commentaire impossible."
 
-#: ../IkiWiki/Plugin/comments.pm:366
+#: ../IkiWiki/Plugin/comments.pm:375
 #, perl-format
 msgid "comments on page '%s' are closed"
 msgstr "Le commentaire pour la page '%s' est terminé."
 
-#: ../IkiWiki/Plugin/comments.pm:468
+#: ../IkiWiki/Plugin/comments.pm:483
 msgid "Added a comment"
 msgstr "Commentaire ajouté"
 
-#: ../IkiWiki/Plugin/comments.pm:472
+#: ../IkiWiki/Plugin/comments.pm:487
 #, perl-format
 msgid "Added a comment: %s"
 msgstr "Commentaire ajouté : %s"
 
-#: ../IkiWiki/Plugin/comments.pm:565
+#: ../IkiWiki/Plugin/comments.pm:601
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -329,10 +329,6 @@ msgstr "Vous devez indiquer %s lors de l'utilisation du greffon « google »."
 msgid "Failed to parse url, cannot determine domain name"
 msgstr "Impossible d'analyser l'url, pas de nom de domaine"
 
-#: ../IkiWiki/Plugin/googlecalendar.pm:32
-msgid "failed to find url in html"
-msgstr "Impossible de trouver une URL dans le code HTML"
-
 #: ../IkiWiki/Plugin/graphviz.pm:67
 msgid "failed to run graphviz"
 msgstr "Échec du lancement de graphviz"
@@ -406,7 +402,7 @@ msgstr "RPC::XML::Client introuvable, pas de réponse au ping"
 msgid "failed to run dot"
 msgstr "Échec du lancement de dot"
 
-#: ../IkiWiki/Plugin/lockedit.pm:49 ../IkiWiki/Plugin/lockedit.pm:66
+#: ../IkiWiki/Plugin/lockedit.pm:47
 #, perl-format
 msgid "%s is locked and cannot be edited"
 msgstr "%s est verrouillé et ne peut être modifié"
@@ -1027,7 +1023,7 @@ msgstr "Impossible de charger le greffon externe nécessaire au greffon %s : %s
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "Une boucle de pré traitement a été détectée sur %s à hauteur de %i"
 
-#: ../IkiWiki.pm:1688
+#: ../IkiWiki.pm:1661
 msgid "yes"
 msgstr "oui"
 
@@ -1050,6 +1046,9 @@ msgstr "Identifiant de l'administrateur (utilisateur ou openid) :"
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr "Nom de domaine du serveur HTTP :"
+
+#~ msgid "failed to find url in html"
+#~ msgstr "Impossible de trouver une URL dans le code HTML"
 
 #~ msgid "processed ok at %s"
 #~ msgstr "A été correctement traité à %s"
