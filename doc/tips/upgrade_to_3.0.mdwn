@@ -37,8 +37,8 @@ following to your setup file:
 	
 	prefix_directives => 0,
 
-To convert to the new syntax, run 
-`ikiwiki-transition prefix_directives your.setup`
+To convert to the new syntax, make sure that your setup file does *not*
+contain the above, then run `ikiwiki-transition prefix_directives your.setup`
 
 (And then commit the changes it makes to pages in your srcdir.)
 
