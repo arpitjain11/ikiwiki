@@ -4,6 +4,9 @@ ikiwiki (3.02) UNRELEASED; urgency=low
   * table: Find links in external files in scan pass.
   * rename: Show full names of affected pages.
   * comments: Fix cache avoidance hack.
+  * repolist: New plugin to support the rel=vcs-* microformat.
+  * goodstuff: Include repolist by default. (But it does nothing until
+    configured with the repository locations.)
 
  -- Joey Hess <joeyh@debian.org>  Tue, 06 Jan 2009 15:02:52 -0500
 

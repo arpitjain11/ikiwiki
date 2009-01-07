@@ -22,6 +22,7 @@ my @bundle=qw{
 	template
 	toc
 	toggle
+	repolist
 };
 
 sub import {
