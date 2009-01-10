@@ -604,6 +604,12 @@ sub pagetemplate (@) {
 		}
 	}
 
+	# everything below this point is only relevant to the comments
+	# themselves
+	if (!exists $commentstate{$page}) {
+		return;
+	}
+
 	if ($template->query(name => 'commentuser')) {
 		$template->param(commentuser =>
 			$commentstate{$page}{commentuser});
