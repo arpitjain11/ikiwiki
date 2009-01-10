@@ -634,6 +634,14 @@ sub pagetemplate (@) {
 		$template->param(commentauthorurl =>
 			$commentstate{$page}{commentauthorurl});
 	}
+
+	if ($template->query(name => 'removeurl') &&
+	    IkiWiki::Plugin::remove->can("check_canremove") &&
+	    length $config{cgiurl}) {
+		$template->param(removeurl => IkiWiki::cgiurl(do => 'remove',
+			page => $page));
+		$template->param(have_actions => 1);
+	}
 }
 
 package IkiWiki::PageSpec;
