@@ -12,23 +12,6 @@
 
 ## Patches pending merge
 
-* If a spammer posts a comment, it is either impossible or hard to clean
-  up via the web. Would be nice to have some kind of link on the comment
-  that allows trusted users to remove it (using the remove plugin of
-  course).
-
-  > Won't the remove plugin refuse to remove internal pages? This would be
-  > a good feature to have, though. --[[smcv]]
-
-  > Here, FWIW, is the first ikiwiki comment spam I've seen:
-  > <http://waldeneffect.org/blog/Snake_bite_information/#blog/Snake_bite_information/comment_1>
-  > So that took about 10 days...
-  > --[[Joey]] 
-
-  >> Implemented in my 'comments' branch, please review. It turns out
-  >> [[plugins/remove]] is happy to remove internal pages, so it was quite
-  >> easy to do. --[[smcv]]
-
 * There is some common code cargo-culted from other plugins (notably inline and editpage) which
   should probably be shared
 
@@ -151,3 +134,22 @@
   first. --[[smcv]]
 
   > done --[[Joey]]
+
+* If a spammer posts a comment, it is either impossible or hard to clean
+  up via the web. Would be nice to have some kind of link on the comment
+  that allows trusted users to remove it (using the remove plugin of
+  course).
+
+  > Won't the remove plugin refuse to remove internal pages? This would be
+  > a good feature to have, though. --[[smcv]]
+
+  > Here, FWIW, is the first ikiwiki comment spam I've seen:
+  > <http://waldeneffect.org/blog/Snake_bite_information/#blog/Snake_bite_information/comment_1>
+  > So that took about 10 days...
+  > --[[Joey]] 
+
+  >> Implemented in my 'comments' branch, please review. It turns out
+  >> [[plugins/remove]] is happy to remove internal pages, so it was quite
+  >> easy to do. --[[smcv]]
+
+  >>> done --[[Joey]] 
