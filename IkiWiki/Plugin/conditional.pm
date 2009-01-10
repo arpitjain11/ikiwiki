@@ -87,6 +87,8 @@ sub match_sourcepage ($$;@) {
 	shift;
 	my $glob=shift;
 	my %params=@_;
+	
+	$glob=derel($glob, $params{location});
 
 	return IkiWiki::FailReason->new("cannot match sourcepage") unless exists $params{sourcepage};
 	if (match_glob($params{sourcepage}, $glob, @_)) {
@@ -102,6 +104,8 @@ sub match_destpage ($$;@) {
 	my $glob=shift;
 	my %params=@_;
 	
+	$glob=derel($glob, $params{location});
+
 	return IkiWiki::FailReason->new("cannot match destpage") unless exists $params{destpage};
 	if (match_glob($params{destpage}, $glob, @_)) {
 		return IkiWiki::SuccessReason->new("destpage matches $glob");

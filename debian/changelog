@@ -8,6 +8,10 @@ ikiwiki (3.02) UNRELEASED; urgency=low
   * goodstuff: Include repolist by default. (But it does nothing until
     configured with the repository locations.)
   * comments: Add support for removing comments via web interface. (smcv)
+  * Consistently allow use of relative paths in all PageSpecs
+    that take a page name parameter. Previously, match_created_before(),
+    match_created_after(), match_sourcepage(), and match_destpage()
+    did not support that, and the docs were not clear.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 06 Jan 2009 15:02:52 -0500
 

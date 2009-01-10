@@ -1880,6 +1880,9 @@ sub match_backlink ($$;@) {
 sub match_created_before ($$;@) {
 	my $page=shift;
 	my $testpage=shift;
+	my %params=@_;
+	
+	$testpage=derel($testpage, $params{location});
 
 	if (exists $IkiWiki::pagectime{$testpage}) {
 		if ($IkiWiki::pagectime{$page} < $IkiWiki::pagectime{$testpage}) {
@@ -1897,6 +1900,9 @@ sub match_created_before ($$;@) {
 sub match_created_after ($$;@) {
 	my $page=shift;
 	my $testpage=shift;
+	my %params=@_;
+	
+	$testpage=derel($testpage, $params{location});
 
 	if (exists $IkiWiki::pagectime{$testpage}) {
 		if ($IkiWiki::pagectime{$page} > $IkiWiki::pagectime{$testpage}) {
