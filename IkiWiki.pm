@@ -1807,19 +1807,25 @@ sub new {
 
 package IkiWiki::PageSpec;
 
+sub derel ($$) {
+	my $path=shift;
+	my $from=shift;
+
+	if ($path =~ m!^\./!) {
+		$from=~s#/?[^/]+$## if defined $from;
+		$path=~s#^\./##;
+		$path="$from/$path" if length $from;
+	}
+
+	return $path;
+}
+
 sub match_glob ($$;@) {
 	my $page=shift;
 	my $glob=shift;
 	my %params=@_;
 	
-	my $from=exists $params{location} ? $params{location} : '';
-	
-	# relative matching
-	if ($glob =~ m!^\./!) {
-		$from=~s#/?[^/]+$##;
-		$glob=~s#^\./##;
-		$glob="$from/$glob" if length $from;
-	}
+	$glob=derel($glob, $params{location});
 
 	my $regexp=IkiWiki::glob2re($glob);
 	if ($page=~/^$regexp$/i) {
@@ -1844,14 +1850,8 @@ sub match_link ($$;@) {
 	my $link=lc(shift);
 	my %params=@_;
 
+	$link=derel($link, $params{location});
 	my $from=exists $params{location} ? $params{location} : '';
-
-	# relative matching
-	if ($link =~ m!^\.! && defined $from) {
-		$from=~s#/?[^/]+$##;
-		$link=~s#^\./##;
-		$link="$from/$link" if length $from;
-	}
 
 	my $links = $IkiWiki::links{$page};
 	return IkiWiki::FailReason->new("$page has no links") unless $links && @{$links};
