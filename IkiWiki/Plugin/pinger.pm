@@ -106,7 +106,7 @@ sub ping {
 			# will still be avoided.
 			next if $url=~/^\Q$config{cgiurl}\E/;
 			
-			$ua->head($url);
+			$ua->get($url);
 		}
 		
 		exit 0;
