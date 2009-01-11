@@ -12,7 +12,8 @@ ikiwiki (3.02) UNRELEASED; urgency=low
     that take a page name parameter. Previously, match_created_before(),
     match_created_after(), match_sourcepage(), and match_destpage()
     did not support that, and the docs were not clear.
-  * pinger: Get whole url, don't just head.
+  * pinger: Get whole url, don't just head, avoids problems on
+    the nostromo web server.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 06 Jan 2009 15:02:52 -0500
 
