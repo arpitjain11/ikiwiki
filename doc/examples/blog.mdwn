@@ -1,10 +1,11 @@
 This is an [[example_blog|index]]. Just copy the blog subdirectory into
-your wiki to quickly get started blogging with ikiwiki.
+your wiki to quickly get started blogging with ikiwiki. 
+
+Or, run this command to set up a blog with ikiwiki.
+
+	% ikiwiki -setup /etc/ikiwiki/auto-blog.setup
 
 Some additional configuration you might want to do:
-
-* Change the name of the blog, by editing `index.mdwn` and changing
-  the `title`.
 
 * Make sure to configure ikiwiki to generate RSS or Atom feeds.
 
