@@ -1,9 +1,9 @@
-Many ikiwiki examples name the [[cgi]] "ikiwiki.cgi", and put it somewhere
+It's common to name the [[cgi]] "ikiwiki.cgi", and put it somewhere
 like `~/public_html/ikiwiki.cgi`, or `/var/www/wiki/ikiwiki.cgi`.
 
-If you follow those examples, you may find that when trying to edit a page
-in your wiki, you see the raw contents of the ikiwiki.cgi program. Or get a
-permission denied problem.
+If you do that, you may find that when trying to edit a page in your wiki,
+you see the raw contents of the ikiwiki.cgi program. Or get a permission
+denied problem.
 
 This is because apache is generally not configured to run cgi scripts
 unless they're in `/usr/lib/cgi-bin/`. While you can put ikiwiki.cgi in
