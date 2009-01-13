@@ -2,7 +2,7 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 
 [[!toc ]]
 
-## [[Download]] and [[install]] ikiwiki
+## Install ikiwiki
 
 If you're using Debian or Ubuntu, ikiwiki is an `apt-get install ikiwiki` away.
 If you're not, see the [[download]] and [[install]] pages.
@@ -46,11 +46,6 @@ Done!
 Now you can go to the url it told you, and edit pages in your new wiki
 using the web interface.
 
-You can log in using the wiki user and password (or the openid)
-that you told it to set up earlier. That user is an admin, so you can
-go to the Preferences page and click on "Wiki Setup" to further
-configure the wiki.
-
 (If the web interface doesn't seem to allow editing or login, you may
 need to configure [[apache|tips/apache_cgi]] or 
 [[lighttpd|tips/lighttpd_cgi]].)
@@ -62,8 +57,8 @@ web for editing pages, and instead using your favorite text editor and
 [[Revision_Control_System|rcs]]. 
 
 To do this, you need to check out a copy of the source to your wiki.
-You should avoid making changes directly to the `srcdir`, as that
-checkout is reserved for use by ikiwiki itself.
+(You should avoid making changes directly to the `srcdir`, as that
+checkout is reserved for use by ikiwiki itself.)
 
 Depending on which [[Revision_Control_System|rcs]] you chose to use,
 you can run one of these commands to check out your own copy of your wiki's
