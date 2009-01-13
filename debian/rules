@@ -25,8 +25,9 @@ binary-indep: build
 	dh_clean -k
 	$(MAKE) pure_install DESTDIR=$(shell pwd)/debian/ikiwiki
 	dh_installdocs html
-	dh_installexamples doc/examples/*
+	dh_link usr/share/ikiwiki/examples usr/share/doc/ikiwiki/examples
 	dh_link usr/share/common-licenses/GPL-2 usr/share/doc/ikiwiki/html/GPL
+	dh_installexamples
 	dh_installchangelogs
 	dh_compress -X html
 	dh_fixperms

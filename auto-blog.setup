@@ -1,10 +1,11 @@
 #!/usr/bin/perl
-# Ikiwiki setup automator.
+# Ikiwiki setup automator -- blog version.
 # 
-# This setup file causes ikiwiki to create a wiki, check it into revision
-# control, generate a setup file for the new wiki, and set everything up.
+# This setup file causes ikiwiki to create a wiki, containing a blog,
+# check it into revision control, generate a setup file for the new
+# wiki, and set everything up.
 #
-# Just run: ikiwiki -setup /etc/ikiwiki/auto.setup
+# Just run: ikiwiki -setup /etc/ikiwiki/auto-blog.setup
 #
 # By default, it asks a few questions, and confines itself to the user's home
 # directory. You can edit it to change what it asks questions about, or to
@@ -13,7 +14,7 @@
 require IkiWiki::Setup::Automator;
 
 our $wikiname=IkiWiki::Setup::Automator::ask(
-	gettext("What will the wiki be named?"), gettext("wiki"));
+	gettext("What will the blog be named?"), gettext("blog"));
 our $rcs=IkiWiki::Setup::Automator::ask(
 	gettext("What revision control system to use?"), "git");
 our $admin=IkiWiki::Setup::Automator::ask(
@@ -34,11 +35,15 @@ IkiWiki::Setup::Automator->import(
 	cgiurl => "http://$domain/~$ENV{USER}/$wikiname/ikiwiki.cgi",
 	cgi_wrapper => "$ENV{HOME}/public_html/$wikiname/ikiwiki.cgi",
 	adminemail => "$ENV{USER}\@$domain",
-	add_plugins => [qw{goodstuff websetup}],
+	add_plugins => [qw{goodstuff websetup comments}],
 	disable_plugins => [qw{}],
 	libdir => "$ENV{HOME}/.ikiwiki",
 	rss => 1,
 	atom => 1,
 	syslog => 1,
 	hardlink => 1,
+	
+	example => "blog",
+	comments_pagespec => "posts/* and !*/Discussion",
+	discussion => 0,
 )
