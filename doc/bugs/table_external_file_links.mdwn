@@ -1,0 +1,9 @@
+If wikilinks are put in an external table file, those links are not seen at
+scan time, and so ikiwiki does not know to update the page containing the
+table when the pages the links point to change (are added, removed, etc).
+
+There seem only two solutions to that bug -- either really make wikilinks
+in an external table file not work (probably by escaping them), 
+or run the preprocess code also in scan (expensive!). --[[Joey]]
+
+[[done]]

@@ -1,0 +1,44 @@
+I keep getting:
+
+	Error: Your login session has expired.
+
+Whilst trying to edit http://hugh.vm.bytemark.co.uk/ikiwiki.cgi via OpenID. Any ideas?
+
+
+	iki@hugh:~$ dpkg -l | grep openid
+	ii  libnet-openid-consumer-perl     0.14-4                library for consumers of OpenID iden
+	tities
+	iki@hugh:~$
+
+> This error occurs if ikiwiki sees something that looks like a CSRF
+> attack. It checks for such an attack by embedding your session id on the
+> page edit form, and comparing that id with the session id used to post
+> the form.
+> 
+> So, somehow your session id has changed between opening the edit form and
+> posting it. A few ways this could happen:
+> 
+> * Genuine CSRF attack (unlikely)
+> * If you logged out and back in, in another tab, while the edit form was
+>   open.
+> * If `.ikiwiki/sessions.db` was deleted/corrupted while you were in the
+>   midst of the edit.
+> * If some bug in CGI::Session caused your session not to be saved to the
+>   database somehow.
+> * If your browser didn't preserve the session cookie across the edit
+>   process, for whatever local reason.
+> * If you were using a modified version of `editpage.tmpl`, and 
+>   it did not include `FIELD-SID`.
+> * If you upgraded from an old version of ikiwiki, before `FIELD-SID` was
+>   added (<= 2.41), and had an edit form open from that old version, and
+>   tried to save it using the new.
+>  
+> I don't see the problem editing the sandbox there myself, FWIW.
+> (BTW, shouldn't you enable the meta plugin so RecentChanges displays
+> better?)
+> --[[joey]]
+
+
+Thanks for you excellent analysis. The bug was due to old pre-3.0 **templates** laying about. After deleting them, ikiwiki defaults to its own templates. Clever. :-)
+
+[[bugs/done]]

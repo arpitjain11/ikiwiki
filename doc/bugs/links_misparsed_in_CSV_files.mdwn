@@ -12,6 +12,16 @@ Oh, wait, I see the problem. IkiWiki::linkify is only called if the external fil
 
 (this is inside /usr/share/perl5/IkiWiki/Plugin/table.pm).
 
+> To reproduce this bug, I had to install the old, broken markdown 1.0,
+> instead of the now-default Text::Markdown.
+> 
+> Why is linkify not called for external files? Well, I checked the
+> history, and it's probably best to say "for historical reasons that no
+> longer apply". So, changed as you suggest. [[done]] --[[Joey]] 
+
 I am rather confused what this check does, and the fact the comments are very different for CSV and DSV when the code is the same doesn't seem to help.
+
+> The code is not the same; two operations are run in different orders for
+> CSV and DSV, as the comments note. --[[Joey]] 
 
 -- Brian May

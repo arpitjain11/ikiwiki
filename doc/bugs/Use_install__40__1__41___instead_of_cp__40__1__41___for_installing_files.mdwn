@@ -24,4 +24,9 @@ Here is a patch against ikiwiki-1.51 for using find(1) and install(1) instead of
 
 >> No, apparently FreeBSD `install` does not support `-D`.  See [the FreeBSD install manpage](http://www.freebsd.org/cgi/man.cgi?query=install&apropos=0&sektion=0&manpath=FreeBSD+6.2-RELEASE&format=html). --[[JoshTriplett]]
 
->> Patch applied; [[bugs/done]]. --[[JoshTriplett]]
+>> Patch applied; [[done]]. --[[JoshTriplett]]
+
+There are still/again "cp -a"s in the Makefile as of 3.00
+
+> It's a cp -a || install. Is that causing you a problem somehow?
+> --[[Joey]] 

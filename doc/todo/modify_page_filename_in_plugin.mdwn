@@ -6,6 +6,8 @@ The problem is that I occasionally have xxx.c and xxx.h in the same directory an
 
 My solution is to allow plugins to provide a hook that sets the pagename. --[[/users/bstpierre]]
 
+> You might also find the solution to [[bugs/multiple_pages_with_same_name]] helps you.  That patch is already applied. -- [[Will]]
+
     --- /usr/share/perl5/IkiWiki.pm.ORIG    2008-10-03 14:12:50.000000000 -0400
     +++ /usr/share/perl5/IkiWiki.pm 2008-10-07 11:57:26.000000000 -0400
     @@ -196,11 +196,32 @@

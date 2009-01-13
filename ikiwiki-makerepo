@@ -75,7 +75,7 @@ mercurial)
 	hg init "$srcdir"
 	cd "$srcdir"
 	echo .ikiwiki > .hgignore
-	hg add * .hgignore
+	hg add
 	hg commit -m "initial import"
 	echo "Directory $srcdir is now set up as a mercurial repository"
 ;;
@@ -83,7 +83,7 @@ bzr)
 	bzr init "$srcdir"
 	cd "$srcdir"
 	echo .ikiwiki > .bzrignore
-	bzr add * .bzrignore
+	bzr add
 	bzr commit -m "initial import"
 	echo "Directory $srcdir is now set up as a bzr repository"
 ;;

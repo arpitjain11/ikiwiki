@@ -1,0 +1,8 @@
+While a relative pagespec like `./posts/*` will work, when used in a page
+such as `bdale/blog`, you cannot do
+`created_after(./posts/foo)` -- only `glob()` supports relative page
+references.
+
+The other pagespec functions should too, where appropriate.
+
+[[done]]

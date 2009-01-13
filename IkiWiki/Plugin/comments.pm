@@ -508,7 +508,7 @@ sub sessioncgi ($$) {
 		# Jump to the new comment on the page.
 		# The trailing question mark tries to avoid broken
 		# caches and get the most recent version of the page.
-		IkiWiki::redirect($cgi, urlto($page, undef, 1)."#$location?updated");
+		IkiWiki::redirect($cgi, urlto($page, undef, 1)."?updated#$location");
 
 	}
 	else {
@@ -604,6 +604,12 @@ sub pagetemplate (@) {
 		}
 	}
 
+	# everything below this point is only relevant to the comments
+	# themselves
+	if (!exists $commentstate{$page}) {
+		return;
+	}
+
 	if ($template->query(name => 'commentuser')) {
 		$template->param(commentuser =>
 			$commentstate{$page}{commentuser});
@@ -627,6 +633,14 @@ sub pagetemplate (@) {
 	if ($template->query(name => 'commentauthorurl')) {
 		$template->param(commentauthorurl =>
 			$commentstate{$page}{commentauthorurl});
+	}
+
+	if ($template->query(name => 'removeurl') &&
+	    IkiWiki::Plugin::remove->can("check_canremove") &&
+	    length $config{cgiurl}) {
+		$template->param(removeurl => IkiWiki::cgiurl(do => 'remove',
+			page => $page));
+		$template->param(have_actions => 1);
 	}
 }
 

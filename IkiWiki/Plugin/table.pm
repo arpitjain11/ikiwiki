@@ -8,7 +8,7 @@ use IkiWiki 3.00;
 
 sub import {
 	hook(type => "getsetup", id => "table", call => \&getsetup);
-	hook(type => "preprocess", id => "table", call => \&preprocess);
+	hook(type => "preprocess", id => "table", call => \&preprocess, scan => 1);
 }
 
 sub getsetup () {
@@ -27,11 +27,29 @@ sub preprocess (@) {
 	);
 
 	if (exists $params{file}) {
-		if (! $pagesources{$params{file}}) {
+		if (! exists $pagesources{$params{file}}) {
 			error gettext("cannot find file");
 		}
 		$params{data} = readfile(srcfile($params{file}));
 		add_depends($params{page}, $params{file});
+	}
+
+	if (! defined wantarray) {
+		# scan mode --	if the table uses an external file, need to
+		# scan that file too.
+		return unless exists $params{file};
+
+		IkiWiki::run_hooks(scan => sub {
+			shift->(
+				page => $params{page},
+				content => $params{data},
+			);
+		});
+
+		# Preprocess in scan-only mode.
+		IkiWiki::preprocess($params{page}, $params{page}, $params{data}, 1);
+
+		return;
 	}
 
 	if (lc $params{format} eq 'auto') {
@@ -50,22 +68,18 @@ sub preprocess (@) {
 			defined $params{delimiter} ? $params{delimiter} : ",",);
 		# linkify after parsing since html link quoting can
 		# confuse CSV parsing
-		if (! exists $params{file}) {
-			@data=map {
-				[ map {
-					IkiWiki::linkify($params{page},
-						$params{destpage}, $_);
-				} @$_ ]
-			} @data;
-		}
+		@data=map {
+			[ map {
+				IkiWiki::linkify($params{page},
+					$params{destpage}, $_);
+			} @$_ ]
+		} @data;
 	}
 	elsif (lc $params{format} eq 'dsv') {
 		# linkify before parsing since wikilinks can contain the
 		# delimiter
-		if (! exists $params{file}) {
-			$params{data} = IkiWiki::linkify($params{page},
-				$params{destpage}, $params{data});
-		}
+		$params{data} = IkiWiki::linkify($params{page},
+			$params{destpage}, $params{data});
 		@data=split_dsv($params{data},
 			defined $params{delimiter} ? $params{delimiter} : "|",);
 	}

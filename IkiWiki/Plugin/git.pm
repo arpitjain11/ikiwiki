@@ -94,8 +94,8 @@ sub getsetup () {
 		},
 		diffurl => {
 			type => "string",
-			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_parent]];f=[[file]]",
-			description => "gitweb url to show a diff ([[sha1_to]], [[sha1_from]], [[sha1_parent]], [[sha1_commit]] and [[file]] substituted)",
+			example => "http://git.example.com/gitweb.cgi?p=wiki.git;a=blobdiff;f=[[file]];h=[[sha1_to]];hp=[[sha1_from]];hb=[[sha1_commit]];hpb=[[sha1_parent]]",
+			description => "gitweb url to show a diff ([[file]], [[sha1_to]], [[sha1_from]], [[sha1_commit]], and [[sha1_parent]] substituted)",
 			safe => 1,
 			rebuild => 1,
 		},

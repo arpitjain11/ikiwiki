@@ -1,0 +1,17 @@
+[[!template id=plugin name=repolist author="[[Joey]]"]]
+[[!tag type/useful]]
+
+This plugin allows you to configure ikiwiki with the location of
+[[rcs]] repositories for your wiki's source. This is done via the
+"repositories" setting in the setup file. Once you tell it where the source
+to your wiki can be downloaded from, this information can be published on
+your wiki in various ways.
+
+This plugin supports the [rel-vcs-*](http://kitenet.net/~joey/rfc/rel-vcs/)
+microformat, and uses it to embed the repository location information in
+every wiki page.
+
+By using this plugin, you will make [[Joey]] very happy, as he will be able
+to easily check out the source of your wiki, for purposes of debugging and
+general curiosity. More generally, making it easy for others to find the
+repository for your wiki is just a Plain Good Idea(TM).

@@ -1,3 +1,33 @@
+ikiwiki (3.02) UNRELEASED; urgency=low
+
+  * table: Fix misparsed links in external files.
+  * table: Find links in external files in scan pass.
+  * rename: Show full names of affected pages.
+  * comments: Fix cache avoidance hack.
+  * repolist: New plugin to support the rel=vcs-* microformat.
+  * goodstuff: Include repolist by default. (But it does nothing until
+    configured with the repository locations.)
+  * comments: Add support for removing comments via web interface. (smcv)
+  * Consistently allow use of relative paths in all PageSpecs
+    that take a page name parameter. Previously, match_created_before(),
+    match_created_after(), match_sourcepage(), and match_destpage()
+    did not support that, and the docs were not clear.
+  * pinger: Get whole url, don't just head.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 06 Jan 2009 15:02:52 -0500
+
+ikiwiki (3.01) unstable; urgency=low
+
+  * ikiwiki-makerepo: Fix injecting of empty mercurial and bzr repositories.
+    Closes: #510518
+  * Fix documentation about git hook to use right name. Closes: #510393
+  * yesno: Always accept English even when localised.
+  * yesno: Also accept 1 and 0 as input.
+  * A recent change to gitweb removed support for the form of diffurl 
+    that many ikiwiki setups use. Document how to use the new url form.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 05 Jan 2009 18:53:50 -0500
+
 ikiwiki (3.00) unstable; urgency=low
 
   * Remove support for GlobLists.
