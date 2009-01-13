@@ -1,0 +1,50 @@
+It's common to name the [[cgi]] "ikiwiki.cgi", and put it somewhere
+like `~/public_html/ikiwiki.cgi`, or `/var/www/wiki/ikiwiki.cgi`.
+
+If you do that, you may find that when trying to edit a page in your wiki,
+you see the raw contents of the ikiwiki.cgi program. Or get a permission
+denied problem.
+
+This is because web servers are generally not configured to run cgi scripts
+unless they're in `/usr/lib/cgi-bin/`. While you can put ikiwiki.cgi in
+there if you like, it's better to configure your web server to 
+run `.cgi`  programs from anywhere.
+
+These instructions are for Debian systems, but the basic
+configuration changes should work anywhere.
+
+## apache 2
+
+* Edit /etc/apache2/apache2.conf and add a line like this:
+
+	AddHandler cgi-script .cgi
+
+* Find the "Options" line for the directory where you've put the
+  ikiwiki.cgi, and add "ExecCGI" to the list of options. For example, if
+  ikiwiki.cgi is in /var/www/, edit `/etc/apache2/sites-enabled/000-default`
+  and add it to the "Options" line in the "Directory /var/www/" stanza.
+  Or, if you've put it in a `~/public_html`, edit
+  `/etc/apache2/mods-available/userdir.conf`.
+
+## lighttpd
+
+Here is how to enable cgi on [lighttpd](http://www.lighttpd.net/) and
+configure it in order to execute ikiwiki.cgi wherever it is located. 
+
+* Activate cgi by linking `/etc/lighttpd/conf-available/10-cgi.conf` into `/etc/lighttpd/conf-enabled` ([doc](http://trac.lighttpd.net/trac/wiki/Docs%3AModCGI)). 
+
+* Create `/etc/lighttpd/conf-available/90-ikiwiki-cgi.conf` and add a line like this:
+
+    cgi.assign = ( "ikiwiki.cgi"  => "", )
+
+* Activate ikiwiki-cgi by linking `/etc/lighttpd/conf-available/90-ikiwiki-cgi.conf` into `/etc/lighttpd/conf-enabled`. 
+
+* Restart lighttpd server with something like `/etc/init.d/lighttpd restart`.
+
+Note that the first part enables cgi server wide but depending on default
+configuration, it may be not enough. The second part creates a specific
+rule that allow `ikiwiki.cgi` to be executed.
+
+**Warning:** I only use this on my development server (offline). I am not
+sure of how secure this approach is. If you have any thought about it, feel
+free to let me know.

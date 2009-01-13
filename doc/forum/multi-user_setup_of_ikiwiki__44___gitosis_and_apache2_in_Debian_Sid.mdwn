@@ -43,7 +43,7 @@ In the end, I did the following. I created a directory /srv/ikiwiki/ which is ow
 
 ## cgi_wrapper
 
-I do not understand those wrappers completely. The cgi is a script, which can be called by a webserver, e. g. [[Apache_2|/tips/apache_cgi]]. But www-data is normally not allowed to write to the source directory (which is owned by gitosis or push to the repository). Therefore it should be run as the user gitosis. And because cgi scripts can not be made suid, I wrapper (in this case a C program) is created (cgi\_wrapper) which can be made suid and therefore be run as the user gitosis. Is this correct?
+I do not understand those wrappers completely. The cgi is a script, which can be called by a webserver, e. g. [[Apache_2|/tips/dot_cgi]]. But www-data is normally not allowed to write to the source directory (which is owned by gitosis or push to the repository). Therefore it should be run as the user gitosis. And because cgi scripts can not be made suid, I wrapper (in this case a C program) is created (cgi\_wrapper) which can be made suid and therefore be run as the user gitosis. Is this correct?
 
 > It seems to me like you understand the wrapper pretty well. It's main reson to exist is to safely be suid, yes.
 
