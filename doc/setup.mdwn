@@ -111,26 +111,24 @@ a working copy checked out from the version control system repository.
 When you used `auto.setup`, ikiwiki put the source directory, destination
 directory, and repository in your home directory, and told you the location
 of each. Those locations were chosen to work without customization, but you
-might want to move them to different directories. There are three steps to
-this process.
+might want to move them to different directories.
 
-1. Move the destination directory and repository around.
+First, move the destination directory and repository around.
    
-   	% mv public_html/foo /srv/web/foo.com
-   	% mv foo.git /srv/git/foo.git
+	% mv public_html/foo /srv/web/foo.com
+	% mv foo.git /srv/git/foo.git
 
-2. Create a new source directory checkout. If you moved the repository
-   to a new location, checkouts pointing at the old location won't work,
-   and the easiest way to deal with this is to delete them and re-checkout
-   from the new repository location.
+If you moved the repository to a new location, checkouts pointing at the
+old location won't work, and the easiest way to deal with this is to delete
+them and re-checkout from the new repository location.
    
-    	% rm -rf foo
-   	% git clone /src/git/foo.git
+	% rm -rf foo
+	% git clone /src/git/foo.git
 
-3. Edit the setup file. Modify the settings for `srcdir`, `destdir`,
-   `url`, `cgiurl`, `cgi_wrapper`, `git_wrapper`, etc to reflect where
-   you moved things. Remember to run `ikiwiki -setup` after editing the
-   setup file.
+Finally, edit the setup file. Modify the settings for `srcdir`, `destdir`,
+`url`, `cgiurl`, `cgi_wrapper`, `git_wrapper`, etc to reflect where
+you moved things. Remember to run `ikiwiki -setup` after editing the
+setup file.
 
 ## Enjoy your new wiki!
 
