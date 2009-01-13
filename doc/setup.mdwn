@@ -116,16 +116,16 @@ this process.
 
 1. Move the destination directory and repository around.
 
-	% mv public_html/foo /srv/web/foo.com
-	% mv foo.git /srv/git/foo.git
+>	% mv public_html/foo /srv/web/foo.com
+>	% mv foo.git /srv/git/foo.git
 
 2. Create a new source directory checkout. If you moved the repository
    to a new location, checkouts pointing at the old location won't work,
    and the easiest way to deal with this is to delete them and re-checkout
    from the new repository location.
 
-	% rm -rf foo
-	% git clone /src/git/foo.git
+>	% rm -rf foo
+>	% git clone /src/git/foo.git
 
 3. Edit the setup file. Modify the settings for `srcdir`, `destdir`,
    `url`, `cgiurl`, `cgi_wrapper`, `git_wrapper`, etc to reflect where
