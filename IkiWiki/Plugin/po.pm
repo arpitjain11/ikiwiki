@@ -593,6 +593,9 @@ sub mynicepagetitle ($;$) {
 	my $res = $origsubs{'nicepagetitle'}->($page, $unescaped);
 	return $res unless istranslation($page);
 	return $res unless $config{po_translation_status_in_links};
+	my @caller = caller(1);
+	return $res if (exists $caller[3] && defined $caller[3]
+			&& $caller[3] eq "IkiWiki::Plugin::parentlinks::parentlinks");
 	return $res.' ('.percenttranslated($page).'&nbsp;%)';
 }
 
