@@ -3,3 +3,8 @@ It would be nice if the sure could set the timezone of the wiki, and have ikiwik
 This is nice for shared hosting, and other situation where the user doesn't have control over the server timezone.
 
 > [[done]] via the ENV setting in the setup file. --[[Joey]]
+
+
+Example (ikiwiki.setup):
+
+    ENV => { TZ => "Europe/Sofia" }
