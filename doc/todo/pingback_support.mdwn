@@ -1,0 +1,22 @@
+A "pingback" is a system whereby URLs you might reference in a blog post are
+contacted by the blog publishing software at publishing time (i.e., once) so
+that they might update a list of "pingbacks" to the URL. The originating
+URL's blog software might then display a list of pingbacks, or an excerpt of
+the text from your blog, perhaps interleaved with comments, etc.
+
+At a technical level, external URLs are extracted from your blog post by the
+blogging software, fetched, inspected for information to determine whether the
+remote server is configured to support pingbacks (look for link tags, or HTTP
+headers) and the relevant pingback URL sent an XML-RPC packet.
+
+There are other technologies to achieve the same thing: trackbacks predate
+pingbacks but are more vulnerable to spam due to design problems.
+
+The spec for pingbacks is at <http://www.hixie.ch/specs/pingback/pingback>.
+
+I would like to somehow use pingbacks in conjunction with ikiwiki. I suppose
+this could be achieved using a commit hook and some external software in which
+case I will consider this done with an entry in [[tips]]; otherwise a
+[[plugins|plugin]] to implement pingbacks would be great.
+
+-- [[Jon]] (Wed Jan 14 13:48:47 GMT 2009)
