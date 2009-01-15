@@ -64,6 +64,14 @@ foreach my $page (keys %pagesources) {
     $IkiWiki::pagecase{lc $page}=$page;
 }
 
+### populate srcdir
+writefile('index.mdwn', $config{srcdir}, '[[translatable]] [[nontranslatable]]');
+writefile('test1.mdwn', $config{srcdir}, 'test1 content');
+writefile('test2.mdwn', $config{srcdir}, 'test2 content');
+writefile('test3.mdwn', $config{srcdir}, 'test3 content');
+writefile('translatable.mdwn', $config{srcdir}, '[[nontranslatable]]');
+writefile('nontranslatable.mdwn', $config{srcdir}, '[[/]] [[translatable]]');
+
 ### istranslatable/istranslation
 # we run these tests twice because memoization attempts made them
 # succeed once every two tries...
@@ -98,10 +106,6 @@ sub refresh_n_scan(@) {
 		map IkiWiki::scan(IkiWiki::abs2rel($_, $config{srcdir})), @pofiles;
 	}
 }
-
-writefile('index.mdwn', $config{srcdir}, '[[translatable]] [[nontranslatable]]');
-writefile('translatable.mdwn', $config{srcdir}, '[[nontranslatable]]');
-writefile('nontranslatable.mdwn', $config{srcdir}, '[[/]] [[translatable]]');
 
 $config{po_link_to}='negotiated';
 $msgprefix="links (po_link_to=negotiated)";
