@@ -56,6 +56,8 @@ sub import {
 	inject(name => "IkiWiki::urlto", call => \&myurlto);
 	$origsubs{'nicepagetitle'}=\&IkiWiki::nicepagetitle;
 	inject(name => "IkiWiki::nicepagetitle", call => \&mynicepagetitle);
+	$origsubs{'cgiurl'}=\&IkiWiki::cgiurl;
+	inject(name => "IkiWiki::cgiurl", call => \&mycgiurl);
 }
 
 
@@ -597,6 +599,16 @@ sub mynicepagetitle ($;$) {
 	return $res if (exists $caller[3] && defined $caller[3]
 			&& $caller[3] eq "IkiWiki::Plugin::parentlinks::parentlinks");
 	return $res.' ('.percenttranslated($page).'&nbsp;%)';
+}
+
+sub mycgiurl (@) {
+	my %params=@_;
+
+	# slave pages have no subpages
+	if (istranslation($params{'from'})) {
+		$params{'from'} = masterpage($params{'from'});
+	}
+	return $origsubs{'cgiurl'}->(%params);
 }
 
 # ,----
