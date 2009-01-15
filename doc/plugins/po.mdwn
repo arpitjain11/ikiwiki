@@ -31,6 +31,12 @@ Example: `bla/page.fr.po` is the PO "message catalog" used to
 translate `bla/page.mdwn` into French; if `usedirs` is enabled, it is
 rendered as `bla/page/index.fr.html`, else as `bla/page.fr.html`
 
+(In)Compatibility
+=================
+
+This plugin does not support the `indexpages` mode. If you don't know
+what it is, you probably don't care.
+
 
 Configuration
 =============
@@ -475,7 +481,10 @@ Robustness tests
 
 ### Enabling/disabling the plugin
 
-- enabling the plugin with `po_translatable_pages` set
+- enabling the plugin with `po_translatable_pages` set to blacklist:
+  **breaks** due to read-only basewiki
+- enabling the plugin with `po_translatable_pages` set to whitelist:
+  **OK**
 - enabling the plugin without `po_translatable_pages` set: **OK**
 - disabling the plugin: **OK**
 
@@ -498,8 +507,15 @@ and via CGI, have been tested.
 ### Misc
 
 - general test with `usedirs` disabled: **OK**
-- general test with `indexpages` enabled
-- general test with `po_link_to=default`
+- general test with `indexpages` enabled: **not OK**
+- general test with `po_link_to=default` with `userdirs` enabled: **TODO**
+- general test with `po_link_to=default` with `userdirs` disabled: **OK**
+
+Misc. bugs
+----------
+
+* link to create missing page from translation is wrong (translations
+  have no subpages)
 
 Documentation
 -------------
