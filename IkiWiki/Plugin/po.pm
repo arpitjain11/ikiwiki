@@ -680,6 +680,7 @@ sub istranslatable ($) {
 sub _istranslation ($) {
 	my $page=shift;
 
+	$page='' unless (defined $page && length $page);
 	my $hasleadingslash = ($page=~s#^/##);
 	my $file=$pagesources{$page};
 	return 0 unless (defined $file
