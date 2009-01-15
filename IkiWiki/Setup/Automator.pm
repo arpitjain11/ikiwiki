@@ -73,8 +73,18 @@ sub import (@) {
 
 	print "\n\nSetting up $config{wikiname} ...\n";
 
-	# Set up the repository.
+	# Set up the srcdir.
 	mkpath($config{srcdir}) || die "mkdir $config{srcdir}: $!";
+	# Copy in example wiki.
+	if (exists $config{example}) {
+		# cp -R is POSIX
+		# Another reason not to use -a is so that pages such as blog
+		# posts will not have old creation dates on this new wiki.
+		system("cp -R $IkiWiki::installdir/share/ikiwiki/examples/$config{example}/* $config{srcdir}");
+		delete $config{example};
+	}
+
+	# Set up the repository.
 	delete $config{repository} if ! $config{rcs} || $config{rcs}=~/bzr|mercurial/;
 	if ($config{rcs}) {
 		my @params=($config{rcs}, $config{srcdir});

@@ -2,205 +2,132 @@ This tutorial will walk you through setting up a wiki with ikiwiki.
 
 [[!toc ]]
 
-## [[Download]] and [[install]] ikiwiki.
+## Install ikiwiki
 
 If you're using Debian or Ubuntu, ikiwiki is an `apt-get install ikiwiki` away.
 If you're not, see the [[download]] and [[install]] pages.
 
-## Quick start
+## Create your wiki
 
-If you'd like to set up a wiki now, and learn more later, and you have
-ikiwiki 2.60 or better installed, just run this command and answer a couple
-of questions.
+All it takes to create a fully functional wiki using ikiwiki is running
+one command.
+[[!template id=note text="""
+For more control, advanced users may prefer to set up a wiki
+[[by_hand|byhand]].
+"""]]
 
 	% ikiwiki -setup /etc/ikiwiki/auto.setup
-	What will the wiki be named? mywiki
+
+Or, set up a blog with ikiwiki, run this command instead.
+
+	% ikiwiki -setup /etc/ikiwiki/auto-blog.setup
+
+Either way, it will ask you a couple of questions.
+
+	What will the wiki be named? foo
 	What revision control system to use? git
-	What wiki user (or openid) will be wiki admin? joey
+	What wiki user (or openid) will be admin? joey
+	Choose a password:
 
-Wait for it to tell you an url for your new wiki.. Done!
+Then, wait for it to tell you an url for your new site..
 
-(If the CGI doesn't seem to let you edit pages, you might need to
-[[configure_apache|tips/apache_cgi]] or [[configure_lighttpd|tips/lighttpd_cgi]].)
+	Successfully set up foo:
+		url:         http://example.com/~joey/foo
+		srcdir:      ~/foo
+		destdir:     ~/public_html/foo
+		repository:  ~/foo.git
+	To modify settings, edit ~/foo.setup and then run:
+		ikiwiki -setup ~/foo.setup
 
-## Decide where your wiki's files will go.
+Done! 
+
+## Using the web interface
+
+Now you can go to the url it told you, and edit pages in your new wiki
+using the web interface.
+
+(If the web interface doesn't seem to allow editing or login, you may
+need to configure [[configure_the_web_server|tips/dot_cgi]].)
+
+## Checkout and edit wiki source
+
+Part of the fun of using ikiwiki is not being limited to using the
+web for editing pages, and instead using your favorite text editor and
+[[Revision_Control_System|rcs]]. 
+
+To do this, you need to check out a copy of the source to your wiki.
+(You should avoid making changes directly to the `srcdir`, as that
+checkout is reserved for use by ikiwiki itself.)
+
+Depending on which [[Revision_Control_System|rcs]] you chose to use,
+you can run one of these commands to check out your own copy of your wiki's
+source. (Remember to replace "foo" with the real directory name.)
+
+	git clone foo.git foo.src
+	svn checkout file://`pwd`/foo.svn/trunk foo.src
+	bzr clone foo foo.src
+	hg clone foo foo.src
+	# TODO monotone, tla
+
+Now to edit pages by hand, go into the directory you checked out (ie,
+"foo.src"), and fire up your text editor to edit `index.mdwn` or whatever
+other page you want to edit. If you chose to set up a blog, there is even a
+sample first post in `posts/first_post.mdwn` that you can edit.
+
+Once you've edited a page, use your revision control system to commit
+the changes. For distributed revision control systems, don't forget to push
+your commit.
+
+Once the commit reaches the repository, ikiwiki will notice it, and
+automatically update the wiki with your changes.
+
+## Customizing the wiki
+
+There are lots of things you can configure to customize your wiki.
+These range from changing the wiki's name, to enabling [[plugins]],
+to banning users and locking pages.
+
+If you log in as the admin user you configured earlier, and go to
+your Preferences page, you can click on "Wiki Setup" to customize many
+wiki settings and plugins.
+
+Some settings cannot be configured on the web, for security reasons or
+because misconfiguring them could break the wiki. To change these settings,
+you can manually edit the setup file, which is named something like
+"foo.setup". The file lists all available configuration settings
+and gives a brief description of each.
+
+After making changes to this file, you need to tell ikiwiki to use it:
+
+	% ikiwiki -setup foo.setup
+
+## Customizing file locations
 
 As a wiki compiler, ikiwiki builds a wiki from files in a source directory,
-and outputs the files to a destination directory.  If you keep your wiki in
-a version control system, the source directory will contain a working copy
-checked out from the version control system.
+and outputs the files to a destination directory. The source directory is
+a working copy checked out from the version control system repository.
 
-For the purposes of this tutorial, we'll set shell variables
-for these locations, and use those variables in the commands that follow.
+When you used `auto.setup`, ikiwiki put the source directory, destination
+directory, and repository in your home directory, and told you the location
+of each. Those locations were chosen to work without customization, but you
+might want to move them to different directories.
 
-	SRCDIR=~/wikiwc
-	DESTDIR=~/public_html/wiki/
-
-Note that ikiwiki owns the working copy directory; do not perform your own
-edits in ikiwiki's working copy.
-
-## Create the beginnings of your wiki.
-
-This will create a simple main page for the wiki.
-
-	mkdir $SRCDIR
-	cd $SRCDIR
-	$EDITOR index.mdwn
-
-In the editor, you could start by entering a simple page like
-[[!toggle id=page text="this one"]].
-[[!toggleable id=page text="""
-	Welcome to your new wiki.
-
-	All wikis are supposed to have a \[[SandBox]],
-	so this one does too.
-
-   	----
-
-	This wiki is powered by [ikiwiki](http://ikiwiki.info).
-"""]]
+First, move the destination directory and repository around.
    
-See [[ikiwiki/formatting]] for details about the markup language.
+	% mv public_html/foo /srv/web/foo.com
+	% mv foo.git /srv/git/foo.git
 
-Note that several [[standard_wiki_pages|basewiki]] will be added to your
-wiki, from files in `/usr/share/ikiwiki/basewiki/`, so your wiki will
-automatically get a [[SandBox]], and some other useful pages.
-
-## Build your wiki for the first time.
-
-	ikiwiki --verbose $SRCDIR $DESTDIR --url=http://example.org/~you/wiki/
-
-Replace the url with the real url to your wiki. You should now
-be able to visit the url and see your wiki.
-
-## Add content to your wiki.
-
-Continue editing or adding pages and rebuilding the wiki.
+If you moved the repository to a new location, checkouts pointing at the
+old location won't work, and the easiest way to deal with this is to delete
+them and re-checkout from the new repository location.
    
-To quickly get started on a common task like blogging with ikiwiki, you
-can copy in files from the [[examples]]. The examples are located in
-`doc/examples/` in the ikiwiki source package.
+	% rm -rf foo
+	% git clone /src/git/foo.git
 
-You can experiment with other ikiwiki parameters such as `--wikiname`
-and `--rebuild` too. Get comfortable with its command line (see
-[[usage]]).
-
-## Add a setup file.
-
-By now you should be getting tired of typing in all the command line
-options each time you change something in your wiki's setup. Time to
-introduce setup files.
-
-To generate a setup file, use `ikiwiki --dumpsetup`. You can pass
-all the options have you been including at the command line, and they
-will be stored in the setup file.
-
-	ikiwiki $SRCDIR $DESTDIR --url=http://example.org/~you/wiki/ --dumpsetup ikiwiki.setup
-
-Note that this file should *not* be put in your wiki's directory with
-the rest of the files. A good place to put it is in a ~/.ikiwiki/
-subdirectory.
-   
-Most of the options, like `wikiname` in the setup file are the same as
-ikiwiki's command line options (documented in [[usage]]. `srcdir` and
-`destdir` are the two directories you specify when running ikiwiki by
-hand. Make sure that these are pointing to the right directories, and
-read through and configure the rest of the file to your liking.
-
-When you're satisfied, run `ikiwiki --setup ikiwiki.setup`, and it
-will set everything up.
-
-## Turn on additional features.
-
-Now you have a basic wiki with a setup file. Time to experiment
-with ikiwiki's many features. 
-   
-Let's first enable a key wiki feature and set up [[CGI]] to allow
-editing the wiki from the web. Just edit ikiwiki.setup, uncomment the
-settings for the `cgi_wrapper`, make sure the filename for the cgi wrapper
-is ok, run `ikiwiki --setup ikiwiki.setup`, and you're done!
-
-There are lots of other configuration options in ikiwiki.setup that you
-can uncomment, configure, and enable by re-running
-`ikiwiki --setup ikiwiki.setup`. Be sure to browse through all the
-[[plugins]]..
-
-## Put your wiki in revision control.
-
-At this point you might want to check your wiki in to a revision control
-system so you can keep track of changes and revert edits. Depending
-on the revision control system you choose, the way this is done varies.
-
-Note that the .ikiwiki subdirectory is where ikiwiki keeps its state, and
-should be preserved, but not checked into revision control.
-
-The [[ikiwiki-makerepo]] command automates setting up a wiki in
-revision control.
-
-[[!toggle id=subversion text="Subversion"]]
-[[!toggleable id=subversion text="""
-	REPOSITORY=~/wikirepo
-	ikiwiki-makerepo svn $SRCDIR $REPOSITORY
-"""]]
-
-[[!toggle id=git text="Git"]]
-[[!toggleable id=git text="""
-	REPOSITORY=~/wiki.git
-	ikiwiki-makerepo git $SRCDIR $REPOSITORY
-
-Please see [[rcs/git]] for detailed documentation about how
-ikiwiki uses git repositories, and some important caveats
-about using the git repositories.
-"""]]
-
-[[!toggle id=mercurial text="Mercurial"]]
-[[!toggleable id=mercurial text="""
-	REPOSITORY=$SRCDIR
-	ikiwiki-makerepo mercurial $SRCDIR
-"""]]
-
-[[!toggle id=bazaar text="Bazaar"]]
-[[!toggleable id=bazaar text="""
-	REPOSITORY=$SRCDIR
-	ikiwiki-makerepo bzr $SRCDIR
-"""]]
-
-[[!toggle id=tla text="TLA"]]
-[[!toggleable id=tla text="""
-	REPOSITORY=~/wikirepo
-	tla make-archive me@localhost--wiki $REPOSITORY
-	tla my-id "<me@localhost>"
-	cd $SRCDIR
-	tla archive-setup me@localhost--wiki/wiki--0
-	tla init-tree me@localhost--wiki/wiki--0
-	# Edit {arch}/=tagging-method and change the precious
-	# line to add the .ikiwiki directory to the regexp.
-	tla add *
-	tla import
-"""]]
-
-[[!toggle id=monotone text="Monotone"]]
-[[!toggleable id=monotone text="""
-	# This assumes that you have already used "mtn genkey you@hostname".
-	REPOSITORY=~/wiki.monotone
-	ikiwiki-makerepo monotone $SRCDIR $REPOSITORY
-"""]]
-
-## Configure ikiwiki to use revision control.
-
-Once your wiki is checked in to the revision control system, you should
-configure ikiwiki to use revision control. Edit your ikiwiki.setup, set
-`rcs` to the the revision control system you chose to use. Be sure to set
-`svnrepo` to the directory for your repository, if using subversion.
-Uncomment the configuration for the wrapper for your revision control
-system, and configure the wrapper path appropriately (for Git, it should be
-the path to `hooks/post-update` inside the bare git repository).
-
-Once it's all set up, run `ikiwiki --setup ikiwiki.setup` once more.
-Now you should be able to edit files in $SRCDIR, and use your revision
-control system to commit them, and the wiki will automatically update.
-And in the web interface, RecentChanges should work, and files changed
-by web users will also be committed using revision control.
+Finally, edit the setup file. Modify the settings for `srcdir`, `destdir`,
+`url`, `cgiurl`, `cgi_wrapper`, `git_wrapper`, etc to reflect where
+you moved things. Remember to run `ikiwiki -setup` after editing the
+setup file.
 
 ## Enjoy your new wiki!
 

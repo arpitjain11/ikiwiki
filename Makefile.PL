@@ -69,6 +69,15 @@ extra_install:
 			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/directives/ikiwiki/directive; \
 		fi \
 	done
+	
+	# Install example sites.
+	for dir in `cd doc/examples; find -type d ! -regex '.*\.svn.*'`; do \
+		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$dir; \
+	done
+	for file in `cd doc/examples; find -type f ! -regex '.*\.svn.*'`; do \
+		cp -aL doc/examples/$$file $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$file || \
+		install -m 644 doc/examples/$$file $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$file; \
+	done
 
 	for dir in `find templates -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
@@ -111,6 +120,7 @@ extra_install:
 	-install -d $(DESTDIR)/etc/ikiwiki
 	-install -m 0644 wikilist $(DESTDIR)/etc/ikiwiki
 	-install -m 0644 auto.setup $(DESTDIR)/etc/ikiwiki
+	-install -m 0644 auto-blog.setup $(DESTDIR)/etc/ikiwiki
 }
 }
 

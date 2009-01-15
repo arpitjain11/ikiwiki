@@ -26,7 +26,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  %pagesources %destsources);
 our $VERSION = 3.00; # plugin interface version, next is ikiwiki version
 our $version='unknown'; # VERSION_AUTOREPLACE done by Makefile, DNE
-my $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
+our $installdir=''; # INSTALLDIR_AUTOREPLACE done by Makefile, DNE
 
 # Optimisation.
 use Memoize;

@@ -7,7 +7,7 @@ BEGIN {
 }
 
 if (/INSTALLDIR_AUTOREPLACE/) {
-	$_=qq{my \$installdir="$prefix";};
+	$_=qq{our \$installdir="$prefix";};
 }
 elsif (/VERSION_AUTOREPLACE/) {
 	$_=qq{our \$version="$ver";};
