@@ -301,8 +301,6 @@ an initial goal, and analysing in detail the possible issues.
   read any file. NB: this hack depends on po4a internals to stay
   the same.
 
-#### To be checked
-
 ##### Locale::Po4a modules
 
 The modules we want to use have to be checked, as not all are safe
@@ -321,52 +319,19 @@ means the `Text` module only.
 
   > Freaky code, but seems ok due to use of `quotementa`.
 
+#### To be checked
+
 ##### Text::WrapI18N
 
 `Text::WrapI18N` can cause DoS (see the
 [Debian bug #470250](http://bugs.debian.org/470250)), but it is
 optional and we do not need the features it provides.
 
-It is loaded if available by `Locale::Po4a::Common`; looking at the
-code, I'm not sure we can prevent this at all, but maybe some symbol
-table manipulation tricks could work; overriding
-`Locale::Po4a::Common::wrapi18n` may be easier. I'm no expert at all
-in this field. Joey? [[--intrigeri]]
-
-> Update: Nicolas François suggests we add an option to po4a to
-> disable it. It would do the trick, but only for people running
-> a brand new po4a (probably too late for Lenny). Anyway, this option
-> would have to take effect in a `BEGIN` / `eval` that I'm not
-> familiar with. I can learn and do it, in case no Perl wizard
-> volunteers to provide the po4a patch. [[--intrigeri]]
-
->> That doesn't really need to be in a BEGIN. This patch moves it to
->> `import`, and makes this disable wrap18n:
->> `use Locale::Po4a::Common q{nowrapi18n}` --[[Joey]]
-
-<pre>
---- /usr/share/perl5/Locale/Po4a/Common.pm	2008-07-21 14:54:52.000000000 -0400
-+++ Common.pm	2008-11-11 18:27:34.000000000 -0500
-@@ -30,8 +30,16 @@
- use strict;
- use warnings;
- 
--BEGIN {
--    if (eval { require Text::WrapI18N }) {
-+sub import {
-+    my $class=shift;
-+    my $wrapi18n=1;
-+    if ($_[0] eq 'nowrapi18n') {
-+    	shift;
-+	$wrapi18n=0;
-+    }
-+    $class->export_to_level(1, $class, @_);
-+
-+    if ($wrapi18n && eval { require Text::WrapI18N }) {
-     
-         # Don't bother determining the wrap column if we cannot wrap.
-         my $col=$ENV{COLUMNS};
-</pre>
+> I proposed a patch based on Joey's to po4a-devel, allowing to fully
+> disable this module's use. When it is merged upstream, we'll need to add
+> `use Locale::Po4a::Common qw(nowrapi18n)` to `po.pm`, before loading
+> any other `Locale::Po4a` module. A versioned dependency may be needed.
+> --[[intrigeri]]
 
 ##### Term::ReadKey
 
@@ -375,46 +340,29 @@ works nicely without it. But the po4a Debian package recommends
 `libterm-readkey-perl`, so it will probably be installed on most
 systems using the po plugin.
 
-If `$ENV{COLUMNS}` is not set, `Locale::Po4a::Common` uses
-`Term::ReadKey::GetTerminalSize()` to get the terminal size. How safe
-is this?
+`Term::ReadKey` has too far reaching implications for us to
+be able to guarantee anything wrt. security.
 
-Part of `Term::ReadKey` is written in C. Depending on the runtime
-platform, this function use ioctl, environment, or C library function
-calls, and may end up running the `resize` command (without
-arguments).
-
-IMHO, using Term::ReadKey has too far reaching implications for us to
-be able to guarantee anything wrt. security. Since it is anyway of no
-use in our case, I suggest we define `ENV{COLUMNS}` before loading
-`Locale::Po4a::Common`, just to be on the safe side. Joey?
-[[--intrigeri]]
-
-> Update: adding an option to disable `Text::WrapI18N`, as Nicolas
-> François suggested, would as a bonus disable `Term::ReadKey`
-> as well. [[--intrigeri]]
+> The option that disables `Text::WrapI18N` also disables
+> `Term::ReadKey` as a consequence. [[--intrigeri]]
 
 ### msgmerge
 
-`refreshpofiles()` runs this external program. A po4a developer
-answered he does "not expect any security issues from it".
+`refreshpofiles()` runs this external program.
+
+A po4a developer answered he does "not expect any security issues from
+it". I did not manage to crash it with `zzuf`, nor was able to find
+any past security holes.
 
 ### msgfmt
 
-`isvalidpo()` runs this external program. Its security should be checked.
+`isvalidpo()` runs this external program.
+
+* I could not manage to make it behave badly using zzuf, it exits
+  cleanly when too many errors are detected.
+* I could not find any past security holes.
 
 ### Fuzzing input
-
-I was not able to find any public information about gettext or po4a
-having been tested with a fuzzing program, such as `zzuf` or `fusil`.
-Moreover, some gettext parsers seem to be quite
-[easy to crash](http://fusil.hachoir.org/trac/browser/trunk/fuzzers/fusil-gettext),
-so it might be useful to bang msgmerge/po4a's heads against such
-a program in order to easily detect some of the most obvious DoS.
-[[--intrigeri]]
-
-> po4a was not fuzzy-tested, but according to one of its developers,
-> "it would be really appreciated". [[--intrigeri]]
 
 Test conditions:
 
@@ -489,18 +437,9 @@ While:
 
 ... seems to lose the fight, at the `readpo(LICENSES.fr.po)` step,
 against some kind of infinite loop, deadlock, or any similar beast.
-It does not seem to eat memory, though.
 
-Whatever format module is used does not change anything. This is thus
-probably a bug in po4a's core or in a lib it depends on.
-
-The sub `read`, in `TransTractor.pm`, seems to be a good debugging
-starting point.
-
-#### msgmerge
-
-`msgmerge` is run in our `refreshpofiles` function. I did not manage
-to crash it with `zzuf`.
+The root of this bug lies in `Text::WrapI18N`, see above for
+possible solutions.
 
 gettext/po4a rough corners
 --------------------------
@@ -529,7 +468,7 @@ Using the fix to
 [[bugs/pagetitle_function_does_not_respect_meta_titles]] from
 [[intrigeri]]'s `meta` branch, the generated links' text is based on
 the page titles set with the [[meta|plugins/meta]] plugin. This has to
-be merged upstream, though.
+be merged into ikiwiki upstream, though.
 
 Robustness tests
 ----------------
