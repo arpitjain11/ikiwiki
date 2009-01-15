@@ -481,10 +481,8 @@ Robustness tests
 
 ### Enabling/disabling the plugin
 
-- enabling the plugin with `po_translatable_pages` set to blacklist:
-  **breaks** due to read-only basewiki
-- enabling the plugin with `po_translatable_pages` set to whitelist:
-  **OK**
+- enabling the plugin with `po_translatable_pages` set to blacklist: **OK**
+- enabling the plugin with `po_translatable_pages` set to whitelist: **OK**
 - enabling the plugin without `po_translatable_pages` set: **OK**
 - disabling the plugin: **OK**
 
