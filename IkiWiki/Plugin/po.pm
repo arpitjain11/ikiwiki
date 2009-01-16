@@ -357,6 +357,42 @@ sub mydelete(@) {
 sub change(@) {
 	my @rendered=@_;
 
+	# All meta titles are first extracted at scan time, i.e. before we turn
+	# PO files back into translated markdown; escaping of double-quotes in
+	# PO files breaks the meta plugin's parsing enough to save ugly titles
+	# to %pagestate at this time.
+	#
+	# Then, at render time, every page's passes on row through the Great
+	# Rendering Chain (filter->preprocess->linkify->htmlize), and the meta
+	# plugin's preprocess hook is this time in a position to correctly
+	# extract the titles from slave pages.
+	#
+	# This is, unfortunately, too late: if the page A, linking to the page B,
+	# is rendered before B, it will display the wrongly-extracted meta title
+	# as the link text to B.
+	#
+	# On the one hand, such a corner case only happens on rebuild: on
+	# refresh, every rendered page is fixed to contain correct meta titles.
+	# On the other hand, it can take some time to get every page fixed.
+	# We therefore re-render every rendered page after a rebuild to fix them
+	# at once. As this more or less doubles the time needed to rebuild the
+	# wiki, we do so only when really needed.
+
+	if (scalar @rendered
+	    && exists $config{rebuild} && defined $config{rebuild} && $config{rebuild}
+	    && UNIVERSAL::can("IkiWiki::Plugin::meta", "getsetup")
+	    && exists $config{meta_overrides_page_title}
+	    && defined $config{meta_overrides_page_title}
+	    && $config{meta_overrides_page_title}) {
+		debug(sprintf(gettext("re-rendering all pages to fix meta titles")));
+		resetalreadyfiltered();
+		require IkiWiki::Render;
+		foreach my $file (@rendered) {
+			debug(sprintf(gettext("rendering %s"), $file));
+			IkiWiki::render($file);
+		}
+	}
+
 	my $updated_po_files=0;
 
 	# Refresh/create POT and PO files as needed.
