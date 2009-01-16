@@ -333,11 +333,8 @@ means the `Text` module only.
 [Debian bug #470250](http://bugs.debian.org/470250)), but it is
 optional and we do not need the features it provides.
 
-> I proposed a patch based on Joey's to po4a-devel, allowing to fully
-> disable this module's use. When it is merged upstream, we'll need to add
-> `use Locale::Po4a::Common qw(nowrapi18n)` to `po.pm`, before loading
-> any other `Locale::Po4a` module. A versioned dependency may be needed.
-> --[[intrigeri]]
+> If a recent enough po4a is installed, this module's use is fully disabled.
+> This feature has been merged in po4a CVS on 2009-01-15. --[[intrigeri]]
 
 ##### Term::ReadKey
 

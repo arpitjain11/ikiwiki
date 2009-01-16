@@ -10,6 +10,16 @@ use warnings;
 use strict;
 use IkiWiki 3.00;
 use Encode;
+BEGIN {
+	eval 'use Locale::Po4a::Common qw(nowrapi18n)';
+	if ($@) {
+		warning(sprintf(gettext('%s is too old, can not disable %s; '.
+					'a denial of service can thus be '.
+					'triggered by malicious content'),
+				'Locale::Po4a', 'Text::WrapI18N'));
+		eval 'use Locale::Po4a::Common';
+	}
+}
 use Locale::Po4a::Chooser;
 use Locale::Po4a::Po;
 use File::Basename;
