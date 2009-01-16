@@ -21,7 +21,7 @@ our @EXPORT = qw(hook debug error template htmlpage add_depends pagespec_match
                  bestlink htmllink readfile writefile pagetype srcfile pagename
                  displaytime will_render gettext urlto targetpage
 		 add_underlay pagetitle titlepage linkpage newpagefile
-		 inject
+		 inject warning
                  %config %links %pagestate %wikistate %renderedfiles
                  %pagesources %destsources);
 our $VERSION = 3.00; # plugin interface version, next is ikiwiki version
@@ -577,6 +577,10 @@ sub error ($;$) {
 		$cleaner->();
 	}
 	die $message."\n";
+}
+
+sub warning ($) {
+	return log_message(warning => @_);
 }
 
 sub debug ($) {
