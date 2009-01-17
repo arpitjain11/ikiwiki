@@ -6,10 +6,10 @@ This plugin adds antispam support to ikiwiki, using the
 [[comment|comments]] postings can be checked for spam. Currently,
 detected spam is not saved for human review, it is just rejected.
 
-You can control how content is tested via the `blogspam_options`
-setting. By default, the options are configured in a way that is
-appropriate for wiki content. This includes turning off some of the
-more problimatic tests.
+You can control how content is tested via the `blogspam_options` setting.
+The list of options is [here](http://blogspam.net/api/testComment.html#options).
+By default, the options are configured in a way that is appropriate for
+wiki content. This includes turning off some of the more problimatic tests.
 
 The `blogspam_pagespec` setting is a [[ikiwiki/PageSpec]] that can be
 used to configure which pages are checked for spam. The default is to check
