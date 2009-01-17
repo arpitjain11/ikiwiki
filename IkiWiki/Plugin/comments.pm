@@ -467,9 +467,18 @@ sub sessioncgi ($$) {
 	}
 
 	if ($form->submitted eq POST_COMMENT && $form->validate) {
-		my $file = "$location._comment";
-
 		IkiWiki::checksessionexpiry($cgi, $session);
+		
+		IkiWiki::check_content(content => $form->field('editcontent'),
+			subject => $form->field('subject'),
+			$config{comments_allowauthor} ? (
+				author => $form->field('author'),
+				url => $form->field('url'),
+			) : (),
+			page => $location,
+			cgi => $cgi, session => $session);
+		
+		my $file = "$location._comment";
 
 		# FIXME: could probably do some sort of graceful retry
 		# on error? Would require significant unwinding though

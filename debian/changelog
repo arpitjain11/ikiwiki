@@ -18,6 +18,8 @@ ikiwiki (3.02) UNRELEASED; urgency=low
     behave better.
   * Add auto-blog.setup, which will set up an ikiwiki instance tuned for use
     in blogging.
+  * checkcontent: New hook, can be used to implement arbitrary content
+    filters, including spam filters.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 06 Jan 2009 15:02:52 -0500
 
