@@ -4,8 +4,6 @@ package IkiWiki::Plugin::blogspam;
 use warnings;
 use strict;
 use IkiWiki 3.00;
-require RPC::XML;
-require RPC::XML::Client;
 
 my $defaulturl='http://test.blogspam.net:8888/';
 
@@ -47,6 +45,15 @@ sub getsetup () {
 
 sub checkcontent (@) {
 	my %params=@_;
+
+	eval q{
+		use RPC::XML;
+		use RPC::XML::Client;
+	};
+	if ($@) {
+		warn($@);
+		return undef;
+	}
 	
  	if (exists $config{blogspam_pagespec}) {
 		return undef
