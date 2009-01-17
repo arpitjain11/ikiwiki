@@ -469,6 +469,7 @@ sub sessioncgi ($$) {
 	if ($form->submitted eq POST_COMMENT && $form->validate) {
 		IkiWiki::checksessionexpiry($cgi, $session);
 		
+		$postcomment=1;
 		IkiWiki::check_content(content => $form->field('editcontent'),
 			subject => $form->field('subject'),
 			$config{comments_allowauthor} ? (
@@ -476,7 +477,9 @@ sub sessioncgi ($$) {
 				url => $form->field('url'),
 			) : (),
 			page => $location,
-			cgi => $cgi, session => $session);
+			cgi => $cgi, session => $session
+		);
+		$postcomment=0;
 		
 		my $file = "$location._comment";
 
