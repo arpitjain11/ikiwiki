@@ -343,8 +343,6 @@ sub sessioncgi ($$) {
 		error(gettext("bad page name"));
 	}
 
-	# FIXME: is this right? Or should we be using the candidate subpage
-	# (whatever that might mean) as the base URL?
 	my $baseurl = urlto($page, undef, 1);
 
 	$form->title(sprintf(gettext("commenting on %s"),
