@@ -4,8 +4,6 @@ package IkiWiki::Plugin::blogspam;
 use warnings;
 use strict;
 use IkiWiki 3.00;
-require RPC::XML;
-require RPC::XML::Client;
 
 my $defaulturl='http://test.blogspam.net:8888/';
 
@@ -47,6 +45,15 @@ sub getsetup () {
 
 sub checkcontent (@) {
 	my %params=@_;
+
+	eval q{
+		use RPC::XML;
+		use RPC::XML::Client;
+	};
+	if ($@) {
+		warn($@);
+		return undef;
+	}
 	
  	if (exists $config{blogspam_pagespec}) {
 		return undef
@@ -76,17 +83,12 @@ sub checkcontent (@) {
 	# and "buy".
 	push @options, "exclude=stopwords";
 
-	# blogspam API does not have a field for author url, so put it in
-	# the content to be checked.
-	if (exists $params{url}) {
-		$params{content}.="\n".$params{url};
-	}
-
 	my $res = $client->send_request('testComment', {
 		ip => $ENV{REMOTE_ADDR},
 		comment => $params{content},
 		subject => defined $params{subject} ? $params{subject} : "",
 		name => defined $params{author} ? $params{author} : "",
+		link => exists $params{url} ? $params{url} : "",
 		options => join(",", @options),
 		site => $config{url},
 		version => "ikiwiki ".$IkiWiki::version,
