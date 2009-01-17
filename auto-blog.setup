@@ -35,7 +35,7 @@ IkiWiki::Setup::Automator->import(
 	cgiurl => "http://$domain/~$ENV{USER}/$wikiname/ikiwiki.cgi",
 	cgi_wrapper => "$ENV{HOME}/public_html/$wikiname/ikiwiki.cgi",
 	adminemail => "$ENV{USER}\@$domain",
-	add_plugins => [qw{goodstuff websetup comments}],
+	add_plugins => [qw{goodstuff websetup comments blogspam}],
 	disable_plugins => [qw{}],
 	libdir => "$ENV{HOME}/.ikiwiki",
 	rss => 1,
@@ -44,5 +44,6 @@ IkiWiki::Setup::Automator->import(
 	
 	example => "blog",
 	comments_pagespec => "posts/* and !*/Discussion",
+	blogspam_pagespec => "postcomment(*)",
 	discussion => 0,
 )

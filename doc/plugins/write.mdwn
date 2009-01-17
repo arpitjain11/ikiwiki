@@ -303,7 +303,7 @@ can check if the session object has a "name" parameter set.
 
 ### canedit
 
-	hook(type => "canedit", id => "foo", call => \&pagelocked);
+	hook(type => "canedit", id => "foo", call => \&canedit);
 
 This hook can be used to implement arbitrary access methods to control when
 a page can be edited using the web interface (commits from revision control
@@ -355,6 +355,26 @@ but is passed:
 * a CGI object
 * a session object
 * the named parameters `src`, `srcfile`, `dest` and `destfile`.
+
+### checkcontent
+	
+	hook(type => "checkcontent", id => "foo", call => \&checkcontent);
+
+This hook is called to check the content a user has entered on a page,
+before it is saved, and decide if it should be allowed.
+
+It is passed named parameters: `content`, `page`, `cgi`, and `session`. If
+the content the user has entered is a comment, it may also be passed some
+additional parameters: `author`, `url`, and `subject`. The `subject`
+parameter may also be filled with the user's comment about the change.
+
+Note: When the user edits an existing wiki page, the passed `content` will
+include only the lines that they added to the page, or modified.
+
+The hook should return `undef` on success. If the content is disallowed, it
+should return a message stating what the problem is, or a function
+that can be run to perform whatever action is necessary to allow the user
+to post the content.
 
 ### editcontent
 

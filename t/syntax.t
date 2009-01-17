@@ -5,8 +5,8 @@ use Test::More;
 
 my @progs="ikiwiki.in";
 my @libs="IkiWiki.pm";
-# monotone, external, amazon_s3 skipped since they need perl modules
-push @libs, map { chomp; $_ } `find IkiWiki -type f -name \\*.pm | grep -v monotone.pm | grep -v external.pm | grep -v amazon_s3.pm | grep -v po.pm`;
+# monotone, external, blogspam, amazon_s3, po skipped since they need perl modules
+push @libs, map { chomp; $_ } `find IkiWiki -type f -name \\*.pm | grep -v monotone.pm | grep -v external.pm | grep -v blogspam.pm | grep -v amazon_s3.pm | grep -v po.pm`;
 push @libs, 'IkiWiki/Plugin/skeleton.pm.example';
 
 plan(tests => (@progs + @libs));

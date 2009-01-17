@@ -1,0 +1,25 @@
+[[!template id=plugin name=blogspam author="[[Joey]]"]]
+[[!tag type/auth]]
+
+This plugin adds antispam support to ikiwiki, using the
+[blogspam.net](http://blogspam.net/) API. Both page edits and
+[[comment|comments]] postings can be checked for spam. Currently,
+detected spam is not saved for human review, it is just rejected.
+
+The plugin requires the [[!cpan RPC::XML]] perl module.
+
+You can control how content is tested via the `blogspam_options` setting.
+The list of options is [here](http://blogspam.net/api/testComment.html#options).
+By default, the options are configured in a way that is appropriate for
+wiki content. This includes turning off some of the more problimatic tests.
+
+The `blogspam_pagespec` setting is a [[ikiwiki/PageSpec]] that can be
+used to configure which pages are checked for spam. The default is to check
+all edits. If you only want to check [[comments]] (not wiki page edits),
+set it to "postcomment(*)".
+
+By default, the blogspam.net server is used to do the spam checking. To
+change this, the `blogspam_server` option can be set to the url for a
+different server implementing the same API. Note that content is sent
+unencrypted over the internet to the server, and the server sees
+the full text of the content.

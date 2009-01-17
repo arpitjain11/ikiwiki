@@ -78,7 +78,43 @@ sub check_canedit ($$$;$) {
 			}
 		}
 	});
-	return $canedit;
+	return defined $canedit ? $canedit : 1;
+}
+
+sub check_content (@) {
+	my %params=@_;
+	
+	return 1 if ! exists $hooks{checkcontent}; # optimisation
+
+	if (exists $pagesources{$params{page}}) {
+		my @diff;
+		my %old=map { $_ => 1 }
+		        split("\n", readfile(srcfile($pagesources{$params{page}})));
+		foreach my $line (split("\n", $params{content})) {
+			push @diff, $line if ! exists $old{$_};
+		}
+		$params{content}=join("\n", @diff);
+	}
+
+	my $ok;
+	run_hooks(checkcontent => sub {
+		return if defined $ok;
+		my $ret=shift->(%params);
+		if (defined $ret) {
+			if ($ret eq "") {
+				$ok=1;
+			}
+			elsif (ref $ret eq 'CODE') {
+				$ret->();
+				$ok=0;
+			}
+			elsif (defined $ret) {
+				error($ret);
+			}
+		}
+
+	});
+	return defined $ok ? $ok : 1;
 }
 
 sub check_cansave ($$$$) {
@@ -395,9 +431,18 @@ sub cgi_editpage ($$) {
 			showform($form, \@buttons, $session, $q, forcebaseurl => $baseurl);
 			exit;
 		}
+			
+		my $message="";
+		if (defined $form->field('comments') &&
+		    length $form->field('comments')) {
+			$message=$form->field('comments');
+		}
 		
 		my $content=$form->field('editcontent');
 		check_cansave($page, $content, $q, $session);
+		check_content(content => $content, page => $page,
+			cgi => $q, session => $session,
+			subject => $message);
 		run_hooks(editcontent => sub {
 			$content=shift->(
 				content => $content,
@@ -431,12 +476,6 @@ sub cgi_editpage ($$) {
 		
 		my $conflict;
 		if ($config{rcs}) {
-			my $message="";
-			if (defined $form->field('comments') &&
-			    length $form->field('comments')) {
-				$message=$form->field('comments');
-			}
-			
 			if (! $exists) {
 				rcs_add($file);
 			}

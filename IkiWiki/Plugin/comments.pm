@@ -343,8 +343,6 @@ sub sessioncgi ($$) {
 		error(gettext("bad page name"));
 	}
 
-	# FIXME: is this right? Or should we be using the candidate subpage
-	# (whatever that might mean) as the base URL?
 	my $baseurl = urlto($page, undef, 1);
 
 	$form->title(sprintf(gettext("commenting on %s"),
@@ -469,9 +467,21 @@ sub sessioncgi ($$) {
 	}
 
 	if ($form->submitted eq POST_COMMENT && $form->validate) {
-		my $file = "$location._comment";
-
 		IkiWiki::checksessionexpiry($cgi, $session);
+		
+		$postcomment=1;
+		IkiWiki::check_content(content => $form->field('editcontent'),
+			subject => $form->field('subject'),
+			$config{comments_allowauthor} ? (
+				author => $form->field('author'),
+				url => $form->field('url'),
+			) : (),
+			page => $location,
+			cgi => $cgi, session => $session
+		);
+		$postcomment=0;
+		
+		my $file = "$location._comment";
 
 		# FIXME: could probably do some sort of graceful retry
 		# on error? Would require significant unwinding though

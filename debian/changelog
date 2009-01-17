@@ -1,5 +1,11 @@
 ikiwiki (3.02) UNRELEASED; urgency=low
 
+  * blogspam: New plugin, adding spam filtering for page editing / comment
+    posting using the BlogSpam.net API.
+  * Add auto-blog.setup, which will set up an ikiwiki instance tuned for use
+    in blogging.
+  * checkcontent: New hook, can be used to implement arbitrary content
+    filters, including spam filters.
   * table: Fix misparsed links in external files.
   * table: Find links in external files in scan pass.
   * rename: Show full names of affected pages.
@@ -16,8 +22,6 @@ ikiwiki (3.02) UNRELEASED; urgency=low
     the nostromo web server.
   * Recommend libterm-readline-gnu-perl since that makes auto.setup
     behave better.
-  * Add auto-blog.setup, which will set up an ikiwiki instance tuned for use
-    in blogging.
 
  -- Joey Hess <joeyh@debian.org>  Tue, 06 Jan 2009 15:02:52 -0500
 
