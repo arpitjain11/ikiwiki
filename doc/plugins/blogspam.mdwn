@@ -6,6 +6,8 @@ This plugin adds antispam support to ikiwiki, using the
 [[comment|comments]] postings can be checked for spam. Currently,
 detected spam is not saved for human review, it is just rejected.
 
+The plugin requires the [[!cpan RPC::XML]] perl module.
+
 You can control how content is tested via the `blogspam_options` setting.
 The list of options is [here](http://blogspam.net/api/testComment.html#options).
 By default, the options are configured in a way that is appropriate for
