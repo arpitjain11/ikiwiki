@@ -1,0 +1,206 @@
+[[!toc levels=2]]
+
+----
+
+# Probable holes
+
+_(The list of things to fix.)_
+
+## po4a-gettextize
+
+* po4a CVS 2009-01-16
+* Perl 5.10.0
+
+`po4a-gettextize` uses more or less the same po4a features as our
+`refreshpot` function.
+
+Without specifying an input charset, zzuf'ed `po4a-gettextize` quickly
+errors out, complaining it was not able to detect the input charset;
+it leaves no incomplete file on disk. I therefore had to pretend the
+input was in UTF-8, as does the po plugin.
+
+        zzuf -c -s 13 -r 0.1 \
+            po4a-gettextize -f text -o markdown -M utf-8 -L utf-8 \
+             -m GPL-3 -p GPL-3.pot
+
+Crashes with:
+
+        Malformed UTF-8 character (UTF-16 surrogate 0xdfa4) in substitution
+        iterator at /usr/share/perl5/Locale/Po4a/Po.pm line 1449.
+        Malformed UTF-8 character (fatal) at /usr/share/perl5/Locale/Po4a/Po.pm
+        line 1449.
+
+An incomplete pot file is left on disk. Unfortunately Po.pm tells us
+nothing about the place where the crash happens.
+
+> It's fairly standard perl behavior when fed malformed utf-8. As long
+> as it doesn't crash ikiwiki, it's probably acceptable. Ikiwiki can
+> do some similar things itself when fed malformed utf-8 (doesn't
+> crash tho) --[[Joey]]
+
+----
+
+# Potential gotchas
+
+_(Things not to do.)_
+
+
+## Blindly activating more po4a format modules
+
+The format modules we want to use have to be checked, as not all are
+safe (e.g. the LaTeX module's behaviour is changed by commands
+included in the content); they may use regexps generated from
+the content.
+
+----
+
+# Hopefully non-holes
+
+_(AKA, the assumptions that will be the root of most security holes...)_
+
+## PO file features
+
+No [documented](http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files)
+directive that can be put in po files is supposed to cause mischief
+(ie, include other files, run commands, crash gettext, whatever).
+
+## gettext
+
+### Security history
+
+The only past security issue I could find in GNU gettext is
+[CVE-2004-0966](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0966),
+*i.e.* [Debian bug #278283](http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=278283):
+the autopoint and gettextize scripts in the GNU gettext package (1.14
+and later versions) may allow local users to overwrite files via
+a symlink attack on temporary files.
+
+This plugin would not have allowed to exploit this bug, as it does not
+use, either directly or indirectly, the faulty scripts.
+
+Note: the lack of found security issues can either indicate that there
+are none, or reveal that no-one ever bothered to find or publish them.
+
+### msgmerge
+
+`refreshpofiles()` runs this external program.
+
+* I was not able to crash it with `zzuf`.
+* I could not find any past security hole.
+
+### msgfmt
+
+`isvalidpo()` runs this external program.
+
+* I was not able to make it behave badly using zzuf: it exits cleanly
+  when too many errors are detected.
+* I could not find any past security hole.
+
+## po4a
+
+### Security history
+
+The only past security issue I could find in po4a is
+[CVE-2007-4462](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4462):
+`lib/Locale/Po4a/Po.pm` in po4a before 0.32 allowed local users to
+overwrite arbitrary files via a symlink attack on the
+gettextization.failed.po temporary file.
+
+This plugin would not have allowed to exploit this bug, as it does not
+use, either directly or indirectly, the faulty `gettextize` function.
+
+Note: the lack of found security issues can either indicate that there
+are none, or reveal that no-one ever bothered to find or publish them.
+
+### General feeling
+
+Are there any security issues on running po4a on untrusted content?
+
+To say the least, this issue is not well covered, at least publicly:
+
+* the documentation does not talk about it;
+* grep'ing the source code for `security` or `trust` gives no answer.
+
+On the other hand, a po4a developer answered my questions in
+a convincing manner, stating that processing untrusted content was not
+an initial goal, and analysing in detail the possible issues.
+The following analysis was done with his help.
+
+### Details
+
+* the core (`Po.pm`, `Transtractor.pm`) should be safe
+* po4a source code was fully checked for other potential symlink
+  attacks, after discovery of one such issue
+* the only external program run by the core is `diff`, in `Po.pm` (in
+  parts of its code we don't use)
+* `Locale::gettext` is only used to display translated error messages
+* Nicolas François "hopes" `DynaLoader` is safe, and has "no reason to
+  think that `Encode` is not safe"
+* Nicolas François has "no reason to think that `Encode::Guess` is not
+  safe". The po plugin nevertheless avoids using it by defining the
+  input charset (`file_in_charset`) before asking `TransTractor` to
+  read any file. NB: this hack depends on po4a internals.
+
+#### Locale::Po4a::Text
+
+* does not run any external program
+* only `do_paragraph()` builds regexp's that expand untrusted
+  variables; according to [[Joey]], this is "Freaky code, but seems ok
+  due to use of `quotementa`".
+
+#### Text::WrapI18N
+
+`Text::WrapI18N` can cause DoS
+([Debian bug #470250](http://bugs.debian.org/470250)).
+It is optional, and we do not need the features it provides.
+
+If a recent enough po4a (>=2009-01-15 CVS, which will probably be
+released as 0.35) is installed, this module's use is fully disabled.
+Else, the wiki administrator is warned about this at runtime.
+
+#### Term::ReadKey
+
+`Term::ReadKey` is not a hard dependency in our case, *i.e.* po4a
+works nicely without it. But the po4a Debian package recommends
+`libterm-readkey-perl`, so it will probably be installed on most
+systems using the po plugin.
+
+`Term::ReadKey` has too far reaching implications for us to
+be able to guarantee anything wrt. security.
+
+If a recent enough po4a (>=2009-01-15 CVS, which will probably be
+released as 0.35) is installed, this module's use is fully disabled.
+
+#### Fuzzing input
+
+##### po4a-translate
+
+* po4a CVS 2009-01-16
+* Perl 5.10.0
+
+`po4a-translate` uses more or less the same po4a features as our
+`filter` function.
+
+Without specifying an input charset, same behaviour as
+`po4a-gettextize`, so let's specify UTF-8 as input charset as of now.
+
+`LICENSES` is a 21M file containing 100 concatenated copies of all the
+files in `/usr/share/common-licenses/`; I had no existing PO file or
+translated versions at hand, which renders these tests
+quite incomplete.
+
+        zzuf -cv -s 0:10 -r 0.001:0.3 \
+          po4a-translate -d -f text -o markdown -M utf-8 -L utf-8 \
+            -k 0 -m LICENSES -p LICENSES.fr.po -l test.fr
+
+... seems to lose the fight, at the `readpo(LICENSES.fr.po)` step,
+against some kind of infinite loop, deadlock, or any similar beast.
+
+The root of this bug lies in `Text::WrapI18N`, see the corresponding
+section.
+
+
+----
+
+# Fixed holes
+

@@ -86,8 +86,8 @@ If `po_link_to` is set to `current`, `\[[destpage]]` links to the
 `destpage`'s version written in the current page's language, if
 available, *i.e.*:
 
-- `foo/destpage/index.LL.html` if `usedirs` is enabled
-- `foo/destpage.LL.html` if `usedirs` is disabled
+* `foo/destpage/index.LL.html` if `usedirs` is enabled
+* `foo/destpage.LL.html` if `usedirs` is disabled
 
 ### Link to negotiated language
 
@@ -96,10 +96,10 @@ negotiated preferred language, *i.e.* `foo/page/`.
 
 (In)compatibility notes:
 
-- if `usedirs` is disabled, it does not make sense to set `po_link_to`
+* if `usedirs` is disabled, it does not make sense to set `po_link_to`
   to `negotiated`; this option combination is neither implemented
   nor allowed.
-- if the web server does not support Content Negotiation, setting
+* if the web server does not support Content Negotiation, setting
   `po_link_to` to `negotiated` will produce a unusable website.
 
 
@@ -166,11 +166,11 @@ One typically adds the following code to `templates/page.tmpl`:
 
 The following variables are available inside the loop (for every page in):
 
-- `URL` - url to the page
-- `CODE` - two-letters language code
-- `LANGUAGE` - language name (as defined in `po_slave_languages`)
-- `MASTER` - is true (1) if, and only if the page is a "master" page
-- `PERCENT` - for "slave" pages, is set to the translation completeness, in percents
+* `URL` - url to the page
+* `CODE` - two-letters language code
+* `LANGUAGE` - language name (as defined in `po_slave_languages`)
+* `MASTER` - is true (1) if, and only if the page is a "master" page
+* `PERCENT` - for "slave" pages, is set to the translation completeness, in percents
 
 ### Display the current translation status
 
@@ -240,227 +240,18 @@ correctly on the slave pages:
   could be used to support them, but they would need a security audit
 * other markup languages have not been tested.
 
+Security
+========
+
+[[./security]] contains a detailed security analysis of this plugin
+and its dependencies.
+
+When using po4a older than 0.35, it is recommended to uninstall
+`Text::WrapI18N` (Debian package `libtext-wrapi18n-perl`), in order to
+avoid a potential denial of service.
 
 TODO
 ====
-
-Security checks
----------------
-
-### Security history
-
-The only past security issues I could find in GNU gettext and po4a
-are:
-
-- [CVE-2004-0966](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0966),
-  *i.e.* [Debian bug #278283](http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=278283):
-  the autopoint and gettextize scripts in the GNU gettext package
-  1.14 and later versions, as used in Trustix Secure Linux 1.5
-  through 2.1 and other operating systems, allows local users to
-  overwrite files via a symlink attack on temporary files.
-- [CVE-2007-4462](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4462):
-  `lib/Locale/Po4a/Po.pm` in po4a before 0.32 allows local users to
-  overwrite arbitrary files via a symlink attack on the
-  gettextization.failed.po temporary file.
-
-**FIXME**: check whether this plugin would have been a possible attack
-vector to exploit these vulnerabilities.
-
-Depending on my mood, the lack of found security issues can either
-indicate that there are none, or reveal that no-one ever bothered to
-find (and publish) them.
-
-### PO file features
-
-Can any sort of directives be put in po files that will cause mischief
-(ie, include other files, run commands, crash gettext, whatever)?
-
-> No [documented](http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files)
-> directive is supposed to do so. [[--intrigeri]]
-
-### Running po4a on untrusted content
-
-Are there any security issues on running po4a on untrusted content?
-
-To say the least, this issue is not well covered, at least publicly:
-
-- the documentation does not talk about it;
-- grep'ing the source code for `security` or `trust` gives no answer.
-
-On the other hand, a po4a developer answered my questions in
-a convincing manner, stating that processing untrusted content was not
-an initial goal, and analysing in detail the possible issues.
-
-#### Already checked
-
-- the core (`Po.pm`, `Transtractor.pm`) should be safe
-- po4a source code was fully checked for other potential symlink
-  attacks, after discovery of one such issue
-- the only external program run by the core is `diff`, in `Po.pm` (in
-  parts of its code we don't use)
-- `Locale::gettext`: only used to display translated error messages
-- Nicolas François "hopes" `DynaLoader` is safe, and has "no reason to
-  think that `Encode` is not safe"
-- Nicolas François has "no reason to think that `Encode::Guess` is not
-  safe". The po plugin nevertheless avoids using it by defining the
-  input charset (`file_in_charset`) before asking `Transtractor` to
-  read any file. NB: this hack depends on po4a internals to stay
-  the same.
-
-##### Locale::Po4a modules
-
-The modules we want to use have to be checked, as not all are safe
-(e.g. the LaTeX module's behaviour is changed by commands included in
-the content); they may use regexps generated from the content.
-
-`Chooser.pm` only loads the plugin we tell it too: currently, this
-means the `Text` module only.
-
-`Text` module (I checked the CVS version):
-
-- it does not run any external program
-- only `do_paragraph()` builds regexp's that expand untrusted
-  variables; they seem safe to me, but someone more expert than me
-  will need to check. Joey?
-
-  > Freaky code, but seems ok due to use of `quotementa`.
-
-#### To be checked
-
-##### Text::WrapI18N
-
-`Text::WrapI18N` can cause DoS (see the
-[Debian bug #470250](http://bugs.debian.org/470250)), but it is
-optional and we do not need the features it provides.
-
-> If a recent enough po4a is installed, this module's use is fully disabled.
-> This feature has been merged in po4a CVS on 2009-01-15. --[[intrigeri]]
-
-##### Term::ReadKey
-
-`Term::ReadKey` is not a hard dependency in our case, *i.e.* po4a
-works nicely without it. But the po4a Debian package recommends
-`libterm-readkey-perl`, so it will probably be installed on most
-systems using the po plugin.
-
-`Term::ReadKey` has too far reaching implications for us to
-be able to guarantee anything wrt. security.
-
-> The option that disables `Text::WrapI18N` also disables
-> `Term::ReadKey` as a consequence. [[--intrigeri]]
-
-### msgmerge
-
-`refreshpofiles()` runs this external program.
-
-A po4a developer answered he does "not expect any security issues from
-it". I did not manage to crash it with `zzuf`, nor was able to find
-any past security holes.
-
-### msgfmt
-
-`isvalidpo()` runs this external program.
-
-* I could not manage to make it behave badly using zzuf, it exits
-  cleanly when too many errors are detected.
-* I could not find any past security holes.
-
-### Fuzzing input
-
-Test conditions:
-
-- a 21M file containing 100 concatenated copies of all the files in my
-  `/usr/share/common-licenses/`; I had no existing PO file or
-  translated versions at hand, which renders these tests
-  quite incomplete.
-- po4a was the Debian 0.34-2 package; the same tests were also run
-  after replacing the `Text` module with the CVS one (the core was not
-  changed in CVS since 0.34-2 was released), without any significant
-  difference in the results.
-- Perl 5.10.0-16
-
-#### po4a-gettextize
-
-`po4a-gettextize` uses more or less the same po4a features as our
-`refreshpot` function.
-
-Without specifying an input charset, zzuf'ed `po4a-gettextize` quickly
-errors out, complaining it was not able to detect the input charset;
-it leaves no incomplete file on disk.
-
-So I had to pretend the input was in UTF-8, as does the po plugin.
-
-Two ways of crashing were revealed by this command-line:
-
-        zzuf -vc -s 0:100 -r 0.1:0.5 \
-          po4a-gettextize -f text -o markdown -M utf-8 -L utf-8 \
-            -m LICENSES >/dev/null
-
-They are:
-
-        Malformed UTF-8 character (UTF-16 surrogate 0xdcc9) in substitution iterator at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
-        Malformed UTF-8 character (fatal) at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
-
-and
-
-        Malformed UTF-8 character (UTF-16 surrogate 0xdcec) in substitution (s///) at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
-        Malformed UTF-8 character (fatal) at /usr/share/perl5/Locale/Po4a/Po.pm line 1443.
-
-Perl seems to exit cleanly, and an incomplete PO file is written on
-disk. I not sure whether if this is a bug in Perl or in `Po.pm`.
-
-> It's fairly standard perl behavior when fed malformed utf-8. As long as it doesn't
-> crash ikiwiki, it's probably acceptable. Ikiwiki can do some similar things itself when fed malformed utf-8 (doesn't crash tho) --[[Joey]]
-
-#### po4a-translate
-
-`po4a-translate` uses more or less the same po4a features as our
-`filter` function.
-
-Without specifying an input charset, same behaviour as
-`po4a-gettextize`, so let's specify UTF-8 as input charset as of now.
-
-        zzuf -cv \
-          po4a-translate -d -f text -o markdown -M utf-8 -L utf-8 \
-            -k 0 -m LICENSES -p LICENSES.fr.po -l test.fr
-
-... prints tons of occurences of the following error, but a complete
-translated document is written (obviously with some weird chars
-inside):
-
-        Use of uninitialized value in string ne at /usr/share/perl5/Locale/Po4a/TransTractor.pm line 854.
-        Use of uninitialized value in string ne at /usr/share/perl5/Locale/Po4a/TransTractor.pm line 840.
-        Use of uninitialized value in pattern match (m//) at /usr/share/perl5/Locale/Po4a/Po.pm line 1002.
-
-While:
-
-        zzuf -cv -s 0:10 -r 0.001:0.3 \
-          po4a-translate -d -f text -o markdown -M utf-8 -L utf-8 \
-            -k 0 -m LICENSES -p LICENSES.fr.po -l test.fr
-
-... seems to lose the fight, at the `readpo(LICENSES.fr.po)` step,
-against some kind of infinite loop, deadlock, or any similar beast.
-
-The root of this bug lies in `Text::WrapI18N`, see above for
-possible solutions.
-
-gettext/po4a rough corners
---------------------------
-
-- fix infinite loop when synchronizing two ikiwiki (when checkouts
-  live in different directories): say bla.fr.po has been updated in
-  repo2; pulling repo2 from repo1 seems to trigger a PO update, that
-  changes bla.fr.po in repo1; then pushing repo1 to repo2 triggers
-  a PO update, that changes bla.fr.po in repo2; etc.; quickly fixed in
-  `629968fc89bced6727981c0a1138072631751fee`, by disabling references
-  in Pot files. Using `Locale::Po4a::write_if_needed` might be
-  a cleaner solution. (warning: this function runs the external
-  `diff` program, have to check security)
-- new translations created in the web interface must get proper
-  charset/encoding gettext metadata, else the next automatic PO update
-  removes any non-ascii chars; possible solution: put such metadata
-  into the Pot file, and let it propagate; should be fixed in
-  `773de05a7a1ee68d2bed173367cf5e716884945a`, time will tell.
 
 Better links
 ------------
@@ -478,19 +269,19 @@ Robustness tests
 
 ### Enabling/disabling the plugin
 
-- enabling the plugin with `po_translatable_pages` set to blacklist: **OK**
-- enabling the plugin with `po_translatable_pages` set to whitelist: **OK**
-- enabling the plugin without `po_translatable_pages` set: **OK**
-- disabling the plugin: **OK**
+* enabling the plugin with `po_translatable_pages` set to blacklist: **OK**
+* enabling the plugin with `po_translatable_pages` set to whitelist: **OK**
+* enabling the plugin without `po_translatable_pages` set: **OK**
+* disabling the plugin: **OK**
 
 ### Changing the plugin config
 
-- adding existing pages to `po_translatable_pages`: **OK**
-- removing existing pages from `po_translatable_pages`: **OK**
-- adding a language to `po_slave_languages`: **OK**
-- removing a language from `po_slave_languages`: **OK**
-- changing `po_master_language`: **OK**
-- replacing `po_master_language` with a language previously part of
+* adding existing pages to `po_translatable_pages`: **OK**
+* removing existing pages from `po_translatable_pages`: **OK**
+* adding a language to `po_slave_languages`: **OK**
+* removing a language from `po_slave_languages`: **OK**
+* changing `po_master_language`: **OK**
+* replacing `po_master_language` with a language previously part of
   `po_slave_languages`: needs two rebuilds, but **OK** (this is quite
   a perverse test actually)
 
@@ -501,10 +292,10 @@ and via CGI, have been tested.
 
 ### Misc
 
-- general test with `usedirs` disabled: **OK**
-- general test with `indexpages` enabled: **not OK**
-- general test with `po_link_to=default` with `userdirs` enabled: **OK**
-- general test with `po_link_to=default` with `userdirs` disabled: **OK**
+* general test with `usedirs` disabled: **OK**
+* general test with `indexpages` enabled: **not OK**
+* general test with `po_link_to=default` with `userdirs` enabled: **OK**
+* general test with `po_link_to=default` with `userdirs` disabled: **OK**
 
 Misc. bugs
 ----------
