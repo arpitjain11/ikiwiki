@@ -217,7 +217,7 @@ sub rcs_recentchanges ($) {
 		push @ret, {
 			rev        => $info->{"changeset"},
 			user       => $user,
-			committype => "mercurial",
+			committype => "hg",
 			when       => str2time($info->{"date"}),
 			message    => [@message],
 			pages      => [@pages],

@@ -559,7 +559,7 @@ sub rcs_recentchanges ($) {
 					if ($cert->{key} eq $config{mtnkey}) {
 						$committype = "web";
 					} else {
-						$committype = "monotone";
+						$committype = "mtn";
 					}
 				} elsif ($cert->{name} eq "date") {
 					$when = str2time($cert->{value}, 'UTC');
