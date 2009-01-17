@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-26 21:41-0500\n"
+"POT-Creation-Date: 2009-01-17 18:19-0500\n"
 "PO-Revision-Date: 2008-10-22 19:13+0100\n"
 "Last-Translator: Jonas Smedegaard <dr@jones.dk>\n"
 "Language-Team: None\n"
@@ -174,7 +174,17 @@ msgstr "vedhæftningsoplægning"
 msgid "automatic index generation"
 msgstr "automatisk indeks-dannelse"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:260
+#: ../IkiWiki/Plugin/blogspam.pm:102
+msgid ""
+"Sorry, but that looks like spam to <a href=\"http://blogspam.net/"
+"\">blogspam</a>: "
+msgstr ""
+
+#: ../IkiWiki/Plugin/blogspam.pm:105
+msgid "blogspam server failure: "
+msgstr ""
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:296
 #: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -212,36 +222,36 @@ msgstr "manglende side"
 msgid "The page %s does not exist."
 msgstr "Siden %s eksisterer ikke."
 
-#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:124
+#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:160
 #, fuzzy
 msgid "bad page name"
 msgstr "dårligt vedhæftningsfilnavn"
 
-#: ../IkiWiki/Plugin/comments.pm:350
+#: ../IkiWiki/Plugin/comments.pm:348
 #, fuzzy, perl-format
 msgid "commenting on %s"
 msgstr "opretter %s"
 
-#: ../IkiWiki/Plugin/comments.pm:368
+#: ../IkiWiki/Plugin/comments.pm:366
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:375
+#: ../IkiWiki/Plugin/comments.pm:373
 #, perl-format
 msgid "comments on page '%s' are closed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:483
+#: ../IkiWiki/Plugin/comments.pm:493
 msgid "Added a comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:487
+#: ../IkiWiki/Plugin/comments.pm:497
 #, perl-format
 msgid "Added a comment: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:598
+#: ../IkiWiki/Plugin/comments.pm:611
 msgid "Comments"
 msgstr ""
 
@@ -266,19 +276,19 @@ msgstr "ingen tekst blev kopieret i denne side med id %s"
 msgid "removing old preview %s"
 msgstr "fjerner gammelt smugkig %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:140
+#: ../IkiWiki/Plugin/editpage.pm:176
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s er ikke en redigérbar side"
 
-#: ../IkiWiki/Plugin/editpage.pm:316
+#: ../IkiWiki/Plugin/editpage.pm:352
 #, perl-format
 msgid "creating %s"
 msgstr "opretter %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:334 ../IkiWiki/Plugin/editpage.pm:353
-#: ../IkiWiki/Plugin/editpage.pm:363 ../IkiWiki/Plugin/editpage.pm:398
-#: ../IkiWiki/Plugin/editpage.pm:443
+#: ../IkiWiki/Plugin/editpage.pm:370 ../IkiWiki/Plugin/editpage.pm:389
+#: ../IkiWiki/Plugin/editpage.pm:399 ../IkiWiki/Plugin/editpage.pm:443
+#: ../IkiWiki/Plugin/editpage.pm:482
 #, perl-format
 msgid "editing %s"
 msgstr "redigerer %s"
@@ -691,7 +701,7 @@ msgstr "Vælg vedhæftningen som skal omdøbes."
 msgid "rename %s to %s"
 msgstr "omdøb %s til %s"
 
-#: ../IkiWiki/Plugin/rename.pm:490
+#: ../IkiWiki/Plugin/rename.pm:493
 #, perl-format
 msgid "update for rename of %s to %s"
 msgstr "opdatering til omdøbning af %s til %s"
@@ -766,19 +776,19 @@ msgstr "php-kørsel mislykkedes"
 msgid "cannot find file"
 msgstr "kan ikke finde fil"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:87
 msgid "unknown data format"
 msgstr "ukendt dataformat"
 
-#: ../IkiWiki/Plugin/table.pm:81
+#: ../IkiWiki/Plugin/table.pm:95
 msgid "empty data"
 msgstr "blanke data"
 
-#: ../IkiWiki/Plugin/table.pm:100
+#: ../IkiWiki/Plugin/table.pm:114
 msgid "Direct data download"
 msgstr "Direkte datanedlastning"
 
-#: ../IkiWiki/Plugin/table.pm:134
+#: ../IkiWiki/Plugin/table.pm:148
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "afkodningsfejl på linje %d: %s"
@@ -938,7 +948,7 @@ msgstr "du skal angive et wikinavn (som indeholder alfanumeriske tegn)"
 msgid "unsupported revision control system %s"
 msgstr "revisionskontrolsystem %s ikke understøttet"
 
-#: ../IkiWiki/Setup/Automator.pm:83
+#: ../IkiWiki/Setup/Automator.pm:93
 msgid "failed to set up the repository with ikiwiki-makerepo"
 msgstr "opsætning af depotet med ikiwiki-makerepo mislykkedes"
 
@@ -1034,7 +1044,8 @@ msgid "What revision control system to use?"
 msgstr "Hvilket revisionskontrolsystem skal bruges?"
 
 #: ../auto.setup:20
-msgid "What wiki user (or openid) will be wiki admin?"
+#, fuzzy
+msgid "What wiki user (or openid) will be admin?"
 msgstr "Hvilken wiki bruger (eller openid) skal være administrator?"
 
 #: ../auto.setup:23
