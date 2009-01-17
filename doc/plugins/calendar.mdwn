@@ -6,7 +6,7 @@ The directive displays a calendar, similar to the typical calendars shown on
 some blogs.
 
 Since ikiwiki is a wiki compiler, to keep the calendar up-to-date,
-wikis that include it need to be preiodically refreshes, typically by cron
+wikis that include it need to be periodically refreshes, typically by cron
 at midnight. Example crontab:
 
 	0 0 * * * ikiwiki -setup ~/ikiwiki.setup -refresh
