@@ -182,7 +182,6 @@ sub canedit ($$$) {
 	debug("skeleton plugin running in canedit");
 }
 
-<<<<<<< HEAD:IkiWiki/Plugin/skeleton.pm.example
 sub cansave ($$$$) {
 	my $page=shift;
 	my $content=shift;
@@ -206,12 +205,11 @@ sub canrename ($$$) {
 	my $session=shift;
 
 	debug("skeleton plugin running in canrename");
-=======
+
 sub checkcontent (@) {
 	my %params=@_;
 
 	debug("skeleton plugin running in checkcontent");
->>>>>>> upstream/master:IkiWiki/Plugin/skeleton.pm.example
 }
 
 sub editcontent ($$$) {
