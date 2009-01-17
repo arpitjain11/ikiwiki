@@ -17,3 +17,14 @@ Cheers,
 You might look at the Wikipedia page on "Spam\_in\_blogs" for more ideas.  In particular, would it be possible to force a subset of the pages (by regex, but you'd choose the regex to match those pages which are publicly writable) to use rel="nofollow" in all links.
 
 > I just wanted to leave a link here to the [[todo/require_CAPTCHA_to_edit]] plugin patch.  Unfortunately that plugin currently interacts badly with the openid plugin. -- [[Will]]
+
+
+---
+
+Ikiwiki now has a checkcontent hook that plugins can use to see content
+that is being entered and check it for spam/whatever.
+
+There is a blogspam plugin that uses the blogspam.org service
+to check for common spam signatures. --[[Joey]] 
+
+[[done]]
