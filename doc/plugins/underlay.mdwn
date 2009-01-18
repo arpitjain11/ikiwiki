@@ -1,0 +1,14 @@
+[[!template id=plugin name=underlay author="[[Simon_McVittie|smcv]]"]]
+[[!tag type/useful]]
+
+This plugin adds an `add_underlays` option to the `.setup` file.
+Its value is a list of underlay directories whose content is added to the wiki.
+
+Multiple underlays are normally set up automatically by other plugins (for
+instance, the images used by the [[plugins/smiley]] plugin), but they can also be
+used as a way to pull in external files that you don't want in revision control,
+like photos or software releases.
+
+Directories in `add_underlays` should usually be absolute. If relative, they're
+interpreted as relative to the parent directory of the basewiki underlay, which
+is probably not particularly useful in this context.
