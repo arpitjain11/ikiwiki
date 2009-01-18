@@ -1,3 +1,10 @@
+ikiwiki (3.03) UNRELEASED; urgency=low
+
+  * Avoid feeding decoded unicode to Term::ReadLine.
+    Closes: 512169
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 18 Jan 2009 14:50:57 -0500
+
 ikiwiki (3.02) unstable; urgency=low
 
   * blogspam: New plugin, adding spam filtering for page editing / comment
