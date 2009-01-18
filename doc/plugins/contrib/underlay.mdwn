@@ -5,13 +5,16 @@ This plugin adds an `add_underlays` option to the `.setup` file.
 Its value is a list of underlay directories whose content is added to the wiki.
 
 Multiple underlays are normally set up automatically by other plugins (for
-instance, the smiley images used by [[plugins/smileys]]), but they can also be
+instance, the images used by the [[plugins/smiley]] plugin), but they can also be
 used as a way to pull in external files that you don't want in revision control,
 like photos or software releases.
 
 Directories in `add_underlays` should usually be absolute. If relative, they're
 interpreted as relative to the parent directory of the basewiki underlay, which
 is probably not particularly useful in this context.
+
+Please feel free to add this plugin to ikiwiki if it seems like a good
+thing to have. See the 'underlay' branch in my git repository.
 
     #!/usr/bin/perl
     package IkiWiki::Plugin::underlay;
