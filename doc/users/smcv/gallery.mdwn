@@ -13,10 +13,10 @@ and Facebook's Photos "application".
 
 The web UI I'm trying to achieve consists of one
 [HTML page of thumbnails](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/)
-as an entry point to the gallery, where each thumbnail
-links to
+as an entry point to the gallery, where each thumbnail links to
 [a "viewer" HTML page](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/img_0068/)
-with a full size image, next/previous thumbnail links, and [[plugins/comments]].
+with a full size image, next/previous thumbnail links, and
+[[plugins/comments]].
 
 (The Summer of Code [[plugins/contrib/gallery]] plugin does the
 next/previous UI in Javascript using Lightbox, which means that
@@ -44,13 +44,14 @@ Other features that would be good to have:
 
 * rendering an `<object>/<embed>` arrangement to display videos, and possibly
   thumbnailing them in the same way as totem-video-thumbnailer
-  (my camera can record short videos, so some of my web photo galleries contain
-  them)
+  (my camera can record short videos, so some of my web photo galleries
+  contain them)
 
 My plan is to have these directives:
 
-* \[[!gallery]] registers the page it's on as a gallery, and displays all photos
-  that are part of this gallery but not part of a \[[!gallerysection]] (below).
+* \[[!gallery]] registers the page it's on as a gallery, and displays all
+  photos that are part of this gallery but not part of a \[[!gallerysection]]
+  (below).
 
   All images (i.e. `*.png *.jpg *.gif`) that are attachments to the gallery page
   or its subpages are considered to be part of the gallery.
@@ -65,7 +66,8 @@ My plan is to have these directives:
 * \[[!gallerysection filter="[[ikiwiki/PageSpec]]"]] displays all photos in the
   gallery that match the filter
 
-So, [the gallery I'm using as an example](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/)
+So,
+[the gallery I'm using as an example](http://www.pseudorandom.co.uk/2008/2008-03-08-panic-cell-gig/)
 could look something like this:
 
     \[[!gallery]]
@@ -85,13 +87,6 @@ could look something like this:
 
 ## Implementation ideas
 
-The photo galleries I have at the moment, like the Panic Cell example above,
-are made by using an external script to parse XML gallery descriptions (lists
-of image filenames, with metadata such as titles), and using this to write IkiWiki
-markup into a directory which is then used as an underlay. This is a hack, but it
-works. The use of XML is left over from a previous attempt at solving the same
-problem using Django.
-
 The next/previous part this plugin overlaps with [[todo/wikitrails]].
 
 A \[[!galleryimg]] directive to assign metadata to images is probably necessary, so
@@ -100,15 +95,21 @@ the gallery page can contain something like:
     \[[!galleryimg p1010001.jpg title="..." caption="..." tags="foo"]]
     \[[!galleryimg p1010002.jpg title="..." caption="..." tags="foo bar"]]
 
-Making the viewer pages could be rather tricky.
+Making the viewer pages could be rather tricky. Here are some options:
+"synthesize source pages for viewers" is the one I'm leaning towards at the
+moment.
 
-One possibility is to write out the viewer pages as a side-effect of preprocessing
-the \[[!gallery]] directive. The proof-of-concept implementation below does this.
-However, this does mean the viewer pages can't have tags or metadata of their own
-and can't be matched by [[pagespecs|ikiwiki/pagespec]] or
+### Viewers' source page is the gallery
+
+One possibility is to write out the viewer pages as a side-effect of
+preprocessing the \[[!gallery]] directive. The proof-of-concept implementation
+below does this.  However, this does mean the viewer pages can't have tags or
+metadata of their own and can't be matched by [[pagespecs|ikiwiki/pagespec]] or
 [[wikilinks|ikiwiki/wikilink]]. It might be possible to implement tagging by
 using \[[!galleryimg]] to assign the metadata to the *images* instead of their
-viewers, 
+viewers.
+
+### Synthesize source pages for viewers
 
 Another is to synthesize source pages for the viewers. This means they can have
 tags and metadata, but trying to arrange for them to be scanned etc. correctly
@@ -117,13 +118,75 @@ without needing another refresh run is somewhat terrifying.
 the refresh hook, but I don't really like the idea of a refresh hook that scans
 all source pages to see if they contain \[[!gallery]]...
 
-Making the image be the source page (and generate HTML itself) would be possible,
-but I wouldn't want to generate a HTML viewer for every `.jpg` on a site, so
-either the images would have to have a special extension (awkward for uploads from
-Windows users) or the plugin would have to be able to change whether HTML was
-generated in some way (not currently possible).
+The photo galleries I have at the moment, like the Panic Cell example above,
+are made by using an external script to parse XML gallery descriptions (lists
+of image filenames, with metadata such as titles), and using this to write
+IkiWiki markup into a directory which is then used as an underlay. This is a
+hack, but it works. The use of XML is left over from a previous attempt at
+solving the same problem using Django.
 
-## Proof-of-concept
+Perhaps a better approach would be to have a setupfile option that names a
+particular underlay directory (meeting the objective of not having large
+photos under source code control) and generates a source page for each file
+in that directory during the refresh hook. The source pages could be in the
+underlay until they are edited (e.g. tagged), at which point they would be
+copied into the source-code-controlled version in the usual way.
+
+The synthetic source pages can be very simple, using the same trick as my
+[[plugins/comments]] plugin (a dedicated [[directive|ikiwiki/directives]]
+encapsulating everything the plugin needs). If the plugin automatically
+gathers information like file size, pixel size, date etc. from the images, then
+only the human-edited information and a filename reference need to be present
+in the source page; with some clever lookup rules based on the filename of
+the source page, not even the photo's filename is necessarily needed.
+
+    \[[!meta title="..."]]
+    \[[!meta date="..."]]
+    \[[!meta copyright="..."]]
+    \[[!tag ...]]
+
+    \[[!galleryimageviewer p1010001.jpg]]
+
+However, this would mean that editing tags and other metadata would require
+editing pages individually. Rather than trying to "fix" that, perhaps it would
+be better to have a special CGI interface for bulk tagging/metadata editing.
+This could even be combined with a bulk upload form (a reasonable number of
+file upload controls - maybe 20 - with metadata alongside each).
+
+Uploading multiple images is necessarily awkward due to restrictions placed on
+file upload controls by browsers for security reasons - sites like Facebook
+allow whole directories to be uploaded at the same time, but they achieve this
+by using a signed Java applet with privileged access to the user's filesystem.
+
+I've found that it's often useful to be able to force the creation time of
+photos (my camera's battery isn't very reliable, and it frequently decides that
+the date is 0000-00-00 00:00:00), so treating the \[[!meta date]] of the source
+page and the creation date of the photo as synonymous would be useful.
+
+### Images are the viewer's source - special filename extension
+
+Making the image be the source page (and generate HTML itself) would be
+possible, but I wouldn't want to generate a HTML viewer for every `.jpg` on a
+site, so either the images would have to have a special extension (awkward for
+uploads from Windows users) or the plugin would have to be able to change
+whether HTML was generated in some way (not currently possible).
+
+### Images are the viewer's source - alter `ispage()`
+
+It might be possible to hack up `ispage()` so some, but not all, images are
+considered to "be a page":
+
+* srcdir/not-a-photo.jpg → destdir/not-a-photo.jpg
+* srcdir/gallery/photo.jpg → destdir/gallery/photo/index.html
+
+Perhaps one way to do this would be for the photos to appear in a particular
+underlay directory, which would also fulfil the objective of having photos not
+be version-controlled:
+
+* srcdir/not-a-photo.jpg → destdir/not-a-photo.jpg
+* underlay/gallery/photo.jpg → destdir/gallery/photo/index.html
+
+## Proof-of-concept implementation of "viewers' source page is the gallery"
 
     #!/usr/bin/perl
     package IkiWiki::Plugin::gallery;
