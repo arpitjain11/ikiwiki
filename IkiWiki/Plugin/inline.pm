@@ -519,9 +519,15 @@ sub genfeed ($$$$$@) {
 			mdate_3339 => date_3339($pagemtime{$p}),
 		);
 
-		if (exists $pagestate{$p} &&
-		    exists $pagestate{$p}{meta}{guid}) {
-			$itemtemplate->param(guid => $pagestate{$p}{meta}{guid});
+		if (exists $pagestate{$p}) {
+			if (exists $pagestate{$p}{meta}{guid}) {
+				$itemtemplate->param(guid => $pagestate{$p}{meta}{guid});
+			}
+
+			if (exists $pagestate{$p}{meta}{updated}) {
+				$itemtemplate->param(mdate_822 => date_822($pagestate{$p}{meta}{updated}));
+				$itemtemplate->param(mdate_3339 => date_3339($pagestate{$p}{meta}{updated}));
+			}
 		}
 
 		if ($itemtemplate->query(name => "enclosure")) {

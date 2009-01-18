@@ -128,6 +128,13 @@ sub preprocess (@) {
 			$IkiWiki::pagectime{$page}=$time if defined $time;
 		}
 	}
+	elsif ($key eq 'updated') {
+		eval q{use Date::Parse};
+		if (! $@) {
+			my $time = str2time($value);
+			$pagestate{$page}{meta}{updated}=$time if defined $time;
+		}
+	}
 
 	if (! defined wantarray) {
 		# avoid collecting duplicate data during scan pass
