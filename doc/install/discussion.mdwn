@@ -178,3 +178,28 @@ I've tried a couple of times and my cpan has never recognised Bundle::IkiWiki. I
 > Can you show how it fails to find the bundle? --[[Joey]]
 
 >> I was not. Next time I build I will have to try that (I'll need to tweak it as I already override PERL5LIB; also I need to specify http proxies). Thanks for your help! -- [[users/Jon]]
+
+---
+
+##Further problems with Bundle::IkiWiki
+I'm also having trouble with finding Bundle::IkiWiki.  I've tried it with the environment settings and without them, and also using the interactive 
+form of the cpan command.  I've also gone to cpan.org and searched -- eg
+
+    http://search.cpan.org/search?query=ikiwiki&mode=all
+
+and no Bundle for IkiWiki comes up at all.
+
+The error I get from the various cpan attempts is basically always the same:
+
+    Warning: Cannot install Bundle::IkiWiki, don't know what it is.
+    Try the command
+
+        i /Bundle::IkiWiki/
+
+    to find objects with matching identifiers.
+
+When I try that command, BTW, it basically seems to find the same stuff I get when searching on the cpan web site.
+
+This happens both on Ubuntu 8.04 and CentOS 5.1
+
+Any help would be greatly appreciated... --kent
