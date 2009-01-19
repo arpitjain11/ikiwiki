@@ -30,7 +30,6 @@ sub import {
 	hook(type => "auth", id => "skeleton", call => \&auth);
 	hook(type => "sessioncgi", id => "skeleton", call => \&sessioncgi);
 	hook(type => "canedit", id => "skeleton", call => \&canedit);
-	hook(type => "cansave", id => "skeleton", call => \&cansave);
 	hook(type => "checkcontent", id => "skeleton", call => \&checkcontent);
 	hook(type => "editcontent", id => "skeleton", call => \&editcontent);
 	hook(type => "formbuilder_setup", id => "skeleton", call => \&formbuilder_setup);
@@ -180,15 +179,6 @@ sub canedit ($$$) {
 	my $session=shift;
 
 	debug("skeleton plugin running in canedit");
-}
-
-sub cansave ($$$$) {
-	my $page=shift;
-	my $content=shift;
-	my $cgi=shift;
-	my $session=shift;
-
-	debug("skeleton plugin running in cansave");
 }
 
 sub canremove ($$$) {

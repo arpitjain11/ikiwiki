@@ -117,33 +117,6 @@ sub check_content (@) {
 	return defined $ok ? $ok : 1;
 }
 
-sub check_cansave ($$$$) {
-	my $page=shift;
-	my $content=shift;
-	my $q=shift;
-	my $session=shift;
-
-	my $cansave;
-	run_hooks(cansave => sub {
-		return if defined $cansave;
-		my $ret=shift->($page, $content, $q, $session);
-		if (defined $ret) {
-			if ($ret eq "") {
-				$cansave=1;
-			}
-			elsif (ref $ret eq 'CODE') {
-				$ret->();
-				$cansave=0;
-			}
-			else {
-				error($ret);
-				$cansave=0;
-			}
-		}
-	});
-	return $cansave;
-}
-
 sub cgi_editpage ($$) {
 	my $q=shift;
 	my $session=shift;
@@ -439,7 +412,6 @@ sub cgi_editpage ($$) {
 		}
 		
 		my $content=$form->field('editcontent');
-		check_cansave($page, $content, $q, $session);
 		check_content(content => $content, page => $page,
 			cgi => $q, session => $session,
 			subject => $message);

@@ -49,7 +49,7 @@ sub import {
 	hook(type => "rename", id => "po", call => \&renamepages, first => 1);
 	hook(type => "delete", id => "po", call => \&mydelete);
 	hook(type => "change", id => "po", call => \&change);
-	hook(type => "cansave", id => "po", call => \&cansave);
+	hook(type => "checkcontent", id => "po", call => \&checkcontent);
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
 	hook(type => "editcontent", id => "po", call => \&editcontent);
@@ -436,11 +436,11 @@ sub change(@) {
 	}
 }
 
-sub cansave ($$$$) {
-	my ($page, $content, $cgi, $session) = (shift, shift, shift, shift);
+sub checkcontent (@) {
+	my %params=@_;
 
-	if (istranslation($page)) {
-		my $res = isvalidpo($content);
+	if (istranslation($params{page})) {
+		my $res = isvalidpo($params{content});
 		if ($res) {
 			return undef;
 		}

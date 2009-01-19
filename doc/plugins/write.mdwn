@@ -321,21 +321,6 @@ This hook should avoid directly redirecting the user to a signin page,
 since it's sometimes used to test to see which pages in a set of pages a
 user can edit.
 
-### cansave
-
-	hook(type => "cansave", id => "foo", call => \&cansave);
-
-This hook can be used to implement arbitrary access methods to control
-when a page being edited can be saved using the web interface (commits
-from revision control bypass it).
-
-When a page is about to be saved, each registered cansave hook is
-called in turn, and passed the page name, the edited content, a CGI
-object and a session object.
-
-The return value of a cansave hook is interpreted the same as for the
-canedit hook.
-
 ### canremove
 
 	hook(type => "canremove", id => "foo", call => \&canremove);
