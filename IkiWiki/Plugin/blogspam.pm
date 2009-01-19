@@ -85,7 +85,7 @@ sub checkcontent (@) {
 
 	my $res = $client->send_request('testComment', {
 		ip => $ENV{REMOTE_ADDR},
-		comment => $params{content},
+		comment => defined $params{diff} ? $params{diff} : $params{content},
 		subject => defined $params{subject} ? $params{subject} : "",
 		name => defined $params{author} ? $params{author} : "",
 		link => exists $params{url} ? $params{url} : "",

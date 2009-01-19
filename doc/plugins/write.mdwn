@@ -368,8 +368,9 @@ the content the user has entered is a comment, it may also be passed some
 additional parameters: `author`, `url`, and `subject`. The `subject`
 parameter may also be filled with the user's comment about the change.
 
-Note: When the user edits an existing wiki page, the passed `content` will
-include only the lines that they added to the page, or modified.
+Note: When the user edits an existing wiki page, this hook is also
+passed a `diff` named parameter, which will include only the lines
+that they added to the page, or modified.
 
 The hook should return `undef` on success. If the content is disallowed, it
 should return a message stating what the problem is, or a function
