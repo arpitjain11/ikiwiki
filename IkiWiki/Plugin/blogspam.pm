@@ -83,7 +83,7 @@ sub checkcontent (@) {
 	# and "buy".
 	push @options, "exclude=stopwords";
 
-	my $res = $client->send_request('testComment', {
+	my %req={
 		ip => $ENV{REMOTE_ADDR},
 		comment => $params{content},
 		subject => defined $params{subject} ? $params{subject} : "",
@@ -92,17 +92,20 @@ sub checkcontent (@) {
 		options => join(",", @options),
 		site => $config{url},
 		version => "ikiwiki ".$IkiWiki::version,
-	});
+	};
+	my $res = $client->send_request('testComment', %req);
 
 	if (! ref $res || ! defined $res->value) {
 		debug("failed to get response from blogspam server ($url)");
 		return undef;
 	}
 	elsif ($res->value =~ /^SPAM:(.*)/) {
+		eval q{use Data::Dumper};
+		debug("blogspam server reports ".$res->value.": ".Dumper(\%req));
 		return gettext("Sorry, but that looks like spam to <a href=\"http://blogspam.net/\">blogspam</a>: ").$1;
 	}
 	elsif ($res->value ne 'OK') {
-		debug(gettext("blogspam server failure: ").$res->value);
+		debug("blogspam server failure: ".$res->value);
 		return undef;
 	}
 	else {
