@@ -1,19 +1,21 @@
+# translation of es.po to spanish
 # ikiwiki spanish translation
-# Copyright (C) 2007 The Free Software Foundation, Inc
+# Copyright (C) 2007, 2009 The Free Software Foundation, Inc
 # This file is distributed under the same license as the ikiwiki package.
 #
-# Víctor Moral <victor@taquiones.net>, 2007.
+# Víctor Moral <victor@taquiones.net>, 2007, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-17 18:19-0500\n"
-"PO-Revision-Date: 2008-12-19 08:10+0100\n"
-"Last-Translator: Víctor Moral <victor@taquiones.net>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2009-01-19 08:58+0100\n"
+"Language-Team: spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Víctor Moral <victor@taquiones.net>\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../IkiWiki/CGI.pm:113
 msgid "You need to log in first."
@@ -21,8 +23,7 @@ msgstr "Antes es necesario identificarse."
 
 #: ../IkiWiki/CGI.pm:145
 msgid "login failed, perhaps you need to turn on cookies?"
-msgstr ""
-"registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
+msgstr "registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
 
 #: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:280
 msgid "Your login session has expired."
@@ -58,8 +59,7 @@ msgstr "Contenido añadido activado vía web."
 
 #: ../IkiWiki/Plugin/aggregate.pm:93
 msgid "Nothing to do right now, all feeds are up-to-date!"
-msgstr ""
-"¡ No hay nada que hacer, todas las fuentes de noticias están actualizadas !"
+msgstr "¡ No hay nada que hacer, todas las fuentes de noticias están actualizadas !"
 
 #: ../IkiWiki/Plugin/aggregate.pm:220
 #, perl-format
@@ -176,11 +176,11 @@ msgstr "creación de índice automática"
 msgid ""
 "Sorry, but that looks like spam to <a href=\"http://blogspam.net/"
 "\">blogspam</a>: "
-msgstr ""
+msgstr "Lo siento, pero el analizador <a href=\"http://blospam.net\">blogspam</a> dice que el texto puede ser spam."
 
 #: ../IkiWiki/Plugin/blogspam.pm:105
 msgid "blogspam server failure: "
-msgstr ""
+msgstr "fallo del servidor blogspam: "
 
 #: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:296
 #: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
@@ -339,8 +339,7 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/google.pm:31
 msgid "Failed to parse url, cannot determine domain name"
-msgstr ""
-"Error en el análisis del URL, no puedo determinar el nombre del dominio"
+msgstr "Error en el análisis del URL, no puedo determinar el nombre del dominio"
 
 #: ../IkiWiki/Plugin/graphviz.pm:67
 msgid "failed to run graphviz"
@@ -422,8 +421,7 @@ msgstr "La página %s está bloqueada y no puede modificarse"
 
 #: ../IkiWiki/Plugin/mdwn.pm:44
 msgid "multimarkdown is enabled, but Text::MultiMarkdown is not installed"
-msgstr ""
-"el modo multimarkdown está activo, pero no está instalado Text::MultiMarkdown"
+msgstr "el modo multimarkdown está activo, pero no está instalado Text::MultiMarkdown"
 
 #: ../IkiWiki/Plugin/mdwn.pm:67
 #, perl-format
@@ -848,8 +846,7 @@ msgid "plugins"
 msgstr "complementos"
 
 #: ../IkiWiki/Plugin/websetup.pm:395
-msgid ""
-"The configuration changes shown below require a wiki rebuild to take effect."
+msgid "The configuration changes shown below require a wiki rebuild to take effect."
 msgstr ""
 "Los cambios en la configuración que se muestran más abajo precisan una "
 "reconstrucción del wiki para tener efecto."
@@ -965,8 +962,7 @@ msgstr "el programa %s no parece ser ejecutable"
 
 #: ../IkiWiki/Wrapper.pm:20
 msgid "cannot create a wrapper that uses a setup file"
-msgstr ""
-"no puedo crear un programa envoltorio que utiliza un archivo de configuración"
+msgstr "no puedo crear un programa envoltorio que utiliza un archivo de configuración"
 
 #: ../IkiWiki/Wrapper.pm:24
 msgid "wrapper filename not specified"
@@ -1054,66 +1050,10 @@ msgid "What revision control system to use?"
 msgstr "¿ Qué sistema de control de versiones empleará ?"
 
 #: ../auto.setup:20
-#, fuzzy
 msgid "What wiki user (or openid) will be admin?"
-msgstr ""
-"¿ Qué usuario del wiki (ó identificador openid) será el administrador del "
-"wiki ? "
+msgstr "¿ Qué usuario del wiki (ó qué identificador openid) será el empleado como administrador ? "
 
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr "¿ Cuál es el dominio para el servidor web ?"
 
-#~ msgid "failed to find url in html"
-#~ msgstr ""
-#~ "El complemento googlecalendar no ha encontrado un URL en el código html "
-
-#~ msgid "processed ok at %s"
-#~ msgstr "proceso completado con éxito a %s"
-
-#~ msgid "Your password has been emailed to you."
-#~ msgstr "Se le ha enviado su contraseña por correo electrónico."
-
-#~ msgid "polygen failed"
-#~ msgstr "El programa polygen ha fallado"
-
-#~ msgid "cleaning hyperestraier search index"
-#~ msgstr "limpiando el índice de búsquedas de hyperestraier"
-
-#~ msgid "updating hyperestraier search index"
-#~ msgstr "actualizando el índice de búsquedas de hyperstraier"
-
-#~ msgid "(not toggleable in preview mode)"
-#~ msgstr "(no se puede cambiar en el modo de previsualización)"
-
-#~ msgid ""
-#~ "REV is not set, not running from mtn post-commit hook, cannot send "
-#~ "notifications"
-#~ msgstr ""
-#~ "La variable de entorno REV no está definida, por lo que no puede "
-#~ "funcionar svn post-commit desde monotone; no puedo enviar ninguna "
-#~ "notificación"
-
-#~ msgid "REV is not a valid revision identifier, cannot send notifications"
-#~ msgstr ""
-#~ "REV no es un identificador de revisión válido, por lo que no puedo enviar "
-#~ "ninguna notificación"
-
-#~ msgid ""
-#~ "REV is not set, not running from svn post-commit hook, cannot send "
-#~ "notifications"
-#~ msgstr ""
-#~ "La variable de entorno REV no está definida, por lo que no puede "
-#~ "funcionar svn post-commit; no puedo enviar ninguna notificación"
-
-#~ msgid "link is no longer supported"
-#~ msgstr "el metadato link ya no puede usarse"
-
-#~ msgid "%s not found"
-#~ msgstr "no he encontrado la plantilla %s "
-
-#~ msgid "What's this?"
-#~ msgstr "¿ Qué es esto ?"
-
-#~ msgid "(use FirstnameLastName)"
-#~ msgstr "(utilice la forma NombreApellidos)"
