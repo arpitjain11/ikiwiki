@@ -171,3 +171,30 @@ Any thoughts on this?
 
 I've set this plugin development aside for a while. I will be back and
 finish it at some point in the first quarter of 2009. --[[intrigeri]]
+
+> Abstract: Joey, please have a look at my po and meta branches.
+> 
+> Detailed progress report:
+> 
+> * it seems the po branch in your repository has not been tracking my
+>   own po branch for two months. any config issue?
+> * all the plugin's todo items have been completed, robustness tests
+>   done
+> * I've finished the detailed security audit, and the fix for po4a
+>   bugs has entered upstream CVS last week
+> * I've merged your new `checkcontent` hook with the `cansave` hook
+>   I previously introduced in my own branch; blogspam plugin updated
+>   accordingly
+> * the rename hook changes we discussed elsewhere are also part of my
+>   branch
+> * I've introduced two new hooks (`canremove` and `canrename`), not
+>   a big deal; IMHO, they extend quite logically the plugin interface
+> * as highlighted on [[bugs/pagetitle_function_does_not_respect_meta_titles]],
+>   my `meta` branch contains a new feature that is really useful in a
+>   translatable wiki
+> 
+> As a conclusion, I'm feeling that my branches are ready to be
+> merged; only thing missing, I guess, are a bit of discussion and
+> subsequent adjustments.
+> 
+> --[[intrigeri]]
