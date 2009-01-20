@@ -1729,7 +1729,7 @@ sub pagespec_translate ($) {
 				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@_)";
 			}
 			else {
-				$code.=' 0';
+				$code.="IkiWiki::FailReason->new(".safequote(qq{unknown function in pagespec "$word"}).")";
 			}
 		}
 		else {
@@ -1738,7 +1738,7 @@ sub pagespec_translate ($) {
 	}
 
 	if (! length $code) {
-		$code=0;
+		$code="IkiWiki::FailReason->new('empty pagespec')";
 	}
 
 	no warnings;
