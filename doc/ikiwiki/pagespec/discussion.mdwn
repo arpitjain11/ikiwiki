@@ -68,4 +68,13 @@ How can I fix this?  --[[sabr]]
 
 ----
 
-Should negation work with user(), with locked_pages in setup?  I experimented with setting locked_pages => 'user(someuser)' and was able to edit as a different user.  However, setting locked_pages => '!user(someuser)' doesn't seem to allow edits for only 'someuser' - it locks out all users.
+Should negation work with user(), with locked_pages in setup?  I
+experimented with setting locked_pages => 'user(someuser)' and was able to
+edit as a different user.  However, setting locked_pages =>
+'!user(someuser)' doesn't seem to allow edits for only 'someuser' - it
+locks out all users.
+
+> Negation works with anything in any PageSpec. I tested the case you
+> describe, and a negated pagespec worked for me; all users except the
+> listed user (and except wiki admins of course) were locked out.
+> --[[Joey]] 
