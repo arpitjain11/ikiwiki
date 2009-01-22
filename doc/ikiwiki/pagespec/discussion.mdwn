@@ -65,3 +65,7 @@ How can I fix this?  --[[sabr]]
 
 > I don't see why that wouldn't work. Can I download the source to your
 > wiki from somewhere to investigate? --[[Joey]]
+
+----
+
+Should negation work with user(), with locked_pages in setup?  I experimented with setting locked_pages => 'user(someuser)' and was able to edit as a different user.  However, setting locked_pages => '!user(someuser)' doesn't seem to allow edits for only 'someuser' - it locks out all users.
