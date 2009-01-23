@@ -406,19 +406,19 @@ sub sessioncgi ($$) {
 
 	if ($config{comments_allowauthor}) {
 		my $author = $form->field('author');
-		if (length $author) {
+		if (defined $author && length $author) {
 			$author =~ s/"/&quot;/g;
 			$content .= " claimedauthor=\"$author\"\n";
 		}
 		my $url = $form->field('url');
-		if (length $url) {
+		if (defined $url && length $url) {
 			$url =~ s/"/&quot;/g;
 			$content .= " url=\"$url\"\n";
 		}
 	}
 
 	my $subject = $form->field('subject');
-	if (length $subject) {
+	if (defined $subject && length $subject) {
 		$subject =~ s/"/&quot;/g;
 		$content .= " subject=\"$subject\"\n";
 	}
