@@ -83,7 +83,7 @@ sub checkcontent (@) {
 	# and "buy".
 	push @options, "exclude=stopwords";
 
-	my %req={
+	my %req=(
 		ip => $ENV{REMOTE_ADDR},
 		comment => $params{content},
 		subject => defined $params{subject} ? $params{subject} : "",
@@ -92,7 +92,7 @@ sub checkcontent (@) {
 		options => join(",", @options),
 		site => $config{url},
 		version => "ikiwiki ".$IkiWiki::version,
-	};
+	);
 	my $res = $client->send_request('testComment', \%req);
 
 	if (! ref $res || ! defined $res->value) {
