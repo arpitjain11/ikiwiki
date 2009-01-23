@@ -93,7 +93,7 @@ sub checkcontent (@) {
 		site => $config{url},
 		version => "ikiwiki ".$IkiWiki::version,
 	};
-	my $res = $client->send_request('testComment', %req);
+	my $res = $client->send_request('testComment', \%req);
 
 	if (! ref $res || ! defined $res->value) {
 		debug("failed to get response from blogspam server ($url)");
