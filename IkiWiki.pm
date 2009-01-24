@@ -174,7 +174,7 @@ sub getsetup () {
 	verbose => {
 		type => "boolean",
 		example => 1,
-		description => "display verbose messages when building?",
+		description => "display verbose messages?",
 		safe => 1,
 		rebuild => 0,
 	},
