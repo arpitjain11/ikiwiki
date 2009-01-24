@@ -7,3 +7,7 @@ I am using the latest ikiwiki(manually installed as non-root user) and CGI::Form
 这个没问题 it is not a problem on ikiwiki website though.
 
 Thanks.
+
+
+> Is your system perhaps not configured with a utf-8 default locale? Or ikiwiki not configured to use it?
+> Make sure that some utf-8 locale is enabled (in /etc/locale.gen on Debian for example) and try setting `locale` in your > ikiwiki setup file. --[[Joey]]
