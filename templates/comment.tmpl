@@ -1,6 +1,12 @@
 <div class="comment" id="<TMPL_VAR NAME=INLINEPAGE>">
 
-<div class="comment-subject"><a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a></div>
+<div class="comment-subject">
+<TMPL_IF PERMALINK">
+<a href="<TMPL_VAR PERMALINK>"><TMPL_VAR TITLE></a>
+<TMPL_ELSE>
+<TMPL_VAR TITLE>
+</TMPL_IF>
+</div>
 
 <div class="inlinecontent">
 <TMPL_VAR CONTENT>

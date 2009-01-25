@@ -673,6 +673,8 @@ sub previewcomment ($$$) {
 			template => $template);
 	});
 
+	$template->param(have_actions => 0);
+
 	return $template->output;
 }
 
