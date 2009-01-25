@@ -83,3 +83,12 @@ locks out all users.
 >> machines.  Both are running the most recent release of ikiwiki in 
 >> pkgsrc - 2.66.  Perhaps an update to a newer version would solve the issue.
 
+----
+
+Is there a way to refer to all subpages of the current page, if  the name of the 
+current page is not known (i.e. the pagespec is used in a template)? The ./ syntax
+does not seem suitable for this, as
+
+> \[[!map pages="./*"]]
+
+also lists the current page and all its siblings.
