@@ -62,11 +62,11 @@ sub checkcontent (@) {
 	}
 
 	my $url=$defaulturl;
-	$url = $params{blogspam_server} if exists $params{blogspam_server};
+	$url = $config{blogspam_server} if exists $config{blogspam_server};
 	my $client = RPC::XML::Client->new($url);
 
-	my @options = split(",", $params{blogspam_options})
-		if exists $params{blogspam_options};
+	my @options = split(",", $config{blogspam_options})
+		if exists $config{blogspam_options};
 
 	# Allow short comments and whitespace-only edits, unless the user
 	# has overridden min-words themselves.
