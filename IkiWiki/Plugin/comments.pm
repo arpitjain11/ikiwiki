@@ -134,8 +134,8 @@ sub preprocess {
 	}
 
 	# no need to bother with htmlize if it's just HTML
-	$content = IkiWiki::htmlize($page, $params{destpage}, $format,
-		$content) if defined $format;
+	$content = IkiWiki::htmlize($page, $params{destpage}, $format, $content)
+		if defined $format;
 
 	IkiWiki::run_hooks(sanitize => sub {
 		$content = shift->(
@@ -263,13 +263,23 @@ sub linkcgi ($) {
 	}
 }
 
-# Mostly cargo-culted from IkiWiki::plugin::editpage
 sub sessioncgi ($$) {
 	my $cgi=shift;
 	my $session=shift;
 
 	my $do = $cgi->param('do');
-	return unless $do eq 'comment';
+	if ($do eq 'comment') {
+		editcomment($cgi, $session);
+	}
+	elsif ($do eq 'commentmoderation') {
+		commentmoderation($cgi, $session);
+	}
+}
+
+# Mostly cargo-culted from IkiWiki::plugin::editpage
+sub editcomment ($$) {
+	my $cgi=shift;
+	my $session=shift;
 
 	IkiWiki::decode_cgi_utf8($cgi);
 
@@ -431,29 +441,8 @@ sub sessioncgi ($$) {
 	# - this means that if they do, rocks fall and everyone dies
 
 	if ($form->submitted eq PREVIEW) {
-		my $preview = IkiWiki::htmlize($location, $page, '_comment',
-				IkiWiki::linkify($location, $page,
-					IkiWiki::preprocess($location, $page,
-						IkiWiki::filter($location,
-							$page, $content),
-						0, 1)));
-		IkiWiki::run_hooks(format => sub {
-				$preview = shift->(page => $page,
-					content => $preview);
-			});
-
-		my $template = template("comment.tmpl");
-		$template->param(content => $preview);
-		$template->param(title => $form->field('subject'));
-		$template->param(ctime => displaytime(time));
-
-		IkiWiki::run_hooks(pagetemplate => sub {
-			shift->(page => $location,
-				destpage => $page,
-				template => $template);
-		});
-
-		$form->tmpl_param(page_preview => $template->output);
+		$form->tmpl_param(page_preview => 
+			previewcomment($content, $location, $page, time));
 	}
 	else {
 		$form->tmpl_param(page_preview => "");
@@ -480,6 +469,7 @@ sub sessioncgi ($$) {
 			my $penddir=$config{wikistatedir}."/comments_pending";
 			$location=unique_comment_location($page, $penddir);
 			writefile("$location._comment", $penddir, $content);
+			IkiWiki::printheader($session);
 			print IkiWiki::misctemplate(gettext(gettext("comment stored for moderation")),
 				"<p>".
 				gettext("Your comment will be posted after moderator review"),
@@ -532,6 +522,158 @@ sub sessioncgi ($$) {
 	}
 
 	exit;
+}
+
+sub commentmoderation ($$) {
+	my $cgi=shift;
+	my $session=shift;
+
+	IkiWiki::needsignin($cgi, $session);
+	if (! IkiWiki::is_admin($session->param("name"))) {
+		error(gettext("you are not logged in as an admin"));
+	}
+
+	IkiWiki::decode_cgi_utf8($cgi);
+	
+	if (defined $cgi->param('sid')) {
+		IkiWiki::checksessionexpiry($cgi, $session);
+
+		my %vars=$cgi->Vars;
+		my $added=0;
+		foreach my $id (keys %vars) {
+			if ($id =~ /(.*)\Q._comment\E$/) {
+				my $action=$cgi->param($id);
+				next if $action eq 'Defer';
+
+				# Make sure that the id is of a legal
+				# pending comment before untainting.
+				my ($f)= $id =~ /$config{wiki_file_regexp}/;
+				if (! defined $f || ! length $f ||
+				    IkiWiki::file_pruned($f, $config{srcdir})) {
+					error("illegal file");
+				}
+
+				my $page=IkiWiki::possibly_foolish_untaint(IkiWiki::dirname($1));
+				my $file="$config{wikistatedir}/comments_pending/".
+					IkiWiki::possibly_foolish_untaint($id);
+
+				if ($action eq 'Accept') {
+					my $content=eval { readfile($file) };
+					next if $@; # file vanished since form was displayed
+					my $dest=unique_comment_location($page, $config{srcdir})."._comment";
+					writefile($dest, $config{srcdir}, $content);
+					if ($config{rcs} and $config{comments_commit}) {
+						IkiWiki::rcs_add($dest);
+					}
+					$added++;
+				}
+
+				# This removes empty subdirs, so the
+				# .ikiwiki/comments_pending dir will
+				# go away when all are moderated.
+				require IkiWiki::Render;
+				IkiWiki::prune($file);
+			}
+		}
+
+		if ($added) {
+			my $conflict;
+			if ($config{rcs} and $config{comments_commit}) {
+				my $message = gettext("Comment moderation");
+				IkiWiki::disable_commit_hook();
+				$conflict=IkiWiki::rcs_commit_staged($message,
+					$session->param('name'), $ENV{REMOTE_ADDR});
+				IkiWiki::enable_commit_hook();
+				IkiWiki::rcs_update();
+			}
+		
+			# Now we need a refresh
+			require IkiWiki::Render;
+			IkiWiki::refresh();
+			IkiWiki::saveindex();
+		
+			error($conflict) if defined $conflict;
+		}
+	}
+
+	my @comments=map {
+		my $id=$_;
+		my $file="$config{wikistatedir}/comments_pending/$id";
+		my $content=readfile($file);
+		my $ctime=(stat($file))[10];
+		{
+			id => $id,
+			view => previewcomment($content, $id,
+					IkiWiki::dirname($_), $ctime),
+		} 
+	} comments_pending();
+
+	my $template=template("commentmoderation.tmpl");
+	$template->param(
+		sid => $session->id,
+		comments => \@comments,
+	);
+	IkiWiki::printheader($session);
+	print IkiWiki::misctemplate(gettext("comment moderation"), $template->output);
+	exit;
+}
+
+sub comments_pending () {
+	my $dir="$config{wikistatedir}/comments_pending/";
+	return unless -d $dir;
+
+	my @ret;
+	eval q{use File::Find};
+	error($@) if $@;
+	find({
+		no_chdir => 1,
+		wanted => sub {
+			$_=decode_utf8($_);
+			if (IkiWiki::file_pruned($_, $dir)) {
+				$File::Find::prune=1;
+			}
+			elsif (! -l $_ && ! -d _) {
+				$File::Find::prune=0;
+				my ($f)=/$config{wiki_file_regexp}/; # untaint
+				if (defined $f && $f =~ /\Q._comment\E$/) {
+					$f=~s/^\Q$dir\E\/?//;
+                                        push @ret, $f;
+				}
+			}
+		}
+	}, $dir);
+
+	return @ret;
+}
+
+sub previewcomment ($$$) {
+	my $content=shift;
+	my $location=shift;
+	my $page=shift;
+	my $time=shift;
+
+	my $preview = IkiWiki::htmlize($location, $page, '_comment',
+			IkiWiki::linkify($location, $page,
+				IkiWiki::preprocess($location, $page,
+					IkiWiki::filter($location,
+						$page, $content),
+					0, 1)));
+	IkiWiki::run_hooks(format => sub {
+			$preview = shift->(page => $page,
+				content => $preview);
+		});
+
+	my $template = template("comment.tmpl");
+	$template->param(content => $preview);
+	$template->param(ctime => displaytime($time));
+
+	IkiWiki::run_hooks(pagetemplate => sub {
+		shift->(page => $location,
+			destpage => $page,
+			template => $template);
+	});
+
+	return $template->output;
 }
 
 sub commentsshown ($) {
