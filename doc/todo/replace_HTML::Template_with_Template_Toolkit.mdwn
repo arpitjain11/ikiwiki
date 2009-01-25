@@ -56,3 +56,5 @@ the templates. I'd prefer not having to touch Perl though...
 Yes, Template::Toolkit is very powerful. But I think it's somehow overkill for a wiki. HTML::Template can keep things simple, though.  --[weakish](http://weakish.int.eu.org/blog/)
 
 I'd have to agree that Template::Toolkit is overkill and personally I'm not a fan, but it is very popular (there is even a book) and the new version (3) is alleged to be much more nimble than current version.  --[[ajt]]
+
+HTML::Template's HTML-like markup prevents me from editing templates in KompoZer or other WYSIWYG HTML editors.  The editor tries to render the template markup rather than display it verbatim, and large parts of the template become invisible.  A markup syntax that doesn't confuse editors (such as Template::Toolkit's "[% FOO %]") may promote template customization.  The ability to replace the template engine would be within the spirit of ikiwiki's extensibility. --Rocco
