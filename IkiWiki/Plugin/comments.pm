@@ -380,14 +380,7 @@ sub sessioncgi ($$) {
 	IkiWiki::check_canedit($page, $cgi, $session);
 	$postcomment=0;
 
-	# FIXME: rather a simplistic way to make the comments...
-	my $i = 0;
-	my $file;
-	my $location;
-	do {
-		$i++;
-		$location = "$page/$config{comments_pagename}$i";
-	} while (-e "$config{srcdir}/$location._comment");
+	my $location=unique_comment_location($page, $config{srcdir});
 
 	my $content = "[[!_comment format=$type\n";
 
@@ -470,21 +463,33 @@ sub sessioncgi ($$) {
 		IkiWiki::checksessionexpiry($cgi, $session);
 		
 		$postcomment=1;
-		IkiWiki::check_content(content => $form->field('editcontent'),
+		my $ok=IkiWiki::check_content(content => $form->field('editcontent'),
 			subject => $form->field('subject'),
 			$config{comments_allowauthor} ? (
 				author => $form->field('author'),
 				url => $form->field('url'),
 			) : (),
 			page => $location,
-			cgi => $cgi, session => $session
+			cgi => $cgi,
+			session => $session,
+			nonfatal => 1,
 		);
 		$postcomment=0;
-		
-		my $file = "$location._comment";
+
+		if (! $ok) {
+			my $penddir=$config{wikistatedir}."/comments_pending";
+			$location=unique_comment_location($page, $penddir);
+			writefile("$location._comment", $penddir, $content);
+			print IkiWiki::misctemplate(gettext(gettext("comment stored for moderation")),
+				"<p>".
+				gettext("Your comment will be posted after moderator review"),
+				"</p>");
+			exit;
+		}
 
 		# FIXME: could probably do some sort of graceful retry
 		# on error? Would require significant unwinding though
+		my $file = "$location._comment";
 		writefile($file, $config{srcdir}, $content);
 
 		my $conflict;
@@ -652,6 +657,20 @@ sub pagetemplate (@) {
 			page => $page));
 		$template->param(have_actions => 1);
 	}
+}
+
+sub unique_comment_location ($) {
+	my $page=shift;
+	my $dir=shift;
+
+	my $location;
+	my $i = 0;
+	do {
+		$i++;
+		$location = "$page/$config{comments_pagename}$i";
+	} while (-e "$dir/$location._comment");
+
+	return $location;
 }
 
 package IkiWiki::PageSpec;

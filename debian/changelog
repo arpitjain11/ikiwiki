@@ -6,6 +6,8 @@ ikiwiki (3.03) UNRELEASED; urgency=low
   * Remove nonstandard css. Closes: #512378
   * blogspam: Fix use of blogspam_options and blogspam_server
     config settings.
+  * comments: If comment content checks fail, store the comment
+    (in .ikiwiki/comments_pending) for moderator review.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 18 Jan 2009 14:50:57 -0500
 
