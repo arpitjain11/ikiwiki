@@ -202,6 +202,8 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 > I've looked it over and updated my branch with some (untested)
 > changes.
 > 
+>> I've merged your changes into my branch. Only one was buggy.
+> 
 > Sorry, I'd forgotten about your cansave hook.. sorry for the duplicate
 > work there.
 > 
@@ -212,7 +214,7 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >   3.x API, which I've promised not to do, so needs to be avoided
 >   somehow. (Sorry, I guess I dropped the ball on not getting this
 >   API change in before cutting 3.0..)
-> 
+>> 
 >> I'm discussing the solutions we now have on
 >> [[todo/need_global_renamepage_hook]], as the solution I implemented
 >> was initially agreed on there.
@@ -235,7 +237,7 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 > * `skeleton.pm.example`'s canrename needs fixing to use either
 >   the current or my suggested parameters.
 >> 
->> I'll do both.
+>> Done.
 >> 
 > * I don't like the exporting of `%backlinks` and `$backlinks_calculated`
 >   (the latter is exported but not used).
@@ -276,8 +278,7 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >   that can be used safely, and that version documented in 
 >   `plugins/po.mdwn`.
 >>
->> Sure. I was waiting for the necessary version to be actually
->> released, but we can guess it will be 0.35.
+>> Done.
 >> 
 >> --[[intrigeri]]
 > 
