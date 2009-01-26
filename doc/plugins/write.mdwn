@@ -401,9 +401,9 @@ This hook is called whenever ikiwiki normally saves its state, just before
 the state is saved. The function can save other state, modify values before
 they're saved, etc.
 
-### renamelink
+### renamepage
 
-	hook(type => "renamelink", id => "foo", call => \&renamelink);
+	hook(type => "renamepage", id => "foo", call => \&renamepage);
 
 This hook is called by the [[plugins/rename]] plugin when it renames
 something, once per page linking to the renamed page's old location.

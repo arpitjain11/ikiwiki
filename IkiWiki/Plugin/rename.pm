@@ -216,7 +216,7 @@ sub postrename ($;$$$) {
 		# Update edit form content to fix any links present
 		# on it.
 		$postrename->param("editcontent",
-			renamelink_hook($dest, $src, $dest,
+			renamepage_hook($dest, $src, $dest,
 				 $postrename->param("editcontent")));
 
 		# Get a new edit token; old was likely invalidated.
@@ -446,10 +446,10 @@ sub linklist {
 	} @{$list}]
 }
 
-sub renamelink_hook ($$$$) {
+sub renamepage_hook ($$$$) {
 	my ($page, $src, $dest, $content)=@_;
 
-	IkiWiki::run_hooks(renamelink => sub {
+	IkiWiki::run_hooks(renamepage => sub {
 		$content=shift->(
 			page => $page,
 			oldpage => $src,
@@ -506,7 +506,7 @@ sub fixlinks ($$$) {
 		if ($needfix) {
 			my $file=$pagesources{$page};
 			my $oldcontent=readfile($config{srcdir}."/".$file);
-			my $content=renamelink_hook($page, $rename->{src}, $rename->{dest}, $oldcontent);
+			my $content=renamepage_hook($page, $rename->{src}, $rename->{dest}, $oldcontent);
 			if ($oldcontent ne $content) {
 				my $token=IkiWiki::rcs_prepedit($file);
 				eval { writefile($file, $config{srcdir}, $content) };

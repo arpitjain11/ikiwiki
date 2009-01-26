@@ -36,6 +36,8 @@ sub import {
 	hook(type => "editcontent", id => "skeleton", call => \&editcontent);
 	hook(type => "formbuilder_setup", id => "skeleton", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "skeleton", call => \&formbuilder);
+	hook(type => "renamepage", id => "skeleton", call => \&renamepage);
+	hook(type => "rename", id => "skeleton", call => \&renamepages);
 	hook(type => "savestate", id => "skeleton", call => \&savestate);
 }
 
@@ -219,6 +221,18 @@ sub formbuilder (@) {
 	my %params=@_;
 	
 	debug("skeleton plugin running in formbuilder");
+}
+
+sub renamepage (@) {
+	my %params=@_;
+	
+	debug("skeleton plugin running in renamepage");
+}
+
+sub renamepages ($$$) {
+	my ($torename, $cgi, $session) = (shift, shift, shift);
+	
+	debug("skeleton plugin running in rename");
 }
 
 sub savestate () {
