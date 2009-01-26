@@ -126,6 +126,13 @@ sub getsetup () {
 			safe => 1,
 			rebuild => 1,
 		},
+		po_strictly_refresh_backlinks => {
+			type => "boolean",
+			example => 1,
+			description => "refresh a page when a backlinked page is changed (can hit performance)",
+			safe => 1,
+			rebuild => 1,
+		},
 }
 
 sub checkconfig () {
@@ -165,6 +172,10 @@ sub checkconfig () {
 	if (! exists $config{po_translation_status_in_links} ||
 	    ! defined $config{po_translation_status_in_links}) {
 		$config{po_translation_status_in_links}=1;
+	}
+	if (! exists $config{po_strictly_refresh_backlinks} ||
+	    ! defined $config{po_strictly_refresh_backlinks}) {
+		$config{po_strictly_refresh_backlinks}=1;
 	}
 	push @{$config{wiki_file_prune_regexps}}, qr/\.pot$/;
 }
@@ -307,8 +318,10 @@ sub pagetemplate (@) {
 
 sub postscan (@) {
 	my %params = @_;
-	my $page = $params{page};
 
+	return unless $config{po_strictly_refresh_backlinks};
+
+	my $page = $params{page};
 	# backlinks involve back-dependencies, so that nicepagetitle effects,
 	# such as translation status displayed in links, are updated
 	use IkiWiki::Render;

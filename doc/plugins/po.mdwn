@@ -72,17 +72,19 @@ worry about excluding them explicitly from this [[ikiwiki/PageSpec]].
 Internal links
 --------------
 
+### Links targets
+
 The `po_link_to` option in `ikiwiki.setup` is used to decide how
 internal links should be generated, depending on web server features
 and site-specific preferences.
 
-### Default linking behavior
+#### Default linking behavior
 
 If `po_link_to` is unset, or set to `default`, ikiwiki's default
 linking behavior is preserved: `\[[destpage]]` links to the master
 language's page.
 
-### Link to current language
+#### Link to current language
 
 If `po_link_to` is set to `current`, `\[[destpage]]` links to the
 `destpage`'s version written in the current page's language, if
@@ -91,7 +93,7 @@ available, *i.e.*:
 * `foo/destpage/index.LL.html` if `usedirs` is enabled
 * `foo/destpage.LL.html` if `usedirs` is disabled
 
-### Link to negotiated language
+#### Link to negotiated language
 
 If `po_link_to` is set to `negotiated`, `\[[page]]` links to the
 negotiated preferred language, *i.e.* `foo/page/`.
@@ -104,6 +106,16 @@ negotiated preferred language, *i.e.* `foo/page/`.
 * if the web server does not support Content Negotiation, setting
   `po_link_to` to `negotiated` will produce a unusable website.
 
+### Links appearance
+
+When `po_translation_status_in_links` is enabled, the text of a link
+to a slave pages displays this page's translation status.
+
+When the `po_strictly_refresh_backlinks` setting is enabled, a page is
+refreshed every time a backlinked page is changed. This updates the
+translation status in links, and helps having a consistent translated
+wiki. Beware, this make every page depend on every page that links to
+it, which can slow everything down and bloat the dependency pagespecs.
 
 Server support
 ==============
