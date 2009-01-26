@@ -266,7 +266,7 @@ sub pagetemplate (@) {
 		$template->param(percenttranslated => percenttranslated($page));
 	}
 	if ($template->query(name => "istranslation")) {
-		$template->param(istranslation => istranslation($page));
+		$template->param(istranslation => scalar istranslation($page));
 	}
 	if ($template->query(name => "istranslatable")) {
 		$template->param(istranslatable => istranslatable($page));
