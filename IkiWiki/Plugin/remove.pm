@@ -73,7 +73,6 @@ sub check_canremove ($$$) {
 			}
 		}
 	});
-	return $canremove;
 }
 
 sub formbuilder_setup (@) {
