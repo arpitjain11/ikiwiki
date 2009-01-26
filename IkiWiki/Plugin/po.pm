@@ -753,7 +753,7 @@ sub istranslation ($) {
 		$translations{$masterpage}{$lang}=$page unless exists $translations{$masterpage}{$lang};
 		return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang);
 	}
-	return;
+	return "";
 }
 
 sub masterpage ($) {
