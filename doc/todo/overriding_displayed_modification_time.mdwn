@@ -1,0 +1,17 @@
+Some aggregators, like Planet, sort by mtime rather than ctime. This
+means that posts with modified content come to the top (which seems odd
+to me, but is presumably what the aggregator's author or operator
+wants), but it also means that posts with insignificant edits (like
+adding tags) come to the top too. Atom defines `<updated>` to be the date
+of the last *significant* change, so it's fine that ikiwiki defaults to
+using the mtime, but it would be good to have a way for the author to
+say "that edit was insignificant, don't use that mtime".
+
+See smcv's 'updated' branch for a basic implementation, which only affects
+the Atom `<updated>` field or the RSS equivalent.
+
+Other places the updated metadata item could be used (opinions on whether
+each should use it or not, please):
+
+* sorting by mtime in the inline directive
+* displaying "last edited" on ordinary pages

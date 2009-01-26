@@ -9,12 +9,13 @@ use IkiWiki;
 use IkiWiki::UserInfo;
 use Term::ReadLine;
 use File::Path;
+use Encode;
 
 sub ask ($$) {
 	my ($question, $default)=@_;
 
 	my $r=Term::ReadLine->new("ikiwiki");
-	$r->readline($question." ", $default);
+	$r->readline(encode_utf8($question)." ", $default);
 }
 
 sub prettydir ($) {

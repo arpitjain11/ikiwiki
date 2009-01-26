@@ -1,0 +1,29 @@
+<TMPL_IF NAME="COMMENTS">
+<br />
+<form action="<TMPL_VAR CGIURL>" method="post">
+<input type="hidden" name="do" value="commentmoderation" />
+<input type="hidden" name="sid" value="<TMPL_VAR SID>" />
+<input type="submit" value="Submit" />
+<input type="checkbox" name="rejectalldefer" value="1" />Reject
+all comments marked <em>Defer</em>
+<br />  
+<TMPL_LOOP NAME="COMMENTS">
+<div>
+<div>
+<TMPL_VAR VIEW>
+</div>
+<input type="radio" value="Defer" name="<TMPL_VAR ID>" checked />Defer
+<input type="radio" value="Accept" name="<TMPL_VAR ID>" />Accept
+<input type="radio" value="Reject" name="<TMPL_VAR ID>" />Reject
+</div>
+<br />
+</TMPL_LOOP>
+<input type="submit" value="Submit" />
+<input type="checkbox" name="rejectalldefer" value="1" />Reject
+all comments marked <em>Defer</em>
+</form>
+<TMPL_ELSE>
+<p>
+No comments need moderation at this time.
+</p>
+</TMPL_IF>

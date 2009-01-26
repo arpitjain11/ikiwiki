@@ -238,7 +238,7 @@ sub sessioncgi ($$) {
 			}
 		}
 		else {
-			IkiWiki::showform($form, $buttons, $session, $q);
+			removal_confirm($q, $session, 0, $q->param("page"));
 		}
 
 		exit 0;

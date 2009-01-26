@@ -23,6 +23,8 @@
 	margin: 0;
 	padding: 6px;
 	list-style-type: none;
+}
+.pageheader .actions ul {
 	border-bottom: 1px solid #000;
 }
 
@@ -339,11 +341,6 @@ input#searchbox {
 	border: 2px solid;
 	background-color: #dee;
 	color: black;
-	
-	/* Nonstandard, but very nice. */
-	opacity: 0.95;
-	-moz-opacity: 0.95;
-	filter: alpha(opacity=95);
 }
 
 /* Formbuilder styling */

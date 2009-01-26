@@ -65,3 +65,30 @@ How can I fix this?  --[[sabr]]
 
 > I don't see why that wouldn't work. Can I download the source to your
 > wiki from somewhere to investigate? --[[Joey]]
+
+----
+
+Should negation work with user(), with locked_pages in setup?  I
+experimented with setting locked_pages => 'user(someuser)' and was able to
+edit as a different user.  However, setting locked_pages =>
+'!user(someuser)' doesn't seem to allow edits for only 'someuser' - it
+locks out all users.
+
+> Negation works with anything in any PageSpec. I tested the case you
+> describe, and a negated pagespec worked for me; all users except the
+> listed user (and except wiki admins of course) were locked out.
+> --[[Joey]] 
+
+>> It must be a local problem, then, cause I've tried it with two separate 
+>> machines.  Both are running the most recent release of ikiwiki in 
+>> pkgsrc - 2.66.  Perhaps an update to a newer version would solve the issue.
+
+----
+
+Is there a way to refer to all subpages of the current page, if  the name of the 
+current page is not known (i.e. the pagespec is used in a template)? The ./ syntax
+does not seem suitable for this, as
+
+> \[[!map pages="./*"]]
+
+also lists the current page and all its siblings.

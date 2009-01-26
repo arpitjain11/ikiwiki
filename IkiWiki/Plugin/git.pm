@@ -139,6 +139,12 @@ sub safe_git (&@) {
 	my @lines;
 	while (<$OUT>) {
 		chomp;
+		
+		# check for invalid utf-8, and toss it back to avoid crashes
+		if (! utf8::valid($_)) {
+			$_=encode_utf8($_);
+		}
+
 		push @lines, $_;
 	}
 

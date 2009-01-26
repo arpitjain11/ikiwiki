@@ -1,0 +1,6 @@
+How does one test a user identity?  I tried "pagename and user(username) for the match, and had a "no user specified" error.
+
+> You can't test them with this directive, because such pagespecs test to
+> see if logged in user, who is performing some action, matches. When the
+> page with the directive is built, the concept of a user being logged in
+> doesn't really apply. --[[Joey]] 

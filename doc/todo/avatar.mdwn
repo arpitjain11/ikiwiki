@@ -1,0 +1,47 @@
+[[!tag wishlist]]
+
+It would be nice if ikiwiki, particularly [[plugins/comments]]
+supported user avatar icons. I was considering adding a directive for this,
+as designed below.
+
+However, there is no *good* service for mapping openids to avatars --
+openavatar has many issues, including not supporting delegated openids, and
+after trying it, I don't trust it to push users toward. 
+Perhaps instead ikiwiki could get the email address from the openid
+provider, though I think the perl openid modules don't support the openid
+2.x feature that allows that.
+
+At the moment, working on this doesn't feel like a good use of my time.
+--[[Joey]]
+
+Hmm.. unless is just always used a single provider (gravatar) and hashed
+the openid. Then wavatars could be used to get a unique avatar per openid
+at least. --[[Joey]] 
+
+----
+
+The directive displays a small avatar image for a user. Pass it the
+email address, openid, or wiki username of the user.
+
+	\[[!avatar user@example.com]]
+	\[[!avatar http://joey.kitenet.net/]]
+	\[[!avatar user]]
+
+The avatars are provided by various sites. For email addresses, it uses a
+[gravatar](http://gravatar.com/). For openid,
+[openavatar](http://www.openvatar.com/) is used. For a wiki username, the
+user's email address is looked up and the gravatar for that user is
+displayed. (Of course, the user has to have filled in their email address
+on their Preferences page for that to work.)
+
+An optional second parameter can be included, containing additional
+options to pass in the 
+[gravatar url](http://en.gravatar.com/site/implement/url).
+For example, this asks for a smaller gravatar, and if a user does
+not have a gravatar, uses a cute auto-generated "wavatar" avatar.
+
+	\[[!gravatar user@example.com "size=40&default=wavatar"]]
+
+The `gravitar_options` setting in the setup file can be used to
+specify additional options to pass. So for example if you want
+to use wavatars everywhere, set it to "default=wavatar".

@@ -105,11 +105,12 @@ sub check_content (@) {
 				$ok=1;
 			}
 			elsif (ref $ret eq 'CODE') {
-				$ret->();
+				$ret->() unless $params{nonfatal};
 				$ok=0;
 			}
 			elsif (defined $ret) {
-				error($ret);
+				error($ret) unless $params{nonfatal};
+				$ok=0;
 			}
 		}
 

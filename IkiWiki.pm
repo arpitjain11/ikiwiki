@@ -174,7 +174,7 @@ sub getsetup () {
 	verbose => {
 		type => "boolean",
 		example => 1,
-		description => "display verbose messages when building?",
+		description => "display verbose messages?",
 		safe => 1,
 		rebuild => 0,
 	},
@@ -1733,7 +1733,7 @@ sub pagespec_translate ($) {
 				$code.="IkiWiki::PageSpec::match_$1(\$page, ".safequote($2).", \@_)";
 			}
 			else {
-				$code.=' 0';
+				$code.="IkiWiki::FailReason->new(".safequote(qq{unknown function in pagespec "$word"}).")";
 			}
 		}
 		else {
@@ -1742,7 +1742,7 @@ sub pagespec_translate ($) {
 	}
 
 	if (! length $code) {
-		$code=0;
+		$code="IkiWiki::FailReason->new('empty pagespec')";
 	}
 
 	no warnings;

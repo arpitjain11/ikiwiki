@@ -62,11 +62,11 @@ sub checkcontent (@) {
 	}
 
 	my $url=$defaulturl;
-	$url = $params{blogspam_server} if exists $params{blogspam_server};
+	$url = $config{blogspam_server} if exists $config{blogspam_server};
 	my $client = RPC::XML::Client->new($url);
 
-	my @options = split(",", $params{blogspam_options})
-		if exists $params{blogspam_options};
+	my @options = split(",", $config{blogspam_options})
+		if exists $config{blogspam_options};
 
 	# Allow short comments and whitespace-only edits, unless the user
 	# has overridden min-words themselves.
@@ -83,7 +83,7 @@ sub checkcontent (@) {
 	# and "buy".
 	push @options, "exclude=stopwords";
 
-	my $res = $client->send_request('testComment', {
+	my %req=(
 		ip => $ENV{REMOTE_ADDR},
 		comment => defined $params{diff} ? $params{diff} : $params{content},
 		subject => defined $params{subject} ? $params{subject} : "",
@@ -92,17 +92,20 @@ sub checkcontent (@) {
 		options => join(",", @options),
 		site => $config{url},
 		version => "ikiwiki ".$IkiWiki::version,
-	});
+	);
+	my $res = $client->send_request('testComment', \%req);
 
 	if (! ref $res || ! defined $res->value) {
 		debug("failed to get response from blogspam server ($url)");
 		return undef;
 	}
 	elsif ($res->value =~ /^SPAM:(.*)/) {
+		eval q{use Data::Dumper};
+		debug("blogspam server reports ".$res->value.": ".Dumper(\%req));
 		return gettext("Sorry, but that looks like spam to <a href=\"http://blogspam.net/\">blogspam</a>: ").$1;
 	}
 	elsif ($res->value ne 'OK') {
-		debug(gettext("blogspam server failure: ").$res->value);
+		debug("blogspam server failure: ".$res->value);
 		return undef;
 	}
 	else {
