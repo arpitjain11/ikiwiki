@@ -659,8 +659,8 @@ sub mycgiurl (@) {
 		my $page=shift;
 		my $destpage=shift;
 
-		return ( exists $filtered{$page}{$destpage}
-			 && $filtered{$page}{$destpage} eq 1 );
+		return exists $filtered{$page}{$destpage}
+			 && $filtered{$page}{$destpage} eq 1;
 	}
 
 	sub setalreadyfiltered($$) {
@@ -768,7 +768,7 @@ sub lang ($) {
 sub islanguagecode ($) {
 	my $code=shift;
 
-	return ($code =~ /^[a-z]{2}$/);
+	return $code =~ /^[a-z]{2}$/;
 }
 
 sub otherlanguage ($$) {
