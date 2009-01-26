@@ -442,8 +442,12 @@ sub editcomment ($$) {
 	# - this means that if they do, rocks fall and everyone dies
 
 	if ($form->submitted eq PREVIEW) {
-		$form->tmpl_param(page_preview => 
-			previewcomment($content, $location, $page, time));
+		my $preview=previewcomment($content, $location, $page, time);
+		IkiWiki::run_hooks(format => sub {
+			$preview = shift->(page => $page,
+				content => $preview);
+		});
+		$form->tmpl_param(page_preview => $preview);
 	}
 	else {
 		$form->tmpl_param(page_preview => "");
@@ -603,10 +607,11 @@ sub commentmoderation ($$) {
 		my ($id, $ctime)=@{$_};
 		my $file="$config{wikistatedir}/comments_pending/$id";
 		my $content=readfile($file);
+		my $preview=previewcomment($content, $id,
+			IkiWiki::dirname($_), $ctime);
 		{
 			id => $id,
-			view => previewcomment($content, $id,
-					IkiWiki::dirname($_), $ctime),
+			view => $preview,
 		} 
 	} sort { $b->[1] <=> $a->[1] } comments_pending();
 
@@ -616,7 +621,11 @@ sub commentmoderation ($$) {
 		comments => \@comments,
 	);
 	IkiWiki::printheader($session);
-	print IkiWiki::misctemplate(gettext("comment moderation"), $template->output);
+	my $out=$template->output;
+	IkiWiki::run_hooks(format => sub {
+		$out = shift->(page => "", content => $out);
+	});
+	print IkiWiki::misctemplate(gettext("comment moderation"), $out);
 	exit;
 }
 
@@ -671,10 +680,6 @@ sub previewcomment ($$$) {
 			IkiWiki::linkify($location, $page,
 			IkiWiki::preprocess($location, $page,
 			IkiWiki::filter($location, $page, $content), 0, 1)));
-	IkiWiki::run_hooks(format => sub {
-		$preview = shift->(page => $page,
-			content => $preview);
-	});
 
 	my $template = template("comment.tmpl");
 	$template->param(content => $preview);
