@@ -1,0 +1,14 @@
+meta title cannot reliably be put inside a template used by the
+[[plugins/template]] plugin. Since meta title info is gathered in the scan
+pass, which does not look at the template a page includes, it will not be
+seen then, and so other pages that use the page title probably won't use
+it. (Barring luck with build order.)
+
+There is a simple fix for this, just add `scan => 1` when registering the
+preprocess hook for the template plugin.
+
+However, the overhead of this has to be considered. It means that, on every
+scan pass, every page containing a template will cause the template to be
+loaded and filled out. This can be some serious additional overhead.
+
+--[[Joey]] 

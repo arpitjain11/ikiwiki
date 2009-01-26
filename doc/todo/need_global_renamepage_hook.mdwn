@@ -55,3 +55,9 @@ would solve my problem. Hmmm? --[[intrigeri]]
 >> In my `po` branch, I renamed `renamepage` to `renamelink`, and
 >> created a `rename` hook that is passed a reference to `@torename`.
 >> --[[intrigeri]]
+
+>>> As Joey highlights it on [[plugins/contrib/po]], it's too late to
+>>> merge such a change, as the 3.x plugin API is released and should
+>>> not be broken. I'm thus proposing to keep the existing
+>>> `renamepage` as it is, and call `rename` the global hook I need.
+>>> --[[intrigeri]]

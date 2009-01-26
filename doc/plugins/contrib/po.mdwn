@@ -198,3 +198,87 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 > subsequent adjustments.
 > 
 > --[[intrigeri]]
+
+> I've looked it over and updated my branch with some (untested)
+> changes.
+> 
+> Sorry, I'd forgotten about your cansave hook.. sorry for the duplicate
+> work there.
+> 
+> Reviewing the changes, mostly outside of `po.pm`, I have
+> the following issues.
+>  
+> * renamepage to renamelink change would break the ikiwiki
+>   3.x API, which I've promised not to do, so needs to be avoided
+>   somehow. (Sorry, I guess I dropped the ball on not getting this
+>   API change in before cutting 3.0..)
+> 
+>> I'm discussing the solutions we now have on
+>> [[todo/need_global_renamepage_hook]], as the solution I implemented
+>> was initially agreed on there.
+>>
+> * I don't understand the parentlinks code change and need to figure it
+>   out. Can you explain what is going on there?
+>> 
+>> I'm calling `bestlink` there so that po's injected `bestlink` is
+>> run. This way, the parent links of a page link to the parent page
+>> version in the proper language, depending on the
+>> `po_link_to=current` and `po_link_to=negotiated` settings.
+>> Moreover, when using my meta branch enhancements plus meta title to
+>> make pages titles translatable, this small patch is needed to get
+>> the translated titles into parentlinks.
+>> 
+> * canrename's mix of positional and named parameters is way too
+>   ugly to get into an ikiwiki API. Use named parameters
+>   entirely. Also probably should just use named parameters
+>   for canremove.
+> * `skeleton.pm.example`'s canrename needs fixing to use either
+>   the current or my suggested parameters.
+>> 
+>> I'll do both.
+>> 
+> * I don't like the exporting of `%backlinks` and `$backlinks_calculated`
+>   (the latter is exported but not used).
+>> 
+>> The commit message for 85f865b5d98e0122934d11e3f3eb6703e4f4c620
+>> contains the rationale for this change. I guess I don't understand
+>> the subtleties of `our` use, and perldoc does not help me a lot.
+>> IIRC, I actually did not use `our` to "export" these variables, but
+>> rather to have them shared between `Render.pm` uses.
+>> 
+> * What is this `IkiWiki::nicepagetitle` and why are you
+>   injecting it into that namespace when only your module uses it?
+>   Actually, I can't even find a caller of it in your module.
+>> 
+>> I guess you should have a look to my `meta` branch and to
+>> [[bugs/pagetitle_function_does_not_respect_meta_titles]] in order
+>> to understand this :)
+>> 
+> * I'm very fearful of the `add_depends` in `postscan`. 
+>   Does this make every page depend on every page that links
+>   to it? Won't this absurdly bloat the dependency pagespecs
+>   and slow everything down? And since nicepagetitle is given
+>   as the reason for doing it, and nicepagetitle isn't used,
+>   why do it?
+>> 
+>> As explained in the 85f865b5d98e0122934d11e3f3eb6703e4f4c620 log:
+>> this feature hits performance a bit. Its cost was quite small in my
+>> real-world use-cases (a few percents bigger refresh time), but
+>> could be bigger in worst cases. When using the po plugin with my
+>> meta branch changes (i.e. the `nicepagetitle` thing), and having
+>> enabled the option to display translation status in links, this
+>> maintains the translation status up-to-date in backlinks. Same when
+>> using meta title to make the pages titles translatable. It does
+>> help having a nice and consistent translated wiki, but as it hurts
+>> performance, I'm proposing to turn it into an option.
+>> 
+> * The po4a Suggests should be versioned to the first version
+>   that can be used safely, and that version documented in 
+>   `plugins/po.mdwn`.
+>>
+>> Sure. I was waiting for the necessary version to be actually
+>> released, but we can guess it will be 0.35.
+>> 
+>> --[[intrigeri]]
+> 
+> --[[Joey]] 
