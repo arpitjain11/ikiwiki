@@ -191,10 +191,8 @@ sub canremove ($$$) {
 	debug("skeleton plugin running in canremove");
 }
 
-sub canrename ($$$) {
-	my $page=shift;
-	my $cgi=shift;
-	my $session=shift;
+sub canrename (@) {
+	my %params=@_;
 
 	debug("skeleton plugin running in canrename");
 }

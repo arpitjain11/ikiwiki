@@ -452,9 +452,9 @@ sub canremove ($$$) {
 	return undef;
 }
 
-sub canrename ($$@) {
-	my ($cgi, $session) = (shift, shift);
+sub canrename (@) {
 	my %params = @_;
+	my $session = $params{session};
 
 	if (istranslation($params{src})) {
 		my $masterpage = masterpage($params{src});
