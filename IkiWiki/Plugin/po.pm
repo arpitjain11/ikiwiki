@@ -535,11 +535,6 @@ sub formbuilder (@) {
 				my @types = grep { $_ ne 'po' } $field->options;
 				$field->options(\@types) if @types;
 			}
-			else {
-				# make sure the default value is not po;
-				# does this case actually happen?
-				debug "po(formbuilder) ".gettext("type field is not selected - not implemented yet");
-			}
 		}
 	}
 }
