@@ -851,9 +851,9 @@ sub refreshpofiles ($@) {
 	my @pofiles=@_;
 
 	my $potfile=potfile($masterfile);
-	(-e $potfile)
-		or error("po(refreshpofiles) ".sprintf(gettext("POT file (%s) does not exist"),
-						       $potfile));
+	if (! -e $potfile) {
+		error("po(refreshpofiles) ".sprintf(gettext("POT file (%s) does not exist"), $potfile));
+	}
 
 	foreach my $pofile (@pofiles) {
 		IkiWiki::prep_writefile(basename($pofile),dirname($pofile));
