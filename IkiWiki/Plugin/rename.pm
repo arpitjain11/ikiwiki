@@ -107,7 +107,6 @@ sub check_canrename ($$$$$$) {
 			}
 		}
 	});
-	return $canrename;
 }
 
 sub rename_form ($$$) {
