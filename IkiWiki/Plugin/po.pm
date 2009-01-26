@@ -1120,9 +1120,6 @@ sub isvalidpo ($) {
 # `----
 
 package IkiWiki::PageSpec;
-use warnings;
-use strict;
-use IkiWiki 2.00;
 
 sub match_istranslation ($;@) {
 	my $page=shift;
