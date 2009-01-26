@@ -58,7 +58,7 @@ sub check_canremove ($$$) {
 	my $canremove;
 	IkiWiki::run_hooks(canremove => sub {
 		return if defined $canremove;
-		my $ret=shift->($page, $q, $session);
+		my $ret=shift->(page => $page, cgi => $q, session => $session);
 		if (defined $ret) {
 			if ($ret eq "") {
 				$canremove=1;

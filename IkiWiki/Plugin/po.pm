@@ -442,10 +442,10 @@ sub checkcontent (@) {
 	return undef;
 }
 
-sub canremove ($$$) {
-	my ($page, $cgi, $session) = (shift, shift, shift);
+sub canremove (@) {
+	my %params = @_;
 
-	if (istranslation($page)) {
+	if (istranslation($params{page})) {
 		return gettext("Can not remove a translation. Removing the master page, ".
 			       "though, removes its translations as well.");
 	}

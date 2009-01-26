@@ -325,9 +325,11 @@ user can edit.
 
 	hook(type => "canremove", id => "foo", call => \&canremove);
 
-This hook can be used to implement arbitrary access methods to control when
-a page can be removed using the web interface (commits from revision control
-bypass it). It works exactly like the `canedit` hook.
+This hook can be used to implement arbitrary access methods to control
+when a page can be removed using the web interface (commits from
+revision control bypass it). It works exactly like the `canedit` hook,
+but is passed the named parameters `cgi` (a CGI object), `session`
+(a session object) and `page` (the page subject to deletion).
 
 ### canrename
 
@@ -335,7 +337,7 @@ bypass it). It works exactly like the `canedit` hook.
 
 This hook can be used to implement arbitrary access methods to control when
 a page can be renamed using the web interface (commits from revision control
-bypass it). It works exactly like the `canedit` and `canremove` hook,
+bypass it). It works exactly like the `canedit` hook,
 but is passed the named parameters `cgi` (a CGI object), `session` (a
 session object), `src`, `srcfile`, `dest` and `destfile`.
 

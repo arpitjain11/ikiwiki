@@ -183,10 +183,8 @@ sub canedit ($$$) {
 	debug("skeleton plugin running in canedit");
 }
 
-sub canremove ($$$) {
-	my $page=shift;
-	my $cgi=shift;
-	my $session=shift;
+sub canremove (@) {
+	my %params=@_;
 
 	debug("skeleton plugin running in canremove");
 }
