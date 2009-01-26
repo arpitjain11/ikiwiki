@@ -5,6 +5,8 @@ This plugin adds support for multi-lingual wikis, translated with
 gettext, using [po4a](http://po4a.alioth.debian.org/).
 
 It depends on the Perl `Locale::Po4a::Po` library (`apt-get install po4a`).
+As detailed bellow in the security section, `po4a` is subject to
+denial-of-service attacks before version 0.35.
 
 [[!toc levels=2]]
 
