@@ -537,7 +537,7 @@ sub formbuilder (@) {
 	# This cannot be done in the formbuilder_setup hook as the list of types is
 	# computed later.
 	if ($form->field("do") eq "create") {
-	        for my $field ($form->field) {
+	        foreach my $field ($form->field) {
 			next unless "$field" eq "type";
 			if ($field->type eq 'select') {
 				# remove po from the list of types
@@ -547,7 +547,7 @@ sub formbuilder (@) {
 			else {
 				# make sure the default value is not po;
 				# does this case actually happen?
-				debug "po(formbuilder) ".gettext("type field is not select - not implemented yet");
+				debug "po(formbuilder) ".gettext("type field is not selected - not implemented yet");
 			}
 		}
 	}
