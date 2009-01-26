@@ -539,12 +539,14 @@ sub commentmoderation ($$) {
 	if (defined $cgi->param('sid')) {
 		IkiWiki::checksessionexpiry($cgi, $session);
 
+		my $rejectalldefer=$cgi->param('rejectalldefer');
+
 		my %vars=$cgi->Vars;
 		my $added=0;
 		foreach my $id (keys %vars) {
 			if ($id =~ /(.*)\Q._comment\E$/) {
 				my $action=$cgi->param($id);
-				next if $action eq 'Defer';
+				next if $action eq 'Defer' && ! $rejectalldefer;
 
 				# Make sure that the id is of a legal
 				# pending comment before untainting.
@@ -601,7 +603,6 @@ sub commentmoderation ($$) {
 		my ($id, $ctime)=@{$_};
 		my $file="$config{wikistatedir}/comments_pending/$id";
 		my $content=readfile($file);
-		my $ctime=(stat($file))[10];
 		{
 			id => $id,
 			view => previewcomment($content, $id,
@@ -668,14 +669,12 @@ sub previewcomment ($$$) {
 
 	my $preview = IkiWiki::htmlize($location, $page, '_comment',
 			IkiWiki::linkify($location, $page,
-				IkiWiki::preprocess($location, $page,
-					IkiWiki::filter($location,
-						$page, $content),
-					0, 1)));
+			IkiWiki::preprocess($location, $page,
+			IkiWiki::filter($location, $page, $content), 0, 1)));
 	IkiWiki::run_hooks(format => sub {
-			$preview = shift->(page => $page,
-				content => $preview);
-		});
+		$preview = shift->(page => $page,
+			content => $preview);
+	});
 
 	my $template = template("comment.tmpl");
 	$template->param(content => $preview);
