@@ -70,7 +70,7 @@ sub import {
 # 2. Injected functions
 # 3. Blackboxes for private data
 # 4. Helper functions
-# 5. PageSpec's
+# 5. PageSpecs
 
 
 # ,----
@@ -250,8 +250,8 @@ sub htmlize (@) {
 
 	# force content to be htmlize'd as if it was the same type as the master page
 	return IkiWiki::htmlize($page, $page,
-				pagetype(srcfile($pagesources{masterpage($page)})),
-				$content);
+		pagetype(srcfile($pagesources{masterpage($page)})),
+		$content);
 }
 
 sub pagetemplate (@) {
@@ -287,13 +287,13 @@ sub pagetemplate (@) {
 	# Known limitations are preferred to future random bugs.
 	if ($template->param('discussionlink') && istranslation($page)) {
 		$template->param('discussionlink' => htmllink(
-							$page,
-							$destpage,
-							$masterpage . '/' . gettext("Discussion"),
-							noimageinline => 1,
-							forcesubpage => 0,
-							linktext => gettext("Discussion"),
-							));
+			$page,
+			$destpage,
+			$masterpage . '/' . gettext("Discussion"),
+			noimageinline => 1,
+			forcesubpage => 0,
+			linktext => gettext("Discussion"),
+		));
 	}
 	# Remove broken parentlink to ./index.html on home page's translations.
 	# It works because this hook has the "last" parameter set, to ensure it
@@ -1116,7 +1116,7 @@ sub isvalidpo ($) {
 }
 
 # ,----
-# | PageSpec's
+# | PageSpecs
 # `----
 
 package IkiWiki::PageSpec;
