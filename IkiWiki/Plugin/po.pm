@@ -275,7 +275,7 @@ sub pagetemplate (@) {
 		$template->param(percenttranslated => percenttranslated($page));
 	}
 	if ($template->query(name => "istranslation")) {
-		$template->param(istranslation => scalar istranslation($page));
+		$template->param(istranslation => istranslation($page));
 	}
 	if ($template->query(name => "istranslatable")) {
 		$template->param(istranslatable => istranslatable($page));
@@ -388,7 +388,7 @@ sub change(@) {
 	# at once. As this more or less doubles the time needed to rebuild the
 	# wiki, we do so only when really needed.
 
-	if (scalar @rendered
+	if (@rendered
 	    && exists $config{rebuild} && defined $config{rebuild} && $config{rebuild}
 	    && UNIVERSAL::can("IkiWiki::Plugin::meta", "getsetup")
 	    && exists $config{meta_overrides_page_title}
@@ -474,7 +474,7 @@ sub canrename ($$@) {
 		# by looking for the master page in the list of to-be-renamed pages we
 		# saved early in the renaming process.
 		my $orig_torename = $session->param("po_orig_torename");
-		unless (scalar grep { $_->{src} eq $masterpage } @{$orig_torename}) {
+		unless (grep { $_->{src} eq $masterpage } @{$orig_torename}) {
 			return gettext("Can not rename a translation. Renaming the master page, ".
 				       "though, renames its translations as well.");
 		}
@@ -542,7 +542,7 @@ sub formbuilder (@) {
 			if ($field->type eq 'select') {
 				# remove po from the list of types
 				my @types = grep { $_ ne 'po' } $field->options;
-				$field->options(\@types) if scalar @types;
+				$field->options(\@types) if @types;
 			}
 			else {
 				# make sure the default value is not po;
@@ -989,7 +989,7 @@ sub deletetranslations ($) {
 		}
 	} @todelete;
 
-	if (scalar @todelete) {
+	if (@todelete) {
 		commit_and_refresh(
 			gettext("removed obsolete PO files"),
 			"IkiWiki::Plugin::po::deletetranslations");
