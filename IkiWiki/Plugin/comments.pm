@@ -598,7 +598,7 @@ sub commentmoderation ($$) {
 	}
 
 	my @comments=map {
-		my $id=$_;
+		my ($id, $ctime)=@{$_};
 		my $file="$config{wikistatedir}/comments_pending/$id";
 		my $content=readfile($file);
 		my $ctime=(stat($file))[10];
@@ -607,7 +607,7 @@ sub commentmoderation ($$) {
 			view => previewcomment($content, $id,
 					IkiWiki::dirname($_), $ctime),
 		} 
-	} comments_pending();
+	} sort { $b->[1] <=> $a->[1] } comments_pending();
 
 	my $template=template("commentmoderation.tmpl");
 	$template->param(
@@ -649,8 +649,9 @@ sub comments_pending () {
 				$File::Find::prune=0;
 				my ($f)=/$config{wiki_file_regexp}/; # untaint
 				if (defined $f && $f =~ /\Q._comment\E$/) {
+					my $ctime=(stat($f))[10];
 					$f=~s/^\Q$dir\E\/?//;
-                                        push @ret, $f;
+                                        push @ret, [$f, $ctime];
 				}
 			}
 		}
