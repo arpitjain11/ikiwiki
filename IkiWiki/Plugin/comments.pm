@@ -26,6 +26,7 @@ sub import {
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
 	hook(type => "cgi", id => "comments", call => \&linkcgi);
+	hook(type => "formbuilder_setup", id => "comments", call => \&formbuilder_setup);
 	IkiWiki::loadplugin("inline");
 }
 
@@ -616,6 +617,18 @@ sub commentmoderation ($$) {
 	IkiWiki::printheader($session);
 	print IkiWiki::misctemplate(gettext("comment moderation"), $template->output);
 	exit;
+}
+
+sub formbuilder_setup (@) {
+	my %params=@_;
+
+	my $form=$params{form};
+	if ($form->title eq "preferences") {
+		push @{$params{buttons}}, "Comment Moderation";
+		if ($form->submitted && $form->submitted eq "Comment Moderation") {
+			commentmoderation($params{cgi}, $params{session});
+		}
+	}
 }
 
 sub comments_pending () {

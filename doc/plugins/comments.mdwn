@@ -45,6 +45,8 @@ There are some global options for the setup file:
 ## comment moderation
 
 If you enable the [[blogspam]] plugin, comments that appear spammy will be
-held for moderation. These comments are stored in
-`.ikiwiki/comments_pending/`, and can be deleted, or moved into the
-wiki's srcdir to be posted.
+held for moderation. Wiki admins can access the comment moderation queue
+via a button on their Preferences page.
+
+The comments are stored in `.ikiwiki/comments_pending/`, and can be
+deleted, or moved into the wiki's srcdir to be posted.
