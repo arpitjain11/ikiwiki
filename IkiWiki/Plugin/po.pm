@@ -709,7 +709,7 @@ sub istranslatablefile ($) {
 	my $file=shift;
 
 	return 0 unless defined $file;
-	return 0 if (defined pagetype($file) && pagetype($file) eq 'po');
+	return 0 if defined pagetype($file) && pagetype($file) eq 'po';
 	return 0 if $file =~ /\.pot$/;
 	return 0 unless -e "$config{srcdir}/$file"; # underlay dirs may be read-only
 	return 1 if pagespec_match(pagename($file), $config{po_translatable_pages});
@@ -727,19 +727,19 @@ sub istranslatable ($) {
 sub _istranslation ($) {
 	my $page=shift;
 
-	$page='' unless (defined $page && length $page);
+	$page='' unless defined $page && length $page;
 	my $hasleadingslash = ($page=~s#^/##);
 	my $file=$pagesources{$page};
-	return 0 unless (defined $file
+	return 0 unless defined $file
 			 && defined pagetype($file)
-			 && pagetype($file) eq 'po');
+			 && pagetype($file) eq 'po';
 	return 0 if $file =~ /\.pot$/;
 
 	my ($masterpage, $lang) = ($page =~ /(.*)[.]([a-z]{2})$/);
-	return 0 unless (defined $masterpage && defined $lang
+	return 0 unless defined $masterpage && defined $lang
 			 && length $masterpage && length $lang
 			 && defined $pagesources{$masterpage}
-			 && defined $config{po_slave_languages}{$lang});
+			 && defined $config{po_slave_languages}{$lang};
 
 	return (maybe_add_leading_slash($masterpage, $hasleadingslash), $lang)
 		if istranslatable($masterpage);
@@ -792,7 +792,7 @@ sub otherlanguages ($) {
 	my $page=shift;
 
 	my %ret;
-	return \%ret unless (istranslation($page) || istranslatable($page));
+	return \%ret unless istranslation($page) || istranslatable($page);
 	my $curlang=lang($page);
 	foreach my $lang
 		($config{po_master_language}{code}, keys %{$config{po_slave_languages}}) {
@@ -1161,7 +1161,7 @@ sub match_lang ($$;@) {
 
 	my $regexp=IkiWiki::glob2re($wanted);
 	my $lang=IkiWiki::Plugin::po::lang($page);
-	if ($lang!~/^$regexp$/i) {
+	if ($lang !~ /^$regexp$/i) {
 		return IkiWiki::FailReason->new("file language is $lang, not $wanted");
 	}
 	else {
