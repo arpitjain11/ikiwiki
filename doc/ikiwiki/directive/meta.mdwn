@@ -139,6 +139,15 @@ Supported fields:
   pages unchanged and avoid_flooding_aggregators
   (see [[!iki tips/howto_avoid_flooding_aggregators]]).
 
+* updated
+
+  Specifies a fake modification time for a page, to be output into RSS and
+  Atom feeds. This is useful to avoid flooding aggregators that sort by
+  modification time, like Planet: for instance, when editing an old blog post
+  to add tags, you could set `updated` to be one second later than the original
+  value. The date/time can be given in any format that
+  [[!cpan TimeDate]] can understand, just like the `date` field.
+
 If the field is not one of the above predefined fields, the metadata will be
 written to the generated html page as a &lt;meta&gt; header. However, this
 won't be allowed if the [[!iki plugins/htmlscrubber desc=htmlscrubber]] plugin is enabled,
