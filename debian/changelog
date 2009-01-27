@@ -1,11 +1,9 @@
 ikiwiki (3.03) UNRELEASED; urgency=low
 
-  * Avoid feeding decoded unicode to Term::ReadLine.
-    Closes: 512169
+  * Avoid feeding decoded unicode to Term::ReadLine. Closes: 512169
   * blogspam: Log spam info on failure in debug mode.
   * Remove nonstandard css. Closes: #512378
-  * blogspam: Fix use of blogspam_options and blogspam_server
-    config settings.
+  * blogspam: Fix use of blogspam_options and blogspam_server config settings.
   * comments: If comment content checks fail, store the comment
     (in .ikiwiki/comments_pending) for moderator review.
   * comments: Add a moderation web interface, which admins can

@@ -87,6 +87,8 @@ hashes is desired, it could return the full set of hashes.
 > though, because one can't build a hash containing an array of hashes
 > as a value, without passing this array as a reference.
 > 
+>> Sure.
+> 
 > I'm not entirely sure about your first concern. Calling the hook
 > before or after the subpages addition both have their own problems.
 > 
@@ -95,3 +97,9 @@ hashes is desired, it could return the full set of hashes.
 > a given hook function can choose to act only before or after, or both?
 > 
 > --[[intrigeri]]
+>> 
+>> Have you thought about making the hook be run once *per* file that is
+>> selected to be renamed? This would even handle the case where two
+>> plugins use the hook; plugin A would see when plugin B adds a new file
+>> to be renamed. And the subpage renaming stuff could probably be moved
+>> into the rename hook too. --[[Joey]] 
