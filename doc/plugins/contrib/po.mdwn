@@ -245,7 +245,9 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >> the subtleties of `our` use, and perldoc does not help me a lot.
 >> IIRC, I actually did not use `our` to "export" these variables, but
 >> rather to have them shared between `Render.pm` uses.
->> 
+>>
+>>> My wording was unclear, I meant exposing. --[[Joey]]
+>>>  
 > * What is this `IkiWiki::nicepagetitle` and why are you
 >   injecting it into that namespace when only your module uses it?
 >   Actually, I can't even find a caller of it in your module.
@@ -253,6 +255,9 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >> I guess you should have a look to my `meta` branch and to
 >> [[bugs/pagetitle_function_does_not_respect_meta_titles]] in order
 >> to understand this :)
+>>
+>>> It would probably be good if I could merge this branch without 
+>>> having to worry about also immediatly merging that one. --[[Joey]] 
 >> 
 > * I'm very fearful of the `add_depends` in `postscan`. 
 >   Does this make every page depend on every page that links
