@@ -259,6 +259,10 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >>>> these two `our` declarations, alongside with the `calculate_backlinks`
 >>>> and `backlinks` subs definitions, would be a proper solution, wouldn't
 >>>> it? --[[intrigeri]]
+>>>>
+>>>>> No, %backlinks and the backlinks() function are not the same thing.
+>>>>> The variable is lexically scoped; only accessible from inside
+>>>>> `Render.pm` --[[Joey]] 
 >>>> 
 > * What is this `IkiWiki::nicepagetitle` and why are you
 >   injecting it into that namespace when only your module uses it?
@@ -279,6 +283,10 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >>>> initially supposing the `meta` branch would be merged first.
 >>>> IMHO, we'll need to come back to this quite soon after `po` is merged.
 >>>> --[[intrigeri]]
+>>>>
+>>>> Maybe you should keep those features in a meta-po branch?
+>>>> I did a cursory review of your meta last night, have some issues with it, 
+>>>> but this page isn't the place for a detailed review. --[[Joey]] 
 >>> 
 > * I'm very fearful of the `add_depends` in `postscan`. 
 >   Does this make every page depend on every page that links
