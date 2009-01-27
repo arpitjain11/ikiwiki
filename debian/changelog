@@ -8,7 +8,8 @@ ikiwiki (3.03) UNRELEASED; urgency=low
     config settings.
   * comments: If comment content checks fail, store the comment
     (in .ikiwiki/comments_pending) for moderator review.
-  * comments: Add a moderation web interface.
+  * comments: Add a moderation web interface, which admins can
+    access via their Preferences page.
   * git: Fix malformed utf8 recieved from git.
   * meta: New "updated" metadata specifies a fake modification time for a
     page, to be output into RSS and Atom feeds. (smcv)
