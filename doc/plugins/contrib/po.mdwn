@@ -248,6 +248,18 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >>
 >>> My wording was unclear, I meant exposing. --[[Joey]]
 >>>  
+>>>> I guess I still don't know Perl's `our` enough to understand clearly.
+>>>> No matter whether these variables are declared with `my` or `our`,
+>>>> any plugin can `use IkiWiki::Render` and then access
+>>>> `$IkiWiki::backlinks`, as already does e.g. the pagestat plugin.
+>>>> So I guess your problem is not with letting plugins use these
+>>>> variables, but with them being visible for every piece of
+>>>> (possibly external) code called from `Render.pm`. Am I right?
+>>>> If I understand clearly, using a brace block to lexically enclose
+>>>> these two `our` declarations, alongside with the `calculate_backlinks`
+>>>> and `backlinks` subs definitions, would be a proper solution, wouldn't
+>>>> it? --[[intrigeri]]
+>>>> 
 > * What is this `IkiWiki::nicepagetitle` and why are you
 >   injecting it into that namespace when only your module uses it?
 >   Actually, I can't even find a caller of it in your module.
@@ -258,7 +270,16 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >>
 >>> It would probably be good if I could merge this branch without 
 >>> having to worry about also immediatly merging that one. --[[Joey]] 
->> 
+>>> 
+>>>> I removed all dependencies on my `meta` branch from the `po` one.
+>>>> This implied removing the `po_translation_status_in_links` and
+>>>> `po_strictly_refresh_backlinks` features, and every link text is now
+>>>> displayed in the master language. I believe the removed features really
+>>>> enhance user experience of a translatable wiki, that's why I was
+>>>> initially supposing the `meta` branch would be merged first.
+>>>> IMHO, we'll need to come back to this quite soon after `po` is merged.
+>>>> --[[intrigeri]]
+>>> 
 > * I'm very fearful of the `add_depends` in `postscan`. 
 >   Does this make every page depend on every page that links
 >   to it? Won't this absurdly bloat the dependency pagespecs
@@ -276,6 +297,9 @@ finish it at some point in the first quarter of 2009. --[[intrigeri]]
 >> using meta title to make the pages titles translatable. It does
 >> help having a nice and consistent translated wiki, but as it can
 >> also involve problems, I just turned it into an option.
+>> 
+>>> This has been completely removed for now due to the removal of
+>>> the dependency on my `meta` branch. --[[intrigeri]]
 >> 
 > * The po4a Suggests should be versioned to the first version
 >   that can be used safely, and that version documented in 
