@@ -477,7 +477,7 @@ sub editcomment ($$) {
 			IkiWiki::printheader($session);
 			print IkiWiki::misctemplate(gettext(gettext("comment stored for moderation")),
 				"<p>".
-				gettext("Your comment will be posted after moderator review"),
+				gettext("Your comment will be posted after moderator review").
 				"</p>");
 			exit;
 		}
