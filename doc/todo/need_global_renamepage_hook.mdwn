@@ -62,3 +62,21 @@ would solve my problem. Hmmm? --[[intrigeri]]
 >>> is, and call `rename` the global hook I need. --[[intrigeri]]
 
 >>>> Done in my `po` branch. --[[intrigeri]]
+
+I think I see a problem in the rename hook. The hook is called
+before the plugin adds any subpages to the set of pages to rename.
+So, if the user choses to rename subpages, po will not notice
+they are moving, and will not move their po files.
+ 
+Perhaps the hooks should be moved to come after subpages are added.
+This would, though, mean that if the hook somehow decides to add
+entirely other pages to the list, their subpages would not be
+automatically added.
+
+I also have some qualms about the design of the hook. In particular,
+passing the mutable array reference probably makes it impossible
+to use from external plugins. Instead it could return any additional
+rename hashes it wants to add. Or, if the ability to modify existing
+hashes is desired, it could return the full set of hashes.
+
+--[[Joey]] 
