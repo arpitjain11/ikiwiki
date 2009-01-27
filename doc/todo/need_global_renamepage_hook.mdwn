@@ -80,3 +80,18 @@ rename hashes it wants to add. Or, if the ability to modify existing
 hashes is desired, it could return the full set of hashes.
 
 --[[Joey]] 
+
+> I fixed the last part, i.e. a rename hook function now returns the
+> full set of hashes. As I also converted it to take named parameters,
+> such a function still is passed a reference to the original array,
+> though, because one can't build a hash containing an array of hashes
+> as a value, without passing this array as a reference.
+> 
+> I'm not entirely sure about your first concern. Calling the hook
+> before or after the subpages addition both have their own problems.
+> 
+> What about running the hook before *and* after the subpages
+> addition, with an additional `when` named parameter, so that
+> a given hook function can choose to act only before or after, or both?
+> 
+> --[[intrigeri]]
