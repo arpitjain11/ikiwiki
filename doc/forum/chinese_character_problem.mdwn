@@ -15,3 +15,7 @@ Thanks.
 I have installed locales-all and locale -a shows that zh_CN.UTF-8 is installed(there is no /etc/local.gen file though). then I enabled this line "locale => 'zh_CN.UTF-8'" in my wiki setup and -setup again. but that generated lots error messages "Missing constant domain at (eval 30) line 3"
 
 sorry being a n00b on this thing  what else can I do?
+
+> See [[bugs/Missing_constant_domain_at_IkiWiki.pm_line_842]].
+> Looks like you need to upgrade to a newer version of 
+> [[cpan Locale::gettext]] --[[Joey]] 
