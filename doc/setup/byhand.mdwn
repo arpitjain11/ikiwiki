@@ -171,11 +171,12 @@ about using the git repositories.
 
 Once your wiki is checked in to the revision control system, you should
 configure ikiwiki to use revision control. Edit your ikiwiki.setup, set
-`rcs` to the the revision control system you chose to use. Be sure to set
-`svnrepo` to the directory for your repository, if using subversion.
-Uncomment the configuration for the wrapper for your revision control
-system, and configure the wrapper path appropriately (for Git, it should be
-the path to `hooks/post-update` inside the bare git repository).
+`rcs` to the the revision control system you chose to use.  Be careful, 
+you may need to use the 'fullname'.  For example, 'hg' doesn't work, you
+should use mercurial.  Be sure to set `svnrepo` to the directory for your
+repository, if using subversion. Uncomment the configuration for the wrapper
+for your revision control system, and configure the wrapper path appropriately 
+(for Git, it should be the path to `hooks/post-update` inside the bare git repository).
 
 Once it's all set up, run `ikiwiki --setup ikiwiki.setup` once more.
 Now you should be able to edit files in $SRCDIR, and use your revision
