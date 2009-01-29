@@ -1,0 +1,15 @@
+ikiwiki 3.03 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * Avoid feeding decoded unicode to Term::ReadLine. Closes: [512169](http://bugs.debian.org/512169)
+   * blogspam: Log spam info on failure in debug mode.
+   * Remove nonstandard css. Closes: #[512378](http://bugs.debian.org/512378)
+   * blogspam: Fix use of blogspam\_options and blogspam\_server config settings.
+   * comments: If comment content checks fail, store the comment
+     (in .ikiwiki/comments\_pending) for moderator review.
+   * comments: Add a moderation web interface, which admins can
+     access via their Preferences page.
+   * git: Fix malformed utf8 received from git.
+   * meta: New "updated" metadata specifies a fake modification time for a
+     page, to be output into RSS and Atom feeds. (smcv)
+   * underlay: New plugin, allows pulling in additional files not
+     in version control. (smcv)"""]]
