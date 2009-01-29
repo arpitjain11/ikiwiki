@@ -1,4 +1,4 @@
-ikiwiki (3.03) UNRELEASED; urgency=low
+ikiwiki (3.03) unstable; urgency=low
 
   * Avoid feeding decoded unicode to Term::ReadLine. Closes: 512169
   * blogspam: Log spam info on failure in debug mode.
@@ -8,13 +8,13 @@ ikiwiki (3.03) UNRELEASED; urgency=low
     (in .ikiwiki/comments_pending) for moderator review.
   * comments: Add a moderation web interface, which admins can
     access via their Preferences page.
-  * git: Fix malformed utf8 recieved from git.
+  * git: Fix malformed utf8 received from git.
   * meta: New "updated" metadata specifies a fake modification time for a
     page, to be output into RSS and Atom feeds. (smcv)
   * underlay: New plugin, allows pulling in additional files not
     in version control. (smcv) 
 
- -- Joey Hess <joeyh@debian.org>  Sun, 18 Jan 2009 14:50:57 -0500
+ -- Joey Hess <joeyh@debian.org>  Thu, 29 Jan 2009 14:36:58 -0500
 
 ikiwiki (3.02) unstable; urgency=low
 
