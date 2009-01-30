@@ -1,20 +1,21 @@
-# translation of es.po to spanish
+# translation of es.po to
 # ikiwiki spanish translation
 # Copyright (C) 2007, 2009 The Free Software Foundation, Inc
 # This file is distributed under the same license as the ikiwiki package.
 #
 # Víctor Moral <victor@taquiones.net>, 2007, 2009.
+# Victor Moral <victor@taquiones.net>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-17 18:19-0500\n"
-"PO-Revision-Date: 2009-01-19 08:58+0100\n"
-"Language-Team: spanish <es@li.org>\n"
+"POT-Creation-Date: 2009-01-30 17:48+0100\n"
+"PO-Revision-Date: 2009-01-30 18:01+0100\n"
+"Last-Translator: Victor Moral <victor@taquiones.net>\n"
+"Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Víctor Moral <victor@taquiones.net>\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../IkiWiki/CGI.pm:113
@@ -172,17 +173,15 @@ msgstr "enviado el adjunto"
 msgid "automatic index generation"
 msgstr "creación de índice automática"
 
-#: ../IkiWiki/Plugin/blogspam.pm:102
+#: ../IkiWiki/Plugin/blogspam.pm:105
 msgid ""
 "Sorry, but that looks like spam to <a href=\"http://blogspam.net/"
 "\">blogspam</a>: "
-msgstr "Lo siento, pero el analizador <a href=\"http://blospam.net\">blogspam</a> dice que el texto puede ser spam."
+msgstr ""
+"Lo siento, pero el analizador <a href=\"http://blospam.net\">blogspam</a> "
+"dice que el texto puede ser spam."
 
-#: ../IkiWiki/Plugin/blogspam.pm:105
-msgid "blogspam server failure: "
-msgstr "fallo del servidor blogspam: "
-
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:296
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:297
 #: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -198,46 +197,54 @@ msgstr "%s desde la página %s"
 msgid "There are no broken links!"
 msgstr "¡ No hay enlaces rotos !"
 
-#: ../IkiWiki/Plugin/comments.pm:120 ../IkiWiki/Plugin/format.pm:23
+#: ../IkiWiki/Plugin/comments.pm:121 ../IkiWiki/Plugin/format.pm:23
 #, perl-format
 msgid "unsupported page format %s"
 msgstr "formato de página %s no soportado"
 
-#: ../IkiWiki/Plugin/comments.pm:125
+#: ../IkiWiki/Plugin/comments.pm:126
 msgid "comment must have content"
 msgstr "Un comentario debe tener algún contenido"
 
-#: ../IkiWiki/Plugin/comments.pm:181
+#: ../IkiWiki/Plugin/comments.pm:182
 msgid "Anonymous"
 msgstr "Anónimo"
 
-#: ../IkiWiki/Plugin/comments.pm:252 ../IkiWiki/Plugin/recentchanges.pm:110
+#: ../IkiWiki/Plugin/comments.pm:253 ../IkiWiki/Plugin/recentchanges.pm:110
 msgid "missing page"
 msgstr "página no encontrada"
 
-#: ../IkiWiki/Plugin/comments.pm:254 ../IkiWiki/Plugin/recentchanges.pm:112
+#: ../IkiWiki/Plugin/comments.pm:255 ../IkiWiki/Plugin/recentchanges.pm:112
 #, perl-format
 msgid "The page %s does not exist."
 msgstr "No existe la página %s."
 
-#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:160
+#: ../IkiWiki/Plugin/comments.pm:354 ../IkiWiki/Plugin/editpage.pm:161
 msgid "bad page name"
 msgstr "nombre de página erróneo"
 
-#: ../IkiWiki/Plugin/comments.pm:348
+#: ../IkiWiki/Plugin/comments.pm:359
 #, perl-format
 msgid "commenting on %s"
 msgstr "creando comentarios en la página %s"
 
-#: ../IkiWiki/Plugin/comments.pm:366
+#: ../IkiWiki/Plugin/comments.pm:377
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr "la página '%s' no existe, así que no se puede comentar sobre ella"
 
-#: ../IkiWiki/Plugin/comments.pm:373
+#: ../IkiWiki/Plugin/comments.pm:384
 #, perl-format
 msgid "comments on page '%s' are closed"
 msgstr "los comentarios para la página '%s' están cerrados"
+
+#: ../IkiWiki/Plugin/comments.pm:478
+msgid "comment stored for moderation"
+msgstr "comentario guardado a la espera de aprobación"
+
+#: ../IkiWiki/Plugin/comments.pm:480
+msgid "Your comment will be posted after moderator review"
+msgstr "Su comentario será publicado después de que el moderador lo revise"
 
 #: ../IkiWiki/Plugin/comments.pm:493
 msgid "Added a comment"
@@ -248,7 +255,19 @@ msgstr "Añadir un comentario"
 msgid "Added a comment: %s"
 msgstr "Comentario añadido: %s"
 
-#: ../IkiWiki/Plugin/comments.pm:611
+#: ../IkiWiki/Plugin/comments.pm:538 ../IkiWiki/Plugin/websetup.pm:236
+msgid "you are not logged in as an admin"
+msgstr "No está registrado como un administrador"
+
+#: ../IkiWiki/Plugin/comments.pm:589
+msgid "Comment moderation"
+msgstr "Aprobación de comentarios"
+
+#: ../IkiWiki/Plugin/comments.pm:628
+msgid "comment moderation"
+msgstr "aprobación de comentarios"
+
+#: ../IkiWiki/Plugin/comments.pm:778
 msgid "Comments"
 msgstr "Comentarios"
 
@@ -273,19 +292,19 @@ msgstr "no se ha copiado ningún texto con el identificador %s en esta pagina"
 msgid "removing old preview %s"
 msgstr "eliminando la antigua previsualización %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:176
+#: ../IkiWiki/Plugin/editpage.pm:177
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "la página %s no es modificable"
 
-#: ../IkiWiki/Plugin/editpage.pm:352
+#: ../IkiWiki/Plugin/editpage.pm:353
 #, perl-format
 msgid "creating %s"
 msgstr "creando página %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:370 ../IkiWiki/Plugin/editpage.pm:389
-#: ../IkiWiki/Plugin/editpage.pm:399 ../IkiWiki/Plugin/editpage.pm:443
-#: ../IkiWiki/Plugin/editpage.pm:482
+#: ../IkiWiki/Plugin/editpage.pm:371 ../IkiWiki/Plugin/editpage.pm:390
+#: ../IkiWiki/Plugin/editpage.pm:400 ../IkiWiki/Plugin/editpage.pm:444
+#: ../IkiWiki/Plugin/editpage.pm:483
 #, perl-format
 msgid "editing %s"
 msgstr "modificando página %s"
@@ -315,18 +334,18 @@ msgstr "se deben especificar tanto el formato como el texto"
 msgid "fortune failed"
 msgstr "el programa fortune ha fallado"
 
-#: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
+#: ../IkiWiki/Plugin/git.pm:624 ../IkiWiki/Plugin/git.pm:642
 #: ../IkiWiki/Receive.pm:129
 #, perl-format
 msgid "you are not allowed to change %s"
 msgstr "No puede cambiar %s"
 
-#: ../IkiWiki/Plugin/git.pm:658
+#: ../IkiWiki/Plugin/git.pm:664
 #, perl-format
 msgid "you cannot act on a file with mode %s"
 msgstr "no puede actuar sobre un archivo con permisos %s"
 
-#: ../IkiWiki/Plugin/git.pm:662
+#: ../IkiWiki/Plugin/git.pm:668
 msgid "you are not allowed to change file modes"
 msgstr "No puede cambiar los permisos de acceso de un archivo"
 
@@ -367,7 +386,7 @@ msgstr "no puedo leer de %s: %s "
 #: ../IkiWiki/Plugin/img.pm:87
 #, perl-format
 msgid "failed to resize: %s"
-msgstr "redimensionado fallido: %s"
+msgstr "dimensionamiento fallido: %s"
 
 #: ../IkiWiki/Plugin/img.pm:118
 #, perl-format
@@ -406,7 +425,7 @@ msgstr "la plantilla %s no existe "
 msgid "Discussion"
 msgstr "Comentarios"
 
-#: ../IkiWiki/Plugin/inline.pm:587
+#: ../IkiWiki/Plugin/inline.pm:593
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "No he encontrado el componente RPC::XML::Client, no envío señal alguna"
 
@@ -430,15 +449,15 @@ msgstr ""
 "no he podido cargar el módulo Perl Markdown.pm (%s) ó no he podido ejecutar "
 "el programa /usr/bin/markdown (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:151
+#: ../IkiWiki/Plugin/meta.pm:158
 msgid "stylesheet not found"
 msgstr "hoja de estilo no encontrada "
 
-#: ../IkiWiki/Plugin/meta.pm:185
+#: ../IkiWiki/Plugin/meta.pm:192
 msgid "redir page not found"
 msgstr "falta la página a donde redirigir"
 
-#: ../IkiWiki/Plugin/meta.pm:198
+#: ../IkiWiki/Plugin/meta.pm:205
 msgid "redir cycle is not allowed"
 msgstr "ciclo de redirección no permitido"
 
@@ -495,7 +514,7 @@ msgstr "No he podido enviar el mensaje de correo electrónico"
 #: ../IkiWiki/Plugin/passwordauth.pm:293
 msgid "You have been mailed password reset instructions."
 msgstr ""
-"Las instrucciones para reinicar la contraseña se le han enviado por correo "
+"Las instrucciones para reiniciar la contraseña se le han enviado por correo "
 "electrónico"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:328
@@ -829,10 +848,6 @@ msgstr "complemento"
 msgid "enable %s?"
 msgstr "¿ activar %s ?"
 
-#: ../IkiWiki/Plugin/websetup.pm:236
-msgid "you are not logged in as an admin"
-msgstr "No está registrado como un administrador"
-
 #: ../IkiWiki/Plugin/websetup.pm:240
 msgid "setup file for this wiki is not known"
 msgstr "El archivo de configuración para este wiki es desconocido"
@@ -933,7 +948,7 @@ msgstr "eliminando la página %s puesto que ya no se deriva de %s"
 #: ../IkiWiki/Render.pm:522
 #, perl-format
 msgid "ikiwiki: cannot render %s"
-msgstr "ikwiki: no puedo convertir la página %s"
+msgstr "ikiwiki: no puedo convertir la página %s"
 
 #. translators: The first parameter is a filename, and the second
 #. translators: is a (probably not translated) error message.
@@ -942,16 +957,16 @@ msgstr "ikwiki: no puedo convertir la página %s"
 msgid "cannot read %s: %s"
 msgstr "no puedo leer el archivo %s: %s"
 
-#: ../IkiWiki/Setup/Automator.pm:33
+#: ../IkiWiki/Setup/Automator.pm:34
 msgid "you must enter a wikiname (that contains alphanumerics)"
 msgstr "debe escribir un nombre wiki (que contiene caracteres alfanuméricos)"
 
-#: ../IkiWiki/Setup/Automator.pm:67
+#: ../IkiWiki/Setup/Automator.pm:68
 #, perl-format
 msgid "unsupported revision control system %s"
 msgstr "el sistema de control de versiones %s no está soportado"
 
-#: ../IkiWiki/Setup/Automator.pm:93
+#: ../IkiWiki/Setup/Automator.pm:94
 msgid "failed to set up the repository with ikiwiki-makerepo"
 msgstr "no he podido crear un repositorio con el programa ikiwiki-makerepo"
 
@@ -1051,7 +1066,9 @@ msgstr "¿ Qué sistema de control de versiones empleará ?"
 
 #: ../auto.setup:20
 msgid "What wiki user (or openid) will be admin?"
-msgstr "¿ Qué usuario del wiki (ó qué identificador openid) será el empleado como administrador ? "
+msgstr ""
+"¿ Qué usuario del wiki (ó qué identificador openid) será el empleado como "
+"administrador ? "
 
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
