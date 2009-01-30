@@ -162,14 +162,14 @@ So, looking at your meta branch: --[[Joey]]
   1) It needs the full page name, not basename.
   2) `titlepage(pagetitle($page))` reversability.
   
-  #1: If you look at all the callers
+  1) If you look at all the callers
   Of `pagetitle` most of them pass a complete page name, not just the
   basename. In most cases `pagetitle` is used to display the full name
   of the page, including any subdirectory it's in. So why not just make
   it consitently be given the full name of the page, with another argument
   specifying if we want to get back just the base name.
 
-  #2: I can't find any code that actually uses the reversability like that.
+  2) I can't find any code that actually uses the reversability like that.
   The value passed to `titlepage` always comes from some external
   source. Unless I missed one.
 * The use of `File::Spec->rel2abs` is a bit scary.
