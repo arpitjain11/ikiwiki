@@ -120,7 +120,7 @@ diff -c /usr/share/perl5/IkiWiki/Plugin/meta.pm.distrib /usr/share/perl5/IkiWiki
 
 </pre>
 
---
+----
 
 > A few quick notes about it:
 
@@ -135,3 +135,53 @@ diff -c /usr/share/perl5/IkiWiki/Plugin/meta.pm.distrib /usr/share/perl5/IkiWiki
 >> Thus tagging [[patch]]. --[[intrigeri]]
 >>
 >>> Joey, please consider merging my `meta` branch. --[[intrigeri]]
+
+So, looking at your meta branch: --[[Joey]] 
+
+* Inter-page dependencies. If page A links to page B, and page B currently
+  has no title, then A will display the link as "B". Now page B is modified
+  and a title is added. Nothing updates "A".
+  The added overhead of rebuilding every page that links to B when B is
+  changed (as the `postscan` hook of the po plugin does) is IMHO a killer.
+  That could be hundreds or thousands of pages, making interactive editing
+  way slow. This is probably the main reason I had not attempted this whole
+  thing myself. IMHO this calls for some kind of intellegent dependency
+  handler that can detect when B's title has changed and only rebuild pages
+  that link to B in that case.
+* Looks like some plugins that use `pagetitle` to format it for display
+  were not changed to use `nicepagetitle` (for example, rename).
+  But most of those callers intend to display the page name
+  as a title, but including the parent directories in the path. (Ie,
+  "renaming foo/page title to bar/page title" -- 
+  you want to know it's moved from foo to bar.) `nicepagetitle` does not
+  allow doing that since it always takes the `basename`.
+* I don't like the name `nicepagetitle`. It's not very descriptive, is it?
+  And it seems very confusing to choose whether to use the "nice" or original
+  version. My hope is that adding a second function is unnecessary.
+  As I understand it, you added a new function for two reasons: 
+  1) It needs the full page name, not basename.
+  2) `titlepage(pagetitle($page))` reversability.
+  
+  #1: If you look at all the callers
+  Of `pagetitle` most of them pass a complete page name, not just the
+  basename. In most cases `pagetitle` is used to display the full name
+  of the page, including any subdirectory it's in. So why not just make
+  it consitently be given the full name of the page, with another argument
+  specifying if we want to get back just the base name.
+
+  #2: I can't find any code that actually uses the reversability like that.
+  The value passed to `titlepage` always comes from some external
+  source. Unless I missed one.
+* The use of `File::Spec->rel2abs` is a bit scary.
+* Does it really make sense to call `pagetitle` on the meta title
+  in meta's `nicepagetitle`? What if the meta title is something like
+  "foo_bar" -- that would be changed to "foo bar".
+* parentlinks is changed to use `nicepagetitle(bestlink($page, $path))`.
+  Won't `bestlink` return "" if the parent page in question does not exist?
+* `backlinks()` is changed to add an additional `title` field
+  to the hash returned, but AFAICS this is not used in the template.
+* Shouldn't `Render.pm` use nicepagetitle when getting the title for the
+  page template? Then meta would not need to override the title in the
+  `pagetemplate` hook. (Although this would eliminate handling of
+  `title_overridden` -- but that is little used and would not catch
+  all the other ways titles can be overridden with this patch anyway.)
