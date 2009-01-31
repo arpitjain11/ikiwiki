@@ -291,6 +291,47 @@ sub cgi_savesession ($) {
 	umask($oldmask);
 }
 
+# cgi_goto(CGI, [page])
+# Redirect to a specified page, or display "not found". If not specified,
+# the page param from the CGI object is used.
+sub cgi_goto ($;$) {
+	my $q = shift;
+	my $page = shift;
+
+	if (!defined $page) {
+		$page = decode_utf8($q->param("page"));
+
+		if (!defined $page) {
+			error("missing page parameter");
+		}
+	}
+
+	loadindex();
+
+	# If the page is internal (like a comment), see if it has a
+	# permalink. Comments do.
+	if (isinternal($page) &&
+	    defined $pagestate{$page}{meta}{permalink}) {
+		redirect($q, $pagestate{$page}{meta}{permalink});
+	}
+
+	my $link = bestlink("", $page);
+
+	if (! length $link) {
+		print "Content-type: text/html\n\n";
+		print misctemplate(gettext("missing page"),
+			"<p>".
+			sprintf(gettext("The page %s does not exist."),
+				htmllink("", "", $page)).
+			"</p>");
+	}
+	else {
+		redirect($q, urlto($link, undef, 1));
+	}
+
+	exit;
+}
+
 sub cgi (;$$) {
 	my $q=shift;
 	my $session=shift;
