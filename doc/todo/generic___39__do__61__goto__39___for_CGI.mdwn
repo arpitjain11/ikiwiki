@@ -17,4 +17,8 @@ something, and moved to `IkiWiki/CGI.pm`?
 >>   MSIE behavior. Actually, I wish we could ignore the MSIE stupidity,
 >>   as I tend to do, but perhaps it's too stupid in this case for that to
 >>   fly..
+>> * Is there any reason to require do=goto before checking for
+>>   `REDIRECT_STATUS`? Seems that if that code were moved
+>>   out of the enclosing if block, the apache 404 handler could
+>>   be set direct to the cgi, which seems simpler to remember.
 >> --[[Joey]] 
