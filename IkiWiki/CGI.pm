@@ -359,6 +359,8 @@ sub cgi (;$$) {
 		}
 	}
 
+	# goto is the preferred name for this; recentchanges_link and
+	# commenter are for compatibility with any saved URLs
 	if ($do eq 'goto' || $do eq 'recentchanges_link' ||
 	    $do eq 'commenter') {
 		cgi_goto($q);
