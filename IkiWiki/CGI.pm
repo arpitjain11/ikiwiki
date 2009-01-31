@@ -403,7 +403,14 @@ sub cgi (;$$) {
 	# commenter are for compatibility with any saved URLs
 	if ($do eq 'goto' || $do eq 'recentchanges_link' ||
 	    $do eq 'commenter') {
-		cgi_goto($q);
+		my $page = undef;
+
+		if ($ENV{REDIRECT_STATUS} eq '404') {
+			$page = cgi_page_from_404($ENV{REDIRECT_URL},
+				$config{url}, $config{usedirs});
+		}
+
+		cgi_goto($q, $page);
 	}
 
 	# Need to lock the wiki before getting a session.
