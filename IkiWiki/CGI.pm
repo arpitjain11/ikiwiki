@@ -332,6 +332,46 @@ sub cgi_goto ($;$) {
 	exit;
 }
 
+sub cgi_page_from_404 ($$$) {
+	my $path = shift;
+	my $baseurl = shift;
+	my $usedirs = shift;
+
+	# fail if missing from environment or whatever
+	return undef unless defined $path;
+	return undef unless defined $baseurl;
+
+	# with usedirs on, path is like /~fred/foo/bar/ or /~fred/foo/bar or
+	#    /~fred/foo/bar/index.html
+	# with usedirs off, path is like /~fred/foo/bar.html
+	# baseurl is like 'http://people.example.com/~fred'
+
+	# convert baseurl to ~fred
+	unless ($baseurl =~ s{^https?://[^/]+/?}{}) {
+		return undef;
+	}
+
+	# convert path to /~fred/foo/bar
+	if ($usedirs) {
+		$path =~ s/\/*(?:index\.$config{htmlext})?$//;
+	}
+	else {
+		$path =~ s/\.$config{htmlext}$//;
+	}
+
+	# remove /~fred/
+	unless ($path =~ s{^/*\Q$baseurl\E/*}{}) {
+		return undef;
+	}
+
+	# special case for the index
+	unless ($path) {
+		return 'index';
+	}
+
+	return $path;
+}
+
 sub cgi (;$$) {
 	my $q=shift;
 	my $session=shift;
