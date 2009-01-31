@@ -8,3 +8,13 @@ something, and moved to `IkiWiki/CGI.pm`?
 
 > Now implemented as the 'goto' branch in my git repository, along with
 > [[apache_404_ErrorDocument_handler]]. --[[smcv]]
+
+>> Looks good, the only things I wonder are:
+>> * Should it be a separate plugin? In particular `cgi_page_from_404()` is
+>>   pretty big, and only works if apache is configured so seems somewhat
+>>   pluginaable.
+>> * I wish there were some way to generalize the workaround for the stupid
+>>   MSIE behavior. Actually, I wish we could ignore the MSIE stupidity,
+>>   as I tend to do, but perhaps it's too stupid in this case for that to
+>>   fly..
+>> --[[Joey]] 
