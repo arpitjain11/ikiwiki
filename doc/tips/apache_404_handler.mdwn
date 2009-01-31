@@ -1,0 +1,10 @@
+[[!meta title="Apache 404 handler"]]
+
+Sufficiently recent versions of IkiWiki can be used as an Apache 404 handler,
+to give the behaviour of various other wiki engines where visiting a
+nonexistent page provides you with a link to create it.
+
+To achieve this, put something like this in the wiki's Apache configuration
+file:
+
+    ErrorDocument 404 /cgi-bin/ikiwiki.cgi?do=goto
