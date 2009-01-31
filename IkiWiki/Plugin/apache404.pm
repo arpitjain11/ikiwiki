@@ -10,6 +10,7 @@ use IkiWiki 3.00;
 
 sub import {
 	hook(type => "cgi", id => 'apache404',  call => \&cgi);
+	IkiWiki::loadplugin("goto");
 }
 
 sub getsetup () {
@@ -69,7 +70,7 @@ sub cgi ($) {
 	if ($ENV{REDIRECT_STATUS} eq '404') {
 		my $page = cgi_page_from_404($ENV{REDIRECT_URL},
 			$config{url}, $config{usedirs});
-		IkiWiki::cgi_goto($cgi, $page);
+		IkiWiki::Plugin::goto::cgi_goto($cgi, $page);
 	}
 }
 

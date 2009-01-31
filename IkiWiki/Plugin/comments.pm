@@ -26,6 +26,8 @@ sub import {
 	hook(type => "htmlize", id => "_comment", call => \&htmlize);
 	hook(type => "pagetemplate", id => "comments", call => \&pagetemplate);
 	hook(type => "formbuilder_setup", id => "comments", call => \&formbuilder_setup);
+	# Load goto to fix up user page links for logged-in commenters
+	IkiWiki::loadplugin("goto");
 	IkiWiki::loadplugin("inline");
 }
 

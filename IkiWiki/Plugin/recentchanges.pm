@@ -13,6 +13,8 @@ sub import {
 	hook(type => "refresh", id => "recentchanges", call => \&refresh);
 	hook(type => "pagetemplate", id => "recentchanges", call => \&pagetemplate);
 	hook(type => "htmlize", id => "_change", call => \&htmlize);
+	# Load goto to fix up links from recentchanges
+	IkiWiki::loadplugin("goto");
 }
 
 sub getsetup () {
