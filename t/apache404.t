@@ -1,12 +1,14 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use Test::More tests => 18;
+use Test::More tests => 17;
 
-BEGIN { use_ok("IkiWiki"); }
-BEGIN { use_ok("IkiWiki::CGI"); }
+BEGIN { use_ok("IkiWiki::Plugin::apache404"); }
 
-sub cgi_page_from_404 { return IkiWiki::cgi_page_from_404(shift, shift, shift); }
+sub cgi_page_from_404 {
+	return IkiWiki::Plugin::apache404::cgi_page_from_404(shift, shift,
+	                                                     shift);
+}
 
 $IkiWiki::config{htmlext} = 'html';
 

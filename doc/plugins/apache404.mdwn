@@ -1,10 +1,11 @@
-[[!meta title="Apache 404 handler"]]
+[[!template id=plugin name=apache404 author="[[Simon_McVittie|smcv]]"]]
+[[!tag type/useful]]
 
-Sufficiently recent versions of IkiWiki can be used as an Apache 404 handler,
+This plugin lets you use the IkiWiki CGI script as an Apache 404 handler,
 to give the behaviour of various other wiki engines where visiting a
 nonexistent page provides you with a link to create it.
 
 To achieve this, put something like this in the wiki's Apache configuration
 file:
 
-    ErrorDocument 404 /cgi-bin/ikiwiki.cgi?do=goto
+    ErrorDocument 404 /cgi-bin/ikiwiki.cgi
