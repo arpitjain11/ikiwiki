@@ -239,6 +239,9 @@ sub check_banned ($$) {
 			print $q->header(-status => "403 Forbidden");
 			$session->delete();
 			print gettext("You are banned.");
+			# Internet Explorer won't show custom 404 responses
+			# unless they're >= 512 bytes
+			print " " x 512;
 			cgi_savesession($session);
 			exit;
 		}
@@ -323,7 +326,10 @@ sub cgi_goto ($;$) {
 			"<p>".
 			sprintf(gettext("The page %s does not exist."),
 				htmllink("", "", $page)).
-			"</p>");
+			"</p>".
+			# Internet Explorer won't show custom 404 responses
+			# unless they're >= 512 bytes
+			(" " x 512));
 	}
 	else {
 		redirect($q, urlto($link, undef, 1));
