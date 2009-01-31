@@ -318,7 +318,7 @@ sub cgi_goto ($;$) {
 	my $link = bestlink("", $page);
 
 	if (! length $link) {
-		print "Content-type: text/html\n\n";
+		print $q->header(-status => "404 Not Found");
 		print misctemplate(gettext("missing page"),
 			"<p>".
 			sprintf(gettext("The page %s does not exist."),
