@@ -8,6 +8,9 @@ I think it'd probably have to be a separate CGI script because the environment w
 (having said that, it might make sense for `recentchanges_link` to return 404 rather than
 200 anyway if the page doesn't exist).
 
+> This turns out to be untrue, as long as the wrapper lets a couple of extra
+> environment variables through. --[[smcv]]
+
 This would give IkiWiki the behaviour of many other wikis, where visiting a page that
 does not yet exist prompts you to create it, without having to invoke the CGI for
 successful requests.
@@ -15,4 +18,6 @@ successful requests.
 Due to [a well-known MSIE misfeature](http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807),
 error output needs to be at least 512 bytes long, so some padding might also be required.
 
-Implemented in the 'goto' branch in my git repository. --[[smcv]]
+Implemented in the 'goto' branch in my git repository. You can see this
+feature in action [on my blog](http://smcv.pseudorandom.co.uk/no/such/page/).
+--[[smcv]]
