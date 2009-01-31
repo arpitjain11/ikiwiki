@@ -358,7 +358,12 @@ sub cgi (;$$) {
 			error("\"do\" parameter missing");
 		}
 	}
-	
+
+	if ($do eq 'goto' || $do eq 'recentchanges_link' ||
+	    $do eq 'commenter') {
+		cgi_goto($q);
+	}
+
 	# Need to lock the wiki before getting a session.
 	lockwiki();
 	loadindex();
