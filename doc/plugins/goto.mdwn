@@ -1,0 +1,10 @@
+[[!template id=plugin name=goto author="[[Simon_McVittie|smcv]]"]]
+[[!tag type/useful]]
+
+This plugin adds a `do=goto` mode for the IkiWiki CGI script. It's mainly
+for internal use by the [[apache404]], [[comments]] and [[recentchanges]]
+plugins, which enable it automatically.
+
+With this plugin enabled you can link to `ikiwiki.cgi?do=goto&page=some/where`
+to make a link that will redirect to the page `/some/where` if it exists, or
+offer a link to create it if it doesn't.

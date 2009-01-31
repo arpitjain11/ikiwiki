@@ -239,6 +239,9 @@ sub check_banned ($$) {
 			print $q->header(-status => "403 Forbidden");
 			$session->delete();
 			print gettext("You are banned.");
+			# Internet Explorer won't show custom 404 responses
+			# unless they're >= 512 bytes
+			print " " x 512;
 			cgi_savesession($session);
 			exit;
 		}
@@ -317,7 +320,7 @@ sub cgi (;$$) {
 			error("\"do\" parameter missing");
 		}
 	}
-	
+
 	# Need to lock the wiki before getting a session.
 	lockwiki();
 	loadindex();
