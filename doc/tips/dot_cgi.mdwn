@@ -26,6 +26,14 @@ configuration changes should work anywhere.
   Or, if you've put it in a `~/public_html`, edit
   `/etc/apache2/mods-available/userdir.conf`.
 
+You may also want to enable the [[plugins/apache404]]
+plugin. To make apache use it, the apache config file
+will need a further modification to make it use ikiwiki's CGI
+as the apache 404 handler. Something like this, with
+the path adjusted to where you've put the CGI:
+
+	ErrorDocument 404 /cgi-bin/ikiwiki.cgi
+
 ## lighttpd
 
 Here is how to enable cgi on [lighttpd](http://www.lighttpd.net/) and

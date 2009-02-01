@@ -1,3 +1,13 @@
+ikiwiki (3.04) UNRELEASED; urgency=low
+
+  * apache404: New plugin which lets you use the IkiWiki CGI script as
+    an Apache 404 handler, to give the behaviour of various other wiki
+    engines where visiting a nonexistent page provides you with a link
+    to create it. (smcv)
+  * Factor out redundant code into goto plugin. (smcv)
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 31 Jan 2009 19:04:45 -0500
+
 ikiwiki (3.03) unstable; urgency=low
 
   * Avoid feeding decoded unicode to Term::ReadLine. Closes: 512169
