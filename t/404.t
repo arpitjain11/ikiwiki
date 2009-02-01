@@ -3,11 +3,10 @@ use warnings;
 use strict;
 use Test::More tests => 17;
 
-BEGIN { use_ok("IkiWiki::Plugin::apache404"); }
+BEGIN { use_ok("IkiWiki::Plugin::404"); }
 
 sub cgi_page_from_404 {
-	return IkiWiki::Plugin::apache404::cgi_page_from_404(shift, shift,
-	                                                     shift);
+	return IkiWiki::Plugin::404::cgi_page_from_404(shift, shift, shift);
 }
 
 $IkiWiki::config{htmlext} = 'html';

@@ -2,14 +2,14 @@
 # Copyright © 2009 Simon McVittie <http://smcv.pseudorandom.co.uk/>
 # Licensed under the GNU GPL, version 2, or any later version published by the
 # Free Software Foundation
-package IkiWiki::Plugin::apache404;
+package IkiWiki::Plugin::404;
 
 use warnings;
 use strict;
 use IkiWiki 3.00;
 
 sub import {
-	hook(type => "cgi", id => 'apache404',  call => \&cgi);
+	hook(type => "cgi", id => '404',  call => \&cgi);
 	IkiWiki::loadplugin("goto");
 }
 
