@@ -229,6 +229,20 @@ sub cgi_prefs ($$) {
 	showform($form, $buttons, $session, $q);
 }
 
+sub cgi_custom_failure ($$) {
+	my $header=shift;
+	my $message=shift;
+
+	print $header;
+	print $message;
+
+	# Internet Explod^Hrer won't show custom 404 responses
+	# unless they're >= 512 bytes
+	print ' ' x 512;
+
+	exit;
+}
+
 sub check_banned ($$) {
 	my $q=shift;
 	my $session=shift;
@@ -236,14 +250,11 @@ sub check_banned ($$) {
 	my $name=$session->param("name");
 	if (defined $name) {
 		if (grep { $name eq $_ } @{$config{banned_users}}) {
-			print $q->header(-status => "403 Forbidden");
 			$session->delete();
-			print gettext("You are banned.");
-			# Internet Explorer won't show custom 404 responses
-			# unless they're >= 512 bytes
-			print " " x 512;
 			cgi_savesession($session);
-			exit;
+			cgi_custom_failure(
+				$q->header(-status => "403 Forbidden"),
+				gettext("You are banned."));
 		}
 	}
 }

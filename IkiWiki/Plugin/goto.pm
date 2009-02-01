@@ -44,15 +44,14 @@ sub cgi_goto ($;$) {
 	my $link = bestlink("", $page);
 
 	if (! length $link) {
-		print $q->header(-status => "404 Not Found");
-		print IkiWiki::misctemplate(gettext("missing page"),
-			"<p>".
-			sprintf(gettext("The page %s does not exist."),
-				htmllink("", "", $page)).
-			"</p>".
-			# Internet Explorer won't show custom 404 responses
-			# unless they're >= 512 bytes
-			(" " x 512));
+		IkiWiki::cgi_custom_failure(
+			$q->header(-status => "404 Not Found"),
+			IkiWiki::misctemplate(gettext("missing page"),
+				"<p>".
+				sprintf(gettext("The page %s does not exist."),
+					htmllink("", "", $page)).
+				"</p>")
+		)
 	}
 	else {
 		IkiWiki::redirect($q, urlto($link, undef, 1));
