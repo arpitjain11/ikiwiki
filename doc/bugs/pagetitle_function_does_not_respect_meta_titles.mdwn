@@ -212,3 +212,22 @@ So, looking at your meta branch: --[[Joey]]
 > preference goes the other way, perhaps a `\[[!meta longtitle=""]]` could take
 > precedence when generating the `<title>` and the title that comes after the
 > parentlinks. --[[smcv]]
+
+>> I think you've convinced me. (I had always had some doubt in my mind as
+>> to whether using titles in all these other places would make sense.)
+>> 
+>> Instead of meta abbrev, you could have a meta pagename that
+>> overrides the page name displayed everywhere (in turn overridden by
+>> meta title iff the page's title is being displayed). But is this complexity
+>> needed? We have meta redir, so if you want to change the name of a page,
+>> you can just rename it, and put in a stub redirection page so links
+>> still work.
+>> 
+>> This leaves the [[plugins/contrib/po]] plugin, which really does need
+>> a way to change the displayed page name everywhere, and at least a
+>> subset of the changes in the meta branch are needed to support that.
+>> 
+>> (This would also get around my concern about inter-page dependency
+>> handling, since po contains a workaround for that, and it's probably
+>> acceptable to use potentially slow methods to handle this case.)
+>> --[[Joey]] 
