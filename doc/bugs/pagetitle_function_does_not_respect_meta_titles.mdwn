@@ -185,3 +185,20 @@ So, looking at your meta branch: --[[Joey]]
   `pagetemplate` hook. (Although this would eliminate handling of
   `title_overridden` -- but that is little used and would not catch
   all the other ways titles can be overridden with this patch anyway.)
+
+> I'm not a reviewer or anything, but can I chime in on changes to pagetitle?
+> I don't think having meta-titles in wikilinks and the parentlinks path by
+> default is necessarily a good thing. I don't consider the meta-title of a page
+> as used in `<title>` to be the same thing as the short title you
+> want in those contexts - IMO, the meta-title is the "formal" title of the page,
+> enough to identify it with no other context, and frequently too long to be used
+> as a link title or a parentlink, whereas the parentlinks title in particular
+> should be some abbreviated form that's enough to identify it in context.
+> [tbm](http://www.cyrius.com/) expressed a similar opinion when I was discussing
+> ikiwiki with him at the weekend.
+>
+> Having a `\[[!meta abbrev="..."]]` that took precedence over title
+> in such contexts might be a good way to fix this? Or if your preference goes
+> the other way, perhaps a `\[[!meta longtitle=""]]` could take precedence
+> when generating the `<title>` and the title that comes after the parentlinks.
+> --[[smcv]]
