@@ -197,8 +197,18 @@ So, looking at your meta branch: --[[Joey]]
 > [tbm](http://www.cyrius.com/) expressed a similar opinion when I was discussing
 > ikiwiki with him at the weekend.
 >
+> It's a matter of taste whether wikilinks are "like a parentlink" or "like a
+> `<title>`"; I could be persuaded either way on that one.
+>
+> An example from my site: [this page](http://www.pseudorandom.co.uk/2004/debian/ipsec/)
+> is the parent of [this page](http://www.pseudorandom.co.uk/2004/debian/ipsec/wifi/)
+> with a title too long to use in the latter's parentlinks; I think the titles of
+> both those pages are too long to use as wikilink text too. Similarly, tbm's page
+> about [Debian on Orion devices from Buffalo](http://www.cyrius.com/debian/orion/buffalo/)
+> can simply be called "Buffalo" in context.
+>
 > Having a `\[[!meta abbrev="..."]]` that took precedence over title
-> in such contexts might be a good way to fix this? Or if your preference goes
-> the other way, perhaps a `\[[!meta longtitle=""]]` could take precedence
-> when generating the `<title>` and the title that comes after the parentlinks.
-> --[[smcv]]
+> in parentlinks and possibly wikilinks might be a good way to fix this? Or if your
+> preference goes the other way, perhaps a `\[[!meta longtitle=""]]` could take
+> precedence when generating the `<title>` and the title that comes after the
+> parentlinks. --[[smcv]]
