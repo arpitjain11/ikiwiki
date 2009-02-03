@@ -28,6 +28,9 @@ case I will consider this done with an entry in [[tips]]; otherwise a
 > would be subject to the usual comment filtering (ie, blogspam) and
 > moderation and would then show up amoung the other, regular comments on
 > the page.
+>
+> (One wrinkle: would need to guard against duplicate pings. Maybe by
+> checking existing comments for any that have the same url?)
 > 
 > As for sending trackbacks and pingbacks, this could fairly easily be
 > implemented using a `editcontent` hook. Since this hook is called
