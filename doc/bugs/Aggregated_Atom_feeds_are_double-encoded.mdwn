@@ -1,0 +1,22 @@
+The Atom feed from <http://planet.collabora.co.uk/>
+get "double-encoded" (UTF-8 is decoded as Latin-1 and re-encoded as
+UTF-8) when aggregated with IkiWiki on Debian unstable. The RSS 1.0
+and RSS 2.0 feeds from the same Planet are fine. All three files
+are in fact correct UTF-8, but IkiWiki mis-parses the Atom.
+
+This turns out to be a bug in XML::Feed, or (depending on your point
+of view) XML::Feed failing to work around a design flaw in XML::Atom.
+When parsing RSS it returns Unicode strings, but when parsing Atom
+it delegates to XML::Atom's behaviour, which by default is to strip
+the UTF8 flag from strings that it outputs; as a result, they're
+interpreted by IkiWiki as byte sequences corresponding to the UTF-8
+encoding. IkiWiki then treats these as if they were Latin-1 and
+encodes them into UTF-8 for output.
+
+I've filed a bug against XML::Feed on CPAN requesting that it sets
+the right magical variable to change this behaviour. IkiWiki can
+also apply the same workaround (and doing so should be harmless even
+when XML::Feed is fixed); please consider merging my 'atom' branch,
+which does so. --[[smcv]]
+
+[[!tag patch]]
