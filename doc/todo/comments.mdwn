@@ -17,6 +17,15 @@
   a single button-press, without being vulnerable to cross-site request forgery.
   So I'll put this in as wontfix. --[[smcv]]
 
+  > Surely there's a way around that?
+  > A web 2.0 way comes to mind: The user clicks on a link
+  > to open the comment post form. While the nasty web 2.0 javascript :)
+  > is manipulating the page to add the form to it, it looks at the cookie
+  > and uses that to insert a sid field.
+  > 
+  > Or, it could have a mandatory preview page and do the CSRF check then.
+  > --[[Joey]]
+
 * It would be useful to have a pagespec that always matches all comments on
   pages matching a glob. Something like `comment(blog/*)`.
   Perhaps postcomment could also be folded into this? Then the pagespec
