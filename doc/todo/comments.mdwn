@@ -10,18 +10,12 @@
   > it's hard enough to get some people to title their blog posts :-)
   > --[[smcv]]
 
-## Patches pending merge
-
-* There is some common code cargo-culted from other plugins (notably inline and editpage) which
-  should probably be shared
-
-  > Actually, there's less of this now than there used to be - a lot of simple
-  > things that were shared have become unshareable as they became more
-  > complex. --[[smcv]]
-
-  > There's still goto. You have a branch for that. --[[Joey]] 
-
 ## Won't fix
+
+* Because IkiWiki generates static HTML, we can't have a form inlined in
+  page.tmpl where the user fills in an entire comment and can submit it in
+  a single button-press, without being vulnerable to cross-site request forgery.
+  So I'll put this in as wontfix. --[[smcv]]
 
 * It would be useful to have a pagespec that always matches all comments on
   pages matching a glob. Something like `comment(blog/*)`.
@@ -46,6 +40,17 @@
   > internal pages. So probably this isn't worth doing. --[[Joey]]
 
 ## Done
+
+* There is some common code cargo-culted from other plugins (notably inline and editpage) which
+  should probably be shared
+
+  > Actually, there's less of this now than there used to be - a lot of simple
+  > things that were shared have become unshareable as they became more
+  > complex. --[[smcv]]
+
+  > There's still goto. You have a branch for that. --[[Joey]] 
+
+  >> Now merged --[[smcv]]
 
 * The default template should have a (?) icon next to unauthenticated users (with the IP address
   as title) and an OpenID icon next to OpenIDs
@@ -90,6 +95,7 @@
   > Fixed in my comments branch by commit 0844bd0b; commits 5b1cf21a
   > and c42f174e fix another `beautify_urlpath` bug and add a regression test
   > --[[smcv]]
+
 
 * Now that inline has some comments-specific functionality anyway, it would
   be good to output `<link rel="comments">` in Atom and the equivalent in RSS.
