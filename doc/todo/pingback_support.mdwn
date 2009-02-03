@@ -20,3 +20,17 @@ case I will consider this done with an entry in [[tips]]; otherwise a
 [[plugins|plugin]] to implement pingbacks would be great.
 
 -- [[Jon]] (Wed Jan 14 13:48:47 GMT 2009)
+
+> I think it's now possible to implement trackback and pingback receiving
+> support in ikiwiki. One easy way to do it would be to hook it into the
+> existing [[plugins/comments]] plugin -- each pingback/trackback that
+> ikiwiki recieves would result in the creation if a new comment, which
+> would be subject to the usual comment filtering (ie, blogspam) and
+> moderation and would then show up amoung the other, regular comments on
+> the page.
+> 
+> As for sending trackbacks and pingbacks, this could fairly easily be
+> implemented using a `editcontent` hook. Since this hook is called
+> whenever a page is posted or edited, and gets the changed content, it can
+> simply scan it for urls (may have to htmlize first?), and send pings to
+> all urls found. --[[Joey]] 
