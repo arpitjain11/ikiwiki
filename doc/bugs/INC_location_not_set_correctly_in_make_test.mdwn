@@ -1,0 +1,12 @@
+'make test' has the following errors:
+
+Can't locate Locale/gettext.pm in @INC (@INC contains: /home/turian/utils//lib/perl5/site_perl/5.8.8/i386-linux-thread-multi /home/turian/utils//lib/perl5/site_perl/5.8.8 . /usr/lib/perl5/site_perl/5.8.8/i386-linux-thread-multi /usr/lib/perl5/site_perl/5.8.7/i386-linux-thread-multi /usr/lib/perl5/site_perl/5.8.6/i386-linux-thread-multi /usr/lib/perl5/site_perl/5.8.5/i386-linux-thread-multi /usr/lib/perl5/site_perl/5.8.8 /usr/lib/perl5/site_perl/5.8.7 /usr/lib/perl5/site_perl/5.8.6 /usr/lib/perl5/site_perl/5.8.5 /usr/lib/perl5/site_perl /usr/lib/perl5/vendor_perl/5.8.8/i386-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.7/i386-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.6/i386-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.5/i386-linux-thread-multi /usr/lib/perl5/vendor_perl/5.8.8 /usr/lib/perl5/vendor_perl/5.8.7 /usr/lib/perl5/vendor_perl/5.8.6 /usr/lib/perl5/vendor_perl/5.8.5 /usr/lib/perl5/vendor_perl /usr/lib/perl5/5.8.8/i386-linux-thread-multi /usr/lib/perl5/5.8.8) at (eval 254) line 2.
+
+What's weird is that I already have gettext.pm:
+   /home/turian/utils/lib/perl5/lib/i386-linux-thread-multi/Locale/gettext.pm
+
+That directory should be part of @INC, because I have:
+  export PERL5LIB="$PERL5LIB:$UTILS/lib/perl5/lib/i386-linux-thread-multi/"
+in my .bashrc. However, /home/turian/utils/lib/perl5/lib/i386-linux-thread-multi/ does not appear in that @INC line.
+
+How do I get the proper @INC locations set?
