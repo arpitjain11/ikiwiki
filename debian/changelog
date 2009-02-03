@@ -5,6 +5,8 @@ ikiwiki (3.04) UNRELEASED; urgency=low
     engines where visiting a nonexistent page provides you with a link
     to create it. (smcv)
   * Factor out redundant code into goto plugin. (smcv)
+  * Work around XML::Atom strangeness that results in double-encoded posts.
+    (smcv) 
 
  -- Joey Hess <joeyh@debian.org>  Sat, 31 Jan 2009 19:04:45 -0500
 
