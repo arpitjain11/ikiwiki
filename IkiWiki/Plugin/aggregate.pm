@@ -534,6 +534,11 @@ sub aggregate (@) {
 		}
 
 		foreach my $entry ($f->entries) {
+			# XML::Feed doesn't work around XML::Atom's bizarre
+			# API, so we will. Real unicode strings? Yes please.
+			# See [[bugs/Aggregated_Atom_feeds_are_double-encoded]]
+			local $XML::Atom::ForceUnicode = 1;
+
 			my $c=$entry->content;
 			# atom feeds may have no content, only a summary
 			if (! defined $c && ref $entry->summary) {
