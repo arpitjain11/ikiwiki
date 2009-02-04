@@ -14,7 +14,7 @@ elsif (/VERSION_AUTOREPLACE/) {
 }
 elsif (/^use lib/) {
 	# The idea here is to figure out if the libdir the Makefile.PL
-	# was configure to use is in perl's normal search path.
+	# was configured to use is in perl's normal search path.
 	# If not, hard code it into ikiwiki.
 	if ((grep { $_ eq $libdir } @INC) &&
             (! exists $ENV{PERL5LIB} || ! length $ENV{PERL5LIB} ||
