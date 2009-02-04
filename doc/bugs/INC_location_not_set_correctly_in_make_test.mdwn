@@ -10,3 +10,15 @@ That directory should be part of @INC, because I have:
 in my .bashrc. However, /home/turian/utils/lib/perl5/lib/i386-linux-thread-multi/ does not appear in that @INC line.
 
 How do I get the proper @INC locations set?
+
+> Nothing in ikiwiki touches whatever PERL5DIR setting you may have,
+> so AFAICS, this must be some sort of local configuration problem.
+> How do
+> `/home/turian/utils//lib/perl5/site_perl/5.8.8/i386-linux-thread-multi`
+> and `/home/turian/utils//lib/perl5/site_perl/5.8.8` get into the
+> displayed `@INC`? The likely way seems to be that something in your
+> system sets PERL5LIB to contain those directories, clobbering 
+> the earlier setting in your `.bashrc`.
+> --[[Joey]] 
+
+[[!tag done]]
