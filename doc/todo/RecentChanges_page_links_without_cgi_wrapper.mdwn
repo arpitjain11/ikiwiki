@@ -2,4 +2,25 @@ Links to the changed page on RecentChanges only show up if the cgi wrapper is
 enabled. It would be nice if links were also generated on wikis that do not use
 the cgi. [[svend]]
 
+> It would be, but doing so would make updating the recentchanges page for
+> each commit a lot slower, or would result in there often being broken
+> links there.
+> 
+> The broken links would happen if a page is removed.
+> 
+> The speed issue is that currently each individual change in the
+> recentchanges page is built just once, when the change is made, and the
+> html for it is reused thereafter. To avoid broken links, it would need to
+> regenerate each change's html on each commit. That's 100x the overhead.
+> (Perhaps it's possible to be smarter about which need generation tho.)
+> 
+> The best way to approach this that I can see ATM is to use the
+> [[plugins/404]] plugin to handle the broken links and then recentchanges
+> could avoid explicitly using the CGI. But this doesn't meet your use case
+> of having no CGI.
+>
+> If you're willing to live with broken links to removed pages, I suppose
+> that could be made an option..
+> --[[Joey]] 
+
 [[!tag wishlist]]
