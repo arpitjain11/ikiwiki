@@ -57,7 +57,7 @@ extra_install:
 	for dir in `cd underlays && find . -follow -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		for file in `find underlays/$$dir -follow -maxdepth 1 -type f`; do \
-			cp -aL $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir || \
+			cp -aL $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir 2>/dev/null || \
 			install -m 644 $$file $(DESTDIR)$(PREFIX)/share/ikiwiki/$$dir; \
 		done; \
 	done
@@ -71,11 +71,11 @@ extra_install:
 	done
 	
 	# Install example sites.
-	for dir in `cd doc/examples; find -type d ! -regex '.*\.svn.*'`; do \
+	for dir in `cd doc/examples; find . -type d ! -regex '.*\.svn.*'`; do \
 		install -d $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$dir; \
 	done
-	for file in `cd doc/examples; find -type f ! -regex '.*\.svn.*'`; do \
-		cp -aL doc/examples/$$file $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$file || \
+	for file in `cd doc/examples; find . -type f ! -regex '.*\.svn.*'`; do \
+		cp -aL doc/examples/$$file $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$file 2>/dev/null || \
 		install -m 644 doc/examples/$$file $(DESTDIR)$(PREFIX)/share/ikiwiki/examples/$$file; \
 	done
 
@@ -87,10 +87,10 @@ extra_install:
 	done
 	
 	install -d $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins
-	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\* ! -name \*demo\* -name \*.py`; do \
+	for file in `find plugins -maxdepth 1 -type f ! -path plugins/.\* ! -name \*demo\* -name \*.py`; do \
 		install -m 644 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
 	done
-	for file in `find plugins -maxdepth 1 -type f ! -wholename plugins/.\* ! -name \*demo\* ! -name \*.py ! -name \*.pyc`; do \
+	for file in `find plugins -maxdepth 1 -type f ! -path plugins/.\* ! -name \*demo\* ! -name \*.py ! -name \*.pyc`; do \
 		install -m 755 $$file $(DESTDIR)$(PREFIX)/lib/ikiwiki/plugins; \
 	done
 
