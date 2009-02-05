@@ -8,4 +8,7 @@ nonexistent page provides you with a link to create it.
 To achieve this, put something like this in the wiki's Apache configuration
 file:
 
-    ErrorDocument 404 /cgi-bin/ikiwiki.cgi
+    ErrorDocument 404 /ikiwiki.cgi
+
+(The path here needs to be whatever the path is to the ikiwiki.cgi from
+the root of your web server.)
