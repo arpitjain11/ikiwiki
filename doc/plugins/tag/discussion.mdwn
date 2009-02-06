@@ -22,3 +22,100 @@ AOLMODE=true echo "I too would really like this feature, which would make cgi fr
 better" --[[DavidBremner]]
 
 Please make the actual text used a template some way or another. I may want `map` instead of `inline`. --[[madduck]]
+
+---
+
+I have create a patch to tag.pm for add the option for auto create tag pages.
+A new setting is used to enable or disable auto-create tag pages, `tag_autocreate`.
+The new tag file is created during the preprocess phase. 
+The new tag file is then complied during the change phase.
+
+	--- tag.pm      2009-02-06 10:26:03.000000000 -0700
+	+++ tag_new.pm  2009-02-06 12:17:19.000000000 -0700
+	@@ -14,6 +14,7 @@
+			hook(type => "preprocess", id => "tag", call => \&preprocess_tag, scan => 1);
+			hook(type => "preprocess", id => "taglink", call => \&preprocess_taglink, scan => 1);
+			hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
+	+       hook(type => "change", id => "tag", call => \&change);
+	 }
+	 
+	 sub getopt () {
+	@@ -36,6 +37,36 @@
+							safe => 1,
+							rebuild => 1,
+					},
+	+               tag_autocreate => {
+	+                       type => "boolean",
+	+                       example => 0,
+	+                       description => "Auto-create the new tag pages, uses autotagpage.tmpl ",
+	+                       safe => 1,
+	+                       rebulid => 1,
+	+               },
+	+}
+	+
+	+my $autocreated_page = 0;
+	+
+	+sub gen_tag_page($)    {
+	+       my $tag=shift;
+	+
+	+       my $tag_file=$tag.'.'.$config{default_pageext};
+	+       return if (-f $config{srcdir}.$tag_file);
+	+
+	+       my $template=template("autotagpage.tmpl");
+	+       $template->param(tag => $tag);
+	+       writefile($tag_file, $config{srcdir}, $template->output);
+	+       $autocreated_page = 1;
+	+
+	+       if ($config{rcs}) {
+	+               IkiWiki::disable_commit_hook();
+	+               IkiWiki::rcs_add($tag_file);
+	+               IkiWiki::rcs_commit_staged(
+	+                       gettext("Automatic tag page generation"),
+	+                       undef, undef);
+	+               IkiWiki::enable_commit_hook();
+	+       }
+	 }
+	 
+	 sub tagpage ($) {
+	@@ -47,6 +78,10 @@
+					$tag=~y#/#/#s; # squash dups
+			}
+	 
+	+       if (defined $config{tag_autocreate} && $config{tag_autocreate} ) {
+	+               gen_tag_page($tag);
+	+       }
+	+
+			return $tag;
+	 }
+	 
+	@@ -125,4 +160,18 @@
+			}
+	 }
+	 
+	+sub change(@) {
+	+       return unless($autocreated_page);
+	+       $autocreated_page = 0;
+	+
+	+       # This refresh/saveindex is to complie the autocreated tag pages
+	+       IkiWiki::refresh();
+	+       IkiWiki::saveindex();
+	+
+	+       # This refresh/saveindex is to fix the Tags link
+	+       # With out this additional refresh/saveindex the tag link displays ?tag
+	+       IkiWiki::refresh();
+	+       IkiWiki::saveindex();
+	+}
+	+
+
+
+This uses a template called `autotagpage.tmpl`, here is my template file:
+
+    \[[!inline pages="link(<TMPL_VAR TAG>)" archive="yes"]]
+
+
+A quirk I have not figured out is during the `sub change`, see my comments in the code.
+I am not sure if that is the best way to handle it.
+
+[[!tag patch]]
+-- Jeremy Schultz <jeremy.schultz@uleth.ca>
+
