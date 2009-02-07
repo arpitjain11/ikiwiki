@@ -10,7 +10,9 @@ where foo and bar are the (source-supported) languages you want to
 highlight
 ### Issues
 
-- I would like to have a link to the raw source; using will_render() and then copying the file should work. 
+- I would like to have a link to the raw source; using will_render() and then copying the file should work.
+
+> You might also like to look at the [[todo/source_link]] todo. -- [[Will]]
 
 - Is there a way to configure the colors used by source-highlight (other than editing the globally installed "default.style" file)? It would help if I could pass the command arbitrary command-line arguments; then I could configure which config file it's supposed to use. For instance, I'm not a fan of hard-coding the colors into the HTML output. IMHO, css-style formatting should be preferred. All that can be set via the command line ... --Peter
 
