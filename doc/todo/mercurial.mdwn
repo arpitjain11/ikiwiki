@@ -29,6 +29,25 @@ This should update the working directory and run ikiwiki every time a change is 
 > It can deadlock if the post-commit hook runs with --refresh in the
 > former case. --[[Joey]]
 
+The problem with --post-commit is that if you delete some pages in $SRC, ikiwiki --setup setupfile --post-commit will not delete them in $DEST.
+
+I add the following to .hg/hgrc:
+
+  [hooks]
+  changegroup = hg update >&2 && ikiwiki --setup path.to.setup.file --refresh
+  post-commit = ikiwiki --setup path.to.setup.file --refresh
+
+I tried the follwing commands in $SRC:
+
+  touch deadlocktest.mdwn
+  hg add
+  hg ci
+
+No deadlock happens.  (Also I push to the $SRC from another machine, again, no deadlock.)  
+
+Of course these tests are too simple.  The problem is I have no idea when the deadlock will happen. If someone is kind enough to point out, I will run more test.
+
+
 ***
 
 I have a few notes on mercurial usage after trying it out for a while:
