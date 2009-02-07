@@ -8,6 +8,9 @@ Updated to use fix noted in [[bugs/multiple_pages_with_same_name]].
 I was trying to replace sourcehighlight with sourcecode. I had to modify the 
 htmlize call slightly so that it would work in a format directive.
 ([modified version](http://pivot.cs.unb.ca/git/?p=ikiplugins.git;a=blob_plain;f=IkiWiki/Plugin/sourcecode.pm;hb=21fc57091edb9))
+
+> I haven't tested them, but those changes look sensible to me. -- [[Will]]
+
 I hit a wall the following example (the last commit in the above repo).
 
     \[[!meta title="Solutions to assignment 1"]]
@@ -16,6 +19,9 @@ I hit a wall the following example (the last commit in the above repo).
     test
     """]]
 
+
+> I haven't actually tested this to see what the problem is.  How does this fail?
+> Does source-highlight barf on the non-c++ content?  Is there a wiki URL that shows the failure?  -- [[Will]]
 
 ----
 
