@@ -31,7 +31,7 @@ This should update the working directory and run ikiwiki every time a change is 
 
 The problem with --post-commit is that if you delete some pages in $SRC, ikiwiki --setup setupfile --post-commit will not delete them in $DEST.
 
-I add the following to .hg/hgrc:
+I add the following to .hg/hgrc:(I use changegroup since I don't think we need refresh per changeset, please point out if I am wrong.)
 
     [hooks]
     changegroup = hg update >&2 && ikiwiki --setup path.to.setup.file --refresh
@@ -43,7 +43,9 @@ I tried the follwing commands in $SRC:
     hg add
     hg ci
 
-No deadlock happens.  (Also I push to the $SRC from another machine, again, no deadlock.)  
+No deadlock happens.  (Also I push to the $SRC from another machine, again, no deadlock.  If there is conflicts between $SRC and my own repo, hg pull will abort.  You have to pull, merge and push again.)
+
+
 
 Of course these tests are too simple.  The problem is I have no idea when the deadlock will happen. If someone is kind enough to point out, I will run more test.
 
