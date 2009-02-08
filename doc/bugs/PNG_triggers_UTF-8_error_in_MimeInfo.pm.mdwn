@@ -1,5 +1,5 @@
-When including a PNG image in a blog, [[ikiwiki/directive/inline]] directives throw an error:
+If a PNG image matches the [[ikiwiki/PageSpec]] of an [[ikiwiki/directive/inline]] directive, the page throws the following error:
 
 > \[[!inline Error: Malformed UTF-8 character (fatal) at /usr/local/lib/perl5/site_perl/5.8.8/File/MimeInfo.pm line 120.]]
 
-Individual posts display fine.
+Individual posts display fine, and moving the offending image outside the scope of the [[ikiwiki/directive/inline]] directive's PageSpec eliminates the error.
