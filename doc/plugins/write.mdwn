@@ -629,6 +629,16 @@ A failure to write the file will result in it dying with an error.
 
 If the destination directory doesn't exist, it will first be created.
 
+The filename and directory are separate parameters because of
+some security checks done to avoid symlink attacks. Before writing a file,
+it checks to make sure there's not a symlink with its name, to avoid
+following the symlink. If the filename parameter includes a subdirectory
+to put the file in, it also checks if that subdirectory is a symlink, etc.
+The directory parameter, however, is not checked for symlinks. So,
+generally the directory parameter is a trusted toplevel directory like
+the srcdir or destdir, and any subdirectories of this are included in the
+filename parameter.
+
 #### `will_render($$)`
 
 Given a page name and a destination file name (not including the base
