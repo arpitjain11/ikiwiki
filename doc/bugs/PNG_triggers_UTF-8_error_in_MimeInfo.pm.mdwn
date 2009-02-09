@@ -3,3 +3,23 @@ If a PNG image matches the [[ikiwiki/PageSpec]] of an [[ikiwiki/directive/inline
 > \[[!inline Error: Malformed UTF-8 character (fatal) at /usr/local/lib/perl5/site_perl/5.8.8/File/MimeInfo.pm line 120.]]
 
 Individual posts display fine, and moving the offending image outside the scope of the [[ikiwiki/directive/inline]] directive's PageSpec eliminates the error.
+
+> I tried to reproduce this with a random png and File::MimeInfo 
+> version 0.15, but could not. The png was included in the generated feed
+> via an enclosure, as it should be; no warnings or errors.
+> 
+> Looking at the source to File::MimeInfo and its changelog,
+> I'm pretty sure that this problem was fixed in version
+> 0.14:
+>>       - Fixed bug with malformed utf8 chars in default() method
+> 
+> The code involved in that fix looks like this:
+>
+>>                 no warnings; # warnings can be thrown when input not ascii
+>>                if ($] < 5.008 or ! utf8::valid($line)) {
+>>                        use bytes; # avoid invalid utf8 chars
+>
+> I guess that your locally installed version of File::MimeInfo is older than
+> this. So closing this bug [[done]]. If you still see the problem with a current
+> version of File::MimeInfo, please reopen and include where I can get a png file
+> that triggers the problem. --[[Joey]] 
