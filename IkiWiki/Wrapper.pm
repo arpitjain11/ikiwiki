@@ -93,10 +93,7 @@ EOF
 	$configstring=~s/"/\\"/g;
 	$configstring=~s/\n/\\n/g;
 	
-	#translators: The first parameter is a filename, and the second is
-	#translators: a (probably not translated) error message.
-	open(OUT, ">$wrapper.c") || error(sprintf(gettext("failed to write %s: %s"), "$wrapper.c", $!));
-	print OUT <<"EOF";
+	writefile(basename("$wrapper.c"), dirname($wrapper), <<"EOF");
 /* A wrapper for ikiwiki, can be safely made suid. */
 #include <stdio.h>
 #include <sys/types.h>
