@@ -1,0 +1,10 @@
+In some wikis, (e.g. Mediawiki) after [[renaming|rename]] 
+a page, the old page still exist but only redirect to the
+new page.  This is convenient since external sites may
+have links pointing to the old url.  
+
+If [[meta]] plugin is enabled, users can manually edit the
+page, and put in '\[[!meta redir=newpage]]', but this is
+not very convenient.
+
+ 
