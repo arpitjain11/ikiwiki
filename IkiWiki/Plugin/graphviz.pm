@@ -45,7 +45,7 @@ sub render_graph (\%) {
 
 	if (! -e "$config{destdir}/$dest") {
 		my $pid;
-		my $sigpipe=0;;
+		my $sigpipe=0;
 		$SIG{PIPE}=sub { $sigpipe=1 };
 		$pid=open2(*IN, *OUT, "$params{prog} -Tpng");
 

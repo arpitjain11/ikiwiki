@@ -130,7 +130,7 @@ sub preprocess (@) {
 
 	if (! -e "$config{destdir}/$fn") {
 		my $pid;
-		my $sigpipe=0;;
+		my $sigpipe=0;
 		$SIG{PIPE}=sub { $sigpipe=1 };
 		$pid=open2(*IN, *OUT, "php");
 
