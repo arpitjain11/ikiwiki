@@ -12,3 +12,9 @@ file:
 
 (The path here needs to be whatever the path is to the ikiwiki.cgi from
 the root of your web server.)
+
+Or put something like this in the wiki's Lighttpd (>=1.4.17) configuration file:
+
+    server.error-handler-404 = "/ikiwiki.cgi"
+
+
