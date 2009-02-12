@@ -1,16 +1,27 @@
-The plugin somehow depends on [[mdwn]].  If you have
+The plugin depends on [[mdwn]].  If you have
 disabled [[mdwn]], to get [[shortcut]] work, you need
-commit in a shortcuts.ext (ext is `rcs|creole|html|txt|etc`).
+commit in a shortcuts.ext (ext is `rcs|creole|html|txt|etc`),
+and edit/patch [[shortcut]].
 
-Then edit the following lines in [[shortcut]] plugin source:
+Maybe use the $default_pageext is better than hardcode .mdwn?
 
-    my $srcfile=srcfile("shortcuts.mdwn", 1);
+<pre>
+--- shortcut.pm.orig    2009-02-12 02:05:22.000000000 -0600
++++ shortcut.pm 2009-02-12 04:41:30.000000000 -0600
+@@ -23,9 +23,9 @@
+        if (defined $config{srcdir}) {
+                # Preprocess the shortcuts page to get all the available shortcuts
+                # defined before other pages are rendered.
+-               my $srcfile=srcfile("shortcuts.mdwn", 1);
++               my $srcfile=srcfile("shortcuts.$config{default_pageext}", 1);
+                if (! defined $srcfile) {
+-                       error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
++                       error(gettext("shortcut plugin will not work without a shortcuts.$config{default_pageext}"));
+                }
+                IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
+        }
+</pre>
 
-and
-
-    error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
+--[[weakish]]
 
 
-(It is better to edit a local copy of shortcut.pm in, say, ~/.ikiwiki/IkiWiki/Plugin
-and add ~/.ikiwiki to libdir in your ikiwiki.setup than edit the shortcut.pm installed
-in system directly.)
