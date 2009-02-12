@@ -1,8 +1,8 @@
 The plugin somehow depends on [[mdwn]].  If you have
 disabled [[mdwn]], to get [[shortcut]] work, you need
-commit in a shortcuts.ext (ext is rcs|creole|html|txt|etc).
+commit in a shortcuts.ext (ext is `rcs|creole|html|txt|etc`).
 
-Then edit the following lines in[[shortcut]] plugin source:
+Then edit the following lines in [[shortcut]] plugin source:
 
     my $srcfile=srcfile("shortcuts.mdwn", 1);
 
@@ -12,5 +12,5 @@ and
 
 
 (It is better to edit a local copy of shortcut.pm in, say, ~/.ikiwiki/IkiWiki/Plugin
-and add ~/.ikiwiki to libdir in your ikiwiki.setup then edit the shortcut.pm installed
+and add ~/.ikiwiki to libdir in your ikiwiki.setup than edit the shortcut.pm installed
 in system directly.)
