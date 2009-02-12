@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ikiwiki 3.02\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-26 21:41-0500\n"
+"Project-Id-Version: ikiwiki 3.03\n"
+"Report-Msgid-Bugs-To: ikiwiki@packages.debian.org\n"
+"POT-Creation-Date: 2009-01-17 18:19-0500\n"
 "PO-Revision-Date: 2009-02-02 11:23+0100\n"
 "Last-Translator: Kai Wasserbäch <debian@carbon-project.org>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -170,7 +170,19 @@ msgstr "Anhang hochladen"
 msgid "automatic index generation"
 msgstr "automatische Index-Erstellung"
 
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:260
+#: ../IkiWiki/Plugin/blogspam.pm:102
+msgid ""
+"Sorry, but that looks like spam to <a href=\"http://blogspam.net/"
+"\">blogspam</a>: "
+msgstr ""
+"Entschuldigung, aber <a href=\"http://blogspam.net/\">blogspam</a> stuft das "
+"als Spam ein: "
+
+#: ../IkiWiki/Plugin/blogspam.pm:105
+msgid "blogspam server failure: "
+msgstr "blogspam-Server-Fehler: "
+
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:296
 #: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -208,37 +220,36 @@ msgstr "fehlende Seite"
 msgid "The page %s does not exist."
 msgstr "Die Seite %s existiert nicht."
 
-#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:124
+#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:160
 msgid "bad page name"
 msgstr "fehlerhafter Seitenname"
 
-#: ../IkiWiki/Plugin/comments.pm:350
+#: ../IkiWiki/Plugin/comments.pm:348
 #, perl-format
 msgid "commenting on %s"
 msgstr "kommentiere %s"
 
-#: ../IkiWiki/Plugin/comments.pm:368
+#: ../IkiWiki/Plugin/comments.pm:366
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr ""
 "Die Seite »%s« existiert nicht, deshalb können Sie sie nicht kommentieren."
 
-#: ../IkiWiki/Plugin/comments.pm:375
+#: ../IkiWiki/Plugin/comments.pm:373
 #, perl-format
 msgid "comments on page '%s' are closed"
-msgstr ""
-"Es können keine weitern Kommentare für die Seite »%s« abgegeben werden."
+msgstr "Es können keine weitern Kommentare für die Seite »%s« abgegeben werden."
 
-#: ../IkiWiki/Plugin/comments.pm:483
+#: ../IkiWiki/Plugin/comments.pm:493
 msgid "Added a comment"
 msgstr "Kommentar hinzugefügt."
 
-#: ../IkiWiki/Plugin/comments.pm:487
+#: ../IkiWiki/Plugin/comments.pm:497
 #, perl-format
 msgid "Added a comment: %s"
 msgstr "Kommentar hinzugefügt: %s"
 
-#: ../IkiWiki/Plugin/comments.pm:598
+#: ../IkiWiki/Plugin/comments.pm:611
 msgid "Comments"
 msgstr "Kommentare"
 
@@ -263,19 +274,19 @@ msgstr "es wurde kein Text in die Seite mit der ID %s kopiert"
 msgid "removing old preview %s"
 msgstr "entferne alte Vorschau %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:140
+#: ../IkiWiki/Plugin/editpage.pm:176
 #, perl-format
 msgid "%s is not an editable page"
 msgstr "%s ist keine bearbeitbare Seite"
 
-#: ../IkiWiki/Plugin/editpage.pm:316
+#: ../IkiWiki/Plugin/editpage.pm:352
 #, perl-format
 msgid "creating %s"
 msgstr "erstelle %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:334 ../IkiWiki/Plugin/editpage.pm:353
-#: ../IkiWiki/Plugin/editpage.pm:363 ../IkiWiki/Plugin/editpage.pm:398
-#: ../IkiWiki/Plugin/editpage.pm:443
+#: ../IkiWiki/Plugin/editpage.pm:370 ../IkiWiki/Plugin/editpage.pm:389
+#: ../IkiWiki/Plugin/editpage.pm:399 ../IkiWiki/Plugin/editpage.pm:443
+#: ../IkiWiki/Plugin/editpage.pm:482
 #, perl-format
 msgid "editing %s"
 msgstr "bearbeite %s"
@@ -694,7 +705,7 @@ msgstr "Bitte wählen Sie den umzubenennenden Anhang aus."
 msgid "rename %s to %s"
 msgstr "Benenne %s in %s um"
 
-#: ../IkiWiki/Plugin/rename.pm:490
+#: ../IkiWiki/Plugin/rename.pm:493
 #, perl-format
 msgid "update for rename of %s to %s"
 msgstr "Aktualisierung für Umbenennung von %s in %s"
@@ -769,19 +780,19 @@ msgstr "konnte PHP nicht ausführen"
 msgid "cannot find file"
 msgstr "konnte Datei nicht finden"
 
-#: ../IkiWiki/Plugin/table.pm:73
+#: ../IkiWiki/Plugin/table.pm:87
 msgid "unknown data format"
 msgstr "unbekanntes Datenformat"
 
-#: ../IkiWiki/Plugin/table.pm:81
+#: ../IkiWiki/Plugin/table.pm:95
 msgid "empty data"
 msgstr "keine Daten"
 
-#: ../IkiWiki/Plugin/table.pm:100
+#: ../IkiWiki/Plugin/table.pm:114
 msgid "Direct data download"
 msgstr "Direkter Daten-Download"
 
-#: ../IkiWiki/Plugin/table.pm:134
+#: ../IkiWiki/Plugin/table.pm:148
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "Verarbeitungsfehler in Zeile %d: %s"
@@ -943,7 +954,7 @@ msgstr ""
 msgid "unsupported revision control system %s"
 msgstr "Nicht unterstütztes Versionskontrollsystem %s"
 
-#: ../IkiWiki/Setup/Automator.pm:83
+#: ../IkiWiki/Setup/Automator.pm:93
 msgid "failed to set up the repository with ikiwiki-makerepo"
 msgstr "Erstellen des Depots mit ikiwiki-makerepo ist fehlgeschlagen"
 
@@ -1040,7 +1051,7 @@ msgid "What revision control system to use?"
 msgstr "Welches Versionskontrollsystem soll verwandt werden?"
 
 #: ../auto.setup:20
-msgid "What wiki user (or openid) will be wiki admin?"
+msgid "What wiki user (or openid) will be admin?"
 msgstr ""
 "Welcher Wiki-Benutzer (oder welche OpenID) soll der Administrator des Wikis "
 "sein?"
@@ -1048,6 +1059,3 @@ msgstr ""
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr "Wie lautet der Domainname des Webservers?"
-
-#~ msgid "failed to find url in html"
-#~ msgstr "URL in HTML nicht gefunden"
