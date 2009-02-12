@@ -10,4 +10,6 @@ I've installed Text::WikiCreole 0.05 and enabled the plugin, but I get an error 
 
 >> Currently the creole plugin is included in ikiwiki but the ikiwiki deb (3.0.3) doesn't suggests libtext-wikicreole-perl.  Why? --[[weakish]]
 
+>>> forgot, done now --[[Joey]] 
+
 I'm moving over a really stinkingly old UseMod and creole seems the nearest match. I've worked out that Bare /Subpage links need to become \[\[Subpage\]\], and Top/Sub links need to be \[\[Top/Sub\]\] (or \[\[Top/Sub|Top/Sub\]\], to display in exactly the same way), but I'm stuck on generic hyperlinks. The creole cheat sheet says I should be able to do \[\[http://url.path/foo|LinkText\]\], but that comes out as a link to create the "linktext" page, and Markdown-style \[Link Text\](http://url.path/foo) just gets rendered as is. Any suggestions? --[[schmonz]]

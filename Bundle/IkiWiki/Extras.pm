@@ -31,6 +31,10 @@ Text::Textile
 Text::WikiFormat
 XML::Feed
 Net::Amazon::S3
+Text::WikiCreole
+Term::ReadLine::Gnu
+HTML::Tree
+Authen::Passphrase
 
 =head1 AUTHOR
 

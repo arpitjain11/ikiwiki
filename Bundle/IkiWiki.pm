@@ -16,17 +16,17 @@ perl -MCPAN -e 'install Bundle::IkiWiki'
 
 =head1 CONTENTS
 
-XML::Simple
 Text::Markdown
-Date::Parse
-HTML::Template
 HTML::Scrubber
-CGI
+HTML::Template
+HTML::Parser
+URI
+XML::Simple
+Date::Parse
 CGI::FormBuilder
 CGI::Session
 Mail::Sendmail
-HTML::Parser
-URI
+CGI
 Data::Dumper
 
 =head1 AUTHOR
