@@ -51,72 +51,8 @@ sub refresh () {
 
 # Back to ikiwiki namespace for the rest, this code is very much
 # internal to ikiwiki even though it's separated into a plugin,
-# and other plugins use the functions below.
+# and other plugins use the function below.
 package IkiWiki;
-
-sub check_canedit ($$$;$) {
-	my $page=shift;
-	my $q=shift;
-	my $session=shift;
-	my $nonfatal=shift;
-	
-	my $canedit;
-	run_hooks(canedit => sub {
-		return if defined $canedit;
-		my $ret=shift->($page, $q, $session);
-		if (defined $ret) {
-			if ($ret eq "") {
-				$canedit=1;
-			}
-			elsif (ref $ret eq 'CODE') {
-				$ret->() unless $nonfatal;
-				$canedit=0;
-			}
-			elsif (defined $ret) {
-				error($ret) unless $nonfatal;
-				$canedit=0;
-			}
-		}
-	});
-	return defined $canedit ? $canedit : 1;
-}
-
-sub check_content (@) {
-	my %params=@_;
-	
-	return 1 if ! exists $hooks{checkcontent}; # optimisation
-
-	if (exists $pagesources{$params{page}}) {
-		my @diff;
-		my %old=map { $_ => 1 }
-		        split("\n", readfile(srcfile($pagesources{$params{page}})));
-		foreach my $line (split("\n", $params{content})) {
-			push @diff, $line if ! exists $old{$_};
-		}
-		$params{content}=join("\n", @diff);
-	}
-
-	my $ok;
-	run_hooks(checkcontent => sub {
-		return if defined $ok;
-		my $ret=shift->(%params);
-		if (defined $ret) {
-			if ($ret eq "") {
-				$ok=1;
-			}
-			elsif (ref $ret eq 'CODE') {
-				$ret->() unless $params{nonfatal};
-				$ok=0;
-			}
-			elsif (defined $ret) {
-				error($ret) unless $params{nonfatal};
-				$ok=0;
-			}
-		}
-
-	});
-	return defined $ok ? $ok : 1;
-}
 
 sub cgi_editpage ($$) {
 	my $q=shift;
