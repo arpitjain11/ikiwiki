@@ -1,0 +1,11 @@
+Unlike other format, ikiwiki is somehow depends
+on mdwn, since the underlay dir
+is written in mdwn.  If you want to disable mdwn,
+you need to overwrite the underlay
+dir (set underlaydir in ikiwiki.setup
+to your own underlay dir or replace underlay pages
+in your $SRC).
+
+Specially, the [[shortcut]] plugin is hardcoded to
+use shortcuts.mdwn.  So you need pay more care if
+you [[use shortcut without mdwn|shortcut/discussion]].

@@ -1,0 +1,27 @@
+The plugin depends on [[mdwn]].  If you have
+disabled [[mdwn]], to get [[shortcut]] work, you need
+commit in a shortcuts.ext (ext is `rcs|creole|html|txt|etc`),
+and edit/patch [[shortcut]].
+
+Maybe use the $default_pageext is better than hardcode .mdwn?
+
+<pre>
+--- shortcut.pm.orig    2009-02-12 02:05:22.000000000 -0600
++++ shortcut.pm 2009-02-12 04:41:30.000000000 -0600
+@@ -23,9 +23,9 @@
+        if (defined $config{srcdir}) {
+                # Preprocess the shortcuts page to get all the available shortcuts
+                # defined before other pages are rendered.
+-               my $srcfile=srcfile("shortcuts.mdwn", 1);
++               my $srcfile=srcfile("shortcuts.$config{default_pageext}", 1);
+                if (! defined $srcfile) {
+-                       error(gettext("shortcut plugin will not work without a shortcuts.mdwn"));
++                       error(gettext("shortcut plugin will not work without a shortcuts.$config{default_pageext}"));
+                }
+                IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
+        }
+</pre>
+
+--[[weakish]]
+
+
