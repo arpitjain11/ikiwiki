@@ -11,6 +11,8 @@ ikiwiki (3.04) UNRELEASED; urgency=low
   * Fix unusual --setup --post-commit command line option combo.
   * Create any missing directory necessary to put the wrapper
     file into. Closes: #514384
+  * shortcut: If default_pageext is set, first look for
+    shortcuts.default_pageext.
 
  -- Joey Hess <joeyh@debian.org>  Sat, 31 Jan 2009 19:04:45 -0500
 
