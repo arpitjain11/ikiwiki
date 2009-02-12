@@ -36,6 +36,7 @@ The problem with --post-commit is that if you delete some pages in $SRC, ikiwiki
 > That will work. I think that the `--setup --post-commit` on the command
 > line is currently broken and does the same expensive rebuild process as --setup
 > alone (which doesn't delete files from $DEST either). Will fix that.
+> (fixed)
 > --[[Joey]] 
 
 >> Mercurial doesn't support put hooks in .hg/hooks/* (like git). In Mercurial, the only way to run
@@ -46,6 +47,10 @@ The problem with --post-commit is that if you delete some pages in $SRC, ikiwiki
 >>
 >> Alternative is always editing via cgi or pushing.  Never work on the $SRC/repo directly.
 >> --[[users/weakish]]
+
+>>> I don't see anything preventing you from using a setup file with
+>>> `mercurual_wrapper => ".hg/ikiwiki-hook",` and then modifying the hgrc
+>>> to run that wrapper. --[[Joey]] 
 
 I add the following to .hg/hgrc:(I use changegroup since I don't think we need refresh per changeset, please point out if I am wrong.)
 
