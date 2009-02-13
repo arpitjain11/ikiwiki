@@ -1,0 +1,20 @@
+This is a [[patch]] to allow filenames that are just the type.  The best example of this is wanting to
+pass a `Makefile` through one of the [[todo/syntax_highlighting/]] plugins.  With this patch,
+if the plugin can process files of type `.Makefile` then it will also process `Makefile`.
+
+I put this patch on the [[todo/syntax_highlighting/]] page a while ago, but it seemed to get
+lost because it didn't have its own bug to track it.  Now it does :).  -- [[Will]]
+
+    diff --git a/IkiWiki.pm b/IkiWiki.pm
+    index 8d728c9..1bd46a9 100644
+    --- a/IkiWiki.pm
+    +++ b/IkiWiki.pm
+    @@ -618,6 +618,8 @@ sub pagetype ($) {
+     	
+     	if ($page =~ /\.([^.]+)$/) {
+     		return $1 if exists $hooks{htmlize}{$1};
+    +	} elsif ($hooks{htmlize}{$page}{keepextension}) {
+    +		return $page;
+     	}
+     	return;
+     }
