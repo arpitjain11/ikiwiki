@@ -1,0 +1,22 @@
+This plugin uses the googleform.tmpl
+which produces valid HTML but invalid XHTML.
+This is not very good since the default ikiwiki
+templates produce XHTML instead of HTML.
+
+To produces valid XHTML, you need to edit
+googleform.tmpl (in e.g. /usr/share/ikiwiki/templates):
+
+
+    --- googleform.tmpl.orig    2009-02-13 02:47:00.000000000 -0600
+    +++ googleform.tmpl 2009-02-13 02:47:40.000000000 -0600
+    @@ -1,6 +1,6 @@
+     <form method="get" action="http://www.google.com/search" id="searchform">
+      <div>
+    -  <input name="sitesearch" value="<TMPL_VAR SITEFQDN>" type="hidden">
+    -  <input name="q" value="" id="searchbox" size="16" maxlength="255" type="text">
+    +  <input name="sitesearch" value="<TMPL_VAR SITEFQDN>" type="hidden" />
+    +  <input name="q" value="" id="searchbox" size="16" maxlength="255" type="text" />
+      </div>
+     </form>
+
+Just tow tiny changes.
