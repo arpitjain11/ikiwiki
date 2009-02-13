@@ -49,15 +49,19 @@ The problem with --post-commit is that if you delete some pages in $SRC, ikiwiki
 >> --[[users/weakish]]
 
 >>> I don't see anything preventing you from using a setup file with
->>> `mercurual_wrapper => ".hg/ikiwiki-hook",` and then modifying the hgrc
+>>> `mercurial_wrapper => ".hg/ikiwiki-hook",` and then modifying the hgrc
 >>> to run that wrapper. --[[Joey]] 
+
+>> Thanks for pointing out this.  I have some stupid misunderstanding on the
+>> usage of mercurial_wrapper before.  The wrapper works nicely! --[[weakish]]
 
 I add the following to .hg/hgrc:(I use changegroup since I don't think we need refresh per changeset, please point out if I am wrong.)
 
     [hooks]
     changegroup = hg update >&2 && ikiwiki --setup path.to.setup.file --refresh
+    post-commit = path.to.the.mercurial.wrapper
 
-<p><del>post-commit = ikiwiki --setup path.to.setup.file --refresh</del><strong>This will cause deadlock! See bleow!</strong></p>
+-----
 
 I have no idea when the deadlock will happen.  --[[users/weakish]]
 
