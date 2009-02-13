@@ -35,10 +35,32 @@ I hit a wall the following example (the last commit in the above repo).
 
      </div>
 
+>>> That is quite strange.  I tested your version of the plugin.  I had to revert one your changes to get it to
+>>> work: the linenumber argument should not have a space at the end of it.  Once I made that change,
+>>> everything worked as expected.  The output I get for your example is below:
+
+    <div id="content">
+    <ul>
+    <li><div id="sourcecode"></li>
+    </ul>
+    
+    <pre><tt><span class="linenum">00001:</span> <span class="normal">test</span></tt></pre>
+    
+    <p></div></p>
+    
+    </div>
+
+>>> I don't know what is going wrong for you... source-highlight, Markdown or something else.
+>>> I do find it interesting the way the sourcecode `div` and the list get interleaved.  That
+>>> just looks like a Markdown thing though.
+>>> In any case, I've updated the patch below to include most of your changes.  -- [[Will]]
+
 ----
 
     #!/usr/bin/perl
     # markup source files
+    # Originally by Will Uther
+    # With modifications by David Bremner
     package IkiWiki::Plugin::sourcecode;
     
     use warnings;
@@ -49,142 +71,144 @@ I hit a wall the following example (the last commit in the above repo).
     my %metaheaders;
     
     sub import {
-    	hook(type => "getsetup", id => "sourcecode", call => \&getsetup);
-    	hook(type => "checkconfig", id => "sourcecode", call => \&checkconfig);
-    	hook(type => "pagetemplate", id => "sourcecode", call => \&pagetemplate);
+        hook(type => "getsetup", id => "sourcecode", call => \&getsetup);
+        hook(type => "checkconfig", id => "sourcecode", call => \&checkconfig);
+        hook(type => "pagetemplate", id => "sourcecode", call => \&pagetemplate);
     }
     
     sub getsetup () {
-    	return 
-    		plugin => {
-    			safe => 1,
-    			rebuild => 1, # format plugin
-    		},
-    		sourcecode_command => {
-    			type => "string",
-    			example => "/usr/bin/source-highlight",
-    			description => "The command to execute to run source-highlight",
-    			safe => 0,
-    			rebuild => 1,
-    		},
-    		sourcecode_lang => {
-    			type => "string",
-    			example => "c,cpp,h,java",
-    			description => "Comma separated list of suffixes to recognise as source code",
-    			safe => 1,
-    			rebuild => 1,
-    		},
-    		sourcecode_linenumbers => {
-    			type => "boolean",
-    			example => 1,
-    			description => "Should we add line numbers to the source code",
-    			safe => 1,
-    			rebuild => 1,
-    		},
-    		sourcecode_css => {
-    			type => "string",
-    			example => "sourcecode_style",
-    			description => "page to use as css file for source",
-    			safe => 1,
-    			rebuild => 1,
-    		},
+        return 
+            plugin => {
+                safe => 1,
+                rebuild => 1, # format plugin
+            },
+            sourcecode_command => {
+                type => "string",
+                example => "/usr/bin/source-highlight",
+                description => "The command to execute to run source-highlight",
+                safe => 0,
+                rebuild => 1,
+            },
+            sourcecode_lang => {
+                type => "string",
+                example => "c,cpp,h,java",
+                description => "Comma separated list of suffixes to recognise as source code",
+                safe => 1,
+                rebuild => 1,
+            },
+            sourcecode_linenumbers => {
+                type => "boolean",
+                example => 1,
+                description => "Should we add line numbers to the source code",
+                safe => 1,
+                rebuild => 1,
+            },
+            sourcecode_css => {
+                type => "string",
+                example => "sourcecode_style",
+                description => "page to use as css file for source",
+                safe => 1,
+                rebuild => 1,
+            },
     }
     
     sub checkconfig () {
-    	if (! $config{sourcecode_lang}) {
-    		error("The sourcecode plugin requires a list of suffixes in the 'sourcecode_lang' config option");
-    	}
-    	
-    	if (! $config{sourcecode_command}) {
-    		$config{sourcecode_command} = "source-highlight";
-    	}
-    	
-    	if (! length `which $config{sourcecode_command} 2>/dev/null`) {
-    		error("The sourcecode plugin is unable to find the $config{sourcecode_command} command");
-    	}
+        if (! $config{sourcecode_lang}) {
+            error("The sourcecode plugin requires a list of suffixes in the 'sourcecode_lang' config option");
+        }
     
-    	if (! $config{sourcecode_css}) {
-    		$config{sourcecode_css} = "sourcecode_style";
-    	}
-    	
-    	if (! defined $config{sourcecode_linenumbers}) {
-    		$config{sourcecode_linenumbers} = 1;
-    	}
-    	
-    	my %langs = ();
-    	
-    	open(LANGS, "$config{sourcecode_command} --lang-list|");
-    	while (<LANGS>) {
-    		if ($_ =~ /(\w+) = .+\.lang/) {
-    			$langs{$1} = 1;
-    		}
-    	}
-    	close(LANGS);
-    	
-    	foreach my $lang (split(/[, ]+/, $config{sourcecode_lang})) {
-    		if ($langs{$lang}) {
-    			hook(type => "htmlize", id => $lang, call => \&htmlize, keepextension => 1);
-    		} else {
-    			error("Your installation of source-highlight cannot handle sourcecode language $lang!");
-    		}
-    	}
+        if (! $config{sourcecode_command}) {
+            $config{sourcecode_command} = "source-highlight";
+        }
+    
+        if (! length `which $config{sourcecode_command} 2>/dev/null`) {
+            error("The sourcecode plugin is unable to find the $config{sourcecode_command} command");
+        }
+    
+        if (! $config{sourcecode_css}) {
+            $config{sourcecode_css} = "sourcecode_style";
+        }
+    
+        if (! defined $config{sourcecode_linenumbers}) {
+            $config{sourcecode_linenumbers} = 1;
+        }
+    
+        my %langs = ();
+    
+        open(LANGS, "$config{sourcecode_command} --lang-list|");
+        while (<LANGS>) {
+            if ($_ =~ /(\w+) = .+\.lang/) {
+                $langs{$1} = 1;
+            }
+        }
+        close(LANGS);
+    
+        foreach my $lang (split(/[, ]+/, $config{sourcecode_lang})) {
+            if ($langs{$lang}) {
+                hook(type => "htmlize", id => $lang, no_override=>1,
+    		 call => sub { htmlize(lang=>$lang, @_) }, 
+    		 keepextension => 1);
+            } else {
+                error("Your installation of source-highlight cannot handle sourcecode language $lang!");
+            }
+        }
     }
     
     sub htmlize (@) {
-    	my %params=@_;
+        my %params=@_;
     
-    	my $page = $params{page};
+        my $page = $params{page};
     
-    	eval q{use FileHandle};
-    	error($@) if $@;
-    	eval q{use IPC::Open2};
-    	error($@) if $@;
+        eval q{use FileHandle};
+        error($@) if $@;
+        eval q{use IPC::Open2};
+        error($@) if $@;
     
-    	local(*SPS_IN, *SPS_OUT);  # Create local handles
+        local(*SPS_IN, *SPS_OUT);  # Create local handles
     
-    	my @args;
+        my @args;
     
-    	if ($config{sourcecode_linenumbers}) {
-    		push @args, '--line-number= ';
-    	}
+        if ($config{sourcecode_linenumbers}) {
+            push @args, '--line-number';
+        }
     
-    	my $pid = open2(*SPS_IN, *SPS_OUT, $config{sourcecode_command},
-    					'-s', IkiWiki::pagetype($pagesources{$page}),
-    					'-c', $config{sourcecode_css}, '--no-doc',
-    					'-f', 'xhtml',
-    					@args);
+        my $pid = open2(*SPS_IN, *SPS_OUT, $config{sourcecode_command},
+                        '-s', $params{lang},
+                        '-c', $config{sourcecode_css}, '--no-doc',
+                        '-f', 'xhtml',
+                        @args);
     
-    	error("Unable to open $config{sourcecode_command}") unless $pid;
+        error("Unable to open $config{sourcecode_command}") unless $pid;
     
-    	print SPS_OUT $params{content};
-    	close SPS_OUT;
+        print SPS_OUT $params{content};
+        close SPS_OUT;
     
-    	my @html = <SPS_IN>;
-    	close SPS_IN;
-    	
-    	waitpid $pid, 0;
+        my @html = <SPS_IN>;
+        close SPS_IN;
     
-    	my $stylesheet=bestlink($page, $config{sourcecode_css}.".css");
-    	if (length $stylesheet) {
-    		push @{$metaheaders{$page}}, '<link href="'.urlto($stylesheet, $page).'"'.
-    			' rel="stylesheet"'.
-    			' type="text/css" />';
-    	}
+        waitpid $pid, 0;
     
-    	return '<div id="sourcecode">'."\r\n".join("\r\n",@html)."\r\n</div>\n";
+        my $stylesheet=bestlink($page, $config{sourcecode_css}.".css");
+        if (length $stylesheet) {
+            push @{$metaheaders{$page}}, '<link href="'.urlto($stylesheet, $page).'"'.
+                ' rel="stylesheet"'.
+                ' type="text/css" />';
+        }
+    
+        return '<div id="sourcecode">'."\r\n".join("",@html)."\r\n</div>\r\n";
     }
     
     sub pagetemplate (@) {
-    	my %params=@_;
+        my %params=@_;
     
-    	my $page=$params{page};
-    	my $template=$params{template};
+        my $page=$params{page};
+        my $template=$params{template};
     
-    	if (exists $metaheaders{$page} && $template->query(name => "meta")) {
-    		# avoid duplicate meta lines
-    		my %seen;
-    		$template->param(meta => join("\n", grep { (! $seen{$_}) && ($seen{$_}=1) } @{$metaheaders{$page}}));
-    	}
+        if (exists $metaheaders{$page} && $template->query(name => "meta")) {
+            # avoid duplicate meta lines
+            my %seen;
+            $template->param(meta => join("\n", grep { (! $seen{$_}) && ($seen{$_}=1) } @{$metaheaders{$page}}));
+        }
     }
     
     1
