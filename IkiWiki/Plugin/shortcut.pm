@@ -28,10 +28,12 @@ sub checkconfig () {
 			$srcfile=srcfile("shortcuts.mdwn", 1);
 		}
 		if (! defined $srcfile) {
-			error(sprintf(gettext("shortcut plugin will not work without %s"),
-				"shortcuts.".$config{default_pageext}));
+			print STDERR sprintf(gettext("shortcut plugin will not work without %s"),
+				"shortcuts.".$config{default_pageext})."\n";
 		}
-		IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
+		else {
+			IkiWiki::preprocess("shortcuts", "shortcuts", readfile($srcfile));
+		}
 	}
 }
 

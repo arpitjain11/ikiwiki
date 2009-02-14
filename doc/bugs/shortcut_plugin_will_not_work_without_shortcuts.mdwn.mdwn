@@ -6,3 +6,15 @@ On my initial ikiwiki -setup auto.setup, I get the following error:
 
 This is using the latest git pull of ikiwiki.
 I am not sure why it is not finding shortcuts.mdwn. -- [[JosephTurian]]
+
+> The error, and the weird paths suggest to me that you
+> have installed ikiwiki in a strange way, and it is failing
+> to find its basewiki underlay. The `$installdir` is
+> hardcoded into IkiWiki.pm at build time, based on the PREFIX
+> setting (see README).
+> 
+> If that's not set right, you'll have other problems than just this one,
+> so I suggest you check how you installed ikiwiki.
+> 
+> Anyway, I've made the shortcut plugin only warn about this..
+> --[[Joey]] 
