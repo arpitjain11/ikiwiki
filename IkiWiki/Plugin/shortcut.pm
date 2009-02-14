@@ -20,7 +20,7 @@ sub getsetup () {
 }
 
 sub checkconfig () {
-	if (defined $config{srcdir}) {
+	if (defined $config{srcdir} && length $config{srcdir}) {
 		# Preprocess the shortcuts page to get all the available shortcuts
 		# defined before other pages are rendered.
 		my $srcfile=srcfile("shortcuts.".$config{default_pageext}, 1);
