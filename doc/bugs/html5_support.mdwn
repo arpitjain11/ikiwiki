@@ -6,6 +6,8 @@ However as an [early adopter](http://en.wikipedia.org/wiki/Early_adopter) I woul
 
 I'm unsure how to turn off the test validation by the very old [wdg-html-validator](http://packages.qa.debian.org/w/wdg-html-validator.html). So I have been unable to test my initial patches as I can't build ikiwiki. I would like to know how to edit the rules/Makefile to temporarily disable this.
 
+> Don't run ¨make test" ... --[[Joey]] 
+
 [validator.nu](http://validator.nu/) incidentally is **the** HTML5 validator, however it is almost impossible to sanely introduce as a build dependency because of its insane Java requirements. :( I test locally via [cURL](http://wiki.whatwg.org/wiki/IDE), though Debian packages cannot be built with a network dependency.
 
 # Notes
