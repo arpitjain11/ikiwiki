@@ -1,0 +1,16 @@
+Some elements of [HTML5](http://www.whatwg.org/specs/web-apps/current-work/multipage/) can be safely supported by ikiwiki. There are [several differences between HTML4 and HTMl5](http://www.w3.org/TR/html5-diff/). Unsupported new elements _should degrade gracefully_.
+
+However as an [early adopter](http://en.wikipedia.org/wiki/Early_adopter) I would like to start using HTML5 as much as possible. The more pragmatic solution would be to use elements supported by the browsers of your readership I guess. I'm following other early adopters like [Anne](http://annevankesteren.nl/) for clues on how to proceed.
+
+* [Initial patch](http://git.webconverger.org/?p=ikiwiki;a=commit;h=2e2bb3f74f5000b1269142d6f9bdf1bcb4075ca4)
+
+I'm unsure how to turn off the test validation by the very old [wdg-html-validator](http://packages.qa.debian.org/w/wdg-html-validator.html). So I have been unable to test my initial patches as I can't build ikiwiki. I would like to know how to edit the rules/Makefile to temporarily disable this.
+
+[validator.nu](http://validator.nu/) incidentally is **the** HTML5 validator, however it is almost impossible to sanely introduce as a build dependency because of its insane Java requirements. :( I test locally via [cURL](http://wiki.whatwg.org/wiki/IDE), though Debian packages cannot be built with a network dependency.
+
+# Notes
+
+* the [time element](http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-time-element) ideally needs the datatime= attribute set with iso8601 time
+* I suspect the migration to the new semantic elements of HTML5 like article, header & footer to take some time, due to browser support. Though they sure make the template code look much nicer.
+* `<br>` and too many `<div>`s usually indicates poor semantics.
+* Many of the header `<span>`s should be proper [header elements](http://www.whatwg.org/specs/web-apps/current-work/multipage/semantics.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements)
