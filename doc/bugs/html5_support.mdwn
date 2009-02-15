@@ -1,8 +1,35 @@
 Some elements of [HTML5](http://www.whatwg.org/specs/web-apps/current-work/multipage/) can be safely supported by ikiwiki. There are [several differences between HTML4 and HTMl5](http://www.w3.org/TR/html5-diff/). Unsupported new elements _should degrade gracefully_.
 
+> In the `origin/html` branch, there is an old work in progress to make
+> ikiwiki use html 4 instead of xhtml. If that could be brought forward and
+> finished then the plan has been to switch ikiwiki over to doing html 4.
+> I don't think it makes sense to try to make it support both xhtml and
+> html, it would complicate the code for no benefit.
+> 
+> I think that is the best route toward supporting html 5 as well. Get
+> ikiwiki doing html 4 first and the changes needed to get to 5 from there
+> should be small. Probably just changing some doctypes and a few other
+> small changes which could be kept in a branch, or even shipped in ikiwiki
+> mainline as an alternate set of templates. Some of the changes, like
+> supporting new html 5 tags in the htmlscrubber, can be done in mainline.
+> (Like was already done for the html 5 video and audio tags.)
+>
+> This approach seems much more maintainable going foward than rolling a
+> html 5 branch immediatly and trying to keep that continually up-to-date
+> with mainline ikiwiki that is still using xhtml. --[[Joey]]
+
 However as an [early adopter](http://en.wikipedia.org/wiki/Early_adopter) I would like to start using HTML5 as much as possible. The more pragmatic solution would be to use elements supported by the browsers of your readership I guess. I'm following other early adopters like [Anne](http://annevankesteren.nl/) for clues on how to proceed.
 
 * [Initial patch](http://git.webconverger.org/?p=ikiwiki;a=commit;h=2e2bb3f74f5000b1269142d6f9bdf1bcb4075ca4)
+
+> I can't figure out how to pull from this repository.
+
+	joey@gnu:~/tmp>git clone git://webconverger.org/git/ikiwiki.git 
+	Initialized empty Git repository in /home/joey/tmp/ikiwiki/.git/
+	fatal: The remote end hung up unexpectedly
+
+> Assuming I got the url right.. your gitweb claims it's
+> `git://webconverger.org/git/iceweasel-webconverger.git` --[[Joey]] 
 
 I'm unsure how to turn off the test validation by the very old [wdg-html-validator](http://packages.qa.debian.org/w/wdg-html-validator.html). So I have been unable to test my initial patches as I can't build ikiwiki. I would like to know how to edit the rules/Makefile to temporarily disable this.
 
@@ -15,4 +42,7 @@ I'm unsure how to turn off the test validation by the very old [wdg-html-validat
 * the [time element](http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-time-element) ideally needs the datatime= attribute set with iso8601 time
 * I suspect the migration to the new semantic elements of HTML5 like article, header & footer to take some time, due to browser support. Though they sure make the template code look much nicer.
 * `<br>` and too many `<div>`s usually indicates poor semantics.
+  > YMMV, but I tend to find that kind of concern counterproductive.
+  > --[[Joey]] 
 * Many of the header `<span>`s should be proper [header elements](http://www.whatwg.org/specs/web-apps/current-work/multipage/semantics.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements)
+  > See [[todo/Option_to_make_title_an_h1__63__]] for why not. --[[Joey]] 
