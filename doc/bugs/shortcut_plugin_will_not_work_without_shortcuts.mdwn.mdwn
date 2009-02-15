@@ -12,9 +12,17 @@ I am not sure why it is not finding shortcuts.mdwn. -- [[JosephTurian]]
 > to find its basewiki underlay. The `$installdir` is
 > hardcoded into IkiWiki.pm at build time, based on the PREFIX
 > setting (see README).
-> 
+>
 > If that's not set right, you'll have other problems than just this one,
 > so I suggest you check how you installed ikiwiki.
 > 
 > Anyway, I've made the shortcut plugin only warn about this..
 > --[[Joey]] 
+
+> > I have
+> >    $installdir="/home/turian/utils/"
+> > and the underlay dir is set to:
+> >    "$installdir/share/ikiwiki/basewiki",
+> > which does contain shortcuts.mdwn. So I am not sure why it is not finding it.
+> > I am grappling with installing ikiwiki in a user account, and would like to get the directories set up correctly.
+> > How can I debug this issue further?

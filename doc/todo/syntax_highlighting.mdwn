@@ -26,6 +26,11 @@ pages, as well as doing syntax highlighting as a preprocessor directive
 * [[users/jasonblevins]]'s code plugin uses src-highlight, and supports both
   while file and directive use.
 
+* [hlsimple](http://pivot.cs.unb.ca/git/?p=ikiplugins.git;a=blob_plain;f=IkiWiki/Plugin/hlsimple.pm;hb=HEAD) is a wrapper for the the perl module Syntax::Highlight::Engine::Simple.  This is pure perl, pretty simple, uses css. It ought to be pretty fast (according to the author, and just because it is not external).
+On the other hand, there are not many predefined languages yet.  Defining language syntaxes is about as much 
+work as source-highlight, but in perl.  I plan to package the base module for debian. Perhaps after the author 
+releases the 5 or 6 language definitions he has running on his web site, it might be suitable for inclusion in ikiwiki. [[DavidBremner]]
+
 ## General problems
 
 * Using non-perl syntax highlighting backends is slow. I'd prefer either
