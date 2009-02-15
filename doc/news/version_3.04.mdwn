@@ -1,0 +1,17 @@
+ikiwiki 3.04 released with [[!toggle text="these changes"]]
+[[!toggleable text="""
+   * 404: New plugin which lets you use the IkiWiki CGI script as
+     an Apache 404 handler, to give the behaviour of various other wiki
+     engines where visiting a nonexistent page provides you with a link
+     to create it. (smcv)
+   * Factor out redundant code into goto plugin. (smcv)
+   * Work around XML::Atom strangeness that results in double-encoded posts.
+     (smcv)
+   * Updated German translation (Kai Wasserbäch). Closes: #[514251](http://bugs.debian.org/514251)
+   * Fix unusual --setup --post-commit command line option combo.
+   * Create any missing directory necessary to put the wrapper
+     file into. Closes: #[514384](http://bugs.debian.org/514384)
+   * shortcut: If default\_pageext is set, first look for
+     shortcuts.default\_pageext.
+   * Allow comments, rename, remove, and attachment plugins to be used
+     even if the editpage plugin is disabled."""]]
