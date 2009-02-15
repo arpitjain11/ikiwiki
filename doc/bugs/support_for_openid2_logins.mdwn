@@ -1,0 +1,10 @@
+I have several complaints that users cannot contribute to my ikiwiki instances since they only have OpenID logins that support OpenID2. E.g. Yahoo!'s OpenID only supports 2.0+ 
+
+This is not the fault of ikiwiki, though the problem lies within the [perl openid consumer](http://packages.qa.debian.org/libn/libnet-openid-consumer-perl.html) in Debian which is a 1.x implementation AFAIK.
+
+I've contacted JanRain who have pointed me to:
+
+* [OpenID4Perl](http://code.sxip.com/openid4perl/)
+* Some [work](http://code.sixapart.com/svn/openid/trunk/perl/) by David Recordon
+
+However both Perl OpenID 2.x implementations have not been released and are incomplete implementations. :(
