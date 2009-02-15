@@ -26,3 +26,6 @@ I am not sure why it is not finding shortcuts.mdwn. -- [[JosephTurian]]
 > > which does contain shortcuts.mdwn. So I am not sure why it is not finding it.
 > > I am grappling with installing ikiwiki in a user account, and would like to get the directories set up correctly.
 > > How can I debug this issue further?
+
+>>>> Why don't you strace it and look at where it's looking for
+>>>> shortcuts.mdwn. --[[Joey]] 
