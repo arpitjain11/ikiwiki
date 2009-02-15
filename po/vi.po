@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-17 18:19-0500\n"
+"POT-Creation-Date: 2009-02-14 03:04-0500\n"
 "PO-Revision-Date: 2007-01-13 15:31+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -24,7 +24,7 @@ msgstr "Trước tiên bạn cần phải đăng nhập."
 msgid "login failed, perhaps you need to turn on cookies?"
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:280
+#: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:294
 msgid "Your login session has expired."
 msgstr ""
 
@@ -45,11 +45,11 @@ msgstr ""
 msgid "Preferences saved."
 msgstr "Tùy thích đã được lưu."
 
-#: ../IkiWiki/CGI.pm:241
+#: ../IkiWiki/CGI.pm:257
 msgid "You are banned."
 msgstr "Bạn bị cấm ra."
 
-#: ../IkiWiki/CGI.pm:371 ../IkiWiki/CGI.pm:372 ../IkiWiki.pm:1204
+#: ../IkiWiki/CGI.pm:385 ../IkiWiki/CGI.pm:386 ../IkiWiki.pm:1204
 msgid "Error"
 msgstr "Lỗi"
 
@@ -122,7 +122,7 @@ msgstr ""
 msgid "feed crashed XML::Feed!"
 msgstr "nguồn tin đã gây ra XML::Feed sụp đổ."
 
-#: ../IkiWiki/Plugin/aggregate.pm:605
+#: ../IkiWiki/Plugin/aggregate.pm:610
 #, perl-format
 msgid "creating new page %s"
 msgstr "đang tạo trang mới %s"
@@ -131,7 +131,7 @@ msgstr "đang tạo trang mới %s"
 msgid "deleting bucket.."
 msgstr ""
 
-#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:208
+#: ../IkiWiki/Plugin/amazon_s3.pm:38 ../ikiwiki.in:210
 msgid "done"
 msgstr "xong"
 
@@ -175,17 +175,13 @@ msgstr ""
 msgid "automatic index generation"
 msgstr ""
 
-#: ../IkiWiki/Plugin/blogspam.pm:102
+#: ../IkiWiki/Plugin/blogspam.pm:105
 msgid ""
 "Sorry, but that looks like spam to <a href=\"http://blogspam.net/"
 "\">blogspam</a>: "
 msgstr ""
 
-#: ../IkiWiki/Plugin/blogspam.pm:105
-msgid "blogspam server failure: "
-msgstr ""
-
-#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:296
+#: ../IkiWiki/Plugin/brokenlinks.pm:33 ../IkiWiki/Plugin/editpage.pm:233
 #: ../IkiWiki/Plugin/inline.pm:354 ../IkiWiki/Plugin/opendiscussion.pm:26
 #: ../IkiWiki/Plugin/orphans.pm:37 ../IkiWiki/Render.pm:79
 #: ../IkiWiki/Render.pm:149
@@ -201,58 +197,68 @@ msgstr ""
 msgid "There are no broken links!"
 msgstr "Không có liên kết bị ngắt nào."
 
-#: ../IkiWiki/Plugin/comments.pm:120 ../IkiWiki/Plugin/format.pm:23
+#: ../IkiWiki/Plugin/comments.pm:122 ../IkiWiki/Plugin/format.pm:23
 #, perl-format
 msgid "unsupported page format %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:125
+#: ../IkiWiki/Plugin/comments.pm:127
 msgid "comment must have content"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:181
+#: ../IkiWiki/Plugin/comments.pm:183
 msgid "Anonymous"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:252 ../IkiWiki/Plugin/recentchanges.pm:110
-#, fuzzy
-msgid "missing page"
-msgstr "mẫu thiếu tham số id"
-
-#: ../IkiWiki/Plugin/comments.pm:254 ../IkiWiki/Plugin/recentchanges.pm:112
-#, perl-format
-msgid "The page %s does not exist."
-msgstr ""
-
-#: ../IkiWiki/Plugin/comments.pm:343 ../IkiWiki/Plugin/editpage.pm:160
+#: ../IkiWiki/Plugin/comments.pm:326 ../IkiWiki/Plugin/editpage.pm:97
 msgid "bad page name"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:348
+#: ../IkiWiki/Plugin/comments.pm:331
 #, fuzzy, perl-format
 msgid "commenting on %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/Plugin/comments.pm:366
+#: ../IkiWiki/Plugin/comments.pm:349
 #, perl-format
 msgid "page '%s' doesn't exist, so you can't comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:373
+#: ../IkiWiki/Plugin/comments.pm:356
 #, perl-format
 msgid "comments on page '%s' are closed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:493
+#: ../IkiWiki/Plugin/comments.pm:450
+msgid "comment stored for moderation"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:452
+msgid "Your comment will be posted after moderator review"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:465
 msgid "Added a comment"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:497
+#: ../IkiWiki/Plugin/comments.pm:469
 #, perl-format
 msgid "Added a comment: %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/comments.pm:611
+#: ../IkiWiki/Plugin/comments.pm:510 ../IkiWiki/Plugin/websetup.pm:236
+msgid "you are not logged in as an admin"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:561
+msgid "Comment moderation"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:600
+msgid "comment moderation"
+msgstr ""
+
+#: ../IkiWiki/Plugin/comments.pm:750
 msgid "Comments"
 msgstr ""
 
@@ -277,19 +283,19 @@ msgstr ""
 msgid "removing old preview %s"
 msgstr "đang gỡ bỏ trang cũ %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:176
+#: ../IkiWiki/Plugin/editpage.pm:113
 #, perl-format
 msgid "%s is not an editable page"
 msgstr ""
 
-#: ../IkiWiki/Plugin/editpage.pm:352
+#: ../IkiWiki/Plugin/editpage.pm:289
 #, perl-format
 msgid "creating %s"
 msgstr "đang tạo %s"
 
-#: ../IkiWiki/Plugin/editpage.pm:370 ../IkiWiki/Plugin/editpage.pm:389
-#: ../IkiWiki/Plugin/editpage.pm:399 ../IkiWiki/Plugin/editpage.pm:443
-#: ../IkiWiki/Plugin/editpage.pm:482
+#: ../IkiWiki/Plugin/editpage.pm:307 ../IkiWiki/Plugin/editpage.pm:326
+#: ../IkiWiki/Plugin/editpage.pm:336 ../IkiWiki/Plugin/editpage.pm:380
+#: ../IkiWiki/Plugin/editpage.pm:419
 #, perl-format
 msgid "editing %s"
 msgstr "đang sửa %s"
@@ -322,18 +328,18 @@ msgstr ""
 msgid "fortune failed"
 msgstr "fortune bị lỗi"
 
-#: ../IkiWiki/Plugin/git.pm:618 ../IkiWiki/Plugin/git.pm:636
+#: ../IkiWiki/Plugin/git.pm:624 ../IkiWiki/Plugin/git.pm:642
 #: ../IkiWiki/Receive.pm:129
 #, perl-format
 msgid "you are not allowed to change %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:658
+#: ../IkiWiki/Plugin/git.pm:664
 #, perl-format
 msgid "you cannot act on a file with mode %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:662
+#: ../IkiWiki/Plugin/git.pm:668
 msgid "you are not allowed to change file modes"
 msgstr ""
 
@@ -344,6 +350,16 @@ msgstr "Cần phải xác định %s khi dùng bổ sung tìm kiếm"
 
 #: ../IkiWiki/Plugin/google.pm:31
 msgid "Failed to parse url, cannot determine domain name"
+msgstr ""
+
+#: ../IkiWiki/Plugin/goto.pm:49
+#, fuzzy
+msgid "missing page"
+msgstr "mẫu thiếu tham số id"
+
+#: ../IkiWiki/Plugin/goto.pm:51
+#, perl-format
+msgid "The page %s does not exist."
 msgstr ""
 
 #: ../IkiWiki/Plugin/graphviz.pm:67
@@ -415,7 +431,7 @@ msgstr ""
 msgid "Discussion"
 msgstr "Thảo luận"
 
-#: ../IkiWiki/Plugin/inline.pm:587
+#: ../IkiWiki/Plugin/inline.pm:593
 msgid "RPC::XML::Client not found, not pinging"
 msgstr "Không tìm thấy RPC::XML::Client nên không gửi gói tin ping"
 
@@ -438,17 +454,17 @@ msgstr ""
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr "lỗi nạp mô-đun perl Markdown.pm (%s) hay « /usr/bin/markdown » (%s)"
 
-#: ../IkiWiki/Plugin/meta.pm:151
+#: ../IkiWiki/Plugin/meta.pm:158
 #, fuzzy
 msgid "stylesheet not found"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/meta.pm:185
+#: ../IkiWiki/Plugin/meta.pm:192
 #, fuzzy
 msgid "redir page not found"
 msgstr "không tìm thấy mẫu %s"
 
-#: ../IkiWiki/Plugin/meta.pm:198
+#: ../IkiWiki/Plugin/meta.pm:205
 #, fuzzy
 msgid "redir cycle is not allowed"
 msgstr "không tìm thấy mẫu %s"
@@ -732,11 +748,12 @@ msgstr ""
 msgid "search"
 msgstr ""
 
-#: ../IkiWiki/Plugin/shortcut.pm:28
-msgid "shortcut plugin will not work without a shortcuts.mdwn"
+#: ../IkiWiki/Plugin/shortcut.pm:31
+#, perl-format
+msgid "shortcut plugin will not work without %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/shortcut.pm:38
+#: ../IkiWiki/Plugin/shortcut.pm:44
 #, fuzzy
 msgid "missing name or url parameter"
 msgstr "lối tắt thiếu tên hay tham số url"
@@ -744,7 +761,7 @@ msgstr "lối tắt thiếu tên hay tham số url"
 #. translators: This is used to display what shortcuts are defined.
 #. translators: First parameter is the name of the shortcut, the second
 #. translators: is an URL.
-#: ../IkiWiki/Plugin/shortcut.pm:48
+#: ../IkiWiki/Plugin/shortcut.pm:54
 #, fuzzy, perl-format
 msgid "shortcut %s points to <i>%s</i>"
 msgstr "lối tắt %s chỉ tới %s"
@@ -849,10 +866,6 @@ msgstr ""
 msgid "enable %s?"
 msgstr ""
 
-#: ../IkiWiki/Plugin/websetup.pm:236
-msgid "you are not logged in as an admin"
-msgstr ""
-
 #: ../IkiWiki/Plugin/websetup.pm:240
 msgid "setup file for this wiki is not known"
 msgstr ""
@@ -955,16 +968,16 @@ msgstr "ikiwiki: không thể vẽ %s"
 msgid "cannot read %s: %s"
 msgstr "không thể đọc %s: %s"
 
-#: ../IkiWiki/Setup/Automator.pm:33
+#: ../IkiWiki/Setup/Automator.pm:34
 msgid "you must enter a wikiname (that contains alphanumerics)"
 msgstr ""
 
-#: ../IkiWiki/Setup/Automator.pm:67
+#: ../IkiWiki/Setup/Automator.pm:68
 #, perl-format
 msgid "unsupported revision control system %s"
 msgstr ""
 
-#: ../IkiWiki/Setup/Automator.pm:93
+#: ../IkiWiki/Setup/Automator.pm:94
 msgid "failed to set up the repository with ikiwiki-makerepo"
 msgstr ""
 
@@ -981,21 +994,14 @@ msgstr "không thể tạo bộ bao bọc sử dụng tập tin thiết lập"
 msgid "wrapper filename not specified"
 msgstr "chưa xác định tên tập tin bộ bao bọc"
 
-#. translators: The first parameter is a filename, and the second is
-#. translators: a (probably not translated) error message.
-#: ../IkiWiki/Wrapper.pm:97
-#, perl-format
-msgid "failed to write %s: %s"
-msgstr "lỗi ghi %s: %s"
-
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:154
+#: ../IkiWiki/Wrapper.pm:152
 #, perl-format
 msgid "failed to compile %s"
 msgstr "lỗi biên dịch %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:174
+#: ../IkiWiki/Wrapper.pm:172
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s đã được tạo ra"
@@ -1012,15 +1018,15 @@ msgstr ""
 msgid "usage: --set var=value"
 msgstr ""
 
-#: ../ikiwiki.in:139
+#: ../ikiwiki.in:140
 msgid "generating wrappers.."
 msgstr "đang tạo ra các bộ bao bọc.."
 
-#: ../ikiwiki.in:197
+#: ../ikiwiki.in:199
 msgid "rebuilding wiki.."
 msgstr "đang xây dựng lại wiki.."
 
-#: ../ikiwiki.in:200
+#: ../ikiwiki.in:202
 msgid "refreshing wiki.."
 msgstr "đang làm tươi wiki.."
 
@@ -1042,7 +1048,7 @@ msgstr ""
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "vòng lặp tiền xử lý %s được phát hiện trên %s ở độ sâu %i"
 
-#: ../IkiWiki.pm:1661
+#: ../IkiWiki.pm:1725
 msgid "yes"
 msgstr ""
 
@@ -1065,6 +1071,9 @@ msgstr ""
 #: ../auto.setup:23
 msgid "What is the domain name of the web server?"
 msgstr ""
+
+#~ msgid "failed to write %s: %s"
+#~ msgstr "lỗi ghi %s: %s"
 
 #, fuzzy
 #~ msgid "failed to find url in html"
