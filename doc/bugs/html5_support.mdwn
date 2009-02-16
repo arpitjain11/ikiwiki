@@ -23,17 +23,12 @@ However as an [early adopter](http://en.wikipedia.org/wiki/Early_adopter) I woul
 * [Initial patch](http://git.webconverger.org/?p=ikiwiki;a=commit;h=2e2bb3f74f5000b1269142d6f9bdf1bcb4075ca4)
 
 > I can't figure out how to pull from this repository.
-
-	joey@gnu:~/tmp>git clone git://webconverger.org/git/ikiwiki.git 
-	Initialized empty Git repository in /home/joey/tmp/ikiwiki/.git/
-	fatal: The remote end hung up unexpectedly
-
-> Assuming I got the url right.. your gitweb claims it's
-> `git://webconverger.org/git/iceweasel-webconverger.git` --[[Joey]] 
+>> Sorry! I have fixed the cloneurl file to read `git clone git://webconverger.org/git/ikiwiki`
 
 I'm unsure how to turn off the test validation by the very old [wdg-html-validator](http://packages.qa.debian.org/w/wdg-html-validator.html). So I have been unable to test my initial patches as I can't build ikiwiki. I would like to know how to edit the rules/Makefile to temporarily disable this.
 
 > Don't run ¨make test" ... --[[Joey]] 
+>> I don't quite grok debhelper7 [rules](http://git.ikiwiki.info/?p=ikiwiki;a=blob;f=debian/rules).
 
 [validator.nu](http://validator.nu/) incidentally is **the** HTML5 validator, however it is almost impossible to sanely introduce as a build dependency because of its insane Java requirements. :( I test locally via [cURL](http://wiki.whatwg.org/wiki/IDE), though Debian packages cannot be built with a network dependency.
 
@@ -44,5 +39,6 @@ I'm unsure how to turn off the test validation by the very old [wdg-html-validat
 * `<br>` and too many `<div>`s usually indicates poor semantics.
   > YMMV, but I tend to find that kind of concern counterproductive.
   > --[[Joey]] 
+
 * Many of the header `<span>`s should be proper [header elements](http://www.whatwg.org/specs/web-apps/current-work/multipage/semantics.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements)
   > See [[todo/Option_to_make_title_an_h1__63__]] for why not. --[[Joey]] 
