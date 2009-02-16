@@ -90,6 +90,11 @@ function is passed no values. It's ok for the function to call
 
 This hook is called just before ikiwiki scans the wiki for changed files.
 It's useful for plugins that need to create or modify a source page. The
+
+
+
+
+
 function is passed no values.
 
 ### needsbuild
@@ -107,7 +112,7 @@ adding or removing files from it.
 
 This hook is called early in the process of building the wiki, and is used
 as a first pass scan of the page, to collect metadata about the page. It's
-mostly used to scan the page for WikiLinks, and add them to `%links`.
+mostly used to scan the page for [[WikiLinks|ikiwiki/WikiLink]], and add them to `%links`.
 Present in IkiWiki 2.40 and later.
 
 The function is passed named parameters "page" and "content". Its return
@@ -168,7 +173,7 @@ htmlize the page) along with the rest of the page.
 
 	hook(type => "linkify", id => "foo", call => \&linkify);
 
-This hook is called to convert [[WikiLinks|WikiLink]] on the page into html
+This hook is called to convert [[WikiLinks|ikiwiki/WikiLink]] on the page into html
 links. The function is passed named parameters "page", "destpage", and
 "content". It should return the linkified content.  Present in IkiWiki 2.40
 and later.
@@ -434,7 +439,7 @@ describes the plugin as a whole. For example:
 * `example` can be set to an example value.
 * `description` is a short description of the option.
 * `link` is a link to further information about the option. This can either
-  be a wikilink, or an url.
+  be a [[ikiwiki/WikiLink]], or an url.
 * `advanced` can be set to true if the option is more suitable for advanced
   users.
 * `safe` should be false if the option should not be displayed in unsafe
@@ -680,7 +685,7 @@ a wiki page name.
 #### `linkpage($)`
 
 This converts text that could have been entered by the user as a
-[[WikiLink]] into a wiki page name.
+[[ikiwiki/WikiLink]] into a wiki page name.
 
 #### `srcfile($;$)`
 
@@ -745,7 +750,7 @@ are collected together to form the RecentChanges page, for example.
 
 To make an internal use page, register a filename extension that starts
 with "_". Internal use pages cannot be edited with the web interface,
-generally shouldn't contain wikilinks or preprocessor directives (use
+generally shouldn't contain [[WikiLinks|ikiwiki/WikiLink]] or preprocessor directives (use
 either on them with extreme caution), and are not matched by regular
 PageSpecs glob patterns, but instead only by a special `internal()`
 [[ikiwiki/PageSpec]].
@@ -914,7 +919,7 @@ or wrap one of the functions.
 For example, your plugin might want to override `displaytime`, to change
 the html markup used when displaying a date. Or it might want to override
 `IkiWiki::formattime`, to change how a date is formatted. Or perhaps you
-want to override `bestlink` and change how ikiwiki deals with WikiLinks.
+want to override `bestlink` and change how ikiwiki deals with [[WikiLinks|ikiwiki/WikiLink]].
 
 By venturing into this territory, your plugin is becoming tightly tied to
 ikiwiki's internals. And it might break if those internals change. But
