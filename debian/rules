@@ -1,45 +1,7 @@
 #!/usr/bin/make -f
-
-build: build-stamp
-build-stamp:
-	dh_testdir
-	perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
-	$(MAKE) -C po
-	$(MAKE)
-	$(MAKE) test
-	touch build-stamp
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-	perl Makefile.PL
-	if [ -e Makefile ]; then $(MAKE) realclean; fi
-	dh_clean
-
-binary-arch: build
-
-binary-indep: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	$(MAKE) pure_install DESTDIR=$(shell pwd)/debian/ikiwiki
-	dh_installdocs html
-	dh_link usr/share/ikiwiki/examples usr/share/doc/ikiwiki/examples
-	dh_link usr/share/common-licenses/GPL-2 usr/share/doc/ikiwiki/html/GPL
-	dh_installexamples
-	dh_installchangelogs
-	dh_compress -X html
-	dh_fixperms
-	dh_perl
-	dh_installdeb
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+%:
+	dh $@
 
 # Not intended for use by anyone except the author.
 announcedir:
 	@echo ${HOME}/src/ikiwiki/doc/news
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary
