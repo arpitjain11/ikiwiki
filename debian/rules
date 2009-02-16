@@ -1,4 +1,11 @@
 #!/usr/bin/make -f
+
+binary: binary-indep
+binary-indep:
+	dh $@ --before dh_compress
+	dh_compress -Xhtml
+	dh $@ --after dh_compress
+
 %:
 	dh $@
 
