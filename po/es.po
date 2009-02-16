@@ -1,3 +1,4 @@
+# translation of es.po to spanish
 # translation of es.po to
 # ikiwiki spanish translation
 # Copyright (C) 2007, 2009 The Free Software Foundation, Inc
@@ -10,9 +11,9 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-14 03:04-0500\n"
-"PO-Revision-Date: 2009-01-30 18:01+0100\n"
-"Last-Translator: Victor Moral <victor@taquiones.net>\n"
-"Language-Team:  <es@li.org>\n"
+"PO-Revision-Date: 2009-02-16 10:22+0100\n"
+"Last-Translator: Víctor Moral <victor@taquiones.net>\n"
+"Language-Team: spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,8 +25,7 @@ msgstr "Antes es necesario identificarse."
 
 #: ../IkiWiki/CGI.pm:145
 msgid "login failed, perhaps you need to turn on cookies?"
-msgstr ""
-"registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
+msgstr "registro fallido, ¿ tal vez necesita activar las cookies en el navegador ?"
 
 #: ../IkiWiki/CGI.pm:163 ../IkiWiki/CGI.pm:294
 msgid "Your login session has expired."
@@ -61,8 +61,7 @@ msgstr "Contenido añadido activado vía web."
 
 #: ../IkiWiki/Plugin/aggregate.pm:93
 msgid "Nothing to do right now, all feeds are up-to-date!"
-msgstr ""
-"¡ No hay nada que hacer, todas las fuentes de noticias están actualizadas !"
+msgstr "¡ No hay nada que hacer, todas las fuentes de noticias están actualizadas !"
 
 #: ../IkiWiki/Plugin/aggregate.pm:220
 #, perl-format
@@ -351,8 +350,7 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/google.pm:31
 msgid "Failed to parse url, cannot determine domain name"
-msgstr ""
-"Error en el análisis del URL, no puedo determinar el nombre del dominio"
+msgstr "Error en el análisis del URL, no puedo determinar el nombre del dominio"
 
 #: ../IkiWiki/Plugin/goto.pm:49
 msgid "missing page"
@@ -443,8 +441,7 @@ msgstr "La página %s está bloqueada y no puede modificarse"
 
 #: ../IkiWiki/Plugin/mdwn.pm:44
 msgid "multimarkdown is enabled, but Text::MultiMarkdown is not installed"
-msgstr ""
-"el modo multimarkdown está activo, pero no está instalado Text::MultiMarkdown"
+msgstr "el modo multimarkdown está activo, pero no está instalado Text::MultiMarkdown"
 
 #: ../IkiWiki/Plugin/mdwn.pm:67
 #, perl-format
@@ -746,9 +743,9 @@ msgid "search"
 msgstr "buscar"
 
 #: ../IkiWiki/Plugin/shortcut.pm:31
-#, fuzzy, perl-format
+#, perl-format
 msgid "shortcut plugin will not work without %s"
-msgstr "el complemento shortcut no funciona sin una página shortcuts.mdwn"
+msgstr "el complemento shortcut no funcionará si no existe la página %s"
 
 #: ../IkiWiki/Plugin/shortcut.pm:44
 msgid "missing name or url parameter"
@@ -866,8 +863,7 @@ msgid "plugins"
 msgstr "complementos"
 
 #: ../IkiWiki/Plugin/websetup.pm:395
-msgid ""
-"The configuration changes shown below require a wiki rebuild to take effect."
+msgid "The configuration changes shown below require a wiki rebuild to take effect."
 msgstr ""
 "Los cambios en la configuración que se muestran más abajo precisan una "
 "reconstrucción del wiki para tener efecto."
@@ -983,8 +979,7 @@ msgstr "el programa %s no parece ser ejecutable"
 
 #: ../IkiWiki/Wrapper.pm:20
 msgid "cannot create a wrapper that uses a setup file"
-msgstr ""
-"no puedo crear un programa envoltorio que utiliza un archivo de configuración"
+msgstr "no puedo crear un programa envoltorio que utiliza un archivo de configuración"
 
 #: ../IkiWiki/Wrapper.pm:24
 msgid "wrapper filename not specified"
@@ -1074,5 +1069,3 @@ msgstr ""
 msgid "What is the domain name of the web server?"
 msgstr "¿ Cuál es el dominio para el servidor web ?"
 
-#~ msgid "failed to write %s: %s"
-#~ msgstr "no puedo escribir en %s: %s"
