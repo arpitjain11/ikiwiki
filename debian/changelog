@@ -1,6 +1,10 @@
 ikiwiki (3.05) UNRELEASED; urgency=low
 
   * debhelper v7.2; rules file minimisation.
+  * template: Load templates in scan mode.
+    This is potentially expensive, but is necessary so that meta and tag
+    directives, and other links on templates affect the page using the
+    template reliably.
 
  -- Joey Hess <joeyh@debian.org>  Sun, 15 Feb 2009 20:11:57 -0500
 
