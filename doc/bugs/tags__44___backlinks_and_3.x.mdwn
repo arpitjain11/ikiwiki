@@ -1,0 +1,27 @@
+I think there might be an issue in the backlinks calculation in ikiwiki 3.04.
+
+I've just migrated to 3.04. In doing so, the following pagespec
+
+> "log/* and !link(tag/aggregation) and !link(tag/draft) and !*/Discussion"
+
+...started matching pages which contained
+
+> \[\[!template draft\]\]
+
+The page templates/draft.mdwn contains (amongst some markup)
+
+> \[\[!tag draft \]\]
+
+Prior to migration, the pagespec definitely took effect post-transclusion.
+
+An example: <http://jmtd.net/log/too_much_debconf_a_bad_thing/> contains the
+template inclusion, which can be seen to have worked due to markup at the
+bottom of the page. It even includes a "Tags: draft" link at the bottom.
+
+Strangely, <http://jmtd.net/tag/draft/> does not contain backlinks to pages
+which are tagged using the procedure above.
+
+After the first rebuild, it's broken, after a subsequent refresh, it is fixed.
+I've reproduced this twice (but assumed I'd done something wrong the first
+time, so went ahead and migrated live, spamming planet debian in the process
+:(). I will try and put together a testcase. -- [[users/Jon]], 2009/02/17

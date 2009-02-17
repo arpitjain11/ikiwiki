@@ -1,0 +1,12 @@
+My ikiwiki setup file configed like:
+
+	usedirs => 0,
+	indexpages => 1,
+
+I create a directory and some .mdwn source file  /Whatis/index.mdwn and /Whatis/OSS.mdwn . The html file ikiwiki generated is
+/Whatis/index.html and /Whatis/OSS.html . 
+
+But in the page [OSS.html](http://atoz.org.cn/Whatis/OSS.html) , the auto generated link (on the page top)
+to “Whatis” is /Whatis.html file , not to /Whatis/index.html. So the link to “Whatis” is fail .
+
+Is it a bug , and how can I do for that ?

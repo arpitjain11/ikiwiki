@@ -1,0 +1,27 @@
+Implementing tags in terms of links is clever, but it would be nice if it was
+opaque in both directions: tagging and matching tags. Writing pagespecs to
+find out which pages are tagged with a given name means that the pagespec is
+tied to whatever the tagbase is.
+
+This patch adds a pagespec function 'tag' which lets you write pagespecs to
+match tagged pages independent of whatever the tagbase is set to.
+
+ -- [[users/Jon]] 2009/02/17
+
+[[!tag patch]]
+
+    --- a/plugins/IkiWiki/Plugin/tag.pm	2009-02-16 11:30:11.000000000 +0000
+    +++ b/plugins/IkiWiki/Plugin/tag.pm	2009-02-17 15:40:03.000000000 +0000
+    @@ -125,4 +125,12 @@
+     	}
+     }
+     
+    +package IkiWiki::PageSpec;
+    +
+    +sub match_tag ($$;@) {
+    +	my $page = shift;
+    +	my $glob = shift;
+    +    return match_link($page, IkiWiki::Plugin::tag::tagpage($glob));
+    +}
+    +
+     1
