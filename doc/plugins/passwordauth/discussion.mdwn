@@ -9,3 +9,53 @@ the *Preferences -- Subscriptions*.  --[[tschwinge]]
 >> Aha, then the problem is Firefox, which is automatically filling the
 >> *Password* field with its previous value, but not filling the
 >> *Confirm Password* one.  --[[tschwinge]]
+
+## easy access to the userdb for apache auth?
+
+My use case is:
+
+* restricted ikiwiki
+* read/edit only allowed from the local network (done with apache restrictions)
+* edit only for people authenticated (done with vanilla ikiwiki passwordauth)
+
+I would like to allow people to read/edit the wiki from outside of the
+local network, if and only if they already have an ikiwiki account.
+
+[[httpauth]] doesn't fit since it doesn't allow anonymous local users
+to create their own account. I want a single, local, simple auth
+database.
+
+My (naïve?) idea would be:
+
+* keep the [[passwordauth]] system
+* provide a way for Apache to use the userdb for authentication if
+people want to connect from outside
+
+I looked at the various auth modules for apache2. It seems that none
+can use a "perl Storable data" file. So, I think some solutions could
+be:
+
+* use a sqlite database instead of a perl Storable file
+  * can be used with
+    [mod_auth_dbd](http://httpd.apache.org/docs/2.2/mod/mod_authn_dbd.html) 
+  * requires a change in ikiwiki module [[passwordauth]]
+* use an external program to read the userdb and talk with
+  [mod_auth_external](http://unixpapa.com/mod_auth_external.html)
+  * requires the maintainance of this external auth proxy over ikiwiki
+    userdb format changes
+  * (I don't know perl)
+* include this wrapper in ikiwiki
+  * something like `ikiwiki --auth user:pass:userdb` check the
+    `user:pass` pair in `userdb` and returns an Accept/Reject flag to
+    Apache 
+  * requires a change in ikiwiki core
+  * still requires
+    [mod_auth_external](http://unixpapa.com/mod_auth_external.html)
+* do it with Apache perl sections
+  * (I don't know perl)
+
+Any opinion/suggestion/solution to this is welcome and appreciated.
+
+--
+[[NicolasLimare]]
+
