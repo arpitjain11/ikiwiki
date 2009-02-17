@@ -8,6 +8,13 @@ match tagged pages independent of whatever the tagbase is set to.
 
  -- [[users/Jon]] 2009/02/17
 
+> So, this looks good, appreciate the patch.
+> 
+> The only problem I see is it could be confusing if `tag(foo)` matched
+> a page that just linked to the tag via a wikilink, w/o actually tagging it.
+>
+> One other thing, perhaps it should be called `tagged()`? --[[Joey]] 
+
 [[!tag patch]]
 
     --- a/plugins/IkiWiki/Plugin/tag.pm	2009-02-16 11:30:11.000000000 +0000
