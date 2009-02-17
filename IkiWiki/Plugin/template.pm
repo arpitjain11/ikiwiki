@@ -10,8 +10,7 @@ use Encode;
 
 sub import {
 	hook(type => "getsetup", id => "template", call => \&getsetup);
-	hook(type => "preprocess", id => "template", call => \&preprocess,
-		scan => 1);
+	hook(type => "preprocess", id => "template", call => \&preprocess);
 }
 
 sub getsetup () {
