@@ -4,6 +4,8 @@ pass, which does not look at the template a page includes, it will not be
 seen then, and so other pages that use the page title probably won't use
 it. (Barring luck with build order.)
 
+Update: This also affects using tags from templates.
+
 There is a simple fix for this, just add `scan => 1` when registering the
 preprocess hook for the template plugin.
 
