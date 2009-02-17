@@ -1,13 +1,18 @@
 #!/usr/bin/make -f
-
-binary: binary-indep
-binary-indep:
-	dh $@ --before dh_compress
-	dh_compress -Xhtml
-	dh $@ --after dh_compress
-
 %:
 	dh $@
+
+# keeps it out if /usr/local
+override_dh_auto_configure:
+	dh_auto_configure -- PREFIX=/usr
+
+# avoid compressing files in the doc wiki
+override_dh_compress:
+	dh_compress -Xhtml
+
+# distclean moans about MANIFEST, this is quieter
+override_dh_auto_clean:
+	$(MAKE) realclean
 
 # Not intended for use by anyone except the author.
 announcedir:
